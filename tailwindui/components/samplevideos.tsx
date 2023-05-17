@@ -1,5 +1,7 @@
-import VideoThumb from '@/public/images/hero-image.png'
-import ModalVideo from '@/components/modal-video'
+'use client'
+
+import LiteYouTubeEmbed from "react-lite-youtube-embed"
+import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css"
 
 export default function SampleVideos() {
   return (
@@ -28,14 +30,13 @@ export default function SampleVideos() {
 
           {/* Items */}
           <div className="pt-32 pb-12 md:pt-40 md:pb-20">
-            <ModalVideo
-                thumb={VideoThumb}
-                thumbWidth={768}
-                thumbHeight={432}
-                thumbAlt="Modal video thumbnail"
-                video="/videos/video.mp4"
-                videoWidth={1920}
-                videoHeight={1080} />
+            <LiteYouTubeEmbed
+              aspectHeight={9}
+              aspectWidth={16}
+              id="cJKrOSwm5nY"
+              title="[Machine Learning Interview] Numpy based gradient updates for binary classification with hinge loss"
+            />
+
           </div>
         </div>
       </div>
