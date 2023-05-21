@@ -9,7 +9,7 @@ export default function Introduction() {
       {/* Illustration behind hero content */}
       <div className="absolute left-1/2 transform -translate-x-1/2 pointer-events-none -z-1" aria-hidden="true">
             <Image
-              className="md:max-w-none mx-auto rounded"
+              className="max-w-none mx-auto rounded"
               src={background}
               layout="fixed"
               objectFit="fill"
