@@ -3,7 +3,9 @@
 import { useState, useRef, useEffect } from 'react'
 import { Transition } from '@headlessui/react'
 import Image from 'next/image'
-import FeaturesBg from '@/public/images/teacher.png'
+import FeaturesBg1 from '@/public/images/386a9ba7ee3443cba548afbd97abcfa6.jpg'
+import FeaturesBg2 from '@/public/images/11062b_5f5c6e4fa60c4e86ab64ce50195d304a~mv2_d_3491_2327_s_2.jpg'
+import FeaturesBg3 from '@/public/images/bcd40fc3ac8646cbbb4135ae7522b1b7.jpg'
 
 export default function Features() {
   
@@ -33,8 +35,6 @@ export default function Features() {
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
             <h1 className="h2 mb-4">More about us</h1>
             <p className="text-xl text-left text-gray-600">At Dr. Lambda, we are passionate about transforming the way people learn and share knowledge. As an AI-driven company, we have developed cutting-edge technology that simplifies the process of creating educational videos with just one click. Our mission is to empower individuals, educators, and organizations to effortlessly produce high-quality video content that engages, educates, and inspires.</p>
-            <br />
-            <p className="text-xl text-left text-gray-600">What sets us apart is our innovative approach to video generation. Leveraging the power of artificial intelligence, our platform automates the entire video creation process, eliminating the need for extensive technical skills or expensive equipment. With Dr. Lambda, anyone can become a proficient video creator, regardless of their prior experience or expertise.</p>
           </div>
 
           {/* Section content */}
@@ -44,7 +44,6 @@ export default function Features() {
             <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 md:mt-6" data-aos="fade-right">
               <div className="md:pr-4 lg:pr-12 xl:pr-16 mb-8">
                 <h3 className="h3 mb-3">Services</h3>
-                <p className="text-xl text-gray-600">Our intelligent algorithms analyze and synthesize content from various sources, such as text, images, and audio, to generate dynamic and visually appealing videos. Whether you need to create instructional videos, training materials, presentations, or explainer videos, our platform streamlines the production process, saving you time and effort.</p>
               </div>
               {/* Tabs buttons */}
               <div className="mb-8 md:mb-0">
@@ -112,7 +111,7 @@ export default function Features() {
                   leaveTo="opacity-0 -translate-y-16"
                 >
                   <div className="relative inline-flex flex-col">
-                    <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg} width={500} height="462" alt="Features bg" />
+                    <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg1} width={500} height="462" alt="Features bg" />
                   </div>
                 </Transition>
                 {/* Item 2 */}
@@ -128,7 +127,7 @@ export default function Features() {
                   leaveTo="opacity-0 -translate-y-16"
                 >
                   <div className="relative inline-flex flex-col">
-                    <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg} width={500} height="462" alt="Features bg" />
+                    <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg2} width={500} height="462" alt="Features bg" />
                   </div>
                 </Transition>
                 {/* Item 3 */}
@@ -144,7 +143,7 @@ export default function Features() {
                   leaveTo="opacity-0 -translate-y-16"
                 >
                   <div className="relative inline-flex flex-col">
-                    <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg} width={500} height="462" alt="Features bg" />
+                    <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg3} width={500} height="462" alt="Features bg" />
                   </div>
                 </Transition>
               </div>
