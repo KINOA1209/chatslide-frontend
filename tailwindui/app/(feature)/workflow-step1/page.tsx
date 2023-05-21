@@ -3,27 +3,15 @@ export const metadata = {
   description: 'Create new content',
 }
 
-import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import TopicForm from '@/components/topic-form'
 
 export default function WorkflowStep1() {
 
-  const [formSubmitSuccess, setFormSubmitSuccess] = useState(false);
-  const [responseData, setResponseData] = useState<any>(null);
-
-  useEffect(() => {
-    if (formSubmitSuccess && responseData) {
-      // Navigate to another page using Link component
-      window.location.href = `/new-page?name=${responseData.res}`;
-    }
-  }, [formSubmitSuccess, responseData]);
-
-
   const handleFormSubmitSuccess = (data: any) => {
     // Handle the response data here
-    setResponseData(data);
-    setFormSubmitSuccess(true);
+    // Navigate to another page using the router
+    window.location.href = `/workflow-step2?name=${data.res}`;
   };
 
   return (

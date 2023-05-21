@@ -1,7 +1,6 @@
-'use client'
+// 'use client'
 
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { useRouter } from 'next/router';
+import React, { ChangeEvent, FormEvent } from 'react';
 
 interface TopicFormProps {
   onSubmitSuccess: (data: any) => void;
@@ -12,8 +11,8 @@ interface TopicFormData {
   requirements: string;
 }
 
+/*
 const TopicForm: React.FC<TopicFormProps> = ({ onSubmitSuccess }) => {
-  const router = useRouter();
   const [formData, setFormData] = useState<TopicFormData>({
     topic: '',
     requirements: ''
@@ -70,6 +69,12 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmitSuccess }) => {
       </div>
     </form>
   );
-};
+};*/
 
-export default TopicForm;
+export default function TopicForm() {
+    return (
+        <section>
+            <form />
+        </section>
+    );
+};
