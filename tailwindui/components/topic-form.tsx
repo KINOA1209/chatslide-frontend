@@ -21,8 +21,8 @@ const TopicForm: React.FC = () => {
     event.preventDefault();
 
     const formData = {
-        topic: event.target.topic.value,
-        requirements: event.target.requirements.value,
+        topic: (event.target as HTMLFormElement).topic.value,
+        requirements: (event.target as HTMLFormElement).requirements.value,
     };
 
     try {
