@@ -26,7 +26,7 @@ export default function WorkflowStep1() {
 
           {/* Form */}
           <div className="max-w-sm mx-auto">
-            <TopicForm onSubmitSuccess={handleFormSubmitSuccess} />
+            <TopicForm />
           </div>
 
         </div>
