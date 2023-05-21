@@ -22,7 +22,7 @@ export default function Features() {
   }, []) 
 
   return (
-    <section className="relative">
+    <section className="relative" id="more">
 
       {/* Section background (needs .relative class on parent and next sibling elements) */}
       <div className="absolute inset-0 bg-gray-100 pointer-events-none mb-16" aria-hidden="true"></div>
@@ -34,7 +34,8 @@ export default function Features() {
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
             <h1 className="h2 mb-4">More about us</h1>
-            <p className="text-xl text-left text-gray-600">At Dr. Lambda, we are passionate about transforming the way people learn and share knowledge. As an AI-driven company, we have developed cutting-edge technology that simplifies the process of creating educational videos with just one click. Our mission is to empower individuals, educators, and organizations to effortlessly produce high-quality video content that engages, educates, and inspires.</p>
+            <p className="text-xl text-left text-gray-600">
+Welcome to Dr. Lambda, your AI copilot for educators! We understand the challenges educators face when it comes to creating engaging and interactive educational content. That's why we're here to revolutionize the way you generate educational materials.</p>
           </div>
 
           {/* Section content */}
@@ -53,7 +54,7 @@ export default function Features() {
                   onClick={(e) => { e.preventDefault(); setTab(1); }}
                 >
                   <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1">One-Click Video Generation</div>
+                    <div className="font-bold leading-snug tracking-tight mb-1">▶️ One-Click Video Generation</div>
                     <div className="text-gray-600">Simply input your content, customize the settings, and let our AI do the rest.</div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
@@ -68,7 +69,7 @@ export default function Features() {
                   onClick={(e) => { e.preventDefault(); setTab(2); }}
                 >
                   <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1">Customization Options</div>
+                    <div className="font-bold leading-snug tracking-tight mb-1">🧮 Customization Options</div>
                     <div className="text-gray-600">Dr. Lambda provides a range of customization options, allowing you to tailor your videos to your specific needs and branding.</div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
@@ -83,7 +84,7 @@ export default function Features() {
                   onClick={(e) => { e.preventDefault(); setTab(3); }}
                 >
                   <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1">Engaging Visuals and Effects</div>
+                    <div className="font-bold leading-snug tracking-tight mb-1">🎉 Engaging Visuals and Effects</div>
                     <div className="text-gray-600">Our advanced algorithms ensure that the videos produced by Dr. Lambda are visually captivating, enhancing the learning experience and capturing the attention of your audience.</div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">

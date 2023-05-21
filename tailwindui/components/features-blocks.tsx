@@ -31,8 +31,7 @@ export default function FeaturesBlocks() {
                   </g>
                 </g>
               </svg>
-              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">Achieve Personal Goals</h4>
-              <p className="text-gray-600 text-center">Learn more</p>
+              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">🎯 Achieve Personal Goals</h4>
             </div>
 
             {/* 2nd item */}
@@ -47,8 +46,7 @@ export default function FeaturesBlocks() {
                   </g>
                 </g>
               </svg>
-              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">Improve Performance</h4>
-              <p className="text-gray-600 text-center">Learn more</p>
+              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">📈 Improve Performance</h4>
             </div>
 
             {/* 3rd item */}
@@ -64,8 +62,7 @@ export default function FeaturesBlocks() {
                   </g>
                 </g>
               </svg>
-              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">Go at Your Own Pace</h4>
-              <p className="text-gray-600 text-center">Learn more</p>
+              <h4 className="text-xl font-bold leading-snug tracking-tight mb-1">👣 Go at Your Own Pace</h4>
             </div>
 
           </div>
