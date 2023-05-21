@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'Sign Up - Simple',
-  description: 'Page description',
+  title: 'Sign Up - Dr. Lambda',
+  description: 'AI copilot for educators',
 }
 
 import Link from 'next/link'

@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'Home - Simple',
-  description: 'Page description',
+  title: 'Home - Dr. Lambda',
+  description: 'AI copilot for educators',
 }
 
 import Introduction from '@/components/introduction'
