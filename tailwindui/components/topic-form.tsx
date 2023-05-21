@@ -25,6 +25,8 @@ const TopicForm: React.FC = () => {
         requirements: (event.target as HTMLFormElement).requirements.value,
     };
 
+    console.log("created form data");
+
     try {
       const response = await fetch('/api/guidelines', {
         method: 'POST',
@@ -33,11 +35,17 @@ const TopicForm: React.FC = () => {
         },
         body: JSON.stringify(formData)
       });
-
-      const data = await response.json();
-      // Handle the response data here
+      
       console.log(formData);
-      console.log(data);
+      console.log(response);
+
+      if (response.ok) {
+        const data = await response.json();
+        // Handle the response data here
+        console.log(data);
+      } else {
+        alert("Request failed: " + response.status);
+      }
 
       // Redirect to a new page with the data
       router.push('workflow-step2');
