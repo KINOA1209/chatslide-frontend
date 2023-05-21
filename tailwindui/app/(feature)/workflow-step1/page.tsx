@@ -8,11 +8,8 @@ import TopicForm from '@/components/topic-form'
 
 export default function WorkflowStep1() {
 
-  const handleFormSubmitSuccess = (data: any) => {
-    // Handle the response data here
-    // Navigate to another page using the router
-    window.location.href = `/workflow-step2?name=${data.res}`;
-  };
+  // client.navigateTo(`/workflow-step2?name=${responseData.name}`);
+
 
   return (
     <section className="bg-gradient-to-b from-gray-100 to-white">

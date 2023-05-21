@@ -1,11 +1,23 @@
-export const metadata = {
-  title: 'Workflow - Dr. Lambda',
-  description: 'Create new content',
-}
-  
-import Link from 'next/link'
+'use client'
 
-export default function WorkflowStep2() {
+import React, { useState, ChangeEvent, FormEvent } from 'react';
+import {useRouter} from 'next/navigation';
+
+const TopicForm: React.FC = () => {
+  /*const [formData, setFormData] = useState<TopicFormData>({
+    topic: '',
+    requirements: ''
+  });
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value
+    });
+  };*/
+  const router = useRouter();
+  // const { name } = router.query;
+
   return (
     <section className="bg-gradient-to-b from-gray-100 to-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -38,4 +50,3 @@ export default function WorkflowStep2() {
     </section>
   )
 }
-  

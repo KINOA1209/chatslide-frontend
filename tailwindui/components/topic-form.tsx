@@ -1,19 +1,10 @@
-// 'use client'
+'use client'
 
-import React, { ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
+import {useRouter} from 'next/navigation';
 
-interface TopicFormProps {
-  onSubmitSuccess: (data: any) => void;
-}
-
-interface TopicFormData {
-  topic: string;
-  requirements: string;
-}
-
-/*
-const TopicForm: React.FC<TopicFormProps> = ({ onSubmitSuccess }) => {
-  const [formData, setFormData] = useState<TopicFormData>({
+const TopicForm: React.FC = () => {
+  /*const [formData, setFormData] = useState<TopicFormData>({
     topic: '',
     requirements: ''
   });
@@ -23,13 +14,19 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmitSuccess }) => {
       ...formData,
       [event.target.name]: event.target.value
     });
-  };
+  };*/
+  const router = useRouter();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    const formData = {
+        topic: event.target.topic.value,
+        requirements: event.target.requirements.value,
+    };
+
     try {
-      const response = await fetch('https://drlambda.ai/api/guidelines', {
+      const response = await fetch('/api/guidelines', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -39,10 +36,11 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmitSuccess }) => {
 
       const data = await response.json();
       // Handle the response data here
+      console.log(formData);
       console.log(data);
 
       // Redirect to a new page with the data
-      onSubmitSuccess(data);
+      router.push('workflow-step2');
     } catch (error) {
       console.error('Error:', error);
     }
@@ -52,29 +50,50 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmitSuccess }) => {
     <form onSubmit={handleSubmit}>
       <div className="flex flex-wrap -mx-3 mb-4">
         <div className="w-full px-3">
-            <label className="block text-gray-800 text-sm font-medium mb-1" htmlFor="topic">Topic <span className="text-red-600">*</span></label>
-            <input id="topic" type="text" className="form-input w-full text-gray-800" placeholder="Enter the topic" value={formData.topic} onChange={handleChange} required />
+            <label
+              className="block text-gray-800 text-sm font-medium mb-1"
+              htmlFor="topic">
+                Topic <span className="text-red-600">*</span>
+            </label>
+            <input
+              id="topic"
+              type="text"
+              className="form-input w-full text-gray-800"
+              placeholder="Enter the topic"
+              //value={formData.topic}
+              //onChange={handleChange}
+              required />
         </div>
       </div>
       <div className="flex flex-wrap -mx-3 mb-4">
         <div className="w-full px-3">
-            <label className="block text-gray-800 text-sm font-medium mb-1" htmlFor="requirements">Requirements: <span className="text-red-600">*</span></label>
-            <input id="requirements" type="text" className="form-input w-full text-gray-800" placeholder="Enter the requirements" required value={formData.requirements} onChange={handleChange} />
+            <label
+              className="block text-gray-800 text-sm font-medium mb-1"
+              htmlFor="requirements">
+                Requirements: <span className="text-red-600">*</span>
+            </label>
+            <input
+              id="requirements"
+              type="text"
+              className="form-input w-full text-gray-800"
+              placeholder="Enter the requirements"
+              required
+              //value={formData.requirements}
+              //onChange={handleChange} 
+            />
         </div>
       </div>
       <div className="flex flex-wrap -mx-3 mt-6">
         <div className="w-full px-3">
-            <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full" type="submit">Generate outline</button>
+            <button
+              className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
+              type="submit">
+                Generate outline
+            </button>
         </div>
       </div>
     </form>
   );
-};*/
-
-export default function TopicForm() {
-    return (
-        <section>
-            <form />
-        </section>
-    );
 };
+
+export default TopicForm;
