@@ -32,9 +32,9 @@ export default function Features() {
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
             <h1 className="h2 mb-4">More about us</h1>
-            <p className="text-xl text-gray-600">At Dr. Lambda, we are passionate about transforming the way people learn and share knowledge. As an AI-driven company, we have developed cutting-edge technology that simplifies the process of creating educational videos with just one click. Our mission is to empower individuals, educators, and organizations to effortlessly produce high-quality video content that engages, educates, and inspires.</p>
+            <p className="text-xl text-left text-gray-600">At Dr. Lambda, we are passionate about transforming the way people learn and share knowledge. As an AI-driven company, we have developed cutting-edge technology that simplifies the process of creating educational videos with just one click. Our mission is to empower individuals, educators, and organizations to effortlessly produce high-quality video content that engages, educates, and inspires.</p>
             <br />
-            <p className="text-xl text-gray-600">What sets us apart is our innovative approach to video generation. Leveraging the power of artificial intelligence, our platform automates the entire video creation process, eliminating the need for extensive technical skills or expensive equipment. With Dr. Lambda, anyone can become a proficient video creator, regardless of their prior experience or expertise.</p>
+            <p className="text-xl text-left text-gray-600">What sets us apart is our innovative approach to video generation. Leveraging the power of artificial intelligence, our platform automates the entire video creation process, eliminating the need for extensive technical skills or expensive equipment. With Dr. Lambda, anyone can become a proficient video creator, regardless of their prior experience or expertise.</p>
           </div>
 
           {/* Section content */}
@@ -86,21 +86,6 @@ export default function Features() {
                   <div>
                     <div className="font-bold leading-snug tracking-tight mb-1">Engaging Visuals and Effects</div>
                     <div className="text-gray-600">Our advanced algorithms ensure that the videos produced by Dr. Lambda are visually captivating, enhancing the learning experience and capturing the attention of your audience.</div>
-                  </div>
-                  <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
-                    <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M11.334 8.06a.5.5 0 00-.421-.237 6.023 6.023 0 01-5.905-6c0-.41.042-.82.125-1.221a.5.5 0 00-.614-.586 6 6 0 106.832 8.529.5.5 0 00-.017-.485z" fill="#191919" fillRule="nonzero" />
-                    </svg>
-                  </div>
-                </a>
-                <a
-                  className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${tab !== 3 ? 'bg-white shadow-md border-gray-200 hover:shadow-lg' : 'bg-gray-200 border-transparent'}`}
-                  href="#0"
-                  onClick={(e) => { e.preventDefault(); setTab(3); }}
-                >
-                  <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1">Time and Cost Efficiency</div>
-                    <div className="text-gray-600">By simplifying the video creation process, Dr. Lambda significantly reduces the time and costs associated with producing educational videos.</div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                     <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
