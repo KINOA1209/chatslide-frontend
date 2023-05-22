@@ -21,12 +21,12 @@ export default function WorkflowIntro() {
             <form action="/workflow-step1">
               <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">
-                  <p>Here is a paragraph for introduction of the workflow. </p>
+                  <p>Starting from here, you can interactively create your customized educational video with a few words.</p>
                 </div>
               </div>
               <div className="flex flex-wrap -mx-3 mt-6">
                 <div className="w-full px-3">
-                  <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">Next</button>
+                  <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">Start</button>
                 </div>
               </div>
               <div className="text-sm text-gray-500 text-center mt-3">

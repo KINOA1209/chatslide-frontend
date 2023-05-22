@@ -18,7 +18,7 @@ export default function WorkflowStep1() {
 
           {/* Page header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-            <h1 className="h1">Workflow Step 1</h1>
+            <h1 className="h1">Step 1: Generate Outline</h1>
           </div>
 
           {/* Form */}

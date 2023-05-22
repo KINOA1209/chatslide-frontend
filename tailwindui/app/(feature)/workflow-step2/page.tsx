@@ -13,7 +13,7 @@ export default function WorkflowStep2() {
 
           {/* Page header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-            <h1 className="h1">Workflow Step 2</h1>
+            <h1 className="h1">Step 2: Generate Slides</h1>
           </div>
 
           {/* Form */}
