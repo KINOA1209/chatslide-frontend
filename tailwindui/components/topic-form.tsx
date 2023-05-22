@@ -23,6 +23,7 @@ const TopicForm: React.FC = () => {
     const formData = {
         topic: (event.target as HTMLFormElement).topic.value,
         requirements: (event.target as HTMLFormElement).requirements.value,
+        audience: (event.target as HTMLFormElement).audience.value,
     };
 
     console.log("created form data");
@@ -43,12 +44,12 @@ const TopicForm: React.FC = () => {
         const data = await response.json();
         // Handle the response data here
         console.log(data);
+
+        // Redirect to a new page with the data
+        router.push('workflow-step2');
       } else {
         alert("Request failed: " + response.status);
       }
-
-      // Redirect to a new page with the data
-      router.push('workflow-step2');
     } catch (error) {
       console.error('Error:', error);
     }
@@ -68,8 +69,6 @@ const TopicForm: React.FC = () => {
               type="text"
               className="form-input w-full text-gray-800"
               placeholder="Enter the topic"
-              //value={formData.topic}
-              //onChange={handleChange}
               required />
         </div>
       </div>
@@ -86,8 +85,22 @@ const TopicForm: React.FC = () => {
               className="form-input w-full text-gray-800"
               placeholder="Enter the requirements"
               required
-              //value={formData.requirements}
-              //onChange={handleChange} 
+            />
+        </div>
+      </div>
+      <div className="flex flex-wrap -mx-3 mb-4">
+        <div className="w-full px-3">
+            <label
+              className="block text-gray-800 text-sm font-medium mb-1"
+              htmlFor="audience">
+                Audience: <span className="text-red-600">*</span>
+            </label>
+            <input
+              id="audience"
+              type="text"
+              className="form-input w-full text-gray-800"
+              placeholder="Enter the audience"
+              required
             />
         </div>
       </div>
