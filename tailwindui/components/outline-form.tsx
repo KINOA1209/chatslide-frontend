@@ -29,12 +29,6 @@ const TopicForm: React.FC = () => {
             <h1 className="h1">Workflow Step 2</h1>
           </div>
 
-          <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-            <p>
-                { cookies().get("topic")?.value }
-            </p>
-          </div>
-
           {/* Form */}
           <div className="max-w-sm mx-auto">
             <form>

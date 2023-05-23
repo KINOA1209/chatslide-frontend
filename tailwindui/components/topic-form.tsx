@@ -2,7 +2,6 @@
 
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { cookies } from 'next/headers';
 
 const TopicForm: React.FC = () => {
   /*const [formData, setFormData] = useState<TopicFormData>({
@@ -50,7 +49,8 @@ const TopicForm: React.FC = () => {
         console.log(outlinesJson.data.topic);
         console.log(outlinesJson.data.res);
 
-        cookies().set("topic", outlinesJson.data.audience);
+        // cookies doesn't work because it needs 'use server'
+        // cookies().set("topic", outlinesJson.data.audience);
 
         // Redirect to a new page with the data
         router.push('workflow-step2');
