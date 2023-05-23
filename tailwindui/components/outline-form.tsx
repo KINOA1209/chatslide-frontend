@@ -2,6 +2,7 @@
 
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import {useRouter} from 'next/navigation';
+import { cookies } from 'next/headers';
 
 const TopicForm: React.FC = () => {
   /*const [formData, setFormData] = useState<TopicFormData>({
@@ -26,6 +27,12 @@ const TopicForm: React.FC = () => {
           {/* Page header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
             <h1 className="h1">Workflow Step 2</h1>
+          </div>
+
+          <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
+            <p>
+                { cookies().get("topic")?.value }
+            </p>
           </div>
 
           {/* Form */}
