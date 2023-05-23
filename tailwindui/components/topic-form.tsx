@@ -4,17 +4,6 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 
 const TopicForm: React.FC = () => {
-  /*const [formData, setFormData] = useState<TopicFormData>({
-    topic: '',
-    requirements: ''
-  });
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value
-    });
-  };*/
   const router = useRouter();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
