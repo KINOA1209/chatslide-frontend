@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import OutlineFrom from '@/components/outline-form'
 
 const OutlineVisualizer = ({ outline }) => {
   console.log(outline);
@@ -19,14 +18,7 @@ const OutlineVisualizer = ({ outline }) => {
   };
 
   return (
-      <section className="bg-gradient-to-b from-gray-100 to-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
     <div className="max-w-3xl mx-auto mt-8">
-
-              {/* Page header */}
-          <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-            <h1 className="h1">Step 2: Edit Outline</h1>
-          </div>
       {Object.keys(outlineData).map((sectionIndex) => (
         <div key={sectionIndex} className="mb-8">
           <h3 className="text-xl font-bold">
@@ -45,21 +37,7 @@ const OutlineVisualizer = ({ outline }) => {
           </div>
         </div>
       ))}
-
-
-    {/* Form */}
-          <div className="max-w-sm mx-auto">
-            <form>
-              <div className="flex flex-wrap -mx-3 mt-6">
-                <div className="w-full px-3">
-                  <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">Generate Slides</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
+    </div>
   );
 };
 

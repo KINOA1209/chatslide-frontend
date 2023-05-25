@@ -53,6 +53,7 @@ const TopicForm: React.FC = () => {
         router.push('workflow-step2');
       } else {
         alert("Request failed: " + response.status);
+        console.log(response)
         setIsSubmitting(false);
       }
     } catch (error) {
