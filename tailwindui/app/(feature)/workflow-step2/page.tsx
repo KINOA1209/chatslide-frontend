@@ -8,16 +8,13 @@ const OutlineVisualizer = ({ outline }) => {
 
   console.log(outlineData);
 
-  const handleChange = (e, sectionIndex, key) => {
+  const handleChange = (e, sectionIndex, detailIndex, key) => {
     const { value } = e.target;
-    console.log(e, sectionIndex, key, value);
-//     setOutlineData((prevOutlineData) => ({
-//       ...prevOutlineData,
-//       [sectionIndex]: {
-//         ...prevOutlineData[sectionIndex],
-//         [key]: value,
-//       },
-//     }));
+  setOutlineData((prevOutlineData) => {
+    const updatedOutlineData = JSON.parse(JSON.stringify(prevOutlineData));
+    updatedOutlineData[sectionIndex]['details'][detailIndex] = value;
+    return updatedOutlineData;
+  });
   };
 
   return (
@@ -33,7 +30,7 @@ const OutlineVisualizer = ({ outline }) => {
                 key={detailIndex}
                 className="form-input w-full text-gray-800 mb-2"
                 value={detail}
-                onChange={(e) => handleChange(e, sectionIndex, 'details')}
+                onChange={(e) => handleChange(e, sectionIndex, detailIndex, 'details')}
                 placeholder={`Detail ${detailIndex}`}
               />
             ))}
