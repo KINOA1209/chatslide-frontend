@@ -6,8 +6,12 @@ import { useRouter } from 'next/navigation';
 const TopicForm: React.FC = () => {
   const router = useRouter();
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    setIsSubmitting(true);
 
     const formData = {
         topic: (event.target as HTMLFormElement).topic.value,
@@ -31,6 +35,7 @@ const TopicForm: React.FC = () => {
 
       if (response.ok) {
         const outlinesJson = await response.json();
+        setIsSubmitting(false);
         // Handle the response data here
         console.log(outlinesJson);
         console.log(outlinesJson.data.audience);
@@ -41,13 +46,18 @@ const TopicForm: React.FC = () => {
         // cookies doesn't work because it needs 'use server'
         // cookies().set("topic", outlinesJson.data.audience);
 
+        // Store the data in local storage
+        localStorage.setItem('outline', JSON.stringify(outlinesJson.data));
+
         // Redirect to a new page with the data
         router.push('workflow-step2');
       } else {
         alert("Request failed: " + response.status);
+        setIsSubmitting(false);
       }
     } catch (error) {
       console.error('Error:', error);
+      setIsSubmitting(false);
     }
   };
 
@@ -105,7 +115,7 @@ const TopicForm: React.FC = () => {
             <button
               className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
               type="submit">
-                Generate outline
+                {isSubmitting ? "Generating..." : "Generate outline"}
             </button>
         </div>
       </div>
