@@ -13,7 +13,7 @@ const OutlineVisualizer = ({outline}: { outline: any }) => {
         const {value} = e.target;
         setOutlineData((prevOutlineData: any) => {
             const updatedOutlineData = JSON.parse(JSON.stringify(prevOutlineData));
-            updatedOutlineData[sectionIndex]['details'][detailIndex] = value;
+            updatedOutlineData[sectionIndex]['content'][detailIndex] = value;
             return updatedOutlineData;
         });
     };
@@ -33,12 +33,12 @@ const OutlineVisualizer = ({outline}: { outline: any }) => {
                                 Section {parseInt(sectionIndex)}: {outlineData[sectionIndex].title}
                             </h3>
                             <div className="mt-4">
-                                {outlineData[sectionIndex].details.map((detail: any, detailIndex: number) => (
+                                {outlineData[sectionIndex].content.map((detail: any, detailIndex: number) => (
                                     <input
                                         key={detailIndex}
                                         className="form-input w-full text-gray-800 mb-2"
                                         value={detail}
-                                        onChange={(e) => handleChange(e, sectionIndex, detailIndex, 'details')}
+                                        onChange={(e) => handleChange(e, sectionIndex, detailIndex, 'content')}
                                         placeholder={`Detail ${detailIndex}`}
                                     />
                                 ))}
