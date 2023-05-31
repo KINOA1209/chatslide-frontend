@@ -1,17 +1,33 @@
 'use client'
 
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 const TopicForm: React.FC = () => {
   const router = useRouter();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [timer, setTimer] = useState(0);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+
+    if (isSubmitting) {
+      interval = setInterval(() => {
+        setTimer(prevTimer => prevTimer + 1); // Increment the timer
+      }, 1000); // Increment every second
+    }
+
+    return () => {
+      clearInterval(interval); // Clear the interval on component unmount
+    };
+  }, [isSubmitting]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     setIsSubmitting(true);
+    setTimer(0);
 
     const formData = {
         topic: (event.target as HTMLFormElement).topic.value,
@@ -120,6 +136,14 @@ const TopicForm: React.FC = () => {
             </button>
         </div>
       </div>
+
+      {isSubmitting && (
+        <div className="mt-4 text-center">
+          <span className="text-sm text-gray-500">
+            This usually takes 15 seconds. Time elapsed: {timer} seconds
+          </span>
+        </div>
+      )}
     </form>
   );
 };
