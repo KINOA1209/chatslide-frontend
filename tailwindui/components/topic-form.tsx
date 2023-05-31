@@ -52,7 +52,7 @@ const TopicForm: React.FC = () => {
         // Redirect to a new page with the data
         router.push('workflow-step2');
       } else {
-        alert("Request failed: " + response.status);
+//         alert("Request failed: " + response.status);
         console.log(response)
         setIsSubmitting(false);
       }
