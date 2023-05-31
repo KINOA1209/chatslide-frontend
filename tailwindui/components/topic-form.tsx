@@ -33,6 +33,7 @@ const TopicForm: React.FC = () => {
         topic: (event.target as HTMLFormElement).topic.value,
         requirements: (event.target as HTMLFormElement).requirements.value,
         audience: (event.target as HTMLFormElement).audience.value,
+        language: (event.target as HTMLFormElement).language.value,
     };
 
     console.log("created form data");
@@ -127,6 +128,25 @@ const TopicForm: React.FC = () => {
             />
         </div>
       </div>
+      <div className="flex flex-wrap -mx-3 mb-4">
+          <div className="w-full px-3">
+            <label
+              className="block text-gray-800 text-sm font-medium mb-1"
+              htmlFor="language">
+                Language: <span className="text-red-600">*</span>
+            </label>
+            <select
+              id="language"
+              className="form-input w-full text-gray-800"
+              required
+            >
+              <option value="English">English</option>
+              <option value="Chinese">中文</option>
+              <option value="Spanish">Español</option>
+            </select>
+          </div>
+        </div>
+
       <div className="flex flex-wrap -mx-3 mt-6">
         <div className="w-full px-3">
             <button
