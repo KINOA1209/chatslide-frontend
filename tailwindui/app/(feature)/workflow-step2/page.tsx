@@ -94,7 +94,7 @@ const OutlineVisualizer = ({outline}: { outline: any }) => {
 
                     {/* Page header */}
                     <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-                        <h1 className="h1">Step 3: Edit Slides</h1>
+                        <h1 className="h1">Step 2: Edit Guidelines</h1>
                     </div>
                     {outlineData && Object.keys(outlineData).map((sectionIndex) => (
                         <div key={sectionIndex} className="mb-8">
@@ -128,6 +128,14 @@ const OutlineVisualizer = ({outline}: { outline: any }) => {
                             </div>
                         </form>
                     </div>
+
+                    {isSubmitting && (
+                    <div className="mt-4 text-center">
+                      <span className="text-sm text-gray-500">
+                        This usually takes 15 seconds. Time elapsed: {timer} seconds
+                      </span>
+                    </div>
+                  )}
                 </div>
             </div>
         </section>
