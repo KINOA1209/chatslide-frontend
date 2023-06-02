@@ -2,7 +2,8 @@
 
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SignupForm: React.FC = () => {
   const router = useRouter();
@@ -35,10 +36,32 @@ const SignupForm: React.FC = () => {
       if (response.ok) {
         const userInfoJson = await response.json();
         console.log(userInfoJson);
-        router.push("/signin");
-      } else {
-        alert("Request failed: " + response.status);
-        console.log(response);
+        if (userInfoJson.message === "OK") {
+          toast.success("Sign up successfully", {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          setTimeout(() => {
+            console.log(router.push("/signin"));
+          }, 4000);
+        } else {
+          toast.error(userInfoJson.message, {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
       }
     } catch (error) {
       console.log("Error:", error);
@@ -120,6 +143,7 @@ const SignupForm: React.FC = () => {
           <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">
             Sign up
           </button>
+          <ToastContainer />
         </div>
       </div>
       <div className="text-sm text-gray-500 text-center mt-3">
