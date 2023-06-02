@@ -11,10 +11,11 @@ const SignupForm: React.FC = () => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = {
-      name: (event.target as HTMLFormElement).fname.value,
+      username: (event.target as HTMLFormElement).username.value,
       email: (event.target as HTMLFormElement).email.value,
       password: (event.target as HTMLFormElement).password.value,
-      verification: (event.target as HTMLFormElement).verification.value,
+      verification_code: (event.target as HTMLFormElement).verification_code
+        .value,
     };
 
     console.log("created form data");
@@ -50,15 +51,15 @@ const SignupForm: React.FC = () => {
         <div className="w-full px-3">
           <label
             className="block text-gray-800 text-sm font-medium mb-1"
-            htmlFor="fname"
+            htmlFor="username"
           >
             Name <span className="text-red-600">*</span>
           </label>
           <input
-            id="fname"
+            id="username"
             type="text"
             className="form-input w-full text-gray-800"
-            placeholder="Enter your name"
+            placeholder="Enter your username"
             required
           />
         </div>
@@ -101,12 +102,12 @@ const SignupForm: React.FC = () => {
         <div className="w-full px-3">
           <label
             className="block text-gray-800 text-sm font-medium mb-1"
-            htmlFor="verification"
+            htmlFor="verification_code"
           >
             Verification Code <span className="text-red-600">*</span>
           </label>
           <input
-            id="verification"
+            id="verification_code"
             type="text"
             className="form-input w-full text-gray-800"
             placeholder="Enter your verfication code"
