@@ -36,10 +36,10 @@ const SignupForm: React.FC = () => {
       if (response.ok) {
         const userInfoJson = await response.json();
         console.log(userInfoJson);
-        if (userInfoJson.message === "OK") {
+        if (userInfoJson.status === "success") {
           toast.success("Sign up successfully", {
             position: "top-center",
-            autoClose: 3000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -49,11 +49,11 @@ const SignupForm: React.FC = () => {
           });
           setTimeout(() => {
             console.log(router.push("/signin"));
-          }, 4000);
+          }, 3000);
         } else {
           toast.error(userInfoJson.message, {
             position: "top-center",
-            autoClose: 3000,
+            autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
