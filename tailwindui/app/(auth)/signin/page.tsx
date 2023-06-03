@@ -1,21 +1,42 @@
-export const metadata = {
-  title: "Sign In - Dr. Lambda",
-  description: "AI copilot for educators",
-};
+"use client";
+// export const metadata = {
+//   title: "Sign In - Dr. Lambda",
+//   description: "AI copilot for educators",
+// };
 
 import LoginForm from "@/components/login-form";
 import Link from "next/link";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useState, useEffect } from "react";
 
 export default function SignIn() {
+  const signed_up = useSearchParams().toString();
+  useEffect(() => {
+    console.log(signed_up);
+    if (signed_up && signed_up === "signed_up=true") {
+      toast.success("Sign up successfully", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  });
+
   return (
     <section className="bg-gradient-to-b from-gray-100 to-white">
+      <ToastContainer />
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="pt-32 pb-12 md:pt-40 md:pb-20">
           {/* Page header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-            <h1 className="h1">
-              💙 Welcome back.
-            </h1>
+            <h1 className="h1">💙 Welcome back.</h1>
           </div>
 
           {/* Form */}
@@ -34,8 +55,7 @@ export default function SignIn() {
             </div>
             <form>
               <div className="flex flex-wrap -mx-3 mb-3">
-                <div className="w-full px-3">
-                </div>
+                <div className="w-full px-3"></div>
               </div>
               <div className="flex flex-wrap -mx-3">
                 <div className="w-full px-3">

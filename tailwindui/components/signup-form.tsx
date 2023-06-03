@@ -37,19 +37,9 @@ const SignupForm: React.FC = () => {
         const userInfoJson = await response.json();
         console.log(userInfoJson);
         if (userInfoJson.status === "success") {
-          toast.success("Sign up successfully", {
-            position: "top-center",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
           setTimeout(() => {
-            console.log(router.push("/signin"));
-          }, 3000);
+            console.log(router.push("/signin?signed_up=true"));
+          }, 500);
         } else {
           toast.error(userInfoJson.message, {
             position: "top-center",
