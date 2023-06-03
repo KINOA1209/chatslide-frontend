@@ -36,19 +36,9 @@ const LoginForm: React.FC = () => {
         const userInfoJson = await response.json();
         console.log(userInfoJson);
         if (userInfoJson.status === "success") {
-          toast.success("Sign in successfully", {
-            position: "top-center",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
           setTimeout(() => {
-            console.log(router.push("/workflow-intro"));
-          }, 3000);
+            console.log(router.push("/workflow-intro?signed_in=true"));
+          }, 500);
         } else {
           toast.error(userInfoJson.message, {
             position: "top-center",
