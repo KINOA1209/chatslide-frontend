@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import OutlineFrom from '@/components/outline-form'
@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { FormEvent } from 'react';
 import SaveToPDF from '@/components/forms/SaveToPdf';
 import Slides from '@/components/slides';
+
 
 const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
   console.log(slide_files);
@@ -69,6 +70,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
 
       if (response.ok) {
         const resp = await response.json();
+        const router = useRouter();
         setIsSubmitting(false);
         // Store the data in local storage
 
