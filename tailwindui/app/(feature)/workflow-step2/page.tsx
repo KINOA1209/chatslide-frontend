@@ -72,7 +72,8 @@ const OutlineVisualizer = ({outline}: { outline: any }) => {
             setIsSubmitting(false);
             // Store the data in local storage
             console.log(resp.data);
-            localStorage.setItem('slide', JSON.stringify(resp.data.res));
+            localStorage.setItem('image_files', JSON.stringify(resp.data.image_files));
+            localStorage.setItem('pdf_file', resp.data.pdf_file);
 
             // Redirect to a new page with the data
             router.push('workflow-step3');
