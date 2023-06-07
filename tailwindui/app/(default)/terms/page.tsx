@@ -161,10 +161,10 @@ export default function Terms() {
             <div className="pb-4">
               <p className="text-base text-gray-600">
                 7.1 Jurisdiction: These Terms shall be governed by and construed
-                in accordance with the laws of [Jurisdiction]. Any disputes
+                in accordance with the laws of United States or your jurisdiction. Any disputes
                 arising out of or relating to these Terms or the Service shall
                 be exclusively resolved by the state and federal courts located
-                in [Jurisdiction].
+                in United States or your jurisdiction.
               </p>
             </div>
           </div>
