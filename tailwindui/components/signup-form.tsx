@@ -138,11 +138,11 @@ const SignupForm: React.FC = () => {
       </div>
       <div className="text-sm text-gray-500 text-center mt-3">
         By creating an account, you agree to the{" "}
-        <a className="underline" href="#0">
+        <a className="underline" href="/terms">
           terms & conditions
         </a>
         , and our{" "}
-        <a className="underline" href="#0">
+        <a className="underline" href="/privacy">
           privacy policy
         </a>
         .
