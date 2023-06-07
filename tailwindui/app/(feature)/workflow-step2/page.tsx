@@ -3,6 +3,7 @@
 import React, {useState, useEffect} from 'react';
 import OutlineFrom from '@/components/outline-form'
 import { useRouter } from 'next/navigation';
+import { FormEvent } from 'react';
 
 const OutlineVisualizer = ({outline}: { outline: any }) => {
     const router = useRouter();
