@@ -2,8 +2,8 @@ import React from 'react';
 import ImageList from './ImageList';
 
 const App: React.FC = () => {
-  const foldername = localStorage.getItem('foldername') || '';
-  const image_files = JSON.parse(localStorage.getItem('image_files') || '');
+  const foldername = typeof localStorage !== 'undefined' ? localStorage.getItem('foldername') : '';
+  const image_files = typeof localStorage !== 'undefined' ?  JSON.parse(localStorage.getItem('image_files') || '') : [];
 
   const imageUrls = image_files.map((filename: string) => `http://localhost/api/jpg?foldername=${foldername}&filename=${filename}`);
 

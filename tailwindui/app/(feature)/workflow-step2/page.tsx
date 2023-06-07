@@ -45,11 +45,15 @@ const OutlineVisualizer = ({outline}: { outline: any }) => {
         setIsSubmitting(true);
         setTimer(0);
 
+        const audience = typeof window !== 'undefined' ? localStorage.getItem('audience') : null;
+        const foldername = typeof window !== 'undefined' ? localStorage.getItem('foldername') : null;
+        const topic = typeof window !== 'undefined' ? localStorage.getItem('topic') : null;
+
         const formData = {
             res: outline,
-            audience: localStorage.getItem('audience'),
-            foldername: localStorage.getItem('foldername'),
-            topic: localStorage.getItem('topic'),
+            audience: audience,
+            foldername: foldername,
+            topic: topic,
             additional_requirements: 'test',
         };
 

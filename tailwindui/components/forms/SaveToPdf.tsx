@@ -5,8 +5,8 @@ const SaveToPdf = () => {
         const element = document.getElementById('pdf-content');
 
         try {
-            const pdf_file = localStorage.getItem('pdf_file');
-            const foldername = localStorage.getItem('foldername');
+            const pdf_file = typeof localStorage !== 'undefined' ?  localStorage.getItem('pdf_file') : '';
+            const foldername = typeof localStorage !== 'undefined' ?  localStorage.getItem('foldername') : '';
     
             const response = await fetch(`/api/pdf?filename=${pdf_file}&foldername=${foldername}`, {
                 method: 'GET',
@@ -17,7 +17,7 @@ const SaveToPdf = () => {
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                const topic = localStorage.getItem('topic');
+                const topic = typeof localStorage !== 'undefined' ?  localStorage.getItem('topic') : '';
                 a.download = `${topic}.pdf`;
                 document.body.appendChild(a);
                 a.click();
