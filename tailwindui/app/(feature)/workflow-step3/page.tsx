@@ -5,7 +5,7 @@ import OutlineFrom from '@/components/outline-form'
 import { useRouter } from 'next/router';
 import { FormEvent } from 'react';
 import SaveToPDF from '@/components/forms/SaveToPdf';
-import Slides from '@/components/slides';
+import Slides from '@/components/Slides';
 
 
 const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
