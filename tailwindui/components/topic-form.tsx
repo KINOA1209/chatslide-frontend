@@ -30,10 +30,10 @@ const TopicForm: React.FC = () => {
     setTimer(0);
 
     const formData = {
-        topic: (event.target as HTMLFormElement).topic.value,
-        requirements: (event.target as HTMLFormElement).requirements.value,
-        audience: (event.target as HTMLFormElement).audience.value,
-        language: (event.target as HTMLFormElement).language.value,
+      topic: (event.target as HTMLFormElement).topic.value,
+      requirements: (event.target as HTMLFormElement).requirements.value,
+      audience: (event.target as HTMLFormElement).audience.value,
+      language: (event.target as HTMLFormElement).language.value,
     };
 
     localStorage.setItem('topic', formData.topic);
@@ -51,7 +51,7 @@ const TopicForm: React.FC = () => {
         },
         body: JSON.stringify(formData)
       });
-      
+
       console.log(formData);
       console.log(response);
 
@@ -91,77 +91,82 @@ const TopicForm: React.FC = () => {
     <form onSubmit={handleSubmit}>
       <div className="flex flex-wrap -mx-3 mb-4">
         <div className="w-full px-3">
-            <label
-              className="block text-gray-800 text-sm font-medium mb-1"
-              htmlFor="topic">
-                Topic <span className="text-red-600">*</span>
-            </label>
-            <input
-              id="topic"
-              type="text"
-              className="form-input w-full text-gray-800"
-              placeholder="Enter the topic"
-              required />
+          <p>
+            Please specify the topic you want to learn, and indicate the audience and their prior knowledge.
+          </p>
+          <br/>
+          <label
+            className="block text-gray-800 text-sm font-medium mb-1"
+            htmlFor="topic">
+            Specific Topic<span className="text-red-600">*</span>
+          </label>
+          <input
+            id="topic"
+            type="text"
+            className="form-input w-full text-gray-800"
+            placeholder="P/E Ratio"
+            required />
+        </div>
+      </div>
+
+      <div className="flex flex-wrap -mx-3 mb-4">
+        <div className="w-full px-3">
+          <label
+            className="block text-gray-800 text-sm font-medium mb-1"
+            htmlFor="audience">
+            Audience: <span className="text-red-600">*</span>
+          </label>
+          <input
+            id="audience"
+            type="text"
+            className="form-input w-full text-gray-800"
+            placeholder="Econ students"
+            required
+          />
         </div>
       </div>
       <div className="flex flex-wrap -mx-3 mb-4">
         <div className="w-full px-3">
-            <label
-              className="block text-gray-800 text-sm font-medium mb-1"
-              htmlFor="requirements">
-                Prior Knowledge: <span className="text-red-600">*</span>
-            </label>
-            <input
-              id="requirements"
-              type="text"
-              className="form-input w-full text-gray-800"
-              placeholder="Enter the requirements"
-              required
-            />
+          <label
+            className="block text-gray-800 text-sm font-medium mb-1"
+            htmlFor="requirements">
+            Prior Knowledge: <span className="text-red-600">*</span>
+          </label>
+          <input
+            id="requirements"
+            type="text"
+            className="form-input w-full text-gray-800"
+            placeholder="Basic economics"
+            required
+          />
         </div>
       </div>
       <div className="flex flex-wrap -mx-3 mb-4">
         <div className="w-full px-3">
-            <label
-              className="block text-gray-800 text-sm font-medium mb-1"
-              htmlFor="audience">
-                Audience: <span className="text-red-600">*</span>
-            </label>
-            <input
-              id="audience"
-              type="text"
-              className="form-input w-full text-gray-800"
-              placeholder="Enter the audience"
-              required
-            />
+          <label
+            className="block text-gray-800 text-sm font-medium mb-1"
+            htmlFor="language">
+            Language: <span className="text-red-600">*</span>
+          </label>
+          <select
+            id="language"
+            className="form-input w-full text-gray-800"
+            required
+          >
+            <option value="English">English</option>
+            <option value="Chinese">中文</option>
+            <option value="Spanish">Español</option>
+          </select>
         </div>
       </div>
-      <div className="flex flex-wrap -mx-3 mb-4">
-          <div className="w-full px-3">
-            <label
-              className="block text-gray-800 text-sm font-medium mb-1"
-              htmlFor="language">
-                Language: <span className="text-red-600">*</span>
-            </label>
-            <select
-              id="language"
-              className="form-input w-full text-gray-800"
-              required
-            >
-              <option value="English">English</option>
-              <option value="Chinese">中文</option>
-              <option value="Spanish">Español</option>
-            </select>
-          </div>
-        </div>
 
       <div className="flex flex-wrap -mx-3 mt-6">
         <div className="w-full px-3">
-            <button
-              className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
-              type="submit">
-                {isSubmitting ? "Generating..." : "Generate outline"}
-            </button>
+          <button
+            className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
+            type="submit">
+            {isSubmitting ? "Generating..." : "Generate outline"}
+          </button>
         </div>
       </div>
 
