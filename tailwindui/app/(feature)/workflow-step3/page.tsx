@@ -46,12 +46,16 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
     setIsSubmitting(true);
     setTimer(0);
 
+    const audience = typeof localStorage !== 'undefined' ? localStorage.getItem('audience') : null;
+    const foldername = typeof localStorage !== 'undefined' ? localStorage.getItem('foldername') : null;
+    const topic = typeof localStorage !== 'undefined' ? localStorage.getItem('topic') : null;
+
     const formData = {
       // res: outline,
-      audience: localStorage.getItem('audience'),
-      foldername: localStorage.getItem('foldername'),
-      topic: localStorage.getItem('topic'),
-      additional_requirements: 'test',
+      audience: audience,
+      foldername: foldername,
+      topic: topic,
+      additional_requirements: 'none',
     };
 
     console.log(formData);
@@ -121,8 +125,8 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
 };
 
 const App = () => {
-  const slide_files = localStorage.getItem('slide_files');
-
+  const slide_files = typeof localStorage !== 'undefined' ? localStorage.getItem('slide_files') : [];
+  
   return (
     <div className="bg-gray-100 min-h-screen py-8">
       <SlideVisualizer slide_files={slide_files} />
