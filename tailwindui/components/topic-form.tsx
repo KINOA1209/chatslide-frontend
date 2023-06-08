@@ -35,7 +35,8 @@ const TopicForm: React.FC = () => {
       audience: (event.target as HTMLFormElement).audience.value,
       language: (event.target as HTMLFormElement).language.value,
     };
-
+    
+    localStorage.clear();
     localStorage.setItem('topic', formData.topic);
     localStorage.setItem('requirements', formData.requirements);
     localStorage.setItem('audience', formData.audience);
