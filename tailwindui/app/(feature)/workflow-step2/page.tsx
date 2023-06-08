@@ -49,12 +49,14 @@ const OutlineVisualizer = ({outline}: { outline: any }) => {
         const audience = typeof window !== 'undefined' ? localStorage.getItem('audience') : null;
         const foldername = typeof window !== 'undefined' ? localStorage.getItem('foldername') : null;
         const topic = typeof window !== 'undefined' ? localStorage.getItem('topic') : null;
+        const language = typeof window !== 'undefined' ? localStorage.getItem('language') : null;
 
         const formData = {
             res: outline,
             audience: audience,
             foldername: foldername,
             topic: topic,
+            language: language,
             additional_requirements: 'test',
         };
 
