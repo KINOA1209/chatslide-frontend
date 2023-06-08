@@ -3,7 +3,6 @@ export const metadata = {
   description: 'Create new content',
 }
 
-import Link from 'next/link';
 import TopicForm from '@/components/topic-form'
 
 export default function WorkflowStep1() {
