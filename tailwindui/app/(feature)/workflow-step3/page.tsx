@@ -39,29 +39,27 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
     };
   }, [isSubmitting]);
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmitTranscript = async (event: FormEvent<HTMLFormElement>) => {
     console.log("submitting");
     event.preventDefault();
 
     setIsSubmitting(true);
     setTimer(0);
 
-    const audience = typeof localStorage !== 'undefined' ? localStorage.getItem('audience') : null;
+    const filename = typeof localStorage !== 'undefined' ? localStorage.getItem('pdf_file') : null;
     const foldername = typeof localStorage !== 'undefined' ? localStorage.getItem('foldername') : null;
     const topic = typeof localStorage !== 'undefined' ? localStorage.getItem('topic') : null;
 
     const formData = {
-      // res: outline,
-      audience: audience,
+      filename: filename,
       foldername: foldername,
       topic: topic,
-      additional_requirements: 'none',
     };
 
     console.log(formData);
 
     try {
-      const response = await fetch('/api/generate_slides', {
+      const response = await fetch('/api/transcript', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -69,17 +67,17 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
         body: JSON.stringify(formData)
       });
 
-      console.log(formData);
       console.log(response);
 
       if (response.ok) {
         const resp = await response.json();
-        const router = useRouter();
         setIsSubmitting(false);
         // Store the data in local storage
+        localStorage.setItem('transcript', resp.data.res);
 
         // Redirect to a new page with the data
-        router.push('workflow-step3');
+        const router = useRouter();
+        router.push('workflow-step4');
       } else {
         alert("Request failed: " + response.status);
         console.log(response)
@@ -117,6 +115,19 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
           </div> */}
 
           <SaveToPDF />
+
+          {/* Form */}
+          <div className="max-w-sm mx-auto">
+              <form onSubmit={handleSubmitTranscript}>
+                  <div className="flex flex-wrap -mx-3 mt-6">
+                      <div className="w-full px-3">
+                          <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">
+                            Continue to Transcript
+                          </button>
+                      </div>
+                  </div>
+              </form>
+          </div>
 
         </div>
       </div>
