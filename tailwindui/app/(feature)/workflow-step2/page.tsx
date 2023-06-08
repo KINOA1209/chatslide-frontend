@@ -139,7 +139,7 @@ const OutlineVisualizer = ({outline}: { outline: any }) => {
                     {isSubmitting && (
                     <div className="mt-4 text-center">
                       <span className="text-sm text-gray-500">
-                        This usually takes 15 seconds. Time elapsed: {timer} seconds
+                        This usually takes 30 seconds. Time elapsed: {timer} seconds
                       </span>
                     </div>
                   )}
