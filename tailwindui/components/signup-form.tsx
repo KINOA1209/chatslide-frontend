@@ -4,9 +4,72 @@ import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { userInfo } from "os";
 
 const SignupForm: React.FC = () => {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [disabled, setDisabled] = useState(false);
+  const [countdown, setCountdown] = useState(15);
+
+  function handleEmailChange(event: any) {
+    setEmail(event.target.value);
+  }
+
+  async function sendVerificationCode() {
+    try {
+      const response = await fetch("/api/send_verification_email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(email),
+      });
+
+      console.log(email);
+      console.log(response);
+
+      if (response.ok) {
+        setDisabled(true);
+        const interval = setInterval(() => {
+          setCountdown((prevCountdown) => prevCountdown - 1);
+        }, 1000);
+        setTimeout(() => {
+          clearInterval(interval);
+          setDisabled(false);
+          setCountdown(15);
+        }, 15000);
+
+        const emailSentInfo = await response.json();
+        console.log(emailSentInfo);
+        if (emailSentInfo.status === "success") {
+          toast.success(emailSentInfo.message, {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        } else {
+          toast.error(emailSentInfo.message, {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  }
 
   /* write a function that will take the form data and send it to the backend */
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -88,6 +151,8 @@ const SignupForm: React.FC = () => {
           <input
             id="email"
             type="email"
+            value={email}
+            onChange={handleEmailChange}
             className="form-input w-full text-gray-800"
             placeholder="Enter your email address"
             required
@@ -122,10 +187,19 @@ const SignupForm: React.FC = () => {
           <input
             id="verification_code"
             type="text"
-            className="form-input w-full text-gray-800"
+            className="form-input w-full text-gray-800 mb-2"
             placeholder="Enter your verfication code"
             required
           />
+          <button
+            onClick={sendVerificationCode}
+            type="button"
+            className="bg-slate-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full"
+          >
+            {disabled
+              ? `Retry after: ${countdown} seconds`
+              : "Send Verification Code"}
+          </button>
         </div>
       </div>
       <div className="flex flex-wrap -mx-3 mt-6">
