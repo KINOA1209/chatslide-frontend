@@ -111,8 +111,24 @@ const TranscriptVisualizer = ({transcript}: { transcript: any }) => {
 
         {/* Form */}
         <div className="max-w-sm mx-auto">
-            {/* todo */}
+            <form onSubmit={handleSubmit}>
+                <div className="flex flex-wrap -mx-3 mt-6">
+                    <div className="w-full px-3">
+                        <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">
+                            Generate Slides
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
+
+        {isSubmitting && (
+        <div className="mt-4 text-center">
+            <span className="text-sm text-gray-500">
+            This usually takes 15 seconds. Time elapsed: {timer} seconds
+            </span>
+        </div>
+        )}
 
         </div>
     </div>
@@ -123,5 +139,8 @@ const TranscriptVisualizer = ({transcript}: { transcript: any }) => {
 export default function WorkflowStep4() {
   const transcriptData = typeof localStorage !== 'undefined' ? localStorage.getItem('transcript') : null;
 
+  <div className="bg-gray-100 min-h-screen py-8">
+    <TranscriptVisualizer transcript={transcriptData}/>
+  </div>
 }
     
