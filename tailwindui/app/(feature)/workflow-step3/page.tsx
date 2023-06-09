@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import OutlineFrom from '@/components/outline-form'
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { FormEvent } from 'react';
 import SaveToPDF from '@/components/forms/SaveToPdf';
 import Slides from '@/components/Slides';
@@ -10,20 +9,10 @@ import Slides from '@/components/Slides';
 
 const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
   console.log(slide_files);
-  // const [backendResponse, setBackendResponse] = useState(slide);
-
-  //
-  //     const handleChange = (e: React.ChangeEvent<HTMLInputElement>, sectionIndex: string, detailIndex: number, key: string) => {
-  //         const {value} = e.target;
-  //         setOutlineData((prevOutlineData: any) => {
-  //             const updatedOutlineData = JSON.parse(JSON.stringify(prevOutlineData));
-  //             updatedOutlineData[sectionIndex]['content'][detailIndex] = value;
-  //             return updatedOutlineData;
-  //         });
-  //     };
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [timer, setTimer] = useState(0);
+  const router = useRouter();  
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -46,12 +35,12 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
     setIsSubmitting(true);
     setTimer(0);
 
-    const filename = typeof localStorage !== 'undefined' ? localStorage.getItem('pdf_file') : null;
+    const latex_filename = 'final_latex.tex';
     const foldername = typeof localStorage !== 'undefined' ? localStorage.getItem('foldername') : null;
     const topic = typeof localStorage !== 'undefined' ? localStorage.getItem('topic') : null;
 
     const formData = {
-      filename: filename,
+      latex_filename: latex_filename,
       foldername: foldername,
       topic: topic,
     };
@@ -74,9 +63,9 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
         setIsSubmitting(false);
         // Store the data in local storage
         localStorage.setItem('transcript', resp.data.res);
-
+        console.log(resp.data.res);
         // Redirect to a new page with the data
-        const router = useRouter();
+        
         router.push('workflow-step4');
       } else {
         alert("Request failed: " + response.status);
@@ -118,15 +107,15 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
 
           {/* Form */}
           <div className="max-w-sm mx-auto">
-              <form onSubmit={handleSubmitTranscript}>
-                  <div className="flex flex-wrap -mx-3 mt-6">
-                      <div className="w-full px-3">
-                          <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">
-                            Continue to Transcript
-                          </button>
-                      </div>
-                  </div>
-              </form>
+            <form onSubmit={handleSubmitTranscript}>
+              <div className="flex flex-wrap -mx-3 mt-6">
+                <div className="w-full px-3">
+                  <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">
+                    Continue to Transcript
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
 
           {isSubmitting && (
@@ -145,7 +134,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
 
 const App = () => {
   const slide_files = typeof localStorage !== 'undefined' ? localStorage.getItem('slide_files') : [];
-  
+
   return (
     <div className="bg-gray-100 min-h-screen py-8">
       <SlideVisualizer slide_files={slide_files} />
