@@ -22,22 +22,22 @@ const OutlineVisualizer = ({outline}: { outline: any }) => {
         });
     };
 
-      const [isSubmitting, setIsSubmitting] = useState(false);
-      const [timer, setTimer] = useState(0);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [timer, setTimer] = useState(0);
 
-      useEffect(() => {
-        let interval: NodeJS.Timeout;
+    useEffect(() => {
+      let interval: NodeJS.Timeout;
 
-        if (isSubmitting) {
-          interval = setInterval(() => {
-            setTimer(prevTimer => prevTimer + 1); // Increment the timer
-          }, 1000); // Increment every second
-        }
+      if (isSubmitting) {
+        interval = setInterval(() => {
+          setTimer(prevTimer => prevTimer + 1); // Increment the timer
+        }, 1000); // Increment every second
+      }
 
-        return () => {
-          clearInterval(interval); // Clear the interval on component unmount
-        };
-      }, [isSubmitting]);
+      return () => {
+        clearInterval(interval); // Clear the interval on component unmount
+      };
+    }, [isSubmitting]);
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         console.log("submitting");
