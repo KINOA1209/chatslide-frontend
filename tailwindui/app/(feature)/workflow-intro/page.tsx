@@ -26,6 +26,7 @@ export default function WorkflowIntro() {
         progress: undefined,
         theme: "light",
       });
+      localStorage.removeItem("signed_in");
     }
   });
   return (

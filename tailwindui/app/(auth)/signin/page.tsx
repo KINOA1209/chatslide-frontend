@@ -26,6 +26,7 @@ export default function SignIn() {
         progress: undefined,
         theme: "light",
       });
+      localStorage.removeItem("signed_up");
     }
   });
 

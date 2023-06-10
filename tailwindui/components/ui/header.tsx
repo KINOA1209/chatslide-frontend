@@ -6,25 +6,42 @@ import Link from "next/link";
 import Logo from "./logo";
 import Dropdown from "@/components/utils/dropdown";
 import MobileMenu from "./mobile-menu";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const [top, setTop] = useState<boolean>(true);
-  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [accessToken, setAccessToken] = useState("");
+  const router = useRouter();
 
   // detect whether user has scrolled the page down by 10px
   const scrollHandler = () => {
     window.pageYOffset > 10 ? setTop(false) : setTop(true);
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    if (token) {
-      setAccessToken(token);
-    }
-    console.log("access token", token);
-  }, []);
+  const handleSignOut = async () => {
+    //send a request to the server to delete the access token
 
-  const handleSignOut = () => {
+    const headers = new Headers();
+    if (accessToken) {
+      console.log("access token", accessToken);
+      headers.append("Authorization", `Bearer ${accessToken}`);
+    }
+    headers.append("Content-Type", "application/json");
+
+    try {
+      const response = await fetch("/api/logout", {
+        method: "GET",
+        headers: headers,
+      });
+      console.log(response);
+
+      setTimeout(() => {
+        console.log(router.push("/"));
+      }, 500);
+    } catch (error) {
+      console.log(error);
+    }
+
     // Remove the access token from local storage
     localStorage.removeItem("access_token");
   };
@@ -34,6 +51,14 @@ export default function Header() {
     window.addEventListener("scroll", scrollHandler);
     return () => window.removeEventListener("scroll", scrollHandler);
   }, [top]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      setAccessToken(token);
+    }
+    //console.log("access token", token);
+  }, []);
 
   return (
     <header
@@ -75,7 +100,6 @@ export default function Header() {
               <ul className="flex grow justify-end flex-wrap items-center">
                 <li>
                   <a
-                    href="/api/logout"
                     className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3"
                     onClick={handleSignOut}
                   >
