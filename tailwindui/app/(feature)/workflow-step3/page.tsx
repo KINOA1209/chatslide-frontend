@@ -75,18 +75,6 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
                         <Slides />
                     </div>
 
-                    {/* Form */}
-                    {/* <div className="max-w-sm mx-auto">
-            <form onSubmit={handleSubmit}>
-              <div className="flex flex-wrap -mx-3 mt-6">
-                <div className="w-full px-3">
-                  <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">Generate Slides
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div> */}
-
                     <SaveToPDF />
 
                     {/* Form */}
