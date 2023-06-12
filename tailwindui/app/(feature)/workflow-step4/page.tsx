@@ -25,10 +25,12 @@ const TranscriptVisualizer = ({ transcripts }: { transcripts: [] }) => {
         setIsSubmitting(true);
 
         const foldername = typeof window !== 'undefined' ? localStorage.getItem('foldername') : null;
+        const topic = typeof window !== 'undefined' ? localStorage.getItem('topic') : null;
 
         const formData = {
             res: transcriptList,
             foldername: foldername,
+            topic: topic
         };
 
         console.log(formData);
