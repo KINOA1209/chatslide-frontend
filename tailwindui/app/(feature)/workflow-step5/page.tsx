@@ -96,7 +96,7 @@ const TranscriptVisualizer = ({ transcript }: { transcript: any }) => {
                         </form>
                     </div>
 
-                    <Timer expectedSeconds={60} isSubmitting={isSubmitting} />
+                    <Timer expectedSeconds={30} isSubmitting={isSubmitting} />
 
                 </div>
             </div>
@@ -104,7 +104,7 @@ const TranscriptVisualizer = ({ transcript }: { transcript: any }) => {
     );
 };
 
-export default function WorkflowStep4() {
+export default function WorkflowStep5() {
     const transcriptData = typeof localStorage !== 'undefined' ? localStorage.getItem('transcript') : null;
     return (
         <div className="bg-gray-100 min-h-screen py-8">
