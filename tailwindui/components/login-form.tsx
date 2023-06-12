@@ -37,8 +37,9 @@ const LoginForm: React.FC = () => {
         console.log(userInfoJson);
         if (userInfoJson.status === "success") {
           localStorage.setItem("access_token", userInfoJson.access_token);
+          localStorage.setItem("signed_in", "true");
           setTimeout(() => {
-            router.push("/workflow-intro?signed_in=true");
+            router.push("/workflow-intro");
           }, 500);
         } else {
           toast.error(userInfoJson.message, {

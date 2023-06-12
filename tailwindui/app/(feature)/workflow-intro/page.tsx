@@ -12,10 +12,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState, useEffect } from "react";
 
 export default function WorkflowIntro() {
-  const signed_in = useSearchParams().toString();
+  // const signed_in = useSearchParams().toString();
+  const signed_in = localStorage.getItem("signed_in");
   useEffect(() => {
     console.log(signed_in);
-    if (signed_in && signed_in === "signed_in=true") {
+    if (signed_in && signed_in === "true") {
       toast.success("Sign in successfully", {
         position: "top-center",
         autoClose: 2000,
