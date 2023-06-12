@@ -100,7 +100,7 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
                     {outlineData && Object.keys(outlineData).map((sectionIndex) => (
                         <div key={sectionIndex} className="mb-8">
                             <h3 className="text-xl font-bold">
-                                Section {parseInt(sectionIndex)}: {outlineData[sectionIndex].title}
+                                {parseInt(sectionIndex)}: {outlineData[sectionIndex].title}
                             </h3>
                             <div className="mt-4">
                                 {outlineData[sectionIndex].content.map((detail: any, detailIndex: number) => (
