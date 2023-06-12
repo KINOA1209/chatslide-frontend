@@ -26,7 +26,9 @@ const ImageList: React.FC<{ urls: string[] }> = ({ urls }) => {
   return (
     <div>
       {images.map((imageUrl, index) => (
+        <div className="h-80 p-4">
         <img key={index} src={imageUrl} alt={`Image ${index + 1}`} />
+        </div>
       ))}
     </div>
   );
