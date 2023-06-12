@@ -73,6 +73,11 @@ const TranscriptVisualizer = ({ transcripts }: { transcripts: [] }) => {
                         <h1 className="h1">Step 4: Edit Transcript</h1>
                     </div>
 
+                    <p>
+                        This is the transcripts generated. Please edit the transcripts to your liking.
+                    </p>
+                    <br/>
+
                     <div className="flex">
                         <div className="w-1/2">
                             <Slides />

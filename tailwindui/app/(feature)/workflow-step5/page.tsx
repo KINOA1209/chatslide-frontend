@@ -75,6 +75,11 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername }: { tr
                         <h1 className="h1">Step 5: Review Audio</h1>
                     </div>
 
+                    <p>
+                        This is the voices generated. If you want to change the transcript, you can edit in the previous step.
+                    </p>
+                    <br/>
+
                     <div className="flex">
                         <div className="w-2/5">
                             <Slides />

@@ -91,6 +91,12 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
                     <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
                         <h1 className="h1">Step 2: Edit Guidelines</h1>
                     </div>
+
+                    <p>
+                        This is the outline generated. You can edit the details below.
+                    </p>
+                    <br/>
+                    
                     {outlineData && Object.keys(outlineData).map((sectionIndex) => (
                         <div key={sectionIndex} className="mb-8">
                             <h3 className="text-xl font-bold">
