@@ -118,7 +118,7 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername }: { tr
                         </form>
                     </div>
 
-                    <Timer expectedSeconds={10} isSubmitting={isSubmitting} />
+                    <Timer expectedSeconds={60} isSubmitting={isSubmitting} />
 
                 </div>
             </div>
