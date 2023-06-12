@@ -91,7 +91,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
                     </div>
 
                     {/* Timer */}
-                    <Timer expectedSeconds={30} isSubmitting={isSubmitting} />
+                    <Timer expectedSeconds={60} isSubmitting={isSubmitting} />
 
                 </div>
             </div>
