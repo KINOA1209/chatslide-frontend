@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-const ImageList: React.FC<{ urls: string[] }> = ({ urls }) => {
+type ImageListProps = {
+  urls: string[],
+  height?: number, // Add new prop here, make it optional.
+};
+
+const ImageList: React.FC<ImageListProps> = ({ urls, height = 80 }) => { // Set default value here
   const [images, setImages] = useState<string[]>([]);
 
   useEffect(() => {
@@ -26,8 +31,9 @@ const ImageList: React.FC<{ urls: string[] }> = ({ urls }) => {
   return (
     <div>
       {images.map((imageUrl, index) => (
-        <div className="h-80 p-4">
-        <img key={index} src={imageUrl} alt={`Image ${index + 1}`} />
+        <div className={`h-${height} p-4`}> 
+        {/* apply the height here */}
+          <img key={index} src={imageUrl} alt={`Image ${index + 1}`} />
         </div>
       ))}
     </div>

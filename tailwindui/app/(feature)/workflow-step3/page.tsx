@@ -75,11 +75,9 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
                     <p>
                         This is the slides generated.
                     </p>
-                    <br/>
+                    <br />
 
-                    <div className="w-1/2">
-                        <Slides />
-                    </div>
+                    <Slides height={160} />
 
                     <SaveToPDF />
 
