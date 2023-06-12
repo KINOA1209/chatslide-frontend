@@ -99,12 +99,12 @@ export default function Header() {
             {accessToken && (
               <ul className="flex grow justify-end flex-wrap items-center">
                 <li>
-                  <a
+                  <button
                     className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3"
                     onClick={handleSignOut}
                   >
                     Sign out
-                  </a>
+                  </button>
                 </li>
               </ul>
             )}

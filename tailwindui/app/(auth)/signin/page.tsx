@@ -12,10 +12,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState, useEffect } from "react";
 
 export default function SignIn() {
-  const signed_up = useSearchParams().toString();
+  const signed_up = localStorage.getItem("signed_up");
   useEffect(() => {
     console.log(signed_up);
-    if (signed_up && signed_up === "signed_up=true") {
+    if (signed_up && signed_up === "true") {
       toast.success("Sign up successfully", {
         position: "top-center",
         autoClose: 2000,

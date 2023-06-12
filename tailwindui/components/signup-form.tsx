@@ -100,8 +100,9 @@ const SignupForm: React.FC = () => {
         const userInfoJson = await response.json();
         console.log(userInfoJson);
         if (userInfoJson.status === "success") {
+          localStorage.setItem("signed_up", "true");
           setTimeout(() => {
-            console.log(router.push("/signin?signed_up=true"));
+            console.log(router.push("/signin"));
           }, 500);
         } else {
           toast.error(userInfoJson.message, {
