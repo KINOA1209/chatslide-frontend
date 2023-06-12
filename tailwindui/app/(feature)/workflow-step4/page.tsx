@@ -3,15 +3,16 @@
 import React, { useState, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Timer from '@/components/Timer';
+import Slides from '@/components/Slides';
 
 const TranscriptVisualizer = ({ transcripts }: { transcripts: [] }) => {
     const [transcriptList, setTranscriptList] = useState<string[]>(transcripts);
     const router = useRouter();
 
-    const handleChange = (index: number, event: React.ChangeEvent<HTMLTextAreaElement>)=> {
-            let newData = [...transcriptList]; // copying the old datas array
-            newData[index] = event.target.value; // replace e.target.value with whatever you want to change it to
-            setTranscriptList(newData); // use the copy to set the state            
+    const handleChange = (index: number, event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        let newData = [...transcriptList]; // copying the old datas array
+        newData[index] = event.target.value; // replace e.target.value with whatever you want to change it to
+        setTranscriptList(newData); // use the copy to set the state            
     };
 
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -72,15 +73,22 @@ const TranscriptVisualizer = ({ transcripts }: { transcripts: [] }) => {
                         <h1 className="h1">Step 4: Edit Transcript</h1>
                     </div>
 
-                    <div className="mt-4">
-                        {transcriptList.map((data, index) => (
-                            <textarea
-                                key={index}
-                                className="form-input w-full text-gray-800 mb-2 resize-none h-80"
-                                value={data}
-                                onChange={(event) => handleChange(index, event)}
-                            />
-                        ))}
+                    <div className="flex">
+                        <div className="w-1/2">
+                            <Slides />
+                        </div>
+                        <div className="w-1/2 mt-4">
+                            {transcriptList.map((data, index) => (
+                                <div className="h-80 p-4">
+                                <textarea
+                                    key={index}
+                                    className="form-input w-full text-gray-800 mb-2 resize-none h-full"
+                                    value={data}
+                                    onChange={(event) => handleChange(index, event)}
+                                />
+                                </div>
+                            ))}
+                        </div>
                     </div>
 
                     {/* Form */}
