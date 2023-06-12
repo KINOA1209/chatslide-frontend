@@ -3,18 +3,17 @@
 import React, { useState, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Timer from '@/components/Timer';
+import Slides from '@/components/Slides';
+import Audio from '@/components/Audio';
 
-const TranscriptVisualizer = ({ transcript }: { transcript: any }) => {
-    const [transcriptData, setTranscriptData] = useState(transcript);
+const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername }: { transcripts: [], audioFiles: [], foldername: string }) => {
+    const [transcriptList, setTranscriptList] = useState<string[]>(transcripts);
     const router = useRouter();
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>, sectionIndex: string, detailIndex: number, key: string) => {
-        const { value } = e.target;
-        setTranscriptData((prevOutlineData: any) => {
-            const updatedOutlineData = JSON.parse(JSON.stringify(prevOutlineData));
-            updatedOutlineData[sectionIndex]['content'][detailIndex] = value;
-            return updatedOutlineData;
-        });
+    const handleChange = (index: number, event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        let newData = [...transcriptList]; // copying the old datas array
+        newData[index] = event.target.value; // replace e.target.value with whatever you want to change it to
+        setTranscriptList(newData); // use the copy to set the state            
     };
 
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -22,23 +21,21 @@ const TranscriptVisualizer = ({ transcript }: { transcript: any }) => {
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         console.log("submitting");
         event.preventDefault();
-        localStorage.setItem('transcript', JSON.stringify(transcriptData));
+        localStorage.setItem('transcripts', JSON.stringify(transcriptList));
 
         setIsSubmitting(true);
 
         const foldername = typeof window !== 'undefined' ? localStorage.getItem('foldername') : null;
-        const voice_filenames = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('audio_files') || '') : [];
-        const img_filenames = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('image_files') || '') : [];
 
         const formData = {
-            res: transcriptData,
+            res: transcriptList,
             foldername: foldername,
         };
 
         console.log(formData);
 
         try {
-            const response = await fetch('/api/generate_video', {
+            const response = await fetch('/api/generate_audio', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -74,15 +71,32 @@ const TranscriptVisualizer = ({ transcript }: { transcript: any }) => {
 
                     {/* Page header */}
                     <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-                        <h1 className="h1">Step 4: Edit Transcript</h1>
+                        <h1 className="h1">Step 5: Review Audio</h1>
                     </div>
 
-                    <div className="mt-4">
-                        <textarea
-                            className="form-input w-full text-gray-800 mb-2 resize-none h-80"
-                            value={transcriptData}
-                            onChange={(event) => setTranscriptData(event.target.value)}
-                        />
+                    <div className="flex">
+                        <div className="w-2/5">
+                            <Slides />
+                        </div>
+                        <div className="w-2/5 mt-4">
+                            {transcriptList.map((data, index) => (
+                                <div className="h-80 p-4">
+                                    <textarea
+                                        key={index}
+                                        className="form-input w-full text-gray-800 mb-2 resize-none h-full"
+                                        value={data}
+                                        onChange={(event) => handleChange(index, event)}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                        <div className="w-1/5 mt-4">
+                            {audioFiles.map((data, index) => (
+                                <div className="h-80 p-4">
+                                    <Audio filename={data} foldername={foldername} />
+                                </div>
+                            ))}
+                        </div>
                     </div>
 
                     {/* Form */}
@@ -98,7 +112,7 @@ const TranscriptVisualizer = ({ transcript }: { transcript: any }) => {
                         </form>
                     </div>
 
-                    <Timer expectedSeconds={30} isSubmitting={isSubmitting} />
+                    <Timer expectedSeconds={60} isSubmitting={isSubmitting} />
 
                 </div>
             </div>
@@ -107,9 +121,15 @@ const TranscriptVisualizer = ({ transcript }: { transcript: any }) => {
 };
 
 export default function WorkflowStep5() {
-    const transcriptData = typeof localStorage !== 'undefined' ? localStorage.getItem('transcript') : null;
+    const transcriptData = typeof localStorage !== 'undefined' ? localStorage.getItem('transcripts') : null;
+    const transcripts = transcriptData ? JSON.parse(transcriptData) : [];
+
+    const audioData = typeof localStorage !== 'undefined' ? localStorage.getItem('audio_files') : null;
+    const audioFiles = audioData ? JSON.parse(audioData) : [];
+    const foldername = typeof localStorage !== 'undefined' ? (localStorage.getItem('foldername') || "") : "";
+
     return (
         <div className="bg-gray-100 min-h-screen py-8">
-            <TranscriptVisualizer transcript={transcriptData} />
+            <TranscriptAudioVisualizer transcripts={transcripts} audioFiles={audioFiles} foldername={foldername} />
         </div>)
 }
