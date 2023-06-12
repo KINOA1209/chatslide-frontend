@@ -4,17 +4,14 @@ import React, { useState, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Timer from '@/components/Timer';
 
-const TranscriptVisualizer = ({ transcript }: { transcript: any }) => {
-    const [transcriptData, setTranscriptData] = useState(transcript);
+const TranscriptVisualizer = ({ transcripts }: { transcripts: [] }) => {
+    const [transcriptList, setTranscriptList] = useState<string[]>(transcripts);
     const router = useRouter();
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>, sectionIndex: string, detailIndex: number, key: string) => {
-        const { value } = e.target;
-        setTranscriptData((prevOutlineData: any) => {
-            const updatedOutlineData = JSON.parse(JSON.stringify(prevOutlineData));
-            updatedOutlineData[sectionIndex]['content'][detailIndex] = value;
-            return updatedOutlineData;
-        });
+    const handleChange = (index: number, event: React.ChangeEvent<HTMLTextAreaElement>)=> {
+            let newData = [...transcriptList]; // copying the old datas array
+            newData[index] = event.target.value; // replace e.target.value with whatever you want to change it to
+            setTranscriptList(newData); // use the copy to set the state            
     };
 
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -22,14 +19,14 @@ const TranscriptVisualizer = ({ transcript }: { transcript: any }) => {
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         console.log("submitting");
         event.preventDefault();
-        localStorage.setItem('transcript', JSON.stringify(transcriptData));
+        localStorage.setItem('transcripts', JSON.stringify(transcriptList));
 
         setIsSubmitting(true);
 
         const foldername = typeof window !== 'undefined' ? localStorage.getItem('foldername') : null;
 
         const formData = {
-            res: transcriptData,
+            res: transcriptList,
             foldername: foldername,
         };
 
@@ -76,11 +73,14 @@ const TranscriptVisualizer = ({ transcript }: { transcript: any }) => {
                     </div>
 
                     <div className="mt-4">
-                        <textarea
-                            className="form-input w-full text-gray-800 mb-2 resize-none h-80"
-                            value={transcriptData}
-                            onChange={(event) => setTranscriptData(event.target.value)}
-                        />
+                        {transcriptList.map((data, index) => (
+                            <textarea
+                                key={index}
+                                className="form-input w-full text-gray-800 mb-2 resize-none h-80"
+                                value={data}
+                                onChange={(event) => handleChange(index, event)}
+                            />
+                        ))}
                     </div>
 
                     {/* Form */}
@@ -105,9 +105,10 @@ const TranscriptVisualizer = ({ transcript }: { transcript: any }) => {
 };
 
 export default function WorkflowStep4() {
-    const transcriptData = typeof localStorage !== 'undefined' ? localStorage.getItem('transcript') : null;
+    const transcriptData = typeof localStorage !== 'undefined' ? localStorage.getItem('transcripts') : null;
+    const transcripts = transcriptData ? JSON.parse(transcriptData) : [];
     return (
         <div className="bg-gray-100 min-h-screen py-8">
-            <TranscriptVisualizer transcript={transcriptData} />
+            <TranscriptVisualizer transcripts={transcripts} />
         </div>)
 }

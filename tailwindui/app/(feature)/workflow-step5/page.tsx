@@ -27,6 +27,8 @@ const TranscriptVisualizer = ({ transcript }: { transcript: any }) => {
         setIsSubmitting(true);
 
         const foldername = typeof window !== 'undefined' ? localStorage.getItem('foldername') : null;
+        const voice_filenames = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('audio_files') || '') : [];
+        const img_filenames = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('image_files') || '') : [];
 
         const formData = {
             res: transcriptData,
@@ -36,7 +38,7 @@ const TranscriptVisualizer = ({ transcript }: { transcript: any }) => {
         console.log(formData);
 
         try {
-            const response = await fetch('/api/generate_audio', {
+            const response = await fetch('/api/generate_video', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
