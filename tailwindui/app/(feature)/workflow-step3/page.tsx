@@ -71,7 +71,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
                     <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
                         <h1 className="h1">Step 3: Review Slides</h1>
                     </div>
-                    <div>
+                    <div className="w-1/2">
                         <Slides />
                     </div>
 
