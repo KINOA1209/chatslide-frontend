@@ -26,16 +26,18 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername }: { tr
         setIsSubmitting(true);
 
         const foldername = typeof window !== 'undefined' ? localStorage.getItem('foldername') : null;
+        const image_files = typeof localStorage !== 'undefined' ?  JSON.parse(localStorage.getItem('image_files') || '') : [];
 
         const formData = {
-            res: transcriptList,
+            img_filenames: image_files,
+            voice_filenames: audioFiles,
             foldername: foldername,
         };
 
         console.log(formData);
 
         try {
-            const response = await fetch('/api/generate_audio', {
+            const response = await fetch('/api/generate_video', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -45,14 +47,13 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername }: { tr
 
             if (response.ok) {
                 const resp = await response.json();
-                console.log(resp);
                 setIsSubmitting(false);
                 // Store the data in local storage
                 console.log(resp.data);
-                localStorage.setItem('audio_files', JSON.stringify(resp.data.res));
+                localStorage.setItem('video_file', resp.data);
 
                 // Redirect to a new page with the data
-                router.push('workflow-step5');
+                router.push('workflow-step6');
             } else {
                 alert("Request failed: " + response.status);
                 console.log(response)
@@ -105,14 +106,14 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername }: { tr
                             <div className="flex flex-wrap -mx-3 mt-6">
                                 <div className="w-full px-3">
                                     <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">
-                                        Generate Voice
+                                        Combine to Video
                                     </button>
                                 </div>
                             </div>
                         </form>
                     </div>
 
-                    <Timer expectedSeconds={60} isSubmitting={isSubmitting} />
+                    <Timer expectedSeconds={10} isSubmitting={isSubmitting} />
 
                 </div>
             </div>
