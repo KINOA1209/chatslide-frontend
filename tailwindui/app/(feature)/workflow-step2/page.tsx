@@ -38,7 +38,7 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
         const language = typeof window !== 'undefined' ? localStorage.getItem('language') : null;
 
         const formData = {
-            res: outline,
+            res: outlineData,
             audience: audience,
             foldername: foldername,
             topic: topic,
