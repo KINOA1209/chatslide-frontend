@@ -6,12 +6,13 @@ import Link from "next/link";
 import Logo from "./logo";
 import Dropdown from "@/components/utils/dropdown";
 import MobileMenu from "./mobile-menu";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function Header() {
   const [top, setTop] = useState<boolean>(true);
   const [accessToken, setAccessToken] = useState("");
   const router = useRouter();
+  const pathname = usePathname();
 
   // detect whether user has scrolled the page down by 10px
   const scrollHandler = () => {
@@ -35,15 +36,15 @@ export default function Header() {
       });
       console.log(response);
 
+      // Remove the access token from local storage
+      localStorage.removeItem("access_token");
+
       setTimeout(() => {
         console.log(router.push("/"));
       }, 500);
     } catch (error) {
       console.log(error);
     }
-
-    // Remove the access token from local storage
-    localStorage.removeItem("access_token");
   };
 
   useEffect(() => {
@@ -56,9 +57,20 @@ export default function Header() {
     const token = localStorage.getItem("access_token");
     if (token) {
       setAccessToken(token);
+    } else {
+      setAccessToken("");
     }
-    //console.log("access token", token);
-  }, []);
+    console.log("access token", accessToken);
+  }, [pathname]);
+
+  //write a function when jumped to new page, run setAccessToken
+  // useEffect(() => {
+  //   const token = localStorage.getItem("access_token");
+  //   if (token) {
+  //     setAccessToken(token);
+  //   }
+  //   console.log("access token", accessToken);
+  // }, [router.pathname]);
 
   return (
     <header
