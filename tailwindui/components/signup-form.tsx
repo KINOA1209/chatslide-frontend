@@ -13,14 +13,66 @@ const SignupForm: React.FC = () => {
   const [disabled, setDisabled] = useState(false);
   const [countdown, setCountdown] = useState(15);
 
-  const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  const isValidEmail = (email: any) => typeof email === "string" && email.match(emailFormat);
+  const [usernameError, setUsernameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [verificationCodeError, setVerificationCodeError] = useState('');
 
-  function handleEmailChange(event: any) {
-    setEmail(event.target.value);
+  const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+  function handleUsernameChange(event: any) {
+    const username = event.target.value;
+
+    // Validate the username (example: at least 6 characters)
+    if (username.length < 3) {
+      setUsernameError('Username should have at least 3 characters.');
+    } else if (username.length > 16) {
+      setUsernameError('Username should have at most 16 characters.');
+    } else {
+      setUsernameError('');
+    }
   }
 
-  useEffect(() => { setValidEmail(isValidEmail(email)); }, [email]);
+  function handleEmailChange(event: any) {
+    const value = event.target.value;
+    setEmail(value);
+
+    // Validate the email (example: using a regular expression)
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailFormat.test(value)) { // email.match(emailFormat)
+      setEmailError('Please enter a valid email address.');
+    } else {
+      setEmailError('');
+    }
+  }
+
+  function handlePasswordChange(event: any) {
+    const value = event.target.value;
+
+    // Validate the password
+    const uppercaseRegex = /[A-Z]/;
+    const lowercaseRegex = /[a-z]/;
+    const numericRegex = /[0-9]/;
+
+    let error = '';
+    if (value.length < 8) {
+      error = 'Password should be at least 8 characters';
+    } else if (value.length > 16) {
+      error = 'Password should be no longer than 16 characters';
+    } else {
+      if (!uppercaseRegex.test(value)) {
+        error += 'Password should contain at least one uppercase letter. ';
+      }
+      if (!lowercaseRegex.test(value)) {
+        error += 'Password should contain at least one lowercase letter. ';
+      }
+      if (!numericRegex.test(value)) {
+        error += 'Password should contain at least one numeric character. ';
+      }
+    }
+
+    setPasswordError(error);
+  }
 
   async function sendVerificationCode() {
     try {
@@ -141,12 +193,14 @@ const SignupForm: React.FC = () => {
           <input
             id="username"
             type="text"
+            onChange={handleUsernameChange}
             className="form-input w-full text-gray-800"
             placeholder="Enter your username"
             minLength={3}
             maxLength={16}
             required
           />
+          {usernameError && <div className="text-sm text-red-500">{usernameError}</div>}
         </div>
       </div>
       <div className="flex flex-wrap -mx-3 mb-4">
@@ -167,6 +221,7 @@ const SignupForm: React.FC = () => {
             placeholder="Enter your email address"
             required
           />
+          {emailError && <div className="text-sm text-red-500">{emailError}</div>}
         </div>
       </div>
       <div className="flex flex-wrap -mx-3 mb-4">
@@ -180,12 +235,14 @@ const SignupForm: React.FC = () => {
           <input
             id="password"
             type="password"
+            onChange={handlePasswordChange}
             className="form-input w-full text-gray-800"
             placeholder="Enter your password"
             minLength={8}
             maxLength={16}
             required
           />
+          {passwordError && <div className="text-sm text-red-500">{passwordError}</div>}
         </div>
       </div>
       <div className="flex flex-wrap -mx-3 mb-4">
@@ -207,7 +264,9 @@ const SignupForm: React.FC = () => {
             onClick={sendVerificationCode}
             disabled={(!validEmail) || disabled}
             type="button"
-            className="bg-slate-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full"
+            className={(!validEmail || disabled) ?
+              "bg-slate-600 disabled-button text-white py-2 px-4 rounded-full" :
+              "bg-slate-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full"}
           >
             {disabled
               ? `Retry after: ${countdown} seconds`
