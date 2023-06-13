@@ -1,6 +1,78 @@
+"use client";
+
+import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function Newsletter() {
+
+    const [email, setEmail] = useState("");
+
+    // function to handle input change
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+      const { value } = event.target;
+      setEmail(value);
+    };
+
+    // function to handle submit
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      const formData = {
+        email: (event.target as HTMLFormElement).email.value,
+      };
+      console.log("created form data");
+
+      try {
+        const response = await fetch("/api/subscribe", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+        console.log(formData);
+        console.log(response);
+
+        if (response.ok) {
+          const emailSentInfo = await response.json();
+          console.log(emailSentInfo);
+          if (emailSentInfo.status === "success") {
+            toast.success(emailSentInfo.message, {
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+            // reset the input field after submit
+
+          } else {
+            toast.error(emailSentInfo.message, {
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          }
+        }
+
+      }
+    catch (error) {
+      console.log("Error:", error);
+    }
+    setEmail("");
+  };
+      
   return (
     <section>
+      <ToastContainer />
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="pb-12 md:pb-20">
 
@@ -40,10 +112,10 @@ export default function Newsletter() {
                 <h3 className="h3 text-white mb-2">Want more tutorials & guides?</h3>
 
                 {/* CTA form */}
-                <form className="w-full lg:w-auto">
+                <form className="w-full lg:w-auto" onSubmit={handleSubmit}>
                   <div className="flex flex-col sm:flex-row justify-center max-w-xs mx-auto sm:max-w-md lg:mx-0">
-                    <input type="email" className="form-input w-full appearance-none bg-gray-800 border border-gray-700 focus:border-gray-600 rounded-sm px-4 py-3 mb-2 sm:mb-0 sm:mr-2 text-white placeholder-gray-500" placeholder="Your email…" aria-label="Your email…" />
-                    <a className="btn text-white bg-blue-600 hover:bg-blue-700 shadow" href="#0">Subscribe</a>
+                    <input id="email" type="email" value={email} onChange={handleInputChange} className="form-input w-full appearance-none bg-gray-800 border border-gray-700 focus:border-gray-600 rounded-sm px-4 py-3 mb-2 sm:mb-0 sm:mr-2 text-white placeholder-gray-500" placeholder="Your email…" aria-label="Your email…" />
+                    <button className="btn text-white bg-blue-600 hover:bg-blue-700 shadow">Subscribe</button>
                   </div>
                   {/* Success message */}
                   {/* <p className="text-sm text-gray-400 mt-3">Thanks for subscribing!</p> */}
