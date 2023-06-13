@@ -262,11 +262,8 @@ const SignupForm: React.FC = () => {
           />
           <button
             onClick={sendVerificationCode}
-            disabled={(!validEmail) || disabled}
             type="button"
-            className={(!validEmail || disabled) ?
-              "bg-slate-600 disabled-button text-white py-2 px-4 rounded-full" :
-              "bg-slate-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full"}
+            className="bg-slate-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full"
           >
             {disabled
               ? `Retry after: ${countdown} seconds`
