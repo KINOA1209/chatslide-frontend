@@ -9,12 +9,18 @@ import { userInfo } from "os";
 const SignupForm: React.FC = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
+  const [validEmail, setValidEmail] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [countdown, setCountdown] = useState(15);
+
+  const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  const isValidEmail = (email: any) => typeof email === "string" && email.match(emailFormat);
 
   function handleEmailChange(event: any) {
     setEmail(event.target.value);
   }
+
+  useEffect(() => { setValidEmail(isValidEmail(email)); }, [email]);
 
   async function sendVerificationCode() {
     try {
@@ -137,6 +143,8 @@ const SignupForm: React.FC = () => {
             type="text"
             className="form-input w-full text-gray-800"
             placeholder="Enter your username"
+            minLength={3}
+            maxLength={16}
             required
           />
         </div>
@@ -152,6 +160,7 @@ const SignupForm: React.FC = () => {
           <input
             id="email"
             type="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
             value={email}
             onChange={handleEmailChange}
             className="form-input w-full text-gray-800"
@@ -173,6 +182,8 @@ const SignupForm: React.FC = () => {
             type="password"
             className="form-input w-full text-gray-800"
             placeholder="Enter your password"
+            minLength={8}
+            maxLength={16}
             required
           />
         </div>
@@ -194,6 +205,7 @@ const SignupForm: React.FC = () => {
           />
           <button
             onClick={sendVerificationCode}
+            disabled={(!validEmail) || disabled}
             type="button"
             className="bg-slate-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full"
           >
