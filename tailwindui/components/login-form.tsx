@@ -74,6 +74,8 @@ const LoginForm: React.FC = () => {
             type="email"
             className="form-input w-full text-gray-800"
             placeholder="Enter your email address"
+            minLength={3}
+            maxLength={16}
             required
           />
         </div>
@@ -99,6 +101,8 @@ const LoginForm: React.FC = () => {
             type="password"
             className="form-input w-full text-gray-800"
             placeholder="Enter your password"
+            minLength={8}
+            maxLength={16}
             required
           />
         </div>
