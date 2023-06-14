@@ -113,6 +113,14 @@ export default function Header() {
                 <li>
                   <button
                     className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3"
+                    onClick={() => router.push("/dashboard")}
+                  >
+                    Dashboard
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 ml-3"
                     onClick={handleSignOut}
                   >
                     Sign out
