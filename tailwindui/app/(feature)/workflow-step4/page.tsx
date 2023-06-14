@@ -26,11 +26,13 @@ const TranscriptVisualizer = ({ transcripts }: { transcripts: [] }) => {
 
         const foldername = typeof window !== 'undefined' ? localStorage.getItem('foldername') : null;
         const topic = typeof window !== 'undefined' ? localStorage.getItem('topic') : null;
+        const language = typeof window !== 'undefined' ? localStorage.getItem('language') : 'English';
 
         const formData = {
             res: transcriptList,
             foldername: foldername,
-            topic: topic
+            topic: topic,
+            language: language,
         };
 
         console.log(formData);

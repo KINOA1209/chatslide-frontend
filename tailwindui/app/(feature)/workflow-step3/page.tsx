@@ -22,11 +22,13 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
         const latex_filename = 'final_latex.tex';
         const foldername = typeof localStorage !== 'undefined' ? localStorage.getItem('foldername') : null;
         const topic = typeof localStorage !== 'undefined' ? localStorage.getItem('topic') : null;
+        const language = typeof window !== 'undefined' ? localStorage.getItem('language') : 'English';
 
         const formData = {
             latex_filename: latex_filename,
             foldername: foldername,
             topic: topic,
+            language: language,
         };
 
         console.log(formData);
