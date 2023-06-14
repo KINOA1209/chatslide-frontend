@@ -27,11 +27,13 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername }: { tr
 
         const foldername = typeof window !== 'undefined' ? localStorage.getItem('foldername') : null;
         const image_files = typeof localStorage !== 'undefined' ?  JSON.parse(localStorage.getItem('image_files') || '') : [];
+        const language = typeof window !== 'undefined' ? localStorage.getItem('language') : 'English';
 
         const formData = {
             img_filenames: image_files,
             voice_filenames: audioFiles,
             foldername: foldername,
+            language: language,
         };
 
         console.log(formData);
