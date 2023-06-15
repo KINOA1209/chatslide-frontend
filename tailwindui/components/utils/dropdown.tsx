@@ -25,7 +25,7 @@ const DropdownButton = () => {
             console.error('Error:', error);
             // Handle the error as needed
           });
-      }, 100); // Adjust the delay time as needed
+      }, 10); // Adjust the delay time as needed
     };
 
     // Call the delayedGetUsername function
