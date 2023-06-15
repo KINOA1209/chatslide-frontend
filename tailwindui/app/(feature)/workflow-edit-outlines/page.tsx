@@ -70,7 +70,7 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
                 localStorage.setItem('pdf_file', resp.data.pdf_file);
 
                 // Redirect to a new page with the data
-                router.push('workflow-step3');
+                router.push('workflow-review-slides');
             } else {
                 alert("Request failed: " + response.status);
                 console.log(response)
@@ -89,7 +89,7 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
 
                     {/* Page header */}
                     <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-                        <h1 className="h1">Step 2: Edit Guidelines</h1>
+                        <h1 className="h1">Step 2: Edit Outlines</h1>
                     </div>
 
                     <p>

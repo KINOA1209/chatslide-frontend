@@ -2,7 +2,7 @@ import Image from 'next/image'
 import logo from '@/public/images/Lambda_L-01.4.png'
 import background from '@/public/images/11062b_dbd82904e3e447898acbf7c3632ee55b~mv2.jpg'
 
-export default function Introduction() {
+const InternalIntroduction = ({ signed_in }: { signed_in: boolean }) => {
   return (
     <section className="relative">
 
@@ -40,7 +40,9 @@ export default function Introduction() {
               <p className="text-2xl text-black-600 mb-8 font-bold" data-aos="zoom-y-out" data-aos-delay="150">AI copilot for educators</p>
               <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center" data-aos="zoom-y-out" data-aos-delay="300">
                 <div>
-                  <a className="btn text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0" href="/workflow-intro">Start free trial</a>
+                  <a className="btn text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0" href={ signed_in ? "/workflow-intro" : "/signup" }>
+                    Start free trial
+                  </a>
                 </div>
                 <div>
                   <a className="btn text-white bg-gray-900 hover:bg-gray-800 w-full sm:w-auto sm:ml-4" href="#more">Learn more</a>
@@ -52,5 +54,15 @@ export default function Introduction() {
 
       </div>
     </section>
+  )
+}
+
+export default function Introduction() {
+  const signed_in = typeof localStorage !== 'undefined' ? (localStorage.getItem('signed_in') === 'true') : false;
+
+  return (
+    <div>
+      <InternalIntroduction signed_in={signed_in} />
+    </div>
   )
 }

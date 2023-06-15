@@ -55,7 +55,7 @@ const TranscriptVisualizer = ({ transcripts }: { transcripts: [] }) => {
                 localStorage.setItem('audio_files', JSON.stringify(resp.data.res));
 
                 // Redirect to a new page with the data
-                router.push('workflow-step5');
+                router.push('workflow-review-audio');
             } else {
                 alert("Request failed: " + response.status);
                 console.log(response)

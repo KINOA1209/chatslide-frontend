@@ -38,6 +38,7 @@ export default function Header() {
 
       // Remove the access token from local storage
       localStorage.removeItem("access_token");
+      localStorage.removeItem("signed_in");
 
       setTimeout(() => {
         console.log(router.push("/"));

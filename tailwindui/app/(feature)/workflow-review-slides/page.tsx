@@ -52,7 +52,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
                 localStorage.setItem('transcripts', JSON.stringify(resp.data.res));
                 // Redirect to a new page with the data
 
-                router.push('workflow-step4');
+                router.push('workflow-edit-transcript');
             } else {
                 alert("Request failed: " + response.status);
                 console.log(response)
