@@ -1,52 +1,179 @@
 'use client'
 
-import { useState } from 'react'
-import { Transition } from '@headlessui/react'
+import React, { useState, useEffect, useRef } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 
-type DropdownProps = {
-  children: React.ReactNode
-  title: string
-}
+const DropdownButton = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [accessToken, setAccessToken] = useState("");
+  const [username, setUsername] = useState("");
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+  const pathname = usePathname();
 
-export default function Dropdown({
-  children,
-  title
-}: DropdownProps) {
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    const delayedGetUsername = () => {
+      timer = setTimeout(() => {
+        getUsername()
+          .then((username) => {
+            if (username) {
+              setUsername(username);
+            }
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+            // Handle the error as needed
+          });
+      }, 100); // Adjust the delay time as needed
+    };
 
-  const [dropdownOpen, setDropdownOpen] = useState<boolean>(false)
+    // Call the delayedGetUsername function
+    delayedGetUsername();
+
+    // Clear the timer if the component unmounts or if accessToken changes
+    return () => clearTimeout(timer);
+  }, [accessToken]);
+  
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      setAccessToken(token);
+    } else {
+      setAccessToken("");
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, []);
+
+
+  async function getUsername() {
+    const headers = new Headers();
+    if (accessToken) {
+      console.log("access token", accessToken);
+      headers.append("Authorization", `Bearer ${accessToken}`);
+    }
+    headers.append("Content-Type", "application/json");
+
+    try {
+      const response = await fetch('/api/profile', {
+        method: "GET",
+        headers: headers,
+        });
+      if (!response.ok) {
+        throw new Error('Failed to fetch profile');
+      }
+      
+      const data = await response.json();
+      return data.username;
+    } catch (error) {
+      console.error(error);
+      // Handle the error as needed
+      return null;
+    }
+  }
+
+  const handleSignOut = async () => {
+    //send a request to the server to delete the access token
+
+    const headers = new Headers();
+    if (accessToken) {
+      console.log("access token", accessToken);
+      headers.append("Authorization", `Bearer ${accessToken}`);
+    }
+    headers.append("Content-Type", "application/json");
+
+    try {
+      const response = await fetch("/api/logout", {
+        method: "GET",
+        headers: headers,
+      });
+      console.log(response);
+
+      // Remove the access token from local storage
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("signed_in");
+
+      setTimeout(() => {
+        console.log(router.push("/"));
+      }, 500);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
 
   return (
-    <li
-      className="relative"
-      onMouseEnter={() => setDropdownOpen(true)}
-      onMouseLeave={() => setDropdownOpen(false)}
-      onFocus={() => setDropdownOpen(true)}
-      onBlur={() => setDropdownOpen(false)}
-    >
-      <a
-        className="text-gray-600 hover:text-gray-900 px-3 lg:px-5 py-2 flex items-center transition duration-150 ease-in-out"
-        href="#0"
-        aria-expanded={dropdownOpen}
-        onClick={(e) => e.preventDefault()}
-      >
-        {title}
-        <svg className="w-3 h-3 fill-current text-gray-500 cursor-pointer ml-1 shrink-0" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10.28 4.305L5.989 8.598 1.695 4.305A1 1 0 00.28 5.72l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z" />
-        </svg>
-      </a>
-      <Transition
-        show={dropdownOpen}
-        as="ul"
-        className="origin-top-right absolute top-full right-0 w-40 bg-white py-2 ml-4 rounded shadow-lg"
-        enter="transition ease-out duration-200 transform"
-        enterFrom="opacity-0 -translate-y-2"
-        enterTo="opacity-100 translate-y-0"
-        leave="transition ease-out duration-200"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-      >
-        {children}
-      </Transition>
-    </li>
-  )
-}
+    <div className="relative inline-block text-left" ref={dropdownRef}>
+      <div>
+        <button
+          type="button"
+          className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+          id="dropdown-menu-button"
+          onClick={toggleDropdown}
+          aria-expanded={isOpen}
+          aria-haspopup="true"
+        >
+          Hi, {username}
+        </button>
+      </div>
+
+      {isOpen && (
+        <div
+          className="origin-top-right absolute right-0 mt-2 w-40 rounded-xl shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-300"
+          role="menu"
+          aria-orientation="vertical"
+          aria-labelledby="dropdown-menu-button"
+        >
+          <div className="py-1" role="none">
+            <a
+              href="/dashboard"
+              className="block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200"
+              role="menuitem"
+            >
+              Projects
+            </a>
+            <a
+              href="#"
+              className="block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200"
+              role="menuitem"
+            >
+              Account settings
+            </a>
+          </div>
+          <div className="py-1" role="none">
+            <div className="py-0.2" role="none">
+              <a
+                onClick={handleSignOut}
+                className="block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200 cursor-pointer"
+                role="menuitem"
+              >
+                Sign out
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default DropdownButton;
