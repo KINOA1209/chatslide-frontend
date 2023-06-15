@@ -45,7 +45,7 @@ export default function WorkflowIntro() {
 
           {/* Form */}
           <div className="max-w-sm mx-auto">
-            <form action="/workflow-step1">
+            <form action="/workflow-generate-outlines">
               <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">
                   <p>

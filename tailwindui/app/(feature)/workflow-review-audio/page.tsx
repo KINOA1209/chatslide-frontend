@@ -55,7 +55,7 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername }: { tr
                 localStorage.setItem('video_file', resp.data);
 
                 // Redirect to a new page with the data
-                router.push('workflow-step6');
+                router.push('workflow-review-video');
             } else {
                 alert("Request failed: " + response.status);
                 console.log(response)

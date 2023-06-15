@@ -6,10 +6,6 @@ export const metadata = {
 import TopicForm from '@/components/topic-form'
 
 export default function WorkflowStep1() {
-
-  // client.navigateTo(`/workflow-step2?name=${responseData.name}`);
-
-
   return (
     <section className="bg-gradient-to-b from-gray-100 to-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -17,7 +13,7 @@ export default function WorkflowStep1() {
 
           {/* Page header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-            <h1 className="h1">Step 1: Generate Outline</h1>
+            <h1 className="h1">Step 1: Generate Outlines</h1>
           </div>
 
           {/* Form */}

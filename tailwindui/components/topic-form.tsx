@@ -61,7 +61,7 @@ const TopicForm: React.FC = () => {
                 localStorage.setItem('foldername', outlinesJson.data.foldername);
 
                 // Redirect to a new page with the data
-                router.push('workflow-step2');
+                router.push('workflow-edit-outlines');
             } else {
                 alert("Request failed: " + response.status);
                 console.log(response)
