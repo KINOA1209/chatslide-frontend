@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 const projects = [
@@ -25,9 +26,9 @@ export default function Dashboard() {
               </div>
             ))}
             <div className="flex justify-center items-center my-20">
-              <button className="flex items-center bg-blue-600 text-white px-4 py-2 rounded-md shadow-md">
+              <Link className="flex items-center bg-blue-600 text-white px-4 py-2 rounded-md shadow-md" href={'/workflow-create-project'}>
                 <span>Start New Project</span>
-              </button>
+              </Link>
             </div>
           </div>
         </div>
