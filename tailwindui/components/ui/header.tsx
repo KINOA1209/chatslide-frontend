@@ -33,7 +33,7 @@ export default function Header() {
       setAccessToken("");
     }
     setLoading(false);
-  }, [pathname]);
+  }, [accessToken, pathname]);
 
   if (loading) {
     return <p></p>;
@@ -57,7 +57,7 @@ export default function Header() {
             {/* Desktop sign in links */}
             {accessToken ? (
               <ul className="flex grow justify-end flex-wrap items-center">
-                <DropdownButton />
+                <DropdownButton accessToken={accessToken} setAccessToken={setAccessToken}/>
               </ul>
             ) : (
               <ul className="flex grow justify-end flex-wrap items-center">
