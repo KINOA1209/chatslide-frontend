@@ -10,7 +10,6 @@ interface DropdownButtonProps {
 
 const DropdownButton: React.FC<DropdownButtonProps> = ({ accessToken, setAccessToken }) => {
   const [isOpen, setIsOpen] = useState(false);
-  //const [accessToken, setAccessToken] = useState("");
   const [username, setUsername] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -40,15 +39,6 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({ accessToken, setAccessT
     return () => clearTimeout(timer);
   }, [accessToken]);
   
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("access_token");
-  //   if (token) {
-  //     setAccessToken(token);
-  //   } else {
-  //     setAccessToken("");
-  //   }
-  // }, [pathname, accessToken]);
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -82,6 +72,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({ accessToken, setAccessT
       }
       
       const data = await response.json();
+      console.log(data.username);
       return data.username;
     } catch (error) {
       console.error(error);
@@ -95,7 +86,6 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({ accessToken, setAccessT
 
     const headers = new Headers();
     if (accessToken) {
-      console.log("access token", accessToken);
       headers.append("Authorization", `Bearer ${accessToken}`);
     }
     headers.append("Content-Type", "application/json");

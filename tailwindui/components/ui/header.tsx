@@ -27,6 +27,7 @@ export default function Header() {
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
+    console.log("token", token);
     if (token) {
       setAccessToken(token);
     } else {
