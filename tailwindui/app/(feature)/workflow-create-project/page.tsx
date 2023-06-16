@@ -1,14 +1,25 @@
 "use client"
 
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function CreateProject() {
   const [projectName, setProjectName] = useState('');
   const [projectDescription, setProjectDescription] = useState('');
+  const [accessToken, setAccessToken] = useState("");
   const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      setAccessToken(token);
+    } else {
+      setAccessToken("");
+    }
+  }, [pathname]);
 
   const handleProjectNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setProjectName(event.target.value);
@@ -24,13 +35,18 @@ export default function CreateProject() {
       project_name: (event.target as HTMLFormElement).project_name.value,
       project_description: (event.target as HTMLFormElement).project_description.value,
     }
+
+    const headers = new Headers();
+    if (accessToken) {
+      console.log("access token", accessToken);
+      headers.append("Authorization", `Bearer ${accessToken}`);
+    }
+    headers.append("Content-Type", "application/json");
     
     try {
-      const response = await fetch("/api/create-project", {
+      const response = await fetch("/api/create_project", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: headers,
         body: JSON.stringify(formData),
       });
 
@@ -56,6 +72,8 @@ export default function CreateProject() {
             theme: "light",
           });
         }
+      } else {
+        alert("Request failed: " + response.status);
       }
     } catch (error) {
       console.log("Error:", error);
