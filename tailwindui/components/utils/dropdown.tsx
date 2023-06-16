@@ -3,9 +3,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 
-const DropdownButton = () => {
+interface DropdownButtonProps {
+  accessToken: string;
+  setAccessToken: (token: string) => void;
+}
+
+const DropdownButton: React.FC<DropdownButtonProps> = ({ accessToken, setAccessToken }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [accessToken, setAccessToken] = useState("");
+  //const [accessToken, setAccessToken] = useState("");
   const [username, setUsername] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -36,14 +41,14 @@ const DropdownButton = () => {
   }, [accessToken]);
   
 
-  useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    if (token) {
-      setAccessToken(token);
-    } else {
-      setAccessToken("");
-    }
-  }, [pathname]);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("access_token");
+  //   if (token) {
+  //     setAccessToken(token);
+  //   } else {
+  //     setAccessToken("");
+  //   }
+  // }, [pathname, accessToken]);
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -63,7 +68,6 @@ const DropdownButton = () => {
   async function getUsername() {
     const headers = new Headers();
     if (accessToken) {
-      console.log("access token", accessToken);
       headers.append("Authorization", `Bearer ${accessToken}`);
     }
     headers.append("Content-Type", "application/json");
@@ -107,9 +111,10 @@ const DropdownButton = () => {
       localStorage.removeItem("access_token");
       localStorage.removeItem("signed_in");
 
+      console.log(router.push("/"))
       setTimeout(() => {
-        console.log(router.push("/"));
-      }, 500);
+        setAccessToken("");
+      }, 100);
     } catch (error) {
       console.log(error);
     }
