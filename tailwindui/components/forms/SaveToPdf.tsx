@@ -1,7 +1,16 @@
-import React from 'react';
+'use client'
 
-const SaveToPdf = () => {
+import React from 'react';
+import { useRouter } from 'next/navigation';
+
+const SaveToPdf = ({disabled}: {disabled: boolean}) => {
+    const router = useRouter();
+
     const handleSavePDF = async () => {
+        if (disabled) {
+            router.push("/signin");
+            return;
+        }
         const element = document.getElementById('pdf-content');
 
         try {
