@@ -12,6 +12,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState, useEffect } from "react";
 
 export default function SignIn() {
+  const searchParams = useSearchParams();
+  const nextUri = searchParams.get("next");
+
   if (typeof window !== "undefined") {
     var signed_up = localStorage.getItem("signed_up");
   }
@@ -81,7 +84,7 @@ export default function SignIn() {
             <div className="text-gray-600 text-center mt-6">
               Don't you have an account?{" "}
               <Link
-                href="/signup"
+                href={  "/signup" + (nextUri == null ? "" : "?next=" + nextUri) }
                 className="text-blue-600 hover:underline transition duration-150 ease-in-out"
               >
                 Sign up
