@@ -1,13 +1,15 @@
 "use client";
 
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 
 const LoginForm: React.FC = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const nextUri = searchParams.get("next");
 
   /* write a function that will take the form data and send it to the backend */
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -39,7 +41,11 @@ const LoginForm: React.FC = () => {
           localStorage.setItem("access_token", userInfoJson.access_token);
           localStorage.setItem("signed_in", "true");
           setTimeout(() => {
-            router.push("/workflow-intro");
+            if (nextUri == null) {
+              router.push("/workflow-intro");
+            } else {
+              router.push(nextUri);
+            }
           }, 500);
         } else {
           toast.error(userInfoJson.message, {
