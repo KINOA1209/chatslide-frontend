@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import Link from "next/link";
+import { useRouter, usePathname } from 'next/navigation';
 import { FormEvent } from 'react';
 import SaveToPDF from '@/components/forms/SaveToPdf';
 import Slides from '@/components/Slides';
@@ -10,12 +11,28 @@ import Timer from '@/components/Timer';
 const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
     console.log(slide_files);
 
+    const [accessToken, setAccessToken] = useState<string>("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
+    const pathname = usePathname();
+
+    useEffect(() => {
+      const token = localStorage.getItem("access_token");
+      if (token) {
+        setAccessToken(token);
+      } else {
+        setAccessToken("");
+      }
+    }, [pathname]);
 
     const handleSubmitTranscript = async (event: FormEvent<HTMLFormElement>) => {
         console.log("submitting");
         event.preventDefault();
+
+        if (accessToken === "") {
+            router.push("/signin");
+            return;
+        }
 
         setIsSubmitting(true);
 
@@ -78,10 +95,17 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
                         This is the slides generated.
                     </p>
                     <br />
+                    {accessToken === "" && (<p>To download PDF or continue to generate transcript, please {" "}
+                        <Link
+                            href="/signin?next=workflow-review-slides"
+                            className="text-blue-600 hover:underline transition duration-150 ease-in-out"
+                        >
+                            sign in
+                        </Link>.</p>)}
 
                     <Slides height={160} />
 
-                    <SaveToPDF />
+                    <SaveToPDF disabled={ accessToken === "" } />
 
                     {/* Form */}
                     <div className="max-w-sm mx-auto">
