@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import Modal from './Modal';
+import SavePDFModal from './savePDFModal';
 
 
 interface SaveToPdfProps {
@@ -46,12 +46,12 @@ const SaveToPdf: React.FC<SaveToPdfProps> = ({accessToken, setAccessToken}) => {
     };
 
     return (
-        <div className="max-w-sm mx-auto">
+    <div className="max-w-sm mx-auto">
       <div className="flex flex-wrap -mx-3 mt-6">
         <div className="w-full px-3">
           {accessToken === '' ? (
             // insert here
-            <Modal />
+            <SavePDFModal />
           ) : (
             <button
             className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
