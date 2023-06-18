@@ -2,15 +2,19 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import Modal from './Modal';
 
-const SaveToPdf = ({disabled}: {disabled: boolean}) => {
+
+interface SaveToPdfProps {
+    accessToken: string;
+    setAccessToken: (token: string) => void;
+  }
+
+const SaveToPdf: React.FC<SaveToPdfProps> = ({accessToken, setAccessToken}) => {
     const router = useRouter();
 
     const handleSavePDF = async () => {
-        if (disabled) {
-            router.push("/signin");
-            return;
-        }
+        
         const element = document.getElementById('pdf-content');
 
         try {
@@ -43,14 +47,22 @@ const SaveToPdf = ({disabled}: {disabled: boolean}) => {
 
     return (
         <div className="max-w-sm mx-auto">
-            <div className="flex flex-wrap -mx-3 mt-6">
-                <div className="w-full px-3">
-                    <button
-                        className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
-                        onClick={handleSavePDF}>Save as PDF</button>
-                </div>
-            </div>
+      <div className="flex flex-wrap -mx-3 mt-6">
+        <div className="w-full px-3">
+          {accessToken === '' ? (
+            // insert here
+            <Modal />
+          ) : (
+            <button
+            className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
+            onClick={handleSavePDF}
+          >
+            Save as PDF
+          </button>
+          )}
         </div>
+      </div>
+    </div>
     );
 };
 

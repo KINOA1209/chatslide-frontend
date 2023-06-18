@@ -95,17 +95,10 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
                         This is the slides generated.
                     </p>
                     <br />
-                    {accessToken === "" && (<p>To download PDF or continue to generate transcript, please {" "}
-                        <Link
-                            href="/signin?next=workflow-review-slides"
-                            className="text-blue-600 hover:underline transition duration-150 ease-in-out"
-                        >
-                            sign in
-                        </Link>.</p>)}
 
                     <Slides height={160} />
 
-                    <SaveToPDF disabled={ accessToken === "" } />
+                    <SaveToPDF accessToken={accessToken} setAccessToken={setAccessToken} />
 
                     {/* Form */}
                     <div className="max-w-sm mx-auto">
