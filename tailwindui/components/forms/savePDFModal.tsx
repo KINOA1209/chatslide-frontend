@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 
-const Modal = () => {
+const SavePDFModal = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const toggleModal = () => {
@@ -81,4 +81,4 @@ const Modal = () => {
   );
 };
 
-export default Modal;
+export default SavePDFModal;
