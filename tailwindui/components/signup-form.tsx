@@ -1,13 +1,17 @@
 "use client";
 
 import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { userInfo } from "os";
+import next from "next/types";
 
 const SignupForm: React.FC = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const nextUri = searchParams.get("next");
+
   const [email, setEmail] = useState("");
   const [validEmail, setValidEmail] = useState(false);
   const [disabled, setDisabled] = useState(false);
@@ -160,7 +164,11 @@ const SignupForm: React.FC = () => {
         if (userInfoJson.status === "success") {
           localStorage.setItem("signed_up", "true");
           setTimeout(() => {
-            console.log(router.push("/signin"));
+            if (nextUri == null) {
+            router.push("/signin");
+            } else {
+              router.push(`/signin?next=${encodeURIComponent(nextUri)}`);
+            }
           }, 500);
         } else {
           toast.error(userInfoJson.message, {
