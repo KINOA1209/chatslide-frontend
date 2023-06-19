@@ -55,6 +55,7 @@ export default function Dashboard() {
               }`}
               onClick={goToPreviousPage}
               disabled={currentPage === 1}
+              style={{ minWidth: '120px' }}
             >
               Previous
             </button>
@@ -64,6 +65,7 @@ export default function Dashboard() {
               }`}
               onClick={goToNextPage}
               disabled={currentPage === totalPages}
+              style={{ minWidth: '120px' }}
             >
               Next
             </button>
