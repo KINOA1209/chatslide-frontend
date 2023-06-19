@@ -98,8 +98,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({ accessToken, setAccessT
       console.log(response);
 
       // Remove the access token from local storage
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("signed_in");
+      localStorage.clear();
 
       console.log(router.push("/"))
       setTimeout(() => {
