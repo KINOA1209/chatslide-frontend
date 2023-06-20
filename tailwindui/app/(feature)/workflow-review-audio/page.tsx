@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import Timer from '@/components/Timer';
 import Slides from '@/components/Slides';
 import Audio from '@/components/Audio';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import GoBackButton from '@/components/GoBackButton';
 
 
@@ -110,9 +109,8 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername }: { tr
                         </div>
                     </div>
 
-                    <Router>
-                        <GoBackButton />
-                    </Router>
+
+                    <GoBackButton />
 
                     {/* Form */}
                     <div className="max-w-sm mx-auto">

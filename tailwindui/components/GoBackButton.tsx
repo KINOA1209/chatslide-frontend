@@ -1,15 +1,17 @@
+'use client'
+
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 function GoBackButton() {
-  let navigate = useNavigate();
+  const router = useRouter();
   return (
     <div className="max-w-sm mx-auto">
         <div className="flex flex-wrap -mx-3 mt-6">
             <div className="w-full px-3">
                 <button 
                   className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
-                  onClick={() => navigate(-1)}
+                  onClick={() => router.back()}
                 >
                     Go Back
                 </button>
