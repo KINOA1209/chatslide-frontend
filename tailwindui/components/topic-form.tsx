@@ -59,6 +59,7 @@ const TopicForm: React.FC = () => {
                 // Store the data in local storage
                 localStorage.setItem('outline', JSON.stringify(outlinesJson.data));
                 localStorage.setItem('foldername', outlinesJson.data.foldername);
+                localStorage.setItem('project_id', outlinesJson.data.project_id);
 
                 // Redirect to a new page with the data
                 router.push('workflow-edit-outlines');
