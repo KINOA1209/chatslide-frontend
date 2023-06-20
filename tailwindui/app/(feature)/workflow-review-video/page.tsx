@@ -3,6 +3,8 @@
 import React, { useState, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Video from '@/components/Video';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import GoBackButton from '@/components/GoBackButton';
 
 const VideoVisualizer = ({ videoFile, foldername }: { videoFile: string, foldername: string }) => {
     const router = useRouter();
@@ -18,6 +20,10 @@ const VideoVisualizer = ({ videoFile, foldername }: { videoFile: string, foldern
                     </div>
 
                     <Video filename={videoFile} foldername={foldername} />
+
+                    <Router>
+                        <GoBackButton />
+                    </Router>
 
                 </div>
             </div>

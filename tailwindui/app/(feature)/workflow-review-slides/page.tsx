@@ -8,6 +8,8 @@ import SaveToPDF from '@/components/forms/SaveToPdf';
 import TranscriptForm from '@/components/forms/TranscriptForm';
 import Slides from '@/components/Slides';
 import Timer from '@/components/Timer';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import GoBackButton from '@/components/GoBackButton';
 
 
 const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
@@ -44,6 +46,10 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
                     <br />
 
                     <Slides height={160} />
+
+                    <Router>
+                        <GoBackButton />
+                    </Router>
 
                     <SaveToPDF accessToken={accessToken} setAccessToken={setAccessToken} />
 
