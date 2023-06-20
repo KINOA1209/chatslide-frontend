@@ -5,6 +5,9 @@ import { useRouter } from 'next/navigation';
 import Timer from '@/components/Timer';
 import Slides from '@/components/Slides';
 import Audio from '@/components/Audio';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import GoBackButton from '@/components/GoBackButton';
+
 
 const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername }: { transcripts: [], audioFiles: [], foldername: string }) => {
     const [transcriptList, setTranscriptList] = useState<string[]>(transcripts);
@@ -107,6 +110,10 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername }: { tr
                         </div>
                     </div>
 
+                    <Router>
+                        <GoBackButton />
+                    </Router>
+
                     {/* Form */}
                     <div className="max-w-sm mx-auto">
                         <form onSubmit={handleSubmit}>
@@ -118,6 +125,7 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername }: { tr
                                 </div>
                             </div>
                         </form>
+                         
                     </div>
 
                     <Timer expectedSeconds={60} isSubmitting={isSubmitting} />

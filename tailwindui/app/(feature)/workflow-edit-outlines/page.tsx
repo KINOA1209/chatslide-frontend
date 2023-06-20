@@ -1,10 +1,12 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import OutlineFrom from '@/components/outline-form'
 import { useRouter } from 'next/navigation';
 import { FormEvent } from 'react';
 import Timer from '@/components/Timer';
+import GoBackButton from '@/components/GoBackButton';
 
 
 const OutlineVisualizer = ({ outline }: { outline: any }) => {
@@ -23,7 +25,7 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
         });
     };
 
-    const [isSubmitting, setIsSubmitting] = useState(false);    const [timer, setTimer] = useState(0);
+    const [isSubmitting, setIsSubmitting] = useState(false); const [timer, setTimer] = useState(0);
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         console.log("submitting");
@@ -95,8 +97,8 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
                     <p>
                         This is the outline generated. You can edit the details below.
                     </p>
-                    <br/>
-                    
+                    <br />
+
                     {outlineData && Object.keys(outlineData).map((sectionIndex) => (
                         <div key={sectionIndex} className="mb-8">
                             <h3 className="text-xl font-bold">
@@ -116,6 +118,9 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
                         </div>
                     ))}
 
+                    <Router>
+                        <GoBackButton />
+                    </Router>
 
                     {/* Form */}
                     <div className="max-w-sm mx-auto">
