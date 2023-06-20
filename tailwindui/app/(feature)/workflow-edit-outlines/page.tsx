@@ -1,8 +1,6 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import OutlineFrom from '@/components/outline-form'
 import { useRouter } from 'next/navigation';
 import { FormEvent } from 'react';
 import Timer from '@/components/Timer';
@@ -118,9 +116,8 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
                         </div>
                     ))}
 
-                    <Router>
-                        <GoBackButton />
-                    </Router>
+
+                    <GoBackButton />
 
                     {/* Form */}
                     <div className="max-w-sm mx-auto">

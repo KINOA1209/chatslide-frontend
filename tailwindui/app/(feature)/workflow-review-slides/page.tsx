@@ -1,14 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from "next/link";
 import { useRouter, usePathname } from 'next/navigation';
-import { FormEvent } from 'react';
 import SaveToPDF from '@/components/forms/SaveToPdf';
 import TranscriptForm from '@/components/forms/TranscriptForm';
 import Slides from '@/components/Slides';
 import Timer from '@/components/Timer';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import GoBackButton from '@/components/GoBackButton';
 
 
@@ -47,9 +44,9 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
 
                     <Slides height={160} />
 
-                    <Router>
-                        <GoBackButton />
-                    </Router>
+
+                    <GoBackButton />
+
 
                     <SaveToPDF accessToken={accessToken} setAccessToken={setAccessToken} />
 

@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import Timer from '@/components/Timer';
 import Slides from '@/components/Slides';
 import GoBackButton from '@/components/GoBackButton';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const TranscriptVisualizer = ({ transcripts }: { transcripts: [] }) => {
     const [transcriptList, setTranscriptList] = useState<string[]>(transcripts);
@@ -102,9 +101,8 @@ const TranscriptVisualizer = ({ transcripts }: { transcripts: [] }) => {
                         </div>
                     </div>
                     
-                    <Router>
-                        <GoBackButton />
-                    </Router>
+
+                    <GoBackButton />
 
                     {/* Form */}
                     <div className="max-w-sm mx-auto">
