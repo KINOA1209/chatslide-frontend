@@ -42,7 +42,7 @@ const LoginForm: React.FC = () => {
           localStorage.setItem("signed_in", "true");
           setTimeout(() => {
             if (nextUri == null) {
-              router.push("/workflow-intro");
+              router.push("/dashboard");
             } else {
               router.push(nextUri);
             }
