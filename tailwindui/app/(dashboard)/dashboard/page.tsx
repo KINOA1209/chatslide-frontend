@@ -1,13 +1,19 @@
-"use client"
+"use client";
 
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
-import { usePathname } from "next/navigation";
+import { usePathname } from 'next/navigation';
+
+interface Project {
+  id: number;
+  name: string;
+  description: string;
+}
 
 export default function Dashboard() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [projects, setProjects] = useState([]);
-  const [accessToken, setAccessToken] = useState("");
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [accessToken, setAccessToken] = useState('');
   const pathname = usePathname();
 
   const projectsPerPage = 3;
@@ -27,12 +33,11 @@ export default function Dashboard() {
   useEffect(() => {
     // Fetch projects from the backend API
     const fetchProjects = async () => {
-
-    const headers = new Headers();
-    if (accessToken) {
-      headers.append("Authorization", `Bearer ${accessToken}`);
-    }
-    headers.append("Content-Type", "application/json");
+      const headers = new Headers();
+      if (accessToken) {
+        headers.append('Authorization', `Bearer ${accessToken}`);
+      }
+      headers.append('Content-Type', 'application/json');
 
       try {
         const response = await fetch('/api/get_projects', {
@@ -52,18 +57,15 @@ export default function Dashboard() {
       }
     };
 
-    useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    console.log("token", token);
+    const token = localStorage.getItem('access_token');
     if (token) {
       setAccessToken(token);
     } else {
-      setAccessToken("");
+      setAccessToken('');
     }
-  }, [accessToken, pathname]);
 
     fetchProjects();
-  }, []); // Run the effect only once on component mount
+  }, [accessToken, pathname]);
 
   return (
     <section className="bg-gradient-to-b from-gray-100 to-white">
