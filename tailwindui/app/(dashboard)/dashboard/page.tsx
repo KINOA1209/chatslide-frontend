@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface Project {
   id: number;
@@ -29,6 +31,28 @@ export default function Dashboard() {
   const goToPreviousPage = () => {
     setCurrentPage((prevPage) => prevPage - 1);
   };
+
+
+  if (typeof window !== "undefined") {
+    var signed_in = localStorage.getItem("signed_in");
+  }
+
+  useEffect(() => {
+    console.log(signed_in);
+    if (signed_in && signed_in === "true") {
+      toast.success("Sign in successfully", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      localStorage.removeItem("signed_in");
+    }
+  });
 
   useEffect(() => {
     // Fetch projects from the backend API
@@ -69,6 +93,7 @@ export default function Dashboard() {
 
   return (
     <section className="bg-gradient-to-b from-gray-100 to-white">
+      <ToastContainer />
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="pt-32 pb-12 md:pt-40 md:pb-20">
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
