@@ -1,20 +1,14 @@
 "use client"
 
 import Link from 'next/link';
-import React, { useState } from 'react';
-
-const projects = [
-  { id: 1, name: 'Project 1', description: 'This is the first project.' },
-  { id: 2, name: 'Project 2', description: 'This is the second project.' },
-  { id: 3, name: 'Project 3', description: 'This is the third project.' },
-  { id: 4, name: 'Project 4', description: 'This is the fourth project.' },
-  { id: 5, name: 'Project 5', description: 'This is the fifth project.' },
-  { id: 6, name: 'Project 6', description: 'This is the sixth project.' },
-  // Add more projects if needed
-];
+import React, { useState, useEffect } from 'react';
+import { usePathname } from "next/navigation";
 
 export default function Dashboard() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [projects, setProjects] = useState([]);
+  const [accessToken, setAccessToken] = useState("");
+  const pathname = usePathname();
 
   const projectsPerPage = 3;
   const totalPages = Math.ceil(projects.length / projectsPerPage);
@@ -29,6 +23,47 @@ export default function Dashboard() {
   const goToPreviousPage = () => {
     setCurrentPage((prevPage) => prevPage - 1);
   };
+
+  useEffect(() => {
+    // Fetch projects from the backend API
+    const fetchProjects = async () => {
+
+    const headers = new Headers();
+    if (accessToken) {
+      headers.append("Authorization", `Bearer ${accessToken}`);
+    }
+    headers.append("Content-Type", "application/json");
+
+      try {
+        const response = await fetch('/api/get_projects', {
+          method: 'POST',
+          headers: headers,
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setProjects(data.projects);
+        } else {
+          // Handle error cases
+          console.error('Failed to fetch projects:', response.status);
+        }
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+      }
+    };
+
+    useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    console.log("token", token);
+    if (token) {
+      setAccessToken(token);
+    } else {
+      setAccessToken("");
+    }
+  }, [accessToken, pathname]);
+
+    fetchProjects();
+  }, []); // Run the effect only once on component mount
 
   return (
     <section className="bg-gradient-to-b from-gray-100 to-white">
