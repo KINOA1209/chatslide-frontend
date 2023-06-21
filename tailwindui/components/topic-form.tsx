@@ -11,6 +11,7 @@ const TopicForm: React.FC = () => {
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        const project_id = localStorage.getItem('project_id') || '';
 
         setIsSubmitting(true);
 
@@ -19,6 +20,7 @@ const TopicForm: React.FC = () => {
             requirements: (event.target as HTMLFormElement).requirements.value,
             audience: (event.target as HTMLFormElement).audience.value,
             language: (event.target as HTMLFormElement).language.value,
+            project_id: project_id,
         };
 
         localStorage.clear();
