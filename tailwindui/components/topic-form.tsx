@@ -9,9 +9,14 @@ const TopicForm: React.FC = () => {
 
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    // bind form data between input and sessionStorage
+    const [topic, setTopic] = useState((typeof window !== 'undefined' && sessionStorage.topic != undefined) ? sessionStorage.topic : '' );
+    const [audience, setAudience] = useState((typeof window !== 'undefined' && sessionStorage.audience != undefined) ? sessionStorage.audience : '' );
+    const [requirements, setRequirements] = useState((typeof window !== 'undefined' && sessionStorage.requirements != undefined) ? sessionStorage.requirements : '' );
+    const [language, setLanguage] = useState((typeof window !== 'undefined' && sessionStorage.language != undefined) ? sessionStorage.language : 'English' );
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const project_id = localStorage.getItem('project_id') || '';
+        const project_id = (typeof window !== 'undefined' && sessionStorage.project_id != undefined) ? sessionStorage.project_id : '';
 
         setIsSubmitting(true);
 
@@ -23,11 +28,10 @@ const TopicForm: React.FC = () => {
             project_id: project_id,
         };
 
-        localStorage.clear();
-        localStorage.setItem('topic', formData.topic);
-        localStorage.setItem('requirements', formData.requirements);
-        localStorage.setItem('audience', formData.audience);
-        localStorage.setItem('language', formData.language);
+        sessionStorage.setItem('topic', formData.topic);
+        sessionStorage.setItem('requirements', formData.requirements);
+        sessionStorage.setItem('audience', formData.audience);
+        sessionStorage.setItem('language', formData.language);
 
         console.log("created form data");
 
@@ -58,10 +62,10 @@ const TopicForm: React.FC = () => {
                 // cookies doesn't work because it needs 'use server'
                 // cookies().set("topic", outlinesJson.data.audience);
 
-                // Store the data in local storage
-                localStorage.setItem('outline', JSON.stringify(outlinesJson.data));
-                localStorage.setItem('foldername', outlinesJson.data.foldername);
-                localStorage.setItem('project_id', outlinesJson.data.project_id);
+                // Store the data in session storage
+                sessionStorage.setItem('outline', JSON.stringify(outlinesJson.data));
+                sessionStorage.setItem('foldername', outlinesJson.data.foldername);
+                sessionStorage.setItem('project_id', outlinesJson.data.project_id);
 
                 // Redirect to a new page with the data
                 router.push('workflow-edit-outlines');
@@ -94,6 +98,8 @@ const TopicForm: React.FC = () => {
                         type="text"
                         className="form-input w-full text-gray-800"
                         placeholder="P/E Ratio"
+                        value={topic}
+                        onChange={e => setTopic(e.target.value)}
                         required />
                 </div>
             </div>
@@ -110,6 +116,8 @@ const TopicForm: React.FC = () => {
                         type="text"
                         className="form-input w-full text-gray-800"
                         placeholder="Econ students"
+                        value={audience}
+                        onChange={e => setAudience(e.target.value)}
                         required
                     />
                 </div>
@@ -126,6 +134,8 @@ const TopicForm: React.FC = () => {
                         type="text"
                         className="form-input w-full text-gray-800"
                         placeholder="Basic economics"
+                        value={requirements}
+                        onChange={e => setRequirements(e.target.value)}
                         required
                     />
                 </div>
@@ -140,6 +150,8 @@ const TopicForm: React.FC = () => {
                     <select
                         id="language"
                         className="form-input w-full text-gray-800"
+                        value={language}
+                        onChange={e => setLanguage(e.target.value)}
                         required
                     >
                         <option value="English">English</option>

@@ -18,8 +18,8 @@ const SaveToPdf: React.FC<SaveToPdfProps> = ({accessToken, setAccessToken}) => {
         const element = document.getElementById('pdf-content');
 
         try {
-            const pdf_file = typeof localStorage !== 'undefined' ?  localStorage.getItem('pdf_file') : '';
-            const foldername = typeof localStorage !== 'undefined' ?  localStorage.getItem('foldername') : '';
+            const pdf_file = typeof sessionStorage !== 'undefined' ?  sessionStorage.getItem('pdf_file') : '';
+            const foldername = typeof sessionStorage !== 'undefined' ?  sessionStorage.getItem('foldername') : '';
     
             const response = await fetch(`/api/pdf?filename=${pdf_file}&foldername=${foldername}`, {
                 method: 'GET',
@@ -30,7 +30,7 @@ const SaveToPdf: React.FC<SaveToPdfProps> = ({accessToken, setAccessToken}) => {
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                const topic = typeof localStorage !== 'undefined' ?  localStorage.getItem('topic') : '';
+                const topic = typeof sessionStorage !== 'undefined' ?  sessionStorage.getItem('topic') : '';
                 a.download = `${topic}.pdf`;
                 document.body.appendChild(a);
                 a.click();

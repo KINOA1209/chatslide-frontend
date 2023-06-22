@@ -136,7 +136,7 @@ const SignupForm: React.FC = () => {
   /* write a function that will take the form data and send it to the backend */
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const project_id = localStorage.getItem('project_id') || '';
+    const project_id = sessionStorage.getItem('project_id') || '';
 
     const formData = {
       username: (event.target as HTMLFormElement).username.value,
