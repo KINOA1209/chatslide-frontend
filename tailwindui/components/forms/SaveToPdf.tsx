@@ -1,17 +1,27 @@
 'use client'
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import SavePDFModal from './savePDFModal';
+import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
+import { auth } from "../Firebase";
 
 
 interface SaveToPdfProps {
-    accessToken: string;
-    setAccessToken: (token: string) => void;
   }
 
-const SaveToPdf: React.FC<SaveToPdfProps> = ({accessToken, setAccessToken}) => {
+const SaveToPdf: React.FC<SaveToPdfProps> = () => {
     const router = useRouter();
+    const [user, setUser] = useState<User | null>(null);
+
+    useEffect(() => {
+      const unsubscribe = onAuthStateChanged(auth, currentUser => {
+          setUser(currentUser);
+      });
+
+      // Clean up subscription on unmount
+      return () => unsubscribe();
+  }, []);
 
     const handleSavePDF = async () => {
         
@@ -49,7 +59,7 @@ const SaveToPdf: React.FC<SaveToPdfProps> = ({accessToken, setAccessToken}) => {
     <div className="max-w-sm mx-auto">
       <div className="flex flex-wrap -mx-3 mt-6">
         <div className="w-full px-3">
-          {accessToken === '' ? (
+          {user ? (
             // insert here
             <SavePDFModal />
           ) : (
