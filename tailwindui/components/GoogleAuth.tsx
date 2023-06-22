@@ -16,15 +16,6 @@ const GoogleAuth: React.FC = () => {
         }
     };
 
-    const signOut = async () => {
-        try {
-            await auth.signOut();
-            console.log('You have signed out!');
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
     return (
         <button onClick={signInWithGoogle} className="btn px-0 text-white bg-red-600 hover:bg-red-700 w-full relative flex items-center">
             <svg
