@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import SignupForm from "@/components/signup-form";
-import GoogleAuth from "@/components/GoogleAuth";
+import GoogleSignIn from "@/components/GoogleSignIn";
 
 export default function SignUp() {
     return (
@@ -31,7 +31,7 @@ export default function SignUp() {
                                 aria-hidden="true"
                             ></div>
                         </div>
-                        <GoogleAuth />
+                        <GoogleSignIn />
                         <div className="text-gray-600 text-center mt-6">
                             Already have an account?{" "}
                             <Link

@@ -3,7 +3,7 @@ import { auth, googleProvider } from './Firebase';
 import { signInWithPopup, signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 
-const GoogleAuth: React.FC = () => {
+const GoogleSignIn: React.FC = () => {
     const router = useRouter();
 
     const signInWithGoogle = async () => {
@@ -32,4 +32,4 @@ const GoogleAuth: React.FC = () => {
     );
 }
 
-export default GoogleAuth;
+export default GoogleSignIn;
