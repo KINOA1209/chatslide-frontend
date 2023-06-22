@@ -13,6 +13,7 @@ const TranscriptVisualizer = ({ transcripts }: { transcripts: [] }) => {
     const handleChange = (index: number, event: React.ChangeEvent<HTMLTextAreaElement>) => {
         let newData = [...transcriptList]; // copying the old datas array
         newData[index] = event.target.value; // replace e.target.value with whatever you want to change it to
+        sessionStorage.setItem('transcripts', JSON.stringify(newData));
         setTranscriptList(newData); // use the copy to set the state            
     };
 
@@ -21,13 +22,13 @@ const TranscriptVisualizer = ({ transcripts }: { transcripts: [] }) => {
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         console.log("submitting");
         event.preventDefault();
-        localStorage.setItem('transcripts', JSON.stringify(transcriptList));
+        sessionStorage.setItem('transcripts', JSON.stringify(transcriptList));
 
         setIsSubmitting(true);
 
-        const foldername = typeof window !== 'undefined' ? localStorage.getItem('foldername') : null;
-        const topic = typeof window !== 'undefined' ? localStorage.getItem('topic') : null;
-        const language = typeof window !== 'undefined' ? localStorage.getItem('language') : 'English';
+        const foldername = typeof window !== 'undefined' ? sessionStorage.getItem('foldername') : null;
+        const topic = typeof window !== 'undefined' ? sessionStorage.getItem('topic') : null;
+        const language = typeof window !== 'undefined' ? sessionStorage.getItem('language') : 'English';
 
         const formData = {
             res: transcriptList,
@@ -53,7 +54,7 @@ const TranscriptVisualizer = ({ transcripts }: { transcripts: [] }) => {
                 setIsSubmitting(false);
                 // Store the data in local storage
                 console.log(resp.data);
-                localStorage.setItem('audio_files', JSON.stringify(resp.data.res));
+                sessionStorage.setItem('audio_files', JSON.stringify(resp.data.res));
 
                 // Redirect to a new page with the data
                 router.push('workflow-review-audio');
@@ -126,7 +127,7 @@ const TranscriptVisualizer = ({ transcripts }: { transcripts: [] }) => {
 };
 
 export default function WorkflowStep4() {
-    const transcriptData = typeof localStorage !== 'undefined' ? localStorage.getItem('transcripts') : null;
+    const transcriptData = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('transcripts') : null;
     const transcripts = transcriptData ? JSON.parse(transcriptData) : [];
     return (
         <div className="bg-gray-100 min-h-screen py-8">

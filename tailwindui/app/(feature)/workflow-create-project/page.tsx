@@ -57,7 +57,7 @@ export default function CreateProject() {
         const projectCreateInfo = await response.json();
         console.log(projectCreateInfo);
         if (projectCreateInfo.status === "success") {
-          localStorage.setItem("project_id", projectCreateInfo.project_id);
+          sessionStorage.setItem("project_id", projectCreateInfo.project_id);
           setTimeout(() => {
             router.push("/workflow-intro");
           }, 500);
