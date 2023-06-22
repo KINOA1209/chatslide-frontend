@@ -31,8 +31,8 @@ const VideoVisualizer = ({ videoFile, foldername }: { videoFile: string, foldern
 };
 
 export default function WorkflowStep6() {
-    const videoFile = typeof localStorage !== 'undefined' ? (localStorage.getItem('video_file') || "") : "";
-    const foldername = typeof localStorage !== 'undefined' ? (localStorage.getItem('foldername') || "") : "";
+    const videoFile = typeof sessionStorage !== 'undefined' ? (sessionStorage.getItem('video_file') || "") : "";
+    const foldername = typeof sessionStorage !== 'undefined' ? (sessionStorage.getItem('foldername') || "") : "";
 
     return (
         <div className="bg-gray-100 min-h-screen py-8">

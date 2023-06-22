@@ -68,7 +68,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
 };
 
 const App = () => {
-    const slide_files = typeof localStorage !== 'undefined' ? localStorage.getItem('slide_files') : [];
+    const slide_files = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('slide_files') : [];
 
     return (
         <div className="bg-gray-100 min-h-screen py-8">

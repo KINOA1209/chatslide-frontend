@@ -9,16 +9,16 @@ import GoBackButton from '@/components/GoBackButton';
 
 const OutlineVisualizer = ({ outline }: { outline: any }) => {
     const router = useRouter();
-    console.log(outline);
     const [outlineData, setOutlineData] = useState(outline);
-
-    console.log(outlineData);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>, sectionIndex: string, detailIndex: number, key: string) => {
         const { value } = e.target;
         setOutlineData((prevOutlineData: any) => {
             const updatedOutlineData = JSON.parse(JSON.stringify(prevOutlineData));
             updatedOutlineData[sectionIndex]['content'][detailIndex] = value;
+            let entireOutline = JSON.parse(sessionStorage.outline);
+            entireOutline.res = JSON.stringify(updatedOutlineData);
+            sessionStorage.setItem('outline', JSON.stringify(entireOutline));
             return updatedOutlineData;
         });
     };
@@ -32,10 +32,10 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
         setIsSubmitting(true);
         setTimer(0);
 
-        const audience = typeof window !== 'undefined' ? localStorage.getItem('audience') : null;
-        const foldername = typeof window !== 'undefined' ? localStorage.getItem('foldername') : null;
-        const topic = typeof window !== 'undefined' ? localStorage.getItem('topic') : null;
-        const language = typeof window !== 'undefined' ? localStorage.getItem('language') : 'English';
+        const audience = typeof window !== 'undefined' ? sessionStorage.getItem('audience') : null;
+        const foldername = typeof window !== 'undefined' ? sessionStorage.getItem('foldername') : null;
+        const topic = typeof window !== 'undefined' ? sessionStorage.getItem('topic') : null;
+        const language = typeof window !== 'undefined' ? sessionStorage.getItem('language') : 'English';
 
         const formData = {
             res: outlineData,
@@ -66,8 +66,8 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
                 setIsSubmitting(false);
                 // Store the data in local storage
                 console.log(resp.data);
-                localStorage.setItem('image_files', JSON.stringify(resp.data.image_files));
-                localStorage.setItem('pdf_file', resp.data.pdf_file);
+                sessionStorage.setItem('image_files', JSON.stringify(resp.data.image_files));
+                sessionStorage.setItem('pdf_file', resp.data.pdf_file);
 
                 // Redirect to a new page with the data
                 router.push('workflow-review-slides');
@@ -142,10 +142,9 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
 };
 
 const App = () => {
-    const storedOutline = typeof localStorage !== 'undefined' ? localStorage.getItem('outline') : null;
+    const storedOutline = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('outline') : null;
     const outline = storedOutline ? JSON.parse(storedOutline) : null;
     const outlineRes = outline ? JSON.parse(outline.res) : null;
-
     return (
         <div className="bg-gray-100 min-h-screen py-8">
             <OutlineVisualizer outline={outlineRes} />

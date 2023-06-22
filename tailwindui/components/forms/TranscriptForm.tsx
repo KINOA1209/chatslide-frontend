@@ -22,17 +22,17 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({accessToken, setAccessTo
 
     const latex_filename = 'final_latex.tex';
     const foldername =
-      typeof localStorage !== 'undefined'
-        ? localStorage.getItem('foldername')
-        : null;
-    const topic =
-      typeof localStorage !== 'undefined'
-        ? localStorage.getItem('topic')
-        : null;
-    const language =
-      typeof window !== 'undefined'
-        ? localStorage.getItem('language')
-        : 'English';
+    typeof sessionStorage !== 'undefined'
+      ? sessionStorage.getItem('foldername')
+      : null;
+  const topic =
+    typeof sessionStorage !== 'undefined'
+      ? sessionStorage.getItem('topic')
+      : null;
+  const language =
+    typeof window !== 'undefined'
+      ? sessionStorage.getItem('language')
+      : 'English';
 
     const formData = {
       latex_filename: latex_filename,
@@ -59,7 +59,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({accessToken, setAccessTo
         setIsSubmitting(false);
         // Store the data in local storage
         console.log(resp.data.res);
-        localStorage.setItem('transcripts', JSON.stringify(resp.data.res));
+        sessionStorage.setItem('transcripts', JSON.stringify(resp.data.res));
         // Redirect to a new page with the data
         router.push('workflow-edit-transcript');
       } else {
