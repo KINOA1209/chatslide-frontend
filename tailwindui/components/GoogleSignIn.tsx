@@ -1,16 +1,23 @@
 import React from 'react';
 import { auth, googleProvider } from './Firebase';
 import { signInWithPopup, signOut } from 'firebase/auth';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from "next/navigation";
 
 const GoogleSignIn: React.FC = () => {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const nextUri = searchParams.get("next");
+
 
     const signInWithGoogle = async () => {
         try {
             await signInWithPopup(auth, googleProvider);
             console.log('You are signed in!');
-            router.push('/workflow-intro');
+            if (nextUri == null) {
+                router.push("/dashboard");
+              } else {
+                router.push(nextUri);
+              }
         } catch (error) {
             console.error(error);
         }
