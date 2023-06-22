@@ -38,15 +38,6 @@ export default function Header() {
         return () => unsubscribe();
     }, []);
 
-    // // Simulate a delay of 1 second before rendering the header
-    // useEffect(() => {
-    //     const timer = setTimeout(() => {
-    //     setLoading(false);
-    //     }, 500);
-
-    //     return () => clearTimeout(timer);
-    // }, []);
-
     if (loading) {
         // Render a loading state or a blank placeholder
         return (
