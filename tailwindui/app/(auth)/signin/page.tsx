@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState, useEffect } from "react";
-import GoogleAuth from "@/components/GoogleAuth";
+import GoogleSignIn from "@/components/GoogleSignIn";
 
 export default function SignIn() {
     const searchParams = useSearchParams();
@@ -62,7 +62,7 @@ export default function SignIn() {
                             ></div>
                         </div>
 
-                        <GoogleAuth />
+                        <GoogleSignIn />
 
                         <div className="text-gray-600 text-center mt-6">
                             Don't you have an account?{" "}
