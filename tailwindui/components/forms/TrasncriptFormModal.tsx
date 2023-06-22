@@ -64,15 +64,26 @@ const TranscriptFormModal = () => {
             </div>
             {/* Modal footer */}
             <div className="flex items-center justify-end p-4 bg-gray-100 dark:bg-gray-800 rounded-b">
-              <Link
-                href="/signin?next=workflow-review-slides"
-                data-modal-hide="staticModal"
-                type="button"
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                onClick={toggleModal}
-              >
-                Sign in
-              </Link>
+              <div className="space-x-2">
+                <Link
+                  href="/signin?next=workflow-review-slides"
+                  data-modal-hide="staticModal"
+                  type="button"
+                  className="text-gray-200 bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  onClick={toggleModal}
+                >
+                  Sign in
+                </Link>
+                <Link
+                  href="/signup?next=workflow-review-slides"
+                  data-modal-hide="staticModal"
+                  type="button"
+                  className="text-gray-200 bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  onClick={toggleModal}
+                >
+                  Sign up
+                </Link>
+              </div>
             </div>
           </div>
         </div>

@@ -1,16 +1,26 @@
 import { useRouter, usePathname } from 'next/navigation';
-import React, { FormEvent, useState } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import TranscriptFormModal from './TrasncriptFormModal';
+import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
+import { auth } from "../Firebase";
 
 interface TranscriptFormProps {
-  accessToken: string;
-  setAccessToken: (token: string) => void;
   isSubmitting: boolean;
   setIsSubmitting: (isSubmitting: boolean) => void;
 }
 
-const TranscriptForm: React.FC<TranscriptFormProps> = ({accessToken, setAccessToken, isSubmitting, setIsSubmitting}) => {
-    const router = useRouter();
+const TranscriptForm: React.FC<TranscriptFormProps> = ({isSubmitting, setIsSubmitting}) => {
+  const router = useRouter();
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, currentUser => {
+        setUser(currentUser);
+    });
+
+    // Clean up subscription on unmount
+    return () => unsubscribe();
+}, []);
 
   const handleSubmitTranscript = async (
     event: FormEvent<HTMLFormElement>
@@ -78,7 +88,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({accessToken, setAccessTo
       <form onSubmit={handleSubmitTranscript}>
         <div className="flex flex-wrap -mx-3 mt-6">
           <div className="w-full px-3">
-            {accessToken === '' ? (
+            {!user ? (
                 <TranscriptFormModal />
             ) : (
             <button
