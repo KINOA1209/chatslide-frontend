@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { User } from 'firebase/auth';
 import { auth } from '../Firebase';
 import { toast } from 'react-toastify';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
@@ -76,7 +75,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
                     aria-expanded={isOpen}
                     aria-haspopup="true"
                 >
-                    Hi, {user && user.email}
+                    Hi, {user && user.displayName }
                 </button>
             </div>
 

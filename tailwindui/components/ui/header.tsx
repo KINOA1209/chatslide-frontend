@@ -12,9 +12,6 @@ import { auth } from "../Firebase";
 
 export default function Header() {
     const [top, setTop] = useState<boolean>(true);
-    const [accessToken, setAccessToken] = useState("");
-    const [loading, setLoading] = useState(true);
-    const pathname = usePathname();
 
     const [user, setUser] = useState<User | null>(null);
 
@@ -57,7 +54,7 @@ export default function Header() {
                         {/* Desktop sign in links */}
                         {user ? (
                             <ul className="flex grow justify-end flex-wrap items-center">
-                                <DropdownButton accessToken={accessToken} setAccessToken={setAccessToken} />
+                                <DropdownButton/>
                             </ul>
                         ) : (
                             <ul className="flex grow justify-end flex-wrap items-center">

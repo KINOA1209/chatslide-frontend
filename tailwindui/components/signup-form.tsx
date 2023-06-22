@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { userInfo } from "os";
 import next from "next/types";
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from "./Firebase";
 
 
@@ -150,6 +150,12 @@ const SignupForm: React.FC = () => {
 
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            if (userCredential.user) {
+                await updateProfile(userCredential.user, {
+                  displayName: username,
+                });
+                console.log('User registered:', userCredential.user);
+              }
             console.log('User registered:', userCredential.user);
             toast.success("User registered successfully!", {
                 position: "top-center",
