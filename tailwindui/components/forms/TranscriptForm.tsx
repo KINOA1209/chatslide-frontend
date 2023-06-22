@@ -88,7 +88,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({isSubmitting, setIsSubmi
       <form onSubmit={handleSubmitTranscript}>
         <div className="flex flex-wrap -mx-3 mt-6">
           <div className="w-full px-3">
-            {user ? (
+            {!user ? (
                 <TranscriptFormModal />
             ) : (
             <button
