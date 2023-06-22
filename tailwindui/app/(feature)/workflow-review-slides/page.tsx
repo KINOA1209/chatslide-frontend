@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
 import SaveToPDF from '@/components/forms/SaveToPdf';
 import TranscriptForm from '@/components/forms/TranscriptForm';
 import Slides from '@/components/Slides';
@@ -11,22 +10,9 @@ import GoBackButton from '@/components/GoBackButton';
 
 const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
     console.log(slide_files);
-
-    const [accessToken, setAccessToken] = useState<string>("");
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const pathname = usePathname();
-
-    useEffect(() => {
-      const token = localStorage.getItem("access_token");
-      if (token) {
-        setAccessToken(token);
-      } else {
-        setAccessToken("");
-      }
-    }, [pathname]);
 
     
-
     return (
         <section className="bg-gradient-to-b from-gray-100 to-white">
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -48,14 +34,12 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
                     <GoBackButton />
 
 
-                    <SaveToPDF accessToken={accessToken} setAccessToken={setAccessToken} />
+                    <SaveToPDF />
 
                     {/* Form */}
                     <TranscriptForm 
                         isSubmitting={isSubmitting} 
-                        setIsSubmitting={setIsSubmitting} 
-                        accessToken={accessToken} 
-                        setAccessToken={setAccessToken} 
+                        setIsSubmitting={setIsSubmitting}
                     />
 
                     {/* Timer */}
