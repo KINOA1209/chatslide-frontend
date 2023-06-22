@@ -5,6 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
+import App from "./GoogleAuth"
+
 
 const LoginForm: React.FC = () => {
   const router = useRouter();
