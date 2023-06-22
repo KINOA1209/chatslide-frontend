@@ -12,9 +12,8 @@ import { auth } from "../Firebase";
 
 export default function Header() {
     const [top, setTop] = useState<boolean>(true);
-
     const [user, setUser] = useState<User | null>(null);
-
+    const [loading, setLoading] = useState(true);
 
     // detect whether user has scrolled the page down by 10px
     const scrollHandler = () => {
@@ -28,6 +27,9 @@ export default function Header() {
     }, [top]);
 
     useEffect(() => {
+        setTimeout(() => {
+                setLoading(false);
+                }, 200);
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
         });
@@ -35,6 +37,22 @@ export default function Header() {
         // Clean up subscription on unmount
         return () => unsubscribe();
     }, []);
+
+    // // Simulate a delay of 1 second before rendering the header
+    // useEffect(() => {
+    //     const timer = setTimeout(() => {
+    //     setLoading(false);
+    //     }, 500);
+
+    //     return () => clearTimeout(timer);
+    // }, []);
+
+    if (loading) {
+        // Render a loading state or a blank placeholder
+        return (
+          <p></p>
+        );
+      }
 
 
     return (
