@@ -101,13 +101,12 @@ export default function Dashboard() {
           </div>
           <div className="flex flex-col gap-4">
             {currentProjects.map((project) => (
-              <div
-                key={project.id}
-                className="border-solid border-2 border-blue-600 p-4 rounded-md shadow-md"
-              >
-                <h2 className="text-lg font-semibold">{project.name}</h2>
-                <p className="text-sm mt-2">{project.description}</p>
-              </div>
+              <Link key={project.id} href={`/project/${project.id}`}
+              rel="noopener noreferrer" target="_blank"
+                className="border-solid border-2 border-blue-600 p-4 rounded-md shadow-md">
+                  <h2 className="text-lg font-semibold">{project.name}</h2>
+                  <p className="text-sm mt-2">{project.description}</p>
+              </Link>
             ))}
           </div>
           <div className="flex justify-center items-center mt-6">

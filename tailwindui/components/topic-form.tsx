@@ -23,7 +23,7 @@ const TopicForm: React.FC = () => {
             project_id: project_id,
         };
 
-        localStorage.clear();
+        //localStorage.clear();
         localStorage.setItem('topic', formData.topic);
         localStorage.setItem('requirements', formData.requirements);
         localStorage.setItem('audience', formData.audience);
