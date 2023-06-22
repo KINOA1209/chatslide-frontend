@@ -59,7 +59,7 @@ const SaveToPdf: React.FC<SaveToPdfProps> = () => {
     <div className="max-w-sm mx-auto">
       <div className="flex flex-wrap -mx-3 mt-6">
         <div className="w-full px-3">
-          {user ? (
+          {!user ? (
             // insert here
             <SavePDFModal />
           ) : (
