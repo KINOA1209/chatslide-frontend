@@ -65,7 +65,6 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
         setIsOpen(!isOpen);
     };
 
-
     return (
         <div className="relative inline-block text-left" ref={dropdownRef}>
             <div>

@@ -135,6 +135,21 @@ const SignupForm: React.FC = () => {
             console.log("Error:", error);
         }
     }
+  }
+
+  /* write a function that will take the form data and send it to the backend */
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const project_id = sessionStorage.getItem('project_id') || '';
+
+    const formData = {
+      username: (event.target as HTMLFormElement).username.value,
+      email: (event.target as HTMLFormElement).email.value,
+      password: (event.target as HTMLFormElement).password.value,
+      verification_code: (event.target as HTMLFormElement).verification_code
+        .value,
+      project_id: project_id,
+    };
 
     /* write a function that will take the form data and send it to the backend */
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {

@@ -23,13 +23,13 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername }: { tr
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         console.log("submitting");
         event.preventDefault();
-        localStorage.setItem('transcripts', JSON.stringify(transcriptList));
+        sessionStorage.setItem('transcripts', JSON.stringify(transcriptList));
 
         setIsSubmitting(true);
 
-        const foldername = typeof window !== 'undefined' ? localStorage.getItem('foldername') : null;
-        const image_files = typeof localStorage !== 'undefined' ?  JSON.parse(localStorage.getItem('image_files') || '') : [];
-        const language = typeof window !== 'undefined' ? localStorage.getItem('language') : 'English';
+        const foldername = typeof window !== 'undefined' ? sessionStorage.getItem('foldername') : null;
+        const image_files = typeof sessionStorage !== 'undefined' ?  JSON.parse(sessionStorage.getItem('image_files') || '') : [];
+        const language = typeof window !== 'undefined' ? sessionStorage.getItem('language') : 'English';
 
         const formData = {
             img_filenames: image_files,
@@ -54,7 +54,7 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername }: { tr
                 setIsSubmitting(false);
                 // Store the data in local storage
                 console.log(resp.data);
-                localStorage.setItem('video_file', resp.data);
+                sessionStorage.setItem('video_file', resp.data);
 
                 // Redirect to a new page with the data
                 router.push('workflow-review-video');
@@ -135,12 +135,12 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername }: { tr
 };
 
 export default function WorkflowStep5() {
-    const transcriptData = typeof localStorage !== 'undefined' ? localStorage.getItem('transcripts') : null;
+    const transcriptData = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('transcripts') : null;
     const transcripts = transcriptData ? JSON.parse(transcriptData) : [];
 
-    const audioData = typeof localStorage !== 'undefined' ? localStorage.getItem('audio_files') : null;
+    const audioData = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('audio_files') : null;
     const audioFiles = audioData ? JSON.parse(audioData) : [];
-    const foldername = typeof localStorage !== 'undefined' ? (localStorage.getItem('foldername') || "") : "";
+    const foldername = typeof sessionStorage !== 'undefined' ? (sessionStorage.getItem('foldername') || "") : "";
 
     return (
         <div className="bg-gray-100 min-h-screen py-8">
