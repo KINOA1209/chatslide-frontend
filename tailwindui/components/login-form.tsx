@@ -45,9 +45,6 @@ const LoginForm: React.FC = () => {
               });
         }
 
-        console.log("created form data");
-
-
     };
 
     return (
