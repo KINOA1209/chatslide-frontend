@@ -109,28 +109,44 @@ export default function Dashboard() {
               </Link>
             ))}
           </div>
-          <div className="flex justify-center items-center mt-6">
+      {projects.length > 0 && (
+        <div className="flex justify-center items-center mt-6">
+          {!projects.length || currentPage === 1 ? (
             <button
-              className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md mr-2 ${
-                currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
-              onClick={goToPreviousPage}
-              disabled={currentPage === 1}
+              className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md opacity-50 cursor-not-allowed mr-2`}
+              disabled
               style={{ minWidth: '120px' }}
             >
               Previous
             </button>
+          ) : (
             <button
-              className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md ${
-                currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
-              onClick={goToNextPage}
-              disabled={currentPage === totalPages}
+              className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md`}
+              onClick={goToPreviousPage}
+              style={{ minWidth: '120px' }}
+            >
+              Previous
+            </button>
+          )}
+          {!projects.length || currentPage === totalPages ? (
+            <button
+              className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md opacity-50 cursor-not-allowed`}
+              disabled
               style={{ minWidth: '120px' }}
             >
               Next
             </button>
-          </div>
+          ) : (
+            <button
+              className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md`}
+              onClick={goToNextPage}
+              style={{ minWidth: '120px' }}
+            >
+              Next
+            </button>
+          )}
+        </div>
+      )}
           <div className="flex justify-center items-center mt-8">
             <Link href="/workflow-create-project">
               <span className="flex items-center bg-blue-600 text-white px-4 py-2 rounded-md shadow-md cursor-pointer">
