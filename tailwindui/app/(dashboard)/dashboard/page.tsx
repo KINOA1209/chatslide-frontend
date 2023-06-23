@@ -34,7 +34,7 @@ export default function Dashboard() {
 
 
   if (typeof window !== "undefined") {
-    var signed_in = localStorage.getItem("signed_in");
+    var signed_in = sessionStorage.getItem("signed_in");
   }
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function Dashboard() {
         progress: undefined,
         theme: "light",
       });
-      localStorage.removeItem("signed_in");
+      sessionStorage.removeItem("signed_in");
     }
   });
 
