@@ -144,7 +144,6 @@ const SignupForm: React.FC = () => {
         const username = (event.target as HTMLFormElement).username.value;
         const email = (event.target as HTMLFormElement).email.value;
         const password = (event.target as HTMLFormElement).password.value;
-        const verification_code = (event.target as HTMLFormElement).verification_code.value;
 
         console.log("created form data");
 
@@ -255,7 +254,7 @@ const SignupForm: React.FC = () => {
                 </div>
             </div>
             <div className="flex flex-wrap -mx-3 mb-4">
-                <div className="w-full px-3">
+                {/* <div className="w-full px-3">
                     <label
                         className="block text-gray-800 text-sm font-medium mb-1"
                         htmlFor="verification_code"
@@ -278,7 +277,7 @@ const SignupForm: React.FC = () => {
                             ? `Retry after: ${countdown} seconds`
                             : "Send Verification Code"}
                     </button>
-                </div>
+                </div> */}
             </div>
             <div className="flex flex-wrap -mx-3 mt-6">
                 <div className="w-full px-3">
