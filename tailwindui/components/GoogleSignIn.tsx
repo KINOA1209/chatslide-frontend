@@ -35,6 +35,7 @@ const GoogleSignIn: React.FC = () => {
     try {
       await signInWithPopup(auth, googleProvider);
       console.log('You are signed in!');
+      sessionStorage.setItem('signed_in', 'true')
 
       const currentUser = auth.currentUser;
       if (currentUser) {
