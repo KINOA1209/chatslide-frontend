@@ -24,13 +24,31 @@ const LoginForm: React.FC = () => {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             console.log('User signed in:', userCredential.user);
-            setTimeout(() => {
-                if (nextUri == null) {
-                  router.push("/dashboard");
-                } else {
-                  router.push(nextUri);
-                }
-              }, 500);
+            sessionStorage.setItem('signed_in', 'true')
+
+            const token = await userCredential.user.getIdToken();
+            console.log('Access token:', token);
+
+            if (nextUri == null) {
+                router.push("/dashboard");
+            } else {
+                const project_id = sessionStorage.getItem('project_id') || '';
+                try {
+                    const response = await fetch('/api/link_project', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                      },
+                      body: JSON.stringify({ 'project_id': project_id }),
+                    });
+                    console.log(response);
+                    router.push(nextUri); // Redirect to nextUri
+                  } catch (error) {
+                    console.error(error);
+                  }
+            }
+
         } catch (error: any) {
             console.error(error);
             toast.error(error.message, {

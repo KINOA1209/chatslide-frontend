@@ -139,7 +139,6 @@ const SignupForm: React.FC = () => {
     /* write a function that will take the form data and send it to the backend */
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const project_id = sessionStorage.getItem('project_id') || '';
 
         const username = (event.target as HTMLFormElement).username.value;
         const email = (event.target as HTMLFormElement).email.value;
@@ -154,25 +153,15 @@ const SignupForm: React.FC = () => {
                   displayName: username,
                 });
                 console.log('User registered:', userCredential.user);
+                sessionStorage.setItem("signed_up", "true")
               }
-            console.log('User registered:', userCredential.user);
-            toast.success("User registered successfully!", {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
-            setTimeout(() => {
-                if (nextUri == null) {
-                    router.push("/signin");
-                } else {
-                    router.push(`/signin?next=${encodeURIComponent(nextUri)}`);
-                }
-            });
+
+            if (nextUri == null) {
+                router.push("/signin");
+            } else {
+                router.push(`/signin?next=${encodeURIComponent(nextUri)}`);
+            }
+
         } catch (error: any) {
             console.log("Error:", error);
             toast.error(error.message, {
