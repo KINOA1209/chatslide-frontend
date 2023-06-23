@@ -32,9 +32,9 @@ const SignupForm: React.FC = () => {
 
         // Validate the username (example: at least 6 characters)
         if (username.length < 2) {
-            setUsernameError('Username should have at least 2 characters.');
+            setUsernameError('Name should have at least 2 characters.');
         } else if (username.length > 16) {
-            setUsernameError('Username should have at most 16 characters.');
+            setUsernameError('Name should have at most 16 characters.');
         } else {
             setUsernameError('');
         }
