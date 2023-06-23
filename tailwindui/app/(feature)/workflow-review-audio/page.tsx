@@ -81,6 +81,7 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername }: { tr
 
                     <p>
                         This is the voices generated. If you want to change the transcript, you can edit in the previous step.
+                        You get the voice generation of the first four slides for free!
                     </p>
                     <br/>
 
