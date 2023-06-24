@@ -1,8 +1,24 @@
+'use client'
+
 import Image from 'next/image'
 import logo from '@/public/images/Lambda_L-01.4.png'
 import background from '@/public/images/11062b_dbd82904e3e447898acbf7c3632ee55b~mv2.jpg'
+import { auth } from './Firebase';
+import { useRouter } from 'next/navigation';
 
-const InternalIntroduction = ({ signed_in }: { signed_in: boolean }) => {
+const InternalIntroduction = () => {
+  const router = useRouter();
+  
+  const handleOnClick = async () => {
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      router.push('/dashboard');
+    } else {
+      router.push('/workflow-intro');
+    }
+  }
+      
+  
   return (
     <section className="relative">
 
@@ -40,7 +56,7 @@ const InternalIntroduction = ({ signed_in }: { signed_in: boolean }) => {
               <p className="text-2xl text-black-600 mb-8 font-bold" data-aos="zoom-y-out" data-aos-delay="150">AI copilot for educators</p>
               <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center" data-aos="zoom-y-out" data-aos-delay="300">
                 <div>
-                  <a className="btn text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0" href="/workflow-intro">
+                  <a className="btn text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0" onClick={handleOnClick}>
                     Start free trial
                   </a>
                 </div>
@@ -62,7 +78,7 @@ export default function Introduction() {
 
   return (
     <div>
-      <InternalIntroduction signed_in={signed_in} />
+      <InternalIntroduction />
     </div>
   )
 }
