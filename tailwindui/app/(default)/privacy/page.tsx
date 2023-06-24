@@ -4,6 +4,9 @@ export const metadata = {
 };
 
 export default function Terms() {
+
+  
+
   return (
     <section className="bg-gradient-to-b from-gray-100 to-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">

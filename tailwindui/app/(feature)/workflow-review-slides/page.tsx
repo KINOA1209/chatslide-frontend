@@ -6,15 +6,37 @@ import TranscriptForm from '@/components/forms/TranscriptForm';
 import Slides from '@/components/Slides';
 import Timer from '@/components/Timer';
 import GoBackButton from '@/components/GoBackButton';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
     console.log(slide_files);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    if (typeof window !== "undefined") {
+        var signed_in = sessionStorage.getItem("signed_in");
+      }
     
+    useEffect(() => {
+    console.log("signed_in", signed_in);
+    if (signed_in && signed_in === "true") {
+        toast.success("Sign in successfully", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+        sessionStorage.removeItem("signed_in");
+    }
+    });
+
     return (
         <section className="bg-gradient-to-b from-gray-100 to-white">
+            <ToastContainer />
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
                 <div className="max-w-3xl mx-auto mt-8">
 
@@ -54,6 +76,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
 const App = () => {
     const slide_files = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('slide_files') : [];
 
+    
     return (
         <div className="bg-gray-100 min-h-screen py-8">
             <SlideVisualizer slide_files={slide_files} />

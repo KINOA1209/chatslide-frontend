@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { auth, googleProvider } from '../../../components/Firebase';
 
 interface Project {
   id: number;
@@ -15,8 +15,6 @@ interface Project {
 export default function Dashboard() {
   const [currentPage, setCurrentPage] = useState(1);
   const [projects, setProjects] = useState<Project[]>([]);
-  const [accessToken, setAccessToken] = useState('');
-  const pathname = usePathname();
 
   const projectsPerPage = 3;
   const totalPages = Math.ceil(projects.length / projectsPerPage);
@@ -32,64 +30,72 @@ export default function Dashboard() {
     setCurrentPage((prevPage) => prevPage - 1);
   };
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        try {
+          const token = await user.getIdToken();
+          console.log('Access token:', token);
+          handleRequest(token);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    });
 
-  if (typeof window !== "undefined") {
-    var signed_in = localStorage.getItem("signed_in");
-  }
+    return () => {
+      unsubscribe(); // Unsubscribe from the listener when the component unmounts
+    };
+  }, []);
 
   useEffect(() => {
+    const signed_in = sessionStorage.getItem('signed_in');
     console.log(signed_in);
-    if (signed_in && signed_in === "true") {
-      toast.success("Sign in successfully", {
-        position: "top-center",
+    if (signed_in && signed_in === 'true') {
+      toast.success('Sign in successfully', {
+        position: 'top-center',
         autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: 'light',
       });
-      localStorage.removeItem("signed_in");
     }
+    sessionStorage.clear();
   });
 
-  useEffect(() => {
-    // Fetch projects from the backend API
-    const fetchProjects = async () => {
-      const headers = new Headers();
-      if (accessToken) {
-        headers.append('Authorization', `Bearer ${accessToken}`);
-      }
-      headers.append('Content-Type', 'application/json');
-
-      try {
-        const response = await fetch('/api/get_projects', {
-          method: 'POST',
-          headers: headers,
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setProjects(data.projects);
-        } else {
-          // Handle error cases
-          console.error('Failed to fetch projects:', response.status);
-        }
-      } catch (error) {
-        console.error('Error fetching projects:', error);
-      }
-    };
-
-    const token = localStorage.getItem('access_token');
+  const handleRequest = async (token: string) => {
+    const headers = new Headers();
     if (token) {
-      setAccessToken(token);
-    } else {
-      setAccessToken('');
+      headers.append('Authorization', `Bearer ${token}`);
     }
+    headers.append('Content-Type', 'application/json');
 
-    fetchProjects();
-  }, [accessToken, pathname]);
+    try {
+      const response = await fetch('/api/get_projects', {
+        method: 'POST',
+        headers: headers,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setProjects(data.projects);
+      } else {
+        // Handle error cases
+        console.error('Failed to fetch projects:', response.status);
+      }
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    }
+  };
+
+  const handleProjectClick = (projectId: number) => {
+
+    // Open the project detail page in a new tab
+    window.open(`/project/${projectId}`, '_blank');
+  };
 
   return (
     <section className="bg-gradient-to-b from-gray-100 to-white">
@@ -101,36 +107,54 @@ export default function Dashboard() {
           </div>
           <div className="flex flex-col gap-4">
             {currentProjects.map((project) => (
-              <Link key={project.id} href={`/project/${project.id}`}
-              rel="noopener noreferrer" target="_blank"
-                className="border-solid border-2 border-blue-600 p-4 rounded-md shadow-md">
-                  <h2 className="text-lg font-semibold">{project.name}</h2>
-                  <p className="text-sm mt-2">{project.description}</p>
-              </Link>
+              <div
+                key={project.id}
+                className="border-solid border-2 border-blue-600 p-4 rounded-md shadow-md cursor-pointer"
+                onClick={() => handleProjectClick(project.id)}
+              >
+                <h2 className="text-lg font-semibold">{project.name}</h2>
+                <p className="text-sm mt-2">{project.description}</p>
+              </div>
             ))}
           </div>
-          <div className="flex justify-center items-center mt-6">
-            <button
-              className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md mr-2 ${
-                currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
-              onClick={goToPreviousPage}
-              disabled={currentPage === 1}
-              style={{ minWidth: '120px' }}
-            >
-              Previous
-            </button>
-            <button
-              className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md ${
-                currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
-              onClick={goToNextPage}
-              disabled={currentPage === totalPages}
-              style={{ minWidth: '120px' }}
-            >
-              Next
-            </button>
-          </div>
+          {projects.length > 0 && (
+            <div className="flex justify-center items-center mt-6">
+              {!projects.length || currentPage === 1 ? (
+                <button
+                  className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md opacity-50 cursor-not-allowed mr-2`}
+                  disabled
+                  style={{ minWidth: '120px' }}
+                >
+                  Previous
+                </button>
+              ) : (
+                <button
+                  className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md`}
+                  onClick={goToPreviousPage}
+                  style={{ minWidth: '120px' }}
+                >
+                  Previous
+                </button>
+              )}
+              {!projects.length || currentPage === totalPages ? (
+                <button
+                  className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md opacity-50 cursor-not-allowed`}
+                  disabled
+                  style={{ minWidth: '120px' }}
+                >
+                  Next
+                </button>
+              ) : (
+                <button
+                  className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md`}
+                  onClick={goToNextPage}
+                  style={{ minWidth: '120px' }}
+                >
+                  Next
+                </button>
+              )}
+            </div>
+          )}
           <div className="flex justify-center items-center mt-8">
             <Link href="/workflow-create-project">
               <span className="flex items-center bg-blue-600 text-white px-4 py-2 rounded-md shadow-md cursor-pointer">
@@ -143,3 +167,4 @@ export default function Dashboard() {
     </section>
   );
 }
+
