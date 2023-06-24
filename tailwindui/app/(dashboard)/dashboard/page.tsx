@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { auth, googleProvider } from '../../../components/Firebase';
+import { usePathname } from 'next/navigation';
 
 interface Project {
   id: number;
@@ -16,7 +17,7 @@ export default function Dashboard() {
   const [currentPage, setCurrentPage] = useState(1);
   const [projects, setProjects] = useState<Project[]>([]);
 
-
+  const pathname = usePathname();
   const projectsPerPage = 3;
   const totalPages = Math.ceil(projects.length / projectsPerPage);
   const indexOfLastProject = currentPage * projectsPerPage;
@@ -37,6 +38,25 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        try {
+          const token = await user.getIdToken();
+          console.log('Access token:', token);
+          handleRequest(token);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    });
+  
+    return () => {
+      unsubscribe(); // Unsubscribe from the listener when the component unmounts
+    };
+  }, []);
+
+
+  useEffect(() => {
     console.log(signed_in);
     if (signed_in && signed_in === "true") {
       toast.success("Sign in successfully", {
@@ -49,8 +69,8 @@ export default function Dashboard() {
         progress: undefined,
         theme: "light",
       });
-      sessionStorage.removeItem("signed_in");
     }
+    sessionStorage.clear();
   });
 
   const handleRequest = async (token: string) => {
@@ -78,24 +98,7 @@ export default function Dashboard() {
     }
   };
   
-  useEffect(() => {
-    // Fetch projects from the backend API
-    const fetchUserProjects = async () => {
-      const currentUser = auth.currentUser;
-      if (currentUser) {
-        try {
-          const token = await currentUser.getIdToken();
-          console.log('Access token:', token);
-          handleRequest(token);
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    };
-  
-    fetchUserProjects(); // Call the fetchUserProjects function
-  
-  }, []); // Empty dependency array to run the effect only once
+
   return (
     <section className="bg-gradient-to-b from-gray-100 to-white">
       <ToastContainer />

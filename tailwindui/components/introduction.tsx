@@ -16,6 +16,7 @@ const InternalIntroduction = () => {
     } else {
       router.push('/workflow-intro');
     }
+    sessionStorage.clear();
   }
       
   
@@ -56,7 +57,7 @@ const InternalIntroduction = () => {
               <p className="text-2xl text-black-600 mb-8 font-bold" data-aos="zoom-y-out" data-aos-delay="150">AI copilot for educators</p>
               <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center" data-aos="zoom-y-out" data-aos-delay="300">
                 <div>
-                  <a className="btn text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0" onClick={handleOnClick}>
+                  <a className="btn text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer" onClick={handleOnClick}>
                     Start free trial
                   </a>
                 </div>

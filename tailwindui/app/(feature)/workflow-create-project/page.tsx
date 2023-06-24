@@ -1,29 +1,20 @@
 "use client"
 
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { auth } from '../../../components/Firebase';
 
 export default function CreateProject() {
   const [projectName, setProjectName] = useState('');
   const [projectDescription, setProjectDescription] = useState('');
-  const [accessToken, setAccessToken] = useState("");
   const router = useRouter();
-  const pathname = usePathname();
-
-  useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    if (token) {
-      setAccessToken(token);
-    } else {
-      setAccessToken("");
-    }
-  }, [pathname]);
 
   const handleProjectNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setProjectName(event.target.value);
   };
+  
   const handleProjectDescriptionChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setProjectDescription(event.target.value);
   };
@@ -36,33 +27,45 @@ export default function CreateProject() {
       project_description: (event.target as HTMLFormElement).project_description.value,
     }
 
-    const headers = new Headers();
-    if (accessToken) {
-      console.log("access token", accessToken);
-      headers.append("Authorization", `Bearer ${accessToken}`);
-    }
-    headers.append("Content-Type", "application/json");
-    
-    try {
-      const response = await fetch("/api/create_project", {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(formData),
-      });
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      try {
+        const token = await currentUser.getIdToken();
+        console.log('Access token:', token);
+        const response = await fetch("/api/create_project", {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(formData),
+        });
 
-      console.log(formData);
-      console.log(response);
+        console.log(formData);
+        console.log(response);
 
-      if (response.ok) {
-        const projectCreateInfo = await response.json();
-        console.log(projectCreateInfo);
-        if (projectCreateInfo.status === "success") {
-          sessionStorage.setItem("project_id", projectCreateInfo.project_id);
-          setTimeout(() => {
-            router.push("/workflow-intro");
-          }, 500);
+        if (response.ok) {
+          const projectCreateInfo = await response.json();
+          console.log(projectCreateInfo);
+          if (projectCreateInfo.status === "success") {
+            sessionStorage.setItem("project_id", projectCreateInfo.project_id);
+            setTimeout(() => {
+              router.push("/workflow-intro");
+            }, 500);
+          } else {
+            toast.error(projectCreateInfo.message, {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          }
         } else {
-          toast.error(projectCreateInfo.message, {
+          toast.error(response.status, {
             position: "top-center",
             autoClose: 5000,
             hideProgressBar: false,
@@ -73,15 +76,10 @@ export default function CreateProject() {
             theme: "light",
           });
         }
-      } else {
-        alert("Request failed: " + response.status);
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.log("Error:", error);
     }
-
-
-    
   };
 
   return (
