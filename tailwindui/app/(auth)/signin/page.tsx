@@ -17,7 +17,7 @@ export default function SignIn() {
     const nextUri = searchParams.get("next");
 
     if (typeof window !== "undefined") {
-        var signed_up = localStorage.getItem("signed_up");
+        var signed_up = sessionStorage.getItem("signed_up");
     }
 
     useEffect(() => {
@@ -33,7 +33,7 @@ export default function SignIn() {
                 progress: undefined,
                 theme: "light",
             });
-            localStorage.removeItem("signed_up");
+            sessionStorage.removeItem("signed_up");
         }
     });
 
