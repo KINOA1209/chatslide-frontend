@@ -62,6 +62,8 @@ const ProjectDetail = () => {
     }
   };
 
+  // ... existing code ...
+
   return (
     <section className="bg-gradient-to-b from-gray-100 to-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -91,11 +93,25 @@ const ProjectDetail = () => {
                 <p>Loading project details...</p>
               )}
             </div>
+  
+            {/* Button Group */}
+            <div className="flex justify-center mt-4">
+              <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded mr-2 btn-size">
+                Edit Prompt
+              </button>
+              <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded mr-2 btn-size">
+                Edit Outlines
+              </button>
+              <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded btn-size">
+                Edit Transcripts
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </section>
   );
+
 };
 
 export default ProjectDetail;
