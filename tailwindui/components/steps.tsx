@@ -62,7 +62,7 @@ const ProgressBox: React.FC<NavProps> = ({currentInd}) => {
                 <div className='relative -top-4 w-full flex flex-row justify-between flex-nowrap pb-6'>
                     {steps.map((desc, index) => (
                         <OneStep
-                        id={index}
+                        id={index + 1}
                         current={currentInd == index}
                         finished={currentInd > index}
                         desc={desc} />
