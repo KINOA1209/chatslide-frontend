@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { auth, googleProvider } from './Firebase';
-import { getAuth, onAuthStateChanged, signInWithPopup, User } from 'firebase/auth';
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { getAuth, signInWithPopup, User } from 'firebase/auth';
+import { useRouter, useSearchParams } from "next/navigation";
 
 const GoogleSignIn: React.FC = () => {
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
   const nextUri = searchParams.get("next");
 
