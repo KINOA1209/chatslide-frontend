@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { auth, googleProvider } from '../../../components/Firebase';
 
 interface Project {
   id: number;
@@ -15,8 +15,7 @@ interface Project {
 export default function Dashboard() {
   const [currentPage, setCurrentPage] = useState(1);
   const [projects, setProjects] = useState<Project[]>([]);
-  const [accessToken, setAccessToken] = useState('');
-  const pathname = usePathname();
+
 
   const projectsPerPage = 3;
   const totalPages = Math.ceil(projects.length / projectsPerPage);
@@ -54,43 +53,49 @@ export default function Dashboard() {
     }
   });
 
+  const handleRequest = async (token: string) => {
+    const headers = new Headers();
+    if (token) {
+      headers.append('Authorization', `Bearer ${token}`);
+    }
+    headers.append('Content-Type', 'application/json');
+  
+    try {
+      const response = await fetch('/api/get_projects', {
+        method: 'POST',
+        headers: headers,
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        setProjects(data.projects);
+      } else {
+        // Handle error cases
+        console.error('Failed to fetch projects:', response.status);
+      }
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    }
+  };
+  
   useEffect(() => {
     // Fetch projects from the backend API
-    const fetchProjects = async () => {
-      const headers = new Headers();
-      if (accessToken) {
-        headers.append('Authorization', `Bearer ${accessToken}`);
-      }
-      headers.append('Content-Type', 'application/json');
-
-      try {
-        const response = await fetch('/api/get_projects', {
-          method: 'POST',
-          headers: headers,
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setProjects(data.projects);
-        } else {
-          // Handle error cases
-          console.error('Failed to fetch projects:', response.status);
+    const fetchUserProjects = async () => {
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        try {
+          const token = await currentUser.getIdToken();
+          console.log('Access token:', token);
+          handleRequest(token);
+        } catch (error) {
+          console.error(error);
         }
-      } catch (error) {
-        console.error('Error fetching projects:', error);
       }
     };
-
-    const token = localStorage.getItem('access_token');
-    if (token) {
-      setAccessToken(token);
-    } else {
-      setAccessToken('');
-    }
-
-    fetchProjects();
-  }, [accessToken, pathname]);
-
+  
+    fetchUserProjects(); // Call the fetchUserProjects function
+  
+  }, []); // Empty dependency array to run the effect only once
   return (
     <section className="bg-gradient-to-b from-gray-100 to-white">
       <ToastContainer />
