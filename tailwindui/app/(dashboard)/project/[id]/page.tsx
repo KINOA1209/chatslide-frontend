@@ -3,14 +3,17 @@
 import React, { useState, useEffect } from 'react';
 import { auth, googleProvider } from '../../../../components/Firebase';
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 interface Project {
   project_name: string;
   project_description: string;
   topic: string;
-  requirement: string;
+  requirements: string;
   audience: string;
   language: string;
+  foldername: string;
+  page_count: string;
 }
 
 const ProjectDetail = () => {
@@ -35,6 +38,19 @@ const ProjectDetail = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (project) {
+      // Store values in sessionStorage
+      sessionStorage.setItem('topic', project.topic);
+      sessionStorage.setItem('requirements', project.requirements);
+      sessionStorage.setItem('audience', project.audience);
+      sessionStorage.setItem('language', project.language);
+      sessionStorage.setItem('foldername', project.foldername);
+      sessionStorage.setItem('page_count', project.page_count);
+      console.log('page_count', project.page_count);
+    }
+  }, [project]);
+
   const fetchProjectDetails = async (token: string) => {
     const headers = new Headers();
     if (token) {
@@ -44,7 +60,11 @@ const ProjectDetail = () => {
 
     try {
       const project_id = pathname.split('/').pop();
-      console.log('this is project_id', project_id);
+      if (project_id){
+        console.log('this is project_id', project_id);
+        sessionStorage.setItem('project_id', project_id);
+      }
+      
       const response = await fetch('/api/get_project_details', {
         method: 'POST',
         headers: headers,
@@ -57,6 +77,20 @@ const ProjectDetail = () => {
       } else {
         console.error('Error fetching project details', response.status);
       }
+
+      const response2 = await fetch('/api/get_guidelines_json', {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({ project_id: project_id }),
+      });
+      console.log('this is response2', response2);
+      if (response2.ok) {
+        const data2 = await response2.json();
+        const outline = data2.outline;
+        console.log('this is data2', outline);
+        sessionStorage.setItem('outline', JSON.stringify(outline));
+      }
+
     } catch (error) {
       console.error('Error fetching project details:', error);
     }
@@ -79,7 +113,7 @@ const ProjectDetail = () => {
                       <strong>Topic:</strong> {project.topic}
                     </p>
                     <p className="text-gray-600 mb-2">
-                      <strong>Requirement:</strong> {project.requirement}
+                      <strong>Prior Knowledge:</strong> {project.requirements}
                     </p>
                     <p className="text-gray-600 mb-2">
                       <strong>Audience:</strong> {project.audience}
@@ -96,15 +130,18 @@ const ProjectDetail = () => {
   
             {/* Button Group */}
             <div className="flex justify-center mt-4">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded mr-2 btn-size">
+              <Link className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded mr-2 btn-size"
+              href = "/workflow-generate-outlines">
                 Edit Prompt
-              </button>
-              <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded mr-2 btn-size">
+              </Link>
+              <Link className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded mr-2 btn-size"
+              href = 'workflow-edit-outlines'>
                 Edit Outlines
-              </button>
-              <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded btn-size">
+              </Link>
+              <Link className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded btn-size"
+              href = 'workflow-review-slides'>
                 Edit Transcripts
-              </button>
+              </Link>
             </div>
           </div>
         </div>
