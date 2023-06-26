@@ -39,7 +39,7 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
         const project_id = typeof window !== 'undefined' ? sessionStorage.getItem('project_id') : null;
 
         const formData = {
-            res: outlineData,
+            res: JSON.stringify(outlineData),
             audience: audience,
             foldername: foldername,
             topic: topic,
