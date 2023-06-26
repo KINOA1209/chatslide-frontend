@@ -36,14 +36,16 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
         const foldername = typeof window !== 'undefined' ? sessionStorage.getItem('foldername') : null;
         const topic = typeof window !== 'undefined' ? sessionStorage.getItem('topic') : null;
         const language = typeof window !== 'undefined' ? sessionStorage.getItem('language') : 'English';
+        const project_id = typeof window !== 'undefined' ? sessionStorage.getItem('project_id') : null;
 
         const formData = {
-            res: outlineData,
+            res: JSON.stringify(outlineData),
             audience: audience,
             foldername: foldername,
             topic: topic,
             language: language,
             additional_requirements: 'test',
+            project_id: project_id
         };
 
         console.log(formData);
@@ -68,6 +70,7 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
                 console.log(resp.data);
                 sessionStorage.setItem('image_files', JSON.stringify(resp.data.image_files));
                 sessionStorage.setItem('pdf_file', resp.data.pdf_file);
+                sessionStorage.setItem('page_count', resp.data.page_count);
 
                 // Redirect to a new page with the data
                 router.push('workflow-review-slides');
