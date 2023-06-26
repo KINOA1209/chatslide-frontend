@@ -140,7 +140,7 @@ const ProjectDetail = () => {
               </Link>
               <Link className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded btn-size"
               href = 'workflow-review-slides'>
-                Edit Transcripts
+                Review Slides
               </Link>
             </div>
           </div>
