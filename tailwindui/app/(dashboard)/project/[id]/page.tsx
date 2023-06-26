@@ -14,6 +14,8 @@ interface Project {
   language: string;
   foldername: string;
   page_count: string;
+  outline: string;
+  transcripts: string;
 }
 
 const ProjectDetail = () => {
@@ -47,6 +49,9 @@ const ProjectDetail = () => {
       sessionStorage.setItem('language', project.language);
       sessionStorage.setItem('foldername', project.foldername);
       sessionStorage.setItem('page_count', project.page_count);
+      sessionStorage.setItem('outline', JSON.stringify(project.outline));
+      sessionStorage.setItem('transcripts', JSON.stringify(project.transcripts));
+      
       console.log('page_count', project.page_count);
     }
   }, [project]);
@@ -76,19 +81,6 @@ const ProjectDetail = () => {
         setProject(data);
       } else {
         console.error('Error fetching project details', response.status);
-      }
-
-      const response2 = await fetch('/api/get_guidelines_json', {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify({ project_id: project_id }),
-      });
-      console.log('this is response2', response2);
-      if (response2.ok) {
-        const data2 = await response2.json();
-        const outline = data2.outline;
-        console.log('this is data2', outline);
-        sessionStorage.setItem('outline', JSON.stringify(outline));
       }
 
     } catch (error) {
@@ -139,8 +131,8 @@ const ProjectDetail = () => {
                 Edit Outlines
               </Link>
               <Link className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded btn-size"
-              href = 'workflow-review-slides'>
-                Review Slides
+              href = 'workflow-edit-transcript'>
+                Edit Transcripts
               </Link>
             </div>
           </div>
