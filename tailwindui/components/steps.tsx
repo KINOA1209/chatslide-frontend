@@ -1,4 +1,6 @@
-import React from 'react';
+"use client";
+
+import React, { useState, MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import CSS from 'csstype';
 
@@ -6,71 +8,107 @@ interface StepProps {
     id: number,
     current: boolean,
     finished: boolean,
-    desc: string
+    desc: string,
+    redirect: string
 };
 
 const StepStyle: CSS.Properties = {
-    width: '32px',
-    height: '32px',
+    width: '28px',
+    height: '28px',
     borderRadius: '50%',
     borderStyle: 'solid',
-    borderWidth: '5px',
+    borderWidth: '3px',
     fontSize: '15px'
 }
 
 
-const OneStep: React.FC<StepProps> = ({ id, current, finished, desc }) => {
+const OneStep: React.FC<StepProps> = ({ id, current, finished, desc, redirect }) => {
+    const router = useRouter();
+
+    let exitClass = 'bg-blue-500 border-blue-500 text-white text-center';
+    let enterClass = 'bg-blue-700 border-blue-700 text-white text-center';
+    let textEnterClass = 'text-blue-700 ml-3';
+
+    const [circleClass, setCircleClass] = useState(exitClass);
+    const [textClass, setTextClass] = useState('ml-3');
+
+    const handleClick = (e: MouseEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        router.push(redirect);
+    };
+
+    const handleHoverEnter = (e: MouseEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        setCircleClass(enterClass);
+        setTextClass(textEnterClass);
+    }
+
+    const handleHoverLeave = (e: MouseEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        setCircleClass(exitClass);
+        setTextClass('ml-3');
+    }
+
     if (current) {
         return (
-            <div className='w-24 h-14 flex flex-col items-center'>
-                <div className='bg-white border-blue-500 text-blue-500' style={StepStyle}>{id}</div>
-                <span className='text-blue-500'>{desc}</span>
+            <div className='w-full h-14 flex items-center'>
+                <div className='bg-white border-blue-500 text-blue-500 text-center' style={StepStyle}>{id}</div>
+                <span className='text-blue-500 ml-3'>{desc}</span>
             </div>
         )
     } else if (finished) {
         return (
-            <div className='w-24 h-14 flex flex-col items-center'>
-                <div className='bg-blue-500 border-blue-500 text-white hover:bg-blue-700 hover:border-blue-700' style={StepStyle}>{id}</div>
-                <span className='hover:text-blue-700'>{desc}</span>
+            <div className='w-full h-14 flex items-center cursor-pointer' onClick={handleClick} onMouseEnter={handleHoverEnter} onMouseLeave={handleHoverLeave}>
+                <div className={circleClass} style={StepStyle}>{id}</div>
+                <span className={textClass}>{desc}</span>
             </div>
         )
     } else {
         return (
-            <div className='w-24 h-14 flex flex-col items-center'>
-                <div className='bg-gray-400 border-gray-400 text-white' style={StepStyle}>{id}</div>
-                <span className='text-gray-400'>{desc}</span>
+            <div className='w-full h-14 flex items-center'>
+                <div className='bg-gray-400 border-gray-400 text-white text-center' style={StepStyle}>{id}</div>
+                <span className='text-gray-400 ml-3'>{desc}</span>
             </div>
         )
     }
 }
 
-interface NavProps {
+interface Current {
     currentInd: number
-};
-
-const ProgressBox: React.FC<NavProps> = ({currentInd}) => {
-    const steps = ['Topic', 'Outlines', 'Slides', 'Transcript', 'Audio', 'Video'];
-
-    return (
-        <div className="max-w-3xl mx-auto text-center">
-            <div className='w-full'>
-                <div className='relative flex '>
-                    <div className='float-left' style={{ height: '16px', width: '48px' }}></div>
-                    <div className='w-full border-b-4 border-blue-200' style={{ height: '16px' }}></div>
-                    <div className='float-left' style={{ height: '16px', width: '48px' }}></div>
-                </div>
-                <div className='relative -top-4 w-full flex flex-row justify-between flex-nowrap pb-6'>
-                    {steps.map((desc, index) => (
-                        <OneStep
-                        id={index + 1}
-                        current={currentInd == index}
-                        finished={currentInd > index}
-                        desc={desc} />
-                    ))}
-                </div>
-            </div>
-        </div >
-    )
 }
 
-export default ProgressBox;
+const ProgressBox = (steps: string[], redirect: string[]) => {
+    const stepRedirectPair = steps.map((desc, index) => { return [desc, redirect[index]] });
+
+    const CurrentProgress: React.FC<Current> = ({ currentInd }) => {
+        return (
+            <div className='hidden md:block w-fit mr-20 ml-auto select-none'>
+                <div className='-top-4 p-5 mb-6 flex justify-center border-r-2 border-r-blue-200 sticky top-1/4'>
+                    <div className='w-fit flex flex-col flex-nowrap content-start'>
+                        {stepRedirectPair.map((pair, index) => (
+                            <OneStep
+                                id={index + 1}
+                                current={currentInd == index}
+                                finished={currentInd > index}
+                                desc={pair[0]}
+                                redirect={pair[1]} />
+                        ))}
+                    </div>
+                </div>
+            </div>
+        )
+    };
+    return CurrentProgress;
+}
+
+// Set up actual progress indicators with texts and redirections
+const steps = ['Topic', 'Outlines', 'Slides', 'Transcript', 'Audio', 'Video'];
+const redirect = ['/workflow-generate-outlines',
+    '/workflow-edit-outlines',
+    '/workflow-review-slides',
+    '/workflow-edit-transcript',
+    'workflow-review-audio',
+    'workflow-review-video'];
+const ProjectProgress = ProgressBox(steps, redirect);
+
+export default ProjectProgress;
