@@ -24,12 +24,13 @@ const InternalIntroduction = () => {
     <section className="relative">
 
       {/* Illustration behind hero content */}
-      <div className="absolute left-1/2 transform -translate-x-1/2 pointer-events-none -z-1" aria-hidden="true">
+      <div className="absolute left-1/4 transform -translate-x-1/4 pointer-events-none -z-1" aria-hidden="true">
             <Image
               className="max-w-none mx-auto rounded"
               src={background}
               layout="fixed"
               objectFit="fill"
+              objectPosition="left" 
               alt="Features bg"
             />
         </div>
