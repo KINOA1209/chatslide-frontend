@@ -9,6 +9,7 @@ import MobileMenu from "./mobile-menu";
 import { usePathname } from "next/navigation";
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import { auth } from "../Firebase";
+import GoogleAnalytics from "../GoogleAnalytics";
 
 export default function Header() {
     const [top, setTop] = useState<boolean>(true);
@@ -28,8 +29,8 @@ export default function Header() {
 
     useEffect(() => {
         setTimeout(() => {
-                setLoading(false);
-                }, 200);
+            setLoading(false);
+        }, 200);
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
         });
@@ -41,22 +42,22 @@ export default function Header() {
     if (loading) {
         // Render a loading state or a blank placeholder
         return (
-        <header
-        className={`fixed w-full z-30 md:bg-opacity-90 transition duration-300 ease-in-out ${!top ? "bg-white backdrop-blur-sm shadow-lg" : ""
-            }`}
-        >
-            <div className="max-w-6xl mx-auto px-5 sm:px-6">
-                <div className="flex items-center justify-between h-16 md:h-20">
-                    {/* Site branding */}
-                    <div className="shrink-0 mr-4">
-                        <Logo />
+            <header
+                className={`fixed w-full z-30 md:bg-opacity-90 transition duration-300 ease-in-out ${!top ? "bg-white backdrop-blur-sm shadow-lg" : ""
+                    }`}
+            >
+                <div className="max-w-6xl mx-auto px-5 sm:px-6">
+                    <div className="flex items-center justify-between h-16 md:h-20">
+                        {/* Site branding */}
+                        <div className="shrink-0 mr-4">
+                            <Logo />
+                        </div>
+                        <MobileMenu />
                     </div>
-                    <MobileMenu />
                 </div>
-            </div>
-        </header>
+            </header>
         );
-      }
+    }
 
 
     return (
@@ -76,7 +77,7 @@ export default function Header() {
                         {/* Desktop sign in links */}
                         {user ? (
                             <ul className="flex grow justify-end flex-wrap items-center">
-                                <DropdownButton/>
+                                <DropdownButton />
                             </ul>
                         ) : (
                             <ul className="flex grow justify-end flex-wrap items-center">
@@ -104,6 +105,8 @@ export default function Header() {
                     <MobileMenu />
                 </div>
             </div>
+
+            <GoogleAnalytics />
         </header>
     );
 }
