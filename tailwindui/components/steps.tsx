@@ -77,7 +77,7 @@ interface Current {
     currentInd: number
 }
 
-const ProgressBox = (steps: string[], redirect: string[]) => {
+const ProgressBox = (steps: string[], redirect: string[], finishedSteps: ()=>number[]) => {
     const stepRedirectPair = steps.map((desc, index) => { return [desc, redirect[index]] });
 
     const CurrentProgress: React.FC<Current> = ({ currentInd }) => {
@@ -89,7 +89,7 @@ const ProgressBox = (steps: string[], redirect: string[]) => {
                             <OneStep
                                 id={index + 1}
                                 current={currentInd == index}
-                                finished={currentInd > index}
+                                finished={finishedSteps().includes(index)}
                                 desc={pair[0]}
                                 redirect={pair[1]} />
                         ))}
@@ -109,6 +109,28 @@ const redirect = ['/workflow-generate-outlines',
     '/workflow-edit-transcript',
     'workflow-review-audio',
     'workflow-review-video'];
-const ProjectProgress = ProgressBox(steps, redirect);
+const projectFinishedSteps: () => number[] = () => {
+    const finishedStepsArray: number[] = [];
+    if (typeof window !== 'undefined' && sessionStorage.getItem('topic')) {
+        finishedStepsArray.push(0);
+    }
+    if (typeof window !== 'undefined' && sessionStorage.getItem('outline')) {
+        finishedStepsArray.push(1);
+    }
+    if (typeof window !== 'undefined' && sessionStorage.getItem('image_files')) {
+        finishedStepsArray.push(2);
+    }
+    if (typeof window !== 'undefined' && sessionStorage.getItem('transcripts')) {
+        finishedStepsArray.push(3);
+    }
+    if (typeof window !== 'undefined' && sessionStorage.getItem('audio_files')) {
+        finishedStepsArray.push(4);
+    }
+    if (typeof window !== 'undefined' && sessionStorage.getItem('video_file')) {
+        finishedStepsArray.push(5);
+    }
+    return finishedStepsArray;
+}
+const ProjectProgress = ProgressBox(steps, redirect, projectFinishedSteps);
 
 export default ProjectProgress;
