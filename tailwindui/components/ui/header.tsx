@@ -8,12 +8,14 @@ import DropdownButton from "@/components/utils/dropdown";
 import MobileMenu from "./mobile-menu";
 import { usePathname } from "next/navigation";
 import GoogleAnalytics from "../GoogleAnalytics";
-import AuthService from "../utils/AuthService";
+// import AuthService from "../utils/AuthService";
+import { Auth, Hub } from 'aws-amplify';
 
 
 export default function Header() {
     const [top, setTop] = useState<boolean>(true);
-    const [username, setUsername] = useState(null);
+    const [user, setUser] = useState(null);
+    // const [username, setUsername] = useState(null);
     const [loading, setLoading] = useState(true);
 
     // detect whether user has scrolled the page down by 10px
@@ -28,24 +30,43 @@ export default function Header() {
     }, [top]);
 
     useEffect(() => {
-        // Create a scoped async function within the hook.
-        const fetchUser = async () => {
-            try {
-                console.log("fetching user")
-                const userDisplayName = await AuthService.getCurrentUserDisplayName();
-                if (userDisplayName) {
-                    setUsername(userDisplayName);
-                }
-                console.log("userDisplayName", userDisplayName)
-            }
-            catch (error: any) {
-                console.error(error);
-            }
+        const checkUser = async () => {
+          try {
+            const user = await Auth.currentAuthenticatedUser();
+            setUser(user);
             setLoading(false);
+          } catch {
+            console.log('No authenticated user.');
+            setLoading(false);
+          }
         };
-        // Execute the created function directly
-        fetchUser();
-    }, []);
+    
+        // check the current user when component loads
+        checkUser();
+    
+        const listener = (data: any) => {
+          switch (data.payload.event) {
+            case 'signIn':
+              console.log('user signed in');
+              checkUser();
+              break;
+            case 'signOut':
+              console.log('user signed out');
+              setUser(null);
+              break;
+            default:
+              break;
+          }
+        };
+    
+        // add auth event listener
+        Hub.listen('auth', listener);
+    
+        // remove auth event listener on cleanup
+        return () => {
+          Hub.remove('auth', listener);
+        };
+      }, []);
 
     if (loading) {
         // Render a loading state or a blank placeholder
@@ -83,7 +104,7 @@ export default function Header() {
                     {/* Desktop navigation */}
                     <nav className="hidden md:flex md:grow">
                         {/* Desktop sign in links */}
-                        {username ? (
+                        {user ? (
                             <ul className="flex grow justify-end flex-wrap items-center">
                                 <DropdownButton />
                             </ul>
