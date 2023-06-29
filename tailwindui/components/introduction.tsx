@@ -3,7 +3,6 @@
 import Image from 'next/image'
 import logo from '@/public/images/Lambda_L-01.4.png'
 import background from '@/public/images/11062b_dbd82904e3e447898acbf7c3632ee55b~mv2.jpg'
-import { auth } from './Firebase';
 import { useRouter } from 'next/navigation';
 
 const InternalIntroduction = () => {

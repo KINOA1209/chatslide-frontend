@@ -7,13 +7,15 @@ import Logo from "./logo";
 import DropdownButton from "@/components/utils/dropdown";
 import MobileMenu from "./mobile-menu";
 import { usePathname } from "next/navigation";
-import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
-import { auth } from "../Firebase";
 import GoogleAnalytics from "../GoogleAnalytics";
+// import AuthService from "../utils/AuthService";
+import { Auth, Hub } from 'aws-amplify';
+
 
 export default function Header() {
     const [top, setTop] = useState<boolean>(true);
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState(null);
+    // const [username, setUsername] = useState(null);
     const [loading, setLoading] = useState(true);
 
     // detect whether user has scrolled the page down by 10px
@@ -28,16 +30,43 @@ export default function Header() {
     }, [top]);
 
     useEffect(() => {
-        setTimeout(() => {
+        const checkUser = async () => {
+          try {
+            const user = await Auth.currentAuthenticatedUser();
+            setUser(user);
             setLoading(false);
-        }, 200);
-        const unsubscribe = onAuthStateChanged(auth, currentUser => {
-            setUser(currentUser);
-        });
-
-        // Clean up subscription on unmount
-        return () => unsubscribe();
-    }, []);
+          } catch {
+            console.log('No authenticated user.');
+            setLoading(false);
+          }
+        };
+    
+        // check the current user when component loads
+        checkUser();
+    
+        const listener = (data: any) => {
+          switch (data.payload.event) {
+            case 'signIn':
+              console.log('user signed in');
+              checkUser();
+              break;
+            case 'signOut':
+              console.log('user signed out');
+              setUser(null);
+              break;
+            default:
+              break;
+          }
+        };
+    
+        // add auth event listener
+        Hub.listen('auth', listener);
+    
+        // remove auth event listener on cleanup
+        return () => {
+          Hub.remove('auth', listener);
+        };
+      }, []);
 
     if (loading) {
         // Render a loading state or a blank placeholder
