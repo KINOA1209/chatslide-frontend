@@ -35,6 +35,7 @@ export default function Dashboard() {
         const fetchUser = async () => {
             try {
                 const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+                handleRequest(token)
             }
             catch (error: any) {
                 console.error(error);
@@ -43,6 +44,7 @@ export default function Dashboard() {
         };
         // Execute the created function directly
         fetchUser();
+
     }, []);
 
     useEffect(() => {

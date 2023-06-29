@@ -1,15 +1,16 @@
 'use client'
 
 import Image from 'next/image'
-import logo from '@/public/images/Lambda_L-01.4.png'
 import background from '@/public/images/11062b_dbd82904e3e447898acbf7c3632ee55b~mv2.jpg'
 import { useRouter } from 'next/navigation';
+import AuthService from "./utils/AuthService";
 
 const InternalIntroduction = () => {
   const router = useRouter();
   
   const handleOnClick = async () => {
-    const currentUser = auth.currentUser;
+    
+    const currentUser = await AuthService.getCurrentUser();
     if (currentUser) {
       router.push('/dashboard');
     } else {

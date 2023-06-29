@@ -81,7 +81,7 @@ class AuthService {
             return user;
         } catch (error) {
             console.error('Error getting current user: ', error);
-            throw error;
+            return null;
         }
     }
 

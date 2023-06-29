@@ -1,24 +1,26 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
 import SavePDFModal from './savePDFModal';
+import AuthService from "../utils/AuthService";
 
 
 interface SaveToPdfProps {
   }
 
 const SaveToPdf: React.FC<SaveToPdfProps> = () => {
-    const router = useRouter();
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
-      const unsubscribe = onAuthStateChanged(auth, currentUser => {
-          setUser(currentUser);
-      });
-
-      // Clean up subscription on unmount
-      return () => unsubscribe();
+      // Create a scoped async function within the hook.
+      const fetchUser = async () => {
+          const user = await AuthService.getCurrentUser();
+          if (user) {
+            setUser(user);
+          }
+      };
+      // Execute the created function directly
+      fetchUser();
   }, []);
 
     const handleSavePDF = async () => {
