@@ -21,11 +21,12 @@ const LoginForm: React.FC = () => {
         const password = (event.target as HTMLFormElement).password.value;
 
         try {
-            const {uid, token } = await AuthService.signIn(email, password);
-            console.log('User signed in:', uid);
+            const user = await AuthService.signIn(email, password);
+            
             sessionStorage.setItem('signed_in', 'true')
 
-            console.log('Access token:', token);
+            const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+            console.log('token', token);
 
             if (nextUri == null) {
                 router.push("/dashboard");

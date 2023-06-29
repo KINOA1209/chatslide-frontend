@@ -65,10 +65,8 @@ class AuthService {
 
     async signIn(email: string, password: string) {
         try {
-            const credential = await AmplifyAuth.signIn(email, password);
-            const token = credential.getSignInUserSession().accessToken.jwtToken;
-            const uid = credential.userSub;
-            return { uid, token };
+            const user = await AmplifyAuth.signIn(email, password);
+            return user;
         } catch (error) {
             console.error('Error signing in: ', error);
             throw error;
