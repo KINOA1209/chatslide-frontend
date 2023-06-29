@@ -4,6 +4,7 @@ import React, { useState, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Video from '@/components/Video';
 import GoBackButton from '@/components/GoBackButton';
+import ProjectProgress from "@/components/steps";
 
 const VideoVisualizer = ({ videoFile, foldername }: { videoFile: string, foldername: string }) => {
     const router = useRouter();
@@ -17,9 +18,12 @@ const VideoVisualizer = ({ videoFile, foldername }: { videoFile: string, foldern
                     <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
                         <h1 className="h1">Step 6: Review Video</h1>
                     </div>
-
+                    <div className='flex'>
+                    <ProjectProgress currentInd={5} />
+                    <div className='grow'>
                     <Video filename={videoFile} foldername={foldername} />
-
+                    </div>
+                    </div>
 
                     <GoBackButton />
 

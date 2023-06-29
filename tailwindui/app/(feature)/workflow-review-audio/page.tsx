@@ -6,6 +6,7 @@ import Timer from '@/components/Timer';
 import Slides from '@/components/Slides';
 import Audio from '@/components/Audio';
 import GoBackButton from '@/components/GoBackButton';
+import ProjectProgress from "@/components/steps";
 
 
 const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername }: { transcripts: [], audioFiles: [], foldername: string }) => {
@@ -79,12 +80,14 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername }: { tr
                         <h1 className="h1">Step 5: Review Audio</h1>
                     </div>
 
+                <div className='flex'>
+                    <ProjectProgress currentInd={4} />
+                    <div className='grow'>
                     <p>
                         This is the voices generated. If you want to change the transcript, you can edit in the previous step.
                         You get the voice generation of the first four slides for free!
                     </p>
                     <br/>
-
                     <div className="flex">
                         <div className="w-2/5">
                             <Slides />
@@ -96,6 +99,7 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername }: { tr
                                         key={index}
                                         className="form-input w-full text-gray-800 mb-2 resize-none h-full"
                                         value={data}
+                                        readOnly
                                         onChange={(event) => handleChange(index, event)}
                                     />
                                 </div>
@@ -109,7 +113,8 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername }: { tr
                             ))}
                         </div>
                     </div>
-
+                    </div>
+                    </div>
 
                     <GoBackButton />
 
