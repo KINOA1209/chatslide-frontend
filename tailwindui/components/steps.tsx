@@ -107,8 +107,8 @@ const redirect = ['/workflow-generate-outlines',
     '/workflow-edit-outlines',
     '/workflow-review-slides',
     '/workflow-edit-transcript',
-    'workflow-review-audio',
-    'workflow-review-video'];
+    '/workflow-review-audio',
+    '/workflow-review-video'];
 const projectFinishedSteps: () => number[] = () => {
     const finishedStepsArray: number[] = [];
     if (typeof window !== 'undefined' && sessionStorage.getItem('topic')) {
