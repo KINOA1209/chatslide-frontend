@@ -1,6 +1,7 @@
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { useState, useEffect, FormEvent } from 'react';
 import TranscriptFormModal from './TrasncriptFormModal';
+import AuthService from "../utils/AuthService";
 
 interface TranscriptFormProps {
   isSubmitting: boolean;
@@ -9,15 +10,18 @@ interface TranscriptFormProps {
 
 const TranscriptForm: React.FC<TranscriptFormProps> = ({isSubmitting, setIsSubmitting}) => {
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, currentUser => {
-        setUser(currentUser);
-    });
-
-    // Clean up subscription on unmount
-    return () => unsubscribe();
+    // Create a scoped async function within the hook.
+    const fetchUser = async () => {
+        const user = await AuthService.getCurrentUser();
+        if (user) {
+          setUser(user);
+        }
+    };
+    // Execute the created function directly
+    fetchUser();
 }, []);
 
   const handleSubmitTranscript = async (
