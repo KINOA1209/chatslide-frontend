@@ -27,6 +27,7 @@ const ProjectDetail = () => {
         const fetchUser = async () => {
             try {
                 const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+                fetchProjectDetails(token)
             }
             catch (error: any) {
                 console.error(error);
