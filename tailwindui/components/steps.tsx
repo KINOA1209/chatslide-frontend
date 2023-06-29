@@ -117,7 +117,7 @@ const projectFinishedSteps: () => number[] = () => {
     if (typeof window !== 'undefined' && sessionStorage.getItem('outline')) {
         finishedStepsArray.push(1);
     }
-    if (typeof window !== 'undefined' && sessionStorage.getItem('page_count')) {
+    if (typeof window !== 'undefined' && sessionStorage.getItem('image_files')) {
         finishedStepsArray.push(2);
     }
     if (typeof window !== 'undefined' && sessionStorage.getItem('transcripts')) {
