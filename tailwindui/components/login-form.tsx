@@ -5,8 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from "./Firebase";
+import AuthService from "./utils/AuthService";
 
 
 
@@ -22,11 +21,10 @@ const LoginForm: React.FC = () => {
         const password = (event.target as HTMLFormElement).password.value;
 
         try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            console.log('User signed in:', userCredential.user);
+            const {uid, token } = await AuthService.signIn(email, password);
+            console.log('User signed in:', uid);
             sessionStorage.setItem('signed_in', 'true')
 
-            const token = await userCredential.user.getIdToken();
             console.log('Access token:', token);
 
             if (nextUri == null) {

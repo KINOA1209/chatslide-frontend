@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { auth, googleProvider } from './Firebase';
-import { getAuth, signInWithPopup, User } from 'firebase/auth';
+import AuthService  from './utils/AuthService';
 import { useRouter, useSearchParams } from "next/navigation";
+
 
 const GoogleSignIn: React.FC = () => {
   const router = useRouter();
@@ -32,14 +32,12 @@ const GoogleSignIn: React.FC = () => {
 
   const signInWithGoogle = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
+      const { uid, token } = await AuthService.googleSingIn();
       console.log('You are signed in!');
       sessionStorage.setItem('signed_in', 'true')
 
-      const currentUser = auth.currentUser;
-      if (currentUser) {
+      if (uid) {
         try {
-          const token = await currentUser.getIdToken();
           console.log('Access token:', token);
           handleRedirect(token); // Pass the token to handleRedirect
         } catch (error) {

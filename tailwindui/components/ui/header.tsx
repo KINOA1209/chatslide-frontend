@@ -7,13 +7,13 @@ import Logo from "./logo";
 import DropdownButton from "@/components/utils/dropdown";
 import MobileMenu from "./mobile-menu";
 import { usePathname } from "next/navigation";
-import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
-import { auth } from "../Firebase";
 import GoogleAnalytics from "../GoogleAnalytics";
+import AuthService from "../utils/AuthService";
+
 
 export default function Header() {
     const [top, setTop] = useState<boolean>(true);
-    const [user, setUser] = useState<User | null>(null);
+    const [username, setUsername] = useState(null);
     const [loading, setLoading] = useState(true);
 
     // detect whether user has scrolled the page down by 10px
@@ -28,15 +28,23 @@ export default function Header() {
     }, [top]);
 
     useEffect(() => {
-        setTimeout(() => {
+        // Create a scoped async function within the hook.
+        const fetchUser = async () => {
+            try {
+                console.log("fetching user")
+                const userDisplayName = await AuthService.getCurrentUserDisplayName();
+                if (userDisplayName) {
+                    setUsername(userDisplayName);
+                }
+                console.log("userDisplayName", userDisplayName)
+            }
+            catch (error: any) {
+                console.error(error);
+            }
             setLoading(false);
-        }, 200);
-        const unsubscribe = onAuthStateChanged(auth, currentUser => {
-            setUser(currentUser);
-        });
-
-        // Clean up subscription on unmount
-        return () => unsubscribe();
+        };
+        // Execute the created function directly
+        fetchUser();
     }, []);
 
     if (loading) {
@@ -75,7 +83,7 @@ export default function Header() {
                     {/* Desktop navigation */}
                     <nav className="hidden md:flex md:grow">
                         {/* Desktop sign in links */}
-                        {user ? (
+                        {username ? (
                             <ul className="flex grow justify-end flex-wrap items-center">
                                 <DropdownButton />
                             </ul>
