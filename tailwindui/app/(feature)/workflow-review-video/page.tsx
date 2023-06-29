@@ -25,7 +25,9 @@ const VideoVisualizer = ({ videoFile, foldername }: { videoFile: string, foldern
                     </div>
                     </div>
 
+                    <div className='block md:hidden'>
                     <GoBackButton />
+                    </div>
 
 
                 </div>
