@@ -53,7 +53,9 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
                         <Slides height={160} />
                     </div>
                 </div>
-                <GoBackButton />
+                <div className='block md:hidden'>
+                    <GoBackButton />
+                </div>
 
 
                 <SaveToPDF />
