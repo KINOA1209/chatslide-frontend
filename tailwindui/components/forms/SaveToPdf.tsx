@@ -3,8 +3,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import SavePDFModal from './savePDFModal';
-import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
-import { auth } from "../Firebase";
 
 
 interface SaveToPdfProps {

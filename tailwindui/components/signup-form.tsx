@@ -6,8 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { userInfo } from "os";
 import next from "next/types";
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { auth } from "./Firebase";
+import AuthService from "./utils/AuthService";
 
 
 const SignupForm: React.FC = () => {
@@ -16,6 +15,8 @@ const SignupForm: React.FC = () => {
     const nextUri = searchParams.get("next");
 
     const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const [validEmail, setValidEmail] = useState(false);
     const [disabled, setDisabled] = useState(false);
     const [countdown, setCountdown] = useState(15);
@@ -38,6 +39,8 @@ const SignupForm: React.FC = () => {
         } else {
             setUsernameError('');
         }
+
+        setUsername(username);
     }
 
     function handleEmailChange(event: any) {
@@ -78,59 +81,33 @@ const SignupForm: React.FC = () => {
             }
         }
 
+        setPassword(value);
         setPasswordError(error);
     }
 
     async function sendVerificationCode() {
+        const resp = await AuthService.sendCode(email, password, username);
         try {
-            const response = await fetch("/api/send_verification_email", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(email),
+            setDisabled(true);
+            const interval = setInterval(() => {
+                setCountdown((prevCountdown) => prevCountdown - 1);
+            }, 1000);
+            setTimeout(() => {
+                clearInterval(interval);
+                setDisabled(false);
+                setCountdown(15);
+            }, 15000);
+
+            toast.success("Email sent", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
             });
-
-            console.log(email);
-            console.log(response);
-
-            if (response.ok) {
-                setDisabled(true);
-                const interval = setInterval(() => {
-                    setCountdown((prevCountdown) => prevCountdown - 1);
-                }, 1000);
-                setTimeout(() => {
-                    clearInterval(interval);
-                    setDisabled(false);
-                    setCountdown(15);
-                }, 15000);
-
-                const emailSentInfo = await response.json();
-                console.log(emailSentInfo);
-                if (emailSentInfo.status === "success") {
-                    toast.success(emailSentInfo.message, {
-                        position: "top-center",
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
-                } else {
-                    toast.error(emailSentInfo.message, {
-                        position: "top-center",
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
-                }
-            }
         } catch (error) {
             console.log("Error:", error);
         }
@@ -142,26 +119,23 @@ const SignupForm: React.FC = () => {
 
         const username = (event.target as HTMLFormElement).username.value;
         const email = (event.target as HTMLFormElement).email.value;
-        const password = (event.target as HTMLFormElement).password.value;
-
-        console.log("created form data");
+        const code = (event.target as HTMLFormElement).verification_code.value;
 
         try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            if (userCredential.user) {
-                await updateProfile(userCredential.user, {
-                  displayName: username,
-                });
-                console.log('User registered:', userCredential.user);
-                sessionStorage.setItem("signed_up", "true")
-              }
-
-            if (nextUri == null) {
-                router.push("/signin");
-            } else {
-                router.push(`/signin?next=${encodeURIComponent(nextUri)}`);
+            await AuthService.confirmSignUp(email, code);
+            const signInResponse = await AuthService.signIn(email, password);  //auto sign in afterwards
+            if (signInResponse) {
+                const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+                if (userId) {
+                    console.log('User registered:', userId);
+                    sessionStorage.setItem("signed_up", "true")
+                }
+                if (nextUri == null) {
+                    router.push("/signin");
+                } else {
+                    router.push(`/signin?next=${encodeURIComponent(nextUri)}`);
+                }
             }
-
         } catch (error: any) {
             console.log("Error:", error);
             toast.error(error.message, {
@@ -243,7 +217,7 @@ const SignupForm: React.FC = () => {
                 </div>
             </div>
             <div className="flex flex-wrap -mx-3 mb-4">
-                {/* <div className="w-full px-3">
+                <div className="w-full px-3">
                     <label
                         className="block text-gray-800 text-sm font-medium mb-1"
                         htmlFor="verification_code"
@@ -266,7 +240,7 @@ const SignupForm: React.FC = () => {
                             ? `Retry after: ${countdown} seconds`
                             : "Send Verification Code"}
                     </button>
-                </div> */}
+                </div>
             </div>
             <div className="flex flex-wrap -mx-3 mt-6">
                 <div className="w-full px-3">

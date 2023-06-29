@@ -2,9 +2,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { auth } from '../Firebase';
 import { toast } from 'react-toastify';
-import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
+import AuthService from "../utils/AuthService";
 
 
 interface DropdownButtonProps {
@@ -14,16 +13,18 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
-    const [user, setUser] = useState<User | null>(null);
-
+    const [username, setUsername] = useState(null);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, currentUser => {
-            setUser(currentUser);
-        });
-
-        // Clean up subscription on unmount
-        return () => unsubscribe();
+        // Create a scoped async function within the hook.
+        const fetchUser = async () => {
+            const username = await AuthService.getCurrentUserDisplayName();
+            if (username) {
+                setUsername(username);
+            }
+        };
+        // Execute the created function directly
+        fetchUser();
     }, []);
 
     useEffect(() => {
@@ -42,7 +43,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
 
     const signOut = async () => {
         try {
-            await auth.signOut();
+            await AuthService.signOut();
             sessionStorage.clear();
             console.log('You have signed out!');
             router.push('/');
@@ -76,7 +77,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
                     aria-expanded={isOpen}
                     aria-haspopup="true"
                 >
-                    Hi, {user && user.displayName }
+                    Hi, { username }
                 </button>
             </div>
 
