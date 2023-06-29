@@ -82,7 +82,7 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: ()=>num
 
     const CurrentProgress: React.FC<Current> = ({ currentInd }) => {
         return (
-            <div className='hidden md:block w-fit mr-20 ml-auto select-none'>
+            <div className='hidden md:block w-fit mr-20 ml-auto select-none grow-0'>
                 <div className='-top-4 p-5 mb-6 flex justify-center border-r-2 border-r-blue-200 sticky top-1/4'>
                     <div className='w-fit flex flex-col flex-nowrap content-start'>
                         {stepRedirectPair.map((pair, index) => (
@@ -117,7 +117,7 @@ const projectFinishedSteps: () => number[] = () => {
     if (typeof window !== 'undefined' && sessionStorage.getItem('outline')) {
         finishedStepsArray.push(1);
     }
-    if (typeof window !== 'undefined' && sessionStorage.getItem('image_files')) {
+    if (typeof window !== 'undefined' && sessionStorage.getItem('page_count')) {
         finishedStepsArray.push(2);
     }
     if (typeof window !== 'undefined' && sessionStorage.getItem('transcripts')) {
