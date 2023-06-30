@@ -121,7 +121,9 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
                             ))}
 
 
-                            <GoBackButton />
+                    <div className='block md:hidden'>
+                    <GoBackButton />
+                    </div>
 
                             {/* Form */}
                             <div className="max-w-sm mx-auto">

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Timer from '@/components/Timer';
 import Slides from '@/components/Slides';
 import GoBackButton from '@/components/GoBackButton';
+import ProjectProgress from "@/components/steps";
 
 const TranscriptVisualizer = ({ transcripts }: { transcripts: [] }) => {
     const [transcriptList, setTranscriptList] = useState<string[]>(transcripts);
@@ -79,6 +80,9 @@ const TranscriptVisualizer = ({ transcripts }: { transcripts: [] }) => {
                         <h1 className="h1">Step 4: Edit Transcript</h1>
                     </div>
 
+                <div className='flex'>
+                    <ProjectProgress currentInd={3} />
+                    <div className='grow'>
                     <p>
                         This is the transcripts generated. Please edit the transcripts to your liking.
                     </p>
@@ -101,10 +105,11 @@ const TranscriptVisualizer = ({ transcripts }: { transcripts: [] }) => {
                             ))}
                         </div>
                     </div>
-                    
-
+                    </div>
+                    </div>
+                    <div className='block md:hidden'>
                     <GoBackButton />
-
+                    </div>
                     {/* Form */}
                     <div className="max-w-sm mx-auto">
                         <form onSubmit={handleSubmit}>

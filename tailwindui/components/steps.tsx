@@ -82,7 +82,7 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: ()=>num
 
     const CurrentProgress: React.FC<Current> = ({ currentInd }) => {
         return (
-            <div className='hidden md:block w-fit mr-20 ml-auto select-none'>
+            <div className='hidden md:block w-fit mr-20 ml-auto select-none grow-0'>
                 <div className='-top-4 p-5 mb-6 flex justify-center border-r-2 border-r-blue-200 sticky top-1/4'>
                     <div className='w-fit flex flex-col flex-nowrap content-start'>
                         {stepRedirectPair.map((pair, index) => (
@@ -107,8 +107,8 @@ const redirect = ['/workflow-generate-outlines',
     '/workflow-edit-outlines',
     '/workflow-review-slides',
     '/workflow-edit-transcript',
-    'workflow-review-audio',
-    'workflow-review-video'];
+    '/workflow-review-audio',
+    '/workflow-review-video'];
 const projectFinishedSteps: () => number[] = () => {
     const finishedStepsArray: number[] = [];
     if (typeof window !== 'undefined' && sessionStorage.getItem('topic')) {
