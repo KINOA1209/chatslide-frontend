@@ -36,7 +36,7 @@ const TopicForm: React.FC = () => {
         console.log("created form data");
 
         try {
-            const response = await fetch('/api/guidelines', {
+            const response = await fetch('/api/outlines', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
