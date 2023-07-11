@@ -77,13 +77,13 @@ interface Current {
     currentInd: number
 }
 
-const ProgressBox = (steps: string[], redirect: string[], finishedSteps: ()=>number[]) => {
+const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => number[]) => {
     const stepRedirectPair = steps.map((desc, index) => { return [desc, redirect[index]] });
 
     const CurrentProgress: React.FC<Current> = ({ currentInd }) => {
         return (
-            <div className='hidden md:block w-fit mr-20 ml-auto select-none grow-0'>
-                <div className='-top-4 p-5 mb-6 flex justify-center border-r-2 border-r-blue-200 sticky top-1/4'>
+            <div className='hidden md:block fixed w-fit left-4 top-52 select-none grow-0'>
+                <div className='-top-4 p-5 mb-6 flex justify-center border-r-2 border-r-blue-200 sticky'>
                     <div className='w-fit flex flex-col flex-nowrap content-start'>
                         {stepRedirectPair.map((pair, index) => (
                             <OneStep
@@ -102,35 +102,37 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: ()=>num
 }
 
 // Set up actual progress indicators with texts and redirections
-const steps = ['Topic', 'Outlines', 'Slides', 'Transcript', 'Audio', 'Video'];
-const redirect = ['/workflow-generate-outlines',
-    '/workflow-edit-outlines',
-    '/workflow-review-slides',
-    '/workflow-edit-transcript',
-    '/workflow-review-audio',
-    '/workflow-review-video'];
-const projectFinishedSteps: () => number[] = () => {
-    const finishedStepsArray: number[] = [];
-    if (typeof window !== 'undefined' && sessionStorage.getItem('topic')) {
-        finishedStepsArray.push(0);
+const ProjectProgress = () => {
+    const steps = ['Topic', 'Outlines', 'Slides', 'Transcript', 'Audio', 'Video'];
+    const redirect = ['/workflow-generate-outlines',
+        '/workflow-edit-outlines',
+        '/workflow-review-slides',
+        '/workflow-edit-transcript',
+        '/workflow-review-audio',
+        '/workflow-review-video'];
+    const projectFinishedSteps: () => number[] = () => {
+        const finishedStepsArray: number[] = [];
+        if (typeof window !== 'undefined' && sessionStorage.getItem('topic')) {
+            finishedStepsArray.push(0);
+        }
+        if (typeof window !== 'undefined' && sessionStorage.getItem('outline')) {
+            finishedStepsArray.push(1);
+        }
+        if (typeof window !== 'undefined' && sessionStorage.getItem('image_files')) {
+            finishedStepsArray.push(2);
+        }
+        if (typeof window !== 'undefined' && sessionStorage.getItem('transcripts')) {
+            finishedStepsArray.push(3);
+        }
+        if (typeof window !== 'undefined' && sessionStorage.getItem('audio_files')) {
+            finishedStepsArray.push(4);
+        }
+        if (typeof window !== 'undefined' && sessionStorage.getItem('video_file')) {
+            finishedStepsArray.push(5);
+        }
+        return finishedStepsArray;
     }
-    if (typeof window !== 'undefined' && sessionStorage.getItem('outline')) {
-        finishedStepsArray.push(1);
-    }
-    if (typeof window !== 'undefined' && sessionStorage.getItem('image_files')) {
-        finishedStepsArray.push(2);
-    }
-    if (typeof window !== 'undefined' && sessionStorage.getItem('transcripts')) {
-        finishedStepsArray.push(3);
-    }
-    if (typeof window !== 'undefined' && sessionStorage.getItem('audio_files')) {
-        finishedStepsArray.push(4);
-    }
-    if (typeof window !== 'undefined' && sessionStorage.getItem('video_file')) {
-        finishedStepsArray.push(5);
-    }
-    return finishedStepsArray;
+    return ProgressBox(steps, redirect, projectFinishedSteps);
 }
-const ProjectProgress = ProgressBox(steps, redirect, projectFinishedSteps);
 
-export default ProjectProgress;
+export default ProjectProgress();

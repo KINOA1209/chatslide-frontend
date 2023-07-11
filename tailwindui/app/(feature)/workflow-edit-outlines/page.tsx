@@ -59,9 +59,6 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
                 body: JSON.stringify(formData)
             });
 
-            //           console.log(formData);
-            //           console.log(response);
-
             if (response.ok) {
                 const resp = await response.json();
                 console.log(resp);
@@ -86,77 +83,66 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
     };
 
     return (
-        <section className="bg-gradient-to-b from-gray-100 to-white">
-            <div className="max-w-6xl pt-16 mx-auto px-4 sm:px-6">
-                {/* Page header */}
-                <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-                    <h1 className="h1">Step 2: Edit Outlines</h1>
-                </div>
-                <div className='grid grid-cols-1 md:grid-cols-3'>
-                    <ProjectProgress currentInd={1} />
-                    <div className="max-w-md mx-auto mt-8">
-                        <div className="max-w-md mx-auto">
-                            <p>
-                                This is the outline generated. You can edit the details below.
-                            </p>
-                            <br />
-
-                            {outlineData && Object.keys(outlineData).map((sectionIndex) => (
-                                <div key={sectionIndex} className="mb-8">
-                                    <h3 className="text-xl font-bold">
-                                        {parseInt(sectionIndex)}: {outlineData[sectionIndex].title}
-                                    </h3>
-                                    <div className="mt-4">
-                                        {outlineData[sectionIndex].content.map((detail: any, detailIndex: number) => (
-                                            <input
-                                                key={detailIndex}
-                                                className="form-input w-full text-gray-800 mb-2"
-                                                value={detail}
-                                                onChange={(e) => handleChange(e, sectionIndex, detailIndex, 'content')}
-                                                placeholder={`Detail ${detailIndex}`}
-                                            />
-                                        ))}
-                                    </div>
-                                </div>
-                            ))}
-
-
-                    <div className='block md:hidden'>
-                    <GoBackButton />
-                    </div>
-
-                            {/* Form */}
-                            <div className="max-w-sm mx-auto">
-                                <form onSubmit={handleSubmit}>
-                                    <div className="flex flex-wrap -mx-3 mt-6">
-                                        <div className="w-full px-3">
-                                            <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">
-                                                {isSubmitting ? 'Generating...' : 'Generate Slides'}
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-
-                            {/* Timer */}
-                            <Timer expectedSeconds={30} isSubmitting={isSubmitting} />
-                        </div>
+        <div>
+            {outlineData && Object.keys(outlineData).map((sectionIndex) => (
+                <div key={sectionIndex} className="mb-8">
+                    <h3 className="text-xl font-bold">
+                        {parseInt(sectionIndex)}: {outlineData[sectionIndex].title}
+                    </h3>
+                    <div className="mt-4">
+                        {outlineData[sectionIndex].content.map((detail: any, detailIndex: number) => (
+                            <input
+                                key={detailIndex}
+                                className="form-input w-full text-gray-800 mb-2"
+                                value={detail}
+                                onChange={(e) => handleChange(e, sectionIndex, detailIndex, 'content')}
+                                placeholder={`Detail ${detailIndex}`}
+                            />
+                        ))}
                     </div>
                 </div>
+            ))}
+
+            <div className='block md:hidden'>
+                <GoBackButton />
             </div>
-        </section>
-    );
-};
 
-const App = () => {
-    const storedOutline = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('outline') : null;
-    const outline = storedOutline ? JSON.parse(storedOutline) : null;
-    const outlineRes = outline ? JSON.parse(outline.res) : null;
-    return (
-        <div className="bg-gray-100 min-h-screen py-8">
-            <OutlineVisualizer outline={outlineRes} />
+            {/* Form */}
+            <form onSubmit={handleSubmit}>
+                <div className="flex flex-wrap -mx-3 mt-6">
+                    <div className="w-full px-3">
+                        <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">
+                            {isSubmitting ? 'Generating...' : 'Generate Slides'}
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            {/* Timer */}
+            <Timer expectedSeconds={30} isSubmitting={isSubmitting} />
         </div>
     );
 };
 
-export default App;
+export default function WorkflowStep2() {
+    const storedOutline = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('outline') : null;
+    const outline = storedOutline ? JSON.parse(storedOutline) : null;
+    const outlineRes = outline ? JSON.parse(outline.res) : null;
+    return (
+        <div>
+            <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
+                <h1 className="h1">Step 2: Edit Outlines</h1>
+            </div>
+
+            <div className="max-w-md mx-auto px-6">
+                <p>
+                    This is the outline generated. You can edit the details below.
+                </p>
+                <br />
+                <OutlineVisualizer outline={outlineRes} />
+            </div>
+        </div>
+    );
+};
+
+// export default App;

@@ -36,23 +36,11 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
     });
 
     return (
-        <section className="bg-gradient-to-b from-gray-100 to-white">
+        <div>
             <ToastContainer />
-            <div className="max-w-6xl pt-16 mx-auto px-4 sm:px-6">
-                {/* Page header */}
-                <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-                    <h1 className="h1">Step 3: Review Slides</h1>
-                </div>
-                <div className='flex'>
-                    <ProjectProgress currentInd={2} />
-                    <div className="max-w-3xl mx-auto mt-8">
-                        <p>
-                            This is the slides generated.
-                        </p>
-                        <br />
-                        <Slides height={160} />
-                    </div>
-                </div>
+            <div className="max-w-4xl mx-auto px-4 sm:px-6">
+
+                    <Slides height={160} />
                 <div className='block md:hidden'>
                     <GoBackButton />
                 </div>
@@ -70,19 +58,25 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
                 <Timer expectedSeconds={60} isSubmitting={isSubmitting} />
 
             </div>
-        </section>
-    );
-};
-
-const App = () => {
-    const slide_files = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('slide_files') : [];
-
-
-    return (
-        <div className="bg-gray-100 min-h-screen py-8">
-            <SlideVisualizer slide_files={slide_files} />
         </div>
     );
 };
 
-export default App;
+export default function WorkflowStep3() {
+    const slide_files = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('slide_files') : [];
+    return (
+        <div>
+            <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
+                <h1 className="h1">Step 3: Review Slides</h1>
+            </div>
+
+            <div className="max-w-4xl mx-auto px-6">
+                <p>
+                    This is the slides generated.
+                </p>
+                <br />
+                <SlideVisualizer slide_files={slide_files} />
+            </div>
+        </div>
+    );
+};
