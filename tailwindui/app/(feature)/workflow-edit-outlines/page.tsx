@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { FormEvent } from 'react';
 import Timer from '@/components/Timer';
@@ -10,7 +10,6 @@ import ProjectProgress from "@/components/steps";
 const OutlineVisualizer = ({ outline }: { outline: any }) => {
     const router = useRouter();
     const [outlineData, setOutlineData] = useState(outline);
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>, sectionIndex: string, detailIndex: number, key: string) => {
         const { value } = e.target;
         setOutlineData((prevOutlineData: any) => {
@@ -128,13 +127,14 @@ export default function WorkflowStep2() {
     const storedOutline = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('outline') : null;
     const outline = storedOutline ? JSON.parse(storedOutline) : null;
     const outlineRes = outline ? JSON.parse(outline.res) : null;
+    const contentRef = useRef<HTMLDivElement>(null);
     return (
         <div>
+            <ProjectProgress currentInd={1} contentRef={contentRef} />
             <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
                 <h1 className="h1">Step 2: Edit Outlines</h1>
             </div>
-
-            <div className="max-w-md mx-auto px-6">
+            <div className="max-w-md mx-auto px-6" ref={contentRef}>
                 <p>
                     This is the outline generated. You can edit the details below.
                 </p>
@@ -144,5 +144,3 @@ export default function WorkflowStep2() {
         </div>
     );
 };
-
-// export default App;

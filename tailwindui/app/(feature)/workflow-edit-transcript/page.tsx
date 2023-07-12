@@ -1,10 +1,11 @@
 'use client'
 
-import React, { useState, useEffect, FormEvent } from 'react';
+import React, { useState, useRef, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Timer from '@/components/Timer';
 import GoBackButton from '@/components/GoBackButton';
 import ImageList from '@/components/ImageList';
+import ProjectProgress from '@/components/steps';
 
 const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], imageUrls: [] }) => {
     const [transcriptList, setTranscriptList] = useState<string[]>(transcripts);
@@ -72,7 +73,7 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
     return (
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
             {transcriptList.map((data, index) => (
-                <div className='grid grid-rows-2 md:grid-rows-1 md:grid-cols-2 mt-4 rounded border-solid border-2 border-blue-200'>
+                <div tabIndex={index} className='grid grid-rows-2 md:grid-rows-1 md:grid-cols-2 mt-4 rounded border-solid border-2 border-blue-200 focus-within:border-blue-600'>
                     <ImageList urls={[imageUrls[index]]} height={100} />
                     <textarea
                         key={index}
@@ -82,7 +83,7 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
                     />
                 </div>
             ))}
-            <div className='block md:hidden'>
+            <div className='block xl:hidden'>
                 <GoBackButton />
             </div>
             {/* Form */}
@@ -110,14 +111,15 @@ export default function WorkflowStep4() {
     const foldername = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('foldername') : '';
     const image_files = typeof sessionStorage !== 'undefined' ? JSON.parse(sessionStorage.getItem('image_files') || '[]') : [];
     const imageUrls = image_files.map((filename: string) => `/api/jpg?foldername=${foldername}&filename=${filename}`);
+    const contentRef = useRef<HTMLDivElement>(null);
 
     return (
         <div>
+            <ProjectProgress currentInd={3} contentRef={contentRef} />
             <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
                 <h1 className="h1">Step 4: Edit Transcript</h1>
             </div>
-
-            <div className="max-w-6xl mx-auto">
+            <div className="max-w-6xl mx-auto grow" ref={contentRef}>
                 <p>
                     This is the transcripts generated. Please edit the transcripts to your liking.
                 </p>
@@ -125,5 +127,5 @@ export default function WorkflowStep4() {
                 <TranscriptVisualizer transcripts={transcripts} imageUrls={imageUrls} />
             </div>
         </div>
-        )
+    )
 }
