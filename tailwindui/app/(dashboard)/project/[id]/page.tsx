@@ -1,9 +1,12 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import AuthService from '@/components/utils/AuthService';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Dialog, Transition } from '@headlessui/react';
 
 interface Project {
     project_name: string;
@@ -25,7 +28,16 @@ const ProjectDetail = () => {
     const [project, setProject] = useState<Project | null>(null);
     const pathname = usePathname();
     const router = useRouter();
+    const [deleteInd, setDeleteInd] = useState(-1);
 
+    const [isOpen, setIsOpen] = useState(false);
+    function closeModal() {
+        setIsOpen(false)
+    };
+
+    function openModal() {
+        setIsOpen(true)
+    };
     useEffect(() => {
         // Create a scoped async function within the hook.
         const fetchUser = async () => {
@@ -160,56 +172,61 @@ const ProjectDetail = () => {
     const handleDelete = async () => {
         const projectId = sessionStorage.getItem('project_id');
         // Modal for warning
-        alert(`Project ${projectId} will be deleted`);
-        // Communicate with server if user confirm deletion
-        if (true) {
-            const projectDeleteData = {
-                project_id: projectId
-            }
-            try {
-                const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
-                const response = await fetch("/api/delete_project", {
-                    method: "DELETE",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify(projectDeleteData),
-                });
-                if (response.ok) {
-                    const projectDeleteFeedback = await response.json();
-                    if (response.status === 200) {
-                        router.push('/dashboard');
-                        toast.success("Project deleted successfully", {
-                            position: "top-center",
-                            autoClose: 2000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "light",
-                        });
-                    } else {
-                        // error handling does not work
-                        toast.error(projectDeleteFeedback.message, {
-                            position: "top-center",
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "light",
-                        });
-                    }
-                }
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
+        setDeleteInd(projectId);
+        setIsOpen(true);
     };
+
+    const confirmDelete = async () => {
+        setIsOpen(false);
+        if (deleteInd == -1) {
+            throw "Error";
+        }
+        const projectDeleteData = {
+            project_id: deleteInd
+        }
+        try {
+            const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+            const response = await fetch("/api/delete_project", {
+                method: "DELETE",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(projectDeleteData),
+            });
+            if (response.ok) {
+                const projectDeleteFeedback = await response.json();
+                if (response.status === 200) {
+                    router.push('/dashboard');
+                    toast.success("Project deleted successfully", {
+                        position: "top-center",
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                } else {
+                    // error handling does not work
+                    toast.error(projectDeleteFeedback.message, {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        }
+        setDeleteInd(-1);
+    }
 
     return (
         <section className="bg-gradient-to-b from-gray-100 to-white">
@@ -258,6 +275,64 @@ const ProjectDetail = () => {
                     </div>
                 </div>
             </div>
+            <Transition appear show={isOpen} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 scale-95"
+                                enterTo="opacity-100 scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 scale-100"
+                                leaveTo="opacity-0 scale-95"
+                            >
+                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-lg font-medium leading-6 text-gray-900"
+                                    >
+                                        Delete Project?
+                                    </Dialog.Title>
+                                    <div className="mt-2">
+                                        <p className="text-sm text-gray-500">
+                                            Deleted Project cannot be restored.
+                                        </p>
+                                    </div>
+
+                                    <div className="flex">
+                                        <div className="flex justify-center mt-4">
+                                            <button className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded mr-2 btn-size"
+                                                onClick={confirmDelete}>
+                                                Yes
+                                            </button>
+                                        </div>
+                                        <div className="flex justify-center mt-4">
+                                            <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded mr-2 btn-size"
+                                                onClick={closeModal}>
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition>
         </section>
     );
 
