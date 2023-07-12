@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, MouseEvent } from 'react';
+import React, { useState, MouseEvent, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import CSS from 'csstype';
 
@@ -74,16 +74,48 @@ const OneStep: React.FC<StepProps> = ({ id, current, finished, desc, redirect })
 }
 
 interface Current {
-    currentInd: number
+    currentInd: number,
+    contentRef: React.RefObject<HTMLDivElement>
 }
 
-const ProgressBox = (steps: string[], redirect: string[], finishedSteps: ()=>number[]) => {
+// General progress indicator component
+const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => number[]) => {
     const stepRedirectPair = steps.map((desc, index) => { return [desc, redirect[index]] });
+    const CurrentProgress: React.FC<Current> = ({ currentInd, contentRef }) => {
+        const progressRef = useRef<HTMLDivElement>(null);
+        // fire on every window resize
+        useEffect(() => {
+            function handleResize() {
+                // Constants -> working for workflow now
+                const minTitleHeight = 500;
+                const headerHeight = 80;
+                const gap = 20;
 
-    const CurrentProgress: React.FC<Current> = ({ currentInd }) => {
+                const viewWidth = window.innerWidth;
+                const viewHeight = window.innerHeight;
+                var contentWidth = viewWidth;
+                if (contentRef.current) { contentWidth = contentRef.current.offsetWidth; }
+                var progressWidth = 0;
+                var progressHeight = 0;
+                if (progressRef.current) {
+                    progressWidth = progressRef.current.offsetWidth;
+                    progressHeight = progressRef.current.offsetHeight;
+                }
+                const marginAvailable = (viewWidth - contentWidth) / 2;
+                if (progressRef.current && marginAvailable >= gap + progressWidth) {
+                    progressRef.current.style.visibility = 'visible';
+                    progressRef.current.style.left = `${marginAvailable - gap - progressWidth}px`;
+                    progressRef.current.style.top = `${Math.max((viewHeight - headerHeight - progressHeight), minTitleHeight)/2}px`;
+                } else if (progressRef.current) {
+                    progressRef.current.style.visibility = 'hidden';
+                }
+            }
+            handleResize();
+            window.addEventListener('resize', handleResize);
+        })
         return (
-            <div className='hidden md:block w-fit mr-20 ml-auto select-none grow-0'>
-                <div className='-top-4 p-5 mb-6 flex justify-center border-r-2 border-r-blue-200 sticky top-1/4'>
+            <div style={{visibility: 'hidden'}} className='fixed w-fit select-none grow-0' ref={progressRef}>
+                <div className='-top-4 p-5 mb-6 flex justify-center border-r-2 border-r-blue-200 sticky'>
                     <div className='w-fit flex flex-col flex-nowrap content-start'>
                         {stepRedirectPair.map((pair, index) => (
                             <OneStep
@@ -102,35 +134,37 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: ()=>num
 }
 
 // Set up actual progress indicators with texts and redirections
-const steps = ['Topic', 'Outlines', 'Slides', 'Transcript', 'Audio', 'Video'];
-const redirect = ['/workflow-generate-outlines',
-    '/workflow-edit-outlines',
-    '/workflow-review-slides',
-    '/workflow-edit-transcript',
-    '/workflow-review-audio',
-    '/workflow-review-video'];
-const projectFinishedSteps: () => number[] = () => {
-    const finishedStepsArray: number[] = [];
-    if (typeof window !== 'undefined' && sessionStorage.getItem('topic')) {
-        finishedStepsArray.push(0);
+const ProjectProgress = () => {
+    const steps = ['Topic', 'Outlines', 'Slides', 'Transcript', 'Audio', 'Video'];
+    const redirect = ['/workflow-generate-outlines',
+        '/workflow-edit-outlines',
+        '/workflow-review-slides',
+        '/workflow-edit-transcript',
+        '/workflow-review-audio',
+        '/workflow-review-video'];
+    const projectFinishedSteps: () => number[] = () => {
+        const finishedStepsArray: number[] = [];
+        if (typeof window !== 'undefined' && sessionStorage.getItem('topic')) {
+            finishedStepsArray.push(0);
+        }
+        if (typeof window !== 'undefined' && sessionStorage.getItem('outline')) {
+            finishedStepsArray.push(1);
+        }
+        if (typeof window !== 'undefined' && sessionStorage.getItem('image_files')) {
+            finishedStepsArray.push(2);
+        }
+        if (typeof window !== 'undefined' && sessionStorage.getItem('transcripts')) {
+            finishedStepsArray.push(3);
+        }
+        if (typeof window !== 'undefined' && sessionStorage.getItem('audio_files')) {
+            finishedStepsArray.push(4);
+        }
+        if (typeof window !== 'undefined' && sessionStorage.getItem('video_file')) {
+            finishedStepsArray.push(5);
+        }
+        return finishedStepsArray;
     }
-    if (typeof window !== 'undefined' && sessionStorage.getItem('outline')) {
-        finishedStepsArray.push(1);
-    }
-    if (typeof window !== 'undefined' && sessionStorage.getItem('image_files')) {
-        finishedStepsArray.push(2);
-    }
-    if (typeof window !== 'undefined' && sessionStorage.getItem('transcripts')) {
-        finishedStepsArray.push(3);
-    }
-    if (typeof window !== 'undefined' && sessionStorage.getItem('audio_files')) {
-        finishedStepsArray.push(4);
-    }
-    if (typeof window !== 'undefined' && sessionStorage.getItem('video_file')) {
-        finishedStepsArray.push(5);
-    }
-    return finishedStepsArray;
+    return ProgressBox(steps, redirect, projectFinishedSteps);
 }
-const ProjectProgress = ProgressBox(steps, redirect, projectFinishedSteps);
 
-export default ProjectProgress;
+export default ProjectProgress();

@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthService from '@/components/utils/AuthService';
 
-export default function CreateProject() {
+function CreateProject() {
     const [projectName, setProjectName] = useState('');
     const [projectDescription, setProjectDescription] = useState('');
     const router = useRouter();
@@ -96,57 +96,65 @@ export default function CreateProject() {
     }
 
     return (
-        <section className="bg-gradient-to-b from-gray-100 to-white">
+        <div>
             <ToastContainer />
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
-                <div className="pt-32 pb-12 md:pt-40 md:pb-20">
 
-                    {/* Page header */}
-                    <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-                        <h1 className="h1">Create new project</h1>
-                    </div>
+                {/* Form */}
+                <div className="max-w-sm mx-auto">
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-4">
+                            <label htmlFor="project_name" className="block font-medium text-gray-700">
+                                Project Name<span className="text-red-500">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="project_name"
+                                className="mt-1 focus:ring-blue-600 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                value={projectName}
+                                onChange={handleProjectNameChange}
+                            />
+                        </div>
 
-                    {/* Form */}
-                    <div className="max-w-sm mx-auto">
-                        <form onSubmit={handleSubmit}>
-                            <div className="mb-4">
-                                <label htmlFor="project_name" className="block font-medium text-gray-700">
-                                    Project Name<span className="text-red-500">*</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    id="project_name"
-                                    className="mt-1 focus:ring-blue-600 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                                    value={projectName}
-                                    onChange={handleProjectNameChange}
-                                />
-                            </div>
+                        <div className="mb-4">
+                            <label htmlFor="project_description" className="block font-medium text-gray-700">
+                                Project Description
+                            </label>
+                            <textarea
+                                id="project_description"
+                                className="mt-1 focus:ring-blue-600 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md h-32 resize-none"
+                                value={projectDescription}
+                                onChange={handleProjectDescriptionChange}
+                                placeholder="Enter project description..."
+                            ></textarea>
+                        </div>
 
-                            <div className="mb-4">
-                                <label htmlFor="project_description" className="block font-medium text-gray-700">
-                                    Project Description
-                                </label>
-                                <textarea
-                                    id="project_description"
-                                    className="mt-1 focus:ring-blue-600 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md h-32 resize-none"
-                                    value={projectDescription}
-                                    onChange={handleProjectDescriptionChange}
-                                    placeholder="Enter project description..."
-                                ></textarea>
-                            </div>
-
-                            <div className="text-center">
-                                <button
-                                    type="submit"
-                                    className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-                                >
-                                    Create Project
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                        <div className="text-center">
+                            <button
+                                type="submit"
+                                className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+                            >
+                                Create Project
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </section>
+        </div>
     );
+}
+
+
+export default function WorkflowStepCreate() {
+    return (
+        <div>
+            <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
+                <h1 className="h1">Create new project</h1>
+            </div>
+
+            <div className="max-w-4xl mx-auto">
+                <CreateProject />
+            </div>
+        </div>
+    )
 }

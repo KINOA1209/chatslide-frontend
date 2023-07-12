@@ -33,7 +33,7 @@ const ImageList: React.FC<ImageListProps> = ({ urls, height = 80 }) => { // Set 
       {images.map((imageUrl, index) => (
         <div className={`h-${height} p-4`}> 
         {/* apply the height here */}
-          <img key={index} src={imageUrl} alt={`Image ${index + 1}`} />
+          <img className='object-contain w-full h-full' key={index} src={imageUrl} alt={`Image ${index + 1}`} />
         </div>
       ))}
     </div>
