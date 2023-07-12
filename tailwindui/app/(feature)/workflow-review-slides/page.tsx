@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import SaveToPDF from '@/components/forms/SaveToPdf';
 import TranscriptForm from '@/components/forms/TranscriptForm';
 import Slides from '@/components/Slides';
@@ -41,7 +41,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
             <div className="max-w-4xl mx-auto px-4 sm:px-6">
 
                     <Slides height={160} />
-                <div className='block md:hidden'>
+                <div className='block lg:hidden'>
                     <GoBackButton />
                 </div>
 
@@ -64,13 +64,15 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
 
 export default function WorkflowStep3() {
     const slide_files = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('slide_files') : [];
+    const contentRef = useRef<HTMLDivElement>(null);
     return (
         <div>
+            <ProjectProgress currentInd={2} contentRef={contentRef} />
             <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
                 <h1 className="h1">Step 3: Review Slides</h1>
             </div>
 
-            <div className="max-w-4xl mx-auto px-6">
+            <div className="max-w-4xl mx-auto px-6" ref={contentRef}>
                 <p>
                     This is the slides generated.
                 </p>

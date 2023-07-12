@@ -1,11 +1,12 @@
 'use client'
 
-import React, { useState, useEffect, FormEvent } from 'react';
+import React, { useState, useRef, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Timer from '@/components/Timer';
 import Audio from '@/components/Audio';
 import GoBackButton from '@/components/GoBackButton';
 import ImageList from '@/components/ImageList';
+import ProjectProgress from "@/components/steps";
 
 
 const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageUrls }: { transcripts: [], audioFiles: [], foldername: string, imageUrls: [] }) => {
@@ -73,7 +74,8 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageU
     return (
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
             {transcriptList.map((data, index) => (
-                <div className='flex flex-col md:flex-row rounded border-solid border-2 border-blue-200 mt-4'>
+                
+                <div tabIndex={index} className='flex flex-col md:flex-row rounded border-solid border-2 border-blue-200 mt-4 focus-within:border-blue-600'>
                     <div className='grid grid-rows-2 md:grid-rows-1 md:grid-cols-2'>
                         <ImageList urls={[imageUrls[index]]} height={100} />
                         <textarea
@@ -92,7 +94,7 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageU
                 </div>
             ))}
 
-            <div className='block md:hidden'>
+            <div className='block xl:hidden'>
                 <GoBackButton />
             </div>
 
@@ -123,14 +125,16 @@ export default function WorkflowStep5() {
     const imageUrls = image_files.map((filename: string) => `/api/jpg?foldername=${foldername}&filename=${filename}`);
     const audioData = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('audio_files') : null;
     const audioFiles = audioData ? JSON.parse(audioData) : [];
+    const contentRef = useRef<HTMLDivElement>(null);
 
     return (
         <div>
+            <ProjectProgress currentInd={4} contentRef={contentRef} />
             <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
                 <h1 className="h1">Step 5: Review Audio</h1>
             </div>
 
-            <div className="max-w-6xl mx-auto">
+            <div className="max-w-6xl mx-auto" ref={contentRef}>
                 <p>
                     This is the voices generated. If you want to change the transcript, you can edit in the previous step.
                     You get the voice generation of the first four slides for free!

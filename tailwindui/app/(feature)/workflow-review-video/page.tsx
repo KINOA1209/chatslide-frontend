@@ -1,9 +1,10 @@
 'use client'
 
-import React, { useState, useEffect, FormEvent } from 'react';
+import React, { useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Video from '@/components/Video';
 import GoBackButton from '@/components/GoBackButton';
+import ProjectProgress from "@/components/steps";
 
 const VideoVisualizer = ({ videoFile, foldername }: { videoFile: string, foldername: string }) => {
     const router = useRouter();
@@ -14,7 +15,7 @@ const VideoVisualizer = ({ videoFile, foldername }: { videoFile: string, foldern
                 <Video filename={videoFile} foldername={foldername} />
             </div>
 
-            <div className='block md:hidden'>
+            <div className='block xl:hidden'>
                 <GoBackButton />
             </div>
         </div>
@@ -24,14 +25,16 @@ const VideoVisualizer = ({ videoFile, foldername }: { videoFile: string, foldern
 export default function WorkflowStep6() {
     const videoFile = typeof sessionStorage !== 'undefined' ? (sessionStorage.getItem('video_file') || "") : "";
     const foldername = typeof sessionStorage !== 'undefined' ? (sessionStorage.getItem('foldername') || "") : "";
+    const contentRef = useRef<HTMLDivElement>(null);
 
     return (
         <div>
+            <ProjectProgress currentInd={5} contentRef={contentRef} />
             <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
                 <h1 className="h1">Step 6: Review Video</h1>
             </div>
 
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-4xl mx-auto" ref={contentRef}>
                 <VideoVisualizer videoFile={videoFile} foldername={foldername} />
             </div>
         </div>
