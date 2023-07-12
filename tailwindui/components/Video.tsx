@@ -9,12 +9,10 @@ const VideoPlayer: React.FC<Props> = ({ filename, foldername }) => {
     const videoSource = `/api/video?foldername=${foldername}&filename=${filename}`;
 
     return (
-        <div>
-            <video height="720" controls>
-                <source src={videoSource} type="video/mp4" />
-                Your browser does not support the video tag.
-            </video>
-        </div>
+        <video height="720" controls>
+            <source src={videoSource} type="video/mp4" />
+            Your browser does not support the video tag.
+        </video>
     );
 };
 
