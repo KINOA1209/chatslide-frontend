@@ -170,10 +170,12 @@ const ProjectDetail = () => {
     };
 
     const handleDelete = async () => {
-        const projectId = sessionStorage.getItem('project_id');
-        // Modal for warning
-        setDeleteInd(projectId);
-        setIsOpen(true);
+        const projectIdString = sessionStorage.getItem('project_id');
+        if (projectIdString !== null) {
+            // Modal for warning
+            setDeleteInd(parseInt(projectIdString));
+            setIsOpen(true);
+        }
     };
 
     const confirmDelete = async () => {
