@@ -95,7 +95,7 @@ const ProjectDetail = () => {
                 console.log('this is project_id', project_id);
                 sessionStorage.setItem('project_id', project_id);
             }
-            
+
             // fetch project details
             const response = await fetch('/api/get_project_details', {
                 method: 'POST',
@@ -147,17 +147,69 @@ const ProjectDetail = () => {
 
     const handleClick = async () => {
         const finishedSteps = projectFinishedSteps();
-      
+
         if (finishedSteps.length > 0) {
-          const lastFinishedStep = finishedSteps[finishedSteps.length - 1];
-          const redirectURL = redirect[lastFinishedStep];
-          router.push(redirectURL);
+            const lastFinishedStep = finishedSteps[finishedSteps.length - 1];
+            const redirectURL = redirect[lastFinishedStep];
+            router.push(redirectURL);
         } else {
             router.push('/workflow-intro');
         }
-      };
+    };
 
+    const handleDelete = async () => {
+        const projectId = sessionStorage.getItem('project_id');
+        // Modal for warning
+        alert(`Project ${projectId} will be deleted`);
+        // Communicate with server if user confirm deletion
+        if (true) {
+            const projectDeleteData = {
+                project_id: projectId
+            }
+            try {
+                const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+                const response = await fetch("/api/delete_project", {
+                    method: "DELETE",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(projectDeleteData),
+                });
+                if (response.ok) {
+                    const projectDeleteFeedback = await response.json();
+                    if (response.status === 200) {
+                        router.push('/dashboard');
+                        toast.success("Project deleted successfully", {
+                            position: "top-center",
+                            autoClose: 2000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                        });
+                    } else {
+                        // error handling does not work
+                        toast.error(projectDeleteFeedback.message, {
+                            position: "top-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
 
+    };
 
     return (
         <section className="bg-gradient-to-b from-gray-100 to-white">
@@ -192,8 +244,15 @@ const ProjectDetail = () => {
                         {/* Button Group */}
                         <div className="flex justify-center mt-4">
                             <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded mr-2 btn-size"
-                            onClick={handleClick}>
+                                onClick={handleClick}>
                                 Continue Project
+                            </button>
+                        </div>
+
+                        <div className="flex justify-center mt-4">
+                            <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded mr-2 btn-size"
+                                onClick={handleDelete}>
+                                Delete Project
                             </button>
                         </div>
                     </div>
