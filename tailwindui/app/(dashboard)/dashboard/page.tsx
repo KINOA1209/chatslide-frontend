@@ -73,7 +73,7 @@ export default function Dashboard() {
                 theme: 'light',
             });
         }
-        sessionStorage.clear();
+        sessionStorage.removeItem('signed_in');
     });
 
     const handleRequest = async (token: string) => {
