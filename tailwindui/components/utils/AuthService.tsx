@@ -121,6 +121,26 @@ class AuthService {
             console.error('Error signing out user: ', error);
         }
     }
+
+    async forgotPassword(email: string) {
+        try {
+            await AmplifyAuth.forgotPassword(email);
+            console.log('Code sent successfully');
+        } catch (error) {
+            console.error('Error sending code: ', error);
+            throw error;
+        }
+    }
+
+    async forgotPasswordSubmit(email: string, code: string, newPassword: string) {
+        try {
+            await AmplifyAuth.forgotPasswordSubmit(email, code, newPassword);
+            console.log('Password updated successfully');
+        } catch (error) {
+            console.error('Error updating password: ', error);
+            throw error;
+        }
+    }
 }
 
 export default new AuthService();
