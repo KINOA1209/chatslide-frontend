@@ -73,7 +73,7 @@ export default function WorkflowStep3() {
             </div>
 
             <div className="max-w-4xl mx-auto px-6" ref={contentRef}>
-                <p>
+                <p className='px-6'>
                     This is the slides generated.
                 </p>
                 <br />
