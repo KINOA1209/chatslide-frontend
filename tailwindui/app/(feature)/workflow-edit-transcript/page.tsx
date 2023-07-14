@@ -119,8 +119,8 @@ export default function WorkflowStep4() {
             <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
                 <h1 className="h1">Step 4: Edit Transcript</h1>
             </div>
-            <div className="max-w-6xl mx-auto grow" ref={contentRef}>
-                <p>
+            <div className="max-w-4xl mx-auto grow" ref={contentRef}>
+                <p className='px-6'>
                     This is the transcripts generated. Please edit the transcripts to your liking.
                 </p>
                 <br />

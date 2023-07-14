@@ -134,8 +134,8 @@ export default function WorkflowStep5() {
                 <h1 className="h1">Step 5: Review Audio</h1>
             </div>
 
-            <div className="max-w-6xl mx-auto" ref={contentRef}>
-                <p>
+            <div className="max-w-4xl mx-auto" ref={contentRef}>
+                <p className='px-6'>
                     This is the voices generated. If you want to change the transcript, you can edit in the previous step.
                     You get the voice generation of the first four slides for free!
                 </p>
