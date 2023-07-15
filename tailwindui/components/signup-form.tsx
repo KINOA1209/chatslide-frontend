@@ -125,15 +125,29 @@ const SignupForm: React.FC = () => {
             await AuthService.confirmSignUp(email, code);
             const signInResponse = await AuthService.signIn(email, password);  //auto sign in afterwards
             if (signInResponse) {
-                const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+                const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
                 if (userId) {
                     console.log('User registered:', userId);
-                    sessionStorage.setItem("signed_up", "true")
+                    sessionStorage.setItem("signed_in", "true")
                 }
                 if (nextUri == null) {
-                    router.push("/signin");
+                    router.push("/dashboard");
                 } else {
-                    router.push(`/signin?next=${encodeURIComponent(nextUri)}`);
+                    const project_id = sessionStorage.getItem('project_id') || '';
+                try {
+                    const response = await fetch('/api/link_project', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                      },
+                      body: JSON.stringify({ 'project_id': project_id }),
+                    });
+                    console.log(response);
+                    router.push(nextUri); // Redirect to nextUri
+                  } catch (error) {
+                    console.error(error);
+                  }
                 }
             }
         } catch (error: any) {
