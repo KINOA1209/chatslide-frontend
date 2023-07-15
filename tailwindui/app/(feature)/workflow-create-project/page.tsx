@@ -11,6 +11,10 @@ function CreateProject() {
     const [projectDescription, setProjectDescription] = useState('');
     const router = useRouter();
 
+    useEffect(() => {
+        sessionStorage.clear()
+      }, []);
+
     const handleProjectNameChange = (event: ChangeEvent<HTMLInputElement>) => {
         setProjectName(event.target.value);
     };
