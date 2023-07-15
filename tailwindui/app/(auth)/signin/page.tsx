@@ -6,40 +6,19 @@
 
 import LoginForm from "@/components/login-form";
 import Link from "next/link";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import GoogleSignIn from "@/components/GoogleSignIn";
+
 
 export default function SignIn() {
     const searchParams = useSearchParams();
     const nextUri = searchParams.get("next");
 
-    if (typeof window !== "undefined") {
-        var signed_up = sessionStorage.getItem("signed_up");
-    }
-
-    useEffect(() => {
-        console.log(signed_up);
-        if (signed_up && signed_up === "true") {
-            toast.success("Sign up successfully", {
-                position: "top-center",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
-            sessionStorage.removeItem("signed_up");
-        }
-    });
 
     return (
         <section className="bg-gradient-to-b from-gray-100 to-white">
-            <ToastContainer />
+
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
                 <div className="pt-32 pb-12 md:pt-40 md:pb-20">
                     {/* Page header */}
