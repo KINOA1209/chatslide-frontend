@@ -1,4 +1,5 @@
 import Logo from "./logo";
+import { useEffect, useRef } from 'react';
 
 export default function Footer() {
   return (
@@ -17,8 +18,7 @@ export default function Footer() {
                 className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out"
               >
                 Terms
-              </a>{" "}
-              ·{" "}
+              </a>&nbsp;·&nbsp;
               <a
                 href="/privacy"
                 className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out"
@@ -183,6 +183,74 @@ export default function Footer() {
           <div className="text-sm text-gray-600 mr-4">
             &copy; drlambda.ai. All rights reserved.
           </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+
+export function WorkflowFooter() {
+  return (
+    <footer>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        {/* Bottom area */}
+        <div className="md:grid md:grid-cols-3  py-4 md:py-8 border-t border-gray-200">
+          {/* Social as */}
+          <ul className="flex justify-center md:justify-end md:order-1 mb-2 md:mb-0">
+            <li>
+              <a
+                href="https://twitter.com/drlambda_ai"
+                className="flex justify-center items-center text-gray-600 hover:text-gray-900 bg-white hover:bg-white-100 rounded-full shadow transition duration-150 ease-in-out"
+                aria-label="Twitter"
+              >
+                <svg
+                  className="w-8 h-8 fill-current"
+                  viewBox="0 0 32 32"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M24 11.5c-.6.3-1.2.4-1.9.5.7-.4 1.2-1 1.4-1.8-.6.4-1.3.6-2.1.8-.6-.6-1.5-1-2.4-1-1.7 0-3.2 1.5-3.2 3.3 0 .3 0 .5.1.7-2.7-.1-5.2-1.4-6.8-3.4-.3.5-.4 1-.4 1.7 0 1.1.6 2.1 1.5 2.7-.5 0-1-.2-1.5-.4 0 1.6 1.1 2.9 2.6 3.2-.3.1-.6.1-.9.1-.2 0-.4 0-.6-.1.4 1.3 1.6 2.3 3.1 2.3-1.1.9-2.5 1.4-4.1 1.4H8c1.5.9 3.2 1.5 5 1.5 6 0 9.3-5 9.3-9.3v-.4c.7-.5 1.3-1.1 1.7-1.8z" />
+                </svg>
+              </a>
+            </li>
+            <li className="ml-4">
+              <a
+                href="https://www.youtube.com/@drlambda_ai"
+                className="flex justify-center items-center text-gray-600 hover:text-gray-900 bg-white hover:bg-white-100 rounded-full shadow transition duration-150 ease-in-out"
+                aria-label="Facebook"
+              >
+                <svg
+                  className="w-8 h-8 fill-current"
+                  viewBox="0 0 32 32"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M29.5,11.3c-0.32-1.54-1.54-2.75-3.08-3.08C20.75,7.2,16,7.2,16,7.2s-4.75,0-10.42,1.02c-1.54,0.33-2.75,1.54-3.08,3.08 C2.2,14.25,2.2,16,2.2,16s0,1.75,0.3,3.7c0.33,1.54,1.54,2.75,3.08,3.08C11.25,23.8,16,23.8,16,23.8s4.75,0,10.42-1.02 c1.54-0.33,2.75-1.54,3.08-3.08c0.3-1.95,0.3-3.7,0.3-3.7S29.8,12.85,29.5,11.3z M13.5,18.15V11.85L21.35,16L13.5,18.15z" />
+                </svg>
+              </a>
+            </li>
+          </ul>
+
+          {/* Copyrights note */}
+          <div className="flex justify-center md:justify-start text-sm text-gray-600 mb-2 md:mb-0">
+            &copy; drlambda.ai. All rights reserved.
+          </div>
+
+          {/* legal note */}
+          <div className="flex justify-center text-sm text-gray-600">
+            <a
+              href="/terms"
+              className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out"
+            >
+              Terms
+            </a>&nbsp;·&nbsp;
+            <a
+              href="/privacy"
+              className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out"
+            >
+              Privacy Policy
+            </a>
+          </div>
+
         </div>
       </div>
     </footer>
