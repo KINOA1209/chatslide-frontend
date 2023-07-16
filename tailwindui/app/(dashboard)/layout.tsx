@@ -1,6 +1,3 @@
-"use client";
-
-import { useRef, useEffect } from 'react';
 import { WorkflowFooter } from '@/components/ui/footer'
 
 export default function DashBoardLayout({
@@ -8,18 +5,8 @@ export default function DashBoardLayout({
 }: {
   children: React.ReactNode
 }) {
-  const pageRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    function handleResize() {
-      if (pageRef.current) {
-        pageRef.current.style.minHeight = `${window.innerHeight}px`;
-      }
-    }
-    handleResize();
-    window.addEventListener('resize', handleResize);
-  })
   return (
-    <main className="flex flex-col" ref={pageRef}>
+    <main className="flex flex-col" style={{minHeight:'100vh'}}>
       <div className='grow'>
         {children}
       </div>

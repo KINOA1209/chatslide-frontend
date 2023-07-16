@@ -1,6 +1,3 @@
-"use client";
-
-import { useRef, useEffect } from 'react';
 import { WorkflowFooter } from '@/components/ui/footer'
 
 export default function WorkflowLayout({
@@ -8,18 +5,8 @@ export default function WorkflowLayout({
 }: {
   children: React.ReactNode
 }) {
-  const pageRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    function handleResize() {
-      if (pageRef.current) {
-        pageRef.current.style.minHeight = `${window.innerHeight}px`;
-      }
-    }
-    handleResize();
-    window.addEventListener('resize', handleResize);
-  })
   return (
-    <main className="flex flex-col" ref={pageRef}>
+    <main className="flex flex-col" style={{minHeight:'100vh'}}>
       <section className="bg-gradient-to-b from-gray-100 to-white pb-8 grow">
         {/* Content */}
         {children}
