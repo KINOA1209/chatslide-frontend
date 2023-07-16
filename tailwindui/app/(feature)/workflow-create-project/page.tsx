@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AuthService from '@/components/utils/AuthService';
 
 function CreateProject() {
-    const [projectName, setProjectName] = useState('');
+    const [projectName, setProjectName] = useState('My First Project');
     const [projectDescription, setProjectDescription] = useState('');
     const router = useRouter();
 
