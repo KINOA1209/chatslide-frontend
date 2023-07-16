@@ -1,21 +1,30 @@
 "use client";
 
-import { useRef } from 'react';
-import Footer from '@/components/ui/footer'
+import { useRef, useEffect } from 'react';
+import { WorkflowFooter } from '@/components/ui/footer'
 
 export default function WorkflowLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const workflowLayoutRef = useRef(null);
+  const pageRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    function handleResize() {
+      if (pageRef.current) {
+        pageRef.current.style.minHeight = `${window.innerHeight}px`;
+      }
+    }
+    handleResize();
+    window.addEventListener('resize', handleResize);
+  })
   return (
-    <main className="grow">
-      <section ref={workflowLayoutRef} className="bg-gradient-to-b from-gray-100 to-white pb-8">
+    <main className="flex flex-col" ref={pageRef}>
+      <section className="bg-gradient-to-b from-gray-100 to-white pb-8 grow">
         {/* Content */}
         {children}
       </section>
-      {/* <Footer /> */}
+      <WorkflowFooter />
     </main>
   )
 }
