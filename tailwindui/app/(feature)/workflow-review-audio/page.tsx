@@ -94,10 +94,6 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageU
                 </div>
             ))}
 
-            <div className='block xl:hidden'>
-                <GoBackButton />
-            </div>
-
             {/* Form */}
             <div className="max-w-sm mx-auto">
                 <form onSubmit={handleSubmit}>

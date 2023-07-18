@@ -14,10 +14,6 @@ const VideoVisualizer = ({ videoFile, foldername }: { videoFile: string, foldern
             <div className='w-fit block m-auto'>
                 <Video filename={videoFile} foldername={foldername} />
             </div>
-
-            <div className='block xl:hidden'>
-                <GoBackButton />
-            </div>
         </div>
     );
 };

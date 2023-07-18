@@ -102,10 +102,6 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
                 </div>
             ))}
 
-            <div className='block md:hidden'>
-                <GoBackButton />
-            </div>
-
             {/* Form */}
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-wrap -mx-3 mt-6">
