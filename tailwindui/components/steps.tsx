@@ -89,18 +89,6 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
         const [mobileOpended, setMobileOpened] = useState<boolean>(false);
         const [mobileButtonDisplay, setMobileButtonDisplay] = useState<CSS.Property.Display>('none');
 
-        // const handleMobileDisplay = () => {
-        //     if (mobileMode && mobileOpended) {
-        //         setMobileDisplay('flex');
-        //     } else {
-        //         setMobileDisplay('none');
-        //     }
-        //     setMobileButtonDisplay('none');
-        //     if (mobileMode && !mobileOpended) {
-        //         setMobileButtonDisplay('flex');
-        //     }
-        // };
-
         // fire on every window resize
         useEffect(() => {
             function handleResize() {
