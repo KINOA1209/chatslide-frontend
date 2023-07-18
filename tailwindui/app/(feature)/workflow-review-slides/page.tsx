@@ -40,10 +40,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
             <ToastContainer />
             <div className="max-w-4xl mx-auto px-4 sm:px-6">
 
-                    <Slides height={160} />
-                <div className='block lg:hidden'>
-                    <GoBackButton />
-                </div>
+                <Slides height={160} />
 
 
                 <SaveToPDF />
