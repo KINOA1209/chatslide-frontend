@@ -3,12 +3,33 @@
 import { useState, useRef, useEffect } from 'react'
 import { Transition } from '@headlessui/react'
 import Link from 'next/link'
+import AuthService from "../utils/AuthService";
+import { toast } from 'react-toastify';
 
 export default function MobileMenu() {
   const [mobileNavOpen, setMobileNavOpen] = useState<boolean>(false)
 
   const trigger = useRef<HTMLButtonElement>(null)
   const mobileNav = useRef<HTMLDivElement>(null)
+  const [username, setUsername] = useState(null);
+  useEffect(() => {
+    // Create a scoped async function within the hook.
+    const fetchUser = async () => {
+      if (username === null) {
+        try {
+          const usernameFetched = await AuthService.getCurrentUserDisplayName();
+          if (usernameFetched) {
+            setUsername(usernameFetched);
+          }
+        }
+        catch {
+          console.log("No username to display.");
+        }
+      }
+    };
+    // Execute the created function directly
+    fetchUser();
+  });
 
   // close the mobile menu on click outside
   useEffect(() => {
@@ -30,6 +51,27 @@ export default function MobileMenu() {
     document.addEventListener('keydown', keyHandler)
     return () => document.removeEventListener('keydown', keyHandler)
   })
+
+  const signOut = async () => {
+    try {
+      await AuthService.signOut();
+      sessionStorage.clear();
+      console.log('You have signed out!');
+      setUsername(null);
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
 
   return (
     <div className="flex md:hidden">
@@ -64,18 +106,36 @@ export default function MobileMenu() {
           leaveTo="opacity-0"
         >
           <ul className="px-5 py-2">
-            <li>
-              <Link href="/signin" className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center" onClick={() => setMobileNavOpen(false)}>Sign in</Link>
-            </li>
-            <li>
-              <Link href="/signup" className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 w-full my-2" onClick={() => setMobileNavOpen(false)}>
-                <span>Sign up</span>
-                <svg className="w-3 h-3 fill-current text-gray-400 shrink-0 ml-2 -mr-1" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M11.707 5.293L7 .586 5.586 2l3 3H0v2h8.586l-3 3L7 11.414l4.707-4.707a1 1 0 000-1.414z" fill="#999" fillRule="nonzero" />
-                </svg>
-              </Link>
-            </li>
-          </ul>          
+            {username ?
+              (<>
+                <div className='text-2xl py-4 text-blue-500'>Hi, {username}</div>
+                <li>
+                  <Link href="/dashboard" className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center" onClick={() => setMobileNavOpen(false)}>Projects</Link>
+                </li>
+                <li>
+                  <Link href="/#" className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center" onClick={() => setMobileNavOpen(false)}>Account settings</Link>
+                </li>
+                <hr className='border-gray-400'/>
+                <li>
+                  <div onClick={signOut}>
+                    <Link href="/" className="flex font-medium w-full text-red-500 hover:text-red-600 py-2 justify-center" onClick={() => setMobileNavOpen(false)}>Log Out</Link>
+                  </div>
+                </li>
+              </>) : (
+                <>
+                  <li>
+                    <Link href="/signin" className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center" onClick={() => setMobileNavOpen(false)}>Sign in</Link>
+                  </li>
+                  <li>
+                    <Link href="/signup" className="btn-sm text-gray-200 bg-gray-900 hover:bg-gray-800 w-full my-2" onClick={() => setMobileNavOpen(false)}>
+                      <span>Sign up</span>
+                      <svg className="w-3 h-3 fill-current text-gray-400 shrink-0 ml-2 -mr-1" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11.707 5.293L7 .586 5.586 2l3 3H0v2h8.586l-3 3L7 11.414l4.707-4.707a1 1 0 000-1.414z" fill="#999" fillRule="nonzero" />
+                      </svg>
+                    </Link>
+                  </li>
+                </>)}
+          </ul>
         </Transition>
       </div>
     </div>
