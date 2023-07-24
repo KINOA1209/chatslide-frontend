@@ -14,6 +14,7 @@ const TopicForm: React.FC = () => {
     const [audience, setAudience] = useState((typeof window !== 'undefined' && sessionStorage.audience != undefined) ? sessionStorage.audience : 'High school students' );
     const [requirements, setRequirements] = useState((typeof window !== 'undefined' && sessionStorage.requirements != undefined) ? sessionStorage.requirements : 'High school knowledge' );
     const [language, setLanguage] = useState((typeof window !== 'undefined' && sessionStorage.language != undefined) ? sessionStorage.language : 'English' );
+    const [addEquations, setAddEquations] = useState((typeof window !== 'undefined' && sessionStorage.addEquations != undefined) ? sessionStorage.addEquations : 'English' );
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const project_id = (typeof window !== 'undefined' && sessionStorage.project_id != undefined) ? sessionStorage.project_id : '';
@@ -25,6 +26,7 @@ const TopicForm: React.FC = () => {
             requirements: (event.target as HTMLFormElement).requirements.value,
             audience: (event.target as HTMLFormElement).audience.value,
             language: (event.target as HTMLFormElement).language.value,
+            addEquations: (event.target as HTMLFormElement).addEquations.value,
             project_id: project_id,
         };
 
@@ -32,6 +34,7 @@ const TopicForm: React.FC = () => {
         sessionStorage.setItem('requirements', formData.requirements);
         sessionStorage.setItem('audience', formData.audience);
         sessionStorage.setItem('language', formData.language);
+        sessionStorage.setItem('addEquations', formData.addEquations);
 
         console.log("created form data");
 
@@ -115,7 +118,7 @@ const TopicForm: React.FC = () => {
                         id="audience"
                         type="text"
                         className="form-input w-full text-gray-800"
-                        placeholder="Econ students"
+                        placeholder="High school students"
                         value={audience}
                         onChange={e => setAudience(e.target.value)}
                         required
@@ -133,11 +136,27 @@ const TopicForm: React.FC = () => {
                         id="requirements"
                         type="text"
                         className="form-input w-full text-gray-800"
-                        placeholder="Basic economics"
+                        placeholder="High school knowledge"
                         value={requirements}
                         onChange={e => setRequirements(e.target.value)}
                         required
                     />
+                </div>
+            </div>
+            <div className="flex flex-wrap -mx-3 mb-4">
+                <div className="w-full px-3 mt-2 flex">
+                    <input
+                        type="checkbox"
+                        id="addEquations"
+                        className="form-checkbox text-gray-800"
+                        value={addEquations}
+                        onChange={e => setAddEquations(e.target.checked)}
+                    />
+                    <label
+                        className="block text-gray-800 text-sm font-medium mb-1"
+                        htmlFor="addEquations">
+                        &nbsp; &nbsp; Add equations and formulas to my slides
+                    </label>
                 </div>
             </div>
             <div className="flex flex-wrap -mx-3 mb-4">
