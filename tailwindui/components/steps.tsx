@@ -128,7 +128,7 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
             }
             handleResize();
             window.addEventListener('resize', handleResize);
-        }, [])
+        })
 
         const handleMobileClose = (e: React.MouseEvent<HTMLDivElement>) => {
             e.stopPropagation();
