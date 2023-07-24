@@ -3,14 +3,25 @@
 import Image from 'next/image'
 import background from '@/public/images/11062b_dbd82904e3e447898acbf7c3632ee55b~mv2.jpg'
 import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 import AuthService from "./utils/AuthService";
 
 const InternalIntroduction = () => {
   const router = useRouter();
+
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      const user = await AuthService.getCurrentUser();
+      setCurrentUser(user);
+    }
+
+    fetchCurrentUser();
+  }, []); // The empty array means this effect runs once on mount and never again
+
   
   const handleOnClick = async () => {
-    
-    const currentUser = await AuthService.getCurrentUser();
     if (currentUser) {
       router.push('/dashboard');
     } else {
@@ -59,7 +70,7 @@ const InternalIntroduction = () => {
               <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center" data-aos="zoom-y-out" data-aos-delay="300">
                 <div>
                   <a className="btn text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer" onClick={handleOnClick}>
-                    Start free trial
+                    {currentUser ? 'My dashboard' : 'Start free trial'}
                   </a>
                 </div>
                 <div>

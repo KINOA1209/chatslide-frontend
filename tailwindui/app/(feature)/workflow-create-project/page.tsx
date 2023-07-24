@@ -68,7 +68,7 @@ function CreateProject() {
                 if (projectCreateInfo.status === "success") {
                     sessionStorage.setItem("project_id", projectCreateInfo.project_id);
                     setTimeout(() => {
-                        router.push("/workflow-intro");
+                        router.push("/workflow-generate-outlines");
                     }, 500);
                 } else {
                     toast.error(projectCreateInfo.message, {
