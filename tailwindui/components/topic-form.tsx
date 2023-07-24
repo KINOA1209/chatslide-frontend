@@ -14,7 +14,7 @@ const TopicForm: React.FC = () => {
     const [audience, setAudience] = useState((typeof window !== 'undefined' && sessionStorage.audience != undefined) ? sessionStorage.audience : 'High school students' );
     const [requirements, setRequirements] = useState((typeof window !== 'undefined' && sessionStorage.requirements != undefined) ? sessionStorage.requirements : 'High school knowledge' );
     const [language, setLanguage] = useState((typeof window !== 'undefined' && sessionStorage.language != undefined) ? sessionStorage.language : 'English' );
-    const [addEquations, setAddEquations] = useState((typeof window !== 'undefined' && sessionStorage.addEquations != undefined) ? sessionStorage.addEquations : 'English' );
+    const [addEquations, setAddEquations] = useState((typeof window !== 'undefined' && sessionStorage.addEquations != undefined) ? sessionStorage.addEquations : 'false' );
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const project_id = (typeof window !== 'undefined' && sessionStorage.project_id != undefined) ? sessionStorage.project_id : '';
