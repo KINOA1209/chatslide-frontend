@@ -27,8 +27,14 @@ const Timer = ({ expectedSeconds, isSubmitting }: { expectedSeconds: number, isS
     return (
         <div className="mt-4 text-center">
             <span className="text-sm text-gray-500">
-                This usually takes {expectedSeconds} seconds. Time elapsed: {timer} seconds
+            <p>
+                This usually takes {expectedSeconds} seconds. Time elapsed: {timer} seconds.
+            </p>
+            <p>
+                You can safely close the window and come back later.
+            </p>
             </span>
+
         </div>
     );
 };
