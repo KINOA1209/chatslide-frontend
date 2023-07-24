@@ -71,7 +71,7 @@ export default function WorkflowStep3() {
 
             <div className="max-w-4xl mx-auto px-6" ref={contentRef}>
                 <p className='px-6'>
-                    This is the slides generated.
+                    These are the slides generated.
                 </p>
                 <br />
                 <SlideVisualizer slide_files={slide_files} />
