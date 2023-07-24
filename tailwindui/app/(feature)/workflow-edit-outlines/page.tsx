@@ -114,7 +114,7 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
             </form>
 
             {/* Timer */}
-            <Timer expectedSeconds={30} isSubmitting={isSubmitting} />
+            <Timer expectedSeconds={60} isSubmitting={isSubmitting} />
         </div>
     );
 };
