@@ -157,7 +157,6 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose }) => {
                     rows={8} // Increase the number of rows here to make the text field larger
                     value={feedbackText}
                     onChange={handleFeedbackTextChange}
-                    required
                   ></textarea>
                 </div>
                 <div className="mt-4 flex justify-end">
