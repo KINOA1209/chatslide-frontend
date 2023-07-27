@@ -1,7 +1,13 @@
 class DatabaseService {
-    static async getUserCredits(username:string) {
+    static async getUserCredits(username:string,idToken:string) {
       try {
-        const response = await fetch(`/api/user/${username}/credits`);
+        const response = await fetch(`/api/user/<string:uid>/credits`, {
+          method: 'GET',
+          headers: {
+              'Authorization': `Bearer ${idToken}`,
+          },
+      });
+
         if (!response.ok) {
           throw new Error(`Error status: ${response.status}`);
         }

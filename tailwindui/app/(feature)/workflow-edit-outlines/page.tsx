@@ -51,11 +51,9 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
         console.log(formData);
 
         try {
-            const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
             const response = await fetch('/api/generate_slides', {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${idToken}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formData)
