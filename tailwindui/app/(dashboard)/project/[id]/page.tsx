@@ -21,6 +21,7 @@ interface Project {
     transcripts: string;
     image_files: string;
     audio_files: string;
+    pdf_file: string;
     video_file: string;
 }
 
@@ -83,6 +84,9 @@ const ProjectDetail = () => {
             }
             if (project.image_files) {
                 sessionStorage.setItem('image_files', JSON.stringify(project.image_files));
+            }
+            if (project.pdf_file) {
+                sessionStorage.setItem('pdf_file', project.pdf_file);
             }
             if (project.audio_files) {
                 sessionStorage.setItem('audio_files', JSON.stringify(project.audio_files));
