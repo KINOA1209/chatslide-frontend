@@ -15,12 +15,16 @@ import SaveToPPTX from '@/components/forms/saveToPptx';
 const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
     console.log(slide_files);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    
-    if (typeof window !== "undefined") {
-        var signed_in = sessionStorage.getItem("signed_in");
-    }
+
+    // Get language from session storage
+    const language = sessionStorage.getItem("language");
 
     useEffect(() => {
+        console.log("Language:", language);
+    }, [language]);
+
+    useEffect(() => {
+        const signed_in = sessionStorage.getItem("signed_in");
         console.log("signed_in", signed_in);
         if (signed_in && signed_in === "true") {
             toast.success("Sign in successfully", {
@@ -46,7 +50,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
 
 
                 <SaveToPDF />
-                <SaveToPPTX />
+                {language === "English" && <SaveToPPTX />}
 
                 {/* Form */}
                 <TranscriptForm
