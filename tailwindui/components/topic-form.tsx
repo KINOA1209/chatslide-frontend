@@ -10,11 +10,11 @@ const TopicForm: React.FC = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     // bind form data between input and sessionStorage
-    const [topic, setTopic] = useState((typeof window !== 'undefined' && sessionStorage.topic != undefined) ? sessionStorage.topic : '' );
-    const [audience, setAudience] = useState((typeof window !== 'undefined' && sessionStorage.audience != undefined) ? sessionStorage.audience : 'High school students' );
-    const [requirements, setRequirements] = useState((typeof window !== 'undefined' && sessionStorage.requirements != undefined) ? sessionStorage.requirements : 'High school knowledge' );
-    const [language, setLanguage] = useState((typeof window !== 'undefined' && sessionStorage.language != undefined) ? sessionStorage.language : 'English' );
-    const [addEquations, setAddEquations] = useState((typeof window !== 'undefined' && sessionStorage.addEquations != undefined) ? sessionStorage.addEquations : 'false' );
+    const [topic, setTopic] = useState((typeof window !== 'undefined' && sessionStorage.topic != undefined) ? sessionStorage.topic : '');
+    const [audience, setAudience] = useState((typeof window !== 'undefined' && sessionStorage.audience != undefined) ? sessionStorage.audience : 'High school students');
+    const [requirements, setRequirements] = useState((typeof window !== 'undefined' && sessionStorage.requirements != undefined) ? sessionStorage.requirements : 'High school knowledge');
+    const [language, setLanguage] = useState((typeof window !== 'undefined' && sessionStorage.language != undefined) ? sessionStorage.language : 'English');
+    const [addEquations, setAddEquations] = useState((typeof window !== 'undefined' && sessionStorage.addEquations != undefined) ? sessionStorage.addEquations : 'false');
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const project_id = (typeof window !== 'undefined' && sessionStorage.project_id != undefined) ? sessionStorage.project_id : '';
@@ -179,17 +179,17 @@ const TopicForm: React.FC = () => {
                     </select>
                 </div>
             </div>
-
-            <div className="flex flex-wrap -mx-3 mt-6">
-                <div className="w-full px-3">
-                    <button
-                        className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
-                        type="submit">
-                        {isSubmitting ? "Generating..." : "Generate outline"}
-                    </button>
+            <div className="max-w-sm mx-auto">
+                <div className="flex flex-wrap -mx-3 mt-6">
+                    <div className="w-full px-3">
+                        <button
+                            className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
+                            type="submit">
+                            {isSubmitting ? "Generating..." : "Generate outline"}
+                        </button>
+                    </div>
                 </div>
             </div>
-
             {/* Timer */}
             <Timer expectedSeconds={15} isSubmitting={isSubmitting} />
 
