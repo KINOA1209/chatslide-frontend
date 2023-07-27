@@ -20,9 +20,10 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
         // Create a scoped async function within the hook.
         const fetchUser = async () => {
             const username = await AuthService.getCurrentUserDisplayName();
+            const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
             if (username) {
                 setUsername(username);
-                UserService.getUserCredits(username)
+                UserService.getUserCredits(username,idToken)
                 .then(credits => {
                     setCredits(credits)
                 })
