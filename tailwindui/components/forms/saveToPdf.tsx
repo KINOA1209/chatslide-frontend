@@ -64,7 +64,7 @@ const SaveToPdf: React.FC<SaveToPdfProps> = () => {
             <SavePDFModal />
           ) : (
             <button
-            className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
+            className="btn text-blue-600 bg-gray-100 hover:bg-gray-200 w-full border border-blue-600"
             onClick={handleSavePDF}
           >
             Save as PDF

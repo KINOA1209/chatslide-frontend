@@ -14,7 +14,7 @@ const SavePDFModal = () => {
       <button
         data-modal-target="staticModal"
         data-modal-toggle="staticModal"
-        className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
+        className="btn text-blue-600 bg-gray-100 hover:bg-gray-200 w-full border border-blue-600"
         type="button"
         onClick={toggleModal}
       >
@@ -59,7 +59,7 @@ const SavePDFModal = () => {
             {/* Modal body */}
             <div className="p-6 space-y-6">
               <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                To download the PDF or continue to generate the transcript, please sign in.
+                To download or continue to generate the transcript, please sign in.
               </p>
             </div>
             {/* Modal footer */}

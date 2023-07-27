@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 
-const TranscriptFormModal = () => {
+const SavePptxModal = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const toggleModal = () => {
@@ -14,11 +14,11 @@ const TranscriptFormModal = () => {
       <button
         data-modal-target="staticModal"
         data-modal-toggle="staticModal"
-        className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
+        className="btn text-blue-600 bg-gray-100 hover:bg-gray-200 w-full border border-blue-600"
         type="button"
         onClick={toggleModal}
       >
-        Generate Transcript
+        Save as PPTX
       </button>
 
       {/* Main modal */}
@@ -92,4 +92,4 @@ const TranscriptFormModal = () => {
   );
 };
 
-export default TranscriptFormModal;
+export default SavePptxModal;

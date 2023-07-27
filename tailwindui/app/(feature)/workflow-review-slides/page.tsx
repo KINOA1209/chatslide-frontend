@@ -10,6 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProjectProgress from "@/components/steps";
 import FeedbackForm from '@/components/feedback';
+import SaveToPPTX from '@/components/forms/saveToPptx';
 
 const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
     console.log(slide_files);
@@ -45,6 +46,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
 
 
                 <SaveToPDF />
+                <SaveToPPTX />
 
                 {/* Form */}
                 <TranscriptForm
