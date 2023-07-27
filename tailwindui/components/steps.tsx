@@ -144,7 +144,7 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
             <>
                 {/* open mobile sidebar button */}
                 <div
-                    className='select-none fixed rounded-full bottom-20 left-10 w-16 h-16 flex items-center justify-center border-solid border-2 border-blue-200 drop-shadow-lg text-blue-600'
+                    className='select-none fixed rounded-full bottom-20 left-10 w-16 h-16 flex items-center justify-center border-solid border-2 border-blue-200 text-blue-600'
                     style={{ display: mobileButtonDisplay, background: `radial-gradient(closest-side, white 61%, transparent 60% 100%),conic-gradient(#0070f4 ${(currentInd + 1) / steps.length * 100}%, white 0)` }}
                     onClick={handleMobileOpen}>
                     <div>{currentInd + 1}/{steps.length}</div>
@@ -163,7 +163,7 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
                         </div>
                     </div>
                 </div>
-                <div style={{ display: mobileDisplay }} className='fixed w-full h-full z-10 bg-slate-100/50 items-center justify-center' onClick={handleMobileClose}>
+                <div style={{ display: mobileDisplay }} className='fixed w-full h-full z-10 bg-gray-500/75 items-center justify-center' onClick={handleMobileClose}>
                     <div className='w-fit select-none grow-0 drop-shadow-xl border-solid border-2 border-blue-600 rounded-lg bg-white z-20 fixed' ref={progressRefMobile} onClick={e => { e.stopPropagation() }}>
                         <div className='-top-4 flex justify-center sticky'>
                             <div className='w-fit flex flex-col flex-nowrap content-start'>
