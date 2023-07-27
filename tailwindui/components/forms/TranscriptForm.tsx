@@ -56,11 +56,13 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({isSubmitting, setIsSubmi
     console.log(formData);
 
     try {
+      const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
       const response = await fetch('/api/transcript', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-        },
+          'Authorization': `Bearer ${idToken}`,
+          'Content-Type': 'application/json'
+      },
         body: JSON.stringify(formData),
       });
 

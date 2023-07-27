@@ -7,7 +7,7 @@ import Audio from '@/components/Audio';
 import GoBackButton from '@/components/GoBackButton';
 import ImageList from '@/components/ImageList';
 import ProjectProgress from "@/components/steps";
-
+import AuthService from '@/components/utils/AuthService';
 
 const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageUrls }: { transcripts: [], audioFiles: [], foldername: string, imageUrls: [] }) => {
     const [transcriptList, setTranscriptList] = useState<string[]>(transcripts);
@@ -43,9 +43,11 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageU
         console.log(formData);
 
         try {
+            const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
             const response = await fetch('/api/generate_video', {
                 method: 'POST',
                 headers: {
+                    'Authorization': `Bearer ${idToken}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formData)
