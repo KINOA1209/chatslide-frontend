@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { toast } from 'react-toastify';
 import AuthService from "../utils/AuthService";
-
+import UserService from "../utils/UserService";
 
 interface DropdownButtonProps {
 }
@@ -14,6 +14,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
     const dropdownRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
     const [username, setUsername] = useState(null);
+    const [credits, setCredits] = useState(0);
 
     useEffect(() => {
         // Create a scoped async function within the hook.
@@ -21,6 +22,11 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
             const username = await AuthService.getCurrentUserDisplayName();
             if (username) {
                 setUsername(username);
+                UserService.getUserCredits(username)
+                .then(credits => {
+                    setCredits(credits)
+                })
+                .catch(() => setCredits(0))
             }
         };
         // Execute the created function directly
@@ -103,6 +109,9 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
                         >
                             Account settings
                         </a>
+                    </div>
+                    <div className="block px-4 py-1 text-sm text-blue-600">
+                        Credits: {credits}
                     </div>
                     <div className="py-1" role="none">
                         <div className="py-0.2" role="none">

@@ -6,6 +6,7 @@ import { FormEvent } from 'react';
 import Timer from '@/components/Timer';
 import GoBackButton from '@/components/GoBackButton';
 import ProjectProgress from "@/components/steps";
+import AuthService from '@/components/utils/AuthService';
 
 const OutlineVisualizer = ({ outline }: { outline: any }) => {
     const router = useRouter();
@@ -50,9 +51,11 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
         console.log(formData);
 
         try {
+            const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
             const response = await fetch('/api/generate_slides', {
                 method: 'POST',
                 headers: {
+                    'Authorization': `Bearer ${idToken}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formData)

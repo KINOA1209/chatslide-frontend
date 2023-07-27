@@ -3,6 +3,7 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Timer from './Timer';
+import AuthService from '@/components/utils/AuthService';
 
 const TopicForm: React.FC = () => {
     const router = useRouter();
@@ -39,9 +40,12 @@ const TopicForm: React.FC = () => {
         console.log("created form data");
 
         try {
+            const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+
             const response = await fetch('/api/outlines', {
                 method: 'POST',
                 headers: {
+                    'Authorization': `Bearer ${idToken}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formData)

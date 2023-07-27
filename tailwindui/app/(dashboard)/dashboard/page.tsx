@@ -166,6 +166,59 @@ export default function Dashboard() {
         setDeleteInd(-1);
     }
 
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+                initializeUser(token)
+            } catch (error: any) {
+                console.error(error);
+            }
+        };
+        fetchUser();
+    }, []);
+
+    const initializeUser = async (token: string) => {
+        const headers = new Headers();
+        if(token){
+            headers.append('Authorization', `Bearer ${token}`);
+        }
+        headers.append('Content-Type', 'application/json');
+
+        const user =  await AuthService.getCurrentUser()
+        const username = user.attributes['name'];
+        const email = user.attributes['email'];
+
+        const userData = {
+          username: username,
+          email: email,
+          is_admin: user.is_admin
+        };
+
+        if (username !== null) {
+            // If user is not found, initialize new user
+            console.log("New user initializing...");
+            try {
+                const createUserResponse  = await fetch('/api/create_user', {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify(userData)
+                });
+                if (createUserResponse.ok) {
+                    console.log("Initialized successfully.")
+                } else {
+                    console.error('Failed to initialize user:', createUserResponse.status);
+                    const errorData = await createUserResponse.json();
+                    console.log('Error message:', errorData.message);
+                }
+                } catch (error) {
+                    console.error('Error initializing user:', error);
+                }
+        }  
+    }
+
+
+
     return (
         <section className="bg-gradient-to-b from-gray-100 to-white">
             <ToastContainer />
