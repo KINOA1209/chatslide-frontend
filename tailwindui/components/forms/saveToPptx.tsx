@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import SavePptxModal from './savePptxModal';
 import AuthService from "../utils/AuthService";
+import { LoadingBar } from '@/components/progress';
 
 
 interface SaveToPPTXProps {
@@ -10,6 +11,8 @@ interface SaveToPPTXProps {
 
 const SaveToPPTX: React.FC<SaveToPPTXProps> = () => {
     const [user, setUser] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [delayedDisplay, setDelayedDisplay] = useState(false);
 
     useEffect(() => {
       // Create a scoped async function within the hook.
@@ -25,6 +28,8 @@ const SaveToPPTX: React.FC<SaveToPPTXProps> = () => {
 
     const handleSavePDF = async () => {
         const foldername = typeof sessionStorage !== 'undefined' ?  sessionStorage.getItem('foldername') : '';
+        setIsSubmitting(true);
+        const delay = setTimeout(()=>{setDelayedDisplay(true)}, 1500);
         try{
             const resp = await fetch('/api/convert_to_pptx', {
                 method: 'POST',
@@ -70,7 +75,9 @@ const SaveToPPTX: React.FC<SaveToPPTXProps> = () => {
             console.error('An error occurred:', error);
         }
         
-    
+        setIsSubmitting(false);
+        setDelayedDisplay(false);
+        clearTimeout(delay);
     };
 
     return (
@@ -87,6 +94,20 @@ const SaveToPPTX: React.FC<SaveToPPTXProps> = () => {
           >
             Save as PPTX
           </button>
+          )}
+          {(isSubmitting && delayedDisplay) && (
+            <div className="mt-4 -mb-4 text-center">
+              <div className='flex justify-center'>
+                <div className='max-w-sm w-full'>
+                  <LoadingBar />
+                </div>
+              </div>
+              <span className="text-sm text-gray-500 mt-4">
+                <p>
+                  Generating PPTX for the first time<br></br> normally takes 15 seconds.
+                </p>
+              </span>
+            </div>
           )}
         </div>
       </div>
