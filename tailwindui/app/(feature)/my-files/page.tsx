@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import AuthService from '@/components/utils/AuthService';
 import { FileUploadButton } from '@/components/fileUpload';
 
-interface File {
+interface UserFile {
     filename: string;
     full_url: string;
     small_url: string;
@@ -12,14 +12,14 @@ interface File {
 
 export default function MyFiles() {
     const [currentPage, setCurrentPage] = useState(1);
-    const [files, setFiles] = useState<File[]>([]);
+    const [files, setFiles] = useState<UserFile[]>([]);
 
     useEffect(() => {
         // Create a scoped async function within the hook.
-        const fetchUser = async () => {
+        const fetchUserFiles = async () => {
             try {
                 const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
-                fetchFiles(token)
+                fetchFiles(token);
             }
             catch (error: any) {
                 console.error(error);
@@ -27,8 +27,7 @@ export default function MyFiles() {
 
         };
         // Execute the created function directly
-        fetchUser();
-
+        fetchUserFiles();
     }, []);
 
     const fetchFiles = async (token: string) => {
@@ -56,8 +55,29 @@ export default function MyFiles() {
         }
     };
 
-    const onFileSelected = () => {
-        console.log("will upload file");
+    const onFileSelected = async (file: File | null) => {
+        console.log("will upload file", file);
+        if (file == null) {
+            alert("Please select non-null file");
+            return;
+        }
+        console.log("file name: ", file.name)//.split('.', 1)
+        console.log("file name split: ", file.name.split('.', 1))
+        const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+        const body = new FormData();
+        body.append("file", file);
+        const response = await fetch("/api/upload_file", {
+            method: "POST",
+            headers: {
+                'Authorization': `Bearer ${idToken}`,
+            },
+            body: body
+        });
+        if (response.ok) {
+            alert("File upload successful!");
+        } else {
+            alert("File upload failed!" + response.status);
+        }
     }
 
     return (
@@ -66,6 +86,8 @@ export default function MyFiles() {
                 <div className="pt-32 pb-12 md:pt-40 md:pb-20">
                     <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
                         <h1 className="h1 text-blue-600">My files</h1>
+                    </div>
+                    <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
                         <FileUploadButton onFileSelected={onFileSelected} />
                     </div>
                 </div>
