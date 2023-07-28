@@ -6,8 +6,8 @@ import { FileUploadButton } from '@/components/fileUpload';
 
 interface UserFile {
     filename: string;
-    full_url: string;
-    small_url: string;
+    // full_url: string;
+    // small_url: string;
 }
 
 export default function MyFiles() {
