@@ -6,6 +6,7 @@ import { FormEvent } from 'react';
 import Timer from '@/components/Timer';
 import GoBackButton from '@/components/GoBackButton';
 import ProjectProgress from "@/components/steps";
+import AuthService from '@/components/utils/AuthService';
 
 const OutlineVisualizer = ({ outline }: { outline: any }) => {
     const router = useRouter();
