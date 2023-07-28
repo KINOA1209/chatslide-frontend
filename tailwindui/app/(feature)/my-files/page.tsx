@@ -87,8 +87,10 @@ export default function MyFiles() {
                     <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
                         <h1 className="h1 text-blue-600">My files</h1>
                     </div>
-                    <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-                        <FileUploadButton onFileSelected={onFileSelected} />
+                    <div className="max-w-sm mx-auto text-center pb-12 md:pb-20">
+                        <div className="w-full px-3">
+                            <FileUploadButton onFileSelected={onFileSelected} />
+                        </div>
                     </div>
                 </div>
             </div>
