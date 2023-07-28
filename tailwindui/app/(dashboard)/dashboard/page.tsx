@@ -211,9 +211,9 @@ export default function Dashboard() {
                     const errorData = await createUserResponse.json();
                     console.log('Error message:', errorData.message);
                 }
-                } catch (error) {
-                    console.error('Error initializing user:', error);
-                }
+            } catch (error) {
+                console.error('Error initializing user:', error);
+            }
         }  
     }
 
