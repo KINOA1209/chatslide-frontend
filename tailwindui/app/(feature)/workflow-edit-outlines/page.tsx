@@ -104,16 +104,17 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
             ))}
 
             {/* Form */}
-            <form onSubmit={handleSubmit}>
-                <div className="flex flex-wrap -mx-3 mt-6">
-                    <div className="w-full px-3">
-                        <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">
-                            {isSubmitting ? 'Generating...' : 'Generate Slides'}
-                        </button>
+            <div className="max-w-sm mx-auto">
+                <form onSubmit={handleSubmit}>
+                    <div className="flex flex-wrap -mx-3 mt-6">
+                        <div className="w-full px-3">
+                            <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">
+                                {isSubmitting ? 'Generating...' : 'Generate Slides'}
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </form>
-
+                </form>
+            </div>
             {/* Timer */}
             <Timer expectedSeconds={60} isSubmitting={isSubmitting} />
         </div>

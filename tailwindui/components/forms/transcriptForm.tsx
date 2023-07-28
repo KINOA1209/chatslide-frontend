@@ -1,6 +1,8 @@
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect, FormEvent } from 'react';
-import TranscriptFormModal from './TrasncriptFormModal';
+
+import TranscriptFormModal from './trasncriptFormModal';
+
 import AuthService from "../utils/AuthService";
 
 interface TranscriptFormProps {
