@@ -26,7 +26,7 @@ const SaveToPPTX: React.FC<SaveToPPTXProps> = () => {
       fetchUser();
   }, []);
 
-    const handleSavePDF = async () => {
+    const handleSavePPTX = async () => {
         const foldername = typeof sessionStorage !== 'undefined' ?  sessionStorage.getItem('foldername') : '';
         setIsSubmitting(true);
         const delay = setTimeout(()=>{setDelayedDisplay(true)}, 1500);
@@ -90,7 +90,7 @@ const SaveToPPTX: React.FC<SaveToPPTXProps> = () => {
           ) : (
             <button
             className="btn text-blue-600 bg-gray-100 hover:bg-gray-200 w-full border border-blue-600"
-            onClick={handleSavePDF}
+            onClick={handleSavePPTX}
           >
             Save as PPTX
           </button>
