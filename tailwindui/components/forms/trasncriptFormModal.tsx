@@ -59,7 +59,9 @@ const TranscriptFormModal = () => {
             {/* Modal body */}
             <div className="p-6 space-y-6">
               <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                To download the PDF or continue to generate the transcript, please sign in.
+
+                To download or continue to generate the transcript, please sign in.
+
               </p>
             </div>
             {/* Modal footer */}
@@ -92,4 +94,6 @@ const TranscriptFormModal = () => {
   );
 };
 
+
 export default TranscriptFormModal;
+

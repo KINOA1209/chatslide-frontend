@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 
-const SavePDFModal = () => {
+const SavePptxModal = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const toggleModal = () => {
@@ -18,7 +18,7 @@ const SavePDFModal = () => {
         type="button"
         onClick={toggleModal}
       >
-        Save as PDF
+        Save as PPTX
       </button>
 
       {/* Main modal */}
@@ -92,4 +92,4 @@ const SavePDFModal = () => {
   );
 };
 
-export default SavePDFModal;
+export default SavePptxModal;
