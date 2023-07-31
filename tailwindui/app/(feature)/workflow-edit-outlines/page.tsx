@@ -133,7 +133,7 @@ export default function WorkflowStep2() {
                 <h1 className="h1">Step 2: Edit Outlines</h1>
             </div>
             <div className="max-w-4xl mx-auto px-6" ref={contentRef}>
-                <p className='px-6'>
+                <p>
                     This is the outline generated. You can edit the details below.
                 </p>
                 <br />
