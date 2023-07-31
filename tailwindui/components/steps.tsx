@@ -88,6 +88,7 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
         const [desktopVisibility, setDesktopVisibility] = useState<CSS.Property.Visibility>('hidden');
         const [mobileOpended, setMobileOpened] = useState<boolean>(false);
         const [mobileButtonDisplay, setMobileButtonDisplay] = useState<CSS.Property.Display>('none');
+        const router = useRouter();
 
         // fire on every window resize
         useEffect(() => {
@@ -140,6 +141,17 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
             setMobileOpened(true);
         };
 
+        const handleDashboard = (e: MouseEvent<HTMLDivElement>) => {
+            e.preventDefault();
+            router.push('/dashboard');
+        };
+
+        const dashboardButton = (<div className='w-full h-14 flex items-center cursor-pointer' onClick={handleDashboard}>
+            <div className='w-full bg-blue-500 hover:bg-blue-600 text-white text-center rounded-2xl flex justify-center items-center' style={{ height: '30px' }}>
+                <span className='w-fit h-fit'>Projects</span>
+            </div>
+        </div>);
+
         return (
             <>
                 {/* open mobile sidebar button */}
@@ -152,6 +164,7 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
                 <div style={{ visibility: desktopVisibility }} className='fixed w-fit select-none grow-0' ref={progressRefDesktop}>
                     <div className='-top-4 p-5 mb-6 flex justify-center border-r-2 border-r-blue-200 sticky'>
                         <div className='w-fit flex flex-col flex-nowrap content-start'>
+                            {dashboardButton}
                             {stepRedirectPair.map((pair, index) => (
                                 <OneStep
                                     id={index + 1}
@@ -176,6 +189,7 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
                                     </div>
                                 </div>
                                 <div className='px-5 pb-5'>
+                                    {dashboardButton}
                                     {stepRedirectPair.map((pair, index) => (
                                         <OneStep
                                             id={index + 1}
