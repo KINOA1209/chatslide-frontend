@@ -201,7 +201,7 @@ const ProjectProgress = () => {
     const redirect = ['/workflow-generate-outlines',
         '/workflow-edit-outlines',
         '/workflow-review-slides',
-        '/workflow-edit-transcript',
+        '/workflow-edit-script',
         '/workflow-review-audio',
         '/workflow-review-video'];
     const projectFinishedSteps: () => number[] = () => {

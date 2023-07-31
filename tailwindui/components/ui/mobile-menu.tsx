@@ -110,7 +110,7 @@ export default function MobileMenu() {
               (<>
                 <div className='text-2xl py-4 text-blue-500'>Hi, {username}</div>
                 <li>
-                  <Link href="/dashboard" className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center" onClick={() => setMobileNavOpen(false)}>Projects</Link>
+                  <Link href="/dashboard" className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center" onClick={() => setMobileNavOpen(false)}>My Projects</Link>
                 </li>
                 <li>
                   <Link href="/my-files" className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center" onClick={() => setMobileNavOpen(false)}>My Files</Link>
