@@ -7,6 +7,7 @@ import Timer from '@/components/Timer';
 import GoBackButton from '@/components/GoBackButton';
 import ProjectProgress from "@/components/steps";
 import AuthService from '@/components/utils/AuthService';
+import FeedbackForm from '@/components/feedback';
 
 const OutlineVisualizer = ({ outline }: { outline: any }) => {
     const router = useRouter();
@@ -126,6 +127,16 @@ export default function WorkflowStep2() {
     const outline = storedOutline ? JSON.parse(storedOutline) : null;
     const outlineRes = outline ? JSON.parse(outline.res) : null;
     const contentRef = useRef<HTMLDivElement>(null);
+    const [showModal, setShowModal] = useState<boolean>(false);
+
+
+    const handleOpenModal = () => {
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
     return (
         <div>
             <ProjectProgress currentInd={1} contentRef={contentRef} />
@@ -138,6 +149,16 @@ export default function WorkflowStep2() {
                 </p>
                 <br />
                 <OutlineVisualizer outline={outlineRes} />
+            </div>
+            <div className="fixed bottom-10 right-10">
+                <button
+                onClick={handleOpenModal}
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
+                >
+                Feedback
+                </button>
+
+                {showModal && <FeedbackForm onClose={handleCloseModal} />}
             </div>
         </div>
     );
