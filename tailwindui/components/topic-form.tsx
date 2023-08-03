@@ -14,7 +14,11 @@ const TopicForm: React.FC = () => {
     const [audience, setAudience] = useState((typeof window !== 'undefined' && sessionStorage.audience != undefined) ? sessionStorage.audience : 'High school students');
     const [requirements, setRequirements] = useState((typeof window !== 'undefined' && sessionStorage.requirements != undefined) ? sessionStorage.requirements : 'High school knowledge');
     const [language, setLanguage] = useState((typeof window !== 'undefined' && sessionStorage.language != undefined) ? sessionStorage.language : 'English');
-    const [addEquations, setAddEquations] = useState((typeof window !== 'undefined' && sessionStorage.addEquations != undefined) ? sessionStorage.addEquations : 'false');
+    const [addEquations, setAddEquations] = useState(
+        typeof window !== 'undefined' && sessionStorage.addEquations != undefined
+          ? JSON.parse(sessionStorage.addEquations)
+          : false
+      );
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const project_id = (typeof window !== 'undefined' && sessionStorage.project_id != undefined) ? sessionStorage.project_id : '';
@@ -26,7 +30,7 @@ const TopicForm: React.FC = () => {
             requirements: (event.target as HTMLFormElement).requirements.value,
             audience: (event.target as HTMLFormElement).audience.value,
             language: (event.target as HTMLFormElement).language.value,
-            addEquations: (event.target as HTMLFormElement).addEquations.value,
+            addEquations: addEquations,
             project_id: project_id,
         };
 
@@ -146,11 +150,11 @@ const TopicForm: React.FC = () => {
             <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3 mt-2 flex">
                     <input
-                        type="checkbox"
-                        id="addEquations"
-                        className="form-checkbox text-gray-800"
-                        value={addEquations}
-                        onChange={e => setAddEquations(e.target.checked)}
+                    type="checkbox"
+                    id="addEquations"
+                    className="form-checkbox text-gray-800"
+                    checked={addEquations} // Use 'checked' instead of 'value'
+                    onChange={(e) => setAddEquations(e.target.checked)}
                     />
                     <label
                         className="block text-gray-800 text-sm font-medium mb-1"
