@@ -14,6 +14,7 @@ interface Project {
     audience: string;
     language: string;
     foldername: string;
+    add_equations: boolean;
     page_count: string;
     outline: string;
     transcripts: string;
@@ -62,6 +63,9 @@ const ProjectLoading = () => {
             }
             if (project.foldername) {
                 sessionStorage.setItem('foldername', project.foldername);
+            }
+            if (project.add_equations) {
+                sessionStorage.setItem('addEquations', project.add_equations.toString());
             }
             if (project.page_count) {
                 sessionStorage.setItem('page_count', project.page_count);
