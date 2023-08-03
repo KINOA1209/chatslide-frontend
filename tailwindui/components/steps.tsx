@@ -3,6 +3,7 @@
 import React, { useState, MouseEvent, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import CSS from 'csstype';
+import AuthService from '@/components/utils/AuthService';
 
 interface StepProps {
     id: number,
@@ -89,6 +90,7 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
         const [mobileOpended, setMobileOpened] = useState<boolean>(false);
         const [mobileButtonDisplay, setMobileButtonDisplay] = useState<CSS.Property.Display>('none');
         const router = useRouter();
+        const [user, setUser] = useState(null);
 
         // fire on every window resize
         useEffect(() => {
@@ -131,6 +133,19 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
             window.addEventListener('resize', handleResize);
         })
 
+        useEffect(() => {
+            // Create a scoped async function within the hook.
+            const fetchUser = async () => {
+                try {
+                    const currentUser = await AuthService.getCurrentUser();
+                    setUser(currentUser);
+                }
+                catch (error: any) { }
+            };
+            // Execute the created function directly
+            fetchUser();
+        }, []);
+
         const handleMobileClose = (e: React.MouseEvent<HTMLDivElement>) => {
             e.stopPropagation();
             setMobileOpened(false);
@@ -146,11 +161,11 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
             router.push('/dashboard');
         };
 
-        const dashboardButton = (<div className='w-full h-14 flex items-center cursor-pointer' onClick={handleDashboard}>
+        const dashboardButton = user ? (<div className='w-full h-14 flex items-center cursor-pointer' onClick={handleDashboard}>
             <div className='w-full bg-blue-500 hover:bg-blue-600 text-white text-center rounded-2xl flex justify-center items-center' style={{ height: '30px' }}>
                 <span className='w-fit h-fit'>Projects</span>
             </div>
-        </div>);
+        </div>) : (<></>);
 
         return (
             <>
