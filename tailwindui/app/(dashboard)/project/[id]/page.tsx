@@ -29,6 +29,7 @@ const ProjectLoading = () => {
     const router = useRouter();
     
     useEffect(() => {
+        sessionStorage.clear();
         // Create a scoped async function within the hook.
         const fetchUser = async () => {
             try {
@@ -108,9 +109,9 @@ const ProjectLoading = () => {
                 headers: headers,
                 body: JSON.stringify({ project_id: project_id }),
             });
-            console.log('this is response', response);
             if (response.ok) {
                 const data = await response.json();
+                console.log('this is data', data);
                 setProject(data);
             } else {
                 console.error('Error fetching project details', response.status);
@@ -159,7 +160,7 @@ const ProjectLoading = () => {
             const redirectURL = redirect[lastFinishedStep];
             router.push(redirectURL);
         } else {
-            router.push('/workflow-intro');
+            router.push('/workflow-generate-outlines');
         }
     };
 

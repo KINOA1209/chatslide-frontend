@@ -38,6 +38,7 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
         const topic = typeof window !== 'undefined' ? sessionStorage.getItem('topic') : null;
         const language = typeof window !== 'undefined' ? sessionStorage.getItem('language') : 'English';
         const project_id = typeof window !== 'undefined' ? sessionStorage.getItem('project_id') : null;
+        const addEquations = typeof window !== 'undefined' ? sessionStorage.getItem('addEquations') : null;
 
         const formData = {
             res: JSON.stringify(outlineData),
@@ -46,7 +47,8 @@ const OutlineVisualizer = ({ outline }: { outline: any }) => {
             topic: topic,
             language: language,
             additional_requirements: 'test',
-            project_id: project_id
+            project_id: project_id,
+            addEquations: addEquations
         };
 
         console.log(formData);
