@@ -4,6 +4,7 @@ import React, { useState, ChangeEvent, FormEvent, useEffect, MouseEvent } from '
 import { useRouter } from 'next/navigation';
 import AuthService from "./utils/AuthService";
 import UserService from "./utils/UserService";
+import {FileUploadButton} from './fileUpload';
 interface Project {
     topic: string;
     audience: string;
@@ -275,6 +276,14 @@ const TopicForm: React.FC = () => {
                     </select>
                 </div>
             </div>
+            <div className="max-w-sm mx-auto">
+                <div className="flex flex-wrap -mx-3 mt-6">
+                    <div className="w-full px-3">
+                         <FileUploadButton />
+                    </div>
+                </div>
+            </div>
+
             <div className="max-w-sm mx-auto">
                 <div className="flex flex-wrap -mx-3 mt-6">
                     <div className="w-full px-3">
