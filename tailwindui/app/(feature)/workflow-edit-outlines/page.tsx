@@ -127,7 +127,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                 if(file){
                     const imageBase64 = await convertImageToBase64(file);
                     formData = {
-                        res: JSON.stringify(outlineData),
+                        res: JSON.stringify({ ...outlineData }),
                         audience: audience,
                         foldername: foldername,
                         topic: topic,
@@ -143,7 +143,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                 const imagePath = "../../../../slidesBackground/theme1.jpg";
                 const imageBase64 = await convertImagePathToBase64(imagePath);
                 formData = {
-                    res: JSON.stringify(outlineData),
+                    res: JSON.stringify({ ...outlineData }),
                     audience: audience,
                     foldername: foldername,
                     topic: topic,
@@ -158,7 +158,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                 const imagePath = "../../../../slidesBackground/theme2.jpg";
                 const imageBase64 = await convertImagePathToBase64(imagePath);
                 formData = {
-                    res: JSON.stringify(outlineData),
+                    res: JSON.stringify({ ...outlineData }),
                     audience: audience,
                     foldername: foldername,
                     topic: topic,
@@ -172,7 +172,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             }
         }else{
             formData = {
-                res: JSON.stringify(outlineData),
+                res: JSON.stringify({ ...outlineData }),
                 audience: audience,
                 foldername: foldername,
                 topic: topic,
