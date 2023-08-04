@@ -11,6 +11,7 @@ interface Project {
     requirements: string;
 }
 import Timer from './Timer';
+import { FileUploadButton } from './fileUpload';
 
 const TopicForm: React.FC = () => {
     const router = useRouter();
@@ -134,6 +135,35 @@ const TopicForm: React.FC = () => {
             setIsSubmitting(false);
         }
     };
+
+    const onFileSelected = async (file: File | null) => {
+        console.log("will upload file", file);
+        if (file == null) {
+            alert("Please select non-null file");
+            return;
+        }
+        console.log("file name: ", file.name)//.split('.', 1)
+        console.log("file name split: ", file.name.split('.', 1))
+
+        const body = new FormData();
+        body.append("file", file);
+        
+        const response = await fetch("/api/chatpdf_upload", {
+            method: "POST",
+            body: body
+        });
+
+        if (response.ok) {
+            alert("File upload successful!");
+            const data = await response.json();
+            console.log("data: ", data);
+            sessionStorage.setItem('source_id', data.sourceId);
+        } else {
+            console.log(response);
+            alert("File upload failed!" + response.status);
+        }
+    }
+
 
     return (
         <form onSubmit={handleSubmit}>
@@ -279,11 +309,10 @@ const TopicForm: React.FC = () => {
             <div className="max-w-sm mx-auto">
                 <div className="flex flex-wrap -mx-3 mt-6">
                     <div className="w-full px-3">
-                         <FileUploadButton />
+                         <FileUploadButton onFileSelected={onFileSelected} />
                     </div>
                 </div>
             </div>
-
             <div className="max-w-sm mx-auto">
                 <div className="flex flex-wrap -mx-3 mt-6">
                     <div className="w-full px-3">
