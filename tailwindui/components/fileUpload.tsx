@@ -4,7 +4,7 @@ interface FileUploadButtonProps {
     onFileSelected: (file: File | null) => void;
 }
 
-export const FileUploadButton: FC<FileUploadButtonProps> = ({ onFileSelected }) => {
+export const FileUploadButton: FC<FileUploadButtonProps> = () => {
     const [fileName, setFileName] = useState<string | null>(null);
     const inputFileRef = useRef<HTMLInputElement>(null);
 
@@ -15,7 +15,7 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({ onFileSelected }) 
             setFileName(file.name);
         }
 
-        onFileSelected(file);
+//         onFileSelected(file);
     };
 
     const handleClick = () => {
