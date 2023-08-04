@@ -1,9 +1,10 @@
 'use client'
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Video from '@/components/Video';
 import ProjectProgress from "@/components/steps";
+import FeedbackForm from '@/components/feedback';
 
 const VideoVisualizer = ({ videoFile, foldername }: { videoFile: string, foldername: string }) => {
     const router = useRouter();
@@ -53,6 +54,15 @@ export default function WorkflowStep6() {
     const videoFile = typeof sessionStorage !== 'undefined' ? (sessionStorage.getItem('video_file') || "") : "";
     const foldername = typeof sessionStorage !== 'undefined' ? (sessionStorage.getItem('foldername') || "") : "";
     const contentRef = useRef<HTMLDivElement>(null);
+    const [showModal, setShowModal] = useState<boolean>(false);
+
+    const handleOpenModal = () => {
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
 
     return (
         <div>
@@ -63,6 +73,16 @@ export default function WorkflowStep6() {
 
             <div className="max-w-4xl mx-auto" ref={contentRef}>
                 <VideoVisualizer videoFile={videoFile} foldername={foldername} />
+            </div>
+            <div className="fixed bottom-10 right-10">
+                <button
+                onClick={handleOpenModal}
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
+                >
+                Feedback
+                </button>
+
+                {showModal && <FeedbackForm onClose={handleCloseModal} />}
             </div>
         </div>
     )

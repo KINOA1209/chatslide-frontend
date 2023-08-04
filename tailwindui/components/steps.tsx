@@ -3,6 +3,7 @@
 import React, { useState, MouseEvent, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import CSS from 'csstype';
+import AuthService from '@/components/utils/AuthService';
 
 interface StepProps {
     id: number,
@@ -88,6 +89,8 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
         const [desktopVisibility, setDesktopVisibility] = useState<CSS.Property.Visibility>('hidden');
         const [mobileOpended, setMobileOpened] = useState<boolean>(false);
         const [mobileButtonDisplay, setMobileButtonDisplay] = useState<CSS.Property.Display>('none');
+        const router = useRouter();
+        const [user, setUser] = useState(null);
 
         // fire on every window resize
         useEffect(() => {
@@ -130,6 +133,19 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
             window.addEventListener('resize', handleResize);
         })
 
+        useEffect(() => {
+            // Create a scoped async function within the hook.
+            const fetchUser = async () => {
+                try {
+                    const currentUser = await AuthService.getCurrentUser();
+                    setUser(currentUser);
+                }
+                catch (error: any) { }
+            };
+            // Execute the created function directly
+            fetchUser();
+        }, []);
+
         const handleMobileClose = (e: React.MouseEvent<HTMLDivElement>) => {
             e.stopPropagation();
             setMobileOpened(false);
@@ -139,6 +155,17 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
             e.stopPropagation();
             setMobileOpened(true);
         };
+
+        const handleDashboard = (e: MouseEvent<HTMLDivElement>) => {
+            e.preventDefault();
+            router.push('/dashboard');
+        };
+
+        const dashboardButton = user ? (<div className='w-full h-14 flex items-center cursor-pointer' onClick={handleDashboard}>
+            <div className='w-full bg-blue-500 hover:bg-blue-600 text-white text-center rounded-2xl flex justify-center items-center' style={{ height: '30px' }}>
+                <span className='w-fit h-fit'>Projects</span>
+            </div>
+        </div>) : (<></>);
 
         return (
             <>
@@ -152,6 +179,7 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
                 <div style={{ visibility: desktopVisibility }} className='fixed w-fit select-none grow-0' ref={progressRefDesktop}>
                     <div className='-top-4 p-5 mb-6 flex justify-center border-r-2 border-r-blue-200 sticky'>
                         <div className='w-fit flex flex-col flex-nowrap content-start'>
+                            {dashboardButton}
                             {stepRedirectPair.map((pair, index) => (
                                 <OneStep
                                     id={index + 1}
@@ -176,6 +204,7 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
                                     </div>
                                 </div>
                                 <div className='px-5 pb-5'>
+                                    {dashboardButton}
                                     {stepRedirectPair.map((pair, index) => (
                                         <OneStep
                                             id={index + 1}
@@ -197,11 +226,11 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
 
 // Set up actual progress indicators with texts and redirections
 const ProjectProgress = () => {
-    const steps = ['Topic', 'Outlines', 'Slides', 'Transcript', 'Audio', 'Video'];
+    const steps = ['Topic', 'Outlines', 'Slides', 'Script', 'Audio', 'Video'];
     const redirect = ['/workflow-generate-outlines',
         '/workflow-edit-outlines',
         '/workflow-review-slides',
-        '/workflow-edit-transcript',
+        '/workflow-edit-script',
         '/workflow-review-audio',
         '/workflow-review-video'];
     const projectFinishedSteps: () => number[] = () => {

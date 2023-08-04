@@ -17,14 +17,14 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     // Get language from session storage
-    const language = sessionStorage.getItem("language");
+    const language = typeof window !== 'undefined' ? sessionStorage.getItem("language") : null;
 
     useEffect(() => {
         console.log("Language:", language);
     }, [language]);
 
     useEffect(() => {
-        const signed_in = sessionStorage.getItem("signed_in");
+        const signed_in = typeof window !== 'undefined' ? sessionStorage.getItem("signed_in") : 'false';
         console.log("signed_in", signed_in);
         if (signed_in && signed_in === "true") {
             toast.success("Sign in successfully", {

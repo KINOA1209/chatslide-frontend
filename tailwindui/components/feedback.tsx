@@ -117,7 +117,7 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose }) => {
                 >
                   Your Feedback
                 </h3>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500 mt-2">
                   We'd love to hear from you! Your experience and thoughts help us create a better
                   service for everyone.
                 </p>
@@ -127,7 +127,7 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose }) => {
               <form onSubmit={handleSubmit} className="w-full mt-4">
                 <div className="mt-4">
                   <label className="flex items-center justify-center block text-gray-700 text-sm font-medium">
-                    What's your opinion of the slides?
+                    What's your opinion of the result?
                   </label>
                   <div className="flex items-center justify-center">
                     {[1, 2, 3, 4, 5].map((star) => (

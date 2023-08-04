@@ -8,6 +8,7 @@ import GoBackButton from '@/components/GoBackButton';
 import ImageList from '@/components/ImageList';
 import ProjectProgress from "@/components/steps";
 import AuthService from '@/components/utils/AuthService';
+import FeedbackForm from '@/components/feedback';
 
 const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageUrls }: { transcripts: [], audioFiles: [], foldername: string, imageUrls: [] }) => {
     const [transcriptList, setTranscriptList] = useState<string[]>(transcripts);
@@ -124,6 +125,15 @@ export default function WorkflowStep5() {
     const audioData = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('audio_files') : null;
     const audioFiles = audioData ? JSON.parse(audioData) : [];
     const contentRef = useRef<HTMLDivElement>(null);
+    const [showModal, setShowModal] = useState<boolean>(false);
+
+    const handleOpenModal = () => {
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
 
     return (
         <div>
@@ -139,6 +149,16 @@ export default function WorkflowStep5() {
                 </p>
                 <br />
                 <TranscriptAudioVisualizer transcripts={transcripts} audioFiles={audioFiles} foldername={foldername} imageUrls={imageUrls} />
+            </div>
+            <div className="fixed bottom-10 right-10">
+                <button
+                onClick={handleOpenModal}
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
+                >
+                Feedback
+                </button>
+
+                {showModal && <FeedbackForm onClose={handleCloseModal} />}
             </div>
         </div>
     )
