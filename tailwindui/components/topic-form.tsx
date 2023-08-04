@@ -1,7 +1,14 @@
 'use client'
 
-import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useEffect, MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
+import AuthService from "./utils/AuthService";
+import UserService from "./utils/UserService";
+interface Project {
+    topic: string;
+    audience: string;
+    requirements: string;
+}
 import Timer from './Timer';
 
 const TopicForm: React.FC = () => {
@@ -19,6 +26,46 @@ const TopicForm: React.FC = () => {
           ? JSON.parse(sessionStorage.addEquations)
           : false
       );
+    const [topicSuggestions, setTopicSuggestions] = useState<string[]>([]);
+    const [audienceSuggestions, setAudienceSuggestions] = useState<string[]>([]);
+    const [requirementsSuggestions, setRequirementsSuggestions] = useState<string[]>([]);
+
+    useEffect(() => {
+        const fetchHistoricalData = async () => {
+            const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+            if (userId) {
+                const data = await UserService.getUserHistoricalInput(idToken)
+                if(data){
+                    //to avoid duplicates, however do not check for cases
+                    const uniqueTopics = new Set(data.map((project: Project) => project.topic));
+                    const uniqueAudiences = new Set(data.map((project: Project) => project.audience));
+                    const uniqueRequirements = new Set(data.map((project: Project) => project.requirements));
+
+                    setTopicSuggestions(Array.from(uniqueTopics) as string[]);
+                    setAudienceSuggestions(Array.from(uniqueAudiences) as string[]); 
+                    setRequirementsSuggestions(Array.from(uniqueRequirements) as string[]);
+                }
+            }
+        };
+        fetchHistoricalData();
+    }, []);
+
+    const handleTopicSuggestionClick = (topic: string, event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        setTopic(topic);
+    };
+
+    const handleAudienceSuggestionClick = (audience: string, event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        setAudience(audience);
+    };
+
+    const handleRequirementsSuggestionClick = (requirement: string, event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        setRequirements(requirement);
+    };
+
+
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const project_id = (typeof window !== 'undefined' && sessionStorage.project_id != undefined) ? sessionStorage.project_id : '';
@@ -103,11 +150,26 @@ const TopicForm: React.FC = () => {
                     <input
                         id="topic"
                         type="text"
-                        className="form-input w-full text-gray-800"
+                        className="form-input w-full text-gray-800 mb-2"
                         placeholder="P/E Ratio"
                         value={topic}
                         onChange={e => setTopic(e.target.value)}
                         required />
+                    {topicSuggestions.length > 0 && (
+                    <div>
+                        <div className="flex flex-wrap gap-3 mb-4">
+                            {topicSuggestions.map((topic, index) => (
+                            <button
+                                key={index}
+                                className="text-sm text-gray-800 bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-sm cursor-pointer"
+                                onClick={(event) => handleTopicSuggestionClick(topic, event)}
+                            >
+                                {topic}
+                            </button>
+                            ))}
+                        </div>
+                    </div>
+                    )}
                 </div>
             </div>
 
@@ -121,12 +183,27 @@ const TopicForm: React.FC = () => {
                     <input
                         id="audience"
                         type="text"
-                        className="form-input w-full text-gray-800"
+                        className="form-input w-full text-gray-800 mb-2"
                         placeholder="High school students"
                         value={audience}
                         onChange={e => setAudience(e.target.value)}
                         required
                     />
+                    {audienceSuggestions.length > 0 && (
+                    <div>
+                        <div className="flex flex-wrap gap-3 mb-4">
+                            {audienceSuggestions.map((audience, index) => (
+                            <button
+                                key={index}
+                                className="text-sm text-gray-800 bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-sm cursor-pointer"
+                                onClick={(event) => handleAudienceSuggestionClick(audience, event)}
+                            >
+                                {audience}
+                            </button>
+                            ))}
+                        </div>
+                    </div>
+                    )}
                 </div>
             </div>
             <div className="flex flex-wrap -mx-3 mb-4">
@@ -139,12 +216,27 @@ const TopicForm: React.FC = () => {
                     <input
                         id="requirements"
                         type="text"
-                        className="form-input w-full text-gray-800"
+                        className="form-input w-full text-gray-800 mb-2"
                         placeholder="High school knowledge"
                         value={requirements}
                         onChange={e => setRequirements(e.target.value)}
                         required
                     />
+                    {requirementsSuggestions.length > 0 && (
+                    <div>
+                        <div className="flex flex-wrap gap-3 mb-4">
+                            {requirementsSuggestions.map((requirement, index) => (
+                            <button
+                                key={index}
+                                className="text-sm text-gray-800 bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-sm cursor-pointer"
+                                onClick={(event) => handleRequirementsSuggestionClick(requirement, event)}
+                            >
+                                {requirement}
+                            </button>
+                            ))}
+                        </div>
+                    </div>
+                    )}
                 </div>
             </div>
             <div className="flex flex-wrap -mx-3 mb-4">
