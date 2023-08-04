@@ -77,7 +77,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({isSubmitting, setIsSubmi
         console.log(resp.data.res);
         sessionStorage.setItem('transcripts', JSON.stringify(resp.data.res));
         // Redirect to a new page with the data
-        router.push('workflow-edit-transcript');
+        router.push('workflow-edit-script');
       } else {
         alert('Request failed: ' + response.status);
         console.log(response);
@@ -101,7 +101,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({isSubmitting, setIsSubmi
               className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Generating...' : 'Generate Transcript'}
+              {isSubmitting ? 'Generating...' : 'Generate Script'}
             </button>
             )
             }

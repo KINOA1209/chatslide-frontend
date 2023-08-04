@@ -7,6 +7,7 @@ import GoBackButton from '@/components/GoBackButton';
 import ImageList from '@/components/ImageList';
 import ProjectProgress from '@/components/steps';
 import AuthService from '@/components/utils/AuthService';
+import FeedbackForm from '@/components/feedback';
 
 const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], imageUrls: [] }) => {
     const [transcriptList, setTranscriptList] = useState<string[]>(transcripts);
@@ -113,19 +114,38 @@ export default function WorkflowStep4() {
     const image_files = typeof sessionStorage !== 'undefined' ? JSON.parse(sessionStorage.getItem('image_files') || '[]') : [];
     const imageUrls = image_files.map((filename: string) => `/api/jpg?foldername=${foldername}&filename=${filename}`);
     const contentRef = useRef<HTMLDivElement>(null);
+    const [showModal, setShowModal] = useState<boolean>(false);
+
+    const handleOpenModal = () => {
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
 
     return (
         <div>
             <ProjectProgress currentInd={3} contentRef={contentRef} />
             <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
-                <h1 className="h1">Step 4: Edit Transcript</h1>
+                <h1 className="h1">Step 4: Edit Script</h1>
             </div>
             <div className="max-w-4xl mx-auto grow" ref={contentRef}>
                 <p className='px-6'>
-                    This is the transcripts generated. Please edit the transcripts to your liking.
+                    These are the scripts generated. Please edit the scripts to your liking.
                 </p>
                 <br />
                 <TranscriptVisualizer transcripts={transcripts} imageUrls={imageUrls} />
+            </div>
+            <div className="fixed bottom-10 right-10">
+                <button
+                onClick={handleOpenModal}
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
+                >
+                Feedback
+                </button>
+
+                {showModal && <FeedbackForm onClose={handleCloseModal} />}
             </div>
         </div>
     )

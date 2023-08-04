@@ -44,7 +44,7 @@ export default function SignIn() {
                         <GoogleSignIn />
 
                         <div className="text-gray-600 text-center mt-6">
-                            Don't you have an account?{" "}
+                            Do not have an account?{" "}
                             <Link
                                 href={"/signup" + (nextUri == null ? "" : "?next=" + nextUri)}
                                 className="text-blue-600 hover:underline transition duration-150 ease-in-out"
