@@ -45,8 +45,8 @@ export default function Features() {
                   onClick={(e) => { e.preventDefault(); setTab(1); }}
                 >
                   <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1">▶️ One-Click Video Generation</div>
-                    <div className="text-gray-600">Simply input your content, customize the settings, and let our AI do the rest.</div>
+                    <div className="font-bold leading-snug tracking-tight mb-1">✨ One-Click Outline Generation</div>
+                    <div className="text-gray-600">Unlock your creativity with Dr. Lambda's one-click outline generation 🎨; the perfect tool to jumpstart your next big idea! 💡</div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                     <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
@@ -61,7 +61,7 @@ export default function Features() {
                 >
                   <div>
                     <div className="font-bold leading-snug tracking-tight mb-1">🧮 Customization Options</div>
-                    <div className="text-gray-600">Dr. Lambda provides a range of customization options, allowing you to tailor your videos to your specific needs and branding.</div>
+                    <div className="text-gray-600">Tailor your learning experience with Dr. Lambda's customizable course outlines. Shape your education your way! 🎓</div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                     <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
@@ -75,8 +75,8 @@ export default function Features() {
                   onClick={(e) => { e.preventDefault(); setTab(3); }}
                 >
                   <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1">🎉 Engaging Visuals and Effects</div>
-                    <div className="text-gray-600">Our advanced algorithms ensure that the videos produced by Dr. Lambda are visually captivating, enhancing the learning experience and capturing the attention of your audience.</div>
+                    <div className="font-bold leading-snug tracking-tight mb-1">📄 Read from PDFs and Webpages</div>
+                    <div className="text-gray-600">Bring the world to your fingertips with Dr. Lambda's ability to read from PDFs and webpages. Information you need, when you need it! 📚</div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                     <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">

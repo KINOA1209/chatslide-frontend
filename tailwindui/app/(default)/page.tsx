@@ -3,10 +3,10 @@ export const metadata = {
   description: 'Remix your knowledge',
 }
 
-import Introduction from '@/components/introduction'
-import Features from '@/components/features'
-import SampleVideos from '@/components/samplevideos'
-import Newsletter from '@/components/newsletter'
+import Introduction from '@/components/landing/introduction'
+import Features from '@/components/landing/features'
+import SampleVideos from '@/components/landing/samplevideos'
+import Newsletter from '@/components/landing/newsletter'
 
 export default function Home() {
   return (
