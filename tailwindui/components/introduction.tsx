@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import background from '@/public/images/11062b_dbd82904e3e447898acbf7c3632ee55b~mv2.jpg'
+import background from '@/public/images/landing.jpeg'
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import AuthService from "./utils/AuthService";
@@ -35,7 +35,7 @@ const InternalIntroduction = () => {
     <section className="relative">
 
       {/* Illustration behind hero content */}
-      <div className="absolute left-1/4 transform -translate-x-1/4 pointer-events-none -z-1" aria-hidden="true">
+      <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none -z-1" aria-hidden="true">
             <Image
               className="max-w-none mx-auto rounded"
               src={background}
@@ -66,7 +66,7 @@ const InternalIntroduction = () => {
             <br/>
             <br/>
             <h1 className="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4" data-aos="zoom-y-out">Dr. <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">Lambda</span></h1>
-              <p className="text-2xl text-black-600 mb-8 font-bold" data-aos="zoom-y-out" data-aos-delay="150">AI copilot for educators</p>
+              <p className="text-3xl text-blue-400 mb-8 font-bold" data-aos="zoom-y-out" data-aos-delay="150">Remix your knowledge</p>
               <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center" data-aos="zoom-y-out" data-aos-delay="300">
                 <div>
                   <a className="btn text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer" onClick={handleOnClick}>

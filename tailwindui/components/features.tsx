@@ -25,9 +25,8 @@ export default function Features() {
 
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-            <h1 className="h2 mb-4">More about us</h1>
             <p className="text-xl text-left text-gray-600">
-Welcome to Dr. Lambda, your AI copilot for educators! We understand the challenges educators face when it comes to creating engaging and interactive educational content. That's why we're here to revolutionize the way you generate educational materials.</p>
+🔮 Welcome to Dr. Lambda! Remix your knowledge 🔄 with our dynamic tool that converts PDFs, webpages, and videos into your desired format 📝🎞️🎨. Dive in and reshape your learning experience today! 🚀</p>
           </div>
 
           {/* Section content */}
