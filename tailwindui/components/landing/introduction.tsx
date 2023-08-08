@@ -39,7 +39,7 @@ const InternalIntroduction = () => {
         <Image
           className="h-full max-w-none"
           src={background}
-          height={window.innerHeight < 768 ? window.innerHeight : 768}
+          height={(typeof window !== 'undefined' && window.innerHeight < 768) ? window.innerHeight : 768}
           style={{ objectFit: "contain" }}
           alt="Features bg"
         />
