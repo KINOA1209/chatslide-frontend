@@ -32,14 +32,15 @@ const InternalIntroduction = () => {
 
 
   return (
-    <section className="relative h-[100vh] md:h-[75vh]">
+    <section className="relative h-[100vh] max-h-[1000px] md:h-[75vh]">
 
       {/* Illustration behind hero content */}
       <div className="h-full absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none -z-1" aria-hidden="true">
         <Image
           className="h-full max-w-none"
           src={background}
-          style={{ objectFit: "scale-down" }}
+          height={window.innerHeight < 768 ? window.innerHeight : 768}
+          style={{ objectFit: "contain" }}
           alt="Features bg"
         />
       </div>
