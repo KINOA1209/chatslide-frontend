@@ -4,46 +4,16 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 
 const GoogleSignIn: React.FC = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const nextUri = searchParams.get("next");
-
-  const handleRedirect = async (token: string) => {
-    if (nextUri) {
-      const project_id = sessionStorage.getItem('project_id') || '';
-      try {
-        const response = await fetch('/api/link_project', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({ 'project_id': project_id }),
-        });
-        console.log(response);
-        router.push(nextUri); // Redirect to nextUri
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      router.push('/dashboard');
-    }
-  };
 
   const signInWithGoogle = async () => {
+    const projectID = sessionStorage.getItem('project_id');
+    if (projectID) {
+      localStorage.setItem("projectToLink", projectID);
+    }
     try {
       const { uid, token } = await AuthService.googleSingIn();
       console.log('You are signed in!');
       sessionStorage.setItem('signed_in', 'true')
-
-      if (uid) {
-        try {
-          console.log('Access token:', token);
-          handleRedirect(token); // Pass the token to handleRedirect
-        } catch (error) {
-          console.error(error);
-        }
-      }
     } catch (error) {
       console.error(error);
     }

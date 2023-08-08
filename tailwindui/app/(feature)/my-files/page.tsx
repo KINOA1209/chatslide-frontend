@@ -66,7 +66,7 @@ export default function MyFiles() {
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
         const body = new FormData();
         body.append("file", file);
-        const response = await fetch("/api/upload_file", {
+        const response = await fetch("/api/upload_user_file", {
             method: "POST",
             headers: {
                 'Authorization': `Bearer ${idToken}`,
