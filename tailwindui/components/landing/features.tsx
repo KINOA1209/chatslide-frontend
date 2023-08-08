@@ -25,9 +25,8 @@ export default function Features() {
 
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-            <h1 className="h2 mb-4">More about us</h1>
             <p className="text-xl text-left text-gray-600">
-Welcome to Dr. Lambda, your AI copilot for educators! We understand the challenges educators face when it comes to creating engaging and interactive educational content. That's why we're here to revolutionize the way you generate educational materials.</p>
+🔮 Welcome to Dr. Lambda! Remix your knowledge 🔄 with our dynamic tool that converts PDFs, webpages, and videos into your desired format 📝🎞️🎨. Dive in and reshape your learning experience today! 🚀</p>
           </div>
 
           {/* Section content */}
@@ -46,8 +45,8 @@ Welcome to Dr. Lambda, your AI copilot for educators! We understand the challeng
                   onClick={(e) => { e.preventDefault(); setTab(1); }}
                 >
                   <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1">▶️ One-Click Video Generation</div>
-                    <div className="text-gray-600">Simply input your content, customize the settings, and let our AI do the rest.</div>
+                    <div className="font-bold leading-snug tracking-tight mb-1">✨ One-Click Outline Generation</div>
+                    <div className="text-gray-600">Unlock your creativity with Dr. Lambda's one-click outline generation 🎨; the perfect tool to jumpstart your next big idea! 💡</div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                     <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
@@ -62,7 +61,7 @@ Welcome to Dr. Lambda, your AI copilot for educators! We understand the challeng
                 >
                   <div>
                     <div className="font-bold leading-snug tracking-tight mb-1">🧮 Customization Options</div>
-                    <div className="text-gray-600">Dr. Lambda provides a range of customization options, allowing you to tailor your videos to your specific needs and branding.</div>
+                    <div className="text-gray-600">Tailor your learning experience with Dr. Lambda's customizable course outlines. Shape your education your way! 🎓</div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                     <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
@@ -76,8 +75,8 @@ Welcome to Dr. Lambda, your AI copilot for educators! We understand the challeng
                   onClick={(e) => { e.preventDefault(); setTab(3); }}
                 >
                   <div>
-                    <div className="font-bold leading-snug tracking-tight mb-1">🎉 Engaging Visuals and Effects</div>
-                    <div className="text-gray-600">Our advanced algorithms ensure that the videos produced by Dr. Lambda are visually captivating, enhancing the learning experience and capturing the attention of your audience.</div>
+                    <div className="font-bold leading-snug tracking-tight mb-1">📄 Read from PDFs and Webpages</div>
+                    <div className="text-gray-600">Bring the world to your fingertips with Dr. Lambda's ability to read from PDFs and webpages. Information you need, when you need it! 📚</div>
                   </div>
                   <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                     <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">

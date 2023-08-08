@@ -2,6 +2,7 @@
 
 import LiteYouTubeEmbed from "react-lite-youtube-embed"
 import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css"
+import demoThumbnail from '@/public/images/demo.jpg'
 
 export default function SampleVideos() {
   return (
@@ -23,18 +24,15 @@ export default function SampleVideos() {
       </div>
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="py-12 md:py-20">
-          {/* Section header */}
-          <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-            <h2 className="h2 mb-4">Sample Videos</h2>
-          </div>
 
           {/* Items */}
           <div className="pt-32 pb-12 md:pt-40 md:pb-20">
             <LiteYouTubeEmbed
               aspectHeight={9}
               aspectWidth={16}
-              id="cJKrOSwm5nY"
-              title="[Machine Learning Interview] Numpy based gradient updates for binary classification with hinge loss"
+              id="hyFhbvX5vFI"
+              title="Create Slides from PDF Using Dr. Lambda"
+              thumbnail={demoThumbnail.src}
             />
 
           </div>
