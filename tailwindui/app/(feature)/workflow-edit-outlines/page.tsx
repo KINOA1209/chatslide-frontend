@@ -75,7 +75,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
 
         const addEquations = typeof window !== 'undefined' ? sessionStorage.getItem('addEquations') : null;
 
-        const formData = {
+        formData = {
             res: JSON.stringify({ ...outlineData }),
             audience: audience,
             foldername: foldername,
