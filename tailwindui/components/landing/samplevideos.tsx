@@ -2,6 +2,7 @@
 
 import LiteYouTubeEmbed from "react-lite-youtube-embed"
 import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css"
+import demoThumbnail from '@/public/images/demo.jpg'
 
 export default function SampleVideos() {
   return (
@@ -31,6 +32,7 @@ export default function SampleVideos() {
               aspectWidth={16}
               id="hyFhbvX5vFI"
               title="Create Slides from PDF Using Dr. Lambda"
+              thumbnail={demoThumbnail.src}
             />
 
           </div>
