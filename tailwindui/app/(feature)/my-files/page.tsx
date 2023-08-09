@@ -61,7 +61,7 @@ const FileManagement: React.FC<UserFileList> = ({ userfiles }) => {
     }
     return (
         <div className='w-full h-fit'>
-            <div className='w-fullpx-4 md:mx-8'>
+            <div className='w-full px-4 md:px-8'>
                 <div className='w-full border-b border-gray-300'></div>
             </div>
             {userfiles.map((file, index) => {
