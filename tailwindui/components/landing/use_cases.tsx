@@ -3,11 +3,11 @@
 import { useState, useRef, useEffect } from 'react'
 import { Transition } from '@headlessui/react'
 import Image from 'next/image'
-import FeaturesBg1 from '@/public/images/video.png'
-import FeaturesBg2 from '@/public/images/read_pdf.png'
-import FeaturesBg3 from '@/public/images/customization.png'
+import UseCasesBg1 from '@/public/images/content_creator.png'
+import UseCasesBg2 from '@/public/images/student.png'
+import UseCasesBg3 from '@/public/images/teacher.png'
 
-export default function Features() {
+export default function UseCases() {
 
     const [tab, setTab] = useState<number>(1)
 
@@ -25,9 +25,7 @@ export default function Features() {
                     {/* Section header */}
                     <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
                         <p className="text-xl text-left text-gray-600">
-                            🔮 Remix your knowledge with our dynamic tool that converts PDFs, webpages, and videos into your desired formats 📝🎞️🎨. </p>
-                        <p className="text-xl text-left text-gray-600">
-                            Dive in and reshape your learning and sharing experience today! 🚀 </p>
+                            From classroom to office, from Youtube to Tiktok, Dr. Lambda is ideal for all who want a productivity boost. 🌟</p>
                     </div>
 
                     {/* Section content */}
@@ -36,7 +34,7 @@ export default function Features() {
                         {/* Content */}
                         <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 md:mt-6" data-aos="fade-right">
                             <div className="md:pr-4 lg:pr-12 xl:pr-16 mb-8">
-                                <h3 className="h3 mb-3">Features</h3>
+                                <h3 className="h3 mb-3">Use Cases</h3>
                             </div>
                             {/* Tabs buttons */}
                             <div className="mb-8 md:mb-0">
@@ -46,8 +44,8 @@ export default function Features() {
                                     onClick={(e) => { e.preventDefault(); setTab(1); }}
                                 >
                                     <div>
-                                        <div className="font-bold leading-snug tracking-tight mb-1">✨ One-Click Video Generation</div>
-                                        <div className="text-gray-600">Unlock your creativity with Dr. Lambda's one-click video generation 🎨; the perfect tool to jumpstart your next big idea! 💡</div>
+                                        <div className="font-bold leading-snug tracking-tight mb-1">🌎 Content Creators</div>
+                                        <div className="text-gray-600">Empower your storytelling with seamless content transformation, tailored for the modern creator. 🎥 </div>
                                     </div>
                                     <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                                         <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
@@ -61,8 +59,8 @@ export default function Features() {
                                     onClick={(e) => { e.preventDefault(); setTab(2); }}
                                 >
                                     <div>
-                                        <div className="font-bold leading-snug tracking-tight mb-1">📄 Read from PDFs, Webpages, and Youtube Videos</div>
-                                        <div className="text-gray-600">Bring the world to your fingertips with Dr. Lambda's ability to read from PDFs and webpages. Information you need, when you need it! 📚</div>
+                                        <div className="font-bold leading-snug tracking-tight mb-1">🎓 Students and Researchers</div>
+                                        <div className="text-gray-600">Elevate your learning experience by easily converting and organizing information to suit your study style. 📚 </div>
                                     </div>
                                     <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                                         <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
@@ -76,8 +74,8 @@ export default function Features() {
                                     onClick={(e) => { e.preventDefault(); setTab(3); }}
                                 >
                                     <div>
-                                        <div className="font-bold leading-snug tracking-tight mb-1">✍️ Edit Your Content Real-time</div>
-                                        <div className="text-gray-600">Instantly refine your content with our real-time editing feature for outlines, slides, and scripts.🔋</div>
+                                        <div className="font-bold leading-snug tracking-tight mb-1">🏫 Teachers</div>
+                                        <div className="text-gray-600">Enhance your presentations and research materials with efficient, real-time editing of outlines, slides, and scripts. 🔍 </div>
                                     </div>
                                     <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                                         <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
@@ -104,7 +102,7 @@ export default function Features() {
                                     leaveTo="opacity-0 -translate-y-16"
                                 >
                                     <div className="relative inline-flex flex-col">
-                                        <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg1} width={500} height="462" alt="Features bg" />
+                                        <Image className="md:max-w-none mx-auto rounded" src={UseCasesBg1} width={500} height="462" alt="Features bg" />
                                     </div>
                                 </Transition>
                                 {/* Item 2 */}
@@ -120,7 +118,7 @@ export default function Features() {
                                     leaveTo="opacity-0 -translate-y-16"
                                 >
                                     <div className="relative inline-flex flex-col">
-                                        <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg2} width={500} height="462" alt="Features bg" />
+                                        <Image className="md:max-w-none mx-auto rounded" src={UseCasesBg2} width={500} height="462" alt="Features bg" />
                                     </div>
                                 </Transition>
                                 {/* Item 3 */}
@@ -136,7 +134,7 @@ export default function Features() {
                                     leaveTo="opacity-0 -translate-y-16"
                                 >
                                     <div className="relative inline-flex flex-col">
-                                        <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg3} width={500} height="462" alt="Features bg" />
+                                        <Image className="md:max-w-none mx-auto rounded" src={UseCasesBg3} width={500} height="462" alt="Features bg" />
                                     </div>
                                 </Transition>
                             </div>
