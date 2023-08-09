@@ -10,7 +10,6 @@ import Timer from './Timer';
 interface Project {
     topic: string;
     audience: string;
-    requirements: string;
 }
 
 
@@ -22,7 +21,6 @@ const TopicForm: React.FC = () => {
     // bind form data between input and sessionStorage
     const [topic, setTopic] = useState((typeof window !== 'undefined' && sessionStorage.topic != undefined) ? sessionStorage.topic : '');
     const [audience, setAudience] = useState((typeof window !== 'undefined' && sessionStorage.audience != undefined) ? sessionStorage.audience : 'High school students');
-    const [requirements, setRequirements] = useState((typeof window !== 'undefined' && sessionStorage.requirements != undefined) ? sessionStorage.requirements : 'High school knowledge');
     const [language, setLanguage] = useState((typeof window !== 'undefined' && sessionStorage.language != undefined) ? sessionStorage.language : 'English');
     const [addEquations, setAddEquations] = useState(
         typeof window !== 'undefined' && sessionStorage.addEquations != undefined
@@ -31,7 +29,6 @@ const TopicForm: React.FC = () => {
       );
     const [topicSuggestions, setTopicSuggestions] = useState<string[]>([]);
     const [audienceSuggestions, setAudienceSuggestions] = useState<string[]>([]);
-    const [requirementsSuggestions, setRequirementsSuggestions] = useState<string[]>([]);
 
     useEffect(() => {
         const fetchHistoricalData = async () => {
@@ -42,11 +39,9 @@ const TopicForm: React.FC = () => {
                     //to avoid duplicates, however do not check for cases
                     const uniqueTopics = new Set(data.map((project: Project) => project.topic));
                     const uniqueAudiences = new Set(data.map((project: Project) => project.audience));
-                    const uniqueRequirements = new Set(data.map((project: Project) => project.requirements));
 
                     setTopicSuggestions(Array.from(uniqueTopics) as string[]);
                     setAudienceSuggestions(Array.from(uniqueAudiences) as string[]); 
-                    setRequirementsSuggestions(Array.from(uniqueRequirements) as string[]);
                 }
             }
         };
@@ -63,11 +58,6 @@ const TopicForm: React.FC = () => {
         setAudience(audience);
     };
 
-    const handleRequirementsSuggestionClick = (requirement: string, event: MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        setRequirements(requirement);
-    };
-
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -77,7 +67,6 @@ const TopicForm: React.FC = () => {
 
         const formData = {
             topic: (event.target as HTMLFormElement).topic.value,
-            requirements: (event.target as HTMLFormElement).requirements.value,
             audience: (event.target as HTMLFormElement).audience.value,
             language: (event.target as HTMLFormElement).language.value,
             addEquations: addEquations,
@@ -85,7 +74,6 @@ const TopicForm: React.FC = () => {
         };
 
         sessionStorage.setItem('topic', formData.topic);
-        sessionStorage.setItem('requirements', formData.requirements);
         sessionStorage.setItem('audience', formData.audience);
         sessionStorage.setItem('language', formData.language);
         sessionStorage.setItem('addEquations', formData.addEquations);
@@ -110,7 +98,6 @@ const TopicForm: React.FC = () => {
                 // Handle the response data here
                 console.log(outlinesJson);
                 console.log(outlinesJson.data.audience);
-                console.log(outlinesJson.data.requirements);
                 console.log(outlinesJson.data.topic);
                 console.log(outlinesJson.data.res);
                 console.log(outlinesJson.data.foldername);
@@ -231,39 +218,6 @@ const TopicForm: React.FC = () => {
                                 onClick={(event) => handleAudienceSuggestionClick(audience, event)}
                             >
                                 {audience}
-                            </button>
-                            ))}
-                        </div>
-                    </div>
-                    )}
-                </div>
-            </div>
-            <div className="flex flex-wrap -mx-3 mb-4">
-                <div className="w-full px-3">
-                    <label
-                        className="block text-gray-800 text-sm font-medium mb-1"
-                        htmlFor="requirements">
-                        Prior Knowledge: <span className="text-red-600">*</span>
-                    </label>
-                    <input
-                        id="requirements"
-                        type="text"
-                        className="form-input w-full text-gray-800 mb-2"
-                        placeholder="High school knowledge"
-                        value={requirements}
-                        onChange={e => setRequirements(e.target.value)}
-                        required
-                    />
-                    {requirementsSuggestions.length > 0 && (
-                    <div>
-                        <div className="flex flex-wrap gap-3 mb-4">
-                            {requirementsSuggestions.map((requirement, index) => (
-                            <button
-                                key={index}
-                                className="text-sm text-gray-800 bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-sm cursor-pointer"
-                                onClick={(event) => handleRequirementsSuggestionClick(requirement, event)}
-                            >
-                                {requirement}
                             </button>
                             ))}
                         </div>

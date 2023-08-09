@@ -27,7 +27,7 @@ export default function Dashboard() {
         setIsOpen(true)
     };
 
-    const projectsPerPage = 3;
+    const projectsPerPage = 10;
     const totalPages = Math.ceil(projects.length / projectsPerPage);
     const indexOfLastProject = currentPage * projectsPerPage;
     const indexOfFirstProject = indexOfLastProject - projectsPerPage;
@@ -255,7 +255,7 @@ export default function Dashboard() {
                                     disabled
                                     style={{ minWidth: '120px' }}
                                 >
-                                    Previous
+                                    Previous Page
                                 </button>
                             ) : (
                                 <button
@@ -263,7 +263,7 @@ export default function Dashboard() {
                                     onClick={goToPreviousPage}
                                     style={{ minWidth: '120px' }}
                                 >
-                                    Previous
+                                    Previous Page
                                 </button>
                             )}
                             {!projects.length || currentPage === totalPages ? (
@@ -272,7 +272,7 @@ export default function Dashboard() {
                                     disabled
                                     style={{ minWidth: '120px' }}
                                 >
-                                    Next
+                                    Next Page
                                 </button>
                             ) : (
                                 <button
@@ -280,7 +280,7 @@ export default function Dashboard() {
                                     onClick={goToNextPage}
                                     style={{ minWidth: '120px' }}
                                 >
-                                    Next
+                                    Next Page
                                 </button>
                             )}
                         </div>
