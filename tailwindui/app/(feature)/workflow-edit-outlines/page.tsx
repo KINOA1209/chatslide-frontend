@@ -83,7 +83,6 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             language: language,
             additional_requirements: 'test',
             project_id: project_id,
-            addBackgroundImage: false,
             addEquations: addEquations
         };
         

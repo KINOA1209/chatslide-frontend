@@ -135,7 +135,7 @@ const BgImagePopup: React.FC<bgImagePopupProps> = ({ onClose }) =>{
         
         console.log(formData);
         try {
-            const response = await fetch('/api/generate_slides', {
+            const response = await fetch('/api/generate_slides_background', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -151,7 +151,7 @@ const BgImagePopup: React.FC<bgImagePopupProps> = ({ onClose }) =>{
                 console.log(resp.data);
                 sessionStorage.setItem('image_files', JSON.stringify(resp.data.image_files));
                 sessionStorage.setItem('pdf_file', resp.data.pdf_file);
-                sessionStorage.setItem('page_count', resp.data.page_count);
+                
 
                 router.push('workflow-review-slides');
             } else {
@@ -196,14 +196,14 @@ const BgImagePopup: React.FC<bgImagePopupProps> = ({ onClose }) =>{
                     <form onSubmit={handleSubmit} encType="multipart/form-data" className="text-gray-800 text-sm font-medium mb-1" style={{display: 'flex', alignItems: 'center'}}>
                         <div className="px-10 mt-1">
                             <label><input type="radio" value="default1" checked={selectedOption === 'default1'} onChange={handleOptionChange} />
-                                <span className='mx-2'>Theme 1</span>
+                                <span className='mx-2'>Rustic</span>
                             </label>
                             {selectedOption === "default1" && (
                                 <img src="../../../../slidesBackground/theme1.jpg" style={{width: "200px", height: "150px"}}/>
                             )}
                             <br/>
                             <label><input type="radio" value="default2" checked={selectedOption === 'default2'} onChange={handleOptionChange} />
-                                <span className='mx-2'>Theme 2</span>
+                                <span className='mx-2'>Vibrant</span>
                             </label>
                             {selectedOption === "default2" && (
                                 <img src="../../../../slidesBackground/theme2.jpg" style={{width: "200px", height: "150px"}}/>
