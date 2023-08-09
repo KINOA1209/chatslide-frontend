@@ -131,7 +131,37 @@ const BgImagePopup: React.FC<bgImagePopupProps> = ({ onClose }) =>{
                 file:imageBase64,
                 addEquations: addEquations
             };
-            }
+        }else if(selectedOption === 'default3'){
+            const imagePath = "../../../../slidesBackground/theme3.png";
+            const imageBase64 = await convertImagePathToBase64(imagePath);
+            formData = {
+                res: JSON.stringify({ ...outlineData }),
+                audience: audience,
+                foldername: foldername,
+                topic: topic,
+                language: language,
+                additional_requirements: 'test',
+                project_id: project_id,
+                addBackgroundImage: true,
+                file:imageBase64,
+                addEquations: addEquations
+            };
+        }else if(selectedOption === 'default4'){
+            const imagePath = "../../../../slidesBackground/theme4.png";
+            const imageBase64 = await convertImagePathToBase64(imagePath);
+            formData = {
+                res: JSON.stringify({ ...outlineData }),
+                audience: audience,
+                foldername: foldername,
+                topic: topic,
+                language: language,
+                additional_requirements: 'test',
+                project_id: project_id,
+                addBackgroundImage: true,
+                file:imageBase64,
+                addEquations: addEquations
+            };
+        }
         
         console.log(formData);
         try {
@@ -207,6 +237,20 @@ const BgImagePopup: React.FC<bgImagePopupProps> = ({ onClose }) =>{
                             </label>
                             {selectedOption === "default2" && (
                                 <img src="../../../../slidesBackground/theme2.jpg" style={{width: "200px", height: "150px"}}/>
+                            )}
+                            <br/>
+                            <label><input type="radio" value="default3" checked={selectedOption === 'default3'} onChange={handleOptionChange} />
+                                <span className='mx-2'>Work With Dr.Lambda: Knowledge Fusion</span>
+                            </label>
+                            {selectedOption === "default3" && (
+                                <img src="../../../../slidesBackground/theme3.png" style={{width: "200px", height: "150px"}}/>
+                            )}
+                            <br/>
+                            <label><input type="radio" value="default4" checked={selectedOption === 'default4'} onChange={handleOptionChange} />
+                                <span className='mx-2'>Work With Dr.Lambda: Wisdom Hub</span>
+                            </label>
+                            {selectedOption === "default4" && (
+                                <img src="../../../../slidesBackground/theme4.png" style={{width: "200px", height: "150px"}}/>
                             )}
                             <br/>
                             <label><input type="radio" value="customize" checked={selectedOption === 'customize'} onChange={handleOptionChange} />
