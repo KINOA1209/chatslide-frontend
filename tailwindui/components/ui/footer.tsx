@@ -181,7 +181,9 @@ export default function Footer() {
 
           {/* Copyrights note */}
           <div className="text-sm text-gray-600 mr-4">
-            &copy; drlambda.ai. All rights reserved.
+            &copy; drlambda.ai. All rights reserved. 
+            <br></br>
+            Created with 💙 from San Francisco. 
           </div>
         </div>
       </div>
