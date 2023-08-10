@@ -43,7 +43,7 @@ const HeroText = () => {
     }, []);
 
     return (
-        <div className={`flex flex-col items-center transition-opacity duration-5000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+        <div className={`flex flex-col items-center transition-opacity duration-3000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
             <div className="flex items-end space-x-4">
                 <h1 className="text-4xl font-extrabold leading-tighter tracking-tighter mb-1">Create</h1>
                 <TextCarousel slides={["Slides", "Script", "Audio", "Video"]} interval={3000} color="text-blue-500"/>
