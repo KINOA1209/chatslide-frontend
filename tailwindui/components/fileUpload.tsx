@@ -53,7 +53,7 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({ onFileSelected, fo
 
 
     return (
-        <div>
+        <div className='max-w-sm flex flex-col items-center'>
             <ToastContainer enableMultiContainer containerId={'upload'} />
             <input
                 type="file"
@@ -63,11 +63,11 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({ onFileSelected, fo
                 style={{ display: 'none' }}
             />
             <button
-                className="btn text-white bg-blue-600 hover:bg-blue-700 w-fit"
+                className="w-full btn text-white bg-blue-600 hover:bg-blue-700"
                 type="button"
                 onClick={handleClick}
             >
-                Upload Files
+                Upload File
             </button>
             <div className='text-sm text-gray-400'>Supported file formats: {formats.map((f, index) => {
                 if (index !== formats.length - 1) {
