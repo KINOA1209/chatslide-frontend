@@ -5,7 +5,11 @@ import React, { useEffect } from 'react';
 
 export default function SSORedirect() {
     useEffect(() => {
+        const nextUri = localStorage.getItem("nextUri");
         const project_to_link = localStorage.getItem("projectToLink");
+        
+        localStorage.removeItem('projectToLink');
+        localStorage.removeItem('nextUri');
         // Link project
         const linkProject = async (projetc_id: string) => {
 
@@ -26,11 +30,13 @@ export default function SSORedirect() {
         }
         if (project_to_link) {
             linkProject(project_to_link);
-            // Remove localStorage
-            localStorage.removeItem('projectToLink');
             // Redirect to project
             window.open(`/project/${project_to_link}`, '_self');
-        } else {
+        } 
+        // else if (nextUri) {
+        //     window.open(`/${nextUri}`, '_self');
+        // }
+        else {
             window.open(`/dashboard`, '_self');
         }
     }, []);

@@ -3,7 +3,6 @@
 import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { FormEvent } from 'react';
-import { ChangeEvent } from 'react';
 import Timer from '@/components/Timer';
 import ProjectProgress from "@/components/steps";
 import AuthService from '@/components/utils/AuthService';
@@ -49,61 +48,15 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
     };
 
     const [isSubmitting, setIsSubmitting] = useState(false); const [timer, setTimer] = useState(0);
-    const [addBackgroundImage, setBackgroundImage] = useState((typeof window !== 'undefined' && sessionStorage.addBackgroundImage !== undefined) ? (sessionStorage.addBackgroundImage === 'true') : false);
-    const [file, setFile] = useState<File | null>(null);
-    const [fileName, setFileName] = useState<string>('No file chosen');
-    const [selectedOption, setSelectedOption] = useState<string>('None');
-
-    const convertImageToBase64 = (file: File): Promise<string> => {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            if (typeof reader.result === 'string') {
-              resolve(reader.result);
-            } else {
-              reject(new Error('Failed to convert image to Base64.'));
-            }
-          };
-          reader.readAsDataURL(file);
-        });
-    };
-    const convertImagePathToBase64 = (imagePath: string): Promise<string> => {
-        return new Promise((resolve, reject) => {
-            fetch(imagePath)
-            .then((response) => response.blob())
-            .then((blob) => {
-              const file = new File([blob], 'imageFile'); 
-              const reader = new FileReader();
-              reader.onloadend = () => {
-                if (typeof reader.result === 'string') {
-                  resolve(reader.result);
-                } else {
-                  reject(new Error('Failed to convert image path to Base64.'));
-                }
-              };
-              reader.readAsDataURL(file);
-            })
-        });
-    };
-    const handleOptionChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setSelectedOption(e.target.value);
-    };
-    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-          setFile(e.target.files[0]);
-          setFileName(e.target.files[0].name);
-        }    
-    };
-    const handleBackgroundChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setBackgroundImage(event.target.checked);
-    };
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         console.log("submitting");
         event.preventDefault();
         setIsSubmitting(true);
         setTimer(0);
+
         let formData: any = {};
+
 
         // remove empty entries
         console.log(outlineData);
@@ -119,123 +72,78 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
         const topic = typeof window !== 'undefined' ? sessionStorage.getItem('topic') : null;
         const language = typeof window !== 'undefined' ? sessionStorage.getItem('language') : 'English';
         const project_id = typeof window !== 'undefined' ? sessionStorage.getItem('project_id') : null;
-
+        const pdf_file_name = typeof window !== 'undefined' ? sessionStorage.getItem('pdf_file_name') : null;
         const addEquations = typeof window !== 'undefined' ? sessionStorage.getItem('addEquations') : null;
 
-        if(addBackgroundImage){
-            if(selectedOption === 'customize'){
-                if(file){
-                    const imageBase64 = await convertImageToBase64(file);
-                    formData = {
-                        res: JSON.stringify({ ...outlineData }),
-                        audience: audience,
-                        foldername: foldername,
-                        topic: topic,
-                        language: language,
-                        additional_requirements: 'test',
-                        project_id: project_id,
-                        addBackgroundImage: addBackgroundImage,
-                        file:imageBase64,
-                        addEquations: addEquations
-                    };
-                }
-            }else if(selectedOption === 'default1'){
-                const imagePath = "../../../../slidesBackground/theme1.jpg";
-                const imageBase64 = await convertImagePathToBase64(imagePath);
-                formData = {
-                    res: JSON.stringify({ ...outlineData }),
-                    audience: audience,
-                    foldername: foldername,
-                    topic: topic,
-                    language: language,
-                    additional_requirements: 'test',
-                    project_id: project_id,
-                    addBackgroundImage: addBackgroundImage,
-                    file:imageBase64,
-                    addEquations: addEquations
-                };
-            }else if(selectedOption === 'default2'){
-                const imagePath = "../../../../slidesBackground/theme2.jpg";
-                const imageBase64 = await convertImagePathToBase64(imagePath);
-                formData = {
-                    res: JSON.stringify({ ...outlineData }),
-                    audience: audience,
-                    foldername: foldername,
-                    topic: topic,
-                    language: language,
-                    additional_requirements: 'test',
-                    project_id: project_id,
-                    addBackgroundImage: addBackgroundImage,
-                    file:imageBase64,
-                    addEquations: addEquations
-                };
+        const pdf_knowledge = typeof window !== 'undefined' ? sessionStorage.getItem('pdf_knowledge') : null;
+
+        
+
+        async function querypdf(project_id: any, pdf_file_name: any, outlineData: any) {
+            const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+            const headers = new Headers();
+            if (token) {
+                headers.append('Authorization', `Bearer ${token}`);
             }
-        }else{
-            formData = {
-                res: JSON.stringify({ ...outlineData }),
-                audience: audience,
-                foldername: foldername,
-                topic: topic,
-                language: language,
-                additional_requirements: 'test',
-                project_id: project_id,
-                addBackgroundImage: addBackgroundImage,
-                addEquations: addEquations
-            };
+
+            const response = await fetch('/api/query_pdf', {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify({
+                    outlines: JSON.stringify({ ...outlineData }),
+                    filename: pdf_file_name,
+                    project_id: project_id  
+                })
+            });
+
+            if (response.ok) {
+                return await response.json();
+            } else {
+                alert("Request failed: " + response.status);
+                console.log(response)
+                setIsSubmitting(false);
+            }
         }
 
-
-        console.log(formData);
-
-        const source_id = sessionStorage.getItem('source_id');
-        const pdf_knowledge = sessionStorage.getItem('pdf_knowledge');
-
-        console.log('source_id is:', source_id);
-
-        if (source_id && !pdf_knowledge) {
+        if (pdf_file_name && !pdf_knowledge) {
             try {
-                const pdfKnowledge = await fetchAskChatPDF(source_id, topic, outlineData);
-                sessionStorage.setItem('pdf_knowledge', JSON.stringify(pdfKnowledge.data));
+                const pdfKnowledge = await querypdf(project_id, pdf_file_name, outlineData);
+                sessionStorage.setItem('pdf_knowledge', JSON.stringify(pdfKnowledge.data.res));
+                sessionStorage.setItem('outline_item_counts', 
+                JSON.stringify(pdfKnowledge.data.outline_item_counts));
               } catch (error) {
                 console.error('Error fetching chat pdf', error);
                 return; 
               }
             }
 
-        async function fetchAskChatPDF(source_id: any, topic: any, outlineData: any) {
-            try {
-                console.log('fetching ask chat pdf');
-                const response = await fetch('/api/ask_chatpdf', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        outlines: JSON.stringify({ ...outlineData }),
-                        topic: topic,
-                        source_id: source_id  
-                    })
-                });
 
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                return await response.json();
-            } catch (error) {
-                // Handle the error here
-                console.error('Error occurred:', error);
-            }
-        }
-
+        formData = {
+            res: JSON.stringify({ ...outlineData }),
+            audience: audience,
+            foldername: foldername,
+            topic: topic,
+            language: language,
+            additional_requirements: 'test',
+            project_id: project_id,
+            addEquations: addEquations
+        };
+        
+        console.log(formData);
 
 
         try {
             const pdfKnowledge = sessionStorage.getItem('pdf_knowledge');
+            const outline_item_counts = sessionStorage.getItem('outline_item_counts');
             if(pdfKnowledge){
                 // add pdf knowledge to formData
                 formData.pdf_knowledge = pdfKnowledge;
             }
+            if(outline_item_counts){
+                // add outline item counts to formData
+                formData.outline_item_counts = outline_item_counts;
+            }
+
 
             const response = await fetch('/api/generate_slides', {
                 method: 'POST',
@@ -427,53 +335,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                     </div>
                 </div>
             ))}
-            <div className="flex flex-wrap -mx-3 mb-4">
-                <div className="w-full px-3 mt-2 flex">
-                    <input
-                        type="checkbox"
-                        id="addBackgroundImage"
-                        className="form-checkbox text-gray-800"
-                        checked={addBackgroundImage}
-                        onChange={handleBackgroundChange}/>
-                    <label
-                        className="block text-gray-800 text-sm font-medium mb-1"
-                        htmlFor="addBackgroundImage">
-                        &nbsp; &nbsp; Add background images to my slides
-                    </label>
-                </div>
-                {addBackgroundImage && (
-                    <form onSubmit={handleSubmit} encType="multipart/form-data" className="text-gray-800 text-sm font-medium mb-1" style={{display: 'flex', alignItems: 'center'}}>
-                        <div className="px-10 mt-1">
-                            <label><input type="radio" value="default1" checked={selectedOption === 'default1'} onChange={handleOptionChange} />
-                                <span className='mx-2'>Theme 1</span>
-                            </label>
-                            {selectedOption === "default1" && (
-                                <img src="../../../../slidesBackground/theme1.jpg" style={{width: "200px", height: "150px"}}/>
-                            )}
-                            <br/>
-                            <label><input type="radio" value="default2" checked={selectedOption === 'default2'} onChange={handleOptionChange} />
-                                <span className='mx-2'>Theme 2</span>
-                            </label>
-                            {selectedOption === "default2" && (
-                                <img src="../../../../slidesBackground/theme2.jpg" style={{width: "200px", height: "150px"}}/>
-                            )}
-                            <br/>
-                            <label><input type="radio" value="customize" checked={selectedOption === 'customize'} onChange={handleOptionChange} />
-                                <span className='mx-2'>Choose your own</span>
-                            </label>
-                            {selectedOption === 'customize' && (
-                                <div>
-                                    <label htmlFor="imageUpload" className="btn text-white bg-blue-600 hover:bg-blue-700 mx-6">
-                                        Choose File
-                                    </label>
-                                    <span>{fileName}</span>
-                                    <input type="file" id="imageUpload" accept="image/*"  onChange={handleFileChange}  style={{display: 'none'}}/>
-                                </div>
-                            )}
-                        </div>  
-                    </form>  
-                )}
-            </div>
+            
             {/* Form */}
             <div className="max-w-sm mx-auto">
                 <form onSubmit={handleSubmit}>
