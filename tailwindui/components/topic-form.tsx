@@ -24,6 +24,7 @@ const TopicForm: React.FC = () => {
     const [topic, setTopic] = useState((typeof window !== 'undefined' && sessionStorage.topic != undefined) ? sessionStorage.topic : '');
     const [audience, setAudience] = useState((typeof window !== 'undefined' && sessionStorage.audience != undefined) ? sessionStorage.audience : 'High school students');
     const [language, setLanguage] = useState((typeof window !== 'undefined' && sessionStorage.language != undefined) ? sessionStorage.language : 'English');
+    const [youtube, setYoutube] = useState((typeof window !== 'undefined' && sessionStorage.youtube != undefined) ? sessionStorage.youtube : '');
     const [addEquations, setAddEquations] = useState(
         typeof window !== 'undefined' && sessionStorage.addEquations != undefined
             ? JSON.parse(sessionStorage.addEquations)
@@ -80,6 +81,7 @@ const TopicForm: React.FC = () => {
             language: (event.target as HTMLFormElement).language.value,
             addEquations: addEquations,
             project_id: project_id,
+            youtube: (event.target as HTMLFormElement).youtube.value,
         };
 
         sessionStorage.setItem('topic', formData.topic);
@@ -90,6 +92,7 @@ const TopicForm: React.FC = () => {
         sessionStorage.setItem('has_script', script.toString());
         sessionStorage.setItem('has_audio', audio.toString());
         sessionStorage.setItem('has_video', video.toString());
+        sessionStorage.setItem('youtube', formData.youtube);
 
         console.log("created form data");
 
@@ -373,6 +376,24 @@ const TopicForm: React.FC = () => {
                     </select>
                 </div>
             </div>
+
+            <div className="flex flex-wrap -mx-3 mb-4">
+                <div className="w-full px-3">
+                    <label
+                        className="block text-gray-800 text-sm font-medium mb-1"
+                        htmlFor="youtube">
+                        Supporting Youtube Video Link: 
+                    </label>
+                    <input
+                        id="youtube"
+                        type="text"
+                        className="form-input w-full text-gray-800 mb-2"
+                        value={youtube}
+                        onChange={e => setYoutube(e.target.value)}
+                    />
+                </div>
+            </div>
+
             <div className="max-w-sm mx-auto">
                 <div className="flex flex-wrap -mx-3 mt-6">
                     <div className="w-full px-3">
