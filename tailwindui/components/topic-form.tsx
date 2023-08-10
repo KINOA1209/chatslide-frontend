@@ -4,7 +4,7 @@ import React, { useState, ChangeEvent, FormEvent, useEffect, MouseEvent } from '
 import { useRouter } from 'next/navigation';
 import AuthService from "./utils/AuthService";
 import UserService from "./utils/UserService";
-import {FileUploadButton} from './fileUpload';
+import { FileUploadButton } from './fileUpload';
 import Timer from './Timer';
 
 interface Project {
@@ -24,9 +24,9 @@ const TopicForm: React.FC = () => {
     const [language, setLanguage] = useState((typeof window !== 'undefined' && sessionStorage.language != undefined) ? sessionStorage.language : 'English');
     const [addEquations, setAddEquations] = useState(
         typeof window !== 'undefined' && sessionStorage.addEquations != undefined
-          ? JSON.parse(sessionStorage.addEquations)
-          : false
-      );
+            ? JSON.parse(sessionStorage.addEquations)
+            : false
+    );
     const [topicSuggestions, setTopicSuggestions] = useState<string[]>([]);
     const [audienceSuggestions, setAudienceSuggestions] = useState<string[]>([]);
 
@@ -35,13 +35,13 @@ const TopicForm: React.FC = () => {
             const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
             if (userId) {
                 const data = await UserService.getUserHistoricalInput(idToken)
-                if(data){
+                if (data) {
                     //to avoid duplicates, however do not check for cases
                     const uniqueTopics = new Set(data.map((project: Project) => project.topic));
                     const uniqueAudiences = new Set(data.map((project: Project) => project.audience));
 
                     setTopicSuggestions(Array.from(uniqueTopics) as string[]);
-                    setAudienceSuggestions(Array.from(uniqueAudiences) as string[]); 
+                    setAudienceSuggestions(Array.from(uniqueAudiences) as string[]);
                 }
             }
         };
@@ -77,6 +77,10 @@ const TopicForm: React.FC = () => {
         sessionStorage.setItem('audience', formData.audience);
         sessionStorage.setItem('language', formData.language);
         sessionStorage.setItem('addEquations', formData.addEquations);
+        sessionStorage.setItem('has_slides', slides.toString());
+        sessionStorage.setItem('has_script', script.toString());
+        sessionStorage.setItem('has_audio', audio.toString());
+        sessionStorage.setItem('has_video', video.toString());
 
         console.log("created form data");
 
@@ -158,6 +162,35 @@ const TopicForm: React.FC = () => {
         }
     }
 
+    const [slides, setSlides] = useState(true);
+    const [script, setScript] = useState(true);
+    const [audio, setAudio] = useState(true);
+    const [video, setVideo] = useState(true);
+
+    const handleSlidesToggle = () => {
+        setSlides(!slides);
+    };
+
+    const handleScriptToggle = () => {
+        setScript(!script);
+    };
+
+    const handleAudioToggle = () => {
+        if (!audio) {
+            setScript(true);
+        }
+        setAudio(!audio);
+    };
+
+    const handleVideoToggle = () => {
+        if (!video) {
+            setSlides(true);
+            setScript(true);
+            setAudio(true);
+        }
+        setVideo(!video);
+    };
+
 
     return (
         <form onSubmit={handleSubmit}>
@@ -181,19 +214,19 @@ const TopicForm: React.FC = () => {
                         onChange={e => setTopic(e.target.value)}
                         required />
                     {topicSuggestions.length > 0 && (
-                    <div>
-                        <div className="flex flex-wrap gap-3 mb-4">
-                            {topicSuggestions.map((topic, index) => (
-                            <button
-                                key={index}
-                                className="text-sm text-gray-800 bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-sm cursor-pointer"
-                                onClick={(event) => handleTopicSuggestionClick(topic, event)}
-                            >
-                                {topic}
-                            </button>
-                            ))}
+                        <div>
+                            <div className="flex flex-wrap gap-3 mb-4">
+                                {topicSuggestions.map((topic, index) => (
+                                    <button
+                                        key={index}
+                                        className="text-sm text-gray-800 bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-sm cursor-pointer"
+                                        onClick={(event) => handleTopicSuggestionClick(topic, event)}
+                                    >
+                                        {topic}
+                                    </button>
+                                ))}
+                            </div>
                         </div>
-                    </div>
                     )}
                 </div>
             </div>
@@ -215,38 +248,102 @@ const TopicForm: React.FC = () => {
                         required
                     />
                     {audienceSuggestions.length > 0 && (
-                    <div>
-                        <div className="flex flex-wrap gap-3 mb-4">
-                            {audienceSuggestions.map((audience, index) => (
-                            <button
-                                key={index}
-                                className="text-sm text-gray-800 bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-sm cursor-pointer"
-                                onClick={(event) => handleAudienceSuggestionClick(audience, event)}
-                            >
-                                {audience}
-                            </button>
-                            ))}
+                        <div>
+                            <div className="flex flex-wrap gap-3 mb-4">
+                                {audienceSuggestions.map((audience, index) => (
+                                    <button
+                                        key={index}
+                                        className="text-sm text-gray-800 bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-sm cursor-pointer"
+                                        onClick={(event) => handleAudienceSuggestionClick(audience, event)}
+                                    >
+                                        {audience}
+                                    </button>
+                                ))}
+                            </div>
                         </div>
-                    </div>
                     )}
                 </div>
             </div>
             <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3 mt-2 flex">
                     <input
-                    type="checkbox"
-                    id="addEquations"
-                    className="form-checkbox text-gray-800"
-                    checked={addEquations} // Use 'checked' instead of 'value'
-                    onChange={(e) => setAddEquations(e.target.checked)}
+                        type="checkbox"
+                        id="addEquations"
+                        className="form-checkbox text-gray-800"
+                        checked={addEquations} // Use 'checked' instead of 'value'
+                        onChange={(e) => setAddEquations(e.target.checked)}
                     />
                     <label
                         className="block text-gray-800 text-sm font-medium mb-1"
                         htmlFor="addEquations">
-                        &nbsp; &nbsp; Add equations and formulas to my slides
+                        &nbsp; &nbsp; Add equations and formulas to my content
                     </label>
                 </div>
             </div>
+
+            <div className="flex flex-wrap -mx-3 mb-4">
+                <div className="w-full px-3 mt-2 ">
+                    <label
+                        className="block text-gray-800 text-sm font-medium mb-1"
+                        htmlFor="target_content">
+                        Target Content<span className="text-red-600">*</span>
+                    </label>
+                </div>
+                <div className="w-full px-3 mt-2 flex">
+                    <input
+                        type="checkbox"
+                        id="slides"
+                        className="form-checkbox text-gray-800"
+                        checked={slides} // Use 'checked' instead of 'value'
+                        onChange={(e) => handleSlidesToggle()}
+                    />
+                    <label
+                        className="block text-gray-800 text-sm font-medium mb-1"
+                        htmlFor="slides">
+                        &nbsp; Slides &nbsp; &nbsp;
+                    </label>
+
+                    <input
+                        type="checkbox"
+                        id="script"
+                        className="form-checkbox text-gray-800"
+                        checked={script} // Use 'checked' instead of 'value'
+                        onChange={(e) => handleScriptToggle()}
+                    />
+                    <label
+                        className="block text-gray-800 text-sm font-medium mb-1"
+                        htmlFor="script">
+                        &nbsp; Script &nbsp; &nbsp;
+                    </label>
+
+                    <input
+                        type="checkbox"
+                        id="audio"
+                        className="form-checkbox text-gray-800"
+                        checked={audio} // Use 'checked' instead of 'value'
+                        onChange={(e) => handleAudioToggle()}
+                    />
+                    <label
+                        className="block text-gray-800 text-sm font-medium mb-1"
+                        htmlFor="audio">
+                        &nbsp;Audio  &nbsp; &nbsp;
+                    </label>
+
+                    <input
+                        type="checkbox"
+                        id="video"
+                        className="form-checkbox text-gray-800"
+                        checked={video} // Use 'checked' instead of 'value'
+                        onChange={(e) => handleVideoToggle()}
+                    />
+                    <label
+                        className="block text-gray-800 text-sm font-medium mb-1"
+                        htmlFor="video">
+                        &nbsp; Video &nbsp; &nbsp;
+                    </label>
+                </div>
+            </div>
+
             <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">
                     <label
@@ -270,7 +367,7 @@ const TopicForm: React.FC = () => {
             <div className="max-w-sm mx-auto">
                 <div className="flex flex-wrap -mx-3 mt-6">
                     <div className="w-full px-3">
-                         <FileUploadButton onFileSelected={onFileSelected} />
+                        <FileUploadButton onFileSelected={onFileSelected} />
                     </div>
                 </div>
             </div>
