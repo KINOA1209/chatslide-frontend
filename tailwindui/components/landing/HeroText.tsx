@@ -54,7 +54,7 @@ const HeroText = () => {
             </div>
             <div className="flex items-end space-x-4">
                 <h1 className="text-4xl font-extrabold leading-tighter tracking-tighter mb-1">without</h1>
-                <TextCarousel slides={["Hardwork", "Confusion"]} interval={5000} color="text-black-400"/>
+                <TextCarousel slides={["Hardwork", "Confusion"]} interval={5000} color="text-amber-800"/>
             </div>
         </div>
     )
