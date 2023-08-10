@@ -72,8 +72,51 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
         const topic = typeof window !== 'undefined' ? sessionStorage.getItem('topic') : null;
         const language = typeof window !== 'undefined' ? sessionStorage.getItem('language') : 'English';
         const project_id = typeof window !== 'undefined' ? sessionStorage.getItem('project_id') : null;
-
+        const pdf_file_name = typeof window !== 'undefined' ? sessionStorage.getItem('pdf_file_name') : null;
         const addEquations = typeof window !== 'undefined' ? sessionStorage.getItem('addEquations') : null;
+
+        const pdf_knowledge = typeof window !== 'undefined' ? sessionStorage.getItem('pdf_knowledge') : null;
+
+        
+
+        async function querypdf(project_id: any, pdf_file_name: any, outlineData: any) {
+            const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+            const headers = new Headers();
+            if (token) {
+                headers.append('Authorization', `Bearer ${token}`);
+            }
+
+            const response = await fetch('/api/query_pdf', {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify({
+                    outlines: JSON.stringify({ ...outlineData }),
+                    filename: pdf_file_name,
+                    project_id: project_id  
+                })
+            });
+
+            if (response.ok) {
+                return await response.json();
+            } else {
+                alert("Request failed: " + response.status);
+                console.log(response)
+                setIsSubmitting(false);
+            }
+        }
+
+        if (pdf_file_name && !pdf_knowledge) {
+            try {
+                const pdfKnowledge = await querypdf(project_id, pdf_file_name, outlineData);
+                sessionStorage.setItem('pdf_knowledge', JSON.stringify(pdfKnowledge.data.res));
+                sessionStorage.setItem('outline_item_counts', 
+                JSON.stringify(pdfKnowledge.data.outline_item_counts));
+              } catch (error) {
+                console.error('Error fetching chat pdf', error);
+                return; 
+              }
+            }
+
 
         formData = {
             res: JSON.stringify({ ...outlineData }),
@@ -88,55 +131,19 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
         
         console.log(formData);
 
-        const source_id = sessionStorage.getItem('source_id');
-        const pdf_knowledge = sessionStorage.getItem('pdf_knowledge');
-
-        console.log('source_id is:', source_id);
-
-        if (source_id && !pdf_knowledge) {
-            try {
-                const pdfKnowledge = await fetchAskChatPDF(source_id, topic, outlineData);
-                sessionStorage.setItem('pdf_knowledge', JSON.stringify(pdfKnowledge.data));
-              } catch (error) {
-                console.error('Error fetching chat pdf', error);
-                return; 
-              }
-            }
-
-        async function fetchAskChatPDF(source_id: any, topic: any, outlineData: any) {
-            try {
-                console.log('fetching ask chat pdf');
-                const response = await fetch('/api/ask_chatpdf', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        outlines: JSON.stringify({ ...outlineData }),
-                        topic: topic,
-                        source_id: source_id  
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                return await response.json();
-            } catch (error) {
-                // Handle the error here
-                console.error('Error occurred:', error);
-            }
-        }
-
-
 
         try {
             const pdfKnowledge = sessionStorage.getItem('pdf_knowledge');
+            const outline_item_counts = sessionStorage.getItem('outline_item_counts');
             if(pdfKnowledge){
                 // add pdf knowledge to formData
                 formData.pdf_knowledge = pdfKnowledge;
             }
+            if(outline_item_counts){
+                // add outline item counts to formData
+                formData.outline_item_counts = outline_item_counts;
+            }
+
 
             const response = await fetch('/api/generate_slides', {
                 method: 'POST',
