@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const RollerTitle: React.FC = () => {
-    const listA = ["Script", "Slides", "Audio", "Video"];
+    const listA = ["Script", "Slides", "Video"];
     const listB = ["Words", "PDF", "Youtube"];
 
     const [currentIndexA, setCurrentIndexA] = useState(0);
@@ -10,11 +10,11 @@ const RollerTitle: React.FC = () => {
     useEffect(() => {
         const intervalA = setInterval(() => {
             setCurrentIndexA((prevIndex) => (prevIndex + 1) % listA.length);
-        }, 3000); // Change every 3 second for list A
+        }, 1000); // Change every 1 second for list A
 
         const intervalB = setInterval(() => {
             setCurrentIndexB((prevIndex) => (prevIndex + 1) % listB.length);
-        }, 3000); // Change every 3 seconds for list B
+        }, 1500); // Change every 1.5 seconds for list B
 
         // Cleanup intervals on component unmount
         return () => {
@@ -24,9 +24,16 @@ const RollerTitle: React.FC = () => {
     }, []);
 
     return (
-        <>
-            <h1 className="text-4xl md:text-5xl font-extrabold leading-tighter tracking-tighter mb-4" data-aos="zoom-y-out">Create {listA[currentIndexA]} with {listB[currentIndexB]}</h1>
-        </>
+        <div>
+            Create 
+            <div style={{ transform: "translate(0px, -40px)", opacity: 5, visibility: "hidden" }}>
+                {listA[currentIndexA]}
+            </div>
+            with 
+            <div style={{ transform: "translate(0px, -40px)", opacity: 5, visibility: "hidden" }}>
+                {listB[currentIndexB]}
+            </div>
+        </div>
     );
 };
 
