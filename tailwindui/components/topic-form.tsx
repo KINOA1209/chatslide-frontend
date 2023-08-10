@@ -130,14 +130,20 @@ const TopicForm: React.FC = () => {
             alert("Please select non-null file");
             return;
         }
-        console.log("file name: ", file.name)//.split('.', 1)
-        console.log("file name split: ", file.name.split('.', 1))
+        console.log("file name: ", file.name)
 
         const body = new FormData();
         body.append("file", file);
+
+        const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+        const headers = new Headers();
+        if (token) {
+            headers.append('Authorization', `Bearer ${token}`);
+        }
         
-        const response = await fetch("/api/chatpdf_upload", {
+        const response = await fetch("/api/upload_user_file", {
             method: "POST",
+            headers: headers,
             body: body
         });
 
@@ -145,7 +151,7 @@ const TopicForm: React.FC = () => {
             alert("File upload successful!");
             const data = await response.json();
             console.log("data: ", data);
-            sessionStorage.setItem('source_id', data.sourceId);
+            sessionStorage.setItem('pdf_file_name', file.name);
         } else {
             console.log(response);
             alert("File upload failed!" + response.status);
