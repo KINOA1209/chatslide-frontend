@@ -42,7 +42,7 @@ const InternalIntroduction = () => {
       {/* Illustration behind hero content */}
       <div className="h-full absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none -z-1" aria-hidden="true">
         <Image
-          className={`h-full max-w-none ${imageOpacity} transition-opacity duration-3000`}
+          className={`h-full max-w-none ${imageOpacity} transition-opacity duration-1000`}
           src={background}
           height={(typeof window !== 'undefined' && window.innerHeight < 768) ? window.innerHeight : 768}
           style={{ objectFit: "contain" }}
