@@ -1,8 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import AuthService from '@/components/utils/AuthService';
 import { FileUploadButton } from '@/components/fileUpload';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const pdfIcon = (<svg className='w-8' version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
     <g>
@@ -31,24 +33,76 @@ interface UserFile {
     id: number,
     uid: string,
     filename: string,
-    thumbnail_name: string
+    thumbnail_name: string,
+    date: string | null,
 }
 
 interface UserFileList {
-    userfiles: Array<UserFile>
+    userfiles: Array<UserFile>,
+    deleteCallback: Function,
 };
 
-const FileManagement: React.FC<UserFileList> = ({ userfiles }) => {
-    const entry = (key: number, filename: string, thumbnail = null, icon = 'pdf') => {
+const FileManagement: React.FC<UserFileList> = ({ userfiles, deleteCallback }) => {
+    const handleDeleteFile = async (e: React.MouseEvent<SVGSVGElement>, id: number) => {
+        e.stopPropagation();
+        try {
+            const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+            const fileDeleteData = {
+                user_file_id: id
+            }
+            const response = await fetch("/api/delete_user_file", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(fileDeleteData),
+            });
+            if (response.ok) {
+                const fileDeleteFeedback = await response.json();
+                if (response.status === 200) {
+                    deleteCallback(id);
+                    toast.success("File deleted successfully", {
+                        position: "top-center",
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        containerId: "fileManagement",
+                    });
+                } else {
+                    // error handling does not work
+                    toast.error(fileDeleteFeedback.message, {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        containerId: "fileManagement",
+                    });
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const entry = (id: number, uid: string, filename: string, date: string | null, thumbnail = null, icon = 'pdf') => {
         return (
             <>
-                <div className='w-full h-16 px-4 md:px-8 rounded-2xl hover:bg-gray-200'>
-                    <div className='h-full flex items-center w-full py-4 px-2' key={key}>
+                <div key={id} className='w-full h-16 px-4 md:px-8 rounded-2xl hover:bg-gray-200'>
+                    <div className='h-full flex items-center w-full py-4 px-2'>
                         <div className='w-8 flex'>{icon === 'pdf' && pdfIcon}</div>
                         <div className='grow text-ellipsis mx-4 overflow-hidden'>{filename}</div>
-                        <div className='mx-16 hidden md:block'>2023-08-08</div>
+                        {date && <div className='mx-16 hidden md:block'>{date}</div>}
                         <div className='w-8 flex flex-row-reverse'>
-                            <svg className='w-6 md:opacity-25 hover:opacity-100 cursor-pointer' viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                            <svg onClick={e => handleDeleteFile(e, id)} className='w-6 md:opacity-25 hover:opacity-100 cursor-pointer' viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
                                 <path fill="#000000"
                                     d="M160 256H96a32 32 0 0 1 0-64h256V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64h-64v672a32 32 0 0 1-32 32H192a32 32 0 0 1-32-32V256zm448-64v-64H416v64h192zM224 896h576V256H224v640zm192-128a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32zm192 0a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32z" />
                             </svg>
@@ -58,14 +112,15 @@ const FileManagement: React.FC<UserFileList> = ({ userfiles }) => {
                 </div>
             </>
         )
-    }
+    };
+
     return (
         <div className='w-full h-fit'>
             <div className='w-full px-4 md:px-8'>
                 <div className='w-full border-b border-gray-300'></div>
             </div>
             {userfiles.map((file, index) => {
-                return entry(file.id, file.filename);
+                return entry(file.id, file.uid, file.filename, file.date);
             })}
         </div>
     )
@@ -74,8 +129,14 @@ const FileManagement: React.FC<UserFileList> = ({ userfiles }) => {
 export default function MyFiles() {
     const [currentPage, setCurrentPage] = useState(1);
     const [files, setFiles] = useState<UserFile[]>([]);
+    const promptRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
+    const [rendered, setRendered] = useState<boolean>(false);
 
     useEffect(() => {
+        if (contentRef.current) {
+            contentRef.current.style.height = contentRef.current.offsetHeight + "px";
+        }
         // Create a scoped async function within the hook.
         const fetchUserFiles = async () => {
             try {
@@ -85,11 +146,16 @@ export default function MyFiles() {
             catch (error: any) {
                 console.error(error);
             }
-
         };
         // Execute the created function directly
         fetchUserFiles();
     }, []);
+
+    useEffect(() => {
+        if (rendered && files.length === 0 && promptRef.current) {
+            promptRef.current.innerHTML = 'You have no uploaded file';
+        }
+    }, [files, rendered]);
 
     const fetchFiles = async (token: string) => {
         const headers = new Headers();
@@ -106,7 +172,18 @@ export default function MyFiles() {
 
             if (response.ok) {
                 const data = await response.json();
-                setFiles(data.user_files);
+                const files = data.data.user_files;
+                const userFilesTemp = files.map((file: any) => {
+                    return {
+                        id: file.id,
+                        uid: file.uid,
+                        filename: file.filename,
+                        thumbnail_name: file.thumbnail_name,
+                        date: null,
+                    }
+                });
+                setFiles(userFilesTemp);
+                setRendered(true);
             } else {
                 // Handle error cases
                 console.error('Failed to fetch projects:', response.status);
@@ -119,7 +196,7 @@ export default function MyFiles() {
     const onFileSelected = async (file: File | null) => {
         console.log("will upload file", file);
         if (file == null) {
-            alert("Please select non-null file");
+            // alert("Please select non-null file");
             return;
         }
         console.log("file name: ", file.name)//.split('.', 1)
@@ -135,107 +212,53 @@ export default function MyFiles() {
             body: body
         });
         if (response.ok) {
-            alert("File upload successful!");
+            toast.success("File uploaded successfully", {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                containerId: "fileManagement",
+            });
         } else {
-            alert("File upload failed!" + response.status);
-        }
-    }
-    const fileList = [
-        {
-            id: 0,
-            uid: '0',
-            filename: 'a.pdf',
-            thumbnail_name: '',
-        }, {
-            id: 1,
-            uid: '1',
-            filename: 'bfweffwfewfwafewfw.pdf',
-            thumbnail_name: '',
-        },
-        {
-            id: 0,
-            uid: '0',
-            filename: 'a.pdf',
-            thumbnail_name: '',
-        }, {
-            id: 1,
-            uid: '1',
-            filename: 'bfweffwfewfwafewfw.pdf',
-            thumbnail_name: '',
-        },
-        {
-            id: 0,
-            uid: '0',
-            filename: 'a.pdf',
-            thumbnail_name: '',
-        }, {
-            id: 1,
-            uid: '1',
-            filename: 'bfweffwfewfwafewfw.pdf',
-            thumbnail_name: '',
-        },
-        {
-            id: 0,
-            uid: '0',
-            filename: 'a.pdf',
-            thumbnail_name: '',
-        }, {
-            id: 1,
-            uid: '1',
-            filename: 'bfweffwfewfwafewfw.pdf',
-            thumbnail_name: '',
-        },
-        {
-            id: 0,
-            uid: '0',
-            filename: 'a.pdf',
-            thumbnail_name: '',
-        }, {
-            id: 1,
-            uid: '1',
-            filename: 'bfweffwfewfwafewfw.pdf',
-            thumbnail_name: '',
-        },
-        {
-            id: 0,
-            uid: '0',
-            filename: 'a.pdf',
-            thumbnail_name: '',
-        }, {
-            id: 1,
-            uid: '1',
-            filename: 'bfweffwfewfwafewfw.pdf',
-            thumbnail_name: '',
-        },
-        {
-            id: 0,
-            uid: '0',
-            filename: 'a.pdf',
-            thumbnail_name: '',
-        }, {
-            id: 1,
-            uid: '1',
-            filename: 'bfweffwfewfwafewfw.pdf',
-            thumbnail_name: '',
-        },
-    ]
+            console.error(response.status);
+            toast.error("File upload failed", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                containerId: "fileManagement",
+            });
+        };
 
-    const fileListShort = [
-        {
-            id: 0,
-            uid: '0',
-            filename: 'a.pdf',
-            thumbnail_name: '',
-        }, {
-            id: 1,
-            uid: '1',
-            filename: 'bfweffwfewfwafewfw.pdf',
-            thumbnail_name: '',
-        },
-    ]
+        fetchFiles(idToken);
+    };
+
+    const handleFileDeleted = (id: number) => {
+        let ind = -1;
+        for (let i = 0; i < files.length; i++) {
+            if (files[i].id === id) {
+                ind = i;
+                break;
+            }
+        };
+        if (ind !== -1) {
+            const newFiles = [...files];
+            newFiles.splice(ind, 1);
+            setFiles(newFiles);
+        }
+    };
 
     return (
-        <section className="bg-gradient-to-b from-gray-100 to-white grow flex flex-col">
+        <section className="bg-gradient-to-b from-gray-100 to-white grow flex flex-col h-full">
+            <ToastContainer enableMultiContainer containerId={'fileManagement'} />
             <div className="max-w-6xl w-full mx-auto px-4 pt-16 md:pt-20 flex flex-wrap justify-around">
                 <div className="pt-4 grow pr-4">
                     <h1 className="h2 text-blue-600">My files</h1>
@@ -246,9 +269,15 @@ export default function MyFiles() {
                     </div>
                 </div>
             </div>
-            <div className="max-w-6xl w-full mx-auto px-4 grow pt-4 flex">
-                <FileManagement userfiles={fileListShort} />
-
+            <div className="max-w-6xl w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto" ref={contentRef}>
+                {files.length > 0 && <FileManagement userfiles={files} deleteCallback={handleFileDeleted} />}
+                {files.length === 0 &&
+                    <div className='w-full grow flex items-center justify-center'>
+                        <div className='text-gray-400' ref={promptRef}>
+                            Loading...
+                        </div>
+                    </div>
+                }
             </div>
         </section>
     )
