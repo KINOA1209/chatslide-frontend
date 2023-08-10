@@ -6,6 +6,7 @@ import AuthService from "./utils/AuthService";
 import UserService from "./utils/UserService";
 import { FileUploadButton } from './fileUpload';
 import Timer from './Timer';
+import GuestUploadModal from './forms/uploadModal';
 
 interface Project {
     topic: string;
@@ -14,6 +15,7 @@ interface Project {
 
 
 const TopicForm: React.FC = () => {
+    const [user, setUser] = useState(null);
     const router = useRouter();
 
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,7 +47,14 @@ const TopicForm: React.FC = () => {
                 }
             }
         };
+        const fetchUser = async () => {
+            const user = await AuthService.getCurrentUser();
+            if (user) {
+                setUser(user);
+            }
+        };
         fetchHistoricalData();
+        fetchUser();
     }, []);
 
     const handleTopicSuggestionClick = (topic: string, event: MouseEvent<HTMLButtonElement>) => {
@@ -144,7 +153,7 @@ const TopicForm: React.FC = () => {
         if (token) {
             headers.append('Authorization', `Bearer ${token}`);
         }
-        
+
         const response = await fetch("/api/upload_user_file", {
             method: "POST",
             headers: headers,
@@ -367,7 +376,9 @@ const TopicForm: React.FC = () => {
             <div className="max-w-sm mx-auto">
                 <div className="flex flex-wrap -mx-3 mt-6">
                     <div className="w-full px-3">
-                        <FileUploadButton onFileSelected={onFileSelected} />
+                        {user ?
+                            <FileUploadButton onFileSelected={onFileSelected} /> :
+                            <GuestUploadModal />}
                     </div>
                 </div>
             </div>
