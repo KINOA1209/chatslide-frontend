@@ -5,6 +5,7 @@ import background from '@/public/images/landing.jpeg'
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import AuthService from "../utils/AuthService";
+import RollerTitle from './rollerTitle';
 
 const InternalIntroduction = () => {
   const router = useRouter();
@@ -53,8 +54,9 @@ const InternalIntroduction = () => {
           {/* Section header */}
           <div className="text-center pb-12 md:pb-16">
             <div className="max-w-3xl mx-auto">
-              <h1 className="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4" data-aos="zoom-y-out">Dr. <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">Lambda</span></h1>
-              <p className="text-3xl md:text-4xl text-black-400 mb-8 font-bold" data-aos="zoom-y-out" data-aos-delay="150">Remix your knowledge</p>
+                <RollerTitle />
+              {/* <h1 className="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4" data-aos="zoom-y-out">Dr. <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">Lambda</span></h1> */}
+              <p className="text-2xl md:text-2xl text-black-400 mb-8 font-bold" data-aos="zoom-y-out" data-aos-delay="150">Remix your knowledge with Dr. Lambda</p>
               <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center" data-aos="zoom-y-out" data-aos-delay="300">
                 <div>
                   <a className="btn text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer" onClick={handleOnClick}>
