@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
-import AuthService  from './utils/AuthService';
+import AuthService from './utils/AuthService';
 import { useRouter, useSearchParams } from "next/navigation";
 
 
 const GoogleSignIn: React.FC = () => {
+  const searchParams = useSearchParams();
+  const nextUri = searchParams.get("next");
 
   const signInWithGoogle = async () => {
-    const projectID = sessionStorage.getItem('project_id');
-    if (projectID) {
-      localStorage.setItem("projectToLink", projectID);
+    if (nextUri) {
+      localStorage.setItem("nextUri", nextUri);
+    }
+    if (nextUri === "workflow-review-slides") {
+      const projectID = sessionStorage.getItem('project_id');
+      if (projectID) {
+        localStorage.setItem("projectToLink", projectID);
+      }
     }
     try {
       const { uid, token } = await AuthService.googleSingIn();

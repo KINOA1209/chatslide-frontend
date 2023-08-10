@@ -11,6 +11,7 @@ interface StepProps {
     finished: boolean,
     desc: string,
     redirect: string
+    unavailable?: boolean
 };
 
 const StepStyle: CSS.Properties = {
@@ -23,7 +24,7 @@ const StepStyle: CSS.Properties = {
 }
 
 
-const OneStep: React.FC<StepProps> = ({ id, current, finished, desc, redirect }) => {
+const OneStep: React.FC<StepProps> = ({ id, current, finished, desc, redirect, unavailable = false }) => {
     const router = useRouter();
 
     let exitClass = 'bg-blue-500 border-blue-500 text-white text-center';
@@ -64,6 +65,13 @@ const OneStep: React.FC<StepProps> = ({ id, current, finished, desc, redirect })
                 <span className={textClass}>{desc}</span>
             </div>
         )
+    } else if (unavailable) {
+        return (
+            <div className='w-full h-14 flex items-center'>
+                <div className='bg-gray-400 border-gray-400 text-white text-center' style={StepStyle}>{id}</div>
+                <span className='text-gray-400 ml-3 line-through'>{desc}</span>
+            </div>
+        )
     } else {
         return (
             <div className='w-full h-14 flex items-center'>
@@ -80,7 +88,7 @@ interface Current {
 }
 
 // General progress indicator component
-const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => number[]) => {
+const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => number[], unavailableSteps: () => number[]) => {
     const stepRedirectPair = steps.map((desc, index) => { return [desc, redirect[index]] });
     const CurrentProgress: React.FC<Current> = ({ currentInd, contentRef }) => {
         const progressRefDesktop = useRef<HTMLDivElement>(null);
@@ -186,7 +194,8 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
                                     current={currentInd == index}
                                     finished={finishedSteps().includes(index)}
                                     desc={pair[0]}
-                                    redirect={pair[1]} />
+                                    redirect={pair[1]}
+                                    unavailable={unavailableSteps().includes(index)} />
                             ))}
                         </div>
                     </div>
@@ -211,7 +220,8 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
                                             current={currentInd == index}
                                             finished={finishedSteps().includes(index)}
                                             desc={pair[0]}
-                                            redirect={pair[1]} />
+                                            redirect={pair[1]}
+                                            unavailable={unavailableSteps().includes(index)} />
                                     ))}
                                 </div>
                             </div>
@@ -255,7 +265,23 @@ const ProjectProgress = () => {
         }
         return finishedStepsArray;
     }
-    return ProgressBox(steps, redirect, projectFinishedSteps);
+    const projectUnavailableSteps: () => number[] = () => {
+        const unavailableStepsArray: number[] = [];
+        if (typeof window !== 'undefined' && sessionStorage.getItem('has_slides') == 'false') {
+            unavailableStepsArray.push(2);
+        }
+        if (typeof window !== 'undefined' && sessionStorage.getItem('has_script') == 'false') {
+            unavailableStepsArray.push(3);
+        }
+        if (typeof window !== 'undefined' && sessionStorage.getItem('has_audio') == 'false') {
+            unavailableStepsArray.push(4);
+        }
+        if (typeof window !== 'undefined' && sessionStorage.getItem('has_video') == 'false') {
+            unavailableStepsArray.push(5);
+        }
+        return unavailableStepsArray;
+    }
+    return ProgressBox(steps, redirect, projectFinishedSteps, projectUnavailableSteps);
 }
 
 export default ProjectProgress();

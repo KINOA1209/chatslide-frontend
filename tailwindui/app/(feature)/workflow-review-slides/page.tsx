@@ -11,10 +11,20 @@ import "react-toastify/dist/ReactToastify.css";
 import ProjectProgress from "@/components/steps";
 import FeedbackForm from '@/components/feedback';
 import SaveToPPTX from '@/components/forms/saveToPptx';
+import BgImagePopup from '@/components/bgImagePopup';
 
 const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
     console.log(slide_files);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showPopup, setShowPopup] = useState<boolean>(false);
+
+    const handlePopupOpen = () => {
+        setShowPopup(true);
+    };
+    
+      const handlePopupClose = () => {
+        setShowPopup(false);
+    };
 
     // Get language from session storage
     const language = typeof window !== 'undefined' ? sessionStorage.getItem("language") : null;
@@ -48,9 +58,22 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
 
                 <Slides height={160} />
 
-
                 <SaveToPDF />
                 {language === "English" && <SaveToPPTX />}
+
+                <div className="max-w-sm mx-auto">
+                    <div className="flex flex-wrap -mx-3 mt-6">
+                        <div className="w-full px-3">
+                        <button
+                            onClick={handlePopupOpen}
+                            className="btn text-blue-600 bg-gray-100 hover:bg-gray-200 w-full border border-blue-600"
+                        >
+                            Add Slides Background
+                        </button>
+                        {showPopup && <BgImagePopup onClose={handlePopupClose} />}
+                        </div>
+                    </div>
+                </div>
 
                 {/* Form */}
                 <TranscriptForm
@@ -62,6 +85,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
                 <Timer expectedSeconds={60} isSubmitting={isSubmitting} />
 
             </div>
+
         </div>
     );
 };
