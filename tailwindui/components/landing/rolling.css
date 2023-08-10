@@ -1,0 +1,15 @@
+/* styles.css or your CSS file */
+@keyframes rollDown {
+    0% {
+        transform: translateY(-100%);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.roll-down {
+    animation: rollDown 1s forwards;
+}
