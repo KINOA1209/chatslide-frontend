@@ -5,13 +5,14 @@ import AuthService from '@/components/utils/AuthService';
 import { FileUploadButton } from '@/components/fileUpload';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import moment from"moment";
 
 interface UserFile {
     id: number,
     uid: string,
     filename: string,
     thumbnail_name: string,
-    date: string | null,
+    timestamp: string,
 }
 
 interface UserFileList {
@@ -70,14 +71,14 @@ const FileManagement: React.FC<UserFileList> = ({ userfiles, deleteCallback }) =
         }
     };
 
-    const entry = (id: number, uid: string, filename: string, date: string | null, thumbnail = null, icon = 'pdf') => {
+    const entry = (id: number, uid: string, filename: string, timestamp: string, thumbnail = null, icon = 'pdf') => {
         return (
             <>
-                <div key={id} className='w-full h-16 px-4 md:px-8 rounded-2xl hover:bg-gray-200'>
+                <div key={id} className='w-full h-16 px-4 rounded-2xl hover:bg-gray-200'>
                     <div className='h-full flex items-center w-full py-4 px-2'>
                         <div className='w-8 flex'>{getIcon(filename)}</div>
                         <div className='grow text-ellipsis mx-4 overflow-hidden'>{filename}</div>
-                        {date && <div className='mx-16 hidden md:block'>{date}</div>}
+                        {timestamp && <div className='mx-16 hidden md:block'>{moment(timestamp).format('L')}</div>}
                         <div className='w-8 flex flex-row-reverse'>
                             <svg onClick={e => handleDeleteFile(e, id)} className='w-6 md:opacity-25 hover:opacity-100 cursor-pointer' viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
                                 <path fill="#000000"
@@ -93,11 +94,11 @@ const FileManagement: React.FC<UserFileList> = ({ userfiles, deleteCallback }) =
 
     return (
         <div className='w-full h-fit'>
-            <div className='w-full px-4 md:px-8'>
+            <div className='w-full px-4'>
                 <div className='w-full border-b border-gray-300'></div>
             </div>
             {userfiles.map((file, index) => {
-                return entry(file.id, file.uid, file.filename, file.date);
+                return entry(file.id, file.uid, file.filename, file.timestamp);
             })}
         </div>
     )
@@ -156,7 +157,7 @@ export default function MyFiles() {
                         uid: file.uid,
                         filename: file.filename,
                         thumbnail_name: file.thumbnail_name,
-                        date: null,
+                        timestamp: file.timestamp,
                     }
                 });
                 setFiles(userFilesTemp);
@@ -238,10 +239,10 @@ export default function MyFiles() {
             <ToastContainer enableMultiContainer containerId={'fileManagement'} />
             <div className="max-w-6xl w-full mx-auto px-4 pt-16 md:pt-20 flex flex-wrap justify-around">
                 <div className="pt-4 grow pr-4">
-                    <h1 className="h2 text-blue-600">My files</h1>
+                    <h1 className="h2 text-blue-600">Resources</h1>
                 </div>
                 <div className="max-w-sm w-fit text-center pt-4">
-                    <div className="w-fit mx-auto">
+                    <div className="w-full mx-auto">
                         <FileUploadButton onFileSelected={onFileSelected} />
                     </div>
                 </div>
