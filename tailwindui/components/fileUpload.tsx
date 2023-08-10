@@ -2,8 +2,12 @@ import React, { ChangeEvent, FC, useState, useRef } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const supportedFormats = ['PDF', 'JPG']; // For prompt displayy
-const supportedExtensions = ['pdf', 'jpg', 'jpeg']; // For checking logic
+// Allowed extensions defined in drlambda/app/user_file_manager.py
+// ALLOWED_DOC_EXTENSIONS = {"txt", "pdf"}
+// ALLOWED_MEDIA_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
+
+const supportedFormats = ['TXT', 'PDF', 'JPG', 'PNG', 'GIF']; // For prompt displayy
+const supportedExtensions = ['txt', 'pdf', 'jpg', 'jpeg', 'png', 'gif']; // For checking logic
 
 interface FileUploadButtonProps {
     onFileSelected: (file: File | null) => void;
@@ -29,6 +33,7 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({ onFileSelected, fo
                 draggable: true,
                 progress: undefined,
                 theme: "light",
+                containerId: "upload",
             });
             return;
         }
@@ -49,7 +54,7 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({ onFileSelected, fo
 
     return (
         <div>
-            <ToastContainer />
+            <ToastContainer enableMultiContainer containerId={'upload'} />
             <input
                 type="file"
                 id="file-upload"
@@ -58,11 +63,11 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({ onFileSelected, fo
                 style={{ display: 'none' }}
             />
             <button
-                className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
+                className="btn text-white bg-blue-600 hover:bg-blue-700 w-fit"
                 type="button"
                 onClick={handleClick}
             >
-                {fileName || 'Upload Files'}
+                Upload Files
             </button>
             <div className='text-sm text-gray-400'>Supported file formats: {formats.map((f, index) => {
                 if (index !== formats.length - 1) {
