@@ -72,26 +72,25 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
         const topic = typeof window !== 'undefined' ? sessionStorage.getItem('topic') : null;
         const language = typeof window !== 'undefined' ? sessionStorage.getItem('language') : 'English';
         const project_id = typeof window !== 'undefined' ? sessionStorage.getItem('project_id') : null;
-        const pdf_file_name = typeof window !== 'undefined' ? sessionStorage.getItem('pdf_file_name') : null;
+        const resources = typeof window !== 'undefined' ? sessionStorage.getItem('resources') : null;
         const addEquations = typeof window !== 'undefined' ? sessionStorage.getItem('addEquations') : null;
-
-        const pdf_knowledge = typeof window !== 'undefined' ? sessionStorage.getItem('pdf_knowledge') : null;
+        const extraKnowledge = typeof window !== 'undefined' ? sessionStorage.getItem('extraKnowledge') : null;
 
         
 
-        async function querypdf(project_id: any, pdf_file_name: any, outlineData: any) {
+        async function query_resources(project_id: any, resources: any, outlineData: any) {
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
             const headers = new Headers();
             if (token) {
                 headers.append('Authorization', `Bearer ${token}`);
             }
 
-            const response = await fetch('/api/query_pdf', {
+            const response = await fetch('/api/query_resources', {
                 method: 'POST',
                 headers: headers,
                 body: JSON.stringify({
                     outlines: JSON.stringify({ ...outlineData }),
-                    filename: pdf_file_name,
+                    resources: resources,
                     project_id: project_id  
                 })
             });
@@ -105,17 +104,17 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             }
         }
 
-        if (pdf_file_name && !pdf_knowledge) {
+        if (resources && !extraKnowledge) {
             try {
-                const pdfKnowledge = await querypdf(project_id, pdf_file_name, outlineData);
-                sessionStorage.setItem('pdf_knowledge', JSON.stringify(pdfKnowledge.data.res));
+                const extraKnowledge = await query_resources(project_id, resources, outlineData);
+                sessionStorage.setItem('extraKnowledge', JSON.stringify(extraKnowledge.data.res));
                 sessionStorage.setItem('outline_item_counts', 
-                JSON.stringify(pdfKnowledge.data.outline_item_counts));
+                JSON.stringify(extraKnowledge.data.outline_item_counts));
               } catch (error) {
                 console.error('Error fetching chat pdf', error);
                 return; 
               }
-            }
+        }
 
 
         formData = {
@@ -133,11 +132,11 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
 
 
         try {
-            const pdfKnowledge = sessionStorage.getItem('pdf_knowledge');
+            const extraKnowledge = sessionStorage.getItem('extraKnowledge');
             const outline_item_counts = sessionStorage.getItem('outline_item_counts');
-            if(pdfKnowledge){
+            if(extraKnowledge){
                 // add pdf knowledge to formData
-                formData.pdf_knowledge = pdfKnowledge;
+                formData.extraKnowledge = extraKnowledge;
             }
             if(outline_item_counts){
                 // add outline item counts to formData

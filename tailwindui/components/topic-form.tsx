@@ -92,7 +92,19 @@ const TopicForm: React.FC = () => {
         sessionStorage.setItem('has_script', script.toString());
         sessionStorage.setItem('has_audio', audio.toString());
         sessionStorage.setItem('has_video', video.toString());
-        sessionStorage.setItem('youtube', formData.youtube);
+        
+        // Retrieve the existing resources from sessionStorage and parse them
+        const resources: string[] = JSON.parse(sessionStorage.getItem('resources') || '[]');
+
+        // Add the new YouTube URL to the resources list
+        const youtubeUrl: string = formData.youtube;
+        resources.push(youtubeUrl);
+
+        // Convert the updated list to a JSON string
+        const updatedResourcesJSON: string = JSON.stringify(resources);
+
+        // Store the updated JSON string back in sessionStorage
+        sessionStorage.setItem('resources', updatedResourcesJSON);
 
         console.log("created form data");
 
@@ -167,7 +179,10 @@ const TopicForm: React.FC = () => {
             alert("File upload successful!");
             const data = await response.json();
             console.log("data: ", data);
-            sessionStorage.setItem('pdf_file_name', file.name);
+            const resources: string[] = JSON.parse(sessionStorage.getItem('resources') || '[]');
+            resources.push(file.name);
+            const updatedResourcesJSON: string = JSON.stringify(resources);
+            sessionStorage.setItem('resources', updatedResourcesJSON);
         } else {
             console.log(response);
             alert("File upload failed!" + response.status);
