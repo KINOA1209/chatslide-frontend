@@ -22,7 +22,7 @@ export default function AboutUs() {
                         <div className="flex flex-col md:flex-row items-center pb-8">
                             <img src="/images/quanlai.jpeg" alt="Quanlai Li" className="w-48 h-48 mb-4 md:mb-0 md:mr-8 rounded-full" />
                             <div>
-                                <h3 className="h3 text-xl mb-2">Quanlai Li</h3>
+                                <h3 className="h3 text-xl mb-2">Founder: Quanlai Li</h3>
                                 <p className="text-base text-gray-600">
                                 Quanlai is an accomplished technologist with an extensive background in data and software engineering. 
                                 As the current CEO of Dr. Lambda, he is pioneering AI-driven tools to revolutionize educational content creation. 
@@ -37,7 +37,7 @@ export default function AboutUs() {
                         <div className="flex flex-col md:flex-row items-center pb-8">
                             <img src="/images/zhiyuan.jpeg" alt="Zhiyuan Wang" className="w-48 h-48 mb-4 md:mb-0 md:mr-8 rounded-full" />
                             <div>
-                                <h3 className="h3 text-xl mb-2">Zhiyuan Wang</h3>
+                                <h3 className="h3 text-xl mb-2">Founding Team: Zhiyuan Wang</h3>
                                 <p className="text-base text-gray-600">
                                 Zhiyuan Wang is a skilled software engineer with a penchant for innovation and optimization. 
                                 As the Co-founder & Engineering Lead at Dr. Lambda, Zhiyuan is shaping the future of AI-enhanced educational content. 
