@@ -180,16 +180,25 @@ const TopicForm: React.FC = () => {
     const [video, setVideo] = useState(true);
 
     const handleSlidesToggle = () => {
+        if (slides) {
+            setVideo(false);
+        }
         setSlides(!slides);
     };
 
     const handleScriptToggle = () => {
+        if (script) {
+            setAudio(false);
+            setVideo(false);
+        }
         setScript(!script);
     };
 
     const handleAudioToggle = () => {
         if (!audio) {
             setScript(true);
+        } else {
+            setVideo(false);
         }
         setAudio(!audio);
     };
