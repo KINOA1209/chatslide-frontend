@@ -5,7 +5,7 @@ import AuthService from '@/components/utils/AuthService';
 import { FileUploadButton } from '@/components/fileUpload';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import moment from"moment";
+import moment from "moment";
 
 interface UserFile {
     id: number,
@@ -36,6 +36,9 @@ const FileManagement: React.FC<UserFileList> = ({ userfiles, deleteCallback }) =
                 },
                 body: JSON.stringify(fileDeleteData),
             });
+            if (typeof window !== 'undefined') {
+                window.location.reload();
+            }
             if (response.ok) {
                 const fileDeleteFeedback = await response.json();
                 if (response.status === 200) {
