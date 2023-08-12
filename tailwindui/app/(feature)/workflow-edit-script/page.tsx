@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useRef, FormEvent } from 'react';
+import React, { useState, useRef, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Timer from '@/components/Timer';
 import GoBackButton from '@/components/GoBackButton';
@@ -12,6 +12,16 @@ import FeedbackForm from '@/components/feedback';
 const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], imageUrls: [] }) => {
     const [transcriptList, setTranscriptList] = useState<string[]>(transcripts);
     const router = useRouter();
+    const [hasSlides, setHasSlides] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const slidesFlag = sessionStorage.getItem('has_slides');
+            if (slidesFlag === 'true') {
+                setHasSlides(true);
+            }
+        }
+    }, []);
 
     const handleChange = (index: number, event: React.ChangeEvent<HTMLTextAreaElement>) => {
         let newData = [...transcriptList]; // copying the old datas array
@@ -77,17 +87,17 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
     return (
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
             {transcriptList.map((data, index) => (
-                <div tabIndex={index} className='grid grid-rows-2 md:grid-rows-1 md:grid-cols-2 mt-4 rounded border-solid border-2 border-blue-200 focus-within:border-blue-600'>
-                    <ImageList urls={[imageUrls[index]]} height={100} />
+                <div tabIndex={index} className={`grid ${hasSlides ? 'grid-rows-2' : 'grid-rows-1'} md:grid-rows-1 md:${hasSlides ? 'grid-cols-2' : 'grid-cols-1'} mt-4 rounded border-solid border-2 border-blue-200 focus-within:border-blue-600`}>
+                    {hasSlides && <ImageList urls={[imageUrls[index]]} height={100} />}
                     <textarea
                         key={index}
-                        className="form-input w-full text-gray-800 mb-2 resize-none h-full border-none p-4"
+                        className={`${!hasSlides && 'h-80'} block form-input w-full text-gray-800 mb-2 resize-none border-none p-4`}
                         value={data}
                         onChange={(event) => handleChange(index, event)}
                     />
                 </div>
             ))}
-            
+
             {/* Form */}
             <div className="max-w-sm mx-auto">
                 <form onSubmit={handleSubmit}>
@@ -139,10 +149,10 @@ export default function WorkflowStep4() {
             </div>
             <div className="fixed bottom-10 right-10">
                 <button
-                onClick={handleOpenModal}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
+                    onClick={handleOpenModal}
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
                 >
-                Feedback
+                    Feedback
                 </button>
 
                 {showModal && <FeedbackForm onClose={handleCloseModal} />}

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useRef, FormEvent } from 'react';
+import React, { useState, useRef, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Timer from '@/components/Timer';
 import Audio from '@/components/Audio';
@@ -13,6 +13,16 @@ import FeedbackForm from '@/components/feedback';
 const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageUrls }: { transcripts: [], audioFiles: [], foldername: string, imageUrls: [] }) => {
     const [transcriptList, setTranscriptList] = useState<string[]>(transcripts);
     const router = useRouter();
+    const [hasSlides, setHasSlides] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const slidesFlag = sessionStorage.getItem('has_slides');
+            if (slidesFlag === 'true') {
+                setHasSlides(true);
+            }
+        }
+    }, []);
 
     const handleChange = (index: number, event: React.ChangeEvent<HTMLTextAreaElement>) => {
         let newData = [...transcriptList]; // copying the old datas array
@@ -75,21 +85,21 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageU
     };
 
     return (
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
             {transcriptList.map((data, index) => (
-                
-                <div tabIndex={index} className='flex flex-col md:flex-row rounded border-solid border-2 border-blue-200 mt-4 focus-within:border-blue-600'>
-                    <div className='grid grid-rows-2 md:grid-rows-1 md:grid-cols-2'>
-                        <ImageList urls={[imageUrls[index]]} height={100} />
+
+                <div tabIndex={index} className='w-full flex flex-col md:flex-row rounded border-solid border-2 border-blue-200 mt-4 focus-within:border-blue-600'>
+                    <div className={`grid ${hasSlides ? 'grid-rows-2' : 'grid-rows-1'} md:grid-rows-1 md:${hasSlides ? 'grid-cols-2' : 'grid-cols-1'} grow`}>
+                        {hasSlides && <ImageList urls={[imageUrls[index]]} height={100} />}
                         <textarea
                             key={index}
-                            className="form-input w-full text-gray-800 mb-2 resize-none h-full border-none p-4"
+                            className={`${!hasSlides && 'h-80'} block form-input w-full text-gray-800 mb-2 resize-none border-none p-4`}
                             value={data}
                             onChange={(event) => handleChange(index, event)}
                             readOnly
                         />
                     </div>
-                    <div className='w-48 flex flex-row items-center px-1.5 py-2 md:flex-col'>
+                    <div className='md:w-28 flex flex-row items-center px-1.5 py-2 md:flex-col shrink-0'>
                         {index < audioFiles.length &&
                             <Audio filename={audioFiles[index]} foldername={foldername} />
                         }
@@ -119,7 +129,7 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageU
 export default function WorkflowStep5() {
     const transcriptData = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('transcripts') : null;
     const transcripts = transcriptData ? JSON.parse(transcriptData) : [];
-    const foldername = typeof sessionStorage !== 'undefined' ? (sessionStorage.getItem('foldername') || ''): '';
+    const foldername = typeof sessionStorage !== 'undefined' ? (sessionStorage.getItem('foldername') || '') : '';
     const image_files = typeof sessionStorage !== 'undefined' ? JSON.parse(sessionStorage.getItem('image_files') || '[]') : [];
     const imageUrls = image_files.map((filename: string) => `/api/jpg?foldername=${foldername}&filename=${filename}`);
     const audioData = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('audio_files') : null;
@@ -152,10 +162,10 @@ export default function WorkflowStep5() {
             </div>
             <div className="fixed bottom-10 right-10">
                 <button
-                onClick={handleOpenModal}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
+                    onClick={handleOpenModal}
+                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
                 >
-                Feedback
+                    Feedback
                 </button>
 
                 {showModal && <FeedbackForm onClose={handleCloseModal} />}
