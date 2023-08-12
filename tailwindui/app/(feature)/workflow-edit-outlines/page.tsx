@@ -116,7 +116,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                 sessionStorage.setItem('outline_item_counts',
                     JSON.stringify(extraKnowledge.data.outline_item_counts));
             } catch (error) {
-                console.error('Error querying vector database', error);
+                console.log('Error querying vector database', error);
                 // return; 
             }
         }
