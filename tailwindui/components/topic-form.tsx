@@ -96,9 +96,12 @@ const TopicForm: React.FC = () => {
         // Retrieve the existing resources from sessionStorage and parse them
         const resources: string[] = JSON.parse(sessionStorage.getItem('resources') || '[]');
 
-        // Add the new YouTube URL to the resources list
+       // Add the new YouTube URL to the resources list if it's not empty
         const youtubeUrl: string = formData.youtube;
-        resources.push(youtubeUrl);
+
+        if (youtubeUrl.trim() !== "") {
+            resources.push(youtubeUrl);
+}
 
         // Convert the updated list to a JSON string
         const updatedResourcesJSON: string = JSON.stringify(resources);
