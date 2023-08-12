@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { FormEvent } from 'react';
 import Timer from '@/components/Timer';
@@ -48,6 +48,11 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
     };
 
     const [isSubmitting, setIsSubmitting] = useState(false); const [timer, setTimer] = useState(0);
+    const [hasSlides, setHasSlides] = useState(false);
+
+    useEffect(() => {
+        setHasSlides(sessionStorage.getItem('has_slides') === 'true');
+    }, []);
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         console.log("submitting");
@@ -75,8 +80,8 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
         const resources = typeof window !== 'undefined' ? sessionStorage.getItem('resources') : null;
         const addEquations = typeof window !== 'undefined' ? sessionStorage.getItem('addEquations') : null;
         const extraKnowledge = typeof window !== 'undefined' ? sessionStorage.getItem('extraKnowledge') : null;
+        const has_slides = typeof window !== 'undefined' ? sessionStorage.getItem('has_slides') : null;
 
-        
 
         async function query_resources(project_id: any, resources: any, outlineData: any) {
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
@@ -91,7 +96,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                 body: JSON.stringify({
                     outlines: JSON.stringify({ ...outlineData }),
                     resources: resources,
-                    project_id: project_id  
+                    project_id: project_id
                 })
             });
 
@@ -108,30 +113,32 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             try {
                 const extraKnowledge = await query_resources(project_id, resources, outlineData);
                 sessionStorage.setItem('extraKnowledge', JSON.stringify(extraKnowledge.data.res));
-                sessionStorage.setItem('outline_item_counts', 
-                JSON.stringify(extraKnowledge.data.outline_item_counts));
-              } catch (error) {
-                console.error('Error fetching chat pdf', error);
-                return; 
-              }
+                sessionStorage.setItem('outline_item_counts',
+                    JSON.stringify(extraKnowledge.data.outline_item_counts));
+            } catch (error) {
+                console.error('Error querying vector database', error);
+                // return; 
+            }
         }
 
 
         formData = {
             res: JSON.stringify({ ...outlineData }),
+            outlines: JSON.stringify({ ...outlineData }),
             audience: audience,
             foldername: foldername,
             topic: topic,
             language: language,
-            additional_requirements: 'test',
             project_id: project_id,
-            addEquations: addEquations
+            addEquations: addEquations,
+            extraKnowledge: extraKnowledge,
         };
-        
+
         console.log(formData);
 
 
         try {
+            // this is defined before
             const extraKnowledge = sessionStorage.getItem('extraKnowledge');
             const outline_item_counts = sessionStorage.getItem('outline_item_counts');
             if(extraKnowledge){
@@ -143,33 +150,62 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                 formData.outline_item_counts = outline_item_counts;
             }
 
+            // generate slides
+            if (has_slides === 'true') {
+                const response = await fetch('/api/generate_slides', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
 
-            const response = await fetch('/api/generate_slides', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
+                console.log('formData is:', formData);
 
-            console.log('formData is:', formData);
+                if (response.ok) {
+                    const resp = await response.json();
+                    console.log(resp);
+                    setIsSubmitting(false);
+                    // Store the data in local storage
+                    console.log(resp.data);
+                    sessionStorage.setItem('image_files', JSON.stringify(resp.data.image_files));
+                    sessionStorage.setItem('pdf_file', resp.data.pdf_file);
+                    sessionStorage.setItem('page_count', resp.data.page_count);
 
-            if (response.ok) {
-                const resp = await response.json();
-                console.log(resp);
-                setIsSubmitting(false);
-                // Store the data in local storage
-                console.log(resp.data);
-                sessionStorage.setItem('image_files', JSON.stringify(resp.data.image_files));
-                sessionStorage.setItem('pdf_file', resp.data.pdf_file);
-                sessionStorage.setItem('page_count', resp.data.page_count);
+                    // Redirect to a new page with the data
+                    router.push('workflow-review-slides');
+                } else {
+                    alert("Request failed: " + response.status);
+                    console.log(response)
+                    setIsSubmitting(false);
+                }
+            }
+            // generate script direclty
+            else {
+                const response = await fetch('/api/scripts_only', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
 
-                // Redirect to a new page with the data
-                router.push('workflow-review-slides');
-            } else {
-                alert("Request failed: " + response.status);
-                console.log(response)
-                setIsSubmitting(false);
+                console.log('formData is:', formData);
+
+                if (response.ok) {
+                    const resp = await response.json();
+                    console.log(resp);
+                    setIsSubmitting(false);
+                    // Store the data in local storage
+                    console.log(resp.data);
+                    sessionStorage.setItem('transcripts', JSON.stringify(resp.data.res));
+                    // Redirect to a new page with the data
+                    router.push('workflow-edit-script');
+                } else {
+                    alert("Request failed: " + response.status);
+                    console.log(response)
+                    setIsSubmitting(false);
+                }
             }
         } catch (error) {
             console.error('Error:', error);
@@ -334,15 +370,23 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                     </div>
                 </div>
             ))}
-            
+
             {/* Form */}
             <div className="max-w-sm mx-auto">
                 <form onSubmit={handleSubmit}>
                     <div className="flex flex-wrap -mx-3 mt-6">
                         <div className="w-full px-3">
-                            <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">
-                                {isSubmitting ? 'Generating...' : 'Generate Slides'}
-                            </button>
+                            {
+                                hasSlides ? (
+                                    <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">
+                                        {isSubmitting ? 'Generating...' : 'Generate Slides'}
+                                    </button>
+                                ) : (
+                                    <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">
+                                        {isSubmitting ? 'Generating...' : 'Generate Scripts'}
+                                    </button>
+                                )
+                            }
                         </div>
                     </div>
                 </form>
