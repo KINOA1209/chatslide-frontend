@@ -104,7 +104,7 @@ class AuthService {
             const idToken = session.getIdToken().getJwtToken();
 
             console.log('User ID:', userId);
-            console.log('ID Token:', idToken);
+            // console.log('ID Token:', idToken);
 
             return { userId, idToken };
         } catch (error) {
