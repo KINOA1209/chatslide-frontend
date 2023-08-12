@@ -422,7 +422,7 @@ export default function WorkflowStep2() {
         <div>
             <ProjectProgress currentInd={1} contentRef={contentRef} />
             <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
-                <h1 className="h1">Step 2: Edit Outlines</h1>
+                <h1 className="h1">Edit Outlines</h1>
             </div>
             <div className="max-w-4xl mx-auto px-6" ref={contentRef}>
                 <p>
