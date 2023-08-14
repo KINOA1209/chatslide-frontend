@@ -47,19 +47,17 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
         }
     };
 
-    const [isSubmitting, setIsSubmitting] = useState(false); const [timer, setTimer] = useState(0);
-    const [hasSlides, setHasSlides] = useState(false);
-
-    useEffect(() => {
-        setHasSlides(sessionStorage.getItem('has_slides') === 'true');
-    }, []);
+    const [isSubmittingSlide, setIsSubmittingSlide] = useState(false);
+    const [timer, setTimer] = useState(0);
+    const [isSubmittingScript, setIsSubmittingScript] = useState(false);
+    const [toSlides, setToSlides] = useState(true);
+    const [isDisabled, setIsDisabled] = useState(false);
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         console.log("submitting");
         event.preventDefault();
-        setIsSubmitting(true);
         setTimer(0);
-
+        setIsDisabled(true);
         let formData: any = {};
 
 
@@ -80,7 +78,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
         const resources = typeof window !== 'undefined' ? sessionStorage.getItem('resources') : null;
         const addEquations = typeof window !== 'undefined' ? sessionStorage.getItem('addEquations') : null;
         const extraKnowledge = typeof window !== 'undefined' ? sessionStorage.getItem('extraKnowledge') : null;
-        const has_slides = typeof window !== 'undefined' ? sessionStorage.getItem('has_slides') : null;
+        // const has_slides = typeof window !== 'undefined' ? sessionStorage.getItem('has_slides') : null;
 
 
         async function query_resources(project_id: any, resources: any, outlineData: any) {
@@ -105,7 +103,8 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             } else {
                 alert("Request failed: " + response.status);
                 console.log(response)
-                setIsSubmitting(false);
+                setIsSubmittingScript(false);
+                setIsSubmittingSlide(false);
             }
         }
 
@@ -141,17 +140,17 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             // this is defined before
             const extraKnowledge = sessionStorage.getItem('extraKnowledge');
             const outline_item_counts = sessionStorage.getItem('outline_item_counts');
-            if(extraKnowledge){
+            if (extraKnowledge) {
                 // add pdf knowledge to formData
                 formData.extraKnowledge = extraKnowledge;
             }
-            if(outline_item_counts){
+            if (outline_item_counts) {
                 // add outline item counts to formData
                 formData.outline_item_counts = outline_item_counts;
             }
 
             // generate slides
-            if (has_slides === 'true') {
+            if (toSlides === true) {
                 const response = await fetch('/api/generate_slides', {
                     method: 'POST',
                     headers: {
@@ -165,7 +164,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                 if (response.ok) {
                     const resp = await response.json();
                     console.log(resp);
-                    setIsSubmitting(false);
+                    setIsSubmittingSlide(false);
                     // Store the data in local storage
                     console.log(resp.data);
                     sessionStorage.setItem('image_files', JSON.stringify(resp.data.image_files));
@@ -177,7 +176,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                 } else {
                     alert("Request failed: " + response.status);
                     console.log(response)
-                    setIsSubmitting(false);
+                    setIsSubmittingSlide(false);
                 }
             }
             // generate script direclty
@@ -195,7 +194,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                 if (response.ok) {
                     const resp = await response.json();
                     console.log(resp);
-                    setIsSubmitting(false);
+                    setIsSubmittingScript(false);
                     // Store the data in local storage
                     console.log(resp.data);
                     sessionStorage.setItem('transcripts', JSON.stringify(resp.data.res));
@@ -204,13 +203,16 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                 } else {
                     alert("Request failed: " + response.status);
                     console.log(response)
-                    setIsSubmitting(false);
+                    setIsSubmittingScript(false);
                 }
             }
         } catch (error) {
             console.error('Error:', error);
-            setIsSubmitting(false);
+            setIsSubmittingSlide(false);
+            setIsSubmittingScript(false);
         }
+        
+        setIsDisabled(false);
     };
 
     const handleAddDetail = (e: React.MouseEvent<SVGSVGElement>, sectionIndex: number, detailIndex: number) => {
@@ -376,23 +378,26 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                 <form onSubmit={handleSubmit}>
                     <div className="flex flex-wrap -mx-3 mt-6">
                         <div className="w-full px-3">
-                            {
-                                hasSlides ? (
-                                    <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">
-                                        {isSubmitting ? 'Generating...' : 'Generate Slides'}
-                                    </button>
-                                ) : (
-                                    <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">
-                                        {isSubmitting ? 'Generating...' : 'Generate Scripts'}
-                                    </button>
-                                )
-                            }
+                            <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full disabled:bg-gray-200 disabled:text-gray-400"
+                                onClick={() => { setIsSubmittingSlide(true) }}
+                                disabled={isDisabled}
+                            >
+                                {isSubmittingSlide ? 'Generating...' : 'Generate Slides'}
+                            </button>
+                            {/* Timer */}
+                            <Timer expectedSeconds={60} isSubmitting={isSubmittingSlide} />
+                            <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full mt-4 disabled:bg-gray-200 disabled:text-gray-400"
+                                onClick={() => { setToSlides(false); setIsSubmittingScript(true) }}
+                                disabled={isDisabled}
+                            >
+                                {isSubmittingScript ? 'Generating...' : 'Generate Scripts'}
+                            </button>
+                            {/* Timer */}
+                            <Timer expectedSeconds={60} isSubmitting={isSubmittingScript} />
                         </div>
                     </div>
                 </form>
             </div>
-            {/* Timer */}
-            <Timer expectedSeconds={60} isSubmitting={isSubmitting} />
         </div>
     );
 };
