@@ -17,8 +17,8 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageU
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            const slidesFlag = sessionStorage.getItem('has_slides');
-            if (slidesFlag === 'true') {
+            const slidesFlag = sessionStorage.getItem('image_files');
+            if (slidesFlag !== null) {
                 setHasSlides(true);
             }
         }
@@ -84,12 +84,17 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageU
         }
     };
 
+    const handleToVideo = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        router.push('/workflow-edit-outlines');
+    }
+
     return (
         <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
             {transcriptList.map((data, index) => (
 
                 <div tabIndex={index} className='w-full flex flex-col md:flex-row rounded border-solid border-2 border-blue-200 mt-4 focus-within:border-blue-600'>
-                    <div className={`grid ${hasSlides ? 'grid-rows-2' : 'grid-rows-1'} md:grid-rows-1 md:${hasSlides ? 'grid-cols-2' : 'grid-cols-1'} grow`}>
+                    <div className={`grid ${hasSlides ? 'sm:grid-rows-2' : 'sm:grid-rows-1'} md:grid-rows-1 ${hasSlides ? 'md:grid-cols-2' : 'md:grid-cols-1'} grow`}>
                         {hasSlides && <ImageList urls={[imageUrls[index]]} height={100} />}
                         <textarea
                             key={index}
@@ -110,11 +115,18 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageU
             {/* Form */}
             <div className="max-w-sm mx-auto">
                 <form onSubmit={handleSubmit}>
-                    <div className="flex flex-wrap -mx-3 mt-6">
+                    <div className="-mx-3 mt-6">
                         <div className="w-full px-3">
-                            <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">
-                                Combine to Video
-                            </button>
+                            {hasSlides ?
+                                <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">
+                                    Combine to Video
+                                </button> :
+                                <>
+                                <div className='text-center'>To generate video, please generate slides in the outline stage.</div>
+                                    <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full" onClick={e => handleToVideo(e)}>
+                                        Go to Outlines
+                                    </button>
+                                </>}
                         </div>
                     </div>
                 </form>

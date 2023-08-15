@@ -8,6 +8,8 @@ import ImageList from '@/components/ImageList';
 import ProjectProgress from '@/components/steps';
 import AuthService from '@/components/utils/AuthService';
 import FeedbackForm from '@/components/feedback';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], imageUrls: [] }) => {
     const [transcriptList, setTranscriptList] = useState<string[]>(transcripts);
@@ -16,8 +18,8 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            const slidesFlag = sessionStorage.getItem('has_slides');
-            if (slidesFlag === 'true') {
+            const slidesFlag = sessionStorage.getItem('image_files');
+            if (slidesFlag !== null) {
                 setHasSlides(true);
             }
         }
@@ -84,17 +86,77 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
         }
     };
 
+    const handleUpdateScript = async (e: React.MouseEvent<HTMLButtonElement>, index: number, ask: string) => {
+        e.preventDefault();
+        const text = transcriptList[index];
+        const updateData = {
+            ask: ask,
+            text: text,
+        }
+        console.log(updateData);
+
+        try {
+            const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+            const response = await fetch('/api/update_script', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${idToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updateData)
+            });
+
+            if (response.ok) {
+                const resp = await response.json();
+                console.log(resp.data);
+                const res = resp.data.res;
+                // Update local data
+                let newData = [...transcriptList];
+                newData[index] = res;
+                sessionStorage.setItem('transcripts', JSON.stringify(newData));
+                setTranscriptList(newData);
+                toast.success('Script has been updated!', {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                })
+
+            } else {
+                alert("Request failed: " + response.status);
+                console.log(response)
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
     return (
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
             {transcriptList.map((data, index) => (
-                <div tabIndex={index} className={`grid ${hasSlides ? 'grid-rows-2' : 'grid-rows-1'} md:grid-rows-1 md:${hasSlides ? 'grid-cols-2' : 'grid-cols-1'} mt-4 rounded border-solid border-2 border-blue-200 focus-within:border-blue-600`}>
-                    {hasSlides && <ImageList urls={[imageUrls[index]]} height={100} />}
-                    <textarea
-                        key={index}
-                        className={`${!hasSlides && 'h-80'} block form-input w-full text-gray-800 mb-2 resize-none border-none p-4`}
-                        value={data}
-                        onChange={(event) => handleChange(index, event)}
-                    />
+                <div tabIndex={index} className='w-full flex flex-col md:flex-row rounded border-solid border-2 border-blue-200 mt-4 focus-within:border-blue-600'>
+                    <div className={`grid ${hasSlides ? 'sm:grid-rows-2' : 'sm:grid-rows-1'} md:grid-rows-1 ${hasSlides ? 'md:grid-cols-2' : 'md:grid-cols-1'} grow`}>
+                        {hasSlides && <ImageList urls={[imageUrls[index]]} height={100} />}
+                        <textarea
+                            key={index}
+                            className={`${!hasSlides && 'h-80'} block form-input w-full text-gray-800 mb-2 resize-none border-none p-4`}
+                            value={data}
+                            onChange={(event) => handleChange(index, event)}
+                        // readOnly
+                        />
+                    </div>
+                    <div className='flex flex-row items-center px-1.5 py-2 md:flex-col shrink-0'>
+                        <button key={index + 'shorter'} className="btn text-white bg-blue-600 hover:bg-blue-700 w-fit" onClick={e => handleUpdateScript(e, index, 'shorter')}>
+                            Shorter
+                        </button>
+                        <button key={index + 'funnier'} className="mt-4 btn text-white bg-blue-600 hover:bg-blue-700 w-fit" onClick={e => handleUpdateScript(e, index, 'funnier')}>
+                            Funnier
+                        </button>
+                    </div>
                 </div>
             ))}
 
@@ -136,6 +198,7 @@ export default function WorkflowStep4() {
 
     return (
         <div>
+            <ToastContainer />
             <ProjectProgress currentInd={3} contentRef={contentRef} />
             <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
                 <h1 className="h1">Edit Script</h1>
