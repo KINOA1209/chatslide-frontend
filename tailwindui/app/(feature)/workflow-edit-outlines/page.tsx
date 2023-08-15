@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, Fragment } from 'react';
 import { useRouter } from 'next/navigation';
 import { FormEvent } from 'react';
 import Timer from '@/components/Timer';
@@ -9,6 +9,8 @@ import AuthService from '@/components/utils/AuthService';
 import FeedbackForm from '@/components/feedback';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Dialog, Transition } from '@headlessui/react';
+import { eventManager } from 'react-toastify/dist/core';
 
 const minOutlineDetailCount = 1;
 const maxOutlineDetailCount = 6;
@@ -52,10 +54,38 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
     const [isSubmittingScript, setIsSubmittingScript] = useState(false);
     const [toSlides, setToSlides] = useState(true);
     const [isDisabled, setIsDisabled] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    function closeModal() {
+        setIsOpen(false);
+        setIsSubmittingSlide(false);
+    };
 
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    function openModal() {
+        setIsOpen(true);
+    };
+
+    const prepareSubmit = (event: FormEvent<HTMLFormElement>) => {
         console.log("submitting");
         event.preventDefault();
+        if (toSlides) {
+            openModal();
+        } else {
+            handleSubmit();
+        }
+    }
+
+    const slideModalSubmit = () => {
+        closeModal();
+        setIsSubmittingSlide(true);
+        // clean sessionStorage
+        if (typeof window !== 'undefined') {
+            sessionStorage.removeItem('transcripts');
+            sessionStorage.removeItem('audio_files');
+        }
+        handleSubmit();
+    };
+
+    const handleSubmit = async () => {
         setTimer(0);
         setIsDisabled(true);
         let formData: any = {};
@@ -210,7 +240,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             setIsSubmittingSlide(false);
             setIsSubmittingScript(false);
         }
-        
+
         setIsDisabled(false);
     };
 
@@ -291,6 +321,64 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
     return (
         <div>
             <ToastContainer />
+            <Transition appear show={isOpen} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 scale-95"
+                                enterTo="opacity-100 scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 scale-100"
+                                leaveTo="opacity-0 scale-95"
+                            >
+                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-lg font-medium leading-6 text-gray-900"
+                                    >
+                                        Continue to generate slides?
+                                    </Dialog.Title>
+                                    <div className="mt-2">
+                                        <p className="text-sm text-gray-500">
+                                            Generate slides will delete current scripts and audio.
+                                        </p>
+                                    </div>
+
+                                    <div className="flex">
+                                        <div className="flex justify-center mt-4">
+                                            <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded mr-2 btn-size"
+                                                onClick={slideModalSubmit}>
+                                                Yes
+                                            </button>
+                                        </div>
+                                        <div className="flex justify-center mt-4">
+                                            <button className="text-blue-600 bg-gray-100 hover:bg-gray-200 border border-blue-600 py-2 px-4 rounded mr-2 btn-size"
+                                                onClick={closeModal}>
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition>
             {outlineData && outlineData.map((section: OutlineSection, sectionIndex: number) => (
                 <div key={sectionIndex + 1} className="mb-8">
                     <div className='flex flex-wrap md:flex-nowrap'>
@@ -374,11 +462,10 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
 
             {/* Form */}
             <div className="max-w-sm mx-auto">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={prepareSubmit}>
                     <div className="flex flex-wrap -mx-3 mt-6">
                         <div className="w-full px-3">
                             <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full disabled:bg-gray-200 disabled:text-gray-400"
-                                onClick={() => { setIsSubmittingSlide(true) }}
                                 disabled={isDisabled}
                             >
                                 {isSubmittingSlide ? 'Generating...' : 'Generate Slides'}
