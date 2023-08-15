@@ -88,11 +88,7 @@ const TopicForm: React.FC = () => {
         sessionStorage.setItem('audience', formData.audience);
         sessionStorage.setItem('language', formData.language);
         sessionStorage.setItem('addEquations', formData.addEquations);
-        sessionStorage.setItem('has_slides', slides.toString());
-        sessionStorage.setItem('has_script', script.toString());
-        sessionStorage.setItem('has_audio', audio.toString());
-        sessionStorage.setItem('has_video', video.toString());
-        
+
         // Retrieve the existing resources from sessionStorage and parse them
         const resources: string[] = JSON.parse(sessionStorage.getItem('resources') || '[]');
 
@@ -192,43 +188,6 @@ const TopicForm: React.FC = () => {
         }
     }
 
-    const [slides, setSlides] = useState(true);
-    const [script, setScript] = useState(true);
-    const [audio, setAudio] = useState(true);
-    const [video, setVideo] = useState(true);
-
-    const handleSlidesToggle = () => {
-        if (slides) {
-            setVideo(false);
-        }
-        setSlides(!slides);
-    };
-
-    const handleScriptToggle = () => {
-        if (script) {
-            setAudio(false);
-            setVideo(false);
-        }
-        setScript(!script);
-    };
-
-    const handleAudioToggle = () => {
-        if (!audio) {
-            setScript(true);
-        } else {
-            setVideo(false);
-        }
-        setAudio(!audio);
-    };
-
-    const handleVideoToggle = () => {
-        if (!video) {
-            setSlides(true);
-            setScript(true);
-            setAudio(true);
-        }
-        setVideo(!video);
-    };
 
 
     return (
@@ -320,68 +279,7 @@ const TopicForm: React.FC = () => {
                 </div>
             </div>
 
-            <div className="flex flex-wrap -mx-3 mb-4">
-                <div className="w-full px-3 mt-2 ">
-                    <label
-                        className="block text-gray-800 text-sm font-medium mb-1"
-                        htmlFor="target_content">
-                        Target Content<span className="text-red-600">*</span>
-                    </label>
-                </div>
-                <div className="w-full px-3 mt-2 flex">
-                    <input
-                        type="checkbox"
-                        id="slides"
-                        className="form-checkbox text-gray-800"
-                        checked={slides} // Use 'checked' instead of 'value'
-                        onChange={(e) => handleSlidesToggle()}
-                    />
-                    <label
-                        className="block text-gray-800 text-sm font-medium mb-1"
-                        htmlFor="slides">
-                        &nbsp; Slides &nbsp; &nbsp;
-                    </label>
 
-                    <input
-                        type="checkbox"
-                        id="script"
-                        className="form-checkbox text-gray-800"
-                        checked={script} // Use 'checked' instead of 'value'
-                        onChange={(e) => handleScriptToggle()}
-                    />
-                    <label
-                        className="block text-gray-800 text-sm font-medium mb-1"
-                        htmlFor="script">
-                        &nbsp; Script &nbsp; &nbsp;
-                    </label>
-
-                    <input
-                        type="checkbox"
-                        id="audio"
-                        className="form-checkbox text-gray-800"
-                        checked={audio} // Use 'checked' instead of 'value'
-                        onChange={(e) => handleAudioToggle()}
-                    />
-                    <label
-                        className="block text-gray-800 text-sm font-medium mb-1"
-                        htmlFor="audio">
-                        &nbsp;Audio  &nbsp; &nbsp;
-                    </label>
-
-                    <input
-                        type="checkbox"
-                        id="video"
-                        className="form-checkbox text-gray-800"
-                        checked={video} // Use 'checked' instead of 'value'
-                        onChange={(e) => handleVideoToggle()}
-                    />
-                    <label
-                        className="block text-gray-800 text-sm font-medium mb-1"
-                        htmlFor="video">
-                        &nbsp; Video &nbsp; &nbsp;
-                    </label>
-                </div>
-            </div>
 
             <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">
