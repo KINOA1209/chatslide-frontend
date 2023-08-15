@@ -78,7 +78,6 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
         const resources = typeof window !== 'undefined' ? sessionStorage.getItem('resources') : null;
         const addEquations = typeof window !== 'undefined' ? sessionStorage.getItem('addEquations') : null;
         const extraKnowledge = typeof window !== 'undefined' ? sessionStorage.getItem('extraKnowledge') : null;
-        // const has_slides = typeof window !== 'undefined' ? sessionStorage.getItem('has_slides') : null;
 
 
         async function query_resources(project_id: any, resources: any, outlineData: any) {
