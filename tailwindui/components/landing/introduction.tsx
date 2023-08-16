@@ -30,7 +30,7 @@ const InternalIntroduction = () => {
     if (currentUser) {
       router.push('/dashboard');
     } else {
-      router.push('/workflow-intro');
+      router.push('/signup');
     }
     sessionStorage.clear();
   }
