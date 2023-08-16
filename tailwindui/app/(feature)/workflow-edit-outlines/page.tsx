@@ -148,7 +148,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             }
         }
 
-        if (resources.length === 0 && !extraKnowledge) {
+        if (resources && resources.length === 0 && !extraKnowledge) {
             try {
                 console.log('querying vector database');
                 const extraKnowledge = await query_resources(project_id, resources, outlineData);

@@ -108,10 +108,12 @@ const TopicForm: React.FC = () => {
         console.log("created form data");
 
         try {
+            const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
             const response = await fetch('/api/outlines', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(formData)
             });
