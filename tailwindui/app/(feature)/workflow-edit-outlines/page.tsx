@@ -68,7 +68,18 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
         console.log("submitting");
         event.preventDefault();
         if (toSlides) {
-            openModal();
+            let hasScript = null;
+            let hasAudio = null;
+            if (typeof window !== 'undefined') {
+                hasScript = sessionStorage.getItem('transcripts');
+                hasAudio = sessionStorage.getItem('audio_files');
+            }
+            if (hasScript !== null || hasAudio !== null) {
+                openModal();
+            } else {
+                setIsSubmittingSlide(true);
+                handleSubmit();
+            }
         } else {
             handleSubmit();
         }
