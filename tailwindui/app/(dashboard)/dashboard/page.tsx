@@ -236,7 +236,6 @@ export default function Dashboard() {
                             >
                                 <div className='grow'>
                                     <h2 className="text-lg font-semibold">{project.name}</h2>
-                                    <p className="text-sm mt-2">{project.description}</p>
                                 </div>
                                 <div className='text-lg opacity-25 hover:opacity-100' onClick={e => handleDelete(e, project.id)}>
                                     <svg className='w-12' data-name="Capa 1" id="Capa_1" viewBox="0 0 20 19.84" xmlns="http://www.w3.org/2000/svg">
@@ -286,7 +285,7 @@ export default function Dashboard() {
                         </div>
                     )}
                     <div className="flex justify-center items-center mt-8">
-                        <Link href="/workflow-create-project">
+                        <Link href="/workflow-generate-outlines">
                             <span className="flex items-center bg-blue-600 text-white px-4 py-2 rounded-md shadow-md cursor-pointer">
                                 Start New Project
                             </span>
