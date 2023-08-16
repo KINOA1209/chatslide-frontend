@@ -8,7 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 interface Project {
     project_name: string;
-    project_description: string;
     topic: string;
     requirements: string;
     audience: string;
