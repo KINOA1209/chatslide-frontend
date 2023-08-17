@@ -26,9 +26,9 @@ const FileManagement: React.FC<UserFileList> = ({ userfiles, deleteCallback }) =
         try {
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
             const fileDeleteData = {
-                user_file_id: id
+                resource_id: id
             }
-            const response = await fetch("/api/delete_user_file", {
+            const response = await fetch("/api/delete_user_resource", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ const FileManagement: React.FC<UserFileList> = ({ userfiles, deleteCallback }) =
 
 export default function MyFiles() {
     const [currentPage, setCurrentPage] = useState(1);
-    const [files, setFiles] = useState<UserFile[]>([]);
+    const [resources, setResources] = useState<UserFile[]>([]);
     const promptRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
     const [rendered, setRendered] = useState<boolean>(false);
@@ -133,10 +133,10 @@ export default function MyFiles() {
     }, []);
 
     useEffect(() => {
-        if (rendered && files.length === 0 && promptRef.current) {
+        if (rendered && resources.length === 0 && promptRef.current) {
             promptRef.current.innerHTML = 'You have no uploaded file';
         }
-    }, [files, rendered]);
+    }, [resources, rendered]);
 
     const fetchFiles = async (token: string) => {
         const headers = new Headers();
@@ -146,24 +146,24 @@ export default function MyFiles() {
         headers.append('Content-Type', 'application/json');
 
         try {
-            const response = await fetch('/api/user_files', {
+            const response = await fetch('/api/resource_info', {
                 method: 'GET',
                 headers: headers,
             });
 
             if (response.ok) {
                 const data = await response.json();
-                const files = data.data.user_files;
-                const userFilesTemp = files.map((file: any) => {
+                const files = data.data.resources;
+                const resourceTemps = files.map((resource: any) => {
                     return {
-                        id: file.id,
-                        uid: file.uid,
-                        filename: file.filename,
-                        thumbnail_name: file.thumbnail_name,
-                        timestamp: file.timestamp,
+                        id: resource.id,
+                        uid: resource.uid,
+                        filename: resource.resource_name,
+                        thumbnail_name: resource.thumbnail_name,
+                        timestamp: resource.timestamp,
                     }
                 });
-                setFiles(userFilesTemp);
+                setResources(resourceTemps);
                 setRendered(true);
             } else {
                 // Handle error cases
@@ -224,16 +224,16 @@ export default function MyFiles() {
 
     const handleFileDeleted = (id: number) => {
         let ind = -1;
-        for (let i = 0; i < files.length; i++) {
-            if (files[i].id === id) {
+        for (let i = 0; i < resources.length; i++) {
+            if (resources[i].id === id) {
                 ind = i;
                 break;
             }
         };
         if (ind !== -1) {
-            const newFiles = [...files];
+            const newFiles = [...resources];
             newFiles.splice(ind, 1);
-            setFiles(newFiles);
+            setResources(newFiles);
         }
     };
 
@@ -251,8 +251,8 @@ export default function MyFiles() {
                 </div>
             </div>
             <div className="max-w-6xl w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto" ref={contentRef}>
-                {files.length > 0 && <FileManagement userfiles={files} deleteCallback={handleFileDeleted} />}
-                {files.length === 0 &&
+                {resources.length > 0 && <FileManagement userfiles={resources} deleteCallback={handleFileDeleted} />}
+                {resources.length === 0 &&
                     <div className='w-full grow flex items-center justify-center'>
                         <div className='text-gray-400' ref={promptRef}>
                             Loading...
