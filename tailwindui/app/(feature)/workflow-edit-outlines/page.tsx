@@ -120,7 +120,6 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
         const addEquations = typeof window !== 'undefined' ? sessionStorage.getItem('addEquations') : null;
         const extraKnowledge = typeof window !== 'undefined' ? sessionStorage.getItem('extraKnowledge') : null;
 
-
         async function query_resources(project_id: any, resources: any, outlineData: any) {
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
             const headers = new Headers();
@@ -148,7 +147,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             }
         }
 
-        if (resources && resources.length === 0 && !extraKnowledge) {
+        if (resources && resources.length > 0 && !extraKnowledge) {
             try {
                 console.log('querying vector database');
                 const extraKnowledge = await query_resources(project_id, resources, outlineData);
@@ -159,6 +158,9 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                 console.log('Error querying vector database', error);
                 // return; 
             }
+        }
+        else{
+            console.log('no need to query vector database');
         }
 
 
