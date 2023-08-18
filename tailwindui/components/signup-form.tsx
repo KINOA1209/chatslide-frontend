@@ -63,6 +63,7 @@ const SignupForm: React.FC = () => {
         const uppercaseRegex = /[A-Z]/;
         const lowercaseRegex = /[a-z]/;
         const numericRegex = /[0-9]/;
+        const symbolRegex = /[?\^\$\*\.\[\]\{\}\(\)?\-"\!\@\#%\&\/\\,><'\:\;\|\_~`]/;
 
         let error = '';
         if (value.length < 8) {
@@ -78,6 +79,9 @@ const SignupForm: React.FC = () => {
             }
             if (!numericRegex.test(value)) {
                 error += 'Password should contain at least one numeric character. ';
+            }
+            if (!symbolRegex.test(value)) {
+                error += 'Password should contain at least one of the following symbol character: ?^ $ * . [ ] { } ( ) ? - " ! @ # % & / \ , > < \' : ; | _ ~ `';
             }
         }
 
