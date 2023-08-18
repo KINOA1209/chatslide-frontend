@@ -81,29 +81,14 @@ const TopicForm: React.FC = () => {
             language: (event.target as HTMLFormElement).language.value,
             addEquations: addEquations,
             project_id: project_id,
-            youtube: (event.target as HTMLFormElement).youtube.value,
+            youtube_url: (event.target as HTMLFormElement).youtube.value,
+            resources: JSON.parse(sessionStorage.getItem('resources') || '[]')
         };
 
         sessionStorage.setItem('topic', formData.topic);
         sessionStorage.setItem('audience', formData.audience);
         sessionStorage.setItem('language', formData.language);
         sessionStorage.setItem('addEquations', formData.addEquations);
-
-        // Retrieve the existing resources from sessionStorage and parse them
-        const resources: string[] = JSON.parse(sessionStorage.getItem('resources') || '[]');
-
-       // Add the new YouTube URL to the resources list if it's not empty
-        const youtubeUrl: string = formData.youtube;
-
-        if (youtubeUrl.trim() !== "") {
-            resources.push(youtubeUrl);
-}
-
-        // Convert the updated list to a JSON string
-        const updatedResourcesJSON: string = JSON.stringify(resources);
-
-        // Store the updated JSON string back in sessionStorage
-        sessionStorage.setItem('resources', updatedResourcesJSON);
 
         console.log("created form data");
 
@@ -139,6 +124,22 @@ const TopicForm: React.FC = () => {
                 sessionStorage.setItem('outline', JSON.stringify(outlinesJson.data));
                 sessionStorage.setItem('foldername', outlinesJson.data.foldername);
                 sessionStorage.setItem('project_id', outlinesJson.data.project_id);
+
+                // Retrieve the existing resources from sessionStorage and parse them
+                const resources: string[] = JSON.parse(sessionStorage.getItem('resources') || '[]');
+
+                // Add the new YouTube URL to the resources list if it's not empty
+                const youtube_id: string = outlinesJson.data.youtube_id;
+        
+                if (youtube_id.trim() !== "") {
+                    resources.push(youtube_id);
+                }
+ 
+                // Convert the updated list to a JSON string
+                const updatedResourcesJSON: string = JSON.stringify(resources);
+        
+                // Store the updated JSON string back in sessionStorage
+                sessionStorage.setItem('resources', updatedResourcesJSON);
 
                 // Redirect to a new page with the data
                 router.push('workflow-edit-outlines');
@@ -180,8 +181,9 @@ const TopicForm: React.FC = () => {
             alert("File upload successful!");
             const data = await response.json();
             console.log("data: ", data);
+            const file_id = data.data.file_id;
             const resources: string[] = JSON.parse(sessionStorage.getItem('resources') || '[]');
-            resources.push(file.name);
+            resources.push(file_id);
             const updatedResourcesJSON: string = JSON.stringify(resources);
             sessionStorage.setItem('resources', updatedResourcesJSON);
         } else {
