@@ -6,8 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 // ALLOWED_DOC_EXTENSIONS = {"txt", "pdf"}
 // ALLOWED_MEDIA_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
 
-const supportedFormats = ['TXT', 'PDF', 'JPG', 'PNG', 'GIF']; // For prompt displayy
-const supportedExtensions = ['txt', 'pdf', 'jpg', 'jpeg', 'png', 'gif']; // For checking logic
+const supportedFormats = ['PDF']; // For prompt displayy
+const supportedExtensions = ['pdf']; // For checking logic
 
 interface FileUploadButtonProps {
     onFileSelected: (file: File | null) => void;

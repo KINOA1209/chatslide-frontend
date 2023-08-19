@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect, Fragment } from 'react';
 import { useRouter } from 'next/navigation';
 import { FormEvent } from 'react';
 import Timer from '@/components/Timer';
@@ -9,6 +9,8 @@ import AuthService from '@/components/utils/AuthService';
 import FeedbackForm from '@/components/feedback';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Dialog, Transition } from '@headlessui/react';
+import { eventManager } from 'react-toastify/dist/core';
 
 const minOutlineDetailCount = 1;
 const maxOutlineDetailCount = 6;
@@ -47,14 +49,56 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
         }
     };
 
-    const [isSubmitting, setIsSubmitting] = useState(false); const [timer, setTimer] = useState(0);
+    const [isSubmittingSlide, setIsSubmittingSlide] = useState(false);
+    const [timer, setTimer] = useState(0);
+    const [isSubmittingScript, setIsSubmittingScript] = useState(false);
+    const [toSlides, setToSlides] = useState(true);
+    const [isDisabled, setIsDisabled] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    function closeModal() {
+        setIsOpen(false);
+        setIsSubmittingSlide(false);
+    };
 
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    function openModal() {
+        setIsOpen(true);
+    };
+
+    const prepareSubmit = (event: FormEvent<HTMLFormElement>) => {
         console.log("submitting");
         event.preventDefault();
-        setIsSubmitting(true);
-        setTimer(0);
+        if (toSlides) {
+            let hasScript = null;
+            let hasAudio = null;
+            if (typeof window !== 'undefined') {
+                hasScript = sessionStorage.getItem('transcripts');
+                hasAudio = sessionStorage.getItem('audio_files');
+            }
+            if (hasScript !== null || hasAudio !== null) {
+                openModal();
+            } else {
+                setIsSubmittingSlide(true);
+                handleSubmit();
+            }
+        } else {
+            handleSubmit();
+        }
+    }
 
+    const slideModalSubmit = () => {
+        closeModal();
+        setIsSubmittingSlide(true);
+        // clean sessionStorage
+        if (typeof window !== 'undefined') {
+            sessionStorage.removeItem('transcripts');
+            sessionStorage.removeItem('audio_files');
+        }
+        handleSubmit();
+    };
+
+    const handleSubmit = async () => {
+        setTimer(0);
+        setIsDisabled(true);
         let formData: any = {};
 
 
@@ -72,27 +116,24 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
         const topic = typeof window !== 'undefined' ? sessionStorage.getItem('topic') : null;
         const language = typeof window !== 'undefined' ? sessionStorage.getItem('language') : 'English';
         const project_id = typeof window !== 'undefined' ? sessionStorage.getItem('project_id') : null;
-        const pdf_file_name = typeof window !== 'undefined' ? sessionStorage.getItem('pdf_file_name') : null;
+        const resources = typeof window !== 'undefined' ? sessionStorage.getItem('resources') : null;
         const addEquations = typeof window !== 'undefined' ? sessionStorage.getItem('addEquations') : null;
+        const extraKnowledge = typeof window !== 'undefined' ? sessionStorage.getItem('extraKnowledge') : null;
 
-        const pdf_knowledge = typeof window !== 'undefined' ? sessionStorage.getItem('pdf_knowledge') : null;
-
-        
-
-        async function querypdf(project_id: any, pdf_file_name: any, outlineData: any) {
+        async function query_resources(project_id: any, resources: any, outlineData: any) {
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
             const headers = new Headers();
             if (token) {
                 headers.append('Authorization', `Bearer ${token}`);
             }
 
-            const response = await fetch('/api/query_pdf', {
+            const response = await fetch('/api/query_resources', {
                 method: 'POST',
                 headers: headers,
                 body: JSON.stringify({
                     outlines: JSON.stringify({ ...outlineData }),
-                    filename: pdf_file_name,
-                    project_id: project_id  
+                    resources: resources,
+                    project_id: project_id
                 })
             });
 
@@ -101,81 +142,120 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             } else {
                 alert("Request failed: " + response.status);
                 console.log(response)
-                setIsSubmitting(false);
+                setIsSubmittingScript(false);
+                setIsSubmittingSlide(false);
             }
         }
 
-        if (pdf_file_name && !pdf_knowledge) {
+        if (resources && resources.length > 0 && !extraKnowledge) {
             try {
-                const pdfKnowledge = await querypdf(project_id, pdf_file_name, outlineData);
-                sessionStorage.setItem('pdf_knowledge', JSON.stringify(pdfKnowledge.data.res));
-                sessionStorage.setItem('outline_item_counts', 
-                JSON.stringify(pdfKnowledge.data.outline_item_counts));
-              } catch (error) {
-                console.error('Error fetching chat pdf', error);
-                return; 
-              }
+                console.log('querying vector database');
+                const extraKnowledge = await query_resources(project_id, resources, outlineData);
+                sessionStorage.setItem('extraKnowledge', JSON.stringify(extraKnowledge.data.res));
+                sessionStorage.setItem('outline_item_counts',
+                    JSON.stringify(extraKnowledge.data.outline_item_counts));
+            } catch (error) {
+                console.log('Error querying vector database', error);
+                // return; 
             }
+        }
+        else{
+            console.log('no need to query vector database');
+        }
 
 
         formData = {
             res: JSON.stringify({ ...outlineData }),
+            outlines: JSON.stringify({ ...outlineData }),
             audience: audience,
             foldername: foldername,
             topic: topic,
             language: language,
-            additional_requirements: 'test',
             project_id: project_id,
-            addEquations: addEquations
+            addEquations: addEquations,
+            extraKnowledge: extraKnowledge,
         };
-        
+
         console.log(formData);
 
 
         try {
-            const pdfKnowledge = sessionStorage.getItem('pdf_knowledge');
+            // this is defined before
+            const extraKnowledge = sessionStorage.getItem('extraKnowledge');
             const outline_item_counts = sessionStorage.getItem('outline_item_counts');
-            if(pdfKnowledge){
+            if (extraKnowledge) {
                 // add pdf knowledge to formData
-                formData.pdf_knowledge = pdfKnowledge;
+                formData.extraKnowledge = extraKnowledge;
             }
-            if(outline_item_counts){
+            if (outline_item_counts) {
                 // add outline item counts to formData
                 formData.outline_item_counts = outline_item_counts;
             }
 
+            // generate slides
+            if (toSlides === true) {
+                const response = await fetch('/api/generate_slides', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
 
-            const response = await fetch('/api/generate_slides', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
+                console.log('formData is:', formData);
 
-            console.log('formData is:', formData);
+                if (response.ok) {
+                    const resp = await response.json();
+                    console.log(resp);
+                    setIsSubmittingSlide(false);
+                    // Store the data in local storage
+                    console.log(resp.data);
+                    sessionStorage.setItem('image_files', JSON.stringify(resp.data.image_files));
+                    sessionStorage.setItem('pdf_file', resp.data.pdf_file);
+                    sessionStorage.setItem('page_count', resp.data.page_count);
 
-            if (response.ok) {
-                const resp = await response.json();
-                console.log(resp);
-                setIsSubmitting(false);
-                // Store the data in local storage
-                console.log(resp.data);
-                sessionStorage.setItem('image_files', JSON.stringify(resp.data.image_files));
-                sessionStorage.setItem('pdf_file', resp.data.pdf_file);
-                sessionStorage.setItem('page_count', resp.data.page_count);
+                    // Redirect to a new page with the data
+                    router.push('workflow-review-slides');
+                } else {
+                    alert("Request failed: " + response.status);
+                    console.log(response)
+                    setIsSubmittingSlide(false);
+                }
+            }
+            // generate script direclty
+            else {
+                const response = await fetch('/api/scripts_only', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
 
-                // Redirect to a new page with the data
-                router.push('workflow-review-slides');
-            } else {
-                alert("Request failed: " + response.status);
-                console.log(response)
-                setIsSubmitting(false);
+                console.log('formData is:', formData);
+
+                if (response.ok) {
+                    const resp = await response.json();
+                    console.log(resp);
+                    setIsSubmittingScript(false);
+                    // Store the data in local storage
+                    console.log(resp.data);
+                    sessionStorage.setItem('transcripts', JSON.stringify(resp.data.res));
+                    // Redirect to a new page with the data
+                    router.push('workflow-edit-script');
+                } else {
+                    alert("Request failed: " + response.status);
+                    console.log(response)
+                    setIsSubmittingScript(false);
+                }
             }
         } catch (error) {
             console.error('Error:', error);
-            setIsSubmitting(false);
+            setIsSubmittingSlide(false);
+            setIsSubmittingScript(false);
         }
+
+        setIsDisabled(false);
     };
 
     const handleAddDetail = (e: React.MouseEvent<SVGSVGElement>, sectionIndex: number, detailIndex: number) => {
@@ -255,6 +335,64 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
     return (
         <div>
             <ToastContainer />
+            <Transition appear show={isOpen} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 scale-95"
+                                enterTo="opacity-100 scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 scale-100"
+                                leaveTo="opacity-0 scale-95"
+                            >
+                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-lg font-medium leading-6 text-gray-900"
+                                    >
+                                        Continue to generate slides?
+                                    </Dialog.Title>
+                                    <div className="mt-2">
+                                        <p className="text-sm text-gray-500">
+                                            Generate slides will delete current scripts and audio.
+                                        </p>
+                                    </div>
+
+                                    <div className="flex">
+                                        <div className="flex justify-center mt-4">
+                                            <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded mr-2 btn-size"
+                                                onClick={slideModalSubmit}>
+                                                Yes
+                                            </button>
+                                        </div>
+                                        <div className="flex justify-center mt-4">
+                                            <button className="text-blue-600 bg-gray-100 hover:bg-gray-200 border border-blue-600 py-2 px-4 rounded mr-2 btn-size"
+                                                onClick={closeModal}>
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition>
             {outlineData && outlineData.map((section: OutlineSection, sectionIndex: number) => (
                 <div key={sectionIndex + 1} className="mb-8">
                     <div className='flex flex-wrap md:flex-nowrap'>
@@ -335,21 +473,31 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                     </div>
                 </div>
             ))}
-            
+
             {/* Form */}
             <div className="max-w-sm mx-auto">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={prepareSubmit}>
                     <div className="flex flex-wrap -mx-3 mt-6">
                         <div className="w-full px-3">
-                            <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">
-                                {isSubmitting ? 'Generating...' : 'Generate Slides'}
+                            <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full disabled:bg-gray-200 disabled:text-gray-400"
+                                disabled={isDisabled}
+                            >
+                                {isSubmittingSlide ? 'Generating...' : 'Generate Slides'}
                             </button>
+                            {/* Timer */}
+                            <Timer expectedSeconds={60} isSubmitting={isSubmittingSlide} />
+                            <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full mt-4 disabled:bg-gray-200 disabled:text-gray-400"
+                                onClick={() => { setToSlides(false); setIsSubmittingScript(true) }}
+                                disabled={isDisabled}
+                            >
+                                {isSubmittingScript ? 'Generating...' : 'Generate Scripts'}
+                            </button>
+                            {/* Timer */}
+                            <Timer expectedSeconds={60} isSubmitting={isSubmittingScript} />
                         </div>
                     </div>
                 </form>
             </div>
-            {/* Timer */}
-            <Timer expectedSeconds={60} isSubmitting={isSubmitting} />
         </div>
     );
 };
@@ -379,7 +527,7 @@ export default function WorkflowStep2() {
         <div>
             <ProjectProgress currentInd={1} contentRef={contentRef} />
             <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
-                <h1 className="h1">Step 2: Edit Outlines</h1>
+                <h1 className="h1">Edit Outlines</h1>
             </div>
             <div className="max-w-4xl mx-auto px-6" ref={contentRef}>
                 <p>
