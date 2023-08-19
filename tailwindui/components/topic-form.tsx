@@ -81,26 +81,24 @@ const TopicForm: React.FC = () => {
             language: (event.target as HTMLFormElement).language.value,
             addEquations: addEquations,
             project_id: project_id,
-            youtube: (event.target as HTMLFormElement).youtube.value,
+            youtube_url: (event.target as HTMLFormElement).youtube.value,
+            resources: JSON.parse(sessionStorage.getItem('resources') || '[]')
         };
 
         sessionStorage.setItem('topic', formData.topic);
         sessionStorage.setItem('audience', formData.audience);
         sessionStorage.setItem('language', formData.language);
         sessionStorage.setItem('addEquations', formData.addEquations);
-        sessionStorage.setItem('has_slides', slides.toString());
-        sessionStorage.setItem('has_script', script.toString());
-        sessionStorage.setItem('has_audio', audio.toString());
-        sessionStorage.setItem('has_video', video.toString());
-        sessionStorage.setItem('youtube', formData.youtube);
 
         console.log("created form data");
 
         try {
+            const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
             const response = await fetch('/api/outlines', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(formData)
             });
@@ -126,6 +124,22 @@ const TopicForm: React.FC = () => {
                 sessionStorage.setItem('outline', JSON.stringify(outlinesJson.data));
                 sessionStorage.setItem('foldername', outlinesJson.data.foldername);
                 sessionStorage.setItem('project_id', outlinesJson.data.project_id);
+
+                // Retrieve the existing resources from sessionStorage and parse them
+                const resources: string[] = JSON.parse(sessionStorage.getItem('resources') || '[]');
+
+                // Add the new YouTube URL to the resources list if it's not empty
+                const youtube_id: string = outlinesJson.data.youtube_id;
+        
+                if (youtube_id.trim() !== "") {
+                    resources.push(youtube_id);
+                }
+ 
+                // Convert the updated list to a JSON string
+                const updatedResourcesJSON: string = JSON.stringify(resources);
+        
+                // Store the updated JSON string back in sessionStorage
+                sessionStorage.setItem('resources', updatedResourcesJSON);
 
                 // Redirect to a new page with the data
                 router.push('workflow-edit-outlines');
@@ -167,41 +181,17 @@ const TopicForm: React.FC = () => {
             alert("File upload successful!");
             const data = await response.json();
             console.log("data: ", data);
-            sessionStorage.setItem('pdf_file_name', file.name);
+            const file_id = data.data.file_id;
+            const resources: string[] = JSON.parse(sessionStorage.getItem('resources') || '[]');
+            resources.push(file_id);
+            const updatedResourcesJSON: string = JSON.stringify(resources);
+            sessionStorage.setItem('resources', updatedResourcesJSON);
         } else {
             console.log(response);
             alert("File upload failed!" + response.status);
         }
     }
 
-    const [slides, setSlides] = useState(true);
-    const [script, setScript] = useState(true);
-    const [audio, setAudio] = useState(true);
-    const [video, setVideo] = useState(true);
-
-    const handleSlidesToggle = () => {
-        setSlides(!slides);
-    };
-
-    const handleScriptToggle = () => {
-        setScript(!script);
-    };
-
-    const handleAudioToggle = () => {
-        if (!audio) {
-            setScript(true);
-        }
-        setAudio(!audio);
-    };
-
-    const handleVideoToggle = () => {
-        if (!video) {
-            setSlides(true);
-            setScript(true);
-            setAudio(true);
-        }
-        setVideo(!video);
-    };
 
 
     return (
@@ -293,68 +283,7 @@ const TopicForm: React.FC = () => {
                 </div>
             </div>
 
-            <div className="flex flex-wrap -mx-3 mb-4">
-                <div className="w-full px-3 mt-2 ">
-                    <label
-                        className="block text-gray-800 text-sm font-medium mb-1"
-                        htmlFor="target_content">
-                        Target Content<span className="text-red-600">*</span>
-                    </label>
-                </div>
-                <div className="w-full px-3 mt-2 flex">
-                    <input
-                        type="checkbox"
-                        id="slides"
-                        className="form-checkbox text-gray-800"
-                        checked={slides} // Use 'checked' instead of 'value'
-                        onChange={(e) => handleSlidesToggle()}
-                    />
-                    <label
-                        className="block text-gray-800 text-sm font-medium mb-1"
-                        htmlFor="slides">
-                        &nbsp; Slides &nbsp; &nbsp;
-                    </label>
 
-                    <input
-                        type="checkbox"
-                        id="script"
-                        className="form-checkbox text-gray-800"
-                        checked={script} // Use 'checked' instead of 'value'
-                        onChange={(e) => handleScriptToggle()}
-                    />
-                    <label
-                        className="block text-gray-800 text-sm font-medium mb-1"
-                        htmlFor="script">
-                        &nbsp; Script &nbsp; &nbsp;
-                    </label>
-
-                    <input
-                        type="checkbox"
-                        id="audio"
-                        className="form-checkbox text-gray-800"
-                        checked={audio} // Use 'checked' instead of 'value'
-                        onChange={(e) => handleAudioToggle()}
-                    />
-                    <label
-                        className="block text-gray-800 text-sm font-medium mb-1"
-                        htmlFor="audio">
-                        &nbsp;Audio  &nbsp; &nbsp;
-                    </label>
-
-                    <input
-                        type="checkbox"
-                        id="video"
-                        className="form-checkbox text-gray-800"
-                        checked={video} // Use 'checked' instead of 'value'
-                        onChange={(e) => handleVideoToggle()}
-                    />
-                    <label
-                        className="block text-gray-800 text-sm font-medium mb-1"
-                        htmlFor="video">
-                        &nbsp; Video &nbsp; &nbsp;
-                    </label>
-                </div>
-            </div>
 
             <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">

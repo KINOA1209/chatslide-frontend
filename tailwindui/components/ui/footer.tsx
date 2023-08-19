@@ -232,16 +232,6 @@ export function WorkflowFooter() {
             &copy; drlambda.ai. All rights reserved.
           </div>
 
-          {/* legal note */}
-          <div className="flex justify-center text-sm text-gray-600">
-            <a
-              href="/terms"
-              className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out"
-            >
-              Terms
-            </a>
-          </div>
-
         </div>
       </div>
     </footer>

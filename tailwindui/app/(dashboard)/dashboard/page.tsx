@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthService from '@/components/utils/AuthService';
 import { Dialog, Transition } from '@headlessui/react';
+import { useRouter } from 'next/navigation';
 
 interface Project {
     id: number;
@@ -17,6 +18,7 @@ export default function Dashboard() {
     const [currentPage, setCurrentPage] = useState(1);
     const [projects, setProjects] = useState<Project[]>([]);
     const [deleteInd, setDeleteInd] = useState(-1);
+    const router = useRouter();
 
     const [isOpen, setIsOpen] = useState(false);
     function closeModal() {
@@ -217,6 +219,13 @@ export default function Dashboard() {
         }  
     }
 
+    // function to handle click start new project, clear sessionstorage
+    const handleStartNewProject = () => {
+        sessionStorage.clear()
+        //route to workflow-generate-outlines
+        router.push('/workflow-generate-outlines')
+    }
+
 
 
     return (
@@ -236,7 +245,6 @@ export default function Dashboard() {
                             >
                                 <div className='grow'>
                                     <h2 className="text-lg font-semibold">{project.name}</h2>
-                                    <p className="text-sm mt-2">{project.description}</p>
                                 </div>
                                 <div className='text-lg opacity-25 hover:opacity-100' onClick={e => handleDelete(e, project.id)}>
                                     <svg className='w-12' data-name="Capa 1" id="Capa_1" viewBox="0 0 20 19.84" xmlns="http://www.w3.org/2000/svg">
@@ -286,11 +294,11 @@ export default function Dashboard() {
                         </div>
                     )}
                     <div className="flex justify-center items-center mt-8">
-                        <Link href="/workflow-create-project">
+                        <button onClick={handleStartNewProject}>
                             <span className="flex items-center bg-blue-600 text-white px-4 py-2 rounded-md shadow-md cursor-pointer">
                                 Start New Project
                             </span>
-                        </Link>
+                        </button>
                     </div>
                 </div>
             </div>
