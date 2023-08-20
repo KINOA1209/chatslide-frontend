@@ -7,6 +7,8 @@ import UserService from "./utils/UserService";
 import { FileUploadButton } from './fileUpload';
 import Timer from './Timer';
 import GuestUploadModal from './forms/uploadModal';
+import MyFiles from './fileManagement';
+import { Transition } from '@headlessui/react'
 
 interface Project {
     topic: string;
@@ -19,6 +21,20 @@ const TopicForm: React.FC = () => {
     const router = useRouter();
 
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showFileModal, setShowFileModal] = useState(false);
+
+    const openFile = () => {
+        setShowFileModal(true);
+    };
+
+    const closeFile = () => {
+        setShowFileModal(false);
+    };
+
+    const handleOpenFile = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        openFile();
+    };
 
     // bind form data between input and sessionStorage
     const [topic, setTopic] = useState((typeof window !== 'undefined' && sessionStorage.topic != undefined) ? sessionStorage.topic : '');
@@ -130,14 +146,14 @@ const TopicForm: React.FC = () => {
 
                 // Add the new YouTube URL to the resources list if it's not empty
                 const youtube_id: string = outlinesJson.data.youtube_id;
-        
+
                 if (youtube_id.trim() !== "") {
                     resources.push(youtube_id);
                 }
- 
+
                 // Convert the updated list to a JSON string
                 const updatedResourcesJSON: string = JSON.stringify(resources);
-        
+
                 // Store the updated JSON string back in sessionStorage
                 sessionStorage.setItem('resources', updatedResourcesJSON);
 
@@ -196,6 +212,34 @@ const TopicForm: React.FC = () => {
 
     return (
         <form onSubmit={handleSubmit}>
+            <Transition
+                className='h-full w-full z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
+                show={showFileModal}
+                onClick={closeFile}
+                enter="transition ease duration-300 transform"
+                enterFrom="opacity-0 translate-y-12"
+                enterTo="opacity-100 translate-y-0"
+                leave="transition ease duration-300 transform"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 translate-y-12"
+            >
+                <div className='grow md:grow-0'></div>
+                <Transition
+                    className='bg-gray-100 w-full h-3/4 md:h-1/2
+                                md:max-w-2xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
+                                overflow-hidden flex flex-col p-4'
+                    show={showFileModal}
+                    enter="transition ease duration-500 transform delay-300"
+                    enterFrom="opacity-0 translate-y-12"
+                    enterTo="opacity-100 translate-y-0"
+                    leave="transition ease duration-300 transform"
+                    leaveFrom="opacity-100 translate-y-0"
+                    leaveTo="opacity-0 translate-y-12"
+                >
+                    <h4 className="h4 text-blue-600 text-center">Select Supporting Material</h4>
+                    <MyFiles selectable={true} callback={() => { alert("a") }} />
+                </Transition>
+            </Transition>
             <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">
                     <p>
@@ -311,7 +355,7 @@ const TopicForm: React.FC = () => {
                     <label
                         className="block text-gray-800 text-sm font-medium mb-1"
                         htmlFor="youtube">
-                        Supporting Youtube Video Link: 
+                        Supporting Youtube Video Link:
                     </label>
                     <input
                         id="youtube"
@@ -327,7 +371,12 @@ const TopicForm: React.FC = () => {
                 <div className="flex flex-wrap -mx-3 mt-6">
                     <div className="w-full px-3">
                         {user ?
-                            <FileUploadButton onFileSelected={onFileSelected} /> :
+                            <button
+                                className="btn text-blue-600 bg-gray-100 hover:bg-gray-200 w-full border border-blue-600"
+                                onClick={e => handleOpenFile(e)}
+                            >
+                                Add File
+                            </button> :
                             <GuestUploadModal />}
                     </div>
                 </div>
@@ -347,7 +396,7 @@ const TopicForm: React.FC = () => {
             <Timer expectedSeconds={15} isSubmitting={isSubmitting} />
 
 
-        </form>
+        </form >
     );
 };
 
