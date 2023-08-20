@@ -235,6 +235,7 @@ const TopicForm: React.FC = () => {
                     leave="transition ease duration-300 transform"
                     leaveFrom="opacity-100 translate-y-0"
                     leaveTo="opacity-0 translate-y-12"
+                    onClick={e => { e.stopPropagation() }}
                 >
                     <h4 className="h4 text-blue-600 text-center">Select Supporting Material</h4>
                     <MyFiles selectable={true} callback={() => { alert("a") }} />
