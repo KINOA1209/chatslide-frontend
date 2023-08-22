@@ -4,6 +4,7 @@
 import Link from "next/link";
 import SignupForm from "@/components/signup-form";
 import GoogleSignIn from "@/components/GoogleSignIn";
+import CustomerServiceInfo from '@/components/customerService';
 
 export default function SignUp() {
     return (
@@ -40,6 +41,9 @@ export default function SignUp() {
                             >
                                 Sign in
                             </Link>
+                        </div>
+                        <div className="text-gray-600 text-center mt-6">
+                            <CustomerServiceInfo />
                         </div>
                     </div>
                 </div>
