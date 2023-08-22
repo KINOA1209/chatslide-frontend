@@ -177,14 +177,14 @@ const SignupForm: React.FC = () => {
                         className="block text-gray-800 text-sm font-medium mb-1"
                         htmlFor="username"
                     >
-                        Name <span className="text-red-600">*</span>
+                        Display Name <span className="text-red-600">*</span>
                     </label>
                     <input
                         id="username"
                         type="text"
                         onChange={handleUsernameChange}
                         className="form-input w-full text-gray-800"
-                        placeholder="Enter your username"
+                        placeholder="Enter your display name"
                         minLength={3}
                         maxLength={16}
                         required
