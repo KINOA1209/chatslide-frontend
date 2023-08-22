@@ -54,14 +54,25 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
     const [isSubmittingScript, setIsSubmittingScript] = useState(false);
     const [toSlides, setToSlides] = useState(true);
     const [isDisabled, setIsDisabled] = useState(false);
-    const [isOpen, setIsOpen] = useState(false);
-    function closeModal() {
-        setIsOpen(false);
+    const [isToSlidesOpen, setIsToSlidesOpen] = useState(false);
+    const [isToScriptOpen, setIsToScriptOpen] = useState(false);
+
+    function closeToSlidesModal() {
+        setIsToSlidesOpen(false);
         setIsSubmittingSlide(false);
     };
 
-    function openModal() {
-        setIsOpen(true);
+    function openToSlidesModal() {
+        setIsToSlidesOpen(true);
+    };
+
+    function closeToScriptModal() {
+        setIsToScriptOpen(false);
+        setIsSubmittingScript(false);
+    };
+
+    function openToScriptModal() {
+        setIsToScriptOpen(true);
     };
 
     const prepareSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -70,28 +81,58 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
         if (toSlides) {
             let hasScript = null;
             let hasAudio = null;
+            let hasVideo = null;
             if (typeof window !== 'undefined') {
                 hasScript = sessionStorage.getItem('transcripts');
                 hasAudio = sessionStorage.getItem('audio_files');
+                hasAudio = sessionStorage.getItem('video_file');
             }
-            if (hasScript !== null || hasAudio !== null) {
-                openModal();
+            if (hasScript !== null || hasAudio !== null || hasVideo !== null) {
+                openToSlidesModal();
             } else {
                 setIsSubmittingSlide(true);
                 handleSubmit();
             }
         } else {
-            handleSubmit();
+            let hasSlides = null;
+            let hasAudio = null;
+            let hasVideo = null;
+            if (typeof window !== 'undefined') {
+                hasSlides = sessionStorage.getItem('image_files');
+                hasAudio = sessionStorage.getItem('audio_files');
+                hasAudio = sessionStorage.getItem('video_file');
+            }
+            if (hasSlides !== null || hasAudio !== null || hasVideo !== null) {
+                openToScriptModal();
+            } else {
+                setIsSubmittingScript(true);
+                handleSubmit();
+            }
         }
     }
 
     const slideModalSubmit = () => {
-        closeModal();
+        closeToSlidesModal();
         setIsSubmittingSlide(true);
         // clean sessionStorage
         if (typeof window !== 'undefined') {
+            sessionStorage.removeItem('pdf_file');
             sessionStorage.removeItem('transcripts');
             sessionStorage.removeItem('audio_files');
+            sessionStorage.removeItem('video_file');
+        }
+        handleSubmit();
+    };
+
+    const scriptModalSubmit = () => {
+        closeToScriptModal();
+        setIsSubmittingScript(true);
+        // clean sessionStorage
+        if (typeof window !== 'undefined') {
+            sessionStorage.removeItem('image_files');
+            sessionStorage.removeItem('pdf_file');
+            sessionStorage.removeItem('audio_files');
+            sessionStorage.removeItem('video_file');
         }
         handleSubmit();
     };
@@ -159,7 +200,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                 // return; 
             }
         }
-        else{
+        else {
             console.log('no need to query vector database');
         }
 
@@ -335,8 +376,10 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
     return (
         <div>
             <ToastContainer />
-            <Transition appear show={isOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={closeModal}>
+
+            {/* generate slides popup */}
+            <Transition appear show={isToSlidesOpen} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={closeToSlidesModal}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -369,7 +412,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                                     </Dialog.Title>
                                     <div className="mt-2">
                                         <p className="text-sm text-gray-500">
-                                            Generate slides will delete current scripts and audio.
+                                            Generate slides will delete current scripts, audio, and video.
                                         </p>
                                     </div>
 
@@ -382,7 +425,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                                         </div>
                                         <div className="flex justify-center mt-4">
                                             <button className="text-blue-600 bg-gray-100 hover:bg-gray-200 border border-blue-600 py-2 px-4 rounded mr-2 btn-size"
-                                                onClick={closeModal}>
+                                                onClick={closeToSlidesModal}>
                                                 Cancel
                                             </button>
                                         </div>
@@ -393,6 +436,68 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                     </div>
                 </Dialog>
             </Transition>
+
+
+            {/* generate script popup */}
+            <Transition appear show={isToScriptOpen} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={closeToScriptModal}>
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 scale-95"
+                                enterTo="opacity-100 scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 scale-100"
+                                leaveTo="opacity-0 scale-95"
+                            >
+                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-lg font-medium leading-6 text-gray-900"
+                                    >
+                                        Continue to generate scripts?
+                                    </Dialog.Title>
+                                    <div className="mt-2">
+                                        <p className="text-sm text-gray-500">
+                                            Generate scripts will delete current slides, audio, and video.
+                                        </p>
+                                    </div>
+
+                                    <div className="flex">
+                                        <div className="flex justify-center mt-4">
+                                            <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded mr-2 btn-size"
+                                                onClick={scriptModalSubmit}>
+                                                Yes
+                                            </button>
+                                        </div>
+                                        <div className="flex justify-center mt-4">
+                                            <button className="text-blue-600 bg-gray-100 hover:bg-gray-200 border border-blue-600 py-2 px-4 rounded mr-2 btn-size"
+                                                onClick={closeToScriptModal}>
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition>
+
             {outlineData && outlineData.map((section: OutlineSection, sectionIndex: number) => (
                 <div key={sectionIndex + 1} className="mb-8">
                     <div className='flex flex-wrap md:flex-nowrap'>
@@ -479,15 +584,19 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                 <form onSubmit={prepareSubmit}>
                     <div className="flex flex-wrap -mx-3 mt-6">
                         <div className="w-full px-3">
+                            {/* Button for generating slides */}
                             <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full disabled:bg-gray-200 disabled:text-gray-400"
+                                onClick={() => { setToSlides(true); }}
                                 disabled={isDisabled}
                             >
                                 {isSubmittingSlide ? 'Generating...' : 'Generate Slides'}
                             </button>
                             {/* Timer */}
                             <Timer expectedSeconds={60} isSubmitting={isSubmittingSlide} />
+
+                            {/* Button for generating scripts */}
                             <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full mt-4 disabled:bg-gray-200 disabled:text-gray-400"
-                                onClick={() => { setToSlides(false); setIsSubmittingScript(true) }}
+                                onClick={() => { setToSlides(false); }}
                                 disabled={isDisabled}
                             >
                                 {isSubmittingScript ? 'Generating...' : 'Generate Scripts'}
