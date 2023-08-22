@@ -36,9 +36,6 @@ const FileManagement: React.FC<UserFileList> = ({ userfiles, deleteCallback }) =
                 },
                 body: JSON.stringify(fileDeleteData),
             });
-            if (typeof window !== 'undefined') {
-                window.location.reload();
-            }
             if (response.ok) {
                 const fileDeleteFeedback = await response.json();
                 if (response.status === 200) {
