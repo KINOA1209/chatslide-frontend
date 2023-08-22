@@ -76,22 +76,20 @@ const FileManagement: React.FC<UserFileList> = ({ userfiles, deleteCallback }) =
 
     const entry = (id: number, uid: string, filename: string, timestamp: string, thumbnail = null, icon = 'pdf') => {
         return (
-            <>
-                <div key={id} className='w-full h-16 px-4 rounded-2xl hover:bg-gray-200'>
-                    <div className='h-full flex items-center w-full py-4 px-2'>
-                        <div className='w-8 flex'>{getIcon(filename)}</div>
-                        <div className='grow text-ellipsis mx-4 overflow-hidden'>{filename}</div>
-                        {timestamp && <div className='mx-16 hidden md:block'>{moment(timestamp).format('L')}</div>}
-                        <div className='w-8 flex flex-row-reverse'>
-                            <svg onClick={e => handleDeleteFile(e, id)} className='w-6 md:opacity-25 hover:opacity-100 cursor-pointer' viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-                                <path fill="#000000"
-                                    d="M160 256H96a32 32 0 0 1 0-64h256V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64h-64v672a32 32 0 0 1-32 32H192a32 32 0 0 1-32-32V256zm448-64v-64H416v64h192zM224 896h576V256H224v640zm192-128a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32zm192 0a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32z" />
-                            </svg>
-                        </div>
+            <div key={id} className='w-full h-16 px-4 rounded-2xl hover:bg-gray-200'>
+                <div className='h-full flex items-center w-full py-4 px-2'>
+                    <div className='w-8 flex'>{getIcon(filename)}</div>
+                    <div className='grow text-ellipsis mx-4 overflow-hidden'>{filename}</div>
+                    {timestamp && <div className='mx-16 hidden md:block'>{moment(timestamp).format('L')}</div>}
+                    <div className='w-8 flex flex-row-reverse'>
+                        <svg onClick={e => handleDeleteFile(e, id)} className='w-6 md:opacity-25 hover:opacity-100 cursor-pointer' viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#000000"
+                                d="M160 256H96a32 32 0 0 1 0-64h256V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64h-64v672a32 32 0 0 1-32 32H192a32 32 0 0 1-32-32V256zm448-64v-64H416v64h192zM224 896h576V256H224v640zm192-128a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32zm192 0a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32z" />
+                        </svg>
                     </div>
-                    <div className='w-full border-b border-gray-300'></div>
                 </div>
-            </>
+                <div className='w-full border-b border-gray-300'></div>
+            </div>
         )
     };
 
