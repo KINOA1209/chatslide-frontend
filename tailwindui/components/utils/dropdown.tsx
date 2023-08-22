@@ -104,11 +104,11 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
                             My Projects
                         </a>
                         <a
-                            href="/my-files"
+                            href="/my-resources"
                             className="block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200"
                             role="menuitem"
                         >
-                            My Files
+                            My Resources
                         </a>
                     </div>
                     <div className="block px-4 py-1 text-sm text-blue-600">
