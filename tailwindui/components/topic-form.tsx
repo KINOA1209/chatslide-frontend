@@ -386,7 +386,8 @@ const TopicForm: React.FC = () => {
                 <div className="flex flex-wrap -mx-3 mt-6">
                     <div className="w-full px-3">
                         <button
-                            className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
+                            className="btn text-white bg-blue-600 hover:bg-blue-700 w-full disabled:bg-gray-200 disabled:text-gray-400"
+                            disabled={isSubmitting}
                             type="submit">
                             {isSubmitting ? "Generating..." : "Generate outline"}
                         </button>

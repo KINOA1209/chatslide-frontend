@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import GoogleSignIn from "@/components/GoogleSignIn";
+import CustomerServiceInfo from '@/components/customerService';
 
 
 export default function SignIn() {
@@ -51,6 +52,9 @@ export default function SignIn() {
                             >
                                 Sign up
                             </Link>
+                        </div>
+                        <div className="text-gray-600 text-center mt-6">
+                            <CustomerServiceInfo />
                         </div>
                     </div>
                 </div>
