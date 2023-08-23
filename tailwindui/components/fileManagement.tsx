@@ -37,9 +37,6 @@ const FileManagement: React.FC<UserFileList> = ({ userfiles, deleteCallback, cli
                 },
                 body: JSON.stringify(fileDeleteData),
             });
-            if (typeof window !== 'undefined') {
-                window.location.reload();
-            }
             if (response.ok) {
                 const fileDeleteFeedback = await response.json();
                 if (response.status === 200) {
@@ -76,27 +73,26 @@ const FileManagement: React.FC<UserFileList> = ({ userfiles, deleteCallback, cli
     };
 
     const handleOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
-        alert("default");
+        // Default behavior in file management page
+        // Open thumbnail / Open Youtube link etc.
     };
 
     const entry = (id: number, uid: string, filename: string, timestamp: string, thumbnail = null, icon = 'pdf') => {
         return (
-            <>
-                <div key={id} className='w-full h-16 px-4 rounded-2xl hover:bg-gray-200' onClick={e => { if (clickCallback !== undefined) { clickCallback() } else { handleOnClick(e) } }}>
-                    <div className='h-full flex items-center w-full py-4 px-2'>
-                        <div className='w-8 flex'>{getIcon(filename)}</div>
-                        <div className='grow text-ellipsis mx-4 overflow-hidden'>{filename}</div>
-                        {timestamp && <div className='mx-16 hidden md:block'>{moment(timestamp).format('L')}</div>}
-                        {(clickCallback === undefined) ? <div className='w-8 flex flex-row-reverse'>
-                            <svg onClick={e => handleDeleteFile(e, id)} className='w-6 md:opacity-25 hover:opacity-100 cursor-pointer' viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-                                <path fill="#000000"
-                                    d="M160 256H96a32 32 0 0 1 0-64h256V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64h-64v672a32 32 0 0 1-32 32H192a32 32 0 0 1-32-32V256zm448-64v-64H416v64h192zM224 896h576V256H224v640zm192-128a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32zm192 0a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32z" />
-                            </svg>
-                        </div> : <></>}
-                    </div>
-                    <div className='w-full border-b border-gray-300'></div>
-                </div >
-            </>
+            <div key={id} className='w-full h-16 px-4 rounded-2xl hover:bg-gray-200' onClick={e => { if (clickCallback !== undefined) { clickCallback() } else { handleOnClick(e) } }}>
+                <div className='h-full flex items-center w-full py-4 px-2'>
+                    <div className='w-8 flex'>{getIcon(filename)}</div>
+                    <div className='grow text-ellipsis mx-4 overflow-hidden'>{filename}</div>
+                    {timestamp && <div className='mx-16 hidden md:block'>{moment(timestamp).format('L')}</div>}
+                    {(clickCallback === undefined) ? <div className='w-8 flex flex-row-reverse'>
+                        <svg onClick={e => handleDeleteFile(e, id)} className='w-6 md:opacity-25 hover:opacity-100 cursor-pointer' viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#000000"
+                                d="M160 256H96a32 32 0 0 1 0-64h256V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64h-64v672a32 32 0 0 1-32 32H192a32 32 0 0 1-32-32V256zm448-64v-64H416v64h192zM224 896h576V256H224v640zm192-128a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32zm192 0a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32z" />
+                        </svg>
+                    </div> : <></>}
+                </div>
+                <div className='w-full border-b border-gray-300'></div>
+            </div>
         )
     };
 
@@ -248,11 +244,11 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
     };
 
     return (
-        <section className="bg-gray-100 grow flex flex-col h-full">
+        <section className="bg-gradient-to-b from-gray-100 to-white grow flex flex-col h-full">
             <ToastContainer enableMultiContainer containerId={'fileManagement'} />
             <div className={`max-w-6xl w-full mx-auto px-4 ${!selectable ? 'pt-16 md:pt-20' : ''} flex flex-wrap justify-around`}>
                 {!selectable ? <div className="pt-4 grow pr-4">
-                    <h1 className="h2 text-blue-600">Resources</h1>
+                    <h1 className="h2 text-blue-600">My Resources</h1>
                 </div> : <></>}
                 <div className="max-w-sm w-fit text-center pt-4">
                     <div className="w-full mx-auto">
