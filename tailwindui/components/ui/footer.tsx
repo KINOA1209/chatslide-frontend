@@ -13,7 +13,7 @@ export default function Footer() {
               <Logo />
             </div>
             <div className="flex justify-center mb-2 text-sm text-gray-600">
-                Dr. Lambda
+              Dr. Lambda
               {/* <a
                 href="/terms"
                 className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out"
@@ -93,16 +93,48 @@ export default function Footer() {
               </div>
             </form>
           </div> */}
-          
+
         </div>
 
         {/* Bottom area */}
         <div className="md:flex md:items-center md:justify-between py-4 md:py-8 border-t border-gray-200">
           {/* Social as */}
           <ul className="flex mb-4 md:order-1 md:ml-4 md:mb-0">
+            {/* Instagram */}
             <li>
               <a
-                href="https://twitter.com/drlambda_ai"
+                href="https://www.instagram.com/drlambda_ai/" target="_blank"
+                className="flex justify-center items-center text-gray-600 hover:text-gray-900 bg-white hover:bg-white-100 rounded-full shadow transition duration-150 ease-in-out"
+                aria-label="Instagram"
+              >
+                <div className="w-8 h-8 fill-current flex items-center justify-center">
+                  <svg className="w-6 h-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                      <path fill="none" d="M0 0h24v24H0z" />
+                      <path fill-rule="nonzero"
+                        d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153a4.908 4.908 0 0 1 1.153 1.772c.247.637.415 1.363.465 2.428.047 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 0 1-1.153 1.772 4.915 4.915 0 0 1-1.772 1.153c-.637.247-1.363.415-2.428.465-1.066.047-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 0 1-1.772-1.153 4.904 4.904 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 0 1 1.153-1.772A4.897 4.897 0 0 1 5.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6.5-.25a1.25 1.25 0 0 0-2.5 0 1.25 1.25 0 0 0 2.5 0zM12 9a3 3 0 1 1 0 6 3 3 0 0 1 0-6z" />
+                    </g>
+                  </svg>
+                </div>
+              </a>
+            </li>
+            {/* Linkedin */}
+            <li className="ml-4">
+              <a
+                href="https://www.linkedin.com/company/drlambda/" target="_blank"
+                className="flex justify-center items-center text-gray-600 hover:text-gray-900 bg-white hover:bg-white-100 rounded-full shadow transition duration-150 ease-in-out"
+                aria-label="Linkedin"
+              >
+                <svg className="w-8 h-8 fill-current pb-1" fill="#000000" width="800px" height="800px" viewBox="-3.5 0 19 19" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M3.335 6.498a1.152 1.152 0 0 1-1.248 1.148h-.015a1.15 1.15 0 1 1 .03-2.295 1.147 1.147 0 0 1 1.233 1.147zM.982 8.553h2.206v6.637H.982zm10.165 2.83v3.807H8.941v-3.55c0-.893-.319-1.502-1.12-1.502a1.21 1.21 0 0 0-1.13.807 1.516 1.516 0 0 0-.073.538v3.708H4.41s.03-6.017 0-6.639h2.21v.94l-.016.023h.015V9.49a2.19 2.19 0 0 1 1.989-1.095c1.451 0 2.54.949 2.54 2.988z" />
+                </svg>
+              </a>
+            </li>
+            {/* twitter */}
+            <li className="ml-4">
+              <a
+                href="https://twitter.com/drlambda_ai" target="_blank"
                 className="flex justify-center items-center text-gray-600 hover:text-gray-900 bg-white hover:bg-white-100 rounded-full shadow transition duration-150 ease-in-out"
                 aria-label="Twitter"
               >
@@ -115,9 +147,10 @@ export default function Footer() {
                 </svg>
               </a>
             </li>
+            {/* youtube */}
             <li className="ml-4">
               <a
-                href="https://www.youtube.com/@drlambda_ai"
+                href="https://www.youtube.com/@drlambda_ai" target="_blank"
                 className="flex justify-center items-center text-gray-600 hover:text-gray-900 bg-white hover:bg-white-100 rounded-full shadow transition duration-150 ease-in-out"
                 aria-label="Facebook"
               >
@@ -134,9 +167,9 @@ export default function Footer() {
 
           {/* Copyrights note */}
           <div className="text-sm text-gray-600 mr-4">
-            &copy; drlambda.ai. All rights reserved. 
+            &copy; drlambda.ai. All rights reserved.
             <br></br>
-            Created with 💙 from San Francisco. 
+            Created with 💙 from San Francisco.
           </div>
         </div>
       </div>
