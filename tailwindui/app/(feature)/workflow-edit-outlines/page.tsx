@@ -53,7 +53,6 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
     const [timer, setTimer] = useState(0);
     const [isSubmittingScript, setIsSubmittingScript] = useState(false);
     const [toSlides, setToSlides] = useState(true);
-    const [isDisabled, setIsDisabled] = useState(false);
     const [isToSlidesOpen, setIsToSlidesOpen] = useState(false);
     const [isToScriptOpen, setIsToScriptOpen] = useState(false);
 
@@ -139,7 +138,6 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
 
     const handleSubmit = async () => {
         setTimer(0);
-        setIsDisabled(true);
         let formData: any = {};
 
 
@@ -296,7 +294,6 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             setIsSubmittingScript(false);
         }
 
-        setIsDisabled(false);
     };
 
     const handleAddDetail = (e: React.MouseEvent<SVGSVGElement>, sectionIndex: number, detailIndex: number) => {
@@ -587,7 +584,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                             {/* Button for generating slides */}
                             <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full disabled:bg-gray-200 disabled:text-gray-400"
                                 onClick={() => { setToSlides(true); }}
-                                disabled={isDisabled}
+                                disabled={isSubmittingSlide||isSubmittingScript}
                             >
                                 {isSubmittingSlide ? 'Generating...' : 'Generate Slides'}
                             </button>
@@ -597,7 +594,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                             {/* Button for generating scripts */}
                             <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full mt-4 disabled:bg-gray-200 disabled:text-gray-400"
                                 onClick={() => { setToSlides(false); }}
-                                disabled={isDisabled}
+                                disabled={isSubmittingSlide||isSubmittingScript}
                             >
                                 {isSubmittingScript ? 'Generating...' : 'Generate Scripts'}
                             </button>
