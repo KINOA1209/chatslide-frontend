@@ -5,6 +5,7 @@ import AuthService from "../../../components/utils/AuthService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
+import CustomerServiceInfo from '@/components/customerService';
 
 export default function ResetPassword(): JSX.Element {
   const [email, setEmail] = useState<string>('');
@@ -133,7 +134,7 @@ export default function ResetPassword(): JSX.Element {
                       type="submit"
                       className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
                     >
-                      Send reset link
+                      Send reset verification code
                     </button>
                   </div>
                 </div>
@@ -195,6 +196,10 @@ export default function ResetPassword(): JSX.Element {
                 </div>
               </form>
             )}
+
+            <div className="text-gray-600 text-center mt-6">
+              <CustomerServiceInfo />
+            </div>
           </div>
         </div>
       </div>

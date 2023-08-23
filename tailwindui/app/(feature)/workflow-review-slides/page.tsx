@@ -105,7 +105,7 @@ export default function WorkflowStep3() {
 
     // Start the timer when the component mounts
     useEffect(() => {
-        const timer = setTimeout(handleTimerCompletion, 10000); // 10 seconds
+        const timer = setTimeout(handleTimerCompletion, 30000); // 30 seconds
 
         // Clean up the timer when the component unmounts
         return () => clearTimeout(timer);
