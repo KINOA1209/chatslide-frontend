@@ -12,6 +12,7 @@ import ProjectProgress from "@/components/steps";
 import FeedbackForm from '@/components/feedback';
 import SaveToPPTX from '@/components/forms/saveToPptx';
 import BgImagePopup from '@/components/bgImagePopup';
+import SlidesHTML from '@/components/SlidesHTML';
 
 const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
     console.log(slide_files);
@@ -22,7 +23,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
         setShowPopup(true);
     };
     
-      const handlePopupClose = () => {
+    const handlePopupClose = () => {
         setShowPopup(false);
     };
 
@@ -56,7 +57,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
             <ToastContainer />
             <div className="max-w-4xl mx-auto px-4 sm:px-6">
 
-                <Slides height={160} />
+                <SlidesHTML/>
 
                 <SaveToPDF />
                 {language === "English" && <SaveToPPTX />}
