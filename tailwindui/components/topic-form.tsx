@@ -208,6 +208,9 @@ const TopicForm: React.FC = () => {
         }
     }
 
+    const handleSelectResources = (resource: Array<string>) => {
+        sessionStorage.setItem('resources', JSON.stringify(resource));
+    };
 
 
     return (
@@ -238,7 +241,7 @@ const TopicForm: React.FC = () => {
                     onClick={e => { e.stopPropagation() }}
                 >
                     <h4 className="h4 text-blue-600 text-center">Select Supporting Material</h4>
-                    <MyFiles selectable={true} callback={() => { alert("a") }} />
+                    <MyFiles selectable={true} callback={handleSelectResources} />
                 </Transition>
             </Transition>
             <div className="flex flex-wrap -mx-3 mb-4">
