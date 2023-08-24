@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import moment from "moment";
 
 interface UserFile {
-    id: number,
+    id: string,
     uid: string,
     filename: string,
     thumbnail_name: string,
@@ -16,13 +16,15 @@ interface UserFile {
 }
 
 interface UserFileList {
+    selectable: boolean
     userfiles: Array<UserFile>,
     deleteCallback: Function,
-    clickCallback?: Function,
+    clickCallback: Function,
+    selectedResources: Array<string>
 };
 
-const FileManagement: React.FC<UserFileList> = ({ userfiles, deleteCallback, clickCallback }) => {
-    const handleDeleteFile = async (e: React.MouseEvent<SVGSVGElement>, id: number) => {
+const FileManagement: React.FC<UserFileList> = ({ selectable = false, userfiles, deleteCallback, clickCallback, selectedResources }) => {
+    const handleDeleteFile = async (e: React.MouseEvent<SVGSVGElement>, id: string) => {
         e.stopPropagation();
         try {
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
@@ -77,14 +79,14 @@ const FileManagement: React.FC<UserFileList> = ({ userfiles, deleteCallback, cli
         // Open thumbnail / Open Youtube link etc.
     };
 
-    const entry = (id: number, uid: string, filename: string, timestamp: string, thumbnail = null, icon = 'pdf') => {
+    const entry = (id: string, uid: string, filename: string, timestamp: string, thumbnail = null, icon = 'pdf') => {
         return (
-            <div key={id} className='w-full h-16 px-4 rounded-2xl hover:bg-gray-200' onClick={e => { if (clickCallback !== undefined) { clickCallback() } else { handleOnClick(e) } }}>
+            <div key={id} className={`w-full h-16 px-4 rounded-2xl md:hover:bg-gray-200 ${selectable && selectedResources.includes(id) ? ' bg-blue-300' : ''}`} onClick={e => { if (selectable) { clickCallback(id) } else { handleOnClick(e) } }}>
                 <div className='h-full flex items-center w-full py-4 px-2'>
                     <div className='w-8 flex'>{getIcon(filename)}</div>
                     <div className='grow text-ellipsis mx-4 overflow-hidden'>{filename}</div>
                     {timestamp && <div className='mx-16 hidden md:block'>{moment(timestamp).format('L')}</div>}
-                    {(clickCallback === undefined) ? <div className='w-8 flex flex-row-reverse'>
+                    {!selectable ? <div className='w-8 flex flex-row-reverse'>
                         <svg onClick={e => handleDeleteFile(e, id)} className='w-6 md:opacity-25 hover:opacity-100 cursor-pointer' viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
                             <path fill="#000000"
                                 d="M160 256H96a32 32 0 0 1 0-64h256V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64h-64v672a32 32 0 0 1-32 32H192a32 32 0 0 1-32-32V256zm448-64v-64H416v64h192zM224 896h576V256H224v640zm192-128a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32zm192 0a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32z" />
@@ -119,6 +121,7 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
     const promptRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
     const [rendered, setRendered] = useState<boolean>(false);
+    const [selectedResources, setSelectedResources] = useState<Array<string>>([]);
 
     useEffect(() => {
         if (contentRef.current) {
@@ -137,6 +140,17 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
         // Execute the created function directly
         fetchUserFiles();
     }, []);
+
+    useEffect(() => {
+        if (!selectable) {
+            return;
+        }
+        const resourcesFromStorage = sessionStorage.getItem('resources');
+        const selected: Array<string> = resourcesFromStorage !== null ? JSON.parse(resourcesFromStorage) : [];
+        setSelectedResources(selected);
+        console.log(selectedResources);
+    }, []);
+
 
     useEffect(() => {
         if (rendered && resources.length === 0 && promptRef.current) {
@@ -228,7 +242,7 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
         fetchFiles(idToken);
     };
 
-    const handleFileDeleted = (id: number) => {
+    const handleFileDeleted = (id: string) => {
         let ind = -1;
         for (let i = 0; i < resources.length; i++) {
             if (resources[i].id === id) {
@@ -242,6 +256,23 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
             setResources(newFiles);
         }
     };
+
+    const handleClick = (id: string) => {
+        const ind = selectedResources.indexOf(id);
+        const resources = [...selectedResources];
+        if (ind !== -1) {
+            resources.splice(ind, 1);
+        } else {
+            resources.push(id);
+        }
+        setSelectedResources(resources);
+    };
+
+    useEffect(() => {
+        if (callback !== undefined) {
+            callback(selectedResources);
+        }
+    }, [selectedResources]);
 
     return (
         <section className="bg-gradient-to-b from-gray-100 to-white grow flex flex-col h-full">
@@ -257,7 +288,13 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
                 </div>
             </div>
             <div className="max-w-6xl w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto" ref={contentRef}>
-                {resources.length > 0 && <FileManagement userfiles={resources} deleteCallback={handleFileDeleted} clickCallback={callback} />}
+                {resources.length > 0 &&
+                    <FileManagement
+                        selectable={selectable}
+                        userfiles={resources}
+                        deleteCallback={handleFileDeleted}
+                        clickCallback={handleClick}
+                        selectedResources={selectedResources} />}
                 {resources.length === 0 &&
                     <div className='w-full grow flex items-center justify-center'>
                         <div className='text-gray-400' ref={promptRef}>
