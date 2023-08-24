@@ -192,7 +192,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
 
             // generate slides
             if (toSlides === true) {
-                const response = await fetch('/api/generate_slides', {
+                const response = await fetch('/api/generate_html', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
