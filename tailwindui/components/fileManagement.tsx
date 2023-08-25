@@ -84,7 +84,7 @@ const FileManagement: React.FC<UserFileList> = ({ selectable = false, userfiles,
             <div key={id} className="w-full h-16 px-4 rounded-2xl md:hover:bg-gray-200" onClick={e => { if (selectable) { clickCallback(id) } else { handleOnClick(e) } }}>
                 <div className='h-full flex items-center w-full py-4 px-2'>
                     <div className='w-8 flex'>{getIcon(filename)}</div>
-                    <div className='grow text-ellipsis mx-4 overflow-hidden'>{filename}</div>
+                    <div className='grow text-ellipsis mx-4 overflow-hidden whitespace-nowrap'>{filename}</div>
                     {timestamp && <div className='mx-16 hidden md:block'>{moment(timestamp).format('L')}</div>}
                     {!selectable ? <div className='w-8 flex flex-row-reverse'>
                         <svg onClick={e => handleDeleteFile(e, id)} className='w-6 md:opacity-25 hover:opacity-100 cursor-pointer' viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
@@ -92,15 +92,15 @@ const FileManagement: React.FC<UserFileList> = ({ selectable = false, userfiles,
                                 d="M160 256H96a32 32 0 0 1 0-64h256V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64h-64v672a32 32 0 0 1-32 32H192a32 32 0 0 1-32-32V256zm448-64v-64H416v64h192zM224 896h576V256H224v640zm192-128a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32zm192 0a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32z" />
                         </svg>
                     </div> : <></>}
-                    <div className='w-8 flex flex-row-reverse'>
-                        {selectable && selectedResources.includes(id) ?
+                    {selectable ? <div className='w-6 flex flex-row-reverse shrink-0'>
+                        {selectedResources.includes(id) ?
                             <svg className='h-6 w-6' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     d="M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM16.78 9.7L11.11 15.37C10.97 15.51 10.78 15.59 10.58 15.59C10.38 15.59 10.19 15.51 10.05 15.37L7.22 12.54C6.93 12.25 6.93 11.77 7.22 11.48C7.51 11.19 7.99 11.19 8.28 11.48L10.58 13.78L15.72 8.64C16.01 8.35 16.49 8.35 16.78 8.64C17.07 8.93 17.07 9.4 16.78 9.7Z"
                                     fill="#0070f4" />
                             </svg>
                             : <></>}
-                    </div>
+                    </div> : <></>}
                 </div>
                 <div className='w-full border-b border-gray-300'></div>
             </div>
