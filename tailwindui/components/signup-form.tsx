@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import React, { useState, ChangeEvent, FormEvent, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -23,8 +23,15 @@ const SignupForm: React.FC = () => {
 
     const [usernameError, setUsernameError] = useState('');
     const [emailError, setEmailError] = useState('');
-    const [passwordError, setPasswordError] = useState('');
+    const [passwordConfirmError, setPasswordConfirmError] = useState('');
     const [verificationCodeError, setVerificationCodeError] = useState('');
+
+    const passwordRef = useRef<HTMLInputElement>(null);
+    const rule1 = useRef<HTMLParagraphElement>(null);
+    const rule2 = useRef<HTMLParagraphElement>(null);
+    const rule3 = useRef<HTMLParagraphElement>(null);
+    const rule4 = useRef<HTMLParagraphElement>(null);
+    const rule5 = useRef<HTMLParagraphElement>(null);
 
     const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -56,40 +63,88 @@ const SignupForm: React.FC = () => {
         }
     }
 
-    function handlePasswordChange(event: any) {
-        const value = event.target.value;
-
+    const validatePassword = (pwd: string): boolean => {
         // Validate the password
         const uppercaseRegex = /[A-Z]/;
         const lowercaseRegex = /[a-z]/;
         const numericRegex = /[0-9]/;
         const symbolRegex = /[?\^\$\*\.\[\]\{\}\(\)?\-"\!\@\#%\&\/\\,><'\:\;\|\_~`]/;
-
-        let error = '';
-        if (value.length < 8) {
-            error = 'Password should be at least 8 characters';
-        } else if (value.length > 16) {
-            error = 'Password should be no longer than 16 characters';
-        } else {
-            if (!uppercaseRegex.test(value)) {
-                error += 'Password should contain at least one uppercase letter. ';
-            }
-            if (!lowercaseRegex.test(value)) {
-                error += 'Password should contain at least one lowercase letter. ';
-            }
-            if (!numericRegex.test(value)) {
-                error += 'Password should contain at least one numeric character. ';
-            }
-            if (!symbolRegex.test(value)) {
-                error += 'Password should contain at least one of the following symbol character: ?^ $ * . [ ] { } ( ) ? - " ! @ # % & / \ , > < \' : ; | _ ~ `';
+        var validated = true;
+        if (rule1.current) {
+            if (pwd.length < 8) {
+                rule1.current.style.color = 'red';
+                validated = false;
+            } else {
+                rule1.current.style.color = 'green';
             }
         }
-
-        setPassword(value);
-        setPasswordError(error);
+        if (rule2.current) {
+            if (!uppercaseRegex.test(pwd)) {
+                rule2.current.style.color = 'red';
+                validated = false;
+            } else {
+                rule2.current.style.color = 'green';
+            }
+        }
+        if (rule3.current) {
+            if (!lowercaseRegex.test(pwd)) {
+                rule3.current.style.color = 'red';
+                validated = false;
+            } else {
+                rule3.current.style.color = 'green';
+            }
+        }
+        if (rule4.current) {
+            if (!numericRegex.test(pwd)) {
+                rule4.current.style.color = 'red';
+                validated = false;
+            } else {
+                rule4.current.style.color = 'green';
+            }
+        }
+        if (rule5.current) {
+            if (!symbolRegex.test(pwd)) {
+                rule5.current.style.color = 'red';
+                validated = false;
+            } else {
+                rule5.current.style.color = 'green';
+            }
+        }
+        return validated;
     }
 
+    const validateConfirmPassword = (pwd1: string, pwd2: string): boolean => {
+        if (pwd1 === pwd2) {
+            setPasswordConfirmError("");
+            return true;
+        } else {
+            setPasswordConfirmError("Two passwords are different.");
+            return false;
+        }
+    }
+
+    function handlePasswordChange(event: React.ChangeEvent<HTMLInputElement>) {
+        const value = event.target.value;
+        validatePassword(value);
+    }
+
+    function handleConfirmPasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
+        if (passwordRef.current) {
+            const validation1 = validatePassword(passwordRef.current.value);
+            const validation2 = validateConfirmPassword(passwordRef.current.value, e.target.value);
+            if (validation1 && validation2) {
+                setPassword(passwordRef.current.value);
+            } else {
+                setPassword("");
+            }
+        }
+    };
+
     async function sendVerificationCode() {
+        if (password === "") { // Invalid password
+            return;
+        }
+
         const resp = await AuthService.sendCode(email, password, username);
         try {
             setDisabled(true);
@@ -125,6 +180,10 @@ const SignupForm: React.FC = () => {
         const email = (event.target as HTMLFormElement).email.value;
         const code = (event.target as HTMLFormElement).verification_code.value;
 
+        if (password === "") { // Invalid password
+            return;
+        }
+
         try {
             await AuthService.confirmSignUp(email, code);
             const signInResponse = await AuthService.signIn(email, password);  //auto sign in afterwards
@@ -138,20 +197,20 @@ const SignupForm: React.FC = () => {
                     router.push("/dashboard");
                 } else {
                     const project_id = sessionStorage.getItem('project_id') || '';
-                try {
-                    const response = await fetch('/api/link_project', {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                      },
-                      body: JSON.stringify({ 'project_id': project_id }),
-                    });
-                    console.log(response);
-                    router.push(nextUri); // Redirect to nextUri
-                  } catch (error) {
-                    console.error(error);
-                  }
+                    try {
+                        const response = await fetch('/api/link_project', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            },
+                            body: JSON.stringify({ 'project_id': project_id }),
+                        });
+                        console.log(response);
+                        router.push(nextUri); // Redirect to nextUri
+                    } catch (error) {
+                        console.error(error);
+                    }
                 }
             }
         } catch (error: any) {
@@ -221,17 +280,36 @@ const SignupForm: React.FC = () => {
                     >
                         Password <span className="text-red-600">*</span>
                     </label>
+                    <div className="text-sm text-gray-500">
+                        {/* <p>&emsp;&emsp;Password must</p> */}
+                        <p ref={rule1}>&emsp;&emsp;Be a minimum of 8 characters</p>
+                        <p ref={rule2}>&emsp;&emsp;Include at least one uppercase letter (A-Z)</p>
+                        <p ref={rule3}>&emsp;&emsp;Include at least one lowercase letter (a-z)</p>
+                        <p ref={rule4}>&emsp;&emsp;Include at least one number (0-9)</p>
+                        <p ref={rule5}>&emsp;&emsp;Include at least one special character</p>
+                    </div>
                     <input
                         id="password"
                         type="password"
                         onChange={handlePasswordChange}
-                        className="form-input w-full text-gray-800"
+                        className="form-input w-full text-gray-800 mt-3"
                         placeholder="Enter your password"
                         minLength={8}
                         maxLength={16}
                         required
+                        ref={passwordRef}
                     />
-                    {passwordError && <div className="text-sm text-red-500">{passwordError}</div>}
+                    <input
+                        id="password"
+                        type="password"
+                        onChange={handleConfirmPasswordChange}
+                        className="form-input w-full text-gray-800 mt-3"
+                        placeholder="Confirm your password"
+                        minLength={8}
+                        maxLength={16}
+                        required
+                    />
+                    {passwordConfirmError && <div className="text-sm text-red-500">{passwordConfirmError}</div>}
                 </div>
             </div>
             <div className="flex flex-wrap -mx-3 mb-4">
