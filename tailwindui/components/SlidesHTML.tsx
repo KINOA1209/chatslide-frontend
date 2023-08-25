@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import sanitizeHtml from 'sanitize-html';
 import ReactQuill  from 'react-quill';
-import { jsPDF } from "jspdf";
-import html2canvas from 'html2canvas';
+
+
 
 interface SlideElement {
-    type: 'h1' | 'h2' | 'h3' | 'p' | 'ul'|'li';
+    type: 'h1' | 'h2' | 'h3' | 'p' | 'ul'| 'li' | 'br';
     content: string | string[];
 }
 
@@ -13,10 +13,16 @@ interface Slide {
     elements: SlideElement[];
 }
 
-const SlidesHTML = () => {
+type SlidesHTMLProps = {
+    finalSlides: Slide[]; 
+    setFinalSlides: React.Dispatch<React.SetStateAction<Slide[]>>; 
+};
+
+const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  }) => {
     const [slides, setSlides] = useState<Slide[]>([]);
     const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
     const foldername = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('foldername') : '';
+
     useEffect(() => {  
         if (foldername !== null) {
             loadHtmlFile(foldername, 'html_init.html');
@@ -52,7 +58,6 @@ const SlidesHTML = () => {
 
     function displaySlides(doc: Document) {
         const slideElements = Array.from(doc.getElementsByClassName('slide'));
-    
         const newSlides = slideElements.map((slide) => {
             const elements: SlideElement[] = [];
             const slideChildren = Array.from(slide.children);
@@ -76,7 +81,7 @@ const SlidesHTML = () => {
             }
             return { elements };
         });
-        console.log(newSlides)
+        setFinalSlides(newSlides);
         setSlides(newSlides);
     }
 
@@ -88,30 +93,40 @@ const SlidesHTML = () => {
         }
     }
 
-    function handleSlideEdit(content: string, slideIndex: number, tag: string, tagIndex: number, liIndex?: number) {
+    function handleSlideEdit(content: any, slideIndex: number, tag: string, tagIndex: number, liIndex?: number) {
         const newSlides = [...slides];
+        const newFinalSlides = [...finalSlides];
+        //handleSlideEdit(quill.getContents(), currentSlideIndex, element.type, i)}  
+
+        const currNewFinalSlides = newFinalSlides[slideIndex];
         const currentSlide = newSlides[slideIndex];
-    
+
         switch (tag) {
             case 'h1':
                 currentSlide.elements[tagIndex].content = content;
+                currNewFinalSlides.elements[tagIndex].content = `<h1>${content}</h1>`;
                 break;
             case 'h2':
                 currentSlide.elements[tagIndex].content = content;
+                currNewFinalSlides.elements[tagIndex].content = `<h2>${content}</h2>`;
                 break;
             case 'h3':
                 currentSlide.elements[tagIndex].content = content;
+                currNewFinalSlides.elements[tagIndex].content = `<h3>${content}</h3>`;
                 break;
             case 'p':
                 currentSlide.elements[tagIndex].content = content;
+                currNewFinalSlides.elements[tagIndex].content = `<p>${content}</p>`;
                 break;
             case 'li':
                 (currentSlide.elements[tagIndex].content as string[])[liIndex as number] = content;
+                currNewFinalSlides.elements[tagIndex].content = `<li>${content}</li>`;
                 break;
             default:
                 console.error(`Unknown tag: ${tag}`);
         }
         setSlides(newSlides);
+        setFinalSlides(newFinalSlides);
     }
 
     function goToSlide(index: number) {
@@ -180,21 +195,22 @@ const SlidesHTML = () => {
                 width: '50px',
                 borderRadius: '5px',
             }} onClick={() => goToSlide(currentSlideIndex + 1)}>&#9654;</button>
-
             {slides.length > 0 && (
                 <div className="slide" style={{
                     backgroundColor: 'rgba(255, 255, 255, 0.5)',
                     padding: '20px',
                     borderRadius: '10px',
                 }}>
-                    {slides.length > 0 && slides[currentSlideIndex] && slides[currentSlideIndex].elements.map((element, i) => {
+                    {slides[currentSlideIndex] && slides[currentSlideIndex].elements.map((element, i) => {
                         return (
                             <ReactQuill 
                                 key={i} 
                                 value={element.content as string} 
-                                onBlur={(range, source, quill) => handleSlideEdit(quill.getText(), currentSlideIndex, element.type, i)}  
-                                modules={{ toolbar: false, 
-                                        keyboard: { bindings: { } } }} 
+                                onBlur={(range, source, quill) => {
+                                    handleSlideEdit(quill.getText(), currentSlideIndex, element.type, i)}}
+                                modules={{  toolbar: false, 
+                                            keyboard: { bindings: { } }}} 
+                                
                                 style={element.type === 'h1' ? h1Style : 
                                     element.type === 'h2' ? h2Style : 
                                     element.type === 'h3' ? h3Style : 
@@ -205,7 +221,7 @@ const SlidesHTML = () => {
                 </div>
             )}
         </div>
-    );    
-    
+    );  
 }
 export default SlidesHTML;
+
