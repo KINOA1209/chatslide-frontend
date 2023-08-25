@@ -4,11 +4,26 @@ import React, { useState, useEffect, useRef } from 'react';
 import SavePDFModal from './savePDFModal';
 import AuthService from "../utils/AuthService";
 
+interface SlideElement {
+    type: 'h1' | 'h2' | 'h3' | 'p' | 'ul'| 'li' | 'br';
+    content: string | string[];
+}
 
-interface SaveToPdfProps {
-  }
+interface Slide {
+    elements: SlideElement[];
+}
 
-const SaveToPdfHtml: React.FC<SaveToPdfProps> = () => {
+type SlidesHTMLProps = {
+    finalSlides: Slide[]; 
+    setFinalSlides: React.Dispatch<React.SetStateAction<Slide[]>>; 
+};
+
+interface SaveToPdfHtmlProps {
+    finalSlides: Slide[]; 
+    //setFinalSlides: React.Dispatch<React.SetStateAction<Slide[]>>; 
+}
+
+const SaveToPdfHtml: React.FC<SaveToPdfHtmlProps> = ({finalSlides} ) => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
@@ -24,15 +39,22 @@ const SaveToPdfHtml: React.FC<SaveToPdfProps> = () => {
   }, []);
 
     const handleSavePDF = async () => {
-        
-        const element = document.getElementById('pdf-content');
-
-        try {
-            const pdf_file = typeof sessionStorage !== 'undefined' ?  sessionStorage.getItem('pdf_file') : '';
-            const foldername = typeof sessionStorage !== 'undefined' ?  sessionStorage.getItem('foldername') : '';
     
-            const response = await fetch(`/api/pdf?filename=${pdf_file}&foldername=${foldername}`, {
-                method: 'GET',
+        try {
+            //call api to save the html first 
+            const foldername = typeof sessionStorage !== 'undefined' ?  sessionStorage.getItem('foldername') : '';
+            const formData = {
+                foldername: foldername,
+                html: finalSlides
+            }
+            const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+            const response = await fetch('/api/save_final_html_pdf', {
+                method: 'POST',
+                headers: {
+                'Authorization': `Bearer ${idToken}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData),
             });
 
             if (response.ok) {
