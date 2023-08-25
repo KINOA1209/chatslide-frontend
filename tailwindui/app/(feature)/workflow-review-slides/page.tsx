@@ -13,11 +13,28 @@ import FeedbackForm from '@/components/feedback';
 import SaveToPPTX from '@/components/forms/saveToPptx';
 import BgImagePopup from '@/components/bgImagePopup';
 import SlidesHTML from '@/components/SlidesHTML';
+import SaveToPdfHtml from '@/components/forms/saveToPdfHtml';
+
+interface SlideElement {
+    type: 'h1' | 'h2' | 'h3' | 'p' | 'ul'| 'li' | 'br';
+    content: string | string[];
+}
+
+interface Slide {
+    elements: SlideElement[];
+}
+
+type SlidesHTMLProps = {
+    finalSlides: Slide[]; 
+    setFinalSlides: React.Dispatch<React.SetStateAction<Slide[]>>; 
+};
 
 const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
     console.log(slide_files);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showPopup, setShowPopup] = useState<boolean>(false);
+
+    const [finalSlides, setFinalSlides] = useState<Slide[]>([]);
 
     const handlePopupOpen = () => {
         setShowPopup(true);
@@ -57,12 +74,12 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
             <ToastContainer />
             <div className="max-w-4xl mx-auto px-4 sm:px-6">
 
-                <SlidesHTML/>
+                <SlidesHTML finalSlides={finalSlides}  setFinalSlides={setFinalSlides} />
 
-                <SaveToPDF />
-                {language === "English" && <SaveToPPTX />}
+                <SaveToPdfHtml finalSlides={finalSlides}/>
+                {/*{language === "English" && <SaveToPPTX />}*/}
 
-                <div className="max-w-sm mx-auto">
+                {/*<div className="max-w-sm mx-auto">
                     <div className="flex flex-wrap -mx-3 mt-6">
                         <div className="w-full px-3">
                         <button
@@ -74,7 +91,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
                         {showPopup && <BgImagePopup onClose={handlePopupClose} />}
                         </div>
                     </div>
-                </div>
+            </div>*/}
 
                 {/* Form */}
                 <TranscriptForm

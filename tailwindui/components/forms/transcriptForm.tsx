@@ -34,7 +34,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({isSubmitting, setIsSubmi
 
     setIsSubmitting(true);
 
-    const latex_filename = 'final_latex.tex';
+    const html_filename = 'html_final.html';
     const foldername =
     typeof sessionStorage !== 'undefined'
       ? sessionStorage.getItem('foldername')
@@ -49,7 +49,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({isSubmitting, setIsSubmi
       : 'English';
 
     const formData = {
-      latex_filename: latex_filename,
+      html_filename: html_filename,
       foldername: foldername,
       topic: topic,
       language: language,
@@ -59,7 +59,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({isSubmitting, setIsSubmi
 
     try {
       const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-      const response = await fetch('/api/transcript', {
+      const response = await fetch('/api/transcript_html', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${idToken}`,
@@ -76,6 +76,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({isSubmitting, setIsSubmi
         // Store the data in local storage
         console.log(resp.data.res);
         sessionStorage.setItem('transcripts', JSON.stringify(resp.data.res));
+        sessionStorage.setItem('image_files', JSON.stringify(resp.data.image_files))
         // Redirect to a new page with the data
         router.push('workflow-edit-script');
       } else {
