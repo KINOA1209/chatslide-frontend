@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from "next/link";
 
-const email = "mail@quanlai.li"
+const email = "contact@drlambda.ai"
 
 export default function CustomerServiceInfo(): JSX.Element {
     return <div>
