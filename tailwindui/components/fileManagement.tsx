@@ -157,7 +157,6 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
         const resourcesFromStorage = sessionStorage.getItem('resources');
         const selected: Array<string> = resourcesFromStorage !== null ? JSON.parse(resourcesFromStorage) : [];
         setSelectedResources(selected);
-        console.log(selectedResources);
     }, []);
 
 
