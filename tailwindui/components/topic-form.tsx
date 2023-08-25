@@ -228,7 +228,7 @@ const TopicForm: React.FC = () => {
             >
                 <div className='grow md:grow-0'></div>
                 <Transition
-                    className='bg-gray-100 w-full h-3/4 md:h-1/2
+                    className='bg-gray-100 w-full h-3/4 md:h-2/3
                                 md:max-w-2xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
                                 overflow-hidden flex flex-col p-4'
                     show={showFileModal}
@@ -242,6 +242,18 @@ const TopicForm: React.FC = () => {
                 >
                     <h4 className="h4 text-blue-600 text-center">Select Supporting Material</h4>
                     <MyFiles selectable={true} callback={handleSelectResources} />
+                    <div className="max-w-sm mx-auto">
+                        <div className="flex flex-wrap -mx-3 mt-6">
+                            <div className="w-full px-3">
+                                <button
+                                    className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
+                                    type="button"
+                                    onClick={e => { e.preventDefault(); closeFile(); }}>
+                                    OK
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </Transition>
             </Transition>
             <div className="flex flex-wrap -mx-3 mb-4">
