@@ -9,6 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 const supportedFormats = ['PDF']; // For prompt displayy
 const supportedExtensions = ['pdf']; // For checking logic
 
+const sizeLimit = 16 * 1024 * 1024; // 16mb
+
 interface FileUploadButtonProps {
     onFileSelected: (file: File | null) => void;
     formats?: string[],
@@ -21,6 +23,21 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({ onFileSelected, fo
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files ? e.target.files[0] : null;
+        console.log(file?.size);
+        if (file?.size && file?.size > sizeLimit) {
+            toast.error("The maximum file size supported is 16 MB.", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                containerId: "upload",
+            });
+            return;
+        }
 
         const ext = file?.name.split('.').pop()?.toLowerCase();
         if (ext && !extensions.includes(ext)) {
