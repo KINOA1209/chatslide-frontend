@@ -63,6 +63,7 @@ const SignupForm: React.FC = () => {
         const uppercaseRegex = /[A-Z]/;
         const lowercaseRegex = /[a-z]/;
         const numericRegex = /[0-9]/;
+        const symbolRegex = /[?\^\$\*\.\[\]\{\}\(\)?\-"\!\@\#%\&\/\\,><'\:\;\|\_~`]/;
 
         let error = '';
         if (value.length < 8) {
@@ -78,6 +79,9 @@ const SignupForm: React.FC = () => {
             }
             if (!numericRegex.test(value)) {
                 error += 'Password should contain at least one numeric character. ';
+            }
+            if (!symbolRegex.test(value)) {
+                error += 'Password should contain at least one of the following symbol character: ?^ $ * . [ ] { } ( ) ? - " ! @ # % & / \ , > < \' : ; | _ ~ `';
             }
         }
 
@@ -173,14 +177,14 @@ const SignupForm: React.FC = () => {
                         className="block text-gray-800 text-sm font-medium mb-1"
                         htmlFor="username"
                     >
-                        Name <span className="text-red-600">*</span>
+                        Display Name <span className="text-red-600">*</span>
                     </label>
                     <input
                         id="username"
                         type="text"
                         onChange={handleUsernameChange}
                         className="form-input w-full text-gray-800"
-                        placeholder="Enter your username"
+                        placeholder="Enter your display name"
                         minLength={3}
                         maxLength={16}
                         required

@@ -7,6 +7,8 @@ import UserService from "./utils/UserService";
 import { FileUploadButton } from './fileUpload';
 import Timer from './Timer';
 import GuestUploadModal from './forms/uploadModal';
+import MyFiles from './fileManagement';
+import { Transition } from '@headlessui/react'
 
 interface Project {
     topic: string;
@@ -19,6 +21,20 @@ const TopicForm: React.FC = () => {
     const router = useRouter();
 
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showFileModal, setShowFileModal] = useState(false);
+
+    const openFile = () => {
+        setShowFileModal(true);
+    };
+
+    const closeFile = () => {
+        setShowFileModal(false);
+    };
+
+    const handleOpenFile = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        openFile();
+    };
 
     // bind form data between input and sessionStorage
     const [topic, setTopic] = useState((typeof window !== 'undefined' && sessionStorage.topic != undefined) ? sessionStorage.topic : '');
@@ -81,29 +97,14 @@ const TopicForm: React.FC = () => {
             language: (event.target as HTMLFormElement).language.value,
             addEquations: addEquations,
             project_id: project_id,
-            youtube: (event.target as HTMLFormElement).youtube.value,
+            youtube_url: (event.target as HTMLFormElement).youtube.value,
+            resources: JSON.parse(sessionStorage.getItem('resources') || '[]')
         };
 
         sessionStorage.setItem('topic', formData.topic);
         sessionStorage.setItem('audience', formData.audience);
         sessionStorage.setItem('language', formData.language);
         sessionStorage.setItem('addEquations', formData.addEquations);
-
-        // Retrieve the existing resources from sessionStorage and parse them
-        const resources: string[] = JSON.parse(sessionStorage.getItem('resources') || '[]');
-
-       // Add the new YouTube URL to the resources list if it's not empty
-        const youtubeUrl: string = formData.youtube;
-
-        if (youtubeUrl.trim() !== "") {
-            resources.push(youtubeUrl);
-}
-
-        // Convert the updated list to a JSON string
-        const updatedResourcesJSON: string = JSON.stringify(resources);
-
-        // Store the updated JSON string back in sessionStorage
-        sessionStorage.setItem('resources', updatedResourcesJSON);
 
         console.log("created form data");
 
@@ -139,6 +140,22 @@ const TopicForm: React.FC = () => {
                 sessionStorage.setItem('outline', JSON.stringify(outlinesJson.data));
                 sessionStorage.setItem('foldername', outlinesJson.data.foldername);
                 sessionStorage.setItem('project_id', outlinesJson.data.project_id);
+
+                // Retrieve the existing resources from sessionStorage and parse them
+                const resources: string[] = JSON.parse(sessionStorage.getItem('resources') || '[]');
+
+                // Add the new YouTube URL to the resources list if it's not empty
+                const youtube_id: string = outlinesJson.data.youtube_id;
+
+                if (youtube_id.trim() !== "") {
+                    resources.push(youtube_id);
+                }
+
+                // Convert the updated list to a JSON string
+                const updatedResourcesJSON: string = JSON.stringify(resources);
+
+                // Store the updated JSON string back in sessionStorage
+                sessionStorage.setItem('resources', updatedResourcesJSON);
 
                 // Redirect to a new page with the data
                 router.push('workflow-edit-outlines');
@@ -180,8 +197,9 @@ const TopicForm: React.FC = () => {
             alert("File upload successful!");
             const data = await response.json();
             console.log("data: ", data);
+            const file_id = data.data.file_id;
             const resources: string[] = JSON.parse(sessionStorage.getItem('resources') || '[]');
-            resources.push(file.name);
+            resources.push(file_id);
             const updatedResourcesJSON: string = JSON.stringify(resources);
             sessionStorage.setItem('resources', updatedResourcesJSON);
         } else {
@@ -190,10 +208,54 @@ const TopicForm: React.FC = () => {
         }
     }
 
+    const handleSelectResources = (resource: Array<string>) => {
+        sessionStorage.setItem('resources', JSON.stringify(resource));
+    };
 
 
     return (
         <form onSubmit={handleSubmit}>
+            <Transition
+                className='h-full w-full z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
+                show={showFileModal}
+                onClick={closeFile}
+                enter="transition ease duration-300 transform"
+                enterFrom="opacity-0 translate-y-12"
+                enterTo="opacity-100 translate-y-0"
+                leave="transition ease duration-300 transform"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 translate-y-12"
+            >
+                <div className='grow md:grow-0'></div>
+                <Transition
+                    className='bg-gray-100 w-full h-3/4 md:h-2/3
+                                md:max-w-2xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
+                                overflow-hidden flex flex-col p-4'
+                    show={showFileModal}
+                    enter="transition ease duration-500 transform delay-300"
+                    enterFrom="opacity-0 translate-y-12"
+                    enterTo="opacity-100 translate-y-0"
+                    leave="transition ease duration-300 transform"
+                    leaveFrom="opacity-100 translate-y-0"
+                    leaveTo="opacity-0 translate-y-12"
+                    onClick={e => { e.stopPropagation() }}
+                >
+                    <h4 className="h4 text-blue-600 text-center">Select Supporting Material</h4>
+                    <MyFiles selectable={true} callback={handleSelectResources} />
+                    <div className="max-w-sm mx-auto">
+                        <div className="flex flex-wrap -mx-3 mt-6">
+                            <div className="w-full px-3">
+                                <button
+                                    className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
+                                    type="button"
+                                    onClick={e => { e.preventDefault(); closeFile(); }}>
+                                    OK
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </Transition>
+            </Transition>
             <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">
                     <p>
@@ -309,7 +371,7 @@ const TopicForm: React.FC = () => {
                     <label
                         className="block text-gray-800 text-sm font-medium mb-1"
                         htmlFor="youtube">
-                        Supporting Youtube Video Link: 
+                        Supporting Youtube Video Link:
                     </label>
                     <input
                         id="youtube"
@@ -325,7 +387,12 @@ const TopicForm: React.FC = () => {
                 <div className="flex flex-wrap -mx-3 mt-6">
                     <div className="w-full px-3">
                         {user ?
-                            <FileUploadButton onFileSelected={onFileSelected} /> :
+                            <button
+                                className="btn text-blue-600 bg-gray-100 hover:bg-gray-200 w-full border border-blue-600"
+                                onClick={e => handleOpenFile(e)}
+                            >
+                                Add File
+                            </button> :
                             <GuestUploadModal />}
                     </div>
                 </div>
@@ -334,7 +401,8 @@ const TopicForm: React.FC = () => {
                 <div className="flex flex-wrap -mx-3 mt-6">
                     <div className="w-full px-3">
                         <button
-                            className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
+                            className="btn text-white bg-blue-600 hover:bg-blue-700 w-full disabled:bg-gray-200 disabled:text-gray-400"
+                            disabled={isSubmitting}
                             type="submit">
                             {isSubmitting ? "Generating..." : "Generate outline"}
                         </button>
@@ -345,7 +413,7 @@ const TopicForm: React.FC = () => {
             <Timer expectedSeconds={15} isSubmitting={isSubmitting} />
 
 
-        </form>
+        </form >
     );
 };
 

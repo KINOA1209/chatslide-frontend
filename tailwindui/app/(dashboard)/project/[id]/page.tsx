@@ -21,6 +21,7 @@ interface Project {
     audio_files: string;
     pdf_file: string;
     video_file: string;
+    resource_ids: string;
 }
 
 const ProjectLoading = () => {
@@ -86,6 +87,9 @@ const ProjectLoading = () => {
             }
             if (project.video_file) {
                 sessionStorage.setItem('video_file', project.video_file);
+            }
+            if (project.resource_ids) {
+                sessionStorage.setItem('resources', JSON.stringify(project.resource_ids));
             }
             handleRedirect();
         }

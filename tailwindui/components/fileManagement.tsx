@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import moment from "moment";
 
 interface UserFile {
-    id: number,
+    id: string,
     uid: string,
     filename: string,
     thumbnail_name: string,
@@ -16,19 +16,22 @@ interface UserFile {
 }
 
 interface UserFileList {
+    selectable: boolean
     userfiles: Array<UserFile>,
     deleteCallback: Function,
+    clickCallback: Function,
+    selectedResources: Array<string>
 };
 
-const FileManagement: React.FC<UserFileList> = ({ userfiles, deleteCallback }) => {
-    const handleDeleteFile = async (e: React.MouseEvent<SVGSVGElement>, id: number) => {
+const FileManagement: React.FC<UserFileList> = ({ selectable = false, userfiles, deleteCallback, clickCallback, selectedResources }) => {
+    const handleDeleteFile = async (e: React.MouseEvent<SVGSVGElement>, id: string) => {
         e.stopPropagation();
         try {
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
             const fileDeleteData = {
-                user_file_id: id
+                resource_id: id
             }
-            const response = await fetch("/api/delete_user_file", {
+            const response = await fetch("/api/delete_user_resource", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -36,9 +39,6 @@ const FileManagement: React.FC<UserFileList> = ({ userfiles, deleteCallback }) =
                 },
                 body: JSON.stringify(fileDeleteData),
             });
-            if (typeof window !== 'undefined') {
-                window.location.reload();
-            }
             if (response.ok) {
                 const fileDeleteFeedback = await response.json();
                 if (response.status === 200) {
@@ -74,24 +74,36 @@ const FileManagement: React.FC<UserFileList> = ({ userfiles, deleteCallback }) =
         }
     };
 
-    const entry = (id: number, uid: string, filename: string, timestamp: string, thumbnail = null, icon = 'pdf') => {
+    const handleOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        // Default behavior in file management page
+        // Open thumbnail / Open Youtube link etc.
+    };
+
+    const entry = (id: string, uid: string, filename: string, timestamp: string, thumbnail = null, icon = 'pdf') => {
         return (
-            <>
-                <div key={id} className='w-full h-16 px-4 rounded-2xl hover:bg-gray-200'>
-                    <div className='h-full flex items-center w-full py-4 px-2'>
-                        <div className='w-8 flex'>{getIcon(filename)}</div>
-                        <div className='grow text-ellipsis mx-4 overflow-hidden'>{filename}</div>
-                        {timestamp && <div className='mx-16 hidden md:block'>{moment(timestamp).format('L')}</div>}
-                        <div className='w-8 flex flex-row-reverse'>
-                            <svg onClick={e => handleDeleteFile(e, id)} className='w-6 md:opacity-25 hover:opacity-100 cursor-pointer' viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-                                <path fill="#000000"
-                                    d="M160 256H96a32 32 0 0 1 0-64h256V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64h-64v672a32 32 0 0 1-32 32H192a32 32 0 0 1-32-32V256zm448-64v-64H416v64h192zM224 896h576V256H224v640zm192-128a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32zm192 0a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32z" />
+            <div key={id} className="w-full h-16 px-4 rounded-2xl md:hover:bg-gray-200" onClick={e => { if (selectable) { clickCallback(id) } else { handleOnClick(e) } }}>
+                <div className='h-full flex items-center w-full py-4 px-2'>
+                    <div className='w-8 flex'>{getIcon(filename)}</div>
+                    <div className='grow text-ellipsis mx-4 overflow-hidden whitespace-nowrap'>{filename}</div>
+                    {timestamp && <div className='mx-16 hidden md:block'>{moment(timestamp).format('L')}</div>}
+                    {!selectable ? <div className='w-8 flex flex-row-reverse'>
+                        <svg onClick={e => handleDeleteFile(e, id)} className='w-6 md:opacity-25 hover:opacity-100 cursor-pointer' viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#000000"
+                                d="M160 256H96a32 32 0 0 1 0-64h256V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64h-64v672a32 32 0 0 1-32 32H192a32 32 0 0 1-32-32V256zm448-64v-64H416v64h192zM224 896h576V256H224v640zm192-128a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32zm192 0a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32z" />
+                        </svg>
+                    </div> : <></>}
+                    {selectable ? <div className='w-6 flex flex-row-reverse shrink-0'>
+                        {selectedResources.includes(id) ?
+                            <svg className='h-6 w-6' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM16.78 9.7L11.11 15.37C10.97 15.51 10.78 15.59 10.58 15.59C10.38 15.59 10.19 15.51 10.05 15.37L7.22 12.54C6.93 12.25 6.93 11.77 7.22 11.48C7.51 11.19 7.99 11.19 8.28 11.48L10.58 13.78L15.72 8.64C16.01 8.35 16.49 8.35 16.78 8.64C17.07 8.93 17.07 9.4 16.78 9.7Z"
+                                    fill="#0070f4" />
                             </svg>
-                        </div>
-                    </div>
-                    <div className='w-full border-b border-gray-300'></div>
+                            : <></>}
+                    </div> : <></>}
                 </div>
-            </>
+                <div className='w-full border-b border-gray-300'></div>
+            </div>
         )
     };
 
@@ -107,12 +119,18 @@ const FileManagement: React.FC<UserFileList> = ({ userfiles, deleteCallback }) =
     )
 };
 
-export default function MyFiles() {
+interface filesInterface {
+    selectable: boolean,
+    callback?: Function
+}
+
+const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [files, setFiles] = useState<UserFile[]>([]);
+    const [resources, setResources] = useState<UserFile[]>([]);
     const promptRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
     const [rendered, setRendered] = useState<boolean>(false);
+    const [selectedResources, setSelectedResources] = useState<Array<string>>([]);
 
     useEffect(() => {
         if (contentRef.current) {
@@ -133,10 +151,20 @@ export default function MyFiles() {
     }, []);
 
     useEffect(() => {
-        if (rendered && files.length === 0 && promptRef.current) {
+        if (!selectable) {
+            return;
+        }
+        const resourcesFromStorage = sessionStorage.getItem('resources');
+        const selected: Array<string> = resourcesFromStorage !== null ? JSON.parse(resourcesFromStorage) : [];
+        setSelectedResources(selected);
+    }, []);
+
+
+    useEffect(() => {
+        if (rendered && resources.length === 0 && promptRef.current) {
             promptRef.current.innerHTML = 'You have no uploaded file';
         }
-    }, [files, rendered]);
+    }, [resources, rendered]);
 
     const fetchFiles = async (token: string) => {
         const headers = new Headers();
@@ -146,24 +174,24 @@ export default function MyFiles() {
         headers.append('Content-Type', 'application/json');
 
         try {
-            const response = await fetch('/api/user_files', {
+            const response = await fetch('/api/resource_info', {
                 method: 'GET',
                 headers: headers,
             });
 
             if (response.ok) {
                 const data = await response.json();
-                const files = data.data.user_files;
-                const userFilesTemp = files.map((file: any) => {
+                const files = data.data.resources;
+                const resourceTemps = files.map((resource: any) => {
                     return {
-                        id: file.id,
-                        uid: file.uid,
-                        filename: file.filename,
-                        thumbnail_name: file.thumbnail_name,
-                        timestamp: file.timestamp,
+                        id: resource.id,
+                        uid: resource.uid,
+                        filename: resource.resource_name,
+                        thumbnail_name: resource.thumbnail_name,
+                        timestamp: resource.timestamp,
                     }
                 });
-                setFiles(userFilesTemp);
+                setResources(resourceTemps);
                 setRendered(true);
             } else {
                 // Handle error cases
@@ -222,28 +250,45 @@ export default function MyFiles() {
         fetchFiles(idToken);
     };
 
-    const handleFileDeleted = (id: number) => {
+    const handleFileDeleted = (id: string) => {
         let ind = -1;
-        for (let i = 0; i < files.length; i++) {
-            if (files[i].id === id) {
+        for (let i = 0; i < resources.length; i++) {
+            if (resources[i].id === id) {
                 ind = i;
                 break;
             }
         };
         if (ind !== -1) {
-            const newFiles = [...files];
+            const newFiles = [...resources];
             newFiles.splice(ind, 1);
-            setFiles(newFiles);
+            setResources(newFiles);
         }
     };
+
+    const handleClick = (id: string) => {
+        const ind = selectedResources.indexOf(id);
+        const resources = [...selectedResources];
+        if (ind !== -1) {
+            resources.splice(ind, 1);
+        } else {
+            resources.push(id);
+        }
+        setSelectedResources(resources);
+    };
+
+    useEffect(() => {
+        if (callback !== undefined) {
+            callback(selectedResources);
+        }
+    }, [selectedResources]);
 
     return (
         <section className="bg-gradient-to-b from-gray-100 to-white grow flex flex-col h-full">
             <ToastContainer enableMultiContainer containerId={'fileManagement'} />
-            <div className="max-w-6xl w-full mx-auto px-4 pt-16 md:pt-20 flex flex-wrap justify-around">
-                <div className="pt-4 grow pr-4">
-                    <h1 className="h2 text-blue-600">Resources</h1>
-                </div>
+            <div className={`max-w-6xl w-full mx-auto px-4 ${!selectable ? 'pt-16 md:pt-20' : ''} flex flex-wrap justify-around`}>
+                {!selectable ? <div className="pt-4 grow pr-4">
+                    <h1 className="h2 text-blue-600">My Resources</h1>
+                </div> : <></>}
                 <div className="max-w-sm w-fit text-center pt-4">
                     <div className="w-full mx-auto">
                         <FileUploadButton onFileSelected={onFileSelected} />
@@ -251,8 +296,14 @@ export default function MyFiles() {
                 </div>
             </div>
             <div className="max-w-6xl w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto" ref={contentRef}>
-                {files.length > 0 && <FileManagement userfiles={files} deleteCallback={handleFileDeleted} />}
-                {files.length === 0 &&
+                {resources.length > 0 &&
+                    <FileManagement
+                        selectable={selectable}
+                        userfiles={resources}
+                        deleteCallback={handleFileDeleted}
+                        clickCallback={handleClick}
+                        selectedResources={selectedResources} />}
+                {resources.length === 0 &&
                     <div className='w-full grow flex items-center justify-center'>
                         <div className='text-gray-400' ref={promptRef}>
                             Loading...
@@ -263,6 +314,8 @@ export default function MyFiles() {
         </section>
     )
 }
+
+export default MyFiles;
 
 const getIcon = (filename: string) => {
     const ext = filename.split('.').pop()?.toLowerCase();

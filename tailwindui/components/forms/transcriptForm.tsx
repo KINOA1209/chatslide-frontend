@@ -99,7 +99,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({isSubmitting, setIsSubmi
                 <TranscriptFormModal />
             ) : (
             <button
-              className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
+              className="btn text-white bg-blue-600 hover:bg-blue-700 w-full disabled:bg-gray-200 disabled:text-gray-400"
               disabled={isSubmitting}
             >
               {isSubmitting ? 'Generating...' : 'Generate Script'}
