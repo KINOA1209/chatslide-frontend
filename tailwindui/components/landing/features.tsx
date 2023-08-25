@@ -22,7 +22,7 @@ export default function Features() {
                     {/* Section header */}
                     <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
                         <p className="text-xl text-left text-gray-600">
-                            🔮 Remix your knowledge with our dynamic tool that converts PDFs, webpages, and videos into your desired formats 📝🎞️🎨. </p>
+                        Use Dr. Lambda to remix your knowledge: effortlessly transform PDFs, webpages, and YouTube content into your preferred formats. A game-changer for researchers, teachers, students, consultants, office workers, and beyond!</p>
                         <p className="text-xl text-left text-gray-600">
                             Dive in and reshape your learning and sharing experience today! 🚀 </p>
                     </div>
