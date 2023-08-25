@@ -22,27 +22,51 @@ export default function AboutUs() {
                         <div className="flex flex-col md:flex-row items-center pb-8">
                             <img src="/images/quanlai.jpeg" alt="Quanlai Li" className="w-48 h-48 mb-4 md:mb-0 md:mr-8 rounded-full" />
                             <div>
-                                <h3 className="h3 text-xl mb-2">Founder: Quanlai Li</h3>
+                                <h3 className="h3 text-xl mb-2">Quanlai Li</h3>
                                 <p className="text-base text-gray-600">
-                                Quanlai is an accomplished technologist with an extensive background in data and software engineering. 
-                                As the current CEO of Dr. Lambda, he is pioneering AI-driven tools to revolutionize educational content creation. 
-                                Previously, he served as the Founder & Tech Lead of Team Workflow at Robinhood, where he implemented intelligent workflow infrastructures. 
-                                Quanlai's engineering journey also includes pivotal roles at Lyft and Uber in San Francisco, where he focused on data solutions and workflow management platforms, respectively.
-                                He holds a bachelor's degree in Computer Science from Zhejiang University, and a master's degree in the same field from the University of California, Berkeley.
+                                Quanlai Li, CEO of Dr. Lambda, has significantly impacted AI-driven platforms at unicorns like Robinhood, Lyft, and Uber. 
+                                Before his entrepreneurial journey, he excelled as a software engineer, notably pioneering data workflow solutions. He has a master's degree from UC Berkeley and bachelor's degree from Zhejiang University.
                                 </p>
                             </div>
                         </div>
 
                         {/* Founder 2 */}
                         <div className="flex flex-col md:flex-row items-center pb-8">
+                            <img src="/images/laura.jpeg" alt="Laura Lin" className="w-48 h-48 mb-4 md:mb-0 md:mr-8 rounded-full" />
+                            <div>
+                                <h3 className="h3 text-xl mb-2">Laura Lin</h3>
+                                <p className="text-base text-gray-600">
+                                Laura Y. Lin is a dedicated UX Researcher with a rich background in HCI and applied product research. 
+                                With notable experiences at big techs like Google and Meta, Laura has focused on areas such as human-vehicle interaction and B2B Ads products. 
+                                Laura was HCI Research Fellow at Stanford and earned a BA degree from Peking University.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="pb-8">
+                            <h2 className="h3 text-2xl">🎓 Meet the Founding Team</h2>
+                        </div>
+
+                        <div className="flex flex-col md:flex-row items-center pb-8">
                             <img src="/images/zhiyuan.jpeg" alt="Zhiyuan Wang" className="w-48 h-48 mb-4 md:mb-0 md:mr-8 rounded-full" />
                             <div>
-                                <h3 className="h3 text-xl mb-2">Founding Team: Zhiyuan Wang</h3>
+                                <h3 className="h3 text-xl mb-2">Zhiyuan Wang</h3>
                                 <p className="text-base text-gray-600">
-                                Zhiyuan Wang is a skilled software engineer with a penchant for innovation and optimization. 
-                                As the Co-founder & Engineering Lead at Dr. Lambda, Zhiyuan is shaping the future of AI-enhanced educational content. 
-                                With past experiences spanning Google's mobile data infrastructure and real-time data services at Bloomberg in New York, he's proven adept at crafting efficient systems. 
-                                Zhiyuan holds a Master's in Computer Science from the University of Southern California and a Bachelor's in Information Engineering from Zhejiang University, where he was recognized as an outstanding graduate.
+                                    Zhiyuan Wang is a skilled software engineer with a penchant for innovation and optimization.
+                                    As the Engineering Lead at Dr. Lambda, Zhiyuan is shaping the future of AI-enhanced educational content.
+                                    With past experiences spanning Google's mobile data infrastructure and real-time data services at Bloomberg in New York, he's proven adept at crafting efficient systems.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col md:flex-row items-center pb-8">
+                            <img src="/images/rex.jpeg" alt="Rex Chen" className="w-48 h-48 mb-4 md:mb-0 md:mr-8 rounded-full" />
+                            <div>
+                                <h3 className="h3 text-xl mb-2">Rex Chen</h3>
+                                <p className="text-base text-gray-600">
+                                Rex Chen is a software engineer with a MS degree in ML and two BS degrees from UCSD. 
+                                At Dr. Lambda, he played a vital role in developing and refining AI-driven products, working alongside a multifaceted team. 
+                                Passionate about data science and continuous learning, Rex is committed to improving user experiences and tackling challenging technological issues.
                                 </p>
                             </div>
                         </div>
@@ -55,8 +79,8 @@ export default function AboutUs() {
                         </div>
                         <div className="pb-4">
                             <p className="text-base text-gray-600">
-                            Founded in 2022 in Delaware, United States, Dr. Lambda emerged from a vision to redefine how knowledge is consumed and presented. 
-                            We believe in the power of remixing content, transforming traditional formats into dynamic, personalized learning experiences.
+                                Founded in 2022 in Delaware, United States, Dr. Lambda emerged from a vision to redefine how knowledge is consumed and presented.
+                                We believe in the power of remixing content, transforming traditional formats into dynamic, personalized learning experiences.
                             </p>
                         </div>
                     </div>
@@ -67,8 +91,8 @@ export default function AboutUs() {
                         </div>
                         <div className="pb-4">
                             <p className="text-base text-gray-600">
-                            We're proud to join hands with renowned researchers from Stanford and Harvard, pushing the boundaries of educational technology. 
-                            Our partnerships with leading content distributors, like TikTok, further fuel our mission to connect diverse knowledge sources.
+                                We're proud to join hands with renowned researchers from Stanford and Harvard, pushing the boundaries of educational technology.
+                                Our partnerships with leading content distributors, like TikTok, further fuel our mission to connect diverse knowledge sources.
                             </p>
                         </div>
                     </div>
