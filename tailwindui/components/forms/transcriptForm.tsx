@@ -8,9 +8,19 @@ import AuthService from "../utils/AuthService";
 interface TranscriptFormProps {
   isSubmitting: boolean;
   setIsSubmitting: (isSubmitting: boolean) => void;
+  finalSlides: Slide[]; 
 }
 
-const TranscriptForm: React.FC<TranscriptFormProps> = ({isSubmitting, setIsSubmitting}) => {
+interface SlideElement {
+  type: 'h1' | 'h2' | 'h3' | 'p' | 'ul'| 'li' | 'br';
+  content: string | string[];
+}
+
+interface Slide {
+  elements: SlideElement[];
+}
+
+const TranscriptForm: React.FC<TranscriptFormProps> = ({finalSlides, isSubmitting, setIsSubmitting}) => {
   const router = useRouter();
   const [user, setUser] = useState(null);
 
@@ -53,6 +63,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({isSubmitting, setIsSubmi
       foldername: foldername,
       topic: topic,
       language: language,
+      html: finalSlides
     };
 
     console.log(formData);
