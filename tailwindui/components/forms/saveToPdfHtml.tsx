@@ -39,6 +39,7 @@ const SaveToPdfHtml: React.FC<SaveToPdfHtmlProps> = ({finalSlides} ) => {
   }, []);
 
     const handleSavePDF = async () => {
+        const element = document.getElementById('pdf-content');
     
         try {
             //call api to save the html first 
@@ -57,7 +58,7 @@ const SaveToPdfHtml: React.FC<SaveToPdfHtmlProps> = ({finalSlides} ) => {
             body: JSON.stringify(formData),
             });
 
-            if (response.ok) {
+            if (response.ok && (typeof window !== "undefined")) {
                 const blob = await response.blob();
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');

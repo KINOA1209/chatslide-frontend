@@ -12,8 +12,19 @@ import ProjectProgress from "@/components/steps";
 import FeedbackForm from '@/components/feedback';
 import SaveToPPTX from '@/components/forms/saveToPptx';
 import BgImagePopup from '@/components/bgImagePopup';
-import SlidesHTML from '@/components/SlidesHTML';
-import SaveToPdfHtml from '@/components/forms/saveToPdfHtml';
+//import SlidesHTML from '@/components/SlidesHTML';
+//import SaveToPdfHtml from '@/components/forms/saveToPdfHtml';
+import dynamic from 'next/dynamic'
+
+const SlidesHTML = dynamic(
+    () => import('@/components/SlidesHTML'),
+    { ssr: false }
+)
+
+const SaveToPdfHtml = dynamic(
+    () => import('@/components/forms/saveToPdfHtml'),
+    { ssr: false }
+)
 
 interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'p' | 'ul'| 'li' | 'br';
