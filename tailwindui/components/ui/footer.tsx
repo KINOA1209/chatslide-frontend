@@ -29,7 +29,7 @@ export default function Footer() {
             <h6 className="text-gray-800 font-medium mb-2">Company</h6>
             <ul className="text-sm">
               <li className="mb-2">
-                <a href="/" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Home</a>
+                <a href="/career" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Career</a>
               </li>
               <li className="mb-2">
                 <a href="/about_us" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">About us</a>
