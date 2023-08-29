@@ -251,7 +251,7 @@ const ProjectProgress = () => {
         if (typeof window !== 'undefined' && sessionStorage.getItem('outline')) {
             finishedStepsArray.push(1);
         }
-        if (typeof window !== 'undefined' && sessionStorage.getItem('image_files')) {
+        if (typeof window !== 'undefined' && sessionStorage.getItem('html')) {
             finishedStepsArray.push(2);
         }
         if (typeof window !== 'undefined' && sessionStorage.getItem('transcripts')) {

@@ -22,6 +22,7 @@ interface Project {
     pdf_file: string;
     video_file: string;
     resource_ids: string;
+    html: string;
 }
 
 const ProjectLoading = () => {
@@ -72,6 +73,9 @@ const ProjectLoading = () => {
             }
             if (project.outline) {
                 sessionStorage.setItem('outline', JSON.stringify(project.outline));
+            }
+            if (project.html) {
+                sessionStorage.setItem('html', project.html);
             }
             if (project.transcripts) {
                 sessionStorage.setItem('transcripts', JSON.stringify(project.transcripts));
@@ -144,7 +148,7 @@ const ProjectLoading = () => {
         if (typeof window !== 'undefined' && sessionStorage.getItem('outline')) {
             finishedStepsArray.push(1);
         }
-        if (typeof window !== 'undefined' && sessionStorage.getItem('image_files')) {
+        if (typeof window !== 'undefined' && sessionStorage.getItem('html')) {
             finishedStepsArray.push(2);
         }
         if (typeof window !== 'undefined' && sessionStorage.getItem('transcripts')) {
