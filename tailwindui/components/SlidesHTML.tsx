@@ -50,6 +50,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
                 displaySlides(doc);
+                sessionStorage.setItem('html', 'html_init.html');
             })
             .catch((error) => {
                 console.error('Failed to load HTML file:', error);
