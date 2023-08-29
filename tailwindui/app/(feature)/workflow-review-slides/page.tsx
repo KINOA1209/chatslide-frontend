@@ -108,6 +108,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
                 <TranscriptForm
                     isSubmitting={isSubmitting}
                     setIsSubmitting={setIsSubmitting}
+                    finalSlides={finalSlides}
                 />
 
                 {/* Timer */}
