@@ -8,7 +8,7 @@ export default function Footer() {
         {/* Top area: Blocks */}
         <div className="flex flex-row py-8 md:py-12 border-t border-gray-200 justify-around">
           {/* 1st block */}
-          <div className="flex flex-col justify-center">
+          <div className="">
             <div className="flex justify-center mb-2">
               <Logo />
             </div>
@@ -42,9 +42,6 @@ export default function Footer() {
               </li> */}
               <li className="mb-2">
                 <a href="/privacy" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Privacy Policy</a>
-              </li>
-              <li className="mb-2">
-                <a href="/career" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Job Openings</a>
               </li>
             </ul>
           </div>
