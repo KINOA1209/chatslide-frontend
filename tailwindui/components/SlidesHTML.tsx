@@ -177,7 +177,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
             boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
             position:'relative',
         }}>        
-            <button style={{
+            {currentSlideIndex > 0 && <button 
+            disabled={currentSlideIndex === 0} 
+            style={{
                 position: 'absolute',
                 right: '70px',
                 bottom: '10px',
@@ -185,8 +187,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
                 color: 'white', 
                 width: '50px', 
                 borderRadius: '5px',
-            }} onClick={() => goToSlide(currentSlideIndex - 1)}>&#9664;</button>
-            <button style={{
+            }} onClick={() => goToSlide(currentSlideIndex - 1)}>&#9664;</button>}
+            {currentSlideIndex < slides.length - 1 && <button 
+            disabled={currentSlideIndex === slides.length - 1}
+            style={{
                 position: 'absolute',
                 right: '10px',
                 bottom: '10px',
@@ -194,7 +198,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
                 color: 'white', 
                 width: '50px',
                 borderRadius: '5px',
-            }} onClick={() => goToSlide(currentSlideIndex + 1)}>&#9654;</button>
+            }} onClick={() => goToSlide(currentSlideIndex + 1)}>&#9654;</button>}
             {slides.length > 0 && (
                 <div className="slide" style={{
                     backgroundColor: 'rgba(255, 255, 255, 0.5)',
