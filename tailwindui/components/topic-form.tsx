@@ -39,7 +39,7 @@ const TopicForm: React.FC = () => {
 
     // bind form data between input and sessionStorage
     const [topic, setTopic] = useState((typeof window !== 'undefined' && sessionStorage.topic != undefined) ? sessionStorage.topic : '');
-    const [audience, setAudience] = useState((typeof window !== 'undefined' && sessionStorage.audience != undefined) ? sessionStorage.audience : 'High school students');
+    const [audience, setAudience] = useState((typeof window !== 'undefined' && sessionStorage.audience != undefined) ? sessionStorage.audience : '');
     const [language, setLanguage] = useState((typeof window !== 'undefined' && sessionStorage.language != undefined) ? sessionStorage.language : 'English');
     const [youtube, setYoutube] = useState((typeof window !== 'undefined' && sessionStorage.youtube != undefined) ? sessionStorage.youtube : '');
     const [addEquations, setAddEquations] = useState(
@@ -326,6 +326,7 @@ const TopicForm: React.FC = () => {
                         onChange={e => audienceDropDown(e.target.value)}
                         required
                     >
+                        <option value="other" selected disabled>Choose your audience</option>
                         {audienceList.map((value) => (
                             <option value={value}>{value}</option>
                         ))}
@@ -336,7 +337,7 @@ const TopicForm: React.FC = () => {
                         id="audience"
                         type="text"
                         className={`form-input w-full text-gray-800 mb-2 ${showAudienceInput ? '' : 'hidden'}`}
-                        placeholder="Your target audience"
+                        placeholder="Others (please specify)"
                         value={audience}
                         onChange={e => setAudience(e.target.value)}
                         required
