@@ -10,11 +10,12 @@ import GuestUploadModal from './forms/uploadModal';
 import MyFiles from './fileManagement';
 import { Transition } from '@headlessui/react'
 
+const audienceList = ['Researchers', 'Students', 'Business Clients'];
+
 interface Project {
     topic: string;
     audience: string;
 }
-
 
 const TopicForm: React.FC = () => {
     const [user, setUser] = useState(null);
@@ -48,6 +49,7 @@ const TopicForm: React.FC = () => {
     );
     const [topicSuggestions, setTopicSuggestions] = useState<string[]>([]);
     const [audienceSuggestions, setAudienceSuggestions] = useState<string[]>([]);
+    const [showAudienceInput, setShowAudienceInput] = useState(false);
 
     useEffect(() => {
         const fetchHistoricalData = async () => {
@@ -212,6 +214,24 @@ const TopicForm: React.FC = () => {
         sessionStorage.setItem('resources', JSON.stringify(resource));
     };
 
+    const audienceDropDown = (value: string) => {
+        if (value === 'other') {
+            setAudience('');
+            setShowAudienceInput(true);
+        } else {
+            setShowAudienceInput(false);
+            setAudience(value);
+        }
+    };
+
+    // Show/hide audience input based on `audience` value
+    useEffect(() => {
+        if (!audienceList.includes(audience)) {
+            setShowAudienceInput(true);
+        } else {
+            setShowAudienceInput(false);
+        }
+    }, [audience]);
 
     return (
         <form onSubmit={handleSubmit}>
@@ -300,11 +320,23 @@ const TopicForm: React.FC = () => {
                         htmlFor="audience">
                         Audience: <span className="text-red-600">*</span>
                     </label>
+                    <select
+                        className="form-input w-full text-gray-800 pb-3 mb-2"
+                        value={audienceList.includes(audience) ? audience : 'other'}
+                        onChange={e => audienceDropDown(e.target.value)}
+                        required
+                    >
+                        {audienceList.map((value) => (
+                            <option value={value}>{value}</option>
+                        ))}
+                        <option value="other">Other (please specify)</option>
+                    </select>
+
                     <input
                         id="audience"
                         type="text"
-                        className="form-input w-full text-gray-800 mb-2"
-                        placeholder="High school students"
+                        className={`form-input w-full text-gray-800 mb-2 ${showAudienceInput ? '' : 'hidden'}`}
+                        placeholder="Your target audience"
                         value={audience}
                         onChange={e => setAudience(e.target.value)}
                         required
