@@ -326,7 +326,7 @@ const TopicForm: React.FC = () => {
                         onChange={e => audienceDropDown(e.target.value)}
                         required
                     >
-                        <option value="other" selected disabled>Choose your audience</option>
+                        <option value="unselected" selected disabled>Choose your audience</option>
                         {audienceList.map((value) => (
                             <option value={value}>{value}</option>
                         ))}
@@ -337,7 +337,7 @@ const TopicForm: React.FC = () => {
                         id="audience"
                         type="text"
                         className={`form-input w-full text-gray-800 mb-2 ${showAudienceInput ? '' : 'hidden'}`}
-                        placeholder="Others (please specify)"
+                        placeholder="Other (please specify)"
                         value={audience}
                         onChange={e => setAudience(e.target.value)}
                         required
