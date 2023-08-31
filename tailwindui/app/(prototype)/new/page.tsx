@@ -96,6 +96,14 @@ const Header = ({ refList }: HeaderProps) => {
         }
     }
 
+    // Hide old header
+    useEffect(() => {
+        const header = Array.from(document.getElementsByClassName("common-header") as HTMLCollectionOf<HTMLElement>);
+        if (header.length > 0) {
+            header[0].style.display = 'none';
+        }
+    }, [])
+
     return (
         <header
             className={`fixed w-full z-30 bg-white md:bg-opacity-90 transition duration-300 ease-in-out ${!top ? "bg-white backdrop-blur-sm shadow-lg" : ""
@@ -104,17 +112,19 @@ const Header = ({ refList }: HeaderProps) => {
             <div className="max-w-4/5 mx-auto px-5 sm:px-6">
                 <div className="flex items-center justify-between h-16 md:h-20">
                     {/* Site branding */}
-                    <div className="w-fit flex flex-row items-center">
+                    <div className="flex flex-row items-center grow md:grow-0">
                         <Logo />
-                        <div className="text-3xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500" style={{ fontFamily: 'Lexend, sans-serif' }}>DrLambda.ai</div>
+                        <div className="grow md:grow-0 flex justify-center md:justify-start">
+                            <div className="w-fit text-xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500" style={{ fontFamily: 'Lexend, sans-serif' }}>DrLambda.ai</div>
+                        </div>
                     </div>
 
                     {/* Navigation on landing page */}
                     <div className="grow max-w-4xl hidden md:flex flex-row flex-nowrap justify-evenly px-4">
                         <div className="text-lg cursor-pointer text-gray-600 hover:text-black hover:underline" onClick={e => handScrollTo(e, 0)}>Features</div>
                         <div className="text-lg cursor-pointer text-gray-600 hover:text-black hover:underline" onClick={e => handScrollTo(e, 1)}>Use Cases</div>
-                        <div className="text-lg cursor-pointer text-gray-600 hover:text-black hover:underline" onClick={e => handScrollTo(e, 2)}>Testimonial</div>
-                        <div className="text-lg cursor-pointer text-gray-600 hover:text-black hover:underline">Pricing</div>
+                        {/* <div className="text-lg cursor-pointer text-gray-600 hover:text-black hover:underline" onClick={e => handScrollTo(e, 2)}>Testimonial</div> */}
+                        {/* <div className="text-lg cursor-pointer text-gray-600 hover:text-black hover:underline">Pricing</div> */}
                     </div>
 
                     {/* Desktop navigation */}
@@ -147,7 +157,7 @@ const Header = ({ refList }: HeaderProps) => {
                         )}
                     </nav>
 
-                    <MobileMenu />
+                    <MobileMenu refList={refList} />
                 </div>
             </div>
 
@@ -164,6 +174,7 @@ interface TextCarouselProps {
 
 const TextCarousel: React.FC<TextCarouselProps> = ({ slides, interval, colors }) => {
     const [currentIndex, setCurrentIndex] = useState<number>(0);
+    const [offset, SetOffset] = useState<number>(7);
 
     const nextSlide = () => {
         setCurrentIndex((prevIndex) => (prevIndex >= slides.length - 1 ? 0 : prevIndex + 1));
@@ -171,6 +182,11 @@ const TextCarousel: React.FC<TextCarouselProps> = ({ slides, interval, colors })
 
     useEffect(() => {
         const slideTimer = setTimeout(nextSlide, interval);
+        if (window.innerWidth <= 640) {
+            SetOffset(4);
+        } else {
+            SetOffset(7);
+        }
 
         // Cleanup the timer when the component is unmounted or before re-running the effect
         return () => {
@@ -179,11 +195,11 @@ const TextCarousel: React.FC<TextCarouselProps> = ({ slides, interval, colors })
     }, [currentIndex]);
 
     return (
-        <div className="carousel-container relative overflow-hidden h-[7rem] max-w-xl mx-auto">
-            <ul className="carousel-list flex flex-col transition-transform duration-500" style={{ transform: `translateY(-${currentIndex * 7}rem)` }}>
+        <div className="carousel-container relative overflow-hidden h-[4rem] md:h-[7rem] mx-auto">
+            <ul className="carousel-list flex flex-col transition-transform duration-500" style={{ transform: `translateY(-${currentIndex * offset}rem)` }}>
                 {slides.map((slide, index) => (
-                    <li key={index} className="carousel-item h-[7rem] text-center py-1 flex-none">
-                        <h1 className={`text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter text-center ${colors[index]}`}>{slide}</h1>
+                    <li key={index} className="carousel-item h-[4rem] md:h-[7rem] text-center py-1 flex-none">
+                        <h1 className={`text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter text-left md:text-center ${colors[index]}`}>{slide}</h1>
                     </li>
                 ))}
             </ul>
@@ -225,38 +241,42 @@ const Introduction = ({ demoRef }: IntroProps) => {
     }, []);
 
     return (
-        <div className="w-full h-[100vh] flex justify-center pt-[64px] md:pt-[80px]"
+        <div className="w-full min-h-[100vh] flex justify-center pt-[68px] md:pt-[84px]"
             style={{
                 background: 'linear-gradient(169deg, rgba(255,0,183,0.7391748935902486) 0%, rgba(237,93,196,0.6019199916294643) 6%, rgba(179,127,213,0.5655054258031338) 26%, rgba(121,145,215,0.3974381989123774) 40%, rgba(22,116,227,0.22096761067708337) 50%, rgba(255,255,255,1) 77%, rgba(255,255,255,1) 100%)',
             }}>
-            <div className="w-full h-full flex flex-col items-center justify-center">
-                <div className="flex flex-col justify-center items-center px-8"  data-aos="zoom-in">
-                    <div className="text-3xl">Be an expert with the power of AI</div>
-                    <div className="text-6xl my-4"
-                        style={{ fontFamily: 'Lexend, sans-serif' }}>
-                        Use {drlambda} to<br></br>
-                        <div className="relative -top-6">
-                            <TextCarousel
-                                slides={["Study", "Present", "Teach", "Create"]}
-                                interval={2000}
-                                colors={["text-[#25bad9]", 'text-[#f78f34]', 'text-[#d15a80]', 'text-[#ae42db]']} />
+            <div className="w-full flex flex-col md:items-center justify-between md:justify-center grow md:grow-0">
+                <div className="h-full md:h-fit flex flex-col justify-evenly md:justify-center items-center px-4" data-aos="zoom-in">
+                    <div>
+                        <div className="text-2xl md:text-3xl w-full text-left md:text-center">Be an expert, AI-powered</div>
+                        <div className="text-5xl md:text-6xl mt-0 md:mt-4"
+                            style={{ fontFamily: 'Lexend, sans-serif' }}>
+                            Use {drlambda} to
+                            <div className="inline md:block relative md:-top-6">
+                                <TextCarousel
+                                    slides={["Study", "Present", "Teach", "Create"]}
+                                    interval={2000}
+                                    colors={["text-[#25bad9]", 'text-[#f78f34]', 'text-[#d15a80]', 'text-[#ae42db]']} />
+                            </div>
                         </div>
                     </div>
-                    <div className="text-lg text-gray-600 text-center">
-                        Give us a topic. <br></br>
-                        Beautiful slides and videos with the wisdom of the entire internet. <br></br>
-                        Now with the ability to comprehend your PDF files.
+                    <div className="text-md md:text-lg text-gray-600 text-center mt-2 flex items-center justify-center">
+                        <div className="text-xl text-left md:text-center">
+                            Give us a topic. <br></br>
+                            Beautiful slides and videos backed by the wisdom of the entire internet. <br></br>
+                            Now with the ability to comprehend your PDF files.
+                        </div>
                     </div>
                 </div>
-                <div className="max-w-xs mx-auto sm:max-w-none flex-col sm:flex sm:justify-center mt-16" data-aos="fade-up" data-aos-delay="300">
+                <div className=" max-w-xs mx-auto sm:max-w-none flex-col flex justify-center mt-6 md:mt-16 items-center" data-aos="fade-up" data-aos-delay="300">
                     <div>
                         <div ref={buttonRef} className="btn drop-shadow-xl text-lg rounded-full text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer"
                             style={{ backgroundImage: 'linear-gradient(-45deg, #FFA63D, #FF3D77, #338AFF, #3CF0C5)', backgroundSize: '600%' }}
-                            onClick={()=>{router.push('/signup');}}>
+                            onClick={() => { router.push('/signup'); }}>
                             Try DrLambda for FREE
                         </div>
+                        <div className="text-center mt-2 md:mt-8 text-lg cursor-pointer text-gray-600 hover:text-black hover:underline mb-8 md:mb-0" onClick={scrollToDemo}>Watch Demo</div>
                     </div>
-                    <div className="text-center mt-8 text-lg cursor-pointer text-gray-600 hover:text-black hover:underline" onClick={scrollToDemo}>Watch Demo</div>
                 </div>
 
             </div>
@@ -270,7 +290,12 @@ export default function newLanding() {
     const useCasesRef = useRef<HTMLDivElement>(null);
     const testimonialRef = useRef<HTMLDivElement>(null);
     const demoRef = useRef<HTMLDivElement>(null);
-    const refList = [featuresRef, useCasesRef, testimonialRef, demoRef];
+    const refList = [
+        featuresRef,
+        useCasesRef,
+        // testimonialRef,
+        // demoRef,
+    ];
 
     useEffect(() => {
         AOS.init({
@@ -288,7 +313,7 @@ export default function newLanding() {
             <div ref={demoRef}><SampleVideos /></div>
             <div ref={featuresRef}><Features /></div>
             <div ref={useCasesRef}><UseCases /></div>
-            <div ref={testimonialRef}><IframeGallery /></div>
+            {/* <div ref={testimonialRef}><IframeGallery /></div> */}
             {/* <Newsletter /> */}
             <Footer />
         </>
