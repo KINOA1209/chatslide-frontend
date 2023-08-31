@@ -39,7 +39,7 @@ const TopicForm: React.FC = () => {
 
     // bind form data between input and sessionStorage
     const [topic, setTopic] = useState((typeof window !== 'undefined' && sessionStorage.topic != undefined) ? sessionStorage.topic : '');
-    const [audience, setAudience] = useState((typeof window !== 'undefined' && sessionStorage.audience != undefined) ? sessionStorage.audience : '');
+    const [audience, setAudience] = useState((typeof window !== 'undefined' && sessionStorage.audience != undefined) ? sessionStorage.audience : 'unselected');
     const [language, setLanguage] = useState((typeof window !== 'undefined' && sessionStorage.language != undefined) ? sessionStorage.language : 'English');
     const [youtube, setYoutube] = useState((typeof window !== 'undefined' && sessionStorage.youtube != undefined) ? sessionStorage.youtube : '');
     const [addEquations, setAddEquations] = useState(
@@ -226,10 +226,12 @@ const TopicForm: React.FC = () => {
 
     // Show/hide audience input based on `audience` value
     useEffect(() => {
-        if (!audienceList.includes(audience)) {
-            setShowAudienceInput(true);
-        } else {
+        if (audienceList.includes(audience)) {
             setShowAudienceInput(false);
+        } else if (audience === 'unselected') {
+            setShowAudienceInput(false);
+        } else {
+            setShowAudienceInput(true);
         }
     }, [audience]);
 
@@ -291,7 +293,7 @@ const TopicForm: React.FC = () => {
                         id="topic"
                         type="text"
                         className="form-input w-full text-gray-800 mb-2"
-                        placeholder="P/E Ratio"
+                        placeholder="Ultrasound"
                         value={topic}
                         onChange={e => setTopic(e.target.value)}
                         required />
@@ -322,7 +324,7 @@ const TopicForm: React.FC = () => {
                     </label>
                     <select
                         className="form-input w-full text-gray-800 pb-3 mb-2"
-                        value={audienceList.includes(audience) ? audience : 'other'}
+                        value={audienceList.includes(audience) ? audience : audience === 'unselected' ? 'unselected' : 'other'}
                         onChange={e => audienceDropDown(e.target.value)}
                         required
                     >

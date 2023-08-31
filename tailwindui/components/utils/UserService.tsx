@@ -1,7 +1,7 @@
 class DatabaseService {
-    static async getUserCredits(username:string,idToken:string) {
+    static async getUserCredits(idToken:string) {
       try {
-        const response = await fetch(`/api/user/<string:uid>/credits`, {
+        const response = await fetch(`/api/user/credits`, {
           method: 'GET',
           headers: {
               'Authorization': `Bearer ${idToken}`,
@@ -22,7 +22,7 @@ class DatabaseService {
     }
     static async getUserHistoricalInput(idToken:string) {
       try {
-        const response = await fetch(`/api/user/<string:uid>/historical_input`, {
+        const response = await fetch(`/api/user/historical_input`, {
           method: 'GET',
           headers: {
               'Authorization': `Bearer ${idToken}`,
