@@ -26,7 +26,7 @@ export default function SampleVideos() {
         <div className="py-12 md:py-20">
 
           {/* Items */}
-          <div>
+          <div className="rounded-2xl overflow-hidden drop-shadow-xl">
             <LiteYouTubeEmbed
               aspectHeight={9}
               aspectWidth={16}
