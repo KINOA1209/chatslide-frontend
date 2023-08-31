@@ -5,14 +5,28 @@ import { Transition } from '@headlessui/react'
 import Link from 'next/link'
 import AuthService from "../utils/AuthService";
 import { toast } from 'react-toastify';
+import { usePathname } from 'next/navigation';
 
-export default function MobileMenu() {
+interface HeaderProps {
+  refList?: Array<React.RefObject<HTMLDivElement>>
+}
+
+const MobileMenu = ({ refList = [] }: HeaderProps) => {
   const [mobileNavOpen, setMobileNavOpen] = useState<boolean>(false)
 
   const trigger = useRef<HTMLButtonElement>(null)
   const mobileNav = useRef<HTMLDivElement>(null)
   const [username, setUsername] = useState(null);
+  const [landingPage, setLandingPage] = useState(false);
+  const pathname = usePathname();
+
   useEffect(() => {
+    // Check if the current page is landing page
+    if (pathname === '/new') {
+      setLandingPage(true);
+    } else {
+      setLandingPage(false);
+    }
     // Create a scoped async function within the hook.
     const fetchUser = async () => {
       if (username === null) {
@@ -73,12 +87,19 @@ export default function MobileMenu() {
     }
   };
 
+  const handScrollTo = (e: React.MouseEvent<HTMLDivElement>, index: number) => {
+    if (refList[index].current) {
+      refList[index].current?.scrollIntoView();
+    }
+    setMobileNavOpen(false);
+  }
+
   return (
     <div className="flex md:hidden">
       {/* Hamburger button */}
       <button
         ref={trigger}
-        className={`hamburger ${mobileNavOpen && 'active'}`}
+        className={`ml-10 hamburger ${mobileNavOpen && 'active'}`}
         aria-controls="mobile-nav"
         aria-expanded={mobileNavOpen}
         onClick={() => setMobileNavOpen(!mobileNavOpen)}
@@ -106,6 +127,17 @@ export default function MobileMenu() {
           leaveTo="opacity-0"
         >
           <ul className="px-5 py-2">
+            {landingPage ?
+              <>
+                <li>
+                  <div onClick={e => handScrollTo(e, 0)} className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center">Features</div>
+                </li>
+                <li>
+                  <div onClick={e => handScrollTo(e, 1)} className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center">Use Cases</div>
+                </li>
+                <hr className='border-gray-400' />
+              </>
+              : <></>}
             {username ?
               (<>
                 <div className='text-2xl py-4 text-blue-500'>Hi, {username}</div>
@@ -118,7 +150,7 @@ export default function MobileMenu() {
                 <li>
                   <Link href="/#" className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center" onClick={() => setMobileNavOpen(false)}>Account Settings</Link>
                 </li>
-                <hr className='border-gray-400'/>
+                <hr className='border-gray-400' />
                 <li>
                   <div onClick={signOut}>
                     <Link href="/" className="flex font-medium w-full text-red-500 hover:text-red-600 py-2 justify-center" onClick={() => setMobileNavOpen(false)}>Log Out</Link>
@@ -144,3 +176,5 @@ export default function MobileMenu() {
     </div>
   )
 }
+
+export default MobileMenu;
