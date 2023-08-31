@@ -104,12 +104,15 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
         useEffect(() => {
             function handleResize() {
                 // Constants -> working for workflow now
-                const minTitleHeight = 500;
+                const minTitleHeight = 100;
                 const headerHeight = 80;
                 const gap = 20;
 
                 const viewWidth = window.innerWidth;
                 const viewHeight = window.innerHeight;
+                const pageHeight = document.body.scrollHeight;
+                const scrollPos = window.scrollY;
+
                 var contentWidth = viewWidth;
                 if (contentRef.current) { contentWidth = contentRef.current.offsetWidth; }
                 var progressWidth = 0;
@@ -125,7 +128,13 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
                     setMobileDisplay('none');
                     setMobileOpened(false);
                     progressRefDesktop.current.style.left = `${marginAvailable - gap - progressWidth}px`;
-                    progressRefDesktop.current.style.top = `${Math.max((viewHeight - headerHeight - progressHeight), minTitleHeight) / 2}px`;
+                    progressRefDesktop.current.style.top = `${Math.max((viewHeight - headerHeight - progressHeight) / 2, minTitleHeight)}px`;
+                    progressRefDesktop.current.style.bottom = '';
+                    if (viewHeight < 650 && pageHeight - scrollPos - viewHeight < 100) {
+                        const footerHeight = 100 - (pageHeight - scrollPos - viewHeight);
+                        progressRefDesktop.current.style.top = '';
+                        progressRefDesktop.current.style.bottom = `${footerHeight}px`;
+                    }
                 } else if (progressRefDesktop.current) {
                     setDesktopVisibility('hidden');
                     if (mobileOpended) {
@@ -139,7 +148,8 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
             }
             handleResize();
             window.addEventListener('resize', handleResize);
-        })
+            window.addEventListener('scroll', handleResize);
+        }, [])
 
         useEffect(() => {
             // Create a scoped async function within the hook.
