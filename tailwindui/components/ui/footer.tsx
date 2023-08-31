@@ -8,7 +8,7 @@ export default function Footer() {
         {/* Top area: Blocks */}
         <div className="flex flex-row py-8 md:py-12 border-t border-gray-200 justify-around">
           {/* 1st block */}
-          <div className="">
+          <div className="flex flex-col items-center justify-center">
             <div className="flex justify-center mb-2">
               <Logo />
             </div>
