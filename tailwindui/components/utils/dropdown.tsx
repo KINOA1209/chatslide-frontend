@@ -23,7 +23,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
             const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
             if (username) {
                 setUsername(username);
-                UserService.getUserCredits(username,idToken)
+                UserService.getUserCredits(idToken)
                 .then(credits => {
                     setCredits(credits)
                 })
