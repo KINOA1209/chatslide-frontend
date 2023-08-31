@@ -235,8 +235,10 @@ const Introduction = ({ demoRef }: IntroProps) => {
             iterations: Infinity,
         };
 
-        if (buttonRef.current) {
+        if (window && window.innerWidth > 640 && buttonRef.current) {
             buttonRef.current.animate(animationProp, animationTiming);
+        } else if (buttonRef.current) {
+            buttonRef.current.style.backgroundPosition = "35% 50%";
         }
     }, []);
 
