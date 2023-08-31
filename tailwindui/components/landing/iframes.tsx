@@ -1,10 +1,10 @@
 export default function IframeGallery() {
 
     return (
-        <div className="pt-12 md:pt-20">
+        <div className="py-12 md:py-20">
             <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
                 <div className="md:pr-4 lg:pr-12 xl:pr-16 mb-8">
-                    <h3 className="h3 mb-3">Use Cases</h3>
+                    <h3 className="h3 mb-3">Testimonial</h3>
                 </div>
             </div>
             <div className="relative w-full mx-auto px-4 sm:px-6 flex flex-rol flex-wrap md:flex-nowrap justify-center overflow-x-auto">
