@@ -65,20 +65,16 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
             for (const child of slideChildren) {
                 if (child.tagName === 'H1') {
                     elements.push({ type: 'h1', content: sanitizeHtml(child.innerHTML) });
-                } else if (child.tagName === 'H2') {
+                }else if (child.className === 'title') {
                     elements.push({ type: 'h2', content: sanitizeHtml(child.innerHTML) });
-                } else if (child.tagName === 'H3') {
+                } else if (child.className === 'subtopic') {
                     elements.push({ type: 'h3', content: sanitizeHtml(child.innerHTML) });
-                } else if (child.tagName === 'P') {
-                    elements.push({ type: 'p', content: sanitizeHtml(child.innerHTML) });
-                } else if (child.tagName === 'UL') {
-                    const liChildren = Array.from(child.children);
-                    for (const liChild of liChildren) {
-                        if (liChild.tagName === 'LI') {
-                            elements.push({ type: 'li', content: sanitizeHtml(liChild.innerHTML) });
-                        }
+                } else if (child.className === 'content') {
+                    const listItems = Array.from(child.getElementsByTagName('li'));
+                    for (const listItem of listItems){
+                        elements.push({ type: 'li', content: sanitizeHtml(listItem.innerHTML) });
                     }
-                }
+                } 
             }
             return { elements };
         });
@@ -120,7 +116,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
                 currNewFinalSlides.elements[tagIndex].content = `<p>${content}</p>`;
                 break;
             case 'li':
-                (currentSlide.elements[tagIndex].content as string[])[liIndex as number] = content;
+                currentSlide.elements[tagIndex].content = content;
                 currNewFinalSlides.elements[tagIndex].content = `<li>${content}</li>`;
                 break;
             default:
