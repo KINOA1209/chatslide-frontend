@@ -64,7 +64,7 @@ const InternalIntroduction = () => {
               {/* <p className="text-2xl md:text-2xl text-black-400 mb-8 font-bold" data-aos="zoom-y-out" data-aos-delay="150">Remix your knowledge with Dr. Lambda</p> */}
               <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center" data-aos="zoom-y-out" data-aos-delay="300">
                 <div>
-                  <a className="btn text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer" onClick={handleOnClick}>
+                  <a className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer" onClick={handleOnClick}>
                     {currentUser ? 'My dashboard' : 'Start free trial'}
                   </a>
                 </div>
