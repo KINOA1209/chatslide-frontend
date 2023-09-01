@@ -384,7 +384,7 @@ const TopicForm: React.FC = () => {
 
             <div className='flex flex-row flex-nowrap w-full items-center'>
                 <hr className='border-gray-400 grow' />
-                <div className='mx-4 text-gray-400'>Optinal</div>
+                <div className='mx-4 text-gray-400'>Optional</div>
                 <hr className='border-gray-400 grow' />
             </div>
 
