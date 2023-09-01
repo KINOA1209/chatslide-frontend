@@ -582,7 +582,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                     <div className="flex flex-wrap -mx-3 mt-6">
                         <div className="w-full px-3">
                             {/* Button for generating slides */}
-                            <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full disabled:bg-gray-200 disabled:text-gray-400"
+                            <button className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full disabled:bg-gray-200 disabled:text-gray-400"
                                 onClick={() => { setToSlides(true); }}
                                 disabled={isSubmittingSlide||isSubmittingScript}
                             >
@@ -592,7 +592,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                             <Timer expectedSeconds={60} isSubmitting={isSubmittingSlide} />
 
                             {/* Button for generating scripts */}
-                            <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full mt-4 disabled:bg-gray-200 disabled:text-gray-400"
+                            <button className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full mt-4 disabled:bg-gray-200 disabled:text-gray-400"
                                 onClick={() => { setToSlides(false); }}
                                 disabled={isSubmittingSlide||isSubmittingScript}
                             >
@@ -630,7 +630,7 @@ export default function WorkflowStep2() {
         setShowModal(false);
     };
     return (
-        <div>
+        <div style={{ background: 'linear-gradient(169deg, rgba(237,113,206,0.602) 0%, rgba(199,157,223,0.566) 13%, rgba(141,165,225,0.397) 40%, rgba(42,136,237,0.221) 50%, rgba(255,255,255,1) 77%, rgba(255,255,255,1) 100%)', }}>
             <ProjectProgress currentInd={1} contentRef={contentRef} />
             <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
                 <h1 className="h1">Edit Outlines</h1>
@@ -645,7 +645,7 @@ export default function WorkflowStep2() {
             <div className="fixed bottom-10 right-10">
                 <button
                     onClick={handleOpenModal}
-                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
+                    className="bg-gradient-to-r from-blue-600  to-purple-500 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
                 >
                     Feedback
                 </button>
