@@ -132,7 +132,7 @@ export default function ResetPassword(): JSX.Element {
                   <div className="w-full px-3">
                     <button
                       type="submit"
-                      className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
+                      className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full"
                     >
                       Send reset verification code
                     </button>
@@ -188,7 +188,7 @@ export default function ResetPassword(): JSX.Element {
                   <div className="w-full px-3">
                     <button
                       type="submit"
-                      className="btn text-white bg-blue-600 hover:bg-blue-700 w-full"
+                      className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full"
                     >
                       Reset Password
                     </button>
