@@ -338,7 +338,6 @@ export default function newLanding() {
             {/* <div ref={testimonialRef}><IframeGallery /></div> */}
             {/* <Newsletter /> */}
             <div ref={pricingRef}><Pricing /></div>
-            <Footer />
         </>
     )
 };
