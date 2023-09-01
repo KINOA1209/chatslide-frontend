@@ -118,13 +118,13 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageU
                     <div className="-mx-3 mt-6">
                         <div className="w-full px-3">
                             {hasSlides ?
-                                <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full disabled:bg-gray-200 disabled:text-gray-400"
+                                <button className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full disabled:bg-gray-200 disabled:text-gray-400"
                                     disabled={isSubmitting}>
                                     Combine to Video
                                 </button> :
                                 <>
                                     <div className='text-center'>To generate video, please generate slides in the outline stage.</div>
-                                    <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full" onClick={e => handleToVideo(e)}>
+                                    <button className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full" onClick={e => handleToVideo(e)}>
                                         Go to Outlines
                                     </button>
                                 </>}
