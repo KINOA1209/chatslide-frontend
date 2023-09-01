@@ -157,7 +157,7 @@ export default function WorkflowStep3() {
     }, [timerFinished]);
 
     return (
-        <div>
+        <div style={{ background: 'linear-gradient(169deg, rgba(237,113,206,0.602) 0%, rgba(199,157,223,0.566) 13%, rgba(141,165,225,0.397) 40%, rgba(42,136,237,0.221) 50%, rgba(255,255,255,1) 77%, rgba(255,255,255,1) 100%)', }}>
             <ProjectProgress currentInd={2} contentRef={contentRef} />
             <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
                 <h1 className="h1">Review Slides</h1>
@@ -173,7 +173,7 @@ export default function WorkflowStep3() {
             <div className="fixed bottom-10 right-10">
                 <button
                 onClick={handleOpenModal}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
+                className="bg-gradient-to-r from-blue-600  to-purple-500 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
                 >
                 Feedback
                 </button>

@@ -136,7 +136,7 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
     };
 
     return (
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div style={{ background: 'linear-gradient(169deg, rgba(237,113,206,0.602) 0%, rgba(199,157,223,0.566) 13%, rgba(141,165,225,0.397) 40%, rgba(42,136,237,0.221) 50%, rgba(255,255,255,1) 77%, rgba(255,255,255,1) 100%)', }} className="max-w-6xl mx-auto px-4 sm:px-6">
             {transcriptList.map((data, index) => (
                 <div tabIndex={index} className='w-full flex flex-col md:flex-row rounded border-solid border-2 border-blue-200 mt-4 focus-within:border-blue-600'>
                     <div className={`grid ${hasSlides ? 'sm:grid-rows-2' : 'sm:grid-rows-1'} md:grid-rows-1 ${hasSlides ? 'md:grid-cols-2' : 'md:grid-cols-1'} grow`}>
@@ -150,10 +150,10 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
                         />
                     </div>
                     <div className='flex flex-row items-center px-1.5 py-2 md:flex-col shrink-0'>
-                        <button key={index + 'shorter'} className="btn text-white bg-blue-600 hover:bg-blue-700 w-full" onClick={e => handleUpdateScript(e, index, 'shorter')}>
+                        <button key={index + 'shorter'} className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full" onClick={e => handleUpdateScript(e, index, 'shorter')}>
                             Shorter
                         </button>
-                        <button key={index + 'funnier'} className="mt-4 btn text-white bg-blue-600 hover:bg-blue-700 w-full" onClick={e => handleUpdateScript(e, index, 'funnier')}>
+                        <button key={index + 'funnier'} className="mt-4 btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full" onClick={e => handleUpdateScript(e, index, 'funnier')}>
                             Funnier
                         </button>
                     </div>
@@ -165,7 +165,7 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
                 <form onSubmit={handleSubmit}>
                     <div className="flex flex-wrap -mx-3 mt-6">
                         <div className="w-full px-3">
-                            <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full disabled:bg-gray-200 disabled:text-gray-400"
+                            <button className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full disabled:bg-gray-200 disabled:text-gray-400"
                             disabled={isSubmitting}>
                                 {isSubmitting ? 'Generating...' : 'Generate Voice'}
                             </button>
@@ -214,7 +214,7 @@ export default function WorkflowStep4() {
             <div className="fixed bottom-10 right-10">
                 <button
                     onClick={handleOpenModal}
-                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
+                    className="bg-gradient-to-r from-blue-600  to-purple-500 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
                 >
                     Feedback
                 </button>
