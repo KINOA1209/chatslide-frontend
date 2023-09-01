@@ -17,12 +17,14 @@ import { usePathname } from "next/navigation";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 // import AuthService from "../utils/AuthService";
 import { Auth, Hub } from 'aws-amplify';
+import AuthService from "@/components/utils/AuthService";
 
 // Content on landing page
 // import Introduction from '@/components/landing/introduction'
 import Features from '@/components/landing/features'
 import UseCases from '@/components/landing/use_cases'
 import SampleVideos from '@/components/landing/samplevideos'
+import Pricing from '@/components/landing/pricing'
 // import Newsletter from '@/components/landing/newsletter'
 import IframeGallery from '@/components/landing/iframes'
 import Footer from '@/components/ui/footer'
@@ -120,22 +122,30 @@ const Header = ({ refList }: HeaderProps) => {
                     </div>
 
                     {/* Navigation on landing page */}
-                    <div className="grow max-w-4xl hidden md:flex flex-row flex-nowrap justify-evenly px-4">
-                        <div className="text-lg cursor-pointer text-gray-600 hover:text-black hover:underline" onClick={e => handScrollTo(e, 0)}>Features</div>
-                        <div className="text-lg cursor-pointer text-gray-600 hover:text-black hover:underline" onClick={e => handScrollTo(e, 1)}>Use Cases</div>
-                        {/* <div className="text-lg cursor-pointer text-gray-600 hover:text-black hover:underline" onClick={e => handScrollTo(e, 2)}>Testimonial</div> */}
-                        {/* <div className="text-lg cursor-pointer text-gray-600 hover:text-black hover:underline">Pricing</div> */}
+                    <div className="grow max-w-4xl hidden lg:flex flex-row flex-nowrap justify-evenly px-4">
+                        <div
+                            className="text-lg cursor-pointer text-gray-700 hover:text-white hover:bg-blue-600 border border-slate-400 rounded-md px-4 py-2 transition duration-150 ease-in-out"
+                            onClick={e => handScrollTo(e, 0)}>Features</div>
+                        <div
+                            className="text-lg cursor-pointer text-gray-700 hover:text-white hover:bg-blue-600 border border-slate-400 rounded-md px-4 py-2 transition duration-150 ease-in-out"
+                            onClick={e => handScrollTo(e, 1)}>Use Cases</div>
+                        {/* <div
+                            className="text-lg cursor-pointer text-gray-700 hover:text-white hover:bg-blue-600 border border-slate-400 rounded-md px-4 py-2 transition duration-150 ease-in-out"
+                            onClick={e => handScrollTo(e, 2)}>Testimonial</div> */}
+                        <div
+                            className="text-lg cursor-pointer text-gray-700 hover:text-white hover:bg-blue-600 border border-slate-400 rounded-md px-4 py-2 transition duration-150 ease-in-out"
+                            onClick={e => handScrollTo(e, 2)}>Pricing</div>
                     </div>
 
                     {/* Desktop navigation */}
-                    <nav className="hidden md:flex">
+                    <nav className="hidden lg:flex w-[272px]">
                         {/* Desktop sign in links */}
                         {user ? (
                             <ul className="flex grow justify-end flex-wrap items-center">
                                 <DropdownButton />
                             </ul>
                         ) : (
-                            <ul className="flex grow justify-end flex-wrap items-center">
+                            <ul className="flex grow justify-end flex-nowrap items-center">
                                 <li>
                                     <Link
                                         href="/signin"
@@ -215,6 +225,7 @@ const Introduction = ({ demoRef }: IntroProps) => {
     const buttonRef = useRef<HTMLDivElement>(null);
     const drlambda = <p className="inline text-transparent bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500" style={{ fontFamily: 'Lexend, sans-serif' }}>DrLambda</p>
     const router = useRouter();
+    const [currentUser, setCurrentUser] = useState(null);
 
     const scrollToDemo = (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
@@ -222,6 +233,13 @@ const Introduction = ({ demoRef }: IntroProps) => {
             demoRef.current?.scrollIntoView();
         }
     }
+    useEffect(() => {
+        const fetchCurrentUser = async () => {
+            const user = await AuthService.getCurrentUser();
+            setCurrentUser(user);
+        }
+        fetchCurrentUser();
+    }, []);
 
     useEffect(() => {
         const animationProp = [
@@ -273,9 +291,9 @@ const Introduction = ({ demoRef }: IntroProps) => {
                 <div className=" max-w-xs mx-auto sm:max-w-none flex-col flex justify-center mt-6 md:mt-16 items-center" data-aos="fade-up" data-aos-delay="300">
                     <div>
                         <div ref={buttonRef} className="btn drop-shadow-xl text-lg rounded-full text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer"
-                            style={{ backgroundImage: 'linear-gradient(-45deg, #FFA63D, #FF3D77, #338AFF, #3CF0C5)', backgroundSize: '600%' }}
-                            onClick={() => { router.push('/signup'); }}>
-                            Try DrLambda for FREE
+                            style={{ backgroundImage: 'linear-gradient(-45deg, #FFA63D, #FF3D77, #338AFF, #3CF0C5)', backgroundSize: '600%', fontFamily: 'Lexend, sans-serif' }}
+                            onClick={() => { currentUser ? router.push('/dashboard') : router.push('/signup') }}>
+                            {currentUser ? 'Go to My Dashboard' : 'Try DrLambda for FREE'}
                         </div>
                         <div className="text-center mt-2 md:mt-8 text-lg cursor-pointer text-gray-600 hover:text-black hover:underline mb-8 md:mb-0" onClick={scrollToDemo}>Watch Demo</div>
                     </div>
@@ -290,13 +308,15 @@ export default function newLanding() {
     // Refs
     const featuresRef = useRef<HTMLDivElement>(null);
     const useCasesRef = useRef<HTMLDivElement>(null);
-    const testimonialRef = useRef<HTMLDivElement>(null);
+    // const testimonialRef = useRef<HTMLDivElement>(null);
     const demoRef = useRef<HTMLDivElement>(null);
+    const pricingRef = useRef<HTMLDivElement>(null);
     const refList = [
         featuresRef,
         useCasesRef,
         // testimonialRef,
         // demoRef,
+        pricingRef,
     ];
 
     useEffect(() => {
@@ -317,6 +337,7 @@ export default function newLanding() {
             <div ref={useCasesRef}><UseCases /></div>
             {/* <div ref={testimonialRef}><IframeGallery /></div> */}
             {/* <Newsletter /> */}
+            <div ref={pricingRef}><Pricing /></div>
             <Footer />
         </>
     )
