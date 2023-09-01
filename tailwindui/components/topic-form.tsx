@@ -362,25 +362,6 @@ const TopicForm: React.FC = () => {
                 </div>
             </div>
             <div className="flex flex-wrap -mx-3 mb-4">
-                <div className="w-full px-3 mt-2 flex">
-                    <input
-                        type="checkbox"
-                        id="addEquations"
-                        className="form-checkbox text-gray-800"
-                        checked={addEquations} // Use 'checked' instead of 'value'
-                        onChange={(e) => setAddEquations(e.target.checked)}
-                    />
-                    <label
-                        className="block text-gray-800 text-sm font-medium mb-1"
-                        htmlFor="addEquations">
-                        &nbsp; &nbsp; Add equations and formulas to my content
-                    </label>
-                </div>
-            </div>
-
-
-
-            <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">
                     <label
                         className="block text-gray-800 text-sm font-medium mb-1"
@@ -398,6 +379,31 @@ const TopicForm: React.FC = () => {
                         <option value="Chinese">中文</option>
                         <option value="Spanish">Español</option>
                     </select>
+                </div>
+            </div>
+
+            <div className='flex flex-row flex-nowrap w-full items-center'>
+                <hr className='border-gray-400 grow' />
+                <div className='mx-4 text-gray-400'>Optinal</div>
+                <hr className='border-gray-400 grow' />
+            </div>
+
+            <div className="flex flex-wrap -mx-3 mb-4">
+                <div className="w-full px-3 mt-2 flex flex-row">
+                    <div className='flex items-center'>
+                        <input
+                            type="checkbox"
+                            id="addEquations"
+                            className="form-checkbox text-gray-800"
+                            checked={addEquations} // Use 'checked' instead of 'value'
+                            onChange={(e) => setAddEquations(e.target.checked)}
+                        />
+                    </div>
+                    <label
+                        className=" ml-2 block text-gray-800 text-sm font-medium"
+                        htmlFor="addEquations">
+                        Select to add equations and formulas to my content, recommended for Math/Science subjects
+                    </label>
                 </div>
             </div>
 
@@ -432,6 +438,7 @@ const TopicForm: React.FC = () => {
                     </div>
                 </div>
             </div>
+            <hr className='border-gray-400 grow mt-6' />
             <div className="max-w-sm mx-auto">
                 <div className="flex flex-wrap -mx-3 mt-6">
                     <div className="w-full px-3">
