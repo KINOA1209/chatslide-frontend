@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import sanitizeHtml from 'sanitize-html';
 import ReactQuill  from 'react-quill';
+import { MathJax, MathJaxContext } from 'better-react-mathjax';
 
 
 
@@ -202,21 +203,37 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
                     
                 }}>
                     {slides[currentSlideIndex] && slides[currentSlideIndex].elements.map((element, i) => {
-                        return (
-                            <ReactQuill 
-                                key={i} 
-                                value={element.content as string} 
-                                onBlur={(range, source, quill) => {
-                                    handleSlideEdit(quill.getText(), currentSlideIndex, element.type, i)}}
-                                modules={{  toolbar: false, 
-                                            keyboard: { bindings: { } }}} 
-                                
-                                style={element.type === 'h1' ? h1Style : 
-                                    element.type === 'h2' ? h2Style : 
-                                    element.type === 'h3' ? h3Style : 
-                                    listStyle}
-                            />
-                        );
+                        const content = element.content as string;
+                        if (content.includes('$$') || content.includes('\\(')){
+                            return (
+                                <div key={i}>
+                                <MathJaxContext>
+                                    <div style={
+                                        listStyle}>
+                                        {content}
+                                    </div>
+                                </MathJaxContext>
+                                </div>
+                            );
+
+                        }else{
+                            return (
+                                <ReactQuill 
+                                    key={i} 
+                                    value={element.content as string} 
+                                    onBlur={(range, source, quill) => {
+                                        handleSlideEdit(quill.getText(), currentSlideIndex, element.type, i)}}
+                                    modules={{  toolbar: false, 
+                                                keyboard: { bindings: { } }}} 
+                                    
+                                    style={element.type === 'h1' ? h1Style : 
+                                        element.type === 'h2' ? h2Style : 
+                                        element.type === 'h3' ? h3Style : 
+                                        listStyle}
+                                />
+                            );
+
+                        }
                     })}
                 </div>
             )}
