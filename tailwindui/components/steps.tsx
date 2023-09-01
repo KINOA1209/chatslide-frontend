@@ -180,7 +180,7 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
         };
 
         const dashboardButton = user ? (<div className='w-full h-14 flex items-center cursor-pointer' onClick={handleDashboard}>
-            <div className='w-full bg-blue-500 hover:bg-blue-600 text-white text-center rounded-2xl flex justify-center items-center' style={{ height: '30px' }}>
+            <div className='w-full bg-gradient-to-r from-blue-600  to-purple-500 text-white text-center rounded-2xl flex justify-center items-center' style={{ height: '30px' }}>
                 <span className='w-fit h-fit'>Projects</span>
             </div>
         </div>) : (<></>);

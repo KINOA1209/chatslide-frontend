@@ -22,7 +22,7 @@ function WorkflowIntro() {
           </div>
           <div className="flex flex-wrap -mx-3 mt-6">
             <div className="w-full px-3">
-              <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">
+              <button className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full">
                 Start
               </button>
             </div>
