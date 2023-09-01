@@ -32,7 +32,7 @@ const TextCarousel: React.FC<TextCarouselProps> = ({ slides, interval, colors })
 
     useEffect(() => {
         const slideTimer = setTimeout(nextSlide, interval);
-        if (window.innerWidth <= 640) {
+        if (window.innerWidth < 768) {
             SetOffset(4);
         } else {
             SetOffset(7);
@@ -93,7 +93,7 @@ const Introduction = ({ demoRef }: IntroProps) => {
             iterations: Infinity,
         };
 
-        if (window && window.innerWidth > 640 && buttonRef.current) {
+        if (window && window.innerWidth >= 768 && buttonRef.current) {
             buttonRef.current.animate(animationProp, animationTiming);
         } else if (buttonRef.current) {
             buttonRef.current.style.backgroundPosition = "35% 50%";
