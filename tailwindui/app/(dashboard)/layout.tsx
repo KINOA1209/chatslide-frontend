@@ -1,6 +1,11 @@
 import { WorkflowFooter } from '@/components/ui/footer'
 import Header from '@/components/ui/header';
 
+export const metadata = {
+  title: 'Projects - Dr. Lambda',
+  description: 'Create new content',
+}
+
 export default function DashBoardLayout({
   children,
 }: {
