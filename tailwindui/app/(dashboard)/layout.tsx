@@ -15,7 +15,7 @@ export default function DashBoardLayout({
     <>
       <Header isLanding={false} refList={[]} />
       <main className="flex flex-col" style={{ minHeight: '100vh' }}>
-        <div className='grow'>
+        <div className='grow flex flex-col'>
           {children}
         </div>
         <WorkflowFooter />
