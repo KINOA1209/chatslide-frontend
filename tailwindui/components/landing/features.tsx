@@ -33,12 +33,12 @@ export default function Features() {
                         {/* Content */}
                         <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 md:mt-6" data-aos="fade-right">
                             <div className="md:pr-4 lg:pr-12 xl:pr-16 mb-8">
-                                <h3 className="h3 mb-3">Features</h3>
+                                <h3 className="h3 mb-3 w-fit text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-500" style={{ fontFamily: 'Lexend, sans-serif' }}>Features</h3>
                             </div>
                             {/* Tabs buttons */}
                             <div className="mb-8 md:mb-0">
                                 <a
-                                    className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${tab !== 1 ? 'bg-white shadow-md border-gray-200 hover:shadow-lg' : 'bg-gray-200 border-transparent'}`}
+                                    className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${tab !== 1 ? 'bg-white shadow-md border-gray-200 hover:shadow-lg' : 'bg-blue-100 border-transparent'}`}
                                     href="#0"
                                     onClick={(e) => { e.preventDefault(); setTab(1); }}
                                 >
@@ -53,7 +53,7 @@ export default function Features() {
                                     </div>
                                 </a>
                                 <a
-                                    className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${tab !== 2 ? 'bg-white shadow-md border-gray-200 hover:shadow-lg' : 'bg-gray-200 border-transparent'}`}
+                                    className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${tab !== 2 ? 'bg-white shadow-md border-gray-200 hover:shadow-lg' : 'bg-blue-100 border-transparent'}`}
                                     href="#0"
                                     onClick={(e) => { e.preventDefault(); setTab(2); }}
                                 >
@@ -68,7 +68,7 @@ export default function Features() {
                                     </div>
                                 </a>
                                 <a
-                                    className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${tab !== 3 ? 'bg-white shadow-md border-gray-200 hover:shadow-lg' : 'bg-gray-200 border-transparent'}`}
+                                    className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${tab !== 3 ? 'bg-white shadow-md border-gray-200 hover:shadow-lg' : 'bg-blue-100 border-transparent'}`}
                                     href="#0"
                                     onClick={(e) => { e.preventDefault(); setTab(3); }}
                                 >

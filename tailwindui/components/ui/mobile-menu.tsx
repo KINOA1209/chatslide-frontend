@@ -95,7 +95,7 @@ const MobileMenu = ({ refList = [] }: HeaderProps) => {
   }
 
   return (
-    <div className="flex md:hidden">
+    <div className="flex lg:hidden">
       {/* Hamburger button */}
       <button
         ref={trigger}
@@ -134,6 +134,9 @@ const MobileMenu = ({ refList = [] }: HeaderProps) => {
                 </li>
                 <li>
                   <div onClick={e => handScrollTo(e, 1)} className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center">Use Cases</div>
+                </li>
+                <li>
+                  <div onClick={e => handScrollTo(e, 2)} className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center">Pricing</div>
                 </li>
                 <hr className='border-gray-400' />
               </>

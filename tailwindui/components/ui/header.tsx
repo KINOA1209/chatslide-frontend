@@ -102,7 +102,7 @@ export default function Header() {
                     </div>
 
                     {/* Desktop navigation */}
-                    <nav className="hidden md:flex md:grow">
+                    <nav className="hidden lg:flex md:grow">
                         {/* Desktop sign in links */}
                         {user ? (
                             <ul className="flex grow justify-end flex-wrap items-center">
