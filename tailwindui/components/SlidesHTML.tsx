@@ -198,9 +198,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
             }} onClick={() => goToSlide(currentSlideIndex + 1)}>&#9654;</button>}
             {slides.length > 0 && (
                 <div className="slide" style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.5)',
                     padding: '20px',
-                    borderRadius: '10px',
+                    
                 }}>
                     {slides[currentSlideIndex] && slides[currentSlideIndex].elements.map((element, i) => {
                         return (
