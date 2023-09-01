@@ -22,7 +22,7 @@ const MobileMenu = ({ refList = [] }: HeaderProps) => {
 
   useEffect(() => {
     // Check if the current page is landing page
-    if (pathname === '/new') {
+    if (pathname === '/new' || pathname === '/') {
       setLandingPage(true);
     } else {
       setLandingPage(false);
