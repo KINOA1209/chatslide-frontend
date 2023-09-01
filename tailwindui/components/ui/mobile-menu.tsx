@@ -150,9 +150,9 @@ const MobileMenu = ({ refList = [] }: HeaderProps) => {
                 <li>
                   <Link href="/my-resources" className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center" onClick={() => setMobileNavOpen(false)}>My Resources</Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link href="/#" className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center" onClick={() => setMobileNavOpen(false)}>Account Settings</Link>
-                </li>
+                </li> */}
                 <hr className='border-gray-400' />
                 <li>
                   <div onClick={signOut}>

@@ -1,3 +1,5 @@
+import Header from '@/components/ui/header';
+
 export const metadata = {
     title: "About Us - Dr. Lambda",
     description: "Learn more about Dr. Lambda.",
@@ -6,6 +8,7 @@ export const metadata = {
 export default function AboutUs() {
     return (
         <section className="bg-gradient-to-b from-gray-100 to-white">
+            <Header isLanding={false} refList={[]} />
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
                 <div className="pt-32 pb-12 md:pt-40 md:pb-20">
                     {/* Page header */}
@@ -24,8 +27,8 @@ export default function AboutUs() {
                             <div>
                                 <h3 className="h3 text-xl mb-2">Quanlai Li</h3>
                                 <p className="text-base text-gray-600">
-                                Quanlai Li, CEO of Dr. Lambda, has significantly impacted AI-driven platforms at unicorns like Robinhood, Lyft, and Uber. 
-                                Before his entrepreneurial journey, he excelled as a software engineer, notably pioneering data workflow solutions. He has a master's degree from UC Berkeley and bachelor's degree from Zhejiang University.
+                                    Quanlai Li, CEO of Dr. Lambda, has significantly impacted AI-driven platforms at unicorns like Robinhood, Lyft, and Uber.
+                                    Before his entrepreneurial journey, he excelled as a software engineer, notably pioneering data workflow solutions. He has a master's degree from UC Berkeley and bachelor's degree from Zhejiang University.
                                 </p>
                             </div>
                         </div>
@@ -36,9 +39,9 @@ export default function AboutUs() {
                             <div>
                                 <h3 className="h3 text-xl mb-2">Laura Lin</h3>
                                 <p className="text-base text-gray-600">
-                                Laura Y. Lin is a dedicated UX Researcher with a rich background in HCI and applied product research. 
-                                With notable experiences at big techs like Google and Meta, Laura has focused on areas such as human-vehicle interaction and B2B Ads products. 
-                                Laura was HCI Research Fellow at Stanford and earned a BA degree from Peking University.
+                                    Laura Y. Lin is a dedicated UX Researcher with a rich background in HCI and applied product research.
+                                    With notable experiences at big techs like Google and Meta, Laura has focused on areas such as human-vehicle interaction and B2B Ads products.
+                                    Laura was HCI Research Fellow at Stanford and earned a BA degree from Peking University.
                                 </p>
                             </div>
                         </div>
@@ -64,9 +67,9 @@ export default function AboutUs() {
                             <div>
                                 <h3 className="h3 text-xl mb-2">Rex Chen</h3>
                                 <p className="text-base text-gray-600">
-                                Rex Chen is a software engineer with a MS degree in ML and two BS degrees from UCSD. 
-                                At Dr. Lambda, he played a vital role in developing and refining AI-driven products, working alongside a multifaceted team. 
-                                Passionate about data science and continuous learning, Rex is committed to improving user experiences and tackling challenging technological issues.
+                                    Rex Chen is a software engineer with a MS degree in ML and two BS degrees from UCSD.
+                                    At Dr. Lambda, he played a vital role in developing and refining AI-driven products, working alongside a multifaceted team.
+                                    Passionate about data science and continuous learning, Rex is committed to improving user experiences and tackling challenging technological issues.
                                 </p>
                             </div>
                         </div>
