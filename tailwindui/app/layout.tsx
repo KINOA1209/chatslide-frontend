@@ -11,7 +11,7 @@ const inter = Inter({
 })
 
 export const metadata = {
-  title: 'Workflow - Dr. Lambda',
+  title: 'Home - Dr. Lambda',
   description: 'Create new content',
 }
 
