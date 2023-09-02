@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from 'react'
 import { Transition } from '@headlessui/react'
 import Image from 'next/image'
 import FeaturesBg1 from '@/public/images/video.png'
-import FeaturesBg2 from '@/public/images/read_pdf.png'
 import FeaturesBg3 from '@/public/images/customization.png'
 
 export default function Features() {
@@ -22,7 +21,7 @@ export default function Features() {
                     {/* Section header */}
                     <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
                         <p className="text-xl text-left text-gray-600">
-                        Use Dr. Lambda to remix your knowledge: effortlessly transform PDFs, webpages, and YouTube content into your preferred formats. A game-changer for researchers, teachers, students, consultants, office workers, and beyond!</p>
+                            Use Dr. Lambda to remix your knowledge: effortlessly transform PDFs, webpages, and YouTube content into your preferred formats. A game-changer for researchers, teachers, students, consultants, office workers, and beyond!</p>
                         <p className="text-xl text-left text-gray-600">
                             Dive in and reshape your learning and sharing experience today! 🚀 </p>
                     </div>
@@ -101,7 +100,10 @@ export default function Features() {
                                     leaveTo="opacity-0 -translate-y-16"
                                 >
                                     <div className="relative inline-flex flex-col">
-                                        <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg1} width={500} height="462" alt="Features bg" />
+                                        <video controls className="md:max-w-none mx-auto rounded" width={500} height="462">
+                                            <source src="/images/script.mp4" type="video/mp4" />
+                                            Your browser does not support the video tag.
+                                        </video>
                                     </div>
                                 </Transition>
                                 {/* Item 2 */}
@@ -117,7 +119,10 @@ export default function Features() {
                                     leaveTo="opacity-0 -translate-y-16"
                                 >
                                     <div className="relative inline-flex flex-col">
-                                        <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg2} width={500} height="462" alt="Features bg" />
+                                        <video controls className="md:max-w-none mx-auto rounded" width={500} height="462">
+                                            <source src="/images/file.mp4" type="video/mp4" />
+                                            Your browser does not support the video tag.
+                                        </video>
                                     </div>
                                 </Transition>
                                 {/* Item 3 */}
@@ -133,7 +138,10 @@ export default function Features() {
                                     leaveTo="opacity-0 -translate-y-16"
                                 >
                                     <div className="relative inline-flex flex-col">
-                                        <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg3} width={500} height="462" alt="Features bg" />
+                                        <video controls className="md:max-w-none mx-auto rounded" width={500} height="462">
+                                            <source src="/images/equation.mp4" type="video/mp4" />
+                                            Your browser does not support the video tag.
+                                        </video>
                                     </div>
                                 </Transition>
                             </div>
