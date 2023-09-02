@@ -135,7 +135,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
     const h1Style: React.CSSProperties = {
         fontSize: '3em',
         fontWeight: 'bold',
-        color:'#3333cc',
+        color:'#2563EB',
         position: 'absolute', 
         top: '50%', 
         left: '50%', 
@@ -146,7 +146,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
         fontSize: '1.5em',
         fontWeight: 'bold',
         marginTop: '10px',
-        color:'#3333cc'
+        color:'#2563EB'
     };
 
     const h3Style: React.CSSProperties = {
