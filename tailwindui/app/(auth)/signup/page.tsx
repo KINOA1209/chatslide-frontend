@@ -3,7 +3,6 @@
 
 import Link from "next/link";
 import SignupForm from "@/components/signup-form";
-import GoogleSignIn from "@/components/GoogleSignIn";
 import CustomerServiceInfo from '@/components/customerService';
 
 export default function SignUp() {
@@ -21,18 +20,6 @@ export default function SignUp() {
                     {/* Form */}
                     <div className="max-w-sm mx-auto">
                         <SignupForm />
-                        <div className="flex items-center my-6">
-                            <div
-                                className="border-t border-gray-300 grow mr-3"
-                                aria-hidden="true"
-                            ></div>
-                            <div className="text-gray-600 italic">Or</div>
-                            <div
-                                className="border-t border-gray-300 grow ml-3"
-                                aria-hidden="true"
-                            ></div>
-                        </div>
-                        <GoogleSignIn />
                         <div className="text-gray-600 text-center mt-6">
                             Already have an account?{" "}
                             <Link
