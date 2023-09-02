@@ -43,8 +43,8 @@ export default function Features() {
                                     onClick={(e) => { e.preventDefault(); setTab(1); }}
                                 >
                                     <div>
-                                        <div className="font-bold leading-snug tracking-tight mb-1">✨ One-Click Video Generation</div>
-                                        <div className="text-gray-600">Unlock your creativity with Dr. Lambda's one-click video generation 🎨; the perfect tool to jumpstart your next big idea! 💡</div>
+                                        <div className="font-bold leading-snug tracking-tight mb-1">✨ One-Click Script Generation</div>
+                                        <div className="text-gray-600">Wrap your knowledge with Dr. Lambda's one-click script generation; the perfect tool to jumpstart your video on fire! 🔥</div>
                                     </div>
                                     <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                                         <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
@@ -73,8 +73,8 @@ export default function Features() {
                                     onClick={(e) => { e.preventDefault(); setTab(3); }}
                                 >
                                     <div>
-                                        <div className="font-bold leading-snug tracking-tight mb-1">✍️ Edit Your Content Real-time</div>
-                                        <div className="text-gray-600">Instantly refine your content with our real-time editing feature for outlines, slides, and scripts.🔋</div>
+                                        <div className="font-bold leading-snug tracking-tight mb-1">🟰 Add Complex Equations Quickly and Efficiently</div>
+                                        <div className="text-gray-600">Instantly improve the clarity of your slides with our equation extraction and generation engine. Save yourself from copypasting and formatting. 🔋</div>
                                     </div>
                                     <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                                         <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
