@@ -23,7 +23,7 @@ export default function SampleVideos() {
         </svg>
       </div>
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
-        <div className="py-12 md:py-20">
+        <div>
 
           {/* Items */}
           <div className="rounded-2xl overflow-hidden drop-shadow-xl">
