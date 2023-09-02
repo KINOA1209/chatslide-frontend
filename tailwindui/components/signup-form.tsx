@@ -170,14 +170,14 @@ const SignupForm: React.FC = () => {
         const resp = await AuthService.sendCode(email, password, email);
         try {
             setDisabled(true);
-            const interval = setInterval(() => {
-                setCountdown((prevCountdown) => prevCountdown - 1);
-            }, 1000);
-            setTimeout(() => {
-                clearInterval(interval);
-                setDisabled(false);
-                setCountdown(15);
-            }, 15000);
+            // const interval = setInterval(() => {
+            //     setCountdown((prevCountdown) => prevCountdown - 1);
+            // }, 1000);
+            // setTimeout(() => {
+            //     clearInterval(interval);
+            //     setDisabled(false);
+            //     setCountdown(15);
+            // }, 15000);
 
             toast.success("Email sent", {
                 position: "top-center",
@@ -422,11 +422,13 @@ const SignupForm: React.FC = () => {
                         <button
                             onClick={e => sendVerificationCode(e)}
                             type="button"
-                            className="btn-sm bg-slate-600 hover:bg-blue-700 text-white rounded-full my-1 mr-1 h-full"
+                            className="btn-sm bg-slate-500 hover:bg-blue-700 text-white rounded-full my-1 mr-1 h-full disabled:bg-slate-700 disabled:text-gray-400"
+                            disabled={disabled}
                         >
-                            {disabled
+                            {/* {disabled
                                 ? `Wait ${countdown} seconds`
-                                : "Get Code"}
+                                : "Get Code"} */}
+                            Get Code
                         </button>
                     </div>
                 </div>
