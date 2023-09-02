@@ -122,9 +122,9 @@ const Introduction = ({ demoRef }: IntroProps) => {
                     </div>
                     <div className="text-md md:text-lg text-gray-600 text-center mt-2 flex items-center justify-center">
                         <div className="text-xl text-left md:text-center">
-                            Give us a topic. <br></br>
-                            Beautiful slides and videos backed by the wisdom of the entire internet. <br></br>
-                            Now with the ability to comprehend your PDF files.
+                            {/* Give us a topic. <br></br> */}
+                            Transform your PDF or topic into professional and interactive slides for teaching and learning <br></br>
+                            {/* Now with the ability to comprehend your PDF files. */}
                         </div>
                     </div>
                 </div>
