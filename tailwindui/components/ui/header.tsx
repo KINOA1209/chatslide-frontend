@@ -154,7 +154,7 @@ const Header = ({ isLanding = false, refList }: HeaderProps) => {
                                     <Link
                                         href="/signin"
                                         className="btn-sm drop-shadow-xl rounded-full text-white w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer mr-4"
-                                        style={{ backgroundImage: 'linear-gradient(-45deg, #FFA63D, #FF3D77, #338AFF, #3CF0C5)', backgroundSize: '600%', fontFamily: 'Lexend, sans-serif' }}
+                                        style={{ backgroundImage: 'linear-gradient(-45deg, #338AFF, #3CF0C5)', backgroundSize: '100%', fontFamily: 'Lexend, sans-serif' }}
                                     >
                                         Sign in
                                     </Link>
@@ -163,7 +163,7 @@ const Header = ({ isLanding = false, refList }: HeaderProps) => {
                                     <Link
                                         href="/signup"
                                         className="btn-sm drop-shadow-xl rounded-full text-white w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer"
-                                        style={{ backgroundImage: 'linear-gradient(-45deg, #FFA63D, #FF3D77, #338AFF, #3CF0C5)', backgroundSize: '600%', fontFamily: 'Lexend, sans-serif' }}
+                                        style={{ backgroundImage: 'linear-gradient(-45deg, #7A55DB, #338AFF)', backgroundSize: '100%', fontFamily: 'Lexend, sans-serif' }}
                                     >
                                         <span>Join for Free</span>
                                     </Link>
