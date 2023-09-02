@@ -204,17 +204,18 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
                 }}>
                     {slides[currentSlideIndex] && slides[currentSlideIndex].elements.map((element, i) => {
                         const content = element.content as string;
+                        console.log(content)
                         if (content.includes('$$') || content.includes('\\(')){
                             return (
                                 <div key={i}>
-                                <MathJaxContext>
-                                    <div style={
-                                        listStyle}>
-                                        {content}
+                                  <MathJaxContext>
+                                    <div style={listStyle}>
+                                      <MathJax>{content}</MathJax>
                                     </div>
-                                </MathJaxContext>
+                                  </MathJaxContext>
                                 </div>
-                            );
+                              );
+                              
 
                         }else{
                             return (
