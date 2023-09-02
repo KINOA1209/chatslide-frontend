@@ -110,7 +110,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({finalSlides, isSubmittin
                 <TranscriptFormModal />
             ) : (
             <button
-              className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full disabled:bg-gray-200 disabled:text-gray-400"
+              className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400"
               disabled={isSubmitting}
             >
               {isSubmitting ? 'Generating...' : 'Generate Script'}

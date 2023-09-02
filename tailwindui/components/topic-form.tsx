@@ -402,7 +402,7 @@ const TopicForm: React.FC = () => {
                     <label
                         className=" ml-2 block text-gray-800 text-sm font-medium"
                         htmlFor="addEquations">
-                        Select to add equations and formulas to my content, recommended for Math/Science subjects
+                        Select to <b>add equations and formulas</b> to my content, recommended for Math/Science subjects
                     </label>
                 </div>
             </div>
@@ -443,7 +443,7 @@ const TopicForm: React.FC = () => {
                 <div className="flex flex-wrap -mx-3 mt-6">
                     <div className="w-full px-3">
                         <button
-                            className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full disabled:bg-gray-200 disabled:text-gray-400"
+                            className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400"
                             disabled={isSubmitting}
                             // style={{ backgroundColor: '#8b2e2d'}}
                             type="submit">
