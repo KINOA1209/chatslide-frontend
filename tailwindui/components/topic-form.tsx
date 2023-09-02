@@ -10,7 +10,7 @@ import GuestUploadModal from './forms/uploadModal';
 import MyFiles from './fileManagement';
 import { Transition } from '@headlessui/react'
 
-const audienceList = ['Researchers', 'Students', 'Business Clients'];
+const audienceList = ['Researchers', 'Students', 'Business Clients', 'Video Viewers'];
 
 interface Project {
     topic: string;
