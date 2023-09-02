@@ -258,7 +258,7 @@ const BgImagePopup: React.FC<bgImagePopupProps> = ({ onClose }) =>{
                             </label>
                             {selectedOption === 'customize' && (
                                 <div>
-                                    <label htmlFor="imageUpload" className="btn text-white bg-blue-600 hover:bg-blue-700 mx-6">
+                                    <label htmlFor="imageUpload" className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 mx-6">
                                         Choose File
                                     </label>
                                     <span>{fileName}</span>

@@ -21,12 +21,6 @@ const MobileMenu = ({ refList = [] }: HeaderProps) => {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Check if the current page is landing page
-    if (pathname === '/new') {
-      setLandingPage(true);
-    } else {
-      setLandingPage(false);
-    }
     // Create a scoped async function within the hook.
     const fetchUser = async () => {
       if (username === null) {
@@ -150,9 +144,9 @@ const MobileMenu = ({ refList = [] }: HeaderProps) => {
                 <li>
                   <Link href="/my-resources" className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center" onClick={() => setMobileNavOpen(false)}>My Resources</Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link href="/#" className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center" onClick={() => setMobileNavOpen(false)}>Account Settings</Link>
-                </li>
+                </li> */}
                 <hr className='border-gray-400' />
                 <li>
                   <div onClick={signOut}>

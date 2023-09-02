@@ -201,7 +201,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
             {slides.length > 0 && (
                 <div className="slide" style={{
                     padding: '20px',
-                    
                 }}>
                     {slides[currentSlideIndex] && slides[currentSlideIndex].elements.map((element, i) => {
                         const content = element.content as string;

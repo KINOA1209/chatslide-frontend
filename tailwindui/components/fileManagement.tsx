@@ -285,7 +285,7 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
     return (
         <section className="bg-gradient-to-b from-gray-100 to-white grow flex flex-col h-full">
             <ToastContainer enableMultiContainer containerId={'fileManagement'} />
-            <div className={`max-w-6xl w-full mx-auto px-4 ${!selectable ? 'pt-16 md:pt-20' : ''} flex flex-wrap justify-around`}>
+            <div className={`max-w-6xl w-full mx-auto px-4 ${!selectable ? 'pt-16 md:pt-32' : ''} flex flex-wrap justify-around`}>
                 {!selectable ? <div className="pt-4 grow pr-4">
                     <h1 className="h2 text-blue-600">My Resources</h1>
                 </div> : <></>}
