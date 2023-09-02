@@ -90,7 +90,9 @@ const Header = ({ isLanding = false, refList }: HeaderProps) => {
                         <div className="flex flex-row items-center grow md:grow-0">
                             <Logo />
                             <div className="grow md:grow-0 flex justify-center md:justify-start">
-                                <div className="w-fit text-xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500" style={{ fontFamily: 'Lexend, sans-serif' }}>DrLambda.ai</div>
+                                <div className="w-fit text-xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500" style={{ fontFamily: 'Lexend, sans-serif' }}>
+                                    <a href="/">DrLambda.ai</a>
+                                </div>
                             </div>
                         </div>
 
@@ -117,7 +119,9 @@ const Header = ({ isLanding = false, refList }: HeaderProps) => {
                     <div className="flex flex-row items-center grow md:grow-0">
                         <Logo />
                         <div className="grow md:grow-0 flex justify-center md:justify-start">
-                            <div className="w-fit text-xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500" style={{ fontFamily: 'Lexend, sans-serif' }}>DrLambda.ai</div>
+                            <div className="w-fit text-xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500" style={{ fontFamily: 'Lexend, sans-serif' }}>
+                                <a href="/">DrLambda.ai</a>
+                            </div>
                         </div>
                     </div>
 
