@@ -14,7 +14,7 @@ import UseCases from '@/components/landing/use_cases'
 import SampleVideos from '@/components/landing/samplevideos'
 import Pricing from '@/components/landing/pricing'
 // import Newsletter from '@/components/landing/newsletter'
-// import IframeGallery from '@/components/landing/iframes'
+import IframeGallery from '@/components/landing/iframes'
 
 interface TextCarouselProps {
     slides: string[];
@@ -70,7 +70,7 @@ const Introduction = ({ demoRef }: IntroProps) => {
     const scrollToDemo = (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
         if (demoRef.current) {
-            demoRef.current?.scrollIntoView();
+            demoRef.current?.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
         }
     }
     useEffect(() => {
@@ -148,14 +148,13 @@ export default function newLanding() {
     // Refs
     const featuresRef = useRef<HTMLDivElement>(null);
     const useCasesRef = useRef<HTMLDivElement>(null);
-    // const testimonialRef = useRef<HTMLDivElement>(null);
+    const testimonialRef = useRef<HTMLDivElement>(null);
     const demoRef = useRef<HTMLDivElement>(null);
     const pricingRef = useRef<HTMLDivElement>(null);
     const refList = [
         featuresRef,
         useCasesRef,
-        // testimonialRef,
-        // demoRef,
+        testimonialRef,
         pricingRef,
     ];
 
@@ -175,7 +174,7 @@ export default function newLanding() {
             <div ref={demoRef}><SampleVideos /></div>
             <div ref={featuresRef}><Features /></div>
             <div ref={useCasesRef}><UseCases /></div>
-            {/* <div ref={testimonialRef}><IframeGallery /></div> */}
+            <div ref={testimonialRef}><IframeGallery /></div>
             {/* <Newsletter /> */}
             <div ref={pricingRef}><Pricing /></div>
         </>
