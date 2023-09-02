@@ -98,7 +98,7 @@ export default function Features() {
                                     leaveTo="opacity-0 -translate-y-16"
                                 >
                                     <div className="relative inline-flex flex-col">
-                                        <video controls className="md:max-w-none mx-auto rounded" width={500} height="462">
+                                        <video controls poster="/images/script.png" className="md:max-w-none mx-auto rounded" width={500} height="462">
                                             <source src="/images/script.mp4" type="video/mp4" />
                                             Your browser does not support the video tag.
                                         </video>
@@ -117,7 +117,7 @@ export default function Features() {
                                     leaveTo="opacity-0 -translate-y-16"
                                 >
                                     <div className="relative inline-flex flex-col">
-                                        <video controls className="md:max-w-none mx-auto rounded" width={500} height="462">
+                                        <video controls poster="/images/file.png" className="md:max-w-none mx-auto rounded" width={500} height="462">
                                             <source src="/images/file.mp4" type="video/mp4" />
                                             Your browser does not support the video tag.
                                         </video>
@@ -136,7 +136,7 @@ export default function Features() {
                                     leaveTo="opacity-0 -translate-y-16"
                                 >
                                     <div className="relative inline-flex flex-col">
-                                        <video controls className="md:max-w-none mx-auto rounded" width={500} height="462">
+                                        <video controls poster="/images/equation.png"  className="md:max-w-none mx-auto rounded" width={500} height="462">
                                             <source src="/images/equation.mp4" type="video/mp4" />
                                             Your browser does not support the video tag.
                                         </video>
