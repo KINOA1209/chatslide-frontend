@@ -129,12 +129,12 @@ const Header = ({ isLanding = false, refList }: HeaderProps) => {
                         <div
                             className="text-lg cursor-pointer btn font-bold text-gray-700 hover:text-white hover:bg-blue-600 rounded-full px-4 py-2 transition duration-150 ease-in-out"
                             onClick={e => handScrollTo(e, 1)}>Use Cases</div>
-                        {/* <div
-                            className="text-lg cursor-pointer btn font-bold text-gray-700 hover:text-white hover:bg-blue-600 rounded-full px-4 py-2 transition duration-150 ease-in-out"
-                            onClick={e => handScrollTo(e, 2)}>Testimonial</div> */}
                         <div
                             className="text-lg cursor-pointer btn font-bold text-gray-700 hover:text-white hover:bg-blue-600 rounded-full px-4 py-2 transition duration-150 ease-in-out"
-                            onClick={e => handScrollTo(e, 2)}>Pricing</div>
+                            onClick={e => handScrollTo(e, 2)}>Testimonial</div>
+                        <div
+                            className="text-lg cursor-pointer btn font-bold text-gray-700 hover:text-white hover:bg-blue-600 rounded-full px-4 py-2 transition duration-150 ease-in-out"
+                            onClick={e => handScrollTo(e, 3)}>Pricing</div>
                     </div> : <></>}
 
                     {/* Desktop navigation */}
