@@ -90,7 +90,9 @@ const Header = ({ isLanding = false, refList }: HeaderProps) => {
                         <div className="flex flex-row items-center grow md:grow-0">
                             <Logo />
                             <div className="grow md:grow-0 flex justify-center md:justify-start">
-                                <div className="w-fit text-xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500" style={{ fontFamily: 'Lexend, sans-serif' }}>DrLambda.ai</div>
+                                <div className="w-fit text-xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500" style={{ fontFamily: 'Lexend, sans-serif' }}>
+                                    <a href="/">DrLambda.ai</a>
+                                </div>
                             </div>
                         </div>
 
@@ -117,24 +119,26 @@ const Header = ({ isLanding = false, refList }: HeaderProps) => {
                     <div className="flex flex-row items-center grow md:grow-0">
                         <Logo />
                         <div className="grow md:grow-0 flex justify-center md:justify-start">
-                            <div className="w-fit text-xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500" style={{ fontFamily: 'Lexend, sans-serif' }}>DrLambda.ai</div>
+                            <div className="w-fit text-xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500" style={{ fontFamily: 'Lexend, sans-serif' }}>
+                                <a href="/">DrLambda.ai</a>
+                            </div>
                         </div>
                     </div>
 
                     {/* Navigation on landing page */}
                     {isLanding ? <div className="grow max-w-4xl hidden lg:flex flex-row flex-nowrap justify-evenly px-4">
                         <div
-                            className="text-lg cursor-pointer text-gray-700 hover:text-white hover:bg-blue-600 border border-slate-400 rounded-md px-4 py-2 transition duration-150 ease-in-out"
+                            className="text-lg cursor-pointer btn font-bold text-gray-700 hover:text-white hover:bg-blue-600 rounded-full px-4 py-2 transition duration-150 ease-in-out"
                             onClick={e => handScrollTo(e, 0)}>Features</div>
                         <div
-                            className="text-lg cursor-pointer text-gray-700 hover:text-white hover:bg-blue-600 border border-slate-400 rounded-md px-4 py-2 transition duration-150 ease-in-out"
+                            className="text-lg cursor-pointer btn font-bold text-gray-700 hover:text-white hover:bg-blue-600 rounded-full px-4 py-2 transition duration-150 ease-in-out"
                             onClick={e => handScrollTo(e, 1)}>Use Cases</div>
-                        {/* <div
-                            className="text-lg cursor-pointer text-gray-700 hover:text-white hover:bg-blue-600 border border-slate-400 rounded-md px-4 py-2 transition duration-150 ease-in-out"
-                            onClick={e => handScrollTo(e, 2)}>Testimonial</div> */}
                         <div
-                            className="text-lg cursor-pointer text-gray-700 hover:text-white hover:bg-blue-600 border border-slate-400 rounded-md px-4 py-2 transition duration-150 ease-in-out"
-                            onClick={e => handScrollTo(e, 2)}>Pricing</div>
+                            className="text-lg cursor-pointer btn font-bold text-gray-700 hover:text-white hover:bg-blue-600 rounded-full px-4 py-2 transition duration-150 ease-in-out"
+                            onClick={e => handScrollTo(e, 2)}>Testimonial</div>
+                        <div
+                            className="text-lg cursor-pointer btn font-bold text-gray-700 hover:text-white hover:bg-blue-600 rounded-full px-4 py-2 transition duration-150 ease-in-out"
+                            onClick={e => handScrollTo(e, 3)}>Pricing</div>
                     </div> : <></>}
 
                     {/* Desktop navigation */}
@@ -149,7 +153,8 @@ const Header = ({ isLanding = false, refList }: HeaderProps) => {
                                 <li>
                                     <Link
                                         href="/signin"
-                                        className="btn-sm text-blue-600 border-2 border-blue-600 bg-white hover:bg-blue-600 hover:text-white ml-3"
+                                        className="btn-sm drop-shadow-xl rounded-full text-white w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer mr-4"
+                                        style={{ backgroundImage: 'linear-gradient(-45deg, #FFA63D, #FF3D77, #338AFF, #3CF0C5)', backgroundSize: '600%', fontFamily: 'Lexend, sans-serif' }}
                                     >
                                         Sign in
                                     </Link>
@@ -157,9 +162,10 @@ const Header = ({ isLanding = false, refList }: HeaderProps) => {
                                 <li>
                                     <Link
                                         href="/signup"
-                                        className="btn-sm text-white bg-blue-600 border-2 border-blue-600 hover:bg-white hover:text-blue-600 ml-3"
+                                        className="btn-sm drop-shadow-xl rounded-full text-white w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer"
+                                        style={{ backgroundImage: 'linear-gradient(-45deg, #FFA63D, #FF3D77, #338AFF, #3CF0C5)', backgroundSize: '600%', fontFamily: 'Lexend, sans-serif' }}
                                     >
-                                        <span className="animate-bounce">Join for Free</span>
+                                        <span>Join for Free</span>
                                     </Link>
                                 </li>
                             </ul>

@@ -37,7 +37,7 @@ export default function Pricing() {
     return (
         <section style={{ fontFamily: 'Lexend, sans-serif' }}>
             <div className="mx-auto px-4 sm:px-6 mb-12">
-                <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 md:mt-6 flex flex-col items-center" data-aos="fade-right">
+                <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 flex flex-col items-center" data-aos="fade-right">
                     <div className="max-w-6xl mx-auto md:pr-4 mb-8 w-full">
                         <h3 className="h3 mb-3 w-fit text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-500">Pricing</h3>
                     </div>
