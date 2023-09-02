@@ -1,7 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthService from '@/components/utils/AuthService';
@@ -19,6 +19,9 @@ export default function Dashboard() {
     const [projects, setProjects] = useState<Project[]>([]);
     const [deleteInd, setDeleteInd] = useState(-1);
     const router = useRouter();
+    const promptRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
+    const [rendered, setRendered] = useState<boolean>(false);
 
     const [isOpen, setIsOpen] = useState(false);
     function closeModal() {
@@ -29,11 +32,12 @@ export default function Dashboard() {
         setIsOpen(true)
     };
 
-    const projectsPerPage = 10;
-    const totalPages = Math.ceil(projects.length / projectsPerPage);
-    const indexOfLastProject = currentPage * projectsPerPage;
-    const indexOfFirstProject = indexOfLastProject - projectsPerPage;
-    const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
+    // const projectsPerPage = 10;
+    // const totalPages = Math.ceil(projects.length / projectsPerPage);
+    // const indexOfLastProject = currentPage * projectsPerPage;
+    // const indexOfFirstProject = indexOfLastProject - projectsPerPage;
+    // const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
+    const currentProjects = projects;
 
     const goToNextPage = () => {
         setCurrentPage((prevPage) => prevPage + 1);
@@ -44,6 +48,9 @@ export default function Dashboard() {
     };
 
     useEffect(() => {
+        if (contentRef.current) {
+            contentRef.current.style.height = contentRef.current.offsetHeight + "px";
+        }
         // Create a scoped async function within the hook.
         const fetchUser = async () => {
             try {
@@ -94,6 +101,7 @@ export default function Dashboard() {
             if (response.ok) {
                 const data = await response.json();
                 setProjects(data.projects);
+                setRendered(true);
             } else {
                 // Handle error cases
                 console.error('Failed to fetch projects:', response.status);
@@ -169,39 +177,33 @@ export default function Dashboard() {
     }
 
     useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
-                initializeUser(token)
-            } catch (error: any) {
-                console.error(error);
-            }
-        };
-        fetchUser();
-    }, []);
+        if (rendered && projects.length === 0 && promptRef.current) {
+            promptRef.current.innerHTML = 'You have no project created.';
+        }
+    }, [projects, rendered]);
 
     const initializeUser = async (token: string) => {
         const headers = new Headers();
-        if(token){
+        if (token) {
             headers.append('Authorization', `Bearer ${token}`);
         }
         headers.append('Content-Type', 'application/json');
 
-        const user =  await AuthService.getCurrentUser()
+        const user = await AuthService.getCurrentUser()
         const username = user.attributes['name'];
         const email = user.attributes['email'];
 
         const userData = {
-          username: username,
-          email: email,
-          is_admin: user.is_admin
+            username: username,
+            email: email,
+            is_admin: user.is_admin
         };
 
         if (username !== null) {
             // If user is not found, initialize new user
             console.log("New user initializing...");
             try {
-                const createUserResponse  = await fetch('/api/create_user', {
+                const createUserResponse = await fetch('/api/create_user', {
                     method: 'POST',
                     headers: headers,
                     body: JSON.stringify(userData)
@@ -216,7 +218,7 @@ export default function Dashboard() {
             } catch (error) {
                 console.error('Error initializing user:', error);
             }
-        }  
+        }
     }
 
     // function to handle click start new project, clear sessionstorage
@@ -229,34 +231,51 @@ export default function Dashboard() {
 
 
     return (
-        <section className="bg-gradient-to-b from-gray-100 to-white">
+        <section className="bg-gradient-to-b from-gray-100 to-white grow flex flex-col h-full">
             <ToastContainer />
-            <div className="max-w-6xl mx-auto px-4 sm:px-6">
-                <div className="pt-32 pb-12 md:pt-40 md:pb-20">
-                    <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-                        <h1 className="h1 text-blue-600">My Projects</h1>
+            <div className="max-w-6xl w-full mx-auto px-4 pt-16 md:pt-32 flex flex-wrap justify-around">
+                <div className="pt-4 grow pr-4">
+                    <h1 className="h2 text-blue-600">My Projects</h1>
+                </div>
+                <div className="w-full sm:w-fit grow sm:grow-0 text-center pt-4">
+                    <div className="w-full mx-auto">
+                        <button
+                            className="w-full btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500"
+                            type="button"
+                            onClick={handleStartNewProject}
+                        >
+                            Start New Project
+                        </button>
                     </div>
-                    <div className="flex flex-col gap-4">
-                        {currentProjects.map((project) => (
-                            <div
-                                key={project.id}
-                                className="flex border-solid border-2 border-blue-600 p-4 rounded-md shadow-md cursor-pointer"
-                                onClick={() => handleProjectClick(project.id)}
-                            >
-                                <div className='grow'>
-                                    <h2 className="text-lg font-semibold">{project.name}</h2>
-                                </div>
-                                <div className='text-lg opacity-25 hover:opacity-100' onClick={e => handleDelete(e, project.id)}>
-                                    <svg className='w-12' data-name="Capa 1" id="Capa_1" viewBox="0 0 20 19.84" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M10.17,10l3.89-3.89a.37.37,0,1,0-.53-.53L9.64,9.43,5.75,5.54a.37.37,0,1,0-.53.53L9.11,10,5.22,13.85a.37.37,0,0,0,0,.53.34.34,0,0,0,.26.11.36.36,0,0,0,.27-.11l3.89-3.89,3.89,3.89a.34.34,0,0,0,.26.11.35.35,0,0,0,.27-.11.37.37,0,0,0,0-.53Z" />
-                                    </svg>
-                                </div>
+                </div>
+            </div>
+
+            <div className="max-w-6xl w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto" ref={contentRef}>
+                {currentProjects.length > 0 &&
+                    <div className='flex flex-col w-full grow'>
+                        <div className='w-full h-fit grow'>
+                            <div className='w-full px-4'>
+                                <div className='w-full border-b border-gray-300'></div>
                             </div>
-                        ))}
-                    </div>
-                    {projects.length > 0 && (
-                        <div className="flex justify-center items-center mt-6">
+                            {currentProjects.map((project) => {
+                                return (
+                                    <div key={project.id} className="w-full h-16 px-4 rounded-2xl md:hover:bg-gray-200 cursor-pointer"
+                                        onClick={() => handleProjectClick(project.id)}>
+                                        <div className='h-full flex items-center w-full py-4 px-2'>
+                                            <div className='font-bold grow text-ellipsis mx-4 overflow-hidden whitespace-nowrap'>{project.name}</div>
+                                            <div className='text-lg opacity-25 hover:opacity-100' onClick={e => handleDelete(e, project.id)}>
+                                                <svg className='w-12' data-name="Capa 1" id="Capa_1" viewBox="0 0 20 19.84" xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M10.17,10l3.89-3.89a.37.37,0,1,0-.53-.53L9.64,9.43,5.75,5.54a.37.37,0,1,0-.53.53L9.11,10,5.22,13.85a.37.37,0,0,0,0,.53.34.34,0,0,0,.26.11.36.36,0,0,0,.27-.11l3.89-3.89,3.89,3.89a.34.34,0,0,0,.26.11.35.35,0,0,0,.27-.11.37.37,0,0,0,0-.53Z" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div className='w-full border-b border-gray-300'></div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        {/* <div className="flex justify-center items-center my-6">
                             {!projects.length || currentPage === 1 ? (
                                 <button
                                     className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md opacity-50 cursor-not-allowed mr-2`}
@@ -291,17 +310,21 @@ export default function Dashboard() {
                                     Next Page
                                 </button>
                             )}
-                        </div>
-                    )}
-                    <div className="flex justify-center items-center mt-8">
-                        <button onClick={handleStartNewProject}>
-                            <span className="flex items-center bg-blue-600 text-white px-4 py-2 rounded-md shadow-md cursor-pointer">
-                                Start New Project
-                            </span>
-                        </button>
+                        </div> */}
+
                     </div>
-                </div>
+                }
+                {currentProjects.length === 0 &&
+                    <div className='w-full grow flex items-center justify-center'>
+                        <div className='text-gray-400' ref={promptRef}>
+                            Loading...
+                        </div>
+                    </div>
+                }
             </div>
+
+
+            {/* Delete modal */}
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-10" onClose={closeModal}>
                     <Transition.Child

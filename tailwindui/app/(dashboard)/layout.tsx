@@ -1,4 +1,10 @@
 import { WorkflowFooter } from '@/components/ui/footer'
+import Header from '@/components/ui/header';
+
+export const metadata = {
+  title: 'Projects - Dr. Lambda',
+  description: 'Create new content',
+}
 
 export default function DashBoardLayout({
   children,
@@ -6,11 +12,14 @@ export default function DashBoardLayout({
   children: React.ReactNode
 }) {
   return (
-    <main className="flex flex-col" style={{minHeight:'100vh'}}>
-      <div className='grow'>
-        {children}
-      </div>
-      <WorkflowFooter />
-    </main>
+    <>
+      <Header isLanding={false} refList={[]} />
+      <main className="flex flex-col" style={{ minHeight: '100vh' }}>
+        <div className='grow flex flex-col'>
+          {children}
+        </div>
+        <WorkflowFooter />
+      </main>
+    </>
   )
 }

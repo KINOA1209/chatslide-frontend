@@ -11,7 +11,7 @@ const inter = Inter({
 })
 
 export const metadata = {
-  title: 'Workflow - Dr. Lambda',
+  title: 'Home - Dr. Lambda',
   description: 'Create new content',
 }
 
@@ -24,7 +24,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable} font-inter antialiased bg-white text-gray-900 tracking-tight`}>
         <div className="Simpleflex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip">
-          <Header />
           {children}
         </div>
       </body>

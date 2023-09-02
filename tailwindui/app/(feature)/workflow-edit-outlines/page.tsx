@@ -582,7 +582,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                     <div className="flex flex-wrap -mx-3 mt-6">
                         <div className="w-full px-3">
                             {/* Button for generating slides */}
-                            <button className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full disabled:bg-gray-200 disabled:text-gray-400"
+                            <button className="btn text-white font-bold bg-gradient-to-r from-blue-600 to-teal-500 w-full disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400"
                                 onClick={() => { setToSlides(true); }}
                                 disabled={isSubmittingSlide||isSubmittingScript}
                             >
@@ -592,7 +592,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                             <Timer expectedSeconds={60} isSubmitting={isSubmittingSlide} />
 
                             {/* Button for generating scripts */}
-                            <button className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full mt-4 disabled:bg-gray-200 disabled:text-gray-400"
+                            <button className="btn text-blue-600 border-blue-600 w-full mt-4 disabled:from-gray-200 disabled:to-gray-200 disabled:bg-gray-200 disabled:text-gray-400"
                                 onClick={() => { setToSlides(false); }}
                                 disabled={isSubmittingSlide||isSubmittingScript}
                             >

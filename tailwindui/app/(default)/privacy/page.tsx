@@ -1,3 +1,5 @@
+import Header from '@/components/ui/header';
+
 export const metadata = {
   title: "Workflow - Dr. Lambda",
   description: "terms and condtions",
@@ -5,10 +7,11 @@ export const metadata = {
 
 export default function Terms() {
 
-  
+
 
   return (
     <section className="bg-gradient-to-b from-gray-100 to-white">
+      <Header isLanding={false} refList={[]} />
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="pt-32 pb-12 md:pt-40 md:pb-20">
           {/* Page header */}

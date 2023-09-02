@@ -165,7 +165,7 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
                 <form onSubmit={handleSubmit}>
                     <div className="flex flex-wrap -mx-3 mt-6">
                         <div className="w-full px-3">
-                            <button className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full disabled:bg-gray-200 disabled:text-gray-400"
+                            <button className="btn text-white bg-gradient-to-r from-blue-600 to-teal-500 font-bold hover:bg-blue-700 w-full disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400"
                             disabled={isSubmitting}>
                                 {isSubmitting ? 'Generating...' : 'Generate Voice'}
                             </button>
@@ -198,7 +198,7 @@ export default function WorkflowStep4() {
     };
 
     return (
-        <div>
+        <div style={{ background: 'linear-gradient(169deg, rgba(237,113,206,0.602) 0%, rgba(199,157,223,0.566) 13%, rgba(141,165,225,0.397) 40%, rgba(42,136,237,0.221) 50%, rgba(255,255,255,1) 77%, rgba(255,255,255,1) 100%)', }}>
             <ToastContainer />
             <ProjectProgress currentInd={3} contentRef={contentRef} />
             <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
