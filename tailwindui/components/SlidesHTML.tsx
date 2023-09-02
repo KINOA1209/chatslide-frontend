@@ -7,6 +7,7 @@ import { MathJax, MathJaxContext } from 'better-react-mathjax';
 
 interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'p' | 'ul'| 'li' | 'br';
+    className: 'head'|'title'|'subtopic'|'content';
     content: string | string[];
 }
 
@@ -65,15 +66,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
             const slideChildren = Array.from(slide.children);
             for (const child of slideChildren) {
                 if (child.tagName === 'H1') {
-                    elements.push({ type: 'h1', content: sanitizeHtml(child.innerHTML) });
+                    elements.push({ type: 'h1', content: sanitizeHtml(child.innerHTML), className:'head'});
                 }else if (child.className === 'title') {
-                    elements.push({ type: 'h2', content: sanitizeHtml(child.innerHTML) });
+                    elements.push({ type: 'h2', content: sanitizeHtml(child.innerHTML), className:'title'});
                 } else if (child.className === 'subtopic') {
-                    elements.push({ type: 'h3', content: sanitizeHtml(child.innerHTML) });
+                    elements.push({ type: 'h3', content: sanitizeHtml(child.innerHTML), className:'subtopic' });
                 } else if (child.className === 'content') {
                     const listItems = Array.from(child.getElementsByTagName('li'));
                     for (const listItem of listItems){
-                        elements.push({ type: 'li', content: sanitizeHtml(listItem.innerHTML) });
+                        elements.push({ type: 'li', content: sanitizeHtml(listItem.innerHTML), className:'content' });
                     }
                 } 
             }
