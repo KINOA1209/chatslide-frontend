@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, ChangeEvent, FormEvent, useEffect, useRef } from "react";
+import React, { useState, ChangeEvent, FormEvent, useEffect, useRef, RefObject } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -39,6 +39,8 @@ const SignupForm: React.FC = () => {
     const rule3 = useRef<HTMLParagraphElement>(null);
     const rule4 = useRef<HTMLParagraphElement>(null);
     const rule5 = useRef<HTMLParagraphElement>(null);
+
+    const verificationCodeInputRef = useRef<HTMLInputElement>(null);
 
     const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -157,7 +159,9 @@ const SignupForm: React.FC = () => {
         }
     };
 
-    async function sendVerificationCode() {
+    async function sendVerificationCode(e: React.MouseEvent<HTMLButtonElement>) {
+        e.preventDefault();
+
         if (password === "") { // Invalid password
             return;
         }
@@ -189,6 +193,12 @@ const SignupForm: React.FC = () => {
             console.log("Error:", error);
         }
     }
+
+    function handleClickVerificationInput(e: React.MouseEvent<HTMLDivElement>, textRef: RefObject<HTMLInputElement>) {
+        if (textRef.current) {
+            textRef.current.focus();
+        }
+    };
 
     /* write a function that will take the form data and send it to the backend */
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -399,22 +409,26 @@ const SignupForm: React.FC = () => {
                     >
                         Verification Code <span className="text-red-600">*</span>
                     </label>
-                    <input
-                        id="verification_code"
-                        type="text"
-                        className="form-input w-full text-gray-800 mb-2"
-                        placeholder="Enter your verfication code"
-                        required
-                    />
-                    <button
-                        onClick={sendVerificationCode}
-                        type="button"
-                        className="bg-slate-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full"
-                    >
-                        {disabled
-                            ? `Retry after: ${countdown} seconds`
-                            : "Send Verification Code"}
-                    </button>
+                    <div className="form-input flex flex-row flex-nowrap mb-2 focus-within:border focus-within:border-gray-500 p-0 cursor-text"
+                        onClick={e => handleClickVerificationInput(e, verificationCodeInputRef)}>
+                        <input
+                            id="verification_code"
+                            type="text"
+                            className=" text-gray-800 grow border-0 p-0 h-6 focus:outline-none focus:ring-0 mx-4 my-3"
+                            placeholder="Enter verfication code"
+                            required
+                            ref={verificationCodeInputRef}
+                        />
+                        <button
+                            onClick={e => sendVerificationCode(e)}
+                            type="button"
+                            className="btn-sm bg-slate-600 hover:bg-blue-700 text-white rounded-full my-1 mr-1 h-full"
+                        >
+                            {disabled
+                                ? `Wait ${countdown} seconds`
+                                : "Get Code"}
+                        </button>
+                    </div>
                 </div>
             </div>
             <div className="flex flex-wrap -mx-3 mt-6">
