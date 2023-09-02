@@ -4,9 +4,8 @@ import React, { useState, ChangeEvent, FormEvent, useEffect, useRef } from "reac
 import { useRouter, useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { userInfo } from "os";
-import next from "next/types";
 import AuthService from "./utils/AuthService";
+import GoogleSignIn from "@/components/GoogleSignIn";
 
 
 const SignupForm: React.FC = () => {
@@ -15,11 +14,12 @@ const SignupForm: React.FC = () => {
     const nextUri = searchParams.get("next");
 
     const [email, setEmail] = useState("");
-    const [username, setUsername] = useState("");
+    // const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [validEmail, setValidEmail] = useState(false);
     const [disabled, setDisabled] = useState(false);
     const [countdown, setCountdown] = useState(15);
+    const [promoCode, setPromoCode] = useState('');
 
     const [usernameError, setUsernameError] = useState('');
     const [emailError, setEmailError] = useState('');
@@ -42,20 +42,20 @@ const SignupForm: React.FC = () => {
 
     const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-    function handleUsernameChange(event: any) {
-        const username = event.target.value;
+    // function handleUsernameChange(event: any) {
+    //     const username = event.target.value;
 
-        // Validate the username (example: at least 6 characters)
-        if (username.length < 2) {
-            setUsernameError('Name should have at least 2 characters.');
-        } else if (username.length > 16) {
-            setUsernameError('Name should have at most 16 characters.');
-        } else {
-            setUsernameError('');
-        }
+    //     // Validate the username (example: at least 6 characters)
+    //     if (username.length < 2) {
+    //         setUsernameError('Name should have at least 2 characters.');
+    //     } else if (username.length > 16) {
+    //         setUsernameError('Name should have at most 16 characters.');
+    //     } else {
+    //         setUsernameError('');
+    //     }
 
-        setUsername(username);
-    }
+    //     setUsername(username);
+    // }
 
     function handleEmailChange(event: any) {
         const value = event.target.value;
@@ -162,7 +162,8 @@ const SignupForm: React.FC = () => {
             return;
         }
 
-        const resp = await AuthService.sendCode(email, password, username);
+        // Remove username input, use email instead
+        const resp = await AuthService.sendCode(email, password, email);
         try {
             setDisabled(true);
             const interval = setInterval(() => {
@@ -193,10 +194,10 @@ const SignupForm: React.FC = () => {
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const username = (event.target as HTMLFormElement).username.value;
+        // const username = (event.target as HTMLFormElement).username.value;
         const email = (event.target as HTMLFormElement).email.value;
         const code = (event.target as HTMLFormElement).verification_code.value;
-
+        const promo = (event.target as HTMLFormElement).promo.value;
         if (password === "") { // Invalid password
             return;
         }
@@ -210,6 +211,15 @@ const SignupForm: React.FC = () => {
                     console.log('User registered:', userId);
                     sessionStorage.setItem("signed_in", "true")
                 }
+                // TODO: Add promo request
+                if (promo !== '') {
+                    // remove localstorage
+                    if (typeof localStorage !== 'undefined') {
+                        localStorage.removeItem('promo');
+                    }
+                    /// send request
+                }
+
                 if (nextUri == null) {
                     router.push("/dashboard");
                 } else {
@@ -245,9 +255,59 @@ const SignupForm: React.FC = () => {
         }
     };
 
+    const handlePromoChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (typeof localStorage !== 'undefined') {
+            localStorage.setItem('promo', e.target.value);
+        }
+    };
+
     return (
         <form onSubmit={handleSubmit}>
-            <div className="flex flex-wrap -mx-3 mb-4">
+            <div className="flex flex-wrap -mx-3 mb-4 hidden">
+                <div className="w-full px-3">
+                    <label
+                        className="block text-gray-800 text-sm font-medium mb-1"
+                        htmlFor="promo"
+                    >
+                        Enter your promo code here if you have one
+                    </label>
+                    <input
+                        id="promo"
+                        type="text"
+                        onChange={e => handlePromoChange(e)}
+                        className="form-input w-full text-gray-800"
+                        placeholder="Promo Code"
+                    />
+                </div>
+            </div>
+
+            <div className="flex items-center my-6">
+                <div
+                    className="border-t border-gray-300 grow mr-3"
+                    aria-hidden="true"
+                ></div>
+                <div className="text-gray-600 italic">Fast sign up with Google</div>
+                <div
+                    className="border-t border-gray-300 grow ml-3"
+                    aria-hidden="true"
+                ></div>
+            </div>
+
+            <GoogleSignIn />
+
+            <div className="flex items-center my-6">
+                <div
+                    className="border-t border-gray-300 grow mr-3"
+                    aria-hidden="true"
+                ></div>
+                <div className="text-gray-600 italic">Or</div>
+                <div
+                    className="border-t border-gray-300 grow ml-3"
+                    aria-hidden="true"
+                ></div>
+            </div>
+
+            {/* <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">
                     <label
                         className="block text-gray-800 text-sm font-medium mb-1"
@@ -267,7 +327,7 @@ const SignupForm: React.FC = () => {
                     />
                     {usernameError && <div className="text-sm text-red-500">{usernameError}</div>}
                 </div>
-            </div>
+            </div> */}
             <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">
                     <label
@@ -315,8 +375,8 @@ const SignupForm: React.FC = () => {
                         maxLength={16}
                         required
                         ref={passwordRef}
-                        onFocus={e=>{setIsFocused(true)}}
-                        onBlur={e=>{setIsFocused(false)}}
+                        onFocus={e => { setIsFocused(true) }}
+                        onBlur={e => { setIsFocused(false) }}
                     />
                     <input
                         id="password"
