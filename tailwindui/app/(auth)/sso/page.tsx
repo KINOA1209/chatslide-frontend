@@ -7,9 +7,12 @@ export default function SSORedirect() {
     useEffect(() => {
         const nextUri = localStorage.getItem("nextUri");
         const project_to_link = localStorage.getItem("projectToLink");
+        const promo = localStorage.getItem("promo");
         
         localStorage.removeItem('projectToLink');
         localStorage.removeItem('nextUri');
+        localStorage.removeItem('promo');
+
         // Link project
         const linkProject = async (projetc_id: string) => {
 
@@ -27,7 +30,12 @@ export default function SSORedirect() {
             } catch (error) {
                 console.error(error);
             }
-        }
+        };
+
+        const addPromoCodeasync = (promoCode:string) => {
+            // TODO: send request
+        };
+
         if (project_to_link) {
             linkProject(project_to_link);
             // Redirect to project

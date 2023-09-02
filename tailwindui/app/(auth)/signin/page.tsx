@@ -29,7 +29,7 @@ export default function SignIn() {
 
                     {/* Form */}
                     <div className="max-w-sm mx-auto">
-                        <LoginForm />
+                        <GoogleSignIn />
                         <div className="flex items-center my-6">
                             <div
                                 className="border-t border-gray-300 grow mr-3"
@@ -42,7 +42,7 @@ export default function SignIn() {
                             ></div>
                         </div>
 
-                        <GoogleSignIn />
+                        <LoginForm />
 
                         <div className="text-gray-600 text-center mt-6">
                             Do not have an account?{" "}
