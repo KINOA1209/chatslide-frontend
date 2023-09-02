@@ -105,7 +105,7 @@ const Introduction = ({ demoRef }: IntroProps) => {
             style={{
                 background: 'linear-gradient(169deg, rgba(255,0,183,0.7391748935902486) 0%, rgba(237,93,196,0.6019199916294643) 6%, rgba(179,127,213,0.5655054258031338) 26%, rgba(121,145,215,0.3974381989123774) 40%, rgba(22,116,227,0.22096761067708337) 50%, rgba(255,255,255,1) 77%, rgba(255,255,255,1) 100%)',
             }}>
-            <div className="w-full flex flex-col md:items-center justify-between md:justify-center grow md:grow-0">
+            <div className="w-full flex flex-col md:items-center justify-between md:justify-center grow md:grow-0 my-20">
                 <div className="h-full md:h-fit flex flex-col justify-evenly md:justify-center items-center px-4" data-aos="zoom-in">
                     <div>
                         <div className="text-2xl md:text-3xl w-full text-left md:text-center">Be an expert, AI-powered</div>
