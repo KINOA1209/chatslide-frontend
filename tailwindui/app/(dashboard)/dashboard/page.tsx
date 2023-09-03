@@ -182,6 +182,18 @@ export default function Dashboard() {
         }
     }, [projects, rendered]);
 
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+                initializeUser(token)
+            } catch (error: any) {
+                console.error(error);
+            }
+        };
+        fetchUser();
+    }, []);
+
     const initializeUser = async (token: string) => {
         const headers = new Headers();
         if (token) {
