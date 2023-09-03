@@ -55,7 +55,8 @@ export default function Dashboard() {
         const fetchUser = async () => {
             try {
                 const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
-                handleRequest(token)
+                initializeUser(token);
+                handleRequest(token);
             }
             catch (error: any) {
                 console.error(error);
