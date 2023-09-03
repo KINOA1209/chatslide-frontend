@@ -344,7 +344,7 @@ const SignupForm: React.FC = () => {
                     <input
                         id="email"
                         type="email"
-                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                        pattern="[A-Za-z0-9._+\-']+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$"
                         value={email}
                         onChange={handleEmailChange}
                         className="form-input w-full text-gray-800"
