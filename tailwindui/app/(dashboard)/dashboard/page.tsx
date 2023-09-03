@@ -56,7 +56,6 @@ export default function Dashboard() {
             try {
                 const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
                 initializeUser(token);
-                handleRequest(token);
             }
             catch (error: any) {
                 console.error(error);
@@ -200,27 +199,49 @@ export default function Dashboard() {
             is_admin: user.is_admin
         };
 
-        if (username !== null) {
-            // If user is not found, initialize new user
-            console.log("New user initializing...");
-            try {
-                const createUserResponse = await fetch('/api/create_user', {
-                    method: 'POST',
-                    headers: headers,
-                    body: JSON.stringify(userData)
-                });
-                if (createUserResponse.ok) {
-                    console.log("Initialized successfully.")
-                } else {
-                    console.error('Failed to initialize user:', createUserResponse.status);
-                    const errorData = await createUserResponse.json();
-                    console.log('Error message:', errorData.message);
-                }
-            } catch (error) {
-                console.error('Error initializing user:', error);
+        console.log("New user initializing...");
+        try {
+            const createUserResponse = await fetch('/api/create_user', {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(userData)
+            });
+            if (createUserResponse.ok) {
+                console.log("Initialized successfully.")
+                applyPromoCode(token);
+                handleRequest(token);
+            } else {
+                console.error('Failed to initialize user:', createUserResponse.status);
+                const errorData = await createUserResponse.json();
+                console.log('Error message:', errorData.message);
             }
+        } catch (error) {
+            console.error('Error initializing user:', error);
         }
     }
+
+    const applyPromoCode = async (token: string) => {
+        const promo = localStorage.getItem("promo");
+        const email = localStorage.getItem("email");
+
+        localStorage.removeItem('promo');
+        localStorage.removeItem('email');
+        if (promo && promo !== '') {
+            try {
+                const response = await fetch(`/api/user/apply_code`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ 'code': promo, 'email': email }),
+                });
+                console.log(response);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    };
 
     // function to handle click start new project, clear sessionstorage
     const handleStartNewProject = () => {
