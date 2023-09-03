@@ -55,7 +55,8 @@ export default function Dashboard() {
         const fetchUser = async () => {
             try {
                 const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
-                handleRequest(token)
+                initializeUser(token);
+                handleRequest(token);
             }
             catch (error: any) {
                 console.error(error);
@@ -181,18 +182,6 @@ export default function Dashboard() {
             promptRef.current.innerHTML = 'You have no project created.';
         }
     }, [projects, rendered]);
-
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
-                initializeUser(token)
-            } catch (error: any) {
-                console.error(error);
-            }
-        };
-        fetchUser();
-    }, []);
 
     const initializeUser = async (token: string) => {
         const headers = new Headers();
