@@ -14,7 +14,7 @@ export default function Features() {
         <section className="relative" id="more">
 
             <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
-                <div className="pt-12 md:pt-20">
+                <div className="">
 
                     {/* Section header */}
                     <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
@@ -83,7 +83,7 @@ export default function Features() {
                         </div>
 
                         {/* Tabs items */}
-                        <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-5 lg:col-span-6 mb-8 md:mb-0 md:order-1" data-aos="zoom-y-out" ref={tabs}>
+                        <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-5 lg:col-span-6 mb-8 md:mb-0 md:order-1 md:mt-24" data-aos="zoom-y-out" ref={tabs}>
                             <div className="relative flex flex-col text-center lg:text-right">
                                 {/* Item 1 */}
                                 <Transition
@@ -98,7 +98,7 @@ export default function Features() {
                                     leaveTo="opacity-0 -translate-y-16"
                                 >
                                     <div className="relative inline-flex flex-col">
-                                        <video controls poster="/images/script.png" className="md:max-w-none mx-auto rounded" width={500} height="462">
+                                        <video controls poster="/images/script.png" className="md:max-w-none mx-auto rounded" width={500} height="462" autoPlay muted loop>
                                             <source src="/images/script.mp4" type="video/mp4" />
                                             Your browser does not support the video tag.
                                         </video>
@@ -117,7 +117,7 @@ export default function Features() {
                                     leaveTo="opacity-0 -translate-y-16"
                                 >
                                     <div className="relative inline-flex flex-col">
-                                        <video controls poster="/images/file.png" className="md:max-w-none mx-auto rounded" width={500} height="462">
+                                        <video controls poster="/images/file.png" className="md:max-w-none mx-auto rounded" width={500} height="462" autoPlay muted loop>
                                             <source src="/images/file.mp4" type="video/mp4" />
                                             Your browser does not support the video tag.
                                         </video>
@@ -136,7 +136,7 @@ export default function Features() {
                                     leaveTo="opacity-0 -translate-y-16"
                                 >
                                     <div className="relative inline-flex flex-col">
-                                        <video controls poster="/images/equation.png"  className="md:max-w-none mx-auto rounded" width={500} height="462">
+                                        <video controls poster="/images/equation.png" className="md:max-w-none mx-auto rounded" width={500} height="462" autoPlay muted loop>
                                             <source src="/images/equation.mp4" type="video/mp4" />
                                             Your browser does not support the video tag.
                                         </video>
