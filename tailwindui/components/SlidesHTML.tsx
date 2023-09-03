@@ -155,7 +155,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
     };
     
     const listStyle: React.CSSProperties = {
-        listStyleType: 'disc', 
+        listStyle: 'disc', 
         paddingLeft: '2em', 
         marginBottom: '1em', 
     }
