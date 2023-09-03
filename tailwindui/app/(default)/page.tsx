@@ -122,9 +122,9 @@ const Introduction = ({ demoRef }: IntroProps) => {
                     </div>
                     <div className="text-md md:text-lg text-gray-600 text-center mt-2 flex items-center justify-center">
                         <div className="text-xl text-left md:text-center">
-                            Give us a topic. <br></br>
-                            Beautiful slides and videos backed by the wisdom of the entire internet. <br></br>
-                            Now with the ability to comprehend your PDF files.
+                            {/* Give us a topic. <br></br> */}
+                            Transform your PDF or topic into professional and interactive slides for teaching and learning <br></br>
+                            {/* Now with the ability to comprehend your PDF files. */}
                         </div>
                     </div>
                 </div>
@@ -135,7 +135,7 @@ const Introduction = ({ demoRef }: IntroProps) => {
                             onClick={() => { currentUser ? router.push('/dashboard') : router.push('/signup') }}>
                             {currentUser ? 'Go to My Dashboard' : 'Try DrLambda for FREE'}
                         </div>
-                        <div className="text-center mt-2 md:mt-8 text-lg cursor-pointer text-gray-600 hover:text-black hover:underline mb-8 md:mb-0" onClick={scrollToDemo}>Watch Demo</div>
+                        {/* <div className="text-center mt-2 md:mt-8 text-lg cursor-pointer text-gray-600 hover:text-black hover:underline mb-8 md:mb-0" onClick={scrollToDemo}>Watch Demo</div> */}
                     </div>
                 </div>
 
@@ -171,7 +171,7 @@ export default function newLanding() {
         <>
             <Header isLanding={true} refList={refList} />
             <Introduction demoRef={demoRef} />
-            <div ref={demoRef}><SampleVideos /></div>
+            {/* <div ref={demoRef}><SampleVideos /></div> */}
             <div ref={featuresRef}><Features /></div>
             <div ref={useCasesRef}><UseCases /></div>
             <div ref={testimonialRef}><IframeGallery /></div>

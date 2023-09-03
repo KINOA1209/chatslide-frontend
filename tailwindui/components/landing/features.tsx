@@ -3,9 +3,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { Transition } from '@headlessui/react'
 import Image from 'next/image'
-import FeaturesBg1 from '@/public/images/video.png'
-import FeaturesBg2 from '@/public/images/read_pdf.png'
-import FeaturesBg3 from '@/public/images/customization.png'
 
 export default function Features() {
 
@@ -17,12 +14,12 @@ export default function Features() {
         <section className="relative" id="more">
 
             <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
-                <div className="pt-12 md:pt-20">
+                <div className="">
 
                     {/* Section header */}
                     <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
                         <p className="text-xl text-left text-gray-600">
-                        Use Dr. Lambda to remix your knowledge: effortlessly transform PDFs, webpages, and YouTube content into your preferred formats. A game-changer for researchers, teachers, students, consultants, office workers, and beyond!</p>
+                            Use Dr. Lambda to remix your knowledge: effortlessly transform PDFs, webpages, and YouTube content into your preferred formats. A game-changer for researchers, teachers, students, consultants, office workers, and beyond!</p>
                         <p className="text-xl text-left text-gray-600">
                             Dive in and reshape your learning and sharing experience today! 🚀 </p>
                     </div>
@@ -43,8 +40,8 @@ export default function Features() {
                                     onClick={(e) => { e.preventDefault(); setTab(1); }}
                                 >
                                     <div>
-                                        <div className="font-bold leading-snug tracking-tight mb-1">✨ One-Click Video Generation</div>
-                                        <div className="text-gray-600">Unlock your creativity with Dr. Lambda's one-click video generation 🎨; the perfect tool to jumpstart your next big idea! 💡</div>
+                                        <div className="font-bold leading-snug tracking-tight mb-1">✨ One-Click Script Generation</div>
+                                        <div className="text-gray-600">Wrap your knowledge with Dr. Lambda's one-click script generation; the perfect tool to jumpstart your video on fire! 🔥</div>
                                     </div>
                                     <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                                         <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
@@ -73,8 +70,8 @@ export default function Features() {
                                     onClick={(e) => { e.preventDefault(); setTab(3); }}
                                 >
                                     <div>
-                                        <div className="font-bold leading-snug tracking-tight mb-1">✍️ Edit Your Content Real-time</div>
-                                        <div className="text-gray-600">Instantly refine your content with our real-time editing feature for outlines, slides, and scripts.🔋</div>
+                                        <div className="font-bold leading-snug tracking-tight mb-1">🟰 Add Complex Equations Quickly and Efficiently</div>
+                                        <div className="text-gray-600">Instantly improve the clarity of your slides with our equation extraction and generation engine. Save yourself from copypasting and formatting. 🔋</div>
                                     </div>
                                     <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                                         <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
@@ -86,7 +83,7 @@ export default function Features() {
                         </div>
 
                         {/* Tabs items */}
-                        <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-5 lg:col-span-6 mb-8 md:mb-0 md:order-1" data-aos="zoom-y-out" ref={tabs}>
+                        <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-5 lg:col-span-6 mb-8 md:mb-0 md:order-1 md:mt-24" data-aos="zoom-y-out" ref={tabs}>
                             <div className="relative flex flex-col text-center lg:text-right">
                                 {/* Item 1 */}
                                 <Transition
@@ -101,7 +98,10 @@ export default function Features() {
                                     leaveTo="opacity-0 -translate-y-16"
                                 >
                                     <div className="relative inline-flex flex-col">
-                                        <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg1} width={500} height="462" alt="Features bg" />
+                                        <video controls poster="/images/script.png" className="md:max-w-none mx-auto rounded" width={500} height="462" autoPlay muted loop>
+                                            <source src="/images/script.mp4" type="video/mp4" />
+                                            Your browser does not support the video tag.
+                                        </video>
                                     </div>
                                 </Transition>
                                 {/* Item 2 */}
@@ -117,7 +117,10 @@ export default function Features() {
                                     leaveTo="opacity-0 -translate-y-16"
                                 >
                                     <div className="relative inline-flex flex-col">
-                                        <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg2} width={500} height="462" alt="Features bg" />
+                                        <video controls poster="/images/file.png" className="md:max-w-none mx-auto rounded" width={500} height="462" autoPlay muted loop>
+                                            <source src="/images/file.mp4" type="video/mp4" />
+                                            Your browser does not support the video tag.
+                                        </video>
                                     </div>
                                 </Transition>
                                 {/* Item 3 */}
@@ -133,7 +136,10 @@ export default function Features() {
                                     leaveTo="opacity-0 -translate-y-16"
                                 >
                                     <div className="relative inline-flex flex-col">
-                                        <Image className="md:max-w-none mx-auto rounded" src={FeaturesBg3} width={500} height="462" alt="Features bg" />
+                                        <video controls poster="/images/equation.png" className="md:max-w-none mx-auto rounded" width={500} height="462" autoPlay muted loop>
+                                            <source src="/images/equation.mp4" type="video/mp4" />
+                                            Your browser does not support the video tag.
+                                        </video>
                                     </div>
                                 </Transition>
                             </div>

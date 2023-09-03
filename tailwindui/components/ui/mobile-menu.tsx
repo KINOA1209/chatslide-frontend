@@ -21,12 +21,6 @@ const MobileMenu = ({ refList = [] }: HeaderProps) => {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Check if the current page is landing page
-    if (pathname === '/new' || pathname === '/') {
-      setLandingPage(true);
-    } else {
-      setLandingPage(false);
-    }
     // Create a scoped async function within the hook.
     const fetchUser = async () => {
       if (username === null) {

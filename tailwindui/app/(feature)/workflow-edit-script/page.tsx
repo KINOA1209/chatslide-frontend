@@ -150,10 +150,10 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
                         />
                     </div>
                     <div className='flex flex-row items-center px-1.5 py-2 md:flex-col shrink-0'>
-                        <button key={index + 'shorter'} className="btn text-white bg-blue-600 hover:bg-blue-700 w-full" onClick={e => handleUpdateScript(e, index, 'shorter')}>
+                        <button key={index + 'shorter'} className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full" onClick={e => handleUpdateScript(e, index, 'shorter')}>
                             Shorter
                         </button>
-                        <button key={index + 'funnier'} className="mt-4 btn text-white bg-blue-600 hover:bg-blue-700 w-full" onClick={e => handleUpdateScript(e, index, 'funnier')}>
+                        <button key={index + 'funnier'} className="mt-4 btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full" onClick={e => handleUpdateScript(e, index, 'funnier')}>
                             Funnier
                         </button>
                     </div>
@@ -214,7 +214,7 @@ export default function WorkflowStep4() {
             <div className="fixed bottom-10 right-10">
                 <button
                     onClick={handleOpenModal}
-                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
+                    className="bg-gradient-to-r from-blue-600  to-purple-500 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
                 >
                     Feedback
                 </button>
