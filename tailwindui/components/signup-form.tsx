@@ -384,7 +384,7 @@ const SignupForm: React.FC = () => {
                         onBlur={e => { setIsFocused(false) }}
                     />
                     <input
-                        id="password"
+                        id="confirmPassword"
                         type="password"
                         onChange={handleConfirmPasswordChange}
                         className="form-input w-full text-gray-800 mt-3"
