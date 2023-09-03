@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import sanitizeHtml from 'sanitize-html';
 import ReactQuill  from 'react-quill';
+import { MathJax, MathJaxContext } from 'better-react-mathjax';
 
 
 
 interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'p' | 'ul'| 'li' | 'br';
+    className: 'head'|'title'|'subtopic'|'content';
     content: string | string[];
 }
 
@@ -64,21 +66,17 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
             const slideChildren = Array.from(slide.children);
             for (const child of slideChildren) {
                 if (child.tagName === 'H1') {
-                    elements.push({ type: 'h1', content: sanitizeHtml(child.innerHTML) });
-                } else if (child.tagName === 'H2') {
-                    elements.push({ type: 'h2', content: sanitizeHtml(child.innerHTML) });
-                } else if (child.tagName === 'H3') {
-                    elements.push({ type: 'h3', content: sanitizeHtml(child.innerHTML) });
-                } else if (child.tagName === 'P') {
-                    elements.push({ type: 'p', content: sanitizeHtml(child.innerHTML) });
-                } else if (child.tagName === 'UL') {
-                    const liChildren = Array.from(child.children);
-                    for (const liChild of liChildren) {
-                        if (liChild.tagName === 'LI') {
-                            elements.push({ type: 'li', content: sanitizeHtml(liChild.innerHTML) });
-                        }
+                    elements.push({ type: 'h1', content: sanitizeHtml(child.innerHTML), className:'head'});
+                }else if (child.className === 'title') {
+                    elements.push({ type: 'h2', content: sanitizeHtml(child.innerHTML), className:'title'});
+                } else if (child.className === 'subtopic') {
+                    elements.push({ type: 'h3', content: sanitizeHtml(child.innerHTML), className:'subtopic' });
+                } else if (child.className === 'content') {
+                    const listItems = Array.from(child.getElementsByTagName('li'));
+                    for (const listItem of listItems){
+                        elements.push({ type: 'li', content: sanitizeHtml(listItem.innerHTML), className:'content' });
                     }
-                }
+                } 
             }
             return { elements };
         });
@@ -120,7 +118,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
                 currNewFinalSlides.elements[tagIndex].content = `<p>${content}</p>`;
                 break;
             case 'li':
-                (currentSlide.elements[tagIndex].content as string[])[liIndex as number] = content;
+                currentSlide.elements[tagIndex].content = content;
                 currNewFinalSlides.elements[tagIndex].content = `<li>${content}</li>`;
                 break;
             default:
@@ -137,7 +135,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
     const h1Style: React.CSSProperties = {
         fontSize: '3em',
         fontWeight: 'bold',
-        color:'#3333cc',
+        color:'#2563EB',
         position: 'absolute', 
         top: '50%', 
         left: '50%', 
@@ -148,7 +146,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
         fontSize: '1.5em',
         fontWeight: 'bold',
         marginTop: '10px',
-        color:'#3333cc'
+        color:'#2563EB'
     };
 
     const h3Style: React.CSSProperties = {
@@ -205,21 +203,38 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
                     padding: '20px',
                 }}>
                     {slides[currentSlideIndex] && slides[currentSlideIndex].elements.map((element, i) => {
-                        return (
-                            <ReactQuill 
-                                key={i} 
-                                value={element.content as string} 
-                                onBlur={(range, source, quill) => {
-                                    handleSlideEdit(quill.getText(), currentSlideIndex, element.type, i)}}
-                                modules={{  toolbar: false, 
-                                            keyboard: { bindings: { } }}} 
-                                
-                                style={element.type === 'h1' ? h1Style : 
-                                    element.type === 'h2' ? h2Style : 
-                                    element.type === 'h3' ? h3Style : 
-                                    listStyle}
-                            />
-                        );
+                        const content = element.content as string;
+                        console.log(content)
+                        if (content.includes('$$') || content.includes('\\(')){
+                            return (
+                                <div key={i}>
+                                  <MathJaxContext>
+                                    <div style={listStyle}>
+                                      <MathJax>{content}</MathJax>
+                                    </div>
+                                  </MathJaxContext>
+                                </div>
+                              );
+                              
+
+                        }else{
+                            return (
+                                <ReactQuill 
+                                    key={i} 
+                                    value={element.content as string} 
+                                    onBlur={(range, source, quill) => {
+                                        handleSlideEdit(quill.getText(), currentSlideIndex, element.type, i)}}
+                                    modules={{  toolbar: false, 
+                                                keyboard: { bindings: { } }}} 
+                                    
+                                    style={element.type === 'h1' ? h1Style : 
+                                        element.type === 'h2' ? h2Style : 
+                                        element.type === 'h3' ? h3Style : 
+                                        listStyle}
+                                />
+                            );
+
+                        }
                     })}
                 </div>
             )}

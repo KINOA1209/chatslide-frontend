@@ -28,6 +28,7 @@ const SaveToPdfHtml = dynamic(
 
 interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'p' | 'ul'| 'li' | 'br';
+    className: 'head'|'title'|'subtopic'|'content';
     content: string | string[];
 }
 
