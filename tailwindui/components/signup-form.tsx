@@ -19,7 +19,6 @@ const SignupForm: React.FC = () => {
     const [validEmail, setValidEmail] = useState(false);
     const [disabled, setDisabled] = useState(false);
     const [countdown, setCountdown] = useState(15);
-    const [promoCode, setPromoCode] = useState('');
 
     const [usernameError, setUsernameError] = useState('');
     const [emailError, setEmailError] = useState('');
@@ -69,6 +68,10 @@ const SignupForm: React.FC = () => {
             setEmailError('Please enter a valid email address.');
         } else {
             setEmailError('');
+        }
+        // For apppy promo code
+        if (typeof localStorage !== 'undefined') {
+            localStorage.setItem('email', value);
         }
     }
 
@@ -221,14 +224,6 @@ const SignupForm: React.FC = () => {
                     console.log('User registered:', userId);
                     sessionStorage.setItem("signed_in", "true")
                 }
-                // TODO: Add promo request
-                if (promo !== '') {
-                    // remove localstorage
-                    if (typeof localStorage !== 'undefined') {
-                        localStorage.removeItem('promo');
-                    }
-                    /// send request
-                }
 
                 if (nextUri == null) {
                     router.push("/dashboard");
@@ -273,20 +268,20 @@ const SignupForm: React.FC = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div className="flex flex-wrap -mx-3 mb-4 hidden">
+            <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">
                     <label
                         className="block text-gray-800 text-sm font-medium mb-1"
                         htmlFor="promo"
                     >
-                        Enter your promo code here if you have one
+                        Enter your referral code here if you have one
                     </label>
                     <input
                         id="promo"
                         type="text"
                         onChange={e => handlePromoChange(e)}
                         className="form-input w-full text-gray-800"
-                        placeholder="Promo Code"
+                        placeholder="Referral Code"
                     />
                 </div>
             </div>
@@ -349,7 +344,7 @@ const SignupForm: React.FC = () => {
                     <input
                         id="email"
                         type="email"
-                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                        pattern="[A-Za-z0-9._+\-']+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$"
                         value={email}
                         onChange={handleEmailChange}
                         className="form-input w-full text-gray-800"
@@ -389,7 +384,7 @@ const SignupForm: React.FC = () => {
                         onBlur={e => { setIsFocused(false) }}
                     />
                     <input
-                        id="password"
+                        id="confirmPassword"
                         type="password"
                         onChange={handleConfirmPasswordChange}
                         className="form-input w-full text-gray-800 mt-3"
