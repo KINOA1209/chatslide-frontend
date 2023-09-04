@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { TwitterTweetEmbed } from "react-twitter-embed";
+import { Transition } from "@headlessui/react";
 
 export default function IframeGallery() {
     const iframeList = [
@@ -14,8 +15,52 @@ export default function IframeGallery() {
     const [list1, setList1] = useState<JSX.Element[]>([]);
     const [list2, setList2] = useState<JSX.Element[]>([]);
     const [list3, setList3] = useState<JSX.Element[]>([]);
+    const [mobileOnDisplay, setMobileOnDisplay] = useState<number>(0);
+    const [display, setDisplay] = useState(false);
+
+    var interval: any;
+
+    const turnPageNext = () => {
+        setDisplay(false);
+        setTimeout(() => {
+            setMobileOnDisplay(old => {
+                if (old + 1 < iframeList.length) {
+                    return old + 1;
+                } else {
+                    return 0;
+                }
+            })
+        }, 300);
+
+        setTimeout(() => {
+            setDisplay(true);
+        }, 900);
+    };
+
+    const turnPagePrevious = () => {
+        setDisplay(false);
+        setTimeout(() => {
+            setMobileOnDisplay(old => {
+                if (old - 1 >= 0) {
+                    return old - 1;
+                } else {
+                    return iframeList.length - 1;
+                }
+            })
+        }, 300);
+
+        setTimeout(() => {
+            setDisplay(true);
+        }, 900);
+    };
+
     useEffect(() => {
         const whenResize = () => {
+            if (interval) {
+                clearInterval(interval);
+            }
+            setDisplay(false);
+
             const width = window.innerWidth;
             var cols = 1;
             const l1: JSX.Element[] = [];
@@ -30,20 +75,28 @@ export default function IframeGallery() {
                 cols = 3;
             } else if (width >= 640) {
                 cols = 2;
+            } else {
+                setDisplay(true);
             };
 
-            var currentCol = 0;
-            for (let i = 0; i < iframeList.length; i++) {
-                ll[currentCol].push(iframeList[i]);
-                currentCol++;
-                if (currentCol >= cols) {
-                    currentCol = 0;
-                }
+            if (cols >= 2) {
+                var currentCol = 0;
+                for (let i = 0; i < iframeList.length; i++) {
+                    ll[currentCol].push(iframeList[i]);
+                    currentCol++;
+                    if (currentCol >= cols) {
+                        currentCol = 0;
+                    }
 
+                }
+                setList1(l1);
+                setList2(l2);
+                setList3(l3);
+            } else {
+                interval = setInterval(() => {
+                    turnPageNext();
+                }, 6000);
             }
-            setList1(l1);
-            setList2(l2);
-            setList3(l3);
         }
 
         window.addEventListener('resize', whenResize);
@@ -58,7 +111,7 @@ export default function IframeGallery() {
                 </div>
             </div>
 
-            <div className="px-4 sm:px-6 w-full max-w-[1152px] mx-auto grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 gap-4">
+            <div className="px-4 sm:px-6 w-full max-w-[1152px] mx-auto hidden sm:grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 gap-4">
 
                 <div className="w-full h-fit flex flex-col">
                     {list1.map((iframeEl, index) => {
@@ -90,6 +143,27 @@ export default function IframeGallery() {
 
 
             </div>
-        </div>
+            <div className="px-4 w-full mx-auto grid grid-cols-1 sm:hidden">
+                <div className="h-[600px] flex flex-col items-center justify-center">
+                    <div key={'mobile-frame'} className="w-full mb-4" data-aos="fade-up" data-aos-delay="300">
+                        <Transition
+                            className="w-full h-full"
+                            show={display}
+                            enter="transition-opacity duration-500"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="transition-opacity duration-300"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                            unmount={false}
+                        >
+                            <div className="flex flex-row w-full h-full drop-shadow-md overflow-hidden rounded-2xl border border-gray-300">
+                                {iframeList[mobileOnDisplay]}
+                            </div>
+                        </Transition>
+                    </div>
+                </div>
+            </div>
+        </div >
     )
 };
