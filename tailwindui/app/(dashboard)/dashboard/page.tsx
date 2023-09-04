@@ -235,8 +235,36 @@ export default function Dashboard() {
                         'Authorization': `Bearer ${token}`
                     },
                     body: JSON.stringify({ 'code': promo, 'email': email }),
-                });
-                console.log(response);
+                }).then(response => {
+                    return response.json()
+                }).then(data => {
+                    console.log(data);
+                    const status = data['status'];
+                    const message = data['message'];
+                    if (status === 'success') {
+                        toast.success("Welcome! Your referral code has been applied.", {
+                            position: "top-center",
+                            autoClose: 2000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                        });
+                    } else {
+                        toast.error(message, {
+                            position: "top-center",
+                            autoClose: 2000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                        });
+                    }
+                })
             } catch (error) {
                 console.error(error);
             }
