@@ -281,7 +281,7 @@ const SignupForm: React.FC = () => {
                         type="text"
                         onChange={e => handlePromoChange(e)}
                         className="form-input w-full text-gray-800"
-                        placeholder="Referral Code"
+                        placeholder="Referral Code (Optional)"
                     />
                 </div>
             </div>
