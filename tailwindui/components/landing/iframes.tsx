@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import { TwitterTweetEmbed } from "react-twitter-embed";
 import { Transition } from "@headlessui/react";
 
 export default function IframeGallery() {
     const iframeList = [
-        <iframe className="w-full" src="https://www.linkedin.com/embed/feed/update/urn:li:share:7099576842361212929" height="600" title="Embedded post"></iframe>,
+        <iframe className="w-full" src="https://www.linkedin.com/embed/feed/update/urn:li:share:7099576842361212929" height="500" title="Embedded post"></iframe>,
         <iframe className="w-full" src="https://cards.producthunt.com/cards/comments/2713233?v=1" height="400"></iframe>,
         <iframe className="w-full" src="https://cards.producthunt.com/cards/comments/2713836?v=1" height="400"></iframe>,
         <div className="relative w-full scale-[1.05]"><TwitterTweetEmbed tweetId={'1698513465143353696'} /></div>,
@@ -16,50 +16,46 @@ export default function IframeGallery() {
     const [list2, setList2] = useState<JSX.Element[]>([]);
     const [list3, setList3] = useState<JSX.Element[]>([]);
     const [mobileOnDisplay, setMobileOnDisplay] = useState<number>(0);
-    const [display, setDisplay] = useState(false);
+    const [intervalID, setIntervalID] = useState<number>(0);
 
-    var interval: any;
+    const testimonialMobileRef = useRef<HTMLDivElement>(null);
 
-    const turnPageNext = () => {
-        setDisplay(false);
-        setTimeout(() => {
-            setMobileOnDisplay(old => {
-                if (old + 1 < iframeList.length) {
-                    return old + 1;
-                } else {
-                    return 0;
-                }
-            })
-        }, 300);
-
-        setTimeout(() => {
-            setDisplay(true);
-        }, 900);
+    const nextTestimonial = () => {
+        setMobileOnDisplay(old => {
+            if (old + 1 < iframeList.length) {
+                return old + 1;
+            } else {
+                return 0;
+            }
+        })
     };
 
-    const turnPagePrevious = () => {
-        setDisplay(false);
-        setTimeout(() => {
-            setMobileOnDisplay(old => {
-                if (old - 1 >= 0) {
-                    return old - 1;
-                } else {
-                    return iframeList.length - 1;
-                }
-            })
-        }, 300);
 
-        setTimeout(() => {
-            setDisplay(true);
-        }, 900);
+    const previousTestimonial = () => {
+        setMobileOnDisplay(old => {
+            if (old - 1 >= 0) {
+                return old - 1;
+            } else {
+                return iframeList.length - 1;
+            }
+        })
     };
 
     useEffect(() => {
+        if (testimonialMobileRef.current && typeof document !== 'undefined') {
+            const scrollPos = 0.83 * document.documentElement.clientWidth * mobileOnDisplay;
+            testimonialMobileRef.current.scroll({
+                left: scrollPos, behavior: 'smooth'
+            });
+        }
+    }, [mobileOnDisplay]);
+
+    useEffect(() => {
         const whenResize = () => {
-            if (interval) {
-                clearInterval(interval);
-            }
-            setDisplay(false);
+            if (intervalID !== 0) {
+                clearInterval(intervalID);
+                setIntervalID(0);
+            };
 
             const width = window.innerWidth;
             var cols = 1;
@@ -76,7 +72,7 @@ export default function IframeGallery() {
             } else if (width >= 640) {
                 cols = 2;
             } else {
-                setDisplay(true);
+                cols = 1;
             };
 
             if (cols >= 2) {
@@ -93,9 +89,12 @@ export default function IframeGallery() {
                 setList2(l2);
                 setList3(l3);
             } else {
-                interval = setInterval(() => {
-                    turnPageNext();
-                }, 6000);
+                if (intervalID === 0) {
+                    var interval = window.setInterval(() => {
+                        nextTestimonial();
+                    }, 7000);
+                    setIntervalID(interval);
+                };
             }
         }
 
@@ -143,24 +142,17 @@ export default function IframeGallery() {
 
 
             </div>
-            <div className="px-4 w-full mx-auto grid grid-cols-1 sm:hidden">
-                <div className="h-[600px] flex flex-col items-center justify-center">
-                    <div key={'mobile-frame'} className="w-full mb-4" data-aos="fade-up" data-aos-delay="300">
-                        <Transition
-                            className="w-full h-full"
-                            show={display}
-                            enter="transition-opacity duration-500"
-                            enterFrom="opacity-0"
-                            enterTo="opacity-100"
-                            leave="transition-opacity duration-300"
-                            leaveFrom="opacity-100"
-                            leaveTo="opacity-0"
-                            unmount={false}
-                        >
-                            <div className="flex flex-row w-full h-full drop-shadow-md overflow-hidden rounded-2xl border border-gray-300">
-                                {iframeList[mobileOnDisplay]}
-                            </div>
-                        </Transition>
+            <div className="w-full mx-auto grid grid-cols-1 sm:hidden">
+                <div className="w-full flex flex-col items-center justify-center">
+                    <div className="w-full flex flex-row overflow-x-auto pl-[10vw] pr-[7vw] items-center" ref={testimonialMobileRef} onClick={e => { clearInterval(intervalID) }}>
+                        {iframeList.map((iframe, index) => {
+                            return (
+                                <div key={'mobile-' + index} className="shrink-0 w-[80vw] mr-[3vw] drop-shadow-md overflow-hidden rounded-2xl border border-gray-300">
+                                    {iframe}
+                                </div>
+                            )
+                        }
+                        )}
                     </div>
                 </div>
             </div>
