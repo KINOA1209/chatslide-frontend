@@ -51,13 +51,13 @@ export default function AboutUs() {
                         </div>
 
                         <div className="flex flex-col md:flex-row items-center pb-8">
-                            <img src="/images/zhiyuan.jpeg" alt="Zhiyuan Wang" className="w-48 h-48 mb-4 md:mb-0 md:mr-8 rounded-full" />
+                            <img src="/images/andrew.jpeg" alt="Andrew Wang" className="w-48 h-48 mb-4 md:mb-0 md:mr-8 rounded-full" />
                             <div>
-                                <h3 className="h3 text-xl mb-2">Zhiyuan Wang</h3>
+                                <h3 className="h3 text-xl mb-2">Andrew Wang</h3>
                                 <p className="text-base text-gray-600">
-                                    Zhiyuan Wang is a skilled software engineer with a penchant for innovation and optimization.
-                                    As the Engineering Lead at Dr. Lambda, Zhiyuan is shaping the future of AI-enhanced educational content.
-                                    With past experiences spanning Google's mobile data infrastructure and real-time data services at Bloomberg in New York, he's proven adept at crafting efficient systems.
+                                    Andrew Wang is a skilled software engineer with a penchant for innovation and optimization.
+                                    As the Engineering Lead at Dr. Lambda, Andrew is shaping the future of AI-enhanced educational content.
+                                    With past experiences spanning infrastructure at Google and backend systems at Bloomberg, he is proven adept at crafting massive distributed systems and complex software architectures.
                                 </p>
                             </div>
                         </div>
