@@ -296,6 +296,7 @@ const TopicForm: React.FC = () => {
                         placeholder="Ultrasound"
                         value={topic}
                         onChange={e => setTopic(e.target.value)}
+                        maxLength={40}
                         required />
                     {topicSuggestions.length > 0 && (
                         <div>
@@ -343,6 +344,7 @@ const TopicForm: React.FC = () => {
                         value={audience}
                         onChange={e => setAudience(e.target.value)}
                         required
+                        maxLength={40}
                     />
                     {audienceSuggestions.length > 0 && (
                         <div>
