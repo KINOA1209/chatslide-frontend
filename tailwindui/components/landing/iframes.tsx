@@ -89,12 +89,12 @@ export default function IframeGallery() {
                 setList2(l2);
                 setList3(l3);
             } else {
-                if (intervalID === 0) {
-                    var interval = window.setInterval(() => {
-                        nextTestimonial();
-                    }, 7000);
-                    setIntervalID(interval);
-                };
+                // if (intervalID === 0) {
+                //     var interval = window.setInterval(() => {
+                //         nextTestimonial();
+                //     }, 7000);
+                //     setIntervalID(interval);
+                // };
             }
         }
 
