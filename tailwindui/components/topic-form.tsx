@@ -23,6 +23,7 @@ const TopicForm: React.FC = () => {
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showFileModal, setShowFileModal] = useState(false);
+    const [youtubeError, setyYoutubeError] = useState('');
 
     const openFile = () => {
         setShowFileModal(true);
@@ -89,6 +90,10 @@ const TopicForm: React.FC = () => {
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        if (youtubeError) {
+            return;
+        }
+
         const project_id = (typeof window !== 'undefined' && sessionStorage.project_id != undefined) ? sessionStorage.project_id : '';
 
         setIsSubmitting(true);
@@ -234,6 +239,48 @@ const TopicForm: React.FC = () => {
             setShowAudienceInput(true);
         }
     }, [audience]);
+
+    const handleYoutubeChange = (link: string) => {
+        // url format: https://gist.github.com/rodrigoborgesdeoliveira/987683cfbfcc8d800192da1e73adc486 
+        // sample: https://www.youtube.com/watch?v=Ir3eJ1t13fk
+        // sample: http://youtu.be/lalOy8Mbfdc?t=1s
+        // sample: https://www.youtube.com/v/-wtIMTCHWuI?app=desktop
+
+        if (link === '') {
+            setYoutube('');
+            setyYoutubeError('');
+            return;
+        }
+        setYoutube(link);
+        setyYoutubeError('');
+        // validate url
+        const re1 = /youtube\.com\/watch\?v=[a-zA-z0-9_-]{11}/;
+        const re2 = /youtu\.be\/[A-Za-z0-9_-]{11}/;
+        const re3 = /youtube\.com\/v\/[a-zA-z0-9_-]{11}/;
+        if (re1.test(link)) {
+            const essentialLink = link.match(re1);
+            if (essentialLink && essentialLink.length > 0) {
+                console.log('https://www.' + essentialLink[0]);
+                setYoutube('https://www.' + essentialLink[0]);
+            }
+        } else if (re2.test(link)) {
+            const essentialLink = link.match(re2);
+            const vID = link.match(/[A-Za-z0-9_-]{11}/);
+            if (vID && vID.length > 0) {
+                console.log('https://www.youtube.com/watch?v=' + vID[0])
+                setYoutube('https://www.youtube.com/watch?v=' + vID[0]);
+            }
+        } else if (re3.test(link)) {
+            const essentialLink = link.match(re3);
+            const vID = link.match(/[A-Za-z0-9_-]{11}/);
+            if (vID && vID.length > 0) {
+                console.log('https://www.youtube.com/watch?v=' + vID[0])
+                setYoutube('https://www.youtube.com/watch?v=' + vID[0]);
+            }
+        } else {
+            setyYoutubeError('Please use a valid YouTube video link');
+        }
+    };
 
     return (
         <form onSubmit={handleSubmit}>
@@ -421,8 +468,9 @@ const TopicForm: React.FC = () => {
                         type="text"
                         className="form-input w-full text-gray-800 mb-2"
                         value={youtube}
-                        onChange={e => setYoutube(e.target.value)}
+                        onChange={e => handleYoutubeChange(e.target.value)}
                     />
+                    {youtubeError && <div className="text-sm text-red-500">{youtubeError}</div>}
                 </div>
             </div>
 
