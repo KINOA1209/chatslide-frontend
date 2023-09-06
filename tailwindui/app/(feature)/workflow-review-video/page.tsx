@@ -65,7 +65,7 @@ export default function WorkflowStep6() {
     };
 
     return (
-        <div style={{ background: 'linear-gradient(169deg, rgba(237,113,206,0.602) 0%, rgba(199,157,223,0.566) 13%, rgba(141,165,225,0.397) 40%, rgba(42,136,237,0.221) 50%, rgba(255,255,255,1) 77%, rgba(255,255,255,1) 100%)', }}>
+        <div>
             <ProjectProgress currentInd={5} contentRef={contentRef} />
             <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
                 <h1 className="h1">Review Video</h1>
