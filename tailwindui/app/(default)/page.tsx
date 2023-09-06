@@ -175,7 +175,7 @@ export default function newLanding() {
 
     return (
         <>
-            <Header isLanding={true} refList={refList} />
+            <Header loginRequired={false} isLanding={true} refList={refList} />
             <Introduction demoRef={demoRef} />
             {/* <div ref={demoRef}><SampleVideos /></div> */}
             <div ref={featuresRef}><Features /></div>
