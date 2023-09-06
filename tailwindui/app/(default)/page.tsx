@@ -139,6 +139,12 @@ const Introduction = ({ demoRef }: IntroProps) => {
                     </div>
                 </div>
 
+                <div className="flex flex-col justify-center items-center mt-8 md:mt-16">
+                    <div className="text-md md:text-lg text-gray-600 text-center mt-2 flex items-center justify-center">
+                    <a href="https://www.producthunt.com/posts/dr-lambda?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-dr&#0045;lambda" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=412747&theme=light&period=daily" alt="Dr&#0046;&#0032;Lambda - Create&#0032;slides&#0032;with&#0032;words&#0044;&#0032;PDF&#0032;&#0038;&#0032;YouTube&#0032;videos | Product Hunt" style={{width: 250, height: 54}} width="250" height="54" /></a>
+                    </div>
+                </div>
+
             </div>
         </div>
     )
