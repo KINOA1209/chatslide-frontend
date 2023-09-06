@@ -13,7 +13,7 @@ export default function WorkflowLayout({
 }) {
   return (
   <main className="flex flex-col" style={{ minHeight: '100vh' }}>
-    <Header isLanding={false} refList={[]} />
+    <Header loginRequired={true} isLanding={false} refList={[]} />
     <section className="bg-gradient-to-b from-gray-100 to-white pb-8 grow flex flex-col">
       {/* Content */}
       {children}
