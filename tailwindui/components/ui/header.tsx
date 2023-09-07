@@ -6,20 +6,23 @@ import Link from "next/link";
 import Logo from "./logo";
 import DropdownButton from "@/components/utils/dropdown";
 import MobileMenu from "./mobile-menu";
-import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import GoogleAnalytics from "../GoogleAnalytics";
 // import AuthService from "../utils/AuthService";
 import { Auth, Hub } from 'aws-amplify';
 
 interface HeaderProps {
+    loginRequired: boolean,
     isLanding: boolean,
     refList?: Array<React.RefObject<HTMLDivElement>>
 }
-const Header = ({ isLanding = false, refList }: HeaderProps) => {
+const Header = ({loginRequired, isLanding = false, refList }: HeaderProps) => {
     const [top, setTop] = useState<boolean>(true);
     const [user, setUser] = useState(null);
     // const [username, setUsername] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    const router = useRouter();
 
     // detect whether user has scrolled the page down by 10px
     const scrollHandler = () => {
@@ -40,6 +43,9 @@ const Header = ({ isLanding = false, refList }: HeaderProps) => {
                 setLoading(false);
             } catch {
                 console.log('No authenticated user.');
+                if (loginRequired) {
+                    router.push('/signin')
+                }
                 setLoading(false);
             }
         };

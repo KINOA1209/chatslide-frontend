@@ -8,7 +8,7 @@ export default function AuthLayout({
   return (
     <main className="grow">
 
-      <Header isLanding={false} refList={[]} />
+      <Header loginRequired={false} isLanding={false} refList={[]} />
       {children}
 
     </main>
