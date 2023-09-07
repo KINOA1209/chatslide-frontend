@@ -10,12 +10,24 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import GoogleSignIn from "@/components/GoogleSignIn";
 import CustomerServiceInfo from '@/components/customerService';
+import { Auth, Hub } from 'aws-amplify';
 
 
 export default function SignIn() {
     const searchParams = useSearchParams();
     const nextUri = searchParams.get("next");
+    const router = useRouter();
 
+    useEffect(() => {
+        const loginRedirect = async () => {
+            try {
+                const user = await Auth.currentAuthenticatedUser();
+                router.push('/dashboard');
+            } catch {
+            }
+        };
+        loginRedirect();
+    }, []);
 
     return (
         <section className="bg-gradient-to-b from-gray-100 to-white">
