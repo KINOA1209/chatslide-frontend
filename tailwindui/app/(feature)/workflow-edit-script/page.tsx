@@ -136,7 +136,7 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
     };
 
     return (
-        <div style={{ background: 'linear-gradient(169deg, rgba(237,113,206,0.602) 0%, rgba(199,157,223,0.566) 13%, rgba(141,165,225,0.397) 40%, rgba(42,136,237,0.221) 50%, rgba(255,255,255,1) 77%, rgba(255,255,255,1) 100%)', }} className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div>
             {transcriptList.map((data, index) => (
                 <div tabIndex={index} className='w-full flex flex-col md:flex-row rounded border-solid border-2 border-blue-200 mt-4 focus-within:border-blue-600'>
                     <div className={`grid ${hasSlides ? 'sm:grid-rows-2' : 'sm:grid-rows-1'} md:grid-rows-1 ${hasSlides ? 'md:grid-cols-2' : 'md:grid-cols-1'} grow`}>
@@ -198,7 +198,7 @@ export default function WorkflowStep4() {
     };
 
     return (
-        <div style={{ background: 'linear-gradient(169deg, rgba(237,113,206,0.602) 0%, rgba(199,157,223,0.566) 13%, rgba(141,165,225,0.397) 40%, rgba(42,136,237,0.221) 50%, rgba(255,255,255,1) 77%, rgba(255,255,255,1) 100%)', }}>
+        <div>
             <ToastContainer />
             <ProjectProgress currentInd={3} contentRef={contentRef} />
             <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
