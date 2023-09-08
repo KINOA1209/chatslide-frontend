@@ -23,7 +23,7 @@ const TopicForm: React.FC = () => {
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showFileModal, setShowFileModal] = useState(false);
-    const [youtubeError, setyYoutubeError] = useState('');
+    const [youtubeError, setYoutubeError] = useState('');
 
     const openFile = () => {
         setShowFileModal(true);
@@ -242,43 +242,45 @@ const TopicForm: React.FC = () => {
 
     const handleYoutubeChange = (link: string) => {
         // url format: https://gist.github.com/rodrigoborgesdeoliveira/987683cfbfcc8d800192da1e73adc486 
+        // search params will be ignored
         // sample: https://www.youtube.com/watch?v=Ir3eJ1t13fk
         // sample: http://youtu.be/lalOy8Mbfdc?t=1s
         // sample: https://www.youtube.com/v/-wtIMTCHWuI?app=desktop
 
         if (link === '') {
             setYoutube('');
-            setyYoutubeError('');
+            setYoutubeError('');
             return;
         }
         setYoutube(link);
-        setyYoutubeError('');
+        setYoutubeError('');
         // validate url
-        const re1 = /youtube\.com\/watch\?v=[a-zA-z0-9_-]{11}/;
-        const re2 = /youtu\.be\/[A-Za-z0-9_-]{11}/;
-        const re3 = /youtube\.com\/v\/[a-zA-z0-9_-]{11}/;
-        if (re1.test(link)) {
-            const essentialLink = link.match(re1);
+        const regex1 = /youtube\.com\/watch\?v=[a-zA-z0-9_-]{11}/;
+        const regex2 = /youtu\.be\/[A-Za-z0-9_-]{11}/;
+        const regex3 = /youtube\.com\/v\/[a-zA-z0-9_-]{11}/;
+        if (regex1.test(link)) {
+            const essentialLink = link.match(regex1);
             if (essentialLink && essentialLink.length > 0) {
-                console.log('https://www.' + essentialLink[0]);
                 setYoutube('https://www.' + essentialLink[0]);
             }
-        } else if (re2.test(link)) {
-            const essentialLink = link.match(re2);
-            const vID = link.match(/[A-Za-z0-9_-]{11}/);
-            if (vID && vID.length > 0) {
-                console.log('https://www.youtube.com/watch?v=' + vID[0])
-                setYoutube('https://www.youtube.com/watch?v=' + vID[0]);
+        } else if (regex2.test(link)) {
+            const essentialLink = link.match(regex2);
+            if (essentialLink && essentialLink.length > 0) {
+                const vID = essentialLink[0].match(/[A-Za-z0-9_-]{11}/);
+                if (vID && vID.length > 0) {
+                    setYoutube('https://www.youtube.com/watch?v=' + vID[0]);
+                }
             }
-        } else if (re3.test(link)) {
-            const essentialLink = link.match(re3);
-            const vID = link.match(/[A-Za-z0-9_-]{11}/);
-            if (vID && vID.length > 0) {
-                console.log('https://www.youtube.com/watch?v=' + vID[0])
-                setYoutube('https://www.youtube.com/watch?v=' + vID[0]);
+        } else if (regex3.test(link)) {
+            const essentialLink = link.match(regex3);
+            if (essentialLink && essentialLink.length > 0) {
+                const vID = essentialLink[0].match(/[A-Za-z0-9_-]{11}/);
+                if (vID && vID.length > 0) {
+                    setYoutube('https://www.youtube.com/watch?v=' + vID[0]);
+                }
             }
         } else {
-            setyYoutubeError('Please use a valid YouTube video link');
+            setYoutubeError('Please use a valid YouTube video link');
         }
     };
 
