@@ -66,7 +66,6 @@ export default function WorkflowStep6() {
 
     return (
         <div>
-            <ProjectProgress currentInd={5} contentRef={contentRef} />
             <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
                 <h1 className="h1">Review Video</h1>
             </div>
@@ -74,6 +73,8 @@ export default function WorkflowStep6() {
             <div className="max-w-4xl mx-auto" ref={contentRef}>
                 <VideoVisualizer videoFile={videoFile} foldername={foldername} />
             </div>
+            
+            <ProjectProgress currentInd={5} contentRef={contentRef} />
             <div className="fixed bottom-10 right-10">
                 <button
                 onClick={handleOpenModal}
