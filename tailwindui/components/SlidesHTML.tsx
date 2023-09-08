@@ -133,7 +133,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
     }
 
     const h1Style: React.CSSProperties = {
-        fontSize: '3em',
+        fontSize: '2.5vw',
         fontWeight: 'bold',
         color:'#2563EB',
         position: 'absolute', 
@@ -143,34 +143,37 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
     };    
     
     const h2Style: React.CSSProperties = {
-        fontSize: '1.5em',
+        fontSize: '1.3vw',
         fontWeight: 'bold',
         marginTop: '10px',
         color:'#2563EB'
     };
 
     const h3Style: React.CSSProperties = {
-        fontSize: '1.2em', 
+        fontSize: '1.1vw', 
         fontWeight: 'bold',
     };
     
     const listStyle: React.CSSProperties = {
-        listStyle: 'disc', 
-        paddingLeft: '2em', 
-        marginBottom: '1em', 
+        display: 'list-item',
+        fontSize: '1vw',
+        marginLeft: '3vw',
+        listStylePosition: 'outside', 
+        paddingLeft: '1vw',  
     }
+    
     
 
     return (
         <div id="slideContainer" style={{
-            width: '800px',
-            height: '600px',
+            width: '50vw',
+            height: 'calc(50vw / 1.77)',
             backgroundSize: 'cover',
             display: 'flex',
             flexDirection: 'column', 
             justifyContent: 'flex-start', 
             alignItems: 'flex-start', 
-            padding: '20px',
+            
             boxSizing: 'border-box',
             border: 'none',
             boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
@@ -180,27 +183,39 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
             disabled={currentSlideIndex === 0} 
             style={{
                 position: 'absolute',
-                right: '70px',
-                bottom: '10px',
+                right: '5.5vw',
+                bottom: '3vh',
                 backgroundColor: 'rgba(128, 128, 128, 0.5)', 
                 color: 'white', 
-                width: '50px', 
-                borderRadius: '5px',
+                width: '3vw', 
+                height: '3vh', 
+                borderRadius: '0.5vw', 
+                fontSize: '0.9vw',
             }} onClick={() => goToSlide(currentSlideIndex - 1)}>&#9664;</button>}
             {currentSlideIndex < slides.length - 1 && <button 
             disabled={currentSlideIndex === slides.length - 1}
             style={{
                 position: 'absolute',
-                right: '10px',
-                bottom: '10px',
+                right: '2vw',
+                bottom: '3vh',
                 backgroundColor: 'rgba(128, 128, 128, 0.5)', 
                 color: 'white', 
-                width: '50px',
-                borderRadius: '5px',
+                width: '3vw', 
+                height: '3vh', 
+                borderRadius: '0.5vw', 
+                fontSize: '0.9vw',
             }} onClick={() => goToSlide(currentSlideIndex + 1)}>&#9654;</button>}
+            <div style={{
+                position: 'absolute',
+                right: '0.5vw',
+                bottom: '0.5vh',
+                color: 'rgba(128, 128, 128, 0.8)', 
+                fontSize: '0.8vw',
+            }}>{currentSlideIndex + 1}/{slides.length}
+            </div>
             {slides.length > 0 && (
                 <div className="slide" style={{
-                    padding: '20px',
+                    padding: '5%',
                 }}>
                     {slides[currentSlideIndex] && slides[currentSlideIndex].elements.map((element, i) => {
                         const content = element.content as string;
