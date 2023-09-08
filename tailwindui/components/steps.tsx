@@ -125,7 +125,6 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
                 if (progressRefDesktop.current && marginAvailable >= gap + progressWidth) {
                     setDesktopVisibility('visible');
                     setMobileButtonDisplay('none');
-                    setMobileDisplay('none');
                     setMobileOpened(false);
                     progressRefDesktop.current.style.left = `${marginAvailable - gap - progressWidth}px`;
                     progressRefDesktop.current.style.top = `${Math.max((viewHeight - headerHeight - progressHeight) / 2, minTitleHeight)}px`;
@@ -135,15 +134,9 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
                         progressRefDesktop.current.style.top = '';
                         progressRefDesktop.current.style.bottom = `${footerHeight}px`;
                     }
-                } else if (progressRefDesktop.current) {
+                } else {
                     setDesktopVisibility('hidden');
-                    if (mobileOpended) {
-                        setMobileDisplay('flex');
-                        setMobileButtonDisplay('none');
-                    } else {
-                        setMobileDisplay('none');
-                        setMobileButtonDisplay('flex');
-                    }
+                    setMobileButtonDisplay('flex');
                 }
             }
         };
@@ -154,9 +147,14 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
             window.addEventListener('scroll', handSidebarPosition);
         }, []);
 
+        // Mobile sidebar panel is only determined by mobileOpened
         useEffect(() => {
-            handSidebarPosition();
-        }, [mobileOpended]);
+            if (mobileOpended) {
+                setMobileDisplay('flex');
+            } else {
+                setMobileDisplay('none');
+            }
+        }, [mobileOpended])
 
         useEffect(() => {
             // Create a scoped async function within the hook.
