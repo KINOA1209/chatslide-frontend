@@ -101,8 +101,8 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
         const [user, setUser] = useState(null);
 
         // fire on every window resize
-        useEffect(() => {
-            function handleResize() {
+        const handSidebarPosition = () => {
+            if (window && document) {
                 // Constants -> working for workflow now
                 const minTitleHeight = 100;
                 const headerHeight = 80;
@@ -146,10 +146,17 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
                     }
                 }
             }
-            handleResize();
-            window.addEventListener('resize', handleResize);
-            window.addEventListener('scroll', handleResize);
-        }, [])
+        };
+
+        useEffect(() => {
+            handSidebarPosition();
+            window.addEventListener('resize', handSidebarPosition);
+            window.addEventListener('scroll', handSidebarPosition);
+        }, []);
+
+        useEffect(() => {
+            handSidebarPosition();
+        }, [mobileOpended]);
 
         useEffect(() => {
             // Create a scoped async function within the hook.
