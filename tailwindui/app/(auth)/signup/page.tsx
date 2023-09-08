@@ -12,12 +12,15 @@ export default function SignUp() {
     const router = useRouter();
 
     useEffect(() => {
-        const loginRedirect = async () => {
-            try {
-                const user = await Auth.currentAuthenticatedUser();
+        const loginRedirect = () => {
+            Auth.currentAuthenticatedUser().then(user => {
                 router.push('/dashboard');
-            } catch {
-            }
+            }).catch((error: string) => {
+                // Throw error if the reason is unknown
+                if (error !== "The user is not authenticated") {
+                    console.error(error);
+                }
+            });
         };
         loginRedirect();
     }, []);
