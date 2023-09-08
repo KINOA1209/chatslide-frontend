@@ -118,17 +118,13 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose }) => {
                   Your Feedback
                 </h3>
                 <p className="text-sm text-gray-500 mt-2">
-                  We'd love to hear from you! Your experience and thoughts help us create a better
-                  service for everyone.
+                  We'd love to hear from you! You can also send us an email at <a href="mailto:contact@drlambda.ai" className="underline">contact@drlambda.ai</a>.
                 </p>
               </div>
             )}
             {submitSuccessful ? null : (
               <form onSubmit={handleSubmit} className="w-full mt-4">
                 <div className="mt-4">
-                  <label className="flex items-center justify-center block text-gray-700 text-sm font-medium">
-                    What's your opinion of the result?
-                  </label>
                   <div className="flex items-center justify-center">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button
