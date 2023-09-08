@@ -13,7 +13,7 @@ export default function DashBoardLayout({
 }) {
   return (
     <>
-      <Header isLanding={false} refList={[]} />
+      <Header loginRequired={true} isLanding={false} refList={[]} />
       <main className="flex flex-col" style={{ minHeight: '100vh' }}>
         <div className='grow flex flex-col'>
           {children}

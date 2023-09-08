@@ -8,10 +8,12 @@ import AuthService from "./utils/AuthService";
 import GoogleSignIn from "@/components/GoogleSignIn";
 
 
+
 const SignupForm: React.FC = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const nextUri = searchParams.get("next");
+
 
     const [email, setEmail] = useState("");
     // const [username, setUsername] = useState("");
@@ -266,6 +268,20 @@ const SignupForm: React.FC = () => {
         }
     };
 
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const referralCode = queryParams.get('referral');
+        if (referralCode) {
+          // If the 'referral' query parameter exists, set it as the input value
+          const promoInput = document.getElementById('promo') as HTMLInputElement;
+          if (promoInput) {
+            promoInput.value = referralCode;
+            // Manually trigger the change event so that the localStorage is updated
+            promoInput.dispatchEvent(new Event('change'));
+          }
+        }
+      }, []);
+
     return (
         <form onSubmit={handleSubmit}>
             <div className="flex flex-wrap -mx-3 mb-4">
@@ -281,7 +297,7 @@ const SignupForm: React.FC = () => {
                         type="text"
                         onChange={e => handlePromoChange(e)}
                         className="form-input w-full text-gray-800"
-                        placeholder="Referral Code"
+                        placeholder="Referral Code (Optional)"
                     />
                 </div>
             </div>

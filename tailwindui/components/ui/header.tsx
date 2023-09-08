@@ -6,20 +6,23 @@ import Link from "next/link";
 import Logo from "./logo";
 import DropdownButton from "@/components/utils/dropdown";
 import MobileMenu from "./mobile-menu";
-import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import GoogleAnalytics from "../GoogleAnalytics";
 // import AuthService from "../utils/AuthService";
 import { Auth, Hub } from 'aws-amplify';
 
 interface HeaderProps {
+    loginRequired: boolean,
     isLanding: boolean,
     refList?: Array<React.RefObject<HTMLDivElement>>
 }
-const Header = ({ isLanding = false, refList }: HeaderProps) => {
+const Header = ({loginRequired, isLanding = false, refList }: HeaderProps) => {
     const [top, setTop] = useState<boolean>(true);
     const [user, setUser] = useState(null);
     // const [username, setUsername] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    const router = useRouter();
 
     // detect whether user has scrolled the page down by 10px
     const scrollHandler = () => {
@@ -40,6 +43,9 @@ const Header = ({ isLanding = false, refList }: HeaderProps) => {
                 setLoading(false);
             } catch {
                 console.log('No authenticated user.');
+                if (loginRequired) {
+                    router.push('/signin')
+                }
                 setLoading(false);
             }
         };
@@ -87,10 +93,10 @@ const Header = ({ isLanding = false, refList }: HeaderProps) => {
                 <div className="max-w-4/5 mx-auto px-5 sm:px-6">
                     <div className="flex items-center justify-between h-16 md:h-20">
                         {/* Site branding */}
-                        <div className="flex flex-row items-center grow md:grow-0">
+                        <div className="flex flex-row items-center md:items-end grow md:grow-0">
                             <Logo />
                             <div className="grow md:grow-0 flex justify-center md:justify-start">
-                                <div className="w-fit text-xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500" style={{ fontFamily: 'Lexend, sans-serif' }}>
+                                <div className="w-fit text-xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500 md:relative md:-bottom-[7px]" style={{ fontFamily: 'Lexend, sans-serif' }}>
                                     <a href="/">DrLambda</a>
                                 </div>
                             </div>
@@ -116,10 +122,10 @@ const Header = ({ isLanding = false, refList }: HeaderProps) => {
             <div className="max-w-4/5 mx-auto px-5 sm:px-6">
                 <div className="flex items-center justify-between h-16 md:h-20">
                     {/* Site branding */}
-                    <div className="flex flex-row items-center grow md:grow-0">
+                    <div className="flex flex-row items-center md:items-end grow md:grow-0">
                         <Logo />
-                        <div className="grow md:grow-0 flex justify-center md:justify-start">
-                            <div className="w-fit text-xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500" style={{ fontFamily: 'Lexend, sans-serif' }}>
+                        <div className="grow md:grow-0 flex flex-row justify-center md:justify-start">
+                            <div className="w-fit text-xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500 md:relative md:-bottom-[7px]" style={{ fontFamily: 'Lexend, sans-serif' }}>
                                 <a href="/">DrLambda</a>
                             </div>
                         </div>

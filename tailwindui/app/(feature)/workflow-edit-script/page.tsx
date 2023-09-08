@@ -166,8 +166,8 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
                     <div className="flex flex-wrap -mx-3 mt-6">
                         <div className="w-full px-3">
                             <button className="btn text-white bg-gradient-to-r from-blue-600 to-teal-500 font-bold hover:bg-blue-700 w-full disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400"
-                            disabled>
-                                {isSubmitting ? 'Generating...' : '🔒 Generate Voice'}
+                            disabled={isSubmitting}>
+                                {isSubmitting ? 'Generating...' : 'Generate Voice'}
                             </button>
                         </div>
                     </div>
