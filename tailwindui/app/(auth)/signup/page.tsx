@@ -4,8 +4,24 @@
 import Link from "next/link";
 import SignupForm from "@/components/signup-form";
 import CustomerServiceInfo from '@/components/customerService';
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Auth, Hub } from 'aws-amplify';
 
 export default function SignUp() {
+    const router = useRouter();
+
+    useEffect(() => {
+        const loginRedirect = async () => {
+            try {
+                const user = await Auth.currentAuthenticatedUser();
+                router.push('/dashboard');
+            } catch {
+            }
+        };
+        loginRedirect();
+    }, []);
+
     return (
         <section className="bg-gradient-to-b from-gray-100 to-white">
             <div className="max-w-6xl mx-auto px-4 sm:px-6">

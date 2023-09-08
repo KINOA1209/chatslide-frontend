@@ -5,11 +5,11 @@ import { Transition } from "@headlessui/react";
 export default function IframeGallery() {
     const iframeList = [
         <iframe className="w-full" src="https://www.linkedin.com/embed/feed/update/urn:li:share:7099576842361212929" height="500" title="Embedded post"></iframe>,
+        <div className="relative w-full scale-[1.05]"><TwitterTweetEmbed tweetId={'1698559011107602603'} /></div>,
         <iframe className="w-full" src="https://cards.producthunt.com/cards/comments/2713233?v=1" height="400"></iframe>,
         <iframe className="w-full" src="https://cards.producthunt.com/cards/comments/2713836?v=1" height="400"></iframe>,
         <div className="relative w-full scale-[1.05]"><TwitterTweetEmbed tweetId={'1698513465143353696'} /></div>,
         <iframe className="w-full" src="https://cards.producthunt.com/cards/comments/2714561?v=1" height="400"></iframe>,
-        <iframe className="w-full" src="https://cards.producthunt.com/cards/comments/2714642?v=1" height="400"></iframe>,
     ]
 
     const [list1, setList1] = useState<JSX.Element[]>([]);
