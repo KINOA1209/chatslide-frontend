@@ -10,6 +10,31 @@ import AuthService from '@/components/utils/AuthService';
 import FeedbackForm from '@/components/feedback';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { LoadingIcon } from '@/components/progress';
+
+interface UpdateButtonProps {
+    callback: Function,
+    text: string,
+    ind: number
+}
+
+const UpdateButton = ({ callback, text, ind }: UpdateButtonProps) => {
+    const [updating, setUpdating] = useState(false);
+
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>, index: number, ask: string) => {
+        setUpdating(old => { return true });
+        callback(e, index, ask).then(() => {
+            setUpdating(old => { return false });
+        });
+    };
+
+    return <button key={ind + text} className="btn w-[154px] text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400"
+        onClick={e => handleClick(e, ind, 'shorter')}
+        disabled={updating}>
+        <div className='h-[22px] mr-2' hidden={!updating}><LoadingIcon /></div>
+        {text}
+    </button>
+}
 
 const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], imageUrls: [] }) => {
     const [transcriptList, setTranscriptList] = useState<string[]>(transcripts);
@@ -150,12 +175,14 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
                         />
                     </div>
                     <div className='flex flex-row items-center px-1.5 py-2 md:flex-col shrink-0'>
-                        <button key={index + 'shorter'} className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full" onClick={e => handleUpdateScript(e, index, 'shorter')}>
+                        {/* <button key={index + 'shorter'} className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full" onClick={e => handleUpdateScript(e, index, 'shorter')}>
                             Shorter
                         </button>
                         <button key={index + 'funnier'} className="mt-4 btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full" onClick={e => handleUpdateScript(e, index, 'funnier')}>
                             Funnier
-                        </button>
+                        </button> */}
+                        <UpdateButton callback={handleUpdateScript} text={'shorter'} ind={index} />
+                        <div className='ml-4 md:ml-0 md:mt-4'><UpdateButton callback={handleUpdateScript} text={'funnier'} ind={index} /></div>
                     </div>
                 </div>
             ))}
@@ -166,7 +193,7 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
                     <div className="flex flex-wrap -mx-3 mt-6">
                         <div className="w-full px-3">
                             <button className="btn text-white bg-gradient-to-r from-blue-600 to-teal-500 font-bold hover:bg-blue-700 w-full disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400"
-                            disabled={isSubmitting}>
+                                disabled={isSubmitting}>
                                 {isSubmitting ? 'Generating...' : 'Generate Voice'}
                             </button>
                         </div>

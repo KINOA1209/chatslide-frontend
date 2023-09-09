@@ -101,8 +101,8 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
         const [user, setUser] = useState(null);
 
         // fire on every window resize
-        useEffect(() => {
-            function handleResize() {
+        const handSidebarPosition = () => {
+            if (window && document) {
                 // Constants -> working for workflow now
                 const minTitleHeight = 100;
                 const headerHeight = 80;
@@ -125,7 +125,6 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
                 if (progressRefDesktop.current && marginAvailable >= gap + progressWidth) {
                     setDesktopVisibility('visible');
                     setMobileButtonDisplay('none');
-                    setMobileDisplay('none');
                     setMobileOpened(false);
                     progressRefDesktop.current.style.left = `${marginAvailable - gap - progressWidth}px`;
                     progressRefDesktop.current.style.top = `${Math.max((viewHeight - headerHeight - progressHeight) / 2, minTitleHeight)}px`;
@@ -135,21 +134,27 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
                         progressRefDesktop.current.style.top = '';
                         progressRefDesktop.current.style.bottom = `${footerHeight}px`;
                     }
-                } else if (progressRefDesktop.current) {
+                } else {
                     setDesktopVisibility('hidden');
-                    if (mobileOpended) {
-                        setMobileDisplay('flex');
-                        setMobileButtonDisplay('none');
-                    } else {
-                        setMobileDisplay('none');
-                        setMobileButtonDisplay('flex');
-                    }
+                    setMobileButtonDisplay('flex');
                 }
             }
-            handleResize();
-            window.addEventListener('resize', handleResize);
-            window.addEventListener('scroll', handleResize);
-        }, [])
+        };
+
+        useEffect(() => {
+            handSidebarPosition();
+            window.addEventListener('resize', handSidebarPosition);
+            window.addEventListener('scroll', handSidebarPosition);
+        }, []);
+
+        // Mobile sidebar panel is only determined by mobileOpened
+        useEffect(() => {
+            if (mobileOpended) {
+                setMobileDisplay('flex');
+            } else {
+                setMobileDisplay('none');
+            }
+        }, [mobileOpended])
 
         useEffect(() => {
             // Create a scoped async function within the hook.
@@ -189,7 +194,7 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
             <>
                 {/* open mobile sidebar button */}
                 <div
-                    className='select-none fixed rounded-full bottom-20 left-10 w-16 h-16 flex items-center justify-center border-solid border-2 border-blue-200 text-blue-600'
+                    className='select-none fixed rounded-full bottom-20 left-10 w-16 h-16 flex items-center justify-center border-solid border-2 border-blue-200 text-blue-600 cursor-pointer'
                     style={{ display: mobileButtonDisplay, background: `radial-gradient(closest-side, white 61%, transparent 60% 100%),conic-gradient(#0070f4 ${(currentInd + 1) / steps.length * 100}%, white 0)` }}
                     onClick={handleMobileOpen}>
                     <div>{currentInd + 1}/{steps.length}</div>
@@ -210,7 +215,7 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
                         </div>
                     </div>
                 </div>
-                <div style={{ display: mobileDisplay }} className='fixed w-full h-full z-10 bg-gray-500/75 items-center justify-center' onClick={handleMobileClose}>
+                <div style={{ display: mobileDisplay }} className='fixed top-0 left-0 w-full h-full z-10 bg-gray-500/75 items-center justify-center' onClick={handleMobileClose}>
                     <div className='w-fit select-none grow-0 drop-shadow-xl border-solid border-2 border-blue-600 rounded-lg bg-white z-20 fixed' ref={progressRefMobile} onClick={e => { e.stopPropagation() }}>
                         <div className='-top-4 flex justify-center sticky'>
                             <div className='w-fit flex flex-col flex-nowrap content-start'>

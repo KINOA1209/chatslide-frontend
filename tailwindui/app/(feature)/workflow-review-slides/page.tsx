@@ -159,7 +159,6 @@ export default function WorkflowStep3() {
 
     return (
         <div>
-            <ProjectProgress currentInd={2} contentRef={contentRef} />
             <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
                 <h1 className="h1">Review Slides</h1>
             </div>
@@ -171,6 +170,8 @@ export default function WorkflowStep3() {
                 <br />
                 <SlideVisualizer slide_files={slide_files} />
             </div>
+            
+            <ProjectProgress currentInd={2} contentRef={contentRef} />
             <div className="fixed bottom-10 right-10">
                 <button
                 onClick={handleOpenModal}
