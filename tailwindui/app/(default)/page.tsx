@@ -16,7 +16,7 @@ import Pricing from '@/components/landing/pricing'
 // import Newsletter from '@/components/landing/newsletter'
 import IframeGallery from '@/components/landing/iframes'
 
-import discord from '@/public/images/discord.png'
+import discord from '@/public/images/discord2x.png';
 
 interface TextCarouselProps {
     slides: string[];
@@ -140,8 +140,8 @@ const Introduction = ({ demoRef }: IntroProps) => {
                         {/* <div className="text-center mt-2 md:mt-8 text-lg cursor-pointer text-gray-600 hover:text-black hover:underline mb-8 md:mb-0" onClick={scrollToDemo}>Watch Demo</div> */}
                     </div>
                     <div className="flex flex-col justify-center items-center mt-8 md:mt-16">
-                        <div className="text-md md:text-lg text-gray-600 text-center mt-2 flex items-center justify-center rounded-xl overflow-hidden border border-[#7688d4] h-[54px] w-[250px] bg-white">
-                            <a className="w-full" href="https://discord.gg/77g8qsxH" target="_blank"><img className="mx-auto" src={discord.src} width={220} /></a>
+                        <div className="text-md md:text-lg text-gray-600 text-center mt-2 flex items-center justify-center rounded-xl overflow-hidden border border-[#7688d4] bg-white">
+                            <a className="w-full" href="https://discord.gg/77g8qsxH" target="_blank"><img className="mx-auto" src={discord.src} width={250} /></a>
                         </div>
                     </div>
                     <div className="flex flex-col justify-center items-center mt-2 md:mt-2">
