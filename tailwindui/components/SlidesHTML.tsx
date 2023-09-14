@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import sanitizeHtml from 'sanitize-html';
-import ReactQuill  from 'react-quill';
+import ReactQuill from 'react-quill';
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
+import backdrop from '@/public/images/backdrop.jpg';
+import './slidesHTML.css';
+import { Col_2_img_1 } from "@/components/slideTemplates";
 
 
 
 interface SlideElement {
-    type: 'h1' | 'h2' | 'h3' | 'p' | 'ul'| 'li' | 'br';
-    className: 'head'|'title'|'subtopic'|'content';
+    type: 'h1' | 'h2' | 'h3' | 'p' | 'ul' | 'li' | 'br';
+    className: 'head' | 'title' | 'subtopic' | 'content';
     content: string | string[];
 }
 
@@ -16,16 +19,16 @@ interface Slide {
 }
 
 type SlidesHTMLProps = {
-    finalSlides: Slide[]; 
-    setFinalSlides: React.Dispatch<React.SetStateAction<Slide[]>>; 
+    finalSlides: Slide[];
+    setFinalSlides: React.Dispatch<React.SetStateAction<Slide[]>>;
 };
 
-const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  }) => {
+const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) => {
     const [slides, setSlides] = useState<Slide[]>([]);
     const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
     const foldername = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('foldername') : '';
 
-    useEffect(() => {  
+    useEffect(() => {
         if (foldername !== null) {
             loadHtmlFile(foldername, 'html_init.html');
         } else {
@@ -66,17 +69,17 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
             const slideChildren = Array.from(slide.children);
             for (const child of slideChildren) {
                 if (child.tagName === 'H1') {
-                    elements.push({ type: 'h1', content: sanitizeHtml(child.innerHTML), className:'head'});
-                }else if (child.className === 'title') {
-                    elements.push({ type: 'h2', content: sanitizeHtml(child.innerHTML), className:'title'});
+                    elements.push({ type: 'h1', content: sanitizeHtml(child.innerHTML), className: 'head' });
+                } else if (child.className === 'title') {
+                    elements.push({ type: 'h2', content: sanitizeHtml(child.innerHTML), className: 'title' });
                 } else if (child.className === 'subtopic') {
-                    elements.push({ type: 'h3', content: sanitizeHtml(child.innerHTML), className:'subtopic' });
+                    elements.push({ type: 'h3', content: sanitizeHtml(child.innerHTML), className: 'subtopic' });
                 } else if (child.className === 'content') {
                     const listItems = Array.from(child.getElementsByTagName('li'));
-                    for (const listItem of listItems){
-                        elements.push({ type: 'li', content: sanitizeHtml(listItem.innerHTML), className:'content' });
+                    for (const listItem of listItems) {
+                        elements.push({ type: 'li', content: sanitizeHtml(listItem.innerHTML), className: 'content' });
                     }
-                } 
+                }
             }
             return { elements };
         });
@@ -135,34 +138,34 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
     const h1Style: React.CSSProperties = {
         fontSize: '2.5vw',
         fontWeight: 'bold',
-        color:'#2563EB',
-        position: 'absolute', 
-        top: '50%', 
-        left: '50%', 
+        color: '#2563EB',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
         transform: 'translate(-50%, -50%)'
-    };    
-    
+    };
+
     const h2Style: React.CSSProperties = {
         fontSize: '1.3vw',
         fontWeight: 'bold',
         marginTop: '10px',
-        color:'#2563EB'
+        color: '#2563EB'
     };
 
     const h3Style: React.CSSProperties = {
-        fontSize: '1.1vw', 
+        fontSize: '1.1vw',
         fontWeight: 'bold',
     };
-    
+
     const listStyle: React.CSSProperties = {
         display: 'list-item',
         fontSize: '1vw',
         marginLeft: '3vw',
-        listStylePosition: 'outside', 
-        paddingLeft: '1vw',  
+        listStylePosition: 'outside',
+        paddingLeft: '1vw',
     }
-    
-    
+
+
 
     return (
         <div id="slideContainer" style={{
@@ -170,46 +173,21 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
             height: 'calc(50vw / 1.77)',
             backgroundSize: 'cover',
             display: 'flex',
-            flexDirection: 'column', 
-            justifyContent: 'flex-start', 
-            alignItems: 'flex-start', 
-            
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+
             boxSizing: 'border-box',
             border: 'none',
             boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
-            position:'relative',
-        }}>        
-            {currentSlideIndex > 0 && <button 
-            disabled={currentSlideIndex === 0} 
-            style={{
-                position: 'absolute',
-                right: '5.5vw',
-                bottom: '3vh',
-                backgroundColor: 'rgba(128, 128, 128, 0.5)', 
-                color: 'white', 
-                width: '3vw', 
-                height: '3vh', 
-                borderRadius: '0.5vw', 
-                fontSize: '0.9vw',
-            }} onClick={() => goToSlide(currentSlideIndex - 1)}>&#9664;</button>}
-            {currentSlideIndex < slides.length - 1 && <button 
-            disabled={currentSlideIndex === slides.length - 1}
-            style={{
-                position: 'absolute',
-                right: '2vw',
-                bottom: '3vh',
-                backgroundColor: 'rgba(128, 128, 128, 0.5)', 
-                color: 'white', 
-                width: '3vw', 
-                height: '3vh', 
-                borderRadius: '0.5vw', 
-                fontSize: '0.9vw',
-            }} onClick={() => goToSlide(currentSlideIndex + 1)}>&#9654;</button>}
+            position: 'relative',
+        }}>
+
             <div style={{
                 position: 'absolute',
                 right: '0.5vw',
                 bottom: '0.5vh',
-                color: 'rgba(128, 128, 128, 0.8)', 
+                color: 'rgba(128, 128, 128, 0.8)',
                 fontSize: '0.8vw',
             }}>{currentSlideIndex + 1}/{slides.length}
             </div>
@@ -217,7 +195,78 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
                 <div className="slide" style={{
                     padding: '5%',
                 }}>
-                    {slides[currentSlideIndex] && slides[currentSlideIndex].elements.map((element, i) => {
+                    {(slides[currentSlideIndex] && slides[currentSlideIndex].elements.length >= 3) &&
+                        <Col_2_img_1 topic={
+                            <ReactQuill
+                                key={0}
+                                value={slides[currentSlideIndex].elements[0].content as string}
+                                onBlur={(range, source, quill) => {
+                                    handleSlideEdit(quill.getText(), currentSlideIndex, slides[currentSlideIndex].elements[0].type, 0)
+                                }}
+                                modules={{
+                                    toolbar: false,
+                                    keyboard: { bindings: {} }
+                                }}
+
+                                style={h2Style}
+                            />
+                        } subtopic={
+                            <ReactQuill
+                                key={1}
+                                value={slides[currentSlideIndex].elements[1].content as string}
+                                onBlur={(range, source, quill) => {
+                                    handleSlideEdit(quill.getText(), currentSlideIndex, slides[currentSlideIndex].elements[1].type, 1)
+                                }}
+                                modules={{
+                                    toolbar: false,
+                                    keyboard: { bindings: {} }
+                                }}
+
+                                style={h3Style}
+                            />
+                        } content={
+                            <ReactQuill
+                                key={1}
+                                value={slides[currentSlideIndex].elements[2].content as string}
+                                onBlur={(range, source, quill) => {
+                                    handleSlideEdit(quill.getText(), currentSlideIndex, slides[currentSlideIndex].elements[2].type, 2)
+                                }}
+                                modules={{
+                                    toolbar: false,
+                                    keyboard: { bindings: {} }
+                                }}
+
+                                style={listStyle}
+                            />
+                        } img={backdrop} />
+                    }
+            {currentSlideIndex > 0 && <button
+                disabled={currentSlideIndex === 0}
+                style={{
+                    position: 'absolute',
+                    right: '5.5vw',
+                    bottom: '3vh',
+                    backgroundColor: 'rgba(128, 128, 128, 0.5)',
+                    color: 'white',
+                    width: '3vw',
+                    height: '3vh',
+                    borderRadius: '0.5vw',
+                    fontSize: '0.9vw',
+                }} onClick={() => goToSlide(currentSlideIndex - 1)}>&#9664;</button>}
+            {currentSlideIndex < slides.length - 1 && <button
+                disabled={currentSlideIndex === slides.length - 1}
+                style={{
+                    position: 'absolute',
+                    right: '2vw',
+                    bottom: '3vh',
+                    backgroundColor: 'rgba(128, 128, 128, 0.5)',
+                    color: 'white',
+                    width: '3vw',
+                    height: '3vh',
+                    borderRadius: '0.5vw',
+                    fontSize: '0.9vw',
+                }} onClick={() => goToSlide(currentSlideIndex + 1)}>&#9654;</button>}
+                    {/* {slides[currentSlideIndex] && slides[currentSlideIndex].elements.map((element, i) => {
                         const content = element.content as string;
                         console.log(content)
                         if (content.includes('$$') || content.includes('\\(')){
@@ -250,11 +299,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides  })
                             );
 
                         }
-                    })}
+                    })} */}
                 </div>
             )}
         </div>
-    );  
+    );
 }
 export default SlidesHTML;
 
