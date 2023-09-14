@@ -224,10 +224,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
 
                                 style={h3Style}
                             />
-                        } content={
+                        } content={                            
                             <ReactQuill
                                 key={1}
-                                value={slides[currentSlideIndex].elements[2].content as string}
+                                value={slides[currentSlideIndex].elements
+                                    .slice(2) // Get elements from startIndex onwards
+                                    .map((element) => element.content)
+                                    .join("\n")}
                                 onBlur={(range, source, quill) => {
                                     handleSlideEdit(quill.getText(), currentSlideIndex, slides[currentSlideIndex].elements[2].type, 2)
                                 }}
