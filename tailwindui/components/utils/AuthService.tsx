@@ -141,6 +141,18 @@ class AuthService {
             throw error;
         }
     }
+
+    async updateName (name: string) {
+        try {
+            const user = await AmplifyAuth.currentAuthenticatedUser();
+            const result = await AmplifyAuth.updateUserAttributes(user, {
+                name: name
+            });
+            console.log(result); // SUCCESS
+        } catch(err) {
+            console.log(err);
+        }
+    };
 }
 
 export default new AuthService();
