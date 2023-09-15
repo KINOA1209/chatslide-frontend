@@ -434,7 +434,7 @@ const SignupForm: React.FC = () => {
                             onClick={e => sendVerificationCode(e)}
                             type="button"
                             className="btn-sm bg-slate-500 hover:bg-blue-700 text-white rounded-full my-1 mr-1 h-full disabled:bg-slate-700 disabled:text-gray-400"
-                            disabled={disabled}
+                            // disabled={disabled}
                         >
                             {/* {disabled
                                 ? `Wait ${countdown} seconds`
