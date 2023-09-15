@@ -137,13 +137,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
     }
 
     const h1Style: React.CSSProperties = {
-        fontSize: '2.5vw',
+        fontSize: '3.5vw',
         fontWeight: 'bold',
         color: '#2563EB',
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)'
     };
 
     const h2Style: React.CSSProperties = {
@@ -200,8 +196,16 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                             <>
                                 {console.log("Rendering First_page_img_1")}
                                 <First_page_img_1
-                                    user_name="Test User Name" 
-                                    title="Test Title"
+                                    user_name={<></>}
+                                    title={
+                                        <div
+                                        key={0}
+                                        contentEditable={true}
+                                        onBlur={(e) => handleSlideEdit(e.target.innerText, currentSlideIndex, slides[currentSlideIndex].elements[0].type, 0)}
+                                        style={h1Style}
+                                        dangerouslySetInnerHTML={{ __html: slides[currentSlideIndex].elements[0].content as string }}
+                                        />
+                                    }
                                     topic={<></>}
                                     subtopic={<></>}
                                     content={<></>}
@@ -212,8 +216,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                         )
                             :<>
                             <Col_2_img_1 
-                                user_name=" " 
-                                title=" " 
+                                user_name={<></>}
+                                title={<></>}
                                 topic={
                                     <div
                                         key={0}
