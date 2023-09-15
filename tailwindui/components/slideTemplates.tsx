@@ -6,11 +6,11 @@ interface MainSlideProps {
     topic: JSX.Element,
     subtopic: JSX.Element,
     content: JSX.Element,
-    img: StaticImageData
+    imgs: string[],
+    update_callback: Function
 }
 
-export const Col_2_img_1 = ({ topic, subtopic, content, img }: MainSlideProps) => {
-    const [imgs, setImgs] = useState()
+export const Col_2_img_1 = ({ topic, subtopic, content, imgs, update_callback }: MainSlideProps) => {
     return <div 
     className="rounded-md overflow-hidden"
     style={{
@@ -36,8 +36,8 @@ export const Col_2_img_1 = ({ topic, subtopic, content, img }: MainSlideProps) =
         <div className="h-full w-full flex flex-row overflow-hidden gap-[32px]">
             <div className="w-full h-full grow">{content}</div>
             <div className="w-full h-full grow rounded-md overflow-hidden">
-                <ImgModule src={img.src} /></div>
-                {/* <ImgModule src={''} /></div> */}
+                <ImgModule src={[imgs[0]]} /></div>
+                {/* <ImgModule src={[]} /></div> */}
         </div>
     </div>
 }

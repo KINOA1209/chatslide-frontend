@@ -224,7 +224,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
 
                                 style={h3Style}
                             />
-                        } content={                            
+                        } content={
                             <ReactQuill
                                 key={1}
                                 value={slides[currentSlideIndex].elements
@@ -241,34 +241,34 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
 
                                 style={listStyle}
                             />
-                        } img={backdrop} />
+                        } imgs={[backdrop.src]} update_callback={() => { }} />
                     }
-            {currentSlideIndex > 0 && <button
-                disabled={currentSlideIndex === 0}
-                style={{
-                    position: 'absolute',
-                    right: '5.5vw',
-                    bottom: '3vh',
-                    backgroundColor: 'rgba(128, 128, 128, 0.5)',
-                    color: 'white',
-                    width: '3vw',
-                    height: '3vh',
-                    borderRadius: '0.5vw',
-                    fontSize: '0.9vw',
-                }} onClick={() => goToSlide(currentSlideIndex - 1)}>&#9664;</button>}
-            {currentSlideIndex < slides.length - 1 && <button
-                disabled={currentSlideIndex === slides.length - 1}
-                style={{
-                    position: 'absolute',
-                    right: '2vw',
-                    bottom: '3vh',
-                    backgroundColor: 'rgba(128, 128, 128, 0.5)',
-                    color: 'white',
-                    width: '3vw',
-                    height: '3vh',
-                    borderRadius: '0.5vw',
-                    fontSize: '0.9vw',
-                }} onClick={() => goToSlide(currentSlideIndex + 1)}>&#9654;</button>}
+                    {currentSlideIndex > 0 && <button
+                        disabled={currentSlideIndex === 0}
+                        style={{
+                            position: 'absolute',
+                            right: '5.5vw',
+                            bottom: '3vh',
+                            backgroundColor: 'rgba(128, 128, 128, 0.5)',
+                            color: 'white',
+                            width: '3vw',
+                            height: '3vh',
+                            borderRadius: '0.5vw',
+                            fontSize: '0.9vw',
+                        }} onClick={() => goToSlide(currentSlideIndex - 1)}>&#9664;</button>}
+                    {currentSlideIndex < slides.length - 1 && <button
+                        disabled={currentSlideIndex === slides.length - 1}
+                        style={{
+                            position: 'absolute',
+                            right: '2vw',
+                            bottom: '3vh',
+                            backgroundColor: 'rgba(128, 128, 128, 0.5)',
+                            color: 'white',
+                            width: '3vw',
+                            height: '3vh',
+                            borderRadius: '0.5vw',
+                            fontSize: '0.9vw',
+                        }} onClick={() => goToSlide(currentSlideIndex + 1)}>&#9654;</button>}
                     {/* {slides[currentSlideIndex] && slides[currentSlideIndex].elements.map((element, i) => {
                         const content = element.content as string;
                         console.log(content)
