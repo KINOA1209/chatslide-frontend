@@ -1,4 +1,6 @@
 import { StaticImageData } from "next/image";
+import { ImgModule } from "@/components/imgModule";
+import { useState } from "react";
 
 interface MainSlideProps {
     topic: JSX.Element,
@@ -8,6 +10,7 @@ interface MainSlideProps {
 }
 
 export const Col_2_img_1 = ({ topic, subtopic, content, img }: MainSlideProps) => {
+    const [imgs, setImgs] = useState()
     return <div 
     className="rounded-md overflow-hidden"
     style={{
@@ -32,7 +35,9 @@ export const Col_2_img_1 = ({ topic, subtopic, content, img }: MainSlideProps) =
         <hr className="border border-[#E7E9EB] w-full mt-[20px] mb-[12px]"></hr>
         <div className="h-full w-full flex flex-row overflow-hidden gap-[32px]">
             <div className="w-full h-full grow">{content}</div>
-            <div className="w-full h-full grow rounded-md overflow-hidden"><img className="w-full h-full" src={img.src}></img></div>
+            <div className="w-full h-full grow rounded-md overflow-hidden">
+                <ImgModule src={img.src} /></div>
+                {/* <ImgModule src={''} /></div> */}
         </div>
     </div>
 }
