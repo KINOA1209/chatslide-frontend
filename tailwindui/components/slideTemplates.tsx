@@ -1,6 +1,6 @@
 import { StaticImageData } from "next/image";
 import { ImgModule } from "@/components/imgModule";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface MainSlideProps {
     user_name: JSX.Element,
@@ -13,23 +13,60 @@ interface MainSlideProps {
 }
 
 export const Col_2_img_1 = ({ user_name, title, topic, subtopic, content, imgs, update_callback }: MainSlideProps) => {
-    return <div 
-    className="rounded-md overflow-hidden"
-    style={{
-        width: '50vw',
-        height: 'calc(50vw / 1.77)',
-        backgroundSize: 'cover',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        boxSizing: 'border-box',
-        border: 'none',
-        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
-        position: 'relative',
-        backgroundColor: 'white',
-        padding: 'calc(50vw * 28 / 960)',
-    }}>
+    // localImgs array length should be initialized to ImgCount
+    const ImgCount = 1;
+    const [localImgs, setLocalImgs] = useState<string[]>(['']);
+    // init localImgs
+    useEffect(() => {
+        if (imgs.length === ImgCount) {
+            setLocalImgs([...imgs])
+        } else {
+            let cleanedImgs = imgs.filter(url => url !== '');
+            if (cleanedImgs.length > ImgCount) {
+                // if too many images => remove excessive urls
+                cleanedImgs = cleanedImgs.splice(ImgCount, cleanedImgs.length - ImgCount);
+            } else if (cleanedImgs.length < ImgCount) {
+                // if not enough images => add empty urls
+                for (let i = cleanedImgs.length + 1; i <= ImgCount; i++) {
+                    cleanedImgs.push('');
+                };
+            }
+            setLocalImgs(cleanedImgs);
+        }
+    }, [])
+
+    // TODO: use update_callback to update image array (imgs)
+    // useEffect(() => {
+    //     update_callback(localImgs)
+    // }, [localImgs])
+
+    const updateImgAtIndex = (index: number) => {
+        const updateLocalImgs = (url: string) => {
+            console.log("callback", url)
+            let newLocalImgs = [...localImgs];
+            newLocalImgs[index] = url;
+            setLocalImgs(newLocalImgs);
+        };
+        return updateLocalImgs;
+    }
+
+    return <div
+        className="rounded-md overflow-hidden"
+        style={{
+            width: '50vw',
+            height: 'calc(50vw / 1.77)',
+            backgroundSize: 'cover',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            boxSizing: 'border-box',
+            border: 'none',
+            boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
+            position: 'relative',
+            backgroundColor: 'white',
+            padding: 'calc(50vw * 28 / 960)',
+        }}>
         <div>
             <div>{topic}</div>
         </div>
@@ -38,41 +75,80 @@ export const Col_2_img_1 = ({ user_name, title, topic, subtopic, content, imgs, 
         <div className="h-full w-full flex flex-row overflow-hidden gap-[32px]">
             <div className="w-full h-full grow">{content}</div>
             <div className="w-full h-full grow rounded-md overflow-hidden">
-                <ImgModule src={[imgs[0]]} /></div>
-                {/* <ImgModule src={[]} /></div> */}
+                <ImgModule imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} />
+            </div>
         </div>
     </div>
 }
+
+
 export const First_page_img_1 = ({ user_name, title, topic, subtopic, content, imgs, update_callback }: MainSlideProps) => {
-    return <div 
-    className="rounded-md overflow-hidden"
-    style={{
-        width: '50vw',
-        height: 'calc(50vw / 1.77)',
-        backgroundSize: 'cover',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        boxSizing: 'border-box',
-        border: 'none',
-        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
-        position: 'relative',
-        backgroundColor: 'white',
-        padding: 'calc(50vw * 28 / 960)',
-    }}>
+    // localImgs array length should be initialized to ImgCount
+    const ImgCount = 1;
+    const [localImgs, setLocalImgs] = useState<string[]>(['']);
+    // init localImgs
+    useEffect(() => {
+        if (imgs.length === ImgCount) {
+            setLocalImgs([...imgs])
+        } else {
+            let cleanedImgs = imgs.filter(url => url !== '');
+            if (cleanedImgs.length > ImgCount) {
+                // if too many images => remove excessive urls
+                cleanedImgs = cleanedImgs.splice(ImgCount, cleanedImgs.length - ImgCount);
+            } else if (cleanedImgs.length < ImgCount) {
+                // if not enough images => add empty urls
+                for (let i = cleanedImgs.length + 1; i <= ImgCount; i++) {
+                    cleanedImgs.push('');
+                };
+            }
+            setLocalImgs(cleanedImgs);
+        }
+    }, [])
+
+    // TODO: use update_callback to update image array (imgs)
+    // useEffect(() => {
+    //     update_callback(localImgs)
+    // }, [localImgs])
+
+    const updateImgAtIndex = (index: number) => {
+        const updateLocalImgs = (url: string) => {
+            console.log("callback", url)
+            let newLocalImgs = [...localImgs];
+            newLocalImgs[index] = url;
+            setLocalImgs(newLocalImgs);
+        };
+        return updateLocalImgs;
+    }
+
+    return <div
+        className="rounded-md overflow-hidden"
+        style={{
+            width: '50vw',
+            height: 'calc(50vw / 1.77)',
+            backgroundSize: 'cover',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            boxSizing: 'border-box',
+            border: 'none',
+            boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
+            position: 'relative',
+            backgroundColor: 'white',
+            padding: 'calc(50vw * 28 / 960)',
+        }}>
         <div className="w-1/2 flex flex-col justify-between h-full">
             <div>
                 {user_name}
             </div>
-                        
+
             <div>
                 {title}
             </div>
         </div>
 
         <div className="w-1/2 h-full rounded-md overflow-hidden">
-                <ImgModule src={[imgs[0]]}  />
+            <ImgModule imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} />
         </div>
-    </div>
+    </div >
 }
