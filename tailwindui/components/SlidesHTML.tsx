@@ -195,12 +195,21 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
         }}>
             {slides.length > 0 && (
                 <div className="slide">
-                    {(slides[currentSlideIndex] && slides[currentSlideIndex].elements.length >= 3) && (
-                        currentSlideIndex === 0 ? 
-                            //<First_page_img_1
-                                // TODO HERE
-                            ///>
-                            ""
+                    {slides[currentSlideIndex] && (
+                        currentSlideIndex === 0 ? (
+                            <>
+                                {console.log("Rendering First_page_img_1")}
+                                <First_page_img_1
+                                    user_name="Test User Name" 
+                                    title="Test Title"
+                                    topic={<></>}
+                                    subtopic={<></>}
+                                    content={<></>}
+                                    imgs={[backdrop.src]}
+                                    update_callback={() => {}}
+                                />
+                            </>
+                        )
                             :<>
                             <Col_2_img_1 
                                 user_name=" " 
@@ -282,7 +291,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                             </div>
                             </>
                     )}
-                </div>
+                    </div>
             )}
 
             {currentSlideIndex > 0 && <button
