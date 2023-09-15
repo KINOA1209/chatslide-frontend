@@ -12,7 +12,7 @@ interface MainSlideProps {
     update_callback: Function
 }
 
-export const Col_2_img_1 = ({ user_name,topic, subtopic, content, imgs, update_callback }: MainSlideProps) => {
+export const Col_2_img_1 = ({ user_name, title, topic, subtopic, content, imgs, update_callback }: MainSlideProps) => {
     return <div 
     className="rounded-md overflow-hidden"
     style={{
@@ -62,15 +62,13 @@ export const First_page_img_1 = ({ user_name, title, topic, subtopic, content, i
         padding: 'calc(50vw * 28 / 960)',
     }}>
         <div>
-            <div>{topic}</div>
+            <div>{user_name}</div>
         </div>
-        <div>{subtopic}</div>
         <hr className="border border-[#E7E9EB] w-full mt-[20px] mb-[12px]"></hr>
         <div className="h-full w-full flex flex-row overflow-hidden gap-[32px]">
-            <div className="w-full h-full grow">{content}</div>
+            <div className="w-full h-full grow">{title}</div>
             <div className="w-full h-full grow rounded-md overflow-hidden">
                 <ImgModule src={[imgs[0]]} /></div>
-                {/* <ImgModule src={[]} /></div> */}
         </div>
     </div>
 }
