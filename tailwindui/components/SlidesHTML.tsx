@@ -196,6 +196,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                             <>
                                 {console.log("Rendering First_page_img_1")}
                                 <First_page_img_1
+                                    key={currentSlideIndex}
                                     user_name={<></>}
                                     title={
                                         <div
@@ -216,6 +217,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                         )
                             :<>
                             <Col_2_img_1 
+                                key={currentSlideIndex}
                                 user_name={<></>}
                                 title={<></>}
                                 topic={

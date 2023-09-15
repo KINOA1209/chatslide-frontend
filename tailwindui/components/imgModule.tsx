@@ -40,7 +40,12 @@ export const ImgModule = ({ src }: ImgModuleProp) => {
                 search_keyword: (e.target as HTMLFormElement).search_keyword.value
             })
         }).then(response => {
-            return response.json();
+            if (response.ok) {
+                return response.json();
+            } else {
+                const error = response.status
+                console.error(error, response);
+            }
         }).then(parsedResponse => {
             console.log(parsedResponse);
             setSearchResult(parsedResponse.data.images);
