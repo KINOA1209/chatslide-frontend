@@ -164,7 +164,7 @@ export const ImgModule = ({ src }: ImgModuleProp) => {
             </Transition>
         </Transition>
         <div onClick={openModal}
-            className="w-full h-full bg-[#E7E9EB] hover:bg-[#CAD0D3] flex flex-col items-center justify-center cursor-pointer">
+            className="w-full h-full bg-[#E7E9EB] transition ease-in-out duration-150 hover:bg-[#CAD0D3] flex flex-col items-center justify-center cursor-pointer">
             <div>
                 {src === '' ? <svg className="w-20 h-20 opacity-50" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <rect x="0" fill="none" width="24" height="24" />
