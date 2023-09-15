@@ -4,7 +4,7 @@ import ReactQuill from 'react-quill';
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
 import backdrop from '@/public/images/backdrop.jpg';
 import './slidesHTML.css';
-import { First_page_img_1,Col_2_img_1 } from "@/components/slideTemplates";
+import { First_page_img_1, Col_2_img_1 } from "@/components/slideTemplates";
 
 
 
@@ -174,160 +174,154 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
     }
 
     return (
-        
-        <div id="slideContainer" style={{
-            width: '50vw',
-            height: 'calc(50vw / 1.77)',
-            backgroundSize: 'cover',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
+        <div className='w-fit h-fit'>
+            <div id="slideContainer" style={{
+                width: '50vw',
+                height: 'calc(50vw / 1.77)',
+                backgroundSize: 'cover',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
 
-            boxSizing: 'border-box',
-            border: 'none',
-            boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
-            position: 'relative',
-        }}>
-            {slides.length > 0 && (
-                <div className="slide">
-                    {slides[currentSlideIndex] && (
-                        currentSlideIndex === 0 ? (
-                            <>
-                                {console.log("Rendering First_page_img_1")}
-                                <First_page_img_1
-                                    key={currentSlideIndex}
-                                    user_name={<></>}
-                                    title={
-                                        <div
-                                        key={0}
-                                        contentEditable={true}
-                                        onBlur={(e) => handleSlideEdit(e.target.innerText, currentSlideIndex, slides[currentSlideIndex].elements[0].type, 0)}
-                                        style={h1Style}
-                                        dangerouslySetInnerHTML={{ __html: slides[currentSlideIndex].elements[0].content as string }}
-                                        />
-                                    }
-                                    topic={<></>}
-                                    subtopic={<></>}
-                                    content={<></>}
-                                    imgs={[backdrop.src]}
-                                    update_callback={() => {}}
-                                />
-                            </>
-                        )
-                            :<>
-                            <Col_2_img_1 
-                                key={currentSlideIndex}
-                                user_name={<></>}
-                                title={<></>}
-                                topic={
-                                    <div
-                                        key={0}
-                                        contentEditable={true}
-                                        onBlur={(e) => handleSlideEdit(e.target.innerText, currentSlideIndex, slides[currentSlideIndex].elements[0].type, 0)}
-                                        style={h2Style}
-                                        dangerouslySetInnerHTML={{ __html: slides[currentSlideIndex].elements[0].content as string }}
+                boxSizing: 'border-box',
+                border: 'none',
+                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
+                position: 'relative',
+            }}>
+                {slides.length > 0 && (
+                    <div className="slide">
+                        {slides[currentSlideIndex] && (
+                            currentSlideIndex === 0 ? (
+                                <>
+                                    {console.log("Rendering First_page_img_1")}
+                                    <First_page_img_1
+                                        key={currentSlideIndex}
+                                        user_name={<></>}
+                                        title={
+                                            <div
+                                                key={0}
+                                                contentEditable={true}
+                                                onBlur={(e) => handleSlideEdit(e.target.innerText, currentSlideIndex, slides[currentSlideIndex].elements[0].type, 0)}
+                                                style={h1Style}
+                                                dangerouslySetInnerHTML={{ __html: slides[currentSlideIndex].elements[0].content as string }}
+                                            />
+                                        }
+                                        topic={<></>}
+                                        subtopic={<></>}
+                                        content={<></>}
+                                        imgs={[backdrop.src]}
+                                        update_callback={() => { }}
                                     />
-                                }
-                                subtopic={
-                                    <div
-                                        key={1}
-                                        contentEditable={true}
-                                        onBlur={(e) =>{
-                                            handleSlideEdit(e.target.innerText, currentSlideIndex, slides[currentSlideIndex].elements[1].type, 1)}}
-                                        style={h3Style}
-                                        dangerouslySetInnerHTML={{ __html: slides[currentSlideIndex].elements[1].content as string }}
-                                    />
-                                }
-                                content={
-                                    <>
-                                        {slides[currentSlideIndex].elements.slice(2).map((el, index) => {
-                                            const content = el.content as string;
-                        
-                                            if (content.includes('$$') || content.includes('\\(')) {
-                                                if (isEditMode) {
+                                </>
+                            )
+                                : <>
+                                    <Col_2_img_1
+                                        key={currentSlideIndex}
+                                        user_name={<></>}
+                                        title={<></>}
+                                        topic={
+                                            <div
+                                                key={0}
+                                                contentEditable={true}
+                                                onBlur={(e) => handleSlideEdit(e.target.innerText, currentSlideIndex, slides[currentSlideIndex].elements[0].type, 0)}
+                                                style={h2Style}
+                                                dangerouslySetInnerHTML={{ __html: slides[currentSlideIndex].elements[0].content as string }}
+                                            />
+                                        }
+                                        subtopic={
+                                            <div
+                                                key={1}
+                                                contentEditable={true}
+                                                onBlur={(e) => {
+                                                    handleSlideEdit(e.target.innerText, currentSlideIndex, slides[currentSlideIndex].elements[1].type, 1)
+                                                }}
+                                                style={h3Style}
+                                                dangerouslySetInnerHTML={{ __html: slides[currentSlideIndex].elements[1].content as string }}
+                                            />
+                                        }
+                                        content={
+                                            <>
+                                                {slides[currentSlideIndex].elements.slice(2).map((el, index) => {
+                                                    const content = el.content as string;
+
+                                                    if (content.includes('$$') || content.includes('\\(')) {
+                                                        if (isEditMode) {
+                                                            return (
+                                                                <div
+                                                                    key={index}
+                                                                    contentEditable={true}
+                                                                    onBlur={(e) => {
+                                                                        handleSlideEdit(e.target.innerText, currentSlideIndex, el.type, index + 2);
+                                                                        toggleEditMode();
+                                                                    }}
+                                                                >
+                                                                    {content}
+                                                                </div>
+                                                            );
+                                                        } else {
+                                                            return (
+                                                                <MathJaxContext key={index}>
+                                                                    <MathJax>
+                                                                        <div onClick={toggleEditMode}>
+                                                                            {content}
+                                                                        </div>
+                                                                    </MathJax>
+                                                                </MathJaxContext>
+                                                            );
+                                                        }
+                                                    }
                                                     return (
                                                         <div
                                                             key={index}
                                                             contentEditable={true}
-                                                            onBlur={(e) => {
-                                                                handleSlideEdit(e.target.innerText, currentSlideIndex, el.type, index+2);
-                                                                toggleEditMode();
-                                                            }}
+                                                            onBlur={(e) =>
+                                                                handleSlideEdit(e.target.innerText, currentSlideIndex, el.type, index + 2)}
+                                                            dangerouslySetInnerHTML={{ __html: wrapWithLiTags(content) }}
                                                         >
-                                                            {content}
                                                         </div>
                                                     );
-                                                } else {
-                                                    return (
-                                                        <MathJaxContext key={index}>
-                                                            <MathJax>
-                                                                <div onClick={toggleEditMode}>
-                                                                    {content}
-                                                                </div>
-                                                            </MathJax>
-                                                        </MathJaxContext>
-                                                    );
-                                                }
-                                            }
-                                            return (
-                                                <div
-                                                    key={index}
-                                                    contentEditable={true}
-                                                    onBlur={(e) => 
-                                                        handleSlideEdit(e.target.innerText, currentSlideIndex, el.type, index+2)}
-                                                    dangerouslySetInnerHTML={{ __html: wrapWithLiTags(content) }}
-                                                >
-                                                </div>
-                                            );
-                                        })}
-                                    </>
-                                }                                   
-                                imgs={[backdrop.src]} 
-                                update_callback={() => {}}
-                            />
-                            <div style={{
-                                position: 'absolute',
-                                right: '0.5vw',
-                                bottom: '0.5vh',
-                                color: 'rgba(128, 128, 128, 0.8)',
-                                fontSize: '0.8vw',
-                            }}>
-                                {currentSlideIndex + 1}/{slides.length}
-                            </div>
-                            </>
-                    )}
+                                                })}
+                                            </>
+                                        }
+                                        imgs={[backdrop.src]}
+                                        update_callback={() => { }}
+                                    />
+                                </>
+                        )}
                     </div>
-            )}
-
-            {currentSlideIndex > 0 && <button
-                        disabled={currentSlideIndex === 0}
-                        style={{
-                            position: 'absolute',
-                            right: '4.5vw',
-                            bottom: '1vh',
-                            backgroundColor: 'rgba(128, 128, 128, 0.5)',
-                            color: 'white',
-                            width: '2vw',
-                            height: '2vh',
-                            borderRadius: '0.5vw',
-                            fontSize: '0.5vw',
-                        }} onClick={() => goToSlide(currentSlideIndex - 1)}>&#9664;</button>}
-            {currentSlideIndex < slides.length - 1 && <button
-                        disabled={currentSlideIndex === slides.length - 1}
-                        style={{
-                            position: 'absolute',
-                            right: '2vw',
-                            bottom: '1vh',
-                            backgroundColor: 'rgba(128, 128, 128, 0.5)',
-                            color: 'white',
-                            width: '2vw',
-                            height: '2vh',
-                            borderRadius: '0.5vw',
-                            fontSize: '0.5vw',
-            }} onClick={() => goToSlide(currentSlideIndex + 1)}>&#9654;</button>}
+                )}
+            </div>
+            <div className='slide-nav flex flex-row items-center justify-center mt-4'>
+                <button
+                    disabled={currentSlideIndex === 0}
+                    style={{
+                        backgroundColor: 'rgba(128, 128, 128, 0.5)',
+                        color: 'white',
+                        width: '2vw',
+                        height: '2vh',
+                        borderRadius: '0.5vw',
+                        fontSize: '0.5vw',
+                    }} onClick={() => goToSlide(currentSlideIndex - 1)}>&#9664;</button>
+                <div className='mx-4'
+                    style={{
+                        color: 'rgba(128, 128, 128, 0.8)',
+                        fontSize: '0.8vw',
+                    }}>
+                    {currentSlideIndex + 1}/{slides.length}
+                </div>
+                <button
+                    disabled={currentSlideIndex === slides.length - 1}
+                    style={{
+                        backgroundColor: 'rgba(128, 128, 128, 0.5)',
+                        color: 'white',
+                        width: '2vw',
+                        height: '2vh',
+                        borderRadius: '0.5vw',
+                        fontSize: '0.5vw',
+                    }} onClick={() => goToSlide(currentSlideIndex + 1)}>&#9654;</button>
+            </div>
         </div>
-        
     );
 }
 export default SlidesHTML;

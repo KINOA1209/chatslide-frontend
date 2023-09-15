@@ -1,20 +1,28 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Transition } from '@headlessui/react';
 import AuthService from '@/components/utils/AuthService';
 import { LoadingIcon } from '@/components/progress';
 
 interface ImgModuleProp {
-    src: string[]
+    imgsrc: string,
+    updateSingleCallback: Function
 }
 
-export const ImgModule = ({ src }: ImgModuleProp) => {
+export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
     const [showModal, setShowModal] = useState(false);
     const [keyword, setKeyword] = useState('');
     const [showImgSearch, setShowImgSearch] = useState(false);
     const [searchResult, setSearchResult] = useState<string[]>([]);
     const [resources, setResources] = useState<string[]>([]);
     const [searching, setSearching] = useState(false);
+    const [selectedImg, setSelectedImg] = useState<string>('')
     const searchRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (imgsrc !== '') {
+            setSelectedImg(imgsrc);
+        }
+    }, [imgsrc]);
 
     const openModal = () => {
         setShowModal(true);
@@ -61,6 +69,12 @@ export const ImgModule = ({ src }: ImgModuleProp) => {
         }
     };
 
+    const handleImageClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        // update image here to template & source html
+        updateSingleCallback((e.target as HTMLImageElement).src);
+    }
+
     return <>
         <Transition
             className='h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
@@ -103,9 +117,19 @@ export const ImgModule = ({ src }: ImgModuleProp) => {
                             <div className='w-full h-full'>
                                 <div className='w-full h-full flex flex-col'>
                                     <div className='w-full h-full overflow-y-auto'>
-                                        <div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-2'>
+                                        <div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-3'>
                                             {resources.map((url, index) => {
-                                                return <div key={index} className='w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square'><img className='w-full h-full object-cover' src={url} /></div>
+                                                if (url === selectedImg) {
+                                                    return <div onClick={handleImageClick}
+                                                        key={index} className={`mouse-cursor w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-4`}>
+                                                        <img className='w-full h-full object-cover' src={url} />
+                                                    </div>
+                                                } else {
+                                                    return <div onClick={handleImageClick}
+                                                        key={index} className={`mouse-cursor w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#9AAEF6] hover:outline outline-4`}>
+                                                        <img className='w-full h-full object-cover' src={url} />
+                                                    </div>
+                                                }
                                             })}
                                         </div>
                                     </div>
@@ -128,7 +152,7 @@ export const ImgModule = ({ src }: ImgModuleProp) => {
                                                 onChange={e => { setKeyword(e.target.value); }}
                                                 value={keyword}
                                             />
-                                            <div className='h-[22px] mr-2' hidden={!searching}><LoadingIcon /></div>
+                                            <div className='h-[22px] mr-2 my-auto' hidden={!searching}><LoadingIcon /></div>
                                             {!searching && <button
                                                 type="submit"
                                                 className="my-1 mr-1 opacity-40 hover:opacity-100"
@@ -142,10 +166,20 @@ export const ImgModule = ({ src }: ImgModuleProp) => {
                                         </div>
                                     </form>
                                 </div>
-                                <div className='w-full h-full overflow-y-auto'>
-                                    <div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-2'>
+                                <div className='w-full h-full overflow-y-auto p-1'>
+                                    <div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-3'>
                                         {searchResult.map((url, index) => {
-                                            return <div key={index} className='w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square'><img className='w-full h-full object-cover' src={url} /></div>
+                                            if (url === selectedImg) {
+                                                return <div onClick={handleImageClick}
+                                                    key={index} className={`mouse-cursor w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-4`}>
+                                                    <img className='w-full h-full object-cover' src={url} />
+                                                </div>
+                                            } else {
+                                                return <div onClick={handleImageClick}
+                                                    key={index} className={`mouse-cursor w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#9AAEF6] hover:outline outline-4`}>
+                                                    <img className='w-full h-full object-cover' src={url} />
+                                                </div>
+                                            }
                                         })}
                                     </div>
                                 </div>
@@ -170,20 +204,23 @@ export const ImgModule = ({ src }: ImgModuleProp) => {
         </Transition>
         <div onClick={openModal}
             className="w-full h-full bg-[#E7E9EB] transition ease-in-out duration-150 hover:bg-[#CAD0D3] flex flex-col items-center justify-center cursor-pointer">
-            <div>
-                {src.length > 0 ? <svg className="w-20 h-20 opacity-50" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="0" fill="none" width="24" height="24" />
-                    <g>
-                        <path
-                            d="M23 4v2h-3v3h-2V6h-3V4h3V1h2v3h3zm-8.5 7c.828 0 1.5-.672 1.5-1.5S15.328 8 14.5 8 13 8.672 13 9.5s.672 1.5 1.5 1.5zm3.5 3.234l-.513-.57c-.794-.885-2.18-.885-2.976 0l-.655.73L9 9l-3 3.333V6h7V4H6c-1.105 0-2 .895-2 2v12c0 1.105.895 2 2 2h12c1.105 0 2-.895 2-2v-7h-2v3.234z" />
-                    </g>
-                </svg>
-                    :
-                    <img className="w-full h-full transition ease-in-out duration-150 hover:brightness-90" src={src[0]}></img>}
-            </div>
-            <div className="text-black opacity-50">
-                Click to add image
-            </div>
+
+            {selectedImg === '' ?
+                <div className='flex flex-col items-center justify-center'>
+                    <svg className="w-20 h-20 opacity-50" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0" fill="none" width="24" height="24" />
+                        <g>
+                            <path
+                                d="M23 4v2h-3v3h-2V6h-3V4h3V1h2v3h3zm-8.5 7c.828 0 1.5-.672 1.5-1.5S15.328 8 14.5 8 13 8.672 13 9.5s.672 1.5 1.5 1.5zm3.5 3.234l-.513-.57c-.794-.885-2.18-.885-2.976 0l-.655.73L9 9l-3 3.333V6h7V4H6c-1.105 0-2 .895-2 2v12c0 1.105.895 2 2 2h12c1.105 0 2-.895 2-2v-7h-2v3.234z" />
+                        </g>
+                    </svg>
+                    <div className="text-black opacity-50">
+                        Click to add image
+                    </div>
+                </div>
+                :
+                <img className="w-full h-full transition ease-in-out duration-150 hover:brightness-90 object-cover" src={imgsrc}></img>
+            }
         </div>
     </>
 }
