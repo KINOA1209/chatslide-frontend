@@ -292,34 +292,20 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                     </div>
                 )}
             </div>
-            <div className='slide-nav flex flex-row items-center justify-center mt-4'>
-                <button
-                    disabled={currentSlideIndex === 0}
-                    style={{
-                        backgroundColor: 'rgba(128, 128, 128, 0.5)',
-                        color: 'white',
-                        width: '2vw',
-                        height: '2vh',
-                        borderRadius: '0.5vw',
-                        fontSize: '0.5vw',
-                    }} onClick={() => goToSlide(currentSlideIndex - 1)}>&#9664;</button>
-                <div className='mx-4'
-                    style={{
-                        color: 'rgba(128, 128, 128, 0.8)',
-                        fontSize: '0.8vw',
-                    }}>
-                    {currentSlideIndex + 1}/{slides.length}
+            <div className='slide-nav mt-4 w-full'>
+                <div className='w-fit h-fit bg-green-500 flex flex-row items-center justify-center mx-auto rounded-full bg-slate-600/40'>
+                    <button
+                        disabled={currentSlideIndex === 0}
+                        className='text-white text-2xl mx-4 my-1 disabled:text-gray-400'
+                        onClick={() => goToSlide(currentSlideIndex - 1)}>&#9664;</button>
+                    <div className='text-white'>
+                        {currentSlideIndex + 1}<span className='font-light'>{' of '}</span>{slides.length}
+                    </div>
+                    <button
+                        disabled={currentSlideIndex === slides.length - 1}
+                        className='text-white text-2xl mx-4 my-1 disabled:text-gray-400'
+                        onClick={() => goToSlide(currentSlideIndex + 1)}>&#9654;</button>
                 </div>
-                <button
-                    disabled={currentSlideIndex === slides.length - 1}
-                    style={{
-                        backgroundColor: 'rgba(128, 128, 128, 0.5)',
-                        color: 'white',
-                        width: '2vw',
-                        height: '2vh',
-                        borderRadius: '0.5vw',
-                        fontSize: '0.5vw',
-                    }} onClick={() => goToSlide(currentSlideIndex + 1)}>&#9654;</button>
             </div>
         </div>
     );
