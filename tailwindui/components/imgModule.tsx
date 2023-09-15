@@ -4,7 +4,7 @@ import AuthService from '@/components/utils/AuthService';
 import { LoadingIcon } from '@/components/progress';
 
 interface ImgModuleProp {
-    src: string
+    src: string[]
 }
 
 export const ImgModule = ({ src }: ImgModuleProp) => {
@@ -166,7 +166,7 @@ export const ImgModule = ({ src }: ImgModuleProp) => {
         <div onClick={openModal}
             className="w-full h-full bg-[#E7E9EB] transition ease-in-out duration-150 hover:bg-[#CAD0D3] flex flex-col items-center justify-center cursor-pointer">
             <div>
-                {src === '' ? <svg className="w-20 h-20 opacity-50" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                {src.length > 0 ? <svg className="w-20 h-20 opacity-50" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <rect x="0" fill="none" width="24" height="24" />
                     <g>
                         <path
@@ -174,7 +174,7 @@ export const ImgModule = ({ src }: ImgModuleProp) => {
                     </g>
                 </svg>
                     :
-                    <img className="w-full h-full transition ease-in-out duration-150 hover:brightness-90" src={src}></img>}
+                    <img className="w-full h-full transition ease-in-out duration-150 hover:brightness-90" src={src[0]}></img>}
             </div>
             <div className="text-black opacity-50">
                 Click to add image
