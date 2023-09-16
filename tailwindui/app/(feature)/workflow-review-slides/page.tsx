@@ -165,7 +165,7 @@ export default function WorkflowStep3() {
 
             <div className="max-w-4xl mx-auto px-6" ref={contentRef}>
                 <p className='px-6'>
-                    These are the slides generated.
+                    These are the slides generated. To edit content, click on the text to reveal the input box.
                 </p>
                 <br />
                 <SlideVisualizer slide_files={slide_files} />

@@ -73,7 +73,7 @@ export const Col_2_img_1 = ({ user_name, title, topic, subtopic, content, imgs, 
         <div>{subtopic}</div>
         <hr className="border border-[#E7E9EB] w-full mt-[20px] mb-[12px]"></hr>
         <div className="h-full w-full flex flex-row overflow-hidden gap-[32px]">
-            <div className="w-full h-full grow">{content}</div>
+            <div className="w-full h-full grow p-1">{content}</div>
             <div className="w-full h-full grow rounded-md overflow-hidden">
                 <ImgModule imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} />
             </div>
@@ -121,7 +121,7 @@ export const First_page_img_1 = ({ user_name, title, topic, subtopic, content, i
     }
 
     return <div
-        className="rounded-md overflow-hidden"
+        className="rounded-md overflow-hidden gap-[32px]"
         style={{
             width: '50vw',
             height: 'calc(50vw / 1.77)',
