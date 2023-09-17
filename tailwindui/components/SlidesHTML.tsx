@@ -9,8 +9,8 @@ import { First_page_img_1, Col_2_img_1 } from "@/components/slideTemplates";
 
 
 interface SlideElement {
-    type: 'h1' | 'h2' | 'h3' | 'p' | 'ul' | 'li' | 'br';
-    className: 'head' | 'title' | 'subtopic' | 'content';
+    type: 'h1' | 'h2' | 'h3' | 'h4'| 'p' | 'ul' | 'li' | 'br';
+    className: 'head' | 'title' | 'subtopic' | 'content'|'userName';
     content: string | string[];
 }
 
@@ -70,6 +70,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
             for (const child of slideChildren) {
                 if (child.tagName === 'H1') {
                     elements.push({ type: 'h1', content: sanitizeHtml(child.innerHTML), className: 'head' });
+                } else if (child.tagName === 'H4') {
+                    elements.push({ type: 'h4', content: sanitizeHtml(child.innerHTML), className: 'userName' });
                 } else if (child.className === 'title') {
                     elements.push({ type: 'h2', content: sanitizeHtml(child.innerHTML), className: 'title' });
                 } else if (child.className === 'subtopic') {
@@ -85,6 +87,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
         });
         setFinalSlides(newSlides);
         setSlides(newSlides);
+        console.log(newSlides)
     }
 
     function handleKeyDown(event: KeyboardEvent) {
@@ -115,6 +118,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
             case 'h3':
                 currentSlide.elements[tagIndex].content = content;
                 currNewFinalSlides.elements[tagIndex].content = `<h3>${content}</h3>`;
+                break;
+            case 'h4':
+                currentSlide.elements[tagIndex].content = content;
+                currNewFinalSlides.elements[tagIndex].content = `<h4>${content}</h4>`;
                 break;
             case 'p':
                 currentSlide.elements[tagIndex].content = content;
@@ -154,12 +161,16 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
         fontWeight: 'bold',
     };
 
+    const h4Style: React.CSSProperties = {
+        fontSize: '1.5vw',
+        color: 'rgb(180,180,180)',
+    };
+    
+
     const listStyle: React.CSSProperties = {
         display: 'list-item',
-        fontSize: '1vw',
-        marginLeft: '3vw',
-        listStylePosition: 'outside',
-        paddingLeft: '1vw',
+        listStyleType: 'disc',
+        listStylePosition: 'inside',
     }
     function wrapWithLiTags(content: string): string {
         if (!content.includes("<li>") || !content.includes("</li>")) {
@@ -197,10 +208,19 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                     {console.log("Rendering First_page_img_1")}
                                     <First_page_img_1
                                         key={currentSlideIndex}
-                                        user_name={<></>}
+                                        user_name=
+                                            {<div
+                                                key={0}
+                                                className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
+                                                contentEditable={true}
+                                                onBlur={(e) => handleSlideEdit(e.target.innerText, currentSlideIndex, slides[currentSlideIndex].elements[1].type, 1)}
+                                                style={h4Style}
+                                                dangerouslySetInnerHTML={{ __html: slides[currentSlideIndex].elements[1].content as string }}
+                                                />
+                                            }
                                         title={
                                             <div
-                                                key={0}
+                                                key={1}
                                                 className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
                                                 contentEditable={true}
                                                 onBlur={(e) => handleSlideEdit(e.target.innerText, currentSlideIndex, slides[currentSlideIndex].elements[0].type, 0)}
@@ -255,6 +275,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                                                     key={index}
                                                                     className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
                                                                     contentEditable={true}
+                                                                    style = {listStyle}
                                                                     onBlur={(e) => {
                                                                         handleSlideEdit(e.target.innerText, currentSlideIndex, el.type, index + 2);
                                                                         toggleEditMode();
@@ -268,7 +289,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                                                 <MathJaxContext key={index}>
                                                                     <MathJax>
                                                                         <div onClick={toggleEditMode}
-                                                                            className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'>
+                                                                            className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
+                                                                            style = {listStyle}>
                                                                             {content}
                                                                         </div>
                                                                     </MathJax>
