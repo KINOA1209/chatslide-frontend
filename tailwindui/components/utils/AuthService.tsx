@@ -102,6 +102,17 @@ class AuthService {
         }
     }
 
+    async getCurrentUserEmail() {
+        const user = await this.getCurrentUser();
+        try {
+            return user.username;
+        }
+        catch (error) {
+            console.error('Error getting current user email: ', error);
+            return null;
+        }
+    }
+
     async getCurrentUserTokenAndId() {
         try {
             const user = await AmplifyAuth.currentAuthenticatedUser();
