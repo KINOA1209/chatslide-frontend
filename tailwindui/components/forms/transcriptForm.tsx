@@ -68,7 +68,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({finalSlides, isSubmittin
       topic: topic,
       language: language,
       html: finalSlides,
-      project_id: ""
+      project_id: project_id
     };
 
     console.log(formData);
