@@ -35,6 +35,83 @@ export default function Pricing() {
         }
     }, []);
 
+    const handleProSubscription = async () => {
+        try {
+            // Determine the tier based on isYearly
+            const tier = isYearly ? 'PRO YEARLY' : 'PRO MONTHLY';
+    
+            // Get current user's token and email
+            const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+            const { email } = await AuthService.getCurrentUserEmail();
+    
+            // Create a request object
+            const requestData = {
+                tier: tier,
+                email: email,
+            };
+    
+            // Make the API request to create a checkout session
+            const response = await fetch('/api/create-checkout-session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: token,
+                },
+                body: JSON.stringify(requestData),
+            });
+    
+            if (response.ok) {
+                const { url } = await response.json();
+                // Redirect to the checkout page
+                router.push(url);
+            } else {
+                console.error('Error creating checkout session:', response.statusText);
+            }
+        } catch (error) {
+            console.error('An error occurred:', error);
+        }
+    };
+
+    const handlePlusSubscription = async () => {
+        try {
+            // Determine the tier based on isYearly
+            const tier = isYearly ? 'PLUS YEARLY' : 'PLUS MONTHLY';
+    
+            // Get current user's token and email
+            const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+            const { email } = await AuthService.getCurrentUserEmail();
+    
+            // Create a request object
+            const requestData = {
+                tier: tier,
+                email: email,
+            };
+    
+            // Make the API request to create a checkout session
+            const response = await fetch('/api/create-checkout-session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: token,
+                },
+                body: JSON.stringify(requestData),
+            });
+    
+            if (response.ok) {
+                const { url } = await response.json();
+                // Redirect to the checkout page
+                router.push(url);
+            } else {
+                console.error('Error creating checkout session:', response.statusText);
+            }
+        } catch (error) {
+            console.error('An error occurred:', error);
+        }
+    };
+    
+
+
+ 
     return (
         <section style={{ fontFamily: 'Lexend, sans-serif' }}>
             <div className="mx-auto px-4 sm:px-6 mb-12">
@@ -117,7 +194,7 @@ export default function Pricing() {
                                         <div>
                                             <div ref={buttonRef} className="btn drop-shadow-xl text-lg rounded-full text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer"
                                                 style={{ backgroundImage: 'linear-gradient(-45deg, #5A24B4, #9271CB, #2E8BC0)', backgroundSize: '200%' }}
-                                                onClick={() => { currentUser ? router.push('/dashboard') : router.push('/signup') }}>
+                                                onClick={() => { currentUser ? handlePlusSubscription : router.push('/signup') }}>
                                                 {currentUser ? 'Subscribe' : 'Sign up'}
                                             </div>
                                         </div>
@@ -168,7 +245,7 @@ export default function Pricing() {
                                         <div>
                                             <div ref={buttonRef} className="btn drop-shadow-xl text-lg rounded-full text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer"
                                                 style={{ backgroundImage: 'linear-gradient(-45deg, #002366, #003366, #004466)', backgroundSize: '200%' }}
-                                                onClick={() => { currentUser ? router.push('/dashboard') : router.push('/signup') }}>
+                                                onClick={() => { currentUser ? handleProSubscription : router.push('/signup') }}>
                                                 {currentUser ? 'Subscribe' : 'Sign up'}
                                             </div>
                                         </div>
