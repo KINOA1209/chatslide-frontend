@@ -84,16 +84,24 @@ export default function Account() {
         <div className='h3 text-blue-600'>Subscription</div>
         <div className='flex flex-row w-full'>
             <div className='border border-black h-[200px] grow'>Current tier  <br></br> till (subscrition end date)</div>
-            <div className='border border-black h-[200px] grow'>upgrade</div>
-            <div className='border border-black h-[200px] grow'>upgrade</div>
-            <div className='border border-black h-[200px] grow'>upgrade</div>
+            <div className='border border-black h-[200px] grow'></div>
+            <div className='border border-black h-[200px] grow'></div>
+            <div className='border border-black h-[200px] grow'></div>
         </div>
         <div className='w-full'>
             <button className='btn text-white font-bold bg-gradient-to-r from-blue-600 to-teal-500' onClick={e => { router.push('/reset-password') }}>Cancel Subscription</button>
         </div>
 
 
+
+        <div className='h3 text-blue-600'>Refer a Friend</div>
+        Each user can get xxx credit for free when they registers using your referral code. Meanwhile, we will also gift you xxx credit for gratitude.
+        <div className='flex flex-row w-full h-[80px] border border-black'>
+            referral link (click to copy)
+        </div>
+
         <div className='h3 text-blue-600'>Credit history</div>
+        <div className='h-[200px] border border-black w-full'>list</div>
         
     </div >)
 };
