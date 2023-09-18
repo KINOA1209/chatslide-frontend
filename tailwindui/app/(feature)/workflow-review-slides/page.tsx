@@ -14,6 +14,7 @@ import SaveToPPTX from '@/components/forms/saveToPptx';
 import BgImagePopup from '@/components/bgImagePopup';
 //import SlidesHTML from '@/components/SlidesHTML';
 //import SaveToPdfHtml from '@/components/forms/saveToPdfHtml';
+import { SlideElement, Slide } from '@/components/SlidesHTML';
 import dynamic from 'next/dynamic'
 
 const SlidesHTML = dynamic(
@@ -26,23 +27,12 @@ const SaveToPdfHtml = dynamic(
     { ssr: false }
 )
 
-interface SlideElement {
-    type: 'h1' | 'h2' | 'h3' | 'p' | 'ul'| 'li' | 'br';
-    className: 'head'|'title'|'subtopic'|'content';
-    content: string | string[];
-}
-
-interface Slide {
-    elements: SlideElement[];
-}
-
 type SlidesHTMLProps = {
-    finalSlides: Slide[]; 
-    setFinalSlides: React.Dispatch<React.SetStateAction<Slide[]>>; 
+    finalSlides: Slide[];
+    setFinalSlides: React.Dispatch<React.SetStateAction<Slide[]>>;
 };
 
 const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
-    console.log(slide_files);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showPopup, setShowPopup] = useState<boolean>(false);
 
@@ -51,7 +41,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
     const handlePopupOpen = () => {
         setShowPopup(true);
     };
-    
+
     const handlePopupClose = () => {
         setShowPopup(false);
     };
@@ -65,7 +55,6 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
 
     useEffect(() => {
         const signed_in = typeof window !== 'undefined' ? sessionStorage.getItem("signed_in") : 'false';
-        console.log("signed_in", signed_in);
         if (signed_in && signed_in === "true") {
             toast.success("Sign in successfully", {
                 position: "top-center",
@@ -79,16 +68,16 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
             });
             sessionStorage.removeItem("signed_in");
         }
-    });
+    }, []);
 
     return (
         <div>
             <ToastContainer />
             <div className="max-w-4xl mx-auto px-4 sm:px-6">
 
-                <SlidesHTML finalSlides={finalSlides}  setFinalSlides={setFinalSlides} />
+                <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} />
 
-                <SaveToPdfHtml finalSlides={finalSlides}/>
+                <SaveToPdfHtml finalSlides={finalSlides} />
                 {/*{language === "English" && <SaveToPPTX />}*/}
 
                 {/*<div className="max-w-sm mx-auto">
@@ -122,7 +111,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
 };
 
 export default function WorkflowStep3() {
-    const slide_files = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('slide_files') : [];
+    const slide_files = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('slide_files') || [] : [];
     const contentRef = useRef<HTMLDivElement>(null);
     const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -170,14 +159,14 @@ export default function WorkflowStep3() {
                 <br />
                 <SlideVisualizer slide_files={slide_files} />
             </div>
-            
+
             <ProjectProgress currentInd={2} contentRef={contentRef} />
             <div className="fixed bottom-10 right-10">
                 <button
-                onClick={handleOpenModal}
-                className="bg-gradient-to-r from-blue-600  to-purple-500 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
+                    onClick={handleOpenModal}
+                    className="bg-gradient-to-r from-blue-600  to-purple-500 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
                 >
-                Feedback
+                    Feedback
                 </button>
 
                 {showModal && <FeedbackForm onClose={handleCloseModal} />}

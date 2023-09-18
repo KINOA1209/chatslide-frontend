@@ -5,19 +5,12 @@ import TranscriptFormModal from './trasncriptFormModal';
 
 import AuthService from "../utils/AuthService";
 
+import { SlideElement, Slide } from '../SlidesHTML';
+
 interface TranscriptFormProps {
   isSubmitting: boolean;
   setIsSubmitting: (isSubmitting: boolean) => void;
   finalSlides: Slide[]; 
-}
-
-interface SlideElement {
-  type: 'h1' | 'h2' | 'h3' | 'p' | 'ul'| 'li' | 'br';
-  content: string | string[];
-}
-
-interface Slide {
-  elements: SlideElement[];
 }
 
 const TranscriptForm: React.FC<TranscriptFormProps> = ({finalSlides, isSubmitting, setIsSubmitting}) => {
