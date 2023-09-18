@@ -4,16 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import SavePDFModal from './savePDFModal';
 import AuthService from "../utils/AuthService";
 import { LoadingIcon } from "@/components/progress";
-
-interface SlideElement {
-  type: 'h1' | 'h2' | 'h3' | 'p' | 'ul' | 'li' | 'br';
-  className: 'head' | 'title' | 'subtopic' | 'content';
-  content: string | string[];
-}
-
-interface Slide {
-  elements: SlideElement[];
-}
+import { SlideElement, Slide } from '../SlidesHTML';
 
 type SlidesHTMLProps = {
   finalSlides: Slide[];
