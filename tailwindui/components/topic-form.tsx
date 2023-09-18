@@ -48,7 +48,7 @@ const TopicForm: React.FC = () => {
             ? JSON.parse(sessionStorage.addEquations)
             : false
     );
-    const [topicSuggestions, setTopicSuggestions] = useState<string[]>([]);
+    const [topicSuggestions, setTopicSuggestions] = useState<string[]>(["Ultrasound"]);
     const [audienceSuggestions, setAudienceSuggestions] = useState<string[]>([]);
     const [showAudienceInput, setShowAudienceInput] = useState(false);
 
@@ -348,14 +348,15 @@ const TopicForm: React.FC = () => {
                                 id="topic"
                                 type="text"
                                 className="form-input w-full text-gray-800 mb-2"
-                                placeholder="Ultrasound"
+                                placeholder="Your topic here"
                                 value={topic}
                                 onChange={e => setTopic(e.target.value)}
                                 maxLength={40}
                                 required />
                             {topicSuggestions.length > 0 && (
                                 <div>
-                                    <div className="flex flex-wrap gap-3 mb-4">
+                                    <div className="flex text-gray-600 flex-wrap gap-3 mb-4">
+                                        Try:
                                         {topicSuggestions.map((topic, index) => (
                                             <button
                                                 key={index}
@@ -402,7 +403,7 @@ const TopicForm: React.FC = () => {
                                 required
                                 maxLength={40}
                             />
-                            {audienceSuggestions.length > 0 && (
+                            {/* {audienceSuggestions.length > 0 && (
                                 <div>
                                     <div className="flex flex-wrap gap-3 mb-4">
                                         {audienceSuggestions.map((audience, index) => (
@@ -416,7 +417,7 @@ const TopicForm: React.FC = () => {
                                         ))}
                                     </div>
                                 </div>
-                            )}
+                            )} */}
                         </div>
                     </div>
 
