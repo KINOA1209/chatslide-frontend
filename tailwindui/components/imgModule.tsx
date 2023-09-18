@@ -35,7 +35,6 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
 
     const handleImageSearchSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("searching")
         setSearching(true);
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
         const response = await fetch('/api/search_images', {
