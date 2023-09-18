@@ -272,37 +272,39 @@ const SignupForm: React.FC = () => {
         const queryParams = new URLSearchParams(location.search);
         const referralCode = queryParams.get('referral');
         if (referralCode) {
-          // If the 'referral' query parameter exists, set it as the input value
-          const promoInput = document.getElementById('promo') as HTMLInputElement;
-          if (promoInput) {
-            promoInput.value = referralCode;
-            // Manually trigger the change event so that the localStorage is updated
-            promoInput.dispatchEvent(new Event('change'));
-          }
+            // If the 'referral' query parameter exists, set it as the input value
+            const promoInput = document.getElementById('promo') as HTMLInputElement;
+            if (promoInput) {
+                promoInput.value = referralCode;
+                // Manually trigger the change event so that the localStorage is updated
+                promoInput.dispatchEvent(new Event('change'));
+            }
         }
-      }, []);
+    }, []);
 
     return (
         <form onSubmit={handleSubmit}>
-            <div className="flex flex-wrap -mx-3 mb-4">
-                <div className="w-full px-3">
-                    <label
-                        className="block text-gray-800 text-sm font-medium mb-1"
-                        htmlFor="promo"
-                    >
-                        Enter your referral code here if you have one
-                    </label>
-                    <input
-                        id="promo"
-                        type="text"
-                        onChange={e => handlePromoChange(e)}
-                        className="form-input w-full text-gray-800"
-                        placeholder="Referral Code (Optional)"
-                    />
+            {searchParams.get('referral') && (
+                <div className="flex flex-wrap -mx-3 mb-4">
+                    <div className="w-full px-3">
+                        <label
+                            className="block text-green-600 text-sm font-medium mb-1"
+                            htmlFor="promo"
+                        >
+                            Referral code applied
+                        </label>
+                        <input
+                            id="promo"
+                            type="text"
+                            value={searchParams.get('referral') || ''}
+                            className="form-input w-full text-gray-800 bg-gray-200 cursor-not-allowed"
+                            disabled={true}
+                        />
+                    </div>
                 </div>
-            </div>
+            )}
 
-            <div className="flex items-center my-6">
+            {/* <div className="flex items-center my-6">
                 <div
                     className="border-t border-gray-300 grow mr-3"
                     aria-hidden="true"
@@ -314,8 +316,8 @@ const SignupForm: React.FC = () => {
                 ></div>
             </div>
 
-            <GoogleSignIn />
-
+            <GoogleSignIn /> */}
+            {/* 
             <div className="flex items-center my-6">
                 <div
                     className="border-t border-gray-300 grow mr-3"
@@ -326,7 +328,7 @@ const SignupForm: React.FC = () => {
                     className="border-t border-gray-300 grow ml-3"
                     aria-hidden="true"
                 ></div>
-            </div>
+            </div> */}
 
             {/* <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">

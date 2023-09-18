@@ -3,13 +3,16 @@
 
 import Link from "next/link";
 import SignupForm from "@/components/signup-form";
+import GoogleSignIn from "@/components/GoogleSignIn";
 import CustomerServiceInfo from '@/components/customerService';
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Auth, Hub } from 'aws-amplify';
 
 export default function SignUp() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const [href, setHref] = useState('/signup-with-email');
 
     useEffect(() => {
         const loginRedirect = () => {
@@ -23,6 +26,8 @@ export default function SignUp() {
             });
         };
         loginRedirect();
+
+        setHref(`/signup-with-email${window.location.search}`);
     }, []);
 
     return (
@@ -36,9 +41,81 @@ export default function SignUp() {
                         </h1>
                     </div>
 
+
+
                     {/* Form */}
                     <div className="max-w-sm mx-auto">
-                        <SignupForm />
+                        {searchParams.get('referral') && (
+                            <div className="flex flex-wrap -mx-3 mb-4">
+                                <div className="w-full px-3">
+                                    <label
+                                        className="block text-green-600 text-sm font-medium mb-1"
+                                        htmlFor="promo"
+                                    >
+                                        Referral code applied
+                                    </label>
+                                    <input
+                                        id="promo"
+                                        type="text"
+                                        value={searchParams.get('referral') || ''}
+                                        className="form-input w-full text-gray-800 bg-gray-200 cursor-not-allowed"
+                                        disabled={true}
+                                    />
+                                </div>
+                            </div>
+                        )}
+
+
+                        <div className="flex items-center my-6">
+                            <div
+                                className="border-t border-gray-300 grow mr-3"
+                                aria-hidden="true"
+                            ></div>
+                            <div className="text-gray-600 italic">Quick Sign Up</div>
+                            <div
+                                className="border-t border-gray-300 grow ml-3"
+                                aria-hidden="true"
+                            ></div>
+                        </div>
+
+
+                        <GoogleSignIn />
+
+                        <div className="flex items-center my-6">
+                            <div
+                                className="border-t border-gray-300 grow mr-3"
+                                aria-hidden="true"
+                            ></div>
+                            <div className="text-gray-600 italic">Or</div>
+                            <div
+                                className="border-t border-gray-300 grow ml-3"
+                                aria-hidden="true"
+                            ></div>
+                        </div>
+
+                        <div className="flex flex-wrap -mx-3 mt-6">
+                            <div className="w-full px-3">
+                                <a 
+                                    href={href}
+                                    className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full">
+                                    Sign up with email
+                                </a>
+                                {/* <ToastContainer /> */}
+                            </div>
+                        </div>
+
+
+                        <div className="text-sm text-gray-500 text-center mt-3">
+                            By creating an account, you agree to the{" "}
+                            <a className="underline" href="/terms">
+                                terms & conditions
+                            </a>
+                            , and our{" "}
+                            <a className="underline" href="/privacy">
+                                privacy policy
+                            </a>
+                            .
+                        </div>
                         <div className="text-gray-600 text-center mt-6">
                             Already have an account?{" "}
                             <Link
@@ -48,9 +125,9 @@ export default function SignUp() {
                                 Sign in
                             </Link>
                         </div>
-                        <div className="text-gray-600 text-center mt-6">
+                        {/* <div className="text-gray-600 text-center mt-6">
                             <CustomerServiceInfo />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
