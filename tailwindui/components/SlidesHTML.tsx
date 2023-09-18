@@ -8,13 +8,13 @@ import { First_page_img_1, Col_2_img_1 } from "@/components/slideTemplates";
 
 
 
-interface SlideElement {
-    type: 'h1' | 'h2' | 'h3' | 'h4'| 'p' | 'ul' | 'li' | 'br';
-    className: 'head' | 'title' | 'subtopic' | 'content'|'userName';
+export interface SlideElement {
+    type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
+    className: 'head' | 'title' | 'subtopic' | 'content' | 'userName' | 'images';
     content: string | string[];
 }
 
-interface Slide {
+export interface Slide {
     elements: SlideElement[];
 }
 
@@ -67,6 +67,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
         const newSlides = slideElements.map((slide) => {
             const elements: SlideElement[] = [];
             const slideChildren = Array.from(slide.children);
+            let hasImg = false;
             for (const child of slideChildren) {
                 if (child.tagName === 'H1') {
                     elements.push({ type: 'h1', content: sanitizeHtml(child.innerHTML), className: 'head' });
@@ -81,13 +82,22 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                     for (const listItem of listItems) {
                         elements.push({ type: 'li', content: sanitizeHtml(listItem.innerHTML), className: 'content' });
                     }
+                } else if (child.className === 'images') {
+                    hasImg = true;
+                    const listItems = Array.from(child.getElementsByTagName('img'));
+                    const urls = listItems.map((img) => {
+                        return img.src;
+                    })
+                    elements.push({ type: 'div', content: urls, className: 'images' });
                 }
+            }
+            if (!hasImg) {
+                elements.push({ type: 'div', content: [], className: 'images' });
             }
             return { elements };
         });
         setFinalSlides(newSlides);
         setSlides(newSlides);
-        console.log(newSlides)
     }
 
     function handleKeyDown(event: KeyboardEvent) {
@@ -98,7 +108,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
         }
     }
 
-    function handleSlideEdit(content: any, slideIndex: number, tag: string, tagIndex: number, liIndex?: number) {
+    function handleSlideEdit(content: string | string[], slideIndex: number, tag: string, tagIndex: number, liIndex?: number) {
         const newSlides = [...slides];
         const newFinalSlides = [...finalSlides];
         //handleSlideEdit(quill.getContents(), currentSlideIndex, element.type, i)}  
@@ -131,12 +141,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                 currentSlide.elements[tagIndex].content = content;
                 currNewFinalSlides.elements[tagIndex].content = content; //need to check here
                 break;
+            case 'img':
+                currentSlide.elements[tagIndex].content = content;
+                currNewFinalSlides.elements[tagIndex].content = content; //need to check here
+                break;
             default:
                 console.error(`Unknown tag: ${tag}`);
         }
         setSlides(newSlides);
         setFinalSlides(newFinalSlides);
-        console.log(newSlides)
     }
 
     function goToSlide(index: number) {
@@ -165,7 +178,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
         fontSize: '1.5vw',
         color: 'rgb(180,180,180)',
     };
-    
+
 
     const listStyle: React.CSSProperties = {
         display: 'list-item',
@@ -182,6 +195,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
 
     function toggleEditMode() {
         setIsEditMode(!isEditMode);
+    }
+
+    const updateImgUrlArray = (slideIndex: number) => {
+        const updateImgUrl = (urls: string[]) => {
+            handleSlideEdit(urls, slideIndex, 'img', slides[slideIndex].elements.length - 1);
+        };
+        return updateImgUrl;
     }
 
     return (
@@ -209,15 +229,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                     <First_page_img_1
                                         key={currentSlideIndex}
                                         user_name=
-                                            {<div
-                                                key={0}
-                                                className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                                                contentEditable={true}
-                                                onBlur={(e) => handleSlideEdit(e.target.innerText, currentSlideIndex, slides[currentSlideIndex].elements[1].type, 1)}
-                                                style={h4Style}
-                                                dangerouslySetInnerHTML={{ __html: slides[currentSlideIndex].elements[1].content as string }}
-                                                />
-                                            }
+                                        {<div
+                                            key={0}
+                                            className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
+                                            contentEditable={true}
+                                            onBlur={(e) => handleSlideEdit(e.target.innerText, currentSlideIndex, slides[currentSlideIndex].elements[1].type, 1)}
+                                            style={h4Style}
+                                            dangerouslySetInnerHTML={{ __html: slides[currentSlideIndex].elements[1].content as string }}
+                                        />
+                                        }
                                         title={
                                             <div
                                                 key={1}
@@ -231,8 +251,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                         topic={<></>}
                                         subtopic={<></>}
                                         content={<></>}
-                                        imgs={[backdrop.src]}
-                                        update_callback={() => { }}
+                                        imgs={slides[currentSlideIndex].elements.filter((e) => e.type === 'div').length > 0 ? slides[currentSlideIndex].elements.filter((e) => e.type === 'div')[0].content as string[] : []}
+                                        update_callback={updateImgUrlArray(currentSlideIndex)}
                                     />
                                 </>
                             )
@@ -265,7 +285,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                         }
                                         content={
                                             <>
-                                                {slides[currentSlideIndex].elements.slice(2).map((el, index) => {
+                                                {slides[currentSlideIndex].elements.slice(2, slides[currentSlideIndex].elements.length - 2).map((el, index) => {
                                                     const content = el.content as string;
 
                                                     if (content.includes('$$') || content.includes('\\(')) {
@@ -275,7 +295,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                                                     key={index}
                                                                     className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
                                                                     contentEditable={true}
-                                                                    style = {listStyle}
+                                                                    style={listStyle}
                                                                     onBlur={(e) => {
                                                                         handleSlideEdit(e.target.innerText, currentSlideIndex, el.type, index + 2);
                                                                         toggleEditMode();
@@ -290,7 +310,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                                                     <MathJax>
                                                                         <div onClick={toggleEditMode}
                                                                             className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                                                                            style = {listStyle}>
+                                                                            style={listStyle}>
                                                                             {content}
                                                                         </div>
                                                                     </MathJax>
@@ -312,8 +332,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                                 })}
                                             </>
                                         }
-                                        imgs={[backdrop.src]}
-                                        update_callback={() => { }}
+                                        imgs={slides[currentSlideIndex].elements.filter((e) => e.type === 'div').length > 0 ? slides[currentSlideIndex].elements.filter((e) => e.type === 'div')[0].content as string[] : []}
+                                        update_callback={updateImgUrlArray(currentSlideIndex)}
                                     />
                                 </>
                         )}

@@ -35,14 +35,12 @@ export const Col_2_img_1 = ({ user_name, title, topic, subtopic, content, imgs, 
         }
     }, [])
 
-    // TODO: use update_callback to update image array (imgs)
-    // useEffect(() => {
-    //     update_callback(localImgs)
-    // }, [localImgs])
+    useEffect(() => {
+        update_callback(localImgs)
+    }, [localImgs])
 
     const updateImgAtIndex = (index: number) => {
         const updateLocalImgs = (url: string) => {
-            console.log("callback", url)
             let newLocalImgs = [...localImgs];
             newLocalImgs[index] = url;
             setLocalImgs(newLocalImgs);
@@ -105,14 +103,12 @@ export const First_page_img_1 = ({ user_name, title, topic, subtopic, content, i
         }
     }, [])
 
-    // TODO: use update_callback to update image array (imgs)
-    // useEffect(() => {
-    //     update_callback(localImgs)
-    // }, [localImgs])
+    useEffect(() => {
+        update_callback(localImgs)
+    }, [localImgs])
 
     const updateImgAtIndex = (index: number) => {
         const updateLocalImgs = (url: string) => {
-            console.log("callback", url)
             let newLocalImgs = [...localImgs];
             newLocalImgs[index] = url;
             setLocalImgs(newLocalImgs);
