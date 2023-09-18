@@ -20,7 +20,7 @@ interface Slide {
 
 type SlidesHTMLProps = {
     finalSlides: Slide[];
-    setFinalSlides: React.Dispatch<React.SetStateAction<Slide[]>>;
+    setFinalSlides: Function;
 };
 
 const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) => {
