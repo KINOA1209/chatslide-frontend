@@ -213,27 +213,35 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
         const body = new FormData();
         body.append("file", file);
-        const response = await fetch("/api/upload_user_file", {
+        fetch("/api/upload_user_file", {
             method: "POST",
             headers: {
                 'Authorization': `Bearer ${idToken}`,
             },
             body: body
-        });
-        if (response.ok) {
-            toast.success("File uploaded successfully", {
-                position: "top-center",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                containerId: "fileManagement",
-            });
-        } else {
-            console.error(response.status);
+        }).then(response => {
+            if (response.ok) {
+                toast.success("File uploaded successfully", {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    containerId: "fileManagement",
+                });
+                return response.json();
+            } else {
+                throw Error(`Request rejected with status ${response.status}`);
+            }
+        }).then(parsedResponse => {
+            const file_id = parsedResponse.data.file_id;
+            fetchFiles(idToken);
+            handleClick(file_id);
+        }).catch(error => {
+            console.error(error);
             toast.error("File upload failed", {
                 position: "top-center",
                 autoClose: 5000,
@@ -245,9 +253,7 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
                 theme: "light",
                 containerId: "fileManagement",
             });
-        };
-
-        fetchFiles(idToken);
+        });
     };
 
     const handleFileDeleted = (id: string) => {
