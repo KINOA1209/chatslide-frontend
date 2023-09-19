@@ -34,8 +34,13 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
         setSearching(false);
     }
 
+    useEffect(() => {
+        setSearchResult([]);
+    }, [showImgSearch])
+
     const handleImageSearchSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setShowImgSearch(true);
         setSearching(true);
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
         const response = await fetch('/api/search_images', {
@@ -101,23 +106,47 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
                 leaveTo="opacity-0 translate-y-12"
                 onClick={e => { e.stopPropagation() }}
             >
-                <h4 className="h4 text-blue-600 text-center">Select Image</h4>
+                <h4 className="font-semibold text-xl text-center mb-3">Image</h4>
                 <div className='grow mt-4 flex flex-col overflow-hidden'>
-                    <div className='w-full flex flex-row justify-between'>
-                        <button className='btn rounded-lg cursor-pointer shadow-none bg-[#ECF1FE] hover:bg-[#B4C5FA] disabled:shadow-inner disabled:bg-[#B4C5FA]'
-                            onClick={e => { setShowImgSearch(false) }}
+                    <div className='w-full flex flex-row justify-between gap-3'>
+                        <button className='btn mb-2 px-4 rounded-xl cursor-pointer shadow-none bg-black text-white hover:bg-slate-700 whitespace-nowrap'
+                            onClick={e => { setShowImgSearch(false); setKeyword(''); }}
                             disabled={!showImgSearch}>My Resources</button>
-                        <button
-                            className='btn rounded-lg cursor-pointer shadow-none bg-[#ECF1FE] hover:bg-[#B4C5FA] disabled:shadow-inner disabled:bg-[#B4C5FA]'
-                            onClick={e => { setShowImgSearch(true) }}
-                            disabled={showImgSearch}>Web Search</button>
+                        <div className='grow'>
+                            <form onSubmit={handleImageSearchSubmit} className='w-full'>
+                                <div className="w-full form-input flex flex-row flex-nowrap mb-2 focus-within:border focus-within:border-gray-500 p-0 cursor-text rounded-xl"
+                                    onClick={e => handleClickSearchInput(e, searchRef)}>
+                                    <div className='h-[22px] ml-[14px] my-auto' hidden={!searching}><LoadingIcon /></div>
+                                    {!searching && <button
+                                        type="submit"
+                                        className="my-1 ml-3 opacity-40 hover:opacity-100"
+                                    >
+                                        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z"
+                                                stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                    </button>}
+                                    <input
+                                        id="search_keyword"
+                                        type="text"
+                                        className=" text-gray-800 grow border-0 p-0 h-6 focus:outline-none focus:ring-0 mx-3 my-3 w-full overflow-hidden"
+                                        placeholder="Search from web"
+                                        required
+                                        ref={searchRef}
+                                        onChange={e => { setKeyword(e.target.value); }}
+                                        value={keyword}
+                                    />
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <div className='mt-3 grow overflow-hidden'>
+                    <div className='mt-3 mb-5 grow overflow-hidden'>
                         {!showImgSearch &&
                             <div className='w-full h-full'>
                                 <div className='w-full h-full flex flex-col'>
                                     <div className='w-full h-full overflow-y-auto'>
-                                        <div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-3'>
+                                        <div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-2'>
                                             {resources.map((url, index) => {
                                                 if (url === selectedImg) {
                                                     return <div onClick={handleImageClick}
@@ -138,36 +167,9 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
                         }
                         {showImgSearch &&
                             <div className='w-full h-full flex flex-col'>
-                                <div>
-                                    <form onSubmit={handleImageSearchSubmit}>
-                                        <div className="form-input flex flex-row flex-nowrap mb-2 focus-within:border focus-within:border-gray-500 p-0 cursor-text"
-                                            onClick={e => handleClickSearchInput(e, searchRef)}>
-                                            <input
-                                                id="search_keyword"
-                                                type="text"
-                                                className=" text-gray-800 grow border-0 p-0 h-6 focus:outline-none focus:ring-0 mx-4 my-3"
-                                                placeholder="Search image from web"
-                                                required
-                                                ref={searchRef}
-                                                onChange={e => { setKeyword(e.target.value); }}
-                                                value={keyword}
-                                            />
-                                            <div className='h-[22px] mr-2 my-auto' hidden={!searching}><LoadingIcon /></div>
-                                            {!searching && <button
-                                                type="submit"
-                                                className="my-1 mr-1 opacity-40 hover:opacity-100"
-                                            >
-                                                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z"
-                                                        stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                                </svg>
-                                            </button>}
-                                        </div>
-                                    </form>
-                                </div>
+
                                 <div className='w-full h-full overflow-y-auto p-1'>
-                                    <div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-3'>
+                                    <div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-2'>
                                         {searchResult.map((url, index) => {
                                             if (url === selectedImg) {
                                                 return <div onClick={handleImageClick}
@@ -188,14 +190,14 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
                     </div>
 
                 </div>
-                <div className="max-w-sm mx-auto">
-                    <div className="flex flex-wrap -mx-3 mt-6">
-                        <div className="w-full px-3">
+                <div className="w-full mx-auto">
+                    <div className="w-full flex flex-wrap">
+                        <div className="w-full">
                             <button
-                                className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full"
+                                className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full rounded-lg"
                                 type="button"
                                 onClick={e => { e.preventDefault(); closeModal(); }}>
-                                OK
+                                Done
                             </button>
                         </div>
                     </div>
