@@ -150,12 +150,12 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
                                             {resources.map((url, index) => {
                                                 if (url === selectedImg) {
                                                     return <div onClick={handleImageClick}
-                                                        key={index} className={`mouse-cursor w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-4`}>
+                                                        key={index} className={`mouse-cursor w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-2`}>
                                                         <img className='w-full h-full object-cover' src={url} />
                                                     </div>
                                                 } else {
                                                     return <div onClick={handleImageClick}
-                                                        key={index} className={`mouse-cursor w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#9AAEF6] hover:outline outline-4`}>
+                                                        key={index} className={`mouse-cursor w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#9AAEF6] hover:outline outline-2`}>
                                                         <img className='w-full h-full object-cover' src={url} />
                                                     </div>
                                                 }
@@ -173,12 +173,12 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
                                         {searchResult.map((url, index) => {
                                             if (url === selectedImg) {
                                                 return <div onClick={handleImageClick}
-                                                    key={index} className={`mouse-cursor w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-4`}>
+                                                    key={index} className={`mouse-cursor w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-2`}>
                                                     <img className='w-full h-full object-cover' src={url} />
                                                 </div>
                                             } else {
                                                 return <div onClick={handleImageClick}
-                                                    key={index} className={`mouse-cursor w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#9AAEF6] hover:outline outline-4`}>
+                                                    key={index} className={`mouse-cursor w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#9AAEF6] hover:outline outline-2`}>
                                                     <img className='w-full h-full object-cover' src={url} />
                                                 </div>
                                             }
