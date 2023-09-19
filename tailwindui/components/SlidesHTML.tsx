@@ -272,7 +272,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
 
     return (
         <div className='w-fit h-fit'>
-            <div id="slideContainer" className='border border-black overflow-hidden' ref={containerRef}>
+            <div id="slideContainer" className='overflow-hidden' ref={containerRef} style={{
+                boxSizing: 'border-box',
+                border: 'none',
+                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
+            }}>
                 {slides.length > 0 && (
                     <div className="slide h-full w-full" ref={slideRef}
                         style={{
@@ -283,10 +287,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                             flexDirection: 'column',
                             justifyContent: 'flex-start',
                             alignItems: 'flex-start',
-
-                            boxSizing: 'border-box',
-                            border: 'none',
-                            boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
                             position: 'relative',
                         }}>
                         {slides[currentSlideIndex] && (
