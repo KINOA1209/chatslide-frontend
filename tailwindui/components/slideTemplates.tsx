@@ -1,6 +1,9 @@
 import { StaticImageData } from "next/image";
 import { ImgModule } from "@/components/imgModule";
 import { useEffect, useState } from "react";
+import template1 from '@/public/images/template/1.jpg' // Cover
+import template2 from '@/public/images/template/2.jpg' // col1 img0
+import template3 from '@/public/images/template/3.jpg' // col2 img1
 
 interface MainSlideProps {
     user_name: JSX.Element,
@@ -284,3 +287,27 @@ export const Col_2_img_2 = ({ user_name, title, topic, subtopic, content, imgs, 
         </div>
     </div>
 }
+
+export default {
+    'Col_2_img_1': Col_2_img_1,
+    'First_page_img_1': First_page_img_1,
+    'Col_1_img_0': Col_1_img_0,
+    'Col_2_img_2': Col_2_img_2,
+}
+
+export const templateSamples = {
+    cover: [{
+        name: 'First_page_img_1',
+        img: template1.src,
+    }],
+    main: [{
+        name: 'Col_1_img_0',
+        img: template2.src,
+    }, {
+        name: 'Col_2_img_1',
+        img: template3.src,
+    }, {
+        name: 'Col_2_img_2',
+        img: template2.src,
+    },]
+};

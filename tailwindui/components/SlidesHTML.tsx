@@ -6,14 +6,7 @@ import backdrop from '@/public/images/backdrop.jpg';
 import './slidesHTML.css';
 
 import { Transition } from '@headlessui/react';
-import template1 from '@/public/images/template/1.jpg'
-import template2 from '@/public/images/template/2.jpg'
-import {
-    First_page_img_1,
-    Col_2_img_1,
-    Col_1_img_0,
-    Col_2_img_2,
-} from "@/components/slideTemplates";
+import templates, { templateSamples } from "@/components/slideTemplates";
 
 export interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
@@ -54,7 +47,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
     const [slides, setSlides] = useState<Slide[]>([]);
     const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
     const foldername = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('foldername') : '';
-    const [showLayout, setShowLayout] = useState(true);
+    const [showLayout, setShowLayout] = useState(false);
     const slideRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -102,7 +95,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
 
     function displaySlides(doc: Document) {
         const slideElements = Array.from(doc.getElementsByClassName('slide'));
-        const newSlides: Slide[] = slideElements.map((slide) => {
+        const newSlides: Slide[] = slideElements.map((slide, index) => {
             const elements = new Slide();
             const slideChildren = Array.from(slide.children);
             for (const child of slideChildren) {
@@ -114,6 +107,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                 } else if (className === 'userName') {
                     elements.userName = sanitizeHtml(child.innerHTML);
                 } else if (className === 'subtopic') {
+                    elements.subtopic = sanitizeHtml(child.innerHTML);
+                } else if (className === 'template') {
                     elements.subtopic = sanitizeHtml(child.innerHTML);
                 } else if (className === 'content') {
                     const listItems = Array.from(child.getElementsByTagName('li'));
@@ -129,6 +124,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                         }
                     })
                     elements.images = urls;
+                }
+            }
+
+            if (elements.template === '') {
+                if (index === 0) {
+                    elements.template = 'First_page_img_1'
+                } else {
+                    elements.template = 'Col_1_img_0';
                 }
             }
             return elements;
@@ -147,7 +150,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
             }
         }
     }
-    
+
+
+    const updateTemplate = (e: React.MouseEvent<HTMLDivElement>, templateName: string, slideIndex: number) => {
+        e.preventDefault();
+        handleSlideEdit(templateName, slideIndex, 'template');
+    }
+
 
     function handleSlideEdit(content: string | string[], slideIndex: number, tag: SlideKeys) {
         setIsEditMode(false);
@@ -157,14 +166,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
         const currentSlide = newSlides[slideIndex];
         const currNewFinalSlides = newFinalSlides[slideIndex];
         const className = tag;
-        // getClassnameByTag(tag);
-
-        // if (['head','title','subtopic', 'userName'].includes(className)) {
-        //     currentSlide.tag = (content as string);
-        //     currNewFinalSlides[className] = (content as string);
-        //     setSlides(newSlides);
-        //     setFinalSlides(newFinalSlides);
-
 
         if (className === 'head') {
             currentSlide.head = (content as string);
@@ -178,6 +179,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
         } else if (className === 'userName') {
             currentSlide.userName = (content as string);
             currNewFinalSlides.userName = (content as string);
+        } else if (className === 'template') {
+            currentSlide.template = (content as string);
+            currNewFinalSlides.template = (content as string);
         } else if (className === 'images') {
             currentSlide.images = (content as string[]);
             currNewFinalSlides.images = (content as string[]);
@@ -190,27 +194,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
         setSlides(newSlides);
         setFinalSlides(newFinalSlides);
     }
-
-    // function getClassnameByTag(tag: string): string | undefined {
-    //     switch (tag) {
-    //         case 'h1':
-    //             return 'head';
-    //         case 'h2':
-    //             return 'title';
-    //         case 'h3':
-    //             return 'subtopic';
-    //         case 'h4':
-    //             return 'userName';
-    //         case 'p':
-    //             return 'paragraph';
-    //         case 'li':
-    //             return 'content';
-    //         case 'img':
-    //             return 'images';
-    //         default:
-    //             return undefined;
-    //     }
-    // }
 
     function goToSlide(index: number) {
         setCurrentSlideIndex(index);
@@ -264,12 +247,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
         return updateImgUrl;
     }
 
-    const templateSample = [
-        <img src={template1.src} className='w-full h-full object-contain' />,
-        <img src={template2.src} className='w-full h-full object-contain' />,
-        <img src={template3.src} className='w-full h-full object-contain' />,
-    ]
-
     useEffect(() => {
         const resizeSlide = () => {
             if (containerRef.current && slideRef.current) {
@@ -296,6 +273,141 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
     }, [containerRef, slideRef]);
 
 
+    const templateDispatch = (slide: Slide, index: number): JSX.Element => {
+        const Template = templates[slide.template as keyof typeof templates];
+        if (index === 0) {
+            return <Template
+                key={index}
+                user_name=
+                {<div
+                    key={0}
+                    className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
+                    contentEditable={true}
+                    onFocus={() => {
+                        setIsEditMode(true)
+                    }}
+                    onBlur={(e) =>
+                        handleSlideEdit(e.target.innerText, index, 'userName')}
+                    style={h4Style}
+                    dangerouslySetInnerHTML={{ __html: slide.userName }}
+                />
+                }
+                title={
+                    <div
+                        key={1}
+                        className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
+                        contentEditable={true}
+                        onFocus={() => {
+                            setIsEditMode(true)
+                        }}
+                        onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'head')}
+                        style={h1Style}
+                        dangerouslySetInnerHTML={{ __html: slide.head }}
+                    />
+                }
+                topic={<></>}
+                subtopic={<></>}
+                content={[<></>]}
+                imgs={slide.images}
+                update_callback={updateImgUrlArray(index)}
+            />
+        } else {
+            return <Template
+                key={index}
+                user_name={<></>}
+                title={<></>}
+                topic={
+                    <div
+                        key={0}
+                        className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
+                        contentEditable={true}
+                        onFocus={() => {
+                            setIsEditMode(true)
+                        }}
+                        onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
+                        style={h2Style}
+                        dangerouslySetInnerHTML={{ __html: slide.title }}
+                    />
+                }
+                subtopic={
+                    <div
+                        key={1}
+                        className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
+                        contentEditable={true}
+                        onFocus={() => {
+                            setIsEditMode(true)
+                        }}
+                        onBlur={(e) => {
+                            handleSlideEdit(e.target.innerText, index, 'subtopic')
+                        }}
+                        style={h3Style}
+                        dangerouslySetInnerHTML={{ __html: slide.subtopic }}
+                    />
+                }
+                content={
+                    slide.content.map((content: string, index: number) => {
+                        if (content.includes('$$') || content.includes('\\(')) {
+                            if (isEditMode) {
+                                return (
+                                    <div
+                                        key={index}
+                                        className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
+                                        contentEditable={true}
+                                        style={listStyle}
+                                        onFocus={() => {
+                                            setIsEditMode(true)
+                                        }}
+                                        onBlur={(e) => {
+                                            const modifiedContent = [...slide.content];
+                                            modifiedContent[index] = e.target.innerText;
+                                            handleSlideEdit(modifiedContent, index, 'content');
+                                        }}
+                                    >
+                                        {content}
+                                    </div>
+                                );
+                            }
+                            else {
+                                return (
+                                    <MathJaxContext key={index}>
+                                        <MathJax>
+                                            <div onClick={toggleEditMode}
+                                                className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
+                                                style={listStyle}>
+                                                {content}
+                                            </div>
+                                        </MathJax>
+                                    </MathJaxContext>
+                                );
+                            }
+                        }
+                        return (
+                            <div
+                                key={index}
+                                className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
+                                contentEditable={true}
+                                onFocus={() => {
+                                    setIsEditMode(true)
+                                }}
+                                onBlur={(e) => {
+                                    const modifiedContent = [...slide.content];
+                                    modifiedContent[index] = e.target.innerText;
+                                    handleSlideEdit(modifiedContent, index, 'content');
+                                }}
+                                dangerouslySetInnerHTML={{ __html: wrapWithLiTags(content) }}
+                            >
+                            </div>
+                        );
+                    })
+                }
+
+                imgs={(slide.images) as string[]}
+                update_callback={updateImgUrlArray(index)}
+            />
+        }
+    }
+
+
     return (
         <div className='w-fit h-fit'>
             <div id="slideContainer" className='overflow-hidden' ref={containerRef} style={{
@@ -315,141 +427,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                             alignItems: 'flex-start',
                             position: 'relative',
                         }}>
-                        {slides[currentSlideIndex] && (
-                            currentSlideIndex === 0 ? (
-                                <>
-                                    <First_page_img_1
-                                        key={currentSlideIndex}
-                                        user_name=
-                                        {<div
-                                            key={0}
-                                            className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                                            contentEditable={true}
-                                            onFocus={() => {
-                                                setIsEditMode(true)
-                                            }}
-                                            onBlur={(e) => 
-                                                handleSlideEdit(e.target.innerText, currentSlideIndex, 'userName')}
-                                            style={h4Style}
-                                            dangerouslySetInnerHTML={{ __html: slides[currentSlideIndex].userName }}
-                                        />
-                                        }
-                                        title={
-                                            <div
-                                                key={1}
-                                                className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                                                contentEditable={true}
-                                                onFocus={() => {
-                                                    setIsEditMode(true)
-                                                }}
-                                                onBlur={(e) => handleSlideEdit(e.target.innerText, currentSlideIndex, 'head')}
-                                                style={h1Style}
-                                                dangerouslySetInnerHTML={{ __html: slides[currentSlideIndex].head }}
-                                            />
-                                        }
-                                        topic={<></>}
-                                        subtopic={<></>}
-                                        content={[<></>]}
-                                        imgs={slides[currentSlideIndex].images}
-                                        update_callback={updateImgUrlArray(currentSlideIndex)}
-                                    />
-                                </>
-                            )
-                                : <>
-                                    <Col_2_img_2
-                                        key={currentSlideIndex}
-                                        user_name={<></>}
-                                        title={<></>}
-                                        topic={
-                                            <div
-                                                key={0}
-                                                className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                                                contentEditable={true}
-                                                onFocus={() => {
-                                                    setIsEditMode(true)
-                                                }}
-                                                onBlur={(e) => handleSlideEdit(e.target.innerText, currentSlideIndex, 'title')}
-                                                style={h2Style}
-                                                dangerouslySetInnerHTML={{ __html: slides[currentSlideIndex].title }}
-                                            />
-                                        }
-                                        subtopic={
-                                            <div
-                                                key={1}
-                                                className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                                                contentEditable={true}
-                                                onFocus={() => {
-                                                    setIsEditMode(true)
-                                                }}
-                                                onBlur={(e) => {
-                                                    handleSlideEdit(e.target.innerText, currentSlideIndex, 'subtopic')
-                                                }}
-                                                style={h3Style}
-                                                dangerouslySetInnerHTML={{ __html: slides[currentSlideIndex].subtopic }}
-                                            />
-                                        }
-                                        content={
-                                            slides[currentSlideIndex].content.map((content: string, index: number) => {
-                                                if (content.includes('$$') || content.includes('\\(')) {
-                                                    if (isEditMode) {
-                                                        return (
-                                                            <div
-                                                                key={index}
-                                                                className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                                                                contentEditable={true}
-                                                                style={listStyle}
-                                                                onFocus={() => {
-                                                                    setIsEditMode(true)
-                                                                }}
-                                                                onBlur={(e) => {
-                                                                    const modifiedContent = [...slides[currentSlideIndex].content];
-                                                                    modifiedContent[index] = e.target.innerText;
-                                                                    handleSlideEdit(modifiedContent, currentSlideIndex, 'content');
-                                                                }}
-                                                            >
-                                                                {content}
-                                                            </div>
-                                                        );
-                                                    }
-                                                    else {
-                                                        return (
-                                                            <MathJaxContext key={index}>
-                                                                <MathJax>
-                                                                    <div onClick={toggleEditMode}
-                                                                        className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                                                                        style={listStyle}>
-                                                                        {content}
-                                                                    </div>
-                                                                </MathJax>
-                                                            </MathJaxContext>
-                                                        );
-                                                    }
-                                                }
-                                                return (
-                                                    <div
-                                                        key={index}
-                                                        className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                                                        contentEditable={true}
-                                                        onFocus={() => {
-                                                            setIsEditMode(true)
-                                                        }}
-                                                        onBlur={(e) => {
-                                                            const modifiedContent = [...slides[currentSlideIndex].content];
-                                                            modifiedContent[index] = e.target.innerText;
-                                                            handleSlideEdit(modifiedContent, currentSlideIndex, 'content');
-                                                        }}
-                                                        dangerouslySetInnerHTML={{ __html: wrapWithLiTags(content) }}
-                                                    >
-                                                    </div>
-                                                );
-                                            })
-                                        }
-
-                                        imgs={(slides[currentSlideIndex].images) as string[]}
-                                        update_callback={updateImgUrlArray(currentSlideIndex)}
-                                    />
-                                </>
-                        )}
+                        {slides[currentSlideIndex] && templateDispatch(slides[currentSlideIndex], currentSlideIndex)}
                     </div>
                 )}
             </div>
@@ -511,9 +489,33 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                         <div className='w-full h-full flex flex-col'>
                                             <div className='w-full h-full overflow-y-auto'>
                                                 <div className='w-full h-fit grid grid-cols-2 gap-4 p-2'>
-                                                    {templateSample.map((sample, index) => {
-                                                        return <div className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-1 outline-black hover:outline-[#9AAEF6] hover:outline-4'>{sample}</div>
-                                                    })}
+                                                    {currentSlideIndex === 0 ?
+                                                        templateSamples.cover.map((temp, index) => {
+                                                            if (!slides[currentSlideIndex]) {
+                                                                return <></>
+                                                            }
+                                                            if (temp.name !== slides[currentSlideIndex].template) {
+                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-1 outline-black hover:outline-[#9AAEF6] hover:outline-4'>
+                                                                    <img src={temp.img} className='w-full h-full object-contain' />
+                                                                </div>
+                                                            } else {
+                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#9AAEF6] outline-4'>
+                                                                    <img src={temp.img} className='w-full h-full object-contain' />
+                                                                </div>
+                                                            }
+                                                        })
+                                                        :
+                                                        templateSamples.main.map((temp, index) => {
+                                                            if (temp.name !== slides[currentSlideIndex].template) {
+                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-1 outline-black hover:outline-[#9AAEF6] hover:outline-4'>
+                                                                    <img src={temp.img} className='w-full h-full object-contain' />
+                                                                </div>
+                                                            } else {
+                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#9AAEF6] outline-4'>
+                                                                    <img src={temp.img} className='w-full h-full object-contain' />
+                                                                </div>
+                                                            }
+                                                        })}
                                                 </div>
                                             </div>
                                         </div>
