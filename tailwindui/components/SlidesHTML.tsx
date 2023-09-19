@@ -7,7 +7,8 @@ import './slidesHTML.css';
 import {
     First_page_img_1,
     Col_2_img_1,
-    Col_1_img_0
+    Col_1_img_0,
+    Col_2_img_2,
 } from "@/components/slideTemplates";
 
 
@@ -106,8 +107,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                     elements.content = listItems.map(li => sanitizeHtml(li.innerHTML));
                 } else if (child.className === 'images') {
                     const listItems = Array.from(child.getElementsByTagName('img'));
-                    const urls = listItems.map((img) => {
-                        return img.src;
+                    let urls = listItems.map((img) => {
+                        const src = img.getAttribute('src');
+                        if (src) {
+                            return src;
+                        } else {
+                            return '';
+                        }
                     })
                     elements.images = urls;
                 }
@@ -294,7 +300,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                 </>
                             )
                                 : <>
-                                    <Col_2_img_1
+                                    <Col_2_img_2
                                         key={currentSlideIndex}
                                         user_name={<></>}
                                         title={<></>}
