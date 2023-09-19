@@ -266,6 +266,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                     slideRef.current.style.transform = `scale(${scale})`;
                     slideRef.current.style.left = `-${960 * (1 - scale) / 2}px`;
                     slideRef.current.style.top = `-${540 * (1 - scale) / 2}px`;
+                } else {
+                    containerRef.current.style.height = `540px`;
+                    containerRef.current.style.width = `960px`;
+                    slideRef.current.style.transform = `scale(1)`;
+                    slideRef.current.style.left = '';
+                    slideRef.current.style.top = '';
                 }
             }
         }
