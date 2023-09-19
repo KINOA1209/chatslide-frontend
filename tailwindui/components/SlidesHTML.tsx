@@ -109,7 +109,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                 } else if (className === 'subtopic') {
                     elements.subtopic = sanitizeHtml(child.innerHTML);
                 } else if (className === 'template') {
-                    elements.subtopic = sanitizeHtml(child.innerHTML);
+                    elements.template = sanitizeHtml(child.innerHTML);
                 } else if (className === 'content') {
                     const listItems = Array.from(child.getElementsByTagName('li'));
                     elements.content = listItems.map(li => sanitizeHtml(li.innerHTML));
@@ -431,8 +431,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                     </div>
                 )}
             </div>
-            <div className='slide-nav mt-4 w-full grid grid-cols-3'>
-                <div className='col-span-1'></div>
+            <div className='slide-nav mt-4 w-full grid grid-cols-2 md:grid-cols-3'>
+                <div className='col-span-1 hidden md:block'></div>
                 <div className='col-span-1'>
                     <div className='w-fit h-fit flex flex-row items-center justify-center mx-auto rounded-full bg-slate-600/40'>
                         <button
