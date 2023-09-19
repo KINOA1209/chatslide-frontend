@@ -128,14 +128,18 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
 
 
     function handleKeyDown(event: KeyboardEvent) {
-        if (event.key === 'ArrowRight' && currentSlideIndex < slides.length - 1) {
-            goToSlide(currentSlideIndex + 1);
-        } else if (event.key === 'ArrowLeft' && currentSlideIndex > 0) {
-            goToSlide(currentSlideIndex - 1);
+        if (!isEditMode) {
+            if (event.key === 'ArrowRight' && currentSlideIndex < slides.length - 1) {
+                goToSlide(currentSlideIndex + 1);
+            } else if (event.key === 'ArrowLeft' && currentSlideIndex > 0) {
+                goToSlide(currentSlideIndex - 1);
+            }
         }
     }
+    
 
     function handleSlideEdit(content: string | string[], slideIndex: number, tag: SlideKeys) {
+        setIsEditMode(false);
         const newSlides = [...slides];
         const newFinalSlides = [...finalSlides];
 
@@ -299,7 +303,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                             key={0}
                                             className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
                                             contentEditable={true}
-                                            onBlur={(e) => handleSlideEdit(e.target.innerText, currentSlideIndex, 'userName')}
+                                            onFocus={() => {
+                                                setIsEditMode(true)
+                                            }}
+                                            onBlur={(e) => 
+                                                handleSlideEdit(e.target.innerText, currentSlideIndex, 'userName')}
                                             style={h4Style}
                                             dangerouslySetInnerHTML={{ __html: slides[currentSlideIndex].userName }}
                                         />
@@ -309,6 +317,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                                 key={1}
                                                 className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
                                                 contentEditable={true}
+                                                onFocus={() => {
+                                                    setIsEditMode(true)
+                                                }}
                                                 onBlur={(e) => handleSlideEdit(e.target.innerText, currentSlideIndex, 'head')}
                                                 style={h1Style}
                                                 dangerouslySetInnerHTML={{ __html: slides[currentSlideIndex].head }}
@@ -332,6 +343,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                                 key={0}
                                                 className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
                                                 contentEditable={true}
+                                                onFocus={() => {
+                                                    setIsEditMode(true)
+                                                }}
                                                 onBlur={(e) => handleSlideEdit(e.target.innerText, currentSlideIndex, 'title')}
                                                 style={h2Style}
                                                 dangerouslySetInnerHTML={{ __html: slides[currentSlideIndex].title }}
@@ -342,6 +356,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                                 key={1}
                                                 className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
                                                 contentEditable={true}
+                                                onFocus={() => {
+                                                    setIsEditMode(true)
+                                                }}
                                                 onBlur={(e) => {
                                                     handleSlideEdit(e.target.innerText, currentSlideIndex, 'subtopic')
                                                 }}
@@ -359,6 +376,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                                                 className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
                                                                 contentEditable={true}
                                                                 style={listStyle}
+                                                                onFocus={() => {
+                                                                    setIsEditMode(true)
+                                                                }}
                                                                 onBlur={(e) => {
                                                                     const modifiedContent = [...slides[currentSlideIndex].content];
                                                                     modifiedContent[index] = e.target.innerText;
@@ -388,6 +408,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                                         key={index}
                                                         className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
                                                         contentEditable={true}
+                                                        onFocus={() => {
+                                                            setIsEditMode(true)
+                                                        }}
                                                         onBlur={(e) => {
                                                             const modifiedContent = [...slides[currentSlideIndex].content];
                                                             modifiedContent[index] = e.target.innerText;
