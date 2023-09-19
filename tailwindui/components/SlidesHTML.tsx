@@ -5,6 +5,10 @@ import { MathJax, MathJaxContext } from 'better-react-mathjax';
 import backdrop from '@/public/images/backdrop.jpg';
 import './slidesHTML.css';
 import { First_page_img_1, Col_2_img_1 } from "@/components/slideTemplates";
+import { Transition } from '@headlessui/react';
+import template1 from '@/public/images/template/1.jpg'
+import template2 from '@/public/images/template/2.jpg'
+import template3 from '@/public/images/template/3.jpg'
 
 
 
@@ -27,6 +31,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
     const [slides, setSlides] = useState<Slide[]>([]);
     const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
     const foldername = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('foldername') : '';
+    const [showLayout, setShowLayout] = useState(true);
+
+    const openModal = () => {
+        setShowLayout(true);
+    }
+
+    const closeModal = () => {
+        setShowLayout(false);
+    }
 
     useEffect(() => {
         if (foldername !== null) {
@@ -65,7 +78,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
     function displaySlides(doc: Document) {
         const slideElements = Array.from(doc.getElementsByClassName('slide'));
         const newSlides: Slide[] = slideElements.map((slide) => {
-            const elements: { [key: string]: { type: string; content: string | string[]} } = {};
+            const elements: { [key: string]: { type: string; content: string | string[] } } = {};
             const slideChildren = Array.from(slide.children);
             let hasImg = false;
             for (const child of slideChildren) {
@@ -83,7 +96,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                     type = 'li';
                     const listItems = Array.from(child.getElementsByTagName('li'));
                     elements[className] = { type, content: listItems.map(li => sanitizeHtml(li.innerHTML)) };
-                    console.log(typeof(elements[className].content))
+                    console.log(typeof (elements[className].content))
                 } else if (child.className === 'images') {
                     hasImg = true;
                     type = 'div';
@@ -91,26 +104,26 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                     const urls = listItems.map((img) => {
                         return img.src;
                     })
-                    elements[className] = { type, content: urls}
+                    elements[className] = { type, content: urls }
                 }
-    
+
                 if (type !== '' && type !== 'li') {
                     const content = sanitizeHtml(child.innerHTML);
                     elements[className] = { type, content };
                 }
             }
-    
+
             if (!hasImg) {
                 // Set an empty string as the content for images
                 elements['images'] = { type: 'div', content: [] };
             }
             return { element: elements };
         });
-    
+
         setFinalSlides(newSlides);
         setSlides(newSlides);
     }
-    
+
 
     function handleKeyDown(event: KeyboardEvent) {
         if (event.key === 'ArrowRight' && currentSlideIndex < slides.length - 1) {
@@ -123,11 +136,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
     function handleSlideEdit(content: string | string[], slideIndex: number, tag: string) {
         const newSlides = [...slides];
         const newFinalSlides = [...finalSlides];
-    
+
         const currentSlide = newSlides[slideIndex];
         const currNewFinalSlides = newFinalSlides[slideIndex];
         const className = getClassnameByTag(tag);
-    
+
         if (className) {
             currentSlide.element[className].content = content;
             currNewFinalSlides.element[className].content = content;
@@ -137,7 +150,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
             console.error(`Unknown tag: ${tag}`);
         }
     }
-    
+
     function getClassnameByTag(tag: string): string | undefined {
         switch (tag) {
             case 'h1':
@@ -158,7 +171,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                 return undefined;
         }
     }
-    
+
 
     function goToSlide(index: number) {
         setCurrentSlideIndex(index);
@@ -212,8 +225,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
         return updateImgUrl;
     }
 
+    const templateSample = [
+        <img src={template1.src} className='w-full h-full object-contain' />,
+        <img src={template2.src} className='w-full h-full object-contain' />,
+        <img src={template3.src} className='w-full h-full object-contain' />,
+    ]
+
     return (
         <div className='w-fit h-fit'>
+
             <div id="slideContainer" style={{
                 width: '50vw',
                 height: 'calc(50vw / 1.77)',
@@ -244,7 +264,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                             onBlur={(e) => handleSlideEdit(e.target.innerText, currentSlideIndex, 'h4')}
                                             style={h4Style}
                                             dangerouslySetInnerHTML={{ __html: slides[currentSlideIndex].element['userName'].content }}
-                                            />
+                                        />
                                         }
                                         title={
                                             <div
@@ -254,7 +274,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                                 onBlur={(e) => handleSlideEdit(e.target.innerText, currentSlideIndex, 'h1')}
                                                 style={h1Style}
                                                 dangerouslySetInnerHTML={{ __html: slides[currentSlideIndex].element['head'].content }}
-                                                />
+                                            />
                                         }
                                         topic={<></>}
                                         subtopic={<></>}
@@ -277,7 +297,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                                 onBlur={(e) => handleSlideEdit(e.target.innerText, currentSlideIndex, 'h2')}
                                                 style={h2Style}
                                                 dangerouslySetInnerHTML={{ __html: slides[currentSlideIndex].element['title'].content }}
-                                                />
+                                            />
                                         }
                                         subtopic={
                                             <div
@@ -289,7 +309,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                                 }}
                                                 style={h3Style}
                                                 dangerouslySetInnerHTML={{ __html: slides[currentSlideIndex].element['subtopic'].content }}
-                                                />
+                                            />
                                         }
                                         content={
                                             slides[currentSlideIndex].element['content'].content.map((content: string, index: number) => {
@@ -340,7 +360,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                                 );
                                             })
                                         }
-                                        
+
                                         imgs={slides[currentSlideIndex].element['images'].content}
                                         update_callback={updateImgUrlArray(currentSlideIndex)}
                                     />
@@ -349,19 +369,89 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                     </div>
                 )}
             </div>
-            <div className='slide-nav mt-4 w-full'>
-                <div className='w-fit h-fit bg-green-500 flex flex-row items-center justify-center mx-auto rounded-full bg-slate-600/40'>
-                    <button
-                        disabled={currentSlideIndex === 0}
-                        className='text-white text-2xl mx-4 my-1 disabled:text-gray-400'
-                        onClick={() => goToSlide(currentSlideIndex - 1)}>&#9664;</button>
-                    <div className='text-white'>
-                        {currentSlideIndex + 1}<span className='font-light'>{' of '}</span>{slides.length}
+            <div className='slide-nav mt-4 w-full grid grid-cols-3'>
+                <div className='col-span-1'></div>
+                <div className='col-span-1'>
+                    <div className='w-fit h-fit flex flex-row items-center justify-center mx-auto rounded-full bg-slate-600/40'>
+                        <button
+                            disabled={currentSlideIndex === 0}
+                            className='text-white text-2xl mx-4 my-1 disabled:text-gray-400'
+                            onClick={() => goToSlide(currentSlideIndex - 1)}>&#9664;</button>
+                        <div className='text-white'>
+                            {currentSlideIndex + 1}<span className='font-light'>{' of '}</span>{slides.length}
+                        </div>
+                        <button
+                            disabled={currentSlideIndex === slides.length - 1}
+                            className='text-white text-2xl mx-4 my-1 disabled:text-gray-400'
+                            onClick={() => goToSlide(currentSlideIndex + 1)}>&#9654;</button>
                     </div>
-                    <button
-                        disabled={currentSlideIndex === slides.length - 1}
-                        className='text-white text-2xl mx-4 my-1 disabled:text-gray-400'
-                        onClick={() => goToSlide(currentSlideIndex + 1)}>&#9654;</button>
+                </div>
+                <div className='col-span-1 flex flex-row-reverse'>
+                    <div className='w-fit h-fit rounded-full overflow-hidden'>
+                        <button
+                            className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
+                            onClick={openModal}>Change Layout</button>
+                    </div>
+                    <Transition
+                        className='h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
+                        show={showLayout}
+                        onClick={closeModal}
+                        enter="transition ease duration-300 transform"
+                        enterFrom="opacity-0 translate-y-12"
+                        enterTo="opacity-100 translate-y-0"
+                        leave="transition ease duration-300 transform"
+                        leaveFrom="opacity-100 translate-y-0"
+                        leaveTo="opacity-0 translate-y-12"
+                    >
+                        <div className='grow md:grow-0'></div>
+                        <Transition
+                            className='bg-gray-100 w-full h-3/4 md:h-1/2
+                    md:max-w-2xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
+                    overflow-hidden flex flex-col p-4'
+                            show={showLayout}
+                            enter="transition ease duration-500 transform delay-300"
+                            enterFrom="opacity-0 translate-y-12"
+                            enterTo="opacity-100 translate-y-0"
+                            leave="transition ease duration-300 transform"
+                            leaveFrom="opacity-100 translate-y-0"
+                            leaveTo="opacity-0 translate-y-12"
+                            onClick={e => { e.stopPropagation() }}
+                        >
+                            <h4 className="h4 text-blue-600 text-center">Select Layout</h4>
+                            <div className='grow mt-4 flex flex-col overflow-hidden'>
+                                <div className='w-full flex flex-row justify-between md:px-12'>
+                                    Select the layout you want to use on current slide. Use a layout with images if you want to insert images.
+                                </div>
+                                <div className='mt-3 grow overflow-hidden md:px-12'>
+                                    <div className='w-full h-full'>
+                                        <div className='w-full h-full flex flex-col'>
+                                            <div className='w-full h-full overflow-y-auto'>
+                                                <div className='w-full h-fit grid grid-cols-2 gap-4 p-2'>
+                                                    {templateSample.map((sample, index) => {
+                                                        return <div className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-1 outline-black hover:outline-[#9AAEF6] hover:outline-4'>{sample}</div>
+                                                    })}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div className="max-w-sm mx-auto">
+                                <div className="flex flex-wrap -mx-3 mt-6">
+                                    <div className="w-full px-3">
+                                        <button
+                                            className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full"
+                                            type="button"
+                                            onClick={e => { e.preventDefault(); closeModal(); }}>
+                                            OK
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </Transition>
+                    </Transition>
                 </div>
             </div>
         </div>
