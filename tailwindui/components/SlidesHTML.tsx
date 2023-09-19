@@ -479,12 +479,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                             leaveTo="opacity-0 translate-y-12"
                             onClick={e => { e.stopPropagation() }}
                         >
-                            <h4 className="h4 text-blue-600 text-center">Select Layout</h4>
-                            <div className='grow mt-4 flex flex-col overflow-hidden'>
-                                <div className='w-full flex flex-row justify-between md:px-12'>
-                                    Select the layout you want to use on current slide. Use a layout with images if you want to insert images.
-                                </div>
-                                <div className='mt-3 grow overflow-hidden md:px-12'>
+                            <h4 className="font-semibold text-xl text-center">Page Layout</h4>
+                            <div className='w-full text-center mb-3'>
+                                Change layout of current page
+                            </div>
+                            <div className='grow flex flex-col overflow-hidden'>
+                                <div className='mt-2 mb-5 grow overflow-hidden'>
                                     <div className='w-full h-full'>
                                         <div className='w-full h-full flex flex-col'>
                                             <div className='w-full h-full overflow-y-auto'>
@@ -495,11 +495,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                                                 return <></>
                                                             }
                                                             if (temp.name !== slides[currentSlideIndex].template) {
-                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-1 outline-black hover:outline-[#9AAEF6] hover:outline-4'>
+                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-1 outline-black hover:outline-[#9AAEF6] hover:outline-2'>
                                                                     <img src={temp.img} className='w-full h-full object-contain' />
                                                                 </div>
                                                             } else {
-                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#9AAEF6] outline-4'>
+                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#9AAEF6] outline-2'>
                                                                     <img src={temp.img} className='w-full h-full object-contain' />
                                                                 </div>
                                                             }
@@ -507,11 +507,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                                         :
                                                         templateSamples.main.map((temp, index) => {
                                                             if (temp.name !== slides[currentSlideIndex].template) {
-                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-1 outline-black hover:outline-[#9AAEF6] hover:outline-4'>
+                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-1 outline-black hover:outline-[#9AAEF6] hover:outline-2'>
                                                                     <img src={temp.img} className='w-full h-full object-contain' />
                                                                 </div>
                                                             } else {
-                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#9AAEF6] outline-4'>
+                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#9AAEF6] outline-2'>
                                                                     <img src={temp.img} className='w-full h-full object-contain' />
                                                                 </div>
                                                             }
@@ -524,14 +524,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                 </div>
 
                             </div>
-                            <div className="max-w-sm mx-auto">
-                                <div className="flex flex-wrap -mx-3 mt-6">
-                                    <div className="w-full px-3">
+                            <div className="w-full mx-auto">
+                                <div className="w-full flex flex-wrap">
+                                    <div className="w-full">
                                         <button
-                                            className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full"
+                                            className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full rounded-lg"
                                             type="button"
                                             onClick={e => { e.preventDefault(); closeModal(); }}>
-                                            OK
+                                            Done
                                         </button>
                                     </div>
                                 </div>
