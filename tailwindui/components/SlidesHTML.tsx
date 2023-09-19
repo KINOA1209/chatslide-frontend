@@ -495,11 +495,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                                                 return <></>
                                                             }
                                                             if (temp.name !== slides[currentSlideIndex].template) {
-                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-1 outline-black hover:outline-[#9AAEF6] hover:outline-2'>
+                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-2 outline-slate-300 hover:outline-black'>
                                                                     <img src={temp.img} className='w-full h-full object-contain' />
                                                                 </div>
                                                             } else {
-                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#9AAEF6] outline-2'>
+                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-black outline-2'>
                                                                     <img src={temp.img} className='w-full h-full object-contain' />
                                                                 </div>
                                                             }
@@ -507,11 +507,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                                         :
                                                         templateSamples.main.map((temp, index) => {
                                                             if (temp.name !== slides[currentSlideIndex].template) {
-                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-1 outline-black hover:outline-[#9AAEF6] hover:outline-2'>
+                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-2 outline-slate-300 hover:outline-black'>
                                                                     <img src={temp.img} className='w-full h-full object-contain' />
                                                                 </div>
                                                             } else {
-                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#9AAEF6] outline-2'>
+                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-black outline-2'>
                                                                     <img src={temp.img} className='w-full h-full object-contain' />
                                                                 </div>
                                                             }
