@@ -51,8 +51,8 @@ export const Col_2_img_1 = ({ user_name, title, topic, subtopic, content, imgs, 
     return <div
         className="rounded-md overflow-hidden"
         style={{
-            width: '50vw',
-            height: 'calc(50vw / 1.77)',
+            width: '960px',
+            height: '540px',
             backgroundSize: 'cover',
             display: 'flex',
             flexDirection: 'column',
@@ -63,7 +63,7 @@ export const Col_2_img_1 = ({ user_name, title, topic, subtopic, content, imgs, 
             boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
             position: 'relative',
             backgroundColor: 'white',
-            padding: 'calc(50vw * 28 / 960)',
+            padding: '28px',
         }}>
         <div>
             <div>{topic}</div>
@@ -119,8 +119,8 @@ export const First_page_img_1 = ({ user_name, title, topic, subtopic, content, i
     return <div
         className="rounded-md overflow-hidden gap-[32px]"
         style={{
-            width: '50vw',
-            height: 'calc(50vw / 1.77)',
+            width: '100%',
+            height: '100%',
             backgroundSize: 'cover',
             display: 'flex',
             flexDirection: 'row',
@@ -131,7 +131,7 @@ export const First_page_img_1 = ({ user_name, title, topic, subtopic, content, i
             boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
             position: 'relative',
             backgroundColor: 'white',
-            padding: 'calc(50vw * 28 / 960)',
+            padding: '28px',
         }}>
         <div className="w-1/2 flex flex-col justify-between h-full">
             <div>
@@ -189,8 +189,8 @@ export const Col_1_img_0 = ({ user_name, title, topic, subtopic, content, imgs, 
     return <div
         className="rounded-md overflow-hidden"
         style={{
-            width: '50vw',
-            height: 'calc(50vw / 1.77)',
+            width: '100%',
+            height: '100%',
             backgroundSize: 'cover',
             display: 'flex',
             flexDirection: 'column',
@@ -201,7 +201,7 @@ export const Col_1_img_0 = ({ user_name, title, topic, subtopic, content, imgs, 
             boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
             position: 'relative',
             backgroundColor: 'white',
-            padding: 'calc(50vw * 28 / 960)',
+            padding: '28px',
         }}>
         <div>
             <div>{topic}</div>
@@ -254,8 +254,8 @@ export const Col_2_img_2 = ({ user_name, title, topic, subtopic, content, imgs, 
     return <div
         className="rounded-md overflow-hidden"
         style={{
-            width: '50vw',
-            height: 'calc(50vw / 1.77)',
+            width: '100%',
+            height: '100%',
             backgroundSize: 'cover',
             display: 'flex',
             flexDirection: 'column',
@@ -266,7 +266,7 @@ export const Col_2_img_2 = ({ user_name, title, topic, subtopic, content, imgs, 
             boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
             position: 'relative',
             backgroundColor: 'white',
-            padding: 'calc(50vw * 28 / 960)',
+            padding: '28px',
         }}>
         <div>
             <div>{topic}</div>
