@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import sanitizeHtml from 'sanitize-html';
 import ReactQuill from 'react-quill';
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
@@ -52,6 +52,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
     const [slides, setSlides] = useState<Slide[]>([]);
     const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
     const foldername = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('foldername') : '';
+    const slideRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (foldername !== null) {
@@ -248,24 +250,45 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
         return updateImgUrl;
     }
 
+    useEffect(() => {
+        const resizeSlide = () => {
+            if (containerRef.current && slideRef.current) {
+                let scale = 1;
+                const viewWidth = window.innerWidth;
+                if (viewWidth < 976) {
+                    scale = (viewWidth - 80) / 960;
+                    containerRef.current.style.height = `${540 * scale}px`;
+                    containerRef.current.style.width = `${960 * scale}px`;
+                    slideRef.current.style.transform = `scale(${scale})`;
+                    slideRef.current.style.left = `-${960 * (1 - scale) / 2}px`;
+                    slideRef.current.style.top = `-${540 * (1 - scale) / 2}px`;
+                }
+            }
+        }
+        window.addEventListener('resize', resizeSlide);
+        resizeSlide();
+    }, [containerRef, slideRef]);
+
+
     return (
         <div className='w-fit h-fit'>
-            <div id="slideContainer" style={{
-                width: '50vw',
-                height: 'calc(50vw / 1.77)',
-                backgroundSize: 'cover',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
-
-                boxSizing: 'border-box',
-                border: 'none',
-                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
-                position: 'relative',
-            }}>
+            <div id="slideContainer" className='border border-black overflow-hidden' ref={containerRef}>
                 {slides.length > 0 && (
-                    <div className="slide">
+                    <div className="slide h-full w-full" ref={slideRef}
+                        style={{
+                            width: '960px',
+                            height: '540px',
+                            backgroundSize: 'cover',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'flex-start',
+                            alignItems: 'flex-start',
+
+                            boxSizing: 'border-box',
+                            border: 'none',
+                            boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
+                            position: 'relative',
+                        }}>
                         {slides[currentSlideIndex] && (
                             currentSlideIndex === 0 ? (
                                 <>
