@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Transition } from '@headlessui/react';
 import AuthService from '@/components/utils/AuthService';
 import { LoadingIcon } from '@/components/progress';
+import { createPortal } from 'react-dom';
 
 interface ImgModuleProp {
     imgsrc: string,
@@ -75,7 +76,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
     }
 
     return <>
-        <Transition
+        {createPortal(<Transition
             className='h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
             show={showModal}
             onClick={closeModal}
@@ -200,7 +201,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
                     </div>
                 </div>
             </Transition>
-        </Transition>
+        </Transition>, document.body)}
         <div onClick={openModal}
             className="w-full h-full bg-[#E7E9EB] transition ease-in-out duration-150 hover:bg-[#CAD0D3] flex flex-col items-center justify-center cursor-pointer">
 
