@@ -231,7 +231,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
                             <div className='w-full h-full'>
                                 <div className='w-full h-full flex flex-col'>
                                     <div className='w-full h-full overflow-y-auto'>
-                                        <FileUploadButton onFileSelected={onFileSelected} extensions={imgFormats} />
+                                        <FileUploadButton onFileSelected={onFileSelected} formats={imgFormats} extensions={imgFormats} />
                                         <div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-2'>
                                             {resources.map((url, index) => {
                                                 if (url === selectedImg) {
