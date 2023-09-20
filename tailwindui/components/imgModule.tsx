@@ -3,6 +3,10 @@ import { Transition } from '@headlessui/react';
 import AuthService from '@/components/utils/AuthService';
 import { LoadingIcon } from '@/components/progress';
 import { createPortal } from 'react-dom';
+import { FileUploadButton } from './fileUpload';
+import { toast } from 'react-toastify';
+
+const imgFormats = ["png", "jpg", "jpeg", "gif"];
 
 interface ImgModuleProp {
     imgsrc: string,
@@ -80,6 +84,87 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
         updateSingleCallback((e.target as HTMLImageElement).src);
     }
 
+    // const fetchFiles = async (token: string) => {
+    //     const headers = new Headers();
+    //     if (token) {
+    //         headers.append('Authorization', `Bearer ${token}`);
+    //     }
+    //     headers.append('Content-Type', 'application/json');
+
+    //     try {
+    //         const response = await fetch('/api/resource_info', {
+    //             method: 'GET',
+    //             headers: headers,
+    //         });
+
+    //         if (response.ok) {
+    //             const data = await response.json();
+    //             const files = data.data.resources;
+    //             const resourceTemps = files.map((resource: any) => {
+    //                 return {
+    //                     id: resource.id,
+    //                     filename: resource.resource_name,
+    //                 }
+    //             });
+    //         } else {
+    //             // Handle error cases
+    //             console.error('Failed to fetch projects:', response.status);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error fetching projects:', error);
+    //     }
+    // };
+
+    const onFileSelected = async (file: File | null) => {
+        console.log("will upload file", file);
+        if (file == null) {
+            return;
+        }
+        console.log("file name: ", file.name)//.split('.', 1)
+        console.log("file name split: ", file.name.split('.', 1))
+        const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+        const body = new FormData();
+        body.append("file", file);
+        const response = await fetch("/api/upload_user_file", {
+            method: "POST",
+            headers: {
+                'Authorization': `Bearer ${idToken}`,
+            },
+            body: body
+        });
+        if (response.ok) {
+            toast.success("File uploaded successfully", {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                containerId: "upload",
+            });
+            const parsedResponse = await response.json();
+            const file_id = parsedResponse.data.file_id;
+            //TODO: match file_id with filename
+        } else {
+            console.error(response.status);
+            toast.error("File upload failed", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                containerId: "upload",
+            });
+        };
+
+        // fetchFiles(idToken);
+    };
+
     return <>
         {createPortal(<Transition
             className='h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
@@ -94,7 +179,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
         >
             <div className='grow md:grow-0'></div>
             <Transition
-                className='bg-gray-100 w-full h-3/4 md:h-1/2
+                className='bg-gray-100 w-full h-3/4 md:h-[65vh]
                     md:max-w-2xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
                     overflow-hidden flex flex-col p-4'
                 show={showModal}
@@ -146,6 +231,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
                             <div className='w-full h-full'>
                                 <div className='w-full h-full flex flex-col'>
                                     <div className='w-full h-full overflow-y-auto'>
+                                        <FileUploadButton onFileSelected={onFileSelected} extensions={imgFormats} />
                                         <div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-2'>
                                             {resources.map((url, index) => {
                                                 if (url === selectedImg) {

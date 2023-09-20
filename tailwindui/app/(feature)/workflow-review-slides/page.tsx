@@ -65,6 +65,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
                 draggable: true,
                 progress: undefined,
                 theme: "light",
+                containerId: "slides",
             });
             sessionStorage.removeItem("signed_in");
         }
@@ -72,7 +73,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
 
     return (
         <div>
-            <ToastContainer />
+            <ToastContainer enableMultiContainer containerId={'slides'} />
             <div className="max-w-4xl mx-auto px-4 sm:px-6">
 
                 <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} />
