@@ -105,7 +105,8 @@ class AuthService {
     async getCurrentUserEmail() {
         const user = await this.getCurrentUser();
         try {
-            return user.username;
+            // console.log(user.attributes['email'])
+            return user.attributes['email'];
         }
         catch (error) {
             console.error('Error getting current user email: ', error);
