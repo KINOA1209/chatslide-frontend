@@ -173,10 +173,15 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
         }
         headers.append('Content-Type', 'application/json');
 
+        const resource_type = selectable ? {
+            resource_type: 'doc',
+        } : {}
+
         try {
             const response = await fetch('/api/resource_info', {
-                method: 'GET',
+                method: 'POST',
                 headers: headers,
+                body: JSON.stringify(resource_type)
             });
 
             if (response.ok) {
