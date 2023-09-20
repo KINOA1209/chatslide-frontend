@@ -194,7 +194,7 @@ export default function Pricing() {
                                         <div>
                                             <div ref={buttonRef} className="btn drop-shadow-xl text-lg rounded-full text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer"
                                                 style={{ backgroundImage: 'linear-gradient(-45deg, #5A24B4, #9271CB, #2E8BC0)', backgroundSize: '200%' }}
-                                                onClick={() => { currentUser ? handlePlusSubscription : router.push('/signup') }}>
+                                                onClick={() => { currentUser ? handlePlusSubscription() : router.push('/signup') }}>
                                                 {currentUser ? 'Subscribe' : 'Sign up'}
                                             </div>
                                         </div>
@@ -245,7 +245,7 @@ export default function Pricing() {
                                         <div>
                                             <div ref={buttonRef} className="btn drop-shadow-xl text-lg rounded-full text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer"
                                                 style={{ backgroundImage: 'linear-gradient(-45deg, #002366, #003366, #004466)', backgroundSize: '200%' }}
-                                                onClick={() => { currentUser ? handleProSubscription : router.push('/signup') }}>
+                                                onClick={() => { currentUser ? handleProSubscription() : router.push('/signup') }}>
                                                 {currentUser ? 'Subscribe' : 'Sign up'}
                                             </div>
                                         </div>
