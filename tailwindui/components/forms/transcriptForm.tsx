@@ -42,19 +42,24 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({finalSlides, isSubmittin
     typeof sessionStorage !== 'undefined'
       ? sessionStorage.getItem('foldername')
       : null;
-  const topic =
-    typeof sessionStorage !== 'undefined'
-      ? sessionStorage.getItem('topic')
-      : null;
-  const language =
-    typeof window !== 'undefined'
-      ? sessionStorage.getItem('language')
-      : 'English';
+    const topic =
+      typeof sessionStorage !== 'undefined'
+        ? sessionStorage.getItem('topic')
+        : null;
+    const language =
+      typeof window !== 'undefined'
+        ? sessionStorage.getItem('language')
+        : 'English';
+    const project_id =
+      typeof window !== 'undefined'
+        ? sessionStorage.getItem('project_id')
+        : '';
 
     const formData = {
       html_filename: html_filename,
       foldername: foldername,
       topic: topic,
+      project_id: project_id,
       language: language,
       html: finalSlides
     };
