@@ -38,17 +38,20 @@ export default function Pricing() {
     const handleProSubscription = async () => {
         try {
             // Determine the tier based on isYearly
-            const tier = isYearly ? 'PRO YEARLY' : 'PRO MONTHLY';
+            const tier = isYearly ? 'PRO_YEARLY' : 'PRO_MONTHLY';
     
             // Get current user's token and email
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
-            const { email } = await AuthService.getCurrentUserEmail();
+            const email = await AuthService.getCurrentUserEmail();
+            // console.log(email);
     
             // Create a request object
             const requestData = {
                 tier: tier,
                 email: email,
             };
+
+            console.log(requestData);
     
             // Make the API request to create a checkout session
             const response = await fetch('/api/create-checkout-session', {
@@ -61,7 +64,7 @@ export default function Pricing() {
             });
     
             if (response.ok) {
-                const { url } = await response.json();
+                const url = await response.text();
                 // Redirect to the checkout page
                 router.push(url);
             } else {
@@ -75,17 +78,20 @@ export default function Pricing() {
     const handlePlusSubscription = async () => {
         try {
             // Determine the tier based on isYearly
-            const tier = isYearly ? 'PLUS YEARLY' : 'PLUS MONTHLY';
+            const tier = isYearly ? 'PLUS_YEARLY' : 'PLUS_MONTHLY';
     
             // Get current user's token and email
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
-            const { email } = await AuthService.getCurrentUserEmail();
+            const email = await AuthService.getCurrentUserEmail();
+            // console.log(email);
     
             // Create a request object
             const requestData = {
                 tier: tier,
                 email: email,
             };
+
+            console.log(requestData);
     
             // Make the API request to create a checkout session
             const response = await fetch('/api/create-checkout-session', {
@@ -98,7 +104,7 @@ export default function Pricing() {
             });
     
             if (response.ok) {
-                const { url } = await response.json();
+                const url = await response.text();
                 // Redirect to the checkout page
                 router.push(url);
             } else {
