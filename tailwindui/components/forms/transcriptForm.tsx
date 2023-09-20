@@ -37,7 +37,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({finalSlides, isSubmittin
 
     setIsSubmitting(true);
 
-    const html_filename = 'html_final.html';
+    const html_filename = 'html_init.html';
     const foldername =
     typeof sessionStorage !== 'undefined'
       ? sessionStorage.getItem('foldername')
