@@ -193,6 +193,7 @@ export default function Pricing() {
                                         {isYearly ? 'Billed yearly' : 'Billed monthly'}
                                     </div>
                                     {isYearly && <div className="w-full text-center text-md text-red-700">Save 20%</div>}
+                                    <div className="w-full text-center text-md text-red-700">7 Day Free Trail</div>
                                     <div className="w-full text-center text-5xl">
                                         {isYearly ? '$8/mo' : '$10/mo'}
                                     </div>
@@ -201,7 +202,7 @@ export default function Pricing() {
                                             <div ref={buttonRef} className="btn drop-shadow-xl text-lg rounded-full text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer"
                                                 style={{ backgroundImage: 'linear-gradient(-45deg, #5A24B4, #9271CB, #2E8BC0)', backgroundSize: '200%' }}
                                                 onClick={() => { currentUser ? handlePlusSubscription() : router.push('/signup') }}>
-                                                {currentUser ? 'Subscribe' : 'Sign up'}
+                                                {currentUser ? 'Start Free Trail' : 'Sign up to Start'}
                                             </div>
                                         </div>
                                     </div>
@@ -244,6 +245,7 @@ export default function Pricing() {
                                         {isYearly ? 'Billed yearly' : 'Billed monthly'}
                                     </div>
                                     {isYearly && <div className="w-full text-center text-md text-red-700">Save 20%</div>}
+                                    <div className="w-full text-center text-md text-red-700">7 Day Free Trail</div>
                                     <div className="w-full text-center text-5xl">
                                         {isYearly ? '$32/mo' : '$40/mo'}
                                     </div>
@@ -252,7 +254,7 @@ export default function Pricing() {
                                             <div ref={buttonRef} className="btn drop-shadow-xl text-lg rounded-full text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer"
                                                 style={{ backgroundImage: 'linear-gradient(-45deg, #002366, #003366, #004466)', backgroundSize: '200%' }}
                                                 onClick={() => { currentUser ? handleProSubscription() : router.push('/signup') }}>
-                                                {currentUser ? 'Subscribe' : 'Sign up'}
+                                                {currentUser ? 'Start Free Trail' : 'Sign up to Start'}
                                             </div>
                                         </div>
                                     </div>
