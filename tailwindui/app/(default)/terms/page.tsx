@@ -1,7 +1,7 @@
 import Header from '@/components/ui/header';
 
 export const metadata = {
-  title: "Workflow - Dr. Lambda",
+  title: "Workflow - DrLambda",
   description: "terms and condtions",
 };
 
@@ -19,7 +19,7 @@ export default function Terms() {
             <div className="pb-16">
               <p className="text-base text-gray-600">
                 Please read these terms and conditions carefully before using
-                our website and services provided by Dr. Lambda. By accessing or
+                our website and services provided by DrLambda. By accessing or
                 using our Service, you agree to be bound by these Terms. If you
                 do not agree with any part of these Terms, you may not access
                 the Service.

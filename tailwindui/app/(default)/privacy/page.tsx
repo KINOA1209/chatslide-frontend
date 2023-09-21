@@ -1,7 +1,7 @@
 import Header from '@/components/ui/header';
 
 export const metadata = {
-  title: "Workflow - Dr. Lambda",
+  title: "Workflow - DrLambda",
   description: "terms and condtions",
 };
 
@@ -21,7 +21,7 @@ export default function Terms() {
           <div className="max-w-3xl mx-auto">
             <div className="pb-16">
               <p className="text-base text-gray-600">
-                This Privacy Policy explains how Dr. Lambda collects, uses, and
+                This Privacy Policy explains how DrLambda collects, uses, and
                 protects the personal information of individuals who access or
                 use our website and services. By accessing or using the Service,
                 you agree to the terms and practices described in this Policy.

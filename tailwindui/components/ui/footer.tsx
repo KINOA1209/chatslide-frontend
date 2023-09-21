@@ -13,7 +13,7 @@ export default function Footer() {
               <Logo />
             </div>
             <div className="flex justify-center mb-2 text-sm text-gray-600">
-              Dr. Lambda
+              DrLambda
               {/* <a
                 href="/terms"
                 className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out"
