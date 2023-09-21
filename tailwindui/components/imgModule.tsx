@@ -22,6 +22,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
     const inputFileRef = useRef<HTMLInputElement>(null);
     const [hoverImgSearch, setHoverImgSearch] = useState(false);
     const [hoverResources, setHoverResources] = useState(false);
+    const [uploadedUid, setUploadedUid] = useState('')
 
     useEffect(() => {
         if (imgsrc !== '') {
@@ -37,10 +38,6 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
         setShowModal(false);
         setSearching(false);
     }
-
-    useEffect(() => {
-        setSearchResult([]);
-    }, [showImgSearch])
 
     const handleImageSearchSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -84,36 +81,42 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
         updateSingleCallback((e.target as HTMLImageElement).src);
     }
 
-    // const fetchFiles = async (token: string) => {
-    //     const headers = new Headers();
-    //     if (token) {
-    //         headers.append('Authorization', `Bearer ${token}`);
-    //     }
-    //     headers.append('Content-Type', 'application/json');
+    const fetchFiles = async (token: string) => {
+        const headers = new Headers();
+        if (token) {
+            headers.append('Authorization', `Bearer ${token}`);
+        }
+        headers.append('Content-Type', 'application/json');
 
-    //     try {
-    //         const response = await fetch('/api/resource_info', {
-    //             method: 'GET',
-    //             headers: headers,
-    //         });
+        const resource_type = {
+            resource_type: 'media',
+        }
 
-    //         if (response.ok) {
-    //             const data = await response.json();
-    //             const files = data.data.resources;
-    //             const resourceTemps = files.map((resource: any) => {
-    //                 return {
-    //                     id: resource.id,
-    //                     filename: resource.resource_name,
-    //                 }
-    //             });
-    //         } else {
-    //             // Handle error cases
-    //             console.error('Failed to fetch projects:', response.status);
-    //         }
-    //     } catch (error) {
-    //         console.error('Error fetching projects:', error);
-    //     }
-    // };
+        try {
+            const response = await fetch('/api/resource_info', {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(resource_type)
+            });
+            if (response.ok) {
+                const data = await response.json();
+                const files = data.data.resources;
+                const resourceTemps = files.map((resource: any) => {
+                    if (resource.id === uploadedUid) {
+                        setSelectedImg(resource.direct_url);
+                        setUploadedUid('');
+                    }
+                    return resource.direct_url;
+                });
+                setResources(resourceTemps);                
+            } else {
+                // Handle error cases
+                console.error('Failed to fetch projects:', response.status);
+            }
+        } catch (error) {
+            console.error('Error fetching projects:', error);
+        }
+    };
 
     const onFileSelected = async (file: File | null) => {
         console.log("will upload file", file);
@@ -146,7 +149,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
             });
             const parsedResponse = await response.json();
             const file_id = parsedResponse.data.file_id;
-            //TODO: match file_id with filename
+            setUploadedUid(file_id);
         } else {
             console.error(response.status);
             toast.error("File upload failed", {
@@ -162,7 +165,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
             });
         };
 
-        // fetchFiles(idToken);
+        fetchFiles(idToken);
     };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
