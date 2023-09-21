@@ -82,7 +82,7 @@ export default function AboutUs() {
                         </div>
                         <div className="pb-4">
                             <p className="text-base text-gray-600">
-                                Founded in 2022 in Delaware, United States, Dr. Lambda emerged from a vision to redefine how knowledge is consumed and presented.
+                                Founded in 2023 in Delaware, United States, Dr. Lambda emerged from a vision to redefine how knowledge is consumed and presented.
                                 We believe in the power of remixing content, transforming traditional formats into dynamic, personalized learning experiences.
                             </p>
                         </div>

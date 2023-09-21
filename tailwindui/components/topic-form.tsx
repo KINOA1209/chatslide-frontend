@@ -48,7 +48,7 @@ const TopicForm: React.FC = () => {
             ? JSON.parse(sessionStorage.addEquations)
             : false
     );
-    const [topicSuggestions, setTopicSuggestions] = useState<string[]>([]);
+    const [topicSuggestions, setTopicSuggestions] = useState<string[]>(["Ultrasound"]);
     const [audienceSuggestions, setAudienceSuggestions] = useState<string[]>([]);
     const [showAudienceInput, setShowAudienceInput] = useState(false);
 
@@ -327,169 +327,195 @@ const TopicForm: React.FC = () => {
                     </div>
                 </Transition>
             </Transition>
+
             <div className="flex flex-wrap -mx-3 mb-4">
-                <div className="w-full px-3">
-                    <p>
-                        Please specify the topic you want to learn, and indicate the audience and their prior knowledge.
-                    </p>
-                    <br />
-                    <label
-                        className="block text-gray-800 text-sm font-medium mb-1"
-                        htmlFor="topic">
-                        Specific Topic<span className="text-red-600">*</span>
-                    </label>
-                    <input
-                        id="topic"
-                        type="text"
-                        className="form-input w-full text-gray-800 mb-2"
-                        placeholder="Ultrasound"
-                        value={topic}
-                        onChange={e => setTopic(e.target.value)}
-                        maxLength={40}
-                        required />
-                    {topicSuggestions.length > 0 && (
-                        <div>
-                            <div className="flex flex-wrap gap-3 mb-4">
-                                {topicSuggestions.map((topic, index) => (
-                                    <button
-                                        key={index}
-                                        className="text-sm text-gray-800 bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-sm cursor-pointer"
-                                        onClick={(event) => handleTopicSuggestionClick(topic, event)}
-                                    >
-                                        {topic}
-                                    </button>
-                                ))}
-                            </div>
+
+                {/* Left Column */}
+                <div className="w-1/2 px-3">
+
+
+                    {/* Topic Section */}
+                    <div className="flex flex-wrap -mx-3 mb-4">
+                        <div className="w-full px-3">
+
+                            <br />
+                            <label
+                                className="block text-gray-800 text-sm font-medium mb-1"
+                                htmlFor="topic">
+                                Topic<span className="text-red-600">*</span>
+                            </label>
+                            <input
+                                id="topic"
+                                type="text"
+                                className="form-input w-full text-gray-800 mb-2"
+                                placeholder="Your topic here"
+                                value={topic}
+                                onChange={e => setTopic(e.target.value)}
+                                maxLength={40}
+                                required />
+                            {topicSuggestions.length > 0 && (
+                                <div>
+                                    <div className="flex text-gray-600 flex-wrap gap-3 mb-4">
+                                        Try:
+                                        {topicSuggestions.map((topic, index) => (
+                                            <button
+                                                key={index}
+                                                className="text-sm text-gray-800 bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-sm cursor-pointer"
+                                                onClick={(event) => handleTopicSuggestionClick(topic, event)}
+                                            >
+                                                {topic}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                    )}
-                </div>
-            </div>
-
-            <div className="flex flex-wrap -mx-3 mb-4">
-                <div className="w-full px-3">
-                    <label
-                        className="block text-gray-800 text-sm font-medium mb-1"
-                        htmlFor="audience">
-                        Audience: <span className="text-red-600">*</span>
-                    </label>
-                    <select
-                        className="form-input w-full text-gray-800 pb-3 mb-2"
-                        value={audienceList.includes(audience) ? audience : audience === 'unselected' ? 'unselected' : 'other'}
-                        onChange={e => audienceDropDown(e.target.value)}
-                        required
-                    >
-                        <option value="unselected" selected disabled>Choose your audience</option>
-                        {audienceList.map((value) => (
-                            <option value={value}>{value}</option>
-                        ))}
-                        <option value="other">Other (please specify)</option>
-                    </select>
-
-                    <input
-                        id="audience"
-                        type="text"
-                        className={`form-input w-full text-gray-800 mb-2 ${showAudienceInput ? '' : 'hidden'}`}
-                        placeholder="Other (please specify)"
-                        value={audience}
-                        onChange={e => setAudience(e.target.value)}
-                        required
-                        maxLength={40}
-                    />
-                    {audienceSuggestions.length > 0 && (
-                        <div>
-                            <div className="flex flex-wrap gap-3 mb-4">
-                                {audienceSuggestions.map((audience, index) => (
-                                    <button
-                                        key={index}
-                                        className="text-sm text-gray-800 bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-sm cursor-pointer"
-                                        onClick={(event) => handleAudienceSuggestionClick(audience, event)}
-                                    >
-                                        {audience}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                    )}
-                </div>
-            </div>
-            <div className="flex flex-wrap -mx-3 mb-4">
-                <div className="w-full px-3">
-                    <label
-                        className="block text-gray-800 text-sm font-medium mb-1"
-                        htmlFor="language">
-                        Language: <span className="text-red-600">*</span>
-                    </label>
-                    <select
-                        id="language"
-                        className="form-input w-full text-gray-800"
-                        value={language}
-                        onChange={e => setLanguage(e.target.value)}
-                        required
-                    >
-                        <option value="English">English</option>
-                        <option value="Chinese">中文</option>
-                        <option value="Spanish">Español</option>
-                    </select>
-                </div>
-            </div>
-
-            <div className='flex flex-row flex-nowrap w-full items-center'>
-                <hr className='border-gray-400 grow' />
-                <div className='mx-4 text-gray-400'>Optional</div>
-                <hr className='border-gray-400 grow' />
-            </div>
-
-            <div className="flex flex-wrap -mx-3 mb-4">
-                <div className="w-full px-3 mt-2 flex flex-row">
-                    <div className='flex items-center'>
-                        <input
-                            type="checkbox"
-                            id="addEquations"
-                            className="form-checkbox text-gray-800"
-                            checked={addEquations} // Use 'checked' instead of 'value'
-                            onChange={(e) => setAddEquations(e.target.checked)}
-                        />
                     </div>
-                    <label
-                        className=" ml-2 block text-gray-800 text-sm font-medium"
-                        htmlFor="addEquations">
-                        Select to <b>add equations and formulas</b> to my content, recommended for Math/Science subjects
-                    </label>
-                </div>
-            </div>
 
-            <div className="flex flex-wrap -mx-3 mb-4">
-                <div className="w-full px-3">
-                    <label
-                        className="block text-gray-800 text-sm font-medium mb-1"
-                        htmlFor="youtube">
-                        Supporting Youtube Video Link:
-                    </label>
-                    <input
-                        id="youtube"
-                        type="text"
-                        className="form-input w-full text-gray-800 mb-2"
-                        value={youtube}
-                        onChange={e => handleYoutubeChange(e.target.value)}
-                    />
-                    {youtubeError && <div className="text-sm text-red-500">{youtubeError}</div>}
-                </div>
-            </div>
-
-            <div className="max-w-sm mx-auto">
-                <div className="flex flex-wrap -mx-3 mt-6">
-                    <div className="w-full px-3">
-                        {user ?
-                            <button
-                                className="btn text-blue-600 bg-gray-100 hover:bg-gray-200 w-full border border-blue-600"
-                                onClick={e => handleOpenFile(e)}
+                    {/* Audience Section */}
+                    <div className="flex flex-wrap -mx-3 mb-4">
+                        <div className="w-full px-3">
+                            <label
+                                className="block text-gray-800 text-sm font-medium mb-1"
+                                htmlFor="audience">
+                                Audience: <span className="text-red-600">*</span>
+                            </label>
+                            <select
+                                className="form-input w-full text-gray-800 pb-3 mb-2"
+                                value={audienceList.includes(audience) ? audience : audience === 'unselected' ? 'unselected' : 'other'}
+                                onChange={e => audienceDropDown(e.target.value)}
+                                required
                             >
-                                Add File
-                            </button> :
-                            <GuestUploadModal />}
+                                <option value="unselected" selected disabled>Choose your audience</option>
+                                {audienceList.map((value) => (
+                                    <option value={value}>{value}</option>
+                                ))}
+                                <option value="other">Other (please specify)</option>
+                            </select>
+
+                            <input
+                                id="audience"
+                                type="text"
+                                className={`form-input w-full text-gray-800 mb-2 ${showAudienceInput ? '' : 'hidden'}`}
+                                placeholder="Other (please specify)"
+                                value={audience}
+                                onChange={e => setAudience(e.target.value)}
+                                required
+                                maxLength={40}
+                            />
+                            {/* {audienceSuggestions.length > 0 && (
+                                <div>
+                                    <div className="flex flex-wrap gap-3 mb-4">
+                                        {audienceSuggestions.map((audience, index) => (
+                                            <button
+                                                key={index}
+                                                className="text-sm text-gray-800 bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-sm cursor-pointer"
+                                                onClick={(event) => handleAudienceSuggestionClick(audience, event)}
+                                            >
+                                                {audience}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            )} */}
+                        </div>
+                    </div>
+
+                    {/* Language Section */}
+                    <div className="flex flex-wrap -mx-3 mb-4">
+                        <div className="w-full px-3">
+                            <label
+                                className="block text-gray-800 text-sm font-medium mb-1"
+                                htmlFor="language">
+                                Language: <span className="text-red-600">*</span>
+                            </label>
+                            <select
+                                id="language"
+                                className="form-input w-full text-gray-800"
+                                value={language}
+                                onChange={e => setLanguage(e.target.value)}
+                                required
+                            >
+                                <option value="English">English</option>
+                                <option value="Chinese">中文</option>
+                                <option value="Spanish">Español</option>
+                                <option value="French">Français</option>
+                                <option value="German">Deutsch</option>
+                                <option value="Russian">Русский</option>
+                                <option value="Japanese">日本語</option>
+                                <option value="Portuguese">Português</option>
+                                <option value="Ukrainian">Українська</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+                {/* Right Column */}
+                <div className="w-1/2 px-3">
+
+                    <div className='flex flex-row flex-nowrap w-full items-center'>
+                        <hr className='border-gray-400 grow' />
+                        <div className='mx-4 text-gray-400'>Optional</div>
+                        <hr className='border-gray-400 grow' />
+                    </div>
+
+                    <div className="flex flex-wrap -mx-3 mb-4">
+                        <div className="w-full px-3 mt-2 flex flex-row">
+                            <div className='flex items-center'>
+                                <input
+                                    type="checkbox"
+                                    id="addEquations"
+                                    className="form-checkbox text-gray-800"
+                                    checked={addEquations} // Use 'checked' instead of 'value'
+                                    onChange={(e) => setAddEquations(e.target.checked)}
+                                />
+                            </div>
+                            <label
+                                className=" ml-2 block text-gray-800 text-sm font-medium"
+                                htmlFor="addEquations">
+                                Select to <b>add equations and formulas</b> to my content, recommended for Math/Science subjects
+                            </label>
+                        </div>
+                    </div>
+
+                    {/* YouTube Section */}
+                    <div className="flex flex-wrap -mx-3 mb-4">
+                        <div className="w-full px-3">
+                            <label
+                                className="block text-gray-800 text-sm font-medium mb-1"
+                                htmlFor="youtube">
+                                Supporting Youtube Video Link:
+                            </label>
+                            <input
+                                id="youtube"
+                                type="text"
+                                className="form-input w-full text-gray-800 mb-2"
+                                value={youtube}
+                                onChange={e => handleYoutubeChange(e.target.value)}
+                            />
+                            {youtubeError && <div className="text-sm text-red-500">{youtubeError}</div>}
+                        </div>
+                    </div>
+
+                    {/* File Upload Section */}
+                    <div className="max-w-sm mx-auto">
+                        <div className="flex flex-wrap -mx-3 mt-6">
+                            <div className="w-full px-3">
+                                {user ?
+                                    <button
+                                        className="btn text-blue-600 bg-gray-100 hover:bg-gray-200 w-full border border-blue-600"
+                                        onClick={e => handleOpenFile(e)}
+                                    >
+                                        Add Supporting File
+                                    </button> :
+                                    <GuestUploadModal />}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
             <hr className='border-gray-400 grow mt-6' />
             <div className="max-w-sm mx-auto">
                 <div className="flex flex-wrap -mx-3 mt-6">
