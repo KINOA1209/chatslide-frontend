@@ -22,7 +22,7 @@ export default function UseCases() {
                     {/* Section header */}
                     <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
                         <p className="text-xl text-left text-gray-600">
-                            From classroom to office, from Youtube to Tiktok, Dr. Lambda is ideal for all who want a productivity boost. 🌟</p>
+                            From classroom to office, from Youtube to Tiktok, DrLambda is ideal for all who want a productivity boost. 🌟</p>
                     </div>
 
                     {/* Section content */}

@@ -1,8 +1,8 @@
 import Header from '@/components/ui/header';
 
 export const metadata = {
-    title: "Career - Dr. Lambda",
-    description: "Join to work with us at Dr. Lambda.",
+    title: "Career - DrLambda",
+    description: "Join to work with us at DrLambda.",
 };
 
 export default function Career() {
@@ -13,7 +13,7 @@ export default function Career() {
                 <div className="pt-32 pb-12 md:pt-40 md:pb-20">
                     {/* Page header */}
                     <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-                        <h1 className="h1">Careers at Dr. Lambda</h1>
+                        <h1 className="h1">Careers at DrLambda</h1>
                     </div>
                     <div className="max-w-3xl mx-auto pb-4">
                         <div className="pb-8">
@@ -24,7 +24,7 @@ export default function Career() {
                             <div>
                                 <h3 className="h3 text-xl mb-2">UX Design Intern</h3>
                                 <p className="text-base text-gray-600">
-                                    Seeking a driven UX enthusiast passionate about innovative design and education? Dr. Lambda invites you to reshape the educational landscape as a UX Design Intern.<br /><br />
+                                    Seeking a driven UX enthusiast passionate about innovative design and education? DrLambda invites you to reshape the educational landscape as a UX Design Intern.<br /><br />
 
                                     <strong>Role Insight:</strong><br />
                                     Engage with our designers to craft user-centric designs amplifying our students' learning experience. This role is ideal for design aficionados with expertise in industrial, product, or UX design, eager to dive into a transformative space.<br /><br />
@@ -49,14 +49,14 @@ export default function Career() {
                                     - Collaborate with AI and education veterans.<br />
                                     - Directly impact global learners with your designs.<br />
                                     - Access to the latest in edtech and design.<br />
-                                    - Competitive pay with avenues for growth at Dr. Lambda.<br /><br />
+                                    - Competitive pay with avenues for growth at DrLambda.<br /><br />
 
-                                    Eager to redefine education with your design finesse? Apply now for the UX Design Internship at Dr. Lambda!<br /><br />
+                                    Eager to redefine education with your design finesse? Apply now for the UX Design Internship at DrLambda!<br /><br />
 
                                     <strong>How to Apply:</strong><br />
                                     Share your resume, portfolio, and a cover letter detailing your journey and interest in the role. Send your applications to <a href="mailto:contact@drlambda.ai">contact@drlambda.ai</a>.<br /><br />
 
-                                    Note: Dr. Lambda champions diversity and inclusivity. We welcome all applicants.
+                                    Note: DrLambda champions diversity and inclusivity. We welcome all applicants.
                                 </p>
                             </div>
                         </div>
