@@ -167,10 +167,10 @@ export default function Pricing() {
                                             100 free credits
                                         </li>
                                         <li>
-                                            Usage of GPT3.5
+                                            Usage of GPT-3.5
                                         </li>
                                         <li>
-                                            Upload 1 file per project
+                                            Up to 1 file upload for each project
                                         </li>
                                     </ul>
                                 </div>
@@ -209,19 +209,19 @@ export default function Pricing() {
                                     <div className="text-2xl">Include</div>
                                     <ul className="list-disc list-outside px-5 space-y-2 mt-4 [&>*]:text-gray-500 text-xl" style={{ fontFamily: 'sans-serif' }}>
                                         <li>
-                                            All features of free
+                                            All features of Free plan
                                         </li>
                                         <li>
                                             1,000 credits per month
                                         </li>
                                         <li>
-                                            Usage of GPT4
+                                            Usage of GPT-4
                                         </li>
                                         <li>
                                             Upload multiple files per project
                                         </li>
                                         <li>
-                                            Remove watermark
+                                            No watermark for output slides and video
                                         </li>
                                     </ul>
                                 </div>
@@ -261,13 +261,13 @@ export default function Pricing() {
                                     <div className="text-2xl">Include</div>
                                     <ul className="list-disc list-outside px-5 space-y-2 mt-4 [&>*]:text-gray-500 text-xl" style={{ fontFamily: 'sans-serif' }}>
                                         <li>
-                                            All features of Free/Plus
+                                            All features of Free/Plus plans
                                         </li>
                                         <li>
                                             Unlimited credits
                                         </li>
                                         <li>
-                                            24 hour support
+                                            24 hour VIP customer support
                                         </li>
                                     </ul>
                                 </div>
