@@ -27,8 +27,15 @@ class AuthService {
                 }
             });
         } catch (error) {
-            console.error('Error signing up: ', error);
-            throw error;
+            try{
+                console.log('Error signing up: ', error);
+                console.log('Resending code');
+                await AmplifyAuth.resendSignUp(email);
+            }
+            catch (error) {
+                console.error('Error sending code: ', error);
+                throw error;
+            }
         }
     }
 
@@ -92,6 +99,18 @@ class AuthService {
         catch (error) {
             console.error('Error getting current user display name: ', error);
             return user.username;
+        }
+    }
+
+    async getCurrentUserEmail() {
+        const user = await this.getCurrentUser();
+        try {
+            // console.log(user.attributes['email'])
+            return user.attributes['email'];
+        }
+        catch (error) {
+            console.error('Error getting current user email: ', error);
+            return null;
         }
     }
 
