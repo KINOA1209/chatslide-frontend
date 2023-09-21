@@ -444,6 +444,7 @@ const TopicForm: React.FC = () => {
                                 <option value="Russian">Русский</option>
                                 <option value="Japanese">日本語</option>
                                 <option value="Portuguese">Português</option>
+                                <option value="Ukrainian">Українська</option>
                             </select>
                         </div>
                     </div>
