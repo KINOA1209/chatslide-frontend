@@ -17,8 +17,8 @@ export default function AccountLayout({
       <main className="flex flex-col min-h-[100vh]">
         <div className='grow flex flex-col'>
           <div className="bg-gradient-to-b from-gray-100 to-white grow flex flex-col h-full pt-16 md:pt-32">
-            <div className='grow h-full w-full max-w-6xl mx-auto px-4 flex flex-row'>
-              <div className='grow max-w-[25%] flex-col items-center hidden md:flex'>
+            <div className='grow h-full w-full max-w-xl md:max-w-none mx-auto px-4 flex flex-row'>
+              {/* <div className='grow max-w-[25%] flex-col items-center hidden md:flex'>
                 <h1 className="h4">My Account</h1>
                 <div className='flex flex-col gap-y-8 mt-8'>
                   <div className='btn rounded-full bg-gray-200 w-full'>Profile</div>
@@ -26,8 +26,8 @@ export default function AccountLayout({
                   <div className='btn rounded-full bg-gray-200 w-full'>Subscription</div>
                   <div className='btn rounded-full bg-gray-200 w-full'>History</div>
                 </div>
-              </div>
-              <div className='grow'>{children}</div>
+              </div> */}
+              <div className='grow w-full'>{children}</div>
             </div>
           </div>
         </div>
