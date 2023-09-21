@@ -110,6 +110,13 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
                         >
                             My Resources
                         </a>
+                        <a
+                            href="/account"
+                            className="block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200"
+                            role="menuitem"
+                        >
+                            Account Settings
+                        </a>
                     </div>
                     <div className="block px-4 py-1 text-sm text-blue-600">
                         Credits: {credits}

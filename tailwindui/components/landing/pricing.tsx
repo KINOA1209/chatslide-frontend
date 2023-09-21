@@ -39,12 +39,12 @@ export default function Pricing() {
         try {
             // Determine the tier based on isYearly
             const tier = isYearly ? 'PRO_YEARLY' : 'PRO_MONTHLY';
-    
+
             // Get current user's token and email
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
             const email = await AuthService.getCurrentUserEmail();
             // console.log(email);
-    
+
             // Create a request object
             const requestData = {
                 tier: tier,
@@ -52,7 +52,7 @@ export default function Pricing() {
             };
 
             console.log(requestData);
-    
+
             // Make the API request to create a checkout session
             const response = await fetch('/api/create-checkout-session', {
                 method: 'POST',
@@ -62,7 +62,7 @@ export default function Pricing() {
                 },
                 body: JSON.stringify(requestData),
             });
-    
+
             if (response.ok) {
                 const url = await response.text();
                 // Redirect to the checkout page
@@ -79,12 +79,12 @@ export default function Pricing() {
         try {
             // Determine the tier based on isYearly
             const tier = isYearly ? 'PLUS_YEARLY' : 'PLUS_MONTHLY';
-    
+
             // Get current user's token and email
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
             const email = await AuthService.getCurrentUserEmail();
             // console.log(email);
-    
+
             // Create a request object
             const requestData = {
                 tier: tier,
@@ -92,7 +92,7 @@ export default function Pricing() {
             };
 
             console.log(requestData);
-    
+
             // Make the API request to create a checkout session
             const response = await fetch('/api/create-checkout-session', {
                 method: 'POST',
@@ -102,7 +102,7 @@ export default function Pricing() {
                 },
                 body: JSON.stringify(requestData),
             });
-    
+
             if (response.ok) {
                 const url = await response.text();
                 // Redirect to the checkout page
@@ -114,17 +114,17 @@ export default function Pricing() {
             console.error('An error occurred:', error);
         }
     };
-    
 
 
- 
+
+
     return (
         <section style={{ fontFamily: 'Lexend, sans-serif' }}>
+            <div className="max-w-6xl mx-auto mb-8 w-full px-4 sm:px-6">
+                <h3 className="h3 mb-3 w-fit text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-500">Subscription Plan</h3>
+            </div>
             <div className="mx-auto px-4 sm:px-6 mb-12">
                 <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 flex flex-col items-center" data-aos="fade-right">
-                    <div className="max-w-6xl mx-auto md:pr-4 mb-8 w-full">
-                        <h3 className="h3 mb-3 w-fit text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-500">Pricing</h3>
-                    </div>
                     <div className="flex items-center">
                         <div className="flex items-center pb-8">
                             <button
