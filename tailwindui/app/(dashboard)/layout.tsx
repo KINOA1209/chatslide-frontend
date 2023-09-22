@@ -2,7 +2,7 @@ import { WorkflowFooter } from '@/components/ui/footer'
 import Header from '@/components/ui/header';
 
 export const metadata = {
-  title: 'Projects - Dr. Lambda',
+  title: 'Projects - DrLambda',
   description: 'Create new content',
 }
 
