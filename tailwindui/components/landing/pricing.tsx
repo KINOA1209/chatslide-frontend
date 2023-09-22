@@ -124,8 +124,8 @@ export default function Pricing() {
                 <h3 className="h3 mb-3 w-fit text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-500">Subscription Plan</h3>
             </div>
             <div className="mx-auto px-4 sm:px-6 mb-12">
-                <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 flex flex-col items-center" data-aos="fade-right">
-                    <div className="flex items-center">
+                <div className="w-full mx-auto flex flex-col items-center overflow-auto" data-aos="fade-right">
+                    <div className="toggle flex items-center">
                         <div className="flex items-center pb-8">
                             <button
                                 onClick={() => setIsYearly(false)}
@@ -134,7 +134,7 @@ export default function Pricing() {
                             </button>
                             <button
                                 onClick={() => setIsYearly(true)}
-                                className={`py-2 px-4 rounded-r-full ${isYearly ? 'bg-blue-800 text-white' : 'bg-gray-200'}`}>
+                                className={`py-2 px-4 rounded-r-full ${isYearly ? 'bg-teal-400 text-white' : 'bg-gray-200'}`}>
                                 Yearly
                             </button>
                         </div>
@@ -299,6 +299,7 @@ export default function Pricing() {
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>
