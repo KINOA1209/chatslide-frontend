@@ -246,25 +246,25 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
     }
 
     const h1Style: React.CSSProperties = {
-        fontSize: '3.5vw',
+        fontSize: '30pt',
         fontWeight: 'bold',
         color: '#2563EB',
     };
 
     const h2Style: React.CSSProperties = {
-        fontSize: '1.3vw',
+        fontSize: '15pt',
         fontWeight: 'bold',
         marginTop: '10px',
         color: '#2563EB'
     };
 
     const h3Style: React.CSSProperties = {
-        fontSize: '1.1vw',
+        fontSize: '20pt',
         fontWeight: 'bold',
     };
 
     const h4Style: React.CSSProperties = {
-        fontSize: '1.5vw',
+        fontSize: '15pt',
         color: 'rgb(180,180,180)',
     };
 
@@ -273,6 +273,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
         display: 'list-item',
         listStyleType: 'disc',
         listStylePosition: 'inside',
+        fontSize: '12pt',
     }
     function wrapWithLiTags(content: string): string {
         if (!content.includes("<li>") || !content.includes("</li>")) {
