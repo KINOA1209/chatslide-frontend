@@ -1,7 +1,7 @@
 "use client";
 
 // export const metadata = {
-//   title: 'Workflow - Dr. Lambda',
+//   title: 'Workflow - DrLambda',
 //   description: 'Create new content',
 // }
 

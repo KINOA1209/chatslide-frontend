@@ -6,7 +6,7 @@ import TopicForm from '@/components/topic-form'
 import FeedbackForm from '@/components/feedback';
 
 const metadata = {
-  title: 'Workflow - Dr. Lambda',
+  title: 'Workflow - DrLambda',
   description: 'Create new content',
 }
 

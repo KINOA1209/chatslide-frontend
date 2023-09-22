@@ -1,6 +1,6 @@
 "use client";
 // export const metadata = {
-//   title: "Sign In - Dr. Lambda",
+//   title: "Sign In - DrLambda",
 //   description: "AI copilot for educators",
 // };
 
