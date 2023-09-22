@@ -51,6 +51,52 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
     const slideRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
 
+    const [unsavedChanges, setUnsavedChanges] = useState(false);
+
+    // Watch for changes in finalSlides
+    useEffect(() => {
+        setUnsavedChanges(true);
+
+        // Set a timer to auto-save after 5 seconds if no more changes occur
+        const saveTimer = setTimeout(() => {
+        if (unsavedChanges) {
+            autoSaveSlides();
+        }
+        }, 3000);
+
+        // Clear the timer if finalSlides changes before the timer expires
+        return () => clearTimeout(saveTimer);
+    }, [finalSlides]);
+
+    // Function to send a request to auto-save finalSlides
+    const autoSaveSlides = () => {
+
+        const formData = {
+            foldername: foldername,
+            html: finalSlides,
+          };
+        // Send a POST request to the backend to save finalSlides
+        fetch('/api/auto_save_html', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+        })
+        .then((response) => {
+            if (response.ok) {
+            setUnsavedChanges(false);
+            } else {
+            // Handle save error
+            console.error('Auto-save failed.');
+            }
+        })
+        .catch((error) => {
+            // Handle network error
+            console.error('Auto-save failed:', error);
+        });
+    };
+
     const openModal = () => {
         setShowLayout(true);
     }
