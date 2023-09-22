@@ -57,7 +57,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
     useEffect(() => {
         setUnsavedChanges(true);
 
-        // Set a timer to auto-save after 5 seconds if no more changes occur
+        // Set a timer to auto-save after 3 seconds if no more changes occur
         const saveTimer = setTimeout(() => {
         if (unsavedChanges) {
             autoSaveSlides();
