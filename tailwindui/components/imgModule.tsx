@@ -81,10 +81,11 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
         updateSingleCallback((e.target as HTMLImageElement).src);
     }
 
-    const fetchFiles = async (token: string) => {
+    const fetchFiles = async () => {
+        const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
         const headers = new Headers();
-        if (token) {
-            headers.append('Authorization', `Bearer ${token}`);
+        if (idToken) {
+            headers.append('Authorization', `Bearer ${idToken}`);
         }
         headers.append('Content-Type', 'application/json');
 
@@ -100,6 +101,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
             });
             if (response.ok) {
                 const data = await response.json();
+                console.log(data);
                 const files = data.data.resources;
                 const resourceTemps = files.map((resource: any) => {
                     if (resource.id === uploadedUid) {
@@ -111,10 +113,10 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
                 setResources(resourceTemps);                
             } else {
                 // Handle error cases
-                console.error('Failed to fetch projects:', response.status);
+                console.error('Failed to fetch images', response.status);
             }
         } catch (error) {
-            console.error('Error fetching projects:', error);
+            console.error('Error fetching images:', error);
         }
     };
 
@@ -165,8 +167,12 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
             });
         };
 
-        fetchFiles(idToken);
+        fetchFiles();
     };
+
+    useEffect(()=>{
+        fetchFiles();
+    }, [])
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const extensions = ["png", "jpg", "jpeg", "gif"]; // For checking logic
@@ -266,11 +272,11 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
                                     <svg className='w-[20px] h-[20px] mr-2' viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M1.71436 6.33105H14.2858V14.3311C14.2858 14.6342 14.1654 14.9248 13.951 15.1392C13.7367 15.3535 13.446 15.4739 13.1429 15.4739H2.85721C2.55411 15.4739 2.26342 15.3535 2.04909 15.1392C1.83476 14.9248 1.71436 14.6342 1.71436 14.3311V6.33105Z"
-                                            stroke="#121212" stroke-linecap="round" stroke-linejoin="round" />
+                                            stroke="#121212" strokeLinecap="round" strokeLinejoin="round" />
                                         <path
                                             d="M15.4282 5.18834V2.90262C15.4282 2.27144 14.9165 1.75977 14.2854 1.75977L1.71394 1.75977C1.08276 1.75977 0.571081 2.27144 0.571081 2.90262V5.18834C0.571081 5.81952 1.08276 6.33119 1.71394 6.33119L14.2854 6.33119C14.9165 6.33119 15.4282 5.81952 15.4282 5.18834Z"
-                                            stroke="#121212" stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M6.28564 9.75977H9.71422" stroke="#121212" stroke-linecap="round" stroke-linejoin="round" />
+                                            stroke="#121212" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M6.28564 9.75977H9.71422" stroke="#121212" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
                                 </div>
                                 My Resources
@@ -282,11 +288,11 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
                                 disabled={showImgSearch}>
                                 <div className='h-full w-full flex justify-center items-center'>
                                     <svg className='w-[20px] h-[20px] mr-2' viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <g clip-path="url(#clip0_276_3476)">
+                                        <g clipPath="url(#clip0_276_3476)">
                                             <path
                                                 d="M6.59985 12.2007C9.69283 12.2007 12.2002 9.69331 12.2002 6.60034C12.2002 3.50736 9.69283 1 6.59985 1C3.50687 1 0.999512 3.50736 0.999512 6.60034C0.999512 9.69331 3.50687 12.2007 6.59985 12.2007Z"
-                                                stroke="#121212" stroke-linecap="round" stroke-linejoin="round" />
-                                            <path d="M15.0005 15.001L10.8003 10.8008" stroke="#121212" stroke-linecap="round" stroke-linejoin="round" />
+                                                stroke="#121212" strokeLinecap="round" strokeLinejoin="round" />
+                                            <path d="M15.0005 15.001L10.8003 10.8008" stroke="#121212" strokeLinecap="round" strokeLinejoin="round" />
                                         </g>
                                         <defs>
                                             <clipPath id="clip0_276_3476">
