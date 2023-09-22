@@ -230,6 +230,8 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                 formData.outline_item_counts = outline_item_counts;
             }
 
+            const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+
             // generate slides
             if (toSlides === true) {
                 const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
@@ -267,7 +269,8 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                 const response = await fetch('/api/scripts_only', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
                     },
                     body: JSON.stringify(formData)
                 });

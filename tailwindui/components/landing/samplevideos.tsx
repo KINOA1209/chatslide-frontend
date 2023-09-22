@@ -31,7 +31,7 @@ export default function SampleVideos() {
               aspectHeight={9}
               aspectWidth={16}
               id="hyFhbvX5vFI"
-              title="Create Slides from PDF Using Dr. Lambda"
+              title="Create Slides from PDF Using DrLambda"
               thumbnail={demoThumbnail.src}
             />
 

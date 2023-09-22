@@ -35,7 +35,7 @@ class DatabaseService {
           }else{
             return data
           }
-        }else{
+        } else {
           throw new Error(`Error status: ${response.status}`);
         }
       } catch (error) {

@@ -19,7 +19,7 @@ export default function Features() {
                     {/* Section header */}
                     <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
                         <p className="text-xl text-left text-gray-600">
-                            Use Dr. Lambda to remix your knowledge: effortlessly transform PDFs, webpages, and YouTube content into your preferred formats. A game-changer for researchers, teachers, students, consultants, office workers, and beyond!</p>
+                            Create slides and presentations from documents: effortlessly transform PDFs, Google docs, webpages, and YouTube content into slides, presentations, and videos. A game-changer for researchers, teachers, students, consultants, office workers, and beyond!</p>
                         <p className="text-xl text-left text-gray-600">
                             Dive in and reshape your learning and sharing experience today! 🚀 </p>
                     </div>
@@ -41,7 +41,7 @@ export default function Features() {
                                 >
                                     <div>
                                         <div className="font-bold leading-snug tracking-tight mb-1">✨ One-Click Script Generation</div>
-                                        <div className="text-gray-600">Wrap your knowledge with Dr. Lambda's one-click script generation; the perfect tool to jumpstart your video on fire! 🔥</div>
+                                        <div className="text-gray-600">Wrap your knowledge with DrLambda's one-click script generation; the perfect tool to jumpstart your video on fire! 🔥</div>
                                     </div>
                                     <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                                         <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
@@ -56,7 +56,7 @@ export default function Features() {
                                 >
                                     <div>
                                         <div className="font-bold leading-snug tracking-tight mb-1">📄 Read from PDFs, Webpages, and Youtube Videos</div>
-                                        <div className="text-gray-600">Bring the world to your fingertips with Dr. Lambda's ability to read from PDFs and webpages. Information you need, when you need it! 📚</div>
+                                        <div className="text-gray-600">Bring the world to your fingertips with DrLambda's ability to read from PDFs and webpages. Information you need, when you need it! 📚</div>
                                     </div>
                                     <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                                         <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">

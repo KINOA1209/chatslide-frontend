@@ -1,7 +1,7 @@
 import MyFiles from '@/components/fileManagement';
 
 export const metadata = {
-    title: 'Resources - Dr. Lambda',
+    title: 'Resources - DrLambda',
     description: 'Create new content',
   }
 
