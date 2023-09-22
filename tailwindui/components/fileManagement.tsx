@@ -131,6 +131,8 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
     const contentRef = useRef<HTMLDivElement>(null);
     const [rendered, setRendered] = useState<boolean>(false);
     const [selectedResources, setSelectedResources] = useState<Array<string>>([]);
+    const [tier, setTier] = useState('');
+    const [prompted, setPrompted] = useState(false);
 
     useEffect(() => {
         if (contentRef.current) {
@@ -278,11 +280,32 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
 
     const handleClick = (id: string) => {
         const ind = selectedResources.indexOf(id);
-        const resources = [...selectedResources];
-        if (ind !== -1) {
-            resources.splice(ind, 1);
+        let resources = []
+        if (['PRO', 'PLUS'].includes(tier)) {
+            console.log()
+            resources = [...selectedResources];
+            if (ind !== -1) {
+                resources.splice(ind, 1);
+            } else {
+                resources.push(id);
+            }
         } else {
-            resources.push(id);
+            resources = [id];
+            console.log(tier)
+            if (!prompted) {
+                toast.info('Only subscribed user can select multiple files!', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    containerId: 'fileManagement'
+                });
+            }
+            setPrompted(true);
         }
         setSelectedResources(resources);
     };
@@ -292,6 +315,30 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
             callback(selectedResources);
         }
     }, [selectedResources]);
+
+    useEffect(() => {
+        const getTier = async () => {
+            const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+            await fetch(`/api/get-user-subscription`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+            }).then(response => {
+                if (response.ok) {
+                    return response.json()
+                }
+                else {
+                    throw response.status, response;
+                }
+            }).then(data => {
+                const fetchedTier = data['tier'];
+                setTier(fetchedTier);
+            }).catch(error => console.error);
+        }
+        getTier();
+    }, [])
 
     return (
         <section className="bg-gradient-to-b from-gray-100 to-white grow flex flex-col h-full">
