@@ -78,7 +78,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
     const handleImageClick = (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
         // update image here to template & source html
-        updateSingleCallback((e.target as HTMLImageElement).src);
+        updateSingleCallback((e.target as HTMLImageElement).getAttribute('src'));
     }
 
     const fetchFiles = async () => {
@@ -147,7 +147,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
                 draggable: true,
                 progress: undefined,
                 theme: "light",
-                containerId: "upload",
+                containerId: "slides",
             });
             const parsedResponse = await response.json();
             const file_id = parsedResponse.data.file_id;
@@ -163,7 +163,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
                 draggable: true,
                 progress: undefined,
                 theme: "light",
-                containerId: "upload",
+                containerId: "slides",
             });
         };
 
@@ -189,6 +189,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
                 draggable: true,
                 progress: undefined,
                 theme: "light",
+                containerId: "slides",
             });
             return;
         }
@@ -204,6 +205,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
                 draggable: true,
                 progress: undefined,
                 theme: "light",
+                containerId: "slides",
             });
             return;
         }
