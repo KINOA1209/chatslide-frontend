@@ -7,6 +7,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import UserService from "@/components/utils/UserService";
 import Link from 'next/link';
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 const Profile = () => {
     const [username, setUsername] = useState('');
@@ -512,10 +514,19 @@ export default function Account() {
     }, [currentDisplay])
 
     const bar = <div className='w-full h-0 border-b-2 border-[#CAD0D3]'></div>
+    useEffect(() => {
+        AOS.init({
+            once: true,
+            disable: 'phone',
+            duration: 700,
+            easing: 'ease-out-cubic',
+        })
+    })
+
     return (
-        <div className='flex flex-col items-center gap-[70px] mx-auto [&>*]:max-w-none [&>*]:2xl:max-w-[80%]'>
+        <div className='flex flex-col items-center gap-[70px] mx-auto'>
             <ToastContainer />
-            <div className='fixed w-full top-0 h-[130px] md:h-[160px] bg-[#E7E9EB] flex flex-col z-20'>
+            <div className='fixed w-full top-0 h-[130px] md:h-[160px] bg-[#E7E9EB] flex flex-col z-20 max-w-none 2xl:max-w-[80%]'>
                 <div className='grow flex flex-row mb-2 items-end'>
                     <div className='text-[#363E4A] text-[16px] mx-1 md:mx-5 cursor-pointer' onClick={e => { toSection(0) }} onMouseMove={e => { handleMouseOver(0) }} onMouseOut={handleMouseOut} ref={tab1Ref}>Account Settings</div>
                     <div className='text-[#363E4A] text-[16px] mx-1 md:mx-5 cursor-pointer' onClick={e => { toSection(1) }} onMouseMove={e => { handleMouseOver(1) }} onMouseOut={handleMouseOut} ref={tab2Ref}>Referral</div>
@@ -526,13 +537,13 @@ export default function Account() {
                     <div className='border-b-2 w-fit border-black h-0 overflow-hidden text-[16px] mx-1 md:mx-5 transition-all duration-300' ref={tabUnderlineRef}></div>
                 </div>
             </div>
-            <div className='w-full mt-[20px] md:mt-0' ref={ref1}><Profile /></div>
-            <div className='w-full'><PasswordModule /></div>
+            <div className='w-full mt-[20px] md:mt-0 max-w-none 2xl:max-w-[80%]' ref={ref1}><Profile /></div>
+            <div className='w-full max-w-none 2xl:max-w-[80%]'><PasswordModule /></div>
             {bar}
-            <div className='w-full' ref={ref2}><Referral /></div>
+            <div className='w-full max-w-none 2xl:max-w-[80%]' ref={ref2}><Referral /></div>
             {bar}
-            <div className='w-full max-w-none' style={{ maxWidth: 'none' }} ref={ref3}><Subscription /></div>
+            <div className='w-full' ref={ref3}><Subscription /></div>
             {bar}
-            <div className='w-full' ref={ref4}><CreditHistory /></div>
+            <div className='w-full max-w-none 2xl:max-w-[80%]' ref={ref4}><CreditHistory /></div>
         </div >)
 };
