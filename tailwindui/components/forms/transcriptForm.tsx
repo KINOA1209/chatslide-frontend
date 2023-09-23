@@ -5,19 +5,12 @@ import TranscriptFormModal from './trasncriptFormModal';
 
 import AuthService from "../utils/AuthService";
 
+import { SlideElement, Slide } from '../SlidesHTML';
+
 interface TranscriptFormProps {
   isSubmitting: boolean;
   setIsSubmitting: (isSubmitting: boolean) => void;
   finalSlides: Slide[]; 
-}
-
-interface SlideElement {
-  type: 'h1' | 'h2' | 'h3' | 'p' | 'ul'| 'li' | 'br';
-  content: string | string[];
-}
-
-interface Slide {
-  elements: SlideElement[];
 }
 
 const TranscriptForm: React.FC<TranscriptFormProps> = ({finalSlides, isSubmitting, setIsSubmitting}) => {
@@ -44,19 +37,19 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({finalSlides, isSubmittin
 
     setIsSubmitting(true);
 
-    const html_filename = 'html_final.html';
+    const html_filename = 'html_init.html';
     const foldername =
     typeof sessionStorage !== 'undefined'
       ? sessionStorage.getItem('foldername')
       : null;
-    const topic =
-      typeof sessionStorage !== 'undefined'
-        ? sessionStorage.getItem('topic')
-        : null;
-    const language =
-      typeof window !== 'undefined'
-        ? sessionStorage.getItem('language')
-        : 'English';
+  const topic =
+    typeof sessionStorage !== 'undefined'
+      ? sessionStorage.getItem('topic')
+      : null;
+  const language =
+    typeof window !== 'undefined'
+      ? sessionStorage.getItem('language')
+      : 'English';
 
     const project_id =
       typeof window !== 'undefined'
@@ -66,9 +59,9 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({finalSlides, isSubmittin
       html_filename: html_filename,
       foldername: foldername,
       topic: topic,
+      project_id: project_id,
       language: language,
       html: finalSlides,
-      project_id: project_id
     };
 
     console.log(formData);
