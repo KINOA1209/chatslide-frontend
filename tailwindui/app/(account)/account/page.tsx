@@ -509,7 +509,7 @@ export default function Account() {
     return (
         <div className='flex flex-col items-center gap-[70px] mx-auto [&>*]:max-w-none [&>*]:2xl:max-w-[80%]'>
             <ToastContainer />
-            <div className='fixed w-full top-0 h-[160px] bg-[#E7E9EB] flex flex-col z-20'>
+            <div className='fixed w-full top-0 h-[130px] md:h-[160px] bg-[#E7E9EB] flex flex-col z-20'>
                 <div className='grow flex flex-row mb-2 items-end'>
                     <div className='text-[#363E4A] text-[16px] mx-1 md:mx-5 cursor-pointer' onClick={e => { toSection(0) }} onMouseMove={e => { handleMouseOver(0) }} onMouseOut={handleMouseOut} ref={tab1Ref}>Account Settings</div>
                     <div className='text-[#363E4A] text-[16px] mx-1 md:mx-5 cursor-pointer' onClick={e => { toSection(1) }} onMouseMove={e => { handleMouseOver(1) }} onMouseOut={handleMouseOut} ref={tab2Ref}>Referral</div>
@@ -520,7 +520,7 @@ export default function Account() {
                     <div className='border-b-2 w-fit border-black h-0 overflow-hidden text-[16px] mx-1 md:mx-5 transition-all duration-300' ref={tabUnderlineRef}></div>
                 </div>
             </div>
-            <div className='w-full' ref={ref1}><Profile /></div>
+            <div className='w-full mt-[20px] md:mt-0' ref={ref1}><Profile /></div>
             <div className='w-full'><PasswordModule /></div>
             {bar}
             <div className='w-full' ref={ref2}><Referral /></div>
