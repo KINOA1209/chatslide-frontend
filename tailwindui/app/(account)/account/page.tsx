@@ -10,12 +10,28 @@ import Link from 'next/link';
 
 const Profile = () => {
     const [username, setUsername] = useState('');
+    const [editUsername, setEditUsername] = useState('');
     const [email, setEmail] = useState('abcdefg@gmail.com');
     const [changed, setChanged] = useState(false);
 
+    const fetchUser = async () => {
+        const user = await AuthService.getCurrentUser();
+        setEmail(user.attributes.email);
+        setUsername(user.attributes.name);
+        setChanged(false);
+    };
+
+    useEffect(() => {
+        fetchUser();
+    }, []);
+
+    useEffect(() => {
+        setEditUsername(username);
+    }, [username])
+
     const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setChanged(true);
-        setUsername(e.target.value);
+        setEditUsername(e.target.value);
     };
 
     const handleSubmitUsername = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,7 +50,7 @@ const Profile = () => {
             return;
         }
 
-        await AuthService.updateName(username);
+        await AuthService.updateName(editUsername);
         const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
         await fetch(`/api/user/update_username`, {
             method: 'POST',
@@ -42,7 +58,7 @@ const Profile = () => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({ 'username': username, }),
+            body: JSON.stringify({ 'username': editUsername, }),
         }).then(response => {
             if (response.ok) {
                 return response.json()
@@ -79,18 +95,8 @@ const Profile = () => {
         })
 
         setChanged(false);
-    };
-
-    useEffect(() => {
-        const fetchUser = async () => {
-            const user = await AuthService.getCurrentUser();
-            setEmail(user.attributes.email);
-            setUsername(user.attributes.name);
-            setChanged(false);
-        };
-        // Execute the created function directly
         fetchUser();
-    }, []);
+    };
 
     return <div className='w-full px-4 sm:px-6'>
         <div className="mb-8 w-full">
@@ -169,7 +175,7 @@ const Profile = () => {
                                 type="text"
                                 className=" grow border-0 p-0 h-6 focus:outline-none focus:ring-0 mx-3 my-3 w-full overflow-hidden cursor-text text-[#707C8A]"
                                 onChange={e => handleUsernameChange(e)}
-                                value={username}
+                                value={editUsername}
                             />
                         </div>
                         <button className='btn text-white font-bold bg-gradient-to-r from-blue-600 to-teal-500 whitespace-nowrap rounded-xl'>Update</button>
