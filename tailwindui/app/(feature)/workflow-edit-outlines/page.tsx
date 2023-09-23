@@ -202,7 +202,6 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             console.log('no need to query vector database');
         }
 
-
         formData = {
             res: JSON.stringify({ ...outlineData }),
             outlines: JSON.stringify({ ...outlineData }),
@@ -235,16 +234,17 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
 
             // generate slides
             if (toSlides === true) {
+                const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
                 const response = await fetch('/api/generate_html', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(formData)
                 });
-
                 console.log('formData is:', formData);
+
 
                 if (response.ok) {
                     const resp = await response.json();
