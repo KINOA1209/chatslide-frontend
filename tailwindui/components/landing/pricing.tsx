@@ -285,7 +285,7 @@ export function Pricing() {
                                         <br />
                                         {isYearly ? 'Billed yearly' : 'Billed monthly'}
                                     </div>}
-                                <div className="w-full text-center text-md text-red-700">7 Day Free Trail</div>
+                                <div className="w-full text-center text-md text-red-700">7 Day Free Trial</div>
                                 <div className="w-full text-center text-4xl md:text-5xl">
                                     {isYearly ? '$8/mo' : '$10/mo'}
                                 </div>
@@ -314,7 +314,7 @@ export function Pricing() {
                                         {(!currentUser || (tier === 'FREE' || tier === '')) && <div ref={buttonRef} className="btn drop-shadow-xl text-lg rounded-full text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer"
                                             style={{ backgroundImage: 'linear-gradient(-45deg, #5A24B4, #9271CB, #2E8BC0)', backgroundSize: '200%' }}
                                             onClick={() => { currentUser ? handlePlusSubscription() : router.push('/signup') }}>
-                                            {currentUser ? 'Start Free Trail' : 'Sign up to Start'}
+                                            {currentUser ? 'Start Free Trial' : 'Sign up to Start'}
                                         </div>}
 
                                         {currentUser && tier === 'PLUS' && <><div className="w-full text-center">Expiring: {expiration}</div><div className="text-xl text-center">Current Subscription</div></>}
@@ -358,7 +358,7 @@ export function Pricing() {
                                         <br />
                                         {isYearly ? 'Billed yearly' : 'Billed monthly'}
                                     </div>}
-                                <div className="w-full text-center text-md text-red-700">7 Day Free Trail</div>
+                                <div className="w-full text-center text-md text-red-700">7 Day Free Trial</div>
                                 <div className="w-full text-center text-4xl md:text-5xl">
                                     {isYearly ? '$32/mo' : '$40/mo'}
                                 </div>
@@ -381,7 +381,7 @@ export function Pricing() {
                                         {(!currentUser || (tier === 'FREE' || tier === '')) && <div ref={buttonRef} className="btn drop-shadow-xl text-lg rounded-full text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer"
                                             style={{ backgroundImage: 'linear-gradient(-45deg, #002366, #003366, #004466)', backgroundSize: '200%' }}
                                             onClick={() => { currentUser ? handleProSubscription() : router.push('/signup') }}>
-                                            {currentUser ? 'Start Free Trail' : 'Sign up to Start'}
+                                            {currentUser ? 'Start Free Trial' : 'Sign up to Start'}
                                         </div>}
                                         {(currentUser && tier === 'PRO') && <><div className="w-full text-center">Expiring: {expiration}</div><div className="text-xl text-center">Current Subscription</div></>}
                                     </div>
