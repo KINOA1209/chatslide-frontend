@@ -205,8 +205,9 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
                             {dashboardButton}
                             {stepRedirectPair.map((pair, index) => (
                                 <OneStep
+                                    key={index} // Add a unique key prop here
                                     id={index + 1}
-                                    current={currentInd == index}
+                                    current={currentInd === index}
                                     finished={finishedSteps().includes(index)}
                                     desc={pair[0]}
                                     redirect={pair[1]}
@@ -231,8 +232,9 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
                                     {dashboardButton}
                                     {stepRedirectPair.map((pair, index) => (
                                         <OneStep
+                                            key={index} // Add a unique key prop here
                                             id={index + 1}
-                                            current={currentInd == index}
+                                            current={currentInd === index}
                                             finished={finishedSteps().includes(index)}
                                             desc={pair[0]}
                                             redirect={pair[1]}
