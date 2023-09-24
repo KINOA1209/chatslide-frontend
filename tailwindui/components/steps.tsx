@@ -88,7 +88,7 @@ interface Current {
 }
 
 // General progress indicator component
-const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => number[], unavailableSteps: () => number[]) => {
+const ProgressBox = (steps: string[], redirect: string[], finishedStepsFunc: () => number[], unavailableStepsFunc: () => number[]) => {
     const stepRedirectPair = steps.map((desc, index) => { return [desc, redirect[index]] });
     const CurrentProgress: React.FC<Current> = ({ currentInd, contentRef }) => {
         const progressRefDesktop = useRef<HTMLDivElement>(null);
@@ -99,6 +99,14 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
         const [mobileButtonDisplay, setMobileButtonDisplay] = useState<CSS.Property.Display>('none');
         const router = useRouter();
         const [user, setUser] = useState(null);
+
+        const [finishedSteps, setFinishedSteps] = useState<number[]>([])
+        const [unavailableSteps, setUnavailableSteps] = useState<number[]>([])
+
+        useEffect(()=>{
+            setFinishedSteps(finishedStepsFunc());
+            setUnavailableSteps(unavailableStepsFunc());
+        }, [])
 
         // fire on every window resize
         const handSidebarPosition = () => {
@@ -208,10 +216,10 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
                                     key={index} // Add a unique key prop here
                                     id={index + 1}
                                     current={currentInd === index}
-                                    finished={finishedSteps().includes(index)}
+                                    finished={finishedSteps.includes(index)}
                                     desc={pair[0]}
                                     redirect={pair[1]}
-                                    unavailable={unavailableSteps().includes(index)} />
+                                    unavailable={unavailableSteps.includes(index)} />
                             ))}
                         </div>
                     </div>
@@ -235,10 +243,10 @@ const ProgressBox = (steps: string[], redirect: string[], finishedSteps: () => n
                                             key={index} // Add a unique key prop here
                                             id={index + 1}
                                             current={currentInd === index}
-                                            finished={finishedSteps().includes(index)}
+                                            finished={finishedSteps.includes(index)}
                                             desc={pair[0]}
                                             redirect={pair[1]}
-                                            unavailable={unavailableSteps().includes(index)} />
+                                            unavailable={unavailableSteps.includes(index)} />
                                     ))}
                                 </div>
                             </div>
