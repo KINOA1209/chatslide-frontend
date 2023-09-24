@@ -15,7 +15,7 @@ export function Pricing() {
     const [showEnt, setShowEnt] = useState(false);
 
     const [tier, setTier] = useState('')
-    const [expiration, setExpiration] = useState('')
+    const [expiration, setExpiration] = useState(0)
 
     const showPricingPanel = (index: number) => {
         setShowFree(false);
@@ -160,8 +160,8 @@ export function Pricing() {
                 }
             }).then(data => {
                 setTier(data.tier)
-                if (data.expiry) {
-                    setExpiration(data.expiry)
+                if (data.expiry_date) {
+                    setExpiration(data.expiry_date)
                 }
             }).catch(error => console.error)
         }
@@ -321,7 +321,7 @@ export function Pricing() {
                                                     {currentUser ? 'Start Free Trial' : 'Sign up to Start'}
                                                 </div>}
 
-                                                {(currentUser && (tier === 'PLUS_MONTHLY' || tier === 'PLUS_YEARLY')) && <><div className="w-full text-center">Expiring: {expiration}</div><div className="text-xl text-center">Current Subscription</div></>}
+                                                {(currentUser && (tier === 'PLUS_MONTHLY' || tier === 'PLUS_YEARLY')) && <><div className="w-full text-center">Expiring: {moment.utc(expiration).format('L')}</div><div className="text-xl text-center">Current Subscription</div></>}
                                             </div>
                                         </div>
                                     </div>
@@ -387,7 +387,7 @@ export function Pricing() {
                                                     onClick={() => { currentUser ? handleProSubscription() : router.push('/signup') }}>
                                                     {currentUser ? 'Start Free Trial' : 'Sign up to Start'}
                                                 </div>}
-                                                {(currentUser && (tier === 'PRO_MONTHLY' || tier === 'PRO_YEARLY')) && <><div className="w-full text-center">Expiring: {moment(expiration).format('L')}</div><div className="text-xl text-center">Current Subscription</div></>}
+                                                {(currentUser && (tier === 'PRO_MONTHLY' || tier === 'PRO_YEARLY')) && <><div className="w-full text-center">Expiring: {moment.utc(expiration).format('L')}</div><div className="text-xl text-center">Current Subscription</div></>}
                                             </div>
                                         </div>
                                     </div>

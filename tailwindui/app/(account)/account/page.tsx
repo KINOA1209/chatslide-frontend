@@ -210,7 +210,7 @@ const Referral = () => {
     const [referralLink, setReferralLink] = useState('');
 
     useEffect(() => {
-        if (window.location.hostname !== 'localhost') {
+        if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
             setHost('https://' + window.location.hostname);
         } else {
             setHost(window.location.hostname);
@@ -238,7 +238,7 @@ const Referral = () => {
                 }
             }).then(data => {
                 const code = data['referral_code'];
-                setReferralLink(host + '/signup?referral=' + code);
+                setReferralLink('/signup?referral=' + code);
             }).catch(error => console.error);
         }
         fetchReferral();
@@ -246,14 +246,14 @@ const Referral = () => {
 
     const sendEmail = () => {
         var subject = 'Invitation to DrLambda';
-        var emailBody = `Hey there!\nI wanted to recommend you check out DrLambda, an AI-powered tool for automatic slide generation. I think you'll really like it. You can get 50 extra credit by using my link:\n${referralLink}`;
+        var emailBody = `Hey there!\nI wanted to recommend you check out DrLambda, an AI-powered tool for automatic slide generation. I think you'll really like it. You can get 50 extra credit by using my link:\n${host + referralLink}`;
         window.location.href = "mailto:" + "?subject=" + subject + "&body=" + emailBody;
     }
 
     const handleOnMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
         e.stopPropagation();
-        navigator.clipboard.writeText(referralLink);
+        navigator.clipboard.writeText(host + referralLink);
         toast.success("Referral link copied.", {
             position: "top-center",
             autoClose: 2000,
@@ -268,7 +268,7 @@ const Referral = () => {
 
     const handleShare = async () => {
         const shareData = {
-            text: `Hey there!\nI wanted to recommend you check out DrLambda, an AI-powered tool for automatic slide generation. I think you'll really like it. You can get 50 extra credit by using my link:\n${referralLink}`,
+            text: `Hey there!\nI wanted to recommend you check out DrLambda, an AI-powered tool for automatic slide generation. I think you'll really like it. You can get 50 extra credit by using my link:\n${host + referralLink}`,
         };
         await navigator.share(shareData);
     }
@@ -298,7 +298,7 @@ const Referral = () => {
                         className="grow border-0 p-0 h-6 focus:outline-none focus:ring-0 mx-3 my-3 w-full overflow-hidden cursor-text text-[#707C8A]"
                         // disabled
                         readOnly
-                        value={referralLink}
+                        value={host + referralLink}
                     />
                 </div>
                 <div className='w-fit flex flex-row justify-center' >
