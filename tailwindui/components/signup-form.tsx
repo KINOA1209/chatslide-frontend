@@ -262,12 +262,6 @@ const SignupForm: React.FC = () => {
         }
     };
 
-    const handlePromoChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (typeof localStorage !== 'undefined') {
-            localStorage.setItem('promo', e.target.value);
-        }
-    };
-
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
         const referralCode = queryParams.get('referral');
@@ -284,25 +278,23 @@ const SignupForm: React.FC = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-            {searchParams.get('referral') && (
-                <div className="flex flex-wrap -mx-3 mb-4">
-                    <div className="w-full px-3">
-                        <label
-                            className="block text-green-600 text-sm font-medium mb-1"
-                            htmlFor="promo"
-                        >
-                            Referral code applied
-                        </label>
-                        <input
-                            id="promo"
-                            type="text"
-                            value={searchParams.get('referral') || ''}
-                            className="form-input w-full text-gray-800 bg-gray-200 cursor-not-allowed"
-                            disabled={true}
-                        />
-                    </div>
+            <div className={`flex flex-wrap -mx-3 mb-4 ${!Boolean(searchParams.get('referral')) && 'hidden'}`}>
+                <div className="w-full px-3">
+                    <label
+                        className="block text-green-600 text-sm font-medium mb-1"
+                        htmlFor="promo"
+                    >
+                        Referral code applied
+                    </label>
+                    <input
+                        id="promo"
+                        type="text"
+                        value={searchParams.get('referral') || ''}
+                        className="form-input w-full text-gray-800 bg-gray-200 cursor-not-allowed"
+                        disabled={true}
+                    />
                 </div>
-            )}
+            </div>
 
             {/* <div className="flex items-center my-6">
                 <div
