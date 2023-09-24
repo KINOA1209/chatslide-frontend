@@ -328,10 +328,10 @@ const TopicForm: React.FC = () => {
                 </Transition>
             </Transition>
 
-            <div className="flex flex-wrap -mx-3 mb-4">
+            <div className="w-full flex flex-row flex-wrap -mx-3 mb-4">
 
                 {/* Left Column */}
-                <div className="w-1/2 px-3">
+                <div className="w-full md:w-1/2 px-3">
 
 
                     {/* Topic Section */}
@@ -452,7 +452,7 @@ const TopicForm: React.FC = () => {
                 </div>
 
                 {/* Right Column */}
-                <div className="w-1/2 px-3">
+                <div className="w-full md:w-1/2 px-3">
 
                     <div className='flex flex-row flex-nowrap w-full items-center'>
                         <hr className='border-gray-400 grow' />
