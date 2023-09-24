@@ -130,6 +130,7 @@ export function Pricing() {
 
             if (response.ok) {
                 const url = await response.text();
+                console.log(url)
                 // Redirect to the checkout page
                 router.push(url);
             } else {
@@ -319,7 +320,7 @@ export function Pricing() {
                                                     {currentUser ? 'Start Free Trial' : 'Sign up to Start'}
                                                 </div>}
 
-                                                {currentUser && tier === 'PLUS' && <><div className="w-full text-center">Expiring: {expiration}</div><div className="text-xl text-center">Current Subscription</div></>}
+                                                {(currentUser && (tier === 'PLUS_MONTHLY' || tier === 'PLUS_YEARLY')) && <><div className="w-full text-center">Expiring: {expiration}</div><div className="text-xl text-center">Current Subscription</div></>}
                                             </div>
                                         </div>
                                     </div>
@@ -385,7 +386,7 @@ export function Pricing() {
                                                     onClick={() => { currentUser ? handleProSubscription() : router.push('/signup') }}>
                                                     {currentUser ? 'Start Free Trial' : 'Sign up to Start'}
                                                 </div>}
-                                                {(currentUser && tier === 'PRO') && <><div className="w-full text-center">Expiring: {expiration}</div><div className="text-xl text-center">Current Subscription</div></>}
+                                                {(currentUser && (tier === 'PRO_MONTHLY' || tier === 'PRO_YEARLY')) && <><div className="w-full text-center">Expiring: {expiration}</div><div className="text-xl text-center">Current Subscription</div></>}
                                             </div>
                                         </div>
                                     </div>
