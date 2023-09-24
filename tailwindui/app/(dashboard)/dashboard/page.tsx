@@ -223,7 +223,6 @@ export default function Dashboard() {
     const applyPromoCode = async (token: string) => {
         const promo = localStorage.getItem("promo");
         const email = localStorage.getItem("email");
-
         localStorage.removeItem('promo');
         localStorage.removeItem('email');
         if (promo && promo !== '') {

@@ -15,6 +15,19 @@ export default function SignUp() {
     const [href, setHref] = useState('/signup-with-email');
 
     useEffect(() => {
+        const handlePromoChange = (promo: string) => {
+            if (typeof localStorage !== 'undefined') {
+                localStorage.setItem('promo', promo);
+            }
+        };
+
+        const promo = searchParams.get('referral');
+        if (promo) {
+            handlePromoChange(promo);
+        };
+    }, [])
+
+    useEffect(() => {
         const loginRedirect = () => {
             Auth.currentAuthenticatedUser().then(user => {
                 router.push('/dashboard');
