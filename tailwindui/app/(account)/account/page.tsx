@@ -350,7 +350,6 @@ const Subscription = () => {
                             throw response.status, response;
                         }
                     }).then(data => {
-                        //TODO: test portal
                         setPortalURL(data);
                     })
                 }
