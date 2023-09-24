@@ -281,7 +281,7 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
     const handleClick = (id: string) => {
         const ind = selectedResources.indexOf(id);
         let resources = []
-        if (['PRO', 'PLUS'].includes(tier)) {
+        if (['PRO_MONTHLY', 'PLUS_MONTHLY', 'PRO_YEARLY', 'PLUS_YEARLY'].includes(tier)) {
             console.log()
             resources = [...selectedResources];
             if (ind !== -1) {

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import AuthService from "@/components/utils/AuthService";
 import { useRouter } from 'next/navigation';
+import moment from "moment";
 
 export function Pricing() {
     const [isYearly, setIsYearly] = useState(true);
@@ -386,7 +387,7 @@ export function Pricing() {
                                                     onClick={() => { currentUser ? handleProSubscription() : router.push('/signup') }}>
                                                     {currentUser ? 'Start Free Trial' : 'Sign up to Start'}
                                                 </div>}
-                                                {(currentUser && (tier === 'PRO_MONTHLY' || tier === 'PRO_YEARLY')) && <><div className="w-full text-center">Expiring: {expiration}</div><div className="text-xl text-center">Current Subscription</div></>}
+                                                {(currentUser && (tier === 'PRO_MONTHLY' || tier === 'PRO_YEARLY')) && <><div className="w-full text-center">Expiring: {moment(expiration).format('L')}</div><div className="text-xl text-center">Current Subscription</div></>}
                                             </div>
                                         </div>
                                     </div>
