@@ -60,7 +60,6 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
                 console.error(error, response);
             }
         }).then(parsedResponse => {
-            console.log(parsedResponse);
             setSearchResult(parsedResponse.data.images);
         }).catch(e => {
             console.error(e);
@@ -100,7 +99,6 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
             });
             if (response.ok) {
                 const data = await response.json();
-                console.log(data);
                 const files = data.data.resources;
                 const resourceTemps = files.map((resource: any) => {
                     if (file_id && resource.id === file_id) {
@@ -119,12 +117,9 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
     };
 
     const onFileSelected = async (file: File | null) => {
-        console.log("will upload file", file);
         if (file == null) {
             return;
         }
-        console.log("file name: ", file.name)//.split('.', 1)
-        console.log("file name split: ", file.name.split('.', 1))
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
         const body = new FormData();
         body.append("file", file);
@@ -164,7 +159,6 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
             }
         }).then(parsedResponse => {
             const file_id = parsedResponse.data.file_id;
-            console.log('id', file_id)
             fetchFiles(file_id);
         }).catch(error => console.error);
     };
@@ -177,7 +171,6 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
         const extensions = ["png", "jpg", "jpeg", "gif"]; // For checking logic
         const sizeLimit = 16 * 1024 * 1024; // 16mb
         const file = e.target.files ? e.target.files[0] : null;
-        console.log(file?.size);
         if (file?.size && file?.size > sizeLimit) {
             toast.error("The maximum file size supported is 16 MB.", {
                 position: "top-center",
