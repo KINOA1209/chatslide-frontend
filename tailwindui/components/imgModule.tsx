@@ -22,7 +22,6 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
     const inputFileRef = useRef<HTMLInputElement>(null);
     const [hoverImgSearch, setHoverImgSearch] = useState(false);
     const [hoverResources, setHoverResources] = useState(false);
-    const [uploadedUid, setUploadedUid] = useState('')
 
     useEffect(() => {
         if (imgsrc !== '') {
@@ -81,7 +80,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
         updateSingleCallback((e.target as HTMLImageElement).getAttribute('src'));
     }
 
-    const fetchFiles = async () => {
+    const fetchFiles = async (file_id?: string) => {
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
         const headers = new Headers();
         if (idToken) {
@@ -104,13 +103,12 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
                 console.log(data);
                 const files = data.data.resources;
                 const resourceTemps = files.map((resource: any) => {
-                    if (resource.id === uploadedUid) {
-                        setSelectedImg(resource.direct_url);
-                        setUploadedUid('');
+                    if (file_id && resource.id === file_id) {
+                        updateSingleCallback(resource.direct_url);
                     }
                     return resource.direct_url;
                 });
-                setResources(resourceTemps);                
+                setResources(resourceTemps);
             } else {
                 // Handle error cases
                 console.error('Failed to fetch images', response.status);
@@ -136,41 +134,42 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
                 'Authorization': `Bearer ${idToken}`,
             },
             body: body
-        });
-        if (response.ok) {
-            toast.success("File uploaded successfully", {
-                position: "top-center",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                containerId: "slides",
-            });
-            const parsedResponse = await response.json();
+        }).then(response => {
+            if (response.ok) {
+                toast.success("File uploaded successfully", {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    containerId: "slides",
+                });
+                return response.json();
+            } else {
+                toast.error("File upload failed", {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    containerId: "slides",
+                });
+                throw response.status, response;
+            }
+        }).then(parsedResponse => {
             const file_id = parsedResponse.data.file_id;
-            setUploadedUid(file_id);
-        } else {
-            console.error(response.status);
-            toast.error("File upload failed", {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                containerId: "slides",
-            });
-        };
-
-        fetchFiles();
+            console.log('id', file_id)
+            fetchFiles(file_id);
+        }).catch(error => console.error);
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchFiles();
     }, [])
 
