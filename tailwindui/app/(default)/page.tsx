@@ -141,7 +141,7 @@ const Introduction = ({ demoRef }: IntroProps) => {
                     </div>
                     <div className="flex flex-col justify-center items-center mt-8 md:mt-16">
                         <div className="text-md md:text-lg text-gray-600 text-center mt-2 flex items-center justify-center rounded-xl overflow-hidden border border-[#7688d4] bg-white">
-                            <a className="w-full" href="https://discord.gg/77g8qsxH" target="_blank"><img className="mx-auto" src={discord.src} width={250} /></a>
+                            <a className="w-full" href="https://discord.gg/8ZQyTesVZ6" target="_blank"><img className="mx-auto" src={discord.src} width={250} /></a>
                         </div>
                     </div>
                     <div className="flex flex-col justify-center items-center mt-2 md:mt-2">
