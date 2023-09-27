@@ -8,7 +8,7 @@ import GoBackButton from '@/components/GoBackButton';
 import ImageList from '@/components/ImageList';
 import ProjectProgress from "@/components/steps";
 import AuthService from '@/components/utils/AuthService';
-import FeedbackForm from '@/components/feedback';
+import FeedbackForm from '@/components/forms/feedback';
 
 const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageUrls }: { transcripts: [], audioFiles: [], foldername: string, imageUrls: [] }) => {
     const [transcriptList, setTranscriptList] = useState<string[]>(transcripts);

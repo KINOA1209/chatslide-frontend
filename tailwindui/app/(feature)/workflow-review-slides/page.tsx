@@ -9,7 +9,7 @@ import GoBackButton from '@/components/GoBackButton';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProjectProgress from "@/components/steps";
-import FeedbackForm from '@/components/feedback';
+import FeedbackForm from '@/components/forms/feedback';
 import SaveToPPTX from '@/components/forms/saveToPptx';
 import BgImagePopup from '@/components/bgImagePopup';
 //import SlidesHTML from '@/components/SlidesHTML';

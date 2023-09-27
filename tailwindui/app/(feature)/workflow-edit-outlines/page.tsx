@@ -6,7 +6,7 @@ import { FormEvent } from 'react';
 import Timer from '@/components/Timer';
 import ProjectProgress from "@/components/steps";
 import AuthService from '@/components/utils/AuthService';
-import FeedbackForm from '@/components/feedback';
+import FeedbackForm from '@/components/forms/feedback';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Dialog, Transition } from '@headlessui/react';

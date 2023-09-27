@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react';
 import ProjectProgress from "@/components/steps";
 import TopicForm from '@/components/topic-form'
-import FeedbackForm from '@/components/feedback';
+import FeedbackForm from '@/components/forms/feedback';
 
 const metadata = {
   title: 'Workflow - DrLambda',
