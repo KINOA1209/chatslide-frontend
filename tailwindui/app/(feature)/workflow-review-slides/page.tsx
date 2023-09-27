@@ -16,16 +16,18 @@ import BgImagePopup from '@/components/bgImagePopup';
 //import SaveToPdfHtml from '@/components/forms/saveToPdfHtml';
 import { SlideElement, Slide } from '@/components/SlidesHTML';
 import dynamic from 'next/dynamic'
+const SlidesHTML = dynamic(() => import('@/components/SlidesHTML'));
+const SaveToPdfHtml = dynamic(() => import('@/components/forms/saveToPdfHtml'));
 
-const SlidesHTML = dynamic(
-    () => import('@/components/SlidesHTML'),
-    { ssr: false }
-)
+// const SlidesHTML = dynamic(
+//     () => import('@/components/SlidesHTML'),
+//     { ssr: false }
+// )
 
-const SaveToPdfHtml = dynamic(
-    () => import('@/components/forms/saveToPdfHtml'),
-    { ssr: false }
-)
+// const SaveToPdfHtml = dynamic(
+//     () => import('@/components/forms/saveToPdfHtml'),
+//     { ssr: false }
+// )
 
 type SlidesHTMLProps = {
     finalSlides: Slide[];
@@ -78,7 +80,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
 
                 <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} />
 
-                <SaveToPdfHtml finalSlides={finalSlides} />
+                {/* <SaveToPdfHtml finalSlides={finalSlides} /> */}
                 {/*{language === "English" && <SaveToPPTX />}*/}
 
                 {/*<div className="max-w-sm mx-auto">

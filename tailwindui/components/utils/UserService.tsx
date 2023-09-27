@@ -1,3 +1,6 @@
+import AuthService from "./AuthService";
+
+
 class DatabaseService {
     static async getUserCredits(idToken:string) {
       try {
@@ -20,6 +23,32 @@ class DatabaseService {
         throw error;
       }
     }
+
+    static async getUserTier() {
+        try {
+            const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+    
+            const response = await fetch(`/api/get-user-subscription`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${idToken}`
+                },
+            });
+    
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+    
+            const data = await response.json();
+            return data['tier'] || 'FREE'; // Return a default tier if none is found, or handle accordingly
+    
+        } catch (error) {
+            console.error('Failed to get user tier:', error);
+            return 'FREE'; // Return an empty string or some default value or handle accordingly
+        }
+    }
+    
     static async getUserHistoricalInput(idToken:string) {
       try {
         const response = await fetch(`/api/user/historical_input`, {

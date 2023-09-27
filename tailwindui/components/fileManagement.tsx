@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import AuthService from '@/components/utils/AuthService';
+import UserService from '@/components/utils/UserService';
 import { FileUploadButton } from '@/components/fileUpload';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -131,7 +132,7 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
     const contentRef = useRef<HTMLDivElement>(null);
     const [rendered, setRendered] = useState<boolean>(false);
     const [selectedResources, setSelectedResources] = useState<Array<string>>([]);
-    const [tier, setTier] = useState('');
+    const [tier, setTier] = useState<string>('');
     const [prompted, setPrompted] = useState(false);
 
     useEffect(() => {
@@ -150,6 +151,13 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
         };
         // Execute the created function directly
         fetchUserFiles();
+    }, []);
+
+    useEffect(() => {
+        (async () => {
+            const userTier = await UserService.getUserTier();
+            setTier(userTier);
+        })();
     }, []);
 
     useEffect(() => {
@@ -315,30 +323,6 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
             callback(selectedResources);
         }
     }, [selectedResources]);
-
-    useEffect(() => {
-        const getTier = async () => {
-            const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
-            await fetch(`/api/get-user-subscription`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-            }).then(response => {
-                if (response.ok) {
-                    return response.json()
-                }
-                else {
-                    throw response.status, response;
-                }
-            }).then(data => {
-                const fetchedTier = data['tier'];
-                setTier(fetchedTier);
-            }).catch(error => console.error);
-        }
-        getTier();
-    }, [])
 
     return (
         <section className="bg-gradient-to-b from-gray-100 to-white grow flex flex-col h-full">
