@@ -116,6 +116,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
         // clean sessionStorage
         if (typeof window !== 'undefined') {
             sessionStorage.removeItem('pdf_file');
+            sessionStorage.removeItem('page_count');
             sessionStorage.removeItem('transcripts');
             sessionStorage.removeItem('audio_files');
             sessionStorage.removeItem('video_file');
@@ -128,6 +129,8 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
         setIsSubmittingScript(true);
         // clean sessionStorage
         if (typeof window !== 'undefined') {
+            sessionStorage.removeItem('page_count');
+            sessionStorage.removeItem('html');
             sessionStorage.removeItem('image_files');
             sessionStorage.removeItem('pdf_file');
             sessionStorage.removeItem('audio_files');
@@ -252,9 +255,6 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                     setIsSubmittingSlide(false);
                     // Store the data in local storage
                     console.log(resp.data);
-                    sessionStorage.setItem('image_files', JSON.stringify(resp.data.image_files));
-                    sessionStorage.setItem('pdf_file', resp.data.pdf_file);
-                    sessionStorage.setItem('page_count', resp.data.page_count);
 
                     // Redirect to a new page with the data
                     router.push('workflow-review-slides');
