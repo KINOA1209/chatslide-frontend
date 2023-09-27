@@ -6,8 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 // ALLOWED_DOC_EXTENSIONS = {"txt", "pdf"}
 // ALLOWED_MEDIA_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
 
-const supportedFormats = ["pdf", "png", "jpg", "jpeg", "gif", "txt", "docx"]; // For prompt display
-const supportedExtensions = ["pdf", "png", "jpg", "jpeg", "gif", "txt", "docx"]; // For checking logic
+const supportedFormats = ["pdf", "txt", "docx"]; // For prompt display
+const supportedExtensions = ["pdf", "txt", "docx"]; // For checking logic
 
 const sizeLimit = 16 * 1024 * 1024; // 16mb
 
@@ -93,6 +93,8 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({ onFileSelected, fo
                     return f;
                 }
             })}</div>
+            <div className='text-sm text-gray-400'>Max file size: 16 MB</div>
+            <div className='text-sm text-gray-400'>Subscribed users can select multiple files</div>
         </div>
     );
 };

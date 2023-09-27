@@ -18,7 +18,7 @@ const GuestUploadModal = () => {
         type="button"
         onClick={toggleModal}
       >
-        Upload File
+        Add Supporting Files
       </button>
 
       {/* Main modal */}
