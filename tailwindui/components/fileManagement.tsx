@@ -133,7 +133,6 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
     const [rendered, setRendered] = useState<boolean>(false);
     const [selectedResources, setSelectedResources] = useState<Array<string>>([]);
     const [tier, setTier] = useState<string>('');
-    const [prompted, setPrompted] = useState(false);
 
     useEffect(() => {
         if (contentRef.current) {
@@ -300,7 +299,7 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
         } else {
             resources = [id];
             console.log(tier)
-            if (!prompted) {
+            if(selectedResources.length > 0){
                 toast.info('Only subscribed user can select multiple files!', {
                     position: "top-center",
                     autoClose: 5000,
@@ -313,7 +312,6 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
                     containerId: 'fileManagement'
                 });
             }
-            setPrompted(true);
         }
         setSelectedResources(resources);
     };
