@@ -7,7 +7,8 @@ import Logo from "./logo";
 import DropdownButton from "@/components/utils/dropdown";
 import MobileMenu from "./mobile-menu";
 import { useRouter } from "next/navigation";
-import GoogleAnalytics from "../GoogleAnalytics";
+import GoogleAnalytics from "@/components/integrations/GoogleAnalytics";
+import Hotjar from "@/components/integrations/Hotjar";
 // import AuthService from "../utils/AuthService";
 import { Auth, Hub } from 'aws-amplify';
 
@@ -109,6 +110,7 @@ const Header = ({loginRequired, isLanding = false, refList }: HeaderProps) => {
                     </div>
                 </div>
                 <GoogleAnalytics />
+                <Hotjar />
             </header>
         );
     }
