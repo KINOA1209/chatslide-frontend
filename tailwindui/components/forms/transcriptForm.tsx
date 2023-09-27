@@ -1,8 +1,6 @@
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect, FormEvent, use } from 'react';
 
-import TranscriptFormModal from './trasncriptFormModal';
-
 import AuthService from "../utils/AuthService";
 
 import { SlideElement, Slide } from '../SlidesHTML';
@@ -109,18 +107,6 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({ finalSlides, isSubmitti
         }
     };
 
-    const handleButtonClick = () => {
-        if (tier === 'FREE') {
-            setShowPaymentPopup(true);
-        } else {
-            // Handle the script generation or whatever the primary function is
-        }
-    };
-
-    const closePaymentPopup = () => {
-        setShowPaymentPopup(false);
-    };
-
     return (
         <div className="max-w-sm mx-auto">
             <form onSubmit={handleSubmitTranscript}>
@@ -132,20 +118,10 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({ finalSlides, isSubmitti
                                     <button
                                         type="button"
                                         className="btn text-white font-bold w-full bg-gradient-to-r from-gray-400 to-gray-600 disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400"
-                                        onClick={() => setShowPaymentPopup(true)}
+                                        onClick={() => window.open('/account', '_blank')}
                                     >
-                                        🔒 Generate Script
+                                        🔒 Subscribe to Generate Script
                                     </button>
-
-                                    {showPaymentPopup && (
-                                        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-                                            <div className="bg-white p-4 rounded">
-                                                <p>You need to pay for this feature.</p>
-                                                {/* Add payment details or options here */}
-                                                <button type="button" onClick={closePaymentPopup}>Close</button>
-                                            </div>
-                                        </div>
-                                    )}
                                 </>
                             ) : (
                                 <button
