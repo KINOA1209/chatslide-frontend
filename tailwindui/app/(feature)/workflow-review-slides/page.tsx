@@ -3,8 +3,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import TranscriptForm from '@/components/forms/transcriptForm';
 import Slides from '@/components/Slides';
-import Timer from '@/components/Timer';
-import GoBackButton from '@/components/GoBackButton';
+import Timer from '@/components/ui/Timer';
+import GoBackButton from '@/components/button/GoBackButton';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProjectProgress from "@/components/steps";

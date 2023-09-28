@@ -2,12 +2,12 @@
 
 import React, { useState, ChangeEvent, FormEvent, useEffect, MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import AuthService from "./utils/AuthService";
-import UserService from "./utils/UserService";
-import { FileUploadButton } from './fileUpload';
-import Timer from './Timer';
-import GuestUploadModal from './forms/uploadModal';
-import MyFiles from './fileManagement';
+import AuthService from "../utils/AuthService";
+import UserService from "../utils/UserService";
+import { FileUploadButton } from '../fileUpload';
+import Timer from '../ui/Timer';
+import GuestUploadModal from './uploadModal';
+import MyFiles from '../fileManagement';
 import { Transition } from '@headlessui/react'
 
 const audienceList = ['Researchers', 'Students', 'Business Clients', 'Video Viewers'];

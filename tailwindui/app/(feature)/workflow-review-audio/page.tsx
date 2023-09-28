@@ -2,9 +2,9 @@
 
 import React, { useState, useRef, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Timer from '@/components/Timer';
+import Timer from '@/components/ui/Timer';
 import Audio from '@/components/Audio';
-import GoBackButton from '@/components/GoBackButton';
+import GoBackButton from '@/components/button/GoBackButton';
 import ImageList from '@/components/ImageList';
 import ProjectProgress from "@/components/steps";
 import AuthService from '@/components/utils/AuthService';

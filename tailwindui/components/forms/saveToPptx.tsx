@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import SavePptxModal from './savePptxModal';
 import AuthService from "../utils/AuthService";
-import { LoadingBar } from '@/components/progress';
+import { LoadingBar } from '@/components/ui/progress';
 
 
 interface SaveToPPTXProps {

@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
-import AuthService from "./utils/AuthService";
+import AuthService from "../utils/AuthService";
 
 
 

@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect, Fragment } from 'react';
 import { useRouter } from 'next/navigation';
 import { FormEvent } from 'react';
-import Timer from '@/components/Timer';
+import Timer from '@/components/ui/Timer';
 import ProjectProgress from "@/components/steps";
 import AuthService from '@/components/utils/AuthService';
 import FeedbackForm from '@/components/forms/feedback';
