@@ -97,7 +97,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             let hasAudio = null;
             let hasVideo = null;
             if (typeof window !== 'undefined') {
-                hasSlides = sessionStorage.getItem('image_files');
+                hasSlides = sessionStorage.getItem('html');
                 hasAudio = sessionStorage.getItem('audio_files');
                 hasAudio = sessionStorage.getItem('video_file');
             }
