@@ -291,7 +291,7 @@ export function Pricing() {
                                             </div>}
                                         <div className="w-full text-center text-md text-red-700">7 Day Free Trial</div>
                                         <div className="w-full text-center text-4xl md:text-5xl">
-                                            {isYearly ? '$8/mo' : '$10/mo'}
+                                            {isYearly ? '$8/mo' : '$9.9/mo'}
                                         </div>
 
                                         <div className="text-2xl mt-4">Include</div>
@@ -364,7 +364,7 @@ export function Pricing() {
                                             </div>}
                                         <div className="w-full text-center text-md text-red-700">7 Day Free Trial</div>
                                         <div className="w-full text-center text-4xl md:text-5xl">
-                                            {isYearly ? '$32/mo' : '$40/mo'}
+                                            {isYearly ? '$32/mo' : '$39.9/mo'}
                                         </div>
 
                                         <div className="text-2xl mt-4">Include</div>
