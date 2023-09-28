@@ -293,7 +293,7 @@ export default function Dashboard() {
                             type="button"
                             onClick={handleStartNewProject}
                         >
-                            Start New Project
+                            Start New Project (20 ⭐️)
                         </button>
                     </div>
                 </div>

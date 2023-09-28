@@ -229,7 +229,7 @@ export function Pricing() {
                                         <div className="text-2xl mt-4">Include</div>
                                         <ul className="list-disc list-outside px-5 space-y-3 mt-2 [&>*]:text-gray-500 text-md" style={{ fontFamily: 'sans-serif' }}>
                                             <li>
-                                                100 free credits
+                                                100 free ⭐️credits
                                             </li>
                                             <li>
                                                 Usage of GPT-3.5
@@ -300,7 +300,7 @@ export function Pricing() {
                                                 All features of Free plan
                                             </li>
                                             <li>
-                                                1,000 credits per month
+                                                1,000 ⭐️credits per month
                                             </li>
                                             <li>
                                                 Usage of GPT-4
@@ -373,7 +373,7 @@ export function Pricing() {
                                                 All features of Free/Plus plans
                                             </li>
                                             <li>
-                                                Unlimited credits
+                                                Unlimited ⭐️credits
                                             </li>
                                             <li>
                                                 24 hour VIP customer support

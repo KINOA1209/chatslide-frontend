@@ -194,7 +194,7 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
                         <div className="w-full px-3">
                             <button className="btn text-white bg-gradient-to-r from-purple-500 to-purple-700 font-bold hover:bg-blue-700 w-full disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400"
                                 disabled={isSubmitting}>
-                                {isSubmitting ? 'Generating...' : '⭐️ Generate Audio'}
+                                {isSubmitting ? 'Generating...' : '🚀 Generate Audio'}
                             </button>
                         </div>
                     </div>
