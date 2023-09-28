@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import AuthService from "@/components/utils/AuthService";
 import { useRouter } from 'next/navigation';
 import moment from "moment";
+import Toggle from "../button/Toggle";
 
 export function Pricing() {
     const [isYearly, setIsYearly] = useState(false);
@@ -172,20 +173,7 @@ export function Pricing() {
 
         <div className="w-full  px-4 sm:px-6 mb-12" style={{ fontFamily: 'Lexend, sans-serif' }}>
             <div className="w-full flex flex-col items-center" data-aos="fade-right">
-                <div className="toggle items-center hidden md:flex">
-                    <div className="flex items-center pb-8">
-                        <button
-                            onClick={() => setIsYearly(false)}
-                            className={`py-2 px-4 rounded-l-full ${isYearly ? 'bg-gray-200' : 'bg-teal-400 text-white'}`}>
-                            Monthly
-                        </button>
-                        <button
-                            onClick={() => setIsYearly(true)}
-                            className={`py-2 px-4 rounded-r-full ${isYearly ? 'bg-teal-400 text-white' : 'bg-gray-200'}`}>
-                            Yearly (17% off)
-                        </button>
-                    </div>
-                </div>
+                <Toggle isLeft={isYearly} setIsLeft={setIsYearly} leftText="Monthly" rightText="Yearly (17% off)" />
                 <div className="changeCard items-center flex md:hidden">
                     <div className="flex items-center pb-8">
                         <button
