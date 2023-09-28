@@ -88,7 +88,7 @@ const SaveToPdfHtml: React.FC<SaveToPdfHtmlProps> = ({ finalSlides }) => {
               disabled={downloadingPDF}
             >
               <div className="text-black h-[22px] mr-2" hidden={!downloadingPDF}><LoadingIcon /></div>
-              Save as PDF
+              Save as PDF (10 ⭐️)
             </button>
           )}
         </div>

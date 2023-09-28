@@ -80,7 +80,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
 
                 <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} />
 
-                {/* <SaveToPdfHtml finalSlides={finalSlides} /> */}
+                <SaveToPdfHtml finalSlides={finalSlides} />
                 {/*{language === "English" && <SaveToPPTX />}*/}
 
                 {/*<div className="max-w-sm mx-auto">

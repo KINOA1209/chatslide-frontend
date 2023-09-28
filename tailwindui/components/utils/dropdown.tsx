@@ -119,7 +119,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
                         </a>
                     </div>
                     <div className="block px-4 py-1 text-sm text-blue-600">
-                        Credits: {credits}
+                        ⭐️Credits: {credits}
                     </div>
                     <div className="py-1" role="none">
                         <div className="py-0.2" role="none">
