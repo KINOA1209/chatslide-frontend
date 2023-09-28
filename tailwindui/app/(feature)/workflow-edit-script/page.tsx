@@ -2,15 +2,15 @@
 
 import React, { useState, useRef, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Timer from '@/components/Timer';
-import GoBackButton from '@/components/GoBackButton';
+import Timer from '@/components/ui/Timer';
+import GoBackButton from '@/components/button/GoBackButton';
 import ImageList from '@/components/ImageList';
 import ProjectProgress from '@/components/steps';
 import AuthService from '@/components/utils/AuthService';
 import FeedbackForm from '@/components/forms/feedback';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { LoadingIcon } from '@/components/progress';
+import { LoadingIcon } from '@/components/ui/progress';
 
 interface UpdateButtonProps {
     callback: Function,
