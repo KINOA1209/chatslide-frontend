@@ -5,8 +5,8 @@ class UserService {
     
     static async forceUpdateUserInfo() {
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-        localStorage.removeItem('userCredits');
-        localStorage.removeItem('userTier');
+        sessionStorage.removeItem('userCredits');
+        sessionStorage.removeItem('userTier');
         UserService.getUserCredits(idToken);
         UserService.getUserTier(idToken);
     }
@@ -15,7 +15,7 @@ class UserService {
     static async getUserCredits(idToken: string): Promise<number> {
         try {
             // Try to get the user credits from sessionStorage first
-            const savedCredits = localStorage.getItem('userCredits');
+            const savedCredits = sessionStorage.getItem('userCredits');
 
             if (savedCredits !== null) {
                 console.log('Saved credits:', savedCredits);
@@ -37,7 +37,7 @@ class UserService {
             const credits: number = data.credits;
 
             // Save the retrieved user credits to sessionStorage
-            localStorage.setItem('userCredits', credits.toString());
+            sessionStorage.setItem('userCredits', credits.toString());
 
             return credits;
 

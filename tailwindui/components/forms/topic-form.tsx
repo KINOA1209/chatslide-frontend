@@ -9,6 +9,7 @@ import Timer from '../ui/Timer';
 import GuestUploadModal from './uploadModal';
 import MyFiles from '../fileManagement';
 import { Transition } from '@headlessui/react'
+import GPTToggle from '../button/GPTToggle';
 
 const audienceList = ['Researchers', 'Students', 'Business Clients', 'Video Viewers'];
 
@@ -24,6 +25,7 @@ const TopicForm: React.FC = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showFileModal, setShowFileModal] = useState(false);
     const [youtubeError, setYoutubeError] = useState('');
+    const [isGpt35, setIsGpt35] = useState(true);
 
     const openFile = () => {
         setShowFileModal(true);
@@ -517,15 +519,19 @@ const TopicForm: React.FC = () => {
             </div>
 
             <hr className='border-gray-400 grow mt-6' />
+
+
+
             <div className="max-w-sm mx-auto">
-                <div className="flex flex-wrap -mx-3 mt-6">
+                <div className="flex flex-wrap -mx-3 mt-6 justify-center">
+                    <GPTToggle isGpt35={isGpt35} setIsGpt35={setIsGpt35} />
                     <div className="w-full px-3">
                         <button
                             className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400"
                             disabled={isSubmitting}
                             // style={{ backgroundColor: '#8b2e2d'}}
                             type="submit">
-                            {isSubmitting ? "Generating..." : "Generate outline"}
+                            {isSubmitting ? "Generating..." : "Generate Outline"}
                         </button>
                     </div>
                 </div>
