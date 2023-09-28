@@ -93,7 +93,7 @@ export function Pricing() {
             if (response.ok) {
                 const url = await response.text();
                 // Redirect to the checkout page
-                router.push(url);
+                window.open(url, '_blank');
             } else {
                 console.error('Error creating checkout session:', response.statusText);
             }
@@ -134,7 +134,7 @@ export function Pricing() {
                 const url = await response.text();
                 console.log(url)
                 // Redirect to the checkout page
-                router.push(url);
+                window.open(url, '_blank');
             } else {
                 console.error('Error creating checkout session:', response.statusText);
             }
