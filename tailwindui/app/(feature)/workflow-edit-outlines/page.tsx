@@ -10,7 +10,7 @@ import FeedbackForm from '@/components/forms/feedback';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Dialog, Transition } from '@headlessui/react';
-import { eventManager } from 'react-toastify/dist/core';
+import GptToggle from '@/components/button/GPTToggle';
 
 const minOutlineDetailCount = 1;
 const maxOutlineDetailCount = 6;
@@ -30,6 +30,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
     const [outlineData, setOutlineData] = useState(outline);
     const [sectionEditMode, setSectionEditMode] = useState(-1);
     const [titleCache, setTitleCache] = useState('');
+    const [isGpt35, setIsGpt35] = useState(true);
 
     const updateOutlineSessionStorage = (updatedOutline: any) => {
         const entireOutline = JSON.parse(sessionStorage.outline);
@@ -583,12 +584,13 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             {/* Form */}
             <div className="max-w-sm mx-auto">
                 <form onSubmit={prepareSubmit}>
-                    <div className="flex flex-wrap -mx-3 mt-6">
+                    <div className="flex flex-wrap -mx-3 mt-6 justify-center">
+                        <GptToggle isGpt35={isGpt35} setIsGpt35={setIsGpt35} />
                         <div className="w-full px-3">
                             {/* Button for generating slides */}
                             <button className="btn text-white font-bold bg-gradient-to-r from-blue-600 to-teal-500 w-full disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400"
                                 onClick={() => { setToSlides(true); }}
-                                disabled={isSubmittingSlide||isSubmittingScript}
+                                disabled={isSubmittingSlide || isSubmittingScript}
                             >
                                 {isSubmittingSlide ? 'Generating...' : 'Generate Slides'}
                             </button>
@@ -598,7 +600,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                             {/* Button for generating scripts */}
                             <button className="btn text-blue-600 border-blue-600 w-full mt-4 disabled:from-gray-200 disabled:to-gray-200 disabled:bg-gray-200 disabled:text-gray-400"
                                 onClick={() => { setToSlides(false); }}
-                                disabled={isSubmittingSlide||isSubmittingScript}
+                                disabled={isSubmittingSlide || isSubmittingScript}
                             >
                                 {isSubmittingScript ? 'Generating...' : 'Generate Scripts'}
                             </button>

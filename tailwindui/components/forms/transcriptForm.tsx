@@ -3,8 +3,9 @@ import React, { useState, useEffect, FormEvent, use } from 'react';
 
 import AuthService from "../utils/AuthService";
 
-import { SlideElement, Slide } from '../SlidesHTML';
+import { Slide } from '../SlidesHTML';
 import UserService from '../utils/UserService';
+import GptToggle from '../button/GPTToggle';
 
 interface TranscriptFormProps {
     isSubmitting: boolean;
@@ -17,6 +18,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({ finalSlides, isSubmitti
     const [user, setUser] = useState(null);
     const [tier, setTier] = useState(null);
     const [showPaymentPopup, setShowPaymentPopup] = useState(false);
+    const [isGpt35, setIsGpt35] = useState(false);
 
     useEffect(() => {
         // Create a scoped async function within the hook.
@@ -110,7 +112,8 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({ finalSlides, isSubmitti
     return (
         <div className="max-w-sm mx-auto">
             <form onSubmit={handleSubmitTranscript}>
-                <div className="flex flex-wrap -mx-3 mt-6">
+                <div className="flex flex-wrap -mx-3 mt-6 justify-center">
+                <GptToggle isGpt35={isGpt35} setIsGpt35={setIsGpt35} />
                     <div className="w-full px-3">
                         {
                             tier === 'FREE' ? (
