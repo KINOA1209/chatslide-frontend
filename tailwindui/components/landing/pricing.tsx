@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import moment from "moment";
 
 export function Pricing() {
-    const [isYearly, setIsYearly] = useState(true);
+    const [isYearly, setIsYearly] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
     const buttonRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
@@ -182,7 +182,7 @@ export function Pricing() {
                         <button
                             onClick={() => setIsYearly(true)}
                             className={`py-2 px-4 rounded-r-full ${isYearly ? 'bg-teal-400 text-white' : 'bg-gray-200'}`}>
-                            Yearly
+                            Yearly (20% off)
                         </button>
                     </div>
                 </div>
