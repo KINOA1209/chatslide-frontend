@@ -16,7 +16,7 @@ interface TranscriptFormProps {
 const TranscriptForm: React.FC<TranscriptFormProps> = ({ finalSlides, isSubmitting, setIsSubmitting }) => {
     const router = useRouter();
     const [user, setUser] = useState(null);
-    const [tier, setTier] = useState(null);
+    const [tier, setTier] = useState<string>('');
     const [showPaymentPopup, setShowPaymentPopup] = useState(false);
     const [isGpt35, setIsGpt35] = useState(false);
 
