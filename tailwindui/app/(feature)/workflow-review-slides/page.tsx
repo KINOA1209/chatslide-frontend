@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import SaveToPDF from '@/components/forms/saveToPdf';
 import TranscriptForm from '@/components/forms/transcriptForm';
 import Slides from '@/components/Slides';
 import Timer from '@/components/Timer';
