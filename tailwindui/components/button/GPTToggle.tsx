@@ -20,8 +20,6 @@ const GPTToggle: React.FC<GPTToggleProps> = ({ isGpt35, setIsGpt35 }) => {
     }, []);
 
     const handleToggle = (value: boolean) => {
-        console.log('handleToggle', value);
-        console.log('isPaidUser', isPaidUser);
         if (!value && !isPaidUser) { // if switched to right (GPT-4) and user is not paid
             setShowPaymentModal(true);
         } else {
