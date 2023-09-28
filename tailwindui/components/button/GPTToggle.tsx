@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Toggle from './Toggle';
 import UserService from '../utils/UserService';
+import PaywallModal from '@/components/forms/paywallModal'
 
 interface GPTToggleProps {
     isGpt35: boolean;
     setIsGpt35: (value: boolean) => void;
 }
 
-const GPTToggle: React.FC<GPTToggleProps>  = ({ isGpt35, setIsGpt35 }) => {
+const GPTToggle: React.FC<GPTToggleProps> = ({ isGpt35, setIsGpt35 }) => {
     const [showPaymentModal, setShowPaymentModal] = useState(false);
     const [isPaidUser, setIsPaidUser] = useState(false);
 
@@ -30,20 +31,14 @@ const GPTToggle: React.FC<GPTToggleProps>  = ({ isGpt35, setIsGpt35 }) => {
 
     return (
         <div>
-            <Toggle 
-                isLeft={isGpt35} 
-                setIsLeft={handleToggle} 
-                leftText="GPT-3.5" 
+            <Toggle
+                isLeft={isGpt35}
+                setIsLeft={handleToggle}
+                leftText="GPT-3.5"
                 rightText="🚀 GPT-4"
             />
 
-            {showPaymentModal && (
-                <div className="payment-modal">
-                    {/* Your payment modal content here */}
-                    Please pay to access GPT-4 features.
-                    {/* Add close button or payment form as needed */}
-                </div>
-            )}
+            {showPaymentModal && <PaywallModal setShowModal={setShowPaymentModal} />}
         </div>
     );
 }
