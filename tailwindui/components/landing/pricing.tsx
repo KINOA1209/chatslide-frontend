@@ -182,7 +182,7 @@ export function Pricing() {
                         <button
                             onClick={() => setIsYearly(true)}
                             className={`py-2 px-4 rounded-r-full ${isYearly ? 'bg-teal-400 text-white' : 'bg-gray-200'}`}>
-                            Yearly (20% off)
+                            Yearly (17% off)
                         </button>
                     </div>
                 </div>
@@ -284,7 +284,7 @@ export function Pricing() {
                                             <div className="w-full text-center text-md">
                                                 {isYearly ? 'Billed yearly' : 'Billed monthly'}
                                             </div>
-                                            <div className="w-full text-center text-md text-red-700">Save 20%</div></>
+                                            <div className="w-full text-center text-md text-red-700">Save 17%</div></>
                                             : <div className="w-full text-center text-md">
                                                 <br />
                                                 {isYearly ? 'Billed yearly' : 'Billed monthly'}
@@ -359,14 +359,14 @@ export function Pricing() {
                                             <div className="w-full text-center text-md">
                                                 {isYearly ? 'Billed yearly' : 'Billed monthly'}
                                             </div>
-                                            <div className="w-full text-center text-md text-red-700">Save 20%</div></>
+                                            <div className="w-full text-center text-md text-red-700">Save 17%</div></>
                                             : <div className="w-full text-center text-md">
                                                 <br />
                                                 {isYearly ? 'Billed yearly' : 'Billed monthly'}
                                             </div>}
                                         <div className="w-full text-center text-md text-red-700">7 Day Free Trial</div>
                                         <div className="w-full text-center text-4xl md:text-5xl">
-                                            {isYearly ? '$32/mo' : '$39.9/mo'}
+                                            {isYearly ? '$33/mo' : '$39.9/mo'}
                                         </div>
 
                                         <div className="text-2xl mt-4">Include</div>
