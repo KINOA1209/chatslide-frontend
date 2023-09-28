@@ -78,10 +78,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
             <div className="max-w-4xl mx-auto px-4 sm:px-6">
 
                 <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} />
-
-                <SaveToPdfHtml finalSlides={finalSlides} />
-                {/*{language === "English" && <SaveToPPTX />}*/}
-
+                
                 {/*<div className="max-w-sm mx-auto">
                     <div className="flex flex-wrap -mx-3 mt-6">
                         <div className="w-full px-3">
@@ -106,6 +103,7 @@ const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
                 {/* Timer */}
                 <Timer expectedSeconds={60} isSubmitting={isSubmitting} />
 
+                <SaveToPdfHtml finalSlides={finalSlides} />
             </div>
 
         </div>
