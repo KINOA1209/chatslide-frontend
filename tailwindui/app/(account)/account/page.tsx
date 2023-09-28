@@ -28,6 +28,10 @@ const Profile = () => {
     }, []);
 
     useEffect(() => {
+        UserService.forceUpdateUserInfo();
+    }, []);
+
+    useEffect(() => {
         setEditUsername(username);
     }, [username])
 
