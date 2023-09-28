@@ -4,9 +4,10 @@ import AuthService from "./AuthService";
 class UserService {
     
     static async forceUpdateUserInfo() {
+        console.log('Force updating user info');
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-        sessionStorage.removeItem('userCredits');
-        sessionStorage.removeItem('userTier');
+        localStorage.removeItem('userCredits');
+        localStorage.removeItem('userTier');
         UserService.getUserCredits(idToken);
         UserService.getUserTier(idToken);
     }
@@ -14,8 +15,8 @@ class UserService {
 
     static async getUserCredits(idToken: string): Promise<number> {
         try {
-            // Try to get the user credits from sessionStorage first
-            const savedCredits = sessionStorage.getItem('userCredits');
+            // Try to get the user credits from localStorage first
+            const savedCredits = localStorage.getItem('userCredits');
 
             if (savedCredits !== null) {
                 console.log('Saved credits:', savedCredits);
@@ -36,8 +37,10 @@ class UserService {
             const data = await response.json();
             const credits: number = data.credits;
 
-            // Save the retrieved user credits to sessionStorage
-            sessionStorage.setItem('userCredits', credits.toString());
+            // Save the retrieved user credits to localStorage
+            localStorage.setItem('userCredits', credits.toString());
+
+            console.log(`User credits: ${credits}`);
 
             return credits;
 
@@ -80,6 +83,8 @@ class UserService {
             // Save the retrieved user tier to localStorage
             localStorage.setItem('userTier', tier);
 
+            console.log(`User tier: ${tier}`);
+
             return tier;
 
         } catch (error) {
@@ -90,7 +95,9 @@ class UserService {
 
     static async isPaidUser() {
         const tier = await UserService.getUserTier();
-        return tier in ['PRO_MONTHLY', 'PLUS_MONTHLY', 'PRO_YEARLY', 'PLUS_YEARLY'];
+        const isPaid = ['PRO_MONTHLY', 'PLUS_MONTHLY', 'PRO_YEARLY', 'PLUS_YEARLY'].includes(tier);
+        console.log(`User is ${isPaid ? '' : 'not '}a paid user`);
+        return isPaid;
     }
 
     static async getUserHistoricalInput(idToken: string) {

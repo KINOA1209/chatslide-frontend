@@ -135,11 +135,11 @@ const TopicForm: React.FC = () => {
                 const outlinesJson = await response.json();
                 setIsSubmitting(false);
                 // Handle the response data here
-                console.log(outlinesJson);
-                console.log(outlinesJson.data.audience);
-                console.log(outlinesJson.data.topic);
-                console.log(outlinesJson.data.res);
-                console.log(outlinesJson.data.foldername);
+                // console.log(outlinesJson);
+                // console.log(outlinesJson.data.audience);
+                // console.log(outlinesJson.data.topic);
+                // console.log(outlinesJson.data.res);
+                // console.log(outlinesJson.data.foldername);
 
 
                 // cookies doesn't work because it needs 'use server'
