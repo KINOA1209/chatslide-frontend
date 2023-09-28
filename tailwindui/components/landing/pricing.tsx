@@ -5,7 +5,7 @@ import moment from "moment";
 import Toggle from "../button/Toggle";
 
 export function Pricing() {
-    const [isYearly, setIsYearly] = useState(false);
+    const [isMonthly, setIsMonthly] = useState(true);
     const [currentUser, setCurrentUser] = useState(null);
     const buttonRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
@@ -65,7 +65,7 @@ export function Pricing() {
     const handleProSubscription = async () => {
         try {
             // Determine the tier based on isYearly
-            const tier = isYearly ? 'PRO_YEARLY' : 'PRO_MONTHLY';
+            const tier = !isMonthly ? 'PRO_YEARLY' : 'PRO_MONTHLY';
 
             // Get current user's token and email
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
@@ -105,7 +105,7 @@ export function Pricing() {
     const handlePlusSubscription = async () => {
         try {
             // Determine the tier based on isYearly
-            const tier = isYearly ? 'PLUS_YEARLY' : 'PLUS_MONTHLY';
+            const tier = !isMonthly ? 'PLUS_YEARLY' : 'PLUS_MONTHLY';
 
             // Get current user's token and email
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
@@ -173,7 +173,7 @@ export function Pricing() {
 
         <div className="w-full  px-4 sm:px-6 mb-12" style={{ fontFamily: 'Lexend, sans-serif' }}>
             <div className="w-full flex flex-col items-center" data-aos="fade-right">
-                <Toggle isLeft={isYearly} setIsLeft={setIsYearly} leftText="Monthly" rightText="Yearly (17% off)" />
+                <Toggle isLeft={isMonthly} setIsLeft={setIsMonthly} leftText="Monthly" rightText="Yearly (17% off)" />
                 <div className="changeCard items-center flex md:hidden">
                     <div className="flex items-center pb-8">
                         <button
@@ -251,35 +251,21 @@ export function Pricing() {
                                     {/* ... You can adjust the content for "Plus" pricing here ... */}
                                     <div className="px-8 py-2 flex flex-row justify-between pr-3">
                                         <div className="text-2xl text-white">Plus</div>
-                                        <div className="toggle flex items-center md:hidden">
-                                            <div className="flex items-center">
-                                                <button
-                                                    onClick={() => setIsYearly(false)}
-                                                    className={`py-2 px-4 rounded-l-full ${isYearly ? 'bg-gray-200' : 'bg-teal-400 text-white'}`}>
-                                                    Monthly
-                                                </button>
-                                                <button
-                                                    onClick={() => setIsYearly(true)}
-                                                    className={`py-2 px-4 rounded-r-full ${isYearly ? 'bg-teal-400 text-white' : 'bg-gray-200'}`}>
-                                                    Yearly
-                                                </button>
-                                            </div>
-                                        </div>
                                     </div>
                                     <div className="p-4 bg-white/90 mx-2 mb-2 rounded-xl flex flex-col">
 
-                                        {isYearly ? <>
+                                        {!isMonthly ? <>
                                             <div className="w-full text-center text-md">
-                                                {isYearly ? 'Billed yearly' : 'Billed monthly'}
+                                                {!isMonthly ? 'Billed yearly' : 'Billed monthly'}
                                             </div>
                                             <div className="w-full text-center text-md text-red-700">Save 17%</div></>
                                             : <div className="w-full text-center text-md">
                                                 <br />
-                                                {isYearly ? 'Billed yearly' : 'Billed monthly'}
+                                                {!isMonthly ? 'Billed yearly' : 'Billed monthly'}
                                             </div>}
                                         <div className="w-full text-center text-md text-red-700">7 Day Free Trial</div>
                                         <div className="w-full text-center text-4xl md:text-5xl">
-                                            {isYearly ? '$8/mo' : '$9.9/mo'}
+                                            {!isMonthly ? '$8/mo' : '$9.9/mo'}
                                         </div>
 
                                         <div className="text-2xl mt-4">Include</div>
@@ -326,35 +312,21 @@ export function Pricing() {
                                     {/* ... You can adjust the content for "Pro" pricing here ... */}
                                     <div className="px-8 py-2 flex flex-row justify-between pr-3">
                                         <div className="text-2xl text-white">Pro</div>
-                                        <div className="toggle flex items-center md:hidden">
-                                            <div className="flex items-center">
-                                                <button
-                                                    onClick={() => setIsYearly(false)}
-                                                    className={`py-2 px-4 rounded-l-full ${isYearly ? 'bg-gray-200' : 'bg-teal-400 text-white'}`}>
-                                                    Monthly
-                                                </button>
-                                                <button
-                                                    onClick={() => setIsYearly(true)}
-                                                    className={`py-2 px-4 rounded-r-full ${isYearly ? 'bg-teal-400 text-white' : 'bg-gray-200'}`}>
-                                                    Yearly
-                                                </button>
-                                            </div>
-                                        </div>
                                     </div>
                                     {/* ... Other content similar to "Free" card ... */}
                                     <div className="p-4 bg-white/90 mx-2 mb-2 rounded-xl h-full flex flex-col">
-                                        {isYearly ? <>
+                                        {!isMonthly ? <>
                                             <div className="w-full text-center text-md">
-                                                {isYearly ? 'Billed yearly' : 'Billed monthly'}
+                                                {!isMonthly ? 'Billed yearly' : 'Billed monthly'}
                                             </div>
                                             <div className="w-full text-center text-md text-red-700">Save 17%</div></>
                                             : <div className="w-full text-center text-md">
                                                 <br />
-                                                {isYearly ? 'Billed yearly' : 'Billed monthly'}
+                                                {!isMonthly ? 'Billed yearly' : 'Billed monthly'}
                                             </div>}
                                         <div className="w-full text-center text-md text-red-700">7 Day Free Trial</div>
                                         <div className="w-full text-center text-4xl md:text-5xl">
-                                            {isYearly ? '$33/mo' : '$39.9/mo'}
+                                            {!isMonthly ? '$33/mo' : '$39.9/mo'}
                                         </div>
 
                                         <div className="text-2xl mt-4">Include</div>
