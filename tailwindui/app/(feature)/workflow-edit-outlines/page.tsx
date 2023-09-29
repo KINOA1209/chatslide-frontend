@@ -146,7 +146,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
 
 
         // remove empty entries
-        console.log(outlineData);
+        // console.log(outlineData);
         const outlineCopy = [...outlineData];
         for (let i = 0; i < outlineCopy.length; i++) {
             outlineCopy[i].content = outlineCopy[i].content.filter(s => { return s.length > 0 });
@@ -216,9 +216,10 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             project_id: project_id,
             addEquations: addEquations,
             extraKnowledge: extraKnowledge,
+            model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4'
         };
 
-        console.log(formData);
+        // console.log(formData);
 
 
         try {
@@ -247,15 +248,15 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                     },
                     body: JSON.stringify(formData)
                 });
-                console.log('formData is:', formData);
+                // console.log('formData is:', formData);
 
 
                 if (response.ok) {
                     const resp = await response.json();
-                    console.log(resp);
+                    // console.log(resp);
                     setIsSubmittingSlide(false);
                     // Store the data in local storage
-                    console.log(resp.data);
+                    // console.log(resp.data);
 
                     // Redirect to a new page with the data
                     router.push('workflow-review-slides');
@@ -276,20 +277,20 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                     body: JSON.stringify(formData)
                 });
 
-                console.log('formData is:', formData);
+                // console.log('formData is:', formData);
 
                 if (response.ok) {
                     const resp = await response.json();
-                    console.log(resp);
+                    // console.log(resp);
                     setIsSubmittingScript(false);
                     // Store the data in local storage
-                    console.log(resp.data);
+                    // console.log(resp.data);
                     sessionStorage.setItem('transcripts', JSON.stringify(resp.data.res));
                     // Redirect to a new page with the data
                     router.push('workflow-edit-script');
                 } else {
                     alert("Request failed: " + response.status);
-                    console.log(response)
+                    // console.log(response)
                     setIsSubmittingScript(false);
                 }
             }

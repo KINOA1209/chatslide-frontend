@@ -42,7 +42,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({ finalSlides, isSubmitti
     const handleSubmitTranscript = async (
         event: FormEvent<HTMLFormElement>
     ) => {
-        console.log('submitting');
+        // console.log('submitting');
         event.preventDefault();
 
         setIsSubmitting(true);
@@ -72,9 +72,10 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({ finalSlides, isSubmitti
             project_id: project_id,
             language: language,
             html: finalSlides,
+            model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4'
         };
 
-        console.log(formData);
+        // console.log(formData);
 
         try {
             const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
@@ -87,7 +88,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({ finalSlides, isSubmitti
                 body: JSON.stringify(formData),
             });
 
-            console.log(response);
+            // console.log(response);
 
             if (response.ok) {
                 const resp = await response.json();
