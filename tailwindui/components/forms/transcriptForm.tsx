@@ -18,7 +18,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({ finalSlides, isSubmitti
     const [user, setUser] = useState(null);
     const [tier, setTier] = useState<string>('');
     const [showPaymentPopup, setShowPaymentPopup] = useState(false);
-    const [isGpt35, setIsGpt35] = useState(false);
+    const [isGpt35, setIsGpt35] = useState(true);
 
     useEffect(() => {
         // Create a scoped async function within the hook.
