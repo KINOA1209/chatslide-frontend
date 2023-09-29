@@ -10,7 +10,7 @@ import FeedbackForm from '@/components/forms/feedback';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Dialog, Transition } from '@headlessui/react';
-import { eventManager } from 'react-toastify/dist/core';
+import GptToggle from '@/components/button/GPTToggle';
 
 const minOutlineDetailCount = 1;
 const maxOutlineDetailCount = 6;
@@ -30,6 +30,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
     const [outlineData, setOutlineData] = useState(outline);
     const [sectionEditMode, setSectionEditMode] = useState(-1);
     const [titleCache, setTitleCache] = useState('');
+    const [isGpt35, setIsGpt35] = useState(true);
 
     const updateOutlineSessionStorage = (updatedOutline: any) => {
         const entireOutline = JSON.parse(sessionStorage.outline);
@@ -145,7 +146,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
 
 
         // remove empty entries
-        console.log(outlineData);
+        // console.log(outlineData);
         const outlineCopy = [...outlineData];
         for (let i = 0; i < outlineCopy.length; i++) {
             outlineCopy[i].content = outlineCopy[i].content.filter(s => { return s.length > 0 });
@@ -215,9 +216,10 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             project_id: project_id,
             addEquations: addEquations,
             extraKnowledge: extraKnowledge,
+            model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4'
         };
 
-        console.log(formData);
+        // console.log(formData);
 
 
         try {
@@ -246,15 +248,15 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                     },
                     body: JSON.stringify(formData)
                 });
-                console.log('formData is:', formData);
+                // console.log('formData is:', formData);
 
 
                 if (response.ok) {
                     const resp = await response.json();
-                    console.log(resp);
+                    // console.log(resp);
                     setIsSubmittingSlide(false);
                     // Store the data in local storage
-                    console.log(resp.data);
+                    // console.log(resp.data);
 
                     // Redirect to a new page with the data
                     router.push('workflow-review-slides');
@@ -275,20 +277,20 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                     body: JSON.stringify(formData)
                 });
 
-                console.log('formData is:', formData);
+                // console.log('formData is:', formData);
 
                 if (response.ok) {
                     const resp = await response.json();
-                    console.log(resp);
+                    // console.log(resp);
                     setIsSubmittingScript(false);
                     // Store the data in local storage
-                    console.log(resp.data);
+                    // console.log(resp.data);
                     sessionStorage.setItem('transcripts', JSON.stringify(resp.data.res));
                     // Redirect to a new page with the data
                     router.push('workflow-edit-script');
                 } else {
                     alert("Request failed: " + response.status);
-                    console.log(response)
+                    // console.log(response)
                     setIsSubmittingScript(false);
                 }
             }
@@ -583,12 +585,13 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             {/* Form */}
             <div className="max-w-sm mx-auto">
                 <form onSubmit={prepareSubmit}>
-                    <div className="flex flex-wrap -mx-3 mt-6">
+                    <div className="flex flex-wrap -mx-3 mt-6 justify-center">
+                        <GptToggle isGpt35={isGpt35} setIsGpt35={setIsGpt35} />
                         <div className="w-full px-3">
                             {/* Button for generating slides */}
                             <button className="btn text-white font-bold bg-gradient-to-r from-blue-600 to-teal-500 w-full disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400"
                                 onClick={() => { setToSlides(true); }}
-                                disabled={isSubmittingSlide||isSubmittingScript}
+                                disabled={isSubmittingSlide || isSubmittingScript}
                             >
                                 {isSubmittingSlide ? 'Generating...' : 'Generate Slides'}
                             </button>
@@ -598,7 +601,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                             {/* Button for generating scripts */}
                             <button className="btn text-blue-600 border-blue-600 w-full mt-4 disabled:from-gray-200 disabled:to-gray-200 disabled:bg-gray-200 disabled:text-gray-400"
                                 onClick={() => { setToSlides(false); }}
-                                disabled={isSubmittingSlide||isSubmittingScript}
+                                disabled={isSubmittingSlide || isSubmittingScript}
                             >
                                 {isSubmittingScript ? 'Generating...' : 'Generate Scripts'}
                             </button>

@@ -3,8 +3,9 @@ import React, { useState, useEffect, FormEvent, use } from 'react';
 
 import AuthService from "../utils/AuthService";
 
-import { SlideElement, Slide } from '../SlidesHTML';
+import { Slide } from '../SlidesHTML';
 import UserService from '../utils/UserService';
+import GptToggle from '../button/GPTToggle';
 
 interface TranscriptFormProps {
     isSubmitting: boolean;
@@ -17,6 +18,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({ finalSlides, isSubmitti
     const [user, setUser] = useState(null);
     const [tier, setTier] = useState<string>('');
     const [showPaymentPopup, setShowPaymentPopup] = useState(false);
+    const [isGpt35, setIsGpt35] = useState(false);
 
     useEffect(() => {
         // Create a scoped async function within the hook.
@@ -40,7 +42,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({ finalSlides, isSubmitti
     const handleSubmitTranscript = async (
         event: FormEvent<HTMLFormElement>
     ) => {
-        console.log('submitting');
+        // console.log('submitting');
         event.preventDefault();
 
         setIsSubmitting(true);
@@ -70,9 +72,10 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({ finalSlides, isSubmitti
             project_id: project_id,
             language: language,
             html: finalSlides,
+            model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4'
         };
 
-        console.log(formData);
+        // console.log(formData);
 
         try {
             const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
@@ -85,7 +88,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({ finalSlides, isSubmitti
                 body: JSON.stringify(formData),
             });
 
-            console.log(response);
+            // console.log(response);
 
             if (response.ok) {
                 const resp = await response.json();
@@ -110,7 +113,8 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({ finalSlides, isSubmitti
     return (
         <div className="max-w-sm mx-auto">
             <form onSubmit={handleSubmitTranscript}>
-                <div className="flex flex-wrap -mx-3 mt-6">
+                <div className="flex flex-wrap -mx-3 mt-6 justify-center">
+                <GptToggle isGpt35={isGpt35} setIsGpt35={setIsGpt35} />
                     <div className="w-full px-3">
                         {
                             tier === 'FREE' ? (
