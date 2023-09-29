@@ -16,6 +16,9 @@ interface MainSlideProps {
 }
 
 export const Col_2_img_1 = ({ user_name, title, topic, subtopic, content, imgs, update_callback }: MainSlideProps) => {
+    console.log(user_name, title, topic, subtopic, content, imgs, update_callback)
+
+
     // localImgs array length should be initialized to ImgCount
     const ImgCount = 1;
     const [localImgs, setLocalImgs] = useState<string[]>(['']);
@@ -84,6 +87,8 @@ export const Col_2_img_1 = ({ user_name, title, topic, subtopic, content, imgs, 
 
 
 export const First_page_img_1 = ({ user_name, title, topic, subtopic, content, imgs, update_callback }: MainSlideProps) => {
+    console.log(user_name, title, topic, subtopic, content, imgs, update_callback)
+    
     // localImgs array length should be initialized to ImgCount
     const ImgCount = 1;
     const [localImgs, setLocalImgs] = useState<string[]>(['']);
@@ -153,6 +158,8 @@ export const First_page_img_1 = ({ user_name, title, topic, subtopic, content, i
 }
 
 export const Col_1_img_0 = ({ user_name, title, topic, subtopic, content, imgs, update_callback }: MainSlideProps) => {
+    console.log(user_name, title, topic, subtopic, content, imgs, update_callback)
+
     // localImgs array length should be initialized to ImgCount
     const ImgCount = 0;
     const [localImgs, setLocalImgs] = useState<string[]>([]);

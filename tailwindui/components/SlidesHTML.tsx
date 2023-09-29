@@ -269,12 +269,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
         setCurrentSlideIndex(index);
     }
 
+    // title
     const h1Style: React.CSSProperties = {
         fontSize: '30pt',
         fontWeight: 'bold',
         color: '#2563EB',
     };
 
+    // topic
     const h2Style: React.CSSProperties = {
         fontSize: '15pt',
         fontWeight: 'bold',
@@ -282,13 +284,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
         color: '#2563EB'
     };
 
+    // subtopic
     const h3Style: React.CSSProperties = {
         fontSize: '20pt',
         fontWeight: 'bold',
     };
 
+    // content
     const h4Style: React.CSSProperties = {
-        fontSize: '15pt',
+        fontSize: '20pt',
         color: 'rgb(180,180,180)',
     };
 
@@ -297,11 +301,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
         display: 'list-item',
         listStyleType: 'disc',
         listStylePosition: 'inside',
-        fontSize: '12pt',
+        fontSize: '20pt',
     }
     function wrapWithLiTags(content: string): string {
         if (!content.includes("<li>") || !content.includes("</li>")) {
-            return `<li>${content}</li>`;
+            return `<li style="font-size: 18pt;">${content}</li>`;
         }
         return content;
     }
