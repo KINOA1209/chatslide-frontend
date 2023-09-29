@@ -29,14 +29,14 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
     const [titleCache, setTitleCache] = useState('');
     const [isGpt35, setIsGpt35] = useState(true);
     const [slidePages, setSlidePages] = useState(20);
-    const [detailLevel, setDetailLevel] = useState('consise');
+    const [wordPerSubpoint, setWordPerSubpoint] = useState(10);
 
     const handleSlidPagesChange = (n: number) => {
         setSlidePages(20 + n * 10);
     };
 
     const handleDetailLevelChange = (n: number) => {
-        setDetailLevel(['consise', 'normal', 'detailed'][n]);
+        setWordPerSubpoint(10 + n * 5);
     };
 
     const updateOutlineSessionStorage = (updatedOutline: any) => {
@@ -225,7 +225,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             extraKnowledge: extraKnowledge,
             model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
             slidePages: slidePages,
-            detailLevel: detailLevel,
+            wordPerSubpoint: wordPerSubpoint,
         };
 
         // console.log(formData);
@@ -604,9 +604,9 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                             onChange={handleSlidPagesChange}/>
 
                         <RangeSlider
-                            label="Detail Level"
+                            label="Content per Page"
                             values={['Consise', 'Normal', 'Detailed']} 
-                            onChange={handleSlidPagesChange}/>
+                            onChange={handleDetailLevelChange}/>
 
                         {/* <SlideLengthSelector /> */}
                         <div className="w-full px-3">
