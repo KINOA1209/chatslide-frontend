@@ -7,10 +7,11 @@ import { toast } from 'react-toastify';
 
 interface ImgModuleProp {
     imgsrc: string,
-    updateSingleCallback: Function
+    updateSingleCallback: Function,
+    canEdit?: boolean
 }
 
-export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
+export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit = false }: ImgModuleProp) => {
     const [showModal, setShowModal] = useState(false);
     const [keyword, setKeyword] = useState('');
     const [showImgSearch, setShowImgSearch] = useState(false);
@@ -30,7 +31,9 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
     }, [imgsrc]);
 
     const openModal = () => {
-        setShowModal(true);
+        if (canEdit) {
+            setShowModal(true);
+        }
     }
 
     const closeModal = () => {
@@ -423,7 +426,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
                         </g>
                     </svg>
                     <div className="text-black opacity-50">
-                        Click to add image
+                        {canEdit && 'Click to add image'}
                     </div>
                 </div>
                 :

@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import sanitizeHtml from 'sanitize-html';
 import ReactQuill from 'react-quill';
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
@@ -48,6 +50,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
     const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
     const foldername = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('foldername') : '';
     const [showLayout, setShowLayout] = useState(false);
+    const [present, setPresent] = useState(false);
     const slideRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -59,9 +62,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
 
         // Set a timer to auto-save after 3 seconds if no more changes occur
         const saveTimer = setTimeout(() => {
-        if (unsavedChanges) {
-            autoSaveSlides();
-        }
+            if (unsavedChanges) {
+                autoSaveSlides();
+            }
         }, 3000);
 
         // Clear the timer if finalSlides changes before the timer expires
@@ -74,32 +77,53 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
         const formData = {
             foldername: foldername,
             html: finalSlides,
-          };
+        };
         // Send a POST request to the backend to save finalSlides
         fetch('/api/auto_save_html', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
         })
-        .then((response) => {
-            if (response.ok) {
-            setUnsavedChanges(false);
-            } else {
-            // Handle save error
-            console.error('Auto-save failed.');
-            }
-        })
-        .catch((error) => {
-            // Handle network error
-            console.error('Auto-save failed:', error);
-        });
+            .then((response) => {
+                if (response.ok) {
+                    setUnsavedChanges(false);
+                } else {
+                    // Handle save error
+                    console.error('Auto-save failed.');
+                }
+            })
+            .catch((error) => {
+                // Handle network error
+                console.error('Auto-save failed:', error);
+            });
     };
 
     const openModal = () => {
         setShowLayout(true);
     }
+
+    const openPresent = () => {
+        toast.success("Use ESC to exit presentation mode, use arrow keys to navigate slides."); 
+        setPresent(true);
+    }
+
+    useEffect(() => {
+        const handleKeyDown = (event: any) => {
+            if (event.key === 'Escape') {
+                setPresent(false); // Exit presentation mode
+            }
+        };
+    
+        window.addEventListener('keydown', handleKeyDown);
+    
+        // Cleanup: remove the event listener when the component is unmounted
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []); // Empty dependency array to ensure this effect runs only once (similar to componentDidMount)
+    
 
     const closeModal = () => {
         setShowLayout(false);
@@ -320,7 +344,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
     }, [containerRef, slideRef]);
 
 
-    const templateDispatch = (slide: Slide, index: number): JSX.Element => {
+    const templateDispatch = (slide: Slide, index: number, canEdit: boolean=true): JSX.Element => {
         const Template = templates[slide.template as keyof typeof templates];
         if (index === 0) {
             return <Template
@@ -329,9 +353,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                 {<div
                     key={0}
                     className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                    contentEditable={true}
+                    contentEditable={canEdit}
                     onFocus={() => {
-                        setIsEditMode(true)
+                        if (canEdit) {
+                            setIsEditMode(true);
+                        }
                     }}
                     onBlur={(e) =>
                         handleSlideEdit(e.target.innerText, index, 'userName')}
@@ -343,9 +369,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                     <div
                         key={1}
                         className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                        contentEditable={true}
+                        contentEditable={canEdit}
                         onFocus={() => {
-                            setIsEditMode(true)
+                            if (canEdit) {
+                                setIsEditMode(true);
+                            }
                         }}
                         onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'head')}
                         style={h1Style}
@@ -367,9 +395,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                     <div
                         key={0}
                         className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                        contentEditable={true}
+                        contentEditable={canEdit}
                         onFocus={() => {
-                            setIsEditMode(true)
+                            if (canEdit) {
+                                setIsEditMode(true);
+                            }
                         }}
                         onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
                         style={h2Style}
@@ -380,9 +410,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                     <div
                         key={1}
                         className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                        contentEditable={true}
+                        contentEditable={canEdit}
                         onFocus={() => {
-                            setIsEditMode(true)
+                            if (canEdit) {
+                                setIsEditMode(true);
+                            }
                         }}
                         onBlur={(e) => {
                             handleSlideEdit(e.target.innerText, index, 'subtopic')
@@ -399,10 +431,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                     <div
                                         key={index}
                                         className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                                        contentEditable={true}
+                                        contentEditable={canEdit}
                                         style={listStyle}
                                         onFocus={() => {
-                                            setIsEditMode(true)
+                                            if (canEdit) {
+                                                setIsEditMode(true);
+                                            }
                                         }}
                                         onBlur={(e) => {
                                             const modifiedContent = [...slide.content];
@@ -432,9 +466,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                             <div
                                 key={index}
                                 className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                                contentEditable={true}
+                                contentEditable={canEdit}
                                 onFocus={() => {
-                                    setIsEditMode(true)
+                                    if (canEdit) {
+                                        setIsEditMode(true);
+                                    }
                                 }}
                                 onBlur={(e) => {
                                     const modifiedContent = [...slide.content];
@@ -457,29 +493,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
 
     return (
         <div className='w-fit h-fit'>
-            <div id="slideContainer" className='overflow-hidden' ref={containerRef} style={{
-                boxSizing: 'border-box',
-                border: 'none',
-                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
-            }}>
-                {slides.length > 0 && (
-                    <div className="slide h-full w-full" ref={slideRef}
-                        style={{
-                            width: '960px',
-                            height: '540px',
-                            backgroundSize: 'cover',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'flex-start',
-                            alignItems: 'flex-start',
-                            position: 'relative',
-                        }}>
-                        {slides[currentSlideIndex] && templateDispatch(slides[currentSlideIndex], currentSlideIndex)}
+            <div className='slide-nav mb-6 w-full grid grid-cols-2 md:grid-cols-3'>
+                <div className='col-span-1'>
+                    <div className='w-fit h-fit rounded-full overflow-hidden'>
+                        <button
+                            className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
+                            onClick={openPresent}>Present</button>
                     </div>
-                )}
-            </div>
-            <div className='slide-nav mt-4 w-full grid grid-cols-2 md:grid-cols-3'>
-                <div className='col-span-1 hidden md:block'></div>
+                </div>
                 <div className='col-span-1'>
                     <div className='w-fit h-fit flex flex-row items-center justify-center mx-auto rounded-full bg-slate-600/40'>
                         <button
@@ -587,6 +608,37 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                     </Transition>
                 </div>
             </div>
+            <div
+                id="slideContainer"
+                className={`overflow-hidden ${present ? 'fixed top-0 left-0 w-full h-screen z-50' : ''}`}
+                ref={containerRef}
+                style={{
+                    boxSizing: 'border-box',
+                    border: 'none',
+                    boxShadow: present ? 'none' : '0 2px 10px rgba(0, 0, 0, 0.5)',
+                }}
+            >
+                {slides.length > 0 && (
+                    <div
+                        className="slide h-full w-full"
+                        ref={slideRef}
+                        style={{
+                            width: present ? '100%' : '960px',
+                            height: present ? '100%' : '540px',
+                            backgroundSize: 'cover',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'flex-start',
+                            alignItems: 'flex-start',
+                            position: 'relative',
+                        }}
+                    >
+                        <ToastContainer />
+                        {slides[currentSlideIndex] && templateDispatch(slides[currentSlideIndex], currentSlideIndex, !present)}
+                    </div>
+                )}
+            </div>
+
         </div>
     );
 }
