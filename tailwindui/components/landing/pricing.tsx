@@ -4,7 +4,11 @@ import { useRouter } from 'next/navigation';
 import moment from "moment";
 import Toggle from "../button/Toggle";
 
-export function Pricing() {
+interface PricingProps {
+    fewerCards?: boolean;
+  }
+  
+  export function Pricing({ fewerCards = false }: PricingProps) {
     const [isMonthly, setIsMonthly] = useState(true);
     const [currentUser, setCurrentUser] = useState(null);
     const buttonRef = useRef<HTMLDivElement>(null);
@@ -201,6 +205,7 @@ export function Pricing() {
                 <div className="w-full flex flex-row justify-center">
                     <div className="w-full flex flex-row overflow-x-auto">
                         <div className="w-fit flex flex-row mx-auto">
+                            { !fewerCards &&
                             <div className={`mx-2 grow basis-0 min-w-[260px] max-w-sm ${showFree ? 'block' : 'hidden'} md:block`}>
                                 <div className="flex flex-col w-full drop-shadow-lg rounded-2xl overflow-hidden h-full"
                                     style={{
@@ -242,6 +247,7 @@ export function Pricing() {
 
                                 </div>
                             </div>
+                            }
                             <div className={`mx-2 grow basis-0 min-w-[260px] max-w-sm ${showPlus ? 'block' : 'hidden'} md:block`}>
                                 <div className="flex flex-col w-full drop-shadow-md rounded-2xl overflow-hidden"
                                     style={{
@@ -296,8 +302,8 @@ export function Pricing() {
                                                 </div>}
 
                                                 {(currentUser && (tier === 'PLUS_MONTHLY' || tier === 'PLUS_YEARLY')) && <>
-                                                {/* <div className="w-full text-center">Expiring: {moment.utc(expiration).format('L')}</div> */}
-                                                <div className="text-xl text-center">Current Subscription</div></>}
+                                                    {/* <div className="w-full text-center">Expiring: {moment.utc(expiration).format('L')}</div> */}
+                                                    <div className="text-xl text-center">Current Subscription</div></>}
                                             </div>
                                         </div>
                                     </div>
@@ -350,38 +356,40 @@ export function Pricing() {
                                                     {currentUser ? 'Start Free Trial' : 'Sign up to Start'}
                                                 </div>}
                                                 {(currentUser && (tier === 'PRO_MONTHLY' || tier === 'PRO_YEARLY')) && <>
-                                                {/* <div className="w-full text-center">Expiring: {moment.utc(expiration).format('L')}</div> */}
-                                                <div className="text-xl text-center">Current Subscription</div></>}
+                                                    {/* <div className="w-full text-center">Expiring: {moment.utc(expiration).format('L')}</div> */}
+                                                    <div className="text-xl text-center">Current Subscription</div></>}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className={`mx-2 grow basis-0 min-w-[260px] max-w-sm ${showEnt ? 'block' : 'hidden'} md:block`}>
-                                <div className="flex flex-col w-full drop-shadow-md rounded-2xl overflow-hidden h-full"
-                                    style={{
-                                        // background: 'linear-gradient(169deg, #505050 0%, #3D3D3D 30%, #2A2A2A 60%, #000000 100%)',
-                                        background: '#000230'
-                                    }}
-                                >
-                                    {/* ... You can adjust the content for "Enterprise" pricing here ... */}
-                                    <div className="px-8 py-2">
-                                        <div className="text-2xl text-white">Enterprise</div>
-                                    </div>
-                                    {/* ... Other content similar to "Free" card ... */}
-                                    <div className="p-4 bg-[#ECF1FE] mx-2 mb-2 rounded-xl h-full flex flex-col justify-between">
-                                        <div className="w-full text-center text-4xl md:text-5xl text-[#000230] leading-none mb-4 pt-9">Upon Request</div>
-                                        <div className="w-full text-center text-md">Contact us at contact@drlabmda.ai.<br />We will give you a quote.</div>
-                                        <div className="h-16 max-w-xs mx-auto sm:max-w-none flex-col flex justify-center items-center my-3">
-                                            <div>
-                                                <a href="mailto:contact@drlambda.ai" className="btn drop-shadow-xl text-lg rounded-full text-white w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer bg-[#000230]">
-                                                    Contact us
-                                                </a>
+                            {!fewerCards &&
+                                <div className={`mx-2 grow basis-0 min-w-[260px] max-w-sm ${showEnt ? 'block' : 'hidden'} md:block`}>
+                                    <div className="flex flex-col w-full drop-shadow-md rounded-2xl overflow-hidden h-full"
+                                        style={{
+                                            // background: 'linear-gradient(169deg, #505050 0%, #3D3D3D 30%, #2A2A2A 60%, #000000 100%)',
+                                            background: '#000230'
+                                        }}
+                                    >
+                                        {/* ... You can adjust the content for "Enterprise" pricing here ... */}
+                                        <div className="px-8 py-2">
+                                            <div className="text-2xl text-white">Enterprise</div>
+                                        </div>
+                                        {/* ... Other content similar to "Free" card ... */}
+                                        <div className="p-4 bg-[#ECF1FE] mx-2 mb-2 rounded-xl h-full flex flex-col justify-between">
+                                            <div className="w-full text-center text-4xl md:text-5xl text-[#000230] leading-none mb-4 pt-9">Upon Request</div>
+                                            <div className="w-full text-center text-md">Contact us at contact@drlabmda.ai.<br />We will give you a quote.</div>
+                                            <div className="h-16 max-w-xs mx-auto sm:max-w-none flex-col flex justify-center items-center my-3">
+                                                <div>
+                                                    <a href="mailto:contact@drlambda.ai" className="btn drop-shadow-xl text-lg rounded-full text-white w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer bg-[#000230]">
+                                                        Contact us
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -396,6 +404,6 @@ export default function PricingSection() {
         <div className="max-w-6xl mx-auto mb-8 w-full px-4 sm:px-6" style={{ fontFamily: 'Lexend, sans-serif' }}>
             <h3 className="h3 mb-3 w-fit text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-500">Pricing</h3>
         </div>
-        <Pricing />
+        <Pricing/>
     </section>
 }
