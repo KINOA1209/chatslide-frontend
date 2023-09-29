@@ -6,16 +6,16 @@ import Toggle from "../button/Toggle";
 
 interface PricingProps {
     fewerCards?: boolean;
-  }
-  
-  export function Pricing({ fewerCards = false }: PricingProps) {
+}
+
+export function Pricing({ fewerCards = false }: PricingProps) {
     const [isMonthly, setIsMonthly] = useState(true);
     const [currentUser, setCurrentUser] = useState(null);
     const buttonRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
 
-    const [showFree, setShowFree] = useState(true);
-    const [showPlus, setShowPlus] = useState(false);
+    const [showFree, setShowFree] = useState(false);
+    const [showPlus, setShowPlus] = useState(true);
     const [showPro, setShowPro] = useState(false);
     const [showEnt, setShowEnt] = useState(false);
 
@@ -180,73 +180,80 @@ interface PricingProps {
                 <Toggle isLeft={isMonthly} setIsLeft={setIsMonthly} leftText="Monthly" rightText="Yearly (17% off)" />
                 <div className="changeCard items-center flex md:hidden">
                     <div className="flex items-center pb-8">
+                        {!fewerCards &&
+                            <button
+                                type="button"
+                                onClick={() => showPricingPanel(1)}
+                                className={`py-2 px-4 rounded-l-full border-r border-gray-300 ${showFree ? 'bg-teal-400 text-white' : 'bg-gray-200'}`}>
+                                Free
+                            </button>}
                         <button
-                            onClick={() => showPricingPanel(1)}
-                            className={`py-2 px-4 rounded-l-full border-r border-gray-300 ${showFree ? 'bg-teal-400 text-white' : 'bg-gray-200'}`}>
-                            Free
-                        </button>
-                        <button
+                            type="button"
                             onClick={() => showPricingPanel(2)}
-                            className={`py-2 px-4 border-r border-gray-300 ${showPlus ? 'bg-teal-400 text-white' : 'bg-gray-200'}`}>
+                            className={`py-2 px-4 ${fewerCards ? 'rounded-l-full' : ''} border-r border-gray-300 ${showPlus ? 'bg-teal-400 text-white' : 'bg-gray-200'}`}>
                             Plus
                         </button>
                         <button
+                            type="button"
                             onClick={() => showPricingPanel(3)}
-                            className={`py-2 px-4 border-r border-gray-300 ${showPro ? 'bg-teal-400 text-white' : 'bg-gray-200'}`}>
+                            className={`py-2 px-4 ${fewerCards ? 'rounded-r-full' : ''} border-r border-gray-300 ${showPro ? 'bg-teal-400 text-white' : 'bg-gray-200'}`}>
                             Pro
                         </button>
-                        <button
-                            onClick={() => showPricingPanel(4)}
-                            className={`py-2 px-4 rounded-r-full ${showEnt ? 'bg-teal-400 text-white' : 'bg-gray-200'}`}>
-                            Enterprise
-                        </button>
+                        {!fewerCards &&
+                            <button
+                                type="button"
+                                onClick={() => showPricingPanel(4)}
+                                className={`py-2 px-4 rounded-r-full ${showEnt ? 'bg-teal-400 text-white' : 'bg-gray-200'}`}>
+                                Enterprise
+                            </button>}
+
                     </div>
                 </div>
                 <div className="w-full flex flex-row justify-center">
                     <div className="w-full flex flex-row overflow-x-auto">
                         <div className="w-fit flex flex-row mx-auto">
-                            { !fewerCards &&
-                            <div className={`mx-2 grow basis-0 min-w-[260px] max-w-sm ${showFree ? 'block' : 'hidden'} md:block`}>
-                                <div className="flex flex-col w-full drop-shadow-lg rounded-2xl overflow-hidden h-full"
-                                    style={{
-                                        background: 'linear-gradient(169deg, #B2F8FF 0%, #80D6FF 30%, #4FB2FF 60%, #2995FF 100%)'
-                                    }}>
-                                    <div className="px-8 py-2">
-                                        <div className="text-2xl text-white">Free</div>
-                                    </div>
+                            {!fewerCards &&
+                                <div className={`mx-2 grow basis-0 min-w-[260px] max-w-sm ${showFree ? 'block' : 'hidden'} md:block`}>
+                                    <div className="flex flex-col w-full drop-shadow-lg rounded-2xl overflow-hidden h-full"
+                                        style={{
+                                            background: 'linear-gradient(169deg, #B2F8FF 0%, #80D6FF 30%, #4FB2FF 60%, #2995FF 100%)'
+                                        }}>
+                                        <div className="px-8 py-2">
+                                            <div className="text-2xl text-white">Free</div>
+                                        </div>
 
-                                    <div className="p-4 bg-white/90 mx-2 mb-2 rounded-xl h-full flex flex-col">
-                                        <div className="w-full text-center text-md"><br /><br />Join us as for free!</div>
-                                        <div className="w-full text-center text-4xl md:text-5xl">$0</div>
+                                        <div className="p-4 bg-white/90 mx-2 mb-2 rounded-xl h-full flex flex-col">
+                                            <div className="w-full text-center text-md"><br /><br />Join us as for free!</div>
+                                            <div className="w-full text-center text-4xl md:text-5xl">$0</div>
 
-                                        <div className="text-2xl mt-4">Include</div>
-                                        <ul className="list-disc list-outside px-5 space-y-3 mt-2 [&>*]:text-gray-500 text-md" style={{ fontFamily: 'sans-serif' }}>
-                                            <li>
-                                                100 free ⭐️credits
-                                            </li>
-                                            <li>
-                                                Usage of GPT-3.5
-                                            </li>
-                                            <li>
-                                                Up to 1 file upload for each project
-                                            </li>
-                                        </ul>
-                                        <div className="grow"></div>
-                                        <div className="h-16 max-w-xs mx-auto sm:max-w-none flex-col flex justify-center items-center my-3">
-                                            <div>
-                                                {(!currentUser) && <div ref={buttonRef} className="btn drop-shadow-xl text-lg rounded-full text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer"
-                                                    style={{ backgroundImage: 'linear-gradient(-45deg, #FFA63D, #FF3D77, #338AFF, #3CF0C5)', backgroundSize: '600%' }}
-                                                    onClick={() => { currentUser ? router.push('/dashboard') : router.push('/signup') }}>
-                                                    Join Now
-                                                </div>}
+                                            <div className="text-2xl mt-4">Include</div>
+                                            <ul className="list-disc list-outside px-5 space-y-3 mt-2 [&>*]:text-gray-500 text-md" style={{ fontFamily: 'sans-serif' }}>
+                                                <li>
+                                                    100 free ⭐️credits
+                                                </li>
+                                                <li>
+                                                    Usage of GPT-3.5
+                                                </li>
+                                                <li>
+                                                    Up to 1 file upload for each project
+                                                </li>
+                                            </ul>
+                                            <div className="grow"></div>
+                                            <div className="h-16 max-w-xs mx-auto sm:max-w-none flex-col flex justify-center items-center my-3">
+                                                <div>
+                                                    {(!currentUser) && <div ref={buttonRef} className="btn drop-shadow-xl text-lg rounded-full text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer"
+                                                        style={{ backgroundImage: 'linear-gradient(-45deg, #FFA63D, #FF3D77, #338AFF, #3CF0C5)', backgroundSize: '600%' }}
+                                                        onClick={() => { currentUser ? router.push('/dashboard') : router.push('/signup') }}>
+                                                        Join Now
+                                                    </div>}
 
-                                                {(currentUser && (tier === 'FREE' || tier === '')) && <><div className="text-xl text-center">Current Subscription</div></>}
+                                                    {(currentUser && (tier === 'FREE' || tier === '')) && <><div className="text-xl text-center">Current Subscription</div></>}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
+                                    </div>
                                 </div>
-                            </div>
                             }
                             <div className={`mx-2 grow basis-0 min-w-[260px] max-w-sm ${showPlus ? 'block' : 'hidden'} md:block`}>
                                 <div className="flex flex-col w-full drop-shadow-md rounded-2xl overflow-hidden"
@@ -404,6 +411,6 @@ export default function PricingSection() {
         <div className="max-w-6xl mx-auto mb-8 w-full px-4 sm:px-6" style={{ fontFamily: 'Lexend, sans-serif' }}>
             <h3 className="h3 mb-3 w-fit text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-500">Pricing</h3>
         </div>
-        <Pricing/>
+        <Pricing />
     </section>
 }
