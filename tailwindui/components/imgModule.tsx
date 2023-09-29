@@ -11,7 +11,7 @@ interface ImgModuleProp {
     canEdit?: boolean
 }
 
-export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit = false }: ImgModuleProp) => {
+export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit = true }: ImgModuleProp) => {
     const [showModal, setShowModal] = useState(false);
     const [keyword, setKeyword] = useState('');
     const [showImgSearch, setShowImgSearch] = useState(false);
