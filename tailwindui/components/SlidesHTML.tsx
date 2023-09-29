@@ -45,6 +45,8 @@ type SlidesHTMLProps = {
     setFinalSlides: Function;
 };
 
+
+// it will render the slides fetched from `foldername` in sessionStorage
 const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) => {
     const [slides, setSlides] = useState<Slide[]>([]);
     const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
@@ -60,12 +62,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
     useEffect(() => {
         setUnsavedChanges(true);
 
-        // Set a timer to auto-save after 3 seconds if no more changes occur
+        // Set a timer to auto-save after 0.01 second if no more changes occur
         const saveTimer = setTimeout(() => {
             if (unsavedChanges) {
                 autoSaveSlides();
             }
-        }, 3000);
+        }, 10);
 
         // Clear the timer if finalSlides changes before the timer expires
         return () => clearTimeout(saveTimer);
