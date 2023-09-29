@@ -1,48 +1,40 @@
 import React, { useState } from 'react';
 
 interface RangeSliderProps {
-  min?: number;
-  max?: number;
-  defaultValue?: number;
   onChange?: (value: number) => void;
-  step?: number;
   label?: string;
+  values: string[]; // Accepting a list of values
 }
 
-const RangeSlider: React.FC<RangeSliderProps> = ({
-  min = 0,
-  max = 100,
-  defaultValue = 50,
-  onChange,
-  step = 1,
-  label
-}) => {
-  const [value, setValue] = useState<number>(defaultValue);
+const RangeSlider: React.FC<RangeSliderProps> = ({ onChange, label, values }) => {
+  const [index, setIndex] = useState<number>(0); // Index will range based on values length
+  const MIN_VALUE = 0;
+  const MAX_VALUE = values.length - 1;
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.valueAsNumber;
-    setValue(newValue);
+    const newIndex = e.target.valueAsNumber;
+    setIndex(newIndex);
     if (onChange) {
-      onChange(newValue);
+      onChange(newIndex);
     }
   };
 
   return (
-    <div className="w-full">
-      {label && <label className="block text-gray-700 mb-2">{label}</label>}
+    <div className="w-full mb-6">
+      {label && <label className="block text-gray-700 mb-2"><b>{label}</b>: {values[index]}</label>}
+      <div className="flex items-center space-x-4">
       <input 
         type="range"
-        min={min}
-        max={max}
-        value={value}
-        step={step}
+        min={MIN_VALUE}
+        max={MAX_VALUE}
+        value={index}
+        step={1}
         onChange={handleOnChange}
         className="slider-thumb appearance-none w-full h-2 bg-gray-200 cursor-pointer rounded-full outline-none"
         style={{
-          backgroundImage: `linear-gradient(90deg, #4F46E5 ${(value / max) * 100}%, #E5E7EB ${(value / max) * 100}%)`
+          backgroundImage: `linear-gradient(90deg, #3AC7B1 ${((index) / (MAX_VALUE)) * 100}%, #E5E7EB ${(index) / (MAX_VALUE) * 100}%)`
         }}
       />
-      <div className="text-right mt-2 text-gray-700">{value}</div>
 
       <style jsx>{`
         input[type="range"]::-webkit-slider-thumb {
@@ -50,7 +42,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
           height: 16px;
           width: 16px;
           border-radius: 50%;
-          background: #4F46E5;
+          background: #049A8F;
           cursor: pointer;
           transition: background 0.15s ease-in-out;
         }
@@ -59,20 +51,21 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
           height: 16px;
           width: 16px;
           border-radius: 50%;
-          background: #4F46E5;
+          background: #049A8F;
           cursor: pointer;
           transition: background 0.15s ease-in-out;
         }
 
         input[type="range"]:focus::-webkit-slider-thumb {
-          background: #3B3F71; // Darkened color for focus state
+          background: #014E56; // Darkened color for focus state
         }
 
         input[type="range"]:focus::-moz-range-thumb {
-          background: #3B3F71; // Darkened color for focus state
+          background: #014E56; // Darkened color for focus state
         }
 
       `}</style>
+      </div>
     </div>
   );
 }
