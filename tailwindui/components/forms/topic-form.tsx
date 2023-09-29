@@ -107,7 +107,8 @@ const TopicForm: React.FC = () => {
             addEquations: addEquations,
             project_id: project_id,
             youtube_url: (event.target as HTMLFormElement).youtube.value,
-            resources: JSON.parse(sessionStorage.getItem('resources') || '[]')
+            resources: JSON.parse(sessionStorage.getItem('resources') || '[]'),
+            model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4'
         };
 
         sessionStorage.setItem('topic', formData.topic);
@@ -128,8 +129,8 @@ const TopicForm: React.FC = () => {
                 body: JSON.stringify(formData)
             });
 
-            console.log(formData);
-            console.log(response);
+            // console.log(formData);
+            // console.log(response);
 
             if (response.ok) {
                 const outlinesJson = await response.json();
