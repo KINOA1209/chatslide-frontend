@@ -57,8 +57,8 @@ export const Col_2_img_1 = ({ user_name, title, topic, subtopic, content, imgs, 
     return <div
         className="rounded-md overflow-hidden"
         style={{
-            width: '960px',
-            height: '540px',
+            width: '100%',
+            height: '100%',
             backgroundSize: 'cover',
             display: 'flex',
             flexDirection: 'column',
