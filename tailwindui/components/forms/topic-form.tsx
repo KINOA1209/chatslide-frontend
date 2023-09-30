@@ -150,6 +150,7 @@ const TopicForm: React.FC = () => {
                 sessionStorage.setItem('outline', JSON.stringify(outlinesJson.data));
                 sessionStorage.setItem('foldername', outlinesJson.data.foldername);
                 sessionStorage.setItem('project_id', outlinesJson.data.project_id);
+                sessionStorage.setItem('pdf_images', JSON.stringify(outlinesJson.data.pdf_images));
 
                 // Retrieve the existing resources from sessionStorage and parse them
                 const resources: string[] = JSON.parse(sessionStorage.getItem('resources') || '[]');
