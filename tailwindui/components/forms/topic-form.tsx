@@ -2,13 +2,14 @@
 
 import React, { useState, ChangeEvent, FormEvent, useEffect, MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import AuthService from "./utils/AuthService";
-import UserService from "./utils/UserService";
-import { FileUploadButton } from './fileUpload';
-import Timer from './Timer';
-import GuestUploadModal from './forms/uploadModal';
-import MyFiles from './fileManagement';
+import AuthService from "../utils/AuthService";
+import UserService from "../utils/UserService";
+import { FileUploadButton } from '../fileUpload';
+import Timer from '../ui/Timer';
+import GuestUploadModal from './uploadModal';
+import MyFiles from '../fileManagement';
 import { Transition } from '@headlessui/react'
+import GPTToggle from '../button/GPTToggle';
 
 const audienceList = ['Researchers', 'Students', 'Business Clients', 'Video Viewers'];
 
@@ -24,6 +25,7 @@ const TopicForm: React.FC = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showFileModal, setShowFileModal] = useState(false);
     const [youtubeError, setYoutubeError] = useState('');
+    const [isGpt35, setIsGpt35] = useState(true);
 
     const openFile = () => {
         setShowFileModal(true);
@@ -105,7 +107,8 @@ const TopicForm: React.FC = () => {
             addEquations: addEquations,
             project_id: project_id,
             youtube_url: (event.target as HTMLFormElement).youtube.value,
-            resources: JSON.parse(sessionStorage.getItem('resources') || '[]')
+            resources: JSON.parse(sessionStorage.getItem('resources') || '[]'),
+            model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4'
         };
 
         sessionStorage.setItem('topic', formData.topic);
@@ -126,18 +129,18 @@ const TopicForm: React.FC = () => {
                 body: JSON.stringify(formData)
             });
 
-            console.log(formData);
-            console.log(response);
+            // console.log(formData);
+            // console.log(response);
 
             if (response.ok) {
                 const outlinesJson = await response.json();
                 setIsSubmitting(false);
                 // Handle the response data here
-                console.log(outlinesJson);
-                console.log(outlinesJson.data.audience);
-                console.log(outlinesJson.data.topic);
-                console.log(outlinesJson.data.res);
-                console.log(outlinesJson.data.foldername);
+                // console.log(outlinesJson);
+                // console.log(outlinesJson.data.audience);
+                // console.log(outlinesJson.data.topic);
+                // console.log(outlinesJson.data.res);
+                // console.log(outlinesJson.data.foldername);
 
 
                 // cookies doesn't work because it needs 'use server'
@@ -147,6 +150,7 @@ const TopicForm: React.FC = () => {
                 sessionStorage.setItem('outline', JSON.stringify(outlinesJson.data));
                 sessionStorage.setItem('foldername', outlinesJson.data.foldername);
                 sessionStorage.setItem('project_id', outlinesJson.data.project_id);
+                sessionStorage.setItem('pdf_images', JSON.stringify(outlinesJson.data.pdf_images));
 
                 // Retrieve the existing resources from sessionStorage and parse them
                 const resources: string[] = JSON.parse(sessionStorage.getItem('resources') || '[]');
@@ -517,15 +521,19 @@ const TopicForm: React.FC = () => {
             </div>
 
             <hr className='border-gray-400 grow mt-6' />
+
+
+
             <div className="max-w-sm mx-auto">
-                <div className="flex flex-wrap -mx-3 mt-6">
+                <div className="flex flex-wrap -mx-3 mt-6 justify-center">
+                    <GPTToggle isGpt35={isGpt35} setIsGpt35={setIsGpt35} />
                     <div className="w-full px-3">
                         <button
                             className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400"
                             disabled={isSubmitting}
                             // style={{ backgroundColor: '#8b2e2d'}}
                             type="submit">
-                            {isSubmitting ? "Generating..." : "Generate outline"}
+                            {isSubmitting ? "Generating..." : "Generate Outline"}
                         </button>
                     </div>
                 </div>

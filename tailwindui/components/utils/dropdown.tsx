@@ -52,6 +52,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
         try {
             await AuthService.signOut();
             sessionStorage.clear();
+            localStorage.clear();
             console.log('You have signed out!');
             router.push('/');
         } catch (error: any) {

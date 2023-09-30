@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {LoadingBar} from '@/components/progress';
+import {LoadingBar} from '@/components/ui/progress';
 
 const Timer = ({ expectedSeconds, isSubmitting }: { expectedSeconds: number, isSubmitting: boolean }) => {
     if (!isSubmitting) {

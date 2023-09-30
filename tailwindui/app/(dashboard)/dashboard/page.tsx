@@ -69,7 +69,7 @@ export default function Dashboard() {
 
     useEffect(() => {
         const signed_in = sessionStorage.getItem('signed_in');
-        console.log(signed_in);
+        console.log(`signed_in: ${signed_in}`);
         if (signed_in && signed_in === 'true') {
             toast.success('Sign in successfully', {
                 position: 'top-center',

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AuthService from './utils/AuthService';
+import AuthService from '../utils/AuthService';
 import { useRouter, useSearchParams } from "next/navigation";
 
 

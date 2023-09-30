@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import sanitizeHtml from 'sanitize-html';
 import ReactQuill from 'react-quill';
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
@@ -7,6 +9,8 @@ import './slidesHTML.css';
 
 import { Transition } from '@headlessui/react';
 import templates, { templateSamples } from "@/components/slideTemplates";
+import ClickableLink from './ui/ClickableLink';
+import AuthService from './utils/AuthService';
 
 export interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
@@ -41,28 +45,47 @@ export class Slide {
 type SlidesHTMLProps = {
     finalSlides: Slide[];
     setFinalSlides: Function;
+    isSharing?: boolean;
 };
 
-const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) => {
+
+// it will render the slides fetched from `foldername` in sessionStorage
+const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, isSharing = false }) => {
     const [slides, setSlides] = useState<Slide[]>([]);
     const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
     const foldername = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('foldername') : '';
     const [showLayout, setShowLayout] = useState(false);
+    const [present, setPresent] = useState(false);
+    const [share, setShare] = useState(false);
     const slideRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+    const [host, setHost] = useState('https://drlambda.ai');
 
     const [unsavedChanges, setUnsavedChanges] = useState(false);
+
+    useEffect(() => {
+        if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+            setHost('https://' + window.location.hostname);
+        } else {
+            setHost(window.location.hostname);
+        }
+    }, [])
+
+    useEffect(() => {
+        setShare(sessionStorage.getItem('is_shared') === 'true');
+        // console.log('share', sessionStorage.getItem('is_shared'));
+    }, []);
 
     // Watch for changes in finalSlides
     useEffect(() => {
         setUnsavedChanges(true);
 
-        // Set a timer to auto-save after 3 seconds if no more changes occur
+        // Set a timer to auto-save after 0.01 second if no more changes occur
         const saveTimer = setTimeout(() => {
-        if (unsavedChanges) {
-            autoSaveSlides();
-        }
-        }, 3000);
+            if (unsavedChanges) {
+                autoSaveSlides();
+            }
+        }, 10);
 
         // Clear the timer if finalSlides changes before the timer expires
         return () => clearTimeout(saveTimer);
@@ -74,32 +97,85 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
         const formData = {
             foldername: foldername,
             html: finalSlides,
-          };
+        };
         // Send a POST request to the backend to save finalSlides
         fetch('/api/auto_save_html', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
         })
-        .then((response) => {
-            if (response.ok) {
-            setUnsavedChanges(false);
-            } else {
-            // Handle save error
-            console.error('Auto-save failed.');
-            }
-        })
-        .catch((error) => {
-            // Handle network error
-            console.error('Auto-save failed:', error);
-        });
+            .then((response) => {
+                if (response.ok) {
+                    setUnsavedChanges(false);
+                } else {
+                    // Handle save error
+                    console.error('Auto-save failed.');
+                }
+            })
+            .catch((error) => {
+                // Handle network error
+                console.error('Auto-save failed:', error);
+            });
     };
 
     const openModal = () => {
         setShowLayout(true);
     }
+
+    const openPresent = () => {
+        toast.success("Use ESC to exit presentation mode, use arrow keys to navigate slides.");
+        setPresent(true);
+    }
+
+    const toggleShare = async () => {
+        const newShareStatus = !share;
+        // console.log('newShareStatus', newShareStatus);
+        setShare(newShareStatus);
+        const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+        try {
+            const response = await fetch("/api/share_project", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    project_id: sessionStorage.getItem('project_id'), // Replace with your project's ID
+                    is_shared: newShareStatus,
+                }),
+            });
+
+            const responseData = await response.json();
+
+            if (response.ok) {
+                sessionStorage.setItem('is_shared', newShareStatus.toString());
+            } else {
+                // Handle error (e.g., show a notification to the user)
+                console.error(responseData.error);
+            }
+        } catch (error) {
+            console.error("Failed to toggle share status:", error);
+            // Handle error (e.g., show a notification to the user)
+        }
+    };
+
+    useEffect(() => {
+        const handleKeyDown = (event: any) => {
+            if (event.key === 'Escape') {
+                setPresent(false); // Exit presentation mode
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+
+        // Cleanup: remove the event listener when the component is unmounted
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []); // Empty dependency array to ensure this effect runs only once (similar to componentDidMount)
+
 
     const closeModal = () => {
         setShowLayout(false);
@@ -245,12 +321,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
         setCurrentSlideIndex(index);
     }
 
+    // title
     const h1Style: React.CSSProperties = {
         fontSize: '30pt',
         fontWeight: 'bold',
         color: '#2563EB',
     };
 
+    // topic
     const h2Style: React.CSSProperties = {
         fontSize: '15pt',
         fontWeight: 'bold',
@@ -258,13 +336,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
         color: '#2563EB'
     };
 
+    // subtopic
     const h3Style: React.CSSProperties = {
         fontSize: '20pt',
         fontWeight: 'bold',
     };
 
+    // content
     const h4Style: React.CSSProperties = {
-        fontSize: '15pt',
+        fontSize: '20pt',
         color: 'rgb(180,180,180)',
     };
 
@@ -273,11 +353,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
         display: 'list-item',
         listStyleType: 'disc',
         listStylePosition: 'inside',
-        fontSize: '12pt',
+        fontSize: '20pt',
     }
     function wrapWithLiTags(content: string): string {
         if (!content.includes("<li>") || !content.includes("</li>")) {
-            return `<li>${content}</li>`;
+            return `<li style="font-size: 18pt;">${content}</li>`;
         }
         return content;
     }
@@ -307,9 +387,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                     slideRef.current.style.left = `-${960 * (1 - scale) / 2}px`;
                     slideRef.current.style.top = `-${540 * (1 - scale) / 2}px`;
                 } else {
-                    containerRef.current.style.height = `540px`;
-                    containerRef.current.style.width = `960px`;
-                    slideRef.current.style.transform = `scale(1)`;
+                    containerRef.current.style.height = present ? '100%' : '540px',
+                        containerRef.current.style.width = present ? '100%' : '960px',
+                        slideRef.current.style.transform = `scale(1)`;
                     slideRef.current.style.left = '';
                     slideRef.current.style.top = '';
                 }
@@ -320,7 +400,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
     }, [containerRef, slideRef]);
 
 
-    const templateDispatch = (slide: Slide, index: number): JSX.Element => {
+    const templateDispatch = (slide: Slide, index: number, canEdit: boolean): JSX.Element => {
         const Template = templates[slide.template as keyof typeof templates];
         if (index === 0) {
             return <Template
@@ -329,9 +409,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                 {<div
                     key={0}
                     className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                    contentEditable={true}
+                    contentEditable={canEdit}
                     onFocus={() => {
-                        setIsEditMode(true)
+                        if (canEdit) {
+                            setIsEditMode(true);
+                        }
                     }}
                     onBlur={(e) =>
                         handleSlideEdit(e.target.innerText, index, 'userName')}
@@ -343,9 +425,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                     <div
                         key={1}
                         className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                        contentEditable={true}
+                        contentEditable={canEdit}
                         onFocus={() => {
-                            setIsEditMode(true)
+                            if (canEdit) {
+                                setIsEditMode(true);
+                            }
                         }}
                         onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'head')}
                         style={h1Style}
@@ -357,9 +441,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                 content={[<></>]}
                 imgs={slide.images}
                 update_callback={updateImgUrlArray(index)}
+                canEdit={canEdit}
             />
         } else {
             return <Template
+                canEdit={canEdit}
                 key={index}
                 user_name={<></>}
                 title={<></>}
@@ -367,9 +453,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                     <div
                         key={0}
                         className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                        contentEditable={true}
+                        contentEditable={canEdit}
                         onFocus={() => {
-                            setIsEditMode(true)
+                            if (canEdit) {
+                                setIsEditMode(true);
+                            }
                         }}
                         onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
                         style={h2Style}
@@ -380,9 +468,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                     <div
                         key={1}
                         className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                        contentEditable={true}
+                        contentEditable={canEdit}
                         onFocus={() => {
-                            setIsEditMode(true)
+                            if (canEdit) {
+                                setIsEditMode(true);
+                            }
                         }}
                         onBlur={(e) => {
                             handleSlideEdit(e.target.innerText, index, 'subtopic')
@@ -399,10 +489,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                     <div
                                         key={index}
                                         className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                                        contentEditable={true}
+                                        contentEditable={canEdit}
                                         style={listStyle}
                                         onFocus={() => {
-                                            setIsEditMode(true)
+                                            if (canEdit) {
+                                                setIsEditMode(true);
+                                            }
                                         }}
                                         onBlur={(e) => {
                                             const modifiedContent = [...slide.content];
@@ -432,9 +524,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                             <div
                                 key={index}
                                 className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                                contentEditable={true}
+                                contentEditable={canEdit}
                                 onFocus={() => {
-                                    setIsEditMode(true)
+                                    if (canEdit) {
+                                        setIsEditMode(true);
+                                    }
                                 }}
                                 onBlur={(e) => {
                                     const modifiedContent = [...slide.content];
@@ -457,29 +551,21 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
 
     return (
         <div className='w-fit h-fit'>
-            <div id="slideContainer" className='overflow-hidden' ref={containerRef} style={{
-                boxSizing: 'border-box',
-                border: 'none',
-                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
-            }}>
-                {slides.length > 0 && (
-                    <div className="slide h-full w-full" ref={slideRef}
-                        style={{
-                            width: '960px',
-                            height: '540px',
-                            backgroundSize: 'cover',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'flex-start',
-                            alignItems: 'flex-start',
-                            position: 'relative',
-                        }}>
-                        {slides[currentSlideIndex] && templateDispatch(slides[currentSlideIndex], currentSlideIndex)}
+            <div className='flex justify-between items-center mb-6'>
+                <div className='col-span-1'>
+                    <div className='w-fit h-fit rounded-full overflow-hidden'>
+                        <button
+                            className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
+                            onClick={openPresent}>Present</button>
                     </div>
-                )}
-            </div>
-            <div className='slide-nav mt-4 w-full grid grid-cols-2 md:grid-cols-3'>
-                <div className='col-span-1 hidden md:block'></div>
+                </div>
+                {!isSharing && <div className='col-span-1'>
+                    <div className='w-fit h-fit rounded-full overflow-hidden'>
+                        <button
+                            className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
+                            onClick={toggleShare}>{!share ? 'Share' : 'Stop Sharing'}</button>
+                    </div>
+                </div>}
                 <div className='col-span-1'>
                     <div className='w-fit h-fit flex flex-row items-center justify-center mx-auto rounded-full bg-slate-600/40'>
                         <button
@@ -495,7 +581,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                             onClick={() => goToSlide(currentSlideIndex + 1)}>&#9654;</button>
                     </div>
                 </div>
-                <div className='col-span-1 flex flex-row-reverse'>
+                {!isSharing && <div className='col-span-1 flex flex-row-reverse'>
                     <div className='w-fit h-fit rounded-full overflow-hidden'>
                         <button
                             className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
@@ -575,7 +661,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                                 <div className="w-full flex flex-wrap">
                                     <div className="w-full">
                                         <button
-                                            className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full rounded-lg"
+                                            // className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full rounded-lg"
                                             type="button"
                                             onClick={e => { e.preventDefault(); closeModal(); }}>
                                             Done
@@ -585,8 +671,44 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                             </div>
                         </Transition>
                     </Transition>
-                </div>
+                </div>}
             </div>
+            {share &&
+                <ClickableLink link={`${host}/shared/${sessionStorage.getItem('project_id')}`} />
+            }
+            <div
+                id="slideContainer"
+                className={`overflow-hidden ${present ? 'fixed top-0 left-0 w-full h-screen z-50' : ''}`}
+                ref={containerRef}
+                style={{
+                    boxSizing: 'border-box',
+                    border: 'none',
+                    boxShadow: present ? 'none' : '0 2px 10px rgba(0, 0, 0, 0.5)',
+                }}
+            >
+                {slides.length > 0 && (
+                    <div
+                        className="slide h-full w-full"
+                        ref={slideRef}
+                        style={{
+                            width: present ? '100%' : '960px',
+                            height: present ? '100%' : '540px',
+                            backgroundSize: 'cover',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'flex-start',
+                            alignItems: 'flex-start',
+                            position: 'relative',
+                        }}
+                    >
+                        <ToastContainer />
+                        {slides[currentSlideIndex] && templateDispatch(slides[currentSlideIndex],
+                            currentSlideIndex,
+                            !isSharing && !present)}
+                    </div>
+                )}
+            </div>
+
         </div>
     );
 }

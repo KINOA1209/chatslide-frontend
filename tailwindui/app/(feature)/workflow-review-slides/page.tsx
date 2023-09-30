@@ -1,116 +1,13 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import TranscriptForm from '@/components/forms/transcriptForm';
-import Slides from '@/components/Slides';
-import Timer from '@/components/Timer';
-import GoBackButton from '@/components/GoBackButton';
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProjectProgress from "@/components/steps";
 import FeedbackForm from '@/components/forms/feedback';
-import SaveToPPTX from '@/components/forms/saveToPptx';
-import BgImagePopup from '@/components/bgImagePopup';
-//import SlidesHTML from '@/components/SlidesHTML';
-//import SaveToPdfHtml from '@/components/forms/saveToPdfHtml';
-import { SlideElement, Slide } from '@/components/SlidesHTML';
-import dynamic from 'next/dynamic'
-const SlidesHTML = dynamic(() => import('@/components/SlidesHTML'));
-const SaveToPdfHtml = dynamic(() => import('@/components/forms/saveToPdfHtml'));
+import SlideVisualizer from '@/components/slides/SlideVisualizer';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-// const SlidesHTML = dynamic(
-//     () => import('@/components/SlidesHTML'),
-//     { ssr: false }
-// )
-
-// const SaveToPdfHtml = dynamic(
-//     () => import('@/components/forms/saveToPdfHtml'),
-//     { ssr: false }
-// )
-
-type SlidesHTMLProps = {
-    finalSlides: Slide[];
-    setFinalSlides: React.Dispatch<React.SetStateAction<Slide[]>>;
-};
-
-const SlideVisualizer = ({ slide_files }: { slide_files: any }) => {
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [showPopup, setShowPopup] = useState<boolean>(false);
-
-    const [finalSlides, setFinalSlides] = useState<Slide[]>([]);
-
-    const handlePopupOpen = () => {
-        setShowPopup(true);
-    };
-
-    const handlePopupClose = () => {
-        setShowPopup(false);
-    };
-
-    // Get language from session storage
-    const language = typeof window !== 'undefined' ? sessionStorage.getItem("language") : null;
-
-    useEffect(() => {
-        console.log("Language:", language);
-    }, [language]);
-
-    useEffect(() => {
-        const signed_in = typeof window !== 'undefined' ? sessionStorage.getItem("signed_in") : 'false';
-        if (signed_in && signed_in === "true") {
-            toast.success("Sign in successfully", {
-                position: "top-center",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                containerId: "slides",
-            });
-            sessionStorage.removeItem("signed_in");
-        }
-    }, []);
-
-    return (
-        <div>
-            <ToastContainer enableMultiContainer containerId={'slides'} />
-            <div className="max-w-4xl mx-auto px-4 sm:px-6">
-
-                <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} />
-
-                <SaveToPdfHtml finalSlides={finalSlides} />
-                {/*{language === "English" && <SaveToPPTX />}*/}
-
-                {/*<div className="max-w-sm mx-auto">
-                    <div className="flex flex-wrap -mx-3 mt-6">
-                        <div className="w-full px-3">
-                        <button
-                            onClick={handlePopupOpen}
-                            className="btn text-blue-600 bg-gray-100 hover:bg-gray-200 w-full border border-blue-600"
-                        >
-                            Add Slides Background
-                        </button>
-                        {showPopup && <BgImagePopup onClose={handlePopupClose} />}
-                        </div>
-                    </div>
-            </div>*/}
-
-                {/* Form */}
-                <TranscriptForm
-                    isSubmitting={isSubmitting}
-                    setIsSubmitting={setIsSubmitting}
-                    finalSlides={finalSlides}
-                />
-
-                {/* Timer */}
-                <Timer expectedSeconds={60} isSubmitting={isSubmitting} />
-
-            </div>
-
-        </div>
-    );
-};
 
 export default function WorkflowStep3() {
     const slide_files = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('slide_files') || [] : [];
@@ -148,18 +45,40 @@ export default function WorkflowStep3() {
         }
     }, [timerFinished]);
 
+
+    useEffect(() => {
+        const signed_in = typeof window !== 'undefined' ? sessionStorage.getItem("signed_in") : 'false';
+        if (signed_in && signed_in === "true") {
+            toast.success("Sign in successfully", {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                containerId: "slides",
+            });
+            sessionStorage.removeItem("signed_in");
+        }
+    }, []);
+
+
     return (
         <div>
             <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
                 <h1 className="h1">Review Slides</h1>
             </div>
 
+            <ToastContainer enableMultiContainer containerId={'slides'} />
+
             <div className="max-w-4xl mx-auto px-6" ref={contentRef}>
                 <p className='px-6'>
                     These are the slides generated. To edit content, click on the text to reveal the input box.
                 </p>
                 <br />
-                <SlideVisualizer slide_files={slide_files} />
+                <SlideVisualizer/>
             </div>
 
             <ProjectProgress currentInd={2} contentRef={contentRef} />

@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthService from "./utils/AuthService";
-import GoogleSignIn from "@/components/GoogleSignIn";
+import GoogleSignIn from "@/components/button/GoogleSignIn";
 
 
 
