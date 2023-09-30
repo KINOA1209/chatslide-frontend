@@ -48,7 +48,7 @@ type SlidesHTMLProps = {
 
 
 // it will render the slides fetched from `foldername` in sessionStorage
-const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, isSharing = true }) => {
+const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, isSharing = false }) => {
     const [slides, setSlides] = useState<Slide[]>([]);
     const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
     const foldername = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('foldername') : '';
