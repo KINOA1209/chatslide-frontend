@@ -112,10 +112,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit = true }: ImgM
 
                 // extend the array to include images from pdf_images inside sessionStorage
                 const pdf_images = JSON.parse(sessionStorage.getItem('pdf_images') || '[]');
-                const pdf_image_urls = pdf_images.map((image: any) => {
-                    return image.url;
-                });
-                resourceTemps.push(...pdf_image_urls);
+                resourceTemps.push(...pdf_images);
                 setResources(resourceTemps);
             } else {
                 // Handle error cases
