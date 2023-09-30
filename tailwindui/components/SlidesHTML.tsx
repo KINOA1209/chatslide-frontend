@@ -10,6 +10,7 @@ import './slidesHTML.css';
 import { Transition } from '@headlessui/react';
 import templates, { templateSamples } from "@/components/slideTemplates";
 import ClickableLink from './ui/ClickableLink';
+import AuthService from './utils/AuthService';
 
 export interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
@@ -71,9 +72,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
     }, [])
 
     useEffect(() => {
-        setShare(sessionStorage.getItem('share') === 'true');
-        console.log('share', sessionStorage.getItem('share'));
-    })
+        setShare(sessionStorage.getItem('is_shared') === 'true');
+        // console.log('share', sessionStorage.getItem('is_shared'));
+    }, []);
 
     // Watch for changes in finalSlides
     useEffect(() => {
@@ -124,13 +125,41 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
     }
 
     const openPresent = () => {
-        toast.success("Use ESC to exit presentation mode, use arrow keys to navigate slides."); 
+        toast.success("Use ESC to exit presentation mode, use arrow keys to navigate slides.");
         setPresent(true);
     }
 
-    const toggleShare = () => {
-        setShare(!share);
-    }
+    const toggleShare = async () => {
+        const newShareStatus = !share;
+        // console.log('newShareStatus', newShareStatus);
+        setShare(newShareStatus);
+        const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+        try {
+            const response = await fetch("/api/share_project", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    project_id: sessionStorage.getItem('project_id'), // Replace with your project's ID
+                    is_shared: newShareStatus,
+                }),
+            });
+
+            const responseData = await response.json();
+
+            if (response.ok) {
+                sessionStorage.setItem('is_shared', newShareStatus.toString());
+            } else {
+                // Handle error (e.g., show a notification to the user)
+                console.error(responseData.error);
+            }
+        } catch (error) {
+            console.error("Failed to toggle share status:", error);
+            // Handle error (e.g., show a notification to the user)
+        }
+    };
 
     useEffect(() => {
         const handleKeyDown = (event: any) => {
@@ -138,15 +167,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
                 setPresent(false); // Exit presentation mode
             }
         };
-    
+
         window.addEventListener('keydown', handleKeyDown);
-    
+
         // Cleanup: remove the event listener when the component is unmounted
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, []); // Empty dependency array to ensure this effect runs only once (similar to componentDidMount)
-    
+
 
     const closeModal = () => {
         setShowLayout(false);
@@ -359,8 +388,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
                     slideRef.current.style.top = `-${540 * (1 - scale) / 2}px`;
                 } else {
                     containerRef.current.style.height = present ? '100%' : '540px',
-                    containerRef.current.style.width = present ? '100%' : '960px',
-                    slideRef.current.style.transform = `scale(1)`;
+                        containerRef.current.style.width = present ? '100%' : '960px',
+                        slideRef.current.style.transform = `scale(1)`;
                     slideRef.current.style.left = '';
                     slideRef.current.style.top = '';
                 }
@@ -530,13 +559,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
                             onClick={openPresent}>Present</button>
                     </div>
                 </div>
-                { !isSharing && <div className='col-span-1'>
+                {!isSharing && <div className='col-span-1'>
                     <div className='w-fit h-fit rounded-full overflow-hidden'>
                         <button
                             className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
-                            onClick={toggleShare}>{ !share ? 'Share' : 'Stop Sharing' }</button>
+                            onClick={toggleShare}>{!share ? 'Share' : 'Stop Sharing'}</button>
                     </div>
-                </div> }
+                </div>}
                 <div className='col-span-1'>
                     <div className='w-fit h-fit flex flex-row items-center justify-center mx-auto rounded-full bg-slate-600/40'>
                         <button
@@ -552,7 +581,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
                             onClick={() => goToSlide(currentSlideIndex + 1)}>&#9654;</button>
                     </div>
                 </div>
-                { !isSharing && <div className='col-span-1 flex flex-row-reverse'>
+                {!isSharing && <div className='col-span-1 flex flex-row-reverse'>
                     <div className='w-fit h-fit rounded-full overflow-hidden'>
                         <button
                             className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
@@ -632,7 +661,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
                                 <div className="w-full flex flex-wrap">
                                     <div className="w-full">
                                         <button
-                                            className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full rounded-lg"
+                                            // className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full rounded-lg"
                                             type="button"
                                             onClick={e => { e.preventDefault(); closeModal(); }}>
                                             Done
@@ -642,10 +671,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
                             </div>
                         </Transition>
                     </Transition>
-                </div> }
+                </div>}
             </div>
-            { share && 
-                <ClickableLink link={`${host}/share/${sessionStorage.getItem('project_id')}`} />
+            {share &&
+                <ClickableLink link={`${host}/shared/${sessionStorage.getItem('project_id')}`} />
             }
             <div
                 id="slideContainer"
@@ -673,8 +702,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
                         }}
                     >
                         <ToastContainer />
-                        {slides[currentSlideIndex] && templateDispatch(slides[currentSlideIndex], 
-                            currentSlideIndex, 
+                        {slides[currentSlideIndex] && templateDispatch(slides[currentSlideIndex],
+                            currentSlideIndex,
                             !isSharing && !present)}
                     </div>
                 )}

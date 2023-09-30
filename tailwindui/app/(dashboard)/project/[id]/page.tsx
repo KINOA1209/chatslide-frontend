@@ -50,6 +50,7 @@ const ProjectLoading = () => {
     }, []);
 
     useEffect(() => {
+        // console.log('this is project', project);
         if (project) {
             // Store values in sessionStorage if they exist
             if (project.topic) {
@@ -100,9 +101,7 @@ const ProjectLoading = () => {
             if (project.resource_ids) {
                 sessionStorage.setItem('resources', JSON.stringify(project.resource_ids));
             }
-            if (project.is_shared) {
-                sessionStorage.setItem('is_shared', project.is_shared.toString());
-            }
+            sessionStorage.setItem('is_shared', project.is_shared.toString());
             handleRedirect();
         }
     }, [project]);
@@ -130,7 +129,7 @@ const ProjectLoading = () => {
             });
             if (response.ok) {
                 const data = await response.json();
-                console.log('this is data', data);
+                // console.log('this is data', data);
                 setProject(data);
             } else {
                 console.error('Error fetching project details', response.status);
