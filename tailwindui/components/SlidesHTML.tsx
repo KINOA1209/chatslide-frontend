@@ -516,7 +516,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
 
     return (
         <div className='w-fit h-fit'>
-            <div className='slide-nav mb-6 w-full grid grid-cols-2 md:grid-cols-3'>
+            <div className='flex justify-between items-center mb-6'>
                 <div className='col-span-1'>
                     <div className='w-fit h-fit rounded-full overflow-hidden'>
                         <button
