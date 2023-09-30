@@ -8,10 +8,10 @@ import { toast } from 'react-toastify';
 interface ImgModuleProp {
     imgsrc: string,
     updateSingleCallback: Function,
-    canEdit?: boolean
+    canEdit: boolean
 }
 
-export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit = true }: ImgModuleProp) => {
+export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit}: ImgModuleProp) => {
     const [showModal, setShowModal] = useState(false);
     const [keyword, setKeyword] = useState('');
     const [showImgSearch, setShowImgSearch] = useState(false);
