@@ -54,10 +54,20 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
     const foldername = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('foldername') : '';
     const [showLayout, setShowLayout] = useState(false);
     const [present, setPresent] = useState(false);
+    const [share, setShare] = useState(false);
     const slideRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+    const [host, setHost] = useState('https://drlambda.ai');
 
     const [unsavedChanges, setUnsavedChanges] = useState(false);
+
+    useEffect(() => {
+        if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+            setHost('https://' + window.location.hostname);
+        } else {
+            setHost(window.location.hostname);
+        }
+    }, [])
 
     // Watch for changes in finalSlides
     useEffect(() => {
@@ -110,6 +120,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
     const openPresent = () => {
         toast.success("Use ESC to exit presentation mode, use arrow keys to navigate slides."); 
         setPresent(true);
+    }
+
+    const toggleShare = () => {
+        setShare(!share);
     }
 
     useEffect(() => {
@@ -510,6 +524,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
                             onClick={openPresent}>Present</button>
                     </div>
                 </div>
+                { !isSharing && <div className='col-span-1'>
+                    <div className='w-fit h-fit rounded-full overflow-hidden'>
+                        <button
+                            className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
+                            onClick={toggleShare}>{ !share ? 'Share' : 'Stop Sharing' }</button>
+                    </div>
+                </div> }
                 <div className='col-span-1'>
                     <div className='w-fit h-fit flex flex-row items-center justify-center mx-auto rounded-full bg-slate-600/40'>
                         <button
@@ -617,6 +638,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
                     </Transition>
                 </div> }
             </div>
+            { share && <label>Sharing at {host}/share/{sessionStorage.getItem('project_id')}.</label>}
             <div
                 id="slideContainer"
                 className={`overflow-hidden ${present ? 'fixed top-0 left-0 w-full h-screen z-50' : ''}`}
