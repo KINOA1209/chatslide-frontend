@@ -23,6 +23,7 @@ interface Project {
     video_file: string;
     resource_ids: string;
     html: string;
+    pdf_images: string;
 }
 
 const ProjectLoading = () => {
@@ -85,6 +86,9 @@ const ProjectLoading = () => {
             }
             if (project.pdf_file) {
                 sessionStorage.setItem('pdf_file', project.pdf_file);
+            }
+            if (project.pdf_images) {
+                sessionStorage.setItem('pdf_images', JSON.stringify(project.pdf_images));
             }
             if (project.audio_files) {
                 sessionStorage.setItem('audio_files', JSON.stringify(project.audio_files));
