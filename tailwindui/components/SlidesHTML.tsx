@@ -70,6 +70,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
         }
     }, [])
 
+    useEffect(() => {
+        setShare(sessionStorage.getItem('share') === 'true');
+        console.log('share', sessionStorage.getItem('share'));
+    })
+
     // Watch for changes in finalSlides
     useEffect(() => {
         setUnsavedChanges(true);
