@@ -45,15 +45,18 @@ const SharePage: React.FC = () => {
     }, [project_id]);
 
     return (
-        
+
         <main className="grow">
             <Header loginRequired={false} isLanding={false} refList={[]} />
-            loading ? <div>Loading...</div> :
-            <div className="flex items-center justify-center min-h-screen">
-                <div>
-                    <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} isSharing={true} />
+            {loading ? (
+                <div>Loading...</div>
+            ) : (
+                <div className="flex items-center justify-center min-h-screen">
+                    <div>
+                        <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} isSharing={true} />
+                    </div>
                 </div>
-            </div>
+            )}
 
             <WorkflowFooter />
         </main>
