@@ -80,11 +80,17 @@ const FileManagement: React.FC<UserFileList> = ({ selectable = false, userfiles,
         // Open thumbnail / Open Youtube link etc.
     };
 
-    const entry = (id: string, uid: string, filename: string, timestamp: string, thumbnail = null, icon = 'pdf') => {
+    const getThumbnail = (thumbnailUrl: string) => {
+        console.log(thumbnailUrl)
+        return <img src={thumbnailUrl} alt="Thumbnail" className="w-full h-full object-cover" />;
+    };
+    
+
+    const entry = (id: string, uid: string, filename: string, timestamp: string, thumbnail: string, icon = 'pdf') => {
         return (
             <div key={id} className="w-full h-16 px-4 rounded-2xl md:hover:bg-gray-200" onClick={e => { if (selectable) { clickCallback(id) } else { handleOnClick(e) } }}>
                 <div className='h-full flex items-center w-full py-4 px-2'>
-                    <div className='w-8 flex'>{getIcon(filename)}</div>
+                <div className='w-8 flex'>{thumbnail ? getThumbnail(thumbnail) : getIcon(filename)}</div>
                     <div className='grow text-ellipsis mx-4 overflow-hidden whitespace-nowrap'>{filename}</div>
                     {timestamp && <div className='mx-16 hidden md:block'>{moment(timestamp).format('L')}</div>}
                     {!selectable ? <div className='w-8 flex flex-row-reverse'>
@@ -114,7 +120,7 @@ const FileManagement: React.FC<UserFileList> = ({ selectable = false, userfiles,
                 <div className='w-full border-b border-gray-300'></div>
             </div>
             {userfiles.map((file, index) => {
-                return entry(file.id, file.uid, file.filename, file.timestamp);
+                return entry(file.id, file.uid, file.filename, file.timestamp, file.thumbnail_name);
             })}
         </div>
     )
@@ -201,7 +207,7 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
                         id: resource.id,
                         uid: resource.uid,
                         filename: resource.resource_name,
-                        thumbnail_name: resource.thumbnail_name,
+                        thumbnail_name: resource.thumbnail_url,
                         timestamp: resource.timestamp,
                     }
                 });
