@@ -9,6 +9,7 @@ import './slidesHTML.css';
 
 import { Transition } from '@headlessui/react';
 import templates, { templateSamples } from "@/components/slideTemplates";
+import ClickableLink from './ui/ClickableLink';
 
 export interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
@@ -638,7 +639,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
                     </Transition>
                 </div> }
             </div>
-            { share && <label>Sharing at {host}/share/{sessionStorage.getItem('project_id')}.</label>}
+            { share && 
+                <ClickableLink link={`${host}/share/${sessionStorage.getItem('project_id')}`} />
+            }
             <div
                 id="slideContainer"
                 className={`overflow-hidden ${present ? 'fixed top-0 left-0 w-full h-screen z-50' : ''}`}

@@ -10,6 +10,7 @@ const SharePage: React.FC = () => {
     const router = useRouter();
     const pathname = usePathname();
     const project_id = pathname.split('/').pop();
+    const [loading, setLoading] = useState(true);
 
     const [finalSlides, setFinalSlides] = useState<Slide[]>([]);
 
@@ -28,11 +29,13 @@ const SharePage: React.FC = () => {
                     if (data.status === "success" && data.foldername) {
                         const foldername = data.foldername;
                         sessionStorage.setItem('foldername', foldername);
-                        console.log(`foldername: ${foldername}`);
+                        // console.log(`foldername: ${foldername}`);
+                        setLoading(false);
                     }
                 })
                 .catch(error => {
                     console.log("There was a problem with the fetch operation:", error.message);
+                    setLoading(false);
                 });
         }
 
@@ -42,9 +45,10 @@ const SharePage: React.FC = () => {
     }, [project_id]);
 
     return (
-
+        
         <main className="grow">
             <Header loginRequired={false} isLanding={false} refList={[]} />
+            loading ? <div>Loading...</div> :
             <div className="flex items-center justify-center min-h-screen">
                 <div>
                     <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} isSharing={true} />
