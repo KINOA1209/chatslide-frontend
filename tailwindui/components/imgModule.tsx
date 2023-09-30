@@ -1,16 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Transition } from '@headlessui/react';
 import AuthService from '@/components/utils/AuthService';
-import { LoadingIcon } from '@/components/progress';
+import { LoadingIcon } from '@/components/ui/progress';
 import { createPortal } from 'react-dom';
 import { toast } from 'react-toastify';
 
 interface ImgModuleProp {
     imgsrc: string,
-    updateSingleCallback: Function
+    updateSingleCallback: Function,
+    canEdit: boolean
 }
 
-export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
+export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit}: ImgModuleProp) => {
     const [showModal, setShowModal] = useState(false);
     const [keyword, setKeyword] = useState('');
     const [showImgSearch, setShowImgSearch] = useState(false);
@@ -30,7 +31,9 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
     }, [imgsrc]);
 
     const openModal = () => {
-        setShowModal(true);
+        if (canEdit) {
+            setShowModal(true);
+        }
     }
 
     const closeModal = () => {
@@ -106,6 +109,10 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
                     }
                     return resource.direct_url;
                 });
+
+                // extend the array to include images from pdf_images inside sessionStorage
+                const pdf_images = JSON.parse(sessionStorage.getItem('pdf_images') || '[]');
+                resourceTemps.push(...pdf_images);
                 setResources(resourceTemps);
             } else {
                 // Handle error cases
@@ -423,7 +430,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback }: ImgModuleProp) => {
                         </g>
                     </svg>
                     <div className="text-black opacity-50">
-                        Click to add image
+                        {canEdit && 'Click to add image'}
                     </div>
                 </div>
                 :

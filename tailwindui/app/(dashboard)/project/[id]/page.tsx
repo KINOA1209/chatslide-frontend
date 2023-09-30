@@ -23,6 +23,8 @@ interface Project {
     video_file: string;
     resource_ids: string;
     html: string;
+    pdf_images: string;
+    is_shared: boolean;
 }
 
 const ProjectLoading = () => {
@@ -48,6 +50,7 @@ const ProjectLoading = () => {
     }, []);
 
     useEffect(() => {
+        // console.log('this is project', project);
         if (project) {
             // Store values in sessionStorage if they exist
             if (project.topic) {
@@ -86,6 +89,9 @@ const ProjectLoading = () => {
             if (project.pdf_file) {
                 sessionStorage.setItem('pdf_file', project.pdf_file);
             }
+            if (project.pdf_images) {
+                sessionStorage.setItem('pdf_images', JSON.stringify(project.pdf_images));
+            }
             if (project.audio_files) {
                 sessionStorage.setItem('audio_files', JSON.stringify(project.audio_files));
             }
@@ -95,6 +101,7 @@ const ProjectLoading = () => {
             if (project.resource_ids) {
                 sessionStorage.setItem('resources', JSON.stringify(project.resource_ids));
             }
+            sessionStorage.setItem('is_shared', project.is_shared.toString());
             handleRedirect();
         }
     }, [project]);
@@ -122,7 +129,7 @@ const ProjectLoading = () => {
             });
             if (response.ok) {
                 const data = await response.json();
-                console.log('this is data', data);
+                // console.log('this is data', data);
                 setProject(data);
             } else {
                 console.error('Error fetching project details', response.status);

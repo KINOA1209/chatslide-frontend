@@ -65,7 +65,7 @@ interface IntroProps {
 
 const Introduction = ({ demoRef }: IntroProps) => {
     const buttonRef = useRef<HTMLDivElement>(null);
-    const drlambda = <p className="inline text-transparent bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500" style={{ fontFamily: 'Lexend, sans-serif' }}>DrLambda</p>
+    // const drlambda = <p className="inline text-transparent bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500" style={{ fontFamily: 'Lexend, sans-serif' }}>DrLambda</p>
     const router = useRouter();
     const [currentUser, setCurrentUser] = useState(null);
 
@@ -113,7 +113,7 @@ const Introduction = ({ demoRef }: IntroProps) => {
                         <div className="text-2xl md:text-3xl w-full text-left md:text-center">Be an expert, AI-powered</div>
                         <div className="text-5xl md:text-6xl mt-0 md:mt-4"
                             style={{ fontFamily: 'Lexend, sans-serif' }}>
-                            Use {drlambda} to
+                            Use DrLambda to
                             <div className="inline md:block relative md:-top-6">
                                 <TextCarousel
                                     slides={["Study", "Present", "Teach", "Create"]}

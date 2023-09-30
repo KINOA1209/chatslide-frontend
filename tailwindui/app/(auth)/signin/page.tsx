@@ -4,11 +4,11 @@
 //   description: "AI copilot for educators",
 // };
 
-import LoginForm from "@/components/login-form";
+import LoginForm from "@/components/forms/login-form";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState, useEffect } from "react";
-import GoogleSignIn from "@/components/GoogleSignIn";
+import GoogleSignIn from "@/components/button/GoogleSignIn";
 import CustomerServiceInfo from '@/components/customerService';
 import { Auth, Hub } from 'aws-amplify';
 

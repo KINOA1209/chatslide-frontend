@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import SavePDFModal from './savePDFModal';
 import AuthService from "../utils/AuthService";
-import { LoadingIcon } from "@/components/progress";
+import { LoadingIcon } from "@/components/ui/progress";
 import { SlideElement, Slide } from '../SlidesHTML';
 
 type SlidesHTMLProps = {

@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import SignupForm from "@/components/signup-form";
-import GoogleSignIn from "@/components/GoogleSignIn";
+import GoogleSignIn from "@/components/button/GoogleSignIn";
 import CustomerServiceInfo from '@/components/customerService';
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";

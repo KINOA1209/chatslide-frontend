@@ -1,3 +1,14 @@
 .ql-clipboard{
     display: none !important
 }
+
+
+@font-face {
+    font-family: 'CreatoDisplayRegular';
+    src:url('/fonts/CreatoDisplay-Regular.otf') format('opentype');
+}
+
+
+#slideContainer {
+    font-family: 'CreatoDisplayRegular'
+}
