@@ -101,7 +101,9 @@ const ProjectLoading = () => {
             if (project.resource_ids) {
                 sessionStorage.setItem('resources', JSON.stringify(project.resource_ids));
             }
-            sessionStorage.setItem('is_shared', project.is_shared.toString());
+            if (project.is_shared) {
+                sessionStorage.setItem('is_shared', project.is_shared.toString());
+            }
             handleRedirect();
         }
     }, [project]);
