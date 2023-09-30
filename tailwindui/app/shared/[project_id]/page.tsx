@@ -1,0 +1,60 @@
+'use client'
+
+import { useRouter, usePathname } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import SlidesHTML, { Slide } from '../../../components/SlidesHTML';
+import Footer, { WorkflowFooter } from '@/components/ui/footer';
+import Header from '@/components/ui/header';
+
+const SharePage: React.FC = () => {
+    const router = useRouter();
+    const pathname = usePathname();
+    const project_id = pathname.split('/').pop();
+
+    const [finalSlides, setFinalSlides] = useState<Slide[]>([]);
+
+    useEffect(() => {
+        // Assume fetchSlideHtml is a function to get slide_html from your project table
+        const fetchFoldername = async () => {
+            sessionStorage.removeItem('foldername');
+            fetch(`/api/get_shared_project_foldername?project_id=${project_id}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.status === "success" && data.foldername) {
+                        const foldername = data.foldername;
+                        sessionStorage.setItem('foldername', foldername);
+                        console.log(`foldername: ${foldername}`);
+                    }
+                })
+                .catch(error => {
+                    console.log("There was a problem with the fetch operation:", error.message);
+                });
+        }
+
+        if (project_id) {
+            fetchFoldername();
+        }
+    }, [project_id]);
+
+    return (
+
+        <main className="grow">
+            <Header loginRequired={false} isLanding={false} refList={[]} />
+            <div className="flex items-center justify-center min-h-screen">
+                <div>
+                    <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} isSharing={true} />
+                </div>
+            </div>
+
+            <WorkflowFooter />
+        </main>
+
+    );
+}
+
+export default SharePage;

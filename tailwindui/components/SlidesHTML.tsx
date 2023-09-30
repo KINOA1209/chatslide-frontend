@@ -43,11 +43,12 @@ export class Slide {
 type SlidesHTMLProps = {
     finalSlides: Slide[];
     setFinalSlides: Function;
+    isSharing?: boolean;
 };
 
 
 // it will render the slides fetched from `foldername` in sessionStorage
-const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) => {
+const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, isSharing = true }) => {
     const [slides, setSlides] = useState<Slide[]>([]);
     const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
     const foldername = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('foldername') : '';
@@ -350,7 +351,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
     }, [containerRef, slideRef]);
 
 
-    const templateDispatch = (slide: Slide, index: number, canEdit: boolean=true): JSX.Element => {
+    const templateDispatch = (slide: Slide, index: number, canEdit: boolean): JSX.Element => {
         const Template = templates[slide.template as keyof typeof templates];
         if (index === 0) {
             return <Template
@@ -391,9 +392,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                 content={[<></>]}
                 imgs={slide.images}
                 update_callback={updateImgUrlArray(index)}
+                canEdit={canEdit}
             />
         } else {
             return <Template
+                canEdit={canEdit}
                 key={index}
                 user_name={<></>}
                 title={<></>}
@@ -522,7 +525,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                             onClick={() => goToSlide(currentSlideIndex + 1)}>&#9654;</button>
                     </div>
                 </div>
-                <div className='col-span-1 flex flex-row-reverse'>
+                { !isSharing && <div className='col-span-1 flex flex-row-reverse'>
                     <div className='w-fit h-fit rounded-full overflow-hidden'>
                         <button
                             className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
@@ -612,7 +615,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                             </div>
                         </Transition>
                     </Transition>
-                </div>
+                </div> }
             </div>
             <div
                 id="slideContainer"
@@ -640,7 +643,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides }) 
                         }}
                     >
                         <ToastContainer />
-                        {slides[currentSlideIndex] && templateDispatch(slides[currentSlideIndex], currentSlideIndex, !present)}
+                        {slides[currentSlideIndex] && templateDispatch(slides[currentSlideIndex], 
+                            currentSlideIndex, 
+                            !isSharing && !present)}
                     </div>
                 )}
             </div>
