@@ -109,6 +109,10 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit = true }: ImgM
                     }
                     return resource.direct_url;
                 });
+
+                // extend the array to include images from pdf_images inside sessionStorage
+                const pdf_images = JSON.parse(sessionStorage.getItem('pdf_images') || '[]');
+                resourceTemps.push(...pdf_images);
                 setResources(resourceTemps);
             } else {
                 // Handle error cases
