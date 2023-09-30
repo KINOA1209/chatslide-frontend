@@ -24,6 +24,7 @@ interface Project {
     resource_ids: string;
     html: string;
     pdf_images: string;
+    is_shared: boolean;
 }
 
 const ProjectLoading = () => {
@@ -98,6 +99,9 @@ const ProjectLoading = () => {
             }
             if (project.resource_ids) {
                 sessionStorage.setItem('resources', JSON.stringify(project.resource_ids));
+            }
+            if (project.is_shared) {
+                sessionStorage.setItem('is_shared', project.is_shared.toString());
             }
             handleRedirect();
         }
