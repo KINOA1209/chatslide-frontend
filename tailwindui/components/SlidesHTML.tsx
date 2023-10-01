@@ -109,6 +109,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
             .then((response) => {
                 if (response.ok) {
                     setUnsavedChanges(false);
+                    console.log('Auto-save successful.');
                 } else {
                     // Handle save error
                     console.error('Auto-save failed.');
@@ -405,6 +406,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
         const Template = templates[slide.template as keyof typeof templates];
         if (index === 0) {
             return <Template
+                autoSave={autoSaveSlides}
                 key={index}
                 user_name=
                 {<div
@@ -446,6 +448,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
             />
         } else {
             return <Template
+                autoSave={autoSaveSlides}
                 canEdit={canEdit}
                 key={index}
                 user_name={<></>}
