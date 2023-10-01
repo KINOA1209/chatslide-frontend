@@ -50,7 +50,6 @@ const ProjectLoading = () => {
     }, []);
 
     useEffect(() => {
-        // console.log('this is project', project);
         if (project) {
             // Store values in sessionStorage if they exist
             if (project.topic) {
@@ -109,6 +108,7 @@ const ProjectLoading = () => {
     }, [project]);
 
     const fetchProjectDetails = async (token: string) => {
+        console.log(`Fetching project details.`);
         const headers = new Headers();
         if (token) {
             headers.append('Authorization', `Bearer ${token}`);
@@ -131,7 +131,7 @@ const ProjectLoading = () => {
             });
             if (response.ok) {
                 const data = await response.json();
-                // console.log('this is data', data);
+                console.log('this is data', data);
                 setProject(data);
             } else {
                 console.error('Error fetching project details', response.status);
