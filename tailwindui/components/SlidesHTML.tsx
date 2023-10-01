@@ -93,6 +93,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
 
     // Function to send a request to auto-save finalSlides
     const autoSaveSlides = () => {
+        if (finalSlides.length === 0) {
+            console.log('Final slides not yet loaded, skip saving');
+            return;
+        }
 
         setSaveStatus('Saving...');
 
