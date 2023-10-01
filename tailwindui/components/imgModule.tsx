@@ -8,10 +8,11 @@ import { toast } from 'react-toastify';
 interface ImgModuleProp {
     imgsrc: string,
     updateSingleCallback: Function,
-    canEdit: boolean
+    canEdit: boolean,
+    autoSave: Function,
 }
 
-export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit}: ImgModuleProp) => {
+export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave}: ImgModuleProp) => {
     const [showModal, setShowModal] = useState(false);
     const [keyword, setKeyword] = useState('');
     const [showImgSearch, setShowImgSearch] = useState(false);
@@ -409,7 +410,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit}: ImgModulePro
                             <button
                                 className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full rounded-lg"
                                 type="button"
-                                onClick={e => { e.preventDefault(); closeModal(); }}>
+                                onClick={e => { e.preventDefault(); closeModal(); autoSave();}}>
                                 Done
                             </button>
                         </div>

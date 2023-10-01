@@ -14,9 +14,10 @@ interface MainSlideProps {
     imgs: string[],
     update_callback: Function,
     canEdit: boolean,
+    autoSave: Function,
 }
 
-export const Col_2_img_1 = ({ user_name, title, topic, subtopic, content, imgs, update_callback, canEdit }: MainSlideProps) => {
+export const Col_2_img_1 = ({ user_name, title, topic, subtopic, content, imgs, update_callback, canEdit, autoSave }: MainSlideProps) => {
 
     // localImgs array length should be initialized to ImgCount
     const ImgCount = 1;
@@ -78,14 +79,14 @@ export const Col_2_img_1 = ({ user_name, title, topic, subtopic, content, imgs, 
         <div className="h-full w-full flex flex-row overflow-hidden gap-[32px]">
             <div className="w-full h-full grow p-1">{content}</div>
             <div className="w-full h-full grow rounded-md overflow-hidden">
-                <ImgModule imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} canEdit={canEdit}/>
+                <ImgModule imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} canEdit={canEdit} autoSave={autoSave}/>
             </div>
         </div>
     </div>
 }
 
 
-export const First_page_img_1 = ({ user_name, title, topic, subtopic, content, imgs, update_callback, canEdit }: MainSlideProps) => {
+export const First_page_img_1 = ({ user_name, title, topic, subtopic, content, imgs, update_callback, canEdit, autoSave }: MainSlideProps) => {
     
     // localImgs array length should be initialized to ImgCount
     const ImgCount = 1;
@@ -150,12 +151,12 @@ export const First_page_img_1 = ({ user_name, title, topic, subtopic, content, i
         </div>
 
         <div className="w-1/2 h-full rounded-md overflow-hidden">
-            <ImgModule imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} canEdit={canEdit}/>
+            <ImgModule imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} canEdit={canEdit} autoSave={autoSave}/>
         </div>
     </div >
 }
 
-export const Col_1_img_0 = ({ user_name, title, topic, subtopic, content, imgs, update_callback, canEdit }: MainSlideProps) => {
+export const Col_1_img_0 = ({ user_name, title, topic, subtopic, content, imgs, update_callback, canEdit, autoSave }: MainSlideProps) => {
 
     // localImgs array length should be initialized to ImgCount
     const ImgCount = 0;
@@ -222,7 +223,7 @@ export const Col_1_img_0 = ({ user_name, title, topic, subtopic, content, imgs, 
 }
 
 
-export const Col_2_img_2 = ({ user_name, title, topic, subtopic, content, imgs, update_callback, canEdit }: MainSlideProps) => {
+export const Col_2_img_2 = ({ user_name, title, topic, subtopic, content, imgs, update_callback, canEdit, autoSave }: MainSlideProps) => {
     // localImgs array length should be initialized to ImgCount
     const ImgCount = 2;
     const [localImgs, setLocalImgs] = useState<string[]>(['', '']);
@@ -283,10 +284,10 @@ export const Col_2_img_2 = ({ user_name, title, topic, subtopic, content, imgs, 
         <div className="h-full w-full flex flex-row overflow-hidden gap-[32px]">
             <div className="w-full h-full grow p-1">{content}</div>
             <div className="w-full h-full grow rounded-md overflow-hidden">
-                <ImgModule imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} canEdit={canEdit} />
+                <ImgModule imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} canEdit={canEdit} autoSave={autoSave} />
             </div>
             <div className="w-full h-full grow rounded-md overflow-hidden">
-                <ImgModule imgsrc={localImgs[1]} updateSingleCallback={updateImgAtIndex(1)} canEdit={canEdit} />
+                <ImgModule imgsrc={localImgs[1]} updateSingleCallback={updateImgAtIndex(1)} canEdit={canEdit} autoSave={autoSave} />
             </div>
         </div>
     </div>
