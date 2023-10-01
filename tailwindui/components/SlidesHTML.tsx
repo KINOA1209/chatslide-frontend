@@ -60,6 +60,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
     const slideRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const [host, setHost] = useState('https://drlambda.ai');
+    const [saveStatus, setSaveStatus] = useState('Up to date');
 
     const [unsavedChanges, setUnsavedChanges] = useState(false);
 
@@ -76,23 +77,24 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
         // console.log('share', sessionStorage.getItem('is_shared'));
     }, []);
 
+    useEffect(() => {
+        if(unsavedChanges) {
+            setSaveStatus('Unsaved changes');
+        }
+    });
+
     // Watch for changes in finalSlides
     useEffect(() => {
+        console.log('finalSlides changed');
         setUnsavedChanges(true);
+        autoSaveSlides();
 
-        // Set a timer to auto-save after 0.01 second if no more changes occur
-        const saveTimer = setTimeout(() => {
-            if (unsavedChanges) {
-                autoSaveSlides();
-            }
-        }, 10);
-
-        // Clear the timer if finalSlides changes before the timer expires
-        return () => clearTimeout(saveTimer);
     }, [finalSlides]);
 
     // Function to send a request to auto-save finalSlides
     const autoSaveSlides = () => {
+
+        setSaveStatus('Saving...');
 
         const formData = {
             foldername: foldername,
@@ -110,6 +112,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
                 if (response.ok) {
                     setUnsavedChanges(false);
                     console.log('Auto-save successful.');
+                    setSaveStatus('Up to date');
                 } else {
                     // Handle save error
                     console.error('Auto-save failed.');
@@ -683,6 +686,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
                     <ClickableLink link={`${host}/shared/${sessionStorage.getItem('project_id')}`} />
                 </div>
             }
+            <label className="text-sm text-gray-500">Save status: {saveStatus}</label>
             <div
                 id="slideContainer"
                 className={`overflow-hidden ${present ? 'fixed top-0 left-0 w-full h-screen z-50' : ''}`}
