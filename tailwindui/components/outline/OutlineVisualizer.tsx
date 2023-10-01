@@ -190,10 +190,10 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             if (response.ok) {
                 return await response.json();
             } else {
-                alert("Request failed: " + response.status);
+                // alert("Request failed: " + response.status);
                 console.log(response)
-                setIsSubmittingScript(false);
-                setIsSubmittingSlide(false);
+                // setIsSubmittingScript(false);
+                // setIsSubmittingSlide(false);
             }
         }
 
