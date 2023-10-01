@@ -4,6 +4,8 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import SlidesHTML, { Slide } from '../../../components/SlidesHTML';
 import Footer, { WorkflowFooter } from '@/components/ui/footer';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Header from '@/components/ui/header';
 
 const SharePage: React.FC = () => {
@@ -35,6 +37,7 @@ const SharePage: React.FC = () => {
                 })
                 .catch(error => {
                     console.log("There was a problem with the fetch operation:", error.message);
+                    toast.error("The shared project is not found.");
                     setLoading(false);
                 });
         }
@@ -48,12 +51,13 @@ const SharePage: React.FC = () => {
 
         <main className="grow">
             <Header loginRequired={false} isLanding={false} refList={[]} />
+            <ToastContainer />
             {loading ? (
                 <div>Loading...</div>
             ) : (
                 <div className="flex items-center justify-center min-h-screen">
                     <div>
-                        <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} isSharing={true} />
+                        <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} viewingMode={true} />
                     </div>
                 </div>
             )}
