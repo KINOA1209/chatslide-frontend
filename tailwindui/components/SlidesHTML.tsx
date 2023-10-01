@@ -678,7 +678,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
                 </div>}
             </div>
             {share &&
-                <ClickableLink link={`${host}/shared/${sessionStorage.getItem('project_id')}`} />
+                <div>
+                    <label className="text-sm text-gray-500">View only link:</label>
+                    <ClickableLink link={`${host}/shared/${sessionStorage.getItem('project_id')}`} />
+                </div>
             }
             <div
                 id="slideContainer"
