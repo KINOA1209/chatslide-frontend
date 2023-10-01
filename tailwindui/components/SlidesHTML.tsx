@@ -45,12 +45,12 @@ export class Slide {
 type SlidesHTMLProps = {
     finalSlides: Slide[];
     setFinalSlides: Function;
-    isSharing?: boolean;
+    viewingMode?: boolean; // viewing another's shared project
 };
 
 
 // it will render the slides fetched from `foldername` in sessionStorage
-const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, isSharing = false }) => {
+const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, viewingMode = false }) => {
     const [slides, setSlides] = useState<Slide[]>([]);
     const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
     const foldername = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('foldername') : '';
@@ -78,7 +78,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
     }, []);
 
     useEffect(() => {
-        if(unsavedChanges) {
+        if (unsavedChanges) {
             setSaveStatus('Unsaved changes');
         }
     });
@@ -570,7 +570,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
                             onClick={openPresent}>Present</button>
                     </div>
                 </div>
-                {!isSharing && <div className='col-span-1'>
+                {!viewingMode && <div className='col-span-1'>
                     <div className='w-fit h-fit rounded-full overflow-hidden'>
                         <button
                             className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
@@ -592,7 +592,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
                             onClick={() => goToSlide(currentSlideIndex + 1)}>&#9654;</button>
                     </div>
                 </div>
-                {!isSharing && <div className='col-span-1 flex flex-row-reverse'>
+                {!viewingMode && <div className='col-span-1 flex flex-row-reverse'>
                     <div className='w-fit h-fit rounded-full overflow-hidden'>
                         <button
                             className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
@@ -690,7 +690,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
                     <ClickableLink link={`${host}/shared/${sessionStorage.getItem('project_id')}`} />
                 </div>
             }
-            <label className="text-sm text-gray-500">Save status: {saveStatus}</label>
+            {!viewingMode &&
+                <label className="text-sm text-gray-500">Save status: {saveStatus}</label>}
             <div
                 id="slideContainer"
                 className={`overflow-hidden ${present ? 'fixed top-0 left-0 w-full h-screen z-50' : ''}`}
@@ -719,7 +720,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, is
                         <ToastContainer />
                         {slides[currentSlideIndex] && templateDispatch(slides[currentSlideIndex],
                             currentSlideIndex,
-                            !isSharing && !present)}
+                            !viewingMode && !present)}
                     </div>
                 )}
             </div>
