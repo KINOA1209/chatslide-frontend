@@ -355,7 +355,7 @@ const TopicForm: React.FC = () => {
                                 placeholder="Your topic here"
                                 value={topic}
                                 onChange={e => setTopic(e.target.value)}
-                                maxLength={40}
+                                maxLength={80}
                                 required />
                             {topicSuggestions.length > 0 && (
                                 <div>
