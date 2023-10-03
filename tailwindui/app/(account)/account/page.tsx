@@ -28,9 +28,9 @@ const Profile = () => {
         fetchUser();
     }, []);
 
-    useEffect(() => {
-        UserService.forceUpdateUserInfo();
-    }, []);
+    // useEffect(() => {
+    //     UserService.forceUpdateUserInfo();
+    // }, []);
 
     useEffect(() => {
         setEditUsername(username);
@@ -340,9 +340,10 @@ const CreditHistory = () => {
     useEffect(() => {
         const fetchCredit = async () => {
             const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-            UserService.getUserCredits(idToken)
+            UserService.getUserCreditsAndTier(idToken)
                 .then(fetched => {
-                    setCredits(fetched)
+                    setCredits(fetched.credits)
+                    // setTier(fetched.tier)
                 })
                 .catch(() => setCredits(0))
         }
