@@ -10,6 +10,7 @@ import GuestUploadModal from './uploadModal';
 import MyFiles from '../fileManagement';
 import { Transition } from '@headlessui/react'
 import GPTToggle from '../button/GPTToggle';
+import PaywallModal from './paywallModal';
 
 const audienceList = ['Researchers', 'Students', 'Business Clients', 'Video Viewers'];
 
@@ -26,6 +27,7 @@ const TopicForm: React.FC = () => {
     const [showFileModal, setShowFileModal] = useState(false);
     const [youtubeError, setYoutubeError] = useState('');
     const [isGpt35, setIsGpt35] = useState(true);
+    const [showPaymentModal, setShowPaymentModal] = useState(false);
 
     const openFile = () => {
         setShowFileModal(true);
@@ -170,6 +172,9 @@ const TopicForm: React.FC = () => {
 
                 // Redirect to a new page with the data
                 router.push('workflow-edit-outlines');
+            } else if (response.status == 402) {
+                setShowPaymentModal(true);
+                setIsSubmitting(false);
             } else {
                 alert("Request failed: " + response.status);
                 console.log(response)
@@ -289,125 +294,128 @@ const TopicForm: React.FC = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <Transition
-                className='h-full w-full z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
-                show={showFileModal}
-                onClick={closeFile}
-                enter="transition ease duration-300 transform"
-                enterFrom="opacity-0 translate-y-12"
-                enterTo="opacity-100 translate-y-0"
-                leave="transition ease duration-300 transform"
-                leaveFrom="opacity-100 translate-y-0"
-                leaveTo="opacity-0 translate-y-12"
-            >
-                <div className='grow md:grow-0'></div>
+        <div>
+            { showPaymentModal && <PaywallModal setShowModal={setShowPaymentModal} message='Upgrade for more ⭐️credits.'/> }
+
+            <form onSubmit={handleSubmit}>
                 <Transition
-                    className='bg-gray-100 w-full h-3/4 md:h-2/3
-                                md:max-w-2xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
-                                overflow-hidden flex flex-col p-4'
+                    className='h-full w-full z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
                     show={showFileModal}
-                    enter="transition ease duration-500 transform delay-300"
+                    onClick={closeFile}
+                    enter="transition ease duration-300 transform"
                     enterFrom="opacity-0 translate-y-12"
                     enterTo="opacity-100 translate-y-0"
                     leave="transition ease duration-300 transform"
                     leaveFrom="opacity-100 translate-y-0"
                     leaveTo="opacity-0 translate-y-12"
-                    onClick={e => { e.stopPropagation() }}
                 >
-                    <h4 className="h4 text-blue-600 text-center">Select Supporting Material</h4>
-                    <MyFiles selectable={true} callback={handleSelectResources} />
-                    <div className="max-w-sm mx-auto">
-                        <div className="flex flex-wrap -mx-3 mt-6">
-                            <div className="w-full px-3">
-                                <button
-                                    className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full"
-                                    type="button"
-                                    onClick={e => { e.preventDefault(); closeFile(); }}>
-                                    OK
-                                </button>
+                    <div className='grow md:grow-0'></div>
+                    <Transition
+                        className='bg-gray-100 w-full h-3/4 md:h-2/3
+                                md:max-w-2xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
+                                overflow-hidden flex flex-col p-4'
+                        show={showFileModal}
+                        enter="transition ease duration-500 transform delay-300"
+                        enterFrom="opacity-0 translate-y-12"
+                        enterTo="opacity-100 translate-y-0"
+                        leave="transition ease duration-300 transform"
+                        leaveFrom="opacity-100 translate-y-0"
+                        leaveTo="opacity-0 translate-y-12"
+                        onClick={e => { e.stopPropagation() }}
+                    >
+                        <h4 className="h4 text-blue-600 text-center">Select Supporting Material</h4>
+                        <MyFiles selectable={true} callback={handleSelectResources} />
+                        <div className="max-w-sm mx-auto">
+                            <div className="flex flex-wrap -mx-3 mt-6">
+                                <div className="w-full px-3">
+                                    <button
+                                        className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full"
+                                        type="button"
+                                        onClick={e => { e.preventDefault(); closeFile(); }}>
+                                        OK
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </Transition>
                 </Transition>
-            </Transition>
 
-            <div className="w-full flex flex-row flex-wrap -mx-3 mb-4">
+                <div className="w-full flex flex-row flex-wrap -mx-3 mb-4">
 
-                {/* Left Column */}
-                <div className="w-full md:w-1/2 px-3">
+                    {/* Left Column */}
+                    <div className="w-full md:w-1/2 px-3">
 
 
-                    {/* Topic Section */}
-                    <div className="flex flex-wrap -mx-3 mb-4">
-                        <div className="w-full px-3">
+                        {/* Topic Section */}
+                        <div className="flex flex-wrap -mx-3 mb-4">
+                            <div className="w-full px-3">
 
-                            <br />
-                            <label
-                                className="block text-gray-800 text-sm font-medium mb-1"
-                                htmlFor="topic">
-                                Topic<span className="text-red-600">*</span>
-                            </label>
-                            <input
-                                id="topic"
-                                type="text"
-                                className="form-input w-full text-gray-800 mb-2"
-                                placeholder="Your topic here"
-                                value={topic}
-                                onChange={e => setTopic(e.target.value)}
-                                maxLength={80}
-                                required />
-                            {topicSuggestions.length > 0 && (
-                                <div>
-                                    <div className="flex text-gray-600 flex-wrap gap-3 mb-4">
-                                        Try:
-                                        {topicSuggestions.map((topic, index) => (
-                                            <button
-                                                key={index}
-                                                className="text-sm text-gray-800 bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-sm cursor-pointer"
-                                                onClick={(event) => handleTopicSuggestionClick(topic, event)}
-                                            >
-                                                {topic}
-                                            </button>
-                                        ))}
+                                <br />
+                                <label
+                                    className="block text-gray-800 text-sm font-medium mb-1"
+                                    htmlFor="topic">
+                                    Topic<span className="text-red-600">*</span>
+                                </label>
+                                <input
+                                    id="topic"
+                                    type="text"
+                                    className="form-input w-full text-gray-800 mb-2"
+                                    placeholder="Your topic here"
+                                    value={topic}
+                                    onChange={e => setTopic(e.target.value)}
+                                    maxLength={80}
+                                    required />
+                                {topicSuggestions.length > 0 && (
+                                    <div>
+                                        <div className="flex text-gray-600 flex-wrap gap-3 mb-4">
+                                            Try:
+                                            {topicSuggestions.map((topic, index) => (
+                                                <button
+                                                    key={index}
+                                                    className="text-sm text-gray-800 bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-sm cursor-pointer"
+                                                    onClick={(event) => handleTopicSuggestionClick(topic, event)}
+                                                >
+                                                    {topic}
+                                                </button>
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
-                            )}
+                                )}
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Audience Section */}
-                    <div className="flex flex-wrap -mx-3 mb-4">
-                        <div className="w-full px-3">
-                            <label
-                                className="block text-gray-800 text-sm font-medium mb-1"
-                                htmlFor="audience">
-                                Audience: <span className="text-red-600">*</span>
-                            </label>
-                            <select
-                                className="form-input w-full text-gray-800 pb-3 mb-2"
-                                value={audienceList.includes(audience) ? audience : audience === 'unselected' ? 'unselected' : 'other'}
-                                onChange={e => audienceDropDown(e.target.value)}
-                                required
-                            >
-                                <option value="unselected" selected disabled>Choose your audience</option>
-                                {audienceList.map((value) => (
-                                    <option value={value}>{value}</option>
-                                ))}
-                                <option value="other">Other (please specify)</option>
-                            </select>
+                        {/* Audience Section */}
+                        <div className="flex flex-wrap -mx-3 mb-4">
+                            <div className="w-full px-3">
+                                <label
+                                    className="block text-gray-800 text-sm font-medium mb-1"
+                                    htmlFor="audience">
+                                    Audience: <span className="text-red-600">*</span>
+                                </label>
+                                <select
+                                    className="form-input w-full text-gray-800 pb-3 mb-2"
+                                    value={audienceList.includes(audience) ? audience : audience === 'unselected' ? 'unselected' : 'other'}
+                                    onChange={e => audienceDropDown(e.target.value)}
+                                    required
+                                >
+                                    <option value="unselected" selected disabled>Choose your audience</option>
+                                    {audienceList.map((value) => (
+                                        <option value={value}>{value}</option>
+                                    ))}
+                                    <option value="other">Other (please specify)</option>
+                                </select>
 
-                            <input
-                                id="audience"
-                                type="text"
-                                className={`form-input w-full text-gray-800 mb-2 ${showAudienceInput ? '' : 'hidden'}`}
-                                placeholder="Other (please specify)"
-                                value={audience}
-                                onChange={e => setAudience(e.target.value)}
-                                required
-                                maxLength={40}
-                            />
-                            {/* {audienceSuggestions.length > 0 && (
+                                <input
+                                    id="audience"
+                                    type="text"
+                                    className={`form-input w-full text-gray-800 mb-2 ${showAudienceInput ? '' : 'hidden'}`}
+                                    placeholder="Other (please specify)"
+                                    value={audience}
+                                    onChange={e => setAudience(e.target.value)}
+                                    required
+                                    maxLength={40}
+                                />
+                                {/* {audienceSuggestions.length > 0 && (
                                 <div>
                                     <div className="flex flex-wrap gap-3 mb-4">
                                         {audienceSuggestions.map((audience, index) => (
@@ -422,127 +430,128 @@ const TopicForm: React.FC = () => {
                                     </div>
                                 </div>
                             )} */}
-                        </div>
-                    </div>
-
-                    {/* Language Section */}
-                    <div className="flex flex-wrap -mx-3 mb-4">
-                        <div className="w-full px-3">
-                            <label
-                                className="block text-gray-800 text-sm font-medium mb-1"
-                                htmlFor="language">
-                                Language: <span className="text-red-600">*</span>
-                            </label>
-                            <select
-                                id="language"
-                                className="form-input w-full text-gray-800"
-                                value={language}
-                                onChange={e => setLanguage(e.target.value)}
-                                required
-                            >
-                                <option value="English">English</option>
-                                <option value="Chinese">中文</option>
-                                <option value="Spanish">Español</option>
-                                <option value="French">Français</option>
-                                <option value="German">Deutsch</option>
-                                <option value="Russian">Русский</option>
-                                <option value="Japanese">日本語</option>
-                                <option value="Portuguese">Português</option>
-                                <option value="Ukrainian">Українська</option>
-                            </select>
-                        </div>
-                    </div>
-
-                </div>
-
-                {/* Right Column */}
-                <div className="w-full md:w-1/2 px-3">
-
-                    <div className='flex flex-row flex-nowrap w-full items-center'>
-                        <hr className='border-gray-400 grow' />
-                        <div className='mx-4 text-gray-400'>Optional</div>
-                        <hr className='border-gray-400 grow' />
-                    </div>
-
-                    <div className="flex flex-wrap -mx-3 mb-4">
-                        <div className="w-full px-3 mt-2 flex flex-row">
-                            <div className='flex items-center'>
-                                <input
-                                    type="checkbox"
-                                    id="addEquations"
-                                    className="form-checkbox text-gray-800"
-                                    checked={addEquations} // Use 'checked' instead of 'value'
-                                    onChange={(e) => setAddEquations(e.target.checked)}
-                                />
                             </div>
-                            <label
-                                className=" ml-2 block text-gray-800 text-sm font-medium"
-                                htmlFor="addEquations">
-                                Select to <b>add equations and formulas</b> to my content, recommended for Math/Science subjects
-                            </label>
                         </div>
-                    </div>
 
-                    {/* YouTube Section */}
-                    <div className="flex flex-wrap -mx-3 mb-4">
-                        <div className="w-full px-3">
-                            <label
-                                className="block text-gray-800 text-sm font-medium mb-1"
-                                htmlFor="youtube">
-                                Supporting Youtube Video Link:
-                            </label>
-                            <input
-                                id="youtube"
-                                type="text"
-                                className="form-input w-full text-gray-800 mb-2"
-                                value={youtube}
-                                onChange={e => handleYoutubeChange(e.target.value)}
-                            />
-                            {youtubeError && <div className="text-sm text-red-500">{youtubeError}</div>}
-                        </div>
-                    </div>
-
-                    {/* File Upload Section */}
-                    <div className="max-w-sm mx-auto">
-                        <div className="flex flex-wrap -mx-3 mt-6">
+                        {/* Language Section */}
+                        <div className="flex flex-wrap -mx-3 mb-4">
                             <div className="w-full px-3">
-                                {user ?
-                                    <button
-                                        className="btn text-blue-600 bg-gray-100 hover:bg-gray-200 w-full border border-blue-600"
-                                        onClick={e => handleOpenFile(e)}
-                                    >
-                                        Add Supporting File
-                                    </button> :
-                                    <GuestUploadModal />}
+                                <label
+                                    className="block text-gray-800 text-sm font-medium mb-1"
+                                    htmlFor="language">
+                                    Language: <span className="text-red-600">*</span>
+                                </label>
+                                <select
+                                    id="language"
+                                    className="form-input w-full text-gray-800"
+                                    value={language}
+                                    onChange={e => setLanguage(e.target.value)}
+                                    required
+                                >
+                                    <option value="English">English</option>
+                                    <option value="Chinese">中文</option>
+                                    <option value="Spanish">Español</option>
+                                    <option value="French">Français</option>
+                                    <option value="German">Deutsch</option>
+                                    <option value="Russian">Русский</option>
+                                    <option value="Japanese">日本語</option>
+                                    <option value="Portuguese">Português</option>
+                                    <option value="Ukrainian">Українська</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {/* Right Column */}
+                    <div className="w-full md:w-1/2 px-3">
+
+                        <div className='flex flex-row flex-nowrap w-full items-center'>
+                            <hr className='border-gray-400 grow' />
+                            <div className='mx-4 text-gray-400'>Optional</div>
+                            <hr className='border-gray-400 grow' />
+                        </div>
+
+                        <div className="flex flex-wrap -mx-3 mb-4">
+                            <div className="w-full px-3 mt-2 flex flex-row">
+                                <div className='flex items-center'>
+                                    <input
+                                        type="checkbox"
+                                        id="addEquations"
+                                        className="form-checkbox text-gray-800"
+                                        checked={addEquations} // Use 'checked' instead of 'value'
+                                        onChange={(e) => setAddEquations(e.target.checked)}
+                                    />
+                                </div>
+                                <label
+                                    className=" ml-2 block text-gray-800 text-sm font-medium"
+                                    htmlFor="addEquations">
+                                    Select to <b>add equations and formulas</b> to my content, recommended for Math/Science subjects
+                                </label>
+                            </div>
+                        </div>
+
+                        {/* YouTube Section */}
+                        <div className="flex flex-wrap -mx-3 mb-4">
+                            <div className="w-full px-3">
+                                <label
+                                    className="block text-gray-800 text-sm font-medium mb-1"
+                                    htmlFor="youtube">
+                                    Supporting Youtube Video Link:
+                                </label>
+                                <input
+                                    id="youtube"
+                                    type="text"
+                                    className="form-input w-full text-gray-800 mb-2"
+                                    value={youtube}
+                                    onChange={e => handleYoutubeChange(e.target.value)}
+                                />
+                                {youtubeError && <div className="text-sm text-red-500">{youtubeError}</div>}
+                            </div>
+                        </div>
+
+                        {/* File Upload Section */}
+                        <div className="max-w-sm mx-auto">
+                            <div className="flex flex-wrap -mx-3 mt-6">
+                                <div className="w-full px-3">
+                                    {user ?
+                                        <button
+                                            className="btn text-blue-600 bg-gray-100 hover:bg-gray-200 w-full border border-blue-600"
+                                            onClick={e => handleOpenFile(e)}
+                                        >
+                                            Add Supporting File
+                                        </button> :
+                                        <GuestUploadModal />}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <hr className='border-gray-400 grow mt-6' />
-
+                <hr className='border-gray-400 grow mt-6' />
 
 
-            <div className="max-w-sm mx-auto">
-                <div className="flex flex-wrap -mx-3 mt-6 justify-center">
-                    <GPTToggle isGpt35={isGpt35} setIsGpt35={setIsGpt35} />
-                    <div className="w-full px-3">
-                        <button
-                            className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400"
-                            disabled={isSubmitting}
-                            // style={{ backgroundColor: '#8b2e2d'}}
-                            type="submit">
-                            {isSubmitting ? "Generating..." : "Generate Outline"}
-                        </button>
+
+                <div className="max-w-sm mx-auto">
+                    <div className="flex flex-wrap -mx-3 mt-6 justify-center">
+                        <GPTToggle isGpt35={isGpt35} setIsGpt35={setIsGpt35} />
+                        <div className="w-full px-3">
+                            <button
+                                className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400"
+                                disabled={isSubmitting}
+                                // style={{ backgroundColor: '#8b2e2d'}}
+                                type="submit">
+                                {isSubmitting ? "Generating..." : "Generate Outline"}
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            {/* Timer */}
-            <Timer expectedSeconds={15} isSubmitting={isSubmitting} />
+                {/* Timer */}
+                <Timer expectedSeconds={15} isSubmitting={isSubmitting} />
 
 
-        </form >
+            </form >
+        </div>
     );
 };
 
