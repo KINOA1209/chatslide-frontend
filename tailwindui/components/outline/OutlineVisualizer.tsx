@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Dialog, Transition } from '@headlessui/react';
 import GptToggle from '@/components/button/GPTToggle';
 import RangeSlider from '../ui/RangeSlider';
+import UserService from '../utils/UserService';
 
 const minOutlineDetailCount = 1;
 const maxOutlineDetailCount = 6;
@@ -30,6 +31,19 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
     const [isGpt35, setIsGpt35] = useState(true);
     const [slidePages, setSlidePages] = useState(20);
     const [wordPerSubpoint, setWordPerSubpoint] = useState(10);
+    const [isPaidUser, setIsPaidUser] = useState<boolean>(false);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const result = await UserService.isPaidUser();
+                setIsPaidUser(result);
+            } catch (error) {
+                console.error("Error fetching user's payment status:", error);
+                // Handle error appropriately
+            }
+        })();
+    }, []);
 
     const handleSlidPagesChange = (n: number) => {
         setSlidePages(20 + n * 10);
@@ -600,13 +614,17 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
 
                         <RangeSlider
                             label="Slide Pages"
-                            values={['20', '30', '40']} 
-                            onChange={handleSlidPagesChange}/>
+                            values={['20', '30', '40']}
+                            onChange={handleSlidPagesChange}
+                            locked={!isPaidUser}
+                        />
 
                         <RangeSlider
                             label="Content per Page"
-                            values={['Consise', 'Normal', 'Detailed']} 
-                            onChange={handleDetailLevelChange}/>
+                            values={['Consise', 'Normal', 'Detailed']}
+                            onChange={handleDetailLevelChange}
+                            locked={!isPaidUser}
+                        />
 
                         {/* <SlideLengthSelector /> */}
                         <div className="w-full px-3">
