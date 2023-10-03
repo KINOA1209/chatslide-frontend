@@ -24,7 +24,7 @@ export default function WorkflowStep3() {
 
     // Start the timer when the component mounts
     useEffect(() => {
-        const timer = setTimeout(handleTimerCompletion, 30000); // 30 seconds
+        const timer = setTimeout(handleTimerCompletion, 60000); // 60 seconds
 
         // Clean up the timer when the component unmounts
         return () => clearTimeout(timer);
@@ -40,7 +40,7 @@ export default function WorkflowStep3() {
 
     // Check if the timer has finished before opening the modal
     useEffect(() => {
-        if (timerFinished) {
+        if (timerFinished && window.location.hostname !== 'localhost') { 
             handleOpenModal();
         }
     }, [timerFinished]);
