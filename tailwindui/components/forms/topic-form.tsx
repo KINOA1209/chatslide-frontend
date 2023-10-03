@@ -176,8 +176,9 @@ const TopicForm: React.FC = () => {
                 setShowPaymentModal(true);
                 setIsSubmitting(false);
             } else {
-                alert("Request failed: " + response.status);
-                console.log(response)
+                alert(`Server is busy now. Please try again later. Reference code: ` + sessionStorage.getItem('project_id'));
+                // alert("Request failed: " + response.status);
+                console.log(response);
                 setIsSubmitting(false);
             }
         } catch (error) {
