@@ -3,53 +3,43 @@ import AuthService from "./AuthService";
 
 class UserService {
     
-    static async forceUpdateUserInfo() {
-        console.log('Force updating user info');
-        const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-        localStorage.removeItem('userCredits');
-        localStorage.removeItem('userTier');
-        UserService.getUserCredits(idToken);
-        UserService.getUserTier(idToken);
-    }
+    // static async forceUpdateUserInfo() {
+    //     console.log('Force updating user info');
+    //     const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+    //     localStorage.removeItem('userCredits');
+    //     localStorage.removeItem('userTier');
+    //     UserService.getUserCredits(idToken);
+    //     UserService.getUserTier(idToken);
+    // }
 
 
-    static async getUserCredits(idToken: string): Promise<number> {
+    static async getUserCreditsAndTier(idToken: string): Promise<{ credits: number, tier: string }> {
         try {
-            // Try to get the user credits from localStorage first
-            const savedCredits = localStorage.getItem('userCredits');
-
-            if (savedCredits !== null) {
-                console.log('Saved credits:', savedCredits);
-                return parseInt(savedCredits, 10);
-            }
-
+    
             const response = await fetch(`/api/user/credits`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${idToken}`,
                 },
             });
-
+    
             if (!response.ok) {
                 throw new Error(`Error status: ${response.status}`);
             }
-
+    
             const data = await response.json();
             const credits: number = data.credits;
-
-            // Save the retrieved user credits to localStorage
-            localStorage.setItem('userCredits', credits.toString());
-
+            const tier: string = data['tier'] || 'FREE';
+    
             console.log(`User credits: ${credits}`);
-
-            return credits;
-
+    
+            return { credits, tier };
+    
         } catch (error) {
             console.error('Failed to fetch user credits:', error);
-            return 0; // Return a default value or handle accordingly
+            return { credits: 0, tier: 'FREE' }; // Return a default value or handle accordingly
         }
     }
-
 
     static async getUserTier(idToken?: string): Promise<string> {
         try {

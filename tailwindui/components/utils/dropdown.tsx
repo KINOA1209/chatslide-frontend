@@ -15,6 +15,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
     const router = useRouter();
     const [username, setUsername] = useState(null);
     const [credits, setCredits] = useState(0);
+    const [tier, setTier] = useState<string>('');
 
     useEffect(() => {
         // Create a scoped async function within the hook.
@@ -23,11 +24,15 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
             const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
             if (username) {
                 setUsername(username);
-                UserService.getUserCredits(idToken)
-                .then(credits => {
-                    setCredits(credits)
+                UserService.getUserCreditsAndTier(idToken)
+                .then(fetched => {
+                    setCredits(fetched.credits)
+                    setTier(fetched.tier)
                 })
-                .catch(() => setCredits(0))
+                .catch(() => {
+                    setCredits(0)
+                    setTier('FREE')
+                })
             }
         };
         // Execute the created function directly
@@ -121,6 +126,9 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
                     </div>
                     <div className="block px-4 py-1 text-sm text-blue-600">
                         ⭐️Credits: {credits}
+                    </div>
+                    <div className="block px-4 py-1 text-sm text-blue-600">
+                        Tier: {tier.split('_')[0]}
                     </div>
                     <div className="py-1" role="none">
                         <div className="py-0.2" role="none">
