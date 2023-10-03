@@ -6,6 +6,7 @@ import AuthService from "../utils/AuthService";
 import { Slide } from '../SlidesHTML';
 import UserService from '../utils/UserService';
 import GptToggle from '../button/GPTToggle';
+import PaywallModal from './paywallModal';
 
 interface TranscriptFormProps {
     isSubmitting: boolean;
@@ -17,8 +18,8 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({ finalSlides, isSubmitti
     const router = useRouter();
     const [user, setUser] = useState(null);
     const [tier, setTier] = useState<string>('');
-    const [showPaymentPopup, setShowPaymentPopup] = useState(false);
     const [isGpt35, setIsGpt35] = useState(true);
+    const [showPaymentModal, setShowPaymentModal] = useState(false);
 
     useEffect(() => {
         // Create a scoped async function within the hook.
@@ -38,6 +39,10 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({ finalSlides, isSubmitti
             setTier(userTier);
         })();
     }, []);
+
+    const handleSubscribeOnclick = () => {
+        setShowPaymentModal(true);
+    }
 
     const handleSubmitTranscript = async (
         event: FormEvent<HTMLFormElement>
@@ -112,6 +117,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({ finalSlides, isSubmitti
 
     return (
         <div className="max-w-sm mx-auto">
+            {showPaymentModal && <PaywallModal setShowModal={setShowPaymentModal} message='Upgrade to unlock more features. 🚀' />}
             <form onSubmit={handleSubmitTranscript}>
                 <div className="flex flex-wrap -mx-3 mt-6 justify-center">
                 <GptToggle isGpt35={isGpt35} setIsGpt35={setIsGpt35} />
@@ -122,7 +128,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({ finalSlides, isSubmitti
                                     <button
                                         type="button"
                                         className="btn text-white font-bold w-full bg-gradient-to-r from-gray-400 to-gray-600 disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400"
-                                        onClick={() => window.open('/account', '_blank')}
+                                        onClick={handleSubscribeOnclick}
                                     >
                                         🔒 Subscribe to Generate Script
                                     </button>
