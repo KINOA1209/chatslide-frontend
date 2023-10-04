@@ -9,7 +9,7 @@ export default function IframeGallery() {
         <iframe className="w-full" src="https://cards.producthunt.com/cards/comments/2713233?v=1" height="400"></iframe>,
         <div className="relative w-full scale-[1.05]"><TwitterTweetEmbed tweetId={'1698513465143353696'} /></div>,
         <iframe className="w-full" src="https://cards.producthunt.com/cards/comments/2714561?v=1" height="400"></iframe>,
-        <div className="relative w-full scale-[1.05]"><TwitterTweetEmbed tweetId={'1700856490595168584'} /></div>,
+        <div className="relative w-full scale-[1.05]"><TwitterTweetEmbed tweetId={'1701222516893577504'} /></div>,
     ]
 
     const [list1, setList1] = useState<JSX.Element[]>([]);
