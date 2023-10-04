@@ -223,7 +223,6 @@ export default function Dashboard() {
     const applyPromoCode = async (token: string) => {
         const promo = localStorage.getItem("promo");
         localStorage.removeItem('promo');
-        localStorage.removeItem('email');
         if (promo && promo !== '') {
             try {
                 const response = await fetch(`/api/user/apply_code`, {
@@ -232,7 +231,7 @@ export default function Dashboard() {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
                     },
-                    body: JSON.stringify({ 'code': promo, 'email': email }),
+                    body: JSON.stringify({ 'code': promo }),
                 }).then(response => {
                     return response.json()
                 }).then(data => {
