@@ -50,7 +50,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
     };
 
     const handleDetailLevelChange = (n: number) => {
-        setWordPerSubpoint(10 + n * 5);
+        setWordPerSubpoint(15 + n * 10);
     };
 
     const updateOutlineSessionStorage = (updatedOutline: any) => {
