@@ -10,6 +10,7 @@ import Link from 'next/link';
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import ClickableLink from '@/components/ui/ClickableLink';
+import ReferralLink from '@/components/ReferralLink';
 
 const Profile = () => {
     const [username, setUsername] = useState('');
@@ -207,44 +208,6 @@ const PasswordModule = () => {
 }
 
 const Referral = () => {
-    const [host, setHost] = useState('https://drlambda.ai');
-    const [referralLink, setReferralLink] = useState('');
-
-    useEffect(() => {
-        if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-            setHost('https://' + window.location.hostname);
-        } else {
-            setHost(window.location.hostname);
-        }
-    }, [])
-
-    useEffect(() => {
-        const fetchReferral = async () => {
-            const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
-            const user = await AuthService.getCurrentUser();
-            const email = user.attributes.email;
-            fetch(`/api/user/create_referral_code`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({ 'email': email }),
-            }).then(response => {
-                if (response.ok) {
-                    return response.json()
-                }
-                else {
-                    throw response.status, response;
-                }
-            }).then(data => {
-                const code = data['referral_code'];
-                setReferralLink('/signup?referral=' + code);
-            }).catch(error => console.error);
-        }
-        fetchReferral();
-    }, [])
-
     const sendEmail = () => {
         var subject = 'Invitation to DrLambda';
         var emailBody = `Hey there!\nI wanted to recommend you check out DrLambda, an AI-powered tool for automatic slide generation. I think you'll really like it. You can get 50 extra credit by using my link:\n${host + referralLink}`;
@@ -261,15 +224,9 @@ const Referral = () => {
     return <div className='w-full px-4 sm:px-6'>
         <div className="mb-8 w-full">
             <div className="w-fit text-[#363E4A] text-[17px] font-bold">Referral</div>
-            <div className="w-fit text-[#212121] text-[80px]">100<span className='text-[24px]'>credit/invite</span></div>
+            <div className="w-fit text-[#212121] text-[80px]">50<span className='text-[24px]'>credit/invite</span></div>
         </div>
-        <div className='w-fit mx-auto'>
-            <ClickableLink link={host + referralLink} />
-            <div className='text-center mt-5 text-[#707C8A] text-[16px]'>
-                You get <b>100</b> credit for free when someone registers using your referral link.<br className='hidden md:inline' />
-                Meanwhile, we will also gift your friend <b>100</b> credit for gratitude.
-            </div>
-        </div>
+        <ReferralLink />
     </div>
 }
 
