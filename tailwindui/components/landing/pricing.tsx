@@ -385,11 +385,11 @@ export function Pricing({ fewerCards = false }: PricingProps) {
                                         {/* ... Other content similar to "Free" card ... */}
                                         <div className="p-4 bg-[#ECF1FE] mx-2 mb-2 rounded-xl h-full flex flex-col justify-between">
                                             <div className="w-full text-center text-4xl md:text-5xl text-[#000230] leading-none mb-4 pt-9">Upon Request</div>
-                                            <div className="w-full text-center text-md">Contact us at contact@drlabmda.ai.<br />We will give you a quote.</div>
+                                            <div className="w-full text-center text-md">Contact us at contact@drlabmda.ai or book a call.<br />We will give you a quote.</div>
                                             <div className="h-16 max-w-xs mx-auto sm:max-w-none flex-col flex justify-center items-center my-3">
                                                 <div>
-                                                    <a href="mailto:contact@drlambda.ai" className="btn drop-shadow-xl text-lg rounded-full text-white w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer bg-[#000230]">
-                                                        Contact us
+                                                    <a href="https://calendly.com/quanlai/30min" target="_blank" className="btn drop-shadow-xl text-lg rounded-full text-white w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer bg-[#000230]">
+                                                        Book a call
                                                     </a>
                                                 </div>
                                             </div>
