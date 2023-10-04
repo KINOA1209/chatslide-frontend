@@ -12,15 +12,17 @@ interface PaywallModalProps {
 const PaywallModal: React.FC<PaywallModalProps> = ({ setShowModal, message }) => {
 
     const modalRef = React.useRef<HTMLDivElement>(null);
+    const modalContentRef = React.useRef<HTMLDivElement>(null);
 
     const handleCloseModal = () => {
         setShowModal(false);
     };
 
-    const handleOutsideClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        if (event.target === modalRef.current) {
-            handleCloseModal();
+    const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (modalContentRef.current?.contains(e.target as Node)) {
+            return; // Click inside the modal content, do nothing
         }
+        handleCloseModal(); // Click outside the modal content, close the modal
     };
 
     return (
