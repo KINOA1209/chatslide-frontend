@@ -24,22 +24,13 @@ const SignupForm: React.FC = () => {
 
     const [usernameError, setUsernameError] = useState('');
     const [emailError, setEmailError] = useState('');
-    const [passwordConfirmError, setPasswordConfirmError] = useState('');
     const [verificationCodeError, setVerificationCodeError] = useState('');
 
     const [isFocused, setIsFocused] = useState(false);
     const [rule1Error, setRule1Error] = useState(false);
-    const [rule2Error, setRule2Error] = useState(false);
-    const [rule3Error, setRule3Error] = useState(false);
-    const [rule4Error, setRule4Error] = useState(false);
-    const [rule5Error, setRule5Error] = useState(false);
 
     const passwordRef = useRef<HTMLInputElement>(null);
     const rule1 = useRef<HTMLParagraphElement>(null);
-    const rule2 = useRef<HTMLParagraphElement>(null);
-    const rule3 = useRef<HTMLParagraphElement>(null);
-    const rule4 = useRef<HTMLParagraphElement>(null);
-    const rule5 = useRef<HTMLParagraphElement>(null);
 
     const verificationCodeInputRef = useRef<HTMLInputElement>(null);
 
@@ -79,10 +70,6 @@ const SignupForm: React.FC = () => {
 
     const validatePassword = (pwd: string): boolean => {
         // Validate the password
-        const uppercaseRegex = /[A-Z]/;
-        const lowercaseRegex = /[a-z]/;
-        const numericRegex = /[0-9]/;
-        const symbolRegex = /[?\^\$\*\.\[\]\{\}\(\)?\-"\!\@\#%\&\/\\,><'\:\;\|\_~`]/;
         var validated = true;
         if (rule1.current) {
             if (pwd.length < 8) {
@@ -92,59 +79,10 @@ const SignupForm: React.FC = () => {
             } else {
                 setRule1Error(false);
                 rule1.current.style.color = 'green';
-            }
-        }
-        if (rule2.current) {
-            if (!uppercaseRegex.test(pwd)) {
-                rule2.current.style.color = 'red';
-                setRule2Error(true);
-                validated = false;
-            } else {
-                setRule2Error(false);
-                rule2.current.style.color = 'green';
-            }
-        }
-        if (rule3.current) {
-            if (!lowercaseRegex.test(pwd)) {
-                rule3.current.style.color = 'red';
-                setRule3Error(true);
-                validated = false;
-            } else {
-                setRule3Error(false);
-                rule3.current.style.color = 'green';
-            }
-        }
-        if (rule4.current) {
-            if (!numericRegex.test(pwd)) {
-                rule4.current.style.color = 'red';
-                setRule4Error(true);
-                validated = false;
-            } else {
-                setRule4Error(false);
-                rule4.current.style.color = 'green';
-            }
-        }
-        if (rule5.current) {
-            if (!symbolRegex.test(pwd)) {
-                rule5.current.style.color = 'red';
-                setRule5Error(true);
-                validated = false;
-            } else {
-                setRule5Error(false);
-                rule5.current.style.color = 'green';
+                setPassword(passwordRef.current?.value || '');
             }
         }
         return validated;
-    }
-
-    const validateConfirmPassword = (pwd1: string, pwd2: string): boolean => {
-        if (pwd1 === pwd2) {
-            setPasswordConfirmError("");
-            return true;
-        } else {
-            setPasswordConfirmError("Two passwords are different.");
-            return false;
-        }
     }
 
     function handlePasswordChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -152,22 +90,12 @@ const SignupForm: React.FC = () => {
         validatePassword(value);
     }
 
-    function handleConfirmPasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
-        if (passwordRef.current) {
-            const validation1 = validatePassword(passwordRef.current.value);
-            const validation2 = validateConfirmPassword(passwordRef.current.value, e.target.value);
-            if (validation1 && validation2) {
-                setPassword(passwordRef.current.value);
-            } else {
-                setPassword("");
-            }
-        }
-    };
-
     async function sendVerificationCode(e: React.MouseEvent<HTMLButtonElement>) {
+        console.log(`sendVerificationCode: ${email}, ${password}`);
         e.preventDefault();
 
         if (password === "") { // Invalid password
+            console.log("Invalid password")
             return;
         }
 
@@ -375,10 +303,6 @@ const SignupForm: React.FC = () => {
                     <div className="text-sm text-gray-500">
                         {/* <p>&emsp;&emsp;Password must</p> */}
                         {isFocused || rule1Error ? <p ref={rule1}>&emsp;&emsp;Be a minimum of 8 characters</p> : <></>}
-                        {isFocused || rule2Error ? <p ref={rule2}>&emsp;&emsp;Include at least one uppercase letter (A-Z)</p> : <></>}
-                        {isFocused || rule3Error ? <p ref={rule3}>&emsp;&emsp;Include at least one lowercase letter (a-z)</p> : <></>}
-                        {isFocused || rule4Error ? <p ref={rule4}>&emsp;&emsp;Include at least one number (0-9)</p> : <></>}
-                        {isFocused || rule5Error ? <p ref={rule5}>&emsp;&emsp;Include at least one special character</p> : <></>}
                     </div>
                     <input
                         id="password"
@@ -393,17 +317,6 @@ const SignupForm: React.FC = () => {
                         onFocus={e => { setIsFocused(true) }}
                         onBlur={e => { setIsFocused(false) }}
                     />
-                    <input
-                        id="confirmPassword"
-                        type="password"
-                        onChange={handleConfirmPasswordChange}
-                        className="form-input w-full text-gray-800 mt-3"
-                        placeholder="Confirm your password"
-                        minLength={8}
-                        maxLength={16}
-                        required
-                    />
-                    {passwordConfirmError && <div className="text-sm text-red-500">{passwordConfirmError}</div>}
                 </div>
             </div>
             <div className="flex flex-wrap -mx-3 mb-4">
