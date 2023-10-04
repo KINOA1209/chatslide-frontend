@@ -208,19 +208,6 @@ const PasswordModule = () => {
 }
 
 const Referral = () => {
-    const sendEmail = () => {
-        var subject = 'Invitation to DrLambda';
-        var emailBody = `Hey there!\nI wanted to recommend you check out DrLambda, an AI-powered tool for automatic slide generation. I think you'll really like it. You can get 50 extra credit by using my link:\n${host + referralLink}`;
-        window.location.href = "mailto:" + "?subject=" + subject + "&body=" + emailBody;
-    }
-
-    const handleShare = async () => {
-        const shareData = {
-            text: `Hey there!\nI wanted to recommend you check out DrLambda, an AI-powered tool for automatic slide generation. I think you'll really like it. You can get 50 extra credit by using my link:\n${host + referralLink}`,
-        };
-        await navigator.share(shareData);
-    }
-
     return <div className='w-full px-4 sm:px-6'>
         <div className="mb-8 w-full">
             <div className="w-fit text-[#363E4A] text-[17px] font-bold">Referral</div>
