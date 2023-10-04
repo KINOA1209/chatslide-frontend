@@ -198,14 +198,10 @@ const PasswordModule = () => {
     const router = useRouter();
 
     return <div className='w-full px-4 sm:px-6'>
-        <div className="mb-8 w-full">
-            <div className="w-fit text-[#363E4A] text-[17px] font-bold">Reset Password</div>
-        </div>
         <div className='w-fit mx-auto'>
             <div className='w-full flex flex-row justify-center mb-5'>
                 <button className='btn text-white font-bold bg-gradient-to-r from-blue-600 to-teal-500 whitespace-nowrap rounded-xl' onClick={e => router.push('/reset-password')}>Change Password</button>
             </div>
-            <div className='text-center text-[#525C6A] text-[16px]'>Click on the button above to redirect to password reset page.</div>
         </div>
     </div>
 }
@@ -530,24 +526,23 @@ export default function Account() {
     return (
         <div className='flex flex-col items-center gap-[70px] mx-auto'>
             <ToastContainer />
-            <div className='fixed w-full top-0 h-[130px] md:h-[160px] bg-[#E7E9EB] flex flex-col z-20 max-w-none 2xl:max-w-[80%]'>
-                <div className='grow flex flex-row mb-2 items-end'>
+            {/* <div className='fixed w-full top-0 h-[130px] md:h-[160px] bg-[#E7E9EB] flex flex-col z-20 max-w-none 2xl:max-w-[80%]'> */}
+                {/* <div className='grow flex flex-row mb-2 items-end'>
                     <div className='text-[#363E4A] text-[16px] mx-1 md:mx-5 cursor-pointer' onClick={e => { toSection(0) }} onMouseMove={e => { handleMouseOver(0) }} onMouseOut={handleMouseOut} ref={tab1Ref}>Account Settings</div>
-                    <div className='text-[#363E4A] text-[16px] mx-1 md:mx-5 cursor-pointer' onClick={e => { toSection(1) }} onMouseMove={e => { handleMouseOver(1) }} onMouseOut={handleMouseOut} ref={tab2Ref}>Referral</div>
+                    <div className='text-[#363E4A] text-[16px] mx-1 md:mx-5 cursor-pointer' onClick={e => { toSection(1) }} onMouseMove={e => { handleMouseOver(1) }} onMouseOut={handleMouseOut} ref={tab4Ref}>Credits</div>
                     <div className='text-[#363E4A] text-[16px] mx-1 md:mx-5 cursor-pointer' onClick={e => { toSection(2) }} onMouseMove={e => { handleMouseOver(2) }} onMouseOut={handleMouseOut} ref={tab3Ref}>Subscription</div>
-                    <div className='text-[#363E4A] text-[16px] mx-1 md:mx-5 cursor-pointer' onClick={e => { toSection(3) }} onMouseMove={e => { handleMouseOver(3) }} onMouseOut={handleMouseOut} ref={tab4Ref}>Credits</div>
-                </div>
-                <div className='w-full flex flex-row'>
+                </div> */}
+                {/* <div className='w-full flex flex-row'>
                     <div className='border-b-2 w-fit border-black h-0 overflow-hidden text-[16px] mx-1 md:mx-5 transition-all duration-300' ref={tabUnderlineRef}></div>
-                </div>
-            </div>
+                </div> */}
+            {/* </div> */}
             <div className='w-full mt-[20px] md:mt-0 max-w-none 2xl:max-w-[80%]' ref={ref1}><Profile /></div>
             <div className='w-full max-w-none 2xl:max-w-[80%]'><PasswordModule /></div>
             {bar}
+            <div className='w-full max-w-none 2xl:max-w-[80%]' ref={ref4}><CreditHistory /></div>
             <div className='w-full max-w-none 2xl:max-w-[80%]' ref={ref2}><Referral /></div>
             {bar}
             <div className='w-full' ref={ref3}><Subscription /></div>
-            {bar}
-            <div className='w-full max-w-none 2xl:max-w-[80%]' ref={ref4}><CreditHistory /></div>
+            
         </div >)
 };
