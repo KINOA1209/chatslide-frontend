@@ -8,6 +8,10 @@
     src:url('/fonts/CreatoDisplay-Regular.otf') format('opentype');
 }
 
+@font-face {
+    font-family: 'ArimoRegular';
+    src:url('/fonts/Arimo-Regular.ttf') format('opentype');
+}
 
 #slideContainer {
     font-family: 'CreatoDisplayRegular'
