@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { Pricing } from '@/components/landing/pricing'
+import ReferralLink from '../ReferralLink';
 
 interface PaywallModalProps {
     setShowModal: (value: boolean) => void;
@@ -34,6 +35,9 @@ const PaywallModal: React.FC<PaywallModalProps> = ({ setShowModal, message }) =>
                 onClick={handleOutsideClick}
             >
                 <div className="relative bg-white rounded-lg shadow dark:bg-gray-700 w-128">
+                    <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                        <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                    </div>
                     {/* Close button */}
                     <button
                         className="absolute top-0 right-4 text-2xl text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white focus:outline-none"
@@ -47,6 +51,8 @@ const PaywallModal: React.FC<PaywallModalProps> = ({ setShowModal, message }) =>
                         <div className="text-center text-white font-bold">
                             {message}
                         </div>
+
+                        <ReferralLink />
                         <Pricing fewerCards={true} />
                     </div>
                 </div>
