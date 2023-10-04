@@ -34,10 +34,16 @@ const PaywallModal: React.FC<PaywallModalProps> = ({ setShowModal, message }) =>
                 className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full h-full"
                 onClick={handleOutsideClick}
             >
-                <div className="relative bg-white rounded-lg shadow dark:bg-gray-700 w-128">
-                    <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-                        <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-                    </div>
+                <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                    <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
+                <span
+                    className="hidden sm:inline-block sm:align-middle sm:h-screen"
+                    aria-hidden="true"
+                >
+                    &#8203;
+                </span>
+                <div className="relative bg-white rounded-lg shadow w-128">
                     {/* Close button */}
                     <button
                         className="absolute top-0 right-4 text-2xl text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white focus:outline-none"
@@ -48,11 +54,11 @@ const PaywallModal: React.FC<PaywallModalProps> = ({ setShowModal, message }) =>
 
                     {/* Modal body */}
                     <div className="p-6 space-y-6 pb-6"> {/* Reduced bottom padding */}
-                        <div className="text-center text-white font-bold">
+                        <div className="text-center text-[#707C8A] text-[16px] font-bold">
                             {message}
                         </div>
 
-                        <ReferralLink />
+                        {/* <ReferralLink /> */}
                         <Pricing fewerCards={true} />
                     </div>
                 </div>
