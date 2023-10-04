@@ -293,9 +293,8 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
 
     const handleClick = (id: string) => {
         const ind = selectedResources.indexOf(id);
-        let resources = []
+        let resources: Array<string> = []
         if (['PRO_MONTHLY', 'PLUS_MONTHLY', 'PRO_YEARLY', 'PLUS_YEARLY'].includes(tier)) {
-            console.log()
             resources = [...selectedResources];
             if (ind !== -1) {
                 resources.splice(ind, 1);
@@ -303,9 +302,12 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
                 resources.push(id);
             }
         } else {
-            resources = [id];
-            console.log(tier)
-            if(selectedResources.length > 0){
+            if (ind !== -1) {
+                resources = [];
+            } else {
+                resources = [id];
+            }
+            if((resources.length > 0) && (selectedResources.length > 0)) {
                 toast.info('Only subscribed user can select multiple files!', {
                     position: "top-center",
                     autoClose: 5000,
