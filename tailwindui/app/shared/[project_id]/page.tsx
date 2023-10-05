@@ -7,6 +7,7 @@ import Footer, { WorkflowFooter } from '@/components/ui/footer';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from '@/components/ui/header';
+import mixpanel from 'mixpanel-browser';
 
 const SharePage: React.FC = () => {
     const router = useRouter();
@@ -20,6 +21,9 @@ const SharePage: React.FC = () => {
         // Assume fetchSlideHtml is a function to get slide_html from your project table
         const fetchFoldername = async () => {
             sessionStorage.removeItem('foldername');
+            mixpanel.track('Shared Project Viewed', {
+                'Project ID': project_id,
+            });
             fetch(`/api/get_shared_project_foldername?project_id=${project_id}`)
                 .then(response => {
                     if (!response.ok) {

@@ -11,6 +11,7 @@ import FeedbackForm from '@/components/forms/feedback';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { LoadingIcon } from '@/components/ui/progress';
+import mixpanel from 'mixpanel-browser';
 
 interface UpdateButtonProps {
     callback: Function,
@@ -81,6 +82,11 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
 
         try {
             const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+            mixpanel.track('Audio Generated', {
+                'Project ID': foldername,
+                'Topic': topic,
+                'Language': language,
+            });
             const response = await fetch('/api/generate_audio', {
                 method: 'POST',
                 headers: {
@@ -122,6 +128,10 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
 
         try {
             const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+            mixpanel.track('Script Updated', {
+                'Ask': ask,
+                'Text': text,
+            });
             const response = await fetch('/api/update_script', {
                 method: 'POST',
                 headers: {

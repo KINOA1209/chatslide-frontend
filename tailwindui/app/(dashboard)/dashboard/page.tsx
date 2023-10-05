@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AuthService from '@/components/utils/AuthService';
 import { Dialog, Transition } from '@headlessui/react';
 import { useRouter } from 'next/navigation';
+import mixpanel from 'mixpanel-browser';
 
 interface Project {
     id: number;
@@ -134,6 +135,9 @@ export default function Dashboard() {
         }
         try {
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+            mixpanel.track('Project Deleted', {
+                'Project ID': deleteInd,
+            });
             const response = await fetch("/api/delete_project", {
                 method: "DELETE",
                 headers: {
@@ -225,6 +229,9 @@ export default function Dashboard() {
         localStorage.removeItem('promo');
         if (promo && promo !== '') {
             try {
+                mixpanel.track('Promo Code Applied', {
+                    'Promo Code': promo,
+                });
                 const response = await fetch(`/api/user/apply_code`, {
                     method: 'POST',
                     headers: {

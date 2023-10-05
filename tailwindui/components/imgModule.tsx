@@ -4,6 +4,7 @@ import AuthService from '@/components/utils/AuthService';
 import { LoadingIcon } from '@/components/ui/progress';
 import { createPortal } from 'react-dom';
 import { toast } from 'react-toastify';
+import mixpanel from 'mixpanel-browser';
 
 interface ImgModuleProp {
     imgsrc: string,
@@ -47,6 +48,11 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave}: Im
         setShowImgSearch(true);
         setSearching(true);
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+
+        mixpanel.track('Image Searched', {
+            'Search Keyword': (e.target as HTMLFormElement).search_keyword.value,
+        });
+        
         const response = await fetch('/api/search_images', {
             method: 'POST',
             headers: {

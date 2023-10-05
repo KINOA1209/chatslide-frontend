@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AuthService from "../utils/AuthService";
+import mixpanel from 'mixpanel-browser';
 
 interface FeedbackFormProps {
   onClose: () => void;
@@ -45,6 +46,12 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose }) => {
           feedbackText: feedbackText,
           project_id: project_id,
         };
+
+        mixpanel.track('Feedback Submitted', {
+            'Rating': rating,
+            'Feedback Text': feedbackText,
+            'Project ID': project_id,
+        });
   
         const response = await fetch('/api/feedback', {
           method: 'POST',

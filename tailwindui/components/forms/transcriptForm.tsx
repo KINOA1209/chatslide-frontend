@@ -7,6 +7,7 @@ import { Slide } from '../SlidesHTML';
 import UserService from '../utils/UserService';
 import GptToggle from '../button/GPTToggle';
 import PaywallModal from './paywallModal';
+import mixpanel from 'mixpanel-browser';
 
 interface TranscriptFormProps {
     isSubmitting: boolean;
@@ -84,6 +85,12 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({ finalSlides, isSubmitti
 
         try {
             const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+
+            mixpanel.track('Script Generated', {
+                'Project ID': sessionStorage.getItem('project_id'),
+                'Language': language,
+            });
+            
             const response = await fetch('/api/transcript_html', {
                 method: 'POST',
                 headers: {

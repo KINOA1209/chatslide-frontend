@@ -9,6 +9,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import GptToggle from '@/components/button/GPTToggle';
 import RangeSlider from '../ui/RangeSlider';
 import UserService from '../utils/UserService';
+import mixpanel from 'mixpanel-browser';
 
 const minOutlineDetailCount = 1;
 const maxOutlineDetailCount = 6;
@@ -243,7 +244,16 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
         };
 
         // console.log(formData);
-
+        mixpanel.track('Generate Slides', {
+            'audience': audience,
+            'language': language,
+            'project_id': project_id,
+            'addEquations': addEquations,
+            'extraKnowledge': extraKnowledge,
+            'model_name': isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
+            'slidePages': slidePages,
+            'wordPerSubpoint': wordPerSubpoint,
+        });
 
         try {
             // this is defined before
@@ -263,6 +273,10 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             // generate slides
             if (toSlides === true) {
                 const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+                mixpanel.track('Generate HTML', {
+                    'Project ID': sessionStorage.getItem('project_id'),
+                    'Language': language,
+                });
                 const response = await fetch('/api/generate_html', {
                     method: 'POST',
                     headers: {
@@ -291,6 +305,10 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             }
             // generate script direclty
             else {
+                mixpanel.track('Generate Script', {
+                    'Project ID': sessionStorage.getItem('project_id'),
+                    'Language': language,
+                });
                 const response = await fetch('/api/scripts_only', {
                     method: 'POST',
                     headers: {
