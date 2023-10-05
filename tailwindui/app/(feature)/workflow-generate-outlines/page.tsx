@@ -32,7 +32,7 @@ export default function WorkflowStep1() {
       <div className="max-w-4xl mx-auto px-6" ref={contentRef}>
         <TopicForm />
       </div>
-      <div className="fixed bottom-10 right-10">
+      <div className="fixed bottom-10 right-10 hidden sm:block">
         <button
           onClick={handleOpenModal}
           className="bg-gradient-to-r from-blue-600  to-purple-500 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
