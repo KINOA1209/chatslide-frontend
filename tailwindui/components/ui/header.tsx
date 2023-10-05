@@ -11,6 +11,8 @@ import GoogleAnalytics from "@/components/integrations/GoogleAnalytics";
 import Hotjar from "@/components/integrations/Hotjar";
 // import AuthService from "../utils/AuthService";
 import { Auth, Hub } from 'aws-amplify';
+import mixpanel from 'mixpanel-browser';
+import AuthService from "../utils/AuthService";
 
 interface HeaderProps {
     loginRequired: boolean,
@@ -19,7 +21,7 @@ interface HeaderProps {
 }
 const Header = ({loginRequired, isLanding = false, refList }: HeaderProps) => {
     const [top, setTop] = useState<boolean>(true);
-    const [user, setUser] = useState(null);
+    const [userId, setUserId] = useState(null);
     // const [username, setUsername] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -37,10 +39,13 @@ const Header = ({loginRequired, isLanding = false, refList }: HeaderProps) => {
     }, [top]);
 
     useEffect(() => {
+        mixpanel.init('22044147cd36f20bf805d416e1235329', { debug: true, track_pageview: true, persistence: 'localStorage' });
+
         const checkUser = async () => {
             try {
-                const user = await Auth.currentAuthenticatedUser();
-                setUser(user);
+                const {userId, idToken} = await AuthService.getCurrentUserTokenAndId();
+                setUserId(userId);
+                mixpanel.identify(userId);
                 setLoading(false);
             } catch {
                 console.log('No authenticated user.');
@@ -53,7 +58,7 @@ const Header = ({loginRequired, isLanding = false, refList }: HeaderProps) => {
 
         // check the current user when component loads
         checkUser();
-
+        
         const listener = (data: any) => {
             switch (data.payload.event) {
                 case 'signIn':
@@ -62,7 +67,7 @@ const Header = ({loginRequired, isLanding = false, refList }: HeaderProps) => {
                     break;
                 case 'signOut':
                     console.log('user signed out');
-                    setUser(null);
+                    setUserId(null);
                     break;
                 default:
                     break;
@@ -152,7 +157,7 @@ const Header = ({loginRequired, isLanding = false, refList }: HeaderProps) => {
                     {/* Desktop navigation */}
                     <nav className="hidden lg:flex w-[272px]">
                         {/* Desktop sign in links */}
-                        {user ? (
+                        {userId ? (
                             <ul className="flex grow justify-end flex-wrap items-center">
                                 <DropdownButton />
                             </ul>

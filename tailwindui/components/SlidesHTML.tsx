@@ -11,6 +11,7 @@ import { Transition } from '@headlessui/react';
 import templates, { templateSamples } from "@/components/slideTemplates";
 import ClickableLink from './ui/ClickableLink';
 import AuthService from './utils/AuthService';
+import mixpanel from 'mixpanel-browser';
 
 export interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
@@ -150,6 +151,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
         setShare(newShareStatus);
         const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
         try {
+
+            mixpanel.track('Project Shared', {
+                'Project ID': sessionStorage.getItem('project_id'),
+            });
+
             const response = await fetch("/api/share_project", {
                 method: "POST",
                 headers: {

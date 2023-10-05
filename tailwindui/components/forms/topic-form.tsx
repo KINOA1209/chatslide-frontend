@@ -11,6 +11,7 @@ import MyFiles from '../fileManagement';
 import { Transition } from '@headlessui/react'
 import GPTToggle from '../button/GPTToggle';
 import PaywallModal from './paywallModal';
+import mixpanel from 'mixpanel-browser';
 
 const audienceList = ['Researchers', 'Students', 'Business Clients', 'Video Viewers'];
 
@@ -120,6 +121,13 @@ const TopicForm: React.FC = () => {
 
         console.log("created form data");
 
+        mixpanel.track("Generate Outline", {
+            "audience": formData.audience,
+            "language": formData.language,
+            "addEquations": formData.addEquations,
+            "model_name": formData.model_name
+        });
+
         try {
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
             const response = await fetch('/api/outlines', {
@@ -186,44 +194,6 @@ const TopicForm: React.FC = () => {
             setIsSubmitting(false);
         }
     };
-
-    const onFileSelected = async (file: File | null) => {
-        console.log("will upload file", file);
-        if (file == null) {
-            alert("Please select non-null file");
-            return;
-        }
-        console.log("file name: ", file.name)
-
-        const body = new FormData();
-        body.append("file", file);
-
-        const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
-        const headers = new Headers();
-        if (token) {
-            headers.append('Authorization', `Bearer ${token}`);
-        }
-
-        const response = await fetch("/api/upload_user_file", {
-            method: "POST",
-            headers: headers,
-            body: body
-        });
-
-        if (response.ok) {
-            alert("File upload successful!");
-            const data = await response.json();
-            console.log("data: ", data);
-            const file_id = data.data.file_id;
-            const resources: string[] = JSON.parse(sessionStorage.getItem('resources') || '[]');
-            resources.push(file_id);
-            const updatedResourcesJSON: string = JSON.stringify(resources);
-            sessionStorage.setItem('resources', updatedResourcesJSON);
-        } else {
-            console.log(response);
-            alert("File upload failed!" + response.status);
-        }
-    }
 
     const handleSelectResources = (resource: Array<string>) => {
         sessionStorage.setItem('resources', JSON.stringify(resource));

@@ -9,6 +9,7 @@ import ImageList from '@/components/ImageList';
 import ProjectProgress from "@/components/steps";
 import AuthService from '@/components/utils/AuthService';
 import FeedbackForm from '@/components/forms/feedback';
+import mixpanel from 'mixpanel-browser';
 
 const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageUrls }: { transcripts: [], audioFiles: [], foldername: string, imageUrls: [] }) => {
     const [transcriptList, setTranscriptList] = useState<string[]>(transcripts);
@@ -55,6 +56,12 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageU
 
         try {
             const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+            mixpanel.track('Video Generated', {
+                'Project ID': sessionStorage.getItem('project_id'),
+                'User ID': userId,
+                'Folder Name': foldername,
+                'Language': language,
+            });
             const response = await fetch('/api/generate_video', {
                 method: 'POST',
                 headers: {

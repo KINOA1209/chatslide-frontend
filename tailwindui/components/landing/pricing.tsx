@@ -3,6 +3,7 @@ import AuthService from "@/components/utils/AuthService";
 import { useRouter } from 'next/navigation';
 import moment from "moment";
 import Toggle from "../button/Toggle";
+import mixpanel from 'mixpanel-browser';
 
 interface PricingProps {
     fewerCards?: boolean;
@@ -84,6 +85,10 @@ export function Pricing({ fewerCards = false }: PricingProps) {
 
             console.log(requestData);
 
+            mixpanel.track('Subscription Intention', {
+                'Subscription Tier': tier,
+            });
+
             // Make the API request to create a checkout session
             const response = await fetch('/api/create-checkout-session', {
                 method: 'POST',
@@ -123,6 +128,10 @@ export function Pricing({ fewerCards = false }: PricingProps) {
             };
 
             console.log(requestData);
+
+            mixpanel.track('Subscription Intention', {
+                'Subscription Tier': tier,
+            });
 
             // Make the API request to create a checkout session
             const response = await fetch('/api/create-checkout-session', {
