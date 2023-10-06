@@ -397,31 +397,36 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
         return updateImgUrl;
     }
 
-    // useEffect(() => {
-    //     console.log(`present: ${present}`);
-    //     const resizeSlide = () => {
-    //         if (containerRef.current && slideRef.current) {
-    //             let scale = 1;
-    //             const viewWidth = window.innerWidth;
-    //             if (viewWidth < 976) {
-    //                 scale = (viewWidth - 80) / 960;
-    //                 containerRef.current.style.height = present ? '100%' : `${540 * scale}px`;
-    //                 containerRef.current.style.width = present ? '100%' : `${960 * scale}px`;
-    //                 slideRef.current.style.transform = `scale(${scale})`;
-    //                 slideRef.current.style.left = `-${960 * (1 - scale) / 2}px`;
-    //                 slideRef.current.style.top = `-${540 * (1 - scale) / 2}px`;
-    //             } else {
-    //                 containerRef.current.style.height = present ? '100%' : '540px',
-    //                 containerRef.current.style.width = present ? '100%' : '960px',
-    //                 slideRef.current.style.transform = `scale(1)`;
-    //                 slideRef.current.style.left = '';
-    //                 slideRef.current.style.top = '';
-    //             }
-    //         }
-    //     }
-    //     window.addEventListener('resize', resizeSlide);
-    //     resizeSlide();
-    // }, [containerRef, slideRef]);
+    useEffect(() => {
+        console.log(`present: ${present}`);
+        if (!containerRef.current || !slideRef.current) {
+            return;  // Exit if containerRef is not loaded
+        }
+    
+        const resizeSlide = () => {
+            if (!present && containerRef.current && slideRef.current) {
+                let scale = 1;
+                const viewWidth = window.innerWidth;
+                if (viewWidth < 976) {
+                    scale = (viewWidth - 80) / 960;
+                    containerRef.current.style.height = present ? '100%' : `${540 * scale}px`;
+                    containerRef.current.style.width = present ? '100%' : `${960 * scale}px`;
+                    slideRef.current.style.transform = `scale(${scale})`;
+                    slideRef.current.style.left = `-${960 * (1 - scale) / 2}px`;
+                    slideRef.current.style.top = `-${540 * (1 - scale) / 2}px`;
+                } else {
+                    containerRef.current.style.height = present ? '100%' : '540px',
+                        containerRef.current.style.width = present ? '100%' : '960px',
+                        slideRef.current.style.transform = `scale(1)`;
+                    slideRef.current.style.left = '';
+                    slideRef.current.style.top = '';
+                }
+            }
+        }
+        window.addEventListener('resize', resizeSlide);
+        resizeSlide();
+        console.log('resize');
+    }, [slideRef, containerRef]);
 
 
     const templateDispatch = (slide: Slide, index: number, canEdit: boolean): JSX.Element => {
@@ -578,7 +583,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
     return (
         <div className='w-fit h-fit'>
             <div className='flex justify-between items-center mb-6'>
-                <div className='col-span-1'>
+                <div className='col-span-1 hidden sm:block'>
                     <div className='w-fit h-fit rounded-full overflow-hidden'>
                         <button
                             className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
@@ -607,97 +612,98 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                             onClick={() => goToSlide(currentSlideIndex + 1)}>&#9654;</button>
                     </div>
                 </div>
-                {!viewingMode && <div className='col-span-1 flex flex-row-reverse'>
-                    <div className='w-fit h-fit rounded-full overflow-hidden'>
-                        <button
-                            className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
-                            onClick={openModal}>Change Layout</button>
-                    </div>
-                    <Transition
-                        className='h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
-                        show={showLayout}
-                        onClick={closeModal}
-                        enter="transition ease duration-300 transform"
-                        enterFrom="opacity-0 translate-y-12"
-                        enterTo="opacity-100 translate-y-0"
-                        leave="transition ease duration-300 transform"
-                        leaveFrom="opacity-100 translate-y-0"
-                        leaveTo="opacity-0 translate-y-12"
-                    >
-                        <div className='grow md:grow-0'></div>
+                {!viewingMode &&
+                    <div className='col-span-1 flex flex-row-reverse hidden sm:block'>
+                        <div className='w-fit h-fit rounded-full overflow-hidden'>
+                            <button
+                                className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
+                                onClick={openModal}>Change Layout</button>
+                        </div>
                         <Transition
-                            className='bg-gray-100 w-full h-3/4 md:h-1/2
-                    md:max-w-2xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
-                    overflow-hidden flex flex-col p-4'
+                            className='h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
                             show={showLayout}
-                            enter="transition ease duration-500 transform delay-300"
+                            onClick={closeModal}
+                            enter="transition ease duration-300 transform"
                             enterFrom="opacity-0 translate-y-12"
                             enterTo="opacity-100 translate-y-0"
                             leave="transition ease duration-300 transform"
                             leaveFrom="opacity-100 translate-y-0"
                             leaveTo="opacity-0 translate-y-12"
-                            onClick={e => { e.stopPropagation() }}
                         >
-                            <h4 className="font-semibold text-xl text-center">Page Layout</h4>
-                            <div className='w-full text-center mb-3'>
-                                Change layout of current page
-                            </div>
-                            <div className='grow flex flex-col overflow-hidden'>
-                                <div className='mt-2 mb-5 grow overflow-hidden'>
-                                    <div className='w-full h-full'>
-                                        <div className='w-full h-full flex flex-col'>
-                                            <div className='w-full h-full overflow-y-auto'>
-                                                <div className='w-full h-fit grid grid-cols-2 gap-4 p-2'>
-                                                    {currentSlideIndex === 0 ?
-                                                        templateSamples.cover.map((temp, index) => {
-                                                            if (!slides[currentSlideIndex]) {
-                                                                return <></>
-                                                            }
-                                                            if (temp.name !== slides[currentSlideIndex].template) {
-                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'>
-                                                                    <img src={temp.img} className='w-full h-full object-contain' />
-                                                                </div>
-                                                            } else {
-                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'>
-                                                                    <img src={temp.img} className='w-full h-full object-contain' />
-                                                                </div>
-                                                            }
-                                                        })
-                                                        :
-                                                        templateSamples.main.map((temp, index) => {
-                                                            if (temp.name !== slides[currentSlideIndex].template) {
-                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'>
-                                                                    <img src={temp.img} className='w-full h-full object-contain' />
-                                                                </div>
-                                                            } else {
-                                                                return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'>
-                                                                    <img src={temp.img} className='w-full h-full object-contain' />
-                                                                </div>
-                                                            }
-                                                        })}
+                            <div className='grow md:grow-0'></div>
+                            <Transition
+                                className='bg-gray-100 w-full h-3/4 md:h-1/2
+                    md:max-w-2xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
+                    overflow-hidden flex flex-col p-4'
+                                show={showLayout}
+                                enter="transition ease duration-500 transform delay-300"
+                                enterFrom="opacity-0 translate-y-12"
+                                enterTo="opacity-100 translate-y-0"
+                                leave="transition ease duration-300 transform"
+                                leaveFrom="opacity-100 translate-y-0"
+                                leaveTo="opacity-0 translate-y-12"
+                                onClick={e => { e.stopPropagation() }}
+                            >
+                                <h4 className="font-semibold text-xl text-center">Page Layout</h4>
+                                <div className='w-full text-center mb-3'>
+                                    Change layout of current page
+                                </div>
+                                <div className='grow flex flex-col overflow-hidden'>
+                                    <div className='mt-2 mb-5 grow overflow-hidden'>
+                                        <div className='w-full h-full'>
+                                            <div className='w-full h-full flex flex-col'>
+                                                <div className='w-full h-full overflow-y-auto'>
+                                                    <div className='w-full h-fit grid grid-cols-2 gap-4 p-2'>
+                                                        {currentSlideIndex === 0 ?
+                                                            templateSamples.cover.map((temp, index) => {
+                                                                if (!slides[currentSlideIndex]) {
+                                                                    return <></>
+                                                                }
+                                                                if (temp.name !== slides[currentSlideIndex].template) {
+                                                                    return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'>
+                                                                        <img src={temp.img} className='w-full h-full object-contain' />
+                                                                    </div>
+                                                                } else {
+                                                                    return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'>
+                                                                        <img src={temp.img} className='w-full h-full object-contain' />
+                                                                    </div>
+                                                                }
+                                                            })
+                                                            :
+                                                            templateSamples.main.map((temp, index) => {
+                                                                if (temp.name !== slides[currentSlideIndex].template) {
+                                                                    return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'>
+                                                                        <img src={temp.img} className='w-full h-full object-contain' />
+                                                                    </div>
+                                                                } else {
+                                                                    return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'>
+                                                                        <img src={temp.img} className='w-full h-full object-contain' />
+                                                                    </div>
+                                                                }
+                                                            })}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
 
                                 </div>
-
-                            </div>
-                            <div className="w-full mx-auto">
-                                <div className="w-full flex flex-wrap">
-                                    <div className="w-full">
-                                        <button
-                                            // className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full rounded-lg"
-                                            type="button"
-                                            onClick={e => { e.preventDefault(); closeModal(); }}>
-                                            Done
-                                        </button>
+                                <div className="w-full mx-auto">
+                                    <div className="w-full flex flex-wrap">
+                                        <div className="w-full">
+                                            <button
+                                                // className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full rounded-lg"
+                                                type="button"
+                                                onClick={e => { e.preventDefault(); closeModal(); }}>
+                                                Done
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </Transition>
                         </Transition>
-                    </Transition>
-                </div>}
+                    </div>}
             </div>
             {share &&
                 <div>
@@ -724,6 +730,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                         style={{
                             width: present ? '100%' : '960px',
                             height: present ? '100%' : '540px',
+                            // transform : present ? `scale(${window.innerWidth/1920})` : 'scale(1)',
+                            // left : present ? `-${960 * (1 - window.innerWidth/1920) / 2}px` : '',
+                            // top : present ? `-${540 * (1 - window.innerWidth/1920) / 2}px` : '',
                             backgroundSize: 'cover',
                             display: 'flex',
                             flexDirection: 'column',
