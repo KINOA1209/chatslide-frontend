@@ -232,31 +232,29 @@ export function Pricing({ fewerCards = false }: PricingProps) {
                                         </div>
 
                                         <div className="p-4 bg-white/90 mx-2 mb-2 rounded-xl h-full flex flex-col">
-                                            <div className="w-full text-center text-md"><br /><br />Join us as for free!</div>
-                                            <div className="w-full text-center text-4xl md:text-5xl">$0</div>
+                                            <div className="w-full text-center text-md"><br /><br />Join us for free!</div>
+                                            <div className="w-full text-center text-3xl md:text-4xl">$0</div>
 
-                                            <div className="text-2xl mt-4">Include</div>
-                                            <ul className="list-disc list-outside px-5 space-y-3 mt-2 [&>*]:text-gray-500 text-md" style={{ fontFamily: 'sans-serif' }}>
-                                                <li>
-                                                    100 free ⭐️credits
-                                                </li>
-                                                <li>
-                                                    Usage of GPT-3.5
-                                                </li>
-                                                <li>
-                                                    Up to 1 file upload for each project
-                                                </li>
+                                            <div className="text-xl mt-4">Include</div>
+                                            <ul className="list-disc list-inside space-y-2 text-sm" style={{ fontFamily: 'sans-serif' }}>
+                                                <li>100 free ⭐️credits</li>
+                                                <li>Usage of GPT-3.5</li>
+                                                <li>Up to 1 file upload for each project</li>
                                             </ul>
-                                            <div className="grow"></div>
-                                            <div className="h-16 max-w-xs mx-auto sm:max-w-none flex-col flex justify-center items-center my-3">
-                                                <div>
-                                                    {(!currentUser) && <div ref={buttonRef} className="btn drop-shadow-xl text-lg rounded-full text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer"
-                                                        style={{ backgroundImage: 'linear-gradient(-45deg, #FFA63D, #FF3D77, #338AFF, #3CF0C5)', backgroundSize: '600%' }}
-                                                        onClick={() => { currentUser ? router.push('/dashboard') : router.push('/signup') }}>
-                                                        Join Now
-                                                    </div>}
 
-                                                    {(currentUser && (tier === 'FREE' || tier === '')) && <><div className="text-xl text-center">Current Subscription</div></>}
+                                            <div className="mt-auto h-12 mx-auto flex-col flex justify-center items-center my-2">
+                                                <div>
+                                                    {!currentUser &&
+                                                        <div ref={buttonRef} className="btn drop-shadow-md text-sm rounded-full text-white bg-blue-600 hover:bg-blue-700 w-full sm:w-auto cursor-pointer"
+                                                            style={{ backgroundImage: 'linear-gradient(-45deg, #FFA63D, #FF3D77, #338AFF, #3CF0C5)', backgroundSize: '600%' }}
+                                                            onClick={() => { currentUser ? router.push('/dashboard') : router.push('/signup') }}>
+                                                            Join Now
+                                                        </div>
+                                                    }
+
+                                                    {currentUser && (tier === 'FREE' || tier === '') &&
+                                                        <div className="text-lg text-center">Current Subscription</div>
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -286,12 +284,12 @@ export function Pricing({ fewerCards = false }: PricingProps) {
                                                 {!isMonthly ? 'Billed yearly' : 'Billed monthly'}
                                             </div>}
                                         <div className="w-full text-center text-md text-red-700">7 Day Free Trial</div>
-                                        <div className="w-full text-center text-4xl md:text-5xl">
+                                        <div className="w-full text-center text-3xl md:text-4xl">
                                             {!isMonthly ? '$8/mo' : '$9.9/mo'}
                                         </div>
 
-                                        <div className="text-2xl mt-4">Include</div>
-                                        <ul className="list-disc list-outside px-5 space-y-3 mt-2 [&>*]:text-gray-500 text-md" style={{ fontFamily: 'sans-serif' }}>
+                                        <div className="text-xl mt-4">Include</div>
+                                        <ul className="list-disc list-inside space-y-2 text-sm" style={{ fontFamily: 'sans-serif' }}>
                                             <li>
                                                 All features of Free plan
                                             </li>
@@ -347,12 +345,12 @@ export function Pricing({ fewerCards = false }: PricingProps) {
                                                 {!isMonthly ? 'Billed yearly' : 'Billed monthly'}
                                             </div>}
                                         <div className="w-full text-center text-md text-red-700">7 Day Free Trial</div>
-                                        <div className="w-full text-center text-4xl md:text-5xl">
+                                        <div className="w-full text-center text-3xl md:text-4xl">
                                             {!isMonthly ? '$33/mo' : '$39.9/mo'}
                                         </div>
 
-                                        <div className="text-2xl mt-4">Include</div>
-                                        <ul className="list-disc list-outside px-5 space-y-3 mt-2 [&>*]:text-gray-500 text-md" style={{ fontFamily: 'sans-serif' }}>
+                                        <div className="text-xl mt-4">Include</div>
+                                        <ul className="list-disc list-inside space-y-2 text-sm" style={{ fontFamily: 'sans-serif' }}>
                                             <li>
                                                 All features of Free/Plus plans
                                             </li>
