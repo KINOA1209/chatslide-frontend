@@ -728,9 +728,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                         className="slide h-full w-full"
                         ref={slideRef}
                         style={{
-                            width: present ? '100%' : '960px',
-                            height: present ? '100%' : '540px',
-                            // transform : present ? `scale(${window.innerWidth/1920})` : 'scale(1)',
+                            width: present ? '50%' : '960px',
+                            height: present ? '50%' : '540px',
+                            transform : present ? `scale(2) translate(25%, 25%)` : 'scale(1)',
                             // left : present ? `-${960 * (1 - window.innerWidth/1920) / 2}px` : '',
                             // top : present ? `-${540 * (1 - window.innerWidth/1920) / 2}px` : '',
                             backgroundSize: 'cover',
