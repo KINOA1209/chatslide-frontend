@@ -426,7 +426,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
         window.addEventListener('resize', resizeSlide);
         resizeSlide();
         console.log('resize');
-    }, [slideRef, containerRef]);
+    }, [slideRef.current, containerRef.current]);
 
 
     const templateDispatch = (slide: Slide, index: number, canEdit: boolean): JSX.Element => {
