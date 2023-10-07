@@ -277,7 +277,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
             slidePages: slidePages,
             wordPerSubpoint: wordPerSubpoint,
-            endIndex: 2,  // generate first 2 sections only
+            // endIndex: 2,  // generate first 2 sections only
         };
 
         if (resources && resources.length > 0 && !extraKnowledge) {
