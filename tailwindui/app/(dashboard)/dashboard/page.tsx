@@ -182,7 +182,7 @@ export default function Dashboard() {
 
     useEffect(() => {
         if (rendered && projects.length === 0 && promptRef.current) {
-            promptRef.current.innerHTML = '';
+            promptRef.current.innerHTML = 'You have no project created.';
         }
     }, [projects, rendered]);
 
@@ -282,19 +282,7 @@ export default function Dashboard() {
         router.push('/workflow-generate-outlines')
     }
 
-    const StartNewProjectButton = () => (
-        <div className="w-full sm:w-fit grow sm:grow-0 text-center pt-4">
-            <div className="w-full mx-auto">
-                <button
-                    className="w-full btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500"
-                    type="button"
-                    onClick={handleStartNewProject}
-                >
-                    Start New Project (20 ⭐️)
-                </button>
-            </div>
-        </div>
-    );
+
 
     return (
         <section className="bg-gradient-to-b from-gray-100 to-white grow flex flex-col h-full">
@@ -303,11 +291,16 @@ export default function Dashboard() {
                 <div className="pt-4 grow pr-4">
                     <h1 className="h2 text-blue-600">My Projects</h1>
                 </div>
-            </div>
-
-            <div className="grid place-items-center h-full">
-                <div>
-                    <StartNewProjectButton />
+                <div className="w-full sm:w-fit grow sm:grow-0 text-center pt-4">
+                    <div className="w-full mx-auto">
+                        <button
+                            className="w-full btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500"
+                            type="button"
+                            onClick={handleStartNewProject}
+                        >
+                            Start New Project (20 ⭐️)
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -336,6 +329,43 @@ export default function Dashboard() {
                                 );
                             })}
                         </div>
+                        {/* <div className="flex justify-center items-center my-6">
+                            {!projects.length || currentPage === 1 ? (
+                                <button
+                                    className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md opacity-50 cursor-not-allowed mr-2`}
+                                    disabled
+                                    style={{ minWidth: '120px' }}
+                                >
+                                    Previous Page
+                                </button>
+                            ) : (
+                                <button
+                                    className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md mr-2`}
+                                    onClick={goToPreviousPage}
+                                    style={{ minWidth: '120px' }}
+                                >
+                                    Previous Page
+                                </button>
+                            )}
+                            {!projects.length || currentPage === totalPages ? (
+                                <button
+                                    className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md opacity-50 cursor-not-allowed`}
+                                    disabled
+                                    style={{ minWidth: '120px' }}
+                                >
+                                    Next Page
+                                </button>
+                            ) : (
+                                <button
+                                    className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md`}
+                                    onClick={goToNextPage}
+                                    style={{ minWidth: '120px' }}
+                                >
+                                    Next Page
+                                </button>
+                            )}
+                        </div> */}
+
                     </div>
                 }
                 {currentProjects.length === 0 &&
@@ -345,8 +375,8 @@ export default function Dashboard() {
                         </div>
                     </div>
                 }
-
             </div>
+
 
             {/* Delete modal */}
             <Transition appear show={isOpen} as={Fragment}>
