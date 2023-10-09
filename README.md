@@ -1,0 +1,19 @@
+# DrLambda Frontend 
+
+## Local Setup
+
+If you have access to backend repo, follow the backend repo setup to run the backend locally.
+
+Otherwise you can set up frontend locally, and connect to the dev backend at https://dev.drlambda.ai .
+To do this, 
+- put the content of `aws-exports.js` under tailwindui directory. The content can be requested. 
+
+- `sudo cp config/nginx_mac_frontend_only.conf /usr/local/etc/nginx/nginx.conf (in some cases the dest file is at /opt/homebrew/etc/nginx/nginx.conf)`
+- `sudo nginx -t`
+- `brew services restart nginx`
+- test if the backend is connected by going to http://localhost/api/test and see if there is result
+
+- `cd tailwindui`
+- `rew install nvm`
+- `nvm install 19.8.1`
+- `npm install`
