@@ -8,7 +8,7 @@ Otherwise you can set up frontend locally, and connect to the dev backend at htt
 To do this, 
 - put the content of `aws-exports.js` under tailwindui directory. The content can be requested. 
 
-- `sudo cp config/nginx_mac_frontend_only.conf /usr/local/etc/nginx/nginx.conf (in some cases the dest file is at /opt/homebrew/etc/nginx/nginx.conf)`
+- `sudo cp config/nginx_mac_frontend_only.conf /usr/local/etc/nginx/nginx.conf` (in some cases the dest file is at `/opt/homebrew/etc/nginx/nginx.conf`)
 - `sudo nginx -t`
 - `brew services restart nginx`
 - test if the backend is connected by going to http://localhost/api/test and see if there is result
@@ -17,3 +17,10 @@ To do this,
 - `rew install nvm`
 - `nvm install 19.8.1`
 - `npm install`
+
+
+## Local Run and Test
+- `npm run dev`
+
+## Local Build
+- `npm run build`: make sure to run this and see if the build passes before commiting
