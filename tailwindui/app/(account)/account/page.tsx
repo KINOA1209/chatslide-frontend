@@ -481,7 +481,7 @@ export default function Account() {
                 </div> */}
             {/* </div> */}
             <div className='w-full mt-[20px] md:mt-0 max-w-none 2xl:max-w-[80%]' ref={ref1}><Profile /></div>
-            {/* <div className='w-full max-w-none 2xl:max-w-[80%]'><PasswordModule /></div> */}
+            <div className='w-full max-w-none 2xl:max-w-[80%]'><PasswordModule /></div>
             {bar}
             <div className='w-full max-w-none 2xl:max-w-[80%]' ref={ref4}><CreditHistory /></div>
             <div className='w-full max-w-none 2xl:max-w-[80%]' ref={ref2}><Referral /></div>
