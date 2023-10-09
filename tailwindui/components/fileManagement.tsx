@@ -8,6 +8,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import moment from "moment";
 import mixpanel from 'mixpanel-browser';
+import { CarbonConnect, IntegrationName } from 'carbon-connect';
+
 
 interface UserFile {
     id: string,
@@ -88,13 +90,13 @@ const FileManagement: React.FC<UserFileList> = ({ selectable = false, userfiles,
         console.log(thumbnailUrl)
         return <img src={thumbnailUrl} alt="Thumbnail" className="w-full h-full object-cover" />;
     };
-    
+
 
     const entry = (id: string, uid: string, filename: string, timestamp: string, thumbnail: string, icon = 'pdf') => {
         return (
             <div key={id} className="w-full h-16 px-4 rounded-2xl md:hover:bg-gray-200" onClick={e => { if (selectable) { clickCallback(id) } else { handleOnClick(e) } }}>
                 <div className='h-full flex items-center w-full py-4 px-2'>
-                <div className='w-8 flex'>{thumbnail ? getThumbnail(thumbnail) : getIcon(filename)}</div>
+                    <div className='w-8 flex'>{thumbnail ? getThumbnail(thumbnail) : getIcon(filename)}</div>
                     <div className='grow text-ellipsis mx-4 overflow-hidden whitespace-nowrap'>{filename}</div>
                     {timestamp && <div className='mx-16 hidden md:block'>{moment(timestamp).format('L')}</div>}
                     {!selectable ? <div className='w-8 flex flex-row-reverse'>
@@ -317,7 +319,7 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
             } else {
                 resources = [id];
             }
-            if((resources.length > 0) && (selectedResources.length > 0)) {
+            if ((resources.length > 0) && (selectedResources.length > 0)) {
                 toast.info('Only subscribed user can select multiple files!', {
                     position: "top-center",
                     autoClose: 5000,
@@ -340,6 +342,57 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
         }
     }, [selectedResources]);
 
+    useEffect(() => {
+        const handleVisibilityChange = async () => {
+            if (document.visibilityState === 'visible') {
+                try {
+                    const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+                    fetchFiles(token);
+                }
+                catch (error: any) {
+                    console.error(error);
+                }
+            }
+        };
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        return () => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
+    }, []);
+
+    const tokenFetcher = async () => {
+        try {
+            // Assuming AuthService.getCurrentUserTokenAndId() returns an object with userId and idToken properties
+            const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+
+            const headers = new Headers();
+            if (token) {
+                headers.append('Authorization', `Bearer ${token}`);
+            }
+            headers.append('Content-Type', 'application/json');
+
+            const response = await fetch('/api/fetchCarbonTokens', {
+                method: 'GET', // The endpoint is using the GET method
+                headers: headers,
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                return data
+            } else {
+                // Handle the case when the response is not OK (status code is not 200)
+                console.error('Failed to fetch access token:', response.status, response.statusText);
+                throw new Error('Failed to fetch access token');
+            }
+        } catch (error) {
+            // Handle any other errors that might occur during the process
+            console.error('Error fetching access token:', error);
+            throw error;
+        }
+    };
+
     return (
         <section className="bg-gradient-to-b from-gray-100 to-white grow flex flex-col h-full">
             <ToastContainer enableMultiContainer containerId={'fileManagement'} />
@@ -347,10 +400,58 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
                 {!selectable ? <div className="pt-4 grow pr-4">
                     <h1 className="h2 text-blue-600">My Resources</h1>
                 </div> : <></>}
-                <div className="max-w-sm w-fit text-center pt-4">
+                <div className="max-w-sm w-fit text-center pt-4 mx-4">
                     <div className="w-full mx-auto">
                         <FileUploadButton onFileSelected={onFileSelected} />
                     </div>
+                </div>
+            </div>
+            <div className="max-w-sm w-fit text-center pt-4">
+                <div className="w-full mx-auto">
+                    <CarbonConnect
+                        orgName="DrLambda"
+                        brandIcon="https://drlambda.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo_no_text.0a4e5a6b.png&w=1920&q=75"
+                        tokenFetcher={tokenFetcher}
+                        tags={{
+                            tag1: 'tag1_value',
+                            tag2: 'tag2_value',
+                            tag3: 'tag3_value',
+                        }}
+                        maxFileSize={10000000}
+                        enabledIntegrations={[
+                            {
+                                id: IntegrationName.GOOGLE_DRIVE,
+                                chunkSize: 1500,
+                                overlapSize: 20,
+                            },
+                            {
+                                id: IntegrationName.ONEDRIVE,
+                                chunkSize: 1000,
+                                overlapSize: 20,
+                            },
+                        ]}
+                        onSuccess={(data) => console.log('Data on Success: ', data)}
+                        onError={(error) => console.log('Data on Error: ', error)}
+                        primaryBackgroundColor="#F2F2F2"
+                        primaryTextColor="#555555"
+                        secondaryBackgroundColor="#f2f2f2"
+                        secondaryTextColor="#000000"
+                        allowMultipleFiles={true}
+                        open={false}
+                        chunkSize={1500}
+                        overlapSize={20}
+                    // entryPoint="LOCAL_FILES"
+                    >
+                        <div className='max-w-sm flex flex-col items-center'>
+                            <button
+                                className="w-full btn text-white font-bold bg-black from-blue-600  to-teal-500"
+                                type="button"
+                            >
+                                3rd Party Integrations
+                            </button>
+                        </div>
+
+                    </CarbonConnect>
                 </div>
             </div>
             <div className="max-w-6xl w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto" ref={contentRef}>
