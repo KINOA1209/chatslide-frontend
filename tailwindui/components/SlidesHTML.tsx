@@ -62,9 +62,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
     const containerRef = useRef<HTMLDivElement>(null);
     const [host, setHost] = useState('https://drlambda.ai');
     const [saveStatus, setSaveStatus] = useState('Up to date');
-
+    const [dimensions, setDimensions] = useState({ width: 960, height: 540 });
     const [unsavedChanges, setUnsavedChanges] = useState(false);
     const isFirstRender = useRef(true);
+
+    const scale = Math.min(dimensions.width / 960, dimensions.height / 540);
 
     useEffect(() => {
         if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
@@ -402,7 +404,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
         if (!containerRef.current || !slideRef.current) {
             return;  // Exit if containerRef is not loaded
         }
-    
+
+        setDimensions({ width: window.innerWidth, height: window.innerHeight });
+
         const resizeSlide = () => {
             if (!present && containerRef.current && slideRef.current) {
                 let scale = 1;
@@ -713,9 +717,25 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
             }
             {!viewingMode &&
                 <label className="text-sm text-gray-500">Save status: {saveStatus}</label>}
+
+            {/* White modal for presentation mode */}
+            {present && (
+                <div
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: 'white',
+                        zIndex: 40
+                    }}
+                ></div>
+            )}
+            
             <div
                 id="slideContainer"
-                className={`overflow-hidden ${present ? 'fixed top-0 left-0 w-full h-screen z-50' : ''}`}
+                className={`${present ? 'fixed top-0 left-0 w-full h-full z-50' : ''}`}
                 ref={containerRef}
                 style={{
                     boxSizing: 'border-box',
@@ -728,9 +748,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                         className="slide h-full w-full"
                         ref={slideRef}
                         style={{
-                            width: present ? '50%' : '960px',
-                            height: present ? '50%' : '540px',
-                            transform : present ? `scale(2) translate(25%, 25%)` : 'scale(1)',
+                            width: present ? '100%' : '960px',
+                            height: present ? '100%' : '540px',
+                            transformOrigin: 'top left',
+                            transform: present ? `scale(${scale})` : 'scale(1)',
                             // left : present ? `-${960 * (1 - window.innerWidth/1920) / 2}px` : '',
                             // top : present ? `-${540 * (1 - window.innerWidth/1920) / 2}px` : '',
                             backgroundSize: 'cover',
