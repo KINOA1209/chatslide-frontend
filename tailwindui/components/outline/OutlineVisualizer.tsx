@@ -627,12 +627,12 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                             <Timer expectedSeconds={60} isSubmitting={isSubmittingSlide} />
 
                             {/* Button for generating scripts */}
-                            <button className="btn text-blue-600 border-blue-600 w-full mt-4 disabled:from-gray-200 disabled:to-gray-200 disabled:bg-gray-200 disabled:text-gray-400"
+                            {/* <button className="btn text-blue-600 border-blue-600 w-full mt-4 disabled:from-gray-200 disabled:to-gray-200 disabled:bg-gray-200 disabled:text-gray-400"
                                 onClick={() => { setToSlides(false); }}
                                 disabled={isSubmittingSlide || isSubmittingScript}
                             >
                                 {isSubmittingScript ? 'Generating...' : 'Generate Scripts'}
-                            </button>
+                            </button> */}
                             {/* Timer */}
                             <Timer expectedSeconds={60} isSubmitting={isSubmittingScript} />
                         </div>
