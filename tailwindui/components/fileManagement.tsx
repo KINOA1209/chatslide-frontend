@@ -142,7 +142,7 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
     const contentRef = useRef<HTMLDivElement>(null);
     const [rendered, setRendered] = useState<boolean>(false);
     const [selectedResources, setSelectedResources] = useState<Array<string>>([]);
-    const [tier, setTier] = useState<string>('');
+    const [isPaid, setIsPaid] = useState<boolean>(false);
 
     useEffect(() => {
         if (contentRef.current) {
@@ -164,8 +164,8 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
 
     useEffect(() => {
         (async () => {
-            const userTier = await UserService.getUserTier();
-            setTier(userTier);
+            const paid = await UserService.isPaidUser();
+            setIsPaid(paid);
         })();
     }, []);
 
@@ -304,7 +304,7 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
     const handleClick = (id: string) => {
         const ind = selectedResources.indexOf(id);
         let resources: Array<string> = []
-        if (['PRO_MONTHLY', 'PLUS_MONTHLY', 'PRO_YEARLY', 'PLUS_YEARLY'].includes(tier)) {
+        if (isPaid) {
             resources = [...selectedResources];
             if (ind !== -1) {
                 resources.splice(ind, 1);
