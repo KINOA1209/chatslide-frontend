@@ -13,7 +13,7 @@ import GPTToggle from '../button/GPTToggle';
 import PaywallModal from './paywallModal';
 import mixpanel from 'mixpanel-browser';
 
-const audienceList = ['Researchers', 'Students', 'Business Clients', 'Video Viewers'];
+const audienceList = ['Researchers', 'Students', 'Business Clients', 'Office Colleagues', 'Video Viewers', 'Myself', ];
 
 interface Project {
     topic: string;
