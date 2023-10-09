@@ -39,7 +39,7 @@ const Header = ({loginRequired, isLanding = false, refList }: HeaderProps) => {
     }, [top]);
 
     useEffect(() => {
-        mixpanel.init('22044147cd36f20bf805d416e1235329', { debug: true, track_pageview: true, persistence: 'localStorage' });
+        mixpanel.init('22044147cd36f20bf805d416e1235329', { debug: true, track_pageview: true, persistence: 'localStorage', ignore_dnt: true });
 
         const checkUser = async () => {
             try {
