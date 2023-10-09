@@ -18,7 +18,7 @@ interface TranscriptFormProps {
 const TranscriptForm: React.FC<TranscriptFormProps> = ({ finalSlides, isSubmitting, setIsSubmitting }) => {
     const router = useRouter();
     const [user, setUser] = useState(null);
-    const [tier, setTier] = useState<string>('');
+    const [isPaid, setIsPaid] = useState(false);
     const [isGpt35, setIsGpt35] = useState(true);
     const [showPaymentModal, setShowPaymentModal] = useState(false);
 
@@ -36,8 +36,8 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({ finalSlides, isSubmitti
 
     useEffect(() => {
         (async () => {
-            const userTier = await UserService.getUserTier();
-            setTier(userTier);
+            const paid = await UserService.isPaidUser();
+            setIsPaid(paid);
         })();
     }, []);
 
@@ -130,7 +130,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({ finalSlides, isSubmitti
                 <GptToggle isGpt35={isGpt35} setIsGpt35={setIsGpt35} />
                     <div className="w-full px-3">
                         {
-                            tier === 'FREE' ? (
+                            !isPaid ? (
                                 <>
                                     <button
                                         type="button"
