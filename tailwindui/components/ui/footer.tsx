@@ -31,9 +31,9 @@ export default function Footer() {
               <li className="mb-2">
                 <a href="/career" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Career</a>
               </li>
-              <li className="mb-2">
+              {/* <li className="mb-2">
                 <a href="/about_us" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">About us</a>
-              </li>
+              </li> */}
               {/* <li className="mb-2">
                 <a href="/terms" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Terms and Services</a>
               </li> */}
