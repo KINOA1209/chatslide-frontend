@@ -405,53 +405,70 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
                         <FileUploadButton onFileSelected={onFileSelected} />
                     </div>
                 </div>
-            </div>
-            <div className="max-w-sm w-fit text-center pt-4">
-                <div className="w-full mx-auto">
-                    <CarbonConnect
-                        orgName="DrLambda"
-                        brandIcon="https://drlambda.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo_no_text.0a4e5a6b.png&w=1920&q=75"
-                        tokenFetcher={tokenFetcher}
-                        tags={{
-                            tag1: 'tag1_value',
-                            tag2: 'tag2_value',
-                            tag3: 'tag3_value',
-                        }}
-                        maxFileSize={10000000}
-                        enabledIntegrations={[
-                            {
-                                id: IntegrationName.GOOGLE_DRIVE,
-                                chunkSize: 1500,
-                                overlapSize: 20,
-                            },
-                            {
-                                id: IntegrationName.ONEDRIVE,
-                                chunkSize: 1000,
-                                overlapSize: 20,
-                            },
-                        ]}
-                        onSuccess={(data) => console.log('Data on Success: ', data)}
-                        onError={(error) => console.log('Data on Error: ', error)}
-                        primaryBackgroundColor="#F2F2F2"
-                        primaryTextColor="#555555"
-                        secondaryBackgroundColor="#f2f2f2"
-                        secondaryTextColor="#000000"
-                        allowMultipleFiles={true}
-                        open={false}
-                        chunkSize={1500}
-                        overlapSize={20}
-                    // entryPoint="LOCAL_FILES"
-                    >
-                        <div className='max-w-sm flex flex-col items-center'>
-                            <button
-                                className="w-full btn text-white font-bold bg-black from-blue-600  to-teal-500"
-                                type="button"
-                            >
-                                3rd Party Integrations
-                            </button>
-                        </div>
 
-                    </CarbonConnect>
+                <div className="max-w-sm w-fit text-center pt-4 mx-4">
+                    <div className="w-full mx-auto">
+                        <CarbonConnect
+                            orgName="DrLambda"
+                            brandIcon="https://drlambda.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo_no_text.0a4e5a6b.png&w=1920&q=75"
+                            tokenFetcher={tokenFetcher}
+                            tags={{
+                                tag1: 'tag1_value',
+                                tag2: 'tag2_value',
+                                tag3: 'tag3_value',
+                            }}
+                            maxFileSize={10000000}
+                            enabledIntegrations={[
+                                {
+                                    id: IntegrationName.GOOGLE_DRIVE,
+                                    chunkSize: 1500,
+                                    overlapSize: 20,
+                                },
+                                {
+                                    id: IntegrationName.ONEDRIVE,
+                                    chunkSize: 1000,
+                                    overlapSize: 20,
+                                },
+                                {
+                                    id: IntegrationName.NOTION,
+                                    chunkSize: 1000,
+                                    overlapSize: 20,
+                                },
+                                {
+                                    id: IntegrationName.WEB_SCRAPER,
+                                    chunkSize: 1000,
+                                    overlapSize: 20,
+                                },
+                                {
+                                    id: IntegrationName.DROPBOX,
+                                    chunkSize: 1000,
+                                    overlapSize: 20,
+                                },
+                                
+                            ]}
+                            onSuccess={(data) => console.log('Data on Success: ', data)}
+                            onError={(error) => console.log('Data on Error: ', error)}
+                            primaryBackgroundColor="#F2F2F2"
+                            primaryTextColor="#555555"
+                            secondaryBackgroundColor="#f2f2f2"
+                            secondaryTextColor="#000000"
+                            allowMultipleFiles={true}
+                            open={false}
+                            chunkSize={1500}
+                            overlapSize={20}
+                        // entryPoint="LOCAL_FILES"
+                        >
+                            <div className='max-w-sm flex flex-col items-center z-50'>
+                                <button
+                                    className="w-full btn text-white font-bold bg-black from-blue-600  to-teal-500"
+                                    type="button"
+                                >
+                                    Connect to Cloud Storage
+                                </button>
+                            </div>
+
+                        </CarbonConnect>
+                    </div>
                 </div>
             </div>
             <div className="max-w-6xl w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto" ref={contentRef}>
