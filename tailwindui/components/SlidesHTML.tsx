@@ -750,7 +750,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                         style={{
                             width: present ? '100%' : '960px',
                             height: present ? '100%' : '540px',
-                            transformOrigin: 'top left',
+                            transformOrigin: present ? 'top left' : '',
                             transform: present ? `scale(${scale})` : 'scale(1)',
                             // left : present ? `-${960 * (1 - window.innerWidth/1920) / 2}px` : '',
                             // top : present ? `-${540 * (1 - window.innerWidth/1920) / 2}px` : '',
