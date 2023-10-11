@@ -383,10 +383,31 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
             try {
                 await sendUpdateToEndpoint(data.data, token);
                 await fetchFiles(token);
-            } catch (error) {
+                toast.success("File uploaded successfully", {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    containerId: "fileManagement",
+                });
+            } catch (error: any) {
                 console.error('Error sending data to sync_carbon_file: ', error);
                 // Handle the error as needed
-                throw error;
+                toast.error(`${error.message}`, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                containerId: "fileManagement",
+            });
             }
         }
     };
@@ -411,7 +432,9 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
             });
 
             if (!response.ok) {
-                throw new Error(`Request failed with status ${response.status}`);
+                const errorResponse = await response.json(); // Assuming the error is returned as JSON
+                console.log('Error response from sync_carbon_file: ', errorResponse);
+                throw new Error(`Request failed with status ${response.status}. ${errorResponse.error}`);
             }
 
             const responseData = await response.json();
