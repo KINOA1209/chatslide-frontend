@@ -434,7 +434,7 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
             if (!response.ok) {
                 const errorResponse = await response.json(); // Assuming the error is returned as JSON
                 console.log('Error response from sync_carbon_file: ', errorResponse);
-                throw new Error(`Request failed with status ${response.status}. ${errorResponse.error}`);
+                throw new Error(`${errorResponse.error}`);
             }
 
             const responseData = await response.json();
