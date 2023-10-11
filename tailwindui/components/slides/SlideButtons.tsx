@@ -1,4 +1,6 @@
+import mixpanel from 'mixpanel-browser';
 import React from 'react';
+import AuthService from '../utils/AuthService';
 
 type SaveButtonProps = {
     saveSlides: () => void;
@@ -40,10 +42,48 @@ export const PresentButton: React.FC<PresentButtonProps> = ({ openPresent }) => 
 
 type ShareToggleButtonProps = {
     share: boolean;
-    toggleShare: () => void;
+    setShare: (share: boolean) => void;
 };
 
-export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({ share, toggleShare }) => {
+export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({ share, setShare }) => {
+
+    const toggleShare = async () => {
+        const newShareStatus = !share;
+        // console.log('newShareStatus', newShareStatus);
+        setShare(newShareStatus);
+        const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+        try {
+
+            mixpanel.track('Project Shared', {
+                'Project ID': sessionStorage.getItem('project_id'),
+            });
+
+            const response = await fetch("/api/share_project", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    project_id: sessionStorage.getItem('project_id'), // Replace with your project's ID
+                    is_shared: newShareStatus,
+                }),
+            });
+
+            const responseData = await response.json();
+
+            if (response.ok) {
+                sessionStorage.setItem('is_shared', newShareStatus.toString());
+            } else {
+                // Handle error (e.g., show a notification to the user)
+                console.error(responseData.error);
+            }
+        } catch (error) {
+            console.error("Failed to toggle share status:", error);
+            // Handle error (e.g., show a notification to the user)
+        }
+    };
+
     return (
         <div className='col-span-1'>
             <div className='w-fit h-fit rounded-full overflow-hidden'>
@@ -88,21 +128,4 @@ export const SlideNavigator: React.FC<{
     );
 };
 
-type SaveButtonProps = {
-    saveSlides: () => void;
-};
 
-export const ExportButton: React.FC<SaveButtonProps> = ({ saveSlides }) => {
-    return (
-        <div className='col-span-1'>
-            <div className='w-fit h-fit rounded-full overflow-hidden'>
-                <button
-                    className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
-                    onClick={saveSlides}
-                >
-                    Save
-                </button>
-            </div>
-        </div>
-    );
-};
