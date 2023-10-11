@@ -2,19 +2,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import sanitizeHtml from 'sanitize-html';
-import ReactQuill from 'react-quill';
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
-import backdrop from '@/public/images/backdrop.jpg';
 import './slidesHTML.css';
 
-import { Transition } from '@headlessui/react';
 import templates, { templateSamples } from "@/components/slideTemplates";
 import ClickableLink from './ui/ClickableLink';
-import AuthService from './utils/AuthService';
-import mixpanel from 'mixpanel-browser';
 import LayoutChanger from './slides/LayoutChanger';
 import { PresentButton, SaveButton, ShareToggleButton, SlideNavigator } from './slides/SlideButtons';
 import SlideContainer from './slides/SlideContainer';
+import { h1Style, h2Style, h3Style, h4Style, listStyle } from './slides/Styles';
+
 
 export interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
@@ -22,7 +19,7 @@ export interface SlideElement {
     content: string | string[];
 }
 
-type SlideKeys = 'head' | 'title' | 'subtopic' | 'userName' | 'template' | 'content' | 'images';
+export type SlideKeys = 'head' | 'title' | 'subtopic' | 'userName' | 'template' | 'content' | 'images';
 
 export class Slide {
 
@@ -68,6 +65,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
     const [dimensions, setDimensions] = useState({ width: 960, height: 540 });
     const [unsavedChanges, setUnsavedChanges] = useState(false);
     const isFirstRender = useRef(true);
+    const [isEditMode, setIsEditMode] = useState(false);
 
     const scale = Math.min(dimensions.width / 960, dimensions.height / 540);
 
@@ -145,47 +143,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
         setShowLayout(true);
     }
 
+    const closeModal = () => {
+        setShowLayout(false);
+    }
+
     const openPresent = () => {
         toast.success("Use ESC to exit presentation mode, use arrow keys to navigate slides.");
         setPresent(true);
     }
-
-    const toggleShare = async () => {
-        const newShareStatus = !share;
-        // console.log('newShareStatus', newShareStatus);
-        setShare(newShareStatus);
-        const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
-        try {
-
-            mixpanel.track('Project Shared', {
-                'Project ID': sessionStorage.getItem('project_id'),
-            });
-
-            const response = await fetch("/api/share_project", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    project_id: sessionStorage.getItem('project_id'), // Replace with your project's ID
-                    is_shared: newShareStatus,
-                }),
-            });
-
-            const responseData = await response.json();
-
-            if (response.ok) {
-                sessionStorage.setItem('is_shared', newShareStatus.toString());
-            } else {
-                // Handle error (e.g., show a notification to the user)
-                console.error(responseData.error);
-            }
-        } catch (error) {
-            console.error("Failed to toggle share status:", error);
-            // Handle error (e.g., show a notification to the user)
-        }
-    };
 
     useEffect(() => {
         const handleKeyDown = (event: any) => {
@@ -202,10 +167,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
         };
     }, []); // Empty dependency array to ensure this effect runs only once (similar to componentDidMount)
 
-
-    const closeModal = () => {
-        setShowLayout(false);
-    }
 
     useEffect(() => {
         if (foldername !== null) {
@@ -300,12 +261,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
     }
 
 
-    const updateTemplate = (e: React.MouseEvent<HTMLDivElement>, templateName: string, slideIndex: number) => {
-        e.preventDefault();
-        handleSlideEdit(templateName, slideIndex, 'template');
-    }
-
-
     function handleSlideEdit(content: string | string[], slideIndex: number, tag: SlideKeys) {
         setIsEditMode(false);
         const newSlides = [...slides];
@@ -358,47 +313,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
         setCurrentSlideIndex(index);
     }
 
-    // title
-    const h1Style: React.CSSProperties = {
-        fontSize: '30pt',
-        fontWeight: 'bold',
-        color: '#2563EB',
-    };
-
-    // topic
-    const h2Style: React.CSSProperties = {
-        fontSize: '15pt',
-        fontWeight: 'bold',
-        marginTop: '10px',
-        color: '#2563EB'
-    };
-
-    // subtopic
-    const h3Style: React.CSSProperties = {
-        fontSize: '20pt',
-        fontWeight: 'bold',
-    };
-
-    // content
-    const h4Style: React.CSSProperties = {
-        fontSize: '20pt',
-        color: 'rgb(180,180,180)',
-    };
-
-
-    const listStyle: React.CSSProperties = {
-        display: 'list-item',
-        listStyleType: 'disc',
-        listStylePosition: 'inside',
-        fontSize: '20pt',
-    }
     function wrapWithLiTags(content: string): string {
         if (!content.includes("<li>") || !content.includes("</li>")) {
             return `<li style="font-size: 18pt;">${content}</li>`;
         }
         return content;
     }
-    const [isEditMode, setIsEditMode] = useState(false);
 
     function toggleEditMode() {
         setIsEditMode(!isEditMode);
@@ -602,7 +522,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                 <PresentButton openPresent={openPresent} />
                 {!viewingMode &&
                     <ShareToggleButton
-                        toggleShare={toggleShare}
+                        setShare={setShare}
                         share={share} />}
                 <SlideNavigator currentSlideIndex={currentSlideIndex} slides={slides} goToSlide={goToSlide} />
                 {!viewingMode &&
@@ -612,7 +532,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                         closeModal={closeModal}
                         currentSlideIndex={currentSlideIndex}
                         templateSamples={templateSamples} slides={slides}
-                        updateTemplate={updateTemplate} />
+                        handleSlideEdit={handleSlideEdit} />
                 }
                 {!viewingMode &&
                     <SaveButton

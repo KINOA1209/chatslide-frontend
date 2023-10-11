@@ -1,5 +1,6 @@
 import React from 'react';
 import { Transition } from '@headlessui/react'; // Assuming you're using Headless UI for Transitions
+import { SlideKeys } from '../SlidesHTML';
 
 type LayoutProps = {
     openModal: () => void;
@@ -11,7 +12,7 @@ type LayoutProps = {
         main: { name: string; img: string }[];
     };
     slides: { template: string }[];
-    updateTemplate: (e: React.MouseEvent<HTMLDivElement>, name: string, index: number) => void;
+    handleSlideEdit: (content: string | string[], slideIndex: number, tag: SlideKeys) => void;
 };
 
 const LayoutChanger: React.FC<LayoutProps> = ({
@@ -21,8 +22,14 @@ const LayoutChanger: React.FC<LayoutProps> = ({
     currentSlideIndex,
     templateSamples,
     slides,
-    updateTemplate,
+    handleSlideEdit,
 }) => {
+
+    const updateTemplate = (e: React.MouseEvent<HTMLDivElement>, templateName: string, slideIndex: number) => {
+        e.preventDefault();
+        handleSlideEdit(templateName, slideIndex, 'template');
+    }
+
     return (
         <div className='col-span-1 flex flex-row-reverse hidden sm:block'>
             <div className='w-fit h-fit rounded-full overflow-hidden'>
