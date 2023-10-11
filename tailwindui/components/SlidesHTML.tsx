@@ -12,6 +12,9 @@ import templates, { templateSamples } from "@/components/slideTemplates";
 import ClickableLink from './ui/ClickableLink';
 import AuthService from './utils/AuthService';
 import mixpanel from 'mixpanel-browser';
+import LayoutChanger from './slides/LayoutChanger';
+import { PresentButton, SaveButton, ShareToggleButton, SlideNavigator } from './slides/SlideButtons';
+import SlideContainer from './slides/SlideContainer';
 
 export interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
@@ -592,141 +595,28 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
         }
     }
 
-
     return (
         <div className='w-fit h-fit'>
             <ToastContainer />
             <div className='flex justify-between items-center mb-6'>
-                <div className='col-span-1 hidden sm:block'>
-                    <div className='w-fit h-fit rounded-full overflow-hidden'>
-                        <button
-                            className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
-                            onClick={openPresent}>Present</button>
-                    </div>
-                </div>
-                {!viewingMode && <div className='col-span-1'>
-                    <div className='w-fit h-fit rounded-full overflow-hidden'>
-                        <button
-                            className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
-                            onClick={toggleShare}>{!share ? 'Share' : 'Stop Sharing'}</button>
-                    </div>
-                </div>}
-                <div className='col-span-1'>
-                    <div className='w-fit h-fit flex flex-row items-center justify-center mx-auto rounded-full bg-slate-600/40'>
-                        <button
-                            disabled={currentSlideIndex === 0}
-                            className='text-white text-2xl mx-4 my-1 disabled:text-gray-400'
-                            onClick={() => goToSlide(currentSlideIndex - 1)}>&#9664;</button>
-                        <div className='text-white'>
-                            {currentSlideIndex + 1}<span className='font-light'>{' of '}</span>{slides.length}
-                        </div>
-                        <button
-                            disabled={currentSlideIndex === slides.length - 1}
-                            className='text-white text-2xl mx-4 my-1 disabled:text-gray-400'
-                            onClick={() => goToSlide(currentSlideIndex + 1)}>&#9654;</button>
-                    </div>
-                </div>
+                <PresentButton openPresent={openPresent} />
                 {!viewingMode &&
-                    <div className='col-span-1 flex flex-row-reverse hidden sm:block'>
-                        <div className='w-fit h-fit rounded-full overflow-hidden'>
-                            <button
-                                className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
-                                onClick={openModal}>Change Layout</button>
-                        </div>
-                        <Transition
-                            className='h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
-                            show={showLayout}
-                            onClick={closeModal}
-                            enter="transition ease duration-300 transform"
-                            enterFrom="opacity-0 translate-y-12"
-                            enterTo="opacity-100 translate-y-0"
-                            leave="transition ease duration-300 transform"
-                            leaveFrom="opacity-100 translate-y-0"
-                            leaveTo="opacity-0 translate-y-12"
-                        >
-                            <div className='grow md:grow-0'></div>
-                            <Transition
-                                className='bg-gray-100 w-full h-3/4 md:h-1/2
-                    md:max-w-2xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
-                    overflow-hidden flex flex-col p-4'
-                                show={showLayout}
-                                enter="transition ease duration-500 transform delay-300"
-                                enterFrom="opacity-0 translate-y-12"
-                                enterTo="opacity-100 translate-y-0"
-                                leave="transition ease duration-300 transform"
-                                leaveFrom="opacity-100 translate-y-0"
-                                leaveTo="opacity-0 translate-y-12"
-                                onClick={e => { e.stopPropagation() }}
-                            >
-                                <h4 className="font-semibold text-xl text-center">Page Layout</h4>
-                                <div className='w-full text-center mb-3'>
-                                    Change layout of current page
-                                </div>
-                                <div className='grow flex flex-col overflow-hidden'>
-                                    <div className='mt-2 mb-5 grow overflow-hidden'>
-                                        <div className='w-full h-full'>
-                                            <div className='w-full h-full flex flex-col'>
-                                                <div className='w-full h-full overflow-y-auto'>
-                                                    <div className='w-full h-fit grid grid-cols-2 gap-4 p-2'>
-                                                        {currentSlideIndex === 0 ?
-                                                            templateSamples.cover.map((temp, index) => {
-                                                                if (!slides[currentSlideIndex]) {
-                                                                    return <></>
-                                                                }
-                                                                if (temp.name !== slides[currentSlideIndex].template) {
-                                                                    return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'>
-                                                                        <img src={temp.img} className='w-full h-full object-contain' />
-                                                                    </div>
-                                                                } else {
-                                                                    return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'>
-                                                                        <img src={temp.img} className='w-full h-full object-contain' />
-                                                                    </div>
-                                                                }
-                                                            })
-                                                            :
-                                                            templateSamples.main.map((temp, index) => {
-                                                                if (temp.name !== slides[currentSlideIndex].template) {
-                                                                    return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'>
-                                                                        <img src={temp.img} className='w-full h-full object-contain' />
-                                                                    </div>
-                                                                } else {
-                                                                    return <div onClick={e => updateTemplate(e, temp.name, currentSlideIndex)} className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'>
-                                                                        <img src={temp.img} className='w-full h-full object-contain' />
-                                                                    </div>
-                                                                }
-                                                            })}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                                <div className="w-full mx-auto">
-                                    <div className="w-full flex flex-wrap">
-                                        <div className="w-full">
-                                            <button
-                                                // className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full rounded-lg"
-                                                type="button"
-                                                onClick={e => { e.preventDefault(); closeModal(); }}>
-                                                Done
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Transition>
-                        </Transition>
-                    </div>
+                    <ShareToggleButton
+                        toggleShare={toggleShare}
+                        share={share} />}
+                <SlideNavigator currentSlideIndex={currentSlideIndex} slides={slides} goToSlide={goToSlide} />
+                {!viewingMode &&
+                    <LayoutChanger
+                        openModal={openModal}
+                        showLayout={showLayout}
+                        closeModal={closeModal}
+                        currentSlideIndex={currentSlideIndex}
+                        templateSamples={templateSamples} slides={slides}
+                        updateTemplate={updateTemplate} />
                 }
-                {!viewingMode && <div className='col-span-1'>
-                    <div className='w-fit h-fit rounded-full overflow-hidden'>
-                        <button
-                            className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
-                            onClick={saveSlides}>Save</button>
-                    </div>
-                </div>
-                }
+                {!viewingMode &&
+                    <SaveButton
+                        saveSlides={saveSlides} />}
             </div>
             {share &&
                 <div>
@@ -752,41 +642,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                 ></div>
             )}
 
-            <div
-                id="slideContainer"
-                className={`${present ? 'fixed top-0 left-0 w-full h-full z-50' : ''}`}
-                ref={containerRef}
-                style={{
-                    boxSizing: 'border-box',
-                    border: 'none',
-                    boxShadow: present ? 'none' : '0 2px 10px rgba(0, 0, 0, 0.5)',
-                }}
-            >
-                {slides.length > 0 && (
-                    <div
-                        className="slide h-full w-full"
-                        ref={slideRef}
-                        style={{
-                            width: present ? '100%' : '960px',
-                            height: present ? '100%' : '540px',
-                            transformOrigin: present ? 'top left' : '',
-                            transform: present ? `scale(${scale})` : 'scale(1)',
-                            // left : present ? `-${960 * (1 - window.innerWidth/1920) / 2}px` : '',
-                            // top : present ? `-${540 * (1 - window.innerWidth/1920) / 2}px` : '',
-                            backgroundSize: 'cover',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'flex-start',
-                            alignItems: 'flex-start',
-                            position: 'relative',
-                        }}
-                    >
-                        {slides[currentSlideIndex] && templateDispatch(slides[currentSlideIndex],
-                            currentSlideIndex,
-                            !viewingMode && !present)}
-                    </div>
-                )}
-            </div>
+            <SlideContainer
+                present={present}
+                slides={slides}
+                currentSlideIndex={currentSlideIndex}
+                viewingMode={viewingMode}
+                scale={scale}
+                templateDispatch={templateDispatch} />
 
         </div>
     );
