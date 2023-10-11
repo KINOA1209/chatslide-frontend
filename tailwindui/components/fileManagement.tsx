@@ -195,7 +195,7 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
         headers.append('Content-Type', 'application/json');
 
         const resource_type = selectable ? {
-            resource_type: 'doc',
+            resource_type: ['doc', 'url'],
         } : {}
 
         try {
