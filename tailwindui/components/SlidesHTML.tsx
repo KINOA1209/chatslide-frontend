@@ -89,20 +89,20 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
 
     // Watch for changes in finalSlides
     useEffect(() => {
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
-            console.log('First render, skip saving')
-            return;
-        }
+        // if (isFirstRender.current) {
+        //     isFirstRender.current = false;
+        //     console.log('First render, skip saving')
+        //     return;
+        // }
 
         console.log('finalSlides changed');
         setUnsavedChanges(true);
-        autoSaveSlides();
+        // saveSlides();
 
     }, [finalSlides]);
 
     // Function to send a request to auto-save finalSlides
-    const autoSaveSlides = () => {
+    const saveSlides = () => {
         if (finalSlides.length === 0) {
             console.log('Final slides not yet loaded, skip saving');
             return;
@@ -437,7 +437,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
         const Template = templates[slide.template as keyof typeof templates];
         if (index === 0) {
             return <Template
-                autoSave={autoSaveSlides}
+                autoSave={saveSlides}
                 key={index}
                 user_name=
                 {<div
@@ -479,7 +479,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
             />
         } else {
             return <Template
-                autoSave={autoSaveSlides}
+                autoSave={saveSlides}
                 canEdit={canEdit}
                 key={index}
                 user_name={<></>}
@@ -707,7 +707,16 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                                 </div>
                             </Transition>
                         </Transition>
-                    </div>}
+                    </div>
+                }
+                {!viewingMode && <div className='col-span-1'>
+                    <div className='w-fit h-fit rounded-full overflow-hidden'>
+                        <button
+                            className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
+                            onClick={saveSlides}>Save</button>
+                    </div>
+                </div>
+                }
             </div>
             {share &&
                 <div>
@@ -732,7 +741,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                     }}
                 ></div>
             )}
-            
+
             <div
                 id="slideContainer"
                 className={`${present ? 'fixed top-0 left-0 w-full h-full z-50' : ''}`}

@@ -263,6 +263,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
         const resources = typeof window !== 'undefined' ? sessionStorage.getItem('resources') : null;
         const addEquations = typeof window !== 'undefined' ? sessionStorage.getItem('addEquations') : null;
         const extraKnowledge = typeof window !== 'undefined' ? sessionStorage.getItem('extraKnowledge') : null;
+        const outline_item_counts = typeof window !== 'undefined' ? sessionStorage.getItem('outline_item_counts') : null;
 
         formData = {
             res: JSON.stringify({ ...outlineData }),
@@ -274,6 +275,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             project_id: project_id,
             addEquations: addEquations,
             extraKnowledge: extraKnowledge,
+            outline_item_counts: outline_item_counts,
             model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
             slidePages: slidePages,
             wordPerSubpoint: wordPerSubpoint,
@@ -287,8 +289,9 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                 sessionStorage.setItem('extraKnowledge', JSON.stringify(extraKnowledge.data.res));
                 sessionStorage.setItem('outline_item_counts',
                     JSON.stringify(extraKnowledge.data.outline_item_counts));
-                formData.extraKnowledge = extraKnowledge;
+                formData.extraKnowledge = extraKnowledge.data.res;
                 formData.outline_item_counts = extraKnowledge.data.outline_item_counts;
+                console.log("formData", formData)
             } catch (error) {
                 console.log('Error querying vector database', error);
                 // return; 
