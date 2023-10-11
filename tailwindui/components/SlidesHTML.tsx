@@ -331,8 +331,17 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
             currentSlide.images = (content as string[]);
             currNewFinalSlides.images = (content as string[]);
         } else if (className === 'content') {
-            currentSlide.content = (content as string[]);
-            currNewFinalSlides.content = (content as string[]);
+
+            let newContent: string[] = [];
+            content = content as string[];
+            content.forEach(str => {
+                newContent.push(...str.split('\n'));
+            });
+            newContent = newContent.filter(item => item !== '');
+
+
+            currentSlide.content = newContent;
+            currNewFinalSlides.content = newContent;
         } else {
             console.error(`Unknown tag: ${tag}`);
         }
@@ -517,7 +526,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                     />
                 }
                 content={
-                    slide.content.map((content: string, index: number) => {
+                    slide.content.map((content: string, contentIndex: number) => {
                         if (content.includes('$$') || content.includes('\\(')) {
                             if (isEditMode) {
                                 return (
@@ -533,7 +542,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                                         }}
                                         onBlur={(e) => {
                                             const modifiedContent = [...slide.content];
-                                            modifiedContent[index] = e.target.innerText;
+                                            modifiedContent[contentIndex] = e.target.innerText;
                                             handleSlideEdit(modifiedContent, index, 'content');
                                         }}
                                     >
@@ -567,7 +576,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                                 }}
                                 onBlur={(e) => {
                                     const modifiedContent = [...slide.content];
-                                    modifiedContent[index] = e.target.innerText;
+                                    modifiedContent[contentIndex] = e.target.innerText;
                                     handleSlideEdit(modifiedContent, index, 'content');
                                 }}
                                 dangerouslySetInnerHTML={{ __html: wrapWithLiTags(content) }}
