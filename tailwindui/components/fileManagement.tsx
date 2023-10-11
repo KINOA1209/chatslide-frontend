@@ -342,26 +342,6 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
         }
     }, [selectedResources]);
 
-    useEffect(() => {
-        const handleVisibilityChange = async () => {
-            if (document.visibilityState === 'visible') {
-                try {
-                    const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
-                    fetchFiles(token);
-                }
-                catch (error: any) {
-                    console.error(error);
-                }
-            }
-        };
-
-        document.addEventListener('visibilitychange', handleVisibilityChange);
-
-        return () => {
-            document.removeEventListener('visibilitychange', handleVisibilityChange);
-        };
-    }, []);
-
     const tokenFetcher = async () => {
         try {
             // Assuming AuthService.getCurrentUserTokenAndId() returns an object with userId and idToken properties
@@ -389,6 +369,55 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
         } catch (error) {
             // Handle any other errors that might occur during the process
             console.error('Error fetching access token:', error);
+            throw error;
+        }
+    };
+
+    const handleSuccess = async (data: any) => {
+        console.log('Data on Success: ', data);
+
+        // Check if the action is "update"
+        if (data && data.action === 'UPDATE') {
+            const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+            // Assuming you have a function to send data to the endpoint
+            try {
+                await sendUpdateToEndpoint(data.data, token);
+                await fetchFiles(token);
+            } catch (error) {
+                console.error('Error sending data to sync_carbon_file: ', error);
+                // Handle the error as needed
+                throw error;
+            }
+        }
+    };
+
+    // Function to send data to the endpoint api/sync_carbon_file
+    const sendUpdateToEndpoint = async (data: any, token: string) => {
+        try {
+            // Assuming you have logic to send the name to the endpoint
+            const name = data.files[0].name;
+
+            const headers = new Headers();
+            if (token) {
+                headers.append('Authorization', `Bearer ${token}`);
+            }
+            headers.append('Content-Type', 'application/json');
+
+            // Replace the following line with your actual endpoint and request logic
+            const response = await fetch('api/sync_carbon_file', {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify({ name }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Request failed with status ${response.status}`);
+            }
+
+            const responseData = await response.json();
+            console.log('Response from sync_carbon_file: ', responseData);
+        } catch (error) {
+            // Rethrow the error for the calling function to catch
             throw error;
         }
     };
@@ -446,13 +475,13 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
                                 },
                                 
                             ]}
-                            onSuccess={(data) => console.log('Data on Success: ', data)}
+                            onSuccess={(data) => handleSuccess(data)}
                             onError={(error) => console.log('Data on Error: ', error)}
                             primaryBackgroundColor="#F2F2F2"
                             primaryTextColor="#555555"
                             secondaryBackgroundColor="#f2f2f2"
                             secondaryTextColor="#000000"
-                            allowMultipleFiles={true}
+                            allowMultipleFiles={false}
                             open={false}
                             chunkSize={1500}
                             overlapSize={20}
