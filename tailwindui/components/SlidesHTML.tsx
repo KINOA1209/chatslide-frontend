@@ -586,6 +586,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
 
     return (
         <div className='w-fit h-fit'>
+            <ToastContainer />
             <div className='flex justify-between items-center mb-6'>
                 <div className='col-span-1 hidden sm:block'>
                     <div className='w-fit h-fit rounded-full overflow-hidden'>
@@ -771,7 +772,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                             position: 'relative',
                         }}
                     >
-                        <ToastContainer />
                         {slides[currentSlideIndex] && templateDispatch(slides[currentSlideIndex],
                             currentSlideIndex,
                             !viewingMode && !present)}
