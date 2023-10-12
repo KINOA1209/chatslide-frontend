@@ -16,4 +16,12 @@ export function Logo() {
       </a>
     );
   }
+
+  export function ColorLogo() {
+    return (
+        <a href="/" className="block" aria-label="Cruip" style={{ backgroundColor: 'black' }}>
+        <img src="/images/logo_no_text.png" alt="DrLambda" className="w-16 h-16" />
+      </a>
+    )
+  }
   
