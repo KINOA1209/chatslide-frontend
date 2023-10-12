@@ -3,7 +3,7 @@ import Header from '@/components/ui/header';
 
 export const metadata = {
   title: 'Workflow - DrLambda',
-  description: 'Create new content',
+  description: 'Convert your documents to slides',
 }
 
 export default function WorkflowLayout({

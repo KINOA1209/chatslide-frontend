@@ -2,8 +2,8 @@ import { WorkflowFooter } from '@/components/ui/footer'
 import Header from '@/components/ui/header';
 
 export const metadata = {
-  title: 'Projects - DrLambda',
-  description: 'Create new content',
+  title: 'Dashboard - DrLambda',
+  description: 'Convert your documents to slides',
 }
 
 export default function DashBoardLayout({
