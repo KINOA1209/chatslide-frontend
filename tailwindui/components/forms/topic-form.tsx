@@ -270,7 +270,7 @@ const TopicForm: React.FC = () => {
 
             <form onSubmit={handleSubmit}>
                 <Transition
-                    className='h-full w-full z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
+                    className='h-full w-full z-5 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
                     show={showFileModal}
                     onClick={closeFile}
                     enter="transition ease duration-300 transform"

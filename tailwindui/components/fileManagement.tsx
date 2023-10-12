@@ -8,6 +8,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import moment from "moment";
 import mixpanel from 'mixpanel-browser';
+import { CarbonConnect, IntegrationName } from 'carbon-connect';
+
 
 interface UserFile {
     id: string,
@@ -88,13 +90,13 @@ const FileManagement: React.FC<UserFileList> = ({ selectable = false, userfiles,
         console.log(thumbnailUrl)
         return <img src={thumbnailUrl} alt="Thumbnail" className="w-full h-full object-cover" />;
     };
-    
+
 
     const entry = (id: string, uid: string, filename: string, timestamp: string, thumbnail: string, icon = 'pdf') => {
         return (
             <div key={id} className="w-full h-16 px-4 rounded-2xl md:hover:bg-gray-200" onClick={e => { if (selectable) { clickCallback(id) } else { handleOnClick(e) } }}>
                 <div className='h-full flex items-center w-full py-4 px-2'>
-                <div className='w-8 flex'>{thumbnail ? getThumbnail(thumbnail) : getIcon(filename)}</div>
+                    <div className='w-8 flex'>{thumbnail ? getThumbnail(thumbnail) : getIcon(filename)}</div>
                     <div className='grow text-ellipsis mx-4 overflow-hidden whitespace-nowrap'>{filename}</div>
                     {timestamp && <div className='mx-16 hidden md:block'>{moment(timestamp).format('L')}</div>}
                     {!selectable ? <div className='w-8 flex flex-row-reverse'>
@@ -193,7 +195,7 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
         headers.append('Content-Type', 'application/json');
 
         const resource_type = selectable ? {
-            resource_type: 'doc',
+            resource_type: ['doc', 'url'],
         } : {}
 
         try {
@@ -317,7 +319,7 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
             } else {
                 resources = [id];
             }
-            if((resources.length > 0) && (selectedResources.length > 0)) {
+            if ((resources.length > 0) && (selectedResources.length > 0)) {
                 toast.info('Only subscribed user can select multiple files!', {
                     position: "top-center",
                     autoClose: 5000,
@@ -340,6 +342,109 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
         }
     }, [selectedResources]);
 
+    const tokenFetcher = async () => {
+        try {
+            // Assuming AuthService.getCurrentUserTokenAndId() returns an object with userId and idToken properties
+            const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+
+            const headers = new Headers();
+            if (token) {
+                headers.append('Authorization', `Bearer ${token}`);
+            }
+            headers.append('Content-Type', 'application/json');
+
+            const response = await fetch('/api/fetchCarbonTokens', {
+                method: 'GET', // The endpoint is using the GET method
+                headers: headers,
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                return data
+            } else {
+                // Handle the case when the response is not OK (status code is not 200)
+                console.error('Failed to fetch access token:', response.status, response.statusText);
+                throw new Error('Failed to fetch access token');
+            }
+        } catch (error) {
+            // Handle any other errors that might occur during the process
+            console.error('Error fetching access token:', error);
+            throw error;
+        }
+    };
+
+    const handleSuccess = async (data: any) => {
+        console.log('Data on Success: ', data);
+
+        // Check if the action is "update"
+        if (data && data.action === 'UPDATE') {
+            const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+            // Assuming you have a function to send data to the endpoint
+            try {
+                await sendUpdateToEndpoint(data.data, token);
+                await fetchFiles(token);
+                toast.success("File uploaded successfully", {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    containerId: "fileManagement",
+                });
+            } catch (error: any) {
+                console.error('Error sending data to sync_carbon_file: ', error);
+                // Handle the error as needed
+                toast.error(`${error.message}`, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                containerId: "fileManagement",
+            });
+            }
+        }
+    };
+
+    // Function to send data to the endpoint api/sync_carbon_file
+    const sendUpdateToEndpoint = async (data: any, token: string) => {
+        try {
+            // Assuming you have logic to send the name to the endpoint
+            const name = data.files[0].name;
+
+            const headers = new Headers();
+            if (token) {
+                headers.append('Authorization', `Bearer ${token}`);
+            }
+            headers.append('Content-Type', 'application/json');
+
+            // Replace the following line with your actual endpoint and request logic
+            const response = await fetch('api/sync_carbon_file', {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify({ name }),
+            });
+
+            if (!response.ok) {
+                const errorResponse = await response.json(); // Assuming the error is returned as JSON
+                console.log('Error response from sync_carbon_file: ', errorResponse);
+                throw new Error(`${errorResponse.error}`);
+            }
+
+            const responseData = await response.json();
+            console.log('Response from sync_carbon_file: ', responseData);
+        } catch (error) {
+            // Rethrow the error for the calling function to catch
+            throw error;
+        }
+    };
+
     return (
         <section className="bg-gradient-to-b from-gray-100 to-white grow flex flex-col h-full">
             <ToastContainer enableMultiContainer containerId={'fileManagement'} />
@@ -347,9 +452,64 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
                 {!selectable ? <div className="pt-4 grow pr-4">
                     <h1 className="h2 text-blue-600">My Resources</h1>
                 </div> : <></>}
-                <div className="max-w-sm w-fit text-center pt-4">
+                <div className="max-w-sm w-fit text-center pt-4 mx-4">
                     <div className="w-full mx-auto">
                         <FileUploadButton onFileSelected={onFileSelected} />
+                    </div>
+                </div>
+
+                <div className="max-w-sm w-fit text-center pt-4 mx-4">
+                    <div className="w-full mx-auto">
+                        <CarbonConnect
+                            orgName="DrLambda"
+                            brandIcon="https://drlambda.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo_no_text.0a4e5a6b.png&w=1920&q=75"
+                            tokenFetcher={tokenFetcher}
+                            tags={{
+                                tag1: 'tag1_value',
+                                tag2: 'tag2_value',
+                                tag3: 'tag3_value',
+                            }}
+                            maxFileSize={10000000}
+                            enabledIntegrations={[
+                                {
+                                    id: IntegrationName.GOOGLE_DRIVE,
+                                    chunkSize: 1500,
+                                    overlapSize: 20,
+                                },
+                                {
+                                    id: IntegrationName.ONEDRIVE,
+                                    chunkSize: 1000,
+                                    overlapSize: 20,
+                                },
+                                {
+                                    id: IntegrationName.DROPBOX,
+                                    chunkSize: 1000,
+                                    overlapSize: 20,
+                                },
+                                
+                            ]}
+                            onSuccess={(data) => handleSuccess(data)}
+                            onError={(error) => console.log('Data on Error: ', error)}
+                            primaryBackgroundColor="#F2F2F2"
+                            primaryTextColor="#555555"
+                            secondaryBackgroundColor="#f2f2f2"
+                            secondaryTextColor="#000000"
+                            allowMultipleFiles={false}
+                            open={false}
+                            chunkSize={1500}
+                            overlapSize={20}
+                        // entryPoint="LOCAL_FILES"
+                        >
+                            <div className='max-w-sm flex flex-col items-center z-50'>
+                                <button
+                                    className="w-full btn text-white font-bold bg-black from-blue-600  to-teal-500"
+                                    type="button"
+                                >
+                                    Connect to Cloud Storage
+                                </button>
+                            </div>
+
+                        </CarbonConnect>
                     </div>
                 </div>
             </div>
