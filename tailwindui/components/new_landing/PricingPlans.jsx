@@ -118,9 +118,11 @@ const PricingPlans = ({ pricingPlansData }) => {
                 : '' // Add more conditions for other styles
             }`}
           >
+            <a href={plan.link}>
             <div className='w-[228px] text-center text-zinc-100 text-base font-medium font-creato-medium leading-normal tracking-tight'>
-              {plan.cta}
+                {plan.cta}
             </div>
+            </a>
           </div>
         </div>
       ))}
