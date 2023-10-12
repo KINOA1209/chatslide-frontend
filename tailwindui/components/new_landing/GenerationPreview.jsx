@@ -1,12 +1,12 @@
-import {DownloadIcon} from '@/components/new_landing/Icons'
+import { DownloadIcon } from '@/components/new_landing/Icons'
 
 const GenerationPreview = () => {
   return (
     <>
-      <div className='mb-[15rem] w-[85%] relative bg-indigo-500 rounded-3xl'>
+      <div className='mb-[15rem] w-[85%] mx-auto max-w-7xl relative bg-indigo-500 rounded-3xl'>
         <div className='flex flex-col gap-[1.5rem] justify-center items-center px-[3.5rem] py-[3rem]'>
           <div className='self-end w-auto h-9 px-3.5 py-1 bg-zinc-100 rounded-lg justify-center items-center gap-3 inline-flex'>
-            <div className="text-center text-gray-700 text-base font-medium font-['Creato Display'] leading-relaxed tracking-wide">
+            <div className='text-center text-gray-700 text-base font-medium font-creato-medium leading-relaxed tracking-wide'>
               Export to PDF
             </div>
             <div className='w-4 h-4 relative'>
