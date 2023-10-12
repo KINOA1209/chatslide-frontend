@@ -7,7 +7,7 @@ import FeedbackForm from '@/components/forms/feedback';
 
 const metadata = {
   title: 'Workflow - DrLambda',
-  description: 'Create new content',
+  description: 'Convert your documents to slides',
 }
 
 
