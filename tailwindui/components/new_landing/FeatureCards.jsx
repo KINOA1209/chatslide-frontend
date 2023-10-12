@@ -29,7 +29,7 @@ const FeatureCards = () => {
           <div className='flex items-stretch justify-between border-t-2 border-gray-300 pt-10 gap-6'>
             <img
               className='w-14 h-14 rounded-full border'
-              src='src/assets/imgs/person1.png'
+              src='new_landing/imgs/person1.png'
             />
             <div className='w-[30rem] h-20 text-slate-500 text-xl font-normal font-creato-regular leading-7 tracking-wide'>
               “It turns vast information into concise, captivating narratives
@@ -55,7 +55,7 @@ const FeatureCards = () => {
           <div className='flex items-stretch justify-between border-t-2 border-gray-300 pt-10 gap-6'>
             <img
               className='w-14 h-14 rounded-full border'
-              src='src/assets/imgs/person2.png'
+              src='new_landing/imgs/person2.png'
             />
             <div className='w-[30rem] h-20 text-slate-500 text-xl font-normal font-creato-regular leading-7 tracking-wide'>
               "Dr.Lambda drafts my 100-page report beautifully. Saves so much
@@ -82,7 +82,7 @@ const FeatureCards = () => {
           <div className='flex items-stretch justify-between border-t-2 border-gray-300 pt-10 gap-6'>
             <img
               className='w-14 h-14 rounded-full border'
-              src='src/assets/imgs/person3.png'
+              src='new_landing/imgs/person3.png'
             />
             <div className='w-[30rem] h-20 text-slate-500 text-xl font-normal font-creato-regular leading-7 tracking-wide'>
               “I use it to turn Youtube videos into a my personal pocket book!
@@ -109,7 +109,7 @@ const FeatureCards = () => {
           <div className='flex items-stretch justify-between border-t-2 border-gray-300 pt-10 gap-6'>
             <img
               className='w-14 h-14 rounded-full border'
-              src='src/assets/imgs/person4.png'
+              src='new_landing/imgs/person4.png'
             />
             <div className='w-[30rem] h-20 text-slate-500 text-xl font-normal font-creato-regular leading-7 tracking-wide'>
               "Dr.Lambda helps me prepare math lecture decks with more engaging
