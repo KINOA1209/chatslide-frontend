@@ -482,16 +482,6 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
                                     overlapSize: 20,
                                 },
                                 {
-                                    id: IntegrationName.NOTION,
-                                    chunkSize: 1000,
-                                    overlapSize: 20,
-                                },
-                                {
-                                    id: IntegrationName.WEB_SCRAPER,
-                                    chunkSize: 1000,
-                                    overlapSize: 20,
-                                },
-                                {
                                     id: IntegrationName.DROPBOX,
                                     chunkSize: 1000,
                                     overlapSize: 20,
