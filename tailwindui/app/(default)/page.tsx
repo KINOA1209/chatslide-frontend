@@ -114,11 +114,11 @@ function App() {
         </div>
 
         {/* section: The Master Alchemist of Knowledge Crafting */}
-        <div className='mt-[6rem] flex flex-col justify-center items-center'>
+        <div className='mt-[3rem] flex flex-col justify-center items-center'>
           <div className='w-[80%] text-center text-zinc-900 text-7xl font-medium font-creato-medium leading-[6.25rem]'>
             The Master Alchemist of <br /> Knowledge Crafting
           </div>
-          <div className='w-[80%] text-center'>
+          <div className='mt-[4rem] w-[80%] text-center'>
             <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
               From{' '}
             </span>
@@ -168,7 +168,7 @@ function App() {
           <FeatureCards />
         </div>
         {/* section: Build up your personal knowledge library */}
-        <div className='relative flex flex-col justify-center items-center overflow-x-hidden'>
+        <div className='relative h-[83rem] flex flex-col justify-center items-center overflow-x-hidden'>
           <div className=' w-[80%] text-center text-zinc-900 text-7xl font-medium font-creato-medium leading-[6.25rem]'>
             Build up your personal <br /> knowledge library
           </div>
@@ -288,7 +288,7 @@ function App() {
         </div>
 
         {/* Multifaceted Outputs */}
-        <div className='mt-[12rem] flex flex-col justify-center items-center'>
+        <div className='mt-[6rem] flex flex-col justify-center items-center'>
           <div className='w-[80%] text-center text-zinc-900 text-7xl font-medium font-creato-medium leading-20 px-4 py-2 mb-[3rem]'>
             Multifaceted Outputs
           </div>
