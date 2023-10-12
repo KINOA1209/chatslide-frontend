@@ -237,7 +237,7 @@ export function Pricing({ fewerCards = false }: PricingProps) {
 
                                             <div className="text-xl mt-4">Include</div>
                                             <ul className="list-disc list-inside space-y-2 text-sm" style={{ fontFamily: 'sans-serif' }}>
-                                                <li>100 free ⭐️credits</li>
+                                                <li>50 free ⭐️credits</li>
                                                 <li>Usage of GPT-3.5</li>
                                                 <li>Up to 1 file upload for each project</li>
                                             </ul>
