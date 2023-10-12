@@ -15,7 +15,7 @@ const GenerationPreview = () => {
           </div>
           {/* grid two columns */}
           <div className='grid grid-cols-3 gap-4 h-[30rem]'>
-            <div className='col-span-2 bg-zinc-100 rounded-lg px-6 py-4 overflow-scroll h-[30rem]'>
+            <div className='col-span-3 lg:col-span-2 bg-zinc-100 rounded-lg px-6 py-4 overflow-scroll h-[15rem] lg:h-[30rem] overflow-y-scroll'>
               <div className='flex flex-col'>
                 <div className='flex justify-between items-center'>
                   <div className="w-96 text-blue-700 text-base font-bold font-['Creato Display'] leading-snug tracking-wide">
@@ -85,7 +85,7 @@ const GenerationPreview = () => {
                 </div>
               </div>
             </div>
-            <div className='col-span-1 bg-zinc-100 rounded-lg px-6 py-4 overflow-scroll'>
+            <div className='col-span-3 lg:col-span-1 bg-zinc-100 rounded-lg px-6 py-4 overflow-scroll'>
               <div className="w-16 h-8 text-neutral-900 text-xs font-bold font-['Creato Display'] leading-normal tracking-tight">
                 Script
               </div>
