@@ -7,7 +7,14 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundColor: {
+        'Grey-50': 'var(--Grey-50, #F4F4F4)',
+        'Grey-100': 'var(--Grey-100, #E7E9EB)'
+      },
       colors: {
+        "neutral-100": 'var(--neutral-100, #1E202C)',
+        'regal-blue': '#243c5a',
+        "Grey-600": 'var(--Grey-600, #525C6A)',
         gray: {
           100: '#FBFBFB',
           200: '#EAEAEA',
@@ -60,7 +67,10 @@ module.exports = {
         '1/1': '100%',
       },
       fontFamily: {
-        inter: ['Inter', 'sans-serif']
+        inter: ['Inter', 'sans-serif'],
+        'creato-regular': ['Creato Display Regular', 'sans'],
+        'creato-medium': ['Creato Display Medium', 'sans'],
+        'creato-bold': ['Creato Display Bold', 'sans'],
       },
       fontSize: {
         xs: '0.75rem',

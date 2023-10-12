@@ -12,8 +12,24 @@
 
 /* Additional Tailwind directives: https://tailwindcss.com/docs/functions-and-directives/#responsive */
 @layer utilities {
-    .rtl {
-        direction: rtl;
-    }
+  .rtl {
+    direction: rtl;
+  }
 }
 
+@font-face {
+  font-family: 'Creato Display Regular';
+  src: url('/fonts/CreatoDisplay-Regular.otf') format('opentype');
+  /* Add more src declarations for different font weights or styles if needed */
+}
+@font-face {
+  font-family: 'Creato Display Medium';
+  src: url('/fonts/CreatoDisplay-Medium.otf') format('opentype');
+  /* Add more src declarations for different font weights or styles if needed */
+}
+
+@font-face {
+  font-family: 'Creato Display Bold';
+  src: url('/fonts/CreatoDisplay-Bold.otf') format('opentype');
+  /* Add more src declarations for different font weights or styles if needed */
+}

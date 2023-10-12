@@ -1,8 +1,8 @@
-import { StarterIcon, PlusIcon, ProIcon, EnterpriseIcon } from "./Icons"
+import { StarterIcon, PlusIcon, ProIcon, EnterpriseIcon } from './Icons'
 
 const PricingPlans = ({ pricingPlansData }) => {
   return (
-    <div className='pricing-options grid grid-cols-4 gap-1 mx-auto max-w-7xl'>
+    <div className='pricing-options grid grid-cols-1 lg:grid-cols-4 gap-6 mx-auto max-w-7xl'>
       {pricingPlansData.map((plan) => (
         <div
           key={plan.title}
@@ -119,9 +119,9 @@ const PricingPlans = ({ pricingPlansData }) => {
             }`}
           >
             <a href={plan.link}>
-            <div className='w-[228px] text-center text-zinc-100 text-base font-medium font-creato-medium leading-normal tracking-tight'>
+              <div className='w-[228px] text-center text-zinc-100 text-base font-medium font-creato-medium leading-normal tracking-tight'>
                 {plan.cta}
-            </div>
+              </div>
             </a>
           </div>
         </div>

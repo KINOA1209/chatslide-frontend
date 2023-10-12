@@ -14,7 +14,7 @@ import VideoIcon from '@/public/new_landing/svgs/video.svg?react'
 
 import Footer from '../../components/ui/footer'
 import PricingPlans from '../../components/new_landing/PricingPlans'
-import MyProjectExample from '../../components/new_landing/MyProjectExample'
+// import MyProjectExample from '../../components/new_landing/MyProjectExample'
 import FeatureCards from '../../components/new_landing/FeatureCards'
 import { pricingPlansMonthlyData } from '../../components/new_landing/data/pricingPlansData'
 import { pricingPlansYearlyData } from '../../components/new_landing/data/pricingPlansData'
@@ -85,11 +85,11 @@ function App() {
               height='54'
             />
           </a>
-          <div className='mt-6 w-96 h-14 text-center text-neutral-900 text-3xl leading-10 tracking-wide'>
+          <div className='mt-6 w-96 h-14 text-center text-neutral-900 text-3xl leading-10 tracking-wide font-creato-medium'>
             Refine the Raw by AI
           </div>
           <div className='text-center mb-[5rem]'>
-            <span className='text-gray-700 text-xl font-normal leading-loose tracking-wide'>
+            <span className='text-gray-700 text-xl font-normal leading-loose tracking-wide font-creato-regular'>
               Transform fragmented information or curiosity <br /> sparkles into
             </span>
             <span className='text-gray-700 text-xl font-bold leading-loose tracking-wide'>
@@ -119,27 +119,27 @@ function App() {
             The Master Alchemist of <br /> Knowledge Crafting
           </div>
           <div className='w-[46.375rem] text-center'>
-            <span className="text-neutral-800 text-xl font-normal font-['Creato Display'] leading-loose tracking-wide">
+            <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
               From{' '}
             </span>
-            <span className="text-neutral-800 text-xl font-bold font-['Creato Display'] leading-loose tracking-wide">
+            <span className='text-neutral-800 text-xl font-bold font-creato-regular leading-loose tracking-wide'>
               multi-source synthesis
             </span>
-            <span className="text-neutral-800 text-xl font-normal font-['Creato Display'] leading-loose tracking-wide">
+            <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
               {' '}
               to{' '}
             </span>
-            <span className="text-neutral-800 text-xl font-bold font-['Creato Display'] leading-loose tracking-wide">
+            <span className='text-neutral-800 text-xl font-bold font-creato-bold leading-loose tracking-wide'>
               topic-driven content generation
             </span>
-            <span className="text-neutral-800 text-xl font-normal font-['Creato Display'] leading-loose tracking-wide">
+            <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
               , <br />
               achieve{' '}
             </span>
-            <span className="text-neutral-800 text-xl font-bold font-['Creato Display'] leading-loose tracking-wide">
+            <span className='text-neutral-800 text-xl font-bold font-creato-bold leading-loose tracking-wide'>
               precision
             </span>
-            <span className="text-neutral-800 text-xl font-normal font-['Creato Display'] leading-loose tracking-wide">
+            <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
               {' '}
               in every narrative with Dr.Lambda.
             </span>
@@ -169,33 +169,33 @@ function App() {
         </div>
         {/* section: Build up your personal knowledge library */}
         <div className='relative h-[83rem] mt-[20rem] flex flex-col justify-center items-center overflow-x-hidden'>
-          <div className=" w-[70rem] h-56 text-center text-zinc-900 text-7xl font-medium font-['Creato Display'] leading-[6.25rem]">
+          <div className=' w-[70rem] h-56 text-center text-zinc-900 text-7xl font-medium font-creato-medium leading-[6.25rem]'>
             Build up your personal <br /> knowledge library
           </div>
           <div className='w-[46rem] text-center'>
-            <span className="text-neutral-800 text-xl font-bold font-['Creato Display'] leading-loose tracking-wide">
+            <span className='text-neutral-800 text-xl font-bold font-creato-bold leading-loose tracking-wide'>
               Curate
             </span>
-            <span className="text-neutral-800 text-xl font-normal font-['Creato Display'] leading-loose tracking-wide">
+            <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
               ,{' '}
             </span>
-            <span className="text-neutral-800 text-xl font-bold font-['Creato Display'] leading-loose tracking-wide">
+            <span className='text-neutral-800 text-xl font-bold font-creato-bold leading-loose tracking-wide'>
               organize
             </span>
-            <span className="text-neutral-800 text-xl font-normal font-['Creato Display'] leading-loose tracking-wide">
+            <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
               , and{' '}
             </span>
-            <span className="text-neutral-800 text-xl font-bold font-['Creato Display'] leading-loose tracking-wide">
+            <span className='text-neutral-800 text-xl font-bold font-creato-bold leading-loose tracking-wide'>
               access
             </span>
-            <span className="text-neutral-800 text-xl font-normal font-['Creato Display'] leading-loose tracking-wide">
+            <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
               {' '}
               your insights and information, all in one{' '}
             </span>
-            <span className="text-neutral-800 text-xl font-bold font-['Creato Display'] leading-loose tracking-wide">
+            <span className='text-neutral-800 text-xl font-bold font-creato-bold leading-loose tracking-wide'>
               centralized hub
             </span>
-            <span className="text-neutral-800 text-xl font-normal font-['Creato Display'] leading-loose tracking-wide">
+            <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
               {' '}
               for continuous learning.
             </span>
@@ -288,53 +288,54 @@ function App() {
 
         {/* Multifaceted Outputs */}
         <div className='mt-[12rem] flex flex-col justify-center items-center'>
-          <div className="w-[70rem] h-28 text-center text-zinc-900 text-7xl font-medium font-['Creato Display'] leading-10 px-4 py-2">
+          <div className='w-[70rem] h-28 text-center text-zinc-900 text-7xl font-medium font-creato-medium leading-10 px-4 py-2'>
             Multifaceted Outputs
           </div>
           <div className='w-[46rem] text-center'>
-            <span className="text-neutral-800 text-xl font-normal font-['Creato Display'] leading-loose tracking-wide">
+            <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
               Showcase your ideas across diverse formats, ensuring each piece of{' '}
             </span>
-            <span className="text-neutral-800 text-xl font-bold font-['Creato Display'] leading-loose tracking-wide">
+            <span className='text-neutral-800 text-xl font-bold font-creato-bold leading-loose tracking-wide'>
               knowledge
             </span>
-            <span className="text-neutral-800 text-xl font-normal font-['Creato Display'] leading-loose tracking-wide">
+            <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
               {' '}
               shines in its{' '}
             </span>
-            <span className="text-neutral-800 text-xl font-bold font-['Creato Display'] leading-loose tracking-wide">
+            <span className='text-neutral-800 text-xl font-bold font-creato-bold leading-loose tracking-wide'>
               best light
             </span>
-            <span className="text-neutral-800 text-xl font-normal font-['Creato Display'] leading-loose tracking-wide">
+            <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
               .
             </span>
           </div>
-          <div className='relative w-full h-[34rem] flex justify-evenly items-cente text-center mt-[6rem] bg-[#E3E9FF]'>
+          {/* three icons */}
+          <div className='relative w-full h-[34rem] flex justify-evenly items-center text-center mt-[6rem] bg-[#E3E9FF] overflow-auto'>
             {/* <div className='absolute inset-0 bg-[#E3E9FF] opacity-30'></div> */}
-            <div className='flex flex-col justify-center items-center w-1/3 h-full gap-10'>
+            <div className='flex flex-col justify-center items-center w-1/3 min-w-fit h-full gap-10'>
               {/* <img
                 className='w-48 h-48'
                 src='https://via.placeholder.com/328x73'
               /> */}
               <ScriptIcon />
-              <div className="text-center text-gray-700 text-4xl font-medium font-['Creato Display'] leading-10 tracking-wide">
+              <div className='text-center text-gray-700 text-4xl font-medium font-creato-medium leading-10 tracking-wide'>
                 Script
               </div>
             </div>
-            <div className='flex flex-col border-r-2 border-l-2 border-slate-300 justify-center items-center w-1/3 h-full gap-10'>
+            <div className='flex flex-col border-r-2 border-l-2 border-slate-300 justify-center items-center w-1/3 min-w-fit h-full gap-10'>
               {/* <img className='w-48 h-48' src='src/imgs/medal-bronze.png' /> */}
               <SlidesIcon />
-              <div className="text-center text-gray-700 text-4xl font-medium font-['Creato Display'] leading-10 tracking-wide">
+              <div className='text-center text-gray-700 text-4xl font-medium font-creato-medium leading-10 tracking-wide'>
                 Slides
               </div>
             </div>
-            <div className='flex flex-col justify-center items-center w-1/3 h-full gap-10'>
+            <div className='flex flex-col justify-center items-center w-1/3 min-w-fit h-full gap-10'>
               {/* <img
                 className='w-48 h-48'
                 src='https://via.placeholder.com/328x73'
               /> */}
               <VideoIcon />
-              <div className="text-center text-gray-700 text-4xl font-medium font-['Creato Display'] leading-10 tracking-wide">
+              <div className='text-center text-gray-700 text-4xl font-medium font-creato-medium leading-10 tracking-wide'>
                 Video
               </div>
             </div>
@@ -342,17 +343,18 @@ function App() {
         </div>
 
         {/* Turning your knowledge into stories worth sharing. */}
-        <div className='mt-[12rem] mb-[30rem] flex flex-col justify-center items-center'>
-          <div className="w-[60rem] h-56 text-center text-zinc-900 text-7xl font-medium font-['Creato Display'] leading-[6.25rem]">
+        <div className='mt-[12rem] mb-[10rem] flex flex-col justify-center items-center'>
+          <div className='w-[60rem] h-56 text-center text-zinc-900 text-7xl font-medium font-creato-medium leading-[6.25rem]'>
             Turning your knowledge <br />
             into stories worth sharing.{' '}
           </div>
           <div className='w-56 h-14 mt-[2.5rem] mb-[10rem] px-8 py-1 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex'>
-            <div className="w-40 h-14 text-center text-zinc-100 text-xl font-medium font-['Creato Display'] capitalize leading-10 tracking-wide">
+            <div className='w-40 h-14 text-center text-zinc-100 text-xl font-medium font-creato-medium capitalize leading-10 tracking-wide'>
               Dive in Today
             </div>
           </div>
-          <div className='w-[80rem] mb-[3rem] flex justify-end items-center'>
+          {/* billing options, yearly and monthly */}
+          <div className='w-[90%] mb-[3rem] flex justify-end items-center'>
             <div className='billing-options flex justify-center items-center rounded-xl bg-Grey-100'>
               <div
                 className='billing-option text-[1rem] px-2 py-2'
