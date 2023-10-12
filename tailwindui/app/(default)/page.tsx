@@ -48,6 +48,15 @@ function App() {
         setIsYearlyData(true)
         setPricingPlansData(pricingPlansYearlyData)
     }
+
+    useEffect(() => {
+        const isMobile = window.innerWidth < 768;
+        const currentDomain = window.location.hostname;
+        if (isMobile && currentDomain === 'pro.drlambda.ai') {
+          window.location.href = 'https://drlambda.ai';
+        }
+      }, []);
+
     return (
         <>
         <Header loginRequired={false} isLanding={true} />
