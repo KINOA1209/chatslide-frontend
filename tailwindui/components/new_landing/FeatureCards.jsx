@@ -19,9 +19,8 @@ const FeatureCards = () => {
             From inspiration to impression.
           </div>
           <div className='w-full py-[4rem] rounded-md self-center'>
-            {/* <ContentCreationImg  /> */}
             <img
-              src={ContentCreationImg}
+              src='/new_landing/imgs/content-creation.png'
               alt='Content Creation'
               className='object-contain w-full h-full'
             />
@@ -47,7 +46,7 @@ const FeatureCards = () => {
           <div className='w-full py-[4rem] rounded-md self-center'>
             {/* <ContentCreationImg  /> */}
             <img
-              src={ResearchSynthesizingImg}
+              src='/new_landing/imgs/research-synthesizing.png'
               alt='Research Synthesizing'
               className='object-contain w-full h-full'
             />
@@ -74,7 +73,7 @@ const FeatureCards = () => {
           <div className='w-full pt-[4rem] pb-[9rem] rounded-md self-center'>
             {/* <ContentCreationImg  /> */}
             <img
-              src={SelfLearningImg}
+              src='/new_landing/imgs/self-learning.png'
               alt='Self Learning Image'
               className='object-contain w-full h-full'
             />
@@ -101,7 +100,7 @@ const FeatureCards = () => {
           <div className='w-full py-[4rem] rounded-md self-center'>
             {/* <ContentCreationImg  /> */}
             <img
-              src={LectureDesignImg}
+              src='/new_landing/imgs/lecture-design.png'
               alt='Lecture Design Image'
               className='object-contain w-full h-full'
             />

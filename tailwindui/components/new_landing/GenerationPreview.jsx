@@ -79,7 +79,7 @@ const GenerationPreview = () => {
                   <div>
                     <img
                       className='rounded object-cover w-[22rem] h-[22rem]'
-                      src='src/assets/imgs/flowerimage.png'
+                      src='/new_landing/imgs/flowerimage.png'
                     />
                   </div>
                 </div>

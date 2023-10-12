@@ -6,7 +6,7 @@ import { ScriptIcon, SlidesIcon, VideoIcon, DrlambdaLogoIcon } from '@/component
 // import GoogleDriveIcon from './assets/svgs/filetypes/google-drive-icon.svg?react'
 // import MyProjectsImg from '../../public/new_landing/svgs/my-projects.svg'
 
-import Footer from '../../components/new_landing/Footer'
+import Footer from '../../components/ui/footer'
 import PricingPlans from '../../components/new_landing/PricingPlans'
 import MyProjectExample from '../../components/new_landing/MyProjectExample'
 import FeatureCards from '../../components/new_landing/FeatureCards'
@@ -61,22 +61,8 @@ function App() {
                         Transform Knowledge
                     </div>
 
-                    <div className='w-80 h-16 bg-white rounded-2xl border border-red-400 flex items-center'>
-                        {/* <img
-              className='w-12 h-12 ml-4'
-              src='src/assets/imgs/medal-bronze.png'
-            /> */}
-                        {/* <MedalIcon className='w-12 h-12 ml-4' /> */}
-                        <div className='ml-4 flex flex-col'>
-                            <div className='w-28 h-5 pt-1 text-red-400 text-xs font-extrabold font-creato-medium leading-loose tracking-[0.01388rem;]'>
-                                PRODUCT HUNT
-                            </div>
-                            <div className='w-60 h-8 pb-10 text-red-400 text-xl font-bold font-creato-medium leading-10 tracking-wide'>
-                                #3 Product of the Day
-                            </div>
-                        </div>
-                    </div>
-                    <div className='w-96 h-14 text-center text-neutral-900 text-3xl leading-10 tracking-wide'>
+                        <a href="https://www.producthunt.com/posts/drlambda-pro?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-drlambda&#0045;pro" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=419457&theme=light" alt="DrLambda&#0032;Pro - One&#0045;click&#0032;presentation&#0032;AI&#0032;tool&#0032;through&#0032;multiple&#0032;sources | Product Hunt" style={{ width: "250px", height: "54px" }} width="250" height="54" /></a>
+                    <div className='mt-6 w-96 h-14 text-center text-neutral-900 text-3xl leading-10 tracking-wide'>
                         Refine the Raw by AI
                     </div>
                     <div className='text-center mb-[5rem]'>
@@ -198,11 +184,11 @@ function App() {
                     </div>
                     {/* my projects */}
                     <div className='relative mt-[6.25rem] w-[80%] h-auto bg-white rounded-3xl flex flex-col justify-start items-center px-12 py-10 gap-6'>
-                        {/* <div className='w-[28rem] opacity-95 text-neutral-800 text-3xl font-bold font-creato-medium leading-10 tracking-wider'>
+                        <div className='w-[28rem] opacity-95 text-neutral-800 text-3xl font-bold font-creato-medium leading-10 tracking-wider'>
               My Projects
             </div>
             <MyProjectExample />
-            <div className='absolute inset-0 rounded-3xl bg-gradient-to-b from-transparent to-neutral-50'></div> */}
+            <div className='absolute inset-0 rounded-3xl bg-gradient-to-b from-transparent to-neutral-50'></div>
                         <div>
                             {/* <MyProjectsImg className='object-contain w-full h-full' /> */}
                         </div>
