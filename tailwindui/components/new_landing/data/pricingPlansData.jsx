@@ -8,7 +8,8 @@ export const pricingPlansMonthlyData = [
       'Automatic voice-over and video composition',
       'Tailor the content by uploading your PDF files',
     ],
-    cta: 'Subscribe',
+    cta: 'Sign up to try',
+    link: '/signup'
   },
   {
     title: 'Plus',
@@ -22,7 +23,8 @@ export const pricingPlansMonthlyData = [
       'Combine to video',
       'Upload multiple source files',
     ],
-    cta: 'Subscribe',
+    cta: 'Sign up to try',
+    link: '/signup'
   },
   {
     title: '* Pro',
@@ -33,7 +35,8 @@ export const pricingPlansMonthlyData = [
       'Unlimited usage',
       'Direct customer support',
     ],
-    cta: 'Subscribe',
+    cta: 'Sign up to try',
+    link: '/signup'
   },
   {
     title: 'ENTERPRISE',
@@ -45,7 +48,8 @@ export const pricingPlansMonthlyData = [
       'Customized branding',
       'Want more feature? Contact us at contact@drlambda.ai for a demo or quote',
     ],
-    cta: 'Contact Us',
+    cta: 'Book a call',
+    link: 'https://calendly.com/quanlai'
   },
 ]
 
@@ -59,7 +63,8 @@ export const pricingPlansYearlyData = [
       'Automatic voice-over and video composition',
       'Tailor the content by uploading your PDF files',
     ],
-    cta: 'Subscribe',
+    cta: 'Sign up to try',
+    link: '/signup'
   },
   {
     title: 'Plus',
@@ -73,7 +78,8 @@ export const pricingPlansYearlyData = [
       'Combine to video',
       'Upload multiple source files',
     ],
-    cta: 'Subscribe',
+    cta: 'Sign up to try',
+    link: '/signup'
   },
   {
     title: '* Pro',
@@ -84,7 +90,8 @@ export const pricingPlansYearlyData = [
       'Unlimited usage',
       'Direct customer support',
     ],
-    cta: 'Subscribe',
+    cta: 'Sign up to try',
+    link: '/signup'
   },
   {
     title: 'ENTERPRISE',
@@ -96,6 +103,7 @@ export const pricingPlansYearlyData = [
       'Customized branding',
       'Want more feature? Contact us at contact@drlambda.ai for a demo or quote',
     ],
-    cta: 'Contact Us',
+    cta: 'Book a call',
+    link: 'https://calendly.com/quanlai'
   },
 ]
