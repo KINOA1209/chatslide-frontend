@@ -1,203 +1,378 @@
-"use client";
+'use client'
 
-import { useState, useEffect, useRef, RefObject } from "react";
-import AOS from 'aos'
-import 'aos/dist/aos.css'
-import { useRouter } from 'next/navigation';
-import AuthService from "@/components/utils/AuthService";
+import {ScriptIcon, SlidesIcon, VideoIcon, DrlambdaLogoIcon } from '@/components/new_landing/Icons'
+// import MedalIcon from '../../public/new_landing/svgs/medal-bronze.svg'
+// import PdfFileIcon from './assets/svgs/filetypes/pdf-file-icon.svg?react'
+// import GoogleDriveIcon from './assets/svgs/filetypes/google-drive-icon.svg?react'
+// import MyProjectsImg from '../../public/new_landing/svgs/my-projects.svg'
 
-// Content on landing page
-import Header from '@/components/ui/header';
-// import Introduction from '@/components/landing/introduction'
-import Features from '@/components/landing/features'
-import UseCases from '@/components/landing/use_cases'
-import SampleVideos from '@/components/landing/samplevideos'
-import Pricing from '@/components/landing/pricing'
-// import Newsletter from '@/components/landing/newsletter'
-import IframeGallery from '@/components/landing/iframes'
+import Footer from '../../components/new_landing/Footer'
+import PricingPlans from '../../components/new_landing/PricingPlans'
+import MyProjectExample from '../../components/new_landing/MyProjectExample'
+import FeatureCards from '../../components/new_landing/FeatureCards'
+import { pricingPlansMonthlyData } from '../../components/new_landing/data/pricingPlansData'
+import { pricingPlansYearlyData } from '../../components/new_landing/data/pricingPlansData'
+import { useState } from 'react'
+import GenerationPreview from '../../components/new_landing/GenerationPreview'
 
-import discord from '@/public/images/discord2x.png';
+function App() {
+  const [isYearlyData, setIsYearlyData] = useState(false)
+  const [pricingPlansData, setPricingPlansData] = useState(
+    pricingPlansMonthlyData
+  )
 
-interface TextCarouselProps {
-    slides: string[];
-    interval?: number; // Time interval for automatic slide change in milliseconds
-    colors: string[];
-}
+  const handleMonthlyClick = () => {
+    setIsYearlyData(false)
+    setPricingPlansData(pricingPlansMonthlyData)
+  }
 
-const TextCarousel: React.FC<TextCarouselProps> = ({ slides, interval, colors }) => {
-    const [currentIndex, setCurrentIndex] = useState<number>(0);
-    const [offset, SetOffset] = useState<number>(7);
-
-    const nextSlide = () => {
-        setCurrentIndex((prevIndex) => (prevIndex >= slides.length - 1 ? 0 : prevIndex + 1));
-    };
-
-    useEffect(() => {
-        const slideTimer = setTimeout(nextSlide, interval);
-        if (window.innerWidth < 768) {
-            SetOffset(4);
-        } else {
-            SetOffset(7);
-        }
-
-        // Cleanup the timer when the component is unmounted or before re-running the effect
-        return () => {
-            clearTimeout(slideTimer);
-        };
-    }, [currentIndex]);
-
-    return (
-        <div className="carousel-container relative overflow-hidden h-[4rem] md:h-[7rem] mx-auto">
-            <ul className="carousel-list flex flex-col transition-transform duration-500" style={{ transform: `translateY(-${currentIndex * offset}rem)` }}>
-                {slides.map((slide, index) => (
-                    <li key={index} className="carousel-item h-[4rem] md:h-[7rem] text-center py-1 flex-none">
-                        <h1 className={`text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter text-left md:text-center ${colors[index]}`}>{slide}</h1>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
-};
-
-interface IntroProps {
-    demoRef: RefObject<HTMLDivElement>
-}
-
-const Introduction = ({ demoRef }: IntroProps) => {
-    const buttonRef = useRef<HTMLDivElement>(null);
-    // const drlambda = <p className="inline text-transparent bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500" style={{ fontFamily: 'Lexend, sans-serif' }}>DrLambda</p>
-    const router = useRouter();
-    const [currentUser, setCurrentUser] = useState(null);
-
-    const scrollToDemo = (e: React.MouseEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        if (demoRef.current) {
-            demoRef.current?.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
-        }
-    }
-    useEffect(() => {
-        const fetchCurrentUser = async () => {
-            const user = await AuthService.getCurrentUser();
-            setCurrentUser(user);
-        }
-        fetchCurrentUser();
-    }, []);
-
-    // redir on phone
-    useEffect(() => {
-        const isMobile = window.innerWidth < 768;
-        const currentDomain = window.location.hostname;
-        if (isMobile && currentDomain === 'pro.drlambda.ai') {
-          window.location.href = 'https://drlambda.ai';
-        }
-      }, []);
-
-    useEffect(() => {
-        const animationProp = [
-            { backgroundPosition: "0% 50%" },
-            { backgroundPosition: "100% 50%" },
-            { backgroundPosition: "0% 50%" },
-        ];
-
-        const animationTiming = {
-            duration: 10000,
-            iterations: Infinity,
-        };
-
-        if (window && window.innerWidth >= 768 && buttonRef.current) {
-            buttonRef.current.animate(animationProp, animationTiming);
-        } else if (buttonRef.current) {
-            buttonRef.current.style.backgroundPosition = "35% 50%";
-        }
-    }, []);
-
-    return (
-        <div className="w-full min-h-[100vh] flex justify-center pt-[68px] md:pt-[84px]"
-            style={{
-                background: 'linear-gradient(169deg, rgba(255,0,183,0.7391748935902486) 0%, rgba(237,93,196,0.6019199916294643) 6%, rgba(179,127,213,0.5655054258031338) 26%, rgba(121,145,215,0.3974381989123774) 40%, rgba(22,116,227,0.22096761067708337) 50%, rgba(255,255,255,1) 77%, rgba(255,255,255,1) 100%)',
-            }}>
-            <div className="w-full flex flex-col md:items-center justify-between md:justify-center grow md:grow-0 my-20">
-                <div className="h-full md:h-fit flex flex-col justify-evenly md:justify-center items-center px-4" data-aos="zoom-in">
-                    <div>
-                        <div className="text-2xl md:text-3xl w-full text-left md:text-center">Be an expert, AI-powered</div>
-                        <div className="text-5xl md:text-6xl mt-0 md:mt-4"
-                            style={{ fontFamily: 'Lexend, sans-serif' }}>
-                            Use DrLambda to
-                            <div className="inline md:block relative md:-top-6">
-                                <TextCarousel
-                                    slides={["Study", "Present", "Teach", "Create"]}
-                                    interval={2000}
-                                    colors={["text-[#25bad9]", 'text-[#f78f34]', 'text-[#d15a80]', 'text-[#ae42db]']} />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="text-md md:text-xl text-gray-600 text-center mt-2 flex items-center justify-center">
-                        <div className="text-xl md:text-2xl text-left md:text-center">
-                            {/* Give us a topic. <br></br> */}
-                            Create slides from doc, PDF, and more <br></br>
-                            {/* Now with the ability to comprehend your PDF files. */}
-                        </div>
-                    </div>
-                </div>
-                <div className=" max-w-xs mx-auto sm:max-w-none flex-col flex justify-center mt-6 md:mt-16 items-center" data-aos="fade-up" data-aos-delay="300">
-                    <div>
-                        <div ref={buttonRef} className="btn drop-shadow-xl text-lg rounded-full text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer"
-                            style={{ backgroundImage: 'linear-gradient(-45deg, #FFA63D, #FF3D77, #338AFF, #3CF0C5)', backgroundSize: '600%', fontFamily: 'Lexend, sans-serif' }}
-                            onClick={() => { currentUser ? router.push('/dashboard') : router.push('/signup') }}>
-                            {currentUser ? 'Go to My Dashboard' : 'Try DrLambda for FREE'}
-                        </div>
-                        {/* <div className="text-center mt-2 md:mt-8 text-lg cursor-pointer text-gray-600 hover:text-black hover:underline mb-8 md:mb-0" onClick={scrollToDemo}>Watch Demo</div> */}
-                    </div>
-                    <div className="flex flex-col justify-center items-center mt-8 md:mt-16">
-                        <div className="text-md md:text-lg text-gray-600 text-center mt-2 flex items-center justify-center rounded-xl overflow-hidden border border-[#7688d4] bg-white">
-                            <a className="w-full" href="https://discord.gg/8ZQyTesVZ6" target="_blank"><img className="mx-auto" src={discord.src} width={250} /></a>
-                        </div>
-                    </div>
-                    <div className="flex flex-col justify-center items-center mt-2 md:mt-2">
-                        <div className="text-md md:text-lg text-gray-600 text-center mt-2 flex items-center justify-center">
-                            <a href="https://www.producthunt.com/posts/dr-lambda?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-dr&#0045;lambda" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=412747&theme=light&period=daily" alt="Dr&#0046;&#0032;Lambda - Create&#0032;slides&#0032;with&#0032;words&#0044;&#0032;PDF&#0032;&#0038;&#0032;YouTube&#0032;videos | Product Hunt" style={{ width: 250, height: 54 }} width="250" height="54" /></a>
-                        </div>
-                    </div>
-                </div>
-
+  const handleYearlyClick = () => {
+    setIsYearlyData(true)
+    setPricingPlansData(pricingPlansYearlyData)
+  }
+  return (
+    <>
+      {/* background container */}
+      <div className='background w-full relative bg-zinc-100'>
+        <div className='fixed nav-bar w-full h-12 bg-neutral-800 text-zinc-100 text-sm flex justify-center items-center p-4 z-50'>
+          {/* company logo */}
+          <div className='company-logo flex justify-center items-center gap-2 py-1'>
+            <div className='w-8 h-8 relative'>
+              <div className='w-6 h-8 left-[3px] -top-[2px] absolute'>
+                <DrlambdaLogoIcon />
+              </div>
             </div>
+
+            <div className='w-36 h-8 text-zinc-100 text-3xl font-creato-regular leading-7 tracking-[0.035rem]'>
+              DrLambda
+            </div>
+          </div>
+          <div className='flex-grow'></div> {/* Empty space-filling div */}
+          <div className='menu-items flex gap-5 justify-center'>
+            <span className='px-6 py-2'>Feature</span>
+            <span className='px-6 py-2'>Use Case</span>
+            <span className='px-6 py-2'>Testimonial</span>
+            <span className='px-6 py-2'>Pricing</span>
+          </div>
+          <div className='flex-grow'></div> {/* Empty space-filling div */}
+          <div className='get-start-btn mr-14 bg-indigo-500 rounded-lg flex justify-center items-center px-4 py-2'>
+            <span>Get Started</span>
+          </div>
         </div>
-    )
+
+        {/* Section: Transform Knowledge */}
+        <div className='relative intro-section flex flex-col justify-center items-center gap-4'>
+          <div className='text-center text-neutral-900 text-8xl leading-[7.5rem] pt-32'>
+            Transform Knowledge
+          </div>
+
+          <div className='w-80 h-16 bg-white rounded-2xl border border-red-400 flex items-center'>
+            {/* <img
+              className='w-12 h-12 ml-4'
+              src='src/assets/imgs/medal-bronze.png'
+            /> */}
+            {/* <MedalIcon className='w-12 h-12 ml-4' /> */}
+            <div className='ml-4 flex flex-col'>
+              <div className='w-28 h-5 pt-1 text-red-400 text-xs font-extrabold font-creato-medium leading-loose tracking-[0.01388rem;]'>
+                PRODUCT HUNT
+              </div>
+              <div className='w-60 h-8 pb-10 text-red-400 text-xl font-bold font-creato-medium leading-10 tracking-wide'>
+                #3 Product of the Day
+              </div>
+            </div>
+          </div>
+          <div className='w-96 h-14 text-center text-neutral-900 text-3xl leading-10 tracking-wide'>
+            Refine the Raw by AI
+          </div>
+          <div className='text-center mb-[5rem]'>
+            <span className='text-gray-700 text-xl font-normal leading-loose tracking-wide'>
+              Transform fragmented information or curiosity <br /> sparkles into
+            </span>
+            <span className='text-gray-700 text-xl font-bold leading-loose tracking-wide'>
+              {' '}
+              ready-to-use content
+            </span>
+            <span className='text-gray-700 text-xl font-normal leading-loose tracking-wide'>
+              .
+            </span>
+          </div>
+          {/* start for free button */}
+          <div className='absolute bottom-[56rem] w-56 h-14 px-8 py-1 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex z-10'>
+            <div className='w-40 h-14 text-center text-zinc-100 text-xl font-medium font-creato-medium capitalize leading-10 tracking-wide'>
+              Start for free
+            </div>
+          </div>
+          <GenerationPreview />
+        </div>
+
+        {/* section: The Master Alchemist of Knowledge Crafting */}
+        <div className='h-[83rem] mt-[40rem] flex flex-col justify-center items-center'>
+          <div className='w-[60rem] h-56 text-center text-zinc-900 text-7xl font-medium font-creato-medium leading-[6.25rem]'>
+            The Master Alchemist of <br /> Knowledge Crafting
+          </div>
+          <div className='w-[46.375rem] text-center'>
+            <span className="text-neutral-800 text-xl font-normal font-['Creato Display'] leading-loose tracking-wide">
+              From{' '}
+            </span>
+            <span className="text-neutral-800 text-xl font-bold font-['Creato Display'] leading-loose tracking-wide">
+              multi-source synthesis
+            </span>
+            <span className="text-neutral-800 text-xl font-normal font-['Creato Display'] leading-loose tracking-wide">
+              {' '}
+              to{' '}
+            </span>
+            <span className="text-neutral-800 text-xl font-bold font-['Creato Display'] leading-loose tracking-wide">
+              topic-driven content generation
+            </span>
+            <span className="text-neutral-800 text-xl font-normal font-['Creato Display'] leading-loose tracking-wide">
+              , <br />
+              achieve{' '}
+            </span>
+            <span className="text-neutral-800 text-xl font-bold font-['Creato Display'] leading-loose tracking-wide">
+              precision
+            </span>
+            <span className="text-neutral-800 text-xl font-normal font-['Creato Display'] leading-loose tracking-wide">
+              {' '}
+              in every narrative with Dr.Lambda.
+            </span>
+          </div>
+
+          {/* discord icon */}
+          <div className='mt-[3.75rem] mb-[7.5rem] w-80 h-16 bg-white rounded-2xl border border-indigo-500 flex items-center'>
+            <img
+              className='w-8 h-6 ml-4'
+              src='src/assets/imgs/discord-icon.png'
+            />
+            {/* <MedalIcon className='w-12 h-12 ml-4' /> */}
+            <div className='ml-4 flex flex-col'>
+              <div className='w-28 h-5 pt-1 text-indigo-500 text-xs font-extrabold font-creato-medium leading-loose tracking-[0.01388rem]'>
+                DISCORD
+              </div>
+              <div className='w-52 h-8 pb-10 text-indigo-500 text-xl font-bold font-creato-medium leading-10 tracking-[0.02425rem]'>
+                Join our community
+              </div>
+            </div>
+          </div>
+
+          {/* grid cards for features */}
+          <FeatureCards />
+        </div>
+        {/* section: Build up your personal knowledge library */}
+        <div className='relative h-[83rem] mt-[20rem] flex flex-col justify-center items-center overflow-x-hidden'>
+          <div className=" w-[70rem] h-56 text-center text-zinc-900 text-7xl font-medium font-['Creato Display'] leading-[6.25rem]">
+            Build up your personal <br /> knowledge library
+          </div>
+          <div className='w-[46rem] text-center'>
+            <span className="text-neutral-800 text-xl font-bold font-['Creato Display'] leading-loose tracking-wide">
+              Curate
+            </span>
+            <span className="text-neutral-800 text-xl font-normal font-['Creato Display'] leading-loose tracking-wide">
+              ,{' '}
+            </span>
+            <span className="text-neutral-800 text-xl font-bold font-['Creato Display'] leading-loose tracking-wide">
+              organize
+            </span>
+            <span className="text-neutral-800 text-xl font-normal font-['Creato Display'] leading-loose tracking-wide">
+              , and{' '}
+            </span>
+            <span className="text-neutral-800 text-xl font-bold font-['Creato Display'] leading-loose tracking-wide">
+              access
+            </span>
+            <span className="text-neutral-800 text-xl font-normal font-['Creato Display'] leading-loose tracking-wide">
+              {' '}
+              your insights and information, all in one{' '}
+            </span>
+            <span className="text-neutral-800 text-xl font-bold font-['Creato Display'] leading-loose tracking-wide">
+              centralized hub
+            </span>
+            <span className="text-neutral-800 text-xl font-normal font-['Creato Display'] leading-loose tracking-wide">
+              {' '}
+              for continuous learning.
+            </span>
+          </div>
+          {/* my projects */}
+          <div className='relative mt-[6.25rem] w-[80%] h-auto bg-white rounded-3xl flex flex-col justify-start items-center px-12 py-10 gap-6'>
+            {/* <div className='w-[28rem] opacity-95 text-neutral-800 text-3xl font-bold font-creato-medium leading-10 tracking-wider'>
+              My Projects
+            </div>
+            <MyProjectExample />
+            <div className='absolute inset-0 rounded-3xl bg-gradient-to-b from-transparent to-neutral-50'></div> */}
+            <div>
+              {/* <MyProjectsImg className='object-contain w-full h-full' /> */}
+            </div>
+            <div className='absolute top-[90%] icons-list flex justify-evenly items-center gap-12 z-10'>
+              <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
+                <img
+                  className='w-[4rem] h-[4rem]'
+                  src='src/assets/imgs/pdf-file-icon.png'
+                />
+              </div>
+              <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
+                <img
+                  className='w-[5rem] h-[5rem]'
+                  src='src/assets/imgs/csv-file-icon.png'
+                />
+              </div>
+              <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
+                <img
+                  className='w-[5rem] h-[5rem]'
+                  src='src/assets/imgs/word-file-icon.png'
+                />
+              </div>
+              <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
+                <img
+                  className='w-[4rem] h-[4rem]'
+                  src='src/assets/imgs/box-file-icon.png'
+                />
+              </div>
+              <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
+                <img
+                  className='w-[8rem] h-[8rem]'
+                  src='src/assets/imgs/slack-file-icon.png'
+                />
+              </div>
+              <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
+                <img
+                  className='w-[4rem] h-[4rem]'
+                  src='src/assets/imgs/dropbox-file-icon.png'
+                />
+              </div>
+              <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
+                <img
+                  className='w-[5rem] h-[5rem]'
+                  src='src/assets/imgs/ppt-file-icon.png'
+                />
+              </div>
+              <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
+                <img
+                  className='w-[4rem] h-[4rem]'
+                  src='src/assets/imgs/unknown-file-icon.png'
+                />
+              </div>
+              <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
+                <img
+                  className='w-[5rem] h-[5rem]'
+                  src='src/assets/imgs/google-drive-icon.png'
+                />
+              </div>
+              <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
+                <img
+                  className='w-[4rem] h-[4rem]'
+                  src='src/assets/imgs/pdf-file-icon.png'
+                />
+              </div>
+              <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
+                <img
+                  className='w-[5rem] h-[5rem]'
+                  src='src/assets/imgs/csv-file-icon.png'
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Multifaceted Outputs */}
+        <div className='mt-[12rem] flex flex-col justify-center items-center'>
+          <div className="w-[70rem] h-28 text-center text-zinc-900 text-7xl font-medium font-['Creato Display'] leading-10 px-4 py-2">
+            Multifaceted Outputs
+          </div>
+          <div className='w-[46rem] text-center'>
+            <span className="text-neutral-800 text-xl font-normal font-['Creato Display'] leading-loose tracking-wide">
+              Showcase your ideas across diverse formats, ensuring each piece of{' '}
+            </span>
+            <span className="text-neutral-800 text-xl font-bold font-['Creato Display'] leading-loose tracking-wide">
+              knowledge
+            </span>
+            <span className="text-neutral-800 text-xl font-normal font-['Creato Display'] leading-loose tracking-wide">
+              {' '}
+              shines in its{' '}
+            </span>
+            <span className="text-neutral-800 text-xl font-bold font-['Creato Display'] leading-loose tracking-wide">
+              best light
+            </span>
+            <span className="text-neutral-800 text-xl font-normal font-['Creato Display'] leading-loose tracking-wide">
+              .
+            </span>
+          </div>
+          <div className='relative w-full h-[34rem] flex justify-evenly items-cente text-center mt-[6rem] bg-[#E3E9FF]'>
+            {/* <div className='absolute inset-0 bg-[#E3E9FF] opacity-30'></div> */}
+            <div className='flex flex-col justify-center items-center w-1/3 h-full gap-10'>
+              {/* <img
+                className='w-48 h-48'
+                src='https://via.placeholder.com/328x73'
+              /> */}
+              <ScriptIcon />
+              <div className="text-center text-gray-700 text-4xl font-medium font-['Creato Display'] leading-10 tracking-wide">
+                Script
+              </div>
+            </div>
+            <div className='flex flex-col border-r-2 border-l-2 border-slate-300 justify-center items-center w-1/3 h-full gap-10'>
+              {/* <img className='w-48 h-48' src='src/imgs/medal-bronze.png' /> */}
+              <SlidesIcon />
+              <div className="text-center text-gray-700 text-4xl font-medium font-['Creato Display'] leading-10 tracking-wide">
+                Slides
+              </div>
+            </div>
+            <div className='flex flex-col justify-center items-center w-1/3 h-full gap-10'>
+              {/* <img
+                className='w-48 h-48'
+                src='https://via.placeholder.com/328x73'
+              /> */}
+              <VideoIcon />
+              <div className="text-center text-gray-700 text-4xl font-medium font-['Creato Display'] leading-10 tracking-wide">
+                Video
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Turning your knowledge into stories worth sharing. */}
+        <div className='mt-[12rem] mb-[30rem] flex flex-col justify-center items-center'>
+          <div className="w-[60rem] h-56 text-center text-zinc-900 text-7xl font-medium font-['Creato Display'] leading-[6.25rem]">
+            Turning your knowledge <br />
+            into stories worth sharing.{' '}
+          </div>
+          <div className='w-56 h-14 mt-[2.5rem] mb-[10rem] px-8 py-1 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex'>
+            <div className="w-40 h-14 text-center text-zinc-100 text-xl font-medium font-['Creato Display'] capitalize leading-10 tracking-wide">
+              Dive in Today
+            </div>
+          </div>
+          <div className='w-[80rem] mb-[3rem] flex justify-end items-center'>
+            <div className='billing-options flex justify-center items-center rounded-xl bg-Grey-100'>
+              <div
+                className='billing-option text-[1rem] px-2 py-2'
+                onClick={handleMonthlyClick}
+              >
+                <span
+                  className={`rounded-md ${
+                    isYearlyData ? '' : 'bg-Grey-50'
+                  } px-[1rem] py-[0.1rem] font-medium`}
+                >
+                  Monthly billing
+                </span>
+              </div>
+              <div
+                className='billing-option text-[1rem] px-2 py-2'
+                onClick={handleYearlyClick}
+              >
+                <span
+                  className={`rounded-md px-[1rem] py-[0.1rem] text-Grey-600 ${
+                    isYearlyData ? 'bg-Grey-50' : ''
+                  } font-normal `}
+                >
+                  Yearly Billing (save 17%)
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <PricingPlans pricingPlansData={pricingPlansData} />
+        </div>
+
+        <Footer />
+      </div>
+    </>
+  )
 }
 
-export default function newLanding() {
-    // Refs
-    const featuresRef = useRef<HTMLDivElement>(null);
-    const useCasesRef = useRef<HTMLDivElement>(null);
-    const testimonialRef = useRef<HTMLDivElement>(null);
-    const demoRef = useRef<HTMLDivElement>(null);
-    const pricingRef = useRef<HTMLDivElement>(null);
-    const refList = [
-        featuresRef,
-        useCasesRef,
-        testimonialRef,
-        pricingRef,
-    ];
-
-    useEffect(() => {
-        AOS.init({
-            once: true,
-            disable: 'phone',
-            duration: 700,
-            easing: 'ease-out-cubic',
-        })
-    })
-
-    return (
-        <>
-            <Header loginRequired={false} isLanding={true} refList={refList} />
-            <Introduction demoRef={demoRef} />
-            {/* <div ref={demoRef}><SampleVideos /></div> */}
-            <div ref={featuresRef}><Features /></div>
-            <div ref={useCasesRef}><UseCases /></div>
-            <div ref={testimonialRef}><IframeGallery /></div>
-            {/* <Newsletter /> */}
-            <div ref={pricingRef}><Pricing /></div>
-        </>
-    )
-};
+export default App
