@@ -114,11 +114,11 @@ function App() {
         </div>
 
         {/* section: The Master Alchemist of Knowledge Crafting */}
-        <div className='h-[83rem] mt-[40rem] flex flex-col justify-center items-center'>
-          <div className='w-[60rem] h-56 text-center text-zinc-900 text-7xl font-medium font-creato-medium leading-[6.25rem]'>
+        <div className='mt-[6rem] flex flex-col justify-center items-center'>
+          <div className='w-[80%] text-center text-zinc-900 text-7xl font-medium font-creato-medium leading-[6.25rem]'>
             The Master Alchemist of <br /> Knowledge Crafting
           </div>
-          <div className='w-[46.375rem] text-center'>
+          <div className='w-[80%] text-center'>
             <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
               From{' '}
             </span>
@@ -168,11 +168,11 @@ function App() {
           <FeatureCards />
         </div>
         {/* section: Build up your personal knowledge library */}
-        <div className='relative h-[83rem] mt-[20rem] flex flex-col justify-center items-center overflow-x-hidden'>
-          <div className=' w-[70rem] h-56 text-center text-zinc-900 text-7xl font-medium font-creato-medium leading-[6.25rem]'>
+        <div className='relative flex flex-col justify-center items-center overflow-x-hidden'>
+          <div className=' w-[80%] text-center text-zinc-900 text-7xl font-medium font-creato-medium leading-[6.25rem]'>
             Build up your personal <br /> knowledge library
           </div>
-          <div className='w-[46rem] text-center'>
+          <div className='mt-[3rem] w-[80%] text-center'>
             <span className='text-neutral-800 text-xl font-bold font-creato-bold leading-loose tracking-wide'>
               Curate
             </span>
@@ -215,6 +215,7 @@ function App() {
             <div>
               {/* <MyProjectsImg className='object-contain w-full h-full' /> */}
             </div>
+            {/* file type icons list */}
             <div className='absolute top-[90%] icons-list flex justify-evenly items-center gap-12 z-10'>
               <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
                 <img
@@ -288,10 +289,10 @@ function App() {
 
         {/* Multifaceted Outputs */}
         <div className='mt-[12rem] flex flex-col justify-center items-center'>
-          <div className='w-[70rem] h-28 text-center text-zinc-900 text-7xl font-medium font-creato-medium leading-10 px-4 py-2'>
+          <div className='w-[80%] text-center text-zinc-900 text-7xl font-medium font-creato-medium leading-20 px-4 py-2 mb-[3rem]'>
             Multifaceted Outputs
           </div>
-          <div className='w-[46rem] text-center'>
+          <div className='w-[80%] text-center'>
             <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
               Showcase your ideas across diverse formats, ensuring each piece of{' '}
             </span>
@@ -344,7 +345,7 @@ function App() {
 
         {/* Turning your knowledge into stories worth sharing. */}
         <div className='mt-[12rem] mb-[10rem] flex flex-col justify-center items-center'>
-          <div className='w-[60rem] h-56 text-center text-zinc-900 text-7xl font-medium font-creato-medium leading-[6.25rem]'>
+          <div className='w-[80%] text-center text-zinc-900 text-7xl font-medium font-creato-medium leading-[6.25rem]'>
             Turning your knowledge <br />
             into stories worth sharing.{' '}
           </div>
