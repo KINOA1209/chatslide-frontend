@@ -358,7 +358,7 @@ function App() {
           <div className='w-[90%] mb-[3rem] flex justify-end items-center'>
             <div className='billing-options flex justify-center items-center rounded-xl bg-Grey-100'>
               <div
-                className='billing-option text-[1rem] px-2 py-2'
+                className='billing-option text-[1rem] px-2 py-2 cursor-pointer'
                 onClick={handleMonthlyClick}
               >
                 <span
@@ -370,7 +370,7 @@ function App() {
                 </span>
               </div>
               <div
-                className='billing-option text-[1rem] px-2 py-2'
+                className='billing-option text-[1rem] px-2 py-2 cursor-pointer'
                 onClick={handleYearlyClick}
               >
                 <span
