@@ -84,7 +84,7 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({ onFileSelected, fo
                 type="button"
                 onClick={handleClick}
             >
-                Upload File
+                Upload Local File
             </button>
             <div className='text-sm text-gray-400'>Supported file formats: {formats.map((f, index) => {
                 if (index !== formats.length - 1) {
