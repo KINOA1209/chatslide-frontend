@@ -1,4 +1,4 @@
-import { BlackLogo } from "./logo";
+import { BlackLogo, ColorLogo } from "./logo";
 import { useEffect, useRef } from 'react';
 
 export default function Footer() {
@@ -10,7 +10,7 @@ export default function Footer() {
           {/* 1st block */}
           <div className="flex flex-col items-center justify-center">
             <div className="flex justify-center mb-2">
-              <BlackLogo />
+              <ColorLogo />
             </div>
             <div className="flex justify-center mb-2 text-sm text-gray-600">
               DrLambda
