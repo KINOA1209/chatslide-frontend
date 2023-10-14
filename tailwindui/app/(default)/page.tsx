@@ -69,7 +69,7 @@ function App() {
       <div className='background w-full relative bg-zinc-100'>
         {/* Section: Transform Knowledge */}
         <div className='relative intro-section flex flex-col justify-center items-center gap-4'>
-          <div className='text-center text-neutral-900 text-8xl leading-[7.5rem] pt-32'>
+          <div className='w-[80%] text-center text-neutral-900 text-5xl lg:text-8xl leading-[4rem] lg:leading-[7.5rem] pt-32'>
             Transform Knowledge
           </div>
 
@@ -80,29 +80,27 @@ function App() {
             <img
               src='https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=419457&theme=light'
               alt='DrLambda&#0032;Pro - One&#0045;click&#0032;presentation&#0032;AI&#0032;tool&#0032;through&#0032;multiple&#0032;sources | Product Hunt'
-              style={{ width: '250px', height: '54px' }}
-              width='250'
-              height='54'
+              className='w-[11rem] lg:w-[20rem]'
             />
           </a>
-          <div className='mt-6 w-96 h-14 text-center text-neutral-900 text-3xl leading-10 tracking-wide font-creato-medium'>
+          <div className='mt-6 w-96 h-14 text-center text-neutral-900 text-2xl lg:text-3xl leading-10 tracking-wide font-creato-medium'>
             Refine the Raw by AI
           </div>
-          <div className='text-center mb-[5rem]'>
-            <span className='text-gray-700 text-xl font-normal leading-loose tracking-wide font-creato-regular'>
+          <div className='text-center mb-[5rem] text-md lg:text-xl'>
+            <span className='text-gray-700 font-normal leading-loose tracking-wide font-creato-regular'>
               Transform fragmented information or curiosity <br /> sparkles into
             </span>
-            <span className='text-gray-700 text-xl font-bold leading-loose tracking-wide'>
+            <span className='text-gray-700 font-bold leading-loose tracking-wide'>
               {' '}
               ready-to-use content
             </span>
-            <span className='text-gray-700 text-xl font-normal leading-loose tracking-wide'>
+            <span className='text-gray-700  font-normal leading-loose tracking-wide'>
               .
             </span>
           </div>
           {/* start for free button */}
-          <div className='absolute bottom-[56rem] w-56 h-14 px-8 py-1 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex z-10'>
-            <div className='w-40 h-14 text-center text-zinc-100 text-xl font-medium font-creato-medium capitalize leading-10 tracking-wide'>
+          <div className='absolute bottom-[56rem] w-28 h-12 lg:w-56 lg:h-14 px-4 py-1 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex z-10'>
+            <div className='w-40 h-12 text-center text-zinc-100 text-sm lg:text-xl font-bold font-creato-medium capitalize leading-10 tracking-wide'>
               {user ? (
                 <Link href='/dashboard'>Go to Dashboard</Link>
               ) : (
@@ -115,38 +113,38 @@ function App() {
 
         {/* section: The Master Alchemist of Knowledge Crafting */}
         <div className='mt-[3rem] flex flex-col justify-center items-center'>
-          <div className='w-[80%] text-center text-zinc-900 text-7xl font-medium font-creato-medium leading-[6.25rem]'>
+          <div className='w-[80%] text-center text-neutral-900 text-4xl lg:text-7xl leading-[4rem] lg:leading-[7.5rem] pt-32'>
             The Master Alchemist of <br /> Knowledge Crafting
           </div>
-          <div className='mt-[4rem] w-[80%] text-center'>
-            <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
+          <div className='text-center mt-[3rem] text-md lg:text-xl'>
+            <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
               From{' '}
             </span>
-            <span className='text-neutral-800 text-xl font-bold font-creato-regular leading-loose tracking-wide'>
+            <span className='text-neutral-800 font-bold font-creato-regular leading-loose tracking-wide'>
               multi-source synthesis
             </span>
-            <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
+            <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
               {' '}
               to{' '}
             </span>
-            <span className='text-neutral-800 text-xl font-bold font-creato-bold leading-loose tracking-wide'>
+            <span className='text-neutral-800 font-bold font-creato-bold leading-loose tracking-wide'>
               topic-driven content generation
             </span>
-            <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
+            <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
               , <br />
               achieve{' '}
             </span>
-            <span className='text-neutral-800 text-xl font-bold font-creato-bold leading-loose tracking-wide'>
+            <span className='text-neutral-800 font-bold font-creato-bold leading-loose tracking-wide'>
               precision
             </span>
-            <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
+            <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
               {' '}
               in every narrative with Dr.Lambda.
             </span>
           </div>
 
           {/* discord icon */}
-          <div className='mt-[3.75rem] mb-[7.5rem] w-80 h-16 bg-white rounded-2xl border border-indigo-500 flex items-center'>
+          <div className='mt-[3rem] mb-[5rem] w-80 h-16 bg-white rounded-2xl border border-indigo-500 flex items-center'>
             <img
               className='w-8 h-6 ml-4'
               src='new_landing/imgs/discord-icon.png'
@@ -169,33 +167,33 @@ function App() {
         </div>
         {/* section: Build up your personal knowledge library */}
         <div className='relative h-[83rem] flex flex-col justify-center items-center overflow-x-hidden'>
-          <div className=' w-[80%] text-center text-zinc-900 text-7xl font-medium font-creato-medium leading-[6.25rem]'>
+          <div className='w-[80%] text-center text-neutral-900 text-4xl lg:text-7xl leading-[4rem] lg:leading-[7.5rem] pt-32'>
             Build up your personal <br /> knowledge library
           </div>
-          <div className='mt-[3rem] w-[80%] text-center'>
-            <span className='text-neutral-800 text-xl font-bold font-creato-bold leading-loose tracking-wide'>
+          <div className='text-center mt-[3rem] text-md lg:text-xl'>
+            <span className='text-neutral-800 font-bold font-creato-bold leading-loose tracking-wide'>
               Curate
             </span>
-            <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
+            <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
               ,{' '}
             </span>
-            <span className='text-neutral-800 text-xl font-bold font-creato-bold leading-loose tracking-wide'>
+            <span className='text-neutral-800 font-bold font-creato-bold leading-loose tracking-wide'>
               organize
             </span>
-            <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
+            <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
               , and{' '}
             </span>
-            <span className='text-neutral-800 text-xl font-bold font-creato-bold leading-loose tracking-wide'>
+            <span className='text-neutral-800 font-bold font-creato-bold leading-loose tracking-wide'>
               access
             </span>
-            <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
+            <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
               {' '}
               your insights and information, all in one{' '}
             </span>
-            <span className='text-neutral-800 text-xl font-bold font-creato-bold leading-loose tracking-wide'>
+            <span className='text-neutral-800 font-bold font-creato-bold leading-loose tracking-wide'>
               centralized hub
             </span>
-            <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
+            <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
               {' '}
               for continuous learning.
             </span>
@@ -289,24 +287,24 @@ function App() {
 
         {/* Multifaceted Outputs */}
         <div className='mt-[6rem] flex flex-col justify-center items-center'>
-          <div className='w-[80%] text-center text-zinc-900 text-7xl font-medium font-creato-medium leading-20 px-4 py-2 mb-[3rem]'>
+          <div className='w-[80%] text-center text-neutral-900 text-4xl lg:text-7xl leading-[4rem] lg:leading-[7.5rem] pt-32'>
             Multifaceted Outputs
           </div>
-          <div className='w-[80%] text-center'>
-            <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
+          <div className='text-center mt-[3rem] text-md lg:text-xl'>
+            <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
               Showcase your ideas across diverse formats, ensuring each piece of{' '}
             </span>
-            <span className='text-neutral-800 text-xl font-bold font-creato-bold leading-loose tracking-wide'>
+            <span className='text-neutral-800 font-bold font-creato-bold leading-loose tracking-wide'>
               knowledge
             </span>
-            <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
+            <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
               {' '}
               shines in its{' '}
             </span>
-            <span className='text-neutral-800 text-xl font-bold font-creato-bold leading-loose tracking-wide'>
+            <span className='text-neutral-800 font-bold font-creato-bold leading-loose tracking-wide'>
               best light
             </span>
-            <span className='text-neutral-800 text-xl font-normal font-creato-regular leading-loose tracking-wide'>
+            <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
               .
             </span>
           </div>
@@ -345,20 +343,20 @@ function App() {
 
         {/* Turning your knowledge into stories worth sharing. */}
         <div className='mt-[12rem] mb-[10rem] flex flex-col justify-center items-center'>
-          <div className='w-[80%] text-center text-zinc-900 text-7xl font-medium font-creato-medium leading-[6.25rem]'>
+          <div className='w-[80%] text-center text-neutral-900 text-4xl lg:text-7xl leading-[4rem] lg:leading-[7.5rem] pt-32'>
             Turning your knowledge <br />
             into stories worth sharing.{' '}
           </div>
-          <div className='w-56 h-14 mt-[2.5rem] mb-[10rem] px-8 py-1 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex'>
-            <div className='w-40 h-14 text-center text-zinc-100 text-xl font-medium font-creato-medium capitalize leading-10 tracking-wide'>
+          <div className='w-28 h-12 lg:w-56 lg:h-14 mt-[2.5rem] mb-[5rem] px-8 py-1 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex'>
+            <div className='w-40 h-14 text-center text-zinc-100 text-sm lg:text:xl font-bold font-creato-bold capitalize leading-10 tracking-wide'>
               Dive in Today
             </div>
           </div>
           {/* billing options, yearly and monthly */}
-          <div className='w-[90%] mb-[3rem] flex justify-end items-center'>
+          <div className='w-[90%] mb-[3rem] flex justify-center lg:justify-end items-center'>
             <div className='billing-options flex justify-center items-center rounded-xl bg-Grey-100'>
               <div
-                className='billing-option text-[1rem] px-2 py-2 cursor-pointer'
+                className='billing-option text-[0.7rem] lg:text-base px-2 py-2 cursor-pointer'
                 onClick={handleMonthlyClick}
               >
                 <span
@@ -370,7 +368,7 @@ function App() {
                 </span>
               </div>
               <div
-                className='billing-option text-[1rem] px-2 py-2 cursor-pointer'
+                className='billing-option text-[0.7rem] lg:text-base px-2 py-2 cursor-pointer'
                 onClick={handleYearlyClick}
               >
                 <span

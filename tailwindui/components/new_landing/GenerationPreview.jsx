@@ -3,10 +3,10 @@ import { DownloadIcon } from '@/components/new_landing/Icons'
 const GenerationPreview = () => {
   return (
     <>
-      <div className='mb-[15rem] w-[85%] mx-auto max-w-7xl relative bg-indigo-500 rounded-3xl'>
+      <div className='w-[85%] mx-auto max-w-7xl relative bg-indigo-500 rounded-3xl hidden lg:block'>
         <div className='flex flex-col gap-[1.5rem] justify-center items-center px-[3.5rem] py-[3rem]'>
-          <div className='self-end w-auto h-9 px-3.5 py-1 bg-zinc-100 rounded-lg justify-center items-center gap-3 inline-flex'>
-            <div className='text-center text-gray-700 text-base font-medium font-creato-medium leading-relaxed tracking-wide'>
+          <div className='self-center lg:self-end w-auto h-9 px-3.5 py-1 bg-zinc-100 rounded-lg justify-center items-center gap-3 inline-flex'>
+            <div className='text-center text-gray-700 text-sm lg:text-base font-medium font-creato-medium leading-relaxed tracking-wide'>
               Export to PDF
             </div>
             <div className='w-4 h-4 relative'>
@@ -14,11 +14,11 @@ const GenerationPreview = () => {
             </div>
           </div>
           {/* grid two columns */}
-          <div className='grid grid-cols-3 gap-4 h-[30rem]'>
-            <div className='col-span-3 lg:col-span-2 bg-zinc-100 rounded-lg px-6 py-4 overflow-scroll h-[15rem] lg:h-[30rem] overflow-y-scroll'>
-              <div className='flex flex-col'>
+          <div className='grid grid-cols-3 gap-4 h-[30rem] '>
+            <div className='col-span-3 lg:col-span-2 bg-zinc-100 rounded-lg px-6 py-4 h-[15rem] lg:h-[30rem] overflow-auto'>
+              <div className='flex flex-col '>
                 <div className='flex justify-between items-center'>
-                  <div className="w-96 text-blue-700 text-base font-bold font-['Creato Display'] leading-snug tracking-wide">
+                  <div className='w-96 text-blue-700 text-base font-bold font-creato-bold leading-snug tracking-wide'>
                     03 - Ideal Growing Conditions
                   </div>
                   <div className='origin-top-left rotate-180 w-16 h-2 relative'>
@@ -30,7 +30,7 @@ const GenerationPreview = () => {
                     <div className='w-2 h-2 left-[-56.62px] top-0 absolute origin-top-left rotate-180 bg-gray-200 rounded-full' />
                   </div>
                 </div>
-                <div className='text-3xl font-normal font-creato-regular leading-loose tracking-wide'>
+                <div className='text-lg font-normal font-creato-medium leading-loose tracking-wide'>
                   Temperature, Humidity & Lighting
                 </div>
                 <div className='grid grid-cols-2 gap-4 border-t-2 py-2'>
