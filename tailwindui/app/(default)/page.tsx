@@ -144,17 +144,17 @@ function App() {
           </div>
 
           {/* discord icon */}
-          <div className='mt-[3rem] mb-[5rem] w-80 h-16 bg-white rounded-2xl border border-indigo-500 flex items-center'>
+          <div className='mt-[3rem] mb-[5rem] w-[13rem] lg:w-[20rem] bg-white rounded-2xl border border-indigo-500 flex items-center'>
             <img
               className='w-8 h-6 ml-4'
               src='new_landing/imgs/discord-icon.png'
             />
             {/* <MedalIcon className='w-12 h-12 ml-4' /> */}
             <div className='ml-4 flex flex-col'>
-              <div className='w-28 h-5 pt-1 text-indigo-500 text-xs font-extrabold font-creato-medium leading-loose tracking-[0.01388rem]'>
+              <div className='w-[3rem] lg:w-[7rem] h-5 pt-1 text-indigo-500 text-xs font-extrabold font-creato-medium leading-loose tracking-tight lg:tracking-[0.01388rem]'>
                 DISCORD
               </div>
-              <div className='w-52 h-8 pb-10 text-indigo-500 text-xl font-bold font-creato-medium leading-10 tracking-[0.02425rem]'>
+              <div className='w-[8rem] lg:w-[13rem] h-8 pb-10 text-indigo-500 text-sm lg:text-xl font-bold font-creato-medium leading-10 tracking-tight lg:tracking-[0.02425rem]'>
                 <Link href='https://discord.gg/CKVdZDAuu3'>
                   Join our community
                 </Link>
