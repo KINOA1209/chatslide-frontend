@@ -92,15 +92,16 @@ function App() {
           </div>
 
           <a
-            href='https://www.producthunt.com/posts/drlambda-pro?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-drlambda&#0045;pro'
+            href='https://www.producthunt.com/posts/dr-lambda?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-dr&#0045;lambda'
             target='_blank'
           >
             <img
-              src='https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=419457&theme=light'
-              alt='DrLambda&#0032;Pro - One&#0045;click&#0032;presentation&#0032;AI&#0032;tool&#0032;through&#0032;multiple&#0032;sources | Product Hunt'
+              src='https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=412747&theme=light&period=daily'
+              alt='DrLambda - One&#0045;click&#0032;presentation&#0032;AI&#0032;tool&#0032;through&#0032;multiple&#0032;sources | Product Hunt'
               className='w-[11rem] lg:w-[20rem]'
             />
           </a>
+
           <div className='mt-6 w-96 h-14 text-center text-neutral-900 text-2xl lg:text-3xl leading-10 tracking-wide font-creato-medium'>
             Refine the Raw by AI
           </div>
