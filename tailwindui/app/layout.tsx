@@ -12,7 +12,7 @@ const inter = Inter({
 
 export const metadata = {
   title: 'Home - DrLambda',
-  description: 'Create new content',
+  description: 'Convert your documents to slides',
 }
 
 export default function RootLayout({

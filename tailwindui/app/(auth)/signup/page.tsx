@@ -13,6 +13,9 @@ export default function SignUp() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [href, setHref] = useState('/signup-with-email');
+    const [showPromo, setShowPromo] = useState(false);
+
+    const [referralValue, setReferralValue] = useState('');
 
     useEffect(() => {
         const handlePromoChange = (promo: string) => {
@@ -24,6 +27,8 @@ export default function SignUp() {
         const promo = searchParams.get('referral');
         if (promo) {
             handlePromoChange(promo);
+            setReferralValue(promo);
+            setShowPromo(true);
         };
     }, [])
 
@@ -58,24 +63,30 @@ export default function SignUp() {
 
                     {/* Form */}
                     <div className="max-w-sm mx-auto">
-                        {searchParams.get('referral') && (
+                        {showPromo ? (
                             <div className="flex flex-wrap -mx-3 mb-4">
                                 <div className="w-full px-3">
                                     <label
-                                        className="block text-green-600 text-sm font-medium mb-1"
+                                        className="block text-green-600 font-medium mb-1"
                                         htmlFor="promo"
                                     >
-                                        Referral code applied
+                                        Get more credits with a promo or referral code
                                     </label>
-                                    <input
-                                        id="promo"
-                                        type="text"
-                                        value={searchParams.get('referral') || ''}
-                                        className="form-input w-full text-gray-800 bg-gray-200 cursor-not-allowed"
-                                        disabled={true}
-                                    />
+                                    <div className="max-w-sm mx-auto">
+                                        <input
+                                            id="promo"
+                                            type="text"
+                                            value={referralValue}
+                                            onChange={(e) => setReferralValue(e.target.value)}
+                                            className="form-input w-full text-gray-800 bg-gray-200"
+                                        />
+                                    </div>
                                 </div>
                             </div>
+                        ) : (
+                            <span className="text-blue-500 cursor-pointer" onClick={() => setShowPromo(true)}>
+                                Have a promo or referral code?
+                            </span>
                         )}
 
 
@@ -108,7 +119,7 @@ export default function SignUp() {
 
                         <div className="flex flex-wrap -mx-3 mt-6">
                             <div className="w-full px-3">
-                                <a 
+                                <a
                                     href={href}
                                     className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full">
                                     Sign up with email
