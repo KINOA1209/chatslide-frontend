@@ -3,9 +3,13 @@
 import { DrlambdaLogoIcon } from '@/components/new_landing/Icons'
 import Image from 'next/image'
 import MyProjectsImg from '@/public/new_landing/imgs/my-project.png'
-import ScriptIcon from '@/public/new_landing/svgs/script.svg?react'
-import SlidesIcon from '@/public/new_landing/svgs/slides.svg?react'
-import VideoIcon from '@/public/new_landing/svgs/video.svg?react'
+import GenerationPreviewImg from '@/public/new_landing/imgs/GenerationPreview.png'
+// import ScriptIcon from '@/public/new_landing/svgs/script.svg?react'
+// import SlidesIcon from '@/public/new_landing/svgs/slides.svg?react'
+// import VideoIcon from '@/public/new_landing/svgs/video.svg?react'
+import ScriptIcon from '@/public/new_landing/imgs/script.png'
+import SlidesIcon from '@/public/new_landing/imgs/slides.png'
+import VideoIcon from '@/public/new_landing/imgs/video.png'
 
 // import MedalIcon from '../../public/new_landing/svgs/medal-bronze.svg'
 // import PdfFileIcon from './assets/svgs/filetypes/pdf-file-icon.svg?react'
@@ -23,6 +27,20 @@ import GenerationPreview from '../../components/new_landing/GenerationPreview'
 import Link from 'next/link'
 import AuthService from '@/components/utils/AuthService'
 import Header from '@/components/ui/header'
+
+const fileTypes = [
+  'pdf-file-icon',
+  'csv-file-icon',
+  'word-file-icon',
+  'box-file-icon',
+  'slack-file-icon',
+  'dropbox-file-icon',
+  'ppt-file-icon',
+  'unknown-file-icon',
+  'google-drive-icon',
+  'pdf-file-icon',
+  'csv-file-icon',
+]
 
 function App() {
   const [isYearlyData, setIsYearlyData] = useState(false)
@@ -69,7 +87,7 @@ function App() {
       <div className='background w-full relative bg-zinc-100'>
         {/* Section: Transform Knowledge */}
         <div className='relative intro-section flex flex-col justify-center items-center gap-4'>
-          <div className='w-[80%] text-center text-neutral-900 text-5xl lg:text-8xl leading-[4rem] lg:leading-[7.5rem] pt-32'>
+          <div className='w-[90%] text-center text-neutral-900 text-5xl lg:text-8xl leading-[4rem] lg:leading-[7.5rem] pt-32'>
             Transform Knowledge
           </div>
 
@@ -86,7 +104,7 @@ function App() {
           <div className='mt-6 w-96 h-14 text-center text-neutral-900 text-2xl lg:text-3xl leading-10 tracking-wide font-creato-medium'>
             Refine the Raw by AI
           </div>
-          <div className='text-center mb-[5rem] text-md lg:text-xl'>
+          <div className='w-[90%] text-center mb-[3rem] text-md lg:text-xl'>
             <span className='text-gray-700 font-normal leading-loose tracking-wide font-creato-regular'>
               Transform fragmented information or curiosity <br /> sparkles into
             </span>
@@ -99,8 +117,8 @@ function App() {
             </span>
           </div>
           {/* start for free button */}
-          <div className='absolute bottom-[56rem] w-28 h-12 lg:w-56 lg:h-14 px-4 py-1 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex z-10'>
-            <div className='w-40 h-12 text-center text-zinc-100 text-sm lg:text-xl font-bold font-creato-medium capitalize leading-10 tracking-wide'>
+          <div className='absolute bottom-[23%] lg:bottom-[48%] w-[6rem] h-8 lg:w-56 lg:h-14 px-[4rem] py-2 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex z-10'>
+            <div className='w-40 h-12 text-center text-zinc-100 text-xs lg:text-xl font-bold font-creato-medium capitalize leading-10 tracking-wide'>
               {user ? (
                 <Link href='/dashboard'>Go to Dashboard</Link>
               ) : (
@@ -108,15 +126,22 @@ function App() {
               )}
             </div>
           </div>
-          <GenerationPreview />
+          <div className='w-[90%]'>
+            <Image
+              src={GenerationPreviewImg}
+              alt='my project'
+              className='object-cover lg:object-contain lg:w-full'
+            />
+          </div>
+          {/* <GenerationPreview /> */}
         </div>
 
         {/* section: The Master Alchemist of Knowledge Crafting */}
         <div className='mt-[3rem] flex flex-col justify-center items-center'>
-          <div className='w-[80%] text-center text-neutral-900 text-4xl lg:text-7xl leading-[4rem] lg:leading-[7.5rem] pt-32'>
+          <div className='w-[90%] text-center text-neutral-900 text-4xl lg:text-7xl leading-[4rem] lg:leading-[7.5rem]'>
             The Master Alchemist of <br /> Knowledge Crafting
           </div>
-          <div className='text-center mt-[3rem] text-md lg:text-xl'>
+          <div className='w-[90%] text-center mt-[3rem] text-md lg:text-xl'>
             <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
               From{' '}
             </span>
@@ -166,11 +191,11 @@ function App() {
           <FeatureCards />
         </div>
         {/* section: Build up your personal knowledge library */}
-        <div className='relative h-[83rem] flex flex-col justify-center items-center overflow-x-hidden'>
-          <div className='w-[80%] text-center text-neutral-900 text-4xl lg:text-7xl leading-[4rem] lg:leading-[7.5rem] pt-32'>
+        <div className='mt-[6rem] relative flex flex-col justify-center items-center'>
+          <div className='w-[90%] h-full text-center text-neutral-900 text-4xl lg:text-7xl leading-[4rem] lg:leading-[7.5rem]'>
             Build up your personal <br /> knowledge library
           </div>
-          <div className='text-center mt-[3rem] text-md lg:text-xl'>
+          <div className='w-[90%] text-center mt-[3rem] text-md lg:text-xl  '>
             <span className='text-neutral-800 font-bold font-creato-bold leading-loose tracking-wide'>
               Curate
             </span>
@@ -199,98 +224,51 @@ function App() {
             </span>
           </div>
           {/* my projects */}
-          <div className='relative mt-[6.25rem] w-[80%] h-auto bg-white rounded-3xl flex flex-col justify-start items-center px-12 py-10 gap-6'>
-            {/* <div className='w-[28rem] opacity-95 text-neutral-800 text-3xl font-bold font-creato-medium leading-10 tracking-wider'>
+          {/* <div className='mt-[6.25rem] w-[90%] h-auto bg-white rounded-3xl flex flex-col justify-center items-center px-12 py-10 gap-6'> */}
+          {/* <div className='w-[28rem] opacity-95 text-neutral-800 text-3xl font-bold font-creato-medium leading-10 tracking-wider'>
               My Projects
             </div> */}
-            {/* <MyProjectExample />
+          {/* <MyProjectExample />
             <div className='absolute inset-0 rounded-3xl bg-gradient-to-b from-transparent to-neutral-50'></div> */}
+
+          <div className='mt-[6.25rem] w-[90%] h-auto  bg-white rounded-3xl flex flex-col justify-center items-center px-6 py-4 lg:px-12 lg:py-10 gap-6'>
             <Image
               src={MyProjectsImg}
               alt='my project'
-              className='object-contain w-full h-full'
+              className='object-contain lg:w-full lg:h-auto'
             />
-            <div>
-              {/* <MyProjectsImg className='object-contain w-full h-full' /> */}
-            </div>
-            {/* file type icons list */}
-            <div className='absolute top-[90%] icons-list flex justify-evenly items-center gap-12 z-10'>
-              <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
+            {/* <MyProjectsImg className='object-contain w-full h-full' /> */}
+          </div>
+          {/* </div> */}
+          {/* file type icons list */}
+
+          <div className='absolute top-[95%] lg:top-[92%] icons-list flex justify-evenly items-center gap-6 z-10'>
+            {fileTypes.map((fileType, index) => (
+              // Each icon container
+              <div
+                key={index}
+                className='w-[4rem] h-[4rem] lg:w-[8rem] lg:h-[8rem] bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'
+              >
                 <img
-                  className='w-[4rem] h-[4rem]'
-                  src='/new_landing/imgs/pdf-file-icon.png'
+                  className={
+                    fileType === 'slack-file-icon'
+                      ? `w-[4rem] h-[4rem] lg:w-[7rem] lg:h-[7rem]`
+                      : `w-[2rem] h-[2rem] lg:w-[4rem] lg:h-[4rem]`
+                  }
+                  src={`/new_landing/imgs/${fileType}.png`} // Make sure the image path is correct
+                  alt={fileType} // Add alt text for accessibility
                 />
               </div>
-              <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
-                <img
-                  className='w-[5rem] h-[5rem]'
-                  src='/new_landing/imgs/csv-file-icon.png'
-                />
-              </div>
-              <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
-                <img
-                  className='w-[5rem] h-[5rem]'
-                  src='/new_landing/imgs/word-file-icon.png'
-                />
-              </div>
-              <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
-                <img
-                  className='w-[4rem] h-[4rem]'
-                  src='/new_landing/imgs/box-file-icon.png'
-                />
-              </div>
-              <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
-                <img
-                  className='w-[8rem] h-[8rem]'
-                  src='/new_landing/imgs/slack-file-icon.png'
-                />
-              </div>
-              <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
-                <img
-                  className='w-[4rem] h-[4rem]'
-                  src='/new_landing/imgs/dropbox-file-icon.png'
-                />
-              </div>
-              <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
-                <img
-                  className='w-[5rem] h-[5rem]'
-                  src='/new_landing/imgs/ppt-file-icon.png'
-                />
-              </div>
-              <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
-                <img
-                  className='w-[4rem] h-[4rem]'
-                  src='/new_landing/imgs/unknown-file-icon.png'
-                />
-              </div>
-              <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
-                <img
-                  className='w-[5rem] h-[5rem]'
-                  src='/new_landing/imgs/google-drive-icon.png'
-                />
-              </div>
-              <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
-                <img
-                  className='w-[4rem] h-[4rem]'
-                  src='/new_landing/imgs/pdf-file-icon.png'
-                />
-              </div>
-              <div className='w-32 h-32 bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'>
-                <img
-                  className='w-[5rem] h-[5rem]'
-                  src='/new_landing/imgs/csv-file-icon.png'
-                />
-              </div>
-            </div>
+            ))}
           </div>
         </div>
 
         {/* Multifaceted Outputs */}
         <div className='mt-[6rem] flex flex-col justify-center items-center'>
-          <div className='w-[80%] text-center text-neutral-900 text-4xl lg:text-7xl leading-[4rem] lg:leading-[7.5rem] pt-32'>
+          <div className='w-[90%] text-center text-neutral-900 text-4xl lg:text-7xl leading-[4rem] lg:leading-[7.5rem]'>
             Multifaceted Outputs
           </div>
-          <div className='text-center mt-[3rem] text-md lg:text-xl'>
+          <div className='w-[90%] text-center mt-[3rem] text-md lg:text-xl'>
             <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
               Showcase your ideas across diverse formats, ensuring each piece of{' '}
             </span>
@@ -309,32 +287,57 @@ function App() {
             </span>
           </div>
           {/* three icons */}
-          <div className='relative w-full h-[34rem] flex justify-evenly items-center text-center mt-[6rem] bg-[#E3E9FF] overflow-auto'>
+          <div className='relative w-auto lg:w-full flex justify-evenly items-center text-center py-10 mt-[6rem] bg-[#E3E9FF] overflow-auto'>
             {/* <div className='absolute inset-0 bg-[#E3E9FF] opacity-30'></div> */}
-            <div className='flex flex-col justify-center items-center w-1/3 min-w-fit h-full gap-10'>
-              {/* <img
-                className='w-48 h-48'
-                src='https://via.placeholder.com/328x73'
+            <div className='flex flex-col justify-center items-center lg:w-1/3 lg:min-w-fit h-full gap-10'>
+              <div className='object-cover lg:object-contain px-4'>
+                {/* <ScriptIcon /> */}
+                <Image
+                  src={ScriptIcon}
+                  alt='script icon'
+                  className='object-contain'
+                />
+              </div>
+
+              {/* <Image
+                src={MyProjectsImg}
+                alt='my project'
+                className='object-cover lg:object-contain lg:w-full'
               /> */}
-              <ScriptIcon />
-              <div className='text-center text-gray-700 text-4xl font-medium font-creato-medium leading-10 tracking-wide'>
+              <div className='text-center text-gray-700 text-2xl lg:text-4xl font-medium font-creato-medium leading-10 tracking-wide'>
                 Script
               </div>
             </div>
-            <div className='flex flex-col border-r-2 border-l-2 border-slate-300 justify-center items-center w-1/3 min-w-fit h-full gap-10'>
+            <div className='flex flex-col border-r-2 border-l-2 border-slate-300 justify-center items-center lg:w-1/3 lg:min-w-fit h-full gap-10'>
               {/* <img className='w-48 h-48' src='src/imgs/medal-bronze.png' /> */}
-              <SlidesIcon />
-              <div className='text-center text-gray-700 text-4xl font-medium font-creato-medium leading-10 tracking-wide'>
+              <div className='object-cover lg:object-contain px-4'>
+                {/* <ScriptIcon /> */}
+                <Image
+                  src={SlidesIcon}
+                  alt='slides icon'
+                  className='object-contain'
+                />
+              </div>
+
+              <div className='text-center text-gray-700 text-2xl lg:text-4xl font-medium font-creato-medium leading-10 tracking-wide'>
                 Slides
               </div>
             </div>
-            <div className='flex flex-col justify-center items-center w-1/3 min-w-fit h-full gap-10'>
+            <div className='flex flex-col justify-center items-center lg:w-1/3 lg:min-w-fit h-full gap-10'>
               {/* <img
                 className='w-48 h-48'
                 src='https://via.placeholder.com/328x73'
               /> */}
-              <VideoIcon />
-              <div className='text-center text-gray-700 text-4xl font-medium font-creato-medium leading-10 tracking-wide'>
+              {/* <VideoIcon /> */}
+              <div className='object-cover lg:object-contain px-4'>
+                {/* <ScriptIcon /> */}
+                <Image
+                  src={VideoIcon}
+                  alt='video icon'
+                  className='object-contain'
+                />
+              </div>
+              <div className='text-center text-gray-700 text-2xl lg:text-4xl font-medium font-creato-medium leading-10 tracking-wide'>
                 Video
               </div>
             </div>
@@ -342,13 +345,14 @@ function App() {
         </div>
 
         {/* Turning your knowledge into stories worth sharing. */}
-        <div className='mt-[12rem] mb-[10rem] flex flex-col justify-center items-center'>
-          <div className='w-[80%] text-center text-neutral-900 text-4xl lg:text-7xl leading-[4rem] lg:leading-[7.5rem] pt-32'>
+        <div className='mt-[6rem] mb-[6rem] flex flex-col justify-center items-center'>
+          <div className='w-[90%] text-center text-neutral-900 text-4xl lg:text-7xl leading-[4rem] lg:leading-[7.5rem]'>
             Turning your knowledge <br />
             into stories worth sharing.{' '}
           </div>
-          <div className='w-28 h-12 lg:w-56 lg:h-14 mt-[2.5rem] mb-[5rem] px-8 py-1 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex'>
-            <div className='w-40 h-14 text-center text-zinc-100 text-sm lg:text:xl font-bold font-creato-bold capitalize leading-10 tracking-wide'>
+          <div className='w-[6rem] h-8 lg:w-56 lg:h-14 mt-[2.5rem] mb-[5rem] px-[4rem] py-2 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex'>
+            {/* absolute bottom-[23%] lg:bottom-[48%] w-[6rem] h-8 lg:w-56 lg:h-14 px-6 py-2 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex z-10 */}
+            <div className='w-40 h-14 text-center text-zinc-100 text-xs lg:text:xl font-bold font-creato-bold capitalize leading-10 tracking-wide'>
               Dive in Today
             </div>
           </div>
