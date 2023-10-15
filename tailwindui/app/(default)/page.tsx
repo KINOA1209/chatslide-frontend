@@ -170,23 +170,26 @@ function App() {
           </div>
 
           {/* discord icon */}
-          <div className='mt-[3rem] mb-[5rem] w-[13rem] lg:w-[20rem] bg-white rounded-2xl border border-indigo-500 flex items-center'>
-            <img
-              className='w-8 h-6 ml-4'
-              src='new_landing/imgs/discord-icon.png'
-            />
-            {/* <MedalIcon className='w-12 h-12 ml-4' /> */}
-            <div className='ml-4 flex flex-col'>
-              <div className='w-[3rem] lg:w-[7rem] h-5 pt-1 text-indigo-500 text-xs font-extrabold font-creato-medium leading-loose tracking-tight lg:tracking-[0.01388rem]'>
-                DISCORD
-              </div>
-              <div className='w-[8rem] lg:w-[13rem] h-8 pb-10 text-indigo-500 text-sm lg:text-xl font-bold font-creato-medium leading-10 tracking-tight lg:tracking-[0.02425rem]'>
-                <Link href='https://discord.gg/CKVdZDAuu3'>
+          <Link href='https://discord.gg/CKVdZDAuu3'>
+            <div className='mt-[3rem] mb-[5rem] w-[13rem] lg:w-[20rem] bg-white rounded-2xl border border-indigo-500 flex items-center'>
+              <img
+                className='w-8 h-6 ml-4'
+                src='new_landing/imgs/discord-icon.png'
+              />
+              {/* <MedalIcon className='w-12 h-12 ml-4' /> */}
+
+              <div className='ml-4 flex flex-col'>
+                <div className='w-auto lg:w-[7rem] h-5 pt-1 text-indigo-500 text-xs font-extrabold font-creato-medium leading-loose tracking-tight lg:tracking-[0.01388rem]'>
+                  DISCORD
+                </div>
+                <div className='w-auto lg:w-[13rem] h-8 pb-10 text-indigo-500 text-sm lg:text-xl font-bold font-creato-medium leading-10 tracking-tight lg:tracking-[0.02425rem]'>
+                  {/* <Link href='https://discord.gg/CKVdZDAuu3'> */}
                   Join our community
-                </Link>
+                  {/* </Link> */}
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
 
           {/* grid cards for features */}
           <FeatureCards />
@@ -353,8 +356,12 @@ function App() {
           </div>
           <div className='w-[6rem] h-8 lg:w-56 lg:h-14 mt-[2.5rem] mb-[5rem] px-[4rem] py-2 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex'>
             {/* absolute bottom-[23%] lg:bottom-[48%] w-[6rem] h-8 lg:w-56 lg:h-14 px-6 py-2 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex z-10 */}
-            <div className='w-40 h-14 text-center text-zinc-100 text-xs lg:text:xl font-bold font-creato-bold capitalize leading-10 tracking-wide'>
-              Dive in Today
+            <div className='w-40 h-12 text-center text-zinc-100 text-xs lg:text-xl font-bold font-creato-medium capitalize leading-10 tracking-wide'>
+              {user ? (
+                <Link href='/dashboard'>Go to Dashboard</Link>
+              ) : (
+                <Link href='/signin'>Dive in Today</Link>
+              )}
             </div>
           </div>
           {/* billing options, yearly and monthly */}
