@@ -355,7 +355,7 @@ function App() {
           </div>
           <div className='w-[6rem] h-8 lg:w-56 lg:h-14 mt-[2.5rem] mb-[5rem] px-[4rem] py-2 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex'>
             {/* absolute bottom-[23%] lg:bottom-[48%] w-[6rem] h-8 lg:w-56 lg:h-14 px-6 py-2 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex z-10 */}
-            <div className='w-40 h-14 text-center text-zinc-100 text-xs lg:text:xl font-bold font-creato-bold capitalize leading-10 tracking-wide'>
+            <div className='w-40 h-12 text-center text-zinc-100 text-xs lg:text-xl font-bold font-creato-medium capitalize leading-10 tracking-wide'>
               {user ? (
                 <Link href='/dashboard'>Go to Dashboard</Link>
               ) : (
