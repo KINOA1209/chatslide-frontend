@@ -75,7 +75,7 @@ function App() {
   useEffect(() => {
     const isMobile = window.innerWidth < 768
     const currentDomain = window.location.hostname
-    if (isMobile && currentDomain === 'pro.drlambda.ai') {
+    if (currentDomain === 'pro.drlambda.ai') {
       window.location.href = 'https://drlambda.ai'
     }
   }, [])
