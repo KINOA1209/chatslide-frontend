@@ -15,7 +15,8 @@ export default function WorkflowStep2() {
     const outlineContent = outlineRes ? Object.keys(outlineRes).map(key => {
         return {
             title: outlineRes[key]['title'],
-            content: outlineRes[key]['content']
+            content: outlineRes[key]['content'],
+            section_style: outlineRes[key]['section_style']
         }
     }) : null;
 
