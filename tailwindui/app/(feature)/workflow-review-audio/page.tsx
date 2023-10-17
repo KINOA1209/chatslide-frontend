@@ -15,6 +15,7 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageU
     const [transcriptList, setTranscriptList] = useState<string[]>(transcripts);
     const router = useRouter();
     const [hasSlides, setHasSlides] = useState<boolean>(false);
+    const [authToken, setAuthToken] = useState<string>();
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -23,6 +24,14 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageU
                 setHasSlides(true);
             }
         }
+    }, []);
+
+    useEffect(() => {
+        const fetchToken = async () => {
+            const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+            setAuthToken(idToken);
+        }
+        fetchToken();
     }, []);
 
     const handleChange = (index: number, event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -102,7 +111,7 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageU
 
                 <div tabIndex={index} className='w-full flex flex-col md:flex-row rounded border-solid border-2 border-blue-200 mt-4 focus-within:border-blue-600'>
                     <div className={`grid ${hasSlides ? 'sm:grid-rows-2' : 'sm:grid-rows-1'} md:grid-rows-1 ${hasSlides ? 'md:grid-cols-2' : 'md:grid-cols-1'} grow`}>
-                        {hasSlides && <ImageList urls={[imageUrls[index]]} height={100} />}
+                        {hasSlides && authToken && <ImageList urls={[imageUrls[index]]} token={authToken} height={100} />}
                         <textarea
                             key={index}
                             className={`${!hasSlides && 'h-80'} block form-input w-full text-gray-800 mb-2 resize-none border-none p-4`}
