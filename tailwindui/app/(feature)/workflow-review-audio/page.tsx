@@ -121,7 +121,7 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageU
                         />
                     </div>
                     <div className='md:w-28 flex flex-row items-center px-1.5 py-2 md:flex-col shrink-0'>
-                        {index < audioFiles.length &&
+                        {index < audioFiles.length && authToken &&
                             <Audio filename={audioFiles[index]} foldername={foldername} token={authToken} />
                         }
                     </div>
