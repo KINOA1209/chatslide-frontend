@@ -612,7 +612,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
 
                         <RangeSlider
                             label="Content per Page"
-                            values={['Consise', 'Normal', 'Detailed']}
+                            values={['Concise', 'Normal', 'Detailed']}
                             onChange={handleDetailLevelChange}
                             locked={!isPaidUser}
                         />
