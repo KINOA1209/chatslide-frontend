@@ -9,18 +9,8 @@ import { SlideElement, Slide } from '@/components/SlidesHTML';
 import dynamic from 'next/dynamic'
 
 
-const SlidesHTML = dynamic(() => import('@/components/SlidesHTML'));
-const SaveToPdfHtml = dynamic(() => import('@/components/forms/saveToPdfHtml'));
-
-// const SlidesHTML = dynamic(
-//     () => import('@/components/SlidesHTML'),
-//     { ssr: false }
-// )
-
-// const SaveToPdfHtml = dynamic(
-//     () => import('@/components/forms/saveToPdfHtml'),
-//     { ssr: false }
-// )
+const SlidesHTML = dynamic(() => import('@/components/SlidesHTML'), { ssr: false });
+const SaveToPdfHtml = dynamic(() => import('@/components/forms/saveToPdfHtml'), { ssr: false });
 
 const SlideVisualizer = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
