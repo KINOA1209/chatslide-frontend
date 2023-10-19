@@ -140,7 +140,7 @@ function App() {
 
         {/* section: The Master Alchemist of Knowledge Crafting */}
         <div className='mt-[3rem] flex flex-col justify-center items-center'>
-          <div className='w-[90%] text-center text-neutral-900 text-4xl lg:text-7xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
+          <div className='w-[90%] text-center text-neutral-900 text-3xl lg:text-7xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
             Professional slides for all scenarios
           </div>
           <div className='w-[90%] text-center text-md lg:text-xl'>
@@ -175,7 +175,7 @@ function App() {
         </div>
         {/* section: Build up your personal knowledge library */}
         <div className='mt-[6rem] relative flex flex-col justify-center items-center'>
-          <div className='w-[90%] h-full text-center text-neutral-900 text-4xl lg:text-7xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
+          <div className='w-[90%] h-full text-center text-neutral-900 text-3xl lg:text-7xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
             Extract information from any source
           </div>
           <div className='w-[90%] text-center text-md lg:text-xl  '>
@@ -248,7 +248,7 @@ function App() {
 
         {/* Multifaceted Outputs */}
         <div className='mt-[12rem] flex flex-col justify-center items-center'>
-          <div className='w-[90%] text-center text-neutral-900 text-4xl font-creato-medium lg:text-7xl leading-[4rem] lg:leading-[7.5rem]'>
+          <div className='w-[90%] text-center text-neutral-900 text-3xl font-creato-medium lg:text-7xl leading-[4rem] lg:leading-[7.5rem]'>
             Multifaceted Outputs
           </div>
           <div className='w-[90%] text-center text-md lg:text-xl'>
