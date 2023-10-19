@@ -36,8 +36,8 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
                     className="slide h-full w-full"
                     ref={slideRef}
                     style={{
-                        width: present ? '100%' : '960px',
-                        height: present ? '100%' : '540px',
+                        width: '960px',
+                        height: '540px',
                         transformOrigin: present ? 'top left' : '',
                         transform: present ? `scale(${scale})` : 'scale(1)',
                         backgroundSize: 'cover',
