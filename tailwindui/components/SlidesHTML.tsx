@@ -66,7 +66,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
     const [unsavedChanges, setUnsavedChanges] = useState(false);
     const isFirstRender = useRef(true);
     const [isEditMode, setIsEditMode] = useState(false);
-
+    const [scale, setScale] = useState(1);
     const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
@@ -76,6 +76,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
             setHost(window.location.hostname);
         }
     }, [])
+
+    useEffect(() => {
+        setScale(Math.min(window.innerWidth / 960, window.innerHeight / 540));
+    });
+
 
     useEffect(() => {
         setShare(sessionStorage.getItem('is_shared') === 'true');
@@ -600,7 +605,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                 slides={slides}
                 currentSlideIndex={currentSlideIndex}
                 viewingMode={viewingMode}
-                scale={Math.min(window.innerWidth / 960, window.innerHeight / 540)}
+                scale={scale}
                 templateDispatch={templateDispatch} />
 
         </div>
