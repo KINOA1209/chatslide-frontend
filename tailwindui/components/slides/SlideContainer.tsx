@@ -6,7 +6,10 @@ type SlideContainerProps = {
     currentSlideIndex: number;
     viewingMode: boolean;
     scale: number;
-    templateDispatch: (slide: any, index: number, condition: boolean) => JSX.Element; // Adjust the types accordingly
+    templateDispatch: (slide: any, index: number, condition: boolean, exportToPdf: boolean) => JSX.Element; // Adjust the types accordingly
+    containerRef: React.RefObject<HTMLDivElement>;
+    slideRef: React.RefObject<HTMLDivElement>;
+    exportToPdf: boolean;
 };
 
 const SlideContainer: React.FC<SlideContainerProps> = ({
@@ -16,9 +19,10 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
     viewingMode,
     scale,
     templateDispatch,
+    containerRef,
+    slideRef,
+    exportToPdf,
 }) => {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const slideRef = useRef<HTMLDivElement>(null);
 
     return (
         <div
@@ -49,7 +53,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
                     }}
                 >
                     {slides[currentSlideIndex] &&
-                        templateDispatch(slides[currentSlideIndex], currentSlideIndex, !viewingMode && !present)}
+                        templateDispatch(slides[currentSlideIndex], currentSlideIndex, !viewingMode && !present, exportToPdf)}
                 </div>
             )}
         </div>
