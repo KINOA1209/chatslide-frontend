@@ -405,15 +405,17 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                 user_name=
                 {<div
                     key={0}
-                    className={`rounded-md overflow-hidden outline-2 ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
-                    contentEditable={canEdit}
-                    onFocus={() => {
-                        if (canEdit) {
-                            setIsEditMode(true);
-                        }
-                    }}
-                    onBlur={(e) =>
-                        handleSlideEdit(e.target.innerText, index, 'userName')}
+                    // className={`rounded-md overflow-hidden outline-2 ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                    className={`rounded-md overflow-hidden outline-2`}
+                    // contentEditable={canEdit}
+                    contentEditable={false}
+                    // onFocus={() => {
+                    //     if (canEdit) {
+                    //         setIsEditMode(true);
+                    //     }
+                    // }}
+                    // onBlur={(e) =>
+                    //     handleSlideEdit(e.target.innerText, index, 'userName')}
                     style={h4Style}
                     dangerouslySetInnerHTML={{ __html: slide.userName }}
                 />
