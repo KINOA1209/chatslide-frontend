@@ -8,7 +8,7 @@ export const pricingPlansMonthlyData = [
       'Automatic voice-over and video composition',
       'Tailor the content by uploading your PDF files',
     ],
-    cta: 'Sign up to try',
+    cta: 'Start free trial',
     link: '/signup'
   },
   {
@@ -23,7 +23,7 @@ export const pricingPlansMonthlyData = [
       'Combine to video',
       'Upload multiple source files',
     ],
-    cta: 'Sign up to try',
+    cta: 'Start free trial',
     link: '/signup'
   },
   {
@@ -35,7 +35,7 @@ export const pricingPlansMonthlyData = [
       'Unlimited usage',
       'Direct customer support',
     ],
-    cta: 'Sign up to try',
+    cta: 'Start free trial',
     link: '/signup'
   },
   {
@@ -63,7 +63,7 @@ export const pricingPlansYearlyData = [
       'Automatic voice-over and video composition',
       'Tailor the content by uploading your PDF files',
     ],
-    cta: 'Sign up to try',
+    cta: 'Start free trial',
     link: '/signup'
   },
   {
@@ -78,7 +78,7 @@ export const pricingPlansYearlyData = [
       'Combine to video',
       'Upload multiple source files',
     ],
-    cta: 'Sign up to try',
+    cta: 'Start free trial',
     link: '/signup'
   },
   {
@@ -90,7 +90,7 @@ export const pricingPlansYearlyData = [
       'Unlimited usage',
       'Direct customer support',
     ],
-    cta: 'Sign up to try',
+    cta: 'Start free trial',
     link: '/signup'
   },
   {
