@@ -242,6 +242,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave}: Im
     }
 
     return <>
+        {/* select image modal */}
         {createPortal(<Transition
             className='h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
             show={showModal}
@@ -424,8 +425,11 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave}: Im
                 </div>
             </Transition>
         </Transition>, document.body)}
+
+
+        {/* image itsefl */}
         <div onClick={openModal}
-            className="w-full h-full bg-[#E7E9EB] transition ease-in-out duration-150 hover:bg-[#CAD0D3] flex flex-col items-center justify-center cursor-pointer">
+            className={`w-full h-full transition ease-in-out duration-150 ${selectedImg === '' ? 'bg-[#E7E9EB]' : 'hover:bg-[#CAD0D3]'} flex flex-col items-center justify-center cursor-pointer`}>
 
             {selectedImg === '' ?
                 <div className='flex flex-col items-center justify-center'>
@@ -441,7 +445,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave}: Im
                     </div>
                 </div>
                 :
-                <img className={`w-full h-full transition ease-in-out duration-150 object-cover ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`} src={imgsrc}></img>
+                <img className={`w-full h-full transition ease-in-out duration-150 object-contain ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`} src={imgsrc}></img>
             }
         </div>
     </>
