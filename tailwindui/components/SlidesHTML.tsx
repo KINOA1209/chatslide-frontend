@@ -11,6 +11,8 @@ import LayoutChanger from './slides/LayoutChanger';
 import { PresentButton, SaveButton, ShareToggleButton, SlideNavigator } from './slides/SlideButtons';
 import SlideContainer from './slides/SlideContainer';
 import { h1Style, h2Style, h3Style, h4Style, listStyle } from './slides/Styles';
+import generatePDF, { Resolution, Margin, Options } from 'react-to-pdf';
+
 
 
 export interface SlideElement {
@@ -60,6 +62,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
     const [share, setShare] = useState(false);
     const slideRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+    const allSlidesRef = useRef<HTMLDivElement>(null);
     const [host, setHost] = useState('https://drlambda.ai');
     const [saveStatus, setSaveStatus] = useState('Up to date');
     const [dimensions, setDimensions] = useState({ width: 960, height: 540 });
@@ -68,6 +71,31 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
     const [isEditMode, setIsEditMode] = useState(false);
     const [scale, setScale] = useState(1);
     const debounceRef = useRef<NodeJS.Timeout | null>(null);
+
+    const exportOptions: Options = {
+        filename: "advanced-example.pdf",
+        method: "save",
+        resolution: Resolution.HIGH,
+        page: {
+          margin: Margin.NONE,
+          format: [254, 143],
+          orientation: "landscape"
+        },
+        canvas: {
+          mimeType: "image/jpeg",
+          qualityRatio: 1
+        },
+        overrides: {
+            // see https://artskydj.github.io/jsPDF/docs/jsPDF.html for more options
+            pdf: {
+              compress: true
+            },
+            // see https://html2canvas.hertzen.com/configuration for more options
+            canvas: {
+              useCORS: true,
+            }
+          }
+      };
 
     useEffect(() => {
         if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
@@ -299,7 +327,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
     function handleAddPage() {
         const newSlides = [...slides];
         const newFinalSlides = [...finalSlides];
-        const newSlide = new Slide(); 
+        const newSlide = new Slide();
         newSlides.splice(currentSlideIndex, 0, newSlide);
         newFinalSlides.splice(currentSlideIndex, 0, newSlide);
         setSlides(newSlides);
@@ -309,7 +337,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
     function handleDeletePage() {
         const newSlides = [...slides];
         const newFinalSlides = [...finalSlides];
-        if(currentSlideIndex!=0){
+        if (currentSlideIndex != 0) {
             newSlides.splice(currentSlideIndex, 1);
             newFinalSlides.splice(currentSlideIndex, 1);
         }
@@ -381,6 +409,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
         setIsEditMode(!isEditMode);
     }
 
+    function exportToPdf() {
+        generatePDF(allSlidesRef, exportOptions);
+    }
+
     const updateImgUrlArray = (slideIndex: number) => {
         const updateImgUrl = (urls: string[]) => {
             handleSlideEdit(urls, slideIndex, 'images');
@@ -422,7 +454,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
     }, [slideRef.current, containerRef.current]);
 
 
-    const templateDispatch = (slide: Slide, index: number, canEdit: boolean): JSX.Element => {
+    const templateDispatch = (slide: Slide, index: number, canEdit: boolean, exportToPdf: boolean): JSX.Element => {
         const Template = templates[slide.template as keyof typeof templates];
         if (index === 0) {
             return <Template
@@ -432,7 +464,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                 {<div
                     key={0}
                     // className={`rounded-md overflow-hidden outline-2 ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
-                    className={`rounded-md overflow-hidden outline-2`}
+                    className={`rounded-md outline-2 ${exportToPdf && 'overflow-hidden'}`}
                     // contentEditable={canEdit}
                     contentEditable={false}
                     // onFocus={() => {
@@ -449,7 +481,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                 title={
                     <div
                         key={1}
-                        className={`rounded-md overflow-hidden outline-2 ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                        className={`rounded-md outline-2 ${exportToPdf && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                         contentEditable={canEdit}
                         onFocus={() => {
                             if (canEdit) {
@@ -478,7 +510,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                 topic={
                     <div
                         key={0}
-                        className={`rounded-md overflow-hidden outline-2 ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                        className={`rounded-md outline-2 ${exportToPdf && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                         contentEditable={canEdit}
                         onFocus={() => {
                             if (canEdit) {
@@ -493,7 +525,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                 subtopic={
                     <div
                         key={1}
-                        className={`rounded-md overflow-hidden outline-2 ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                        className={`rounded-md outline-2 ${exportToPdf && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                         contentEditable={canEdit}
                         onFocus={() => {
                             if (canEdit) {
@@ -514,7 +546,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                                 return (
                                     <div
                                         key={index}
-                                        className={`rounded-md overflow-hidden outline-2 ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                                        className={`rounded-md outline-2 ${exportToPdf && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                                         contentEditable={canEdit}
                                         style={listStyle}
                                         onFocus={() => {
@@ -537,7 +569,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                                     <MathJaxContext key={index}>
                                         <MathJax>
                                             <div onClick={toggleEditMode}
-                                                className={`rounded-md overflow-hidden outline-2 ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                                                className={`rounded-md outline-2 ${exportToPdf && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                                                 style={listStyle}>
                                                 {content}
                                             </div>
@@ -549,7 +581,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                         return (
                             <div
                                 key={index}
-                                className={`rounded-md overflow-hidden outline-2 ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                                className={`rounded-md outline-2 ${exportToPdf && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                                 contentEditable={canEdit}
                                 onFocus={() => {
                                     if (canEdit) {
@@ -583,7 +615,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                     <ShareToggleButton
                         setShare={setShare}
                         share={share} />}
-                <SlideNavigator currentSlideIndex={currentSlideIndex} slides={slides} goToSlide={goToSlide} handleAddPage={handleAddPage} handleDeletePage={handleDeletePage} canEdit={!viewingMode}/>
+                <SlideNavigator currentSlideIndex={currentSlideIndex} slides={slides} goToSlide={goToSlide} handleAddPage={handleAddPage} handleDeletePage={handleDeletePage} canEdit={!viewingMode} />
                 {!viewingMode &&
                     <LayoutChanger
                         openModal={openModal}
@@ -627,9 +659,33 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                 currentSlideIndex={currentSlideIndex}
                 viewingMode={viewingMode}
                 scale={scale}
-                templateDispatch={templateDispatch} />
+                templateDispatch={templateDispatch}
+                containerRef={containerRef}
+                slideRef={slideRef}
+                exportToPdf={false}
+            />
 
-
+            <div style={{ overflow: 'hidden', height: 0 }} >
+                <div
+                    ref={allSlidesRef}>
+                    {/* Render all of your slides here. This can be a map of your slides array */}
+                    {slides.map((slide, index) => (
+                        <div key={index} style={{ pageBreakAfter: 'always' }}>
+                            <SlideContainer
+                                present={false}
+                                slides={slides}
+                                currentSlideIndex={index}
+                                viewingMode={false}
+                                scale={1}
+                                templateDispatch={templateDispatch}
+                                containerRef={containerRef}
+                                slideRef={slideRef}
+                                exportToPdf={true}
+                            />
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
     );
 }

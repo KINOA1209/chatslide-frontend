@@ -3,14 +3,11 @@ import TranscriptForm from '@/components/forms/transcriptForm';
 import Timer from '@/components/ui/Timer';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-//import SlidesHTML from '@/components/SlidesHTML';
-//import SaveToPdfHtml from '@/components/forms/saveToPdfHtml';
 import { SlideElement, Slide } from '@/components/SlidesHTML';
 import dynamic from 'next/dynamic'
 
 
 const SlidesHTML = dynamic(() => import('@/components/SlidesHTML'), { ssr: false });
-const SaveToPdfHtml = dynamic(() => import('@/components/forms/saveToPdfHtml'), { ssr: false });
 
 const SlideVisualizer = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -22,7 +19,7 @@ const SlideVisualizer = () => {
         <div>
             <div className="max-w-4xl mx-auto px-4 sm:px-6">
 
-                <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} />
+                <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides}/>
 
                 {/* Form */}
                 <TranscriptForm
@@ -33,8 +30,6 @@ const SlideVisualizer = () => {
 
                 {/* Timer */}
                 <Timer expectedSeconds={60} isSubmitting={isSubmitting} />
-
-                <SaveToPdfHtml finalSlides={finalSlides} />
             </div>
 
         </div>
