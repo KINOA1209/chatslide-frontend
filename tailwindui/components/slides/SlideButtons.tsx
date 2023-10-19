@@ -106,6 +106,21 @@ export const SlideNavigator: React.FC<{
     handleDeletePage: () => void;
     canEdit: boolean;
 }> = ({ currentSlideIndex, slides, goToSlide, handleAddPage, handleDeletePage, canEdit }) => {
+
+    const addPageButton = (
+        <svg onClick={(e) => handleAddPage()} className='w-8 h-8 md:opacity-25 hover:opacity-100 cursor-pointer' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="Edit / Add_Plus">
+                <path id="Vector" d="M6 12H12M12 12H18M12 12V18M12 12V6" stroke="#000000" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+        </svg>);
+
+    const deletePageButton = (
+        <svg onClick={(e) => handleDeletePage()} className='w-6 h-6 md:opacity-25 hover:opacity-100 cursor-pointer' viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#000000"
+                d="M160 256H96a32 32 0 0 1 0-64h256V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64h-64v672a32 32 0 0 1-32 32H192a32 32 0 0 1-32-32V256zm448-64v-64H416v64h192zM224 896h576V256H224v640zm192-128a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32zm192 0a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32z" />
+        </svg>);
+
     return (
         <div className='col-span-1'>
             <div className='w-fit h-fit flex flex-row items-center justify-center mx-auto rounded-full bg-slate-600/40'>
@@ -127,23 +142,15 @@ export const SlideNavigator: React.FC<{
                     &#9654;
                 </button>
             </div>
-            { canEdit &&
-            <div className='flex items-center justify-center'>
-                <div className='ml-2'>
-                    {<svg onClick={(e) => handleAddPage()} className='w-8 h-8 md:opacity-25 hover:opacity-100 cursor-pointer' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g id="Edit / Add_Plus">
-                            <path id="Vector" d="M6 12H12M12 12H18M12 12V18M12 12V6" stroke="#000000" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </g>
-                    </svg>}
+            {canEdit &&
+                <div className='flex items-center justify-center'>
+                    <div className='ml-2'>
+                        {currentSlideIndex!=0 && addPageButton}
+                    </div>
+                    <div className='ml-2'>
+                        {currentSlideIndex!=0 && deletePageButton}
+                    </div>
                 </div>
-                <div className='ml-2'>
-                    {<svg onClick={(e) => handleDeletePage()} className='w-6 h-6 md:opacity-25 hover:opacity-100 cursor-pointer' viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-                        <path fill="#000000"
-                            d="M160 256H96a32 32 0 0 1 0-64h256V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64h-64v672a32 32 0 0 1-32 32H192a32 32 0 0 1-32-32V256zm448-64v-64H416v64h192zM224 896h576V256H224v640zm192-128a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32zm192 0a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32z" />
-                    </svg>}
-                </div>
-            </div>
             }
         </div>
     );
