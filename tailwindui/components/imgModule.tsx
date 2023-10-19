@@ -441,7 +441,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave}: Im
                     </div>
                 </div>
                 :
-                <img className="w-full h-full transition ease-in-out duration-150 hover:brightness-90 object-cover" src={imgsrc}></img>
+                <img className={`w-full h-full transition ease-in-out duration-150 object-cover ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`} src={imgsrc}></img>
             }
         </div>
     </>

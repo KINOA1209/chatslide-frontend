@@ -67,7 +67,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
     const isFirstRender = useRef(true);
     const [isEditMode, setIsEditMode] = useState(false);
 
-    const scale = Math.min(dimensions.width / 960, dimensions.height / 540);
+    const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
@@ -148,7 +148,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
     }
 
     const openPresent = () => {
-        toast.success("Use ESC to exit presentation mode, use arrow keys to navigate slides.");
+        // toast.success("Use ESC to exit presentation mode, use arrow keys to navigate slides.");
         setPresent(true);
     }
 
@@ -178,8 +178,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
 
     useEffect(() => {
         document.addEventListener('keydown', handleKeyDown);
+        if (present) {
+            document.addEventListener('wheel', handleScroll);
+        }
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
+            if (present) {
+                document.removeEventListener('wheel', handleScroll);
+            }
         };
     });
 
@@ -256,6 +262,31 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                 goToSlide(currentSlideIndex + 1);
             } else if (event.key === 'ArrowLeft' && currentSlideIndex > 0) {
                 goToSlide(currentSlideIndex - 1);
+            }
+        }
+    }
+
+    function handleScroll(event: WheelEvent) {
+        if (!isEditMode && present) {
+
+            if (debounceRef.current) return;
+
+            debounceRef.current = setTimeout(() => {
+                debounceRef.current = null;
+            }, 500);  // Adjust the delay as needed
+
+            if (event.deltaY < 0) {
+                if (currentSlideIndex < slides.length - 1) {
+                    goToSlide(currentSlideIndex + 1);
+                } else {
+                    setPresent(false);
+                }
+            } else if (event.deltaY > 0) {
+                if (currentSlideIndex > 0) {
+                    goToSlide(currentSlideIndex - 1);
+                } else {
+                    setPresent(false);
+                }
             }
         }
     }
@@ -374,7 +405,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                 user_name=
                 {<div
                     key={0}
-                    className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
+                    className={`rounded-md overflow-hidden outline-2 ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                     contentEditable={canEdit}
                     onFocus={() => {
                         if (canEdit) {
@@ -390,7 +421,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                 title={
                     <div
                         key={1}
-                        className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
+                        className={`rounded-md overflow-hidden outline-2 ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                         contentEditable={canEdit}
                         onFocus={() => {
                             if (canEdit) {
@@ -419,7 +450,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                 topic={
                     <div
                         key={0}
-                        className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
+                        className={`rounded-md overflow-hidden outline-2 ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                         contentEditable={canEdit}
                         onFocus={() => {
                             if (canEdit) {
@@ -434,7 +465,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                 subtopic={
                     <div
                         key={1}
-                        className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
+                        className={`rounded-md overflow-hidden outline-2 ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                         contentEditable={canEdit}
                         onFocus={() => {
                             if (canEdit) {
@@ -455,7 +486,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                                 return (
                                     <div
                                         key={index}
-                                        className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
+                                        className={`rounded-md overflow-hidden outline-2 ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                                         contentEditable={canEdit}
                                         style={listStyle}
                                         onFocus={() => {
@@ -478,7 +509,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                                     <MathJaxContext key={index}>
                                         <MathJax>
                                             <div onClick={toggleEditMode}
-                                                className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
+                                                className={`rounded-md overflow-hidden outline-2 ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                                                 style={listStyle}>
                                                 {content}
                                             </div>
@@ -490,7 +521,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                         return (
                             <div
                                 key={index}
-                                className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
+                                className={`rounded-md overflow-hidden outline-2 ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                                 contentEditable={canEdit}
                                 onFocus={() => {
                                     if (canEdit) {
@@ -567,7 +598,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                 slides={slides}
                 currentSlideIndex={currentSlideIndex}
                 viewingMode={viewingMode}
-                scale={scale}
+                scale={Math.min(window.innerWidth / 960, window.innerHeight / 540)}
                 templateDispatch={templateDispatch} />
 
         </div>
