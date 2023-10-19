@@ -32,12 +32,12 @@ export class Slide {
     images: string[];
 
     constructor() {
-        this.head = '';
-        this.title = '';
-        this.subtopic = '';
+        this.head = 'New Slide';
+        this.title = 'New Slide';
+        this.subtopic = 'New Slide';
         this.userName = '';
-        this.template = '';
-        this.content = [];
+        this.template = 'Col_1_img_0';
+        this.content = ['Your content here'];
         this.images = [];
     }
 
@@ -294,6 +294,27 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                 }
             }
         }
+    }
+
+    function handleAddPage() {
+        const newSlides = [...slides];
+        const newFinalSlides = [...finalSlides];
+        const newSlide = new Slide(); 
+        newSlides.splice(currentSlideIndex, 0, newSlide);
+        newFinalSlides.splice(currentSlideIndex, 0, newSlide);
+        setSlides(newSlides);
+        setFinalSlides(newFinalSlides);
+    }
+
+    function handleDeletePage() {
+        const newSlides = [...slides];
+        const newFinalSlides = [...finalSlides];
+        if(currentSlideIndex!=0){
+            newSlides.splice(currentSlideIndex, 1);
+            newFinalSlides.splice(currentSlideIndex, 1);
+        }
+        setSlides(newSlides);
+        setFinalSlides(newFinalSlides);
     }
 
 
@@ -556,13 +577,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
     return (
         <div className='w-fit h-fit'>
             <ToastContainer />
-            <div className='flex justify-between items-center mb-6'>
+            <div className='flex justify-between items-start mb-6'>
                 <PresentButton openPresent={openPresent} />
                 {!viewingMode &&
                     <ShareToggleButton
                         setShare={setShare}
                         share={share} />}
-                <SlideNavigator currentSlideIndex={currentSlideIndex} slides={slides} goToSlide={goToSlide} />
+                <SlideNavigator currentSlideIndex={currentSlideIndex} slides={slides} goToSlide={goToSlide} handleAddPage={handleAddPage} handleDeletePage={handleDeletePage} canEdit={!viewingMode}/>
                 {!viewingMode &&
                     <LayoutChanger
                         openModal={openModal}
@@ -607,6 +628,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                 viewingMode={viewingMode}
                 scale={scale}
                 templateDispatch={templateDispatch} />
+
 
         </div>
     );
