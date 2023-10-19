@@ -77,25 +77,25 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
         method: "save",
         resolution: Resolution.HIGH,
         page: {
-          margin: Margin.NONE,
-          format: [254, 143],
-          orientation: "landscape"
+            margin: Margin.NONE,
+            format: [254, 143],
+            orientation: "landscape"
         },
         canvas: {
-          mimeType: "image/jpeg",
-          qualityRatio: 1
+            mimeType: "image/jpeg",
+            qualityRatio: 1
         },
         overrides: {
             // see https://artskydj.github.io/jsPDF/docs/jsPDF.html for more options
             pdf: {
-              compress: true
+                compress: true
             },
             // see https://html2canvas.hertzen.com/configuration for more options
             canvas: {
-              useCORS: true,
+                useCORS: true,
             }
-          }
-      };
+        }
+    };
 
     useEffect(() => {
         if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
@@ -328,8 +328,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
         const newSlides = [...slides];
         const newFinalSlides = [...finalSlides];
         const newSlide = new Slide();
-        newSlides.splice(currentSlideIndex, 0, newSlide);
-        newFinalSlides.splice(currentSlideIndex, 0, newSlide);
+        if (currentSlideIndex != 0) {
+            newSlides.splice(currentSlideIndex, 0, newSlide);
+            newFinalSlides.splice(currentSlideIndex, 0, newSlide);
+        }
         setSlides(newSlides);
         setFinalSlides(newFinalSlides);
     }

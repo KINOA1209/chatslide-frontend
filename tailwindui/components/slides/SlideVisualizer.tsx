@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import TranscriptForm from '@/components/forms/transcriptForm';
 import Timer from '@/components/ui/Timer';
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { SlideElement, Slide } from '@/components/SlidesHTML';
 import dynamic from 'next/dynamic'
 
