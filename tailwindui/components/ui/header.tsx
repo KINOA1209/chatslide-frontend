@@ -99,8 +99,8 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
     // Render a loading state or a blank placeholder
     return (
       <header
-        className={`fixed w-full z-30 bg-white md:bg-opacity-90 transition duration-300 ease-in-out ${
-          !top ? 'bg-white backdrop-blur-sm shadow-lg' : ''
+        className={`fixed w-full z-30 bg-gray-800 md:bg-opacity-90 transition duration-300 ease-in-out ${
+          !top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
         }`}
       >
         <div className='max-w-4/5 mx-auto px-5 sm:px-6'>
