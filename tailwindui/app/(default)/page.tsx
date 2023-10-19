@@ -2,7 +2,7 @@
 
 import { DrlambdaLogoIcon } from '@/components/new_landing/Icons'
 import Image from 'next/image'
-import MyProjectsImg from '@/public/new_landing/imgs/my-project.png'
+import MyProjectsImg from '@/public/new_landing/imgs/my-projects-mask.png'
 import GenerationPreviewImg from '@/public/new_landing/imgs/GenerationPreview.png'
 // import ScriptIcon from '@/public/new_landing/svgs/script.svg?react'
 // import SlidesIcon from '@/public/new_landing/svgs/slides.svg?react'
@@ -87,7 +87,7 @@ function App() {
       <div className='background w-full relative bg-zinc-100'>
         {/* Section: Transform Knowledge */}
         <div className='relative intro-section flex flex-col justify-center items-center gap-4'>
-          <div className='w-[90%] text-center text-neutral-900 text-5xl lg:text-8xl leading-[4rem] lg:leading-[7.5rem] pt-32'>
+          <div className='w-[90%] text-center text-neutral-900 text-5xl lg:text-8xl font-creato-medium leading-[4rem] lg:leading-[7.5rem] pt-32'>
             Transform Knowledge
           </div>
 
@@ -118,8 +118,8 @@ function App() {
             </span>
           </div>
           {/* start for free button */}
-          <div className='absolute bottom-[23%] lg:bottom-[48%] w-[6rem] h-8 lg:w-56 lg:h-14 px-[4rem] py-2 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex z-10'>
-            <div className='w-40 h-12 text-center text-zinc-100 text-xs lg:text-xl font-bold font-creato-medium capitalize leading-10 tracking-wide'>
+          <div className='lg:bottom-[48%] w-[6rem] h-8 lg:w-[14rem] lg:h-[3.75rem] mb-[3rem] px-[4rem] py-2 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex z-10'>
+            <div className='w-40 h-12 text-center text-zinc-100 text-xs lg:text-xl font-creato-medium capitalize leading-10 tracking-wide'>
               {user ? (
                 <Link href='/dashboard'>Go to Dashboard</Link>
               ) : (
@@ -127,7 +127,7 @@ function App() {
               )}
             </div>
           </div>
-          <div className='w-[90%]'>
+          <div className='w-[90%] lg:w-[70rem] lg:h-[35rem] mx-auto max-w-7xl'>
             <Image
               src={GenerationPreviewImg}
               alt='my project'
@@ -139,10 +139,10 @@ function App() {
 
         {/* section: The Master Alchemist of Knowledge Crafting */}
         <div className='mt-[3rem] flex flex-col justify-center items-center'>
-          <div className='w-[90%] text-center text-neutral-900 text-4xl lg:text-7xl leading-[4rem] lg:leading-[7.5rem]'>
+          <div className='w-[90%] text-center text-neutral-900 text-4xl lg:text-7xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
             The Master Alchemist of <br /> Knowledge Crafting
           </div>
-          <div className='w-[90%] text-center mt-[3rem] text-md lg:text-xl'>
+          <div className='w-[90%] text-center text-md lg:text-xl'>
             <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
               From{' '}
             </span>
@@ -196,10 +196,10 @@ function App() {
         </div>
         {/* section: Build up your personal knowledge library */}
         <div className='mt-[6rem] relative flex flex-col justify-center items-center'>
-          <div className='w-[90%] h-full text-center text-neutral-900 text-4xl lg:text-7xl leading-[4rem] lg:leading-[7.5rem]'>
+          <div className='w-[90%] h-full text-center text-neutral-900 text-4xl lg:text-7xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
             Build up your personal <br /> knowledge library
           </div>
-          <div className='w-[90%] text-center mt-[3rem] text-md lg:text-xl  '>
+          <div className='w-[90%] text-center text-md lg:text-xl  '>
             <span className='text-neutral-800 font-bold font-creato-bold leading-loose tracking-wide'>
               Curate
             </span>
@@ -235,7 +235,7 @@ function App() {
           {/* <MyProjectExample />
             <div className='absolute inset-0 rounded-3xl bg-gradient-to-b from-transparent to-neutral-50'></div> */}
 
-          <div className='mt-[6.25rem] w-[90%] h-auto  bg-white rounded-3xl flex flex-col justify-center items-center px-6 py-4 lg:px-12 lg:py-10 gap-6'>
+          <div className='mt-[6.25rem] w-[90%] lg:w-[70rem] lg:h-[25rem] max-w-7xl  bg-white rounded-3xl flex flex-col justify-center items-center px-6 py-4 lg:px-12 lg:py-10 gap-6'>
             <Image
               src={MyProjectsImg}
               alt='my project'
@@ -246,7 +246,7 @@ function App() {
           {/* </div> */}
           {/* file type icons list */}
 
-          <div className='absolute top-[95%] lg:top-[92%] icons-list flex justify-evenly items-center gap-6 z-10'>
+          <div className='absolute top-[95%] lg:top-[93%] icons-list flex justify-evenly items-center gap-6 z-10'>
             {fileTypes.map((fileType, index) => (
               // Each icon container
               <div
@@ -268,11 +268,11 @@ function App() {
         </div>
 
         {/* Multifaceted Outputs */}
-        <div className='mt-[6rem] flex flex-col justify-center items-center'>
-          <div className='w-[90%] text-center text-neutral-900 text-4xl lg:text-7xl leading-[4rem] lg:leading-[7.5rem]'>
+        <div className='mt-[12rem] flex flex-col justify-center items-center'>
+          <div className='w-[90%] text-center text-neutral-900 text-4xl font-creato-medium lg:text-7xl leading-[4rem] lg:leading-[7.5rem]'>
             Multifaceted Outputs
           </div>
-          <div className='w-[90%] text-center mt-[3rem] text-md lg:text-xl'>
+          <div className='w-[90%] text-center text-md lg:text-xl'>
             <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
               Showcase your ideas across diverse formats, ensuring each piece of{' '}
             </span>
@@ -291,7 +291,7 @@ function App() {
             </span>
           </div>
           {/* three icons */}
-          <div className='relative w-auto lg:w-full flex justify-evenly items-center text-center py-10 mt-[6rem] bg-[#E3E9FF] overflow-auto'>
+          <div className='relative w-auto mx-auto max-w-7xl lg:w-full flex justify-evenly items-center text-center py-10 mt-[6rem] bg-[#E3E9FF] overflow-auto'>
             {/* <div className='absolute inset-0 bg-[#E3E9FF] opacity-30'></div> */}
             <div className='flex flex-col justify-center items-center lg:w-1/3 lg:min-w-fit h-full gap-10'>
               <div className='object-cover lg:object-contain px-4'>
@@ -350,13 +350,13 @@ function App() {
 
         {/* Turning your knowledge into stories worth sharing. */}
         <div className='mt-[6rem] mb-[6rem] flex flex-col justify-center items-center'>
-          <div className='w-[90%] text-center text-neutral-900 text-4xl lg:text-7xl leading-[4rem] lg:leading-[7.5rem]'>
+          <div className='w-[90%] text-center text-neutral-900 text-4xl lg:text-7xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
             Turning your knowledge <br />
             into stories worth sharing.{' '}
           </div>
           <div className='w-[6rem] h-8 lg:w-56 lg:h-14 mt-[2.5rem] mb-[5rem] px-[4rem] py-2 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex'>
             {/* absolute bottom-[23%] lg:bottom-[48%] w-[6rem] h-8 lg:w-56 lg:h-14 px-6 py-2 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex z-10 */}
-            <div className='w-40 h-12 text-center text-zinc-100 text-xs lg:text-xl font-bold font-creato-medium capitalize leading-10 tracking-wide'>
+            <div className='w-40 h-12 lg:w-[14rem] lg:h-[3.75rem] text-center text-zinc-100 text-xs lg:text-xl font-creato-medium capitalize leading-10 tracking-wide'>
               {user ? (
                 <Link href='/dashboard'>Go to Dashboard</Link>
               ) : (
@@ -365,7 +365,7 @@ function App() {
             </div>
           </div>
           {/* billing options, yearly and monthly */}
-          <div className='w-[90%] mb-[3rem] flex justify-center lg:justify-end items-center'>
+          <div className='w-[90%] mx-auto max-w-7xl mb-[3rem] flex justify-center lg:justify-end items-center'>
             <div className='billing-options flex justify-center items-center rounded-xl bg-Grey-100'>
               <div
                 className='billing-option text-[0.7rem] lg:text-base px-2 py-2 cursor-pointer'
