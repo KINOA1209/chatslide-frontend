@@ -13,8 +13,8 @@ export const pricingPlansMonthlyData = [
   },
   {
     title: 'Plus',
-    price: '$9.9',
-    frequency: '/month',
+    price: '$0.99',
+    frequency: 'for 1st month, then $9.99/month',
     features: [
       'All features in Free',
       '100 credits a month',
@@ -23,19 +23,19 @@ export const pricingPlansMonthlyData = [
       'Combine to video',
       'Upload multiple source files',
     ],
-    cta: 'Start free trial',
+    cta: 'Claim special offer',
     link: '/signup'
   },
   {
     title: '* Pro',
-    price: '$39.9',
-    frequency: '/month',
+    price: '$3.99',
+    frequency: 'for 1st month, then $39.99/month',
     features: [
       'All features in Plus',
       'Unlimited usage',
       'Direct customer support',
     ],
-    cta: 'Start free trial',
+    cta: 'Claim special offer',
     link: '/signup'
   },
   {
@@ -68,8 +68,8 @@ export const pricingPlansYearlyData = [
   },
   {
     title: 'Plus',
-    price: '$8.25',
-    frequency: '/month ($99 billed annually)',
+    price: '$9.9',
+    frequency: 'for 1st year, then $99/year',
     features: [
       'All features in Free',
       '100 credits a month',
@@ -78,19 +78,19 @@ export const pricingPlansYearlyData = [
       'Combine to video',
       'Upload multiple source files',
     ],
-    cta: 'Start free trial',
+    cta: 'Claim special offer',
     link: '/signup'
   },
   {
     title: '* Pro',
-    price: '$33.25',
-    frequency: '/month ($399 billed annually)',
+    price: '$39.9',
+    frequency: 'for 1st year, then $399/year',
     features: [
       'All features in Plus',
       'Unlimited usage',
       'Direct customer support',
     ],
-    cta: 'Start free trial',
+    cta: 'Claim special offer',
     link: '/signup'
   },
   {

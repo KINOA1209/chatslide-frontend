@@ -283,9 +283,12 @@ export function Pricing({ fewerCards = false }: PricingProps) {
                                                 <br />
                                                 {!isMonthly ? 'Billed yearly' : 'Billed monthly'}
                                             </div>}
-                                        <div className="w-full text-center text-md text-red-700">7 Day Free Trial</div>
+
                                         <div className="w-full text-center text-3xl md:text-4xl">
-                                            {!isMonthly ? '$8/mo' : '$9.9/mo'}
+                                            {!isMonthly ? '$9.9 1st year' : '$0.99 1st month'}
+                                        </div>
+                                        <div className="w-full text-center text-md text-gray-700">
+                                            {!isMonthly ? 'Then $99 per year' : 'Then $9.9 per month'}
                                         </div>
 
                                         <div className="text-xl mt-4">Include</div>
@@ -312,7 +315,7 @@ export function Pricing({ fewerCards = false }: PricingProps) {
                                                 {(!currentUser || (tier === 'FREE' || tier === '')) && <div ref={buttonRef} className="btn drop-shadow-xl text-lg rounded-full text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer"
                                                     style={{ backgroundImage: 'linear-gradient(-45deg, #5A24B4, #9271CB, #2E8BC0)', backgroundSize: '200%' }}
                                                     onClick={() => { currentUser ? handlePlusSubscription() : router.push('/signup') }}>
-                                                    {currentUser ? 'Start Free Trial' : 'Sign up to Start'}
+                                                    {currentUser ? 'Claim Offer' : 'Sign up to Start'}
                                                 </div>}
 
                                                 {(currentUser && (tier === 'PLUS_MONTHLY' || tier === 'PLUS_YEARLY')) && <>
@@ -344,9 +347,12 @@ export function Pricing({ fewerCards = false }: PricingProps) {
                                                 <br />
                                                 {!isMonthly ? 'Billed yearly' : 'Billed monthly'}
                                             </div>}
-                                        <div className="w-full text-center text-md text-red-700">7 Day Free Trial</div>
+                                        {/* <div className="w-full text-center text-md text-red-700">7 Day Free Trial</div> */}
                                         <div className="w-full text-center text-3xl md:text-4xl">
-                                            {!isMonthly ? '$33/mo' : '$39.9/mo'}
+                                            {!isMonthly ? '$39.9 1st year' : '$3.99 1st month'}
+                                        </div>
+                                        <div className="w-full text-center text-md text-gray-700">
+                                            {!isMonthly ? 'Then $399 per year' : 'Then $39.9 per month'}
                                         </div>
 
                                         <div className="text-xl mt-4">Include</div>
@@ -367,7 +373,7 @@ export function Pricing({ fewerCards = false }: PricingProps) {
                                                 {(!currentUser || (tier === 'FREE' || tier === '')) && <div ref={buttonRef} className="btn drop-shadow-xl text-lg rounded-full text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer"
                                                     style={{ backgroundImage: 'linear-gradient(-45deg, #002366, #003366, #004466)', backgroundSize: '200%' }}
                                                     onClick={() => { currentUser ? handleProSubscription() : router.push('/signup') }}>
-                                                    {currentUser ? 'Start Free Trial' : 'Sign up to Start'}
+                                                    {currentUser ? 'Claim Offer' : 'Sign up to Start'}
                                                 </div>}
                                                 {(currentUser && (tier === 'PRO_MONTHLY' || tier === 'PRO_YEARLY')) && <>
                                                     {/* <div className="w-full text-center">Expiring: {moment.utc(expiration).format('L')}</div> */}
