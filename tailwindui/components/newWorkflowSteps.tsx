@@ -4,6 +4,7 @@ import React, { useState, MouseEvent, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import CSS from 'csstype'
 import AuthService from '@/components/utils/AuthService'
+import { RightArrowIcon } from '@/app/(feature)/icons'
 
 interface StepProps {
   id: number
@@ -12,6 +13,7 @@ interface StepProps {
   desc: string
   redirect: string
   unavailable?: boolean
+  isLastStep: boolean // Pass this prop to indicate if it's the last step
 }
 
 const StepStyle: CSS.Properties = {
@@ -30,6 +32,7 @@ const OneStep: React.FC<StepProps> = ({
   desc,
   redirect,
   unavailable = false,
+  isLastStep, // Pass this prop to indicate if it's the last step
 }) => {
   const router = useRouter()
 
@@ -57,54 +60,71 @@ const OneStep: React.FC<StepProps> = ({
     setTextClass('ml-3')
   }
 
+  // Conditionally render the RightArrowIcon based on whether it's the last step
+  const renderRightArrow = !isLastStep ? <RightArrowIcon /> : null
+
   if (current) {
     return (
-      <div className='w-full h-14 flex items-center'>
-        <div
+      <div className='w-full flex items-center'>
+        {/* <div
           className='bg-white border-blue-500 text-blue-500 text-center'
           style={StepStyle}
         >
           {id}
-        </div>
-        <span className='text-blue-500 ml-3'>{desc}</span>
+        </div> */}
+        <span className='text-neutral-800 text-sm font-medium font-creato-bold leading-normal tracking-tight mx-3'>
+          {desc}
+        </span>
+        {renderRightArrow}
       </div>
     )
   } else if (finished) {
     return (
       <div
-        className='w-full h-14 flex items-center cursor-pointer'
+        className='w-full flex items-center cursor-pointer'
         onClick={handleClick}
         onMouseEnter={handleHoverEnter}
         onMouseLeave={handleHoverLeave}
       >
-        <div className={circleClass} style={StepStyle}>
+        {/* <div className={circleClass} style={StepStyle}>
           {id}
-        </div>
-        <span className={textClass}>{desc}</span>
+        </div> */}
+        <span
+          className={` mx-3 text-gray-600 text-sm font-normal font-creato-medium leading-normal tracking-tight ${textClass}`}
+        >
+          {desc}
+        </span>
+        {renderRightArrow}
       </div>
     )
   } else if (unavailable) {
     return (
-      <div className='w-full h-14 flex items-center'>
-        <div
+      <div className='w-full flex items-center'>
+        {/* <div
           className='bg-gray-400 border-gray-400 text-white text-center'
           style={StepStyle}
         >
           {id}
-        </div>
-        <span className='text-gray-400 ml-3 line-through'>{desc}</span>
+        </div> */}
+        <span className='text-gray-600 text-sm font-normal font-creato-medium leading-normal tracking-tight mx-3 '>
+          {desc}
+        </span>
+        {renderRightArrow}
       </div>
     )
   } else {
     return (
-      <div className='w-full h-14 flex items-center'>
-        <div
+      <div className='w-full flex items-center'>
+        {/* <div
           className='bg-gray-400 border-gray-400 text-white text-center'
           style={StepStyle}
         >
           {id}
-        </div>
-        <span className='text-gray-400 ml-3'>{desc}</span>
+        </div> */}
+        <span className='text-gray-600 text-sm font-normal font-creato-medium leading-normal tracking-tight mx-3'>
+          {desc}
+        </span>
+        {renderRightArrow}
       </div>
     )
   }
@@ -200,20 +220,20 @@ const ProgressBox = (
       }
     }
 
-    useEffect(() => {
-      handSidebarPosition()
-      window.addEventListener('resize', handSidebarPosition)
-      window.addEventListener('scroll', handSidebarPosition)
-    }, [])
+    // useEffect(() => {
+    //   handSidebarPosition()
+    //   window.addEventListener('resize', handSidebarPosition)
+    //   window.addEventListener('scroll', handSidebarPosition)
+    // }, [])
 
     // Mobile sidebar panel is only determined by mobileOpened
-    useEffect(() => {
-      if (mobileOpended) {
-        setMobileDisplay('flex')
-      } else {
-        setMobileDisplay('none')
-      }
-    }, [mobileOpended])
+    // useEffect(() => {
+    //   if (mobileOpended) {
+    //     setMobileDisplay('flex')
+    //   } else {
+    //     setMobileDisplay('none')
+    //   }
+    // }, [mobileOpended])
 
     useEffect(() => {
       // Create a scoped async function within the hook.
@@ -262,9 +282,9 @@ const ProgressBox = (
       <>
         {/* open mobile sidebar button */}
         <div
-          className='select-none fixed rounded-full bottom-20 left-10 w-16 h-16 flex items-center justify-center border-solid border-2 border-blue-200 text-blue-600 cursor-pointer'
+          className='select-none fixed rounded-full bottom-20 left-10 w-16 h-16 flex items-center justify-center border-solid border-2 border-blue-200 text-blue-600 cursor-pointer md:hidden'
           style={{
-            display: mobileButtonDisplay,
+            // display: mobileButtonDisplay,
             background: `radial-gradient(closest-side, white 61%, transparent 60% 100%),conic-gradient(#0070f4 ${
               ((currentInd + 1) / steps.length) * 100
             }%, white 0)`,
@@ -275,14 +295,21 @@ const ProgressBox = (
             {currentInd + 1}/{steps.length}
           </div>
         </div>
-        <div
+        {/* <div
           style={{ visibility: desktopVisibility }}
           className='fixed w-fit select-none grow-0'
           ref={progressRefDesktop}
+        > */}
+        <div
+          //   style={{ visibility: desktopVisibility }}
+          className='w-fit select-none grow-0'
+          ref={progressRefDesktop}
         >
-          <div className='-top-4 p-5 mb-6 flex justify-center border-r-2 border-r-blue-200 sticky'>
-            <div className='w-fit flex flex-col flex-nowrap content-start'>
-              {dashboardButton}
+          {/* <div className='-top-4 p-5 mb-6 flex justify-center border-2 border-r-blue-200 sticky'> */}
+          <div className='flex justify-center'>
+            <div className='w-fit flex flex-row flex-nowrap content-start'>
+              {/* <div className='w-fit flex flex-col flex-nowrap content-start'> */}
+              {/* {dashboardButton} */}
               {stepRedirectPair.map((pair, index) => (
                 <OneStep
                   key={index} // Add a unique key prop here
@@ -292,6 +319,7 @@ const ProgressBox = (
                   desc={pair[0]}
                   redirect={pair[1]}
                   unavailable={unavailableSteps.includes(index)}
+                  isLastStep={index === stepRedirectPair.length - 1} // Check if it's the last step
                 />
               ))}
             </div>
@@ -338,6 +366,7 @@ const ProgressBox = (
                       desc={pair[0]}
                       redirect={pair[1]}
                       unavailable={unavailableSteps.includes(index)}
+                      isLastStep={index === stepRedirectPair.length - 1} // Check if it's the last step
                     />
                   ))}
                 </div>
