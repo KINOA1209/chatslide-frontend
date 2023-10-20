@@ -476,7 +476,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                 {<div
                     key={0}
                     // className={`rounded-md overflow-hidden outline-2 ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
-                    className={`rounded-md outline-2 ${exportToPdf && 'overflow-hidden'}`}
+                    className={`rounded-md outline-2 ${!exportToPdf && 'overflow-hidden'}`}
                     // contentEditable={canEdit}
                     contentEditable={false}
                     // onFocus={() => {
@@ -493,7 +493,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                 title={
                     <div
                         key={1}
-                        className={`rounded-md outline-2 ${exportToPdf && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                        className={`rounded-md outline-2 ${!exportToPdf && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                         contentEditable={canEdit}
                         onFocus={() => {
                             if (canEdit) {
@@ -522,7 +522,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                 topic={
                     <div
                         key={0}
-                        className={`rounded-md outline-2 ${exportToPdf && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                        className={`rounded-md outline-2 ${!exportToPdf && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                         contentEditable={canEdit}
                         onFocus={() => {
                             if (canEdit) {
@@ -537,7 +537,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                 subtopic={
                     <div
                         key={1}
-                        className={`rounded-md outline-2 ${exportToPdf && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                        className={`rounded-md outline-2 ${!exportToPdf && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                         contentEditable={canEdit}
                         onFocus={() => {
                             if (canEdit) {
@@ -558,7 +558,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                                 return (
                                     <div
                                         key={index}
-                                        className={`rounded-md outline-2 ${exportToPdf && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                                        className={`rounded-md outline-2 ${!exportToPdf && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                                         contentEditable={canEdit}
                                         style={listStyle}
                                         onFocus={() => {
@@ -581,7 +581,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                                     <MathJaxContext key={index}>
                                         <MathJax>
                                             <div onClick={toggleEditMode}
-                                                className={`rounded-md outline-2 ${exportToPdf && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                                                className={`rounded-md outline-2 ${!exportToPdf && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                                                 style={listStyle}>
                                                 {content}
                                             </div>
@@ -593,7 +593,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                         return (
                             <div
                                 key={index}
-                                className={`rounded-md outline-2 ${exportToPdf && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                                className={`rounded-md outline-2 ${!exportToPdf && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                                 contentEditable={canEdit}
                                 onFocus={() => {
                                     if (canEdit) {
