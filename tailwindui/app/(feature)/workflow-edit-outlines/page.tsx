@@ -173,7 +173,7 @@ export default function WorkflowStep2() {
             <li>asdsad</li>
           </ol>
         </div>
-        <div className='flex flex-col border-4'>
+        <div className='flex flex-col'>
           {/* <span>Section 1</span>
           <span>Introduction</span>
           <ol className='list-decimal px-8'>
