@@ -130,9 +130,11 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
     const handleUpdateScript = async (e: React.MouseEvent<HTMLButtonElement>, index: number, ask: string) => {
         e.preventDefault();
         const text = transcriptList[index];
+        const language = typeof window !== 'undefined' ? sessionStorage.getItem('language') : 'English';
         const updateData = {
             ask: ask,
             text: text,
+            language: language,
         }
         console.log(updateData);
 
@@ -141,6 +143,7 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
             mixpanel.track('Script Updated', {
                 'Ask': ask,
                 'Text': text,
+                'Language': language,
             });
             const response = await fetch('/api/update_script', {
                 method: 'POST',
