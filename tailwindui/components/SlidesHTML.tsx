@@ -49,14 +49,17 @@ type SlidesHTMLProps = {
     finalSlides: Slide[];
     setFinalSlides: Function;
     viewingMode?: boolean; // viewing another's shared project
+    exportMode?: boolean;
+    setExportMode?: Function;
 };
 
 
 // it will render the slides fetched from `foldername` in sessionStorage
-const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, viewingMode = false }) => {
+const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, viewingMode = false, exportMode = false, setExportMode }) => {
     const [slides, setSlides] = useState<Slide[]>([]);
     const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
     const foldername = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('foldername') : '';
+    const topic = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('topic') : '';
     const [showLayout, setShowLayout] = useState(false);
     const [present, setPresent] = useState(false);
     const [share, setShare] = useState(false);
@@ -73,12 +76,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
     const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
     const exportOptions: Options = {
-        filename: "advanced-example.pdf",
+        filename: (topic ? topic : 'drlambda') + '.pdf',
         method: "save",
         resolution: Resolution.HIGH,
         page: {
             margin: Margin.NONE,
-            format: [254, 143],
+            format: [254, 143], // 960x540 px in mm
             orientation: "landscape"
         },
         canvas: {
@@ -86,11 +89,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
             qualityRatio: 1
         },
         overrides: {
-            // see https://artskydj.github.io/jsPDF/docs/jsPDF.html for more options
             pdf: {
                 compress: true
             },
-            // see https://html2canvas.hertzen.com/configuration for more options
             canvas: {
                 useCORS: true,
             }
@@ -414,6 +415,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
     function exportToPdf() {
         generatePDF(allSlidesRef, exportOptions);
     }
+
+    useEffect(() => {
+        if (exportMode) {
+            exportToPdf();
+            if (setExportMode) {
+                setExportMode(false);
+            }
+        }
+    }, [exportMode]);
 
     const updateImgUrlArray = (slideIndex: number) => {
         const updateImgUrl = (urls: string[]) => {
