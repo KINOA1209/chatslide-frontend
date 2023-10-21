@@ -572,7 +572,8 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                         <input
                           key={detailIndex}
                           className={`form-input border-none w-full text-gray-800 grow  ${
-                            hoveredDetailIndex === detailIndex
+                            hoveredDetailIndex === detailIndex &&
+                            sectionIndex === hoveredSectionIndex
                               ? 'bg-gray-200'
                               : 'bg-neutral-50 '
                           }`}
@@ -587,46 +588,51 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                           }
                           placeholder={`Detail ${detailIndex + 1}`}
                         />
-                        {hoveredDetailIndex === detailIndex && (
-                          <div className='absolute flex flex-row gap-4 bottom-[70%] right-0 mt-1 mr-1'>
-                            {outlineData[sectionIndex].content.length >
-                              minOutlineDetailCount && (
-                              <div
-                                onClick={(e) =>
-                                  handleDeleteDetail(
-                                    e,
-                                    sectionIndex,
-                                    detailIndex
-                                  )
-                                }
-                              >
-                                <DeleteIcon />
-                              </div>
-                            )}
+                        {hoveredDetailIndex === detailIndex &&
+                          sectionIndex === hoveredSectionIndex && (
+                            <div className='absolute flex flex-row gap-4 bottom-[70%] right-0 mt-1 mr-1'>
+                              {outlineData[sectionIndex].content.length >
+                                minOutlineDetailCount && (
+                                <div
+                                  onClick={(e) =>
+                                    handleDeleteDetail(
+                                      e,
+                                      sectionIndex,
+                                      detailIndex
+                                    )
+                                  }
+                                >
+                                  <DeleteIcon />
+                                </div>
+                              )}
 
-                            {outlineData[sectionIndex].content.length <
-                              maxOutlineDetailCount && (
-                              <div
-                                onClick={(e) =>
-                                  handleAddDetail(e, sectionIndex, detailIndex)
-                                }
-                              >
-                                <AddTopicIcon />
-                              </div>
-                            )}
-                          </div>
-                        )}
+                              {outlineData[sectionIndex].content.length <
+                                maxOutlineDetailCount && (
+                                <div
+                                  onClick={(e) =>
+                                    handleAddDetail(
+                                      e,
+                                      sectionIndex,
+                                      detailIndex
+                                    )
+                                  }
+                                >
+                                  <AddTopicIcon />
+                                </div>
+                              )}
+                            </div>
+                          )}
                       </li>
                     </ul>
                   ))}
                 </div>
               </div>
-              <div className='"w-48 flex flex-col bg-gray-700 rounded-md border-4 max-h-[16rem] justify-center items-center gap-8'>
+              <div className='"w-48 flex flex-col bg-gray-700 rounded-md border-4 max-h-[16rem] px-2 justify-center items-center gap-8'>
                 {/* <div className='flex flex-row'>
                   <LeftChangeIcon></LeftChangeIcon>Concise
                   <RightChangeIcon></RightChangeIcon>
                 </div> */}
-                <div className='flex flex-row justify-center items-center'>
+                <div className='flex flex-row gap-3 justify-center items-center'>
                   <div
                     className='cursor-pointer'
                     onClick={() =>
