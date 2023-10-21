@@ -10,7 +10,13 @@ import GptToggle from '@/components/button/GPTToggle'
 import RangeSlider from '../ui/RangeSlider'
 import UserService from '../utils/UserService'
 import mixpanel from 'mixpanel-browser'
-import { AddSectionIcon, AddTopicIcon, DeleteIcon } from '@/app/(feature)/icons'
+import {
+  AddSectionIcon,
+  AddTopicIcon,
+  DeleteIcon,
+  LeftChangeIcon,
+  RightChangeIcon,
+} from '@/app/(feature)/icons'
 
 const minOutlineDetailCount = 1
 const maxOutlineDetailCount = 6
@@ -408,6 +414,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
       title: 'New Section',
       content: ['Provide some details about this section'],
     })
+    console.log('Add section after section index: ' + sectionIndex)
     setOutlineData(newOutlineData)
     updateOutlineSessionStorage(newOutlineData)
   }
@@ -472,7 +479,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
           <>
             {outlineData.length < maxOutlineSectionCount && (
               <div
-                className='mb-[1.5rem]'
+                className='my-[1.5rem]'
                 onClick={(e) => {
                   handleAddSection(e, sectionIndex)
                 }}
@@ -480,95 +487,109 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                 <AddSectionIcon />
               </div>
             )}
-            <div
-              id={String(sectionIndex)}
-              key={sectionIndex + 1}
-              className='relative mb-8 bg-neutral-50 rounded-md shadow border border-gray-200 px-4 py-2'
-              onMouseEnter={() => setHoveredSectionIndex(sectionIndex)}
-              onMouseLeave={() => setHoveredSectionIndex(-1)}
-            >
+            <div className='flex flex-row gap-4'>
               <div
-                className='flex flex-col flex-wrap md:flex-nowrap'
-                onClick={(e) => {
-                  handleEnterEditSection(e, sectionIndex)
-                }}
+                id={String(sectionIndex)}
+                key={sectionIndex + 1}
+                className='relative w-[40rem] bg-neutral-50 rounded-md shadow border border-gray-200 px-4 py-2'
+                onMouseEnter={() => setHoveredSectionIndex(sectionIndex)}
+                onMouseLeave={() => setHoveredSectionIndex(-1)}
               >
-                <h3 className='text-lg'>Section {sectionIndex + 1}</h3>
-                <input
-                  key={sectionIndex}
-                  className='border-none outline-none focus:outline-slate-300 bg-neutral-50 rounded inline text-xl font-bold grow'
-                  value={section.title}
-                  onChange={(e) => handleSectionChange(e, sectionIndex)}
-                  // onFocus={e => handleFocus(e, sectionIndex)}
-                  onBlur={(e) => handleBlur(e, sectionIndex)}
-                  autoFocus
-                />
-              </div>
-              {hoveredSectionIndex === sectionIndex &&
-                outlineData.length > minOutlineSectionCount && (
-                  <div
-                    className='absolute -top-[7%] right-[10%]'
-                    onClick={(e) => {
-                      handleDeleteSection(e, sectionIndex)
-                    }}
-                  >
-                    <DeleteIcon></DeleteIcon>
-                  </div>
-                )}
-              <div className='mt-4'>
-                {section.content.map((content: any, detailIndex: number) => (
-                  <ul className='flex mb-2 list-disc px-8'>
-                    <li
-                      className='w-full relative '
-                      onMouseEnter={() => setHoveredDetailIndex(detailIndex)}
-                      onMouseLeave={() => setHoveredDetailIndex(-1)}
+                <div
+                  className='flex flex-col flex-wrap md:flex-nowrap'
+                  onClick={(e) => {
+                    handleEnterEditSection(e, sectionIndex)
+                  }}
+                >
+                  <h3 className='text-lg'>Section {sectionIndex + 1}</h3>
+                  <input
+                    key={sectionIndex}
+                    className='border-none outline-none focus:outline-slate-300 bg-neutral-50 rounded inline text-xl font-bold grow'
+                    value={section.title}
+                    onChange={(e) => handleSectionChange(e, sectionIndex)}
+                    // onFocus={e => handleFocus(e, sectionIndex)}
+                    onBlur={(e) => handleBlur(e, sectionIndex)}
+                    autoFocus
+                  />
+                </div>
+                {hoveredSectionIndex === sectionIndex &&
+                  outlineData.length > minOutlineSectionCount && (
+                    <div
+                      className='absolute -top-[7%] right-[10%]'
+                      onClick={(e) => {
+                        handleDeleteSection(e, sectionIndex)
+                      }}
                     >
-                      <input
-                        key={detailIndex}
-                        className={`form-input border-none w-full text-gray-800 grow  ${
-                          hoveredDetailIndex === detailIndex
-                            ? 'bg-gray-200'
-                            : 'bg-neutral-50 '
-                        }`}
-                        value={content}
-                        onChange={(e) =>
-                          handleDetailChange(
-                            e,
-                            sectionIndex,
-                            detailIndex,
-                            'content'
-                          )
-                        }
-                        placeholder={`Detail ${detailIndex + 1}`}
-                      />
-                      {hoveredDetailIndex === detailIndex && (
-                        <div className='absolute flex flex-row gap-4 bottom-[70%] right-0 mt-1 mr-1'>
-                          {outlineData[sectionIndex].content.length >
-                            minOutlineDetailCount && (
-                            <div
-                              onClick={(e) =>
-                                handleDeleteDetail(e, sectionIndex, detailIndex)
-                              }
-                            >
-                              <DeleteIcon />
-                            </div>
-                          )}
+                      <DeleteIcon></DeleteIcon>
+                    </div>
+                  )}
+                <div className='mt-4'>
+                  {section.content.map((content: any, detailIndex: number) => (
+                    <ul className='flex mb-2 list-disc px-8'>
+                      <li
+                        className='w-full relative '
+                        onMouseEnter={() => setHoveredDetailIndex(detailIndex)}
+                        onMouseLeave={() => setHoveredDetailIndex(-1)}
+                      >
+                        <input
+                          key={detailIndex}
+                          className={`form-input border-none w-full text-gray-800 grow  ${
+                            hoveredDetailIndex === detailIndex
+                              ? 'bg-gray-200'
+                              : 'bg-neutral-50 '
+                          }`}
+                          value={content}
+                          onChange={(e) =>
+                            handleDetailChange(
+                              e,
+                              sectionIndex,
+                              detailIndex,
+                              'content'
+                            )
+                          }
+                          placeholder={`Detail ${detailIndex + 1}`}
+                        />
+                        {hoveredDetailIndex === detailIndex && (
+                          <div className='absolute flex flex-row gap-4 bottom-[70%] right-0 mt-1 mr-1'>
+                            {outlineData[sectionIndex].content.length >
+                              minOutlineDetailCount && (
+                              <div
+                                onClick={(e) =>
+                                  handleDeleteDetail(
+                                    e,
+                                    sectionIndex,
+                                    detailIndex
+                                  )
+                                }
+                              >
+                                <DeleteIcon />
+                              </div>
+                            )}
 
-                          {outlineData[sectionIndex].content.length <
-                            maxOutlineDetailCount && (
-                            <div
-                              onClick={(e) =>
-                                handleAddDetail(e, sectionIndex, detailIndex)
-                              }
-                            >
-                              <AddTopicIcon />
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </li>
-                  </ul>
-                ))}
+                            {outlineData[sectionIndex].content.length <
+                              maxOutlineDetailCount && (
+                              <div
+                                onClick={(e) =>
+                                  handleAddDetail(e, sectionIndex, detailIndex)
+                                }
+                              >
+                                <AddTopicIcon />
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </li>
+                    </ul>
+                  ))}
+                </div>
+              </div>
+              <div className='flex flex-col border-4 max-h-[16rem]'>
+                <span>Section {sectionIndex}narrative style</span>
+                <div className='flex flex-row'>
+                  <LeftChangeIcon></LeftChangeIcon>Concise
+                  <RightChangeIcon></RightChangeIcon>
+                </div>
+                <div>You’ll get fewer slides for this section</div>
               </div>
             </div>
           </>

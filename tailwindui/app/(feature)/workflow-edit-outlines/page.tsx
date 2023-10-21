@@ -170,8 +170,8 @@ export default function WorkflowStep2() {
         </div>
       </div>
       {/* grid, small screen one col, large screen two col */}
-      <div className='grid grid-cols-1 gap-10 lg:grid-cols-3 mt-[12rem] auto-rows-min'>
-        <div className='ml-[10rem] w-56 max-h-[20rem] overflow-y-auto bg-neutral-50 rounded-md border border-gray-200'>
+      <div className='grid gap-10 grid-cols-1 lg:grid-cols-3 mt-[12rem] auto-rows-min'>
+        <div className='lg:col-span-1 w-56  ml-[10rem] max-h-[20rem] overflow-y-auto bg-neutral-50 rounded-md border border-gray-200'>
           <div className='w-48 h-5 text-neutral-900 text-xs font-bold font-creato-medium leading-tight tracking-wide px-4 py-3'>
             OVER VIEW
           </div>
@@ -191,7 +191,7 @@ export default function WorkflowStep2() {
             ))}
           </ol>
         </div>
-        <div className='flex flex-col'>
+        <div className='lg:col-span-2 flex flex-col mr-[10rem]'>
           {/* <span>Section 1</span>
           <span>Introduction</span>
           <ol className='list-decimal px-8'>
@@ -200,14 +200,6 @@ export default function WorkflowStep2() {
             <li>asdsad</li>
           </ol> */}
           {outlineContent && <NewOutlineVisualizer outline={outlineContent} />}
-        </div>
-        <div className='flex flex-col border-4 mr-[3rem]'>
-          <span>Section narrative style</span>
-          <div className='flex flex-row'>
-            <LeftChangeIcon></LeftChangeIcon>Concise
-            <RightChangeIcon></RightChangeIcon>
-          </div>
-          <div>You’ll get fewer slides for this section</div>
         </div>
       </div>
       {/* <ProjectProgress currentInd={1} contentRef={contentRef} /> */}
