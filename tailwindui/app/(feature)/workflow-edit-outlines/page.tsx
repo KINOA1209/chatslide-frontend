@@ -71,15 +71,15 @@ export default function WorkflowStep2() {
   const closePopup = () => {
     setShowPopup(false)
   }
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      // Calculate the offset due to the fixed navbar's height
-      // const navbarHeight = 112 // 7rem * 16px/rem
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+  //     // Calculate the offset due to the fixed navbar's height
+  //     // const navbarHeight = 112 // 7rem * 16px/rem
 
-      // Scroll to the adjusted position
-      window.scrollTo(0, 0)
-    }
-  }, [])
+  //     // Scroll to the adjusted position
+  //     window.scrollTo(0, 0)
+  //   }
+  // }, [])
   return (
     <div className=' bg-zinc-100'>
       {/* flex col container for steps, title, generate slides button etc */}
