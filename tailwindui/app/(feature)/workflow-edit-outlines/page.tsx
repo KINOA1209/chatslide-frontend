@@ -170,23 +170,22 @@ export default function WorkflowStep2() {
         </div>
       </div>
       {/* grid, small screen one col, large screen two col */}
-      <div className='grid gap-10 grid-cols-1 lg:grid-cols-3 mt-[12rem] auto-rows-min'>
+      <div className='grid gap-10 grid-cols-1 lg:grid-cols-3 mt-[12rem] mb-[3rem] auto-rows-min'>
         <div className='lg:col-span-1 w-56  ml-[10rem] max-h-[20rem] overflow-y-auto bg-neutral-50 rounded-md border border-gray-200'>
           <div className='w-48 h-5 text-neutral-900 text-xs font-bold font-creato-medium leading-tight tracking-wide px-4 py-3'>
             OVER VIEW
           </div>
 
-          <ol className='list-decimal px-8'>
+          <ol className='list-none px-8 py-4'>
             {outlineContent?.map((section, index) => (
               <li
+                className='w-48 pb-2 opacity-60 text-neutral-900 text-xs font-medium font-creato-medium leading-normal tracking-tight cursor-pointer hover:text-black  hover:rounded-md hover:bg-gray-200'
                 key={index}
                 onClick={() => scrollToSection(index)}
-                style={{
-                  cursor: 'pointer',
-                  color: activeSection === index ? 'blue' : 'black',
-                }}
               >
-                {section.title}
+                <span className=''>
+                  {index + 1}. {section.title}
+                </span>
               </li>
             ))}
           </ol>

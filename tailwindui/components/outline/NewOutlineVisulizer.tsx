@@ -32,6 +32,11 @@ interface OutlineSection {
 interface OutlineDataType extends Array<OutlineSection> {}
 
 const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
+  const [detailOptions, setDetailOptions] = useState([
+    { detailLevel: 'More Slides', description: 'detailed' },
+    { detailLevel: 'Fewer Slides', description: 'concise' },
+  ])
+  const [selectedDetail, setSelectedDetail] = useState(detailOptions[0])
   const router = useRouter()
   const [outlineData, setOutlineData] = useState(outline)
   const [sectionEditMode, setSectionEditMode] = useState(-1)
@@ -54,6 +59,16 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
       }
     })()
   }, [])
+
+  const handleDetailLevelOptionChange = (increment: number) => {
+    const currentIndex = detailOptions.indexOf(selectedDetail)
+    const totalOptions = detailOptions.length
+    //If the selectedDetail is found in the array (meaning currentIndex is not -1),
+    if (currentIndex !== -1) {
+      const newIndex = (currentIndex + increment + totalOptions) % totalOptions
+      setSelectedDetail(detailOptions[newIndex])
+    }
+  }
 
   const handleSlidPagesChange = (n: number) => {
     setSlidePages(20 + n * 10)
@@ -583,13 +598,40 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                   ))}
                 </div>
               </div>
-              <div className='flex flex-col border-4 max-h-[16rem]'>
-                <span>Section {sectionIndex}narrative style</span>
-                <div className='flex flex-row'>
+              <div className='"w-48 flex flex-col bg-gray-700 rounded-md border-4 max-h-[16rem] justify-center items-center gap-8'>
+                {/* <div className='flex flex-row'>
                   <LeftChangeIcon></LeftChangeIcon>Concise
                   <RightChangeIcon></RightChangeIcon>
+                </div> */}
+                <div className='flex flex-row justify-center items-center'>
+                  <div
+                    className='cursor-pointer'
+                    onClick={() => handleDetailLevelOptionChange(-1)}
+                  >
+                    <LeftChangeIcon></LeftChangeIcon>
+                  </div>
+                  <div className='w-20 text-center text-indigo-50 text-xl font-normal font-creato-medium leading-relaxed tracking-tight'>
+                    {selectedDetail.detailLevel}
+                  </div>
+                  <div
+                    className='cursor-pointer'
+                    onClick={() => handleDetailLevelOptionChange(1)}
+                  >
+                    <RightChangeIcon></RightChangeIcon>
+                  </div>
                 </div>
-                <div>You’ll get fewer slides for this section</div>
+
+                <div className='w-40 h-14 text-center'>
+                  <span className='text-gray-200 text-xs font-normal font-creato-medium leading-none tracking-tight'>
+                    Generate{' '}
+                  </span>
+                  <span className='text-indigo-300 text-xs font-bold font-creato-medium leading-none tracking-tight'>
+                    {selectedDetail.description}{' '}
+                  </span>
+                  <span className='text-gray-200 text-xs font-normal font-creato-medium leading-none tracking-tight'>
+                    contents for this section
+                  </span>
+                </div>
               </div>
             </div>
           </>
