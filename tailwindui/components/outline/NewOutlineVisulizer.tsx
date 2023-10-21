@@ -35,10 +35,14 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
   const [detailOptions, setDetailOptions] = useState([
     { detailLevel: 'More Slides', description: 'detailed' },
     { detailLevel: 'Fewer Slides', description: 'concise' },
+    // { detailLevel: 'Normal Slides', description: 'Medium' },
   ])
-  const [selectedDetail, setSelectedDetail] = useState(detailOptions[0])
+  //   const [selectedDetail, setSelectedDetail] = useState(detailOptions[0])
   const router = useRouter()
   const [outlineData, setOutlineData] = useState(outline)
+  const [detailLevels, setDetailLevels] = useState(
+    Array(outline.length).fill(0)
+  )
   const [sectionEditMode, setSectionEditMode] = useState(-1)
   const [titleCache, setTitleCache] = useState('')
   const [isGpt35, setIsGpt35] = useState(true)
@@ -60,14 +64,33 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
     })()
   }, [])
 
-  const handleDetailLevelOptionChange = (increment: number) => {
-    const currentIndex = detailOptions.indexOf(selectedDetail)
-    const totalOptions = detailOptions.length
-    //If the selectedDetail is found in the array (meaning currentIndex is not -1),
-    if (currentIndex !== -1) {
-      const newIndex = (currentIndex + increment + totalOptions) % totalOptions
-      setSelectedDetail(detailOptions[newIndex])
-    }
+  //   const handleDetailLevelOptionChange = (increment: number) => {
+  //     const currentIndex = detailOptions.indexOf(selectedDetail)
+  //     const totalOptions = detailOptions.length
+  //     //If the selectedDetail is found in the array (meaning currentIndex is not -1),
+  //     if (currentIndex !== -1) {
+  //       const newIndex = (currentIndex + increment + totalOptions) % totalOptions
+  //       setSelectedDetail(detailOptions[newIndex])
+  //     }
+  //   }
+  const handleDetailLevelOptionChange = (
+    sectionIndex: number,
+    increment: number
+  ) => {
+    setDetailLevels((prevDetailLevels) => {
+      const newDetailLevels = [...prevDetailLevels]
+
+      // Calculate the new detail level in a circular manner
+      const currentLevel = newDetailLevels[sectionIndex]
+      const numberOfOptions = detailOptions.length
+      const newIndex = (currentLevel + increment) % numberOfOptions
+
+      // Handle negative results by adding the number of options
+      newDetailLevels[sectionIndex] =
+        newIndex >= 0 ? newIndex : newIndex + numberOfOptions
+
+      return newDetailLevels
+    })
   }
 
   const handleSlidPagesChange = (n: number) => {
@@ -606,16 +629,20 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                 <div className='flex flex-row justify-center items-center'>
                   <div
                     className='cursor-pointer'
-                    onClick={() => handleDetailLevelOptionChange(-1)}
+                    onClick={() =>
+                      handleDetailLevelOptionChange(sectionIndex, -1)
+                    }
                   >
                     <LeftChangeIcon></LeftChangeIcon>
                   </div>
                   <div className='w-20 text-center text-indigo-50 text-xl font-normal font-creato-medium leading-relaxed tracking-tight'>
-                    {selectedDetail.detailLevel}
+                    {detailOptions[detailLevels[sectionIndex]].detailLevel}
                   </div>
                   <div
                     className='cursor-pointer'
-                    onClick={() => handleDetailLevelOptionChange(1)}
+                    onClick={() =>
+                      handleDetailLevelOptionChange(sectionIndex, 1)
+                    }
                   >
                     <RightChangeIcon></RightChangeIcon>
                   </div>
@@ -626,7 +653,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                     Generate{' '}
                   </span>
                   <span className='text-indigo-300 text-xs font-bold font-creato-medium leading-none tracking-tight'>
-                    {selectedDetail.description}{' '}
+                    {detailOptions[detailLevels[sectionIndex]].description}{' '}
                   </span>
                   <span className='text-gray-200 text-xs font-normal font-creato-medium leading-none tracking-tight'>
                     contents for this section
