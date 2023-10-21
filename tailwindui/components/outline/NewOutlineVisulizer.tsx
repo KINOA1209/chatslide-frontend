@@ -452,8 +452,14 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
       title: 'New Section',
       content: ['Provide some details about this section'],
     })
+
+    // Create a new detailLevels array with the same length as newOutlineData
+    const newDetailLevels = [...detailLevels]
+    newDetailLevels.splice(sectionIndex + 1, 0, 0)
+
     console.log('Add section after section index: ' + sectionIndex)
     setOutlineData(newOutlineData)
+    setDetailLevels(newDetailLevels)
     updateOutlineSessionStorage(newOutlineData)
   }
 
