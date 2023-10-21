@@ -20,6 +20,7 @@ import NewWorkflowGPTToggle from '@/components/button/NewWorkflowGPTToggle'
 import { useRouter } from 'next/navigation'
 
 export default function WorkflowStep2() {
+  const [activeSection, setActiveSection] = useState(-1)
   const router = useRouter()
   const storedOutline =
     typeof sessionStorage !== 'undefined'
@@ -39,7 +40,20 @@ export default function WorkflowStep2() {
       })
     : null
 
+  if (outlineRes) {
+    console.log('outlineContent:', outlineRes)
+  }
+
   const [isGpt35, setIsGpt35] = useState(true)
+
+  // Function to scroll to a specific section
+  const scrollToSection = (sectionId: number) => {
+    const sectionElement = document.getElementById(String(sectionId))
+    if (sectionElement) {
+      sectionElement.scrollIntoView({ behavior: 'smooth' })
+      setActiveSection(sectionId)
+    }
+  }
 
   const handleOpenModal = () => {
     setShowModal(true)
@@ -57,6 +71,15 @@ export default function WorkflowStep2() {
   const closePopup = () => {
     setShowPopup(false)
   }
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Calculate the offset due to the fixed navbar's height
+      // const navbarHeight = 112 // 7rem * 16px/rem
+
+      // Scroll to the adjusted position
+      window.scrollTo(0, 0)
+    }
+  }, [])
   return (
     <div className=' bg-zinc-100'>
       {/* flex col container for steps, title, generate slides button etc */}
@@ -145,32 +168,27 @@ export default function WorkflowStep2() {
 
           {outlineContent && <GenerateSlidesSubmit outline={outlineContent} />}
         </div>
-
-        {/* <div className='flex flex-row'>
-          <AddSectionIcon />
-          <DeleteIcon />
-          <AddTopicIcon />
-          <LeftChangeIcon />
-          <RightChangeIcon />
-          <LeftTurnArrowIcon />
-          <RightTurnArrowIcon />
-          <QuestionExplainIcon />
-        </div> */}
       </div>
       {/* grid, small screen one col, large screen two col */}
-      <div className='grid grid-cols-1 gap-10 lg:grid-cols-3 mt-[12rem]'>
-        <div className='ml-[8rem] w-56 h-60 bg-neutral-50 rounded-md border border-gray-200'>
+      <div className='grid grid-cols-1 gap-10 lg:grid-cols-3 mt-[12rem] auto-rows-min'>
+        <div className='ml-[10rem] w-56 max-h-[20rem] overflow-y-auto bg-neutral-50 rounded-md border border-gray-200'>
           <div className='w-48 h-5 text-neutral-900 text-xs font-bold font-creato-medium leading-tight tracking-wide px-4 py-3'>
             OVER VIEW
           </div>
 
           <ol className='list-decimal px-8'>
-            <li>asdsad</li>
-            <li>asdsad</li>
-            <li>asdsad</li>
-            <li>asdsad</li>
-            <li>asdsad</li>
-            <li>asdsad</li>
+            {outlineContent?.map((section, index) => (
+              <li
+                key={index}
+                onClick={() => scrollToSection(index)}
+                style={{
+                  cursor: 'pointer',
+                  color: activeSection === index ? 'blue' : 'black',
+                }}
+              >
+                {section.title}
+              </li>
+            ))}
           </ol>
         </div>
         <div className='flex flex-col'>
