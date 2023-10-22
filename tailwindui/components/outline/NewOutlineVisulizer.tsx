@@ -363,6 +363,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
       model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
       slidePages: slidePages,
       wordPerSubpoint: wordPerSubpoint,
+      detailLevels: JSON.stringify(detailLevels),
       // endIndex: 2,  // generate first 2 sections only
     }
 
