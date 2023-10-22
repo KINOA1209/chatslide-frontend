@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import AuthService from '@/components/utils/AuthService';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -135,6 +136,16 @@ const ProjectLoading = () => {
                 setProject(data);
             } else {
                 console.error('Error fetching project details', response.status);
+                toast.error('The project is not found or you do not have access to it.', {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
             }
 
         } catch (error) {
