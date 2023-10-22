@@ -36,7 +36,7 @@ export default function WorkflowStep2() {
         return {
           title: outlineRes[key]['title'],
           content: outlineRes[key]['content'],
-          detailLevels: outlineRes[key]['detailLevels'],
+          detailLevel: outlineRes[key]['detailLevel'],
         }
       })
     : null
