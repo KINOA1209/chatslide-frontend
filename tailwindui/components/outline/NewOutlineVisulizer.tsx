@@ -27,6 +27,7 @@ const maxLength = 60
 interface OutlineSection {
   title: string
   content: Array<string>
+  detailLevel: string
 }
 
 interface OutlineDataType extends Array<OutlineSection> {}
@@ -41,9 +42,23 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
   //   const [selectedDetail, setSelectedDetail] = useState(detailOptions[0])
   const router = useRouter()
   const [outlineData, setOutlineData] = useState(outline)
+
+  const mapDetailLevels = (section: OutlineSection) => {
+    const detailLevel = section.detailLevel;
+    switch (detailLevel) {
+        case 'Default':
+          return 0;
+        case 'More Slides':
+          return 1;
+        case 'Fewer Slides':
+          return 2;
+        default:
+          return 0; // You can set a default value if needed
+      }
+  };
   const [detailLevels, setDetailLevels] = useState(
-    Array(outline.length).fill(0)
-  )
+    outlineData.map(section => mapDetailLevels(section))
+  );
   const [sectionEditMode, setSectionEditMode] = useState(-1)
   const [titleCache, setTitleCache] = useState('')
   const [isGpt35, setIsGpt35] = useState(true)
@@ -64,6 +79,34 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
       }
     })()
   }, [])
+
+  useEffect(() => {
+    // Function to reverse map numeric detail levels to string values
+    const reverseMapDetailLevels = (detailLevel: number) => {
+      switch (detailLevel) {
+        case 0:
+          return 'Default';
+        case 1:
+          return 'More Slides';
+        case 2:
+          return 'Fewer Slides';
+        default:
+          return 'Default'; // You can set a default value if needed
+      }
+    };
+
+
+    // Create a new copy of outlineData with updated detailLevels
+    const updatedOutlineData = outlineData.map((section, index) => {
+      section.detailLevel = reverseMapDetailLevels(detailLevels[index]);
+      return section;
+    });
+
+    // Update outlineData
+    setOutlineData(updatedOutlineData);
+    console.log('outlineData', outlineData);
+  }, [detailLevels]);
+
 
   //   const handleDetailLevelOptionChange = (increment: number) => {
   //     const currentIndex = detailOptions.indexOf(selectedDetail)
@@ -87,8 +130,8 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
       const newIndex = (currentLevel + increment) % numberOfOptions
 
       // Handle negative results by adding the number of options
-      newDetailLevels[sectionIndex] =
-        newIndex >= 0 ? newIndex : newIndex + numberOfOptions
+      newDetailLevels[sectionIndex] = (newIndex >= 0 ? newIndex : newIndex + numberOfOptions) as 0 | 1 | 2;
+
 
       return newDetailLevels
     })
@@ -363,7 +406,6 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
       model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
       slidePages: slidePages,
       wordPerSubpoint: wordPerSubpoint,
-      detailLevels: JSON.stringify(detailLevels),
       // endIndex: 2,  // generate first 2 sections only
     }
 
@@ -453,6 +495,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
     newOutlineData.splice(sectionIndex + 1, 0, {
       title: 'New Section',
       content: ['Provide some details about this section'],
+      detailLevel: 'default',
     })
 
     // Create a new detailLevels array with the same length as newOutlineData
