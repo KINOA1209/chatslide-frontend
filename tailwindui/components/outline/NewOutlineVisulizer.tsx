@@ -33,6 +33,7 @@ interface OutlineDataType extends Array<OutlineSection> {}
 
 const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
   const [detailOptions, setDetailOptions] = useState([
+    { detailLevel: 'Default', description: 'moderate'},
     { detailLevel: 'More Slides', description: 'detailed' },
     { detailLevel: 'Fewer Slides', description: 'concise' },
     // { detailLevel: 'Normal Slides', description: 'Medium' },
