@@ -158,8 +158,8 @@ const ProjectLoading = () => {
         '/workflow-edit-outlines',
         '/workflow-review-slides',
         '/workflow-edit-script',
-        'workflow-review-audio',
-        'workflow-review-video'];
+        '/workflow-review-audio',
+        '/workflow-review-video'];
     const projectFinishedSteps: () => number[] = () => {
         const finishedStepsArray: number[] = [];
         if (typeof window !== 'undefined' && sessionStorage.getItem('topic')) {
