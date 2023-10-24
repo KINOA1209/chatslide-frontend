@@ -4,7 +4,7 @@ export const pricingPlansMonthlyData = [
     price: 'Free',
     frequency: '',
     features: [
-      '100 credits a month',
+      '50 ⭐️credits',
       'Automatic voice-over and video composition',
       'Tailor the content by uploading your PDF files',
     ],
@@ -17,7 +17,7 @@ export const pricingPlansMonthlyData = [
     frequency: 'for 1st month, then $9.99/month',
     features: [
       'All features in Free',
-      '100 credits a month',
+      '1000 ⭐️credits a month',
       'Connect to GPT 4',
       'Remove water mark',
       'Combine to video',
@@ -32,8 +32,8 @@ export const pricingPlansMonthlyData = [
     frequency: 'for 1st month, then $39.99/month',
     features: [
       'All features in Plus',
-      'Unlimited usage',
-      'Direct customer support',
+      'Unlimited ⭐️credits',
+      'Direct ☎️ customer support',
     ],
     cta: 'Claim special offer',
     link: '/signup'
@@ -59,7 +59,7 @@ export const pricingPlansYearlyData = [
     price: 'Free',
     frequency: '',
     features: [
-      '100 credits a month',
+      '50 ⭐️credits',
       'Automatic voice-over and video composition',
       'Tailor the content by uploading your PDF files',
     ],
@@ -68,11 +68,11 @@ export const pricingPlansYearlyData = [
   },
   {
     title: 'Plus',
-    price: '$9.9',
-    frequency: 'for 1st year, then $99/year',
+    price: 'Free',
+    frequency: 'for 2 months, then $99/year',
     features: [
       'All features in Free',
-      '100 credits a month',
+      '1000 ⭐️credits a month',
       'Connect to GPT 4',
       'Remove water mark',
       'Combine to video',
@@ -83,12 +83,12 @@ export const pricingPlansYearlyData = [
   },
   {
     title: '* Pro',
-    price: '$39.9',
-    frequency: 'for 1st year, then $399/year',
+    price: 'Free',
+    frequency: 'for 2 months, then $399/year',
     features: [
       'All features in Plus',
-      'Unlimited usage',
-      'Direct customer support',
+      'Unlimited ⭐️credits',
+      'Direct ☎️customer support',
     ],
     cta: 'Claim special offer',
     link: '/signup'
