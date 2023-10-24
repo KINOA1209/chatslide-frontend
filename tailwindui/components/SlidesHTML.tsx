@@ -78,7 +78,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
     const exportOptions: Options = {
         filename: (topic ? topic : 'drlambda') + '.pdf',
         method: "save",
-        resolution: Resolution.HIGH,
+        resolution: Resolution.MEDIUM,
         page: {
             margin: Margin.NONE,
             format: [254, 143], // 960x540 px in mm
@@ -417,12 +417,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
     }
 
     useEffect(() => {
-        if (exportMode) {
-            exportToPdf();
-            if (setExportMode) {
-                setExportMode(false);
+        const handleExport = async () => {
+            if (exportMode) {
+                await exportToPdf();
+                if (setExportMode) {
+                    setExportMode(false);
+                }
             }
-        }
+        };
+        handleExport();
     }, [exportMode]);
 
     const updateImgUrlArray = (slideIndex: number) => {
