@@ -202,3 +202,150 @@ export const QuestionExplainIcon = () => (
     />
   </svg>
 )
+export const DownloadIcon = () => (
+  <svg
+    width='16'
+    height='16'
+    viewBox='0 0 16 16'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <path
+      d='M2.66602 11.3327V12.666C2.66602 13.0196 2.80649 13.3588 3.05654 13.6088C3.30659 13.8589 3.64573 13.9993 3.99935 13.9993H11.9993C12.353 13.9993 12.6921 13.8589 12.9422 13.6088C13.1922 13.3588 13.3327 13.0196 13.3327 12.666V11.3327M4.66602 7.33268L7.99935 10.666M7.99935 10.666L11.3327 7.33268M7.99935 10.666V2.66602'
+      stroke='#121212'
+      stroke-linecap='round'
+      stroke-linejoin='round'
+    />
+  </svg>
+)
+export const ScriptsIcon = () => (
+  <svg
+    width='20'
+    height='20'
+    viewBox='0 0 20 20'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <path
+      d='M6.875 6.25H8.75M6.875 11.875H13.125M6.875 14.375H10.625'
+      stroke='#1D222A'
+      stroke-width='1.25'
+      stroke-linecap='round'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M15.625 16.3462C15.625 16.4895 15.5688 16.625 15.4719 16.7235C15.3752 16.8216 15.2462 16.875 15.1136 16.875H4.88636C4.75385 16.875 4.6248 16.8216 4.52814 16.7235C4.43116 16.625 4.375 16.4895 4.375 16.3462V3.65385C4.375 3.51053 4.43116 3.37498 4.52814 3.27651C4.6248 3.17836 4.75385 3.125 4.88636 3.125H10.5682H12.5395C12.725 3.125 12.9009 3.20739 13.0197 3.34988L13.4998 2.94977L13.0197 3.34988L15.1904 5.95478C15.4712 6.29174 15.625 6.71649 15.625 7.15512V16.3462Z'
+      stroke='#1D222A'
+      stroke-width='1.25'
+      stroke-linecap='round'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M11.875 3.75L11.875 6.25C11.875 6.59518 12.1548 6.875 12.5 6.875H15'
+      stroke='#1D222A'
+      stroke-width='1.25'
+      stroke-linecap='round'
+    />
+  </svg>
+)
+
+export const PresentationModeIcon = () => (
+  <svg
+    width='32'
+    height='32'
+    viewBox='0 0 32 32'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <path
+      d='M26.9724 5.25586L5.02952 5.25586C4.52457 5.25586 4.11523 5.6652 4.11523 6.17015L4.11523 20.7987C4.11523 21.3037 4.52457 21.713 5.02952 21.713L26.9724 21.713C27.4773 21.713 27.8867 21.3037 27.8867 20.7987L27.8867 6.17015C27.8867 5.6652 27.4773 5.25586 26.9724 5.25586Z'
+      stroke='#5168F6'
+      stroke-width='2.24'
+      stroke-linecap='round'
+      stroke-linejoin='round'
+    />
+    <path
+      d='M14.1728 21.7138L12.3442 26.2853M17.8299 21.7138L19.6585 26.2853M10.5156 26.2853H21.4871M11.4299 14.3996L15.0871 17.1424L21.4871 9.82813'
+      stroke='#5168F6'
+      stroke-width='2.24'
+      stroke-linecap='round'
+      stroke-linejoin='round'
+    />
+  </svg>
+)
+
+export const ChangeLayoutIcon = () => (
+  <svg
+    width='32'
+    height='32'
+    viewBox='0 0 32 32'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <g clip-path='url(#clip0_1298_28336)'>
+      <rect width='32' height='32' fill='white' />
+      <path
+        d='M4.32117 26.8296L4.32117 5.16806C4.32117 4.69904 4.70138 4.31883 5.1704 4.31883L26.8319 4.31883C27.301 4.31883 27.6812 4.69904 27.6812 5.16806L27.6812 26.8296C27.6812 27.2986 27.301 27.6788 26.8319 27.6788L5.1704 27.6788C4.70139 27.6788 4.32117 27.2986 4.32117 26.8296Z'
+        stroke='#5168F6'
+        stroke-width='2.24'
+        stroke-linecap='round'
+        stroke-linejoin='round'
+      />
+      <path
+        d='M10.4004 27.1992L10.4004 4.79922M10.4004 11.0761L27.2004 11.0755'
+        stroke='#5168F6'
+        stroke-width='2.24'
+        stroke-linecap='round'
+        stroke-linejoin='round'
+      />
+    </g>
+    <defs>
+      <clipPath id='clip0_1298_28336'>
+        <rect width='32' height='32' fill='white' />
+      </clipPath>
+    </defs>
+  </svg>
+)
+
+export const AddSlideIcon = () => (
+  <svg
+    width='32'
+    height='32'
+    viewBox='0 0 32 32'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width='32' height='32' fill='white' />
+    <path
+      d='M5 16.25L27.5 16.25'
+      stroke='#5168F6'
+      stroke-width='2.5'
+      stroke-linecap='round'
+    />
+    <path
+      d='M16.25 5L16.25 27.5'
+      stroke='#5168F6'
+      stroke-width='2.5'
+      stroke-linecap='round'
+    />
+  </svg>
+)
+
+export const DeleteSlideIcon = () => (
+  <svg
+    width='32'
+    height='32'
+    viewBox='0 0 32 32'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <rect width='32' height='32' fill='white' />
+    <path
+      d='M5 9.53846H27M11.4167 9.53846V8.61538C11.4167 7.39131 11.8996 6.21737 12.7591 5.35181C13.6186 4.48626 14.7844 4 16 4C17.2156 4 18.3814 4.48626 19.2409 5.35181C20.1004 6.21737 20.5833 7.39131 20.5833 8.61538V9.53846M13.25 13.2308V23.3846M18.75 13.2308V23.3846M7.75 9.53846H24.25V26.1538C24.25 26.6435 24.0568 27.1131 23.713 27.4593C23.3692 27.8055 22.9029 28 22.4167 28H9.58333C9.0971 28 8.63079 27.8055 8.28697 27.4593C7.94315 27.1131 7.75 26.6435 7.75 26.1538V9.53846Z'
+      stroke='#5168F6'
+      stroke-width='2.5'
+      stroke-linecap='round'
+      stroke-linejoin='round'
+    />
+  </svg>
+)

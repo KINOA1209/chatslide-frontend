@@ -1,131 +1,263 @@
-import mixpanel from 'mixpanel-browser';
-import React from 'react';
-import AuthService from '../utils/AuthService';
-
+import mixpanel from 'mixpanel-browser'
+import React from 'react'
+import AuthService from '../utils/AuthService'
+import {
+  LeftSlideNavIcon,
+  RightSlideNavIcon,
+} from '@/app/(feature)/workflow-review-slides/icons'
+import {
+  PresentationModeIcon,
+  ChangeLayoutIcon,
+  AddSlideIcon,
+  DeleteSlideIcon,
+  ScriptsIcon,
+} from '@/app/(feature)/icons'
 type SaveButtonProps = {
-    saveSlides: () => void;
-};
+  saveSlides: () => void
+}
 
 export const SaveButton: React.FC<SaveButtonProps> = ({ saveSlides }) => {
-    return (
-        <div className='col-span-1'>
-            <div className='w-fit h-fit rounded-full overflow-hidden'>
-                <button
-                    className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
-                    onClick={saveSlides}
-                >
-                    Save
-                </button>
-            </div>
-        </div>
-    );
-};
+  return (
+    <div className='col-span-1'>
+      <div className='w-fit h-fit rounded-full overflow-hidden'>
+        <button
+          className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
+          onClick={saveSlides}
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  )
+}
 
 type PresentButtonProps = {
-    openPresent: () => void;
-};
+  openPresent: () => void
+}
 
-export const PresentButton: React.FC<PresentButtonProps> = ({ openPresent }) => {
-    return (
-        <div className='col-span-1 hidden sm:block'>
-            <div className='w-fit h-fit rounded-full overflow-hidden'>
-                <button
-                    className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
-                    onClick={openPresent}
-                >
-                    Present
-                </button>
-            </div>
+export const PresentButton: React.FC<PresentButtonProps> = ({
+  openPresent,
+}) => {
+  return (
+    <div className='col-span-1 hidden sm:block'>
+      <div className='w-fit h-fit'>
+        {/* <button
+          className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
+          onClick={openPresent}
+        >
+          Present
+        </button> */}
+        <div
+          className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300 hover:bg-slate-400 flex justify-center items-center cursor-pointer'
+          onClick={openPresent}
+        >
+          <PresentationModeIcon />
         </div>
-    );
-};
+      </div>
+    </div>
+  )
+}
 
 type ShareToggleButtonProps = {
-    share: boolean;
-    setShare: (share: boolean) => void;
-};
+  share: boolean
+  setShare: (share: boolean) => void
+}
 
-export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({ share, setShare }) => {
+export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
+  share,
+  setShare,
+}) => {
+  const toggleShare = async () => {
+    const newShareStatus = !share
+    // console.log('newShareStatus', newShareStatus);
+    setShare(newShareStatus)
+    const { userId, idToken: token } =
+      await AuthService.getCurrentUserTokenAndId()
+    try {
+      mixpanel.track('Project Shared', {
+        'Project ID': sessionStorage.getItem('project_id'),
+      })
 
-    const toggleShare = async () => {
-        const newShareStatus = !share;
-        // console.log('newShareStatus', newShareStatus);
-        setShare(newShareStatus);
-        const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
-        try {
+      const response = await fetch('/api/share_project', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          project_id: sessionStorage.getItem('project_id'), // Replace with your project's ID
+          is_shared: newShareStatus,
+        }),
+      })
 
-            mixpanel.track('Project Shared', {
-                'Project ID': sessionStorage.getItem('project_id'),
-            });
+      const responseData = await response.json()
 
-            const response = await fetch("/api/share_project", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    project_id: sessionStorage.getItem('project_id'), // Replace with your project's ID
-                    is_shared: newShareStatus,
-                }),
-            });
+      if (response.ok) {
+        sessionStorage.setItem('is_shared', newShareStatus.toString())
+      } else {
+        // Handle error (e.g., show a notification to the user)
+        console.error(responseData.error)
+      }
+    } catch (error) {
+      console.error('Failed to toggle share status:', error)
+      // Handle error (e.g., show a notification to the user)
+    }
+  }
 
-            const responseData = await response.json();
-
-            if (response.ok) {
-                sessionStorage.setItem('is_shared', newShareStatus.toString());
-            } else {
-                // Handle error (e.g., show a notification to the user)
-                console.error(responseData.error);
-            }
-        } catch (error) {
-            console.error("Failed to toggle share status:", error);
-            // Handle error (e.g., show a notification to the user)
-        }
-    };
-
-    return (
-        <div className='col-span-1'>
-            <div className='w-fit h-fit rounded-full overflow-hidden'>
-                <button
-                    className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
-                    onClick={toggleShare}
-                >
-                    {!share ? 'Share' : 'Stop Sharing'}
-                </button>
-            </div>
-        </div>
-    );
-};
+  return (
+    <div className='col-span-1'>
+      <div className='w-fit h-fit rounded-full overflow-hidden'>
+        <button
+          className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
+          onClick={toggleShare}
+        >
+          {!share ? 'Share' : 'Stop Sharing'}
+        </button>
+      </div>
+    </div>
+  )
+}
 
 export const SlideNavigator: React.FC<{
-    currentSlideIndex: number;
-    slides: any[]; // Replace 'any' with the appropriate type if known
-    goToSlide: (index: number) => void;
+  currentSlideIndex: number
+  slides: any[] // Replace 'any' with the appropriate type if known
+  goToSlide: (index: number) => void
 }> = ({ currentSlideIndex, slides, goToSlide }) => {
-    return (
-        <div className='col-span-1'>
-            <div className='w-fit h-fit flex flex-row items-center justify-center mx-auto rounded-full bg-slate-600/40'>
-                <button
-                    disabled={currentSlideIndex === 0}
-                    className='text-white text-2xl mx-4 my-1 disabled:text-gray-400'
-                    onClick={() => goToSlide(currentSlideIndex - 1)}
-                >
-                    &#9664;
-                </button>
-                <div className='text-white'>
-                    {currentSlideIndex + 1}<span className='font-light'>{' of '}</span>{slides.length}
-                </div>
-                <button
-                    disabled={currentSlideIndex === slides.length - 1}
-                    className='text-white text-2xl mx-4 my-1 disabled:text-gray-400'
-                    onClick={() => goToSlide(currentSlideIndex + 1)}
-                >
-                    &#9654;
-                </button>
-            </div>
+  return (
+    <div className='col-span-1'>
+      <div className='w-fit h-fit flex flex-row items-center justify-center mx-auto rounded-full bg-slate-600/40'>
+        <button
+          disabled={currentSlideIndex === 0}
+          className='text-white text-2xl mx-4 my-1 disabled:text-gray-400'
+          onClick={() => goToSlide(currentSlideIndex - 1)}
+        >
+          &#9664;
+        </button>
+        <div className='text-white'>
+          {currentSlideIndex + 1}
+          <span className='font-light'>{' of '}</span>
+          {slides.length}
         </div>
-    );
-};
+        <button
+          disabled={currentSlideIndex === slides.length - 1}
+          className='text-white text-2xl mx-4 my-1 disabled:text-gray-400'
+          onClick={() => goToSlide(currentSlideIndex + 1)}
+        >
+          &#9654;
+        </button>
+      </div>
+    </div>
+  )
+}
 
+export const SlidePagesIndicator: React.FC<{
+  currentSlideIndex: number
+  slides: any[] // Replace 'any' with the appropriate type if known
+  goToSlide: (index: number) => void
+}> = ({ currentSlideIndex, slides, goToSlide }) => {
+  return (
+    <div className='col-span-1'>
+      {/* <div className='w-fit h-fit flex flex-row items-center justify-center mx-auto rounded-full bg-slate-600/40'>
+        <div className='text-white'>
+          {currentSlideIndex + 1}
+          <span className='font-light'>{' of '}</span>
+          {slides.length}
+        </div>
+      </div> */}
+      <div className='w-20 h-7 px-4 py-1 bg-indigo-400 rounded-3xl justify-center items-center gap-2 inline-flex'>
+        <div className='text-center'>
+          <span className='text-zinc-100 text-xs font-bold font-creato-medium leading-tight tracking-wide'>
+            {currentSlideIndex + 1}
+          </span>
+          <span className='text-zinc-100 text-xs font-normal font-creato-medium leading-tight tracking-wide'>
+            {' of '}
+          </span>
+          <span className='text-zinc-100 text-xs font-bold font-creato-medium leading-tight tracking-wide'>
+            {slides.length}
+          </span>
+        </div>
+      </div>
+    </div>
+  )
+}
 
+export const SlideLeftNavigator: React.FC<{
+  currentSlideIndex: number
+  slides: any[] // Replace 'any' with the appropriate type if known
+  goToSlide: (index: number) => void
+}> = ({ currentSlideIndex, slides, goToSlide }) => {
+  return (
+    <div className='col-span-1'>
+      <div className='w-fit h-fit flex flex-row items-center justify-center mx-auto rounded-full'>
+        <button
+          disabled={currentSlideIndex === 0}
+          className='text-white text-2xl mx-4 my-1 disabled:text-black'
+          onClick={() => goToSlide(currentSlideIndex - 1)}
+        >
+          {/* &#9664; */}
+          <LeftSlideNavIcon />
+        </button>
+      </div>
+    </div>
+  )
+}
+
+export const SlideRightNavigator: React.FC<{
+  currentSlideIndex: number
+  slides: any[] // Replace 'any' with the appropriate type if known
+  goToSlide: (index: number) => void
+}> = ({ currentSlideIndex, slides, goToSlide }) => {
+  return (
+    <div className='col-span-1'>
+      <div className='w-fit h-fit flex flex-row items-center justify-center mx-auto rounded-full'>
+        <button
+          disabled={currentSlideIndex === slides.length - 1}
+          className='text-white text-2xl mx-4 my-1 disabled:text-gray-400'
+          onClick={() => goToSlide(currentSlideIndex + 1)}
+        >
+          {/* &#9654; */}
+          <RightSlideNavIcon />
+        </button>
+      </div>
+    </div>
+  )
+}
+
+export const AddSlideButton: React.FC<{}> = () => {
+  return (
+    <div className='col-span-1 hidden sm:block'>
+      <div className='w-fit h-fit'>
+        {/* <button
+            className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
+            onClick={openPresent}
+          >
+            Present
+          </button> */}
+        <div className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300 hover:bg-slate-400 flex justify-center items-center cursor-pointer'>
+          <AddSlideIcon />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export const DeleteSlideButton: React.FC<{}> = () => {
+  return (
+    <div className='col-span-1 hidden sm:block'>
+      <div className='w-fit h-fit'>
+        {/* <button
+            className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
+            onClick={openPresent}
+          >
+            Present
+          </button> */}
+        <div
+          className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300 hover:bg-slate-400 flex justify-center items-center cursor-pointer'
+          //   onClick={openPresent}
+        >
+          <DeleteSlideIcon />
+        </div>
+      </div>
+    </div>
+  )
+}
