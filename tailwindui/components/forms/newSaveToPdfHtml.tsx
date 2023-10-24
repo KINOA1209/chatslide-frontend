@@ -7,6 +7,7 @@ import { LoadingIcon } from '@/components/ui/progress'
 import { SlideElement, Slide } from '../SlidesHTML'
 import PaywallModal from './paywallModal'
 import mixpanel from 'mixpanel-browser'
+import { DownloadIcon } from '@/app/(feature)/icons'
 
 type SlidesHTMLProps = {
   finalSlides: Slide[]
@@ -91,37 +92,51 @@ const SaveToPdfHtml: React.FC<SaveToPdfHtmlProps> = ({ finalSlides }) => {
   }
 
   return (
-    <div className='max-w-sm mx-auto'>
-      <div className='flex flex-wrap -mx-3 mt-6'>
-        <div className='w-full px-3'>
-          {showPaymentModal && (
-            <PaywallModal
-              setShowModal={setShowPaymentModal}
-              message='Upgrade for more ⭐️credits.'
-            />
-          )}
+    // <div className=''>
+    <div className='flex flex-wrap'>
+      <div className='w-full px-3'>
+        {showPaymentModal && (
+          <PaywallModal
+            setShowModal={setShowPaymentModal}
+            message='Upgrade for more ⭐️credits.'
+          />
+        )}
 
-          {!user ? (
-            // insert here
-            <SavePDFModal />
-          ) : (
-            <button
-              className='btn text-blue-600 bg-gray-100 hover:bg-gray-200 w-full border border-blue-600 disabled:from-gray-200 disabled:bg-gray-200 disabled:text-gray-400 disabled:border-0'
-              onClick={handleSavePDF}
-              disabled={downloadingPDF}
-            >
-              <div
-                className='text-black h-[22px] mr-2'
-                hidden={!downloadingPDF}
-              >
-                <LoadingIcon />
-              </div>
-              Save as PDF (10 ⭐️)
-            </button>
-          )}
-        </div>
+        {!user ? (
+          // insert here
+          <SavePDFModal />
+        ) : (
+          // <button
+          //   className='btn text-blue-600 bg-gray-100 hover:bg-gray-200 w-full border border-blue-600 disabled:from-gray-200 disabled:bg-gray-200 disabled:text-gray-400 disabled:border-0'
+          //   onClick={handleSavePDF}
+          //   disabled={downloadingPDF}
+          // >
+          //   <div
+          //     className='text-black h-[22px] mr-2'
+          //     hidden={!downloadingPDF}
+          //   >
+          //     <LoadingIcon />
+          //   </div>
+          //   Save as PDF (10 ⭐️)
+          // </button>
+          <div
+            className='h-8 px-3 py-1 bg-zinc-100 rounded-lg justify-center items-center gap-2.5 inline-flex'
+            onClick={handleSavePDF}
+          >
+            <div className='text-center text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide'>
+              Export to PDF
+            </div>
+            <div className='w-4 h-4 relative' hidden={downloadingPDF}>
+              <DownloadIcon />
+            </div>
+            <div className='text-black h-[22px] mr-2' hidden={!downloadingPDF}>
+              <LoadingIcon />
+            </div>
+          </div>
+        )}
       </div>
     </div>
+    // </div>
   )
 }
 
