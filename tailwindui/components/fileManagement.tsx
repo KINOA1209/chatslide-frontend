@@ -381,7 +381,7 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
             // Assuming you have a function to send data to the endpoint
             try {
-                await sendUpdateToEndpoint(data.data, token);
+                await sendUpdateToEndpoint(data, token);
                 await fetchFiles(token);
                 toast.success("File uploaded successfully", {
                     position: "top-center",
@@ -415,8 +415,6 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
     // Function to send data to the endpoint api/sync_carbon_file
     const sendUpdateToEndpoint = async (data: any, token: string) => {
         try {
-            // Assuming you have logic to send the name to the endpoint
-            const name = data.files[0].name;
 
             const headers = new Headers();
             if (token) {
@@ -428,7 +426,7 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
             const response = await fetch('api/sync_carbon_file', {
                 method: 'POST',
                 headers: headers,
-                body: JSON.stringify({ name }),
+                body: JSON.stringify({ data }),
             });
 
             if (!response.ok) {
@@ -478,14 +476,19 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
                                 },
                                 {
                                     id: IntegrationName.ONEDRIVE,
-                                    chunkSize: 1000,
+                                    chunkSize: 1500,
                                     overlapSize: 20,
                                 },
                                 {
                                     id: IntegrationName.DROPBOX,
-                                    chunkSize: 1000,
+                                    chunkSize: 1500,
                                     overlapSize: 20,
                                 },
+                                {
+                                    id: IntegrationName.NOTION,
+                                    chunkSize: 1500,
+                                    overlapSize: 20,
+                                }
                                 
                             ]}
                             onSuccess={(data) => handleSuccess(data)}
