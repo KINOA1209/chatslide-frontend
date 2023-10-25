@@ -5,6 +5,7 @@ import { LoadingIcon } from '@/components/ui/progress';
 import { createPortal } from 'react-dom';
 import { toast } from 'react-toastify';
 import mixpanel from 'mixpanel-browser';
+import PaywallModal from './forms/paywallModal';
 
 interface ImgModuleProp {
     imgsrc: string,
@@ -28,6 +29,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
     const [selectedImg, setSelectedImg] = useState<string>('')
     const searchRef = useRef<HTMLInputElement>(null);
     const inputFileRef = useRef<HTMLInputElement>(null);
+    const [showPaymentModal, setShowPaymentModal] = useState(false);
 
     const [hoverQueryMode, setHoverQueryMode] = useState<ImgQueryMode>(ImgQueryMode.RESOURCE);
     const [selectedQueryMode, setSelectedQueryMode] = useState<ImgQueryMode>(ImgQueryMode.RESOURCE);
@@ -109,6 +111,8 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
         }).then(response => {
             if (response.ok) {
                 return response.json();
+            } else if (response.status === 402) {
+                setShowPaymentModal(true);
             } else {
                 const error = response.status
                 console.error(error, response);
@@ -423,6 +427,9 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
     )
 
     return <>
+
+
+
         {/* select image modal */}
         {createPortal(<Transition
             className='h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
@@ -435,6 +442,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
             leaveFrom="opacity-100 translate-y-0"
             leaveTo="opacity-0 translate-y-12"
         >
+            {showPaymentModal && <PaywallModal setShowModal={setShowPaymentModal} message='Upgrade for more ⭐️credits.' />}
             <div className='grow md:grow-0'></div>
             <Transition
                 className='bg-gray-100 w-full h-3/4 md:h-[65vh]
@@ -524,7 +532,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
                     </div>
 
                     <div className='mt-3 mb-5 grow overflow-hidden'>
-                        {selectedQueryMode == ImgQueryMode.RESOURCE && resourceSelectionDiv }
+                        {selectedQueryMode == ImgQueryMode.RESOURCE && resourceSelectionDiv}
                         {selectedQueryMode == ImgQueryMode.SEARCH && imgSearchDiv}
                         {selectedQueryMode == ImgQueryMode.GENERATION && imgGenerationDiv}
                     </div>
