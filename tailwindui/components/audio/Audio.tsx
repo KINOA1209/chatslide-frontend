@@ -1,35 +1,46 @@
 import React, { useRef, useEffect, useState } from "react";
+import { useAudio } from '@/components/audio/AudioContext';
 
 interface Props {
+    index: string;
     filename: string;
     foldername: string;
     token?: string;
 }
 
-const PlayButton: React.FC<Props> = ({ filename, foldername, token }) => {
+const PlayButton: React.FC<Props> = ({ index, filename, foldername, token }) => {
     const audioRef = useRef<HTMLAudioElement | null>(null);
-    const [isPlaying, setIsPlaying] = useState(false);
     const [audioBlobUrl, setAudioBlobUrl] = useState<string | null>(null);
+    const { playingId, setPlayingId } = useAudio();
 
     const handleAudio = () => {
         if (audioRef.current) {
-            if (isPlaying) {
-                audioRef.current.pause();
+            if (playingId == index) {
+                setPlayingId(null);
             } else {
-                audioRef.current.play();
+                setPlayingId(index);
             }
-            setIsPlaying(!isPlaying);
         }
     };
 
     useEffect(() => {
+        if (audioRef.current) {
+            if (playingId === index) {
+                audioRef.current.play();
+            } else {
+                audioRef.current.pause();
+            }
+        }
+    }, [playingId, index]);
+
+    useEffect(() => {
         const audioElem = audioRef.current;
         if (audioElem) {
-            audioElem.addEventListener('ended', () => setIsPlaying(false));
+            audioElem.addEventListener('ended', () => setPlayingId(null));
         }
         return () => {
             if (audioElem) {
-                audioElem.removeEventListener('ended', () => setIsPlaying(false));
+                audioElem.removeEventListener('ended', () => setPlayingId(null));
             }
         };
     }, []);
@@ -61,7 +72,7 @@ const PlayButton: React.FC<Props> = ({ filename, foldername, token }) => {
                 className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700" 
                 onClick={handleAudio}
             >
-                {isPlaying ? "Pause" : "Play"}
+                { playingId == index ? "Pause" : "Play"}
             </button>
         </div>
     );
