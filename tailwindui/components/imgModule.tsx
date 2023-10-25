@@ -445,7 +445,10 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave}: Im
                     </div>
                 </div>
                 :
-                <img className={`w-full h-full transition ease-in-out duration-150 object-contain ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`} src={imgsrc}></img>
+                <img 
+                    style={{ objectFit: 'contain'}}
+                    className= {`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`} 
+                    src={imgsrc} />
             }
         </div>
     </>
