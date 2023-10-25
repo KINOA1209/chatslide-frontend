@@ -13,7 +13,7 @@ interface ImgModuleProp {
     autoSave: Function,
 }
 
-export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave}: ImgModuleProp) => {
+export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: ImgModuleProp) => {
     const [showModal, setShowModal] = useState(false);
     const [keyword, setKeyword] = useState('');
     const [showImgSearch, setShowImgSearch] = useState(false);
@@ -52,7 +52,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave}: Im
         mixpanel.track('Image Searched', {
             'Search Keyword': (e.target as HTMLFormElement).search_keyword.value,
         });
-        
+
         const response = await fetch('/api/search_images', {
             method: 'POST',
             headers: {
@@ -366,17 +366,8 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave}: Im
                                 <form onSubmit={handleImageSearchSubmit} className='w-full'>
                                     <div className="w-full form-input flex flex-row flex-nowrap mb-2 focus-within:border focus-within:border-gray-500 p-0 cursor-text rounded-xl"
                                         onClick={e => handleClickSearchInput(e, searchRef)}>
-                                        <div className='h-[22px] ml-[14px] my-auto' hidden={!searching}><LoadingIcon /></div>
-                                        {!searching && <button
-                                            type="submit"
-                                            className="my-1 ml-3 opacity-40 hover:opacity-100"
-                                        >
-                                            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z"
-                                                    stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                            </svg>
-                                        </button>}
+                                        
+                                        
                                         <input
                                             id="search_keyword"
                                             type="text"
@@ -387,6 +378,17 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave}: Im
                                             onChange={e => { setKeyword(e.target.value); }}
                                             value={keyword}
                                         />
+                                        <div className='h-[22px] ml-[14px] my-auto mr-2' hidden={!searching}><LoadingIcon /></div>
+                                        {!searching && <button
+                                            type="submit"
+                                            className="my-1 ml-3 opacity-40 hover:opacity-100 mr-2"
+                                        >
+                                            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z"
+                                                    stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                        </button>}
                                     </div>
                                 </form>
                                 <div className='w-full h-full overflow-y-auto p-1'>
@@ -417,7 +419,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave}: Im
                             <button
                                 className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full rounded-lg"
                                 type="button"
-                                onClick={e => { e.preventDefault(); closeModal(); autoSave();}}>
+                                onClick={e => { e.preventDefault(); closeModal(); autoSave(); }}>
                                 Done
                             </button>
                         </div>
@@ -445,9 +447,9 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave}: Im
                     </div>
                 </div>
                 :
-                <img 
-                    style={{ objectFit: 'contain'}}
-                    className= {`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`} 
+                <img
+                    style={{ objectFit: 'contain' }}
+                    className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`}
                     src={imgsrc} />
             }
         </div>
