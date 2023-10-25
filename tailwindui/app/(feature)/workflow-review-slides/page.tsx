@@ -80,7 +80,7 @@ export default function WorkflowStep3() {
   }, [])
 
   return (
-    <div className='bg-gradient-to-b from-indigo-500 to-indigo-600'>
+    <div className='bg-gradient-to-b from-[#6A7EF9] to-[#415AF1]'>
       {/* flex col container for steps, title, etc */}
       <div className='fixed mt-[3rem] flex flex-col w-full bg-Grey-50 justify-center z-10 gap-1 py-[0.75rem] border-b-2'>
         {/* steps bar */}
