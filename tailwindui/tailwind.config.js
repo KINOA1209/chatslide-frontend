@@ -11,7 +11,8 @@ module.exports = {
         'Grey-50': 'var(--Grey-50, #F4F4F4)',
         'Grey-100': 'var(--Grey-100, #E7E9EB)',
         'Workflow-bg-color': 'var(--Workflow-bg-color, #6A7EF9)',
-        'Generate-slides-bg-color': 'var(--Blue-600, #2943E9)'
+        'Generate-slides-bg-color': 'var(--Blue-600, #2943E9)',
+        'Workflow-slides-button-hover-bg-color': 'var(--Workflow-slides-button-hover-bg-color, #9AAEF9)'
       },
       colors: {
         "neutral-100": 'var(--neutral-100, #1E202C)',

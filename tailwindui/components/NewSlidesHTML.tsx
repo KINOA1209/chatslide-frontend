@@ -22,6 +22,7 @@ import {
 
 import SlideContainer from './slides/SlideContainer'
 import { h1Style, h2Style, h3Style, h4Style, listStyle } from './slides/Styles'
+import ButtonWithExplanation from './button/ButtonWithExplanation'
 
 export interface SlideElement {
   type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div'
@@ -78,10 +79,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       : ''
   const [showLayout, setShowLayout] = useState(false)
   const [present, setPresent] = useState(false)
-  const [share, setShare] = useState(false)
+  // const [share, setShare] = useState(false)
   const slideRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const [host, setHost] = useState('https://drlambda.ai')
+  // const [host, setHost] = useState('https://drlambda.ai')
   const [saveStatus, setSaveStatus] = useState('Up to date')
   const [dimensions, setDimensions] = useState({ width: 960, height: 540 })
   const [unsavedChanges, setUnsavedChanges] = useState(false)
@@ -93,21 +94,21 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     () => import('@/components/forms/newSaveToPdfHtml')
   )
 
-  useEffect(() => {
-    if (
-      window.location.hostname !== 'localhost' &&
-      window.location.hostname !== '127.0.0.1'
-    ) {
-      setHost('https://' + window.location.hostname)
-    } else {
-      setHost(window.location.hostname)
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (
+  //     window.location.hostname !== 'localhost' &&
+  //     window.location.hostname !== '127.0.0.1'
+  //   ) {
+  //     setHost('https://' + window.location.hostname)
+  //   } else {
+  //     setHost(window.location.hostname)
+  //   }
+  // }, [])
 
-  useEffect(() => {
-    setShare(sessionStorage.getItem('is_shared') === 'true')
-    // console.log('share', sessionStorage.getItem('is_shared'));
-  }, [])
+  // useEffect(() => {
+  //   setShare(sessionStorage.getItem('is_shared') === 'true')
+  //   // console.log('share', sessionStorage.getItem('is_shared'));
+  // }, [])
 
   useEffect(() => {
     if (unsavedChanges) {
@@ -557,19 +558,20 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
   return (
     <div className='flex flex-col items-center justify-center gap-4'>
-      {share && (
+      {/* {share && (
         <div>
           <label className='text-sm text-zinc-100'>View only link:</label>
           <ClickableLink
             link={`${host}/shared/${sessionStorage.getItem('project_id')}`}
           />
         </div>
-      )}
-      {!viewingMode && (
+      )} */}
+
+      {/* {!viewingMode && (
         <label className='text-sm text-zinc-100'>
           Save status: {saveStatus}
         </label>
-      )}
+      )} */}
 
       {/* buttons and contents */}
       <div className='relative w-fit h-fit flex flex-row items-center justify-center gap-4'>
@@ -595,12 +597,16 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
         {/* buttons for change layout, present, add and save slides */}
         <div className='absolute -right-[10rem] top-[7rem] flex flex-col justify-between items-center mb-6 gap-[1.25rem] ml-[6rem]'>
-          <PresentButton openPresent={openPresent} />
-          {!viewingMode && (
+          {/* <PresentButton openPresent={openPresent} /> */}
+          <ButtonWithExplanation
+            button={<PresentButton openPresent={openPresent} />}
+            explanation='Presentation Mode'
+          />
+          {/* {!viewingMode && (
             <ShareToggleButton setShare={setShare} share={share} />
-          )}
+          )} */}
 
-          {!viewingMode && (
+          {/* {!viewingMode && (
             <LayoutChanger
               openModal={openModal}
               showLayout={showLayout}
@@ -610,10 +616,34 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
               slides={slides}
               handleSlideEdit={handleSlideEdit}
             />
+          )} */}
+          {!viewingMode && (
+            <ButtonWithExplanation
+              button={
+                <LayoutChanger
+                  openModal={openModal}
+                  showLayout={showLayout}
+                  closeModal={closeModal}
+                  currentSlideIndex={currentSlideIndex}
+                  templateSamples={templateSamples}
+                  slides={slides}
+                  handleSlideEdit={handleSlideEdit}
+                />
+              }
+              explanation='Change Layout'
+            />
           )}
-          {!viewingMode && <SaveButton saveSlides={saveSlides} />}
-          <AddSlideButton />
-          <DeleteSlideButton />
+
+          {/* save button */}
+          {/* {!viewingMode && <SaveButton saveSlides={saveSlides} />} */}
+          <ButtonWithExplanation
+            button={<AddSlideButton />}
+            explanation='Add Slide'
+          />
+          <ButtonWithExplanation
+            button={<DeleteSlideButton />}
+            explanation='Delete Current Slide'
+          />
         </div>
 
         {/* White modal for presentation mode */}

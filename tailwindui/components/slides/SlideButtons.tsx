@@ -4,6 +4,7 @@ import AuthService from '../utils/AuthService'
 import {
   LeftSlideNavIcon,
   RightSlideNavIcon,
+  ShareSlidesIcon,
 } from '@/app/(feature)/workflow-review-slides/icons'
 import {
   PresentationModeIcon,
@@ -48,7 +49,7 @@ export const PresentButton: React.FC<PresentButtonProps> = ({
           Present
         </button> */}
         <div
-          className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300 hover:bg-slate-400 flex justify-center items-center cursor-pointer'
+          className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300  hover:bg-Workflow-slides-button-hover-bg-color flex justify-center items-center cursor-pointer'
           onClick={openPresent}
         >
           <PresentationModeIcon />
@@ -106,13 +107,28 @@ export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
 
   return (
     <div className='col-span-1'>
-      <div className='w-fit h-fit rounded-full overflow-hidden'>
+      {/* <div className='w-fit h-fit rounded-full overflow-hidden'>
         <button
           className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
           onClick={toggleShare}
         >
           {!share ? 'Share' : 'Stop Sharing'}
         </button>
+      </div> */}
+      <div
+        className='h-8 px-3 py-1 bg-zinc-100 rounded-lg justify-center items-center gap-2.5 inline-flex cursor-pointer'
+        onClick={toggleShare}
+      >
+        <div className='text-center text-gray-700 text-sm font-medium font-creto-medium leading-normal tracking-wide'>
+          {!share ? 'Share' : 'Stop Sharing'}
+        </div>
+        <div className='w-5 h-5 p-0.5 bg-zinc-100 justify-center items-center flex'>
+          <div className='w-4 h-4 relative flex-col justify-start items-start flex'>
+            <div className='w-3.5 h-3.5 relative'>
+              <ShareSlidesIcon />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )
@@ -233,7 +249,7 @@ export const AddSlideButton: React.FC<{}> = () => {
           >
             Present
           </button> */}
-        <div className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300 hover:bg-slate-400 flex justify-center items-center cursor-pointer'>
+        <div className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300 hover:bg-Workflow-slides-button-hover-bg-color flex justify-center items-center cursor-pointer'>
           <AddSlideIcon />
         </div>
       </div>
@@ -252,7 +268,7 @@ export const DeleteSlideButton: React.FC<{}> = () => {
             Present
           </button> */}
         <div
-          className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300 hover:bg-slate-400 flex justify-center items-center cursor-pointer'
+          className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300  hover:bg-Workflow-slides-button-hover-bg-color flex justify-center items-center cursor-pointer'
           //   onClick={openPresent}
         >
           <DeleteSlideIcon />
