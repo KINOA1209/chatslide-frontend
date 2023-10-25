@@ -582,7 +582,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       )} */}
 
       {/* buttons and contents */}
-      <div className='relative max-w-4xl flex flex-row items-center justify-center gap-4'>
+      <div className='max-w-4xl relative flex flex-row items-center justify-center gap-4'>
         <ToastContainer />
         <SlideLeftNavigator
           currentSlideIndex={currentSlideIndex}
@@ -603,7 +603,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
           goToSlide={goToSlide}
         />
 
-        {/* buttons for change layout, present, add and save slides */}
+        {/* 4 buttons for change layout, present, add and save slides */}
         <div className='absolute -right-[10rem] top-[7rem] flex flex-col justify-between items-center mb-6 gap-[1.25rem] ml-[6rem]'>
           {/* <PresentButton openPresent={openPresent} /> */}
           <ButtonWithExplanation
@@ -687,9 +687,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                 className={`w-[3.75rem] h-[2.875rem] ${
                   index % 2 === 0 ? 'bg-zinc-100' : 'opacity-20 bg-zinc-100'
                 }
-                    rounded-md flex-shrink-0`} // Added margin and flex-shrink-0
+                    rounded-md flex-shrink-0 cursor-pointer`} // Added margin and flex-shrink-0
               >
-                {index}
+                {index + 1}
               </div>
             ))}
         </div>
