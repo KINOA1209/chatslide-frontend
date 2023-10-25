@@ -13,18 +13,28 @@ interface ImgModuleProp {
     autoSave: Function,
 }
 
+enum ImgQueryMode {
+    RESOURCE,
+    SEARCH,
+    GENERATION,
+}
+
 export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: ImgModuleProp) => {
     const [showModal, setShowModal] = useState(false);
     const [keyword, setKeyword] = useState('');
-    const [showImgSearch, setShowImgSearch] = useState(false);
     const [searchResult, setSearchResult] = useState<string[]>([]);
     const [resources, setResources] = useState<string[]>([]);
     const [searching, setSearching] = useState(false);
     const [selectedImg, setSelectedImg] = useState<string>('')
     const searchRef = useRef<HTMLInputElement>(null);
     const inputFileRef = useRef<HTMLInputElement>(null);
-    const [hoverImgSearch, setHoverImgSearch] = useState(false);
-    const [hoverResources, setHoverResources] = useState(false);
+
+    const [hoverQueryMode, setHoverQueryMode] = useState<ImgQueryMode>(ImgQueryMode.RESOURCE);
+    const [selectedQueryMode, setSelectedQueryMode] = useState<ImgQueryMode>(ImgQueryMode.RESOURCE);
+
+    useEffect(() => {
+        console.log(selectedQueryMode)
+    }, [selectedQueryMode])
 
     useEffect(() => {
         if (imgsrc !== '') {
@@ -45,7 +55,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
 
     const handleImageSearchSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setShowImgSearch(true);
+        setSelectedQueryMode(ImgQueryMode.SEARCH);
         setSearching(true);
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
 
@@ -61,6 +71,40 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
             },
             body: JSON.stringify({
                 search_keyword: (e.target as HTMLFormElement).search_keyword.value
+            })
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                const error = response.status
+                console.error(error, response);
+            }
+        }).then(parsedResponse => {
+            setSearchResult(parsedResponse.data.images);
+        }).catch(e => {
+            console.error(e);
+        });
+        setSearching(false);
+    }
+
+    const handleImageGenerationSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setSelectedQueryMode(ImgQueryMode.GENERATION);
+        setSearching(true);
+        const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+
+        mixpanel.track('Image Generated', {
+            'Generate Prompt': (e.target as HTMLFormElement).search_keyword.value,
+        });
+
+        const response = await fetch('/api/generate_images', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${idToken}`
+            },
+            body: JSON.stringify({
+                prompt: (e.target as HTMLFormElement).search_keyword.value
             })
         }).then(response => {
             if (response.ok) {
@@ -225,21 +269,158 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
         }
     }
 
-    const handleMouseOver = (e: React.MouseEvent<HTMLButtonElement>, isResources: boolean) => {
-        if (isResources) {
-            setHoverResources(true);
-        } else {
-            setHoverImgSearch(true);
-        }
+    const handleMouseOver = (e: React.MouseEvent<HTMLButtonElement>, type: ImgQueryMode) => {
+        setHoverQueryMode(type)
+        console.log('hover', type)
     }
 
-    const handleMouseOut = (e: React.MouseEvent<HTMLButtonElement>, isResources: boolean) => {
-        if (isResources) {
-            setHoverResources(false);
-        } else {
-            setHoverImgSearch(false);
-        }
+    const handleMouseOut = (e: React.MouseEvent<HTMLButtonElement>, type: ImgQueryMode) => {
+        setHoverQueryMode(selectedQueryMode);
+        console.log('out', selectedQueryMode)
     }
+
+    const resourceSelectionDiv = (
+        <div className='w-full h-full'>
+            <div className='w-full h-full flex flex-col'>
+                <div className='w-full h-full overflow-y-auto p-1'>
+                    <div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-2'>
+                        <div onClick={handleClick} className='upload-image w-full h-fit rounded-md overflow-hidden aspect-square flex flex-col items-center justify-center bg-[#E7E9EB] hover:bg-[#CAD0D3] cursor-pointer'>
+                            <input
+                                type="file"
+                                id="file-upload"
+                                ref={inputFileRef}
+                                onChange={handleFileChange}
+                                style={{ display: 'none' }}
+                            />
+                            <svg className='w-12 h-12' viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clipPath="url(#clip0_250_2609)">
+                                    <path d="M22.2859 25.7139V46.2853M22.2859 25.7139L15.4287 32.571M22.2859 25.7139L29.143 32.571" stroke="#A6B1BB" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" />
+                                    <path d="M41.1429 27.7712C42.4164 27.0364 43.5176 26.0371 44.3722 24.8407C45.2269 23.6443 45.815 22.2786 46.0971 20.8356C46.3793 19.3926 46.3487 17.9059 46.0076 16.4758C45.6665 15.0456 45.0227 13.7052 44.1197 12.5449C43.2167 11.3846 42.0754 10.4313 40.7728 9.74943C39.4702 9.06754 38.0366 8.67284 36.5685 8.59194C35.1004 8.51104 33.6321 8.74582 32.2624 9.28045C30.8928 9.81507 29.6537 10.6371 28.6287 11.6912C27.7298 8.50205 25.7068 5.74616 22.9335 3.93297C20.1603 2.11979 16.8244 1.37192 13.5425 1.82763C10.2606 2.28333 7.25461 3.91179 5.08029 6.41196C2.90597 8.91213 1.71032 12.1149 1.71437 15.4283C1.7168 18.5453 2.78096 21.5685 4.73151 23.9998" stroke="#A6B1BB" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_250_2609">
+                                        <rect width={48} height={48} fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                            <div className='text-[#A6B1BB]'>Upload</div>
+                        </div>
+                        {resources.map((url, index) => {
+                            if (url === selectedImg) {
+                                return <div onClick={handleImageClick}
+                                    key={index} className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-2`}>
+                                    <img className='w-full h-full object-cover' src={url} />
+                                </div>
+                            } else {
+                                return <div onClick={handleImageClick}
+                                    key={index} className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-2`}>
+                                    <img className='w-full h-full object-cover' src={url} />
+                                </div>
+                            }
+                        })}
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+
+    const imgSearchDiv = (
+        <div className='w-full h-full flex flex-col'>
+            <form onSubmit={handleImageSearchSubmit} className='w-full'>
+                <div className="w-full form-input flex flex-row flex-nowrap mb-2 focus-within:border focus-within:border-gray-500 p-0 cursor-text rounded-xl"
+                    onClick={e => handleClickSearchInput(e, searchRef)}>
+
+                    <input
+                        id="search_keyword"
+                        type="text"
+                        className=" text-gray-800 grow border-0 p-0 h-6 focus:outline-none focus:ring-0 mx-3 my-3 w-full overflow-hidden"
+                        placeholder="Search from internet"
+                        required
+                        ref={searchRef}
+                        onChange={e => { setKeyword(e.target.value); }}
+                        value={keyword}
+                    />
+                    <div className='h-[22px] ml-[14px] my-auto mr-2' hidden={!searching}><LoadingIcon /></div>
+                    {!searching && <button
+                        type="submit"
+                        className="my-1 ml-3 opacity-40 hover:opacity-100 mr-2"
+                    >
+                        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z"
+                                stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                    </button>}
+                </div>
+            </form>
+            <div className='w-full h-full overflow-y-auto p-1'>
+                <div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-2'>
+                    {searchResult.map((url, index) => {
+                        if (url === selectedImg) {
+                            return <div onClick={handleImageClick}
+                                key={index} className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-[3px]`}>
+                                <img className='w-full h-full object-cover' src={url} />
+                            </div>
+                        } else {
+                            return <div onClick={handleImageClick}
+                                key={index} className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-[3px]`}>
+                                <img className='w-full h-full object-cover' src={url} />
+                            </div>
+                        }
+                    })}
+                </div>
+            </div>
+        </div>
+    )
+
+    const imgGenerationDiv = (
+        <div className='w-full h-full flex flex-col'>
+            <form onSubmit={handleImageGenerationSubmit} className='w-full'>
+                <div className="w-full form-input flex flex-row flex-nowrap mb-2 focus-within:border focus-within:border-gray-500 p-0 cursor-text rounded-xl"
+                    onClick={e => handleClickSearchInput(e, searchRef)}>
+
+                    <input
+                        id="search_keyword"
+                        type="text"
+                        className=" text-gray-800 grow border-0 p-0 h-6 focus:outline-none focus:ring-0 mx-3 my-3 w-full overflow-hidden"
+                        placeholder="Generate from AI"
+                        required
+                        ref={searchRef}
+                        onChange={e => { setKeyword(e.target.value); }}
+                        value={keyword}
+                    />
+                    <div className='h-[22px] ml-[14px] my-auto mr-2' hidden={!searching}><LoadingIcon /></div>
+                    {!searching && <button
+                        type="submit"
+                        className="my-1 ml-3 opacity-40 hover:opacity-100 mr-2"
+                    >
+                        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z"
+                                stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                    </button>}
+                </div>
+            </form>
+            <div className='w-full h-full overflow-y-auto p-1'>
+                <div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-2'>
+                    {searchResult.map((url, index) => {
+                        if (url === selectedImg) {
+                            return <div onClick={handleImageClick}
+                                key={index} className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-[3px]`}>
+                                <img className='w-full h-full object-cover' src={url} />
+                            </div>
+                        } else {
+                            return <div onClick={handleImageClick}
+                                key={index} className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-[3px]`}>
+                                <img className='w-full h-full object-cover' src={url} />
+                            </div>
+                        }
+                    })}
+                </div>
+            </div>
+        </div>
+    )
 
     return <>
         {/* select image modal */}
@@ -273,10 +454,10 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
                     <div className='w-full flex flex-col'>
                         <div className='w-full flex flex-row justify-around gap-3'>
                             <button className='cursor-pointer whitespace-nowrap py-2 flex flex-row'
-                                onClick={e => { setShowImgSearch(false); setKeyword(''); }}
-                                onMouseOver={e => { handleMouseOver(e, true) }}
-                                onMouseOut={e => { handleMouseOut(e, true) }}
-                                disabled={!showImgSearch}>
+                                onClick={e => { setSelectedQueryMode(ImgQueryMode.RESOURCE); setKeyword(''); }}
+                                onMouseOver={e => { handleMouseOver(e, ImgQueryMode.RESOURCE) }}
+                                onMouseOut={e => { handleMouseOut(e, ImgQueryMode.RESOURCE) }}
+                            >
                                 <div className='h-full w-full flex justify-center items-center'>
                                     <svg className='w-[20px] h-[20px] mr-2' viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -291,10 +472,10 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
                                 My Resources
                             </button>
                             <button className='cursor-pointer whitespace-nowrap py-2 flex flex-row'
-                                onClick={e => { setShowImgSearch(true); setKeyword(''); }}
-                                onMouseOver={e => { handleMouseOver(e, false) }}
-                                onMouseOut={e => { handleMouseOut(e, false) }}
-                                disabled={showImgSearch}>
+                                onClick={e => { console.log('search'); setSelectedQueryMode(ImgQueryMode.SEARCH); setKeyword(''); }}
+                                onMouseOver={e => { handleMouseOver(e, ImgQueryMode.SEARCH) }}
+                                onMouseOut={e => { handleMouseOut(e, ImgQueryMode.SEARCH) }}
+                            >
                                 <div className='h-full w-full flex justify-center items-center'>
                                     <svg className='w-[20px] h-[20px] mr-2' viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g clipPath="url(#clip0_276_3476)">
@@ -312,105 +493,41 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
                                 </div>
                                 Search
                             </button>
+                            <button className='cursor-pointer whitespace-nowrap py-2 flex flex-row'
+                                onClick={e => { setSelectedQueryMode(ImgQueryMode.GENERATION); setKeyword(''); }}
+                                onMouseOver={e => { handleMouseOver(e, ImgQueryMode.GENERATION) }}
+                                onMouseOut={e => { handleMouseOut(e, ImgQueryMode.GENERATION) }}
+                            >
+                                <div className='h-full w-full flex justify-center items-center'>
+                                    <svg className='w-[20px] h-[20px] mr-2' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g>
+                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 17.18 21.02 12 17.77 6.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                                                stroke="#121212" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_276_3476">
+                                                <rect width="16" height="16" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </div>
+                                Generate (10 ⭐️)
+                            </button>
                         </div>
-                        <div className='w-full bg-slate-200'><div className={`w-1/2 h-[2px] bg-black ${((showImgSearch && !hoverResources) || (!showImgSearch && hoverImgSearch)) && 'ml-[50%]'} transition-all ease-in-out`}></div></div>
+                        <div className='w-full bg-slate-200'>
+                            <div className={`w-1/3 h-[2px] bg-black 
+                                ${hoverQueryMode == ImgQueryMode.SEARCH && 'ml-[33.3%]'} 
+                                ${hoverQueryMode == ImgQueryMode.GENERATION && 'ml-[66.7%]'} 
+                                transition-all ease-in-out`}>
+                            </div>
+                        </div>
                     </div>
 
                     <div className='mt-3 mb-5 grow overflow-hidden'>
-                        {!showImgSearch &&
-                            <div className='w-full h-full'>
-                                <div className='w-full h-full flex flex-col'>
-                                    <div className='w-full h-full overflow-y-auto p-1'>
-                                        <div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-2'>
-                                            <div onClick={handleClick} className='upload-image w-full h-fit rounded-md overflow-hidden aspect-square flex flex-col items-center justify-center bg-[#E7E9EB] hover:bg-[#CAD0D3] cursor-pointer'>
-                                                <input
-                                                    type="file"
-                                                    id="file-upload"
-                                                    ref={inputFileRef}
-                                                    onChange={handleFileChange}
-                                                    style={{ display: 'none' }}
-                                                />
-                                                <svg className='w-12 h-12' viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <g clipPath="url(#clip0_250_2609)">
-                                                        <path d="M22.2859 25.7139V46.2853M22.2859 25.7139L15.4287 32.571M22.2859 25.7139L29.143 32.571" stroke="#A6B1BB" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" />
-                                                        <path d="M41.1429 27.7712C42.4164 27.0364 43.5176 26.0371 44.3722 24.8407C45.2269 23.6443 45.815 22.2786 46.0971 20.8356C46.3793 19.3926 46.3487 17.9059 46.0076 16.4758C45.6665 15.0456 45.0227 13.7052 44.1197 12.5449C43.2167 11.3846 42.0754 10.4313 40.7728 9.74943C39.4702 9.06754 38.0366 8.67284 36.5685 8.59194C35.1004 8.51104 33.6321 8.74582 32.2624 9.28045C30.8928 9.81507 29.6537 10.6371 28.6287 11.6912C27.7298 8.50205 25.7068 5.74616 22.9335 3.93297C20.1603 2.11979 16.8244 1.37192 13.5425 1.82763C10.2606 2.28333 7.25461 3.91179 5.08029 6.41196C2.90597 8.91213 1.71032 12.1149 1.71437 15.4283C1.7168 18.5453 2.78096 21.5685 4.73151 23.9998" stroke="#A6B1BB" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" />
-                                                    </g>
-                                                    <defs>
-                                                        <clipPath id="clip0_250_2609">
-                                                            <rect width={48} height={48} fill="white" />
-                                                        </clipPath>
-                                                    </defs>
-                                                </svg>
-                                                <div className='text-[#A6B1BB]'>Upload</div>
-                                            </div>
-                                            {resources.map((url, index) => {
-                                                if (url === selectedImg) {
-                                                    return <div onClick={handleImageClick}
-                                                        key={index} className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-2`}>
-                                                        <img className='w-full h-full object-cover' src={url} />
-                                                    </div>
-                                                } else {
-                                                    return <div onClick={handleImageClick}
-                                                        key={index} className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-2`}>
-                                                        <img className='w-full h-full object-cover' src={url} />
-                                                    </div>
-                                                }
-                                            })}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                        {showImgSearch &&
-                            <div className='w-full h-full flex flex-col'>
-                                <form onSubmit={handleImageSearchSubmit} className='w-full'>
-                                    <div className="w-full form-input flex flex-row flex-nowrap mb-2 focus-within:border focus-within:border-gray-500 p-0 cursor-text rounded-xl"
-                                        onClick={e => handleClickSearchInput(e, searchRef)}>
-                                        
-                                        
-                                        <input
-                                            id="search_keyword"
-                                            type="text"
-                                            className=" text-gray-800 grow border-0 p-0 h-6 focus:outline-none focus:ring-0 mx-3 my-3 w-full overflow-hidden"
-                                            placeholder="Search from internet"
-                                            required
-                                            ref={searchRef}
-                                            onChange={e => { setKeyword(e.target.value); }}
-                                            value={keyword}
-                                        />
-                                        <div className='h-[22px] ml-[14px] my-auto mr-2' hidden={!searching}><LoadingIcon /></div>
-                                        {!searching && <button
-                                            type="submit"
-                                            className="my-1 ml-3 opacity-40 hover:opacity-100 mr-2"
-                                        >
-                                            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z"
-                                                    stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                            </svg>
-                                        </button>}
-                                    </div>
-                                </form>
-                                <div className='w-full h-full overflow-y-auto p-1'>
-                                    <div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-2'>
-                                        {searchResult.map((url, index) => {
-                                            if (url === selectedImg) {
-                                                return <div onClick={handleImageClick}
-                                                    key={index} className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-[3px]`}>
-                                                    <img className='w-full h-full object-cover' src={url} />
-                                                </div>
-                                            } else {
-                                                return <div onClick={handleImageClick}
-                                                    key={index} className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-[3px]`}>
-                                                    <img className='w-full h-full object-cover' src={url} />
-                                                </div>
-                                            }
-                                        })}
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                        d</div>
+                        {selectedQueryMode == ImgQueryMode.RESOURCE && resourceSelectionDiv }
+                        {selectedQueryMode == ImgQueryMode.SEARCH && imgSearchDiv}
+                        {selectedQueryMode == ImgQueryMode.GENERATION && imgGenerationDiv}
+                    </div>
 
                 </div>
                 <div className="w-full mx-auto">
