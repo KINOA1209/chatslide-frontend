@@ -399,7 +399,7 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
                         containerId: "fileManagement",
                     });
                 } else {
-                    toast.success("All files uploaded successfully", {
+                    toast.success("All files synced successfully", {
                         position: "top-center",
                         autoClose: 2000,
                         hideProgressBar: false,
