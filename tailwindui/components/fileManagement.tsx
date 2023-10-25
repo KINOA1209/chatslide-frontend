@@ -473,21 +473,26 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
                                     id: IntegrationName.GOOGLE_DRIVE,
                                     chunkSize: 1500,
                                     overlapSize: 20,
+                                    skipEmbeddingGeneration: true,
                                 },
                                 {
                                     id: IntegrationName.ONEDRIVE,
                                     chunkSize: 1500,
                                     overlapSize: 20,
+                                    skipEmbeddingGeneration: true,
+                                    
                                 },
                                 {
                                     id: IntegrationName.DROPBOX,
                                     chunkSize: 1500,
                                     overlapSize: 20,
+                                    skipEmbeddingGeneration: true,
                                 },
                                 {
                                     id: IntegrationName.NOTION,
                                     chunkSize: 1500,
                                     overlapSize: 20,
+                                    skipEmbeddingGeneration: true,
                                 }
                                 
                             ]}
