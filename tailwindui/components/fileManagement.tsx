@@ -381,19 +381,36 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
             // Assuming you have a function to send data to the endpoint
             try {
-                await sendUpdateToEndpoint(data, token);
+                const response = await sendUpdateToEndpoint(data, token);
                 await fetchFiles(token);
-                toast.success("File uploaded successfully", {
-                    position: "top-center",
-                    autoClose: 2000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    containerId: "fileManagement",
-                });
+
+                // Check if there are failed files in the response
+                if (response && response.failed_files) {
+                    const failedFiles = response.failed_files.join(', '); // Assuming it's an array of file names
+                    toast.error(`Some files failed to be synced: ${failedFiles}`, {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        containerId: "fileManagement",
+                    });
+                } else {
+                    toast.success("All files uploaded successfully", {
+                        position: "top-center",
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        containerId: "fileManagement",
+                    });
+                }
             } catch (error: any) {
                 console.error('Error sending data to sync_carbon_file: ', error);
                 // Handle the error as needed
@@ -436,7 +453,11 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
             }
 
             const responseData = await response.json();
+
             console.log('Response from sync_carbon_file: ', responseData);
+
+            return responseData;
+
         } catch (error) {
             // Rethrow the error for the calling function to catch
             throw error;
@@ -502,7 +523,7 @@ const MyFiles: React.FC<filesInterface> = ({ selectable = false, callback }) => 
                             primaryTextColor="#555555"
                             secondaryBackgroundColor="#f2f2f2"
                             secondaryTextColor="#000000"
-                            allowMultipleFiles={false}
+                            allowMultipleFiles={true}
                             open={false}
                             chunkSize={1500}
                             overlapSize={20}
