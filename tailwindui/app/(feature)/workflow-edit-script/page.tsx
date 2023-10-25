@@ -187,11 +187,11 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
         <div>
             {transcriptList.map((data, index) => (
                 <div tabIndex={index} className='w-full flex flex-col md:flex-row rounded border-solid border-2 border-blue-200 mt-4 focus-within:border-blue-600'>
-                    <div className={`grid ${hasSlides ? 'sm:grid-rows-2' : 'sm:grid-rows-1'} md:grid-rows-1 ${hasSlides ? 'md:grid-cols-2' : 'md:grid-cols-1'} grow`}>
-                        {hasSlides && authToken && <ImageList urls={[imageUrls[index]]} token={authToken} height={100} />}
+                    <div className={`grid grow`}>
+                        {/* {hasSlides && authToken && <ImageList urls={[imageUrls[index]]} token={authToken} height={100} />} */}
                         <textarea
                             key={index}
-                            className={`${!hasSlides && 'h-80'} block form-input w-full text-gray-800 mb-2 resize-none border-none p-4`}
+                            className={`h-80 block form-input w-full text-gray-800 mb-2 resize-none border-none p-4`}
                             value={data}
                             onChange={(event) => handleChange(index, event)}
                         // readOnly
