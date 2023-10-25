@@ -3,7 +3,8 @@
 import React, { useState, useRef, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Timer from '@/components/ui/Timer';
-import Audio from '@/components/Audio';
+import Audio from '@/components/audio/Audio';
+import { AudioContextProvider } from '@/components/audio/AudioContext';
 import GoBackButton from '@/components/button/GoBackButton';
 import ImageList from '@/components/ImageList';
 import ProjectProgress from "@/components/steps";
@@ -107,6 +108,7 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageU
 
     return (
         <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
+            <AudioContextProvider>
             {transcriptList.map((data, index) => (
 
                 <div tabIndex={index} className='w-full flex flex-col md:flex-row rounded border-solid border-2 border-blue-200 mt-4 focus-within:border-blue-600'>
@@ -122,11 +124,12 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageU
                     </div>
                     <div className='md:w-28 flex flex-row items-center px-1.5 py-2 md:flex-col shrink-0'>
                         {index < audioFiles.length && authToken &&
-                            <Audio filename={audioFiles[index]} foldername={foldername} token={authToken} />
+                            <Audio index={String(index)} filename={audioFiles[index]} foldername={foldername} token={authToken} />
                         }
                     </div>
                 </div>
             ))}
+            </AudioContextProvider>
 
             {/* Form */}
             <div className="max-w-sm mx-auto">
