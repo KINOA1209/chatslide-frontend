@@ -58,6 +58,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
     const handleImageSearchSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setSelectedQueryMode(ImgQueryMode.SEARCH);
+        setSearchResult([]);
         setSearching(true);
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
 
@@ -92,6 +93,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
     const handleImageGenerationSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setSelectedQueryMode(ImgQueryMode.GENERATION);
+        setSearchResult([]);
         setSearching(true);
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
 
@@ -462,7 +464,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
                     <div className='w-full flex flex-col'>
                         <div className='w-full flex flex-row justify-around gap-3'>
                             <button className='cursor-pointer whitespace-nowrap py-2 flex flex-row'
-                                onClick={e => { setSelectedQueryMode(ImgQueryMode.RESOURCE); setKeyword(''); }}
+                                onClick={e => { setSelectedQueryMode(ImgQueryMode.RESOURCE); setSearchResult([]); setKeyword(''); }}
                                 onMouseOver={e => { handleMouseOver(e, ImgQueryMode.RESOURCE) }}
                                 onMouseOut={e => { handleMouseOut(e, ImgQueryMode.RESOURCE) }}
                             >
@@ -480,7 +482,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
                                 My Resources
                             </button>
                             <button className='cursor-pointer whitespace-nowrap py-2 flex flex-row'
-                                onClick={e => { console.log('search'); setSelectedQueryMode(ImgQueryMode.SEARCH); setKeyword(''); }}
+                                onClick={e => { setSelectedQueryMode(ImgQueryMode.SEARCH); setSearchResult([]); setKeyword(''); }}
                                 onMouseOver={e => { handleMouseOver(e, ImgQueryMode.SEARCH) }}
                                 onMouseOut={e => { handleMouseOut(e, ImgQueryMode.SEARCH) }}
                             >
@@ -502,7 +504,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
                                 Search
                             </button>
                             <button className='cursor-pointer whitespace-nowrap py-2 flex flex-row'
-                                onClick={e => { setSelectedQueryMode(ImgQueryMode.GENERATION); setKeyword(''); }}
+                                onClick={e => { setSelectedQueryMode(ImgQueryMode.GENERATION); setSearchResult([]); setKeyword(''); }}
                                 onMouseOver={e => { handleMouseOver(e, ImgQueryMode.GENERATION) }}
                                 onMouseOut={e => { handleMouseOut(e, ImgQueryMode.GENERATION) }}
                             >
