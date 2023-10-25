@@ -211,6 +211,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     }
   })
 
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null) // Specify the type as HTMLDivElement
+
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollLeft = -20 // Set the scroll position to the left
+    }
+  }, [])
+
   function loadHtmlFile(foldername: string, filename: string) {
     fetch(`/api/html?foldername=${foldername}&filename=${filename}`)
       .then((response) => {
@@ -668,29 +676,22 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       />
 
       {/* preview little image */}
-      <div className='mx-auto max-w-3xl py-6 justify-center items-center flex flex-row gap-4 overflow-x-auto'>
-        <div className='h-24 py-6 flex gap-2'>
-          <div className='w-14 h-11 opacity-20 bg-zinc-100 rounded-md' />
-          <div className='w-14 h-11 opacity-20 bg-zinc-100 rounded-md' />
-          <div className='w-14 h-11 bg-zinc-100 rounded-md' />
-          <div className='w-14 h-11 opacity-20 bg-zinc-100 rounded-md' />
-          <div className='w-14 h-11 opacity-20 bg-zinc-100 rounded-md' />
-          <div className='w-14 h-11 opacity-20 bg-zinc-100 rounded-md' />
-          <div className='w-14 h-11 opacity-20 bg-zinc-100 rounded-md' />
-          <div className='w-14 h-11 opacity-20 bg-zinc-100 rounded-md' />
-          <div className='w-14 h-11 opacity-20 bg-zinc-100 rounded-md' />
-          <div className='w-14 h-11 opacity-20 bg-zinc-100 rounded-md' />
-          <div className='w-14 h-11 opacity-20 bg-zinc-100 rounded-md' />
-          <div className='w-14 h-11 opacity-20 bg-zinc-100 rounded-md' />
-          <div className='w-14 h-11 opacity-20 bg-zinc-100 rounded-md' />
-          <div className='w-14 h-11 opacity-20 bg-zinc-100 rounded-md' />
-          <div className='w-14 h-11 opacity-20 bg-zinc-100 rounded-md' />
-          <div className='w-14 h-11 opacity-20 bg-zinc-100 rounded-md' />
-          <div className='w-14 h-11 opacity-20 bg-zinc-100 rounded-md' />
-          <div className='w-14 h-11 opacity-20 bg-zinc-100 rounded-md' />
-          <div className='w-14 h-11 opacity-20 bg-zinc-100 rounded-md' />
-          <div className='w-14 h-11 opacity-20 bg-zinc-100 rounded-md' />
-          <div className='w-14 h-11 opacity-20 bg-zinc-100 rounded-md' />
+
+      <div className='max-w-4xl mx-auto py-6 justify-center items-center'>
+        <div className='w-full py-6 flex flex-nowrap overflow-x-auto gap-4'>
+          {Array(20)
+            .fill(0)
+            .map((_, index) => (
+              <div
+                key={index}
+                className={`w-[3.75rem] h-[2.875rem] ${
+                  index % 2 === 0 ? 'bg-zinc-100' : 'opacity-20 bg-zinc-100'
+                }
+                    rounded-md flex-shrink-0`} // Added margin and flex-shrink-0
+              >
+                {index}
+              </div>
+            ))}
         </div>
       </div>
     </div>
