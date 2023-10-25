@@ -582,7 +582,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       )} */}
 
       {/* buttons and contents */}
-      <div className='relative w-fit h-fit flex flex-row items-center justify-center gap-4'>
+      <div className='relative max-w-4xl flex flex-row items-center justify-center gap-4'>
         <ToastContainer />
         <SlideLeftNavigator
           currentSlideIndex={currentSlideIndex}
