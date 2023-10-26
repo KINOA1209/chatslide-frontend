@@ -172,16 +172,15 @@ export default function WorkflowStep2() {
                 </div>
             </div>
             {/* grid, small screen one col, large screen two col */}
-            <div className='grid gap-10 grid-cols-1 lg:grid-cols-3 mt-[12rem] mb-[3rem] auto-rows-min'>
-                <div className='lg:col-span-1 w-56  ml-[10rem] max-h-[20rem] overflow-y-auto bg-neutral-50 rounded-md border border-gray-200'>
+            <div className='relative mt-[12rem] mb-[3rem]'>
+                <div className='fixed top-[15rem] w-[20rem] ml-[10rem] overflow-y-auto bg-neutral-50 rounded-md border border-gray-200'>
                     <div className='w-48 h-5 text-neutral-900 text-xs font-bold font-creato-medium leading-tight tracking-wide px-4 py-3'>
-                        OVER VIEW
+                        OVERVIEW
                     </div>
-
                     <ol className='list-none px-8 py-4'>
                         {outlineContent?.map((section, index) => (
                             <li
-                                className='w-48 pb-2 opacity-60 text-neutral-900 text-xs font-medium font-creato-medium leading-normal tracking-tight cursor-pointer hover:text-black  hover:rounded-md hover:bg-gray-200'
+                                className='w-[19rem] pb-2 opacity-60 text-neutral-900 text-s font-medium font-creato-medium leading-normal tracking-tight cursor-pointer hover:text-black  hover:rounded-md hover:bg-gray-200'
                                 key={index}
                                 onClick={() => scrollToSection(index)}
                             >
@@ -192,16 +191,16 @@ export default function WorkflowStep2() {
                         ))}
                     </ol>
                 </div>
-                <div className='lg:col-span-2 flex flex-col mr-[10rem]'>
-                    {/* <span>Section 1</span>
-          <span>Introduction</span>
-          <ol className='list-decimal px-8'>
-            <li>asdsad</li>
-            <li>asdsad</li>
-            <li>asdsad</li>
-          </ol> */}
-                    {outlineContent && <NewOutlineVisualizer outline={outlineContent} />}
-                </div>
+                <div className='pl-[10rem]'>  {/* Added padding-left here */}
+                        <div className='grid gap-10 grid-cols-1 lg:grid-cols-3 auto-rows-min'>
+                            <div className='lg:col-span-1'>
+                                {/* Empty div to maintain the grid structure */}
+                            </div>
+                            <div className='lg:col-span-2 flex flex-col mr-[10rem]'>
+                                {outlineContent && <NewOutlineVisualizer outline={outlineContent} />}
+                            </div>
+                        </div>
+                    </div>
             </div>
             {/* <ProjectProgress currentInd={1} contentRef={contentRef} /> */}
             {/* <div className='pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20'>
