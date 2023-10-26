@@ -5,7 +5,7 @@ import { MathJax, MathJaxContext } from 'better-react-mathjax'
 
 function wrapWithLiTags(content: string): string {
     if (!content.includes('<li>') || !content.includes('</li>')) {
-        return `<li style="font-size: 18pt;">${content}</li>`
+        return `<li style="font-size: 18pt; margin-left: 20px;">${content}</li>`
     }
     return content
 }
