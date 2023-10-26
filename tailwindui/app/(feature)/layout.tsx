@@ -21,7 +21,7 @@ export default function WorkflowLayout({
         }}
       ></div>
       <Header loginRequired={true} isLanding={false} refList={[]} />
-      <section className='pb-8 grow flex flex-col'>
+      <section className='grow flex flex-col'>
         {/* Content */}
         {children}
       </section>
