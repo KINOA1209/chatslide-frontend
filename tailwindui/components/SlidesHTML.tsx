@@ -124,15 +124,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
 
     // Watch for changes in finalSlides
     useEffect(() => {
-        // if (isFirstRender.current) {
-        //     isFirstRender.current = false;
-        //     console.log('First render, skip saving')
-        //     return;
-        // }
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            console.log('First render, skip saving')
+            return;
+        }
 
-        console.log('finalSlides changed');
+        console.log('Slides changed, auto saving');
         setUnsavedChanges(true);
-        // saveSlides();
+        saveSlides();
 
     }, [finalSlides]);
 
@@ -396,7 +396,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
     }
 
     function goToSlide(index: number) {
-        console.log('Goinng to slide', index);
         isFirstRender.current = true;
         setCurrentSlideIndex(index);
     }
