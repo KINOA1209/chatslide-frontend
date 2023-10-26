@@ -3,7 +3,8 @@
 import React, { useState, useRef, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Timer from '@/components/ui/Timer';
-import Audio from '@/components/Audio';
+import Audio from '@/components/audio/Audio';
+import { AudioContextProvider } from '@/components/audio/AudioContext';
 import GoBackButton from '@/components/button/GoBackButton';
 import ImageList from '@/components/ImageList';
 import ProjectProgress from "@/components/steps";
@@ -15,6 +16,7 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageU
     const [transcriptList, setTranscriptList] = useState<string[]>(transcripts);
     const router = useRouter();
     const [hasSlides, setHasSlides] = useState<boolean>(false);
+    const [authToken, setAuthToken] = useState<string>();
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -23,6 +25,14 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageU
                 setHasSlides(true);
             }
         }
+    }, []);
+
+    useEffect(() => {
+        const fetchToken = async () => {
+            const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+            setAuthToken(idToken);
+        }
+        fetchToken();
     }, []);
 
     const handleChange = (index: number, event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -98,11 +108,12 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageU
 
     return (
         <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
+            <AudioContextProvider>
             {transcriptList.map((data, index) => (
 
                 <div tabIndex={index} className='w-full flex flex-col md:flex-row rounded border-solid border-2 border-blue-200 mt-4 focus-within:border-blue-600'>
                     <div className={`grid ${hasSlides ? 'sm:grid-rows-2' : 'sm:grid-rows-1'} md:grid-rows-1 ${hasSlides ? 'md:grid-cols-2' : 'md:grid-cols-1'} grow`}>
-                        {hasSlides && <ImageList urls={[imageUrls[index]]} height={100} />}
+                        {hasSlides && authToken && <ImageList urls={[imageUrls[index]]} token={authToken} height={100} />}
                         <textarea
                             key={index}
                             className={`${!hasSlides && 'h-80'} block form-input w-full text-gray-800 mb-2 resize-none border-none p-4`}
@@ -112,12 +123,13 @@ const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageU
                         />
                     </div>
                     <div className='md:w-28 flex flex-row items-center px-1.5 py-2 md:flex-col shrink-0'>
-                        {index < audioFiles.length &&
-                            <Audio filename={audioFiles[index]} foldername={foldername} />
+                        {index < audioFiles.length && authToken &&
+                            <Audio index={String(index)} filename={audioFiles[index]} foldername={foldername} token={authToken} />
                         }
                     </div>
                 </div>
             ))}
+            </AudioContextProvider>
 
             {/* Form */}
             <div className="max-w-sm mx-auto">

@@ -99,8 +99,8 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
     // Render a loading state or a blank placeholder
     return (
       <header
-        className={`fixed w-full z-30 bg-white md:bg-opacity-90 transition duration-300 ease-in-out ${
-          !top ? 'bg-white backdrop-blur-sm shadow-lg' : ''
+        className={`fixed w-full z-30 bg-gray-800 md:bg-opacity-90 transition duration-300 ease-in-out ${
+          !top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
         }`}
       >
         <div className='max-w-4/5 mx-auto px-5 sm:px-6'>
@@ -109,7 +109,7 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
             <div className='flex flex-row justify-center items-center gap-[0.37rem] md:items-end grow md:grow-0'>
               <Logo />
               <div className='grow md:grow-0 flex justify-center md:justify-start'>
-                <div className='w-fit h-[1.5rem] text-xl md:text-[1.3125rem]text-transparent bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500 md:relative md:bottom-[3px] font-creato-medium'>
+                <div className='w-fit h-[1.5rem] text-xl md:text-[1.3125rem] text-gray-200 bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500 md:relative md:bottom-[3px] font-creato-medium'>
                   <a href='/'>DrLambda</a>
                 </div>
               </div>
