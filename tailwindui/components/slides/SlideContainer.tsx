@@ -1,15 +1,16 @@
 import React, { useRef } from 'react';
+import {Slide} from '@/components/slides/NewSlidesHTML';
 
 type SlideContainerProps = {
     present: boolean;
-    slides: any[]; // You can replace 'any' with the actual type of the slides if known
+    slides: Slide[]; // You can replace 'any' with the actual type of the slides if known
     currentSlideIndex: number;
     viewingMode: boolean;
     scale: number;
-    templateDispatch: (slide: any, index: number, condition: boolean, exportToPdf: boolean) => JSX.Element; // Adjust the types accordingly
+    templateDispatch: (slide: Slide, index: number, canEidt: boolean, exportToPdfMode: boolean) => JSX.Element; // Adjust the types accordingly
     containerRef: React.RefObject<HTMLDivElement>;
     slideRef: React.RefObject<HTMLDivElement>;
-    exportToPdf: boolean;
+    exportToPdfMode: boolean;
 };
 
 const SlideContainer: React.FC<SlideContainerProps> = ({
@@ -21,7 +22,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
     templateDispatch,
     containerRef,
     slideRef,
-    exportToPdf,
+    exportToPdfMode = false,
 }) => {
 
     return (
@@ -53,7 +54,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
                     }}
                 >
                     {slides[currentSlideIndex] &&
-                        templateDispatch(slides[currentSlideIndex], currentSlideIndex, !viewingMode && !present, exportToPdf)}
+                        templateDispatch(slides[currentSlideIndex], currentSlideIndex, !viewingMode && !present, exportToPdfMode)}
                 </div>
             )}
         </div>

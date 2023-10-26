@@ -5,9 +5,9 @@ import sanitizeHtml from 'sanitize-html'
 import { MathJax, MathJaxContext } from 'better-react-mathjax'
 import './slidesHTML.css'
 import dynamic from 'next/dynamic'
-import templates, { templateSamples } from '@/components/slideTemplates'
-import ClickableLink from './ui/ClickableLink'
-import LayoutChanger from './slides/LayoutChanger'
+import templates, { templateSamples } from '@/components/slides/slideTemplates'
+import ClickableLink from '../ui/ClickableLink'
+import LayoutChanger from './LayoutChanger'
 import {
     PresentButton,
     SlideLeftNavigator,
@@ -15,11 +15,11 @@ import {
     SlidePagesIndicator,
     AddSlideButton,
     DeleteSlideButton,
-} from './slides/SlideButtons'
+} from './SlideButtons'
 
-import SlideContainer from './slides/SlideContainer'
-import { h1Style, h2Style, h3Style, h4Style, listStyle } from './slides/Styles'
-import ButtonWithExplanation from './button/ButtonWithExplanation'
+import SlideContainer from './SlideContainer'
+import { h1Style, h2Style, h3Style, h4Style, listStyle } from './Styles'
+import ButtonWithExplanation from '../button/ButtonWithExplanation'
 
 
 export interface SlideElement {
