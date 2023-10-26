@@ -2,11 +2,7 @@ import React from 'react'
 import { Transition } from '@headlessui/react' // Assuming you're using Headless UI for Transitions
 import { SlideKeys } from '../SlidesHTML'
 import {
-  PresentationModeIcon,
   ChangeLayoutIcon,
-  AddSlideIcon,
-  DeleteSlideIcon,
-  ScriptsIcon,
 } from '@/app/(feature)/icons'
 type LayoutProps = {
   openModal: () => void
