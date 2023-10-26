@@ -343,6 +343,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
         if (currentSlideIndex != 0) {
             newSlides.splice(currentSlideIndex, 1);
             newFinalSlides.splice(currentSlideIndex, 1);
+
+            if (currentSlideIndex >= newSlides.length) {
+                setCurrentSlideIndex(newSlides.length - 1);
+            }
         }
         setSlides(newSlides);
         setFinalSlides(newFinalSlides);
