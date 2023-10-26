@@ -6,8 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 // ALLOWED_DOC_EXTENSIONS = {"txt", "pdf"}
 // ALLOWED_MEDIA_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
 
-const supportedFormats = ["pdf", "txt", "docx"]; // For prompt display
-const supportedExtensions = ["pdf", "txt", "docx"]; // For checking logic
+const supportedFormats = ["pdf", "txt", "docx", "png", "jpg", 'jpeg']; // For prompt display
+const supportedExtensions = ["pdf", "txt", "docx", "png", "jpg", 'jpeg']; // For checking logic
 
 const sizeLimit = 16 * 1024 * 1024; // 16mb
 
