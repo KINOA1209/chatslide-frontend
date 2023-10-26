@@ -20,8 +20,6 @@ import {
 import SlideContainer from './slides/SlideContainer'
 import { h1Style, h2Style, h3Style, h4Style, listStyle } from './slides/Styles'
 import ButtonWithExplanation from './button/ButtonWithExplanation'
-import generatePDF, { Resolution, Margin, Options } from 'react-to-pdf';
-import ExportToPdfButton from './slides/exportToPdfButton'
 
 
 export interface SlideElement {
@@ -77,7 +75,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         typeof sessionStorage !== 'undefined'
             ? sessionStorage.getItem('foldername')
             : ''
-    const topic = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('topic') : '';
+
     const [showLayout, setShowLayout] = useState(false)
     const [present, setPresent] = useState(false)
     // const [share, setShare] = useState(false)
@@ -94,28 +92,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     const scale = Math.min(dimensions.width / 960, dimensions.height / 540)
 
 
-    const exportOptions: Options = {
-        filename: (topic ? topic : 'drlambda') + '.pdf',
-        method: "save",
-        resolution: Resolution.MEDIUM,
-        page: {
-            margin: Margin.NONE,
-            format: [254, 143], // 960x540 px in mm
-            orientation: "landscape"
-        },
-        canvas: {
-            mimeType: "image/jpeg",
-            qualityRatio: 1
-        },
-        overrides: {
-            pdf: {
-                compress: true
-            },
-            canvas: {
-                useCORS: true,
-            }
-        }
-    };
+
 
     // useEffect(() => {
     //   if (
@@ -399,19 +376,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         setFinalSlides(newFinalSlides);
     }
 
-    function wrapWithLiTags(content: string): string {
-        if (!content.includes('<li>') || !content.includes('</li>')) {
-            return `<li style="font-size: 18pt;">${content}</li>`
-        }
-        return content
-    }
+
 
     function toggleEditMode() {
         setIsEditMode(!isEditMode)
-    }
-
-    function exportToPdf() {
-        generatePDF(allSlidesRef, exportOptions);
     }
 
     const updateImgUrlArray = (slideIndex: number) => {
@@ -419,6 +387,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
             handleSlideEdit(urls, slideIndex, 'images')
         }
         return updateImgUrl
+    }
+
+    function wrapWithLiTags(content: string): string {
+        if (!content.includes('<li>') || !content.includes('</li>')) {
+            return `<li style="font-size: 18pt;">${content}</li>`
+        }
+        return content
     }
 
     useEffect(() => {
@@ -749,29 +724,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                                 {index + 1}
                             </div>
                         ))}
-                </div>
-            </div>
-
-            {/* hidden div for export to pdf */}
-            <div style={{ overflow: 'hidden', height: 0 }} >
-                <div
-                    ref={allSlidesRef}>
-                    {/* Render all of your slides here. This can be a map of your slides array */}
-                    {slides.map((slide, index) => (
-                        <div key={index} style={{ pageBreakAfter: 'always' }}>
-                            <SlideContainer
-                                present={false}
-                                slides={slides}
-                                currentSlideIndex={index}
-                                viewingMode={false}
-                                scale={1}
-                                templateDispatch={templateDispatch}
-                                containerRef={containerRef}
-                                slideRef={slideRef}
-                                exportToPdf={true}
-                            />
-                        </div>
-                    ))}
                 </div>
             </div>
         </div>
