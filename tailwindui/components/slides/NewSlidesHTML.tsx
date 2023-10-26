@@ -623,7 +623,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                     slides={slides}
                     currentSlideIndex={currentSlideIndex}
                     isViewing={isViewing}
-                    scale={scale}
+                    scale={present ? scale : 1}
                     templateDispatch={templateDispatch}
                     slideRef={slideRef}
                     containerRef={containerRef}
@@ -711,7 +711,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
             <div className='max-w-4xl mx-auto py-6 justify-center items-center'>
                 <div className='w-full py-6 flex flex-nowrap overflow-x-auto gap-4'>
-                    {Array(20)
+                    {Array(slides.length)
                         .fill(0)
                         .map((_, index) => (
                             <div
@@ -721,6 +721,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                     rounded-md flex-shrink-0 cursor-pointer`} // Added margin and flex-shrink-0
                             >
                                 {index + 1}
+                                <SlideContainer slides={slides} currentSlideIndex={index} scale={0.1}/>
                             </div>
                         ))}
                 </div>

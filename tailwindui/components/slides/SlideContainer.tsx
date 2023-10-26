@@ -44,8 +44,8 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
                     style={{
                         width: '960px',
                         height: '540px',
-                        transformOrigin: isPresenting ? 'top left' : '',
-                        transform: isPresenting ? `scale(${scale})` : 'scale(1)',
+                        transformOrigin: 'top left',
+                        transform: `scale(${scale})`,
                         backgroundSize: 'cover',
                         display: 'flex',
                         flexDirection: 'column',
