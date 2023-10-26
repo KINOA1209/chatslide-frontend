@@ -633,7 +633,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({ finalSlides, setFinalSlides, vi
                     <ShareToggleButton
                         setShare={setShare}
                         share={share} />}
-                <SlideNavigator currentSlideIndex={currentSlideIndex} slides={slides} goToSlide={goToSlide} handleAddPage={handleAddPage} handleDeletePage={handleDeletePage} canEdit={!viewingMode} />
+                <SlideNavigator currentSlideIndex={currentSlideIndex} slides={slides} goToSlide={goToSlide} />
                 {!viewingMode &&
                     <LayoutChanger
                         openModal={openModal}
