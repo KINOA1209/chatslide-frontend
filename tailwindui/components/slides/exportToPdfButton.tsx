@@ -1,10 +1,10 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
-import SavePDFModal from './savePDFModal'
+import ExportToPDFModal from './exportToPdfModal'
 import AuthService from '../utils/AuthService'
 import { LoadingIcon } from '@/components/ui/progress'
-import { SlideElement, Slide } from '../SlidesHTML'
+import { Slide } from './NewSlidesHTML'
 import PaywallModal from '../forms/paywallModal'
 import mixpanel from 'mixpanel-browser'
 import { DownloadIcon } from '@/app/(feature)/icons'
@@ -115,7 +115,7 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
 
                 {!user ? (
                     // insert here
-                    <SavePDFModal />
+                    <ExportToPDFModal />
                 ) : (
                     <div
                         className='h-8 px-3 py-1 bg-zinc-100 rounded-lg justify-center items-center gap-2.5 inline-flex cursor-pointer'
@@ -150,7 +150,7 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
                                 templateDispatch={templateDispatch}
                                 containerRef={containerRef}
                                 slideRef={slideRef}
-                                exportToPdf={true}
+                                exportToPdfMode={true}
                             />
                         </div>
                     ))}

@@ -17,7 +17,7 @@ import {
 import { ShareSlidesIcon } from '@/app/(feature)/workflow-review-slides/icons'
 import { ShareToggleButton } from '@/components/slides/SlideButtons'
 
-const SlidesHTML = dynamic(() => import('@/components/NewSlidesHTML'))
+const SlidesHTML = dynamic(() => import('@/components/slides/NewSlidesHTML'))
 
 // const SlidesHTML = dynamic(
 //     () => import('@/components/SlidesHTML'),
