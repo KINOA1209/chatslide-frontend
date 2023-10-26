@@ -9,7 +9,7 @@ import GoBackButton from '@/components/button/GoBackButton';
 import ImageList from '@/components/ImageList';
 import ProjectProgress from "@/components/steps";
 import AuthService from '@/components/utils/AuthService';
-import FeedbackForm from '@/components/forms/feedback';
+import FeedbackForm from '@/components/slides/feedback';
 import mixpanel from 'mixpanel-browser';
 
 const TranscriptAudioVisualizer = ({ transcripts, audioFiles, foldername, imageUrls }: { transcripts: [], audioFiles: [], foldername: string, imageUrls: [] }) => {

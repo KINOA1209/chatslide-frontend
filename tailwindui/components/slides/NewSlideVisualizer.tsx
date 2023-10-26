@@ -4,9 +4,8 @@ import Timer from '@/components/ui/Timer'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import ClickableLink from '@/components/ui/ClickableLink'
-//import SlidesHTML from '@/components/SlidesHTML';
-//import SaveToPdfHtml from '@/components/forms/saveToPdfHtml';
 import { SlideElement, Slide } from '@/components/SlidesHTML'
+import ExportToPdfButton from './exportToPdfButton'
 import dynamic from 'next/dynamic'
 import {
   PresentationModeIcon,
@@ -19,9 +18,7 @@ import { ShareSlidesIcon } from '@/app/(feature)/workflow-review-slides/icons'
 import { ShareToggleButton } from '@/components/slides/SlideButtons'
 
 const SlidesHTML = dynamic(() => import('@/components/NewSlidesHTML'))
-const SaveToPdfHtml = dynamic(
-  () => import('@/components/forms/newSaveToPdfHtml')
-)
+
 
 // const SlidesHTML = dynamic(
 //     () => import('@/components/SlidesHTML'),
@@ -78,7 +75,7 @@ const SlideVisualizer = () => {
             </div>
           </div>
           {/* export to pdf */}
-          <SaveToPdfHtml finalSlides={finalSlides} />
+          <ExportToPdfButton finalSlides={finalSlides} />
           {/* share slides */}
           <ShareToggleButton setShare={setShare} share={share} />
         </div>

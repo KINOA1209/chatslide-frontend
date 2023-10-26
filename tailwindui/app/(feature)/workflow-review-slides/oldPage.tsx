@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import 'react-toastify/dist/ReactToastify.css'
 import ProjectProgress from '@/components/steps'
-import FeedbackForm from '@/components/forms/feedback'
+import FeedbackForm from '@/components/slides/feedback'
 import SlideVisualizer from '@/components/slides/SlideVisualizer'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
