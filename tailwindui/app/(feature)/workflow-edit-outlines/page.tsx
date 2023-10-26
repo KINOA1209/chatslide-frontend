@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect, Fragment } from 'react'
 import ProjectProgress from '@/components/newWorkflowSteps'
-import FeedbackForm from '@/components/forms/feedback'
+import FeedbackForm from '@/components/slides/feedback'
 import 'react-toastify/dist/ReactToastify.css'
 import NewOutlineVisualizer from '@/components/outline/NewOutlineVisulizer'
 import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit'

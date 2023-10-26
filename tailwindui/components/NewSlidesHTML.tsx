@@ -10,9 +10,6 @@ import ClickableLink from './ui/ClickableLink'
 import LayoutChanger from './slides/LayoutChanger'
 import {
     PresentButton,
-    SaveButton,
-    ShareToggleButton,
-    SlideNavigator,
     SlideLeftNavigator,
     SlideRightNavigator,
     SlidePagesIndicator,
@@ -23,6 +20,9 @@ import {
 import SlideContainer from './slides/SlideContainer'
 import { h1Style, h2Style, h3Style, h4Style, listStyle } from './slides/Styles'
 import ButtonWithExplanation from './button/ButtonWithExplanation'
+import generatePDF, { Resolution, Margin, Options } from 'react-to-pdf';
+import ExportToPdfButton from './slides/ExportToPdfButton'
+
 
 export interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div'
@@ -77,11 +77,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         typeof sessionStorage !== 'undefined'
             ? sessionStorage.getItem('foldername')
             : ''
+    const topic = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('topic') : '';
     const [showLayout, setShowLayout] = useState(false)
     const [present, setPresent] = useState(false)
     // const [share, setShare] = useState(false)
     const slideRef = useRef<HTMLDivElement>(null)
     const containerRef = useRef<HTMLDivElement>(null)
+    const allSlidesRef = useRef<HTMLDivElement>(null);
     // const [host, setHost] = useState('https://drlambda.ai')
     const [saveStatus, setSaveStatus] = useState('Up to date')
     const [dimensions, setDimensions] = useState({ width: 960, height: 540 })
@@ -90,9 +92,30 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     const [isEditMode, setIsEditMode] = useState(false)
 
     const scale = Math.min(dimensions.width / 960, dimensions.height / 540)
-    const SaveToPdfHtml = dynamic(
-        () => import('@/components/forms/newSaveToPdfHtml')
-    )
+
+
+    const exportOptions: Options = {
+        filename: (topic ? topic : 'drlambda') + '.pdf',
+        method: "save",
+        resolution: Resolution.MEDIUM,
+        page: {
+            margin: Margin.NONE,
+            format: [254, 143], // 960x540 px in mm
+            orientation: "landscape"
+        },
+        canvas: {
+            mimeType: "image/jpeg",
+            qualityRatio: 1
+        },
+        overrides: {
+            pdf: {
+                compress: true
+            },
+            canvas: {
+                useCORS: true,
+            }
+        }
+    };
 
     // useEffect(() => {
     //   if (
@@ -349,6 +372,33 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         setCurrentSlideIndex(index)
     }
 
+    function handleAddPage() {
+        const newSlides = [...slides];
+        const newFinalSlides = [...finalSlides];
+        const newSlide = new Slide();
+        if (currentSlideIndex != 0) {
+            newSlides.splice(currentSlideIndex, 0, newSlide);
+            newFinalSlides.splice(currentSlideIndex, 0, newSlide);
+        }
+        setSlides(newSlides);
+        setFinalSlides(newFinalSlides);
+    }
+
+    function handleDeletePage() {
+        const newSlides = [...slides];
+        const newFinalSlides = [...finalSlides];
+        if (currentSlideIndex != 0) {
+            newSlides.splice(currentSlideIndex, 1);
+            newFinalSlides.splice(currentSlideIndex, 1);
+
+            if (currentSlideIndex >= newSlides.length) {
+                setCurrentSlideIndex(newSlides.length - 1);
+            }
+        }
+        setSlides(newSlides);
+        setFinalSlides(newFinalSlides);
+    }
+
     function wrapWithLiTags(content: string): string {
         if (!content.includes('<li>') || !content.includes('</li>')) {
             return `<li style="font-size: 18pt;">${content}</li>`
@@ -358,6 +408,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
     function toggleEditMode() {
         setIsEditMode(!isEditMode)
+    }
+
+    function exportToPdf() {
+        generatePDF(allSlidesRef, exportOptions);
     }
 
     const updateImgUrlArray = (slideIndex: number) => {
@@ -600,6 +654,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                     containerRef={containerRef}
                     exportToPdf={false}
                 />
+
                 <SlideRightNavigator
                     currentSlideIndex={currentSlideIndex}
                     slides={slides}
@@ -648,11 +703,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                     {/* save button */}
                     {/* {!viewingMode && <SaveButton saveSlides={saveSlides} />} */}
                     <ButtonWithExplanation
-                        button={<AddSlideButton />}
+                        button={<AddSlideButton addPage={handleAddPage} currentSlideIndex={currentSlideIndex} />}
                         explanation='Add Slide'
                     />
                     <ButtonWithExplanation
-                        button={<DeleteSlideButton />}
+                        button={<DeleteSlideButton deletePage={handleDeletePage} currentSlideIndex={currentSlideIndex} />}
                         explanation='Delete Current Slide'
                     />
                 </div>
@@ -694,6 +749,29 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                                 {index + 1}
                             </div>
                         ))}
+                </div>
+            </div>
+
+            {/* hidden div for export to pdf */}
+            <div style={{ overflow: 'hidden', height: 0 }} >
+                <div
+                    ref={allSlidesRef}>
+                    {/* Render all of your slides here. This can be a map of your slides array */}
+                    {slides.map((slide, index) => (
+                        <div key={index} style={{ pageBreakAfter: 'always' }}>
+                            <SlideContainer
+                                present={false}
+                                slides={slides}
+                                currentSlideIndex={index}
+                                viewingMode={false}
+                                scale={1}
+                                templateDispatch={templateDispatch}
+                                containerRef={containerRef}
+                                slideRef={slideRef}
+                                exportToPdf={true}
+                            />
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
