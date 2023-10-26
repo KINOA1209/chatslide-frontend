@@ -601,7 +601,7 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                                         onChange={(e) => handleSectionChange(e, sectionIndex)}
                                         // onFocus={e => handleFocus(e, sectionIndex)}
                                         onBlur={(e) => handleBlur(e, sectionIndex)}
-                                        autoFocus
+                                        // autoFocus
                                     />
                                 </div>
                                 {hoveredSectionIndex === sectionIndex &&
