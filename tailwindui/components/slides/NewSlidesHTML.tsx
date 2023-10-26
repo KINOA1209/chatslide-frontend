@@ -614,7 +614,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                     slides={slides}
                     goToSlide={goToSlide}
                 />
-                
+
                 <SlideContainer
                     isPresenting={present}
                     slides={slides}
@@ -696,23 +696,23 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
             {/* preview little image */}
 
-            <div className='max-w-4xl mx-auto py-6 justify-center items-center'>
-                <div className='w-full py-6 flex flex-nowrap overflow-x-auto gap-4'>
+            <div className='max-w-6xl mx-auto py-6 justify-center items-center'>
+                <div className='w-full py-6 flex flex-nowrap overflow-x-auto'>
                     {Array(slides.length)
                         .fill(0)
                         .map((_, index) => (
                             <div
                                 key={index}
-                                className={`w-[3.75rem] h-[2.875rem] ${index % 2 === 0 ? 'bg-zinc-100' : 'opacity-20 bg-zinc-100'
-                                    }
-                    rounded-md flex-shrink-0 cursor-pointer`} // Added margin and flex-shrink-0
+                                className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
+                                onClick={() => setCurrentSlideIndex(index)} // Added onClick handler
                             >
-                                {index + 1}
-                                <SlideContainer slides={slides} currentSlideIndex={index} scale={0.1} />
+                                {/* {index + 1} */}
+                                <SlideContainer slides={slides} currentSlideIndex={index} scale={0.1} isViewing={true}/>
                             </div>
                         ))}
                 </div>
             </div>
+
         </div>
     )
 }
