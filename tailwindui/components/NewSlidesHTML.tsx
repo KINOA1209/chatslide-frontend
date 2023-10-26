@@ -21,7 +21,7 @@ import SlideContainer from './slides/SlideContainer'
 import { h1Style, h2Style, h3Style, h4Style, listStyle } from './slides/Styles'
 import ButtonWithExplanation from './button/ButtonWithExplanation'
 import generatePDF, { Resolution, Margin, Options } from 'react-to-pdf';
-import ExportToPdfButton from './slides/ExportToPdfButton'
+import ExportToPdfButton from './slides/exportToPdfButton'
 
 
 export interface SlideElement {
