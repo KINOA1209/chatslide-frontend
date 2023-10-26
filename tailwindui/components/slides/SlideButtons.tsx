@@ -108,19 +108,11 @@ export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
 
     return (
         <div className='col-span-1'>
-            {/* <div className='w-fit h-fit rounded-full overflow-hidden'>
-        <button
-          className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
-          onClick={toggleShare}
-        >
-          {!share ? 'Share' : 'Stop Sharing'}
-        </button>
-      </div> */}
             <div
                 className='h-8 px-3 py-1 bg-zinc-100 rounded-lg justify-center items-center gap-2.5 inline-flex cursor-pointer'
                 onClick={toggleShare}
             >
-                <div className='text-center text-gray-700 text-sm font-medium font-creto-medium leading-normal tracking-wide'>
+                <div className='text-center text-gray-700 text-sm font-medium font-creto-medium leading-normal tracking-wide whitespace-nowrap overflow-hidden text-ellipsis'>
                     {!share ? 'Share' : 'Stop Sharing'}
                 </div>
                 <div className='w-5 h-5 p-0.5 bg-zinc-100 justify-center items-center flex'>
@@ -247,7 +239,7 @@ export const AddSlideButton: React.FC<{
     return (
         <div className='col-span-1 hidden sm:block'>
             <div className='w-fit h-fit'>
-                <div 
+                <div
                     className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300 hover:bg-Workflow-slides-button-hover-bg-color flex justify-center items-center cursor-pointer'
                     onClick={addPage}
                 >
