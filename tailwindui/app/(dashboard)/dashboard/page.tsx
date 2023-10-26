@@ -282,9 +282,9 @@ export default function Dashboard() {
   const handleStartNewProject = () => {
     sessionStorage.clear()
     //route to workflow-generate-outlines
-    //router.push('/workflow-generate-outlines')
+    router.push('/workflow-generate-outlines')
     //route to type choosing page (new workflow)
-    router.push('/workflow-type-choice')
+    // router.push('/workflow-type-choice')
   }
 
   return (

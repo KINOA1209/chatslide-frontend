@@ -20,7 +20,7 @@ export const PresentationTypeIcon = () => (
       stroke-linecap='round'
       stroke-linejoin='round'
     />
-    <g style='mix-blend-mode:multiply'>
+    <g style={{ mixBlendMode: 'multiply' }}>
       <circle cx='76' cy='64' r='40' fill='#D1DEFC' />
     </g>
   </svg>
@@ -48,7 +48,7 @@ export const SocialPostTypeIcon = () => (
       stroke-linecap='round'
       stroke-linejoin='round'
     />
-    <g style='mix-blend-mode:multiply'>
+    <g style={{ mixBlendMode: 'multiply' }}>
       <circle cx='76' cy='64' r='40' fill='#D1DEFC' />
     </g>
   </svg>
