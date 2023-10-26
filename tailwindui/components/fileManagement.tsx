@@ -340,7 +340,7 @@ const MyFiles: React.FC<filesInterface> = ({
           })
           return response.json()
         } else {
-          throw Error(`Request rejected with status ${response.status}`)
+          throw Error(`${response.text}`)
         }
       })
       .then((parsedResponse) => {
@@ -350,7 +350,7 @@ const MyFiles: React.FC<filesInterface> = ({
       })
       .catch((error) => {
         console.error(error)
-        toast.error('File upload failed', {
+        toast.error(`File upload failed ${error.message}`, {
           position: 'top-center',
           autoClose: 5000,
           hideProgressBar: false,
