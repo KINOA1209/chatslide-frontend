@@ -1,17 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
-import TranscriptForm from '@/components/forms/transcriptForm'
-import Timer from '@/components/ui/Timer'
-import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import ClickableLink from '@/components/ui/ClickableLink'
-import { SlideElement, Slide } from '@/components/SlidesHTML'
+import { Slide } from '@/components/slides/NewSlidesHTML'
 import ExportToPdfButton from './exportToPdfButton'
 import dynamic from 'next/dynamic'
 import {
-  PresentationModeIcon,
-  ChangeLayoutIcon,
-  AddSlideIcon,
-  DeleteSlideIcon,
   ScriptsIcon,
 } from '@/app/(feature)/icons'
 import { ShareSlidesIcon } from '@/app/(feature)/workflow-review-slides/icons'
