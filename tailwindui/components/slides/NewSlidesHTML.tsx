@@ -60,14 +60,14 @@ export class Slide {
 type SlidesHTMLProps = {
     finalSlides: Slide[]
     setFinalSlides: Function
-    viewingMode?: boolean // viewing another's shared project
+    isViewing?: boolean // viewing another's shared project
 }
 
 // it will render the slides fetched from `foldername` in sessionStorage
 const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     finalSlides,
     setFinalSlides,
-    viewingMode = false,
+    isViewing = false,
 }) => {
     const [slides, setSlides] = useState<Slide[]>([])
     const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0)
@@ -619,15 +619,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                     goToSlide={goToSlide}
                 />
                 <SlideContainer
-                    present={present}
+                    isPresenting={present}
                     slides={slides}
                     currentSlideIndex={currentSlideIndex}
-                    viewingMode={viewingMode}
+                    isViewing={isViewing}
                     scale={scale}
                     templateDispatch={templateDispatch}
                     slideRef={slideRef}
                     containerRef={containerRef}
-                    exportToPdf={false}
                 />
 
                 <SlideRightNavigator
@@ -658,7 +657,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
               handleSlideEdit={handleSlideEdit}
             />
           )} */}
-                    {!viewingMode && (
+                    {!isViewing && (
                         <ButtonWithExplanation
                             button={
                                 <LayoutChanger

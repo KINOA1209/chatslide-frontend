@@ -142,10 +142,10 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
                     {finalSlides.map((slide, index) => (
                         <div key={index} style={{ pageBreakAfter: 'always' }}>
                             <SlideContainer
-                                present={false}
                                 slides={finalSlides}
                                 currentSlideIndex={index}
-                                viewingMode={false}
+                                isViewing={false}
+                                isPresenting={false}
                                 scale={1}
                                 templateDispatch={templateDispatch}
                                 containerRef={containerRef}
