@@ -8,7 +8,7 @@ export const LeftSlideNavIcon = () => (
   >
     <path
       d='M12 2L1.97086 14.7644C1.40104 15.4896 1.40104 16.5104 1.97086 17.2356L12 30'
-      stroke='#FCFCFC'
+      stroke='#d3d3d3'
       stroke-width='3'
       stroke-linecap='round'
     />
@@ -26,7 +26,7 @@ export const RightSlideNavIcon = () => (
     <path
       id='Vector 22'
       d='M2 2L12.0291 14.7644C12.599 15.4896 12.599 16.5104 12.0291 17.2356L2 30'
-      stroke='#FCFCFC'
+      stroke='#d3d3d3'
       stroke-width='3'
       stroke-linecap='round'
     />

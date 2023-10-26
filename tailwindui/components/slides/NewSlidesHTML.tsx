@@ -604,20 +604,17 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         </div>
       )} */}
 
-            {/* {!viewingMode && (
-        <label className='text-sm text-zinc-100'>
-          Save status: {saveStatus}
-        </label>
-      )} */}
 
             {/* buttons and contents */}
             <div className='max-w-4xl relative flex flex-row items-center justify-center gap-4'>
                 <ToastContainer />
+
                 <SlideLeftNavigator
                     currentSlideIndex={currentSlideIndex}
                     slides={slides}
                     goToSlide={goToSlide}
                 />
+                
                 <SlideContainer
                     isPresenting={present}
                     slides={slides}
@@ -635,28 +632,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                     goToSlide={goToSlide}
                 />
 
-                {/* 4 buttons for change layout, present, add and save slides */}
+                {/* 4 buttons for change layout, present, add and add / delete slide */}
                 <div className='absolute -right-[10rem] top-[7rem] flex flex-col justify-between items-center mb-6 gap-[1.25rem] ml-[6rem]'>
-                    {/* <PresentButton openPresent={openPresent} /> */}
                     <ButtonWithExplanation
                         button={<PresentButton openPresent={openPresent} />}
                         explanation='Presentation Mode'
                     />
-                    {/* {!viewingMode && (
-            <ShareToggleButton setShare={setShare} share={share} />
-          )} */}
 
-                    {/* {!viewingMode && (
-            <LayoutChanger
-              openModal={openModal}
-              showLayout={showLayout}
-              closeModal={closeModal}
-              currentSlideIndex={currentSlideIndex}
-              templateSamples={templateSamples}
-              slides={slides}
-              handleSlideEdit={handleSlideEdit}
-            />
-          )} */}
                     {!isViewing && (
                         <ButtonWithExplanation
                             button={
@@ -674,16 +656,21 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                         />
                     )}
 
-                    {/* save button */}
-                    {/* {!viewingMode && <SaveButton saveSlides={saveSlides} />} */}
-                    <ButtonWithExplanation
-                        button={<AddSlideButton addPage={handleAddPage} currentSlideIndex={currentSlideIndex} />}
-                        explanation='Add Slide'
-                    />
-                    <ButtonWithExplanation
-                        button={<DeleteSlideButton deletePage={handleDeletePage} currentSlideIndex={currentSlideIndex} />}
-                        explanation='Delete Current Slide'
-                    />
+                    {!isViewing && (
+                        <ButtonWithExplanation
+                            button={<AddSlideButton addPage={handleAddPage} currentSlideIndex={currentSlideIndex} />}
+                            explanation='Add Slide'
+                        />
+                    )}
+
+                    {!isViewing && (
+                        <ButtonWithExplanation
+                            button={<DeleteSlideButton deletePage={handleDeletePage} currentSlideIndex={currentSlideIndex} />}
+                            explanation='Delete Current Slide'
+                        />
+                    )}
+
+
                 </div>
 
                 {/* White modal for presentation mode */}
@@ -721,7 +708,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                     rounded-md flex-shrink-0 cursor-pointer`} // Added margin and flex-shrink-0
                             >
                                 {index + 1}
-                                <SlideContainer slides={slides} currentSlideIndex={index} scale={0.1}/>
+                                <SlideContainer slides={slides} currentSlideIndex={index} scale={0.1} />
                             </div>
                         ))}
                 </div>
