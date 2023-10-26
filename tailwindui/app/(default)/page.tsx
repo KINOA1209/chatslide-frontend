@@ -30,7 +30,6 @@ import Header from '@/components/ui/header'
 
 const fileTypes = [
   'pdf-file-icon',
-  'csv-file-icon',
   'word-file-icon',
   'box-file-icon',
   'slack-file-icon',
@@ -75,7 +74,7 @@ function App() {
   useEffect(() => {
     const isMobile = window.innerWidth < 768
     const currentDomain = window.location.hostname
-    if (isMobile && currentDomain === 'pro.drlambda.ai') {
+    if (currentDomain === 'pro.drlambda.ai') {
       window.location.href = 'https://drlambda.ai'
     }
   }, [])
@@ -88,23 +87,25 @@ function App() {
         {/* Section: Transform Knowledge */}
         <div className='relative intro-section flex flex-col justify-center items-center gap-4'>
           <div className='w-[90%] text-center text-neutral-900 text-5xl lg:text-8xl font-creato-medium leading-[4rem] lg:leading-[7.5rem] pt-32'>
-            Transform Knowledge
+            Present Your Knowledge
           </div>
 
           <a
-            href='https://www.producthunt.com/posts/drlambda-pro?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-drlambda&#0045;pro'
+            href='https://www.producthunt.com/posts/dr-lambda?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-dr&#0045;lambda'
             target='_blank'
+            className='fixed bottom-0 right-0 m-4 z-50'
           >
             <img
-              src='https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=419457&theme=light'
-              alt='DrLambda&#0032;Pro - One&#0045;click&#0032;presentation&#0032;AI&#0032;tool&#0032;through&#0032;multiple&#0032;sources | Product Hunt'
-              className='w-[11rem] lg:w-[20rem]'
+              src='https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=412747&theme=light&period=daily'
+              alt='DrLambda - One&#0045;click&#0032;presentation&#0032;AI&#0032;tool&#0032;through&#0032;multiple&#0032;sources | Product Hunt'
+              className='w-[11rem] lg:w-[15rem] z-50'
             />
           </a>
-          <div className='mt-6 w-96 h-14 text-center text-neutral-900 text-2xl lg:text-3xl leading-10 tracking-wide font-creato-medium'>
-            Refine the Raw by AI
+
+          <div className='mt-6 w-50% text-center text-neutral-900 text-2xl lg:text-3xl leading-10 tracking-wide font-creato-medium'>
+            Create professional slides from your documents and sources
           </div>
-          <div className='w-[90%] text-center mb-[3rem] text-md lg:text-xl'>
+          {/* <div className='w-[90%] text-center mb-[3rem] text-md lg:text-xl'>
             <span className='text-gray-700 font-normal leading-loose tracking-wide font-creato-regular'>
               Transform fragmented information or curiosity <br /> sparkles into
             </span>
@@ -115,7 +116,7 @@ function App() {
             <span className='text-gray-700  font-normal leading-loose tracking-wide'>
               .
             </span>
-          </div>
+          </div> */}
           {/* start for free button */}
           <div className='lg:bottom-[48%] w-[6rem] h-8 lg:w-[14rem] lg:h-[3.75rem] mb-[3rem] px-[4rem] py-2 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex z-10'>
             <div className='w-40 h-12 text-center text-zinc-100 text-xs lg:text-xl font-creato-medium capitalize leading-10 tracking-wide'>
@@ -126,6 +127,7 @@ function App() {
               )}
             </div>
           </div>
+
           <div className='w-[90%] lg:w-[70rem] lg:h-[35rem] mx-auto max-w-7xl'>
             <Image
               src={GenerationPreviewImg}
@@ -138,8 +140,8 @@ function App() {
 
         {/* section: The Master Alchemist of Knowledge Crafting */}
         <div className='mt-[3rem] flex flex-col justify-center items-center'>
-          <div className='w-[90%] text-center text-neutral-900 text-4xl lg:text-7xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
-            The Master Alchemist of <br /> Knowledge Crafting
+          <div className='w-[90%] text-center text-neutral-900 text-3xl lg:text-7xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
+            Professional slides for all scenarios
           </div>
           <div className='w-[90%] text-center text-md lg:text-xl'>
             <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
@@ -156,7 +158,7 @@ function App() {
               topic-driven content generation
             </span>
             <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
-              , <br />
+              , 
               achieve{' '}
             </span>
             <span className='text-neutral-800 font-bold font-creato-bold leading-loose tracking-wide'>
@@ -164,39 +166,17 @@ function App() {
             </span>
             <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
               {' '}
-              in every narrative with Dr.Lambda.
+              in every narrative with DrLambda.
             </span>
           </div>
-
-          {/* discord icon */}
-          <Link href='https://discord.gg/CKVdZDAuu3'>
-            <div className='mt-[3rem] mb-[5rem] w-[13rem] lg:w-[20rem] bg-white rounded-2xl border border-indigo-500 flex items-center'>
-              <img
-                className='w-8 h-6 ml-4'
-                src='new_landing/imgs/discord-icon.png'
-              />
-              {/* <MedalIcon className='w-12 h-12 ml-4' /> */}
-
-              <div className='ml-4 flex flex-col'>
-                <div className='w-auto lg:w-[7rem] h-5 pt-1 text-indigo-500 text-xs font-extrabold font-creato-medium leading-loose tracking-tight lg:tracking-[0.01388rem]'>
-                  DISCORD
-                </div>
-                <div className='w-auto lg:w-[13rem] h-8 pb-10 text-indigo-500 text-sm lg:text-xl font-bold font-creato-medium leading-10 tracking-tight lg:tracking-[0.02425rem]'>
-                  {/* <Link href='https://discord.gg/CKVdZDAuu3'> */}
-                  Join our community
-                  {/* </Link> */}
-                </div>
-              </div>
-            </div>
-          </Link>
 
           {/* grid cards for features */}
           <FeatureCards />
         </div>
         {/* section: Build up your personal knowledge library */}
         <div className='mt-[6rem] relative flex flex-col justify-center items-center'>
-          <div className='w-[90%] h-full text-center text-neutral-900 text-4xl lg:text-7xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
-            Build up your personal <br /> knowledge library
+          <div className='w-[90%] h-full text-center text-neutral-900 text-3xl lg:text-7xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
+            Extract information from any source
           </div>
           <div className='w-[90%] text-center text-md lg:text-xl  '>
             <span className='text-neutral-800 font-bold font-creato-bold leading-loose tracking-wide'>
@@ -266,95 +246,12 @@ function App() {
           </div>
         </div>
 
-        {/* Multifaceted Outputs */}
-        <div className='mt-[12rem] flex flex-col justify-center items-center'>
-          <div className='w-[90%] text-center text-neutral-900 text-4xl font-creato-medium lg:text-7xl leading-[4rem] lg:leading-[7.5rem]'>
-            Multifaceted Outputs
-          </div>
-          <div className='w-[90%] text-center text-md lg:text-xl'>
-            <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
-              Showcase your ideas across diverse formats, ensuring each piece of{' '}
-            </span>
-            <span className='text-neutral-800 font-bold font-creato-bold leading-loose tracking-wide'>
-              knowledge
-            </span>
-            <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
-              {' '}
-              shines in its{' '}
-            </span>
-            <span className='text-neutral-800 font-bold font-creato-bold leading-loose tracking-wide'>
-              best light
-            </span>
-            <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
-              .
-            </span>
-          </div>
-          {/* three icons */}
-          <div className='relative w-auto mx-auto max-w-7xl lg:w-full flex justify-evenly items-center text-center py-10 mt-[6rem] bg-[#E3E9FF] overflow-auto'>
-            {/* <div className='absolute inset-0 bg-[#E3E9FF] opacity-30'></div> */}
-            <div className='flex flex-col justify-center items-center lg:w-1/3 lg:min-w-fit h-full gap-10'>
-              <div className='object-cover lg:object-contain px-4'>
-                {/* <ScriptIcon /> */}
-                <Image
-                  src={ScriptIcon}
-                  alt='script icon'
-                  className='object-contain'
-                />
-              </div>
-
-              {/* <Image
-                src={MyProjectsImg}
-                alt='my project'
-                className='object-cover lg:object-contain lg:w-full'
-              /> */}
-              <div className='text-center text-gray-700 text-2xl lg:text-4xl font-medium font-creato-medium leading-10 tracking-wide'>
-                Script
-              </div>
-            </div>
-            <div className='flex flex-col border-r-2 border-l-2 border-slate-300 justify-center items-center lg:w-1/3 lg:min-w-fit h-full gap-10'>
-              {/* <img className='w-48 h-48' src='src/imgs/medal-bronze.png' /> */}
-              <div className='object-cover lg:object-contain px-4'>
-                {/* <ScriptIcon /> */}
-                <Image
-                  src={SlidesIcon}
-                  alt='slides icon'
-                  className='object-contain'
-                />
-              </div>
-
-              <div className='text-center text-gray-700 text-2xl lg:text-4xl font-medium font-creato-medium leading-10 tracking-wide'>
-                Slides
-              </div>
-            </div>
-            <div className='flex flex-col justify-center items-center lg:w-1/3 lg:min-w-fit h-full gap-10'>
-              {/* <img
-                className='w-48 h-48'
-                src='https://via.placeholder.com/328x73'
-              /> */}
-              {/* <VideoIcon /> */}
-              <div className='object-cover lg:object-contain px-4'>
-                {/* <ScriptIcon /> */}
-                <Image
-                  src={VideoIcon}
-                  alt='video icon'
-                  className='object-contain'
-                />
-              </div>
-              <div className='text-center text-gray-700 text-2xl lg:text-4xl font-medium font-creato-medium leading-10 tracking-wide'>
-                Video
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Turning your knowledge into stories worth sharing. */}
         <div className='mt-[6rem] mb-[6rem] flex flex-col justify-center items-center'>
           <div className='w-[90%] text-center text-neutral-900 text-4xl lg:text-7xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
-            Turning your knowledge <br />
-            into stories worth sharing.{' '}
+            Pricing
           </div>
-          <div className='w-[6rem] h-8 lg:w-56 lg:h-14 mt-[2.5rem] mb-[5rem] px-[4rem] py-2 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex'>
-            {/* absolute bottom-[23%] lg:bottom-[48%] w-[6rem] h-8 lg:w-56 lg:h-14 px-6 py-2 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex z-10 */}
+          {/* <div className='w-[6rem] h-8 lg:w-56 lg:h-14 mt-[2.5rem] mb-[5rem] px-[4rem] py-2 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex'>
             <div className='w-40 h-12 lg:w-[14rem] lg:h-[3.75rem] text-center text-zinc-100 text-xs lg:text-xl font-creato-medium capitalize leading-10 tracking-wide'>
               {user ? (
                 <Link href='/dashboard'>Go to Dashboard</Link>
@@ -362,7 +259,7 @@ function App() {
                 <Link href='/signin'>Dive in Today</Link>
               )}
             </div>
-          </div>
+          </div> */}
           {/* billing options, yearly and monthly */}
           <div className='w-[90%] mx-auto max-w-7xl mb-[3rem] flex justify-center lg:justify-end items-center'>
             <div className='billing-options flex justify-center items-center rounded-xl bg-Grey-100'>
@@ -394,6 +291,26 @@ function App() {
           </div>
 
           <PricingPlans pricingPlansData={pricingPlansData} />
+
+
+          {/* discord icon */}
+          {/* <Link href='https://discord.gg/CKVdZDAuu3'>
+            <div className='mt-[3rem] mb-[5rem] w-[13rem] lg:w-[20rem] bg-white rounded-2xl border border-indigo-500 flex items-center'>
+              <img
+                className='w-8 h-6 ml-4'
+                src='new_landing/imgs/discord-icon.png'
+              />
+
+              <div className='ml-4 flex flex-col'>
+                <div className='w-auto lg:w-[7rem] h-5 pt-1 text-indigo-500 text-xs font-extrabold font-creato-medium leading-loose tracking-tight lg:tracking-[0.01388rem]'>
+                  DISCORD
+                </div>
+                <div className='w-auto lg:w-[13rem] h-8 pb-10 text-indigo-500 text-sm lg:text-xl font-bold font-creato-medium leading-10 tracking-tight lg:tracking-[0.02425rem]'>
+                  Join our community
+                </div>
+              </div>
+            </div>
+          </Link> */}
         </div>
 
         <Footer />

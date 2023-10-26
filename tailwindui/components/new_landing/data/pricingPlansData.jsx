@@ -4,38 +4,38 @@ export const pricingPlansMonthlyData = [
     price: 'Free',
     frequency: '',
     features: [
-      '100 credits a month',
+      '50 ⭐️credits',
       'Automatic voice-over and video composition',
       'Tailor the content by uploading your PDF files',
     ],
-    cta: 'Sign up to try',
+    cta: 'Start free trial',
     link: '/signup'
   },
   {
     title: 'Plus',
-    price: '$9.9',
-    frequency: '/month',
+    price: '$0.99',
+    frequency: 'for 1st month, then $9.99/month',
     features: [
       'All features in Free',
-      '100 credits a month',
+      '1000 ⭐️credits a month',
       'Connect to GPT 4',
       'Remove water mark',
       'Combine to video',
       'Upload multiple source files',
     ],
-    cta: 'Sign up to try',
+    cta: 'Claim special offer',
     link: '/signup'
   },
   {
     title: '* Pro',
-    price: '$39.9',
-    frequency: '/month',
+    price: '$3.99',
+    frequency: 'for 1st month, then $39.99/month',
     features: [
       'All features in Plus',
-      'Unlimited usage',
-      'Direct customer support',
+      'Unlimited ⭐️credits',
+      'Direct ☎️ customer support',
     ],
-    cta: 'Sign up to try',
+    cta: 'Claim special offer',
     link: '/signup'
   },
   {
@@ -59,38 +59,38 @@ export const pricingPlansYearlyData = [
     price: 'Free',
     frequency: '',
     features: [
-      '100 credits a month',
+      '50 ⭐️credits',
       'Automatic voice-over and video composition',
       'Tailor the content by uploading your PDF files',
     ],
-    cta: 'Sign up to try',
+    cta: 'Start free trial',
     link: '/signup'
   },
   {
     title: 'Plus',
-    price: '$8.25',
-    frequency: '/month ($99 billed annually)',
+    price: 'Free',
+    frequency: 'for 2 months, then $99/year',
     features: [
       'All features in Free',
-      '100 credits a month',
+      '1000 ⭐️credits a month',
       'Connect to GPT 4',
       'Remove water mark',
       'Combine to video',
       'Upload multiple source files',
     ],
-    cta: 'Sign up to try',
+    cta: 'Claim special offer',
     link: '/signup'
   },
   {
     title: '* Pro',
-    price: '$33.25',
-    frequency: '/month ($399 billed annually)',
+    price: 'Free',
+    frequency: 'for 2 months, then $399/year',
     features: [
       'All features in Plus',
-      'Unlimited usage',
-      'Direct customer support',
+      'Unlimited ⭐️credits',
+      'Direct ☎️customer support',
     ],
-    cta: 'Sign up to try',
+    cta: 'Claim special offer',
     link: '/signup'
   },
   {

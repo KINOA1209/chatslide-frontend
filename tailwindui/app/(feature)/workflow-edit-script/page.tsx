@@ -41,6 +41,7 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
     const [transcriptList, setTranscriptList] = useState<string[]>(transcripts);
     const router = useRouter();
     const [hasSlides, setHasSlides] = useState<boolean>(false);
+    const [authToken, setAuthToken] = useState<string>();
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -51,11 +52,20 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
         }
     }, []);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+            setAuthToken(idToken);
+        };
+
+        fetchData();
+    }, []);
+
     const handleChange = (index: number, event: React.ChangeEvent<HTMLTextAreaElement>) => {
         let newData = [...transcriptList]; // copying the old datas array
         newData[index] = event.target.value; // replace e.target.value with whatever you want to change it to
         sessionStorage.setItem('transcripts', JSON.stringify(newData));
-        setTranscriptList(newData); // use the copy to set the state            
+        setTranscriptList(newData); // use the copy to set the state
     };
 
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -120,9 +130,11 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
     const handleUpdateScript = async (e: React.MouseEvent<HTMLButtonElement>, index: number, ask: string) => {
         e.preventDefault();
         const text = transcriptList[index];
+        const language = typeof window !== 'undefined' ? sessionStorage.getItem('language') : 'English';
         const updateData = {
             ask: ask,
             text: text,
+            language: language,
         }
         console.log(updateData);
 
@@ -131,6 +143,7 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
             mixpanel.track('Script Updated', {
                 'Ask': ask,
                 'Text': text,
+                'Language': language,
             });
             const response = await fetch('/api/update_script', {
                 method: 'POST',
@@ -174,11 +187,11 @@ const TranscriptVisualizer = ({ transcripts, imageUrls }: { transcripts: [], ima
         <div>
             {transcriptList.map((data, index) => (
                 <div tabIndex={index} className='w-full flex flex-col md:flex-row rounded border-solid border-2 border-blue-200 mt-4 focus-within:border-blue-600'>
-                    <div className={`grid ${hasSlides ? 'sm:grid-rows-2' : 'sm:grid-rows-1'} md:grid-rows-1 ${hasSlides ? 'md:grid-cols-2' : 'md:grid-cols-1'} grow`}>
-                        {hasSlides && <ImageList urls={[imageUrls[index]]} height={100} />}
+                    <div className={`grid grow`}>
+                        {/* {hasSlides && authToken && <ImageList urls={[imageUrls[index]]} token={authToken} height={100} />} */}
                         <textarea
                             key={index}
-                            className={`${!hasSlides && 'h-80'} block form-input w-full text-gray-800 mb-2 resize-none border-none p-4`}
+                            className={`h-80 block form-input w-full text-gray-800 mb-2 resize-none border-none p-4`}
                             value={data}
                             onChange={(event) => handleChange(index, event)}
                         // readOnly

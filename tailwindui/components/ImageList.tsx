@@ -2,16 +2,20 @@ import React, { useEffect, useState } from 'react';
 
 type ImageListProps = {
   urls: string[],
+  token?: string,
   height?: number, // Add new prop here, make it optional.
 };
 
-const ImageList: React.FC<ImageListProps> = ({ urls, height = 80 }) => { // Set default value here
+const ImageList: React.FC<ImageListProps> = ({ urls, token, height = 80 }) => { // Set default value here
   const [images, setImages] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const responses = await Promise.all(urls.map(url => fetch(url)));
+        const headers = {
+          'Authorization': `Bearer ${token}`
+        };
+        const responses = await Promise.all(urls.map(url => fetch(url, {headers})));
         const blobs = await Promise.all(responses.map(response => response.blob()));
         const imageUrls = blobs.map(blob => URL.createObjectURL(blob));
         setImages(imageUrls);
