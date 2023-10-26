@@ -6,6 +6,7 @@ type SlideContainerProps = {
     slides: Slide[]; // You can replace 'any' with the actual type of the slides if known
     currentSlideIndex: number;
     isViewing?: boolean;
+    isSnippet?: boolean;
     isPresenting?: boolean;
     scale?: number;
     templateDispatch?: (slide: Slide, index: number, canEidt: boolean, exportToPdfMode: boolean) => JSX.Element; // Adjust the types accordingly
@@ -34,7 +35,9 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
             style={{
                 boxSizing: 'border-box',
                 border: 'none',
-                boxShadow: isPresenting ? 'none' : '0 2px 10px rgba(0, 0, 0, 0.5)',
+                boxShadow: (isPresenting) ? 'none' : '0 2px 10px rgba(0, 0, 0, 0.5)',
+                width: isPresenting ? '100vw' : `${960 * scale}px`,
+                height: isPresenting ? '100vh' : `${540 * scale}px`,
             }}
         >
             {slides.length > 0 && (

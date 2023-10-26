@@ -3,7 +3,7 @@ import React, { useState, useEffect, FormEvent, use } from 'react';
 
 import AuthService from "../utils/AuthService";
 
-import { Slide } from '../SlidesHTML';
+import { Slide } from '@/components/slides/NewSlidesHTML'
 import UserService from '../utils/UserService';
 import GptToggle from '../button/GPTToggle';
 import PaywallModal from './paywallModal';
