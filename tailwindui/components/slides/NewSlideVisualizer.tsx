@@ -67,7 +67,7 @@ const SlideVisualizer = () => {
 
                 {/* shareable link */}
                 {share && (
-                    <div>
+                    <div className='flex-grow'>
                         <label className='text-sm text-zinc-100'>View only link:</label>
                         <ClickableLink
                             link={`${host}/shared/${sessionStorage.getItem('project_id')}`}
