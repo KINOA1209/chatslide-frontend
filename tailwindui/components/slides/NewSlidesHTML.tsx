@@ -114,15 +114,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
   // Watch for changes in finalSlides
   useEffect(() => {
-    // if (isFirstRender.current) {
-    //     isFirstRender.current = false;
-    //     console.log('First render, skip saving')
-    //     return;
-    // }
+    if (isFirstRender.current) {
+        isFirstRender.current = false;
+        console.log('First render, skip saving')
+        return;
+    }
 
     console.log('finalSlides changed')
     setUnsavedChanges(true)
-    // saveSlides();
+    saveSlides();
   }, [finalSlides])
 
   // Function to send a request to auto-save finalSlides
