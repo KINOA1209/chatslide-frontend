@@ -20,6 +20,7 @@ import {
 import SlideContainer from './SlideContainer'
 import { h1Style, h2Style, h3Style, h4Style, listStyle } from './Styles'
 import ButtonWithExplanation from '../button/ButtonWithExplanation'
+import { templateDispatch } from './templateDispatch'
 
 export interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div'
@@ -431,165 +432,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         console.log('resize')
     }, [slideRef.current, containerRef.current])
 
-    const templateDispatch = (
-        slide: Slide,
-        index: number,
-        canEdit: boolean
-    ): JSX.Element => {
-        const Template = templates[slide.template as keyof typeof templates]
-        if (index === 0) {
-            return (
-                <Template
-                    autoSave={saveSlides}
-                    key={index}
-                    user_name={
-                        <div
-                            key={0}
-                            className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                            contentEditable={canEdit}
-                            onFocus={() => {
-                                if (canEdit) {
-                                    setIsEditMode(true)
-                                }
-                            }}
-                            onBlur={(e) =>
-                                handleSlideEdit(e.target.innerText, index, 'userName')
-                            }
-                            style={h4Style}
-                            dangerouslySetInnerHTML={{ __html: slide.userName }}
-                        />
-                    }
-                    title={
-                        <div
-                            key={1}
-                            className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                            contentEditable={canEdit}
-                            onFocus={() => {
-                                if (canEdit) {
-                                    setIsEditMode(true)
-                                }
-                            }}
-                            onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'head')}
-                            style={h1Style}
-                            dangerouslySetInnerHTML={{ __html: slide.head }}
-                        />
-                    }
-                    topic={<></>}
-                    subtopic={<></>}
-                    content={[<></>]}
-                    imgs={slide.images}
-                    update_callback={updateImgUrlArray(index)}
-                    canEdit={canEdit}
-                />
-            )
-        } else {
-            return (
-                <Template
-                    autoSave={saveSlides}
-                    canEdit={canEdit}
-                    key={index}
-                    user_name={<></>}
-                    title={<></>}
-                    topic={
-                        <div
-                            key={0}
-                            className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                            contentEditable={canEdit}
-                            onFocus={() => {
-                                if (canEdit) {
-                                    setIsEditMode(true)
-                                }
-                            }}
-                            onBlur={(e) =>
-                                handleSlideEdit(e.target.innerText, index, 'title')
-                            }
-                            style={h2Style}
-                            dangerouslySetInnerHTML={{ __html: slide.title }}
-                        />
-                    }
-                    subtopic={
-                        <div
-                            key={1}
-                            className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                            contentEditable={canEdit}
-                            onFocus={() => {
-                                if (canEdit) {
-                                    setIsEditMode(true)
-                                }
-                            }}
-                            onBlur={(e) => {
-                                handleSlideEdit(e.target.innerText, index, 'subtopic')
-                            }}
-                            style={h3Style}
-                            dangerouslySetInnerHTML={{ __html: slide.subtopic }}
-                        />
-                    }
-                    content={slide.content.map(
-                        (content: string, contentIndex: number) => {
-                            if (content.includes('$$') || content.includes('\\(')) {
-                                if (isEditMode) {
-                                    return (
-                                        <div
-                                            key={index}
-                                            className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                                            contentEditable={canEdit}
-                                            style={listStyle}
-                                            onFocus={() => {
-                                                if (canEdit) {
-                                                    setIsEditMode(true)
-                                                }
-                                            }}
-                                            onBlur={(e) => {
-                                                const modifiedContent = [...slide.content]
-                                                modifiedContent[contentIndex] = e.target.innerText
-                                                handleSlideEdit(modifiedContent, index, 'content')
-                                            }}
-                                        >
-                                            {content}
-                                        </div>
-                                    )
-                                } else {
-                                    return (
-                                        <MathJaxContext key={index}>
-                                            <MathJax>
-                                                <div
-                                                    onClick={toggleEditMode}
-                                                    className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                                                    style={listStyle}
-                                                >
-                                                    {content}
-                                                </div>
-                                            </MathJax>
-                                        </MathJaxContext>
-                                    )
-                                }
-                            }
-                            return (
-                                <div
-                                    key={index}
-                                    className='hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline outline-2 rounded-md overflow-hidden'
-                                    contentEditable={canEdit}
-                                    onFocus={() => {
-                                        if (canEdit) {
-                                            setIsEditMode(true)
-                                        }
-                                    }}
-                                    onBlur={(e) => {
-                                        const modifiedContent = [...slide.content]
-                                        modifiedContent[contentIndex] = e.target.innerText
-                                        handleSlideEdit(modifiedContent, index, 'content')
-                                    }}
-                                    dangerouslySetInnerHTML={{ __html: wrapWithLiTags(content) }}
-                                ></div>
-                            )
-                        }
-                    )}
-                    imgs={slide.images as string[]}
-                    update_callback={updateImgUrlArray(index)}
-                />
-            )
-        }
-    }
+    const editableTemplateDispatch = (slide: Slide, index: number, canEdit: boolean) => templateDispatch(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode, handleSlideEdit, updateImgUrlArray, toggleEditMode);
 
     return (
         <div className='flex flex-col items-center justify-center gap-4'>
@@ -618,7 +461,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                     currentSlideIndex={currentSlideIndex}
                     isViewing={isViewing}
                     scale={present ? scale : 1}
-                    templateDispatch={templateDispatch}
+                    templateDispatch={editableTemplateDispatch}
                     slideRef={slideRef}
                     containerRef={containerRef}
                 />

@@ -558,7 +558,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
 
         {/* image itsefl */}
         <div onClick={openModal}
-            className={`w-full h-full transition ease-in-out duration-150 ${selectedImg === '' ? 'bg-[#E7E9EB]' : 'hover:bg-[#CAD0D3]'} flex flex-col items-center justify-center cursor-pointer`}>
+            className={`w-full h-full transition ease-in-out duration-150 ${selectedImg === '' ? 'bg-[#E7E9EB]' : canEdit ? 'hover:bg-[#CAD0D3]' : ''} flex flex-col items-center justify-center cursor-pointer`}>
 
             {selectedImg === '' ?
                 <div className='flex flex-col items-center justify-center'>
