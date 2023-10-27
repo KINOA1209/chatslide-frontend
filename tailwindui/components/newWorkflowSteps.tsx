@@ -382,14 +382,11 @@ const ProgressBox = (
 
 // Set up actual progress indicators with texts and redirections
 const ProjectProgress = () => {
-  const steps = ['Topic', 'Outlines', 'Slides', 'Script', 'Audio', 'Video']
+  const steps = ['Topic', 'Outlines', 'Slides']
   const redirect = [
     '/workflow-generate-outlines',
     '/workflow-edit-outlines',
     '/workflow-review-slides',
-    '/workflow-edit-script',
-    '/workflow-review-audio',
-    '/workflow-review-video',
   ]
   const projectFinishedSteps: () => number[] = () => {
     const finishedStepsArray: number[] = []

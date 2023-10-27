@@ -1,5 +1,5 @@
 import { h1Style, h2Style, h3Style, h4Style, listStyle } from './Styles'
-import { Slide } from '@/components/slides/NewSlidesHTML'
+import { Slide, SlideKeys } from '@/components/slides/NewSlidesHTML'
 import templates, { templateSamples } from '@/components/slides/slideTemplates'
 import { MathJax, MathJaxContext } from 'better-react-mathjax'
 
@@ -19,8 +19,8 @@ export const templateDispatch = (
     editMathMode: boolean = false,
     saveSlides: (slides: Slide[]) => void = () => {},  // Replace with your default function if you have one
     setIsEditMode: (isEditMode: boolean) => void = () => {},  // Replace with your default function if you have one
-    handleSlideEdit: (content: string | string[], index: number, field: string) => void = () => {},  // Replace with your default function if you have one
-    updateImgUrlArray: (index: number) => (url: string, imgIndex: number) => void = () => () => {},  // Replace with your default function if you have one
+    handleSlideEdit: (content: string | string[], index: number, tag: SlideKeys) => void = () => {},  // Replace with your default function if you have one
+    updateImgUrlArray: (slideIndex: number) => (urls: string[]) => void = () => () => {},  // Replace with your default function if you have one
     toggleEditMathMode: () => void = () => {}  // Replace with your default function if you have one
 ): JSX.Element => {
     const Template = templates[slide.template as keyof typeof templates]
