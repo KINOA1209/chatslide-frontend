@@ -17,11 +17,11 @@ function ButtonWithExplanation({
     >
       {button}
       <div
-        className={`absolute left-[-8rem] top-4 p-1 bg-black text-white rounded-md transition-opacity duration-200 ${
+        className={`absolute top-10 z-10 p-1 bg-black text-white rounded-md transition-opacity duration-200 ${
           showExplanation ? 'opacity-100' : 'opacity-0'
         }`}
       >
-        <div className='text-right text-zinc-100 text-sm font-normal font-creato-medium leading-snug tracking-tight'>
+        <div className='text-left text-zinc-100 text-sm font-normal font-creato-medium leading-snug tracking-tight'>
           {explanation}
         </div>
       </div>

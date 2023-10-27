@@ -476,7 +476,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                 <div className='absolute -right-[10rem] top-[7rem] flex flex-col justify-between items-center mb-6 gap-[1.25rem] ml-[6rem]'>
                     <ButtonWithExplanation
                         button={<PresentButton openPresent={openPresent} />}
-                        explanation='Presentation Mode'
+                        explanation='Present'
                     />
 
                     {!isViewing && (
@@ -504,7 +504,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                                     currentSlideIndex={currentSlideIndex}
                                 />
                             }
-                            explanation='Add Slide'
+                            explanation='Add Page'
                         />
                     )}
 
@@ -516,7 +516,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                                     currentSlideIndex={currentSlideIndex}
                                 />
                             }
-                            explanation='Delete Current Slide'
+                            explanation='Delete Page'
                         />
                     )}
                 </div>
