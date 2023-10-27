@@ -7,7 +7,7 @@ import GoBackButton from '@/components/button/GoBackButton';
 import ImageList from '@/components/ImageList';
 import ProjectProgress from '@/components/steps';
 import AuthService from '@/components/utils/AuthService';
-import FeedbackForm from '@/components/forms/feedback';
+import FeedbackForm from '@/components/slides/feedback';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { LoadingIcon } from '@/components/ui/progress';

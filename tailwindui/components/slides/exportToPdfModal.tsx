@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 
-const SavePDFModal = () => {
+const ExportToPDFModal = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const toggleModal = () => {
@@ -92,4 +92,4 @@ const SavePDFModal = () => {
   );
 };
 
-export default SavePDFModal;
+export default ExportToPDFModal;
