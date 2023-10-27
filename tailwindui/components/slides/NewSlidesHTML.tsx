@@ -479,7 +479,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                         explanation='Present'
                     />
 
-                    {!isViewing && (
+                    {!isViewing && (currentSlideIndex!=0) &&(
                         <ButtonWithExplanation
                             button={
                                 <LayoutChanger
@@ -496,7 +496,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                         />
                     )}
 
-                    {!isViewing && (
+                    {!isViewing && (currentSlideIndex!=0) && (
                         <ButtonWithExplanation
                             button={
                                 <AddSlideButton
@@ -508,7 +508,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                         />
                     )}
 
-                    {!isViewing && (
+                    {!isViewing && (currentSlideIndex!=0) && (
                         <ButtonWithExplanation
                             button={
                                 <DeleteSlideButton
