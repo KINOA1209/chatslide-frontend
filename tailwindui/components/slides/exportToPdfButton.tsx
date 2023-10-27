@@ -9,7 +9,6 @@ import PaywallModal from '../forms/paywallModal'
 import mixpanel from 'mixpanel-browser'
 import { DownloadIcon } from '@/app/(feature)/icons'
 import SlideContainer from './SlideContainer'
-import { templateDispatch } from './templateDispatch'
 import generatePDF, { Resolution, Margin, Options } from 'react-to-pdf'
 
 type SlidesHTMLProps = {
@@ -29,8 +28,6 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
   const [downloadingPDF, setDownloadingPDF] = useState(false)
   const [showPaymentModal, setShowPaymentModal] = useState(false)
   const exportSlidesRef = useRef<HTMLDivElement>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const slideRef = useRef<HTMLDivElement>(null)
 
   const exportOptions: Options = {
     filename: (topic ? topic : 'drlambda') + '.pdf',
@@ -122,7 +119,7 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
             onClick={handleSavePDF}
           >
             <div className='text-center text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide'>
-              Export to PDF
+              Export to PDF (10⭐️)
             </div>
             <div className='w-4 h-4 relative' hidden={downloadingPDF}>
               <DownloadIcon />
@@ -135,7 +132,7 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
       </div>
 
       {/* hidden div for export to pdf */}
-      <div style={{ overflow: 'hidden', height: 0, width: 0 }}>
+      <div style={{ position: 'absolute', zIndex: -1 }}>
         <div ref={exportSlidesRef}>
           {/* Render all of your slides here. This can be a map of your slides array */}
           {finalSlides.map((slide, index) => (
@@ -143,12 +140,6 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
               <SlideContainer
                 slides={finalSlides}
                 currentSlideIndex={index}
-                isViewing={false}
-                isPresenting={false}
-                scale={1}
-                templateDispatch={templateDispatch}
-                containerRef={containerRef}
-                slideRef={slideRef}
                 exportToPdfMode={true}
               />
             </div>
