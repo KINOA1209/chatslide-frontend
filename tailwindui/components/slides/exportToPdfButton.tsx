@@ -28,6 +28,7 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
   const [downloadingPDF, setDownloadingPDF] = useState(false)
   const [showPaymentModal, setShowPaymentModal] = useState(false)
   const exportSlidesRef = useRef<HTMLDivElement>(null)
+  let pdfIsBeingGenerated = false
 
   const exportOptions: Options = {
     filename: (topic ? topic : 'drlambda') + '.pdf',
@@ -87,7 +88,7 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
         },
       })
 
-      if (response.ok && typeof window !== 'undefined') {
+      if (response.ok) {
         exportToPdf()
       } else if (response.status === 402) {
         setShowPaymentModal(true)
@@ -132,7 +133,7 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
       </div>
 
       {/* hidden div for export to pdf */}
-      <div style={{ position: 'absolute', zIndex: -1 }}>
+      <div style={{ display: downloadingPDF ? 'block' : 'none', zIndex: -1 }}>
         <div ref={exportSlidesRef}>
           {/* Render all of your slides here. This can be a map of your slides array */}
           {finalSlides.map((slide, index) => (
