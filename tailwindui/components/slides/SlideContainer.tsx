@@ -1,38 +1,43 @@
 import React, { useRef } from 'react';
+import { Slide } from '@/components/slides/NewSlidesHTML';
+import { templateDispatch as defaultTemplateDispatch } from './templateDispatch';
 
 type SlideContainerProps = {
-    present: boolean;
-    slides: any[]; // You can replace 'any' with the actual type of the slides if known
+    slides: Slide[]; // You can replace 'any' with the actual type of the slides if known
     currentSlideIndex: number;
-    viewingMode: boolean;
-    scale: number;
-    templateDispatch: (slide: any, index: number, condition: boolean, exportToPdf: boolean) => JSX.Element; // Adjust the types accordingly
-    containerRef: React.RefObject<HTMLDivElement>;
-    slideRef: React.RefObject<HTMLDivElement>;
-    exportToPdf: boolean;
+    isViewing?: boolean;
+    isSnippet?: boolean;
+    isPresenting?: boolean;
+    scale?: number;
+    templateDispatch?: (slide: Slide, index: number, canEidt: boolean, exportToPdfMode: boolean) => JSX.Element; // Adjust the types accordingly
+    containerRef?: React.RefObject<HTMLDivElement>;
+    slideRef?: React.RefObject<HTMLDivElement>;
+    exportToPdfMode?: boolean;
 };
 
 const SlideContainer: React.FC<SlideContainerProps> = ({
-    present,
     slides,
     currentSlideIndex,
-    viewingMode,
-    scale,
-    templateDispatch,
-    containerRef,
-    slideRef,
-    exportToPdf,
+    isViewing = false,
+    isPresenting = false,
+    scale = 1,
+    templateDispatch = defaultTemplateDispatch,
+    containerRef = useRef(null),
+    slideRef = useRef(null),
+    exportToPdfMode = false,
 }) => {
 
     return (
         <div
             id="slideContainer"
-            className={`${present ? 'fixed top-0 left-0 w-full h-full z-50' : ''}`}
+            className={`${isPresenting ? 'fixed top-0 left-0 w-full h-full z-50' : ''}`}
             ref={containerRef}
             style={{
                 boxSizing: 'border-box',
                 border: 'none',
-                boxShadow: present ? 'none' : '0 2px 10px rgba(0, 0, 0, 0.5)',
+                boxShadow: (isPresenting) ? 'none' : '0 2px 10px rgba(0, 0, 0, 0.5)',
+                width: isPresenting ? '100vw' : `${960 * scale}px`,
+                height: isPresenting ? '100vh' : `${540 * scale}px`,
             }}
         >
             {slides.length > 0 && (
@@ -42,8 +47,8 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
                     style={{
                         width: '960px',
                         height: '540px',
-                        transformOrigin: present ? 'top left' : '',
-                        transform: present ? `scale(${scale})` : 'scale(1)',
+                        transformOrigin: 'top left',
+                        transform: `scale(${scale})`,
                         backgroundSize: 'cover',
                         display: 'flex',
                         flexDirection: 'column',
@@ -53,7 +58,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
                     }}
                 >
                     {slides[currentSlideIndex] &&
-                        templateDispatch(slides[currentSlideIndex], currentSlideIndex, !viewingMode && !present, exportToPdf)}
+                        templateDispatch(slides[currentSlideIndex], currentSlideIndex, !isViewing && !isPresenting, exportToPdfMode)}
                 </div>
             )}
         </div>

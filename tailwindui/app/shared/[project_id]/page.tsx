@@ -2,7 +2,7 @@
 
 import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import SlidesHTML, { Slide } from '../../../components/SlidesHTML';
+import SlidesHTML, { Slide } from '@/components/slides/NewSlidesHTML';
 import Footer, { WorkflowFooter } from '@/components/ui/footer';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -61,7 +61,7 @@ const SharePage: React.FC = () => {
             ) : (
                 <div className="flex items-center justify-center min-h-screen">
                     <div>
-                        <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} viewingMode={true} />
+                        <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} isViewing={true} />
                     </div>
                 </div>
             )}
