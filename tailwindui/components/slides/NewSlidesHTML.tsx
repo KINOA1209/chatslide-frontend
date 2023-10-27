@@ -330,6 +330,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       })
       newContent = newContent.filter((item) => item !== '')
 
+      if (newContent.length === 0) { // leave one empty line for editing
+        newContent.push('')
+      }
+
       currentSlide.content = newContent
       currNewFinalSlides.content = newContent
     } else {
