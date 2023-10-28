@@ -85,7 +85,7 @@ export default function WorkflowStep2() {
     return (
         <div className=' bg-zinc-100'>
             {/* flex col container for steps, title, generate slides button etc */}
-            <div className='fixed mt-[3rem] flex flex-col w-full bg-Grey-50 justify-center z-10 gap-1 py-[0.75rem] border-b-2'>
+            <div className='fixed mt-[3rem] flex flex-col w-full bg-Grey-50 justify-center z-10 gap-1 border-b-2'>
                 {/* steps bar */}
                 <div className='self-center'>
                     <ProjectProgress currentInd={1} contentRef={contentRef} />
@@ -171,36 +171,35 @@ export default function WorkflowStep2() {
                     {outlineContent && <GenerateSlidesSubmit outline={outlineContent} />}
                 </div>
             </div>
-            {/* grid, small screen one col, large screen two col */}
-            <div className='relative mt-[12rem] mb-[3rem]'>
-                <div className='fixed top-[15rem] w-[20rem] ml-[10rem] overflow-y-auto bg-neutral-50 rounded-md border border-gray-200'>
-                    <div className='w-48 h-5 text-neutral-900 text-xs font-bold font-creato-medium leading-tight tracking-wide px-4 py-3'>
-                        OVERVIEW
+
+            <div className='mt-[12rem] mb-[3rem]'>
+                <div className='w-1/4 fixed top-[16.5rem] overflow-y-auto flex justify-center' >
+                    <div className='w-2/3 bg-neutral-50 rounded-md border border-gray-200 hidden sm:block'>
+                        <div className='h-5 text-neutral-900 text-xs font-bold font-creato-medium leading-tight tracking-wide px-4 py-3'>
+                            OVERVIEW
+                        </div>
+                        <ol className='list-none px-4 py-4'>
+                            {outlineContent?.map((section, index) => (
+                                <li
+                                    className='pb-2 opacity-60 text-neutral-900 text-s font-medium font-creato-medium leading-normal tracking-tight cursor-pointer hover:text-black  hover:rounded-md hover:bg-gray-200'
+                                    key={index}
+                                    onClick={() => scrollToSection(index)}
+                                >
+                                    <span className=''>
+                                        {index + 1}. {section.title}
+                                    </span>
+                                </li>
+                            ))}
+                        </ol>
                     </div>
-                    <ol className='list-none px-8 py-4'>
-                        {outlineContent?.map((section, index) => (
-                            <li
-                                className='w-[19rem] pb-2 opacity-60 text-neutral-900 text-s font-medium font-creato-medium leading-normal tracking-tight cursor-pointer hover:text-black  hover:rounded-md hover:bg-gray-200'
-                                key={index}
-                                onClick={() => scrollToSection(index)}
-                            >
-                                <span className=''>
-                                    {index + 1}. {section.title}
-                                </span>
-                            </li>
-                        ))}
-                    </ol>
                 </div>
-                <div className='pl-[10rem]'>  {/* Added padding-left here */}
-                        <div className='grid gap-10 grid-cols-1 lg:grid-cols-3 auto-rows-min'>
-                            <div className='lg:col-span-1'>
-                                {/* Empty div to maintain the grid structure */}
-                            </div>
-                            <div className='lg:col-span-2 flex flex-col mr-[10rem]'>
-                                {outlineContent && <NewOutlineVisualizer outline={outlineContent} />}
-                            </div>
+                <div className='flex justify-end'>
+                    <div className='w-full sm:w-3/4 gap-10 auto-rows-min'>
+                        <div className='lg:col-span-2 flex flex-col'>
+                            {outlineContent && <NewOutlineVisualizer outline={outlineContent} />}
                         </div>
                     </div>
+                </div>
             </div>
             {/* <ProjectProgress currentInd={1} contentRef={contentRef} /> */}
             {/* <div className='pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20'>
