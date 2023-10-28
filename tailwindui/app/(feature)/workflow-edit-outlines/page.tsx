@@ -183,7 +183,7 @@ export default function WorkflowStep2() {
                 </div>
 
                 <div className='flex-auto text-center self-center text-neutral-900 font-medium font-creato-medium leading-snug tracking-tight whitespace-nowrap sm:hidden'>
-                    Use our desktop version to use all the functionalities!
+                    Use our desktop version to see all the functionalities!
                 </div>
             </div>
 
