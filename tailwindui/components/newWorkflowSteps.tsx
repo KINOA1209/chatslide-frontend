@@ -280,26 +280,6 @@ const ProgressBox = (
 
     return (
       <>
-        {/* open mobile sidebar button */}
-        <div
-          className='select-none fixed rounded-full bottom-20 left-10 w-16 h-16 flex items-center justify-center border-solid border-2 border-blue-200 text-blue-600 cursor-pointer md:hidden'
-          style={{
-            // display: mobileButtonDisplay,
-            background: `radial-gradient(closest-side, white 61%, transparent 60% 100%),conic-gradient(#0070f4 ${
-              ((currentInd + 1) / steps.length) * 100
-            }%, white 0)`,
-          }}
-          onClick={handleMobileOpen}
-        >
-          <div>
-            {currentInd + 1}/{steps.length}
-          </div>
-        </div>
-        {/* <div
-          style={{ visibility: desktopVisibility }}
-          className='fixed w-fit select-none grow-0'
-          ref={progressRefDesktop}
-        > */}
         <div
           //   style={{ visibility: desktopVisibility }}
           className='w-fit select-none grow-0'
@@ -322,55 +302,6 @@ const ProgressBox = (
                   isLastStep={index === stepRedirectPair.length - 1} // Check if it's the last step
                 />
               ))}
-            </div>
-          </div>
-        </div>
-        <div
-          style={{ display: mobileDisplay }}
-          className='fixed top-0 left-0 w-full h-full z-10 bg-gray-500/75 items-center justify-center'
-          onClick={handleMobileClose}
-        >
-          <div
-            className='w-fit select-none grow-0 drop-shadow-xl border-solid border-2 border-blue-600 rounded-lg bg-white z-20 fixed'
-            ref={progressRefMobile}
-            onClick={(e) => {
-              e.stopPropagation()
-            }}
-          >
-            <div className='-top-4 flex justify-center sticky'>
-              <div className='w-fit flex flex-col flex-nowrap content-start'>
-                <div className='flex flex-row-reverse'>
-                  <div
-                    className='text-lg opacity-25 hover:opacity-100 cursor-pointer'
-                    onClick={handleMobileClose}
-                  >
-                    <svg
-                      className='w-12'
-                      data-name='Capa 1'
-                      id='Capa_1'
-                      viewBox='0 0 20 19.84'
-                      xmlns='http://www.w3.org/2000/svg'
-                    >
-                      <path d='M10.17,10l3.89-3.89a.37.37,0,1,0-.53-.53L9.64,9.43,5.75,5.54a.37.37,0,1,0-.53.53L9.11,10,5.22,13.85a.37.37,0,0,0,0,.53.34.34,0,0,0,.26.11.36.36,0,0,0,.27-.11l3.89-3.89,3.89,3.89a.34.34,0,0,0,.26.11.35.35,0,0,0,.27-.11.37.37,0,0,0,0-.53Z' />
-                    </svg>
-                  </div>
-                </div>
-                <div className='px-5 pb-5'>
-                  {dashboardButton}
-                  {stepRedirectPair.map((pair, index) => (
-                    <OneStep
-                      key={index} // Add a unique key prop here
-                      id={index + 1}
-                      current={currentInd === index}
-                      finished={finishedSteps.includes(index)}
-                      desc={pair[0]}
-                      redirect={pair[1]}
-                      unavailable={unavailableSteps.includes(index)}
-                      isLastStep={index === stepRedirectPair.length - 1} // Check if it's the last step
-                    />
-                  ))}
-                </div>
-              </div>
             </div>
           </div>
         </div>
