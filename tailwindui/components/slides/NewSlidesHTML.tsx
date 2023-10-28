@@ -78,34 +78,24 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
     const [showLayout, setShowLayout] = useState(false)
     const [present, setPresent] = useState(false)
-    // const [share, setShare] = useState(false)
     const slideRef = useRef<HTMLDivElement>(null)
     const containerRef = useRef<HTMLDivElement>(null)
     const allSlidesRef = useRef<HTMLDivElement>(null)
-    // const [host, setHost] = useState('https://drlambda.ai')
     const [saveStatus, setSaveStatus] = useState('Up to date')
-    const [dimensions, setDimensions] = useState({ width: 960, height: 540 })
+    const [dimensions, setDimensions] = useState({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
     const [unsavedChanges, setUnsavedChanges] = useState(false)
     const isFirstRender = useRef(true)
     const [isEditMode, setIsEditMode] = useState(false)
 
-    const scale = Math.min(dimensions.width / 960, dimensions.height / 540)
+    const presentScale = Math.min(dimensions.width / 960, dimensions.height / 540)
+    const nonPresentScale = Math.min(1, presentScale)
 
-    // useEffect(() => {
-    //   if (
-    //     window.location.hostname !== 'localhost' &&
-    //     window.location.hostname !== '127.0.0.1'
-    //   ) {
-    //     setHost('https://' + window.location.hostname)
-    //   } else {
-    //     setHost(window.location.hostname)
-    //   }
-    // }, [])
+    console.log(`presentScale: ${presentScale}`)
+    console.log(`nonPresentScale: ${nonPresentScale}`)
 
-    // useEffect(() => {
-    //   setShare(sessionStorage.getItem('is_shared') === 'true')
-    //   // console.log('share', sessionStorage.getItem('is_shared'));
-    // }, [])
 
     useEffect(() => {
         if (unsavedChanges) {
@@ -395,42 +385,42 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         return content
     }
 
-    useEffect(() => {
-        console.log(`present: ${present}`)
-        if (!containerRef.current || !slideRef.current) {
-            return // Exit if containerRef is not loaded
-        }
+    // useEffect(() => {
+    //     console.log(`present: ${present}`)
+    //     if (!containerRef.current || !slideRef.current) {
+    //         return // Exit if containerRef is not loaded
+    //     }
 
-        setDimensions({ width: window.innerWidth, height: window.innerHeight })
+    //     setDimensions({ width: window.innerWidth, height: window.innerHeight })
 
-        const resizeSlide = () => {
-            if (!present && containerRef.current && slideRef.current) {
-                let scale = 1
-                const viewWidth = window.innerWidth
-                if (viewWidth < 976) {
-                    scale = (viewWidth - 80) / 960
-                    containerRef.current.style.height = present
-                        ? '100%'
-                        : `${540 * scale}px`
-                    containerRef.current.style.width = present
-                        ? '100%'
-                        : `${960 * scale}px`
-                    slideRef.current.style.transform = `scale(${scale})`
-                    slideRef.current.style.left = `-${(960 * (1 - scale)) / 2}px`
-                    slideRef.current.style.top = `-${(540 * (1 - scale)) / 2}px`
-                } else {
-                    ; (containerRef.current.style.height = present ? '100%' : '540px'),
-                        (containerRef.current.style.width = present ? '100%' : '960px'),
-                        (slideRef.current.style.transform = `scale(1)`)
-                    slideRef.current.style.left = ''
-                    slideRef.current.style.top = ''
-                }
-            }
-        }
-        window.addEventListener('resize', resizeSlide)
-        resizeSlide()
-        console.log('resize')
-    }, [slideRef.current, containerRef.current])
+    //     const resizeSlide = () => {
+    //         if (!present && containerRef.current && slideRef.current) {
+    //             let scale = 1
+    //             const viewWidth = window.innerWidth
+    //             if (viewWidth < 976) {
+    //                 scale = (viewWidth - 80) / 960
+    //                 containerRef.current.style.height = present
+    //                     ? '100%'
+    //                     : `${540 * scale}px`
+    //                 containerRef.current.style.width = present
+    //                     ? '100%'
+    //                     : `${960 * scale}px`
+    //                 slideRef.current.style.transform = `scale(${scale})`
+    //                 slideRef.current.style.left = `-${(960 * (1 - scale)) / 2}px`
+    //                 slideRef.current.style.top = `-${(540 * (1 - scale)) / 2}px`
+    //             } else {
+    //                 ; (containerRef.current.style.height = present ? '100%' : '540px'),
+    //                     (containerRef.current.style.width = present ? '100%' : '960px'),
+    //                     (slideRef.current.style.transform = `scale(1)`)
+    //                 slideRef.current.style.left = ''
+    //                 slideRef.current.style.top = ''
+    //             }
+    //         }
+    //     }
+    //     window.addEventListener('resize', resizeSlide)
+    //     resizeSlide()
+    //     console.log('resize')
+    // }, [slideRef.current, containerRef.current])
 
     const editableTemplateDispatch = (slide: Slide, index: number, canEdit: boolean) => templateDispatch(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode, handleSlideEdit, updateImgUrlArray, toggleEditMode);
 
@@ -460,7 +450,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                     slides={slides}
                     currentSlideIndex={currentSlideIndex}
                     isViewing={isViewing}
-                    scale={present ? scale : 1}
+                    scale={present ? presentScale : nonPresentScale}
                     templateDispatch={editableTemplateDispatch}
                     slideRef={slideRef}
                     containerRef={containerRef}
