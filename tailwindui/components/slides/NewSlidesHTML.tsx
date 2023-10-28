@@ -83,8 +83,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     const allSlidesRef = useRef<HTMLDivElement>(null)
     const [saveStatus, setSaveStatus] = useState('Up to date')
     const [dimensions, setDimensions] = useState({
-        width: window ? window.innerWidth : 960,
-        height: window ? window.innerHeight : 540,
+        width: typeof window !== 'undefined' ? window.innerWidth : 960,
+        height: typeof window !== 'undefined' ? window.innerHeight : 540,
       });
     const [unsavedChanges, setUnsavedChanges] = useState(false)
     const isFirstRender = useRef(true)
