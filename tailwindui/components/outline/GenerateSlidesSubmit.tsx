@@ -25,7 +25,7 @@ interface OutlineSection {
 
 interface OutlineDataType extends Array<OutlineSection> { }
 
-const GenerateOutlinesSubmit = ({ outline }: { outline: OutlineDataType }) => {
+const GenerateSlidesSubmit = ({ outline }: { outline: OutlineDataType }) => {
     const router = useRouter()
     const [outlineData, setOutlineData] = useState(outline)
     const [sectionEditMode, setSectionEditMode] = useState(-1)
@@ -638,4 +638,4 @@ const GenerateOutlinesSubmit = ({ outline }: { outline: OutlineDataType }) => {
     )
 }
 
-export default GenerateOutlinesSubmit
+export default GenerateSlidesSubmit
