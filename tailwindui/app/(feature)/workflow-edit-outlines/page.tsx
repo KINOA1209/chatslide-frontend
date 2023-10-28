@@ -19,6 +19,13 @@ import {
 import NewWorkflowGPTToggle from '@/components/button/NewWorkflowGPTToggle'
 import { useRouter } from 'next/navigation'
 
+interface OutlineSection {
+    title: string
+    content: string[]
+    detailLevel: string
+    section_style: string
+}
+
 export default function WorkflowStep2() {
     const [activeSection, setActiveSection] = useState(-1)
     const router = useRouter()
@@ -31,20 +38,22 @@ export default function WorkflowStep2() {
     const contentRef = useRef<HTMLDivElement>(null)
     const [showModal, setShowModal] = useState<boolean>(false)
     const [showPopup, setShowPopup] = useState(false) // State for the popup visibility
-    const outlineContent = outlineRes
-        ? Object.keys(outlineRes).map((key) => {
-            return {
-                title: outlineRes[key]['title'],
-                content: outlineRes[key]['content'],
-                detailLevel: outlineRes[key]['detailLevel'],
-                section_style: outlineRes[key]['section_style']
-            }
-        })
-        : null
+    const [outlineContent, setOutlineContent] = useState<OutlineSection[] | null>(null)
 
-    if (outlineRes) {
-        console.log('outlineContent:', outlineRes)
-    }
+    useEffect(() => {
+        if (outlineRes) {
+            const newOutlineContent = Object.keys(outlineRes).map((key) => {
+                return {
+                    title: outlineRes[key]['title'],
+                    content: outlineRes[key]['content'],
+                    detailLevel: outlineRes[key]['detailLevel'],
+                    section_style: outlineRes[key]['section_style'],
+                }
+            })
+            setOutlineContent(newOutlineContent)
+        }
+    }, [outlineRes])
+
 
     const [isGpt35, setIsGpt35] = useState(true)
 
