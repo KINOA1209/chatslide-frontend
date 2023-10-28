@@ -33,7 +33,7 @@ interface OutlineSection {
 
 interface OutlineDataType extends Array<OutlineSection> { }
 
-const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
+const OutlineVisualizer = ({ outlineData, setOutlineData }: { outlineData: OutlineDataType, setOutlineData: (outline: OutlineDataType) => (void) }) => {
     const [detailOptions, setDetailOptions] = useState([
         { detailLevel: 'Default', description: 'moderate' },
         { detailLevel: 'More Slides', description: 'detailed' },
@@ -42,7 +42,6 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
     ])
     //   const [selectedDetail, setSelectedDetail] = useState(detailOptions[0])
     const router = useRouter()
-    const [outlineData, setOutlineData] = useState(outline)
 
     const mapDetailLevels = (section: OutlineSection) => {
         const detailLevel = section.detailLevel;

@@ -19,6 +19,7 @@ import {
 import NewWorkflowGPTToggle from '@/components/button/NewWorkflowGPTToggle'
 import { useRouter } from 'next/navigation'
 
+
 interface OutlineSection {
     title: string
     content: string[]
@@ -48,11 +49,12 @@ export default function WorkflowStep2() {
                     content: outlineRes[key]['content'],
                     detailLevel: outlineRes[key]['detailLevel'],
                     section_style: outlineRes[key]['section_style'],
-                }
-            })
-            setOutlineContent(newOutlineContent)
+                };
+            });
+            setOutlineContent(newOutlineContent);
         }
-    }, [outlineRes])
+    }, []);
+
 
 
     const [isGpt35, setIsGpt35] = useState(true)
@@ -205,7 +207,7 @@ export default function WorkflowStep2() {
                 <div className='flex justify-end'>
                     <div className='w-full sm:w-3/4 gap-10 auto-rows-min'>
                         <div className='lg:col-span-2 flex flex-col'>
-                            {outlineContent && <NewOutlineVisualizer outline={outlineContent} />}
+                            {outlineContent && <NewOutlineVisualizer outlineData={outlineContent} setOutlineData={setOutlineContent}/>}
                         </div>
                     </div>
                 </div>
