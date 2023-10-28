@@ -166,7 +166,7 @@ export default function WorkflowStep2() {
                 {/* flex row container for backlink, title and generate button */}
                 <div className='flex justify-between items-center mx-[5rem]'>
                     <div
-                        className='flex flex-row justify-center items-center gap-4 cursor-pointer hidden sm:block'
+                        className='flex-row justify-center items-center gap-4 cursor-pointer hidden sm:flex'
                         onClick={() => router.push('/workflow-generate-outlines')}
                     >
                         <LeftTurnArrowIcon></LeftTurnArrowIcon>

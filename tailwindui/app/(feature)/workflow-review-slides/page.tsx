@@ -91,7 +91,7 @@ export default function WorkflowStep3() {
         {/* flex row container for backlink, title*/}
         <div className='flex justify-start items-center mx-[5rem]'>
           <div
-            className='flex flex-row justify-center items-center gap-4 cursor-pointer hidden sm:block'
+            className='flex-row justify-center items-center gap-4 cursor-pointer hidden sm:flex'
             onClick={() => router.push('/workflow-edit-outlines')}
           >
             <LeftTurnArrowIcon></LeftTurnArrowIcon>
