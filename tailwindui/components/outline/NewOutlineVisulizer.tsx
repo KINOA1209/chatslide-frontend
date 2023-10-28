@@ -488,10 +488,8 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
     }
 
     const handleAddSection = (
-        e: React.MouseEvent<HTMLDivElement>,
         sectionIndex: number
     ) => {
-        e.preventDefault()
         console.log('Add section after section index: ' + sectionIndex)
         let newOutlineData = [...outlineData]
         newOutlineData.splice(sectionIndex + 1, 0, {
@@ -569,21 +567,25 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
             {outlineData &&
                 outlineData.map((section: OutlineSection, sectionIndex: number) => (
                     <>
-                        {outlineData.length < maxOutlineSectionCount && (
-                            <div
-                                className='my-[1.5rem]'
+                        <div className={`my-[1.5rem] ${outlineData.length >= maxOutlineSectionCount ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                            <button
+                                disabled={outlineData.length >= maxOutlineSectionCount}
                                 onClick={(e) => {
-                                    handleAddSection(e, sectionIndex)
+                                    if (outlineData.length < maxOutlineSectionCount) {
+                                        handleAddSection(sectionIndex);
+                                    }
                                 }}
+                                className="focus:outline-none"
                             >
                                 <AddSectionIcon />
-                            </div>
-                        )}
+                            </button>
+                        </div>
+
                         <div className='flex flex-row gap-4'>
                             <div
                                 id={String(sectionIndex)}
                                 key={sectionIndex + 1}
-                                className='relative w-[40rem] bg-neutral-50 rounded-md shadow border border-gray-200 px-4 py-2'
+                                className='relative w-4/5 bg-neutral-50 rounded-md shadow border border-gray-200 px-4 py-2'
                                 onMouseEnter={() => setHoveredSectionIndex(sectionIndex)}
                                 onMouseLeave={() => setHoveredSectionIndex(-1)}
                             >
@@ -596,12 +598,12 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                                     <h3 className='text-lg'>Section {sectionIndex + 1}</h3>
                                     <input
                                         key={sectionIndex}
-                                        className='border-none outline-none focus:outline-slate-300 bg-neutral-50 rounded inline text-xl font-bold grow'
+                                        className='border-none outline-none focus:outline-slate-300 bg-neutral-50 rounded inline text-xl font-bold grow whitespace-normal'
                                         value={section.title}
                                         onChange={(e) => handleSectionChange(e, sectionIndex)}
                                         // onFocus={e => handleFocus(e, sectionIndex)}
                                         onBlur={(e) => handleBlur(e, sectionIndex)}
-                                        // autoFocus
+                                    // autoFocus
                                     />
                                 </div>
                                 {hoveredSectionIndex === sectionIndex &&
@@ -626,9 +628,9 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                                                 <input
                                                     key={detailIndex}
                                                     className={`form-input border-none w-full text-gray-800 grow  ${hoveredDetailIndex === detailIndex &&
-                                                            sectionIndex === hoveredSectionIndex
-                                                            ? 'bg-gray-200'
-                                                            : 'bg-neutral-50 '
+                                                        sectionIndex === hoveredSectionIndex
+                                                        ? 'bg-gray-200'
+                                                        : 'bg-neutral-50 '
                                                         }`}
                                                     value={content}
                                                     onChange={(e) =>
@@ -680,11 +682,11 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                                     ))}
                                 </div>
                             </div>
-                            <div className='"w-48 flex flex-col bg-gray-700 rounded-md border-4 max-h-[16rem] px-2 justify-center items-center gap-8'>
+                            <div className='"w-5/1 flex flex-col bg-gray-700 rounded-md border-4 max-h-[16rem] px-2 justify-center items-center gap-8 hidden sm:block'>
                                 {/* <div className='flex flex-row'>
-                  <LeftChangeIcon></LeftChangeIcon>Concise
-                  <RightChangeIcon></RightChangeIcon>
-                </div> */}
+                                    <LeftChangeIcon></LeftChangeIcon>Concise
+                                    <RightChangeIcon></RightChangeIcon>
+                                    </div> */}
                                 <div className='flex flex-row gap-3 justify-center items-center'>
                                     <div
                                         className='cursor-pointer'
