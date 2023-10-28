@@ -159,12 +159,10 @@ const OutlineVisualizer = ({ outlineData, setOutlineData }: { outlineData: Outli
     ) => {
         const { value } = e.target
         if (value.length <= maxLength) {
-            setOutlineData((prevOutlineData: any) => {
-                const updatedOutlineData = [...prevOutlineData]
-                updatedOutlineData[sectionIndex]['content'][detailIndex] = value
-                updateOutlineSessionStorage(updatedOutlineData)
-                return updatedOutlineData
-            })
+            const updatedOutlineData = [...outlineData]; // Directly use the current state
+            updatedOutlineData[sectionIndex]['content'][detailIndex] = value;
+            setOutlineData(updatedOutlineData); // Pass the updated data directly
+            updateOutlineSessionStorage(updatedOutlineData);
         }
     }
 
@@ -533,12 +531,11 @@ const OutlineVisualizer = ({ outlineData, setOutlineData }: { outlineData: Outli
                 progress: undefined,
                 theme: 'light',
             })
-            setOutlineData((prevOutlineData: OutlineDataType) => {
-                const updatedOutlineData = [...prevOutlineData]
-                updatedOutlineData[sectionIndex].title = titleCache
-                updateOutlineSessionStorage(updatedOutlineData)
-                return updatedOutlineData
-            })
+            const updatedOutlineData = [...outlineData]; // Directly use the current state
+            updatedOutlineData[sectionIndex].title = titleCache;
+            setOutlineData(updatedOutlineData); // Pass the updated data directly
+            updateOutlineSessionStorage(updatedOutlineData);
+
             setTitleCache('')
         }
         setSectionEditMode(-1)
@@ -550,12 +547,10 @@ const OutlineVisualizer = ({ outlineData, setOutlineData }: { outlineData: Outli
     ) => {
         const { value } = e.target
         if (value.length <= maxLength) {
-            setOutlineData((prevOutlineData: OutlineDataType) => {
-                const updatedOutlineData = [...prevOutlineData]
-                updatedOutlineData[sectionIndex].title = value
-                updateOutlineSessionStorage(updatedOutlineData)
-                return updatedOutlineData
-            })
+            const updatedOutlineData = [...outlineData]; // Directly use the current state
+            updatedOutlineData[sectionIndex].title = value;
+            setOutlineData(updatedOutlineData); // Pass the updated data directly
+            updateOutlineSessionStorage(updatedOutlineData);
         }
     }
 
