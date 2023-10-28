@@ -96,7 +96,7 @@ export default function WorkflowStep2() {
     return (
         <div className=' bg-zinc-100'>
             {/* flex col container for steps, title, generate slides button etc */}
-            <div className='fixed mt-[3rem] flex flex-col w-full bg-Grey-50 justify-center z-10 gap-1 border-b-2'>
+            <div className='fixed mt-[3rem] flex flex-col w-full bg-Grey-50 justify-center z-10 gap-1 py-[0.75rem] border-b-2'>
                 {/* steps bar */}
                 <div className='self-center'>
                     <ProjectProgress currentInd={1} contentRef={contentRef} />
@@ -166,7 +166,7 @@ export default function WorkflowStep2() {
                 {/* flex row container for backlink, title and generate button */}
                 <div className='flex justify-between items-center mx-[5rem]'>
                     <div
-                        className='flex flex-row justify-center items-center gap-4 cursor-pointer'
+                        className='flex flex-row justify-center items-center gap-4 cursor-pointer hidden sm:block'
                         onClick={() => router.push('/workflow-generate-outlines')}
                     >
                         <LeftTurnArrowIcon></LeftTurnArrowIcon>
@@ -175,11 +175,15 @@ export default function WorkflowStep2() {
                         </div>
                     </div>
 
-                    <div className='w-[50rem] h-9 text-center text-neutral-900 text-xl font-medium font-creato-medium leading-snug tracking-tight whitespace-nowrap'>
+                    <div className='w-[50rem] h-9 text-center text-neutral-900 text-xl font-medium font-creato-medium leading-snug tracking-tight whitespace-nowrap hidden sm:block'>
                         Please review or edit the outlined sections and topics.
                     </div>
 
                     {outlineContent && <GenerateSlidesSubmit outline={outlineContent} />}
+                </div>
+
+                <div className='flex-auto text-center self-center text-neutral-900 font-medium font-creato-medium leading-snug tracking-tight whitespace-nowrap sm:hidden'>
+                    Use our desktop version to use all the functionalities!
                 </div>
             </div>
 
@@ -207,7 +211,7 @@ export default function WorkflowStep2() {
                 <div className='flex justify-end'>
                     <div className='w-full sm:w-3/4 gap-10 auto-rows-min'>
                         <div className='lg:col-span-2 flex flex-col'>
-                            {outlineContent && <NewOutlineVisualizer outlineData={outlineContent} setOutlineData={setOutlineContent}/>}
+                            {outlineContent && <NewOutlineVisualizer outlineData={outlineContent} setOutlineData={setOutlineContent} />}
                         </div>
                     </div>
                 </div>

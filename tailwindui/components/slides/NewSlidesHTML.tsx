@@ -91,7 +91,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     const [isEditMode, setIsEditMode] = useState(false)
 
     const presentScale = Math.min(dimensions.width / 960, dimensions.height / 540)
-    const nonPresentScale = Math.min(1, presentScale)
+    const nonPresentScale = Math.min(1, presentScale * 0.9)
 
     console.log(`presentScale: ${presentScale}`)
     console.log(`nonPresentScale: ${nonPresentScale}`)

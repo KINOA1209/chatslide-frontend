@@ -111,25 +111,21 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
           />
         )}
 
-        {!user ? (
-          // insert here
-          <ExportToPDFModal />
-        ) : (
-          <div
-            className='h-8 px-3 py-1 bg-zinc-100 rounded-lg justify-center items-center gap-2.5 inline-flex cursor-pointer'
+        
+        <div
+            className='h-8 px-3 py-1 bg-zinc-100 rounded-lg justify-center items-center gap-2.5 inline-flex cursor-pointer hidden sm:block'
             onClick={handleSavePDF}
-          >
+        >
             <div className='text-center text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide'>
-              Export to PDF (10⭐️)
+                Export to PDF (10⭐️)
             </div>
             <div className='w-4 h-4 relative' hidden={downloadingPDF}>
-              <DownloadIcon />
+                <DownloadIcon />
             </div>
             <div className='text-black h-[22px] mr-2' hidden={!downloadingPDF}>
-              <LoadingIcon />
+                <LoadingIcon />
             </div>
-          </div>
-        )}
+        </div>
       </div>
 
       {/* hidden div for export to pdf */}

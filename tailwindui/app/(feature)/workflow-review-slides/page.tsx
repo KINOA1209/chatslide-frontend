@@ -91,16 +91,16 @@ export default function WorkflowStep3() {
         {/* flex row container for backlink, title*/}
         <div className='flex justify-start items-center mx-[5rem]'>
           <div
-            className='flex flex-row justify-center items-center gap-4 cursor-pointer'
+            className='flex flex-row justify-center items-center gap-4 cursor-pointer hidden sm:block'
             onClick={() => router.push('/workflow-edit-outlines')}
           >
             <LeftTurnArrowIcon></LeftTurnArrowIcon>
-            <div className='text-center self-center text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-[0.035rem] whitespace-nowrap'>
+            <div className='text-center self-center text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-[0.035rem] whitespace-nowrap hidden sm:block'>
               Back to Outline
             </div>
           </div>
 
-          <div className='flex-auto text-center self-center text-neutral-900 text-xl font-medium font-creato-medium leading-snug tracking-tight whitespace-nowrap'>
+          <div className='flex-auto text-center self-center text-neutral-900 text-xl font-medium font-creato-medium leading-snug tracking-tight whitespace-nowrap hidden sm:block'>
             Enjoy your slides! : )
           </div>
 
@@ -108,6 +108,10 @@ export default function WorkflowStep3() {
 
           {/* <div className='flex flex-grow'></div> */}
         </div>
+
+        <div className='flex-auto text-center self-center text-neutral-900 font-medium font-creato-medium leading-snug tracking-tight whitespace-nowrap sm:hidden'>
+            Use our desktop version to use all the functionalities!
+          </div>
       </div>
       {/* <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
                 <h1 className="h1">Review Slides</h1>
