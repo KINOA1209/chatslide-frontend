@@ -554,7 +554,7 @@ const MyFiles: React.FC<filesInterface> = ({
       >
         {!selectable ? (
           <div className='pt-4 grow pr-4'>
-            <h1 className='h2 text-blue-600'>My Resources</h1>
+            <h1 className='h2' style={{ color: '#180d09' }}>My Resources</h1>
           </div>
         ) : (
           <></>

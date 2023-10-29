@@ -292,12 +292,12 @@ export default function Dashboard() {
       <ToastContainer />
       <div className='max-w-6xl w-full mx-auto px-4 pt-16 md:pt-32 flex flex-wrap justify-around'>
         <div className='pt-4 grow pr-4'>
-          <h1 className='h2 text-blue-600'>My Projects</h1>
+          <h1 className='h2' style={{ color: '#180d09' }}>My Projects</h1>
         </div>
         <div className='w-full sm:w-fit grow sm:grow-0 text-center pt-4'>
           <div className='w-full mx-auto'>
             <button
-              className='w-full btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500'
+              className='w-full btn text-white font-bold bg-gray-800 md:bg-opacity-90'
               type='button'
               onClick={handleStartNewProject}
             >

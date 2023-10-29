@@ -80,7 +80,7 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({ onFileSelected, fo
                 style={{ display: 'none' }}
             />
             <button
-                className="w-full btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500"
+                className="w-full btn text-white font-bold bg-gray-800 md:bg-opacity-90"
                 type="button"
                 onClick={handleClick}
             >
