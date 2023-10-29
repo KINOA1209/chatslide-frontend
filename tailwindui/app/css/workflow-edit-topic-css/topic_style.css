@@ -1,0 +1,405 @@
+/* navigation bar */
+@font-face {
+    font-family: "Creato Display";
+    src: url("https://db.onlinewebfonts.com/t/c456ecaa67ab8ddf91e221ee3ccaa6b3.eot");
+    src: url("https://db.onlinewebfonts.com/t/c456ecaa67ab8ddf91e221ee3ccaa6b3.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/c456ecaa67ab8ddf91e221ee3ccaa6b3.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/c456ecaa67ab8ddf91e221ee3ccaa6b3.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/c456ecaa67ab8ddf91e221ee3ccaa6b3.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/c456ecaa67ab8ddf91e221ee3ccaa6b3.svg#Creato Display")format("svg");
+}
+#generate_button{
+    background-color: #2943E9;
+    border: none;
+    color: white;
+    text-align: center;
+    font-family: 'Creato Display', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    border-radius: 40px;
+    padding: 10px 38px;
+
+}
+
+/* main page */
+.main_container {
+    background-color: #F4F4F4;
+    
+}
+
+@media (min-width: 1024px){
+    .main_container {
+        background-color: #F4F4F4;
+        padding: 2% 8% 4% 8%;
+        gap: 1%;
+        justify-content: center;
+        
+    }
+}
+
+.title1 p{
+    display: inline;
+    font-family: 'Creato Display', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+#after1 {
+    font-weight: 500;
+    color: #707C8A;
+}
+
+.title2 p{
+    display: inline;
+    font-family: 'Creato Display', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+#after2 {
+    font-weight: 500;
+    color: #707C8A;
+}
+
+.project_container {
+    background-color: #E7E9EB;
+    border-radius: 7px;
+    padding: 16px 24px 23px 24px;
+}
+
+.additional_container {
+    height: 550px;
+    background-color: #E7E9EB;
+    border-radius: 7px;
+    padding: 16px 20px;
+}
+
+.project_topic {
+    display: flex;
+    align-items: center;
+    gap:1%;
+}
+
+.project_topic p{
+    margin: 0;
+    font-family: 'Creato Display', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+
+.textfield {
+    background-color: white;
+    border-radius: 11px;
+    height: 300px;
+    margin-top: 15px;
+    resize: none;
+}
+#topic {
+    border: None;
+    width: 100%;
+    border-radius: 11px;
+    height: 270px;
+    resize: none;
+    padding: 20px;
+    font-family: 'Creato Display', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+
+
+#charcnt {
+    height:30px;
+    bottom: 35px;
+    font-family: 'Creato Display', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #707C8A;
+    scroll-padding: 20px;
+    padding-left: 20px;
+}
+
+.dropdown_container {
+    padding-top: 20px; 
+}
+
+@media (min-width: 1024px){
+    .dropdown_container {
+        align-items: center;
+        gap: 1%;
+    }
+}
+
+.dropdown_container span{
+    margin: 0;
+    font-family: 'Creato Display', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.your_audience {
+    display: flex;
+    align-items: center;
+    gap:2%;
+}
+
+.language {
+    display: flex;
+    align-items: center;
+    gap:2%;
+}
+
+.audience_container {
+    flex: 1;
+}
+
+.dropdown_container span{
+    display: inline;
+}
+
+.language_container {
+    flex: 1;
+}
+
+.dropdown_container select{
+    border: none;
+    border-radius: 7px;
+    padding: 20px;
+    width: 100%;
+    margin-top: 12px;
+}
+
+.dropdown_container select:focus{
+    outline-style: none;
+}
+
+
+/*upload files*/
+
+.upload {
+    display: flex;
+    align-items: center;
+    gap:2%;
+}
+
+.upload span{
+    margin: 0;
+    font-family: 'Creato Display', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    display: inline;
+}
+
+
+.youtube_container {
+    margin-top: 15px;
+    border-radius: 6px;
+    border: 2px dashed var(--Grey-400, #919DAA);
+}
+
+
+.drop_file{
+    margin-top: 3px;
+    padding-left: 16px;
+    padding-top: 28px;
+    border-radius: 6px;
+    border: 2px dashed var(--Grey-400, #919DAA);
+    height: 84px;
+}
+
+.drop_file span{
+    margin-left: 2%;
+    font-family: 'Creato Display', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--Grey-500, #707C8A);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px; /* 138.462% */
+    letter-spacing: 0.26px;
+    display: inline;
+}
+
+.drop_file img{
+    width: 16px;
+    height: 16px;
+    display: inline;
+}
+
+#browse_btn {
+    margin-left: 2%;
+    color: var(--Grey-100, #E7E9EB);
+    text-align: center;
+    font-family: 'Creato Display', sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18.869px; /* 145.146% */
+    letter-spacing: 0.26px;
+    border-radius: 4px;
+    background: var(--Grey-600, #525C6A);
+    border: none;
+    padding: 4px 12px;
+}
+
+#add_hr {
+    border: 1px solid #CAD0D3;
+    margin-top: 20px;
+    margin-left: -6px;
+    margin-right: -6px;
+}
+/* 
+.overlay{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    transition: opacity 400ms;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.overlay:target{
+    position: fixed;
+    visibility: visible;
+    opacity: 1;
+}
+
+.wrapper{
+    margin: 150px auto;
+    padding: 20px;
+    background: #E7E9EB;
+    border-radius: 8px;
+    width: 45%;
+    height: 600px;
+    transition: all 1s ease-in-out;
+}
+
+
+#pop_title{
+    color: var(--Gery-700, #363E4A);
+    text-align: center;
+    font-family: 'Creato Display', sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0.72px;
+    text-align: center;
+}
+
+#library{
+    height: 18px;
+    width: 17px;
+}
+.ele{
+    display: inline-block;
+    width:31%;
+    text-align: center;
+    padding: 4px 12px;
+    border: none;
+    border-bottom: 2px solid #CAD0D3;
+    background-color: #E7E9EB;
+}
+.category {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    margin-top:30px;
+    justify-content: center;
+}
+
+.category a{
+    color: var(--Grey-900, #121212);
+    text-align: center;
+    font-family: 'Creato Display', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 100;
+    line-height: 24px;
+    letter-spacing: 0.42px;
+    display: inline;
+}
+
+.category a:focus{
+    outline: none;
+}
+
+
+.category img{
+    position: relative;
+    bottom: 2px;
+    display: inline;
+    right:5px;
+}
+
+.tab-content{
+    height: 380px;
+    margin-top: 28px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+.button_row{
+    align-items: center;
+    margin-top: 30px;
+}
+
+.cancel{
+    float:left;
+    border-radius: 4.935px;
+    border: 1.635px solid #323232;
+    color: #323232;
+    text-align: center;
+    font-family: 'Creato Display',sans-serif;
+    font-size: 13.572px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 14.806px; 
+    letter-spacing: 0.543px;
+    width: 80.814px;
+    height: 28.377px;
+    padding: 6px 9px;
+    background-color: #E7E9EB;
+}
+
+.continue{
+    float:right;
+    border-radius: 4.935px;
+    border: 1.635px solid #323232;
+    color: #F4F4F4;
+    text-align: center;
+    font-family: 'Creato Display',sans-serif;
+    font-size: 13.572px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 14.806px;
+    letter-spacing: 0.543px;
+    width: 80.814px;
+    height: 28.377px;
+    padding: 2.468px 7.403px;
+    background-color: #585858;
+} */
+
+
+#youtube {
+    padding-left: 2%;
+    background-color: #E7E9EB;
+    border: None;
+    width: 100%;
+    border-radius: 11px;
+    font-family: 'Creato Display', sans-serif;
+    font-size: 14px;
+    color: var(--Grey-500, #707C8A);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px; /* 138.462% */
+    letter-spacing: 0.26px;
+}
+
+#youtube_text_container {
+    padding: 16px;
+}
