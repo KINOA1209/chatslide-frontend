@@ -30,25 +30,15 @@ export default function Topic() {
     const [showPopup, setShowPopup] = useState(false) 
     const [user, setUser] = useState(null);
     const router = useRouter();
-
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showFileModal, setShowFileModal] = useState(false);
     const [youtubeError, setYoutubeError] = useState('');
     const [isGpt35, setIsGpt35] = useState(true);
     const [showPaymentModal, setShowPaymentModal] = useState(false);
+    const [topicSuggestions, setTopicSuggestions] = useState<string[]>(["Ultrasound"]);
+    const [audienceSuggestions, setAudienceSuggestions] = useState<string[]>([]);
+    const [showAudienceInput, setShowAudienceInput] = useState(false);
 
-    const openFile = () => {
-        setShowFileModal(true);
-    };
-
-    const closeFile = () => {
-        setShowFileModal(false);
-    };
-
-    const handleOpenFile = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        openFile();
-    };
 
     // bind form data between input and sessionStorage
     const [topic, setTopic] = useState('');
@@ -60,9 +50,7 @@ export default function Topic() {
             ? JSON.parse(sessionStorage.addEquations)
             : false
     );
-    const [topicSuggestions, setTopicSuggestions] = useState<string[]>(["Ultrasound"]);
-    const [audienceSuggestions, setAudienceSuggestions] = useState<string[]>([]);
-    const [showAudienceInput, setShowAudienceInput] = useState(false);
+
 
     useEffect(() => {
         const clientTopic = sessionStorage.getItem('topic');
@@ -96,6 +84,18 @@ export default function Topic() {
         fetchUser();
     }, []);
 
+    const openFile = () => {
+        setShowFileModal(true);
+    };
+
+    const closeFile = () => {
+        setShowFileModal(false);
+    };
+
+    const handleOpenFile = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        openFile();
+    };
     const handleTopicSuggestionClick = (topic: string, event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         setTopic(topic);
@@ -116,11 +116,7 @@ export default function Topic() {
         const project_id = (typeof window !== 'undefined' && sessionStorage.project_id != undefined) ? sessionStorage.project_id : '';
 
         setIsSubmitting(true);
-        // console.log('check form data')
-        // console.log((event.target as HTMLFormElement).audience)
-        // console.log((event.target as HTMLFormElement).topic)
-        // console.log((event.target as HTMLFormElement).language)
-        // console.log((event.target as HTMLFormElement))
+
         const formData = {
             topic: (event.target as HTMLFormElement).topic.value,
             audience: (event.target as HTMLFormElement).audience.value,
@@ -132,14 +128,10 @@ export default function Topic() {
             model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4'
         };
 
-        console.log(formData)
-
         sessionStorage.setItem('topic', formData.topic);
         sessionStorage.setItem('audience', formData.audience);
         sessionStorage.setItem('language', formData.language);
         sessionStorage.setItem('addEquations', formData.addEquations);
-
-        // console.log("created form data");
 
         mixpanel.track("Generate Outline", {
             "audience": formData.audience,
@@ -159,19 +151,11 @@ export default function Topic() {
                 body: JSON.stringify(formData)
             });
 
-            // console.log(formData);
-            // console.log(response);
-
             if (response.ok) {
                 const outlinesJson = await response.json();
                 setIsSubmitting(false);
                 // Handle the response data here
                  console.log(outlinesJson);
-                // console.log(outlinesJson.data.audience);
-                // console.log(outlinesJson.data.topic);
-                // console.log(outlinesJson.data.res);
-                // console.log(outlinesJson.data.foldername);
-
 
                 // cookies doesn't work because it needs 'use server'
                 // cookies().set("topic", outlinesJson.data.audience);
@@ -185,7 +169,6 @@ export default function Topic() {
                 // Retrieve the existing resources from sessionStorage and parse them
                 const resources: string[] = JSON.parse(sessionStorage.getItem('resources') || '[]');
 
-                //console.log(resources)
                 // Add the new YouTube URL to the resources list if it's not empty
                 const youtube_id: string = outlinesJson.data.youtube_id;
 
@@ -195,8 +178,6 @@ export default function Topic() {
 
                 // Convert the updated list to a JSON string
                 const updatedResourcesJSON: string = JSON.stringify(resources);
-
-                //console.log(updatedResourcesJSON)
 
                 // Store the updated JSON string back in sessionStorage
                 sessionStorage.setItem('resources', updatedResourcesJSON);
@@ -209,7 +190,6 @@ export default function Topic() {
             } else {
                 alert(`Server is busy now. Please try again later. Reference code: ` + sessionStorage.getItem('project_id'));
                 // alert("Request failed: " + response.status);
-                console.log(response);
                 setIsSubmitting(false);
             }
         } catch (error) {
@@ -286,6 +266,7 @@ export default function Topic() {
             setYoutubeError('Please use a valid YouTube video link');
         }
     };
+
     // Function to open the popup
     const openPopup = () => {
         setShowPopup(true)
@@ -296,7 +277,7 @@ export default function Topic() {
         setShowPopup(false)
     }
 
-    // users file list section
+    // code for stripe to make fake payment
     // useEffect(() => {
     //     // Include the Stripe.js script dynamically
     //     const stripeScript = document.createElement('script');
@@ -363,33 +344,34 @@ export default function Topic() {
                     </Transition>
                 </Transition>
 
-            
-            <div className='flex mt-[3rem] flex-col w-full bg-Grey-50 justify-center gap-1 py-[1rem] border-b-2'>
-                <div className='self-center'>
-                <ProjectProgress currentInd={0} contentRef={contentRef} />
-                </div>
+                {/* project progress section */}
+                <div className='flex mt-[3rem] flex-col w-full bg-Grey-50 justify-center gap-1 py-[1rem] border-b-2'>
+                    <div className='self-center'>
+                    <ProjectProgress currentInd={0} contentRef={contentRef} />
+                    </div>
 
-                <div className='self-end mx-auto lg:mx-[5rem] flex gap-4 cursor-pointer'>
-                    <NewWorkflowGPTToggle isGpt35={isGpt35} setIsGpt35={setIsGpt35} />
-                    <div className='cursor-pointer' onClick={openPopup}>
+                    <div className='self-end mx-auto lg:mx-[5rem] flex gap-4 cursor-pointer'>
+                        <NewWorkflowGPTToggle isGpt35={isGpt35} setIsGpt35={setIsGpt35} />
+                        <div className='cursor-pointer' onClick={openPopup}>
                     </div>
                 </div>
-                <div className="self-end mx-auto lg:mx-[5rem] flex gap-4">
-                        <button 
-                            id="generate_button"
-                            disabled={isSubmitting}
-                            type="submit"
-                            >
-                            {isSubmitting ? "Generating..." : "Generate Outline"}
-                        </button>
-                </div>
 
-                <div className='flex-auto text-center self-center text-neutral-900 text-xl hidden sm:block hidden md:block lg:text-2xl xl:text-3xl font-medium font-creato-medium leading-snug tracking-tight whitespace-nowrap'>
-                    To get started, give us some high-level intro about your project.
-                </div>
+                    <div className="self-end mx-auto lg:mx-[5rem] flex gap-4">
+                            <button 
+                                id="generate_button"
+                                disabled={isSubmitting}
+                                type="submit"
+                                >
+                                {isSubmitting ? "Generating..." : "Generate Outline"}
+                            </button>
+                    </div>
 
-                <div className='w-[9rem]'></div>
-            </div>                   
+                    <div className='flex-auto text-center self-center text-neutral-900 text-xl hidden sm:block hidden md:block lg:text-2xl xl:text-3xl font-medium font-creato-medium leading-snug tracking-tight whitespace-nowrap'>
+                        To get started, give us some high-level intro about your project.
+                    </div>
+
+                    <div className='w-[9rem]'></div>
+                </div>                   
             
 
             {/* main content */}
@@ -480,26 +462,30 @@ export default function Topic() {
                                 </div>
                             </div>           
                         </div>
+
+                        {/* check equation section */}
                         <div className="flex flex-wrap -mx-3 mb-4">
-                                <div className="w-full px-3 mt-2 flex flex-row">
-                                    <div className='flex items-center'>
-                                        <input
-                                            type="checkbox"
-                                            id="addEquations"
-                                            className="form-checkbox text-gray-800"
-                                            checked={addEquations} // Use 'checked' instead of 'value'
-                                            onChange={(e) => setAddEquations(e.target.checked)}
-                                        />
-                                    </div>
-                                    <label
-                                        className=" ml-2 block text-gray-800 text-sm font-medium"
-                                        htmlFor="addEquations">
-                                        Select to <b>add equations and formulas</b> to my content, recommended for Math/Science subjects
-                                    </label>
+                            <div className="w-full px-3 mt-2 flex flex-row">
+                                <div className='flex items-center'>
+                                    <input
+                                        type="checkbox"
+                                        id="addEquations"
+                                        className="form-checkbox text-gray-800"
+                                        checked={addEquations} // Use 'checked' instead of 'value'
+                                        onChange={(e) => setAddEquations(e.target.checked)}
+                                    />
                                 </div>
+                                <label
+                                    className=" ml-2 block text-gray-800 text-sm font-medium"
+                                    htmlFor="addEquations">
+                                    Select to <b>add equations and formulas</b> to my content, recommended for Math/Science subjects
+                                </label>
                             </div>
+                        </div>
                     </div>
                 </div>
+
+                {/* supplementary section */}
                 <div className="supp_container w-full lg:w-2/5 px-3 my-3 lg:my-1">
                     <div className="title2">
                         <p>Supplementary Materials</p>
@@ -515,7 +501,6 @@ export default function Topic() {
                         <div className="youtube_container">
                             <div id='youtube_text_container' className="flex items-center w-full">
                                 <img className="w-4 h-4" src="/icons/youtube_icon.png" />
-
                                 <div className="w-full">
                                     <label htmlFor="youtube_text"></label>
                                     <input
@@ -527,10 +512,10 @@ export default function Topic() {
                                         placeholder= 'Paster YouTube link here'
                                     />  
                                 </div>
-                            
                             </div>
                             {youtubeError && <div className="text-sm text-red-500">{youtubeError}</div>}  
                         </div>
+
                         <div className="drop_file">
                             <div className='flex items-center w-full'>
                                 <img className="" src="/icons/drop_files_icon.png" />
@@ -545,44 +530,7 @@ export default function Topic() {
                                         <GuestUploadModal />}                                   
                             </div>
                         </div>
-
-                        
-                        {/* <div className="overlay mt-[6rem]" id="pop_up">
-                            <div className="wrapper">
-                                <p id="pop_title">Add Supportive File</p>
-                                <ul className="category">
-                                    <a href="#pop_up" className="ele">
-                                        <img id='library' src="/icons/library.png" />
-                                        <span>My Library</span>
-                                    </a>
-                                    <a href="#pop_up" className="ele">
-                                        <img src="/icons/computer.png" />
-                                        <span>From Computer</span>
-                                    </a>
-                                    <a href="#pop_up" className="ele">
-                                        <img src="/icons/cloud.png" />
-                                        <span>From Cloud</span>
-                                    </a>
-                                </ul>
-
-                                <div id="tab1" className="tab-content">
-                                    <p>inner page 1</p>
-                                </div>
-                                <div className="button_row">
-                                    <div className="cancel_container">
-                                        <a href="#" className="cancel" id="cancel">Cancel</a>
-                                    </div>
-                                    <div className="continue_container">
-                                        <button className="continue">Continue</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>*/}
-                        <hr id="add_hr" />
-                        {/* <div className="h-[60%] bg-white overflow-y-auto">
-                            
-                        </div> */}
-                         
+                        <hr id="add_hr" />     
                     </div>
                 </div>
             </div>
