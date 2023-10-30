@@ -393,13 +393,13 @@ export default function Topic() {
                         <div className="textfield">
                             <textarea 
                                 onChange={(e) => setTopic(e.target.value)} 
-                                className="focus:ring-0" 
+                                className="focus:ring-0 text-xl" 
                                 id="topic"
                                 value={topic} 
                                 placeholder="e.g. How to make healthy & yummy salad. Talk about multi aspects, from ingredients selection to secret sauce making, perfect recipes, etc.">
 
                             </textarea>
-                            {<div className="charcnt" id="charcnt">{topic.length  || 80} characters</div>}
+                            {<div className="charcnt" id="charcnt">{80 - topic.length} characters</div>}
                         </div>
 
                         {/* DropDown menu section */}
@@ -509,7 +509,7 @@ export default function Topic() {
                                         className="form-input w-full"
                                         value={youtube}
                                         onChange={e => handleYoutubeChange(e.target.value)}
-                                        placeholder= 'Paster YouTube link here'
+                                        placeholder= 'Paste YouTube link here'
                                     />  
                                 </div>
                             </div>
@@ -520,14 +520,12 @@ export default function Topic() {
                             <div className='flex items-center w-full'>
                                 <img className="" src="/icons/drop_files_icon.png" />
                                 <span>Drop files here or </span>                                   
-                                    {user ?
-                                        <button
-                                            id = "browse_btn"
-                                            onClick={e => handleOpenFile(e)}
-                                        >
-                                            Browse File
-                                        </button> :
-                                        <GuestUploadModal />}                                   
+                                    <button
+                                        id = "browse_btn"
+                                        onClick={e => handleOpenFile(e)}
+                                    >
+                                        Browse File
+                                    </button> 
                             </div>
                         </div>
                         <hr id="add_hr" />     
