@@ -32,7 +32,7 @@ const SignupForm: React.FC = () => {
     const passwordRef = useRef<HTMLInputElement>(null);
     const rule1 = useRef<HTMLParagraphElement>(null);
 
-    const verificationCodeInputRef = useRef<HTMLInputElement>(null);
+    const [submitting, setSubmitting] = useState(false);
 
     const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -165,6 +165,7 @@ const SignupForm: React.FC = () => {
         }
 
         try {
+            setSubmitting(true);
             const user = await AuthService.signupNoCode(email, password, email);
             if (user) {
                 sessionStorage.setItem("signed_in", "true")
@@ -189,6 +190,8 @@ const SignupForm: React.FC = () => {
                 progress: undefined,
                 theme: "light",
             });
+        } finally {
+            setSubmitting(false);
         }
     };
 
@@ -324,8 +327,9 @@ const SignupForm: React.FC = () => {
             </div>
             <div className="flex flex-wrap -mx-3 mt-6">
                 <div className="w-full px-3">
-                    <button className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full">
-                        Sign up
+                    <button className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400"
+                    disabled={submitting}>
+                        {!submitting ? 'Sign up' : 'Singing up...'}
                     </button>
                 </div>
             </div>
