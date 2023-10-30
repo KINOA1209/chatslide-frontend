@@ -100,8 +100,8 @@ const SignupForm: React.FC = () => {
         }
 
         // Remove username input, use email instead
-        const resp = await AuthService.sendCode(email, password, email);
         try {
+            const resp = await AuthService.sendCode(email, password, email);
             setDisabled(true);
             const interval = setInterval(() => {
                 setCountdown((prevCountdown) => prevCountdown - 1);
@@ -123,6 +123,27 @@ const SignupForm: React.FC = () => {
                 theme: "light",
             });
         } catch (error) {
+
+            let errorMessage: string;
+
+            if (error instanceof Error) {
+                errorMessage = error.message;
+            } else if (typeof error === 'string') {
+                errorMessage = error;
+            } else {
+                errorMessage = 'An unknown error occurred';
+            }
+
+            toast.error(errorMessage as string, {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
             console.log("Error:", error);
         }
     }
@@ -206,6 +227,7 @@ const SignupForm: React.FC = () => {
 
     return (
         <form onSubmit={handleSubmit}>
+            <ToastContainer />
             <div className={`flex flex-wrap -mx-3 mb-4 ${!Boolean(searchParams.get('referral')) && 'hidden'}`}>
                 <div className="w-full px-3">
                     <label
@@ -356,7 +378,6 @@ const SignupForm: React.FC = () => {
                     <button className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full">
                         Sign up
                     </button>
-                    <ToastContainer />
                 </div>
             </div>
             <div className="text-sm text-gray-500 text-center mt-3">
