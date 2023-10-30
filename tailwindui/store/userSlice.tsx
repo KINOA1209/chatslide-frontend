@@ -29,9 +29,22 @@ const userSlice = createSlice({
         setUsername: (state, action) => {
             state.username = action.payload.username;
         },
+
+        setEmail: (state, action) => {
+            state.email = action.payload.email;
+        },
+
+        unsetUser: (state, action) => {
+            state.uid = null;
+            state.token = null;
+            state.username = null;
+            state.email = null;
+            state.credits = 0;
+            state.tier = 'FREE';
+        },
     },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUserToken, setCredits, setTier, setUsername, setEmail, unsetUser} = userSlice.actions;
 
 export default userSlice.reducer;
