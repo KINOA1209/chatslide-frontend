@@ -57,7 +57,6 @@ export default function Dashboard() {
       try {
         const { userId, idToken: token } =
           await AuthService.getCurrentUserTokenAndId()
-        initializeUser(token)
       } catch (error: any) {
         console.error(error)
       }
@@ -186,44 +185,6 @@ export default function Dashboard() {
       promptRef.current.innerHTML = 'You have no project created.'
     }
   }, [projects, rendered])
-
-  const initializeUser = async (token: string) => {
-    const headers = new Headers()
-    if (token) {
-      headers.append('Authorization', `Bearer ${token}`)
-    }
-    headers.append('Content-Type', 'application/json')
-
-    const user = await AuthService.getCurrentUser()
-    const username = user.attributes['name']
-    const email = user.attributes['email']
-
-    const userData = {
-      username: username,
-      email: email,
-      is_admin: user.is_admin,
-    }
-
-    console.log('New user initializing...')
-    try {
-      const createUserResponse = await fetch('/api/create_user', {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(userData),
-      })
-      if (createUserResponse.ok) {
-        console.log('Initialized successfully.')
-        applyPromoCode(token)
-        handleRequest(token)
-      } else {
-        console.error('Failed to initialize user:', createUserResponse.status)
-        const errorData = await createUserResponse.json()
-        console.log('Error message:', errorData.message)
-      }
-    } catch (error) {
-      console.error('Error initializing user:', error)
-    }
-  }
 
   const applyPromoCode = async (token: string) => {
     const promo = localStorage.getItem('promo')

@@ -4,8 +4,8 @@ import React, { useState, ChangeEvent, FormEvent, useEffect, useRef, RefObject }
 import { useRouter, useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AuthService from "./utils/AuthService";
-import GoogleSignIn from "@/components/button/GoogleSignIn";
+import AuthService from "@/components/utils/AuthService";
+import UserService from "@/components/utils/UserService";
 
 
 
@@ -169,6 +169,7 @@ const SignupForm: React.FC = () => {
             const user = await AuthService.signupNoCode(email, password, email);
             if (user) {
                 sessionStorage.setItem("signed_in", "true")
+                UserService.initializeUser();
 
                 if (nextUri == null) {
                     router.push("/dashboard");

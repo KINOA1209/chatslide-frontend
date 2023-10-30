@@ -3,15 +3,42 @@ import AuthService from "./AuthService";
 
 class UserService {
 
-    // static async forceUpdateUserInfo() {
-    //     console.log('Force updating user info');
-    //     const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-    //     localStorage.removeItem('userCredits');
-    //     localStorage.removeItem('userTier');
-    //     UserService.getUserCredits(idToken);
-    //     UserService.getUserTier(idToken);
-    // }
+    static async initializeUser() {
+        const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+        const headers = new Headers();
+        if (token) {
+            headers.append('Authorization', `Bearer ${token}`);
+        }
+        headers.append('Content-Type', 'application/json');
 
+        const user = await AuthService.getCurrentUser()
+        const username = user.attributes['name'];
+        const email = user.attributes['email'];
+
+        const userData = {
+            username: username,
+            email: email,
+            is_admin: false,
+        };
+
+        console.log("New user initializing...");
+        try {
+            const createUserResponse = await fetch('/api/create_user', {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(userData)
+            });
+            if (createUserResponse.ok) {
+                console.log("Initialized successfully.")
+            } else {
+                console.error('Failed to initialize user:', createUserResponse.status);
+                const errorData = await createUserResponse.json();
+                console.log('Error message:', errorData.message);
+            }
+        } catch (error) {
+            console.error('Error initializing user:', error);
+        }
+    }
 
     static async getUserCreditsAndTier(idToken: string): Promise<{ credits: number, tier: string }> {
         try {
