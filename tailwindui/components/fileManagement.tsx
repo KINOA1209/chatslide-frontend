@@ -302,57 +302,32 @@ const MyFiles: React.FC<filesInterface> = ({
   }
 
   const onFileSelected = async (file: File | null) => {
-    console.log('will upload file', file)
-    if (file == null) {
-      // alert("Please select non-null file");
-      return
-    }
-    console.log('file name: ', file.name) //.split('.', 1)
-    console.log('file name split: ', file.name.split('.', 1))
-    const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
-    const body = new FormData()
-    body.append('file', file)
+  console.log('will upload file', file);
+  if (!file) {
+    return;
+  }
 
-    mixpanel.track('File Uploaded', {
-      'File Name': file.name,
-      'File Type': file.type,
-    })
+  const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+  const body = new FormData();
+  body.append('file', file);
 
-    fetch('/api/upload_user_file', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-      body: body,
-    })
-      .then((response) => {
-        if (response.ok) {
-          toast.success('File uploaded successfully', {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'light',
-            containerId: 'fileManagement',
-          })
-          return response.json()
-        } else {
-          throw Error(`${response.text}`)
-        }
-      })
-      .then((parsedResponse) => {
-        const file_id = parsedResponse.data.file_id
-        fetchFiles(idToken)
-        handleClick(file_id)
-      })
-      .catch((error) => {
-        console.error(error)
-        toast.error(`File upload failed ${error.message}`, {
+  mixpanel.track('File Uploaded', {
+    'File Name': file.name,
+    'File Type': file.type,
+  });
+
+  fetch('/api/upload_user_file', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${idToken}`,
+    },
+    body: body,
+  })
+    .then(async (response) => {
+      if (response.ok) {
+        toast.success('File uploaded successfully', {
           position: 'top-center',
-          autoClose: 5000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -360,9 +335,34 @@ const MyFiles: React.FC<filesInterface> = ({
           progress: undefined,
           theme: 'light',
           containerId: 'fileManagement',
-        })
-      })
-  }
+        });
+        return response.json();
+      } else {
+        const errorData = await response.json();
+        throw new Error(`${errorData.message}`);
+      }
+    })
+    .then((parsedResponse) => {
+      const file_id = parsedResponse.data.file_id;
+      fetchFiles(idToken);
+      handleClick(file_id);
+    })
+    .catch((error) => {
+      console.error(error);
+      toast.error(`File upload failed: ${error.message}`, {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        containerId: 'fileManagement',
+      });
+    });
+};
+
 
   const handleFileDeleted = (id: string) => {
     let ind = -1
