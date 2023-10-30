@@ -8,18 +8,6 @@
     url("https://db.onlinewebfonts.com/t/c456ecaa67ab8ddf91e221ee3ccaa6b3.ttf")format("truetype"),
     url("https://db.onlinewebfonts.com/t/c456ecaa67ab8ddf91e221ee3ccaa6b3.svg#Creato Display")format("svg");
 }
-#generate_button{
-    background-color: #2943E9;
-    border: none;
-    color: white;
-    text-align: center;
-    font-family: 'Creato Display', sans-serif;
-    font-weight: 500;
-    font-size: 16px;
-    border-radius: 40px;
-    padding: 10px 38px;
-
-}
 
 /* main page */
 .main_container {
