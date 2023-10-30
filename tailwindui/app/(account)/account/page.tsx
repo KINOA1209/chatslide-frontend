@@ -43,54 +43,58 @@ const Profile = () => {
     };
 
     const handleSubmitUsername = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (!changed) {
-            toast.error('This username is the same as your old username.', {
-                position: "top-center",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
-            return;
+    e.preventDefault();
+    if (!changed) {
+        toast.error('This username is the same as your old username.', {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+        return;
+    }
+
+    // Set the character limit for editUsername
+    const maxCharacterLimit = 50;
+    if (editUsername.length > maxCharacterLimit) {
+        toast.error('Username must be 50 characters or less.', {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+        return;
+    }
+
+    await AuthService.updateName(editUsername);
+    const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+
+    await fetch(`/api/user/update_username`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ 'username': editUsername }),
+    }).then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw response.status, response;
         }
-
-        await AuthService.updateName(editUsername);
-        const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
-        await fetch(`/api/user/update_username`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ 'username': editUsername, }),
-        }).then(response => {
-            if (response.ok) {
-                return response.json()
-            }
-            else {
-                throw response.status, response;
-            }
-        }).then(data => {
-            const status = data['status'];
-            const message = data['message'];
-            if (status === 'success') {
-                toast.success("Username successfully updated", {
-                    position: "top-center",
-                    autoClose: 2000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
-            }
-        }).catch(error => {
-            toast.error(error, {
+    }).then(data => {
+        const status = data['status'];
+        const message = data['message'];
+        if (status === 'success') {
+            toast.success("Username successfully updated", {
                 position: "top-center",
                 autoClose: 2000,
                 hideProgressBar: false,
@@ -100,11 +104,24 @@ const Profile = () => {
                 progress: undefined,
                 theme: "light",
             });
-        })
+        }
+    }).catch(error => {
+        toast.error(error, {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+    });
 
-        setChanged(false);
-        fetchUser();
-    };
+    setChanged(false);
+    fetchUser();
+};
+
 
     return <div className='w-full px-4 sm:px-6'>
         <div className="mb-8 w-full">
