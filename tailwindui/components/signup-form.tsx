@@ -160,44 +160,25 @@ const SignupForm: React.FC = () => {
 
         // const username = (event.target as HTMLFormElement).username.value;
         const email = (event.target as HTMLFormElement).email.value;
-        const code = (event.target as HTMLFormElement).verification_code.value;
-        const promo = (event.target as HTMLFormElement).promo.value;
         if (password === "") { // Invalid password
             return;
         }
 
         try {
-            await AuthService.confirmSignUp(email, code);
-            const signInResponse = await AuthService.signIn(email, password);  //auto sign in afterwards
-            if (signInResponse) {
-                const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
-                if (userId) {
-                    console.log('User registered:', userId);
-                    sessionStorage.setItem("signed_in", "true")
-                }
+            const user = await AuthService.signupNoCode(email, password, email);
+            if (user) {
+                sessionStorage.setItem("signed_in", "true")
 
                 if (nextUri == null) {
                     router.push("/dashboard");
-                } else {
-                    const project_id = sessionStorage.getItem('project_id') || '';
-                    try {
-                        const response = await fetch('/api/link_project', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${token}`
-                            },
-                            body: JSON.stringify({ 'project_id': project_id }),
-                        });
-                        console.log(response);
-                        router.push(nextUri); // Redirect to nextUri
-                    } catch (error) {
-                        console.error(error);
-                    }
                 }
             }
         } catch (error: any) {
             console.log("Error:", error);
+
+            if (error.message == "PreSignUp failed with error Email already exists.") {
+                error.message = "Email already exists. Please sign in or reset your password."
+            }
             toast.error(error.message, {
                 position: "top-center",
                 autoClose: 5000,
@@ -339,38 +320,6 @@ const SignupForm: React.FC = () => {
                         onFocus={e => { setIsFocused(true) }}
                         onBlur={e => { setIsFocused(false) }}
                     />
-                </div>
-            </div>
-            <div className="flex flex-wrap -mx-3 mb-4">
-                <div className="w-full px-3">
-                    <label
-                        className="block text-gray-800 text-sm font-medium mb-1"
-                        htmlFor="verification_code"
-                    >
-                        Verification Code <span className="text-red-600">*</span>
-                    </label>
-                    <div className="form-input flex flex-row flex-nowrap mb-2 focus-within:border focus-within:border-gray-500 p-0 cursor-text"
-                        onClick={e => handleClickVerificationInput(e, verificationCodeInputRef)}>
-                        <input
-                            id="verification_code"
-                            type="text"
-                            className=" text-gray-800 grow border-0 p-0 h-6 focus:outline-none focus:ring-0 mx-4 my-3"
-                            placeholder="Enter verfication code"
-                            required
-                            ref={verificationCodeInputRef}
-                        />
-                        <button
-                            onClick={e => sendVerificationCode(e)}
-                            type="button"
-                            className="btn-sm bg-slate-500 hover:bg-blue-700 text-white rounded-full my-1 mr-1 h-full disabled:bg-slate-700 disabled:text-gray-400"
-                            disabled={disabled}
-                        >
-                            {disabled
-                                ? `Wait ${countdown} seconds`
-                                : "Get Code"}
-                            {/* Get Code */}
-                        </button>
-                    </div>
                 </div>
             </div>
             <div className="flex flex-wrap -mx-3 mt-6">

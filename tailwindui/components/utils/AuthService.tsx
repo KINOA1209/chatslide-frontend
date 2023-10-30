@@ -31,6 +31,25 @@ class AuthService {
         }
     }
 
+    async signupNoCode(email: string, password: string, name: string) {
+        try {
+            const user = await AmplifyAuth.signUp({
+                username: email,
+                password,
+                attributes: {
+                    email: email,
+                    name: name,  // name is display name, different from useranme (id and email)
+                },
+                autoSignIn: { // optional - enables auto sign in after user is confirmed
+                    enabled: true,
+                }
+            });
+            return user;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async resendConfirmationCode(username: string) {
         try {
             await AmplifyAuth.resendSignUp(username);
