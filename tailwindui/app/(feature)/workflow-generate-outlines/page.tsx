@@ -4,6 +4,7 @@ import React, { useState, ChangeEvent, FormEvent, useEffect, MouseEvent, useRef 
 import { useRouter } from 'next/navigation';
 import '@/app/css/workflow-edit-topic-css/topic_style.css';
 import GuestUploadModal from '@/components/forms/uploadModal';
+import 'react-toastify/dist/ReactToastify.css'
 import ProjectProgress from '@/components/newWorkflowSteps';
 import NewWorkflowGPTToggle from '@/components/button/NewWorkflowGPTToggle';
 import AuthService from "@/components/utils/AuthService";
@@ -16,6 +17,7 @@ import Timer from '@/components/ui/Timer';
 
 import {
 　QuestionExplainIcon,
+  RightTurnArrowIcon,
 } from '../icons'
 
 const audienceList = ['Researchers', 'Students', 'Business Clients', 'Office Colleagues', 'Video Viewers', 'Myself', ];
@@ -277,6 +279,8 @@ export default function Topic() {
         setShowPopup(false)
     }
 
+    
+
     // code for stripe to make fake payment
     // useEffect(() => {
     //     // Include the Stripe.js script dynamically
@@ -286,7 +290,7 @@ export default function Topic() {
     
     //     stripeScript.onload = () => {
     //       // Stripe.js has loaded, you can now use it
-    //       const stripe = window.Stripe('sk_test_51O6QCAAiRzsH1VWMG6DDdhYgxe19iaZEmvzF4lf4y4DY57IkYtKySAnWUoG8PLDbZdGdH4yn50XM3BndaiABtBe300QWqAPy7L');
+    //       const stripe = window.Stripe('');
     //       // Rest of your Stripe-related code here
     //     };
     
@@ -344,32 +348,92 @@ export default function Topic() {
                     </Transition>
                 </Transition>
 
+                {/* questionmark after gpt toggle */}
+                {showPopup && (
+                    <div className='fixed top-[15%] left-[70%] w-[27rem] h-48 bg-gradient-to-l from-gray-950 to-slate-600 rounded-md shadow backdrop-blur-2xl flex flex-col'>
+                        {/* Popup content */}
+                        {/* You can add content, explanations, and close button here */}
+                        <div
+                            onClick={closePopup}
+                            className='text-gray-50 cursor-pointer self-end px-4 py-2'
+                        >
+                            Close
+                        </div>
+                        {/* columns for two models */}
+                        <div className='grid grid-cols-2 gap-8'>
+                            <div className='flex flex-col justify-center items-center border-r-2 border-black/25'>
+                                <div className='w-32 h-10 text-center mb-4'>
+                                    <span className='text-zinc-100 text-2xl font-normal font-creato-medium leading-loose tracking-wide'>
+                                        GPT
+                                    </span>
+                                    <span className='text-zinc-100 text-2xl font-bold font-creato-medium leading-loose tracking-wide'>
+                                        {' '}
+                                        3.5
+                                    </span>
+                                </div>
+                                <div className="w-40 h-12 text-center text-neutral-300 text-xs font-normal font-['Creato Display'] leading-tight tracking-tight mb-[1.5rem]">
+                                    Fast generation, great for small projects.
+                                </div>
+                                <div className="w-40 h-5 text-center text-zinc-100 text-xs font-medium font-['Creato Display'] leading-tight tracking-tight">
+                                    Available to All Users
+                                </div>
+                            </div>
+                            <div className='flex flex-col justify-center items-center'>
+                                <div className='w-32 h-10 text-center mb-4'>
+                                    <span className='text-zinc-100 text-2xl font-normal font-creato-medium leading-loose tracking-wide'>
+                                        GPT
+                                    </span>
+                                    <span className='text-zinc-100 text-2xl font-bold font-creato-medium leading-loose tracking-wide'>
+                                        {' '}
+                                    </span>
+                                    <span className='text-violet-500 text-2xl font-bold font-creato-medium leading-loose tracking-wide'>
+                                        4.0
+                                    </span>
+                                </div>
+                                <div className='w-40 h-12 text-center text-neutral-300 text-xs font-normal font-creato-medium leading-tight tracking-tight mb-[1.5rem]'>
+                                    Master of deep & complex subjects.
+                                </div>
+                                <div className='w-40 h-5 text-center text-zinc-100 text-xs font-medium font-creato-medium leading-tight tracking-tight'>
+                                    Exclusive to Plus & Pro Users
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 {/* project progress section */}
-                <div className='flex mt-[3rem] flex-col w-full bg-Grey-50 justify-center gap-1 py-[1rem] border-b-2'>
+                <div className='mt-[3rem] flex flex-col w-full bg-Grey-50 justify-center gap-1 py-[0.75rem] border-b-2'>
                     <div className='self-center'>
-                    <ProjectProgress currentInd={0} contentRef={contentRef} />
+                        <ProjectProgress currentInd={0} contentRef={contentRef} />
                     </div>
 
-                    <div className='self-end mx-auto lg:mx-[5rem] flex gap-4 cursor-pointer'>
+                    <div className='self-end mx-auto lg:mx-[5rem] flex flex-row gap-4 cursor-pointer'>
                         <NewWorkflowGPTToggle isGpt35={isGpt35} setIsGpt35={setIsGpt35} />
                         <div className='cursor-pointer' onClick={openPopup}>
-                    </div>
-                </div>
-
-                    <div className="self-end mx-auto lg:mx-[5rem] flex gap-4">
-                            <button 
-                                id="generate_button"
-                                disabled={isSubmitting}
-                                type="submit"
-                                >
-                                {isSubmitting ? "Generating..." : "Generate Outline"}
-                            </button>
+                            <QuestionExplainIcon />
+                        </div>
                     </div>
 
-                    <div className='flex-auto text-center self-center text-neutral-900 text-xl hidden sm:block hidden md:block lg:text-2xl xl:text-3xl font-medium font-creato-medium leading-snug tracking-tight whitespace-nowrap'>
-                        To get started, give us some high-level intro about your project.
-                    </div>
+                    <div className="self-end w-full mx-auto lg:mx-[5rem] flex gap-4">
 
+                        <div className='flex-auto text-center self-center text-neutral-900 text-xl hidden md:block hidden font-medium font-creato-medium leading-snug tracking-tight whitespace-nowrap lg:pl-[20%]'>
+                            To get started, give us some high-level intro about your project.
+                        </div>
+                        <button 
+                            id="generate_button"
+                            disabled={isSubmitting}
+                            className='w-[11rem] mx-auto h-8 px-5 py-1.5 bg-Generate-slides-bg-color rounded-3xl justify-center items-center gap-5 inline-flex cursor-pointer disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400  lg:mr-[1%]'
+                            type="submit"
+                            >
+                            <div className='w-[6rem] text-zinc-100 text-sm font-medium font-creato-medium leading-none tracking-tight whitespace-nowrap'>
+                                Generate Outline
+                            </div>
+                            <div>
+                                <RightTurnArrowIcon />
+                            </div>
+                        </button>
+                        
+                    </div>
                     <div className='w-[9rem]'></div>
                 </div>                   
             
@@ -388,18 +452,19 @@ export default function Topic() {
                     <div className="project_container h-[650px] lg:h-[550px] my-2 lg:my-5">
                         <div className="project_topic">
                             <p>Project Topic</p>
-                            <QuestionExplainIcon />
+                            {/* <QuestionExplainIcon /> */}
                         </div>
                         <div className="textfield">
                             <textarea 
                                 onChange={(e) => setTopic(e.target.value)} 
                                 className="focus:ring-0 text-xl" 
                                 id="topic"
-                                value={topic} 
+                                value={topic}
+                                maxLength={80} 
                                 placeholder="e.g. How to make healthy & yummy salad. Talk about multi aspects, from ingredients selection to secret sauce making, perfect recipes, etc.">
 
                             </textarea>
-                            {<div className="charcnt" id="charcnt">{80 - topic.length} characters</div>}
+                            {<div className="charcnt" id="charcnt">{80 - topic.length} characters left</div>}
                         </div>
 
                         {/* DropDown menu section */}
@@ -407,7 +472,7 @@ export default function Topic() {
                             <div className="audience_container">
                                 <div className="your_audience ">
                                     <span>Your Audience</span>
-                                    <QuestionExplainIcon />
+                                    {/* <QuestionExplainIcon /> */}
                                 </div>
                                 <div className="audience_drop">
                                     <label
@@ -439,7 +504,7 @@ export default function Topic() {
                             <div className="language_container">
                                 <div className="language">
                                     <span>Language</span>
-                                    <QuestionExplainIcon />
+                                    {/* <QuestionExplainIcon /> */}
                                 </div>
                                 <div className="language_drop">
                                     <select 
@@ -495,7 +560,7 @@ export default function Topic() {
                     <div className="additional_container my-2 lg:my-5">
                         <div className="upload">
                             <span>Upload Files</span>
-                            <QuestionExplainIcon />
+                            {/* <QuestionExplainIcon /> */}
                         </div>
 
                         <div className="youtube_container">
