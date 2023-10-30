@@ -18,7 +18,7 @@ import Timer from '@/components/ui/Timer';
 import {
 　QuestionExplainIcon,
   RightTurnArrowIcon,
-} from '../icons'
+} from '@/app/(feature)/icons'
 
 const audienceList = ['Researchers', 'Students', 'Business Clients', 'Office Colleagues', 'Video Viewers', 'Myself', ];
 
@@ -460,9 +460,9 @@ export default function Topic() {
                                 className="focus:ring-0 text-xl" 
                                 id="topic"
                                 value={topic}
-                                maxLength={80} 
-                                placeholder="e.g. How to make healthy & yummy salad. Talk about multi aspects, from ingredients selection to secret sauce making, perfect recipes, etc.">
-
+                                maxLength={80}
+                                required
+                                placeholder="e.g. How to make healthy & yummy salad. Talk about multi aspects, from ingredients selection to secret sauce making, perfect recipes, etc.">                                               
                             </textarea>
                             {<div className="charcnt" id="charcnt">{80 - topic.length} characters left</div>}
                         </div>
