@@ -8,121 +8,17 @@ import AuthService from '@/components/utils/AuthService'
 import { Dialog, Transition } from '@headlessui/react'
 import { useRouter } from 'next/navigation'
 import mixpanel from 'mixpanel-browser'
-import ProjectTable from './ProjectTable'
-// interface Project {
-//   id: number
-//   name: string
-//   description: string
-// }
+
 interface Project {
-  id: string
-  task: 'video' | 'scripts' | 'slides'
-  projectName: string
-  resources: string[]
-  creationDate: string
+  id: number
+  name: string
+  description: string
 }
-
-const fakeProjects: Project[] = [
-  {
-    id: '63fa4d24-04de-43c5-8bc6-bc00175e10ca',
-    task: 'video',
-    projectName: 'Exploration of Creative Arts in Modern Society',
-    resources: [
-      'introduction_to_creative_arts.pdf',
-      'creative_arts_script_v1.docx',
-      'creative_arts_video_part1.mp4',
-    ],
-    creationDate: '10-03-2023',
-  },
-  {
-    id: '1b9566e1-5b9f-4d3f-9e6b-3a70e1240b68',
-    task: 'scripts',
-    projectName: 'A Comprehensive Study of Musical Evolution Across Centuries',
-    resources: [
-      'musical_evolution_lyrics.pdf',
-      'musical_evolution_composition_notes.docx',
-    ],
-    creationDate: '05-15-2023',
-  },
-  {
-    id: '9be376e7-9c47-42c3-8745-6e8f5985bfc7',
-    task: 'slides',
-    projectName:
-      'Art Gallery Showcase and Historical Significance Presentation',
-    resources: ['gallery_showcase_and_historical_presentation.pptx'],
-    creationDate: '12-30-2023',
-  },
-  {
-    id: '64aa30bb-f6eb-44f5-9e68-ef7eeef4d2f4',
-    task: 'video',
-    projectName:
-      'Sustainable and Eco-Friendly Living Practices in the Modern World',
-    resources: [
-      'sustainability_research.pdf',
-      'eco_friendly_living_guide.docx',
-      'eco_friendly_living_video_part1.mp4',
-      'eco_friendly_living_video_part2.mp4',
-      'sustainability_research2.pdf',
-      'sustainability_research3.pdf',
-    ],
-    creationDate: '08-21-2023',
-  },
-  {
-    id: 'd2a7e0d1-31de-4fb3-9b75-8a33b65f4c81',
-    task: 'slides',
-    projectName: 'Insights into Historical Events and Their Impact on Society',
-    resources: [
-      'historical_events_presentation.pptx',
-      'historical_events_research_notes.docx',
-    ],
-    creationDate: '04-07-2023',
-  },
-  {
-    id: 'e4f3c6ab-60a1-45bd-87de-20ab54fe5929',
-    task: 'video',
-    projectName: 'Project ABC - Video Editing',
-    resources: ['video1.mp4', 'video2.mp4', 'video3.mp4'],
-    creationDate: '10-18-2023',
-  },
-  {
-    id: 'db159980-7e52-4287-8a52-3f46d42266aa',
-    task: 'slides',
-    projectName: 'Project XYZ - Presentation Slides',
-    resources: ['slides1.pdf', 'slides2.pdf'],
-    creationDate: '11-04-2023',
-  },
-  {
-    id: 'df2a7e3c-96f9-4926-a21f-64a2a2d8f03a',
-    task: 'scripts',
-    projectName: 'Project DEF - Scriptwriting',
-    resources: ['script1.docx', 'script2.docx', 'script3.docx'],
-    creationDate: '09-29-2023',
-  },
-  {
-    id: 'c43b265c-3da7-46b7-98f7-0d433243e92d',
-    task: 'video',
-    projectName: 'Project GHI - Video Production',
-    resources: ['video1.mp4', 'video2.mp4'],
-    creationDate: '12-15-2023',
-  },
-  {
-    id: '8e9c5b26-10d1-47cc-bb9f-1df63e4b67c8',
-    task: 'slides',
-    projectName: 'Project JKL - Conference Presentation',
-    resources: ['slides1.pdf', 'slides2.pdf', 'slides3.pdf'],
-    creationDate: '08-21-2023',
-  },
-]
-
-// console.log(fakeProjects)
-
-// console.log(fakeProjects);
 
 export default function Dashboard() {
   const [currentPage, setCurrentPage] = useState(1)
   const [projects, setProjects] = useState<Project[]>([])
-  // const [deleteInd, setDeleteInd] = useState(-1)
-  const [deleteInd, setDeleteInd] = useState('')
+  const [deleteInd, setDeleteInd] = useState(-1)
   const router = useRouter()
   const promptRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
@@ -142,11 +38,7 @@ export default function Dashboard() {
   // const indexOfLastProject = currentPage * projectsPerPage;
   // const indexOfFirstProject = indexOfLastProject - projectsPerPage;
   // const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
-
-  // const currentProjects = projects
-
-  // place holder data
-  const currentProjects = fakeProjects
+  const currentProjects = projects
 
   const goToNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1)
@@ -161,18 +53,36 @@ export default function Dashboard() {
       contentRef.current.style.height = contentRef.current.offsetHeight + 'px'
     }
     // Create a scoped async function within the hook.
-    const fetchUserAndProject = async () => {
+    const fetchUser = async () => {
       try {
         const { userId, idToken: token } =
           await AuthService.getCurrentUserTokenAndId()
-          handleRequest(token)
+        initializeUser(token)
       } catch (error: any) {
         console.error(error)
       }
     }
     // Execute the created function directly
-    fetchUserAndProject()
+    fetchUser()
   }, [])
+
+  useEffect(() => {
+    const signed_in = sessionStorage.getItem('signed_in')
+    console.log(`signed_in: ${signed_in}`)
+    if (signed_in && signed_in === 'true') {
+      toast.success('Sign in successfully', {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      })
+    }
+    sessionStorage.removeItem('signed_in')
+  })
 
   const handleRequest = async (token: string) => {
     const headers = new Headers()
@@ -189,7 +99,6 @@ export default function Dashboard() {
 
       if (response.ok) {
         const data = await response.json()
-        console.log('project data: ', data.projects)
         setProjects(data.projects)
         setRendered(true)
       } else {
@@ -201,14 +110,14 @@ export default function Dashboard() {
     }
   }
 
-  const handleProjectClick = (projectId: string) => {
+  const handleProjectClick = (projectId: number) => {
     // Open the project detail page in a new tab
     window.open(`/project/${projectId}`, '_blank')
   }
 
   const handleDelete = (
     e: React.MouseEvent<HTMLDivElement>,
-    projectId: string
+    projectId: number
   ) => {
     e.stopPropagation()
     // Modal for warning
@@ -218,7 +127,7 @@ export default function Dashboard() {
 
   const confirmDelete = async () => {
     setIsOpen(false)
-    if (deleteInd === '') {
+    if (deleteInd == -1) {
       throw 'Error'
     }
     const projectDeleteData = {
@@ -269,7 +178,7 @@ export default function Dashboard() {
     } catch (error) {
       console.error(error)
     }
-    setDeleteInd('')
+    setDeleteInd(-1)
   }
 
   useEffect(() => {
@@ -277,6 +186,97 @@ export default function Dashboard() {
       promptRef.current.innerHTML = 'You have no project created.'
     }
   }, [projects, rendered])
+
+  const initializeUser = async (token: string) => {
+    const headers = new Headers()
+    if (token) {
+      headers.append('Authorization', `Bearer ${token}`)
+    }
+    headers.append('Content-Type', 'application/json')
+
+    const user = await AuthService.getCurrentUser()
+    const username = user.attributes['name']
+    const email = user.attributes['email']
+
+    const userData = {
+      username: username,
+      email: email,
+      is_admin: user.is_admin,
+    }
+
+    console.log('New user initializing...')
+    try {
+      const createUserResponse = await fetch('/api/create_user', {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(userData),
+      })
+      if (createUserResponse.ok) {
+        console.log('Initialized successfully.')
+        applyPromoCode(token)
+        handleRequest(token)
+      } else {
+        console.error('Failed to initialize user:', createUserResponse.status)
+        const errorData = await createUserResponse.json()
+        console.log('Error message:', errorData.message)
+      }
+    } catch (error) {
+      console.error('Error initializing user:', error)
+    }
+  }
+
+  const applyPromoCode = async (token: string) => {
+    const promo = localStorage.getItem('promo')
+    localStorage.removeItem('promo')
+    if (promo && promo !== '') {
+      try {
+        mixpanel.track('Promo Code Applied', {
+          'Promo Code': promo,
+        })
+        const response = await fetch(`/api/user/apply_code`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ code: promo }),
+        })
+          .then((response) => {
+            return response.json()
+          })
+          .then((data) => {
+            console.log(data)
+            const status = data['status']
+            const message = data['message']
+            if (status === 'success') {
+              toast.success('Welcome! Your referral code has been applied.', {
+                position: 'top-center',
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'light',
+              })
+            } else {
+              toast.error(message, {
+                position: 'top-center',
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'light',
+              })
+            }
+          })
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  }
 
   // function to handle click start new project, clear sessionstorage
   const handleStartNewProject = () => {
@@ -288,38 +288,34 @@ export default function Dashboard() {
   }
 
   return (
-    <section className=' grow flex flex-col h-full'>
+    <section className='bg-gradient-to-b from-gray-100 to-white grow flex flex-col h-full'>
       <ToastContainer />
-      {/* top background container of my projects title text and  */}
-      <div className='bg-gray-200 pt-16 md:pt-32 flex justify-center '>
-        {/* flex container controlling max width */}
-        <div className='w-full h-[6.25rem] max-w-7xl flex flex-wrap items-end justify-between '>
-          {/* my project title text */}
-          <div className='w-40 rounded-md justify-center items-center inline-flex '>
-            <div className='text-neutral-900 text-base font-bold font-creato-medium leading-10 tracking-wide border-black border-b-2'>
-              My Projects
-            </div>
-          </div>
-          {/* create new project button */}
-          <div className='h-9 px-5 py-2 bg-[#2943E9] rounded-3xl justify-center items-center inline-flex self-start whitespace-no-wrap'>
-            <div
-              className='text-center text-zinc-100 text-sm font-medium font-creato-medium leading-none tracking-tight cursor-pointer'
+      <div className='max-w-6xl w-full mx-auto px-4 pt-16 md:pt-32 flex flex-wrap justify-around'>
+        <div className='pt-4 grow pr-4'>
+          <h1 className='h2' style={{ color: '#180d09' }}>
+            My Projects
+          </h1>
+        </div>
+        <div className='w-full sm:w-fit grow sm:grow-0 text-center pt-4'>
+          <div className='w-full mx-auto'>
+            <button
+              className='w-full btn text-white font-bold bg-gray-800 md:bg-opacity-90'
+              type='button'
               onClick={handleStartNewProject}
             >
-              Create New Project (20 ⭐️)
-            </div>
+              Start New Project (20 ⭐️)
+            </button>
           </div>
         </div>
       </div>
 
-      {/* projects details area */}
+      {/* My project title and start new project button */}
+
       <div
-        className='max-w-7xl mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto'
+        className='max-w-6xl w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto'
         ref={contentRef}
       >
-        {/* table header */}
-        {/* <div className='w-full h-8 bg-indigo-50 rounded-tl-md rounded-tr-md border border-gray-200'></div> */}
-        {/* {currentProjects.length > 0 && (
+        {currentProjects.length > 0 && (
           <div className='flex flex-col w-full grow'>
             <div className='w-full h-fit grow'>
               <div className='w-full px-4'>
@@ -356,6 +352,42 @@ export default function Dashboard() {
                 )
               })}
             </div>
+            {/* <div className="flex justify-center items-center my-6">
+                            {!projects.length || currentPage === 1 ? (
+                                <button
+                                    className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md opacity-50 cursor-not-allowed mr-2`}
+                                    disabled
+                                    style={{ minWidth: '120px' }}
+                                >
+                                    Previous Page
+                                </button>
+                            ) : (
+                                <button
+                                    className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md mr-2`}
+                                    onClick={goToPreviousPage}
+                                    style={{ minWidth: '120px' }}
+                                >
+                                    Previous Page
+                                </button>
+                            )}
+                            {!projects.length || currentPage === totalPages ? (
+                                <button
+                                    className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md opacity-50 cursor-not-allowed`}
+                                    disabled
+                                    style={{ minWidth: '120px' }}
+                                >
+                                    Next Page
+                                </button>
+                            ) : (
+                                <button
+                                    className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md`}
+                                    onClick={goToNextPage}
+                                    style={{ minWidth: '120px' }}
+                                >
+                                    Next Page
+                                </button>
+                            )}
+                        </div> */}
           </div>
         )}
         {currentProjects.length === 0 && (
@@ -364,12 +396,7 @@ export default function Dashboard() {
               Loading...
             </div>
           </div>
-        )} */}
-        <ProjectTable
-          currentProjects={currentProjects}
-          onProjectClick={handleProjectClick}
-          onDelete={handleDelete}
-        />
+        )}
       </div>
 
       {/* Delete modal */}
