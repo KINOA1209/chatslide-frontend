@@ -83,26 +83,27 @@ const SignupForm: React.FC = () => {
         try {
             setSubmitting(true);
             await AuthService.signupNoCode(email, password, email);
-            const {user } = await AuthService.signIn(email, password);
+            const { user } = await AuthService.signIn(email, password);
             console.log(user);
-            sessionStorage.setItem("signed_in", "true");
 
             const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
 
             await UserService.initializeUser(idToken);  // in our db
-            const { status, message } = await UserService.applyPromoCode(referralValue, idToken);
-            console.log(status, message);
-            if (status == 200) {
-                toast.success(message, {
-                    position: "top-center",
-                    autoClose: 2000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
+            if (referralValue) {
+                const { status, message } = await UserService.applyPromoCode(referralValue, idToken);
+                // console.log(status, message);
+                if (status == 200) {
+                    toast.success(message, {
+                        position: "top-center",
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }
             }
             router.push("/dashboard");
         } catch (error: any) {
