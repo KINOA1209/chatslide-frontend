@@ -53,16 +53,17 @@ export default function Dashboard() {
       contentRef.current.style.height = contentRef.current.offsetHeight + 'px'
     }
     // Create a scoped async function within the hook.
-    const fetchUser = async () => {
+    const fetchUserAndProject = async () => {
       try {
         const { userId, idToken: token } =
           await AuthService.getCurrentUserTokenAndId()
+          handleRequest(token)
       } catch (error: any) {
         console.error(error)
       }
     }
     // Execute the created function directly
-    fetchUser()
+    fetchUserAndProject()
   }, [])
 
   const handleRequest = async (token: string) => {
@@ -279,7 +280,7 @@ export default function Dashboard() {
         {currentProjects.length === 0 && (
           <div className='w-full grow flex items-center justify-center'>
             <div className='text-gray-400' ref={promptRef}>
-              You have no project created. Click the button above to start a new project.
+              Loading...
             </div>
           </div>
         )}
