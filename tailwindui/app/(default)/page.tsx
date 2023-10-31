@@ -123,7 +123,7 @@ function App() {
               {user ? (
                 <Link href='/dashboard'>Go to Dashboard</Link>
               ) : (
-                <Link href='/signin'>Start for Free</Link>
+                <Link href='/signup'>Start for Free</Link>
               )}
             </div>
           </div>
@@ -251,16 +251,6 @@ function App() {
           <div className='w-[90%] text-center text-neutral-900 text-4xl lg:text-7xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
             Pricing
           </div>
-          {/* <div className='w-[6rem] h-8 lg:w-56 lg:h-14 mt-[2.5rem] mb-[5rem] px-[4rem] py-2 bg-gradient-to-b from-blue-950 to-slate-950 rounded-lg shadow border border-blue-700 flex-col justify-center items-center gap-2.5 inline-flex'>
-            <div className='w-40 h-12 lg:w-[14rem] lg:h-[3.75rem] text-center text-zinc-100 text-xs lg:text-xl font-creato-medium capitalize leading-10 tracking-wide'>
-              {user ? (
-                <Link href='/dashboard'>Go to Dashboard</Link>
-              ) : (
-                <Link href='/signin'>Dive in Today</Link>
-              )}
-            </div>
-          </div> */}
-          {/* billing options, yearly and monthly */}
           <div className='w-[90%] mx-auto max-w-7xl mb-[3rem] flex justify-center lg:justify-end items-center'>
             <div className='billing-options flex justify-center items-center rounded-xl bg-Grey-100'>
               <div

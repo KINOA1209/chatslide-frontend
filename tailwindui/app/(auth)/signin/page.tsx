@@ -16,21 +16,6 @@ import { Auth, Hub } from 'aws-amplify';
 export default function SignIn() {
     const searchParams = useSearchParams();
     const nextUri = searchParams.get("next");
-    const router = useRouter();
-
-    useEffect(() => {
-        const loginRedirect = () => {
-            Auth.currentAuthenticatedUser().then(user => {
-                router.push('/dashboard');
-            }).catch((error: string) => {
-                // Throw error if the reason is unknown
-                if (error !== "The user is not authenticated") {
-                    console.error(error);
-                }
-            });
-        };
-        loginRedirect();
-    }, []);
 
     return (
         <section className="bg-gradient-to-b from-gray-100 to-white">
