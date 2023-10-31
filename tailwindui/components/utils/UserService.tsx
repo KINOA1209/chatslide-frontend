@@ -5,7 +5,7 @@ class UserService {
 
     static async initializeUser(token: string) {
         const headers = new Headers();
-        console.log("Token: ", token)
+        // console.log("Token: ", token)
         if (token) {
             headers.append('Authorization', `Bearer ${token}`);
         }
@@ -54,10 +54,10 @@ class UserService {
                     return response.json()
                 })
                 .then((data) => {
-                    console.log(data)
+                    // console.log(data)
                     const status = data['status']
                     const message = data['message']
-                    console.log(status, message)
+                    // console.log(status, message)
                     if (status === 'success') {
                         return { status: 200, message }
                     } else {
