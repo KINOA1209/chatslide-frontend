@@ -58,6 +58,7 @@ export default function SSORedirect() {
 
     }, []);
     return (<>
+        You should be redirected soon. If not, you may already have an account. Please sign in or reset your password.
         <ToastContainer />
     </>)
 };
