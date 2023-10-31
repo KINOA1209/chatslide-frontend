@@ -1,5 +1,6 @@
 import { Auth as AmplifyAuth, Hub } from 'aws-amplify';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
+import { setUserToken, setCredits, setTier, setUsername, setEmail, unsetUser } from '@/store/userSlice';
 
 import awsConfig from '../../aws-exports';
 
@@ -33,7 +34,7 @@ class AuthService {
 
     async signupNoCode(email: string, password: string, name: string) {
         try {
-            const user = await AmplifyAuth.signUp({
+            const { user } = await AmplifyAuth.signUp({
                 username: email,
                 password,
                 attributes: {
@@ -69,18 +70,6 @@ class AuthService {
         }
     }
 
-    // listenToAutoSignInEvent() {
-    //     Hub.listen('auth', ({ payload }) => {
-    //         const { event } = payload;
-    //         if (event === 'autoSignIn') {
-    //             const user = payload.data;
-    //             // assign user
-    //         } else if (event === 'autoSignIn_failure') {
-    //             // redirect to sign in page
-    //         }
-    //     })
-    // }
-
     async signIn(email: string, password: string) {
         try {
             const user = await AmplifyAuth.signIn(email, password);
@@ -103,27 +92,35 @@ class AuthService {
 
     async getCurrentUserDisplayName() {
         const user = await this.getCurrentUser();
-        try {
-            // console.log(user.attributes['name']);
-            return user.attributes['name'];
-        }
-        catch (error) {
-            console.error('Error getting current user display name: ', error);
-            return user.username;
+        if (user) {
+            try {
+                // console.log(user.attributes['name']);
+                const name = user.attributes['name'];
+                return name;
+            }
+            catch (error) {
+                console.error('Error getting current user display name: ', error);
+                return user.username;
+            }
         }
     }
 
     async getCurrentUserEmail() {
         const user = await this.getCurrentUser();
-        try {
-            // console.log(user.attributes['email'])
-            return user.attributes['email'];
-        }
-        catch (error) {
-            console.error('Error getting current user email: ', error);
-            return null;
+        if (user) {
+            try {
+                // console.log(user.attributes['email'])
+                const email = user.attributes['email'];
+                return email;
+            }
+            catch (error) {
+                console.error('Error getting current user email: ', error);
+                return null;
+            }
         }
     }
+
+
 
     async getCurrentUserTokenAndId() {
         try {
@@ -172,14 +169,14 @@ class AuthService {
         }
     }
 
-    async updateName (name: string) {
+    async updateName(name: string) {
         try {
             const user = await AmplifyAuth.currentAuthenticatedUser();
             const result = await AmplifyAuth.updateUserAttributes(user, {
                 name: name
             });
             console.log(result); // SUCCESS
-        } catch(err) {
+        } catch (err) {
             console.log(err);
         }
     };
