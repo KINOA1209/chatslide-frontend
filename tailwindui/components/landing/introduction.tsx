@@ -79,8 +79,6 @@ const InternalIntroduction = () => {
 }
 
 export default function Introduction() {
-  const signed_in = typeof localStorage !== 'undefined' ? (localStorage.getItem('signed_in') === 'true') : false;
-
   return (
     <>
       <InternalIntroduction />

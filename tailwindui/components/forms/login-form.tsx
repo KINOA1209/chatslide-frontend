@@ -23,8 +23,6 @@ const LoginForm: React.FC = () => {
         try {
             const user = await AuthService.signIn(email, password);
             
-            sessionStorage.setItem('signed_in', 'true')
-
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
             console.log('token', token);
 

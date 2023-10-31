@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import AuthService from '../utils/AuthService';
 import { useRouter, useSearchParams } from "next/navigation";
+import UserService from '../utils/UserService';
 
-
-const GoogleSignIn: React.FC = () => {
+interface GoogleSignInProps {
+    promo?: string;
+  }
+  
+  const GoogleSignIn: React.FC<GoogleSignInProps> = ({ promo }) => {
   const searchParams = useSearchParams();
   const nextUri = searchParams.get("next");
 
@@ -19,8 +23,7 @@ const GoogleSignIn: React.FC = () => {
     }
     try {
       const { uid, token } = await AuthService.googleSingIn();
-      console.log('You are signed in!');
-      sessionStorage.setItem('signed_in', 'true')
+
     } catch (error) {
       console.error(error);
     }
