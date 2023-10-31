@@ -6,8 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthService from "@/components/utils/AuthService";
 import UserService from "@/components/utils/UserService";
-
-
+import Promo from "./signup/Promo";
 
 const SignupForm: React.FC = () => {
     const router = useRouter();
@@ -18,38 +17,20 @@ const SignupForm: React.FC = () => {
     const [email, setEmail] = useState("");
     // const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [validEmail, setValidEmail] = useState(false);
-    const [disabled, setDisabled] = useState(false);
-    const [countdown, setCountdown] = useState(15);
 
-    const [usernameError, setUsernameError] = useState('');
     const [emailError, setEmailError] = useState('');
-    const [verificationCodeError, setVerificationCodeError] = useState('');
 
     const [isFocused, setIsFocused] = useState(false);
     const [rule1Error, setRule1Error] = useState(false);
 
     const passwordRef = useRef<HTMLInputElement>(null);
     const rule1 = useRef<HTMLParagraphElement>(null);
+    const [showPromo, setShowPromo] = useState(false);
+    const [referralValue, setReferralValue] = useState('');
 
     const [submitting, setSubmitting] = useState(false);
 
     const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
-    // function handleUsernameChange(event: any) {
-    //     const username = event.target.value;
-
-    //     // Validate the username (example: at least 6 characters)
-    //     if (username.length < 2) {
-    //         setUsernameError('Name should have at least 2 characters.');
-    //     } else if (username.length > 16) {
-    //         setUsernameError('Name should have at most 16 characters.');
-    //     } else {
-    //         setUsernameError('');
-    //     }
-
-    //     setUsername(username);
-    // }
 
     function handleEmailChange(event: any) {
         const value = event.target.value;
@@ -90,71 +71,6 @@ const SignupForm: React.FC = () => {
         validatePassword(value);
     }
 
-    async function sendVerificationCode(e: React.MouseEvent<HTMLButtonElement>) {
-        console.log(`sendVerificationCode: ${email}, ${password}`);
-        e.preventDefault();
-
-        if (password === "") { // Invalid password
-            console.log("Invalid password")
-            return;
-        }
-
-        // Remove username input, use email instead
-        try {
-            const resp = await AuthService.sendCode(email, password, email);
-            setDisabled(true);
-            const interval = setInterval(() => {
-                setCountdown((prevCountdown) => prevCountdown - 1);
-            }, 1000);
-            setTimeout(() => {
-                clearInterval(interval);
-                setDisabled(false);
-                setCountdown(15);
-            }, 15000);
-
-            toast.success("Email sent", {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
-        } catch (error) {
-
-            let errorMessage: string;
-
-            if (error instanceof Error) {
-                errorMessage = error.message;
-            } else if (typeof error === 'string') {
-                errorMessage = error;
-            } else {
-                errorMessage = 'An unknown error occurred';
-            }
-
-            toast.error(errorMessage as string, {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
-            console.log("Error:", error);
-        }
-    }
-
-    function handleClickVerificationInput(e: React.MouseEvent<HTMLDivElement>, textRef: RefObject<HTMLInputElement>) {
-        if (textRef.current) {
-            textRef.current.focus();
-        }
-    };
-
-    /* write a function that will take the form data and send it to the backend */
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
@@ -166,15 +82,29 @@ const SignupForm: React.FC = () => {
 
         try {
             setSubmitting(true);
-            const user = await AuthService.signupNoCode(email, password, email);
-            if (user) {
-                sessionStorage.setItem("signed_in", "true")
-                UserService.initializeUser();
+            await AuthService.signupNoCode(email, password, email);
+            const {user } = await AuthService.signIn(email, password);
+            console.log(user);
+            sessionStorage.setItem("signed_in", "true");
 
-                if (nextUri == null) {
-                    router.push("/dashboard");
-                }
+            const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+
+            await UserService.initializeUser(idToken);  // in our db
+            const { status, message } = await UserService.applyPromoCode(referralValue, idToken);
+            console.log(status, message);
+            if (status == 200) {
+                toast.success(message, {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
             }
+            router.push("/dashboard");
         } catch (error: any) {
             console.log("Error:", error);
 
@@ -231,53 +161,7 @@ const SignupForm: React.FC = () => {
                 </div>
             </div>
 
-            {/* <div className="flex items-center my-6">
-                <div
-                    className="border-t border-gray-300 grow mr-3"
-                    aria-hidden="true"
-                ></div>
-                <div className="text-gray-600 italic">Fast sign up with Google</div>
-                <div
-                    className="border-t border-gray-300 grow ml-3"
-                    aria-hidden="true"
-                ></div>
-            </div>
-
-            <GoogleSignIn /> */}
-            {/* 
-            <div className="flex items-center my-6">
-                <div
-                    className="border-t border-gray-300 grow mr-3"
-                    aria-hidden="true"
-                ></div>
-                <div className="text-gray-600 italic">Or</div>
-                <div
-                    className="border-t border-gray-300 grow ml-3"
-                    aria-hidden="true"
-                ></div>
-            </div> */}
-
-            {/* <div className="flex flex-wrap -mx-3 mb-4">
-                <div className="w-full px-3">
-                    <label
-                        className="block text-gray-800 text-sm font-medium mb-1"
-                        htmlFor="username"
-                    >
-                        Display Name <span className="text-red-600">*</span>
-                    </label>
-                    <input
-                        id="username"
-                        type="text"
-                        onChange={handleUsernameChange}
-                        className="form-input w-full text-gray-800"
-                        placeholder="Enter your display name"
-                        minLength={3}
-                        maxLength={16}
-                        required
-                    />
-                    {usernameError && <div className="text-sm text-red-500">{usernameError}</div>}
-                </div>
-            </div> */}
+            <Promo showPromo={showPromo} setShowPromo={setShowPromo} referralValue={referralValue} setReferralValue={setReferralValue} />
             <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">
                     <label
@@ -329,7 +213,7 @@ const SignupForm: React.FC = () => {
             <div className="flex flex-wrap -mx-3 mt-6">
                 <div className="w-full px-3">
                     <button className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400"
-                    disabled={submitting}>
+                        disabled={submitting}>
                         {!submitting ? 'Sign up' : 'Singing up...'}
                     </button>
                 </div>

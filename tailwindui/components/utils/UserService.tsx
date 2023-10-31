@@ -1,11 +1,11 @@
 import AuthService from "./AuthService";
-
+import { ISignUpResult, CognitoUser, MFAOption, CognitoUserSession, CognitoUserAttribute, NodeCallback } from 'amazon-cognito-identity-js';
 
 class UserService {
 
-    static async initializeUser() {
-        const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+    static async initializeUser(token: string) {
         const headers = new Headers();
+        console.log("Token: ", token)
         if (token) {
             headers.append('Authorization', `Bearer ${token}`);
         }
@@ -40,6 +40,38 @@ class UserService {
         }
     }
 
+    static async applyPromoCode(promo: string, token: string): Promise<{ status: number, message: string }> {
+        try {
+            const response = await fetch(`/api/user/apply_code`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ code: promo }),
+            })
+                .then((response) => {
+                    return response.json()
+                })
+                .then((data) => {
+                    console.log(data)
+                    const status = data['status']
+                    const message = data['message']
+                    console.log(status, message)
+                    if (status === 'success') {
+                        return { status: 200, message }
+                    } else {
+                        return { status: 400, message }
+                    }
+                })
+
+            return response
+        } catch (error) {
+            console.error(error)
+            return { status: 400, message: 'Error applying promo code.' }
+        }
+    }
+
     static async getUserCreditsAndTier(idToken: string): Promise<{ credits: number, tier: string }> {
         try {
 
@@ -51,7 +83,8 @@ class UserService {
             });
 
             if (!response.ok) {
-                throw new Error(`Error status: ${response.status}`);
+                console.log('Failed to fetch user credits:', response.status);
+                return { credits: 0, tier: 'FREE' }; // Return a default value or handle accordingly
             }
 
             const data = await response.json();

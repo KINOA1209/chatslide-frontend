@@ -2,12 +2,10 @@
 
 
 import Link from "next/link";
-import SignupForm from "@/components/signup-form";
 import GoogleSignIn from "@/components/button/GoogleSignIn";
-import CustomerServiceInfo from '@/components/customerService';
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Auth, Hub } from 'aws-amplify';
+import Promo from "@/components/signup/Promo";
 
 export default function SignUp() {
     const router = useRouter();
@@ -32,22 +30,6 @@ export default function SignUp() {
         };
     }, [])
 
-    useEffect(() => {
-        const loginRedirect = () => {
-            Auth.currentAuthenticatedUser().then(user => {
-                router.push('/dashboard');
-            }).catch((error: string) => {
-                // Throw error if the reason is unknown
-                if (error !== "The user is not authenticated") {
-                    console.error(error);
-                }
-            });
-        };
-        loginRedirect();
-
-        setHref(`/signup-with-email${window.location.search}`);
-    }, []);
-
     return (
         <section className="bg-gradient-to-b from-gray-100 to-white">
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -63,32 +45,7 @@ export default function SignUp() {
 
                     {/* Form */}
                     <div className="max-w-sm mx-auto">
-                        {showPromo ? (
-                            <div className="flex flex-wrap -mx-3 mb-4">
-                                <div className="w-full px-3">
-                                    <label
-                                        className="block text-green-600 font-medium mb-1"
-                                        htmlFor="promo"
-                                    >
-                                        Get more credits with a promo or referral code
-                                    </label>
-                                    <div className="max-w-sm mx-auto">
-                                        <input
-                                            id="promo"
-                                            type="text"
-                                            value={referralValue}
-                                            onChange={(e) => setReferralValue(e.target.value)}
-                                            className="form-input w-full text-gray-800 bg-gray-200"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        ) : (
-                            <span className="text-blue-500 cursor-pointer" onClick={() => setShowPromo(true)}>
-                                Have a promo or referral code?
-                            </span>
-                        )}
-
+                        <Promo showPromo={showPromo} setShowPromo={setShowPromo} referralValue={referralValue} setReferralValue={setReferralValue} />
 
                         <div className="flex items-center my-6">
                             <div
@@ -102,8 +59,7 @@ export default function SignUp() {
                             ></div>
                         </div>
 
-
-                        <GoogleSignIn />
+                        <GoogleSignIn promo={referralValue}/>
 
                         <div className="flex items-center my-6">
                             <div

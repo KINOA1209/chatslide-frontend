@@ -34,7 +34,7 @@ const userSlice = createSlice({
             state.email = action.payload.email;
         },
 
-        unsetUser: (state, action) => {
+        unsetUser: (state) => {
             state.uid = null;
             state.token = null;
             state.username = null;

@@ -7,4 +7,11 @@ const store = configureStore({
   },
 });
 
+export interface RootState {
+    user: {
+      uid: string | null;
+      token: string | null;
+    };
+  }
+
 export default store;
