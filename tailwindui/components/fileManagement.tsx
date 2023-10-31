@@ -350,7 +350,7 @@ const MyFiles: React.FC<filesInterface> = ({
       })
       .catch((error) => {
         console.error(error)
-        toast.error(`File upload failed ${error.message}`, {
+        toast.error(`File upload failed ${error}`, {
           position: 'top-center',
           autoClose: 5000,
           hideProgressBar: false,
