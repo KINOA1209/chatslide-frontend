@@ -23,12 +23,7 @@ interface GoogleSignInProps {
     }
     try {
       const { uid, token } = await AuthService.googleSingIn();
-      await UserService.initializeUser(uid, token);
-      if (promo) {
-        await UserService.applyPromoCode(promo, token);
-      }
-      console.log('You are signed in!');
-      sessionStorage.setItem('signed_in', 'true')
+
     } catch (error) {
       console.error(error);
     }

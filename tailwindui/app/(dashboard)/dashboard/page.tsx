@@ -65,24 +65,6 @@ export default function Dashboard() {
     fetchUser()
   }, [])
 
-  useEffect(() => {
-    const signed_in = sessionStorage.getItem('signed_in')
-    console.log(`signed_in: ${signed_in}`)
-    if (signed_in && signed_in === 'true') {
-      toast.success('Sign in successfully', {
-        position: 'top-center',
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-      })
-    }
-    sessionStorage.removeItem('signed_in')
-  })
-
   const handleRequest = async (token: string) => {
     const headers = new Headers()
     if (token) {
