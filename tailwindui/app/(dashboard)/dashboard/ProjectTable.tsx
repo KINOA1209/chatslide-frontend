@@ -79,17 +79,17 @@ const ProjectTable: React.FC<Props> = ({
       <div className='p-2 bg-gray-300 text-center'>Date</div>
       {currentProjects.map((project, index) => (
         <React.Fragment key={project.id}>
-          <div className='p-2 flex items-center justify-center'>
+          <div className='p-2 flex items-center border-b-2 justify-center'>
             <TaskIcon task={project.task} />
             <span className='ml-1'>{project.task}</span>
           </div>
           <div
-            className='p-2 cursor-pointer'
+            className='p-2 flex cursor-pointer items-center border-b-2'
             onClick={() => onProjectClick(project.id)}
           >
             {project.projectName}
           </div>
-          <div className='p-2'>
+          <div className='p-2 border-b-2 flex items-center justify-center'>
             <div className='flex items-center justify-center'>
               <FileIcon fileType='pdf' />
               <span className='ml-1'>{project.resources.length} Resources</span>
@@ -101,7 +101,7 @@ const ProjectTable: React.FC<Props> = ({
               </button>
             </div>
           </div>
-          <div className='p-2'>
+          <div className='p-2 border-b-2 flex items-center justify-center'>
             <div className='flex justify-center items-center gap-[3.75rem]'>
               <span>{project.creationDate}</span>
               <div
@@ -113,11 +113,11 @@ const ProjectTable: React.FC<Props> = ({
             </div>
           </div>
           {expandedProject === index && (
-            <div className='mt-2 flex flex-wrap col-start-2 col-span-3'>
+            <div className='mt-2 flex flex-wrap col-start-2 col-span-3 border-b-2 items-center'>
               {project.resources.map((resource, resourceIndex) => (
                 <div
                   key={resourceIndex}
-                  className='flex items-center bg-gray-100 p-1 m-1 rounded border-b-2'
+                  className='flex items-center justify-center gap-[0.5rem] bg-gray-100 p-1 m-1 rounded'
                 >
                   <FileIcon fileType={resource.split('.').pop() || ''} />
                   {resource}
