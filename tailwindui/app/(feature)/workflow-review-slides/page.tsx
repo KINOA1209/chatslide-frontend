@@ -58,26 +58,6 @@ export default function WorkflowStep3() {
     }
   }, [timerFinished])
 
-  useEffect(() => {
-    const signed_in =
-      typeof window !== 'undefined'
-        ? sessionStorage.getItem('signed_in')
-        : 'false'
-    if (signed_in && signed_in === 'true') {
-      toast.success('Sign in successfully', {
-        position: 'top-center',
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-        containerId: 'slides',
-      })
-      sessionStorage.removeItem('signed_in')
-    }
-  }, [])
 
   return (
     <div className='bg-gradient-to-b from-[#6A7EF9] to-[#415AF1]'>
