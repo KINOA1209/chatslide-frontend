@@ -279,7 +279,7 @@ export default function Dashboard() {
         {currentProjects.length === 0 && (
           <div className='w-full grow flex items-center justify-center'>
             <div className='text-gray-400' ref={promptRef}>
-              Loading...
+              You have no project created. Click the button above to start a new project.
             </div>
           </div>
         )}
