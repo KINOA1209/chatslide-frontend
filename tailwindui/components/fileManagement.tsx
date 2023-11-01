@@ -7,7 +7,7 @@ import { FileUploadButton } from '@/components/fileUpload'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import moment from 'moment'
-import mixpanel from 'mixpanel-browser'
+// import mixpanel from 'mixpanel-browser'
 import { CarbonConnect, IntegrationName } from 'carbon-connect'
 
 interface UserFile {
@@ -220,9 +220,9 @@ const NewFileManagement: React.FC<UserFileList> = ({
       const fileDeleteData = {
         resource_id: id,
       }
-      mixpanel.track('File Deleted', {
-        'File ID': id,
-      })
+      // mixpanel.track('File Deleted', {
+      //   'File ID': id,
+      // })
       const response = await fetch('/api/delete_user_resource', {
         method: 'POST',
         headers: {
@@ -940,10 +940,10 @@ const NewMyFiles: React.FC<filesInterface> = ({
     const body = new FormData()
     body.append('file', file)
 
-    mixpanel.track('File Uploaded', {
-      'File Name': file.name,
-      'File Type': file.type,
-    })
+    // mixpanel.track('File Uploaded', {
+    //   'File Name': file.name,
+    //   'File Type': file.type,
+    // })
 
     fetch('/api/upload_user_file', {
       method: 'POST',
