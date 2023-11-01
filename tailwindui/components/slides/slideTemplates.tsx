@@ -297,7 +297,7 @@ export default {
     'Col_2_img_1': Col_2_img_1,
     'First_page_img_1': First_page_img_1,
     'Col_1_img_0': Col_1_img_0,
-    // 'Col_2_img_2': Col_2_img_2,
+    'Col_2_img_2': Col_2_img_2,
 }
 
 export const templateSamples = {
@@ -312,9 +312,9 @@ export const templateSamples = {
         name: 'Col_2_img_1',
         img: template3.src,
     }, 
-    // {
-    //     name: 'Col_2_img_2',
-    //     img: template2.src,
-    // },
+    {
+        name: 'Col_2_img_2',
+        img: template2.src,
+    },
 ]
 };

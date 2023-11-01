@@ -21,13 +21,19 @@ export const templateDispatch = (
     setIsEditMode: (isEditMode: boolean) => void = () => {},  // Replace with your default function if you have one
     handleSlideEdit: (content: string | string[], index: number, tag: SlideKeys) => void = () => {},  // Replace with your default function if you have one
     updateImgUrlArray: (slideIndex: number) => (urls: string[]) => void = () => () => {},  // Replace with your default function if you have one
-    toggleEditMathMode: () => void = () => {}  // Replace with your default function if you have one
+    toggleEditMathMode: () => void = () => {},  // Replace with your default function if you have one
 ): JSX.Element => {
+    let keyPrefix = ''
+    if (exportToPdfMode) {
+        keyPrefix = 'exportToPdf'
+    } else if (!canEdit){
+        keyPrefix = 'preview'
+    }
     const Template = templates[slide.template as keyof typeof templates]
     if (index === 0) {
         return <Template
             autoSave={saveSlides}
-            key={index}
+            key={keyPrefix + index.toString()}
             user_name=
             {<div
                 key={0}
@@ -72,7 +78,7 @@ export const templateDispatch = (
         return <Template
             autoSave={saveSlides}
             canEdit={canEdit}
-            key={index}
+            key={keyPrefix + index.toString()}
             user_name={<></>}
             title={<></>}
             topic={
@@ -113,7 +119,7 @@ export const templateDispatch = (
                         if (editMathMode) {
                             return (
                                 <div
-                                    key={index}
+                                    key={keyPrefix + index.toString() + '_' + contentIndex.toString()}
                                     className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                                     contentEditable={canEdit}
                                     style={listStyle}
@@ -134,7 +140,7 @@ export const templateDispatch = (
                         }
                         else {
                             return (
-                                <MathJaxContext key={index}>
+                                <MathJaxContext key={keyPrefix + index.toString() + '_' + contentIndex.toString()}>
                                     <MathJax>
                                         <div onClick={toggleEditMathMode}
                                             className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
@@ -148,7 +154,7 @@ export const templateDispatch = (
                     }
                     return (
                         <div
-                            key={index}
+                            key={keyPrefix + index.toString() + '_' + contentIndex.toString()}
                             className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                             contentEditable={canEdit}
                             onFocus={() => {
