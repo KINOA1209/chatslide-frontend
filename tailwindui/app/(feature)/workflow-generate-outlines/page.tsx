@@ -218,18 +218,18 @@ export default function Topic() {
 
     const handleSelectResources = (resource: Array<string>) => {
         sessionStorage.setItem('resources', JSON.stringify(resource));
-        const selectedFileList = sessionStorage.getItem('resources')
-        const history_file = sessionStorage.getItem('history_resource')
+        const selectedResourcesJson = sessionStorage.getItem('resources')
+        const allHistoryResourcesJson = sessionStorage.getItem('history_resource')
 
-        if (selectedFileList && history_file) {
-            const parseFileList = JSON.parse(selectedFileList);
-            setselectedFileList(parseFileList);
+        if (selectedResourcesJson && allHistoryResourcesJson) {
+            const selectedResources = JSON.parse(selectedResourcesJson);
+            setselectedFileList(selectedResources);
 
             //find the corresponding file name
-            const parseFileList2: string[] = JSON.parse(selectedFileList)
-            const parseHistoryFile: Array<{id:string, filename:string}> = JSON.parse(history_file);
-            const fileNamesArray = parseFileList2.map((id) => {
-                const correspondingFile = parseHistoryFile.find((file) => file.id === id);
+            const selectedResourcesIdArray: string[] = JSON.parse(selectedResourcesJson)
+            const allHistoryResourcesArray: Array<{id:string, filename:string}> = JSON.parse(allHistoryResourcesJson);
+            const fileNamesArray = selectedResourcesIdArray.map((id) => {
+                const correspondingFile = allHistoryResourcesArray.find((file) => file.id === id);
                 return correspondingFile ? correspondingFile.filename : 'Unkown File';
             });
             setselectedFileListName(fileNamesArray)
