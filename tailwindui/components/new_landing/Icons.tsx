@@ -41,7 +41,7 @@ export const DrlambdaLogoIcon = () => (
 export const DownloadIcon = () => (
     <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g id="tabler:download">
-            <path id="Vector" d="M3.73828 12.7688V14.2563C3.73828 14.6509 3.895 15.0292 4.17396 15.3082C4.45292 15.5871 4.83127 15.7438 5.22578 15.7438H14.1508C14.5453 15.7438 14.9236 15.5871 15.2026 15.3082C15.4816 15.0292 15.6383 14.6509 15.6383 14.2563V12.7688M5.96953 8.30635L9.68828 12.0251M9.68828 12.0251L13.407 8.30635M9.68828 12.0251V3.1001" stroke="#121212" stroke-width="1.11563" stroke-linecap="round" stroke-linejoin="round" />
+            <path id="Vector" d="M3.73828 12.7688V14.2563C3.73828 14.6509 3.895 15.0292 4.17396 15.3082C4.45292 15.5871 4.83127 15.7438 5.22578 15.7438H14.1508C14.5453 15.7438 14.9236 15.5871 15.2026 15.3082C15.4816 15.0292 15.6383 14.6509 15.6383 14.2563V12.7688M5.96953 8.30635L9.68828 12.0251M9.68828 12.0251L13.407 8.30635M9.68828 12.0251V3.1001" stroke="#121212" strokeWidth="1.11563" strokeLinecap="round" stroke-linejoin="round" />
         </g>
     </svg>
 );
@@ -49,8 +49,8 @@ export const DownloadIcon = () => (
 export const StarterIcon = () => (
     <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="Group 16">
-<path id="Vector 11" d="M6.48138 10.3702H14.2592" stroke="#9AAEF9" stroke-width="2.07407" stroke-linecap="square"/>
-<path id="Vector 12" d="M10.3702 14.2592L10.3702 6.48138" stroke="#9AAEF9" stroke-width="2.07407" stroke-linecap="square"/>
+<path id="Vector 11" d="M6.48138 10.3702H14.2592" stroke="#9AAEF9" strokeWidth="2.07407" strokeLinecap="square"/>
+<path id="Vector 12" d="M10.3702 14.2592L10.3702 6.48138" stroke="#9AAEF9" strokeWidth="2.07407" strokeLinecap="square"/>
 </g>
 </svg>
 );
@@ -58,8 +58,8 @@ export const StarterIcon = () => (
 export const PlusIcon = () => (
     <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="Group 16">
-<path id="Vector 11" d="M6.48137 10.3704H14.2592" stroke="#562968" stroke-width="2.07407" stroke-linecap="square"/>
-<path id="Vector 12" d="M10.3703 14.2593L10.3703 6.4815" stroke="#562968" stroke-width="2.07407" stroke-linecap="square"/>
+<path id="Vector 11" d="M6.48137 10.3704H14.2592" stroke="#562968" strokeWidth="2.07407" strokeLinecap="square"/>
+<path id="Vector 12" d="M10.3703 14.2593L10.3703 6.4815" stroke="#562968" strokeWidth="2.07407" strokeLinecap="square"/>
 </g>
 </svg>
 );
@@ -67,8 +67,8 @@ export const PlusIcon = () => (
 export const ProIcon = () => (
     <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="Group 16">
-<path id="Vector 11" d="M6.48138 10.3704H14.2592" stroke="#2943E9" stroke-width="2.07407" stroke-linecap="square"/>
-<path id="Vector 12" d="M10.3703 14.2593L10.3703 6.4815" stroke="#2943E9" stroke-width="2.07407" stroke-linecap="square"/>
+<path id="Vector 11" d="M6.48138 10.3704H14.2592" stroke="#2943E9" strokeWidth="2.07407" strokeLinecap="square"/>
+<path id="Vector 12" d="M10.3703 14.2593L10.3703 6.4815" stroke="#2943E9" strokeWidth="2.07407" strokeLinecap="square"/>
 </g>
 </svg>
 );
@@ -76,8 +76,8 @@ export const ProIcon = () => (
 export const EnterpriseIcon = () => (
     <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="Group 16">
-<path id="Vector 11" d="M6.48047 10.3706H14.2582" stroke="#562968" stroke-width="2.07407" stroke-linecap="square"/>
-<path id="Vector 12" d="M10.3711 14.2593L10.3711 6.4815" stroke="#562968" stroke-width="2.07407" stroke-linecap="square"/>
+<path id="Vector 11" d="M6.48047 10.3706H14.2582" stroke="#562968" strokeWidth="2.07407" strokeLinecap="square"/>
+<path id="Vector 12" d="M10.3711 14.2593L10.3711 6.4815" stroke="#562968" strokeWidth="2.07407" strokeLinecap="square"/>
 </g>
 </svg>
 );

@@ -551,8 +551,8 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                             {outlineData.length < maxOutlineSectionCount && <div>
                                 <svg onClick={e => { handleAddSection(e, sectionIndex) }} className='md:ml-2 w-8 h-8 md:opacity-25 hover:opacity-100 cursor-pointer' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="Edit / Add_Plus">
-                                        <path id="Vector" d="M6 12H12M12 12H18M12 12V18M12 12V6" stroke="#000000" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path id="Vector" d="M6 12H12M12 12H18M12 12V18M12 12V6" stroke="#000000" strokeWidth="2"
+                                            strokeLinecap="round" stroke-linejoin="round" />
                                     </g>
                                 </svg>
                             </div>}
@@ -578,8 +578,8 @@ const OutlineVisualizer = ({ outline }: { outline: OutlineDataType }) => {
                                     <div className='ml-2'>
                                         {outlineData[sectionIndex].content.length < maxOutlineDetailCount && <svg onClick={(e) => handleAddDetail(e, sectionIndex, detailIndex)} className='w-8 h-8 md:opacity-25 hover:opacity-100 cursor-pointer' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g id="Edit / Add_Plus">
-                                                <path id="Vector" d="M6 12H12M12 12H18M12 12V18M12 12V6" stroke="#000000" stroke-width="2"
-                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path id="Vector" d="M6 12H12M12 12H18M12 12V18M12 12V6" stroke="#000000" strokeWidth="2"
+                                                    strokeLinecap="round" stroke-linejoin="round" />
                                             </g>
                                         </svg>}
                                     </div>
