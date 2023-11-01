@@ -8,10 +8,9 @@ import { ScriptsIcon } from '@/app/(feature)/icons'
 import { ShareSlidesIcon } from '@/app/(feature)/workflow-review-slides/icons'
 import { ShareToggleButton } from '@/components/slides/SlideButtons'
 import UserService from '../utils/UserService'
-import SlidesHTML from '@/components/slides/NewSlidesHTML'
 
 
-// const SlidesHTML = dynamic(() => import('@/components/slides/NewSlidesHTML'))
+const SlidesHTML = dynamic(() => import('@/components/slides/NewSlidesHTML'))
 
 
 const SlideVisualizer = () => {
