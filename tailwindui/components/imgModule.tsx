@@ -314,12 +314,12 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
                         {resources.map((url, index) => {
                             if (url === selectedImg) {
                                 return <div onClick={handleImageClick}
-                                    key={index} className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-2`}>
+                                    className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-2`}>
                                     <img className='w-full h-full object-cover' src={url} />
                                 </div>
                             } else {
                                 return <div onClick={handleImageClick}
-                                    key={index} className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-2`}>
+                                    className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-2`}>
                                     <img className='w-full h-full object-cover' src={url} />
                                 </div>
                             }
@@ -364,12 +364,12 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
                     {searchResult.map((url, index) => {
                         if (url === selectedImg) {
                             return <div onClick={handleImageClick}
-                                key={index} className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-[3px]`}>
+                                className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-[3px]`}>
                                 <img className='w-full h-full object-cover' src={url} />
                             </div>
                         } else {
                             return <div onClick={handleImageClick}
-                                key={index} className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-[3px]`}>
+                                className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-[3px]`}>
                                 <img className='w-full h-full object-cover' src={url} />
                             </div>
                         }
@@ -413,12 +413,12 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
                     {searchResult.map((url, index) => {
                         if (url === selectedImg) {
                             return <div onClick={handleImageClick}
-                                key={index} className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-[3px]`}>
+                                className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-[3px]`}>
                                 <img className='w-full h-full object-cover' src={url} />
                             </div>
                         } else {
                             return <div onClick={handleImageClick}
-                                key={index} className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-[3px]`}>
+                                className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-[3px]`}>
                                 <img className='w-full h-full object-cover' src={url} />
                             </div>
                         }
