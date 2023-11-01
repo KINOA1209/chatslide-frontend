@@ -75,6 +75,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         typeof sessionStorage !== 'undefined'
             ? sessionStorage.getItem('foldername')
             : ''
+    
+    const project_id =
+        typeof sessionStorage !== 'undefined'
+            ? sessionStorage.getItem('project_id')
+            : ''
 
     const [showLayout, setShowLayout] = useState(false)
     const [present, setPresent] = useState(false)
@@ -124,6 +129,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         const formData = {
             foldername: foldername,
             html: finalSlides,
+            project_id: project_id,
         }
         // Send a POST request to the backend to save finalSlides
         fetch('/api/auto_save_html', {
