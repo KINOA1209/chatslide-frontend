@@ -1,4 +1,4 @@
-import NewMyFiles from '@/components/fileManagement'
+import MyFiles from '@/components/fileManagement'
 
 export const metadata = {
   title: 'Resources - DrLambda',
@@ -6,5 +6,5 @@ export const metadata = {
 }
 
 export default function FileManagement() {
-  return <NewMyFiles selectable={false} />
+  return <MyFiles selectable={false} />
 }
