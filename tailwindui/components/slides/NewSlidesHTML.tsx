@@ -540,7 +540,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                         .fill(0)
                         .map((_, index) => (
                             <div
-                                key={index}
+                                key={`previewContainer` + index.toString()}
                                 className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
                                 onClick={() => setCurrentSlideIndex(index)} // Added onClick handler
                             >

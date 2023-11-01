@@ -292,7 +292,7 @@ const ProgressBox = (
               {/* {dashboardButton} */}
               {stepRedirectPair.map((pair, index) => (
                 <OneStep
-                  key={index} // Add a unique key prop here
+                  key={`step` + index.toString()} // Add a unique key prop here
                   id={index + 1}
                   current={currentInd === index}
                   finished={finishedSteps.includes(index)}
