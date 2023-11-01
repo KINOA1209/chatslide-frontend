@@ -2,12 +2,17 @@
 
 import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import SlidesHTML, { Slide } from '@/components/slides/NewSlidesHTML';
+import { Slide } from '@/components/slides/NewSlidesHTML';
 import Footer, { WorkflowFooter } from '@/components/ui/footer';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from '@/components/ui/header';
 import mixpanel from 'mixpanel-browser';
+import dynamic from 'next/dynamic'
+
+
+const SlidesHTML = dynamic(() => import('@/components/slides/NewSlidesHTML'), { ssr: false })
+
 
 const SharePage: React.FC = () => {
     const router = useRouter();

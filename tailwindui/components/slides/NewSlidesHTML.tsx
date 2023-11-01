@@ -93,10 +93,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     const presentScale = Math.min(dimensions.width / 960, dimensions.height / 540)
     const nonPresentScale = Math.min(1, presentScale * 0.9)
 
-    console.log(`presentScale: ${presentScale}`)
-    console.log(`nonPresentScale: ${nonPresentScale}`)
-
-
     useEffect(() => {
         if (unsavedChanges) {
             setSaveStatus('Unsaved changes')
@@ -540,7 +536,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                         .fill(0)
                         .map((_, index) => (
                             <div
-                                key={index}
+                                key={`previewContainer` + index.toString()}
                                 className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
                                 onClick={() => setCurrentSlideIndex(index)} // Added onClick handler
                             >
