@@ -118,6 +118,12 @@
     }
 }
 
+@media (max-width: 1024px){
+    #progress_title{
+        display: none;
+    }
+}
+
 .dropdown_container span{
     margin: 0;
     font-family: 'Creato Display', sans-serif;
@@ -253,4 +259,39 @@
 
 #youtube_text_container {
     padding: 16px;
+}
+
+#project_popup{
+    border-radius: 7px;
+    background-color: #525c6A;
+    font-family: 'Creato Display', sans-serif;
+    color: var(--Grey-500, #E7E9EB);
+}
+
+#audience_popup{
+    border-radius: 7px;
+    background-color: #525c6A;
+    font-family: 'Creato Display', sans-serif;
+    color: var(--Grey-500, #E7E9EB);
+}
+
+#language_popup{
+    border-radius: 7px;
+    background-color: #525c6A;
+    font-family: 'Creato Display', sans-serif;
+    color: var(--Grey-500, #E7E9EB);
+}
+
+#supportive_popup{
+    border-radius: 7px;
+    background-color: #525c6A;
+    font-family: 'Creato Display', sans-serif;
+    color: var(--Grey-500, #E7E9EB);
+}
+
+#selectedfile_each{
+    font-family: 'Creato Display', sans-serif;
+    color: var(--Grey-700, #363E4A);
+    font-weight: 700;
+    font-size: 14px;
 }

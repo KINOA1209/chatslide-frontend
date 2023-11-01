@@ -14,6 +14,8 @@ import { Transition } from '@headlessui/react';
 import MyFiles from '@/components/fileManagement';
 import PaywallModal from '@/components/forms/paywallModal';
 import Timer from '@/components/ui/Timer';
+import FileManagement from '@/components/fileManagement';
+import FeedbackForm from '@/components/slides/feedback';
 
 import {
 　QuestionExplainIcon,
@@ -26,6 +28,14 @@ interface Project {
     topic: string;
     audience: string;
 }
+
+interface UserFile {
+    id: string
+    uid: string
+    filename: string
+    thumbnail_name: string
+    timestamp: string
+  }
 
 export default function Topic() {
     const contentRef = useRef<HTMLDivElement>(null)
@@ -40,7 +50,13 @@ export default function Topic() {
     const [topicSuggestions, setTopicSuggestions] = useState<string[]>(["Ultrasound"]);
     const [audienceSuggestions, setAudienceSuggestions] = useState<string[]>([]);
     const [showAudienceInput, setShowAudienceInput] = useState(false);
-
+    const [showProjectPopup, setProjectPopup] = useState(false);
+    const [showAudiencePopup, setAudiencePopup] = useState(false);
+    const [showLanguagePopup, setLanguagePopup] = useState(false);
+    const [showSupportivePopup, setSupportivePopup] = useState(false);
+    const [selectedFileList, setselectedFileList] = useState([]);
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [selectedFileListName, setselectedFileListName] = useState<string[]>([]);
 
     // bind form data between input and sessionStorage
     const [topic, setTopic] = useState('');
@@ -202,6 +218,22 @@ export default function Topic() {
 
     const handleSelectResources = (resource: Array<string>) => {
         sessionStorage.setItem('resources', JSON.stringify(resource));
+        const selectedFileList = sessionStorage.getItem('resources')
+        const history_file = sessionStorage.getItem('history_resource')
+
+        if (selectedFileList && history_file) {
+            const parseFileList = JSON.parse(selectedFileList);
+            setselectedFileList(parseFileList);
+
+            //find the corresponding file name
+            const parseFileList2: string[] = JSON.parse(selectedFileList)
+            const parseHistoryFile: Array<{id:string, filename:string}> = JSON.parse(history_file);
+            const fileNamesArray = parseFileList2.map((id) => {
+                const correspondingFile = parseHistoryFile.find((file) => file.id === id);
+                return correspondingFile ? correspondingFile.filename : 'Unkown File';
+            });
+            setselectedFileListName(fileNamesArray)
+        }
     };
 
     const audienceDropDown = (value: string) => {
@@ -302,12 +334,54 @@ export default function Topic() {
     //     };
     //   }, []);
 
+
+    // The functions that manage the pop-up windows for questionmark
+    const openProjectPopup = () => {
+        setProjectPopup(true)
+    }
+
+    const closeProjectPopup = () => {
+        setProjectPopup(false)
+    }
+
+    const openAudiencePopup = () => {
+        setAudiencePopup(true)
+    }
+
+    const closeAudiencePopup = () => {
+        setAudiencePopup(false)
+    }
+
+    const openLanguagePopup = () => {
+        setLanguagePopup(true)
+    }
+
+    const closeLanguagePopup = () => {
+        setLanguagePopup(false)
+    }
+
+    const openSupportivePopup = () => {
+        setSupportivePopup(true)
+    }
+
+    const closeSupportivePopup = () => {
+        setSupportivePopup(false)
+    }
+
+    const handleOpenModal = () => {
+        setShowModal(true)
+    }
+
+    const handleCloseModal = () => {
+        setShowModal(false)
+    }
+
     return (
         <section>
             { showPaymentModal && <PaywallModal setShowModal={setShowPaymentModal} message='Upgrade for more ⭐️credits.'/> }
             <form onSubmit={handleSubmit}>
                 <Transition
-                    className='h-full w-full z-5 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
+                    className='h-full w-full z-50 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
                     show={showFileModal}
                     onClick={closeFile}
                     enter="transition ease duration-300 transform"
@@ -416,23 +490,27 @@ export default function Topic() {
 
                     <div className="self-end w-full mx-auto lg:mx-[5rem] flex gap-4">
 
-                        <div className='flex-auto text-center self-center text-neutral-900 text-xl hidden md:block hidden font-medium font-creato-medium leading-snug tracking-tight whitespace-nowrap lg:pl-[20%]'>
+                        <div id='progress_title' className='flex-auto text-center self-center text-neutral-900 text-xl hidden md:block hidden font-medium font-creato-medium leading-snug tracking-tight whitespace-nowrap lg:pl-[35%]'>
                             To get started, give us some high-level intro about your project.
                         </div>
-                        <button 
-                            id="generate_button"
-                            disabled={isSubmitting}
-                            className='w-[11rem] mx-auto h-8 px-5 py-1.5 bg-Generate-slides-bg-color rounded-3xl justify-center items-center gap-5 inline-flex cursor-pointer disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400  lg:mr-[1%]'
-                            type="submit"
-                            >
-                            <div className='w-[6rem] text-zinc-100 text-sm font-medium font-creato-medium leading-none tracking-tight whitespace-nowrap'>
-                                Generate Outline
+                        <div className='flex flex-col w-full lg:mx-[0rem] lg:w-[23rem]'>
+                            <button 
+                                id="generate_button"
+                                disabled={isSubmitting}
+                                className='w-[11rem] mx-auto h-8 px-5 py-1.5 bg-Generate-slides-bg-color rounded-3xl justify-center items-center gap-5 inline-flex cursor-pointer disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400  lg:mr-[1%]'
+                                type="submit"
+                                >
+                                <div className='w-[6rem] text-zinc-100 text-sm font-medium font-creato-medium leading-none tracking-tight whitespace-nowrap'>
+                                    Generate Outline
+                                </div>
+                                <div>
+                                    <RightTurnArrowIcon />
+                                </div>
+                            </button>
+                            <div className='mx-auto py-1.5 lg:mr-[0%]'>
+                                <Timer expectedSeconds={15} isSubmitting={isSubmitting} />
                             </div>
-                            <div>
-                                <RightTurnArrowIcon />
-                            </div>
-                        </button>
-                        
+                        </div> 
                     </div>
                     <div className='w-[9rem]'></div>
                 </div>                   
@@ -449,10 +527,28 @@ export default function Topic() {
                     </div>
 
                     {/* text area section */}
-                    <div className="project_container h-[650px] lg:h-[550px] my-2 lg:my-5">
+                    <div className="project_container w-full h-[665px] lg:h-[550px] my-2 lg:my-5">
                         <div className="project_topic">
                             <p>Project Topic</p>
-                            {/* <QuestionExplainIcon /> */}
+                            <div className='relative inline-block'>
+                                <div
+                                    className='cursor-pointer' 
+                                    onMouseEnter={openProjectPopup} 
+                                    onMouseLeave={closeProjectPopup} 
+                                    onTouchStart={openProjectPopup}
+                                    onTouchEnd={closeProjectPopup}
+                                >
+                                    <QuestionExplainIcon />
+                                    { showProjectPopup && (
+                                        <div 
+                                        id='project_popup' 
+                                        className=
+                                        "absolute z-10 p-2 bg-gray-800 text-white text-sm rounded shadow-md w-[15rem] h-[5rem] md:w-80 md:h-[4rem] flex justify-center items-center">
+                                            The main subject or theme of your project. It will set the direction and focus of the contents.
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
                         </div>
                         <div className="textfield">
                             <textarea 
@@ -472,7 +568,25 @@ export default function Topic() {
                             <div className="audience_container">
                                 <div className="your_audience ">
                                     <span>Your Audience</span>
-                                    {/* <QuestionExplainIcon /> */}
+                                    <div className='relative inline-block'>
+                                        <div
+                                            className='cursor-pointer' 
+                                            onMouseEnter={openAudiencePopup} 
+                                            onMouseLeave={closeAudiencePopup} 
+                                            onTouchStart={openAudiencePopup}
+                                            onTouchEnd={closeAudiencePopup}
+                                        >
+                                            <QuestionExplainIcon />
+                                            { showAudiencePopup && (
+                                                <div 
+                                                id='audience_popup' 
+                                                className=
+                                                "absolute z-10 p-2 bg-gray-800 text-white text-sm rounded shadow-md w-[15rem] h-[6rem] md:w-[17rem] md:h-[5rem] flex justify-center items-center">
+                                                    Specify the intended viewers of your projects, tailoring to your audience ensures the content resonates effectively.
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="audience_drop">
                                     <label
@@ -501,10 +615,28 @@ export default function Topic() {
                                     />
                                 </div>
                             </div>
-                            <div className="language_container">
-                                <div className="language">
+                            <div className="language_container mt-[1rem] lg:mt-[0rem]">
+                                <div className="language ">
                                     <span>Language</span>
-                                    {/* <QuestionExplainIcon /> */}
+                                    <div className='relative inline-block'>
+                                        <div
+                                            className='cursor-pointer' 
+                                            onMouseEnter={openLanguagePopup} 
+                                            onMouseLeave={closeLanguagePopup} 
+                                            onTouchStart={openLanguagePopup}
+                                            onTouchEnd={closeLanguagePopup}
+                                        >
+                                            <QuestionExplainIcon />
+                                            { showLanguagePopup && (
+                                                <div 
+                                                id='language_popup' 
+                                                className=
+                                                "absolute z-10 p-2 bg-gray-800 text-white text-sm rounded shadow-md w-[13rem] h-[3rem] md:w-[14rem] md:h-[3rem] flex justify-center items-center">
+                                                    Specify the intended language of your projects.
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="language_drop">
                                     <select 
@@ -561,6 +693,25 @@ export default function Topic() {
                         <div className="upload">
                             <span>Upload Files</span>
                             {/* <QuestionExplainIcon /> */}
+                            <div className='relative inline-block'>
+                                <div
+                                    className='cursor-pointer' 
+                                    onMouseEnter={openSupportivePopup} 
+                                    onMouseLeave={closeSupportivePopup} 
+                                    onTouchStart={openSupportivePopup}
+                                    onTouchEnd={closeSupportivePopup}
+                                >
+                                    <QuestionExplainIcon />
+                                    { showSupportivePopup && (
+                                        <div 
+                                        id='supportive_popup' 
+                                        className=
+                                        "absolute z-10 p-2 bg-gray-800 text-white text-sm rounded shadow-md w-[15rem] h-[6rem] md:w-80 md:h-[5rem] flex justify-center items-center">
+                                            Any additional files that can enhance and provide context to your projects. This could be research data, images, charts, or reference materials.
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
                         </div>
 
                         <div className="youtube_container">
@@ -593,12 +744,31 @@ export default function Topic() {
                                     </button> 
                             </div>
                         </div>
-                        <hr id="add_hr" />     
+                        <hr id="add_hr" />
+                        <div className='h-[290px] mt-[10px]'>
+                            <ul className='flex flex-col gap-4' style={{ maxHeight: '280px', overflowY: 'auto' }}>
+                                {selectedFileListName.map((selectedFile, index) => (
+                                    <li key={index}>
+                                        <div id='selectedfile_each' className='flex items-center gap-2 bg-white rounded h-[50px] pl-[1rem]'>
+                                            <img src="/icons/selectedFiles_icon.png"/>
+                                            <span>{selectedFile}</span>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div>
-                <Timer expectedSeconds={15} isSubmitting={isSubmitting} />
+            <div className='fixed bottom-10 right-10 hidden sm:block'>
+                <button
+                onClick={handleOpenModal}
+                className='bg-gradient-to-r from-blue-600  to-purple-500 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700'
+                >
+                Feedback
+                </button>
+
+                {showModal && <FeedbackForm onClose={handleCloseModal} />}
             </div>
             </form>
         </section>
