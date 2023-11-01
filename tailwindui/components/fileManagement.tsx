@@ -287,6 +287,7 @@ const MyFiles: React.FC<filesInterface> = ({
                     }
                 })
                 setResources(resourceTemps)
+                sessionStorage.setItem('history_resource', JSON.stringify(resourceTemps))
                 setRendered(true)
             } else {
                 // Handle error cases
