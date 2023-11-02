@@ -13,7 +13,7 @@ type GenerateMetadataResult = {
 export async function generateMetadata({ params }: Props): Promise<GenerateMetadataResult> {
     const project_id = params.project_id;
     const host = process.env.NEXT_PUBLIC_HOST;
-    const data = await fetch(`${host}/api/get_shared_project_foldername?project_id=${project_id}`).then(response => response.json());
+    const data = await fetch(`https://${host}/api/get_shared_project_foldername?project_id=${project_id}`).then(response => response.json());
     const topic = data.topic;
     const description = data.description;
     const foldername = data.foldername;
