@@ -10,7 +10,7 @@ import { ShareToggleButton } from '@/components/slides/SlideButtons'
 import UserService from '../utils/UserService'
 
 
-const SlidesHTML = dynamic(() => import('@/components/slides/NewSlidesHTML'), { ssr: false })
+const SlidesHTML = dynamic(() => import('@/components/slides/NewSlidesHTML'))
 
 
 const SlideVisualizer = () => {

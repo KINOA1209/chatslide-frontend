@@ -7,7 +7,7 @@ import GoBackButton from '@/components/button/GoBackButton';
 import ImageList from '@/components/ImageList';
 import ProjectProgress from '@/components/steps';
 import AuthService from '@/components/utils/AuthService';
-import FeedbackButton from '@/components/slides/feedback';
+import FeedbackForm from '@/components/slides/feedback';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { LoadingIcon } from '@/components/ui/progress';
@@ -237,6 +237,15 @@ export default function WorkflowStep4() {
     const image_files = typeof sessionStorage !== 'undefined' ? JSON.parse(sessionStorage.getItem('image_files') || '[]') : [];
     const imageUrls = image_files.map((filename: string) => `/api/jpg?foldername=${foldername}&filename=${filename}`);
     const contentRef = useRef<HTMLDivElement>(null);
+    const [showModal, setShowModal] = useState<boolean>(false);
+
+    const handleOpenModal = () => {
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
 
     return (
         <div>
@@ -252,7 +261,16 @@ export default function WorkflowStep4() {
                 <br />
                 <TranscriptVisualizer transcripts={transcripts} imageUrls={imageUrls} />
             </div>
-            <FeedbackButton />
+            <div className="fixed bottom-10 right-10 hidden sm:block">
+                <button
+                    onClick={handleOpenModal}
+                    className="bg-gradient-to-r from-blue-600  to-purple-500 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
+                >
+                    Feedback
+                </button>
+
+                {showModal && <FeedbackForm onClose={handleCloseModal} />}
+            </div>
         </div>
     )
 }

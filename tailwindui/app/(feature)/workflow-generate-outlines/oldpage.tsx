@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react';
 import ProjectProgress from "@/components/steps";
 import TopicForm from '@/components/forms/topic-form'
-import FeedbackButton from '@/components/slides/feedback';
+import FeedbackForm from '@/components/slides/feedback';
 
 const metadata = {
   title: 'Workflow - DrLambda',
@@ -14,7 +14,15 @@ const metadata = {
 
 export default function WorkflowStep1() {
   const contentRef = useRef<HTMLDivElement>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
   return (
     <div>
       <ProjectProgress currentInd={0} contentRef={contentRef} />
@@ -24,7 +32,16 @@ export default function WorkflowStep1() {
       <div className="max-w-4xl mx-auto px-6" ref={contentRef}>
         <TopicForm />
       </div>
-      <FeedbackButton />
+      <div className="fixed bottom-10 right-10 hidden sm:block">
+        <button
+          onClick={handleOpenModal}
+          className="bg-gradient-to-r from-blue-600  to-purple-500 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
+        >
+          Feedback
+        </button>
+
+        {showModal && <FeedbackForm onClose={handleCloseModal} />}
+      </div>
     </div>
   )
 }
