@@ -104,7 +104,7 @@ const ProjectTable: React.FC<Props> = ({
         {' '}
         {currentProjects.map((project, index) => (
           <React.Fragment key={project.id}>
-            <div className='p-2 flex items-center border-b-2 justify-center'>
+            <div className='p-[2rem] flex items-center border-b-2 justify-center'>
               <TaskIcon task={project.task} />
               <span className='ml-1'>{project.task}</span>
             </div>
@@ -114,7 +114,7 @@ const ProjectTable: React.FC<Props> = ({
             >
               {project.name}
             </div>
-            <div className='p-2 border-b-2 flex items-center justify-center'>
+            <div className='p-[2rem] border-b-2 flex items-center justify-center'>
               <div className='flex items-center justify-center'>
                 <FileIcon fileType='pdf' />
                 <span className='ml-1'>
