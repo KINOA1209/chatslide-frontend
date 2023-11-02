@@ -69,19 +69,17 @@ const SharePage: React.FC = () => {
 
         <main className="grow">
 
-            {loading ? <></> : <Helmet>
-                <Head>
-                    <title>{topic}</title>
-                    <meta property="og:title" content={topic} />
-                    <meta property="og:description" content={description} />
-                    <meta property="og:image" content={img_url} />
-                    <meta property="og:url" content={url} />
-                    <meta name="twitter:card" content="summary_large_image" />
-                    <meta name="twitter:title" content={topic} />
-                    <meta name="twitter:description" content={description} />
-                    <meta name="twitter:image" content={img_url} />
-                </Head>
-            </Helmet>}
+            <Head>
+                <title>{topic}</title>
+                <meta property="og:title" content={topic} />
+                <meta property="og:description" content={description} />
+                <meta property="og:image" content={img_url} />
+                <meta property="og:url" content={url} />
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content={topic} />
+                <meta name="twitter:description" content={description} />
+                <meta name="twitter:image" content={img_url} />
+            </Head>
 
             <Header loginRequired={false} isLanding={false} refList={[]} />
             <ToastContainer />
