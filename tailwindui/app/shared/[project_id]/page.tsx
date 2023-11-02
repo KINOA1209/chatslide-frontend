@@ -4,11 +4,13 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { Slide } from '@/components/slides/NewSlidesHTML';
 import Footer, { WorkflowFooter } from '@/components/ui/footer';
+import Head from 'next/head';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from '@/components/ui/header';
 import mixpanel from 'mixpanel-browser';
 import dynamic from 'next/dynamic'
+import { Helmet } from 'react-helmet';
 
 
 const SlidesHTML = dynamic(() => import('@/components/slides/NewSlidesHTML'), { ssr: false })
@@ -19,6 +21,11 @@ const SharePage: React.FC = () => {
     const pathname = usePathname();
     const project_id = pathname.split('/').pop();
     const [loading, setLoading] = useState(true);
+    const [topic, setTopic] = useState('');
+    const [description, setDescription] = useState('');
+    const url = window.location.href;
+    const img_url = 'https://drlambda.ai/images/logo_no_text.png'
+
 
     const [finalSlides, setFinalSlides] = useState<Slide[]>([]);
 
@@ -39,6 +46,8 @@ const SharePage: React.FC = () => {
                 .then(data => {
                     if (data.status === "success" && data.foldername) {
                         const foldername = data.foldername;
+                        setTopic(data.topic);
+                        setDescription(data.description);
                         sessionStorage.setItem('foldername', foldername);
                         // console.log(`foldername: ${foldername}`);
                         setLoading(false);
@@ -59,6 +68,21 @@ const SharePage: React.FC = () => {
     return (
 
         <main className="grow">
+
+            {loading ? <></> : <Helmet>
+                <Head>
+                    <title>{topic}</title>
+                    <meta property="og:title" content={topic} />
+                    <meta property="og:description" content={description} />
+                    <meta property="og:image" content={img_url} />
+                    <meta property="og:url" content={url} />
+                    <meta name="twitter:card" content="summary_large_image" />
+                    <meta name="twitter:title" content={topic} />
+                    <meta name="twitter:description" content={description} />
+                    <meta name="twitter:image" content={img_url} />
+                </Head>
+            </Helmet>}
+
             <Header loginRequired={false} isLanding={false} refList={[]} />
             <ToastContainer />
             {loading ? (

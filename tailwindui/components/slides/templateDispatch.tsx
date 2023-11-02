@@ -5,7 +5,7 @@ import { MathJax, MathJaxContext } from 'better-react-mathjax'
 
 function wrapWithLiTags(content: string): string {
     if (!content.includes('<li>') || !content.includes('</li>')) {
-        return `<li style="font-size: 18pt; margin-left: 20px;">${content}</li>`
+        return `<li">${content}</li>`
     }
     return content
 }
@@ -157,6 +157,7 @@ export const templateDispatch = (
                             key={keyPrefix + index.toString() + '_' + contentIndex.toString()}
                             className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                             contentEditable={canEdit}
+                            style={listStyle}
                             onFocus={() => {
                                 if (canEdit) {
                                     setIsEditMode(true);

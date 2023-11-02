@@ -110,7 +110,7 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
               <Logo />
               <div className='grow md:grow-0 flex justify-center md:justify-start'>
                 <div className='w-fit h-[1.5rem] text-xl md:text-[1.3125rem] text-gray-200 bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500 md:relative md:bottom-[3px] font-creato-medium'>
-                  <a href='/'>DrLambda</a>
+                  <a href='/dashboard'>DrLambda</a>
                 </div>
               </div>
             </div>
@@ -140,7 +140,7 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
             <Logo />
             <div className='grow md:grow-0 flex flex-row justify-center item-center md:justify-start'>
               <div className='w-fit h-[1.5rem] text-xl md:text-[1.3125rem] text-gray-200 bg-clip-text bg-gradient-to-r md:relative md:bottom-[3px] font-creato-medium'>
-                <a href='/'>DrLambda</a>
+                <a href='/dashboard'>DrLambda</a>
               </div>
             </div>
           </div>
