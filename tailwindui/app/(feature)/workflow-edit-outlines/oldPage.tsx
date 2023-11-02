@@ -2,7 +2,6 @@
 
 import React, { useState, useRef, useEffect, Fragment } from 'react'
 import ProjectProgress from '@/components/steps'
-import FeedbackForm from '@/components/slides/feedback'
 import 'react-toastify/dist/ReactToastify.css'
 import OutlineVisualizer from '@/components/outline/OutlineVisualizer'
 
@@ -14,7 +13,6 @@ export default function WorkflowStep2() {
   const outline = storedOutline ? JSON.parse(storedOutline) : null
   const outlineRes = outline ? JSON.parse(outline.res) : null
   const contentRef = useRef<HTMLDivElement>(null)
-  const [showModal, setShowModal] = useState<boolean>(false)
   const outlineContent = outlineRes
     ? Object.keys(outlineRes).map((key) => {
         return {
@@ -25,13 +23,6 @@ export default function WorkflowStep2() {
       })
     : null
 
-  const handleOpenModal = () => {
-    setShowModal(true)
-  }
-
-  const handleCloseModal = () => {
-    setShowModal(false)
-  }
   return (
     <div>
       <ProjectProgress currentInd={1} contentRef={contentRef} />
@@ -42,16 +33,6 @@ export default function WorkflowStep2() {
         <p>This is the outline generated. You can edit the details below.</p>
         <br />
         {outlineContent && <OutlineVisualizer outline={outlineContent} />}
-      </div>
-      <div className='fixed bottom-10 right-10 hidden sm:block'>
-        <button
-          onClick={handleOpenModal}
-          className='bg-gradient-to-r from-blue-600  to-purple-500 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700'
-        >
-          Feedback
-        </button>
-
-        {showModal && <FeedbackForm onClose={handleCloseModal} />}
       </div>
     </div>
   )
