@@ -124,6 +124,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
             return
         }
 
+        if (!foldername) {
+            console.log('Foldername not found, skip saving')
+            return 
+        }
+
         setSaveStatus('Saving...')
 
         const formData = {
