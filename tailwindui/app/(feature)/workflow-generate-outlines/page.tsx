@@ -15,7 +15,7 @@ import MyFiles from '@/components/fileManagement';
 import PaywallModal from '@/components/forms/paywallModal';
 import Timer from '@/components/ui/Timer';
 import FileManagement from '@/components/fileManagement';
-import FeedbackForm from '@/components/slides/feedback';
+import FeedbackButton from '@/components/slides/feedback';
 
 import {
 　QuestionExplainIcon,
@@ -55,7 +55,6 @@ export default function Topic() {
     const [showLanguagePopup, setLanguagePopup] = useState(false);
     const [showSupportivePopup, setSupportivePopup] = useState(false);
     const [selectedFileList, setselectedFileList] = useState([]);
-    const [showModal, setShowModal] = useState<boolean>(false);
     const [selectedFileListName, setselectedFileListName] = useState<string[]>([]);
 
     // bind form data between input and sessionStorage
@@ -366,14 +365,6 @@ export default function Topic() {
 
     const closeSupportivePopup = () => {
         setSupportivePopup(false)
-    }
-
-    const handleOpenModal = () => {
-        setShowModal(true)
-    }
-
-    const handleCloseModal = () => {
-        setShowModal(false)
     }
 
     return (
@@ -760,17 +751,9 @@ export default function Topic() {
                     </div>
                 </div>
             </div>
-            <div className='fixed bottom-10 right-10 hidden sm:block'>
-                <button
-                onClick={handleOpenModal}
-                className='bg-gradient-to-r from-blue-600  to-purple-500 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700'
-                >
-                Feedback
-                </button>
-
-                {showModal && <FeedbackForm onClose={handleCloseModal} />}
-            </div>
+            
             </form>
+            <FeedbackButton />
         </section>
     )
 }
