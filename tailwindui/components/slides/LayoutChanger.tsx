@@ -66,7 +66,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
       >
         <div className='grow md:grow-0'></div>
         <Transition
-          className='bg-gray-100 w-full h-3/4 md:h-1/2
+          className='bg-gray-100 w-full h-3/4 md:h-fit
                     md:max-w-2xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
                     overflow-hidden flex flex-col p-4'
           show={showLayout}

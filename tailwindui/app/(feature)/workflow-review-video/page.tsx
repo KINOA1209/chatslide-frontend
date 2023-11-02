@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Video from '@/components/Video';
 import ProjectProgress from "@/components/steps";
-import FeedbackForm from '@/components/slides/feedback';
+import FeedbackButton from '@/components/slides/feedback';
 
 const VideoVisualizer = ({ videoFile, foldername }: { videoFile: string, foldername: string }) => {
     const router = useRouter();
@@ -54,15 +54,6 @@ export default function WorkflowStep6() {
     const videoFile = typeof sessionStorage !== 'undefined' ? (sessionStorage.getItem('video_file') || "") : "";
     const foldername = typeof sessionStorage !== 'undefined' ? (sessionStorage.getItem('foldername') || "") : "";
     const contentRef = useRef<HTMLDivElement>(null);
-    const [showModal, setShowModal] = useState<boolean>(false);
-
-    const handleOpenModal = () => {
-        setShowModal(true);
-    };
-
-    const handleCloseModal = () => {
-        setShowModal(false);
-    };
 
     return (
         <div>
@@ -75,16 +66,8 @@ export default function WorkflowStep6() {
             </div>
             
             <ProjectProgress currentInd={5} contentRef={contentRef} />
-            <div className="fixed bottom-10 right-10 hidden sm:block">
-                <button
-                onClick={handleOpenModal}
-                className="bg-gradient-to-r from-blue-600  to-purple-500 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700"
-                >
-                Feedback
-                </button>
-
-                {showModal && <FeedbackForm onClose={handleCloseModal} />}
-            </div>
+            
+            <FeedbackButton />
         </div>
     )
 }
