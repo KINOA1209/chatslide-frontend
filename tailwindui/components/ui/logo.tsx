@@ -3,7 +3,7 @@ import logo from '@/public/new_landing/svgs/drlambda-logo.svg'
 
 export function Logo() {
   return (
-    <a href='/' className='block' aria-label='Cruip'>
+    <a href='/dashboard' className='block' aria-label='Cruip'>
       <img
         src='/new_landing/svgs/drlambda-logo.svg'
         alt='DrLambda'
