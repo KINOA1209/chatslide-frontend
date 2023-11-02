@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import 'react-toastify/dist/ReactToastify.css'
 import ProjectProgress from '@/components/newWorkflowSteps'
-import FeedbackForm from '@/components/slides/feedback'
+import FeedbackButton from '@/components/slides/feedback'
 import SlideVisualizer from '@/components/slides/NewSlideVisualizer'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -25,39 +25,6 @@ export default function WorkflowStep3() {
       ? sessionStorage.getItem('slide_files') || []
       : []
   const contentRef = useRef<HTMLDivElement>(null)
-  const [showModal, setShowModal] = useState<boolean>(false)
-
-  // State variable to track whether the timer has finished
-  const [timerFinished, setTimerFinished] = useState(false)
-
-  // Timer completion handler
-  const handleTimerCompletion = () => {
-    setTimerFinished(true)
-  }
-
-  // Start the timer when the component mounts
-  useEffect(() => {
-    const timer = setTimeout(handleTimerCompletion, 30000) // 30 seconds
-
-    // Clean up the timer when the component unmounts
-    return () => clearTimeout(timer)
-  }, [])
-
-  const handleOpenModal = () => {
-    setShowModal(true)
-  }
-
-  const handleCloseModal = () => {
-    setShowModal(false)
-  }
-
-  // Check if the timer has finished before opening the modal
-  useEffect(() => {
-    if (timerFinished && window.location.hostname !== 'localhost') {
-      handleOpenModal()
-    }
-  }, [timerFinished])
-
 
   return (
     <div className='bg-gradient-to-b from-[#6A7EF9] to-[#415AF1]'>
@@ -107,16 +74,8 @@ export default function WorkflowStep3() {
         <br /> */}
         <SlideVisualizer />
       </div>
-      <div className='fixed bottom-10 right-10 hidden sm:block'>
-        <button
-          onClick={handleOpenModal}
-          className='bg-gradient-to-r from-blue-600  to-purple-500 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700'
-        >
-          Feedback
-        </button>
-
-        {showModal && <FeedbackForm onClose={handleCloseModal} />}
-      </div>
+      
+      <FeedbackButton timer={3000} />
     </div>
   )
 }
