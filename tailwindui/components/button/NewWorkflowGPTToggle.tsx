@@ -35,6 +35,8 @@ const GPTToggle: React.FC<GPTToggleProps> = ({ isGpt35, setIsGpt35 }) => {
         setIsLeft={handleToggle}
         leftText='GPT 3.5'
         rightText='GPT 4'
+        leftColor='bg-[#A6B1BB]'
+        rightColor='bg-[#455BE8]'
       />
 
       {showPaymentModal && (
