@@ -26,11 +26,13 @@ const h4Style: React.CSSProperties = {
 };
 
 
+// 
 const listStyle: React.CSSProperties = {
     display: 'list-item',
     listStyleType: 'disc',
     listStylePosition: 'inside',
-    fontSize: '20pt',
+    fontSize: '18pt',
+    marginLeft: '20px',
 }
 
 export { h1Style, h2Style, h3Style, h4Style, listStyle };
