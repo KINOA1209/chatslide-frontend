@@ -4,6 +4,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { Slide } from '@/components/slides/NewSlidesHTML';
 import Footer, { WorkflowFooter } from '@/components/ui/footer';
+import Head from 'next/head';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from '@/components/ui/header';
@@ -68,15 +69,18 @@ const SharePage: React.FC = () => {
 
         <main className="grow">
 
-            { loading ? <></> : <Helmet>
-                <meta property="og:title" content={topic} />
-                <meta property="og:description" content={description} />
-                <meta property="og:image" content={img_url} />
-                <meta property="og:url" content={url} />
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content={topic} />
-                <meta name="twitter:description" content={description} />
-                <meta name="twitter:image" content={img_url} />
+            {loading ? <></> : <Helmet>
+                <Head>
+                    <title>{topic}</title>
+                    <meta property="og:title" content={topic} />
+                    <meta property="og:description" content={description} />
+                    <meta property="og:image" content={img_url} />
+                    <meta property="og:url" content={url} />
+                    <meta name="twitter:card" content="summary_large_image" />
+                    <meta name="twitter:title" content={topic} />
+                    <meta name="twitter:description" content={description} />
+                    <meta name="twitter:image" content={img_url} />
+                </Head>
             </Helmet>}
 
             <Header loginRequired={false} isLanding={false} refList={[]} />
