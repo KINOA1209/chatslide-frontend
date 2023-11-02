@@ -9,7 +9,7 @@ import GoBackButton from '@/components/button/GoBackButton'
 import ImageList from '@/components/ImageList'
 import ProjectProgress from '@/components/steps'
 import AuthService from '@/components/utils/AuthService'
-import FeedbackButton from '@/components/slides/feedback'
+import FeedbackForm from '@/components/slides/feedback'
 import mixpanel from 'mixpanel-browser'
 
 const TranscriptAudioVisualizer = ({
@@ -234,6 +234,15 @@ export default function WorkflowStep5() {
       : null
   const audioFiles = audioData ? JSON.parse(audioData) : []
   const contentRef = useRef<HTMLDivElement>(null)
+  const [showModal, setShowModal] = useState<boolean>(false)
+
+  const handleOpenModal = () => {
+    setShowModal(true)
+  }
+
+  const handleCloseModal = () => {
+    setShowModal(false)
+  }
 
   return (
     <div>
@@ -256,8 +265,16 @@ export default function WorkflowStep5() {
           imageUrls={imageUrls}
         />
       </div>
-      
-      <FeedbackButton />
+      <div className='fixed bottom-10 right-10 hidden sm:block'>
+        <button
+          onClick={handleOpenModal}
+          className='bg-gradient-to-r from-blue-600  to-purple-500 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700'
+        >
+          Feedback
+        </button>
+
+        {showModal && <FeedbackForm onClose={handleCloseModal} />}
+      </div>
     </div>
   )
 }

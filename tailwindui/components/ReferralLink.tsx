@@ -39,7 +39,7 @@ const ReferralLink: React.FC = () =>  {
                 }
             }).then(data => {
                 const code = data['referral_code'];
-                setReferralLink('/referral/' + code);
+                setReferralLink('/signup?referral=' + code);
             }).catch(error => console.error);
         }
         fetchReferral();

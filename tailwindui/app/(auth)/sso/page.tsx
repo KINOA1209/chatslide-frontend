@@ -57,12 +57,8 @@ export default function SSORedirect() {
         initUser();
 
     }, []);
-    return (
-        <div className="flex items-center justify-center min-h-screen">
-            <div className="text-center">
-                You should be redirected soon. If not, you may already have an account. Please sign in or reset your password.
-                <ToastContainer />
-            </div>
-        </div>
-    );
+    return (<>
+        You should be redirected soon. If not, you may already have an account. Please sign in or reset your password.
+        <ToastContainer />
+    </>)
 };
