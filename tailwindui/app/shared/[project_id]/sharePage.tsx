@@ -1,11 +1,9 @@
 'use client'
 
-
 import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { Slide } from '@/components/slides/NewSlidesHTML';
 import Footer, { WorkflowFooter } from '@/components/ui/footer';
-import Head from 'next/head';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from '@/components/ui/header';
@@ -17,12 +15,12 @@ const SlidesHTML = dynamic(() => import('@/components/slides/NewSlidesHTML'), { 
 
 
 const SharePage: React.FC = () => {
+    const router = useRouter();
+    const pathname = usePathname();
+    const project_id = pathname.split('/').pop();
+    const [loading, setLoading] = useState(true);
 
     const [finalSlides, setFinalSlides] = useState<Slide[]>([]);
-
-    const project_id = usePathname().split('/').pop();
-    const [foldername, setFoldername] = useState('');
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         // Assume fetchSlideHtml is a function to get slide_html from your project table
@@ -57,20 +55,25 @@ const SharePage: React.FC = () => {
             fetchFoldername();
         }
     }, [project_id]);
-    
 
     return (
-        foldername ? <></> : 
+
         <main className="grow">
             <Header loginRequired={false} isLanding={false} refList={[]} />
             <ToastContainer />
-            <div className="flex items-center justify-center min-h-screen">
-                <div>
-                    <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} isViewing={true}/>
+            {loading ? (
+                <div>Loading...</div>
+            ) : (
+                <div className="flex items-center justify-center min-h-screen">
+                    <div>
+                        <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} isViewing={true} />
+                    </div>
                 </div>
-            </div>
+            )}
+
             <WorkflowFooter />
         </main>
+
     );
 }
 

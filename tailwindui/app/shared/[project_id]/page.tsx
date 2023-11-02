@@ -9,7 +9,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const project_id = params.project_id;
     const host = process.env.NEXT_PUBLIC_HOST;
-    const data = await fetch(`http://localhost/api/get_shared_project_foldername?project_id=${project_id}`).then(response => response.json());
+    const data = await fetch(`https://dev.drlambda.ai/api/get_shared_project_foldername?project_id=${project_id}`).then(response => response.json());
     const topic = data.topic;
     const description = data.description;
 
