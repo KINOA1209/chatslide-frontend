@@ -119,6 +119,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
     // Function to send a request to auto-save finalSlides
     const saveSlides = () => {
+        if (isViewing) {
+            console.log('Viewing another\'s shared project, skip saving')
+            return
+        }
+
         if (finalSlides.length === 0) {
             console.log('Final slides not yet loaded, skip saving')
             return
