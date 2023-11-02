@@ -6,7 +6,7 @@ const PricingPlans = ({ pricingPlansData }) => {
       {pricingPlansData.map((plan) => (
         <div
           key={plan.title}
-          className={`w-80 p-6 rounded-md border flex-col inline-flex justify-start items-start gap-6  ${
+          className={`transition-transform duration-150 transform hover:-translate-y-2 w-80 p-6 rounded-md border flex-col inline-flex justify-start items-start gap-6  ${
             plan.title === 'Starter'
               ? 'bg-indigo-50 border-violet-200'
               : plan.title === 'Plus'

@@ -17,13 +17,11 @@ import Header from '@/components/ui/header'
 const fileTypes = [
   'pdf-file-icon',
   'word-file-icon',
-  'box-file-icon',
   'slack-file-icon',
   'dropbox-file-icon',
   'ppt-file-icon',
   'unknown-file-icon',
   'google-drive-icon',
-  'pdf-file-icon',
   'csv-file-icon',
 ]
 
@@ -114,7 +112,7 @@ function App() {
             </div>
           </div>
 
-          <div className='w-[90%] lg:w-[70rem] lg:h-[35rem] mx-auto max-w-7xl'>
+          <div className='transition-transform duration-150 transform hover:scale-110 w-[90%] lg:w-[70rem] lg:h-[35rem] mx-auto max-w-7xl'>
             <Image
               src={GenerationPreviewImg}
               alt='my project'
@@ -216,7 +214,7 @@ function App() {
               // Each icon container
               <div
                 key={index}
-                className='w-[4rem] h-[4rem] lg:w-[8rem] lg:h-[8rem] bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'
+                className='transition-transform duration-150 transform hover:scale-110 w-[4rem] h-[4rem] lg:w-[8rem] lg:h-[8rem] bg-white rounded-full border border-gray-200 flex justify-center items-center shadow-2xl'
               >
                 <img
                   className={
