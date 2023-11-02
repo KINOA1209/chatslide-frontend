@@ -14,105 +14,111 @@ import ProjectTable from './ProjectTable'
 //   name: string
 //   description: string
 // }
+interface Resource {
+  id: string
+  name: string
+  type: string
+}
 interface Project {
   id: string
-  task: 'video' | 'scripts' | 'slides'
-  projectName: string
-  resources: string[]
-  creationDate: string
+  //   task: 'video' | 'scripts' | 'slides'
+  task: 'presentation' | 'social post'
+  name: string
+  resources: Resource[]
+  created_datetime: string
 }
 
-const fakeProjects: Project[] = [
-  {
-    id: '63fa4d24-04de-43c5-8bc6-bc00175e10ca',
-    task: 'video',
-    projectName: 'Exploration of Creative Arts in Modern Society',
-    resources: [
-      'introduction_to_creative_arts.pdf',
-      'creative_arts_script_v1.docx',
-      'creative_arts_video_part1.mp4',
-    ],
-    creationDate: '10-03-2023',
-  },
-  {
-    id: '1b9566e1-5b9f-4d3f-9e6b-3a70e1240b68',
-    task: 'scripts',
-    projectName: 'A Comprehensive Study of Musical Evolution Across Centuries',
-    resources: [
-      'musical_evolution_lyrics.pdf',
-      'musical_evolution_composition_notes.docx',
-    ],
-    creationDate: '05-15-2023',
-  },
-  {
-    id: '9be376e7-9c47-42c3-8745-6e8f5985bfc7',
-    task: 'slides',
-    projectName:
-      'Art Gallery Showcase and Historical Significance Presentation',
-    resources: ['gallery_showcase_and_historical_presentation.pptx'],
-    creationDate: '12-30-2023',
-  },
-  {
-    id: '64aa30bb-f6eb-44f5-9e68-ef7eeef4d2f4',
-    task: 'video',
-    projectName:
-      'Sustainable and Eco-Friendly Living Practices in the Modern World',
-    resources: [
-      'sustainability_research.pdf',
-      'eco_friendly_living_guide.docx',
-      'eco_friendly_living_video_part1.mp4',
-      'eco_friendly_living_video_part2.mp4',
-      'sustainability_research2.pdf',
-      'sustainability_research3.pdf',
-    ],
-    creationDate: '08-21-2023',
-  },
-  {
-    id: 'd2a7e0d1-31de-4fb3-9b75-8a33b65f4c81',
-    task: 'slides',
-    projectName: 'Insights into Historical Events and Their Impact on Society',
-    resources: [
-      'historical_events_presentation.pptx',
-      'historical_events_research_notes.docx',
-    ],
-    creationDate: '04-07-2023',
-  },
-  {
-    id: 'e4f3c6ab-60a1-45bd-87de-20ab54fe5929',
-    task: 'video',
-    projectName: 'Project ABC - Video Editing',
-    resources: ['video1.mp4', 'video2.mp4', 'video3.mp4'],
-    creationDate: '10-18-2023',
-  },
-  {
-    id: 'db159980-7e52-4287-8a52-3f46d42266aa',
-    task: 'slides',
-    projectName: 'Project XYZ - Presentation Slides',
-    resources: ['slides1.pdf', 'slides2.pdf'],
-    creationDate: '11-04-2023',
-  },
-  {
-    id: 'df2a7e3c-96f9-4926-a21f-64a2a2d8f03a',
-    task: 'scripts',
-    projectName: 'Project DEF - Scriptwriting',
-    resources: ['script1.docx', 'script2.docx', 'script3.docx'],
-    creationDate: '09-29-2023',
-  },
-  {
-    id: 'c43b265c-3da7-46b7-98f7-0d433243e92d',
-    task: 'video',
-    projectName: 'Project GHI - Video Production',
-    resources: ['video1.mp4', 'video2.mp4'],
-    creationDate: '12-15-2023',
-  },
-  {
-    id: '8e9c5b26-10d1-47cc-bb9f-1df63e4b67c8',
-    task: 'slides',
-    projectName: 'Project JKL - Conference Presentation',
-    resources: ['slides1.pdf', 'slides2.pdf', 'slides3.pdf'],
-    creationDate: '08-21-2023',
-  },
-]
+// const fakeProjects: Project[] = [
+//   {
+//     id: '63fa4d24-04de-43c5-8bc6-bc00175e10ca',
+//     task: 'video',
+//     projectName: 'Exploration of Creative Arts in Modern Society',
+//     resources: [
+//       'introduction_to_creative_arts.pdf',
+//       'creative_arts_script_v1.docx',
+//       'creative_arts_video_part1.mp4',
+//     ],
+//     creationDate: '10-03-2023',
+//   },
+//   {
+//     id: '1b9566e1-5b9f-4d3f-9e6b-3a70e1240b68',
+//     task: 'scripts',
+//     projectName: 'A Comprehensive Study of Musical Evolution Across Centuries',
+//     resources: [
+//       'musical_evolution_lyrics.pdf',
+//       'musical_evolution_composition_notes.docx',
+//     ],
+//     creationDate: '05-15-2023',
+//   },
+//   {
+//     id: '9be376e7-9c47-42c3-8745-6e8f5985bfc7',
+//     task: 'slides',
+//     projectName:
+//       'Art Gallery Showcase and Historical Significance Presentation',
+//     resources: ['gallery_showcase_and_historical_presentation.pptx'],
+//     creationDate: '12-30-2023',
+//   },
+//   {
+//     id: '64aa30bb-f6eb-44f5-9e68-ef7eeef4d2f4',
+//     task: 'video',
+//     projectName:
+//       'Sustainable and Eco-Friendly Living Practices in the Modern World',
+//     resources: [
+//       'sustainability_research.pdf',
+//       'eco_friendly_living_guide.docx',
+//       'eco_friendly_living_video_part1.mp4',
+//       'eco_friendly_living_video_part2.mp4',
+//       'sustainability_research2.pdf',
+//       'sustainability_research3.pdf',
+//     ],
+//     creationDate: '08-21-2023',
+//   },
+//   {
+//     id: 'd2a7e0d1-31de-4fb3-9b75-8a33b65f4c81',
+//     task: 'slides',
+//     projectName: 'Insights into Historical Events and Their Impact on Society',
+//     resources: [
+//       'historical_events_presentation.pptx',
+//       'historical_events_research_notes.docx',
+//     ],
+//     creationDate: '04-07-2023',
+//   },
+//   {
+//     id: 'e4f3c6ab-60a1-45bd-87de-20ab54fe5929',
+//     task: 'video',
+//     projectName: 'Project ABC - Video Editing',
+//     resources: ['video1.mp4', 'video2.mp4', 'video3.mp4'],
+//     creationDate: '10-18-2023',
+//   },
+//   {
+//     id: 'db159980-7e52-4287-8a52-3f46d42266aa',
+//     task: 'slides',
+//     projectName: 'Project XYZ - Presentation Slides',
+//     resources: ['slides1.pdf', 'slides2.pdf'],
+//     creationDate: '11-04-2023',
+//   },
+//   {
+//     id: 'df2a7e3c-96f9-4926-a21f-64a2a2d8f03a',
+//     task: 'scripts',
+//     projectName: 'Project DEF - Scriptwriting',
+//     resources: ['script1.docx', 'script2.docx', 'script3.docx'],
+//     creationDate: '09-29-2023',
+//   },
+//   {
+//     id: 'c43b265c-3da7-46b7-98f7-0d433243e92d',
+//     task: 'video',
+//     projectName: 'Project GHI - Video Production',
+//     resources: ['video1.mp4', 'video2.mp4'],
+//     creationDate: '12-15-2023',
+//   },
+//   {
+//     id: '8e9c5b26-10d1-47cc-bb9f-1df63e4b67c8',
+//     task: 'slides',
+//     projectName: 'Project JKL - Conference Presentation',
+//     resources: ['slides1.pdf', 'slides2.pdf', 'slides3.pdf'],
+//     creationDate: '08-21-2023',
+//   },
+// ]
 
 // console.log(fakeProjects)
 
@@ -143,10 +149,10 @@ export default function Dashboard() {
   // const indexOfFirstProject = indexOfLastProject - projectsPerPage;
   // const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
 
-  // const currentProjects = projects
+  const currentProjects = projects
 
   // place holder data
-  const currentProjects = fakeProjects
+  // const currentProjects = fakeProjects
 
   const goToNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1)
@@ -165,7 +171,7 @@ export default function Dashboard() {
       try {
         const { userId, idToken: token } =
           await AuthService.getCurrentUserTokenAndId()
-          handleRequest(token)
+        handleRequest(token)
       } catch (error: any) {
         console.error(error)
       }
@@ -314,7 +320,7 @@ export default function Dashboard() {
 
       {/* projects details area */}
       <div
-        className='max-w-7xl mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto'
+        className='max-w-7xl mx-auto mt-4 px-4 pt-4 flex flex-col grow overflow-y-auto'
         ref={contentRef}
       >
         {/* table header */}

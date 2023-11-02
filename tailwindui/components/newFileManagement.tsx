@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import moment from 'moment'
 // import mixpanel from 'mixpanel-browser'
+import { DeleteResourceIcon } from '@/app/(feature)/my-resources/icons'
 import { CarbonConnect, IntegrationName } from 'carbon-connect'
 
 interface UserFile {
@@ -29,11 +30,15 @@ interface UserFileList {
 // Define a new component for the table header
 const FileTableHeader = () => (
   <div
-    className='grid grid-cols-3 border border-gray-300'
+    className='grid grid-cols-3 bg-[#ECF1FE] border border-gray-200'
     style={{ gridTemplateColumns: '2fr 1fr' }}
   >
-    <div className='px-[2.5rem] py-[1rem] bg-gray-300 text-start'>File</div>
-    <div className='px-[2.5rem] py-[1rem] bg-gray-300 text-start'>Date</div>
+    <div className='px-[2.5rem] py-[1rem] text-start w-[37px] text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+      File
+    </div>
+    <div className='px-[2.5rem] py-[1rem] text-start w-[37px] text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+      Date
+    </div>
   </div>
 )
 
@@ -45,7 +50,7 @@ const FileManagement: React.FC<UserFileList> = ({
   selectedResources,
 }) => {
   const handleDeleteFile = async (
-    e: React.MouseEvent<SVGSVGElement>,
+    e: React.MouseEvent<HTMLDivElement>,
     id: string
   ) => {
     e.stopPropagation()
@@ -156,12 +161,12 @@ const FileManagement: React.FC<UserFileList> = ({
             {thumbnail ? getThumbnail(thumbnail) : getIcon(filename)}
           </div>
           {/* filename */}
-          <div className='grow text-ellipsis mx-4 overflow-hidden'>
+          <div className='grow text-ellipsis mx-4 overflow-hidden text-gray-600 text-[17px] italic font-creato-medium leading-normal tracking-wide'>
             {filename}
           </div>
         </div>
         {/* timestamp and delete icon */}
-        <div className='h-full flex justify-between items-center w-full py-4 px-2'>
+        <div className='h-full flex justify-between items-center w-full py-4 px-2 text-gray-600 text-[13px] font-normal font-creato-medium leading-normal tracking-[0.12rem]'>
           {' '}
           {timestamp && (
             <div className='hidden md:block'>
@@ -169,18 +174,10 @@ const FileManagement: React.FC<UserFileList> = ({
             </div>
           )}
           {!selectable ? (
-            <div className='w-8 flex flex-row-reverse'>
-              <svg
-                onClick={(e) => handleDeleteFile(e, id)}
-                className='w-6 md:opacity-25 hover:opacity-100 cursor-pointer'
-                viewBox='0 0 1024 1024'
-                xmlns='http://www.w3.org/2000/svg'
-              >
-                <path
-                  fill='#000000'
-                  d='M160 256H96a32 32 0 0 1 0-64h256V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64h-64v672a32 32 0 0 1-32 32H192a32 32 0 0 1-32-32V256zm448-64v-64H416v64h192zM224 896h576V256H224v640zm192-128a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32zm192 0a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32z'
-                />
-              </svg>
+            <div className='w-8 flex flex-row-reverse cursor-pointer'>
+              <div onClick={(e) => handleDeleteFile(e, id)}>
+                <DeleteResourceIcon></DeleteResourceIcon>
+              </div>
             </div>
           ) : (
             <></>
@@ -581,9 +578,8 @@ const MyFiles: React.FC<filesInterface> = ({
     <section className='bg-gradient-to-b from-gray-100 to-white grow flex flex-col h-full'>
       <ToastContainer enableMultiContainer containerId={'fileManagement'} />
       <div
-        className={`max-w-7xl w-full mx-auto px-4 ${
-          !selectable ? 'pt-16 md:pt-32' : ''
-        } flex flex-wrap justify-around`}
+        className={`max-w-7xl w-full mx-auto px-4
+          flex flex-wrap justify-around`}
       >
         {/* {!selectable ? (
           <div className='pt-4 grow pr-4'>
@@ -596,14 +592,14 @@ const MyFiles: React.FC<filesInterface> = ({
         )} */}
 
         {/* upload local file button */}
-        <div className='max-w-sm w-fit text-center pt-4 mx-4'>
+        {/* <div className='max-w-sm w-fit text-center pt-4 mx-4'>
           <div className='w-full mx-auto'>
             <FileUploadButton onFileSelected={onFileSelected} />
           </div>
-        </div>
+        </div> */}
 
         {/* carbon connect cloud storage */}
-        <div className='max-w-sm w-fit text-center pt-4 mx-4'>
+        {/* <div className='max-w-sm w-fit text-center pt-4 mx-4'>
           <div className='w-full mx-auto'>
             <CarbonConnect
               orgName='DrLambda'
@@ -663,7 +659,7 @@ const MyFiles: React.FC<filesInterface> = ({
               </div>
             </CarbonConnect>
           </div>
-        </div>
+        </div> */}
       </div>
       <div
         className='max-w-6xl w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto'

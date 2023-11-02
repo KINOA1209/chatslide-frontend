@@ -10,12 +10,18 @@ import {
   FaFileWord,
 } from 'react-icons/fa'
 
+interface Resource {
+  id: string
+  name: string
+  type: string
+}
 interface Project {
   id: string
-  task: 'video' | 'scripts' | 'slides'
-  projectName: string
-  resources: string[]
-  creationDate: string
+  //   task: 'video' | 'scripts' | 'slides'
+  task: 'presentation' | 'social post'
+  name: string
+  resources: Resource[]
+  created_datetime: string
 }
 
 interface Props {
@@ -24,15 +30,15 @@ interface Props {
   onDelete: (e: React.MouseEvent<HTMLDivElement>, projectId: string) => void
 }
 
-const TaskIcon: React.FC<{ task: 'video' | 'scripts' | 'slides' }> = ({
+const TaskIcon: React.FC<{ task: 'presentation' | 'social post' }> = ({
   task,
 }) => {
   switch (task) {
-    case 'video':
-      return <FaFilm />
-    case 'scripts':
+    // case 'video':
+    //   return <FaFilm />
+    case 'social post':
       return <FaFileAlt />
-    case 'slides':
+    case 'presentation':
       return <FaFilePowerpoint />
     default:
       return null
@@ -41,9 +47,9 @@ const TaskIcon: React.FC<{ task: 'video' | 'scripts' | 'slides' }> = ({
 
 const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
   switch (fileType) {
-    case 'pdf':
+    case 'doc':
       return <FaFilePdf />
-    case 'docx':
+    case 'url':
       return <FaFileWord />
     default:
       return null
@@ -66,68 +72,90 @@ const ProjectTable: React.FC<Props> = ({
   }
 
   return (
-    <div
-      className='grid grid-cols-4 border border-gray-300 mb-[3rem]'
-      style={{
-        gridTemplateColumns: '1fr 2fr 1fr 1fr',
-        overflowY: 'auto',
-      }}
-    >
-      <div className='p-2 bg-gray-300 text-center'>Task</div>
-      <div className='p-2 bg-gray-300 text-center'>Project</div>
-      <div className='p-2 bg-gray-300 text-center'>Resources</div>
-      <div className='p-2 bg-gray-300 text-center'>Date</div>
-      {currentProjects.map((project, index) => (
-        <React.Fragment key={project.id}>
-          <div className='p-2 flex items-center border-b-2 justify-center'>
-            <TaskIcon task={project.task} />
-            <span className='ml-1'>{project.task}</span>
-          </div>
-          <div
-            className='p-2 flex cursor-pointer items-center border-b-2'
-            onClick={() => onProjectClick(project.id)}
-          >
-            {project.projectName}
-          </div>
-          <div className='p-2 border-b-2 flex items-center justify-center'>
-            <div className='flex items-center justify-center'>
-              <FileIcon fileType='pdf' />
-              <span className='ml-1'>{project.resources.length} Resources</span>
-              <button
-                onClick={() => toggleExpand(index)}
-                className='ml-2 p-1 border rounded cursor-pointer'
-              >
-                {expandedProject === index ? <FaArrowDown /> : <FaArrowUp />}
-              </button>
+    <>
+      {' '}
+      <div
+        className='grid grid-cols-4 bg-[#ECF1FE] border border-gray-200'
+        style={{
+          gridTemplateColumns: '1fr 2fr 1fr 1fr',
+          overflowY: 'auto',
+        }}
+      >
+        <div className='px-[2.5rem] py-[1rem] text-start w-[37px] text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+          Task
+        </div>
+        <div className='px-[2.5rem] py-[1rem] text-start w-[37px] text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+          Project
+        </div>
+        <div className='px-[2.5rem] py-[1rem] text-start w-[37px] text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+          Resources
+        </div>
+        <div className='px-[2.5rem] py-[1rem] text-start w-[37px] text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+          Date
+        </div>
+      </div>
+      <div
+        className='grid grid-cols-4 border border-gray-200'
+        style={{
+          gridTemplateColumns: '1fr 2fr 1fr 1fr',
+          overflowY: 'auto',
+        }}
+      >
+        {' '}
+        {currentProjects.map((project, index) => (
+          <React.Fragment key={project.id}>
+            <div className='p-2 flex items-center border-b-2 justify-center'>
+              <TaskIcon task={project.task} />
+              <span className='ml-1'>{project.task}</span>
             </div>
-          </div>
-          <div className='p-2 border-b-2 flex items-center justify-center'>
-            <div className='flex justify-center items-center gap-[3.75rem]'>
-              <span>{project.creationDate}</span>
-              <div
-                className='p-1 cursor-pointer'
-                onClick={(e) => onDelete(e, project.id)}
-              >
-                <FaTrash />
+            <div
+              className='p-2 flex cursor-pointer items-center border-b-2'
+              onClick={() => onProjectClick(project.id)}
+            >
+              {project.name}
+            </div>
+            <div className='p-2 border-b-2 flex items-center justify-center'>
+              <div className='flex items-center justify-center'>
+                <FileIcon fileType='pdf' />
+                <span className='ml-1'>
+                  {project.resources.length} Resources
+                </span>
+                <button
+                  onClick={() => toggleExpand(index)}
+                  className='ml-2 p-1 border rounded cursor-pointer'
+                >
+                  {expandedProject === index ? <FaArrowDown /> : <FaArrowUp />}
+                </button>
               </div>
             </div>
-          </div>
-          {expandedProject === index && (
-            <div className='mt-2 flex flex-wrap col-start-2 col-span-3 border-b-2 items-center'>
-              {project.resources.map((resource, resourceIndex) => (
+            <div className='p-2 border-b-2 flex items-center justify-center'>
+              <div className='flex justify-center items-center gap-[3.75rem]'>
+                <span>{project.created_datetime}</span>
                 <div
-                  key={resourceIndex}
-                  className='flex items-center justify-center gap-[0.5rem] bg-gray-100 p-1 m-1 rounded'
+                  className='p-1 cursor-pointer'
+                  onClick={(e) => onDelete(e, project.id)}
                 >
-                  <FileIcon fileType={resource.split('.').pop() || ''} />
-                  {resource}
+                  <FaTrash />
                 </div>
-              ))}
+              </div>
             </div>
-          )}
-        </React.Fragment>
-      ))}
-    </div>
+            {expandedProject === index && (
+              <div className='mt-2 flex flex-wrap col-start-2 col-span-3 border-b-2 items-center'>
+                {project.resources.map((resource, resourceIndex) => (
+                  <div
+                    key={resourceIndex}
+                    className='flex items-center justify-center gap-[0.5rem] bg-gray-100 p-1 m-1 rounded'
+                  >
+                    <FileIcon fileType={resource.type} />
+                    {resource.name}
+                  </div>
+                ))}
+              </div>
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+    </>
   )
 }
 
