@@ -25,6 +25,8 @@ export const metadata = {
     title: 'DrLambda',
     description: 'Your AI agent to create professional slides.',
     keywords: 'DrLambda, AI-powered, tool, create, professional, slides, documents, sources, pdf, docx, notion, presentation, knowledge',
+    image: 'https://drlambda.ai/new_landing/imgs/ogimage.png',
+    name: 'DrLambda',
     openGraph: {
         title: 'DrLambda',
         description: 'Your AI agent to create professional slides.',
@@ -46,7 +48,7 @@ export const metadata = {
         creator: '@drlambda_ai',
         title: 'DrLambda',
         description: 'Your AI agent to create professional slides.',
-        images: ['https://drlambda.ai/new_landing/imgs/ogimage.png'],
+        image: 'https://drlambda.ai/new_landing/imgs/ogimage.png',
     }
 }
 
@@ -60,7 +62,7 @@ function App() {
                 {/* Section: Transform Knowledge */}
                 <div className='relative intro-section flex flex-col justify-center items-center gap-4'>
                     <div className='w-[90%] text-center text-neutral-900 text-5xl lg:text-8xl font-creato-medium leading-[4rem] lg:leading-[7.5rem] pt-32'>
-                        Present Your Knowledge
+                        Create slides from your documents
                     </div>
 
                     <a
@@ -76,7 +78,9 @@ function App() {
                     </a>
 
                     <div className='mt-6 w-50% text-center text-neutral-900 text-2xl lg:text-3xl leading-10 tracking-wide font-creato-medium'>
-                        Create professional slides from your documents and sources
+                        DrLambda is your AI agent to help you create professional slides.
+                        <br />
+                        Say goodbye to the tedious tasks of searching, copy-pasting, and formatting. 
                     </div>
 
                     <LandingButton />

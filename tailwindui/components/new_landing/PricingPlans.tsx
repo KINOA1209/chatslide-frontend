@@ -152,8 +152,8 @@ const PricingSection = () => {
     }
 
     return (
-        <div className='mt-[6rem] mb-[6rem] flex flex-col justify-center items-center'>
-            <div className='w-[90%] text-center text-neutral-900 text-4xl lg:text-7xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
+        <div className='mt-[10rem] mb-[6rem] flex flex-col justify-center items-center'>
+            <div className='w-[90%] text-center text-neutral-900 text-4xl lg:text-6xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
                 Pricing
             </div>
             <div className='w-[90%] mx-auto max-w-7xl mb-[3rem] flex justify-center lg:justify-end items-center'>
