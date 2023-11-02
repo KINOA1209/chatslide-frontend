@@ -1,5 +1,3 @@
-'use client'
-
 import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { Slide } from '@/components/slides/NewSlidesHTML';
@@ -10,7 +8,6 @@ import "react-toastify/dist/ReactToastify.css";
 import Header from '@/components/ui/header';
 import mixpanel from 'mixpanel-browser';
 import dynamic from 'next/dynamic'
-import { Helmet } from 'react-helmet';
 
 
 const SlidesHTML = dynamic(() => import('@/components/slides/NewSlidesHTML'), { ssr: false })
@@ -69,17 +66,17 @@ const SharePage: React.FC = () => {
 
         <main className="grow">
 
-            <Head>
-                <title>{topic}</title>
-                <meta property="og:title" content={topic} />
-                <meta property="og:description" content={description} />
-                <meta property="og:image" content={img_url} />
-                <meta property="og:url" content={url} />
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content={topic} />
-                <meta name="twitter:description" content={description} />
-                <meta name="twitter:image" content={img_url} />
-            </Head>
+                <Head>
+                    <title>{topic}</title>
+                    <meta property="og:title" content={topic} />
+                    <meta property="og:description" content={description} />
+                    <meta property="og:image" content={img_url} />
+                    <meta property="og:url" content={url} />
+                    <meta name="twitter:card" content="summary_large_image" />
+                    <meta name="twitter:title" content={topic} />
+                    <meta name="twitter:description" content={description} />
+                    <meta name="twitter:image" content={img_url} />
+                </Head>
 
             <Header loginRequired={false} isLanding={false} refList={[]} />
             <ToastContainer />
