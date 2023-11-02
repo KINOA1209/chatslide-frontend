@@ -73,10 +73,10 @@ const SharePage: React.FC = () => {
                 <meta property="og:description" content={description} />
                 <meta property="og:image" content={img_url} />
                 <meta property="og:url" content={url} />
-                <meta name="twitter:card" content={img_url} />
+                <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content={topic} />
                 <meta name="twitter:description" content={description} />
-                <meta name="twitter:image" content={url} />
+                <meta name="twitter:image" content={img_url} />
             </Helmet>}
 
             <Header loginRequired={false} isLanding={false} refList={[]} />
