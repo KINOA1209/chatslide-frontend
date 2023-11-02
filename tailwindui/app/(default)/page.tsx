@@ -20,9 +20,10 @@ const fileTypes = [
   'slack-file-icon',
   'dropbox-file-icon',
   'ppt-file-icon',
-  'unknown-file-icon',
   'google-drive-icon',
-  'csv-file-icon',
+  'notion-icon',
+  'youtube-square-icon',
+  'txt-icon',
 ]
 
 function App() {
