@@ -28,6 +28,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             locale: "en_US",
             type: "website",
         },
+        twitter: {
+            site: '@drlambda_ai',
+            card: 'summary_large_image',
+            creator: '@drlambda_ai',
+            title: 'DrLambda',
+            description: description,
+            images: ['https://drlambda.ai/new_landing/imgs/ogimage.png'], // todo: use one from slides
+        }
     };
 
     return metadata
