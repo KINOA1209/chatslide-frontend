@@ -68,7 +68,7 @@ const SharePage: React.FC = () => {
 
         <main className="grow">
 
-            <Helmet>
+            { loading ? <></> : <Helmet>
                 <meta property="og:title" content={topic} />
                 <meta property="og:description" content={description} />
                 <meta property="og:image" content={img_url} />
@@ -77,7 +77,7 @@ const SharePage: React.FC = () => {
                 <meta name="twitter:title" content={topic} />
                 <meta name="twitter:description" content={description} />
                 <meta name="twitter:image" content={url} />
-            </Helmet>
+            </Helmet>}
 
             <Header loginRequired={false} isLanding={false} refList={[]} />
             <ToastContainer />
