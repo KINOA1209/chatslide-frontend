@@ -38,11 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<GenerateMetad
 }
 
 
-type PageProps = {
-    foldername: string
-}
-
-const Page: React.FC<PageProps> = ({ foldername }) => {
+const Page: React.FC = () => {
     return (
         <div>
             <SharePage /> {/* Include your client-side component */}
