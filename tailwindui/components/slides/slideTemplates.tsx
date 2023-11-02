@@ -1,9 +1,10 @@
 import { StaticImageData } from "next/image";
 import { ImgModule } from "@/components/imgModule";
 import { useEffect, useState } from "react";
-import template1 from '@/public/images/template/1.jpg' // Cover
-import template2 from '@/public/images/template/2.jpg' // col1 img0
-import template3 from '@/public/images/template/3.jpg' // col2 img1
+import cover_png from '@/public/images/template/cover.png' // Cover
+import col1img0_png from '@/public/images/template/col1img0.png' 
+import col2img1_png from '@/public/images/template/col2img1.png' 
+import col3img2_png from '@/public/images/template/col3img2.png' 
 
 interface MainSlideProps {
     user_name: JSX.Element,
@@ -223,7 +224,7 @@ export const Col_1_img_0 = ({ user_name, title, topic, subtopic, content, imgs, 
 }
 
 
-export const Col_2_img_2 = ({ user_name, title, topic, subtopic, content, imgs, update_callback, canEdit, autoSave }: MainSlideProps) => {
+export const Col_3_img_2 = ({ user_name, title, topic, subtopic, content, imgs, update_callback, canEdit, autoSave }: MainSlideProps) => {
     // localImgs array length should be initialized to ImgCount
     const ImgCount = 2;
     const [localImgs, setLocalImgs] = useState<string[]>(['', '']);
@@ -297,24 +298,24 @@ export default {
     'Col_2_img_1': Col_2_img_1,
     'First_page_img_1': First_page_img_1,
     'Col_1_img_0': Col_1_img_0,
-    'Col_2_img_2': Col_2_img_2,
+    'Col_3_img_2': Col_3_img_2,
 }
 
 export const templateSamples = {
     cover: [{
         name: 'First_page_img_1',
-        img: template1.src,
+        img: cover_png.src,
     }],
     main: [{
         name: 'Col_1_img_0',
-        img: template2.src,
+        img: col1img0_png.src,
     }, {
         name: 'Col_2_img_1',
-        img: template3.src,
+        img: col2img1_png.src,
     }, 
     {
-        name: 'Col_2_img_2',
-        img: template2.src,
+        name: 'Col_3_img_2',
+        img: col3img2_png.src,
     },
 ]
 };
