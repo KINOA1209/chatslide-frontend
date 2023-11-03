@@ -117,7 +117,6 @@ export const NewFileUploadButton: FC<FileUploadButtonProps> = ({
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null
-    console.log(file?.size)
     if (file?.size && file?.size > sizeLimit) {
       toast.error('The maximum file size supported is 16 MB.', {
         position: 'top-center',
@@ -163,7 +162,7 @@ export const NewFileUploadButton: FC<FileUploadButtonProps> = ({
   }
 
   return (
-    <div className='max-w-sm flex flex-col items-center'>
+    <div className='px-4 py-1.5 bg-indigo-500 rounded-[70px] justify-center items-center'>
       <ToastContainer enableMultiContainer containerId={'upload'} />
       <input
         type='file'
@@ -173,26 +172,12 @@ export const NewFileUploadButton: FC<FileUploadButtonProps> = ({
         style={{ display: 'none' }}
       />
       <button
-        className='w-full btn text-white font-bold bg-gray-800 md:bg-opacity-90'
+        className='w-full bg-indigo-500 rounded-[70px] text-zinc-100 text-sm font-medium font-creato-medium leading-tight tracking-tight'
         type='button'
         onClick={handleClick}
       >
         Upload Local File
       </button>
-      <div className='text-sm text-gray-400'>
-        Supported file formats:{' '}
-        {formats.map((f, index) => {
-          if (index !== formats.length - 1) {
-            return f + ', '
-          } else {
-            return f
-          }
-        })}
-      </div>
-      <div className='text-sm text-gray-400'>Max file size: 16 MB</div>
-      <div className='text-sm text-gray-400'>
-        Subscribed users can select multiple files
-      </div>
     </div>
   )
 }

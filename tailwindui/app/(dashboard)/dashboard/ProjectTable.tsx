@@ -81,16 +81,16 @@ const ProjectTable: React.FC<Props> = ({
           overflowY: 'auto',
         }}
       >
-        <div className='px-[2.5rem] py-[1rem] text-start w-[37px] text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+        <div className='flex items-center justify-center text-start w-full text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
           Task
         </div>
-        <div className='px-[2.5rem] py-[1rem] text-start w-[37px] text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+        <div className='flex items-center justify-center text-start w-full text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
           Project
         </div>
-        <div className='px-[2.5rem] py-[1rem] text-start w-[37px] text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+        <div className='flex items-center justify-center text-start w-full text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
           Resources
         </div>
-        <div className='px-[2.5rem] py-[1rem] text-start w-[37px] text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+        <div className='flex items-center justify-center text-start w-full text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
           Date
         </div>
       </div>
@@ -109,7 +109,7 @@ const ProjectTable: React.FC<Props> = ({
               <span className='ml-1'>{project.task}</span>
             </div>
             <div
-              className='p-2 flex cursor-pointer items-center border-b-2'
+              className='p-2 flex cursor-pointer items-center border-b-2 justify-center'
               onClick={() => onProjectClick(project.id)}
             >
               {project.name}

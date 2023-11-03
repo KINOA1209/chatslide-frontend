@@ -1,9 +1,10 @@
 'use client'
-import React, { useState } from 'react'
-import UploadToLibraryWindow from './UploadToLibraryWindow'
+import React, { useState } from 'react';
+import UploadToLibraryWindow from './UploadToLibraryWindow';
+import { Transition } from '@headlessui/react';
 
 const MyResourcePageHeader = () => {
-  const [showModal, setShowModal] = useState(true)
+  const [showModal, setShowModal] = useState(false)
 
   const openModal = () => {
     setShowModal(true)
@@ -13,7 +14,7 @@ const MyResourcePageHeader = () => {
     setShowModal(false)
   }
   return (
-    <>
+    <section>
       {/* top background container of my projects title text and  */}
       <div className='bg-gray-200 pt-16 md:pt-32 flex justify-center '>
         {/* flex container controlling max width */}
@@ -35,6 +36,20 @@ const MyResourcePageHeader = () => {
           </div>
         </div>
       </div>
+      <Transition
+        className='h-full w-full z-50 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
+        show={showModal}
+        onClick={ (e) => {
+          e.stopPropagation();
+          closeModal;
+        }}
+        enter="transition ease duration-300 transform"
+        enterFrom="opacity-0 translate-y-12"
+        enterTo="opacity-100 translate-y-0"
+        leave="transition ease duration-300 transform"
+        leaveFrom="opacity-100 translate-y-0"
+        leaveTo="opacity-0 translate-y-12"
+      >
       {showModal && (
         <UploadToLibraryWindow
           showModal={showModal}
@@ -42,7 +57,8 @@ const MyResourcePageHeader = () => {
           selectable={false}
         />
       )}
-    </>
+      </Transition>
+    </section>
   )
 }
 
