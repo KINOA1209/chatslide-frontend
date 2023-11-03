@@ -358,7 +358,7 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
           onClick={closeModal}
         ></div>
         {/* pop up modal box container */}
-        <div id='main_container' className='w-[34rem] h-[35rem] relative rounded-lg flex flex-col items-center'>
+        <div id='main_container' className='w-full md:w-[34rem] h-[35rem] relative rounded-lg flex flex-col items-center'>
           {/* Upload to my library text */}
           <div className='pt-[1.25rem] w-[444px] text-center text-gray-700 text-lg font-bold font-creato-medium leading-normal tracking-wide'>
             Upload to My Library
@@ -372,8 +372,8 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
               handleTabClick('computer');
             }}
             >
-              <div className='w-[17px] h-[17px] relative'>
-                <div className='w-[15.79px] h-3.5 left-[0.61px] top-[2.43px] absolute'>
+              <div className='w-[17px] h-[18px] relative'>
+                <div className='w-[15.79px] h-3.5 left-[0.61px] absolute'>
                   <FromComputerIcon />
                 </div>
               </div>
@@ -400,7 +400,7 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
           </div>
           {/* File upload area */}
           { activeTab === 'computer' && (
-            <div className='h-[400px] my-[20px] flex-1 flex flex-col'>
+            <div className='h-[400px] my-[20px] px-2 md:px-5 w-full flex-1 flex flex-col'>
               <div className='flex-1 overflow-auto max-h-[280px] z-50'>
                 {uploadedResources.map((uploadedFile, index) => (
                     <li className='list-none flex' key={index}>
@@ -418,7 +418,7 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
                     </li>
                 ))}
               </div>
-              <div id='instruction_container' className={`w-[478px] min-h-[100px] border-0 border-dotted border-gray-400'} bg-gray-200 rounded-lg flex flex-col items-center justify-center`}>
+              <div id='instruction_container' className={`w-full min-h-[100px] border-0 border-dotted border-gray-400'} bg-gray-200 rounded-lg flex flex-col items-center justify-center`}>
                 {' '}
                 {/* select local file button */}
                 <NewFileUploadButton onFileSelected={localFileUpload} />
@@ -426,7 +426,7 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
                   or drop here
                 </div> */}
                 {/* Select Local file explanation text */}
-                <div className='w-[336px] h-7 text-center'>
+                <div className='w-full h-7 text-center'>
                   <span className='text-slate-500 text-sm font-normal font-creato-medium leading-normal tracking-tight'>
                     PDF, TXT, DOCX, PNG, JPG, JPEG{' '}
                   </span>

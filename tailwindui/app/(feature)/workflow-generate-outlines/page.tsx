@@ -726,7 +726,7 @@ export default function Topic() {
                         <div className="drop_file">
                             <div className='flex items-center w-full'>
                                 <img className="" src="/icons/drop_files_icon.png" />
-                                <span>Drop files here or </span>                                   
+                                {/* <span>Drop files here or </span>*/}
                                     <button
                                         id = "browse_btn"
                                         onClick={e => handleOpenFile(e)}
