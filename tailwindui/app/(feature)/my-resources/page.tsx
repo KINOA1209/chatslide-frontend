@@ -2,7 +2,7 @@ import NewMyFiles from '@/components/newFileManagement'
 import { FileUploadButton } from '@/components/fileUpload'
 import { CarbonConnect, IntegrationName } from 'carbon-connect'
 import { Transition } from '@headlessui/react'
-import MyResourcePageHeader from './MyResourcePageHeader'
+import MyResourcePageHeader from '@/app/(feature)/my-resources/MyResourcePageHeader'
 export const metadata = {
   title: 'Resources - DrLambda',
   description: 'Convert your documents to slides',
