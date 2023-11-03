@@ -1,3 +1,6 @@
+'use client'
+
+
 import { useEffect, useRef, useState } from "react";
 import AuthService from "@/components/utils/AuthService";
 import { useRouter } from 'next/navigation';
@@ -188,7 +191,7 @@ export function Pricing({ fewerCards = false }: PricingProps) {
             <div className="w-full flex flex-col items-center" data-aos="fade-right">
                 <Toggle isLeft={isMonthly} setIsLeft={setIsMonthly} leftText="Monthly" rightText="Yearly (17% off)" />
                 <div className="changeCard items-center flex md:hidden">
-                    <div className="flex items-center pb-8">
+                    <div className="transition ease-in-out delay-150 flex items-center pb-8">
                         {!fewerCards &&
                             <button
                                 type="button"
@@ -219,10 +222,10 @@ export function Pricing({ fewerCards = false }: PricingProps) {
                     </div>
                 </div>
                 <div className="w-full flex flex-row justify-center">
-                    <div className="w-full flex flex-row overflow-x-auto">
+                    <div className="w-full flex flex-row overflow-x-auto pt-2">
                         <div className="w-fit flex flex-row mx-auto">
                             {!fewerCards &&
-                                <div className={`mx-2 grow basis-0 min-w-[260px] max-w-sm ${showFree ? 'block' : 'hidden'} md:block`}>
+                                <div className={`transition ease-in-out delay-150 hover:-translate-y-2 mx-2 grow basis-0 min-w-[260px] max-w-sm ${showFree ? 'block' : 'hidden'} md:block`}>
                                     <div className="flex flex-col w-full drop-shadow-lg rounded-2xl overflow-hidden h-full"
                                         style={{
                                             background: 'linear-gradient(169deg, #B2F8FF 0%, #80D6FF 30%, #4FB2FF 60%, #2995FF 100%)'
@@ -262,7 +265,7 @@ export function Pricing({ fewerCards = false }: PricingProps) {
                                     </div>
                                 </div>
                             }
-                            <div className={`mx-2 grow basis-0 min-w-[260px] max-w-sm ${showPlus ? 'block' : 'hidden'} md:block`}>
+                            <div className={`transition ease-in-out delay-150 hover:-translate-y-2 mx-2 grow basis-0 min-w-[260px] max-w-sm ${showPlus ? 'block' : 'hidden'} md:block`}>
                                 <div className="flex flex-col w-full drop-shadow-md rounded-2xl overflow-hidden"
                                     style={{
                                         background: 'linear-gradient(169deg, #D0A6FF 0%, #BF80FF 30%, #AE59FF 60%, #9D32FF 100%)',
@@ -326,7 +329,7 @@ export function Pricing({ fewerCards = false }: PricingProps) {
                                     </div>
                                 </div>
                             </div>
-                            <div className={`mx-2 grow basis-0 min-w-[260px] max-w-sm ${showPro ? 'block' : 'hidden'} md:block`}>
+                            <div className={`transition ease-in-out delay-150 hover:-translate-y-2 mx-2 grow basis-0 min-w-[260px] max-w-sm ${showPro ? 'block' : 'hidden'} md:block`}>
                                 <div className="flex flex-col w-full drop-shadow-md rounded-2xl overflow-hidden h-full"
                                     style={{
                                         background: 'linear-gradient(169deg, #B084FF 0%, #8C62FF 30%, #703FFF 60%, #531CFF 100%)',
@@ -384,7 +387,7 @@ export function Pricing({ fewerCards = false }: PricingProps) {
                                 </div>
                             </div>
                             {!fewerCards &&
-                                <div className={`mx-2 grow basis-0 min-w-[260px] max-w-sm ${showEnt ? 'block' : 'hidden'} md:block`}>
+                                <div className={`transition ease-in-out delay-150 hover:-translate-y-2 mx-2 grow basis-0 min-w-[260px] max-w-sm ${showEnt ? 'block' : 'hidden'} md:block`}>
                                     <div className="flex flex-col w-full drop-shadow-md rounded-2xl overflow-hidden h-full"
                                         style={{
                                             // background: 'linear-gradient(169deg, #505050 0%, #3D3D3D 30%, #2A2A2A 60%, #000000 100%)',
