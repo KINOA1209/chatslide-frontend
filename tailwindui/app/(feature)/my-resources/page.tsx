@@ -1,8 +1,8 @@
 import MyFiles from '@/components/fileManagement';
 
 export const metadata = {
-    title: 'Resources - DrLambda',
-    description: 'Convert your documents to slides',
+    title: 'My Resources - DrLambda',
+    description: 'Manage your docuemtns, images, and resources',
   }
 
 export default function FileManagement() {
