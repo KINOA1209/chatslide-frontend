@@ -31,9 +31,9 @@ const Footer = () => {
         <div className='w-12 h-12 bg-white rounded-full flex justify-center items-center'>
           <img className='w-7 h-7' src='src/assets/imgs/linkedin-icon.png' />
         </div>
-        <div className='w-12 h-12 bg-white rounded-full flex justify-center items-center'>
+        {/* <div className='w-12 h-12 bg-white rounded-full flex justify-center items-center'>
           <img className='w-7 h-7' src='src/assets/imgs/youtube-icon.png' />
-        </div>
+        </div> */}
       </div>
     </div>
   )
