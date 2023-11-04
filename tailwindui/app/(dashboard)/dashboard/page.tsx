@@ -100,6 +100,11 @@ export default function Dashboard() {
       if (response.ok) {
         const data = await response.json()
         console.log('project data: ', data.projects)
+        data.projects.forEach((item:Project) => {
+          if (item.task === null){
+            item.task = 'presentation';
+          }
+        })
         setProjects(data.projects)
         setRendered(true)
       } else {
