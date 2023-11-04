@@ -20,6 +20,11 @@ interface UpdateButtonProps {
   ind: number
 }
 
+interface TranscriptWithTitle {
+  title: string
+  subtitle: string
+  script: string
+}
 const UpdateButton = ({ callback, text, ind }: UpdateButtonProps) => {
   const [updating, setUpdating] = useState(false)
 
@@ -57,10 +62,12 @@ const TranscriptVisualizer = ({
   transcripts,
 }: //   imageUrls,
 {
-  transcripts: []
+  transcripts: TranscriptWithTitle[]
   //   imageUrls: []
 }) => {
-  const [transcriptList, setTranscriptList] = useState<string[]>(transcripts)
+  // const [transcriptList, setTranscriptList] = useState<string[]>(transcripts)
+  const [transcriptList, setTranscriptList] =
+    useState<TranscriptWithTitle[]>(transcripts)
   const router = useRouter()
   const [hasSlides, setHasSlides] = useState<boolean>(false)
   const [authToken, setAuthToken] = useState<string>()
@@ -81,6 +88,7 @@ const TranscriptVisualizer = ({
     }
 
     fetchData()
+    console.log('transcripts with title in visulizer', transcriptList)
   }, [])
 
   const handleChange = (
@@ -88,7 +96,7 @@ const TranscriptVisualizer = ({
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     let newData = [...transcriptList] // copying the old datas array
-    newData[index] = event.target.value // replace e.target.value with whatever you want to change it to
+    newData[index].script = event.target.value // replace e.target.value with whatever you want to change it to
     sessionStorage.setItem('transcripts', JSON.stringify(newData))
     setTranscriptList(newData) // use the copy to set the state
   }
@@ -233,7 +241,7 @@ const TranscriptVisualizer = ({
             <textarea
               key={index}
               className={`h-80 block form-input w-full text-gray-800 mb-2 resize-none border-none p-4`}
-              value={data}
+              value={data.script}
               onChange={(event) => handleChange(index, event)}
               // readOnly
             />
@@ -262,7 +270,7 @@ const TranscriptVisualizer = ({
       ))}
 
       {/* Form */}
-      <div className='max-w-sm mx-auto'>
+      {/* <div className='max-w-sm mx-auto'>
         <form onSubmit={handleSubmit}>
           <div className='flex flex-wrap -mx-3 mt-6'>
             <div className='w-full px-3'>
@@ -275,23 +283,65 @@ const TranscriptVisualizer = ({
             </div>
           </div>
         </form>
-      </div>
-
-      <Timer expectedSeconds={60} isSubmitting={isSubmitting} />
+      </div> */}
+      {/* <Timer expectedSeconds={60} isSubmitting={isSubmitting} /> */}
     </div>
   )
 }
 
 export default function WorkflowStep4() {
+  const storedOutline =
+    typeof sessionStorage !== 'undefined'
+      ? sessionStorage.getItem('outline')
+      : null
+  const outline = storedOutline ? JSON.parse(storedOutline) : null
+  const outlineRes = outline ? JSON.parse(outline.res) : null
+
   const transcriptData =
     typeof sessionStorage !== 'undefined'
       ? sessionStorage.getItem('transcripts')
       : null
+  // parsed transcriptData
   const transcripts = transcriptData ? JSON.parse(transcriptData) : []
+  const [transcriptWithTitle, setTranscriptWithTitle] = useState<
+    TranscriptWithTitle[]
+  >([])
   const foldername =
     typeof sessionStorage !== 'undefined'
       ? sessionStorage.getItem('foldername')
       : ''
+  useEffect(() => {
+    if (outlineRes && transcripts) {
+      // Flatten the 'outlineRes' data
+      const flattenedOutline = Object.keys(outlineRes).flatMap(
+        (sectionIndex) => {
+          const section = outlineRes[sectionIndex]
+          return section.content.map((subtitle: string) => ({
+            title: section.title,
+            subtitle,
+          }))
+        }
+      )
+
+      console.log('flattened outline: ', flattenedOutline)
+      console.log('transcriptData: ', transcriptData)
+      // Combine 'flattenedOutline' and 'transcript' data
+      const transcriptWithTitle = flattenedOutline.map((item, index) => ({
+        title: item.title,
+        subtitle: item.subtitle,
+        script: transcripts[index] || '',
+      }))
+
+      console.log('transcriptData with title:', transcriptWithTitle)
+
+      setTranscriptWithTitle(transcriptWithTitle)
+      // Store 'transcriptWithTitle' in session storage
+      sessionStorage.setItem(
+        'transcriptWithTitle',
+        JSON.stringify(transcriptWithTitle)
+      )
+    }
+  }, [])
   //   const image_files =
   //     typeof sessionStorage !== 'undefined'
   //       ? JSON.parse(sessionStorage.getItem('image_files') || '[]')
@@ -415,8 +465,9 @@ export default function WorkflowStep4() {
           Use our desktop version to see all the functionalities!
         </div>
       </div>
+      <div>{/* Render your component with 'transcriptWithTitle' data */}</div>
       <div className='mt-[10rem] max-w-4xl mx-auto grow' ref={contentRef}>
-        <TranscriptVisualizer transcripts={transcripts} />
+        <TranscriptVisualizer transcripts={transcriptWithTitle} />
       </div>
       <FeedbackButton />
     </div>
