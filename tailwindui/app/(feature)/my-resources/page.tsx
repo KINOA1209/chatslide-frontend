@@ -1,10 +1,15 @@
-import MyFiles from '@/components/fileManagement';
-
+import MyFiles from '@/components/newFileManagement'
+import MyResourcePageHeader from '@/app/(feature)/my-resources/MyResourcePageHeader'
 export const metadata = {
-    title: 'My Resources - DrLambda',
-    description: 'Manage your docuemtns, images, and resources',
-  }
+  title: 'My Resources - DrLambda',
+  description: 'Convert your documents to slides',
+}
 
 export default function FileManagement() {
-    return (<MyFiles selectable={false}/>);
+  return (
+    <>
+      <MyResourcePageHeader />
+      <MyFiles selectable={false} />
+    </>
+  )
 }
