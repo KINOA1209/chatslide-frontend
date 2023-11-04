@@ -88,7 +88,6 @@ const TranscriptVisualizer = ({
     }
 
     fetchData()
-    console.log('transcripts with title in visulizer', transcriptList)
   }, [])
 
   const handleChange = (
@@ -167,31 +166,95 @@ const TranscriptVisualizer = ({
     }
   }
 
+  // const handleUpdateScript = async (
+  //   e: React.MouseEvent<HTMLButtonElement>,
+  //   index: number,
+  //   ask: string
+  // ) => {
+  //   e.preventDefault()
+  //   const text = transcriptList[index]
+  //   const language =
+  //     typeof window !== 'undefined'
+  //       ? sessionStorage.getItem('language')
+  //       : 'English'
+  //   const updateData = {
+  //     ask: ask,
+  //     text: text,
+  //     language: language,
+  //   }
+  //   console.log(updateData)
+
+  //   try {
+  //     const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
+  //     mixpanel.track('Script Updated', {
+  //       Ask: ask,
+  //       Text: text,
+  //       Language: language,
+  //     })
+  //     const response = await fetch('/api/update_script', {
+  //       method: 'POST',
+  //       headers: {
+  //         Authorization: `Bearer ${idToken}`,
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(updateData),
+  //     })
+
+  //     if (response.ok) {
+  //       const resp = await response.json()
+  //       console.log(resp.data)
+  //       const res = resp.data.res
+  //       // Update local data
+  //       let newData = [...transcriptList]
+  //       newData[index] = res
+  //       sessionStorage.setItem('transcripts', JSON.stringify(newData))
+  //       setTranscriptList(newData)
+  //       toast.success('Script has been updated!', {
+  //         position: 'top-center',
+  //         autoClose: 2000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: 'light',
+  //       })
+  //     } else {
+  //       alert('Request failed: ' + response.status)
+  //       console.log(response)
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error)
+  //   }
+  // }
   const handleUpdateScript = async (
     e: React.MouseEvent<HTMLButtonElement>,
     index: number,
     ask: string
   ) => {
     e.preventDefault()
-    const text = transcriptList[index]
+    const { title, subtitle, script } = transcriptList[index]
     const language =
       typeof window !== 'undefined'
         ? sessionStorage.getItem('language')
         : 'English'
+
     const updateData = {
       ask: ask,
-      text: text,
+      text: script, // Use the 'script' field from the object
       language: language,
     }
+
     console.log(updateData)
 
     try {
       const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
       mixpanel.track('Script Updated', {
         Ask: ask,
-        Text: text,
+        Text: script, // Use the 'script' field from the object
         Language: language,
       })
+
       const response = await fetch('/api/update_script', {
         method: 'POST',
         headers: {
@@ -205,11 +268,13 @@ const TranscriptVisualizer = ({
         const resp = await response.json()
         console.log(resp.data)
         const res = resp.data.res
+
         // Update local data
         let newData = [...transcriptList]
-        newData[index] = res
+        newData[index] = { title, subtitle, script: res }
         sessionStorage.setItem('transcripts', JSON.stringify(newData))
         setTranscriptList(newData)
+
         toast.success('Script has been updated!', {
           position: 'top-center',
           autoClose: 2000,
@@ -232,38 +297,53 @@ const TranscriptVisualizer = ({
   return (
     <div>
       {transcriptList.map((data, index) => (
-        <div
-          tabIndex={index}
-          className='w-full flex flex-col md:flex-row rounded border-solid border-2 border-blue-200 mt-4 focus-within:border-blue-600'
-        >
-          <div className={`grid grow`}>
-            {/* {hasSlides && authToken && <ImageList urls={[imageUrls[index]]} token={authToken} height={100} />} */}
-            <textarea
-              key={index}
-              className={`h-80 block form-input w-full text-gray-800 mb-2 resize-none border-none p-4`}
-              value={data.script}
-              onChange={(event) => handleChange(index, event)}
-              // readOnly
-            />
+        <div className='rounded bg-[#FCFCFC] border-solid border-2 border-blue-200 mb-[1rem]'>
+          <div className='flex flex-col px-4 py-2'>
+            <div className='text-gray-400 text-xs font-bold font-creto-medium leading-tight tracking-tight'>
+              Section{index + 1}
+            </div>
+            <div className='text-neutral-900 text-lg font-bold font-creto-medium leading-tight tracking-tight'>
+              {data.title}
+            </div>
+            <div className='text-neutral-900 text-base font-medium font-creto-medium leading-tight tracking-tight'>
+              {data.subtitle}
+            </div>
           </div>
-          <div className='flex flex-row items-center px-1.5 py-2 md:flex-col shrink-0'>
-            {/* <button key={index + 'shorter'} className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full" onClick={e => handleUpdateScript(e, index, 'shorter')}>
+
+          <div
+            id={index.toString()}
+            tabIndex={index}
+            className='w-full flex flex-col md:flex-row  mt-4 focus-within:border-blue-600]'
+          >
+            <div className={`grid grow`}>
+              {/* {hasSlides && authToken && <ImageList urls={[imageUrls[index]]} token={authToken} height={100} />} */}
+              <textarea
+                key={index}
+                className={`h-80 block form-input w-full text-gray-800 mb-2 resize-none border-none p-4`}
+                value={data.script}
+                onChange={(event) => handleChange(index, event)}
+                // readOnly
+              />
+            </div>
+            <div className='flex flex-row items-center px-1.5 py-2 md:flex-col shrink-0'>
+              {/* <button key={index + 'shorter'} className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full" onClick={e => handleUpdateScript(e, index, 'shorter')}>
                             Shorter
                         </button>
                         <button key={index + 'funnier'} className="mt-4 btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full" onClick={e => handleUpdateScript(e, index, 'funnier')}>
                             Funnier
                         </button> */}
-            <UpdateButton
-              callback={handleUpdateScript}
-              text={'shorter'}
-              ind={index}
-            />
-            <div className='ml-4 md:ml-0 md:mt-4'>
               <UpdateButton
                 callback={handleUpdateScript}
-                text={'funnier'}
+                text={'shorter'}
                 ind={index}
               />
+              <div className='ml-4 md:ml-0 md:mt-4'>
+                <UpdateButton
+                  callback={handleUpdateScript}
+                  text={'funnier'}
+                  ind={index}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -303,45 +383,65 @@ export default function WorkflowStep4() {
       : null
   // parsed transcriptData
   const transcripts = transcriptData ? JSON.parse(transcriptData) : []
+
+  const flattenedOutline = Object.keys(outlineRes).flatMap((sectionIndex) => {
+    const section = outlineRes[sectionIndex]
+    return section.content.map((subtitle: string) => ({
+      title: section.title,
+      subtitle,
+    }))
+  })
+
+  const transcriptWithTitleData = flattenedOutline.map((item, index) => ({
+    title: item.title,
+    subtitle: item.subtitle,
+    script: transcripts[index] || '',
+  }))
+
   const [transcriptWithTitle, setTranscriptWithTitle] = useState<
     TranscriptWithTitle[]
-  >([])
+  >(transcriptWithTitleData)
   const foldername =
     typeof sessionStorage !== 'undefined'
       ? sessionStorage.getItem('foldername')
       : ''
   useEffect(() => {
-    if (outlineRes && transcripts) {
-      // Flatten the 'outlineRes' data
-      const flattenedOutline = Object.keys(outlineRes).flatMap(
-        (sectionIndex) => {
-          const section = outlineRes[sectionIndex]
-          return section.content.map((subtitle: string) => ({
-            title: section.title,
-            subtitle,
-          }))
-        }
-      )
+    // if (outlineRes && transcripts) {
+    //   // Flatten the 'outlineRes' data
+    //   const flattenedOutline = Object.keys(outlineRes).flatMap(
+    //     (sectionIndex) => {
+    //       const section = outlineRes[sectionIndex]
+    //       return section.content.map((subtitle: string) => ({
+    //         title: section.title,
+    //         subtitle,
+    //       }))
+    //     }
+    //   )
 
-      console.log('flattened outline: ', flattenedOutline)
-      console.log('transcriptData: ', transcriptData)
-      // Combine 'flattenedOutline' and 'transcript' data
-      const transcriptWithTitle = flattenedOutline.map((item, index) => ({
-        title: item.title,
-        subtitle: item.subtitle,
-        script: transcripts[index] || '',
-      }))
+    //   console.log('flattened outline: ', flattenedOutline)
+    //   console.log('transcriptData: ', transcriptData)
+    //   // Combine 'flattenedOutline' and 'transcript' data
+    //   const transcriptWithTitleData = flattenedOutline.map((item, index) => ({
+    //     title: item.title,
+    //     subtitle: item.subtitle,
+    //     script: transcripts[index] || '',
+    //   }))
 
-      console.log('transcriptData with title:', transcriptWithTitle)
-
-      setTranscriptWithTitle(transcriptWithTitle)
-      // Store 'transcriptWithTitle' in session storage
-      sessionStorage.setItem(
-        'transcriptWithTitle',
-        JSON.stringify(transcriptWithTitle)
-      )
-    }
+    //   console.log('transcriptData with title:', transcriptWithTitleData)
+    // setTranscriptWithTitle(transcriptWithTitleData)
+    // Store 'transcriptWithTitle' in session storage
+    sessionStorage.setItem(
+      'transcriptWithTitle',
+      JSON.stringify(transcriptWithTitleData)
+    )
   }, [])
+
+  useEffect(() => {
+    console.log(
+      'transcriptData with title state variable:',
+      transcriptWithTitle
+    )
+  }, [transcriptWithTitle])
   //   const image_files =
   //     typeof sessionStorage !== 'undefined'
   //       ? JSON.parse(sessionStorage.getItem('image_files') || '[]')
@@ -363,6 +463,15 @@ export default function WorkflowStep4() {
   // Function to close the popup
   const closePopup = () => {
     setShowPopup(false)
+  }
+
+  // Function to scroll to a specific section
+  const scrollToSection = (sectionId: number) => {
+    const sectionElement = document.getElementById(String(sectionId))
+    if (sectionElement) {
+      sectionElement.scrollIntoView({ behavior: 'smooth' })
+      setActiveSection(sectionId)
+    }
   }
 
   return (
@@ -465,7 +574,28 @@ export default function WorkflowStep4() {
           Use our desktop version to see all the functionalities!
         </div>
       </div>
-      <div>{/* Render your component with 'transcriptWithTitle' data */}</div>
+
+      {/* overview nav section */}
+      <div className='w-1/4 fixed top-[16.5rem] overflow-y-auto flex justify-center'>
+        <div className='w-2/3 bg-neutral-50 rounded-md border border-gray-200 hidden sm:block'>
+          <div className='h-5 text-neutral-900 text-xs font-bold font-creato-medium leading-tight tracking-wide px-4 py-3'>
+            OVERVIEW
+          </div>
+          <ol className='list-none px-4 py-4'>
+            {transcriptWithTitle?.map((section, index) => (
+              <li
+                className='pb-2 opacity-60 text-neutral-900 text-s font-medium font-creato-medium leading-normal tracking-tight cursor-pointer hover:text-black  hover:rounded-md hover:bg-gray-200'
+                key={index}
+                onClick={() => scrollToSection(index)}
+              >
+                <span className=''>
+                  {index + 1}. {section.subtitle}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
       <div className='mt-[10rem] max-w-4xl mx-auto grow' ref={contentRef}>
         <TranscriptVisualizer transcripts={transcriptWithTitle} />
       </div>

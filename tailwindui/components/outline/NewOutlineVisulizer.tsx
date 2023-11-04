@@ -596,6 +596,7 @@ const OutlineVisualizer = ({
                 onMouseEnter={() => setHoveredSectionIndex(sectionIndex)}
                 onMouseLeave={() => setHoveredSectionIndex(-1)}
               >
+                {/* section index and title */}
                 <div
                   className='flex flex-col flex-wrap md:flex-nowrap'
                   onClick={(e) => {
