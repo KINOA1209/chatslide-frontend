@@ -25,6 +25,11 @@ export default function WorkflowStep3() {
       ? sessionStorage.getItem('slide_files') || []
       : []
   const contentRef = useRef<HTMLDivElement>(null)
+  // fetch isGpt35 from sessionStorage
+  const isGpt35 =
+    typeof sessionStorage !== 'undefined'
+      ? JSON.parse(sessionStorage.getItem('isGpt35') || 'true')
+      : true
 
   return (
     <div className='bg-gradient-to-b from-[#6A7EF9] to-[#415AF1]'>
@@ -57,7 +62,7 @@ export default function WorkflowStep3() {
         </div>
 
         <div className='flex-auto text-center self-center text-neutral-900 font-medium font-creato-medium leading-snug tracking-tight whitespace-nowrap sm:hidden'>
-            Use our desktop version to see all the functionalities!
+          Use our desktop version to see all the functionalities!
         </div>
       </div>
       {/* <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
@@ -72,9 +77,9 @@ export default function WorkflowStep3() {
           reveal the input box.
         </p>
         <br /> */}
-        <SlideVisualizer />
+        <SlideVisualizer isGpt35={isGpt35} />
       </div>
-      
+
       <FeedbackButton timer={3000} />
     </div>
   )
