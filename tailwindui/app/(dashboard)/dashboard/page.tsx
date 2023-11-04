@@ -8,17 +8,31 @@ import AuthService from '@/components/utils/AuthService'
 import { Dialog, Transition } from '@headlessui/react'
 import { useRouter } from 'next/navigation'
 import mixpanel from 'mixpanel-browser'
-
-interface Project {
-  id: number
+import ProjectTable from './ProjectTable'
+// interface Project {
+//   id: number
+//   name: string
+//   description: string
+// }
+interface Resource {
+  id: string
   name: string
-  description: string
+  type: string
+}
+interface Project {
+  id: string
+  //   task: 'video' | 'scripts' | 'slides'
+  task: 'presentation' | 'social post'
+  name: string
+  resources: Resource[]
+  created_datetime: string
 }
 
 export default function Dashboard() {
   const [currentPage, setCurrentPage] = useState(1)
   const [projects, setProjects] = useState<Project[]>([])
-  const [deleteInd, setDeleteInd] = useState(-1)
+  // const [deleteInd, setDeleteInd] = useState(-1)
+  const [deleteInd, setDeleteInd] = useState('')
   const router = useRouter()
   const promptRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
@@ -38,7 +52,11 @@ export default function Dashboard() {
   // const indexOfLastProject = currentPage * projectsPerPage;
   // const indexOfFirstProject = indexOfLastProject - projectsPerPage;
   // const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
+
   const currentProjects = projects
+
+  // place holder data
+  // const currentProjects = fakeProjects
 
   const goToNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1)
@@ -57,7 +75,7 @@ export default function Dashboard() {
       try {
         const { userId, idToken: token } =
           await AuthService.getCurrentUserTokenAndId()
-          handleRequest(token)
+        handleRequest(token)
       } catch (error: any) {
         console.error(error)
       }
@@ -81,6 +99,7 @@ export default function Dashboard() {
 
       if (response.ok) {
         const data = await response.json()
+        console.log('project data: ', data.projects)
         setProjects(data.projects)
         setRendered(true)
       } else {
@@ -92,14 +111,14 @@ export default function Dashboard() {
     }
   }
 
-  const handleProjectClick = (projectId: number) => {
+  const handleProjectClick = (projectId: string) => {
     // Open the project detail page in a new tab
     window.open(`/project/${projectId}`, '_blank')
   }
 
   const handleDelete = (
     e: React.MouseEvent<HTMLDivElement>,
-    projectId: number
+    projectId: string
   ) => {
     e.stopPropagation()
     // Modal for warning
@@ -109,7 +128,7 @@ export default function Dashboard() {
 
   const confirmDelete = async () => {
     setIsOpen(false)
-    if (deleteInd == -1) {
+    if (deleteInd === '') {
       throw 'Error'
     }
     const projectDeleteData = {
@@ -160,7 +179,7 @@ export default function Dashboard() {
     } catch (error) {
       console.error(error)
     }
-    setDeleteInd(-1)
+    setDeleteInd('')
   }
 
   useEffect(() => {
@@ -179,111 +198,40 @@ export default function Dashboard() {
   }
 
   return (
-    <section className='bg-gradient-to-b from-gray-100 to-white grow flex flex-col h-full'>
+    <section className=' grow flex flex-col h-full'>
       <ToastContainer />
-      <div className='max-w-6xl w-full mx-auto px-4 pt-16 md:pt-32 flex flex-wrap justify-around'>
-        <div className='pt-4 grow pr-4'>
-          <h1 className='h2' style={{ color: '#180d09' }}>My Projects</h1>
-        </div>
-        <div className='w-full sm:w-fit grow sm:grow-0 text-center pt-4'>
-          <div className='w-full mx-auto'>
-            <button
-              className='w-full btn text-white font-bold bg-gray-800 md:bg-opacity-90'
-              type='button'
+      {/* top background container of my projects title text and  */}
+      <div className='bg-gray-200 pt-16 md:pt-32 flex justify-center '>
+        {/* flex container controlling max width */}
+        <div className='w-full h-[6.25rem] max-w-7xl flex flex-wrap items-end justify-between '>
+          {/* my project title text */}
+          <div className='w-40 rounded-md justify-center items-center inline-flex '>
+            <div className='text-neutral-900 text-base font-bold font-creato-medium leading-10 tracking-wide border-black border-b-2'>
+              My Projects
+            </div>
+          </div>
+          {/* create new project button */}
+          <div className='h-9 px-5 py-2 bg-[#2943E9] rounded-3xl justify-center items-center inline-flex self-start whitespace-no-wrap'>
+            <div
+              className='text-center text-zinc-100 text-sm font-medium font-creato-medium leading-none tracking-tight cursor-pointer'
               onClick={handleStartNewProject}
             >
-              Start New Project (20 ⭐️)
-            </button>
+              Create New Project (20 ⭐️)
+            </div>
           </div>
         </div>
       </div>
 
+      {/* projects details area */}
       <div
-        className='max-w-6xl w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto'
+        className='max-w-7xl mx-auto mt-4 px-4 pt-4 flex flex-col grow overflow-y-auto'
         ref={contentRef}
       >
-        {currentProjects.length > 0 && (
-          <div className='flex flex-col w-full grow'>
-            <div className='w-full h-fit grow'>
-              <div className='w-full px-4'>
-                <div className='w-full border-b border-gray-300'></div>
-              </div>
-              {currentProjects.map((project) => {
-                return (
-                  <div
-                    key={project.id}
-                    className='w-full h-16 px-4 rounded-2xl md:hover:bg-gray-200 cursor-pointer'
-                    onClick={() => handleProjectClick(project.id)}
-                  >
-                    <div className='h-full flex items-center w-full py-4 px-2'>
-                      <div className='font-bold grow text-ellipsis mx-4 overflow-hidden whitespace-nowrap'>
-                        {project.name}
-                      </div>
-                      <div
-                        className='text-lg opacity-25 hover:opacity-100'
-                        onClick={(e) => handleDelete(e, project.id)}
-                      >
-                        <svg
-                          className='w-12'
-                          data-name='Capa 1'
-                          id='Capa_1'
-                          viewBox='0 0 20 19.84'
-                          xmlns='http://www.w3.org/2000/svg'
-                        >
-                          <path d='M10.17,10l3.89-3.89a.37.37,0,1,0-.53-.53L9.64,9.43,5.75,5.54a.37.37,0,1,0-.53.53L9.11,10,5.22,13.85a.37.37,0,0,0,0,.53.34.34,0,0,0,.26.11.36.36,0,0,0,.27-.11l3.89-3.89,3.89,3.89a.34.34,0,0,0,.26.11.35.35,0,0,0,.27-.11.37.37,0,0,0,0-.53Z' />
-                        </svg>
-                      </div>
-                    </div>
-                    <div className='w-full border-b border-gray-300'></div>
-                  </div>
-                )
-              })}
-            </div>
-            {/* <div className="flex justify-center items-center my-6">
-                            {!projects.length || currentPage === 1 ? (
-                                <button
-                                    className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md opacity-50 cursor-not-allowed mr-2`}
-                                    disabled
-                                    style={{ minWidth: '120px' }}
-                                >
-                                    Previous Page
-                                </button>
-                            ) : (
-                                <button
-                                    className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md mr-2`}
-                                    onClick={goToPreviousPage}
-                                    style={{ minWidth: '120px' }}
-                                >
-                                    Previous Page
-                                </button>
-                            )}
-                            {!projects.length || currentPage === totalPages ? (
-                                <button
-                                    className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md opacity-50 cursor-not-allowed`}
-                                    disabled
-                                    style={{ minWidth: '120px' }}
-                                >
-                                    Next Page
-                                </button>
-                            ) : (
-                                <button
-                                    className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md`}
-                                    onClick={goToNextPage}
-                                    style={{ minWidth: '120px' }}
-                                >
-                                    Next Page
-                                </button>
-                            )}
-                        </div> */}
-          </div>
-        )}
-        {currentProjects.length === 0 && (
-          <div className='w-full grow flex items-center justify-center'>
-            <div className='text-gray-400' ref={promptRef}>
-              Loading...
-            </div>
-          </div>
-        )}
+        <ProjectTable
+          currentProjects={currentProjects}
+          onProjectClick={handleProjectClick}
+          onDelete={handleDelete}
+        />
       </div>
 
       {/* Delete modal */}
