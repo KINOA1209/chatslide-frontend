@@ -9,7 +9,7 @@ import GptToggle from '../button/GPTToggle'
 import PaywallModal from './paywallModal'
 import mixpanel from 'mixpanel-browser'
 import { ScriptsIcon } from '@/app/(feature)/icons'
-
+import Timer from '@/components/ui/Timer'
 interface TranscriptFormProps {
   isSubmitting: boolean
   setIsSubmitting: (isSubmitting: boolean) => void
@@ -28,7 +28,6 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({
   const [isPaid, setIsPaid] = useState(false)
   //   const [isGpt35, setIsGpt35] = useState(true)
   const [showPaymentModal, setShowPaymentModal] = useState(false)
-
   useEffect(() => {
     // Create a scoped async function within the hook.
     const fetchUser = async () => {
@@ -53,7 +52,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({
   }
 
   const handleSubmitTranscript = async (event: FormEvent<HTMLFormElement>) => {
-    // console.log('submitting');
+    console.log('submitting')
     event.preventDefault()
 
     setIsSubmitting(true)
@@ -141,32 +140,43 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({
       <form onSubmit={handleSubmitTranscript}>
         {!isPaid ? (
           <>
-            <div
-              className='h-8 px-3 py-1 bg-zinc-100 rounded-lg flex justify-center items-center gap-2.5 cursor-pointer'
-              onClick={handleSubscribeOnclick}
-            >
-              <div className='flex items-center overflow-hidden'>
+            <div className='h-8 px-3 py-1 bg-zinc-100 rounded-lg flex justify-center items-center gap-2.5 cursor-pointer'>
+              <button
+                type='button'
+                className='flex items-center overflow-hidden'
+                onClick={handleSubscribeOnclick}
+              >
                 <div className='text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide whitespace-nowrap overflow-hidden text-ellipsis'>
                   🔒 Subscribe to Generate Script
                 </div>
-              </div>
+              </button>
               <div className='w-5 h-5 relative'>
                 <ScriptsIcon />
               </div>
             </div>
           </>
         ) : (
-          <div className='h-8 px-3 py-1 bg-zinc-100 rounded-lg flex justify-center items-center gap-2.5 cursor-pointer'>
-            <div className='flex items-center overflow-hidden'>
+          <div className='px-3 py-1 bg-zinc-100 rounded-lg flex justify-center items-center gap-2.5 cursor-pointer'>
+            <div className='flex flex-col items-center overflow-hidden'>
               {isSubmitting ? (
-                'Generating...'
+                <button
+                  type='submit'
+                  className='text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide whitespace-nowrap overflow-hidden text-ellipsis'
+                  disabled={isSubmitting}
+                >
+                  Generating...
+                </button>
               ) : (
-                <div className='text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide whitespace-nowrap overflow-hidden text-ellipsis'>
+                <button
+                  type='submit'
+                  className='text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide whitespace-nowrap overflow-hidden text-ellipsis'
+                  disabled={isSubmitting}
+                >
                   {isPaid ? '🚀' : '🔒'} Want some scripts?{' '}
                   <span className='text-blue-700 text-sm font-medium font-creato-medium leading-normal tracking-wide'>
                     (10 credits)
                   </span>
-                </div>
+                </button>
               )}
             </div>
             <div className='w-5 h-5 relative'>

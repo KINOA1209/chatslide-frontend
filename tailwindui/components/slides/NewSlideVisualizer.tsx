@@ -63,7 +63,8 @@ const SlideVisualizer = ({ isGpt35 }: { isGpt35: boolean }) => {
           <ExportToPdfButton finalSlides={finalSlides} />
           <ShareToggleButton setShare={setShare} share={share} />
         </div>
-
+        {/* Timer */}
+        <Timer expectedSeconds={60} isSubmitting={isSubmitting} />
         {/* shareable link */}
         {share && (
           <div className='w-fit flex-grow'>
@@ -76,13 +77,11 @@ const SlideVisualizer = ({ isGpt35 }: { isGpt35: boolean }) => {
         {/* slides contents */}
         <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} />
 
-        <PreviousTranscriptForm
+        {/* <PreviousTranscriptForm
           isSubmitting={isSubmitting}
           setIsSubmitting={setIsSubmitting}
           finalSlides={finalSlides}
-        />
-        {/* Timer */}
-        <Timer expectedSeconds={60} isSubmitting={isSubmitting} />
+        /> */}
       </div>
     </div>
   )

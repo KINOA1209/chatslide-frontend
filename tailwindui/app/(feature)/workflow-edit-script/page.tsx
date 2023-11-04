@@ -331,7 +331,7 @@ export default function WorkflowStep4() {
 
         {/* gpt model switch area */}
         <div className='self-end mx-[5rem] flex flex-row gap-4 cursor-pointer'>
-          <NewWorkflowGPTToggle isGpt35={isGpt35} setIsGpt35={setIsGpt35} />
+          <NewWorkflowGPTToggle setIsGpt35={setIsGpt35} />
           <div className='cursor-pointer' onClick={openPopup}>
             <QuestionExplainIcon />
           </div>
