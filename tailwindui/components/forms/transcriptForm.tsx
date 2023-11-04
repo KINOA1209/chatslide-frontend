@@ -50,7 +50,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({
   }
 
   const handleSubmitTranscript = async (event: FormEvent<HTMLFormElement>) => {
-    // console.log('submitting');
+    console.log('submitting')
     event.preventDefault()
 
     setIsSubmitting(true)
