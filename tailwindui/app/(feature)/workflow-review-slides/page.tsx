@@ -7,16 +7,10 @@ import FeedbackButton from '@/components/slides/feedback'
 import SlideVisualizer from '@/components/slides/NewSlideVisualizer'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import {
-  DownloadIcon,
-  LeftTurnArrowIcon,
-  PresentationModeIcon,
-  ChangeLayoutIcon,
-  AddSlideIcon,
-  DeleteSlideIcon,
-} from '../icons'
-
+import { LeftTurnArrowIcon } from '../icons'
+import { ScriptEditIcon } from './icons'
 import { useRouter } from 'next/navigation'
+import ButtonWithExplanation from '@/components/button/ButtonWithExplanation'
 
 export default function WorkflowStep3() {
   const router = useRouter()
@@ -30,6 +24,14 @@ export default function WorkflowStep3() {
     typeof sessionStorage !== 'undefined'
       ? JSON.parse(sessionStorage.getItem('isGpt35') || 'true')
       : true
+  // script data
+  const transcriptData =
+    typeof sessionStorage !== 'undefined'
+      ? sessionStorage.getItem('transcripts')
+      : null
+  const transcripts = transcriptData ? JSON.parse(transcriptData) : []
+  const [transcriptList, setTranscriptList] = useState<string[]>(transcripts)
+  // const [transcriptList, setTranscriptList] = useState(null)
 
   return (
     <div className='bg-gradient-to-b from-[#6A7EF9] to-[#415AF1]'>
@@ -71,14 +73,86 @@ export default function WorkflowStep3() {
 
       <ToastContainer enableMultiContainer containerId={'slides'} />
 
-      <div className='mt-[10rem] max-w-4xl mx-auto px-6' ref={contentRef}>
+      <div
+        className={`mt-[10rem] max-w-4xl ${
+          transcriptList !== null && transcriptList.length > 0
+            ? 'max-w-7xl'
+            : ''
+        } px-6 flex flex-row relative mx-auto`}
+        ref={contentRef}
+      >
         {/* <p className='px-6'>
           These are the slides generated. To edit content, click on the text to
           reveal the input box.
         </p>
         <br /> */}
         <SlideVisualizer isGpt35={isGpt35} />
+        {/* scriptlist textbox */}
+        {transcriptList !== null && transcriptList.length > 0 && (
+          <div className='w-72 h-[540px] absolute top-[48px] -right-[10%] bg-zinc-100 rounded-md flex flex-col overflow-y-auto'>
+            <div className='px-4 py-2 h-8 bg-zinc-100 flex flex-row justify-between items-center sticky top-0 border-b-2 border-gray-300'>
+              <div className=' text-neutral-900 text-xs font-bold font-creato-medium leading-snug tracking-tight '>
+                Script
+              </div>
+              <div
+                className='cursor-pointer'
+                onClick={() => router.push('/workflow-edit-script')}
+              >
+                <ButtonWithExplanation
+                  button={<ScriptEditIcon />}
+                  explanation='Edit Script'
+                />
+              </div>
+            </div>
+            <div className='flex flex-col gap-4 '>
+              {transcriptList.map((item, index) => (
+                <div
+                  key={index} // Make sure to provide a unique key
+                  className='px-4 py-2 w-full text-gray-700 text-xs font-normal font-creato-medium leading-[1.125rem] tracking-[0.015rem]'
+                >
+                  "{item}"
+                  {/* Insert the content of each transcriptList item here */}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
+      {/* {transcriptList !== null && transcriptList.length > 0 && (
+        <div className='w-72 h-96 relative bg-zinc-100 rounded-md'>
+          <div className="w-60 left-[17px] top-[50px] absolute text-gray-700 text-xs font-normal font-['Creato Display'] leading-none tracking-tight">
+            “ Welcome to 'Tropical Plants 101.' From the luscious rainforests to
+            the coastal shores of the tropics, today, we're diving deep into the
+            world of tropical plants."
+          </div>
+          <div className="w-60 left-[17px] top-[138px] absolute text-gray-700 text-xs font-normal font-['Creato Display'] leading-none tracking-tight">
+            “ Welcome to 'Tropical Plants 101.' From the luscious rainforests to
+            the coastal shores of the tropics, today, we're diving deep into the
+            world of tropical plants."
+          </div>
+          <div className="w-60 left-[17px] top-[226px] absolute text-gray-700 text-xs font-normal font-['Creato Display'] leading-none tracking-tight">
+            “ Welcome to 'Tropical Plants 101.' From the luscious rainforests to
+            the coastal shores of the tropics, today, we're diving deep into the
+            world of tropical plants."
+          </div>
+          <div className="w-60 left-[17px] top-[314px] absolute text-gray-700 text-xs font-normal font-['Creato Display'] leading-none tracking-tight">
+            “ Welcome to 'Tropical Plants 101.' From the luscious rainforests to
+            the coastal shores of the tropics, today, we're diving deep into the
+            world of tropical plants."
+          </div>
+          <div className="w-60 left-[17px] top-[402px] absolute text-gray-700 text-xs font-normal font-['Creato Display'] leading-none tracking-tight">
+            “ Welcome to 'Tropical Plants 101.' From the luscious rainforests to
+            the coastal shores of the tropics, today, we're diving deep into the
+            world of tropical plants."
+          </div>
+          <div className='w-96 h-9 left-0 top-0 absolute'>
+            <div className='w-96 h-8 left-0 top-0 absolute bg-zinc-100' />
+            <div className="w-14 h-7 left-[9.66px] top-[6.04px] absolute text-neutral-900 text-xs font-bold font-['Creato Display'] leading-snug tracking-tight">
+              Script
+            </div>
+          </div>
+        </div>
+      )} */}
 
       <FeedbackButton timer={3000} />
     </div>
