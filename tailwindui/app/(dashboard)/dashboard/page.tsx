@@ -22,7 +22,7 @@ interface Resource {
 interface Project {
   id: string
   //   task: 'video' | 'scripts' | 'slides'
-  task: 'presentation' | 'social post'
+  task: 'video' | 'scripts' | 'slides' | 'presentation' | 'social post'
   name: string
   resources: Resource[]
   created_datetime: string
@@ -100,6 +100,11 @@ export default function Dashboard() {
       if (response.ok) {
         const data = await response.json()
         console.log('project data: ', data.projects)
+        data.projects.forEach((item:Project) => {
+          if (item.task === null){
+            item.task = 'presentation';
+          }
+        })
         setProjects(data.projects)
         setRendered(true)
       } else {
@@ -198,33 +203,35 @@ export default function Dashboard() {
   }
 
   return (
-    <section className=' grow flex flex-col h-full'>
+    <section className='grow flex flex-col h-full'>
       <ToastContainer />
       {/* top background container of my projects title text and  */}
-      <div className='bg-gray-200 pt-16 md:pt-32 flex justify-center '>
+      <div className='bg-gray-200 pt-16 md:pt-18 flex justify-center '>
         {/* flex container controlling max width */}
-        <div className='w-full h-[6.25rem] max-w-7xl flex flex-wrap items-end justify-between '>
-          {/* my project title text */}
-          <div className='w-40 rounded-md justify-center items-center inline-flex '>
-            <div className='text-neutral-900 text-base font-bold font-creato-medium leading-10 tracking-wide border-black border-b-2'>
+        <div className='w-full h-[6.25rem] max-w-7xl flex flex-wrap items-center justify-center lg:items-end lg:justify-between '>
+           {/* my project title text */}
+           <div className='w-full lg:w-40 rounded-md justify-center items-center inline-flex'>
+            <div className='text-neutral-900 text-base font-bold font-creato-medium leading-10 tracking-wide border-black lg:border-b-2'>
               My Projects
             </div>
           </div>
+          
           {/* create new project button */}
           <div className='h-9 px-5 py-2 bg-[#2943E9] rounded-3xl justify-center items-center inline-flex self-start whitespace-no-wrap'>
             <div
               className='text-center text-zinc-100 text-sm font-medium font-creato-medium leading-none tracking-tight cursor-pointer'
               onClick={handleStartNewProject}
             >
-              Create New Project (20 ⭐️)
+              Create New Project (20⭐️)
             </div>
           </div>
+         
         </div>
       </div>
 
       {/* projects details area */}
       <div
-        className='max-w-7xl mx-auto mt-4 px-4 pt-4 flex flex-col grow overflow-y-auto'
+        className='w-full px-8 pt-8 flex flex-col grow overflow-y-auto bg-gray-100'
         ref={contentRef}
       >
         <ProjectTable
