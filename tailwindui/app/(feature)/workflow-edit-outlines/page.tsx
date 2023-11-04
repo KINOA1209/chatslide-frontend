@@ -82,6 +82,11 @@ export default function WorkflowStep2() {
   //     window.scrollTo(0, 0)
   //   }
   // }, [])
+  // initialize a isGpt35 value in session storagee
+  //   useEffect(() => {
+  //     sessionStorage.setItem('isGpt35', 'true')
+  //     console.log('session storage isGpt35', sessionStorage.getItem('isGpt35'))
+  //   }, [])
   return (
     <div className=' bg-zinc-100'>
       {/* flex col container for steps, title, generate slides button etc */}
@@ -93,7 +98,8 @@ export default function WorkflowStep2() {
 
         {/* gpt model switch area */}
         <div className='self-end mx-[5rem] flex flex-row gap-4 cursor-pointer'>
-          <NewWorkflowGPTToggle isGpt35={isGpt35} setIsGpt35={setIsGpt35} />
+          <NewWorkflowGPTToggle setIsGpt35={setIsGpt35} />
+          {/* <NewWorkflowGPTToggle isGpt35={isGpt35} setIsGpt35={setIsGpt35} /> */}
           <div className='cursor-pointer' onClick={openPopup}>
             <QuestionExplainIcon />
           </div>
