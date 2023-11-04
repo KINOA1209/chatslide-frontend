@@ -272,7 +272,13 @@ const TranscriptVisualizer = ({
         // Update local data
         let newData = [...transcriptList]
         newData[index] = { title, subtitle, script: res }
-        sessionStorage.setItem('transcripts', JSON.stringify(newData))
+        // sessionStorage.setItem('transcripts', JSON.stringify(newData))
+        sessionStorage.setItem(
+          'transcripts',
+          JSON.stringify(newData.map((item) => item.script))
+        )
+        sessionStorage.setItem('transcriptWithTitle', JSON.stringify(newData))
+
         setTranscriptList(newData)
 
         toast.success('Script has been updated!', {
