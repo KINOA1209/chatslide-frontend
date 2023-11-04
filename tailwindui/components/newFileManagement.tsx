@@ -144,7 +144,7 @@ const FileManagement: React.FC<UserFileList> = ({
       // >
       <div
         key={id}
-        className='grid grid-cols-3 border border-gray-300'
+        className='grid grid-cols-3 border border-gray-300 bg-white'
         style={{ gridTemplateColumns: '2fr 1fr' }}
         onClick={(e) => {
           if (selectable) {
