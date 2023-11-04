@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import {useRouter} from 'next/navigation'
 import Link from 'next/link'
 import AuthService from '@/components/utils/AuthService'
 
@@ -8,6 +9,7 @@ import AuthService from '@/components/utils/AuthService'
 const LandingButton = () => {
     const [user, setUser] = useState(null)
     const [username, setUsername] = useState(null)
+    const router = useRouter()
 
 
     const fetchUser = async () => {
@@ -18,6 +20,9 @@ const LandingButton = () => {
 
     useEffect(() => {
         fetchUser()
+        if(user) {
+            router.push('/dashboard')
+        }
     }, [])
 
     {/* start for free button */ }

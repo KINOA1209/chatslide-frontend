@@ -1,7 +1,7 @@
 import MyFiles from '@/components/newFileManagement'
 import MyResourcePageHeader from '@/app/(feature)/my-resources/MyResourcePageHeader'
 export const metadata = {
-  title: 'Resources - DrLambda',
+  title: 'My Resources - DrLambda',
   description: 'Convert your documents to slides',
 }
 
