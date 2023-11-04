@@ -3,7 +3,7 @@ import Header from '@/components/ui/header';
 
 export const metadata = {
   title: 'My Account - Dr. Lambda',
-  description: 'Convert your documents to slides',
+  description: 'Manage your account settings and subscription',
 }
 
 export default function AccountLayout({

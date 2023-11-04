@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         title: topic,
         description: description,
         openGraph: {
-            images: ["https://drlambda.ai/images/logo_no_text.png"],
+            images: ["https://drlambda.ai/new_landing/imgs/ogimage.png"],
             title: topic,
             description: description,
             url: `https://drlambda.ai/shared/${project_id}`,

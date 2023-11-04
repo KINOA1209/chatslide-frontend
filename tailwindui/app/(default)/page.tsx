@@ -21,6 +21,8 @@ const fileTypes = [
     'txt-icon',
 ]
 
+
+// fields can be overwritten by child pages, usually title and description
 export const metadata = {
     title: 'DrLambda',
     description: 'Your AI agent to create professional slides.',
