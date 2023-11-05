@@ -393,8 +393,8 @@ const OutlineVisualizer = ({ outlineData, setOutlineData }: { outlineData: Outli
                 : null
         const recreate_collection =
             typeof window !== 'undefined'
-                ? sessionStorage.getItem('recreate_collection') === 'true'
-                : false;
+                ? sessionStorage.getItem('recreate_collection') === 'false'
+                : true;
 
 
         formData = {
