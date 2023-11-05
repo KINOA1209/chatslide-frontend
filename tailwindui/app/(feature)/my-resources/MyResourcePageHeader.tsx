@@ -20,7 +20,7 @@ const MyResourcePageHeader = () => {
         {/* flex container controlling max width */}
         <div className='w-full h-[6.25rem] max-w-7xl flex flex-wrap items-center justify-center lg:items-end lg:justify-between '>
           {/* my project title text */}
-          <div className='w-full lg:w-40 rounded-md justify-center items-center inline-flex '>
+          <div className='w-full lg:w-40 rounded-md justify-center items-center inline-flex'>
             <div className='text-neutral-900 text-base font-bold font-creato-medium leading-10 tracking-wide border-black lg:border-b-2'>
               My Library
             </div>

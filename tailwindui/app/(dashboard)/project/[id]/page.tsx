@@ -17,6 +17,8 @@ interface Project {
     add_equations: boolean;
     page_count: string;
     outline: string;
+    extraKnowledge: string;
+    outline_item_counts: string;
     transcripts: string;
     image_files: string;
     audio_files: string;
@@ -103,6 +105,12 @@ const ProjectLoading = () => {
             }
             if (project.is_shared) {
                 sessionStorage.setItem('is_shared', project.is_shared.toString());
+            }
+            if (project.extraKnowledge) {
+                sessionStorage.setItem('extraKnowledge', project.extraKnowledge);
+            }
+            if (project.outline_item_counts) {
+                sessionStorage.setItem('outline_item_counts', JSON.stringify(project.outline_item_counts));
             }
             handleRedirect();
         }
