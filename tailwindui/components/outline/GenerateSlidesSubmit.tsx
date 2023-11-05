@@ -171,7 +171,8 @@ const GenerateSlidesSubmit = ({ outline }: { outline: OutlineDataType }) => {
     async function query_resources(
         project_id: any,
         resources: any,
-        outlineData: any
+        outlineData: any,
+        recreate_collection: any
     ) {
         const { userId, idToken: token } =
             await AuthService.getCurrentUserTokenAndId()
@@ -187,6 +188,7 @@ const GenerateSlidesSubmit = ({ outline }: { outline: OutlineDataType }) => {
                 outlines: JSON.stringify({ ...outlineData }),
                 resources: resources,
                 project_id: project_id,
+                recreate_collection: recreate_collection,
             }),
         })
 
@@ -301,7 +303,11 @@ const GenerateSlidesSubmit = ({ outline }: { outline: OutlineDataType }) => {
             typeof window !== 'undefined'
                 ? sessionStorage.getItem('outline_item_counts')
                 : null
-
+        const recreate_collection =
+            typeof window !== 'undefined'
+                ? sessionStorage.getItem('recreate_collection')==='true'
+                : false
+        
         formData = {
             res: JSON.stringify({ ...outlineData }),
             outlines: JSON.stringify({ ...outlineData }),
@@ -325,7 +331,8 @@ const GenerateSlidesSubmit = ({ outline }: { outline: OutlineDataType }) => {
                 const extraKnowledge = await query_resources(
                     project_id,
                     resources,
-                    outlineData
+                    outlineData,
+                    recreate_collection
                 )
                 sessionStorage.setItem(
                     'extraKnowledge',

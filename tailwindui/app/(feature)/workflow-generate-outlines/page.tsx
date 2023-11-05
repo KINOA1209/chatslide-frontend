@@ -224,6 +224,13 @@ export default function Topic() {
             const selectedResources = JSON.parse(selectedResourcesJson);
             setselectedFileList(selectedResources);
 
+            // set recreate_collection to true in session storage
+            sessionStorage.setItem('recreate_collection', JSON.stringify(true));
+
+            //clear extraKnowledge from session storage
+            sessionStorage.removeItem('extraKnowledge');
+            sessionStorage.removeItem('outline_item_counts')
+
             //find the corresponding file name
             const selectedResourcesIdArray: string[] = JSON.parse(selectedResourcesJson)
             const allHistoryResourcesArray: Array<{id:string, filename:string}> = JSON.parse(allHistoryResourcesJson);
