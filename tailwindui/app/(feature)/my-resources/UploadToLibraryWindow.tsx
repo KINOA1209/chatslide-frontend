@@ -352,7 +352,7 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
 
   return (
     <section>
-      <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center z-10'>
+      <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center z-[20]'>
         <div
           className='fixed top-0 left-0 w-full h-full bg-black opacity-70'
           onClick={closeModal}
@@ -401,7 +401,7 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
           {/* File upload area */}
           { activeTab === 'computer' && (
             <div className='h-[400px] my-[20px] px-2 md:px-5 w-full flex-1 flex flex-col'>
-              <div className='flex-1 overflow-auto max-h-[280px] z-50'>
+              <div className='flex-1 overflow-auto max-h-[280px] z-[50]'>
                 {uploadedResources.map((uploadedFile, index) => (
                     <li className='list-none flex' key={index}>
                         <div id='uploadfile_each' className='flex w-full justify-between items-center gap-2 rounded h-[45px] pl-[1rem] mt-[10px]'>

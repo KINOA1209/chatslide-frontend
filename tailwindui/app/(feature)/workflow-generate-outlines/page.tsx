@@ -379,7 +379,7 @@ export default function Topic() {
             { showPaymentModal && <PaywallModal setShowModal={setShowPaymentModal} message='Upgrade for more ⭐️credits.'/> }
             <form onSubmit={handleSubmit}>
                 <Transition
-                    className='h-full w-full z-50 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
+                    className='h-full w-full z-[20] bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
                     show={showFileModal}
                     onClick={closeFile}
                     enter="transition ease duration-300 transform"
@@ -392,7 +392,7 @@ export default function Topic() {
                     <div className='grow md:grow-0'></div>
                     <Transition
                         className='bg-gray-100 w-full h-3/4 md:h-2/3
-                                md:max-w-2xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
+                                md:max-w-2xl z-[30] rounded-t-xl md:rounded-xl drop-shadow-2xl 
                                 overflow-hidden flex flex-col p-4'
                         show={showFileModal}
                         enter="transition ease duration-500 transform delay-300"
@@ -541,7 +541,7 @@ export default function Topic() {
                                         <div 
                                         id='project_popup' 
                                         className=
-                                        "absolute z-10 p-2 bg-gray-800 text-white text-sm rounded shadow-md w-[15rem] h-[5rem] md:w-80 md:h-[4rem] flex justify-center items-center">
+                                        "absolute z-[10] p-2 bg-gray-800 text-white text-sm rounded shadow-md w-[15rem] h-[5rem] md:w-80 md:h-[4rem] flex justify-center items-center">
                                             The main subject or theme of your project. It will set the direction and focus of the contents.
                                         </div>
                                     )}
@@ -579,7 +579,7 @@ export default function Topic() {
                                                 <div 
                                                 id='audience_popup' 
                                                 className=
-                                                "absolute z-10 p-2 bg-gray-800 text-white text-sm rounded shadow-md w-[15rem] h-[6rem] md:w-[17rem] md:h-[5rem] flex justify-center items-center">
+                                                "absolute z-[10] p-2 bg-gray-800 text-white text-sm rounded shadow-md w-[15rem] h-[6rem] md:w-[17rem] md:h-[5rem] flex justify-center items-center">
                                                     Specify the intended viewers of your projects, tailoring to your audience ensures the content resonates effectively.
                                                 </div>
                                             )}
@@ -629,7 +629,7 @@ export default function Topic() {
                                                 <div 
                                                 id='language_popup' 
                                                 className=
-                                                "absolute z-10 p-2 bg-gray-800 text-white text-sm rounded shadow-md w-[13rem] h-[3rem] md:w-[14rem] md:h-[3rem] flex justify-center items-center">
+                                                "absolute z-[10] p-2 bg-gray-800 text-white text-sm rounded shadow-md w-[13rem] h-[3rem] md:w-[14rem] md:h-[3rem] flex justify-center items-center">
                                                     Specify the intended language of your projects.
                                                 </div>
                                             )}
@@ -704,7 +704,7 @@ export default function Topic() {
                                         <div 
                                         id='supportive_popup' 
                                         className=
-                                        "absolute z-10 p-2 bg-gray-800 text-white text-sm rounded shadow-md w-[15rem] h-[6rem] md:w-80 md:h-[5rem] flex justify-center items-center">
+                                        "absolute z-[10] p-2 bg-gray-800 text-white text-sm rounded shadow-md w-[15rem] h-[6rem] md:w-80 md:h-[5rem] flex justify-center items-center">
                                             Any additional files that can enhance and provide context to your projects. This could be research data, images, charts, or reference materials.
                                         </div>
                                     )}
