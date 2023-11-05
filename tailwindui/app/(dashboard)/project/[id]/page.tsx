@@ -17,7 +17,7 @@ interface Project {
     add_equations: boolean;
     page_count: string;
     outline: string;
-    extraKnowledge: string;
+    extra_knowledge: string;
     outline_item_counts: string;
     transcripts: string;
     image_files: string;
@@ -106,8 +106,8 @@ const ProjectLoading = () => {
             if (project.is_shared) {
                 sessionStorage.setItem('is_shared', project.is_shared.toString());
             }
-            if (project.extraKnowledge) {
-                sessionStorage.setItem('extraKnowledge', project.extraKnowledge);
+            if (project.extra_knowledge) {
+                sessionStorage.setItem('extraKnowledge', project.extra_knowledge);
             }
             if (project.outline_item_counts) {
                 sessionStorage.setItem('outline_item_counts', JSON.stringify(project.outline_item_counts));
