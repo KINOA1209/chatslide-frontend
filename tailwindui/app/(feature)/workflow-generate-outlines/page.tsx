@@ -224,8 +224,8 @@ export default function Topic() {
             const selectedResources = JSON.parse(selectedResourcesJson);
             setselectedFileList(selectedResources);
 
-            // set recreate_collection to false in session storage
-            sessionStorage.setItem('recreate_collection', JSON.stringify(false));
+            // set recreate_collection to true in session storage
+            sessionStorage.setItem('recreate_collection', JSON.stringify(true));
 
             //clear extraKnowledge from session storage
             sessionStorage.removeItem('extraKnowledge');
