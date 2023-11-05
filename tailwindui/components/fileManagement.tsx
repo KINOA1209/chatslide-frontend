@@ -653,7 +653,7 @@ const MyFiles: React.FC<filesInterface> = ({
               overlapSize={20}
               // entryPoint="LOCAL_FILES"
             >
-              <div className='max-w-sm flex flex-col items-center z-50'>
+              <div className='max-w-sm flex flex-col items-center z-[50]'>
                 <button
                   className='w-full btn text-white font-bold bg-black from-blue-600  to-teal-500'
                   type='button'

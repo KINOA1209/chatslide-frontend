@@ -37,7 +37,7 @@ const MyResourcePageHeader = () => {
         </div>
       </div>
       <Transition
-        className='h-full w-full z-50 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
+        className='h-full w-full z-[10] bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
         show={showModal}
         onClick={ (e) => {
           e.stopPropagation();
