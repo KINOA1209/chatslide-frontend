@@ -259,7 +259,8 @@ const OutlineVisualizer = ({ outlineData, setOutlineData }: { outlineData: Outli
     async function query_resources(
         project_id: any,
         resources: any,
-        outlineData: any
+        outlineData: any,
+        recreate_collection: boolean
     ) {
         const { userId, idToken: token } =
             await AuthService.getCurrentUserTokenAndId()
@@ -275,6 +276,7 @@ const OutlineVisualizer = ({ outlineData, setOutlineData }: { outlineData: Outli
                 outlines: JSON.stringify({ ...outlineData }),
                 resources: resources,
                 project_id: project_id,
+                recreate_collection: recreate_collection,
             }),
         })
 
@@ -389,6 +391,11 @@ const OutlineVisualizer = ({ outlineData, setOutlineData }: { outlineData: Outli
             typeof window !== 'undefined'
                 ? sessionStorage.getItem('outline_item_counts')
                 : null
+        const recreate_collection =
+            typeof window !== 'undefined'
+                ? sessionStorage.getItem('recreate_collection') === 'true'
+                : false;
+
 
         formData = {
             res: JSON.stringify({ ...outlineData }),
@@ -413,7 +420,8 @@ const OutlineVisualizer = ({ outlineData, setOutlineData }: { outlineData: Outli
                 const extraKnowledge = await query_resources(
                     project_id,
                     resources,
-                    outlineData
+                    outlineData,
+                    recreate_collection
                 )
                 sessionStorage.setItem(
                     'extraKnowledge',
