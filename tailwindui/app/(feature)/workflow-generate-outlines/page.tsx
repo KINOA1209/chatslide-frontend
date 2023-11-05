@@ -229,6 +229,7 @@ export default function Topic() {
 
             //clear extraKnowledge from session storage
             sessionStorage.removeItem('extraKnowledge');
+            sessionStorage.removeItem('outline_item_counts')
 
             //find the corresponding file name
             const selectedResourcesIdArray: string[] = JSON.parse(selectedResourcesJson)

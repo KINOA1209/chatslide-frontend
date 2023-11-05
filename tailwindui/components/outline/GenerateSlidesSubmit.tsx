@@ -308,8 +308,6 @@ const GenerateSlidesSubmit = ({ outline }: { outline: OutlineDataType }) => {
                 ? sessionStorage.getItem('recreate_collection')==='true'
                 : false
         
-        console.log(recreate_collection)
-
         formData = {
             res: JSON.stringify({ ...outlineData }),
             outlines: JSON.stringify({ ...outlineData }),
