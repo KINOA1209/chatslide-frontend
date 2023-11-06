@@ -272,7 +272,7 @@ export default function Dashboard() {
                     as='h3'
                     className='text-lg font-medium leading-6 text-gray-900'
                   >
-                    Delete Project?
+                    Are you sure you want to delete this project?
                   </Dialog.Title>
                   <div className='mt-2'>
                     <p className='text-sm text-gray-500'>
@@ -286,7 +286,7 @@ export default function Dashboard() {
                         className='bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded mr-2 btn-size'
                         onClick={confirmDelete}
                       >
-                        Yes
+                        Confirm
                       </button>
                     </div>
                     <div className='flex justify-center mt-4'>
