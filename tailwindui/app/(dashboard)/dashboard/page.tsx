@@ -217,7 +217,7 @@ export default function Dashboard() {
           </div>
           
           {/* create new project button */}
-          <div className='h-9 px-5 py-2 bg-[#2943E9] rounded-3xl justify-center items-center inline-flex self-start whitespace-no-wrap'>
+          <div className='h-8 px-5 py-1.5 bg-button-color rounded-3xl justify-center items-center inline-flex self-start whitespace-no-wrap'>
             <div
               className='text-center text-zinc-100 text-sm font-medium font-creato-medium leading-none tracking-tight cursor-pointer'
               onClick={handleStartNewProject}
