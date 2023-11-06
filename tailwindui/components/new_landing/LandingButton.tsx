@@ -8,22 +8,21 @@ import AuthService from '@/components/utils/AuthService'
 
 const LandingButton = () => {
     const [user, setUser] = useState(null)
-    const [username, setUsername] = useState(null)
     const router = useRouter()
 
 
-    const fetchUser = async () => {
-        const user = await AuthService.getCurrentUser()
-        setUser(user)
-        setUsername(user?.attributes.name)
-    }
-
     useEffect(() => {
-        fetchUser()
-        if (user) {
-            router.push('/dashboard')
-        }
-    }, [])
+        const fetchUser = async () => {
+            const user = await AuthService.getCurrentUser();
+            if (user) {
+                setUser(user);
+                router.push('/dashboard');
+            }
+        };
+
+        fetchUser();
+    }, []); 
+
 
     {/* start for free button */ }
     return (
