@@ -113,6 +113,7 @@ export default function Topic() {
         e.preventDefault();
         openFile();
     };
+
     const handleTopicSuggestionClick = (topic: string, event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         setTopic(topic);
