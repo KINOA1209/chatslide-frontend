@@ -1,8 +1,8 @@
 'use client'
-import React, { useState, ChangeEvent, FormEvent, useEffect, MouseEvent, useRef } from 'react';
+import React, { useState, useEffect,  useRef } from 'react';
 import { FromCloudIcon, FromComputerIcon } from '@/app/(feature)/my-resources/icons';
 import { NewFileUploadButton } from '@/components/fileUpload';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import AuthService from '@/components/utils/AuthService';
 import UserService from '@/components/utils/UserService';
 import { CarbonConnect, IntegrationName } from 'carbon-connect';
@@ -37,10 +37,8 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
   const [activeTab, setActiveTab] = useState('computer')
   const [resources, setResources] = useState<UserFile[]>([])
   const [rendered, setRendered] = useState<boolean>(false)
-  const [isPaid, setIsPaid] = useState<boolean>(false)
   const promptRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
-  const [selectedResources, setSelectedResources] = useState<Array<string>>([])
   const [uploadedResources, setUploadedResources] = useState<Array<File>>([])
   const [selectedUploadedResources, setSelectedUploadedResources] = useState<Array<File | null>>([])
   const [uploadedResourcesClicked, setUploadedResourcesClicked] = useState(new Array(uploadedResources.length).fill(false))
@@ -68,12 +66,6 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
     fetchUserFiles()
   }, [])
 
-  useEffect(() => {
-    ;(async () => {
-      const paid = await UserService.isPaidUser()
-      setIsPaid(paid)
-    })()
-  }, [])
 
   useEffect(() => {
     if (rendered && resources.length === 0 && promptRef.current) {
@@ -254,6 +246,9 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
       }
     }
   }
+
+  // function to update the uploadedResources when the user uploads the file locally
+  // uploadedResources: <Array<File>>([]) ex: [File, File, File]
   const localFileUpload = async (file: File | null) => {
     if (file == null){
       return
@@ -303,6 +298,7 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
       })
       .then(parsedResponse => {
         const file_id = parsedResponse.data.file_id
+        fetchFiles(idToken);
       })
     })
 
@@ -337,42 +333,6 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
       })
   }
 
-  const handleClick = (id: string) => {
-    const ind = selectedResources.indexOf(id)
-    let resources: Array<string> = []
-    if (isPaid) {
-      resources = [...selectedResources]
-      if (ind !== -1) {
-        resources.splice(ind, 1)
-      } 
-      else {
-        resources.push(id)
-      }
-    } 
-    else {
-      if (ind !== -1) {
-        resources = []
-      } 
-      else {
-        resources = [id]
-      }
-      if (resources.length > 0 && selectedResources.length > 0) {
-        toast.info('Only subscribed user can select multiple files!', {
-          position: 'top-center',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-          containerId: 'fileManagement',
-        })
-      }
-    }
-    setSelectedResources(resources)
-  }
-
   //function to handle the toggle in upload local file section
   const handleUploadResourcesClick = (idx:number) => {
     //update boolean array to keep tracking the selected/unselected state of upload file
@@ -389,15 +349,16 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
     }
     setSelectedUploadedResources(newSelectedFileArray)
   }
+
   return (
     <section>
-      <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center z-10'>
+      <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center z-[20]'>
         <div
           className='fixed top-0 left-0 w-full h-full bg-black opacity-70'
           onClick={closeModal}
         ></div>
         {/* pop up modal box container */}
-        <div id='main_container' className='w-[34rem] h-[35rem] relative rounded-lg flex flex-col items-center'>
+        <div id='main_container' className='w-full md:w-[34rem] h-[35rem] relative rounded-lg flex flex-col items-center'>
           {/* Upload to my library text */}
           <div className='pt-[1.25rem] w-[444px] text-center text-gray-700 text-lg font-bold font-creato-medium leading-normal tracking-wide'>
             Upload to My Library
@@ -411,8 +372,8 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
               handleTabClick('computer');
             }}
             >
-              <div className='w-[17px] h-[17px] relative'>
-                <div className='w-[15.79px] h-3.5 left-[0.61px] top-[2.43px] absolute'>
+              <div className='w-[17px] h-[18px] relative'>
+                <div className='w-[15.79px] h-3.5 left-[0.61px] absolute'>
                   <FromComputerIcon />
                 </div>
               </div>
@@ -439,8 +400,8 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
           </div>
           {/* File upload area */}
           { activeTab === 'computer' && (
-            <div className='h-[400px] my-[20px] flex-1 flex flex-col'>
-              <div className='flex-1 overflow-auto max-h-[280px] z-50'>
+            <div className='h-[400px] my-[20px] px-2 md:px-5 w-full flex-1 flex flex-col'>
+              <div className='flex-1 overflow-auto max-h-[280px] z-[20]'>
                 {uploadedResources.map((uploadedFile, index) => (
                     <li className='list-none flex' key={index}>
                         <div id='uploadfile_each' className='flex w-full justify-between items-center gap-2 rounded h-[45px] pl-[1rem] mt-[10px]'>
@@ -457,15 +418,15 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
                     </li>
                 ))}
               </div>
-              <div className={`w-[478px] min-h-[100px] border-0 border-dotted border-gray-400'} bg-gray-200 rounded-lg flex flex-col items-center justify-center`}>
+              <div id='instruction_container' className={`w-full min-h-[100px] border-0 border-dotted border-gray-400'} bg-gray-200 rounded-lg flex flex-col items-center justify-center`}>
                 {' '}
                 {/* select local file button */}
                 <NewFileUploadButton onFileSelected={localFileUpload} />
-                <div className='w-[334.50px] h-[29.16px] text-center text-blue-700 text-[15px] font-medium font-creato-medium leading-tight tracking-tight'>
+                {/* <div className='w-[334.50px] h-[29.16px] text-center text-blue-700 text-[15px] font-medium font-creato-medium leading-tight tracking-tight'>
                   or drop here
-                </div>
+                </div> */}
                 {/* Select Local file explanation text */}
-                <div className='w-[336px] h-7 text-center'>
+                <div className='w-full h-7 text-center'>
                   <span className='text-slate-500 text-sm font-normal font-creato-medium leading-normal tracking-tight'>
                     PDF, TXT, DOCX, PNG, JPG, JPEG{' '}
                   </span>
@@ -532,7 +493,7 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
             >
               <div className='h-[385px] my-[20px] flex items-center justify-center'>
                 <button
-                  className='w-full btn text-white font-bold bg-black from-blue-600  to-teal-500'
+                  className='w-full btn text-white font-bold bg-black from-blue-600 to-teal-500 z-[50]'
                   type='button'
                 >
                   Connect to Cloud Storage

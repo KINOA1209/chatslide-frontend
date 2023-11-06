@@ -1,8 +1,8 @@
 import Header from '@/components/ui/header';
 
 export const metadata = {
-  title: "Workflow - DrLambda",
-  description: "Convert your documents to slides",
+  title: "Terms - DrLambda",
+  description: "DrLambda's Terms and Conditions",
 };
 
 export default function Terms() {

@@ -129,7 +129,6 @@ class UserService {
             }
         } catch (error) {
             console.error('Failed to fetch user historical inputs:', error);
-            throw error;
         }
     }
 }

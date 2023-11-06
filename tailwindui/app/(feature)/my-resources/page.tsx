@@ -1,10 +1,7 @@
-import NewMyFiles from '@/components/newFileManagement'
-import { FileUploadButton } from '@/components/fileUpload'
-import { CarbonConnect, IntegrationName } from 'carbon-connect'
-import { Transition } from '@headlessui/react'
+import MyFiles from '@/components/newFileManagement'
 import MyResourcePageHeader from '@/app/(feature)/my-resources/MyResourcePageHeader'
 export const metadata = {
-  title: 'Resources - DrLambda',
+  title: 'My Resources - DrLambda',
   description: 'Convert your documents to slides',
 }
 
@@ -12,7 +9,7 @@ export default function FileManagement() {
   return (
     <>
       <MyResourcePageHeader />
-      <NewMyFiles selectable={false} />
+      <MyFiles selectable={false} />
     </>
   )
 }

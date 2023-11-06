@@ -1,13 +1,8 @@
 import React, { useState, useRef, useEffect, Fragment } from 'react'
 import { useRouter } from 'next/navigation'
-import { FormEvent } from 'react'
-import Timer from '@/components/ui/Timer'
 import AuthService from '@/components/utils/AuthService'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { Dialog, Transition } from '@headlessui/react'
-import GptToggle from '@/components/button/GPTToggle'
-import RangeSlider from '../ui/RangeSlider'
 import UserService from '../utils/UserService'
 import mixpanel from 'mixpanel-browser'
 import {
