@@ -16,7 +16,7 @@ const LandingButton = () => {
             const user = await AuthService.getCurrentUser();
             if (user) {
                 setUser(user);
-                // router.push('/dashboard');
+                router.push('/dashboard');
             }
         };
 
