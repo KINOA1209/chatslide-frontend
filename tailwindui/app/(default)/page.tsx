@@ -63,8 +63,8 @@ function App() {
             <div className='background w-full relative bg-zinc-100'>
                 {/* Section: Transform Knowledge */}
                 <div className='relative intro-section flex flex-col justify-center items-center gap-4'>
-                    <div className='w-[90%] text-center text-neutral-900 text-5xl lg:text-8xl font-creato-medium leading-[4rem] lg:leading-[7.5rem] pt-32'>
-                        Create slides from your documents
+                    <div className='w-[90%] text-center text-neutral-900 text-4xl md:text-8xl font-creato-medium leading-[4rem] lg:leading-[7.5rem] pt-32'>
+                        Documents to Slides
                     </div>
 
                     <a
@@ -79,13 +79,16 @@ function App() {
                         />
                     </a>
 
-                    <div className='mt-6 w-50% text-center text-neutral-900 text-2xl lg:text-3xl leading-10 tracking-wide font-creato-medium'>
-                        DrLambda is your AI agent to help you create professional slides.
+                    <div className='mt-6 w-50% text-center text-neutral-900 text-l md:text-3xl leading-10 tracking-wide font-creato-medium'>
+                        Your 🤖 agent to help you create professional slides. 
                         <br />
-                        Say goodbye to the tedious tasks of searching, copy-pasting, and formatting. 
+                        No ctrl F, ctrl C, or ctrl V 👍. 
                     </div>
 
-                    <LandingButton />
+                    <div className="py-6">
+                        <LandingButton />
+                    </div>
+                    
 
                     <div className='transition-transform duration-150 transform hover:scale-110 w-[90%] lg:w-[70rem] lg:h-[35rem] mx-auto max-w-7xl'>
                         <Image
