@@ -472,7 +472,7 @@ const GenerateSlidesSubmit = ({ outline }: { outline: OutlineDataType }) => {
         <div>
             <ToastContainer />
 
-            {/* generate slides popup */}
+            {/* generate slides popup if user already generated slides */}
             <Transition appear show={isToSlidesOpen} as={Fragment}>
                 <Dialog as='div' className='relative z-10' onClose={closeToSlidesModal}>
                     <Transition.Child
@@ -537,72 +537,6 @@ const GenerateSlidesSubmit = ({ outline }: { outline: OutlineDataType }) => {
                 </Dialog>
             </Transition>
 
-            {/* generate script popup */}
-            <Transition appear show={isToScriptOpen} as={Fragment}>
-                <Dialog as='div' className='relative z-10' onClose={closeToScriptModal}>
-                    <Transition.Child
-                        as={Fragment}
-                        enter='ease-out duration-300'
-                        enterFrom='opacity-0'
-                        enterTo='opacity-100'
-                        leave='ease-in duration-200'
-                        leaveFrom='opacity-100'
-                        leaveTo='opacity-0'
-                    >
-                        <div className='fixed inset-0 bg-black bg-opacity-25' />
-                    </Transition.Child>
-
-                    <div className='fixed inset-0 overflow-y-auto'>
-                        <div className='flex min-h-full items-center justify-center p-4 text-center'>
-                            <Transition.Child
-                                as={Fragment}
-                                enter='ease-out duration-300'
-                                enterFrom='opacity-0 scale-95'
-                                enterTo='opacity-100 scale-100'
-                                leave='ease-in duration-200'
-                                leaveFrom='opacity-100 scale-100'
-                                leaveTo='opacity-0 scale-95'
-                            >
-                                <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
-                                    <Dialog.Title
-                                        as='h3'
-                                        className='text-lg font-medium leading-6 text-gray-900'
-                                    >
-                                        Continue to generate scripts?
-                                    </Dialog.Title>
-                                    <div className='mt-2'>
-                                        <p className='text-sm text-gray-500'>
-                                            Generate scripts will delete current slides, audio, and
-                                            video.
-                                        </p>
-                                    </div>
-
-                                    <div className='flex'>
-                                        <div className='flex justify-center mt-4'>
-                                            <button
-                                                className='bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded mr-2 btn-size'
-                                                onClick={scriptModalSubmit}
-                                            >
-                                                Yes
-                                            </button>
-                                        </div>
-                                        <div className='flex justify-center mt-4'>
-                                            <button
-                                                className='text-blue-600 bg-gray-100 hover:bg-gray-200 border border-blue-600 py-2 px-4 rounded mr-2 btn-size'
-                                                onClick={closeToScriptModal}
-                                            >
-                                                Cancel
-                                            </button>
-                                        </div>
-                                    </div>
-                                </Dialog.Panel>
-                            </Transition.Child>
-                        </div>
-                    </div>
-                </Dialog>
-            </Transition>
-
-
             {/* Form */}
             <div className='max-w-sm mx-auto'>
                 <form onSubmit={prepareSubmit}>
@@ -612,7 +546,7 @@ const GenerateSlidesSubmit = ({ outline }: { outline: OutlineDataType }) => {
                         {/* <SlideLengthSelector /> */}
                         <div className='w-full px-3'>
                             <button
-                                className='w-[11rem] h-8 px-5 py-1.5 bg-Generate-slides-bg-color rounded-3xl justify-center items-center gap-5 inline-flex cursor-pointer disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400'
+                                className='w-[11rem] h-8 px-5 py-1.5 bg-button-color Generate-slides-bg-color rounded-3xl justify-center items-center gap-5 inline-flex cursor-pointer disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400'
                                 onClick={() => {
                                     setToSlides(true)
                                 }}
