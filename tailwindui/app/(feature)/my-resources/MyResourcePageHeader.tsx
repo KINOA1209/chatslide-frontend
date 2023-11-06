@@ -16,12 +16,12 @@ const MyResourcePageHeader = () => {
   return (
     <section>
       {/* top background container of my projects title text and  */}
-      <div className='bg-gray-200 pt-16 md:pt-32 flex justify-center '>
+      <div className='bg-gray-200 pt-16 md:pt-18 flex justify-center '>
         {/* flex container controlling max width */}
-        <div className='w-full h-[6.25rem] max-w-7xl flex flex-wrap items-end justify-between '>
+        <div className='w-full h-[6.25rem] max-w-7xl flex flex-wrap items-center justify-center lg:items-end lg:justify-between '>
           {/* my project title text */}
-          <div className='w-40 rounded-md justify-center items-center inline-flex '>
-            <div className='text-neutral-900 text-base font-bold font-creato-medium leading-10 tracking-wide border-black border-b-2'>
+          <div className='w-full lg:w-40 rounded-md justify-center items-center inline-flex'>
+            <div className='text-neutral-900 text-base font-bold font-creato-medium leading-10 tracking-wide border-black lg:border-b-2'>
               My Library
             </div>
           </div>
@@ -37,7 +37,7 @@ const MyResourcePageHeader = () => {
         </div>
       </div>
       <Transition
-        className='h-full w-full z-50 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
+        className='h-full w-full z-[10] bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
         show={showModal}
         onClick={ (e) => {
           e.stopPropagation();

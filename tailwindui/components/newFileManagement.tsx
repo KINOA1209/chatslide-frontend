@@ -36,7 +36,7 @@ const FileTableHeader = () => (
     <div className='px-[2.5rem] py-[1rem] text-start w-[37px] text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
       File
     </div>
-    <div className='px-[2.5rem] py-[1rem] text-start w-[37px] text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+    <div className='px-[2.5rem] py-[1rem] text-start w-[37px] text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide hidden sm:block'>
       Date
     </div>
   </div>
@@ -144,7 +144,7 @@ const FileManagement: React.FC<UserFileList> = ({
       // >
       <div
         key={id}
-        className='grid grid-cols-3 border border-gray-300'
+        className='grid grid-cols-3 border border-gray-300 bg-white'
         style={{ gridTemplateColumns: '2fr 1fr' }}
         onClick={(e) => {
           if (selectable) {

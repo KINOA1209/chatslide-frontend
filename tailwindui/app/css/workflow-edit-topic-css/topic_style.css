@@ -92,7 +92,6 @@
     padding: 20px;
     font-family: 'Creato Display', sans-serif;
     font-weight: 400;
-    font-size: 14px;
     line-height: 1.5;
 }
 
@@ -180,7 +179,6 @@
     margin: 0;
     font-family: 'Creato Display', sans-serif;
     font-weight: 700;
-    font-size: 14px;
     display: inline;
 }
 
@@ -204,7 +202,6 @@
     margin-left: 2%;
     font-family: 'Creato Display', sans-serif;
     font-weight: 400;
-    font-size: 14px;
     color: var(--Grey-500, #707C8A);
     font-style: normal;
     font-weight: 400;
@@ -224,7 +221,6 @@
     color: var(--Grey-100, #E7E9EB);
     text-align: center;
     font-family: 'Creato Display', sans-serif;
-    font-size: 13px;
     font-style: normal;
     font-weight: 500;
     line-height: 18.869px;
@@ -249,7 +245,6 @@
     width: 100%;
     border-radius: 11px;
     font-family: 'Creato Display', sans-serif;
-    font-size: 14px;
     color: var(--Grey-500, #707C8A);
     font-style: normal;
     font-weight: 400;
@@ -293,5 +288,4 @@
     font-family: 'Creato Display', sans-serif;
     color: var(--Grey-700, #363E4A);
     font-weight: 700;
-    font-size: 14px;
 }

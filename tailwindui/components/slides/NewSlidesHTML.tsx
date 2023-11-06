@@ -145,7 +145,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         fetch('/api/auto_save_html', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json; charset=utf-8',
             },
             body: JSON.stringify(formData),
         })

@@ -26,16 +26,6 @@ interface UserFileList {
   selectedResources: Array<string>
 }
 
-// Define a new component for the table header
-const FileTableHeader = () => (
-  <div
-    className='grid grid-cols-3 border border-gray-300'
-    style={{ gridTemplateColumns: '2fr 1fr' }}
-  >
-    <div className='px-[2.5rem] py-[1rem] bg-gray-300 text-start'>File</div>
-    <div className='px-[2.5rem] py-[1rem] bg-gray-300 text-start'>Date</div>
-  </div>
-)
 
 const FileManagement: React.FC<UserFileList> = ({
   selectable = false,
@@ -126,17 +116,6 @@ const FileManagement: React.FC<UserFileList> = ({
     icon = 'pdf'
   ) => {
     return (
-      // <div
-      //   key={id}
-      //   className='w-full h-16 px-4 rounded-2xl md:hover:bg-gray-200'
-      //   onClick={(e) => {
-      //     if (selectable) {
-      //       clickCallback(id)
-      //     } else {
-      //       handleOnClick(e)
-      //     }
-      //   }}
-      // >
       <div
         key={id}
         className='grid grid-cols-3 border border-gray-300'
@@ -216,7 +195,6 @@ const FileManagement: React.FC<UserFileList> = ({
       {/* <div className='w-full px-4'>
         <div className='w-full border-b border-gray-300'></div>
       </div> */}
-      <FileTableHeader /> {/* Render the table header */}
       {userfiles.map((file, index) => {
         return entry(
           file.id,
@@ -346,8 +324,8 @@ const MyFiles: React.FC<filesInterface> = ({
       // alert("Please select non-null file");
       return
     }
-    console.log('file name: ', file.name) //.split('.', 1)
-    console.log('file name split: ', file.name.split('.', 1))
+    //console.log('file name: ', file.name) //.split('.', 1)
+    //console.log('file name split: ', file.name.split('.', 1))
     const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
     const body = new FormData()
     body.append('file', file)
@@ -379,7 +357,9 @@ const MyFiles: React.FC<filesInterface> = ({
           })
           return response.json()
         } else {
-          throw Error(`${response.text}`)
+            return response.text().then((text) => {
+                throw Error(text || 'An unknown error occurred');
+              });
         }
       })
       .then((parsedResponse) => {
@@ -388,7 +368,8 @@ const MyFiles: React.FC<filesInterface> = ({
         handleClick(file_id)
       })
       .catch((error) => {
-        console.error(error)
+        const errorMessage = error.message
+        console.log(errorMessage)
         toast.error(`File upload failed ${error.message}`, {
           position: 'top-center',
           autoClose: 5000,
@@ -577,23 +558,21 @@ const MyFiles: React.FC<filesInterface> = ({
     }
   }
 
+  // new design of pop-up window
+  const [activeTab, setActiveTab] = useState('library')
+  // function to keep tracking of current tab
+  const handleTabClick = (tab:string) => {
+    setActiveTab(tab)
+  }
+
   return (
-    <section className='bg-gradient-to-b from-gray-100 to-white grow flex flex-col h-full'>
+    <section className='grow flex flex-col h-full'>
       <ToastContainer enableMultiContainer containerId={'fileManagement'} />
       <div
         className={`max-w-7xl w-full mx-auto px-4 ${
           !selectable ? 'pt-16 md:pt-32' : ''
         } flex flex-wrap justify-around`}
       >
-        {/* {!selectable ? (
-          <div className='pt-4 grow pr-4'>
-            <h1 className='h2' style={{ color: '#180d09' }}>
-              My Resources
-            </h1>
-          </div>
-        ) : (
-          <></>
-        )} */}
 
         {/* upload local file button */}
         <div className='max-w-sm w-fit text-center pt-4 mx-4'>
@@ -653,7 +632,7 @@ const MyFiles: React.FC<filesInterface> = ({
               overlapSize={20}
               // entryPoint="LOCAL_FILES"
             >
-              <div className='max-w-sm flex flex-col items-center z-[50]'>
+              <div className='max-w-sm flex flex-col items-center z-50'>
                 <button
                   className='w-full btn text-white font-bold bg-black from-blue-600  to-teal-500'
                   type='button'
@@ -681,7 +660,7 @@ const MyFiles: React.FC<filesInterface> = ({
         {resources.length === 0 && (
           <div className='w-full grow flex items-center justify-center'>
             <div className='text-gray-400' ref={promptRef}>
-              Loading...
+              No history file was found.
             </div>
           </div>
         )}
