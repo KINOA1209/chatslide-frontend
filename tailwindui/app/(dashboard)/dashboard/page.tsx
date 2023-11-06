@@ -234,11 +234,14 @@ export default function Dashboard() {
         className='w-full px-8 pt-8 flex flex-col grow overflow-y-auto bg-gray-100'
         ref={contentRef}
       >
-        <ProjectTable
+        {projects && projects.length > 0 ? (<ProjectTable
           currentProjects={currentProjects}
           onProjectClick={handleProjectClick}
           onDelete={handleDelete}
-        />
+        />) :
+        (
+          <div className='flex items-center mt-[1rem] md:mt-[6rem] justify-center text-gray-600 text-[14px] md:text-[20px] font-normal font-creato-medium leading-normal tracking-wide'>You haven't created any project yet.</div>
+        )}
       </div>
 
       {/* Delete modal */}
