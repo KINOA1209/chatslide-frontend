@@ -357,7 +357,9 @@ const MyFiles: React.FC<filesInterface> = ({
           })
           return response.json()
         } else {
-          throw Error(`${response.text}`)
+            return response.text().then((text) => {
+                throw Error(text || 'An unknown error occurred');
+              });
         }
       })
       .then((parsedResponse) => {
@@ -366,7 +368,8 @@ const MyFiles: React.FC<filesInterface> = ({
         handleClick(file_id)
       })
       .catch((error) => {
-        console.error(error)
+        const errorMessage = error.message
+        console.log(errorMessage)
         toast.error(`File upload failed ${error.message}`, {
           position: 'top-center',
           autoClose: 5000,
