@@ -1,13 +1,8 @@
 import React, { useState, useRef, useEffect, Fragment } from 'react'
 import { useRouter } from 'next/navigation'
-import { FormEvent } from 'react'
-import Timer from '@/components/ui/Timer'
 import AuthService from '@/components/utils/AuthService'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { Dialog, Transition } from '@headlessui/react'
-import GptToggle from '@/components/button/GPTToggle'
-import RangeSlider from '../ui/RangeSlider'
 import UserService from '../utils/UserService'
 import mixpanel from 'mixpanel-browser'
 import {
@@ -169,92 +164,6 @@ const OutlineVisualizer = ({ outlineData, setOutlineData }: { outlineData: Outli
     const [isSubmittingSlide, setIsSubmittingSlide] = useState(false)
     const [timer, setTimer] = useState(0)
     const [isSubmittingScript, setIsSubmittingScript] = useState(false)
-    const [toSlides, setToSlides] = useState(true)
-    const [isToSlidesOpen, setIsToSlidesOpen] = useState(false)
-    const [isToScriptOpen, setIsToScriptOpen] = useState(false)
-
-    function closeToSlidesModal() {
-        setIsToSlidesOpen(false)
-        setIsSubmittingSlide(false)
-    }
-
-    function openToSlidesModal() {
-        setIsToSlidesOpen(true)
-    }
-
-    function closeToScriptModal() {
-        setIsToScriptOpen(false)
-        setIsSubmittingScript(false)
-    }
-
-    function openToScriptModal() {
-        setIsToScriptOpen(true)
-    }
-
-    const prepareSubmit = (event: FormEvent<HTMLFormElement>) => {
-        console.log('submitting')
-        event.preventDefault()
-        if (toSlides) {
-            let hasScript = null
-            let hasAudio = null
-            let hasVideo = null
-            if (typeof window !== 'undefined') {
-                hasScript = sessionStorage.getItem('transcripts')
-                hasAudio = sessionStorage.getItem('audio_files')
-                hasAudio = sessionStorage.getItem('video_file')
-            }
-            if (hasScript !== null || hasAudio !== null || hasVideo !== null) {
-                openToSlidesModal()
-            } else {
-                setIsSubmittingSlide(true)
-                handleSubmit()
-            }
-        } else {
-            let hasSlides = null
-            let hasAudio = null
-            let hasVideo = null
-            if (typeof window !== 'undefined') {
-                hasSlides = sessionStorage.getItem('html')
-                hasAudio = sessionStorage.getItem('audio_files')
-                hasAudio = sessionStorage.getItem('video_file')
-            }
-            if (hasSlides !== null || hasAudio !== null || hasVideo !== null) {
-                openToScriptModal()
-            } else {
-                setIsSubmittingScript(true)
-                handleSubmit()
-            }
-        }
-    }
-
-    const slideModalSubmit = () => {
-        closeToSlidesModal()
-        setIsSubmittingSlide(true)
-        // clean sessionStorage
-        if (typeof window !== 'undefined') {
-            sessionStorage.removeItem('pdf_file')
-            sessionStorage.removeItem('page_count')
-            sessionStorage.removeItem('transcripts')
-            sessionStorage.removeItem('audio_files')
-            sessionStorage.removeItem('video_file')
-        }
-        handleSubmit()
-    }
-
-    const scriptModalSubmit = () => {
-        closeToScriptModal()
-        setIsSubmittingScript(true)
-        // clean sessionStorage
-        if (typeof window !== 'undefined') {
-            sessionStorage.removeItem('page_count')
-            sessionStorage.removeItem('html')
-            sessionStorage.removeItem('image_files')
-            sessionStorage.removeItem('pdf_file')
-            sessionStorage.removeItem('audio_files')
-            sessionStorage.removeItem('video_file')
-        }
-        handleSubmit()
-    }
 
     async function query_resources(
         project_id: any,
@@ -290,34 +199,6 @@ const OutlineVisualizer = ({ outlineData, setOutlineData }: { outlineData: Outli
         }
     }
 
-    async function generateScripts(formData: any, token: string) {
-        mixpanel.track('Generate Script', {
-            formData: formData,
-        })
-        const response = await fetch('/api/scripts_only', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(formData),
-        })
-
-        if (response.ok) {
-            const resp = await response.json()
-            // console.log(resp);
-            setIsSubmittingScript(false)
-            // Store the data in local storage
-            // console.log(resp.data);
-            sessionStorage.setItem('transcripts', JSON.stringify(resp.data.res))
-            // Redirect to a new page with the data
-            router.push('workflow-edit-script')
-        } else {
-            alert('Request failed: ' + response.status)
-            // console.log(response)
-            setIsSubmittingScript(false)
-        }
-    }
 
     async function generateSlidesPreview(formData: any, token: string) {
         mixpanel.track('Generate HTML', {
@@ -445,11 +326,7 @@ const OutlineVisualizer = ({ outlineData, setOutlineData }: { outlineData: Outli
         try {
             const { userId, idToken: token } =
                 await AuthService.getCurrentUserTokenAndId()
-            if (toSlides) {
-                await generateSlidesPreview(formData, token)
-            } else {
-                await generateScripts(formData, token)
-            }
+            await generateSlidesPreview(formData, token)
         } catch (error) {
             console.error('Error:', error)
             setIsSubmittingSlide(false)
