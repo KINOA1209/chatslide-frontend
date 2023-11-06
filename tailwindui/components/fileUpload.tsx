@@ -87,7 +87,7 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
         type='button'
         onClick={handleClick}
       >
-        Upload Local File
+        Select Local File
       </button>
       <div className='text-sm text-gray-400'>
         Supported file formats:{' '}
@@ -176,7 +176,7 @@ export const NewFileUploadButton: FC<FileUploadButtonProps> = ({
         type='button'
         onClick={handleClick}
       >
-        Upload Local File
+        Select Local File
       </button>
     </div>
   )
