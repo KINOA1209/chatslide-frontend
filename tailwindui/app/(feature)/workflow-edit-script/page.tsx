@@ -302,58 +302,79 @@ const TranscriptVisualizer = ({
 
   return (
     <div>
-      {transcriptList.map((data, index) => (
-        <div className='rounded bg-[#FCFCFC] border-solid border-2 border-blue-200 mb-[1rem]'>
-          <div className='flex flex-col px-4 py-2'>
-            <div className='text-gray-400 text-xs font-bold font-creto-medium leading-tight tracking-tight'>
-              Section{index + 1}
-            </div>
-            <div className='text-neutral-900 text-lg font-bold font-creto-medium leading-tight tracking-tight'>
-              {data.title}
-            </div>
-            <div className='text-neutral-900 text-base font-medium font-creto-medium leading-tight tracking-tight'>
-              {data.subtitle}
-            </div>
-          </div>
-
+      {transcriptList
+        .reduce(
+          (
+            acc: Array<{
+              title: string
+              sections: Array<{ subtitle: string; script: string }>
+            }>,
+            data,
+            index
+          ) => {
+            // Check if the current section has the same title as the previous section
+            if (index > 0 && data.title === transcriptList[index - 1].title) {
+              // Add the subtitle and script to the previous section
+              acc[acc.length - 1].sections.push({
+                subtitle: data.subtitle,
+                script: data.script,
+              })
+            } else {
+              // Create a new section if the title is different
+              acc.push({
+                title: data.title,
+                sections: [{ subtitle: data.subtitle, script: data.script }],
+              })
+            }
+            return acc
+          },
+          []
+        )
+        .map((section, index) => (
           <div
-            id={index.toString()}
-            tabIndex={index}
-            className='w-full flex flex-col md:flex-row  mt-4 focus-within:border-blue-600]'
+            className='rounded bg-[#FCFCFC] border-solid border-2 border-blue-200 mb-[1rem]'
+            key={index}
           >
-            <div className={`grid grow`}>
-              {/* {hasSlides && authToken && <ImageList urls={[imageUrls[index]]} token={authToken} height={100} />} */}
-              <textarea
-                key={index}
-                className={`h-80 block form-input w-full text-gray-800 mb-2 resize-none border-none p-4`}
-                value={data.script}
-                onChange={(event) => handleChange(index, event)}
-                // readOnly
-              />
-            </div>
-            <div className='flex flex-row items-center px-1.5 py-2 md:flex-col shrink-0'>
-              {/* <button key={index + 'shorter'} className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full" onClick={e => handleUpdateScript(e, index, 'shorter')}>
-                            Shorter
-                        </button>
-                        <button key={index + 'funnier'} className="mt-4 btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full" onClick={e => handleUpdateScript(e, index, 'funnier')}>
-                            Funnier
-                        </button> */}
-              <UpdateButton
-                callback={handleUpdateScript}
-                text={'shorter'}
-                ind={index}
-              />
-              <div className='ml-4 md:ml-0 md:mt-4'>
-                <UpdateButton
-                  callback={handleUpdateScript}
-                  text={'funnier'}
-                  ind={index}
-                />
+            {/* per section (same title) */}
+            <div
+              id={index.toString()}
+              className='flex flex-col px-4 py-2 gap-4'
+            >
+              <div className='text-gray-400 text-xs font-bold font-creto-medium leading-tight tracking-tight'>
+                Section {index + 1}
+              </div>
+              <div className='pb-4 text-neutral-900 text-lg font-bold font-creto-medium leading-tight tracking-tight border-b-2 border-gray-300'>
+                {section.title}
+              </div>
+              {/* subtitle and script */}
+              <div className='px-4 py-2 rounded-md justify-center items-end gap-2.5 flex flex-col'>
+                {section.sections.map((subsection, subIndex) => (
+                  <div
+                    key={subIndex}
+                    className='w-full border-2 border-black px-2 py-1'
+                  >
+                    {/* <div className='bg-[#D1DEFC] text-indigo-500 text-xs font-bold font-creato-medium leading-none tracking-tight flex-nowrap'>
+                      {subsection.subtitle}
+                    </div> */}
+                    <div className='px-4 py-2 w-fit bg-[#D1DEFC] rounded-md justify-center items-end gap-2.5 flex'>
+                      <div className='text-indigo-500 text-xs font-bold font-creato-medium leading-none tracking-tight flex-nowrap'>
+                        {subsection.subtitle}
+                      </div>
+                    </div>
+                    {/* <div className='bg-[#FCFCFC] block form-input w-full text-gray-800 resize-none border-none p-4'>{subsection.script}</div> */}
+                    <textarea
+                      key={index}
+                      className={`h-80 \bg-[#FCFCFC] block w-full text-gray-800 mb-2 resize-none border-none p-4`}
+                      value={subsection.script}
+                      onChange={(event) => handleChange(index, event)}
+                      // readOnly
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
 
       {/* Form */}
       {/* <div className='max-w-sm mx-auto'>
@@ -412,29 +433,6 @@ export default function WorkflowStep4() {
       ? sessionStorage.getItem('foldername')
       : ''
   useEffect(() => {
-    // if (outlineRes && transcripts) {
-    //   // Flatten the 'outlineRes' data
-    //   const flattenedOutline = Object.keys(outlineRes).flatMap(
-    //     (sectionIndex) => {
-    //       const section = outlineRes[sectionIndex]
-    //       return section.content.map((subtitle: string) => ({
-    //         title: section.title,
-    //         subtitle,
-    //       }))
-    //     }
-    //   )
-
-    //   console.log('flattened outline: ', flattenedOutline)
-    //   console.log('transcriptData: ', transcriptData)
-    //   // Combine 'flattenedOutline' and 'transcript' data
-    //   const transcriptWithTitleData = flattenedOutline.map((item, index) => ({
-    //     title: item.title,
-    //     subtitle: item.subtitle,
-    //     script: transcripts[index] || '',
-    //   }))
-
-    //   console.log('transcriptData with title:', transcriptWithTitleData)
-    // setTranscriptWithTitle(transcriptWithTitleData)
     // Store 'transcriptWithTitle' in session storage
     sessionStorage.setItem(
       'transcriptWithTitle',
@@ -582,27 +580,31 @@ export default function WorkflowStep4() {
       </div>
 
       {/* overview nav section */}
-      <div className='w-1/4 fixed top-[16.5rem] overflow-y-auto flex justify-center'>
-        <div className='w-2/3 bg-neutral-50 rounded-md border border-gray-200 hidden sm:block'>
+      <div className='w-1/4 h-[15rem] fixed top-[12rem]  flex justify-center'>
+        <div className='w-2/3 bg-neutral-50 rounded-md border border-gray-200 hidden sm:block overflow-y-auto'>
           <div className='h-5 text-neutral-900 text-xs font-bold font-creato-medium leading-tight tracking-wide px-4 py-3'>
             OVERVIEW
           </div>
           <ol className='list-none px-4 py-4'>
-            {transcriptWithTitle?.map((section, index) => (
-              <li
-                className='pb-2 opacity-60 text-neutral-900 text-s font-medium font-creato-medium leading-normal tracking-tight cursor-pointer hover:text-black  hover:rounded-md hover:bg-gray-200'
-                key={index}
-                onClick={() => scrollToSection(index)}
-              >
-                <span className=''>
-                  {index + 1}. {section.subtitle}
-                </span>
-              </li>
-            ))}
+            {transcriptWithTitle
+              ?.map((section) => section.title) // Extract titles
+              .filter((value, index, self) => self.indexOf(value) === index) // Filter unique titles
+              .map((title, index) => (
+                <li
+                  className='pb-2 opacity-60 text-neutral-900 text-s font-medium font-creato-medium leading-normal tracking-tight cursor-pointer hover:text-black  hover:rounded-md hover:bg-gray-200'
+                  key={index}
+                  onClick={() => scrollToSection(index)}
+                >
+                  <span className=''>
+                    {index + 1}. {title}
+                  </span>
+                </li>
+              ))}
           </ol>
         </div>
       </div>
-      <div className='mt-[10rem] max-w-4xl mx-auto grow' ref={contentRef}>
+
+      <div className='mt-[12rem] max-w-4xl mx-auto grow' ref={contentRef}>
         <TranscriptVisualizer transcripts={transcriptWithTitle} />
       </div>
       <FeedbackButton />
