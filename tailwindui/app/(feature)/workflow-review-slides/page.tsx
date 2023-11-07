@@ -75,7 +75,7 @@ export default function WorkflowStep3() {
         <SlideVisualizer />
       </div>
       
-      <FeedbackButton timer={3000} />
+      <FeedbackButton timeout={30000} />
     </div>
   )
 }
