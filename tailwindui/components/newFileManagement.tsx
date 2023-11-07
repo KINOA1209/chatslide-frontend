@@ -228,13 +228,18 @@ const FileManagement: React.FC<UserFileList> = ({
 }
 
 interface filesInterface {
-  selectable: boolean
-  callback?: Function
+  selectable: boolean;
+  callback?: Function;
+  filesUpdated: boolean;
+  setFilesUpdated: React.Dispatch<React.SetStateAction<boolean>>;
+  
 }
 
 const MyFiles: React.FC<filesInterface> = ({
   selectable = false,
   callback,
+  filesUpdated,
+  setFilesUpdated,
 }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [resources, setResources] = useState<UserFile[]>([])
@@ -244,6 +249,22 @@ const MyFiles: React.FC<filesInterface> = ({
   const [selectedResources, setSelectedResources] = useState<Array<string>>([])
   const [isPaid, setIsPaid] = useState<boolean>(false)
 
+  useEffect(() =>{
+    if(filesUpdated){
+      const fetchUserFiles = async () => {
+        try {
+          const { userId, idToken: token } =
+            await AuthService.getCurrentUserTokenAndId()
+          fetchFiles(token)
+        } catch (error: any) {
+          console.error(error)
+        }
+      }
+      // Execute the created function directly
+      fetchUserFiles();
+      setFilesUpdated(false);
+    }
+  }, [filesUpdated, setFilesUpdated])
   useEffect(() => {
     if (contentRef.current) {
       contentRef.current.style.height = contentRef.current.offsetHeight + 'px'
@@ -290,6 +311,7 @@ const MyFiles: React.FC<filesInterface> = ({
       callback(selectedResources)
     }
   }, [selectedResources])
+
   const fetchFiles = async (token: string) => {
     const headers = new Headers()
     if (token) {
@@ -335,69 +357,6 @@ const MyFiles: React.FC<filesInterface> = ({
     } catch (error) {
       console.error('Error fetching projects:', error)
     }
-  }
-
-  const onFileSelected = async (file: File | null) => {
-    console.log('will upload file', file)
-    if (file == null) {
-      // alert("Please select non-null file");
-      return
-    }
-    console.log('file name: ', file.name) //.split('.', 1)
-    console.log('file name split: ', file.name.split('.', 1))
-    const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
-    const body = new FormData()
-    body.append('file', file)
-
-    // mixpanel.track('File Uploaded', {
-    //   'File Name': file.name,
-    //   'File Type': file.type,
-    // })
-
-    fetch('/api/upload_user_file', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-      body: body,
-    })
-      .then((response) => {
-        if (response.ok) {
-          toast.success('File uploaded successfully', {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'light',
-            containerId: 'fileManagement',
-          })
-          return response.json()
-        } else {
-          throw Error(`${response.text}`)
-        }
-      })
-      .then((parsedResponse) => {
-        const file_id = parsedResponse.data.file_id
-        fetchFiles(idToken)
-        handleClick(file_id)
-      })
-      .catch((error) => {
-        console.error(error)
-        toast.error(`File upload failed ${error.message}`, {
-          position: 'top-center',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-          containerId: 'fileManagement',
-        })
-      })
   }
 
   const handleFileDeleted = (id: string) => {
@@ -448,132 +407,6 @@ const MyFiles: React.FC<filesInterface> = ({
     setSelectedResources(resources)
   }
 
-  const tokenFetcher = async () => {
-    try {
-      // Assuming AuthService.getCurrentUserTokenAndId() returns an object with userId and idToken properties
-      const { userId, idToken: token } =
-        await AuthService.getCurrentUserTokenAndId()
-
-      const headers = new Headers()
-      if (token) {
-        headers.append('Authorization', `Bearer ${token}`)
-      }
-      headers.append('Content-Type', 'application/json')
-
-      const response = await fetch('/api/fetchCarbonTokens', {
-        method: 'GET', // The endpoint is using the GET method
-        headers: headers,
-      })
-
-      if (response.ok) {
-        const data = await response.json()
-        return data
-      } else {
-        // Handle the case when the response is not OK (status code is not 200)
-        console.error(
-          'Failed to fetch access token:',
-          response.status,
-          response.statusText
-        )
-        throw new Error('Failed to fetch access token')
-      }
-    } catch (error) {
-      // Handle any other errors that might occur during the process
-      console.error('Error fetching access token:', error)
-      throw error
-    }
-  }
-
-  const handleSuccess = async (data: any) => {
-    console.log('Data on Success: ', data)
-
-    // Check if the action is "update"
-    if (data && data.action === 'UPDATE') {
-      const { userId, idToken: token } =
-        await AuthService.getCurrentUserTokenAndId()
-      // Assuming you have a function to send data to the endpoint
-      try {
-        const response = await sendUpdateToEndpoint(data, token)
-        await fetchFiles(token)
-
-        // Check if there are failed files in the response
-        if (response && response.failed_files) {
-          const failedFiles = response.failed_files.join(', ') // Assuming it's an array of file names
-          toast.error(`Some files failed to be synced: ${failedFiles}`, {
-            position: 'top-center',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'light',
-            containerId: 'fileManagement',
-          })
-        } else {
-          toast.success('All files synced successfully', {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'light',
-            containerId: 'fileManagement',
-          })
-        }
-      } catch (error: any) {
-        console.error('Error sending data to sync_carbon_file: ', error)
-        // Handle the error as needed
-        toast.error(`${error.message}`, {
-          position: 'top-center',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-          containerId: 'fileManagement',
-        })
-      }
-    }
-  }
-
-  // Function to send data to the endpoint api/sync_carbon_file
-  const sendUpdateToEndpoint = async (data: any, token: string) => {
-    try {
-      const headers = new Headers()
-      if (token) {
-        headers.append('Authorization', `Bearer ${token}`)
-      }
-      headers.append('Content-Type', 'application/json')
-
-      // Replace the following line with your actual endpoint and request logic
-      const response = await fetch('api/sync_carbon_file', {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify({ data }),
-      })
-
-      if (!response.ok) {
-        const errorResponse = await response.json() // Assuming the error is returned as JSON
-        console.log('Error response from sync_carbon_file: ', errorResponse)
-        throw new Error(`${errorResponse.error}`)
-      }
-
-      const responseData = await response.json()
-
-      console.log('Response from sync_carbon_file: ', responseData)
-
-      return responseData
-    } catch (error) {
-      // Rethrow the error for the calling function to catch
-      throw error
-    }
-  }
-
   return (
     <section className='bg-gradient-to-b from-gray-100 to-white grow flex flex-col h-full'>
       <ToastContainer enableMultiContainer containerId={'fileManagement'} />
@@ -581,85 +414,6 @@ const MyFiles: React.FC<filesInterface> = ({
         className={`max-w-7xl w-full mx-auto px-4
           flex flex-wrap justify-around`}
       >
-        {/* {!selectable ? (
-          <div className='pt-4 grow pr-4'>
-            <h1 className='h2' style={{ color: '#180d09' }}>
-              My Resources
-            </h1>
-          </div>
-        ) : (
-          <></>
-        )} */}
-
-        {/* upload local file button */}
-        {/* <div className='max-w-sm w-fit text-center pt-4 mx-4'>
-          <div className='w-full mx-auto'>
-            <FileUploadButton onFileSelected={onFileSelected} />
-          </div>
-        </div> */}
-
-        {/* carbon connect cloud storage */}
-        {/* <div className='max-w-sm w-fit text-center pt-4 mx-4'>
-          <div className='w-full mx-auto'>
-            <CarbonConnect
-              orgName='DrLambda'
-              brandIcon='https://drlambda.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo_no_text.0a4e5a6b.png&w=1920&q=75'
-              tokenFetcher={tokenFetcher}
-              tags={{
-                tag1: 'tag1_value',
-                tag2: 'tag2_value',
-                tag3: 'tag3_value',
-              }}
-              maxFileSize={10000000}
-              enabledIntegrations={[
-                // {
-                //     id: IntegrationName.GOOGLE_DRIVE,
-                //     chunkSize: 1500,
-                //     overlapSize: 20,
-                //     skipEmbeddingGeneration: true,
-                // },
-                {
-                  id: IntegrationName.ONEDRIVE,
-                  chunkSize: 1500,
-                  overlapSize: 20,
-                  // skipEmbeddingGeneration: true,
-                },
-                {
-                  id: IntegrationName.DROPBOX,
-                  chunkSize: 1500,
-                  overlapSize: 20,
-                  // skipEmbeddingGeneration: true,
-                },
-                {
-                  id: IntegrationName.NOTION,
-                  chunkSize: 1500,
-                  overlapSize: 20,
-                  // skipEmbeddingGeneration: true,
-                },
-              ]}
-              onSuccess={(data) => handleSuccess(data)}
-              onError={(error) => console.log('Data on Error: ', error)}
-              primaryBackgroundColor='#F2F2F2'
-              primaryTextColor='#555555'
-              secondaryBackgroundColor='#f2f2f2'
-              secondaryTextColor='#000000'
-              allowMultipleFiles={true}
-              open={false}
-              chunkSize={1500}
-              overlapSize={20}
-              // entryPoint="LOCAL_FILES"
-            >
-              <div className='max-w-sm flex flex-col items-center z-50'>
-                <button
-                  className='w-full btn text-white font-bold bg-black from-blue-600  to-teal-500'
-                  type='button'
-                >
-                  Connect to Cloud Storage
-                </button>
-              </div>
-            </CarbonConnect>
-          </div>
-        </div> */}
       </div>
       <div
         className='max-w-6xl w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto'
