@@ -17,7 +17,7 @@ function ButtonWithExplanation({
     >
       {button}
       <div
-        className={`absolute top-10 z-10 p-1 bg-black text-white rounded-md transition-opacity duration-200 ${
+        className={`absolute top-5 -left-10 z-10 p-1 bg-black text-white rounded-md transition-opacity duration-200 ${
           showExplanation ? 'opacity-100' : 'opacity-0'
         }`}
       >

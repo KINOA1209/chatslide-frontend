@@ -78,3 +78,27 @@ export const ShareSlidesIcon = () => (
     </defs>
   </svg>
 )
+
+export const ScriptEditIcon = () => (
+  <svg
+    width='14'
+    height='14'
+    viewBox='0 0 14 14'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+  >
+    <g clip-path='url(#clip0_22_9170)'>
+      <path
+        d='M5 12.2409L0.5 13.5009L1.76 9.00088L10 0.800876C10.0931 0.70563 10.2044 0.629951 10.3271 0.578283C10.4499 0.526615 10.5818 0.5 10.715 0.5C10.8482 0.5 10.9801 0.526615 11.1029 0.578283C11.2256 0.629951 11.3369 0.70563 11.43 0.800876L13.2 2.58088C13.2937 2.67384 13.3681 2.78444 13.4189 2.9063C13.4697 3.02816 13.4958 3.15886 13.4958 3.29088C13.4958 3.42289 13.4697 3.55359 13.4189 3.67545C13.3681 3.79731 13.2937 3.90791 13.2 4.00088L5 12.2409Z'
+        stroke='black'
+        stroke-linecap='round'
+        stroke-linejoin='round'
+      />
+    </g>
+    <defs>
+      <clipPath id='clip0_22_9170'>
+        <rect width='14' height='14' fill='white' />
+      </clipPath>
+    </defs>
+  </svg>
+)

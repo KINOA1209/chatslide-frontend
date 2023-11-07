@@ -8,24 +8,26 @@ import UserService from '../utils/UserService'
 import GptToggle from '../button/GPTToggle'
 import PaywallModal from './paywallModal'
 import mixpanel from 'mixpanel-browser'
-
+import { ScriptsIcon } from '@/app/(feature)/icons'
+import Timer from '@/components/ui/Timer'
 interface TranscriptFormProps {
   isSubmitting: boolean
   setIsSubmitting: (isSubmitting: boolean) => void
   finalSlides: Slide[]
+  isGpt35: boolean
 }
 
 const TranscriptForm: React.FC<TranscriptFormProps> = ({
   finalSlides,
   isSubmitting,
   setIsSubmitting,
+  isGpt35,
 }) => {
   const router = useRouter()
   const [user, setUser] = useState(null)
   const [isPaid, setIsPaid] = useState(false)
-  const [isGpt35, setIsGpt35] = useState(true)
+  //   const [isGpt35, setIsGpt35] = useState(true)
   const [showPaymentModal, setShowPaymentModal] = useState(false)
-
   useEffect(() => {
     // Create a scoped async function within the hook.
     const fetchUser = async () => {
@@ -54,6 +56,7 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({
     event.preventDefault()
 
     setIsSubmitting(true)
+    console.log('isSubmitting', isSubmitting)
 
     const html_filename = 'html_init.html'
     const foldername =
@@ -126,7 +129,8 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({
   }
 
   return (
-    <div className='max-w-sm mx-auto'>
+    <div className='mx-auto'>
+      {/* want some scripts? */}
       {showPaymentModal && (
         <PaywallModal
           setShowModal={setShowPaymentModal}
@@ -134,30 +138,52 @@ const TranscriptForm: React.FC<TranscriptFormProps> = ({
         />
       )}
       <form onSubmit={handleSubmitTranscript}>
-        <div className='flex flex-wrap -mx-3 mt-6 justify-center'>
-          <GptToggle isGpt35={isGpt35} setIsGpt35={setIsGpt35} />
-          <div className='w-full px-3'>
-            {!isPaid ? (
-              <>
-                <button
-                  type='button'
-                  className='btn text-white font-bold w-full bg-gradient-to-r from-gray-400 to-gray-600 disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400'
-                  onClick={handleSubscribeOnclick}
-                >
-                  🔒 Subscribe to Generate Script
-                </button>
-              </>
-            ) : (
+        {!isPaid ? (
+          <>
+            <div className='h-8 px-3 py-1 bg-zinc-100 rounded-lg flex justify-center items-center gap-2.5 cursor-pointer'>
               <button
-                type='submit'
-                className='btn text-white font-bold w-full bg-gradient-to-r from-purple-500 to-purple-700 disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400'
-                disabled={isSubmitting}
+                type='button'
+                className='flex items-center overflow-hidden'
+                onClick={handleSubscribeOnclick}
               >
-                {isSubmitting ? 'Generating...' : '🚀 Generate Script'}
+                <div className='text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide whitespace-nowrap overflow-hidden text-ellipsis'>
+                  🔒 Subscribe to Generate Script
+                </div>
               </button>
-            )}
+              <div className='w-5 h-5 relative'>
+                <ScriptsIcon />
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className='px-3 py-1 bg-zinc-100 rounded-lg flex justify-center items-center gap-2.5 cursor-pointer'>
+            <div className='flex flex-col items-center overflow-hidden'>
+              {isSubmitting ? (
+                <button
+                  type='submit'
+                  className='text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide whitespace-nowrap overflow-hidden text-ellipsis'
+                  disabled={isSubmitting}
+                >
+                  Generating...
+                </button>
+              ) : (
+                <button
+                  type='submit'
+                  className='text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide whitespace-nowrap overflow-hidden text-ellipsis'
+                  disabled={isSubmitting}
+                >
+                  {isPaid ? '🚀' : '🔒'} Want some scripts?{' '}
+                  <span className='text-blue-700 text-sm font-medium font-creato-medium leading-normal tracking-wide'>
+                    (10 credits)
+                  </span>
+                </button>
+              )}
+            </div>
+            <div className='w-5 h-5 relative'>
+              <ScriptsIcon />
+            </div>
           </div>
-        </div>
+        )}
       </form>
     </div>
   )
