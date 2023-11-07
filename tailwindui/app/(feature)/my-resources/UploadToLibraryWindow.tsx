@@ -300,7 +300,6 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
       })
       .then(parsedResponse => {
         const file_id = parsedResponse.data.file_id
-        //fetchFiles(idToken);
       })
     })
 
