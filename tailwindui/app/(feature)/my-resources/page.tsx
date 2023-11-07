@@ -1,15 +1,14 @@
-import MyFiles from '@/components/newFileManagement'
-import MyResourcePageHeader from '@/app/(feature)/my-resources/MyResourcePageHeader'
+import FileManagementClient from '@/app/(feature)/my-resources/page_client'
 export const metadata = {
   title: 'My Resources - DrLambda',
   description: 'Convert your documents to slides',
 }
 
-export default function FileManagement() {
+
+export default function FileManagementServer() {
   return (
-    <>
-      <MyResourcePageHeader />
-      <MyFiles selectable={false} />
-    </>
+    <div className='h-screen'>
+      <FileManagementClient />
+    </div>
   )
 }

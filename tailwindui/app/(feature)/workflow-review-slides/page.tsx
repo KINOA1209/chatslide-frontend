@@ -118,6 +118,7 @@ export default function WorkflowStep3() {
           </div>
         )}
       </div>
+
       {/* {transcriptList !== null && transcriptList.length > 0 && (
         <div className='w-72 h-96 relative bg-zinc-100 rounded-md'>
           <div className="w-60 left-[17px] top-[50px] absolute text-gray-700 text-xs font-normal font-['Creato Display'] leading-none tracking-tight">
@@ -154,7 +155,9 @@ export default function WorkflowStep3() {
         </div>
       )} */}
 
-      <FeedbackButton timer={3000} />
+
+      <FeedbackButton timeout={30000} />
+
     </div>
   )
 }

@@ -14,6 +14,7 @@ interface UploadToLibraryWindowProps {
   showModal: boolean
   closeModal: () => void
   selectable: boolean
+  onFilesUploaded: () => void
 }
 
 interface UserFile {
@@ -27,6 +28,7 @@ interface UserFile {
 const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
   showModal,
   closeModal,
+  onFilesUploaded,
   selectable = false,
 }) => {
   if (!showModal) {
@@ -298,12 +300,13 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
       })
       .then(parsedResponse => {
         const file_id = parsedResponse.data.file_id
-        fetchFiles(idToken);
       })
     })
 
     Promise.all(uploadPromises)
       .then(() => {
+        fetchFiles(idToken);
+        onFilesUploaded();
         toast.success('File uploaded successfully', {
           position: 'top-center',
           autoClose: 2000,
@@ -318,6 +321,8 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
         //fetchFiles(idToken);
       })
       .catch(error => {
+        fetchFiles(idToken);
+        onFilesUploaded();
         console.error(error);
         toast.error(`Some file uploads failed ${error.message}`, {
           position: 'top-center',

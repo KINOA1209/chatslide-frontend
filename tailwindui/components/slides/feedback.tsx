@@ -8,10 +8,10 @@ interface FeedbackFormProps {
 }
 
 interface FeedbackButtonProps {
-    timer?: number
+    timeout?: number
 }
 
-const FeedbackButton: React.FC<FeedbackButtonProps> = ({ timer = 3000 }) => {
+const FeedbackButton: React.FC<FeedbackButtonProps> = ({ timeout = 0 }) => {
 
     const [showModal, setShowModal] = useState(false);
     const [timerFinished, setTimerFinished] = useState(false)
@@ -30,7 +30,11 @@ const FeedbackButton: React.FC<FeedbackButtonProps> = ({ timer = 3000 }) => {
 
     // Start the timer when the component mounts
     useEffect(() => {
-        const timer = setTimeout(handleTimerCompletion, 30000) // 30 seconds
+        if (timeout == 0){
+            // no timer
+            return 
+        }
+        const timer = setTimeout(handleTimerCompletion, timeout) // 30 seconds
 
         // Clean up the timer when the component unmounts
         return () => clearTimeout(timer)

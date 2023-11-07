@@ -3,7 +3,12 @@ import React, { useState } from 'react';
 import UploadToLibraryWindow from './UploadToLibraryWindow';
 import { Transition } from '@headlessui/react';
 
-const MyResourcePageHeader = () => {
+interface MyResourcePageHeaderProps{
+  onFilesUploaded: () => void;
+}
+const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
+  onFilesUploaded,
+}) => {
   const [showModal, setShowModal] = useState(false)
 
   const openModal = () => {
@@ -55,6 +60,7 @@ const MyResourcePageHeader = () => {
           showModal={showModal}
           closeModal={closeModal}
           selectable={false}
+          onFilesUploaded={onFilesUploaded}
         />
       )}
       </Transition>
