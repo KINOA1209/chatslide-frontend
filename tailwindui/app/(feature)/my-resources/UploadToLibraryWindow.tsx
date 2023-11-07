@@ -469,19 +469,19 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
                   id: IntegrationName.ONEDRIVE,
                   chunkSize: 1500,
                   overlapSize: 20,
-                  // skipEmbeddingGeneration: true,
+                  skipEmbeddingGeneration: true,
                 },
                 {
                   id: IntegrationName.DROPBOX,
                   chunkSize: 1500,
                   overlapSize: 20,
-                  // skipEmbeddingGeneration: true,
+                  skipEmbeddingGeneration: true,
                 },
                 {
                   id: IntegrationName.NOTION,
                   chunkSize: 1500,
                   overlapSize: 20,
-                  // skipEmbeddingGeneration: true,
+                  skipEmbeddingGeneration: true,
                 },
               ]}
               onSuccess={(data) => handleSuccess(data)}
