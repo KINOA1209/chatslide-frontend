@@ -107,7 +107,7 @@ const FileManagement: React.FC<UserFileList> = ({
   }
 
   const getThumbnail = (thumbnailUrl: string) => {
-    console.log(thumbnailUrl)
+    //console.log(thumbnailUrl)
     return (
       <img
         src={thumbnailUrl}
@@ -356,39 +356,37 @@ const MyFiles: React.FC<filesInterface> = ({
     //   'File Name': file.name,
     //   'File Type': file.type,
     // })
+    try{
+      const response = await fetch('/api/upload_user_file', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: body,
+      });
 
-    fetch('/api/upload_user_file', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${idToken}`,
-      },
-      body: body,
-    })
-      .then((response) => {
-        if (response.ok) {
-          toast.success('File uploaded successfully', {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'light',
-            containerId: 'fileManagement',
-          })
-          return response.json()
-        } else {
-          throw Error(`${response.text}`)
-        }
-      })
-      .then((parsedResponse) => {
-        const file_id = parsedResponse.data.file_id
-        fetchFiles(idToken)
-        handleClick(file_id)
-      })
-      .catch((error) => {
-        console.error(error)
+      if (response.ok){
+        toast.success('File uploaded successfully', {
+          position: 'top-center',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+          containerId: 'fileManagement',
+        })
+        const data = await response.json();
+        await fetchFiles(idToken)
+        handleClick(data.data.file_id)
+      }
+      else{
+        throw Error(`${response.text}`)
+      }
+    } catch (error)  {
+      console.error(error)
+      if (error instanceof Error){
         toast.error(`File upload failed ${error.message}`, {
           position: 'top-center',
           autoClose: 5000,
@@ -400,7 +398,8 @@ const MyFiles: React.FC<filesInterface> = ({
           theme: 'light',
           containerId: 'fileManagement',
         })
-      })
+      }
+    }
   }
 
   const handleFileDeleted = (id: string) => {
