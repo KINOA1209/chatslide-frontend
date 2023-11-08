@@ -596,7 +596,7 @@ export default function Topic() {
                   value={topic}
                   maxLength={80}
                   required
-                  placeholder='e.g. How to make healthy & yummy salad. Talk about multi aspects, from ingredients selection to secret sauce making, perfect recipes, etc.'
+                  placeholder='e.g. How to use ultrasound to detect breast cancer'
                 ></textarea>
                 {
                   <div className='charcnt' id='charcnt'>
@@ -646,7 +646,7 @@ export default function Topic() {
                       onChange={(e) => audienceDropDown(e.target.value)}
                       required
                     >
-                      <option value='unselected' selected disabled>
+                      <option value='unselected' disabled>
                         Choose your audience
                       </option>
                       {audienceList.map((value) => (
