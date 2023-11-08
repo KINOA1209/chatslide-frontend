@@ -488,7 +488,7 @@ const GenerateSlidesSubmit = ({
             {/* <SlideLengthSelector /> */}
             <div className='w-full px-3'>
               <button
-                className='w-[11rem] h-8 px-5 py-1.5 bg-Generate-slides-bg-color rounded-3xl justify-center items-center gap-5 inline-flex cursor-pointer disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400'
+                className='w-[11rem] h-8 px-5 py-1.5 bg-button-color rounded-3xl justify-center items-center gap-5 inline-flex cursor-pointer disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400'
                 onClick={() => {
                   setToSlides(true)
                 }}

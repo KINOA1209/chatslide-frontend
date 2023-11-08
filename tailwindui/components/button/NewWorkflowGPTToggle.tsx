@@ -1,3 +1,6 @@
+'use client'
+
+
 import React, { useEffect, useState } from 'react'
 import NewWorkflowToggle from './NewWorkflowToggle'
 import UserService from '../utils/UserService'
@@ -12,7 +15,7 @@ const GPTToggle: React.FC<GPTToggleProps> = ({ setIsGpt35 }) => {
   const [isPaidUser, setIsPaidUser] = useState(false)
   const [isGpt35, setIsGpt35Locally] = useState(() => {
     // Load the value from sessionStorage, defaulting to true if it's not set
-    const storedValue = sessionStorage.getItem('isGpt35')
+    const storedValue = typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('isGpt35') : null;
     return storedValue ? JSON.parse(storedValue) : true
   })
   useEffect(() => {
