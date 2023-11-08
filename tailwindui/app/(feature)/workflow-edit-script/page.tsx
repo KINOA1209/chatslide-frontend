@@ -9,6 +9,15 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { LoadingIcon } from '@/components/ui/progress'
 import { LeftTurnArrowIcon, QuestionExplainIcon } from '../icons'
+import ButtonWithExplanation from '@/components/button/ButtonWithExplanation'
+import {
+  AddScriptIconActive,
+  AddScriptIconInactive,
+  DeleteScriptIconActive,
+  DeleteScriptIconInactive,
+  AIEditIconActive,
+  AIEditIconInactive,
+} from './icons'
 import NewWorkflowGPTToggle from '@/components/button/NewWorkflowGPTToggle'
 interface UpdateButtonProps {
   callback: Function
@@ -67,7 +76,13 @@ const TranscriptVisualizer = ({
   const router = useRouter()
   const [hasSlides, setHasSlides] = useState<boolean>(false)
   const [authToken, setAuthToken] = useState<string>()
-
+  const [hoveredIcons, setHoveredIcons] = useState<{
+    sectionIndex: number | null
+    subsectionIndex: number | null
+    iconIndex: number | null
+  }>({ sectionIndex: null, subsectionIndex: null, iconIndex: null })
+  const [showAIDropdown, setShowAIDropdown] = useState(false)
+  // const [aiEditHovered, setAIEEditHovered] = useState(false)
   //   useEffect(() => {
   //     if (typeof window !== 'undefined') {
   //       const slidesFlag = sessionStorage.getItem('image_files')
@@ -332,25 +347,166 @@ const TranscriptVisualizer = ({
               <div className='pb-4 text-neutral-900 text-lg font-bold font-creto-medium leading-tight tracking-tight border-b-2 border-gray-300'>
                 {section.title}
               </div>
-              {/* subtitle and script */}
+              {/* subtitle and script*/}
               <div className='px-4 py-2 rounded-md justify-center items-end gap-2.5 flex flex-col'>
                 {section.sections.map((subsection, subIndex) => (
                   <div
                     key={subIndex}
-                    className='w-full border-2 border-black px-2 py-1'
+                    className={`w-full border-2 border-black px-2 py-1 relative `}
+                    onMouseEnter={() =>
+                      setHoveredIcons({
+                        sectionIndex: index,
+                        subsectionIndex: subIndex,
+                        iconIndex: null,
+                      })
+                    }
+                    onMouseLeave={() =>
+                      setHoveredIcons({
+                        sectionIndex: null,
+                        subsectionIndex: null,
+                        iconIndex: null,
+                      })
+                    }
                   >
-                    {/* <div className='bg-[#D1DEFC] text-indigo-500 text-xs font-bold font-creato-medium leading-none tracking-tight flex-nowrap'>
-                      {subsection.subtitle}
+                    {/*  add, delete, ai edit icons for this section when hovering on this   */}
+                    {hoveredIcons.sectionIndex === index &&
+                      hoveredIcons.subsectionIndex === subIndex && (
+                        // Display active icons when hovering over a specific icon
+                        <div className='active-icons flex relative'>
+                          {showAIDropdown ? (
+                            <div className='w-28 h-14 absolute top-[20px] right-0'>
+                              {/* Your choice box content */}
+                              <div className='w-28 h-14 left-0 top-0 absolute bg-neutral-300 rounded-xl'>
+                                <div className='w-20 h-4 left-[8px] top-[8px] absolute text-gray-700 text-xs font-medium font-creato-medium leading-normal tracking-tight'>
+                                  Make Funnier
+                                </div>
+                                <div className='w-20 h-4 left-[8px] top-[32px] absolute text-gray-700 text-xs font-medium font-creato-medium leading-normal tracking-tight'>
+                                  Make Shorter
+                                </div>
+                              </div>
+                            </div>
+                          ) : null}
+                          {/* add script button */}
+                          <div
+                            className='absolute -top-4 right-[0.5rem]'
+                            onMouseEnter={() =>
+                              setHoveredIcons({
+                                sectionIndex: index,
+                                subsectionIndex: subIndex,
+                                iconIndex: 0,
+                              })
+                            }
+                            onMouseLeave={() =>
+                              setHoveredIcons((prev) =>
+                                prev.sectionIndex === index &&
+                                prev.subsectionIndex === subIndex
+                                  ? { ...prev, iconIndex: null }
+                                  : prev
+                              )
+                            }
+                          >
+                            {hoveredIcons.iconIndex === 0 ? (
+                              <AddScriptIconActive />
+                            ) : (
+                              <AddScriptIconInactive />
+                            )}
+                          </div>
+                          {/* delete script */}
+                          <div
+                            className='absolute -top-4 right-[3rem]'
+                            onMouseEnter={() =>
+                              setHoveredIcons({
+                                sectionIndex: index,
+                                subsectionIndex: subIndex,
+                                iconIndex: 1,
+                              })
+                            }
+                            onMouseLeave={() =>
+                              setHoveredIcons((prev) =>
+                                prev.sectionIndex === index &&
+                                prev.subsectionIndex === subIndex
+                                  ? { ...prev, iconIndex: null }
+                                  : prev
+                              )
+                            }
+                          >
+                            {hoveredIcons.iconIndex === 1 ? (
+                              <DeleteScriptIconActive />
+                            ) : (
+                              <DeleteScriptIconInactive />
+                            )}
+                          </div>
+                          {/* AI edit choice */}
+                          <div
+                            className='absolute -top-4 right-[5.5rem]'
+                            onMouseEnter={() => {
+                              setHoveredIcons({
+                                sectionIndex: index,
+                                subsectionIndex: subIndex,
+                                iconIndex: 2,
+                              })
+                              // setAIEEditHovered(true) // Add this line
+                            }}
+                            onMouseLeave={() => {
+                              setHoveredIcons((prev) =>
+                                prev.sectionIndex === index &&
+                                prev.subsectionIndex === subIndex
+                                  ? { ...prev, iconIndex: null }
+                                  : prev
+                              )
+                              // setAIEEditHovered(false)
+                            }}
+                          >
+                            {hoveredIcons.iconIndex === 2 ? (
+                              <div
+                                onClick={
+                                  () => setShowAIDropdown(!showAIDropdown) // Add this line
+                                }
+                              >
+                                <ButtonWithExplanation
+                                  button={<AIEditIconActive />}
+                                  explanation='AI Edit'
+                                />
+                              </div>
+                            ) : (
+                              <AIEditIconInactive />
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    {/*  // Display active icons
+                    <div className='flex'>
+                      <div className='absolute -top-4 right-[0.5rem]'>
+                        <AddScriptIconActive />
+                      </div>
+                      <div className='absolute -top-4 right-[3rem]'>
+                        <DeleteScriptIconActive />
+                      </div>
+                      <div className='absolute -top-4 right-[5.5rem]'>
+                        <AIEditIconActive />
+                      </div>
                     </div> */}
-                    <div className='px-4 py-2 w-fit bg-[#D1DEFC] rounded-md justify-center items-end gap-2.5 flex'>
-                      <div className='text-indigo-500 text-xs font-bold font-creato-medium leading-none tracking-tight flex-nowrap'>
+                    {/* <div className='bg-[#D1DEFC] text-indigo-500 text-xs font-bold font-creato-medium leading-none tracking-tight flex-nowrap'>
+                    {subsection.subtitle}
+                  </div> */}
+                    <div
+                      className={`px-4 py-2 w-fit bg-[#D1DEFC] rounded-md justify-center items-end gap-2.5 flex 
+                    }`}
+                    >
+                      <div
+                        className={`text-indigo-500 text-xs font-bold font-creato-medium leading-none tracking-tight flex-nowrap`}
+                      >
                         {subsection.subtitle}
                       </div>
                     </div>
                     {/* <div className='bg-[#FCFCFC] block form-input w-full text-gray-800 resize-none border-none p-4'>{subsection.script}</div> */}
                     <textarea
                       key={index}
-                      className={`h-80 \bg-[#FCFCFC] block w-full text-gray-800 mb-2 resize-none border-none p-4`}
+                      className={`h-80 ${
+                        index === hoveredIcons.subsectionIndex
+                          ? 'hover:bg-gray-300'
+                          : 'bg-[#FCFCFC] '
+                      }  block w-full text-gray-800 mb-2 resize-none border-none p-4 `}
                       value={subsection.script}
                       onChange={(event) => handleChange(index, event)}
                       // readOnly
