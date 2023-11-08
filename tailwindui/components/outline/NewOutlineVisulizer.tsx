@@ -555,7 +555,7 @@ const OutlineVisualizer = ({
 
       {outlineData &&
         outlineData.map((section: OutlineSection, sectionIndex: number) => (
-          <>
+          <div key={sectionIndex}>
             <div
               className={`my-[1.5rem] ${
                 outlineData.length >= maxOutlineSectionCount
@@ -613,7 +613,7 @@ const OutlineVisualizer = ({
                   )}
                 <div className='mt-4'>
                   {section.content.map((content: any, detailIndex: number) => (
-                    <ul className='flex mb-2 list-disc px-8'>
+                    <ul key={detailIndex} className='flex mb-2 list-disc px-8'>
                       <li
                         className='w-full relative '
                         onMouseEnter={() => setHoveredDetailIndex(detailIndex)}
@@ -717,7 +717,7 @@ const OutlineVisualizer = ({
                 </div>
               </div>
             </div>
-          </>
+          </div>
         ))}
     </div>
   )
