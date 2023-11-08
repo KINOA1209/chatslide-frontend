@@ -11,7 +11,6 @@ import MyFiles from '../fileManagement';
 import { Transition } from '@headlessui/react'
 import GPTToggle from '../button/GPTToggle';
 import PaywallModal from './paywallModal';
-import mixpanel from 'mixpanel-browser';
 
 const audienceList = ['Researchers', 'Students', 'Business Clients', 'Office Colleagues', 'Video Viewers', 'Myself', ];
 
@@ -120,13 +119,6 @@ const TopicForm: React.FC = () => {
         sessionStorage.setItem('addEquations', formData.addEquations);
 
         console.log("created form data");
-
-        mixpanel.track("Generate Outline", {
-            "audience": formData.audience,
-            "language": formData.language,
-            "addEquations": formData.addEquations,
-            "model_name": formData.model_name
-        });
 
         try {
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();

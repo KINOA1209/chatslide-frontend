@@ -6,7 +6,6 @@ import AuthService from '../utils/AuthService'
 import { LoadingIcon } from '@/components/ui/progress'
 import { Slide } from './NewSlidesHTML'
 import PaywallModal from '../forms/paywallModal'
-import mixpanel from 'mixpanel-browser'
 import { DownloadIcon } from '@/app/(feature)/icons'
 import SlideContainer from './SlideContainer'
 import generatePDF, { Resolution, Margin, Options } from 'react-to-pdf'
@@ -75,10 +74,6 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
 
     try {
       const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
-
-      mixpanel.track('PDF Downloaded', {
-        'Project ID': sessionStorage.getItem('project_id'),
-      })
 
       const response = await fetch('/api/save_final_html_pdf', {
         method: 'POST',

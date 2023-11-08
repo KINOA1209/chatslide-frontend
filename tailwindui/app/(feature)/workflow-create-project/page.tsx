@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthService from '@/components/utils/AuthService';
-import mixpanel from 'mixpanel-browser';
 
 function CreateProject() {
     const [projectName, setProjectName] = useState('My First Project');
@@ -51,10 +50,6 @@ function CreateProject() {
         try {
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
             console.log('Access token:', token);
-            mixpanel.track('Project Created', {
-                'Project Name': formData.project_name,
-                'Project Description': formData.project_description,
-                });
             const response = await fetch("/api/create_project", {
                 method: "POST",
                 headers: {

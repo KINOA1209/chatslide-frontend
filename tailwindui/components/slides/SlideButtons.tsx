@@ -1,4 +1,3 @@
-import mixpanel from 'mixpanel-browser'
 import React from 'react'
 import AuthService from '../utils/AuthService'
 import {
@@ -76,9 +75,6 @@ export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
         const { userId, idToken: token } =
             await AuthService.getCurrentUserTokenAndId()
         try {
-            mixpanel.track('Project Shared', {
-                'Project ID': sessionStorage.getItem('project_id'),
-            })
 
             const response = await fetch('/api/share_project', {
                 method: 'POST',

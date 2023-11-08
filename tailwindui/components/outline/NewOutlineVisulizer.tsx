@@ -4,7 +4,6 @@ import AuthService from '@/components/utils/AuthService'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import UserService from '../utils/UserService'
-import mixpanel from 'mixpanel-browser'
 import {
   AddSectionIcon,
   AddTopicIcon,
@@ -293,9 +292,6 @@ const OutlineVisualizer = ({
   }
 
   async function generateScripts(formData: any, token: string) {
-    mixpanel.track('Generate Script', {
-      formData: formData,
-    })
     const response = await fetch('/api/scripts_only', {
       method: 'POST',
       headers: {
@@ -322,9 +318,6 @@ const OutlineVisualizer = ({
   }
 
   async function generateSlidesPreview(formData: any, token: string) {
-    mixpanel.track('Generate HTML', {
-      formData: formData,
-    })
     const response = await fetch('/api/generate_html', {
       method: 'POST',
       headers: {

@@ -7,7 +7,6 @@ import { Slide } from '@/components/slides/NewSlidesHTML'
 import UserService from '../utils/UserService'
 import GptToggle from '../button/GPTToggle'
 import PaywallModal from './paywallModal'
-import mixpanel from 'mixpanel-browser'
 
 interface TranscriptFormProps {
   isSubmitting: boolean

@@ -11,7 +11,6 @@ import GoogleAnalytics from '@/components/integrations/GoogleAnalytics'
 import Hotjar from '@/components/integrations/Hotjar'
 // import AuthService from "../utils/AuthService";
 import { Auth, Hub } from 'aws-amplify'
-import mixpanel from 'mixpanel-browser'
 import AuthService from '../utils/AuthService'
 import { DrlambdaLogoIcon } from '../new_landing/Icons'
 
@@ -40,18 +39,18 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
   }, [top])
 
   useEffect(() => {
-    mixpanel.init('22044147cd36f20bf805d416e1235329', {
-      debug: true,
-      track_pageview: true,
-      persistence: 'localStorage',
-      ignore_dnt: true,
-    })
+    // mixpanel.init('22044147cd36f20bf805d416e1235329', {
+    //   debug: true,
+    //   track_pageview: true,
+    //   persistence: 'localStorage',
+    //   ignore_dnt: true,
+    // })
 
     const checkUser = async () => {
       try {
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
         setUserId(userId)
-        mixpanel.identify(userId)
+        // mixpanel.identify(userId)
         setLoading(false)
       } catch {
         console.log('No authenticated user.')

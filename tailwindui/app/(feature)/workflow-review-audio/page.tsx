@@ -10,7 +10,6 @@ import ImageList from '@/components/ImageList'
 import ProjectProgress from '@/components/steps'
 import AuthService from '@/components/utils/AuthService'
 import FeedbackButton from '@/components/slides/feedback'
-import mixpanel from 'mixpanel-browser'
 
 const TranscriptAudioVisualizer = ({
   transcripts,
@@ -88,12 +87,6 @@ const TranscriptAudioVisualizer = ({
 
     try {
       const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
-      mixpanel.track('Video Generated', {
-        'Project ID': sessionStorage.getItem('project_id'),
-        'User ID': userId,
-        'Folder Name': foldername,
-        Language: language,
-      })
       const response = await fetch('/api/generate_video', {
         method: 'POST',
         headers: {
