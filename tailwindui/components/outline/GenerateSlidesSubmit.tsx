@@ -10,6 +10,7 @@ import GptToggle from '@/components/button/GPTToggle'
 import RangeSlider from '../ui/RangeSlider'
 import UserService from '../utils/UserService'
 import { RightTurnArrowIcon } from '@/app/(feature)/icons'
+import DrlambdaButton from '../button/DrlambdaButton'
 
 const minOutlineDetailCount = 1
 const maxOutlineDetailCount = 6
@@ -62,7 +63,6 @@ const GenerateSlidesSubmit = ({
 
   const [isSubmittingSlide, setIsSubmittingSlide] = useState(false)
   const [timer, setTimer] = useState(0)
-  const [isSubmittingScript, setIsSubmittingScript] = useState(false)
   const [toSlides, setToSlides] = useState(true)
   const [isToSlidesOpen, setIsToSlidesOpen] = useState(false)
   const [isToScriptOpen, setIsToScriptOpen] = useState(false)
@@ -480,20 +480,14 @@ const GenerateSlidesSubmit = ({
 
             {/* <SlideLengthSelector /> */}
             <div className='w-full px-3'>
-              <button
-                className='w-[11rem] h-8 px-5 py-1.5 bg-button-color rounded-3xl justify-center items-center gap-5 inline-flex cursor-pointer disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400'
+              <DrlambdaButton
                 onClick={() => {
                   setToSlides(true)
                 }}
-                disabled={isSubmittingSlide || isSubmittingScript}
+                disabled={isSubmittingSlide}
               >
-                <div className='w-[6rem] text-zinc-100 text-sm font-medium font-creato-medium leading-none tracking-tight whitespace-nowrap'>
-                  Generate Slides
-                </div>
-                <div>
-                  <RightTurnArrowIcon />
-                </div>
-              </button>
+                {!isSubmittingSlide ? 'Next' : 'Generating Slides'}
+              </DrlambdaButton>
               {/* Timer */}
               <Timer expectedSeconds={60} isSubmitting={isSubmittingSlide} />
 
@@ -506,7 +500,7 @@ const GenerateSlidesSubmit = ({
                                 {isSubmittingScript ? 'Generating...' : 'Generate Scripts'}
                             </button> */}
               {/* Timer */}
-              <Timer expectedSeconds={60} isSubmitting={isSubmittingScript} />
+              {/* <Timer expectedSeconds={60} isSubmitting={isSubmittingScript} /> */}
             </div>
           </div>
         </form>
