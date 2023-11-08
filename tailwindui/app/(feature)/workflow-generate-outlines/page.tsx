@@ -24,6 +24,7 @@ import FileManagement from '@/components/fileManagement'
 import FeedbackButton from '@/components/slides/feedback'
 
 import { QuestionExplainIcon, RightTurnArrowIcon } from '@/app/(feature)/icons'
+import DrlambdaButton from '@/components/button/DrlambdaButton'
 
 const audienceList = [
   'Researchers',
@@ -158,7 +159,9 @@ export default function Topic() {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    console.log('submitting')
     if (youtubeError) {
+      console.log('youtube error')
       return
     }
 
@@ -241,7 +244,7 @@ export default function Topic() {
       } else {
         alert(
           `Server is busy now. Please try again later. Reference code: ` +
-            sessionStorage.getItem('project_id')
+          sessionStorage.getItem('project_id')
         )
         // alert("Request failed: " + response.status);
         setIsSubmitting(false)
@@ -414,7 +417,7 @@ export default function Topic() {
           message='Upgrade for more ⭐️credits.'
         />
       )}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} id='topic_form'>
         <Transition
           className='h-full w-full z-50 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
           show={showFileModal}
@@ -539,19 +542,9 @@ export default function Topic() {
               To get started, give us some high-level intro about your project.
             </div>
             <div className='flex flex-col w-full lg:mx-[0rem] lg:w-[23rem]'>
-              <button
-                id='generate_button'
-                disabled={isSubmitting}
-                className='w-[11rem] mx-auto h-8 px-5 py-1.5 bg-button-color rounded-3xl justify-center items-center gap-5 inline-flex cursor-pointer disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400  lg:mr-[1%]'
-                type='submit'
-              >
-                <div className='w-[6rem] text-zinc-100 text-sm font-medium font-creato-medium leading-none tracking-tight whitespace-nowrap'>
-                  Generate Outline
-                </div>
-                <div>
-                  <RightTurnArrowIcon />
-                </div>
-              </button>
+              <DrlambdaButton disabled={isSubmitting}>
+                {!isSubmitting ? 'Next' : 'Generating Outline...'}
+              </DrlambdaButton>
               <div className='mx-auto py-1.5 lg:mr-[0%]'>
                 <Timer expectedSeconds={15} isSubmitting={isSubmitting} />
               </div>
@@ -647,8 +640,8 @@ export default function Topic() {
                         audienceList.includes(audience)
                           ? audience
                           : audience === 'unselected'
-                          ? 'unselected'
-                          : 'other'
+                            ? 'unselected'
+                            : 'other'
                       }
                       onChange={(e) => audienceDropDown(e.target.value)}
                       required
@@ -663,9 +656,8 @@ export default function Topic() {
                     <input
                       id='audience'
                       type='text'
-                      className={`form-input w-full text-gray-800 mb-2 ${
-                        showAudienceInput ? '' : 'hidden'
-                      }`}
+                      className={`form-input w-full text-gray-800 mb-2 ${showAudienceInput ? '' : 'hidden'
+                        }`}
                       placeholder='Other (please specify)'
                       value={audience}
                       onChange={(e) => setAudience(e.target.value)}
@@ -795,7 +787,7 @@ export default function Topic() {
                     />
                   </div>
                 </div>
-                
+
                 {youtubeError && (
                   <div id='youtube_error' className='text-sm text-red-500'>{youtubeError}</div>
                 )}
