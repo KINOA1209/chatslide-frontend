@@ -2,9 +2,6 @@
 
 import React, { useState, useRef, FormEvent, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import Timer from '@/components/ui/Timer'
-import GoBackButton from '@/components/button/GoBackButton'
-import ImageList from '@/components/ImageList'
 import ProjectProgress from '@/components/newWorkflowSteps'
 import AuthService from '@/components/utils/AuthService'
 import FeedbackButton from '@/components/slides/feedback'
@@ -379,13 +376,13 @@ export default function WorkflowStep4() {
   // parsed transcriptData
   const transcripts = transcriptData ? JSON.parse(transcriptData) : []
 
-  const flattenedOutline = Object.keys(outlineRes).flatMap((sectionIndex) => {
+  const flattenedOutline = outlineRes ? Object.keys(outlineRes).flatMap((sectionIndex) => {
     const section = outlineRes[sectionIndex]
     return section.content.map((subtitle: string) => ({
       title: section.title,
       subtitle,
     }))
-  })
+  }) : []
 
   const transcriptWithTitleData = flattenedOutline.map((item, index) => ({
     title: item.title,
