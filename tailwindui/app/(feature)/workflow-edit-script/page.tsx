@@ -106,10 +106,23 @@ const TranscriptVisualizer = ({
     index: number,
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    let newData = [...transcriptList] // copying the old datas array
-    newData[index].script = event.target.value // replace e.target.value with whatever you want to change it to
-    sessionStorage.setItem('transcripts', JSON.stringify(newData))
-    setTranscriptList(newData) // use the copy to set the state
+    // let newData = [...transcriptList] // copying the old datas array
+    // newData[index].script = event.target.value // replace e.target.value with whatever you want to change it to
+    // sessionStorage.setItem('transcripts', JSON.stringify(newData))
+    // setTranscriptList(newData) // use the copy to set the state
+
+    // Update local data
+    // const { title, subtitle, script } = transcriptList[index]
+
+    let newData = [...transcriptList]
+    newData[index].script = event.target.value
+    // sessionStorage.setItem('transcripts', JSON.stringify(newData))
+    sessionStorage.setItem(
+      'transcripts',
+      JSON.stringify(newData.map((item) => item.script))
+    )
+    sessionStorage.setItem('transcriptWithTitle', JSON.stringify(newData))
+    setTranscriptList(newData)
   }
 
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -646,12 +659,12 @@ export default function WorkflowStep4() {
         </div>
 
         {/* gpt model switch area */}
-        <div className='self-end mx-[5rem] flex flex-row gap-4 cursor-pointer'>
+        {/* <div className='self-end mx-[5rem] flex flex-row gap-4 cursor-pointer'>
           <NewWorkflowGPTToggle setIsGpt35={setIsGpt35} />
           <div className='cursor-pointer' onClick={openPopup}>
             <QuestionExplainIcon />
           </div>
-        </div>
+        </div> */}
 
         {/* Popup for explaining model difference */}
         {showPopup && (
