@@ -6,10 +6,7 @@ import AuthService from '@/components/utils/AuthService'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { Dialog, Transition } from '@headlessui/react'
-import GptToggle from '@/components/button/GPTToggle'
-import RangeSlider from '../ui/RangeSlider'
 import UserService from '../utils/UserService'
-import { RightTurnArrowIcon } from '@/app/(feature)/icons'
 import DrlambdaButton from '../button/DrlambdaButton'
 
 const minOutlineDetailCount = 1
@@ -36,8 +33,6 @@ const GenerateSlidesSubmit = ({
 }) => {
   const router = useRouter()
   const [outlineData, setOutlineData] = useState(outline)
-  const [sectionEditMode, setSectionEditMode] = useState(-1)
-  const [titleCache, setTitleCache] = useState('')
   //   const [isGpt35, setIsGpt35] = useState(true)
   const [slidePages, setSlidePages] = useState(20)
   const [wordPerSubpoint, setWordPerSubpoint] = useState(10)
@@ -76,15 +71,6 @@ const GenerateSlidesSubmit = ({
     setIsToSlidesOpen(true)
   }
 
-  function closeToScriptModal() {
-    setIsToScriptOpen(false)
-    setIsSubmittingScript(false)
-  }
-
-  function openToScriptModal() {
-    setIsToScriptOpen(true)
-  }
-
   const prepareSubmit = (event: FormEvent<HTMLFormElement>) => {
     console.log('submitting')
     event.preventDefault()
@@ -112,12 +98,6 @@ const GenerateSlidesSubmit = ({
         hasAudio = sessionStorage.getItem('audio_files')
         hasAudio = sessionStorage.getItem('video_file')
       }
-      if (hasSlides !== null || hasAudio !== null || hasVideo !== null) {
-        openToScriptModal()
-      } else {
-        setIsSubmittingScript(true)
-        handleSubmit()
-      }
     }
   }
 
@@ -129,21 +109,6 @@ const GenerateSlidesSubmit = ({
       sessionStorage.removeItem('pdf_file')
       sessionStorage.removeItem('page_count')
       sessionStorage.removeItem('transcripts')
-      sessionStorage.removeItem('audio_files')
-      sessionStorage.removeItem('video_file')
-    }
-    handleSubmit()
-  }
-
-  const scriptModalSubmit = () => {
-    closeToScriptModal()
-    setIsSubmittingScript(true)
-    // clean sessionStorage
-    if (typeof window !== 'undefined') {
-      sessionStorage.removeItem('page_count')
-      sessionStorage.removeItem('html')
-      sessionStorage.removeItem('image_files')
-      sessionStorage.removeItem('pdf_file')
       sessionStorage.removeItem('audio_files')
       sessionStorage.removeItem('video_file')
     }
@@ -195,7 +160,6 @@ const GenerateSlidesSubmit = ({
     if (response.ok) {
       const resp = await response.json()
       // console.log(resp);
-      setIsSubmittingScript(false)
       // Store the data in local storage
       // console.log(resp.data);
       sessionStorage.setItem('transcripts', JSON.stringify(resp.data.res))
@@ -204,7 +168,6 @@ const GenerateSlidesSubmit = ({
     } else {
       alert('Request failed: ' + response.status)
       // console.log(response)
-      setIsSubmittingScript(false)
     }
   }
 
@@ -333,7 +296,6 @@ const GenerateSlidesSubmit = ({
     } catch (error) {
       console.error('Error:', error)
       setIsSubmittingSlide(false)
-      setIsSubmittingScript(false)
     }
   }
 
@@ -407,71 +369,6 @@ const GenerateSlidesSubmit = ({
         </Dialog>
       </Transition>
 
-      {/* generate script popup */}
-      <Transition appear show={isToScriptOpen} as={Fragment}>
-        <Dialog as='div' className='relative z-10' onClose={closeToScriptModal}>
-          <Transition.Child
-            as={Fragment}
-            enter='ease-out duration-300'
-            enterFrom='opacity-0'
-            enterTo='opacity-100'
-            leave='ease-in duration-200'
-            leaveFrom='opacity-100'
-            leaveTo='opacity-0'
-          >
-            <div className='fixed inset-0 bg-black bg-opacity-25' />
-          </Transition.Child>
-
-          <div className='fixed inset-0 overflow-y-auto'>
-            <div className='flex min-h-full items-center justify-center p-4 text-center'>
-              <Transition.Child
-                as={Fragment}
-                enter='ease-out duration-300'
-                enterFrom='opacity-0 scale-95'
-                enterTo='opacity-100 scale-100'
-                leave='ease-in duration-200'
-                leaveFrom='opacity-100 scale-100'
-                leaveTo='opacity-0 scale-95'
-              >
-                <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
-                  <Dialog.Title
-                    as='h3'
-                    className='text-lg font-medium leading-6 text-gray-900'
-                  >
-                    Continue to generate scripts?
-                  </Dialog.Title>
-                  <div className='mt-2'>
-                    <p className='text-sm text-gray-500'>
-                      Generate scripts will delete current slides, audio, and
-                      video.
-                    </p>
-                  </div>
-
-                  <div className='flex'>
-                    <div className='flex justify-center mt-4'>
-                      <button
-                        className='bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded mr-2 btn-size'
-                        onClick={scriptModalSubmit}
-                      >
-                        Yes
-                      </button>
-                    </div>
-                    <div className='flex justify-center mt-4'>
-                      <button
-                        className='text-blue-600 bg-gray-100 hover:bg-gray-200 border border-blue-600 py-2 px-4 rounded mr-2 btn-size'
-                        onClick={closeToScriptModal}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
-
       {/* Form */}
       <div className='max-w-sm mx-auto'>
         <form onSubmit={prepareSubmit}>
@@ -490,17 +387,6 @@ const GenerateSlidesSubmit = ({
               </DrlambdaButton>
               {/* Timer */}
               <Timer expectedSeconds={60} isSubmitting={isSubmittingSlide} />
-
-              {/* Button for generating scripts */}
-              {/* <button className="btn text-blue-600 border-blue-600 w-full mt-4 disabled:from-gray-200 disabled:to-gray-200 disabled:bg-gray-200 disabled:text-gray-400"
-
-                                onClick={() => { setToSlides(false); }}
-                                disabled={isSubmittingSlide || isSubmittingScript}
-                            >
-                                {isSubmittingScript ? 'Generating...' : 'Generate Scripts'}
-                            </button> */}
-              {/* Timer */}
-              {/* <Timer expectedSeconds={60} isSubmitting={isSubmittingScript} /> */}
             </div>
           </div>
         </form>
