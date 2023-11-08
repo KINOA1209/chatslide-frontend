@@ -82,6 +82,7 @@ const TranscriptVisualizer = ({
     iconIndex: number | null
   }>({ sectionIndex: null, subsectionIndex: null, iconIndex: null })
   const [showAIDropdown, setShowAIDropdown] = useState(false)
+  const [selectedOption, setSelectedOption] = useState<string | null>(null)
   // const [aiEditHovered, setAIEEditHovered] = useState(false)
   //   useEffect(() => {
   //     if (typeof window !== 'undefined') {
@@ -376,11 +377,21 @@ const TranscriptVisualizer = ({
                           {showAIDropdown ? (
                             <div className='w-28 h-14 absolute top-[20px] right-0'>
                               {/* Your choice box content */}
-                              <div className='w-28 h-14 left-0 top-0 absolute bg-neutral-300 rounded-xl'>
-                                <div className='w-20 h-4 left-[8px] top-[8px] absolute text-gray-700 text-xs font-medium font-creato-medium leading-normal tracking-tight'>
+                              <div className='w-28 h-14 px-2 py-1 left-0 top-0 absolute rounded-xl bg-gray-300'>
+                                <div
+                                  className={`w-fit px-2 py-1 left-[8px] top-[8px] absolute rounded-xl text-gray-500 hover:text-gray-700 text-xs font-medium font-creato-medium leading-normal tracking-tight cursor-pointer hover:bg-gray-200`}
+                                  onClick={() =>
+                                    setSelectedOption('makeFunnier')
+                                  }
+                                >
                                   Make Funnier
                                 </div>
-                                <div className='w-20 h-4 left-[8px] top-[32px] absolute text-gray-700 text-xs font-medium font-creato-medium leading-normal tracking-tight'>
+                                <div
+                                  className={`w-fit px-2 py-1 left-[8px] top-[32px] rounded-xl absolute text-gray-500 hover:text-gray-700 text-xs font-medium font-creato-medium leading-normal tracking-tight cursor-pointer hover:bg-gray-200`}
+                                  onClick={() =>
+                                    setSelectedOption('makeShorter')
+                                  }
+                                >
                                   Make Shorter
                                 </div>
                               </div>
