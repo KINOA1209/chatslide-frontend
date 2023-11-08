@@ -4,7 +4,6 @@ import AuthService from '@/components/utils/AuthService';
 import { LoadingIcon } from '@/components/ui/progress';
 import { createPortal } from 'react-dom';
 import { toast } from 'react-toastify';
-import mixpanel from 'mixpanel-browser';
 import PaywallModal from './forms/paywallModal';
 
 interface ImgModuleProp {
@@ -62,10 +61,6 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
         setSearching(true);
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
 
-        mixpanel.track('Image Searched', {
-            'Search Keyword': (e.target as HTMLFormElement).search_keyword.value,
-        });
-
         const response = await fetch('/api/search_images', {
             method: 'POST',
             headers: {
@@ -96,10 +91,6 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
         setSearchResult([]);
         setSearching(true);
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-
-        mixpanel.track('Image Generated', {
-            'Generate Prompt': (e.target as HTMLFormElement).search_keyword.value,
-        });
 
         const response = await fetch('/api/generate_images', {
             method: 'POST',

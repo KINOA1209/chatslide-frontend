@@ -11,7 +11,6 @@ import FeedbackButton from '@/components/slides/feedback'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { LoadingIcon } from '@/components/ui/progress'
-import mixpanel from 'mixpanel-browser'
 import { LeftTurnArrowIcon, QuestionExplainIcon } from '../icons'
 import NewWorkflowGPTToggle from '@/components/button/NewWorkflowGPTToggle'
 interface UpdateButtonProps {
@@ -131,11 +130,6 @@ const TranscriptVisualizer = ({
 
     try {
       const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
-      mixpanel.track('Audio Generated', {
-        'Project ID': foldername,
-        Topic: topic,
-        Language: language,
-      })
       const response = await fetch('/api/generate_audio', {
         method: 'POST',
         headers: {
@@ -249,11 +243,6 @@ const TranscriptVisualizer = ({
 
     try {
       const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
-      mixpanel.track('Script Updated', {
-        Ask: ask,
-        Text: script, // Use the 'script' field from the object
-        Language: language,
-      })
 
       const response = await fetch('/api/update_script', {
         method: 'POST',

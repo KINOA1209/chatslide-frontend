@@ -16,7 +16,6 @@ import ProjectProgress from '@/components/newWorkflowSteps'
 import NewWorkflowGPTToggle from '@/components/button/NewWorkflowGPTToggle'
 import AuthService from '@/components/utils/AuthService'
 import UserService from '@/components/utils/UserService'
-import mixpanel from 'mixpanel-browser'
 import { Transition } from '@headlessui/react'
 import MyFiles from '@/components/fileManagement'
 import PaywallModal from '@/components/forms/paywallModal'
@@ -185,13 +184,6 @@ export default function Topic() {
     sessionStorage.setItem('audience', formData.audience)
     sessionStorage.setItem('language', formData.language)
     sessionStorage.setItem('addEquations', formData.addEquations)
-
-    mixpanel.track('Generate Outline', {
-      audience: formData.audience,
-      language: formData.language,
-      addEquations: formData.addEquations,
-      model_name: formData.model_name,
-    })
 
     try {
       const { userId, idToken: token } =
