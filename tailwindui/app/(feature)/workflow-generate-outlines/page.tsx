@@ -795,8 +795,9 @@ export default function Topic() {
                     />
                   </div>
                 </div>
+                
                 {youtubeError && (
-                  <div className='text-sm text-red-500'>{youtubeError}</div>
+                  <div id='youtube_error' className='text-sm text-red-500'>{youtubeError}</div>
                 )}
               </div>
 
