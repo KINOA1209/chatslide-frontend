@@ -83,15 +83,6 @@ const TranscriptVisualizer = ({
   }>({ sectionIndex: null, subsectionIndex: null, iconIndex: null })
   const [showAIDropdown, setShowAIDropdown] = useState(false)
   const [selectedOption, setSelectedOption] = useState<string | null>(null)
-  // const [aiEditHovered, setAIEEditHovered] = useState(false)
-  //   useEffect(() => {
-  //     if (typeof window !== 'undefined') {
-  //       const slidesFlag = sessionStorage.getItem('image_files')
-  //       if (slidesFlag !== null) {
-  //         setHasSlides(true)
-  //       }
-  //     }
-  //   }, [])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -186,67 +177,6 @@ const TranscriptVisualizer = ({
     }
   }
 
-  // const handleUpdateScript = async (
-  //   e: React.MouseEvent<HTMLButtonElement>,
-  //   index: number,
-  //   ask: string
-  // ) => {
-  //   e.preventDefault()
-  //   const text = transcriptList[index]
-  //   const language =
-  //     typeof window !== 'undefined'
-  //       ? sessionStorage.getItem('language')
-  //       : 'English'
-  //   const updateData = {
-  //     ask: ask,
-  //     text: text,
-  //     language: language,
-  //   }
-  //   console.log(updateData)
-
-  //   try {
-  //     const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
-  //     mixpanel.track('Script Updated', {
-  //       Ask: ask,
-  //       Text: text,
-  //       Language: language,
-  //     })
-  //     const response = await fetch('/api/update_script', {
-  //       method: 'POST',
-  //       headers: {
-  //         Authorization: `Bearer ${idToken}`,
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(updateData),
-  //     })
-
-  //     if (response.ok) {
-  //       const resp = await response.json()
-  //       console.log(resp.data)
-  //       const res = resp.data.res
-  //       // Update local data
-  //       let newData = [...transcriptList]
-  //       newData[index] = res
-  //       sessionStorage.setItem('transcripts', JSON.stringify(newData))
-  //       setTranscriptList(newData)
-  //       toast.success('Script has been updated!', {
-  //         position: 'top-center',
-  //         autoClose: 2000,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: true,
-  //         draggable: true,
-  //         progress: undefined,
-  //         theme: 'light',
-  //       })
-  //     } else {
-  //       alert('Request failed: ' + response.status)
-  //       console.log(response)
-  //     }
-  //   } catch (error) {
-  //     console.error('Error:', error)
-  //   }
-  // }
   const handleUpdateScript = async (
     e: React.MouseEvent<HTMLButtonElement>,
     index: number,
@@ -719,7 +649,7 @@ export default function WorkflowStep4() {
           </div>
         )}
 
-        {/* flex row container for backlink, title*/}
+        {/* flex row container for backlink, title */}
         <div className='flex justify-start items-center mx-[5rem]'>
           <div
             className='flex-row justify-center items-center gap-4 cursor-pointer hidden sm:flex'
