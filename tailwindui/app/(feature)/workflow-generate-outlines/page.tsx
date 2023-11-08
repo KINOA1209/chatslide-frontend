@@ -550,7 +550,7 @@ export default function Topic() {
               <button
                 id='generate_button'
                 disabled={isSubmitting}
-                className='w-[11rem] mx-auto h-8 px-5 py-1.5 bg-Generate-slides-bg-color rounded-3xl justify-center items-center gap-5 inline-flex cursor-pointer disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400  lg:mr-[1%]'
+                className='w-[11rem] mx-auto h-8 px-5 py-1.5 bg-button-color rounded-3xl justify-center items-center gap-5 inline-flex cursor-pointer disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400  lg:mr-[1%]'
                 type='submit'
               >
                 <div className='w-[6rem] text-zinc-100 text-sm font-medium font-creato-medium leading-none tracking-tight whitespace-nowrap'>
