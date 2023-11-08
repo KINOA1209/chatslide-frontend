@@ -646,11 +646,11 @@ export default function Topic() {
                       onChange={(e) => audienceDropDown(e.target.value)}
                       required
                     >
-                      <option value='unselected' disabled>
+                      <option key='unselected' value='unselected' disabled>
                         Choose your audience
                       </option>
                       {audienceList.map((value) => (
-                        <option value={value}>{value}</option>
+                        <option key={value} value={value}>{value}</option>
                       ))}
                     </select>
                     <input
@@ -697,15 +697,15 @@ export default function Topic() {
                       onChange={(e) => setLanguage(e.target.value)}
                       required
                     >
-                      <option value='English'>English</option>
-                      <option value='Chinese'>中文</option>
-                      <option value='Spanish'>Español</option>
-                      <option value='French'>Français</option>
-                      <option value='German'>Deutsch</option>
-                      <option value='Russian'>Русский</option>
-                      <option value='Japanese'>日本語</option>
-                      <option value='Portuguese'>Português</option>
-                      <option value='Ukrainian'>Українська</option>
+                      <option key='English' value='English'>English</option>
+                      <option key='Chinese' value='Chinese'>中文</option>
+                      <option key='Spanish' value='Spanish'>Español</option>
+                      <option key='French' value='French'>Français</option>
+                      <option key='German' value='German'>Deutsch</option>
+                      <option key='Russian' value='Russian'>Русский</option>
+                      <option key='Japanese' value='Japanese'>日本語</option>
+                      <option key='Portuguese' value='Portuguese'>Português</option>
+                      <option key='Ukrainian' value='Ukrainian'>Українська</option>
                     </select>
                   </div>
                 </div>
