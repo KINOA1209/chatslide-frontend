@@ -1,6 +1,6 @@
-import FileManagementClient from '@/app/(feature)/my-resources/page_client'
+import FileManagementClient from '@/app/(feature)/my-library/page_client'
 export const metadata = {
-  title: 'My Resources - DrLambda',
+  title: 'My Library - DrLambda',
   description: 'Convert your documents to slides',
 }
 
