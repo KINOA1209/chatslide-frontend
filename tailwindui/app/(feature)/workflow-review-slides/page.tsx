@@ -2,18 +2,15 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import 'react-toastify/dist/ReactToastify.css'
-import ProjectProgress from '@/components/newWorkflowSteps'
 import FeedbackButton from '@/components/slides/feedback'
 import SlideVisualizer from '@/components/slides/NewSlideVisualizer'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { LeftTurnArrowIcon } from '../icons'
 import { ScriptEditIcon } from './icons'
 import { useRouter } from 'next/navigation'
 import ButtonWithExplanation from '@/components/button/ButtonWithExplanation'
-import DrlambdaButton, { DrLambdaBackButton } from '@/components/button/DrlambdaButton'
-import AuthService from '@/components/utils/AuthService'
 import UserService from '@/components/utils/UserService'
+import WorkflowStepsBanner from '@/components/WorkflowStepsBanner'
 
 export default function WorkflowStep3() {
   const router = useRouter()
@@ -48,29 +45,8 @@ export default function WorkflowStep3() {
   return (
     <div className='bg-gradient-to-b from-[#6A7EF9] to-[#415AF1]'>
       {/* flex col container for steps, title, etc */}
-      <div className='fixed mt-[3rem] flex items-center w-full bg-Grey-50 z-10 py-[0.75rem] border-b-2 px-[5rem]'>
-        {/* flex row container for backlink, title*/}
-        <div className="absolute left-10">
-          <DrLambdaBackButton href='/workflow-edit-outlines' />
-        </div>
-
-        <div className="flex-grow flex justify-center">
-          <ProjectProgress currentInd={2} contentRef={contentRef} />
-        </div>
-
-        <div className="absolute right-10">
-          <DrlambdaButton isSubmitting={isSubmitting} isPaidUser={isPaidUser} isPaidFeature={true} onClick={e => {setIsSubmitting(true)}}>
-            {!isSubmitting ? 'Next' : 'Writing Scripts'}
-          </DrlambdaButton>
-        </div>
-
-        <div className='flex-auto text-center self-center text-neutral-900 font-medium font-creato-medium leading-snug tracking-tight whitespace-nowrap sm:hidden'>
-          Use our desktop version to see all the functionalities!
-        </div>
-      </div>
-      {/* <div className="pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20">
-                <h1 className="h1">Review Slides</h1>
-            </div> */}
+      
+      <WorkflowStepsBanner currentIndex={3} isSubmitting={isSubmitting} setIsSubmitting={setIsSubmitting} isPaidUser={isPaidUser} contentRef={contentRef} nextIsPaidFeature={false} />
 
       <ToastContainer enableMultiContainer containerId={'slides'} />
 
