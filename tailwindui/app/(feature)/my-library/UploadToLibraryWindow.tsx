@@ -1,13 +1,13 @@
 'use client'
 import React, { useState, useEffect,  useRef } from 'react';
-import { FromCloudIcon, FromComputerIcon } from '@/app/(feature)/my-resources/icons';
+import { FromCloudIcon, FromComputerIcon } from '@/app/(feature)/my-library/icons';
 import { NewFileUploadButton } from '@/components/fileUpload';
 import { toast } from 'react-toastify';
 import AuthService from '@/components/utils/AuthService';
 import UserService from '@/components/utils/UserService';
 import { CarbonConnect, IntegrationName } from 'carbon-connect';
 import 'react-toastify/dist/ReactToastify.css';
-import '@/app/(feature)/my-resources/UploadToLibraryWindow.css';
+import '@/app/(feature)/my-library/UploadToLibraryWindow.css';
 
 
 interface UploadToLibraryWindowProps {
