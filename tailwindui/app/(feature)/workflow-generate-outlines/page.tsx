@@ -542,12 +542,12 @@ export default function Topic() {
               To get started, give us some high-level intro about your project.
             </div>
             <div className='flex flex-col w-full lg:mx-[0rem] lg:w-[23rem]'>
-              <DrlambdaButton disabled={isSubmitting}>
-                {!isSubmitting ? 'Next' : 'Generating Outline...'}
+              <DrlambdaButton isSubmitting={isSubmitting} onClick={e => {}}>
+                {!isSubmitting ? 'Next' : 'Writing Outline...'}
               </DrlambdaButton>
-              <div className='mx-auto py-1.5 lg:mr-[0%]'>
+              {/* <div className='mx-auto py-1.5 lg:mr-[0%]'>
                 <Timer expectedSeconds={15} isSubmitting={isSubmitting} />
-              </div>
+              </div> */}
             </div>
           </div>
           <div className='w-[9rem]'></div>

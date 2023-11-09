@@ -381,12 +381,12 @@ const GenerateSlidesSubmit = ({
                 onClick={() => {
                   setToSlides(true)
                 }}
-                disabled={isSubmittingSlide}
+                isSubmitting={isSubmittingSlide}
               >
                 {!isSubmittingSlide ? 'Next' : 'Generating Slides'}
               </DrlambdaButton>
               {/* Timer */}
-              <Timer expectedSeconds={60} isSubmitting={isSubmittingSlide} />
+              {/* <Timer expectedSeconds={60} isSubmitting={isSubmittingSlide} /> */}
             </div>
           </div>
         </form>
