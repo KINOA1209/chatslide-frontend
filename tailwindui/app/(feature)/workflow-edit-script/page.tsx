@@ -9,18 +9,67 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { LoadingIcon } from '@/components/ui/progress'
 import { LeftTurnArrowIcon, QuestionExplainIcon } from '../icons'
+import ButtonWithExplanation from '@/components/button/ButtonWithExplanation'
+import {
+  AddScriptIconActive,
+  AddScriptIconInactive,
+  DeleteScriptIconActive,
+  DeleteScriptIconInactive,
+  AIEditIconActive,
+  AIEditIconInactive,
+} from './icons'
 import NewWorkflowGPTToggle from '@/components/button/NewWorkflowGPTToggle'
 interface UpdateButtonProps {
   callback: Function
   text: string
   ind: number
+  subIndex: number
 }
 
+// interface TranscriptWithTitle {
+//   title: string
+//   subtitle: string
+//   script: string
+// }
 interface TranscriptWithTitle {
   title: string
-  subtitle: string
-  script: string
+  sections: Array<{ subtitle: string; script: string }>
 }
+
+const AIEditButton = ({ callback, text, ind, subIndex }: UpdateButtonProps) => {
+  const [updating, setUpdating] = useState(false)
+  const handleClick = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    index: number,
+    subIndex: number,
+    ask: string
+  ) => {
+    setUpdating((old) => {
+      return true
+    })
+    callback(e, index, subIndex, ask).then(() => {
+      setUpdating((old) => {
+        return false
+      })
+    })
+  }
+  return (
+    <button
+      key={ind + subIndex}
+      className={`w-fit px-2 py-1 rounded-xl text-gray-500 hover:text-gray-700 text-xs font-medium font-creato-medium leading-normal tracking-tight cursor-pointer hover:bg-gray-200`}
+      onClick={(e) => handleClick(e, ind, subIndex, text)}
+      disabled={updating}
+    >
+      <div className='flex flex-row'>
+        <div className='h-[16px] mr-2' hidden={!updating}>
+          <LoadingIcon />
+        </div>
+        {text}
+      </div>
+    </button>
+  )
+}
+
 const UpdateButton = ({ callback, text, ind }: UpdateButtonProps) => {
   const [updating, setUpdating] = useState(false)
 
@@ -62,20 +111,18 @@ const TranscriptVisualizer = ({
   //   imageUrls: []
 }) => {
   // const [transcriptList, setTranscriptList] = useState<string[]>(transcripts)
-  const [transcriptList, setTranscriptList] =
-    useState<TranscriptWithTitle[]>(transcripts)
+  // const [transcriptList, setTranscriptList] =
+  //   useState<TranscriptWithTitle[]>(transcripts)
   const router = useRouter()
   const [hasSlides, setHasSlides] = useState<boolean>(false)
   const [authToken, setAuthToken] = useState<string>()
-
-  //   useEffect(() => {
-  //     if (typeof window !== 'undefined') {
-  //       const slidesFlag = sessionStorage.getItem('image_files')
-  //       if (slidesFlag !== null) {
-  //         setHasSlides(true)
-  //       }
-  //     }
-  //   }, [])
+  const [hoveredIcons, setHoveredIcons] = useState<{
+    sectionIndex: number | null
+    subsectionIndex: number | null
+    iconIndex: number | null
+  }>({ sectionIndex: null, subsectionIndex: null, iconIndex: null })
+  const [showAIDropdown, setShowAIDropdown] = useState(false)
+  const [selectedOption, setSelectedOption] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -86,145 +133,130 @@ const TranscriptVisualizer = ({
     fetchData()
   }, [])
 
-  const handleChange = (
-    index: number,
+  const [transformedTranscripts, setTransformedTranscripts] = useState<
+    Array<{
+      title: string
+      sections: Array<{ subtitle: string; script: string }>
+    }>
+  >(transcripts)
+
+  const handleChangeScriptText = (
+    sectionIndex: number,
+    subIndex: number,
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    let newData = [...transcriptList] // copying the old datas array
-    newData[index].script = event.target.value // replace e.target.value with whatever you want to change it to
-    sessionStorage.setItem('transcripts', JSON.stringify(newData))
-    setTranscriptList(newData) // use the copy to set the state
+    const { value } = event.target
+
+    const newData = [...transformedTranscripts]
+    newData[sectionIndex].sections[subIndex].script = value
+    setTransformedTranscripts(newData)
+
+    // setTranscriptList(newData)
+    sessionStorage.setItem(
+      'transcripts',
+      JSON.stringify(
+        newData
+          .map((section) => section.sections.map((sub) => sub.script))
+          .flat()
+      )
+    )
+    sessionStorage.setItem('transcriptWithTitle', JSON.stringify(newData))
   }
+
+  // const handleChangeSubtitleText = (
+  //   index: number,
+  //   event: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   // let newData = [...transcriptList] // copying the old datas array
+  //   // newData[index].script = event.target.value // replace e.target.value with whatever you want to change it to
+  //   // sessionStorage.setItem('transcripts', JSON.stringify(newData))
+  //   // setTranscriptList(newData) // use the copy to set the state
+
+  //   // Update local data
+  //   // const { title, subtitle, script } = transcriptList[index]
+
+  //   let newData = [...transcriptList]
+  //   newData[index].subtitle = event.target.value
+  //   console.log('updated subtitle:', newData[index].subtitle)
+  //   // sessionStorage.setItem('transcripts', JSON.stringify(newData))
+  //   sessionStorage.setItem(
+  //     'transcripts',
+  //     JSON.stringify(newData.map((item) => item.script))
+  //   )
+  //   sessionStorage.setItem('transcriptWithTitle', JSON.stringify(newData))
+  //   setTranscriptList(newData)
+  // }
 
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    console.log('submitting')
-    event.preventDefault()
-    sessionStorage.setItem('transcripts', JSON.stringify(transcriptList))
+  // const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  //   console.log('submitting')
+  //   event.preventDefault()
+  //   sessionStorage.setItem('transcripts', JSON.stringify(transcriptList))
 
-    setIsSubmitting(true)
+  //   setIsSubmitting(true)
 
-    const foldername =
-      typeof window !== 'undefined'
-        ? sessionStorage.getItem('foldername')
-        : null
-    const topic =
-      typeof window !== 'undefined' ? sessionStorage.getItem('topic') : null
-    const language =
-      typeof window !== 'undefined'
-        ? sessionStorage.getItem('language')
-        : 'English'
-
-    const formData = {
-      res: transcriptList,
-      foldername: foldername,
-      topic: topic,
-      language: language,
-    }
-
-    console.log(formData)
-
-    try {
-      const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
-      const response = await fetch('/api/generate_audio', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${idToken}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
-
-      if (response.ok) {
-        const resp = await response.json()
-        console.log(resp)
-        setIsSubmitting(false)
-        // Store the data in local storage
-        console.log(resp.data)
-        sessionStorage.setItem('audio_files', JSON.stringify(resp.data.res))
-
-        // Redirect to a new page with the data
-        router.push('workflow-review-audio')
-      } else {
-        alert('Request failed: ' + response.status)
-        console.log(response)
-        setIsSubmitting(false)
-      }
-    } catch (error) {
-      console.error('Error:', error)
-      setIsSubmitting(false)
-    }
-  }
-
-  // const handleUpdateScript = async (
-  //   e: React.MouseEvent<HTMLButtonElement>,
-  //   index: number,
-  //   ask: string
-  // ) => {
-  //   e.preventDefault()
-  //   const text = transcriptList[index]
+  //   const foldername =
+  //     typeof window !== 'undefined'
+  //       ? sessionStorage.getItem('foldername')
+  //       : null
+  //   const topic =
+  //     typeof window !== 'undefined' ? sessionStorage.getItem('topic') : null
   //   const language =
   //     typeof window !== 'undefined'
   //       ? sessionStorage.getItem('language')
   //       : 'English'
-  //   const updateData = {
-  //     ask: ask,
-  //     text: text,
+
+  //   const formData = {
+  //     res: transcriptList,
+  //     foldername: foldername,
+  //     topic: topic,
   //     language: language,
   //   }
-  //   console.log(updateData)
+
+  //   console.log(formData)
 
   //   try {
   //     const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
-  //     mixpanel.track('Script Updated', {
-  //       Ask: ask,
-  //       Text: text,
-  //       Language: language,
-  //     })
-  //     const response = await fetch('/api/update_script', {
+  //     const response = await fetch('/api/generate_audio', {
   //       method: 'POST',
   //       headers: {
   //         Authorization: `Bearer ${idToken}`,
   //         'Content-Type': 'application/json',
   //       },
-  //       body: JSON.stringify(updateData),
+  //       body: JSON.stringify(formData),
   //     })
 
   //     if (response.ok) {
   //       const resp = await response.json()
+  //       console.log(resp)
+  //       setIsSubmitting(false)
+  //       // Store the data in local storage
   //       console.log(resp.data)
-  //       const res = resp.data.res
-  //       // Update local data
-  //       let newData = [...transcriptList]
-  //       newData[index] = res
-  //       sessionStorage.setItem('transcripts', JSON.stringify(newData))
-  //       setTranscriptList(newData)
-  //       toast.success('Script has been updated!', {
-  //         position: 'top-center',
-  //         autoClose: 2000,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: true,
-  //         draggable: true,
-  //         progress: undefined,
-  //         theme: 'light',
-  //       })
+  //       sessionStorage.setItem('audio_files', JSON.stringify(resp.data.res))
+
+  //       // Redirect to a new page with the data
+  //       router.push('workflow-review-audio')
   //     } else {
   //       alert('Request failed: ' + response.status)
   //       console.log(response)
+  //       setIsSubmitting(false)
   //     }
   //   } catch (error) {
   //     console.error('Error:', error)
+  //     setIsSubmitting(false)
   //   }
   // }
+
   const handleUpdateScript = async (
     e: React.MouseEvent<HTMLButtonElement>,
     index: number,
+    subIndex: number,
     ask: string
   ) => {
     e.preventDefault()
-    const { title, subtitle, script } = transcriptList[index]
+    const { subtitle, script } =
+      transformedTranscripts[index].sections[subIndex]
     const language =
       typeof window !== 'undefined'
         ? sessionStorage.getItem('language')
@@ -236,7 +268,7 @@ const TranscriptVisualizer = ({
       language: language,
     }
 
-    console.log(updateData)
+    console.log('updateData is ', updateData)
 
     try {
       const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
@@ -256,16 +288,20 @@ const TranscriptVisualizer = ({
         const res = resp.data.res
 
         // Update local data
-        let newData = [...transcriptList]
-        newData[index] = { title, subtitle, script: res }
+        let newData = [...transformedTranscripts]
+        newData[index].sections[subIndex].script = res
         // sessionStorage.setItem('transcripts', JSON.stringify(newData))
         sessionStorage.setItem(
           'transcripts',
-          JSON.stringify(newData.map((item) => item.script))
+          JSON.stringify(
+            newData
+              .map((section) => section.sections.map((sub) => sub.script))
+              .flat()
+          )
         )
         sessionStorage.setItem('transcriptWithTitle', JSON.stringify(newData))
 
-        setTranscriptList(newData)
+        setTransformedTranscripts(newData)
 
         toast.success('Script has been updated!', {
           position: 'top-center',
@@ -288,54 +324,192 @@ const TranscriptVisualizer = ({
 
   return (
     <div>
-      {transcriptList.map((data, index) => (
-        <div className='rounded bg-[#FCFCFC] border-solid border-2 border-blue-200 mb-[1rem]'>
-          <div className='flex flex-col px-4 py-2'>
-            <div className='text-gray-400 text-xs font-bold font-creto-medium leading-tight tracking-tight'>
-              Section{index + 1}
-            </div>
-            <div className='text-neutral-900 text-lg font-bold font-creto-medium leading-tight tracking-tight'>
-              {data.title}
-            </div>
-            <div className='text-neutral-900 text-base font-medium font-creto-medium leading-tight tracking-tight'>
-              {data.subtitle}
-            </div>
-          </div>
-
+      {transformedTranscripts.map((section, index) => (
+        <div
+          className='rounded bg-[#FCFCFC] border-solid border-2 border-blue-200 mb-[1rem]'
+          key={index}
+        >
+          {/* per section (same title) */}
           <div
-            id={index.toString()}
             tabIndex={index}
-            className='w-full flex flex-col md:flex-row  mt-4 focus-within:border-blue-600]'
+            id={index.toString()}
+            className='flex flex-col px-4 py-2 gap-4'
           >
-            <div className={`grid grow`}>
-              {/* {hasSlides && authToken && <ImageList urls={[imageUrls[index]]} token={authToken} height={100} />} */}
-              <textarea
-                key={index}
-                className={`h-80 block form-input w-full text-gray-800 mb-2 resize-none border-none p-4`}
-                value={data.script}
-                onChange={(event) => handleChange(index, event)}
-                // readOnly
-              />
+            <div className='text-gray-400 text-xs font-bold font-creto-medium leading-tight tracking-tight'>
+              Section {index + 1}
             </div>
-            <div className='flex flex-row items-center px-1.5 py-2 md:flex-col shrink-0'>
-              {/* <button key={index + 'shorter'} className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full" onClick={e => handleUpdateScript(e, index, 'shorter')}>
-                            Shorter
-                        </button>
-                        <button key={index + 'funnier'} className="mt-4 btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full" onClick={e => handleUpdateScript(e, index, 'funnier')}>
-                            Funnier
-                        </button> */}
-              <UpdateButton
-                callback={handleUpdateScript}
-                text={'shorter'}
-                ind={index}
-              />
-              <div className='ml-4 md:ml-0 md:mt-4'>
-                <UpdateButton
-                  callback={handleUpdateScript}
-                  text={'funnier'}
-                  ind={index}
-                />
-              </div>
+            <div className='pb-4 text-neutral-900 text-lg font-bold font-creto-medium leading-tight tracking-tight border-b-2 border-gray-300'>
+              {section.title}
+            </div>
+            {/* subtitle and script*/}
+            <div className='px-4 py-2 rounded-md justify-start items-end gap-2.5 flex flex-col'>
+              {section.sections.map((subsection, subIndex) => (
+                <div
+                  key={subIndex}
+                  className={`w-full border-2 border-black px-2 py-1 relative `}
+                  onMouseEnter={() =>
+                    setHoveredIcons({
+                      sectionIndex: index,
+                      subsectionIndex: subIndex,
+                      iconIndex: null,
+                    })
+                  }
+                  onMouseLeave={() =>
+                    setHoveredIcons({
+                      sectionIndex: null,
+                      subsectionIndex: null,
+                      iconIndex: null,
+                    })
+                  }
+                >
+                  {subIndex}
+                  {/*  add, delete, ai edit icons for this section when hovering on this   */}
+                  {hoveredIcons.sectionIndex === index &&
+                    hoveredIcons.subsectionIndex === subIndex && (
+                      // Display active icons when hovering over a specific icon
+                      <div className='active-icons flex relative'>
+                        {showAIDropdown ? (
+                          <div className='w-28 h-14 absolute top-[20px] right-0'>
+                            {/* Your choice box content */}
+                            <div className='w-28 h-14 px-2 py-1 left-0 top-0 absolute rounded-xl bg-gray-300 flex flex-col'>
+                              <AIEditButton
+                                callback={handleUpdateScript}
+                                text={'shorter'}
+                                ind={index}
+                                subIndex={subIndex}
+                              />
+                              <AIEditButton
+                                callback={handleUpdateScript}
+                                text={'funnier'}
+                                ind={index}
+                                subIndex={subIndex}
+                              />
+                            </div>
+                          </div>
+                        ) : null}
+                        {/* add script button */}
+                        {/* <div
+                            className='absolute -top-4 right-[0.5rem]'
+                            onMouseEnter={() =>
+                              setHoveredIcons({
+                                sectionIndex: index,
+                                subsectionIndex: subIndex,
+                                iconIndex: 0,
+                              })
+                            }
+                            onMouseLeave={() =>
+                              setHoveredIcons((prev) =>
+                                prev.sectionIndex === index &&
+                                prev.subsectionIndex === subIndex
+                                  ? { ...prev, iconIndex: null }
+                                  : prev
+                              )
+                            }
+                          >
+                            {hoveredIcons.iconIndex === 0 ? (
+                              <AddScriptIconActive />
+                            ) : (
+                              <AddScriptIconInactive />
+                            )}
+                          </div> */}
+                        {/* delete script */}
+                        {/* <div
+                            className='absolute -top-4 right-[3rem]'
+                            onMouseEnter={() =>
+                              setHoveredIcons({
+                                sectionIndex: index,
+                                subsectionIndex: subIndex,
+                                iconIndex: 1,
+                              })
+                            }
+                            onMouseLeave={() =>
+                              setHoveredIcons((prev) =>
+                                prev.sectionIndex === index &&
+                                prev.subsectionIndex === subIndex
+                                  ? { ...prev, iconIndex: null }
+                                  : prev
+                              )
+                            }
+                          >
+                            {hoveredIcons.iconIndex === 1 ? (
+                              <DeleteScriptIconActive />
+                            ) : (
+                              <DeleteScriptIconInactive />
+                            )}
+                          </div> */}
+                        {/* AI edit choice */}
+                        <div
+                          className='absolute -top-4 right-[5.5rem]'
+                          onMouseEnter={() => {
+                            setHoveredIcons({
+                              sectionIndex: index,
+                              subsectionIndex: subIndex,
+                              iconIndex: 2,
+                            })
+                            // setAIEEditHovered(true) // Add this line
+                          }}
+                          onMouseLeave={() => {
+                            setHoveredIcons((prev) =>
+                              prev.sectionIndex === index &&
+                              prev.subsectionIndex === subIndex
+                                ? { ...prev, iconIndex: null }
+                                : prev
+                            )
+                            // setAIEEditHovered(false)
+                          }}
+                        >
+                          {hoveredIcons.iconIndex === 2 ? (
+                            <div
+                              onClick={
+                                () => setShowAIDropdown(!showAIDropdown) // Add this line
+                              }
+                            >
+                              <ButtonWithExplanation
+                                button={<AIEditIconActive />}
+                                explanation='AI Edit'
+                              />
+                            </div>
+                          ) : (
+                            <AIEditIconInactive />
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                  <div
+                    className={`rounded-md justify-start items-center gap-2.5
+                    }`}
+                  >
+                    <div
+                      className={`px-4 py-2 rounded-md bg-[#D1DEFC] text-indigo-500 text-xs font-bold font-creato-medium leading-none tracking-tight flex-nowrap`}
+                    ></div>
+                    {/* comment for now: this is editable input version */}
+                    {/* <input
+                        key={index + subIndex}
+                        className={`rounded-md w-fit px-4 py-2 bg-[#D1DEFC] text-indigo-500 text-xs font-bold font-creato-medium leading-none tracking-tight`}
+                        value={subsection.subtitle}
+                        onChange={(event) =>
+                          handleChangeSubtitleText(subIndex, event)
+                        }
+                        // readOnly
+                      /> */}
+                  </div>
+                  {/* <div className='bg-[#FCFCFC] block form-input w-full text-gray-800 resize-none border-none p-4'>{subsection.script}</div> */}
+                  <textarea
+                    key={subIndex}
+                    className={`h-80 ${
+                      subIndex === hoveredIcons.subsectionIndex
+                        ? 'hover:bg-gray-300'
+                        : 'bg-[#FCFCFC] '
+                    }  block w-full text-gray-800 mb-2 resize-none border-none p-4 `}
+                    value={subsection.script}
+                    onChange={(event) =>
+                      handleChangeScriptText(index, subIndex, event)
+                    }
+                    // readOnly
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -376,13 +550,15 @@ export default function WorkflowStep4() {
   // parsed transcriptData
   const transcripts = transcriptData ? JSON.parse(transcriptData) : []
 
-  const flattenedOutline = outlineRes ? Object.keys(outlineRes).flatMap((sectionIndex) => {
-    const section = outlineRes[sectionIndex]
-    return section.content.map((subtitle: string) => ({
-      title: section.title,
-      subtitle,
-    }))
-  }) : []
+  const flattenedOutline = outlineRes
+    ? Object.keys(outlineRes).flatMap((sectionIndex) => {
+        const section = outlineRes[sectionIndex]
+        return section.content.map((subtitle: string) => ({
+          title: section.title,
+          subtitle,
+        }))
+      })
+    : []
 
   const transcriptWithTitleData = flattenedOutline.map((item, index) => ({
     title: item.title,
@@ -390,37 +566,46 @@ export default function WorkflowStep4() {
     script: transcripts[index] || '',
   }))
 
+  const transformedTranscriptsData = transcriptWithTitleData.reduce(
+    (
+      acc: Array<{
+        title: string
+        sections: Array<{ subtitle: string; script: string }>
+      }>,
+      data,
+      index
+    ) => {
+      // Check if the current section has the same title as the previous section
+      if (
+        index > 0 &&
+        data.title === transcriptWithTitleData[index - 1].title
+      ) {
+        // Add the subtitle and script to the previous section
+        acc[acc.length - 1].sections.push({
+          subtitle: data.subtitle,
+          script: data.script,
+        })
+      } else {
+        // Create a new section if the title is different
+        acc.push({
+          title: data.title,
+          sections: [{ subtitle: data.subtitle, script: data.script }],
+        })
+      }
+      return acc
+    },
+    []
+  )
+
   const [transcriptWithTitle, setTranscriptWithTitle] = useState<
     TranscriptWithTitle[]
-  >(transcriptWithTitleData)
+  >(transformedTranscriptsData)
+  const titles = transcriptWithTitle.map((section) => section.title)
   const foldername =
     typeof sessionStorage !== 'undefined'
       ? sessionStorage.getItem('foldername')
       : ''
   useEffect(() => {
-    // if (outlineRes && transcripts) {
-    //   // Flatten the 'outlineRes' data
-    //   const flattenedOutline = Object.keys(outlineRes).flatMap(
-    //     (sectionIndex) => {
-    //       const section = outlineRes[sectionIndex]
-    //       return section.content.map((subtitle: string) => ({
-    //         title: section.title,
-    //         subtitle,
-    //       }))
-    //     }
-    //   )
-
-    //   console.log('flattened outline: ', flattenedOutline)
-    //   console.log('transcriptData: ', transcriptData)
-    //   // Combine 'flattenedOutline' and 'transcript' data
-    //   const transcriptWithTitleData = flattenedOutline.map((item, index) => ({
-    //     title: item.title,
-    //     subtitle: item.subtitle,
-    //     script: transcripts[index] || '',
-    //   }))
-
-    //   console.log('transcriptData with title:', transcriptWithTitleData)
-    // setTranscriptWithTitle(transcriptWithTitleData)
     // Store 'transcriptWithTitle' in session storage
     sessionStorage.setItem(
       'transcriptWithTitle',
@@ -469,10 +654,7 @@ export default function WorkflowStep4() {
   return (
     <div>
       <ToastContainer />
-      {/* <ProjectProgress currentInd={3} contentRef={contentRef} />
-      <div className='pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20'>
-        <h1 className='h1'>Edit Script</h1>
-      </div> */}
+
       {/* flex col container for steps, title, generate slides button etc */}
       <div className='fixed mt-[3rem] flex flex-col w-full bg-Grey-50 justify-center z-10 gap-1 py-[0.75rem] border-b-2'>
         {/* steps bar */}
@@ -481,12 +663,12 @@ export default function WorkflowStep4() {
         </div>
 
         {/* gpt model switch area */}
-        <div className='self-end mx-[5rem] flex flex-row gap-4 cursor-pointer'>
+        {/* <div className='self-end mx-[5rem] flex flex-row gap-4 cursor-pointer'>
           <NewWorkflowGPTToggle setIsGpt35={setIsGpt35} />
           <div className='cursor-pointer' onClick={openPopup}>
             <QuestionExplainIcon />
           </div>
-        </div>
+        </div> */}
 
         {/* Popup for explaining model difference */}
         {showPopup && (
@@ -541,7 +723,7 @@ export default function WorkflowStep4() {
           </div>
         )}
 
-        {/* flex row container for backlink, title*/}
+        {/* flex row container for backlink, title */}
         <div className='flex justify-start items-center mx-[5rem]'>
           <div
             className='flex-row justify-center items-center gap-4 cursor-pointer hidden sm:flex'
@@ -568,27 +750,28 @@ export default function WorkflowStep4() {
       </div>
 
       {/* overview nav section */}
-      <div className='w-1/4 fixed top-[16.5rem] overflow-y-auto flex justify-center'>
-        <div className='w-2/3 bg-neutral-50 rounded-md border border-gray-200 hidden sm:block'>
+      <div className='w-1/4 h-[15rem] fixed top-[12rem]  flex justify-center'>
+        <div className='w-2/3 bg-neutral-50 rounded-md border border-gray-200 hidden sm:block overflow-y-auto'>
           <div className='h-5 text-neutral-900 text-xs font-bold font-creato-medium leading-tight tracking-wide px-4 py-3'>
             OVERVIEW
           </div>
           <ol className='list-none px-4 py-4'>
-            {transcriptWithTitle?.map((section, index) => (
+            {titles.map((title, index) => (
               <li
                 className='pb-2 opacity-60 text-neutral-900 text-s font-medium font-creato-medium leading-normal tracking-tight cursor-pointer hover:text-black  hover:rounded-md hover:bg-gray-200'
                 key={index}
                 onClick={() => scrollToSection(index)}
               >
                 <span className=''>
-                  {index + 1}. {section.subtitle}
+                  {index + 1}. {title}
                 </span>
               </li>
             ))}
           </ol>
         </div>
       </div>
-      <div className='mt-[10rem] max-w-4xl mx-auto grow' ref={contentRef}>
+
+      <div className='mt-[12rem] max-w-4xl mx-auto grow' ref={contentRef}>
         <TranscriptVisualizer transcripts={transcriptWithTitle} />
       </div>
       <FeedbackButton />
