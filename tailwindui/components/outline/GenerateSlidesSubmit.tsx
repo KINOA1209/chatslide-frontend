@@ -1,19 +1,8 @@
 import React, { useState, useRef, useEffect, Fragment } from 'react'
 import { useRouter } from 'next/navigation'
-import { FormEvent } from 'react'
-import Timer from '@/components/ui/Timer'
 import AuthService from '@/components/utils/AuthService'
-import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { Dialog, Transition } from '@headlessui/react'
 import UserService from '../utils/UserService'
-import DrlambdaButton from '../button/DrlambdaButton'
-
-const minOutlineDetailCount = 1
-const maxOutlineDetailCount = 6
-const minOutlineSectionCount = 1
-const maxOutlineSectionCount = 10
-const maxLength = 60
 
 interface OutlineSection {
   title: string
@@ -22,33 +11,31 @@ interface OutlineSection {
   section_style: string
 }
 
-interface OutlineDataType extends Array<OutlineSection> {}
+interface OutlineDataType extends Array<OutlineSection> { }
 
+// this class has no UI, it is used to submit the outline to the backend when isSubmitting is true
 const GenerateSlidesSubmit = ({
   outline,
   isGPT35,
+  isSubmitting,
+  setIsSubmitting,
 }: {
   outline: OutlineDataType
   isGPT35: boolean
+  isSubmitting: boolean
+  setIsSubmitting: (submitting: boolean) => void
 }) => {
   const router = useRouter()
   const [outlineData, setOutlineData] = useState(outline)
   //   const [isGpt35, setIsGpt35] = useState(true)
   const [slidePages, setSlidePages] = useState(20)
   const [wordPerSubpoint, setWordPerSubpoint] = useState(10)
-  const [isPaidUser, setIsPaidUser] = useState<boolean>(false)
 
   useEffect(() => {
-    ;(async () => {
-      try {
-        const result = await UserService.isPaidUser()
-        setIsPaidUser(result)
-      } catch (error) {
-        console.error("Error fetching user's payment status:", error)
-        // Handle error appropriately
-      }
-    })()
-  }, [])
+    if (isSubmitting) {
+      handleSubmit()
+    }
+  }, [isSubmitting])
 
   const updateOutlineSessionStorage = (updatedOutline: any) => {
     const entireOutline = JSON.parse(sessionStorage.outline)
@@ -58,62 +45,6 @@ const GenerateSlidesSubmit = ({
 
   const [isSubmittingSlide, setIsSubmittingSlide] = useState(false)
   const [timer, setTimer] = useState(0)
-  const [toSlides, setToSlides] = useState(true)
-  const [isToSlidesOpen, setIsToSlidesOpen] = useState(false)
-  const [isToScriptOpen, setIsToScriptOpen] = useState(false)
-
-  function closeToSlidesModal() {
-    setIsToSlidesOpen(false)
-    setIsSubmittingSlide(false)
-  }
-
-  function openToSlidesModal() {
-    setIsToSlidesOpen(true)
-  }
-
-  const prepareSubmit = (event: FormEvent<HTMLFormElement>) => {
-    console.log('submitting')
-    event.preventDefault()
-    if (toSlides) {
-      let hasScript = null
-      let hasAudio = null
-      let hasVideo = null
-      if (typeof window !== 'undefined') {
-        hasScript = sessionStorage.getItem('transcripts')
-        hasAudio = sessionStorage.getItem('audio_files')
-        hasAudio = sessionStorage.getItem('video_file')
-      }
-      if (hasScript !== null || hasAudio !== null || hasVideo !== null) {
-        openToSlidesModal()
-      } else {
-        setIsSubmittingSlide(true)
-        handleSubmit()
-      }
-    } else {
-      let hasSlides = null
-      let hasAudio = null
-      let hasVideo = null
-      if (typeof window !== 'undefined') {
-        hasSlides = sessionStorage.getItem('html')
-        hasAudio = sessionStorage.getItem('audio_files')
-        hasAudio = sessionStorage.getItem('video_file')
-      }
-    }
-  }
-
-  const slideModalSubmit = () => {
-    closeToSlidesModal()
-    setIsSubmittingSlide(true)
-    // clean sessionStorage
-    if (typeof window !== 'undefined') {
-      sessionStorage.removeItem('pdf_file')
-      sessionStorage.removeItem('page_count')
-      sessionStorage.removeItem('transcripts')
-      sessionStorage.removeItem('audio_files')
-      sessionStorage.removeItem('video_file')
-    }
-    handleSubmit()
-  }
 
   async function query_resources(
     project_id: any,
@@ -147,30 +78,6 @@ const GenerateSlidesSubmit = ({
     }
   }
 
-  async function generateScripts(formData: any, token: string) {
-    const response = await fetch('/api/scripts_only', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(formData),
-    })
-
-    if (response.ok) {
-      const resp = await response.json()
-      // console.log(resp);
-      // Store the data in local storage
-      // console.log(resp.data);
-      sessionStorage.setItem('transcripts', JSON.stringify(resp.data.res))
-      // Redirect to a new page with the data
-      router.push('workflow-edit-script')
-    } else {
-      alert('Request failed: ' + response.status)
-      // console.log(response)
-    }
-  }
-
   async function generateSlidesPreview(formData: any, token: string) {
     const response = await fetch('/api/generate_html', {
       method: 'POST',
@@ -189,7 +96,7 @@ const GenerateSlidesSubmit = ({
     } else {
       alert(
         `Server is busy now. Please try again later. Reference code: ` +
-          sessionStorage.getItem('project_id')
+        sessionStorage.getItem('project_id')
       )
       console.log(response)
       setIsSubmittingSlide(false)
@@ -288,11 +195,7 @@ const GenerateSlidesSubmit = ({
     try {
       const { userId, idToken: token } =
         await AuthService.getCurrentUserTokenAndId()
-      if (toSlides) {
-        await generateSlidesPreview(formData, token)
-      } else {
-        await generateScripts(formData, token)
-      }
+      await generateSlidesPreview(formData, token)
     } catch (error) {
       console.error('Error:', error)
       setIsSubmittingSlide(false)
@@ -301,96 +204,6 @@ const GenerateSlidesSubmit = ({
 
   return (
     <div>
-      <ToastContainer />
-
-      {/* generate slides popup */}
-      <Transition appear show={isToSlidesOpen} as={Fragment}>
-        <Dialog as='div' className='relative z-10' onClose={closeToSlidesModal}>
-          <Transition.Child
-            as={Fragment}
-            enter='ease-out duration-300'
-            enterFrom='opacity-0'
-            enterTo='opacity-100'
-            leave='ease-in duration-200'
-            leaveFrom='opacity-100'
-            leaveTo='opacity-0'
-          >
-            <div className='fixed inset-0 bg-black bg-opacity-25' />
-          </Transition.Child>
-
-          <div className='fixed inset-0 overflow-y-auto'>
-            <div className='flex min-h-full items-center justify-center p-4 text-center'>
-              <Transition.Child
-                as={Fragment}
-                enter='ease-out duration-300'
-                enterFrom='opacity-0 scale-95'
-                enterTo='opacity-100 scale-100'
-                leave='ease-in duration-200'
-                leaveFrom='opacity-100 scale-100'
-                leaveTo='opacity-0 scale-95'
-              >
-                <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
-                  <Dialog.Title
-                    as='h3'
-                    className='text-lg font-medium leading-6 text-gray-900'
-                  >
-                    Continue to generate slides?
-                  </Dialog.Title>
-                  {/* <div className='mt-2'>
-                    <p className='text-sm text-gray-500'>
-                      Generate slides will delete current scripts, audio, and
-                      video.
-                    </p>
-                  </div> */}
-
-                  <div className='flex'>
-                    <div className='flex justify-center mt-4'>
-                      <button
-                        className='bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded mr-2 btn-size'
-                        onClick={slideModalSubmit}
-                      >
-                        Yes
-                      </button>
-                    </div>
-
-                    <div className='flex justify-center mt-4'>
-                      <button
-                        className='text-blue-600 bg-gray-100 hover:bg-gray-200 border border-blue-600 py-2 px-4 rounded mr-2 btn-size'
-                        onClick={closeToSlidesModal}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
-
-      {/* Form */}
-      <div className='max-w-sm mx-auto'>
-        <form onSubmit={prepareSubmit}>
-          <div className='flex flex-wrap justify-center'>
-            {/* <GptToggle isGpt35={isGpt35} setIsGpt35={setIsGpt35} /> */}
-
-            {/* <SlideLengthSelector /> */}
-            <div className='w-full px-3'>
-              <DrlambdaButton
-                onClick={() => {
-                  setToSlides(true)
-                }}
-                isSubmitting={isSubmittingSlide}
-              >
-                {!isSubmittingSlide ? 'Next' : 'Generating Slides'}
-              </DrlambdaButton>
-              {/* Timer */}
-              {/* <Timer expectedSeconds={60} isSubmitting={isSubmittingSlide} /> */}
-            </div>
-          </div>
-        </form>
-      </div>
     </div>
   )
 }
