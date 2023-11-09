@@ -46,7 +46,7 @@ export default function WorkflowStep3() {
     <div className='bg-gradient-to-b from-[#6A7EF9] to-[#415AF1]'>
       {/* flex col container for steps, title, etc */}
       
-      <WorkflowStepsBanner currentIndex={3} isSubmitting={isSubmitting} setIsSubmitting={setIsSubmitting} isPaidUser={isPaidUser} contentRef={contentRef} nextIsPaidFeature={true} />
+      <WorkflowStepsBanner currentIndex={2} isSubmitting={isSubmitting} setIsSubmitting={setIsSubmitting} isPaidUser={isPaidUser} contentRef={contentRef} nextIsPaidFeature={true} />
 
       <ToastContainer enableMultiContainer containerId={'slides'} />
 
