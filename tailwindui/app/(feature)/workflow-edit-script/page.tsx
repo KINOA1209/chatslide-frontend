@@ -362,7 +362,7 @@ const TranscriptVisualizer = ({
                     })
                   }
                 >
-                  {subIndex}
+                  {/* {subIndex} */}
                   {/*  add, delete, ai edit icons for this section when hovering on this   */}
                   {hoveredIcons.sectionIndex === index &&
                     hoveredIcons.subsectionIndex === subIndex && (
@@ -482,7 +482,9 @@ const TranscriptVisualizer = ({
                   >
                     <div
                       className={`px-4 py-2 rounded-md bg-[#D1DEFC] text-indigo-500 text-xs font-bold font-creato-medium leading-none tracking-tight flex-nowrap`}
-                    ></div>
+                    >
+                      {subsection.subtitle}
+                    </div>
                     {/* comment for now: this is editable input version */}
                     {/* <input
                         key={index + subIndex}
