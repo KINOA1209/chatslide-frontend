@@ -19,6 +19,7 @@
     "aws-crt": "^1.15.18",
     "better-react-mathjax": "^2.0.2",
     "carbon-connect": "^1.5.40",
+    "cheerio": "^1.0.0-rc.12",
     "encoding": "^0.1.13",
     "file-saver": "^2.0.5",
     "firebase": "^9.23.0",
