@@ -54,9 +54,9 @@ const TaskIcon: React.FC<{ task: 'video' | 'scripts' | 'slides' | 'presentation'
 const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
   switch (fileType) {
     case 'doc':
-      return <FaFilePdf />
+      return <FaFilePdf size={'1em'}/>
     case 'url':
-      return <FaYoutube />
+      return <FaYoutube size={'2em'}/>
     default:
       return null
   }
@@ -104,7 +104,7 @@ const ProjectTable: React.FC<Props> = ({
             </div>
             <div className='p-[2rem] border-b-2 hidden md:flex items-center justify-center text-gray-600 text-[17px] font-normal font-creato-medium leading-normal tracking-wide'>
               <div className='flex items-center justify-center'>
-                <FileIcon fileType='pdf' />
+                {/* <FileIcon fileType='pdf' /> */}
                 {project.resources.map((resource, resourceIndex) => (
                   <div
                     key={resourceIndex}
