@@ -1,0 +1,11 @@
+@media (min-width : 960px) {
+    #choice_container .div{
+        width: 300px;
+    }
+}
+
+@media (min-width : 960px) {
+    #choice_container{
+        flex-direction: row;
+    }
+}

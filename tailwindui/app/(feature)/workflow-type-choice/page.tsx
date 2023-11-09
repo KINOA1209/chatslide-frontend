@@ -9,23 +9,28 @@ import { useRouter } from 'next/navigation'
 const TypeChoicePage = () => {
   const router = useRouter() // Initialize the router
   // Function to navigate to the "workflow-scenario-choice" page
-  const navigateToScenarioChoice = () => {
-    router.push('/workflow-scenario-choice') // Specify the route you want to navigate to
+  // Specify the route you want to navigate to
+  const navigateToScenarioChoice = (workflowType:string) => {
+    if (workflowType === 'presentation'){
+      router.push('/workflow-generate-outlines')
+    } else if (workflowType === 'socialpost'){
+      router.push('/workflow-scenario-choice') 
+    }
   }
   return (
     <div className='bg-zinc-100 min-h-screen'>
-      <div className='flex flex-col justify-center items-center gap-12'>
+      <div className='flex flex-col justify-center items-center gap-4 sm:gap-12 p-4 sm:p-8'>
         {/* title */}
-        <div className='w-[47rem] mt-[12rem] text-center text-neutral-800 text-2xl font-normal font-creato-medium leading-9 tracking-wide'>
+        <div className='w-full mt-[12rem] max-w-screen-lg text-center text-neutral-800 text-lg sm:text-2xl font-normal font-creato-medium leading-7 sm:leading-9 tracking-wide'>
           Hey, polumage! <br />
           What are you planning to create today?
         </div>
         {/* two types choices */}
-        <div className='flex flex-row gap-5'>
+        <div className='flex flex-col sm:flex-row gap-4 sm:gap-5'>
           {/* Presentation */}
           <div
-            onClick={navigateToScenarioChoice} // Attach the onClick handler
-            className='w-96 h-64 bg-neutral-50 rounded-lg shadow flex flex-col justify-center items-center gap-8 cursor-pointer'
+            onClick={() => navigateToScenarioChoice('presentation')} // Attach the onClick handler
+            className='w-full sm:w-96 h-64 bg-neutral-50 rounded-lg shadow flex flex-col justify-center items-center gap-2 sm:gap-8 cursor-pointer'
           >
             {/* icons and type text box */}
             <div className='w-[7.5rem] h-[6.75rem]'>
@@ -36,7 +41,10 @@ const TypeChoicePage = () => {
             </div>
           </div>
           {/* Social Post */}
-          <div className='w-96 h-64 bg-neutral-50 rounded-lg shadow flex flex-col justify-center items-center gap-8 cursor-pointer'>
+          <div
+            onClick={() => navigateToScenarioChoice('socialpost')}
+            className='w-96 h-64 bg-neutral-50 rounded-lg shadow flex flex-col justify-center items-center gap-8 cursor-pointer'
+          >
             {/* icons and type text box */}
             <div className='w-[7.5rem] h-[6.75rem]'>
               <SocialPostTypeIcon />
