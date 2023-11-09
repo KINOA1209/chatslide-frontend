@@ -1,6 +1,7 @@
-import { RightTurnArrowIcon, SpinIcon } from '@/app/(feature)/icons';
+import { LeftTurnArrowIcon, RightTurnArrowIcon, SpinIcon } from '@/app/(feature)/icons';
 import React, { MouseEventHandler, ReactNode, useState, MouseEvent } from 'react';
 import PaywallModal from '../forms/paywallModal';
+import { useRouter } from 'next/navigation';
 
 type DrlambdaButtonProps = {
   children: ReactNode;
@@ -10,7 +11,7 @@ type DrlambdaButtonProps = {
   isPaidFeature?: boolean;
 };
 
-const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSubmitting, isPaidUser, isPaidFeature=false }) => {
+const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSubmitting, isPaidUser, isPaidFeature = false }) => {
 
   const [showPaywallModal, setShowPaywallModal] = useState(false);
 
@@ -57,3 +58,23 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSu
 };
 
 export default DrlambdaButton;
+
+
+type DrLambdaBackButtonProps = {
+  href: string;
+};
+
+export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({ href }) => {
+  const router =  useRouter();
+  return (
+  <div
+    className='flex-row justify-center items-center gap-4 cursor-pointer hidden sm:flex'
+    onClick={() => router.push(href)}
+  >
+    <LeftTurnArrowIcon></LeftTurnArrowIcon>
+    <div className='text-center self-center text-gray-700 font-medium font-creato-medium leading-normal tracking-[0.035rem] whitespace-nowrap hidden sm:block'>
+      Back
+    </div>
+  </div>
+  )
+}
