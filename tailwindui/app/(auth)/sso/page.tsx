@@ -60,7 +60,8 @@ export default function SSORedirect() {
     return (
         <div className="flex items-center justify-center min-h-screen">
             <div className="text-center">
-                You should be redirected soon. If not, you may already have an account. Please sign in or reset your password.
+                <div>You should be redirected soon. </div>
+                <div className='text-gray-400 mt-10'>If not, you may already have an account. Please sign in or reset your password.</div>
                 <ToastContainer />
             </div>
         </div>
