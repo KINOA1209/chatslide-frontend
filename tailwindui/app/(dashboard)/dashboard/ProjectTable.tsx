@@ -103,7 +103,7 @@ const ProjectTable: React.FC<Props> = ({
               {project.name}
             </div>
             <div className='p-[2rem] border-b-2 hidden md:flex items-center justify-center text-gray-600 text-[17px] font-normal font-creato-medium leading-normal tracking-wide'>
-              <div className='flex items-center justify-center'>
+              <div className='flex flex-col items-start'>
                 {/* <FileIcon fileType='pdf' /> */}
                 {project.resources.map((resource, resourceIndex) => (
                   <div
