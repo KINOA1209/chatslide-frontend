@@ -30,6 +30,40 @@ interface TranscriptWithTitle {
   subtitle: string
   script: string
 }
+
+const AIEditButton = ({ callback, text, ind }: UpdateButtonProps) => {
+  const [updating, setUpdating] = useState(false)
+  const handleClick = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    index: number,
+    ask: string
+  ) => {
+    setUpdating((old) => {
+      return true
+    })
+    callback(e, index, ask).then(() => {
+      setUpdating((old) => {
+        return false
+      })
+    })
+  }
+  return (
+    <button
+      key={ind + text}
+      className={`w-fit px-2 py-1 rounded-xl text-gray-500 hover:text-gray-700 text-xs font-medium font-creato-medium leading-normal tracking-tight cursor-pointer hover:bg-gray-200`}
+      onClick={(e) => handleClick(e, ind, text)}
+      disabled={updating}
+    >
+      <div className='flex flex-row'>
+        <div className='h-[16px] mr-2' hidden={!updating}>
+          <LoadingIcon />
+        </div>
+        {text}
+      </div>
+    </button>
+  )
+}
+
 const UpdateButton = ({ callback, text, ind }: UpdateButtonProps) => {
   const [updating, setUpdating] = useState(false)
 
@@ -93,7 +127,7 @@ const TranscriptVisualizer = ({
     fetchData()
   }, [])
 
-  const handleChange = (
+  const handleChangeScriptText = (
     index: number,
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
@@ -107,6 +141,29 @@ const TranscriptVisualizer = ({
 
     let newData = [...transcriptList]
     newData[index].script = event.target.value
+    // sessionStorage.setItem('transcripts', JSON.stringify(newData))
+    sessionStorage.setItem(
+      'transcripts',
+      JSON.stringify(newData.map((item) => item.script))
+    )
+    sessionStorage.setItem('transcriptWithTitle', JSON.stringify(newData))
+    setTranscriptList(newData)
+  }
+
+  const handleChangeSubtitleText = (
+    index: number,
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    // let newData = [...transcriptList] // copying the old datas array
+    // newData[index].script = event.target.value // replace e.target.value with whatever you want to change it to
+    // sessionStorage.setItem('transcripts', JSON.stringify(newData))
+    // setTranscriptList(newData) // use the copy to set the state
+
+    // Update local data
+    // const { title, subtitle, script } = transcriptList[index]
+
+    let newData = [...transcriptList]
+    newData[index].subtitle = event.target.value
     // sessionStorage.setItem('transcripts', JSON.stringify(newData))
     sessionStorage.setItem(
       'transcripts',
@@ -195,7 +252,7 @@ const TranscriptVisualizer = ({
       language: language,
     }
 
-    console.log(updateData)
+    console.log('updateData is ', updateData)
 
     try {
       const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
@@ -292,7 +349,7 @@ const TranscriptVisualizer = ({
                 {section.title}
               </div>
               {/* subtitle and script*/}
-              <div className='px-4 py-2 rounded-md justify-center items-end gap-2.5 flex flex-col'>
+              <div className='px-4 py-2 rounded-md justify-start items-end gap-2.5 flex flex-col'>
                 {section.sections.map((subsection, subIndex) => (
                   <div
                     key={subIndex}
@@ -320,23 +377,17 @@ const TranscriptVisualizer = ({
                           {showAIDropdown ? (
                             <div className='w-28 h-14 absolute top-[20px] right-0'>
                               {/* Your choice box content */}
-                              <div className='w-28 h-14 px-2 py-1 left-0 top-0 absolute rounded-xl bg-gray-300'>
-                                <div
-                                  className={`w-fit px-2 py-1 left-[8px] top-[8px] absolute rounded-xl text-gray-500 hover:text-gray-700 text-xs font-medium font-creato-medium leading-normal tracking-tight cursor-pointer hover:bg-gray-200`}
-                                  onClick={() =>
-                                    setSelectedOption('makeFunnier')
-                                  }
-                                >
-                                  Make Funnier
-                                </div>
-                                <div
-                                  className={`w-fit px-2 py-1 left-[8px] top-[32px] rounded-xl absolute text-gray-500 hover:text-gray-700 text-xs font-medium font-creato-medium leading-normal tracking-tight cursor-pointer hover:bg-gray-200`}
-                                  onClick={() =>
-                                    setSelectedOption('makeShorter')
-                                  }
-                                >
-                                  Make Shorter
-                                </div>
+                              <div className='w-28 h-14 px-2 py-1 left-0 top-0 absolute rounded-xl bg-gray-300 flex flex-col'>
+                                <AIEditButton
+                                  callback={handleUpdateScript}
+                                  text={'shorter'}
+                                  ind={subIndex}
+                                />
+                                <AIEditButton
+                                  callback={handleUpdateScript}
+                                  text={'funnier'}
+                                  ind={subIndex}
+                                />
                               </div>
                             </div>
                           ) : null}
@@ -428,41 +479,38 @@ const TranscriptVisualizer = ({
                           </div>
                         </div>
                       )}
-                    {/*  // Display active icons
-                    <div className='flex'>
-                      <div className='absolute -top-4 right-[0.5rem]'>
-                        <AddScriptIconActive />
-                      </div>
-                      <div className='absolute -top-4 right-[3rem]'>
-                        <DeleteScriptIconActive />
-                      </div>
-                      <div className='absolute -top-4 right-[5.5rem]'>
-                        <AIEditIconActive />
-                      </div>
-                    </div> */}
-                    {/* <div className='bg-[#D1DEFC] text-indigo-500 text-xs font-bold font-creato-medium leading-none tracking-tight flex-nowrap'>
-                    {subsection.subtitle}
-                  </div> */}
+
                     <div
-                      className={`px-4 py-2 w-fit bg-[#D1DEFC] rounded-md justify-center items-end gap-2.5 flex 
+                      className={`rounded-md justify-start items-center gap-2.5
                     }`}
                     >
-                      <div
+                      {/* <div
                         className={`text-indigo-500 text-xs font-bold font-creato-medium leading-none tracking-tight flex-nowrap`}
                       >
                         {subsection.subtitle}
-                      </div>
+                      </div> */}
+                      <input
+                        key={subIndex}
+                        className={`rounded-md w-fit px-4 py-2 bg-[#D1DEFC] text-indigo-500 text-xs font-bold font-creato-medium leading-none tracking-tight`}
+                        value={subsection.subtitle}
+                        onChange={(event) =>
+                          handleChangeSubtitleText(subIndex, event)
+                        }
+                        // readOnly
+                      />
                     </div>
                     {/* <div className='bg-[#FCFCFC] block form-input w-full text-gray-800 resize-none border-none p-4'>{subsection.script}</div> */}
                     <textarea
-                      key={index}
+                      key={subIndex}
                       className={`h-80 ${
-                        index === hoveredIcons.subsectionIndex
+                        subIndex === hoveredIcons.subsectionIndex
                           ? 'hover:bg-gray-300'
                           : 'bg-[#FCFCFC] '
                       }  block w-full text-gray-800 mb-2 resize-none border-none p-4 `}
                       value={subsection.script}
-                      onChange={(event) => handleChange(index, event)}
+                      onChange={(event) =>
+                        handleChangeScriptText(subIndex, event)
+                      }
                       // readOnly
                     />
                   </div>
@@ -507,13 +555,15 @@ export default function WorkflowStep4() {
   // parsed transcriptData
   const transcripts = transcriptData ? JSON.parse(transcriptData) : []
 
-  const flattenedOutline = outlineRes ? Object.keys(outlineRes).flatMap((sectionIndex) => {
-    const section = outlineRes[sectionIndex]
-    return section.content.map((subtitle: string) => ({
-      title: section.title,
-      subtitle,
-    }))
-  }) : []
+  const flattenedOutline = outlineRes
+    ? Object.keys(outlineRes).flatMap((sectionIndex) => {
+        const section = outlineRes[sectionIndex]
+        return section.content.map((subtitle: string) => ({
+          title: section.title,
+          subtitle,
+        }))
+      })
+    : []
 
   const transcriptWithTitleData = flattenedOutline.map((item, index) => ({
     title: item.title,
@@ -577,10 +627,7 @@ export default function WorkflowStep4() {
   return (
     <div>
       <ToastContainer />
-      {/* <ProjectProgress currentInd={3} contentRef={contentRef} />
-      <div className='pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20'>
-        <h1 className='h1'>Edit Script</h1>
-      </div> */}
+
       {/* flex col container for steps, title, generate slides button etc */}
       <div className='fixed mt-[3rem] flex flex-col w-full bg-Grey-50 justify-center z-10 gap-1 py-[0.75rem] border-b-2'>
         {/* steps bar */}
