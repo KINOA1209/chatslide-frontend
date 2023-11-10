@@ -8,7 +8,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import moment from 'moment'
 // import mixpanel from 'mixpanel-browser'
-import { DeleteResourceIcon } from '@/app/(feature)/my-library/icons'
+import { DeleteResourceIcon } from '@/app/(feature)/my-resources/icons'
 import { CarbonConnect, IntegrationName } from 'carbon-connect'
 
 interface UserFile {

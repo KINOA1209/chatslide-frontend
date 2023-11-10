@@ -110,7 +110,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
                             My Projects
                         </a>
                         <a
-                            href="/my-library"
+                            href="/my-resources"
                             className="block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200"
                             role="menuitem"
                         >

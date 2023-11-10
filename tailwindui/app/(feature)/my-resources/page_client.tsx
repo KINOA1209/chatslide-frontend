@@ -1,7 +1,7 @@
 'use client'
 import MyFiles from '@/components/newFileManagement'
 import React, { useState, useEffect} from 'react'
-import MyResourcePageHeader from '@/app/(feature)/my-library/MyResourcePageHeader'
+import MyResourcePageHeader from '@/app/(feature)/my-resources/MyResourcePageHeader'
 
 export default function FileManagementClient() {
     // State to trigger update
