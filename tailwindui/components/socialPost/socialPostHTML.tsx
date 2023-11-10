@@ -26,7 +26,7 @@ import { templateDispatch } from '@/components/socialPost/socialPostTemplateDisp
 
 export interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div'
-    className: 'subtopic' | 'keywords' | 'content' | 'template'
+    className: 'subtopic' | 'keywords' | 'content' | 'template' | 'images'
     content: string | string[]
 }
 
@@ -35,18 +35,21 @@ export type SlideKeys =
     | 'keywords'
     | 'content'
     | 'template'
+    | 'images'
 
 export class SocialPostSlide {
     subtopic: string
     keywords: string[]
     content: string[]
     template: string
+    images: string[]
 
     constructor() {
         this.subtopic = 'New Slide';
         this.keywords = ['New Slide'];
         this.content = ['Your content here'];
         this.template = 'Col_1_img_0'
+        this.images = ['']
     }
 }
 
@@ -75,7 +78,17 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 
     const res_slide = 
         typeof sessionStorage !== 'undefined'
-        ? sessionStorage.getItem('socialpost')
+        ? sessionStorage.getItem('socialPost')
+        : ''
+
+    const res_images =
+        typeof sessionStorage !== 'undefined'
+        ? JSON.parse(sessionStorage.getItem('socialPostImages') ?? '[]') 
+        : []
+    
+    const cover_title = 
+        typeof sessionStorage !== 'undefined'
+        ? sessionStorage.getItem('topic')
         : ''
 
     const [showLayout, setShowLayout] = useState(false)
@@ -91,8 +104,8 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
     const isFirstRender = useRef(true)
     const [isEditMode, setIsEditMode] = useState(false)
 
-    const presentScale = Math.min(dimensions.width / 960, dimensions.height / 540)
-    const nonPresentScale = Math.min(1, presentScale * 0.9)
+    const presentScale = Math.min(dimensions.width / 450, dimensions.height / 600)
+    const nonPresentScale = Math.min(1, presentScale * 0.6)
 
     useEffect(() => {
         if (unsavedChanges) {
@@ -116,16 +129,29 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
     useEffect(() => {
         if (res_slide) {
             const parse_slide = JSON.parse(res_slide)
-            const slidesArray: SocialPostSlide[] = Object.keys(parse_slide).map(key => {
+            const slidesArray: SocialPostSlide[] = Object.keys(parse_slide).map((key, index) => {
                 const slideData = parse_slide[key]
                 const slide = new SocialPostSlide()
-                slide.subtopic = slideData.subtopic,
-                slide.keywords = slideData.keywords || ['New Slide'],
+                if (index === 0 && res_images && res_images.length > 0){
+                    const randomIndex = Math.floor(Math.random() * res_images.length)
+                    slide.images = [res_images[randomIndex]]
+                }
+                else{
+                    slide.images = ['']
+                }
+                if (index === 0) {
+                    slide.subtopic = cover_title || 'Your topic here'
+                    slide.template = 'First_page_img_1'
+                }
+                else {
+                    slide.subtopic = slideData.subtopic
+                    slide.template = 'Col_1_img_0'
+                }
+                slide.keywords = slideData.keywords || ['Your keywords here'],
                 slide.content = slideData.content || ['Your content here']
-                slide.template = 'Col_1_img_0'
                 return slide
             });
-            console.log(slidesArray)
+            //console.log(slidesArray)
             setSlides(slidesArray);
             setFinalSlides(slidesArray)
         };
@@ -285,6 +311,32 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
         setIsEditMode(!isEditMode)
     }
 
+    function handleAddPage() {
+        const newSlides = [...slides]
+        const newFinalSlides = [...finalSlides]
+        const newSlide = new SocialPostSlide()
+        if (currentSlideIndex != 0) {
+            newSlides.splice(currentSlideIndex, 0, newSlide)
+            newFinalSlides.splice(currentSlideIndex, 0, newSlide)
+        }
+        setSlides(newSlides)
+        setFinalSlides(newFinalSlides)
+    }
+
+    function handleDeletePage() {
+        const newSlides = [...slides]
+        const newFinalSlides = [...finalSlides]
+        if (currentSlideIndex != 0) {
+            newSlides.splice(currentSlideIndex, 1)
+            newFinalSlides.splice(currentSlideIndex, 1)
+
+            if (currentSlideIndex >= newSlides.length) {
+                setCurrentSlideIndex(newSlides.length - 1)
+            }
+        }
+        setSlides(newSlides)
+        setFinalSlides(newFinalSlides)
+    }
 
     const editableTemplateDispatch = (slide: SocialPostSlide, index: number, canEdit: boolean) => 
     templateDispatch(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode);
@@ -317,6 +369,99 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                     slides={slides}
                     goToSlide={goToSlide}
                 />
+
+                {/* 4 buttons for change layout, present, add and add / delete slide */}
+                <div className='absolute -right-[10rem] top-[7rem] flex flex-col justify-between items-center mb-6 gap-[1.25rem] ml-[6rem]'>
+                    <ButtonWithExplanation
+                        button={<PresentButton openPresent={openPresent} />}
+                        explanation='Present'
+                    />
+{/* 
+                    {!isViewing && (currentSlideIndex!=0) &&(
+                        <ButtonWithExplanation
+                            button={
+                                <LayoutChanger
+                                    openModal={openModal}
+                                    showLayout={showLayout}
+                                    closeModal={closeModal}
+                                    currentSlideIndex={currentSlideIndex}
+                                    templateSamples={templateSamples}
+                                    slides={slides}
+                                    handleSlideEdit={handleSlideEdit}
+                                />
+                            }
+                            explanation='Change Layout'
+                        />
+                    )} */}
+
+                    {!isViewing && (currentSlideIndex!=0) && (
+                        <ButtonWithExplanation
+                            button={
+                                <AddSlideButton
+                                    addPage={handleAddPage}
+                                    currentSlideIndex={currentSlideIndex}
+                                />
+                            }
+                            explanation='Add Page'
+                        />
+                    )}
+
+                    {!isViewing && (currentSlideIndex!=0) && (
+                        <ButtonWithExplanation
+                            button={
+                                <DeleteSlideButton
+                                    deletePage={handleDeletePage}
+                                    currentSlideIndex={currentSlideIndex}
+                                />
+                            }
+                            explanation='Delete Page'
+                        />
+                    )}
+                </div>
+
+                {/* White modal for presentation mode */}
+                {present && (
+                    <div
+                        style={{
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'white',
+                            zIndex: 40,
+                        }}
+                    ></div>
+                )}
+            </div>
+            <SlidePagesIndicator
+                currentSlideIndex={currentSlideIndex}
+                slides={slides}
+                goToSlide={goToSlide}
+            />
+
+            {/* preview little image */}
+
+            <div className='max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
+                <div className='w-full py-6 flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
+                    {Array(slides.length)
+                        .fill(0)
+                        .map((_, index) => (
+                            <div
+                                key={`previewContainer` + index.toString()}
+                                className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
+                                onClick={() => setCurrentSlideIndex(index)} // Added onClick handler
+                            >
+                                {/* {index + 1} */}
+                                <SocialPostContainer
+                                    slides={slides}
+                                    currentSlideIndex={index}
+                                    scale={0.1}
+                                    isViewing={true}
+                                />
+                            </div>
+                        ))}
+                </div>
             </div>
         </div>
     )

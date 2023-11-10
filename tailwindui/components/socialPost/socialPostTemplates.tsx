@@ -12,8 +12,8 @@ interface MainSlideProps {
     subtopic: JSX.Element,
     keywords: JSX.Element[] | JSX.Element,
     content: JSX.Element[],
-    //imgs: string[],
-    //update_callback: (imgs: string[]) => void,
+    imgs: string[],
+    update_callback: (imgs: string[]) => void,
     canEdit: boolean,
     autoSave: Function,
 }
@@ -83,9 +83,9 @@ export const Col_2_img_1 = ({subtopic, content, canEdit, autoSave }: MainSlidePr
 }
 
 
-export const First_page_img_1 = ({ subtopic, content, canEdit, autoSave }: MainSlideProps) => {
+export const First_page_img_1 = ({ subtopic, keywords, canEdit, imgs, update_callback, autoSave }: MainSlideProps) => {
 
-    //const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback);
+    const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback);
 
     return (
         <div
@@ -103,11 +103,27 @@ export const First_page_img_1 = ({ subtopic, content, canEdit, autoSave }: MainS
                 // boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
                 position: 'relative',
                 backgroundColor: 'white',
-                padding: '28px',
+                //padding: '28px',
             }}>
-            <div className="w-1/2 flex flex-col justify-between h-full">
-                <div>
-                    {subtopic}
+            <div 
+                id="container_cover_gradient" 
+                className="w-full h-full flex flex-col justify-between"
+                style={{
+                    backgroundImage: `linear-gradient(180deg, #E54BFF 0%, rgba(217, 217, 217, 0.00) 40%), url(${localImgs[0]})`,
+                    backgroundSize: 'cover',
+                }}
+            >
+                <div className="mt-[40px] px-[20px] text-center">{subtopic}</div>
+                <div
+                className="mb-[20px] mx-[auto] text-center"
+                style={{
+                    border: '3px solid #FFF',
+                    borderRadius: '10px',
+                    background: 'rgba(0, 0, 0, 0.4)',
+                    backdropFilter: 'blur(24px)',
+                }}
+                >
+                    {keywords}
                 </div>
             </div>
 
@@ -135,14 +151,13 @@ export const Col_1_img_0 = ({ subtopic, keywords, content, canEdit, autoSave }: 
                 border: 'none',
                 // boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
                 position: 'relative',
-                backgroundColor: 'white',
+                backgroundColor: '#444',
                 padding: '28px',
             }}>
-            <div className="w-full">{keywords}</div>
-            <div className='border w-full h-[400px]'>{subtopic}</div>
-            
-                <div id='container_gradient'className="h-full w-full flex flex-row overflow-hidden gap-[32px] rounded-lg">
-                    <div className="grow p-1">{content}</div>
+            <div className="w-full px-[15px]">{keywords}</div>
+            <div className='w-full px-[15px]'>{subtopic}</div>
+                <div id='container_gradient'className="h-full w-full flex flex-row overflow-hidden gap-[32px] rounded-lg mt">
+                    <div className="grow mt-[10px] mx-[30px] ">{content}</div>
                 </div>
         </div>
     )

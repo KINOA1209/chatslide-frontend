@@ -30,30 +30,30 @@ const SocialPostContainer: React.FC<SlideContainerProps> = ({
     return (
         <div
             id="slideContainer"
-            className={`${isPresenting ? 'fixed top-0 left-0 w-full h-full z-50' : ''}`}
+            className={`${isPresenting ? 'fixed top-0 left-0 w-full h-full z-50 flex justify-center' : 'rounded-md'}`}
             ref={containerRef}
             style={{
                 boxSizing: 'border-box',
                 border: 'none',
                 boxShadow: (isPresenting) ? 'none' : '0 2px 10px rgba(0, 0, 0, 0.5)',
-                width: isPresenting ? '100vw' : `${540 * scale}px`,
-                height: isPresenting ? '100vh' : `${720 * scale}px`,
+                width: isPresenting ? '80vw' : `${450 * scale}px`,
+                height: isPresenting ? '100vh' : `${600 * scale}px`,
             }}
         >
             {/* 0.75 width = 1 height */}
             {slides.length > 0 && (
                 <div
-                    className="slide h-full w-full"
+                    className="slide h-full w-full rounded-md"
                     ref={slideRef}
                     style={{
-                        width: '540px',
-                        height: '720px',
-                        transformOrigin: 'center center',
+                        width: '450px',
+                        height: '600px',
+                        transformOrigin: 'top left',
                         transform: `scale(${scale})`,
                         backgroundSize: 'cover',
                         display: 'flex',
                         flexDirection: 'column',
-                        justifyContent: 'flex-start',
+                        justifyContent: isPresenting ? 'center' : 'flex-start',
                         alignItems: 'flex-start',
                         position: 'relative',
                     }}
