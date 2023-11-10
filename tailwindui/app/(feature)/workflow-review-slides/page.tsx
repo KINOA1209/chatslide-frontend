@@ -59,7 +59,7 @@ export default function WorkflowStep3() {
       <ToastContainer enableMultiContainer containerId={'slides'} />
 
       <div
-        className={`mt-[10rem] max-w-4xl ${transcriptList !== null && transcriptList.length > 0
+        className={`mt-[2rem] max-w-4xl ${transcriptList !== null && transcriptList.length > 0
           ? 'max-w-7xl'
           : ''
           } px-6 flex flex-row relative mx-auto`}
