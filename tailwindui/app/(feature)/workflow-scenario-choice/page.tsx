@@ -8,7 +8,7 @@ const ScenarioChoicePage = () => {
   const router = useRouter() // Initialize the router
   // Function to navigate to the "workflow-scenario-choice" page
   const navigateToScenarioChoice = (scenarioType:string) => {
-    router.push(`/workflow-generate-socialpost?scenarioType=${scenarioType}`) // Specify the route you want to navigate to
+    router.push('/workflow-generate-socialpost') // Specify the route you want to navigate to?scenarioType=${scenarioType}
   }
   const customBreakpointStyles = {
     '@media (max-width: 960px)': {

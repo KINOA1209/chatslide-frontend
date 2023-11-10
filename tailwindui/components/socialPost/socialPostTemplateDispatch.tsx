@@ -1,4 +1,4 @@
-import { h1Style, h2Style, h3Style, h4Style, listStyle } from '@/components/slides/Styles'
+import { h1Style, h2Style, h3Style, h4Style, listStyle } from '@/components/socialPost/Styles'
 import { SocialPostSlide, SlideKeys } from '@/components/socialPost/socialPostHTML'
 import templates, { templateSamples } from '@/components/socialPost/socialPostTemplates'
 import { MathJax, MathJaxContext } from 'better-react-mathjax'
@@ -20,7 +20,7 @@ export const templateDispatch = (
     saveSlides: (slides: SocialPostSlide[]) => void = () => {},  // Replace with your default function if you have one
     setIsEditMode: (isEditMode: boolean) => void = () => {},  // Replace with your default function if you have one
     //handleSlideEdit: (content: string | string[], index: number, tag: SlideKeys) => void = () => {},  // Replace with your default function if you have one
-    //updateImgUrlArray: (slideIndex: number) => (urls: string[]) => void = () => () => {},  // Replace with your default function if you have one
+    updateImgUrlArray: (slideIndex: number) => (urls: string[]) => void = () => () => {},  // Replace with your default function if you have one
     toggleEditMathMode: () => void = () => {},  // Replace with your default function if you have one
 ): JSX.Element => {
     let keyPrefix = ''
@@ -29,17 +29,46 @@ export const templateDispatch = (
     } else if (!canEdit){
         keyPrefix = 'preview'
     }
-    console.log(slide)
     const Template = templates[slide.template as keyof typeof templates]
     if (index === 0) {
+        const keywordsString = slide.keywords.join(' | ')
         return <Template
             autoSave={saveSlides}
             key={keyPrefix + index.toString()}
-            subtopic={<></>}
+            subtopic={
+                <div
+                    key={0}
+                    className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                    contentEditable={canEdit}
+                    onFocus={() => {
+                        if (canEdit) {
+                            setIsEditMode(true);
+                        }
+                    }}
+                    //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
+                    style={h3Style}
+                    dangerouslySetInnerHTML={{ __html: slide.subtopic }}
+                />
+            }
             content={[<></>]}
-            keywords={[<></>]}
-            //update_callback={updateImgUrlArray(index)}
+            keywords={
+                <div
+                    key={1}
+                    className={`rounded-md outline-2 px-[4px] ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                    contentEditable={canEdit}
+                    onFocus={() => {
+                        if (canEdit) {
+                            setIsEditMode(true);
+                        }
+                    }}
+                    //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
+                    style={h4Style}
+                    dangerouslySetInnerHTML={{ __html: keywordsString }}
+                />
+            }
+            update_callback={updateImgUrlArray(index)}
             canEdit={canEdit}
+            imgs={slide.images}
         />
     } 
     else {
@@ -73,7 +102,7 @@ export const templateDispatch = (
                         }
                     }}
                     //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
-                    style={h2Style}
+                    style={h1Style}
                     dangerouslySetInnerHTML={{ __html: slide.keywords }}
                 />
             }
@@ -118,6 +147,7 @@ export const templateDispatch = (
                         }
                     }
                     return (
+                        <>
                         <div
                             key={keyPrefix + index.toString() + '_' + contentIndex.toString()}
                             className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
@@ -136,12 +166,14 @@ export const templateDispatch = (
                             dangerouslySetInnerHTML={{ __html: wrapWithLiTags(content) }}
                         >
                         </div>
+                        <hr className='my-[15px]'></hr>
+                        </>    
                     );
                 })
             }
 
-            //imgs={(slide.images) as string[]}
-            //update_callback={updateImgUrlArray(index)}
+            imgs={(slide.images) as string[]}
+            update_callback={updateImgUrlArray(index)}
         />
     }
 }

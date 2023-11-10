@@ -60,7 +60,7 @@ export default function SocialMediaTemplate() {
       <div className='mt-[10rem] max-w-4xl mx-auto px-6' ref={contentRef}>
         <SocialPostVisualizer />
       </div>
-      
+      <FeedbackButton timeout={30000} />
     </div>
   )
 }

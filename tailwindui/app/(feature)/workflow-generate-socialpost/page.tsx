@@ -39,15 +39,33 @@ interface Project {
   audience: string
 }
 
-interface UserFile {
-  id: string
-  uid: string
-  filename: string
-  thumbnail_name: string
-  timestamp: string
+interface FormatData {
+  topic: string;
+  language: string;
+  project_id: string;
+  youtube_url: string;
+  resources: string[];
+  model_name: string;
+  post_style: string | null;
 }
 
-export default function Topic() {
+interface OutlineResponse {
+  data:{
+    foldername: string;
+    project_id: string;
+    res: string;
+  }
+}
+
+interface ImageResponse {
+  images: string[];
+}
+
+interface IllustrationResponse{
+  illustration: string[];
+}
+
+export default function Topic_SocialPost() {
   const contentRef = useRef<HTMLDivElement>(null)
   const [showPopup, setShowPopup] = useState(false)
   const [user, setUser] = useState(null)
@@ -68,8 +86,8 @@ export default function Topic() {
   const [showSupportivePopup, setSupportivePopup] = useState(false)
   const [selectedFileList, setselectedFileList] = useState([])
   const [selectedFileListName, setselectedFileListName] = useState<string[]>([])
-  const searchParams = useSearchParams();
-  const scenarioType = searchParams.get('scenarioType');
+  //const searchParams = useSearchParams();
+  //const scenarioType = searchParams.get('scenarioType');
 
   // bind form data between input and sessionStorage
   const [topic, setTopic] = useState('')
@@ -87,11 +105,6 @@ export default function Topic() {
     typeof window !== 'undefined' && sessionStorage.youtube != undefined
       ? sessionStorage.youtube
       : ''
-  )
-  const [addEquations, setAddEquations] = useState(
-    typeof window !== 'undefined' && sessionStorage.addEquations != undefined
-      ? JSON.parse(sessionStorage.addEquations)
-      : false
   )
 
   useEffect(() => {
@@ -142,21 +155,6 @@ export default function Topic() {
     e.preventDefault()
     openFile()
   }
-  const handleTopicSuggestionClick = (
-    topic: string,
-    event: MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault()
-    setTopic(topic)
-  }
-
-  const handleAudienceSuggestionClick = (
-    audience: string,
-    event: MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault()
-    setAudience(audience)
-  }
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -178,84 +176,102 @@ export default function Topic() {
       youtube_url: (event.target as HTMLFormElement).youtube.value,
       resources: JSON.parse(sessionStorage.getItem('resources') || '[]'),
       model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
-      post_style: scenarioType,
+      post_style: 'casual_topic',
     }
-
     sessionStorage.setItem('topic', formData.topic)
-   // sessionStorage.setItem('audience', formData.audience)
     sessionStorage.setItem('language', formData.language)
-    //sessionStorage.setItem('addEquations', formData.addEquations)
 
     try {
-      const { userId, idToken: token } =
-        await AuthService.getCurrentUserTokenAndId()
-      const response = await fetch('/api/social_posts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(formData),
-      })
+      const outlinesJson = await callSocialPost(formData as FormatData)
+      const searchImagesResponse = await callSearchImages(JSON.stringify(formData.topic))
+      setIsSubmitting(false)
 
-      if (response.ok) {
-        console.log(response)
-        const outlinesJson = await response.json()
-        setIsSubmitting(false)
-        // Handle the response data here
-        console.log(outlinesJson)
-        console.log(outlinesJson.data)
-        // cookies doesn't work because it needs 'use server'
-        // cookies().set("topic", outlinesJson.data.audience);
+      // Store the data in session storage
+      sessionStorage.setItem('outline', JSON.stringify(outlinesJson.data))
+      sessionStorage.setItem('foldername', outlinesJson.data.foldername)
+      sessionStorage.setItem('project_id', outlinesJson.data.project_id)
+      sessionStorage.setItem('socialPost', outlinesJson.data.res)
+      sessionStorage.setItem('socialPostImages', JSON.stringify(searchImagesResponse.data.images))
+      // sessionStorage.setItem(
+      //   'pdf_images',
+      //   JSON.stringify(outlinesJson.data.pdf_images)
+      // )
 
-        // Store the data in session storage
-        sessionStorage.setItem('outline', JSON.stringify(outlinesJson.data))
-        console.log(outlinesJson.data.foldername)
-        console.log(outlinesJson.data.project_id)
-        sessionStorage.setItem('foldername', outlinesJson.data.foldername)
-        sessionStorage.setItem('project_id', outlinesJson.data.project_id)
-        sessionStorage.setItem('socialpost', outlinesJson.data.res)
-        // sessionStorage.setItem(
-        //   'pdf_images',
-        //   JSON.stringify(outlinesJson.data.pdf_images)
-        // )
+      // Retrieve the existing resources from sessionStorage and parse them
+      const resources: string[] = JSON.parse(
+        sessionStorage.getItem('resources') || '[]'
+      )
 
-        // Retrieve the existing resources from sessionStorage and parse them
-        const resources: string[] = JSON.parse(
-          sessionStorage.getItem('resources') || '[]'
-        )
+      // Add the new YouTube URL to the resources list if it's not empty
+      // const youtube_id: string = outlinesJson.data.youtube_id
 
-        // Add the new YouTube URL to the resources list if it's not empty
-        // const youtube_id: string = outlinesJson.data.youtube_id
+      // if (youtube_id.trim() !== '') {
+      //   resources.push(youtube_id)
+      // }
 
-        // if (youtube_id.trim() !== '') {
-        //   resources.push(youtube_id)
-        // }
+      // Convert the updated list to a JSON string
+      const updatedResourcesJSON: string = JSON.stringify(resources)
 
-        // Convert the updated list to a JSON string
-        const updatedResourcesJSON: string = JSON.stringify(resources)
+      // Store the updated JSON string back in sessionStorage
+      sessionStorage.setItem('resources', updatedResourcesJSON)
 
-        // Store the updated JSON string back in sessionStorage
-        sessionStorage.setItem('resources', updatedResourcesJSON)
-
-        // Redirect to a new page with the data
-        router.push('/workflow-review-socialpost')
-      } else if (response.status == 402) {
-        setShowPaymentModal(true)
-        setIsSubmitting(false)
-      } else {
-        alert(
-          `Server is busy now. Please try again later. Reference code: ` +
-            sessionStorage.getItem('project_id')
-        )
-        // alert("Request failed: " + response.status);
-        setIsSubmitting(false)
-      }
-    } catch (error) {
+      // Redirect to a new page with the data
+      router.push('/workflow-review-socialpost')
+    } 
+    catch (error) {
       console.error('Error:', error)
       setIsSubmitting(false)
     }
   }
+
+  // api/social_posts helper function
+  async function callSocialPost(formData: FormatData) {
+    const { userId, idToken: token } =
+        await AuthService.getCurrentUserTokenAndId()
+    const response = await fetch('/api/social_posts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(formData)
+    })
+    if (!response.ok){
+      if (response.status == 402){
+        setShowPaymentModal(true)
+        setIsSubmitting(false)
+      }
+      else{
+        alert(
+          `Server is busy now. Please try again later. Reference code: ` +
+          sessionStorage.getItem('project_id')
+        )
+        // alert("Request failed: " + response.status);
+        setIsSubmitting(false)
+      }
+    }
+    return await response.json()
+  }
+
+  // api/search_images helper function
+  async function callSearchImages(search_keyword:string) {
+    const { userId, idToken: token } =
+        await AuthService.getCurrentUserTokenAndId()
+    const response = await fetch('/api/search_images', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({search_keyword: search_keyword })
+    })
+    if (!response.ok){
+      const errorData = await response.text();
+      throw new Error(`API call failed with status ${response.status}: ${errorData}`);
+    }
+    return await response.json()
+  }
+
 
   const handleSelectResources = (resource: Array<string>) => {
     sessionStorage.setItem('resources', JSON.stringify(resource))
@@ -279,16 +295,6 @@ export default function Topic() {
         return correspondingFile ? correspondingFile.filename : 'Unkown File'
       })
       setselectedFileListName(fileNamesArray)
-    }
-  }
-
-  const audienceDropDown = (value: string) => {
-    if (value === 'other') {
-      setAudience('')
-      setShowAudienceInput(true)
-    } else {
-      setShowAudienceInput(false)
-      setAudience(value)
     }
   }
 
@@ -634,28 +640,6 @@ export default function Topic() {
                   </div>
                 </div>
               </div>
-
-              {/* check equation section */}
-              {/* <div className='flex flex-wrap -mx-3 mb-4'>
-                <div className='w-full px-3 mt-2 flex flex-row'>
-                  <div className='flex items-center'>
-                    <input
-                      type='checkbox'
-                      id='addEquations'
-                      className='form-checkbox text-gray-800'
-                      checked={addEquations} // Use 'checked' instead of 'value'
-                      onChange={(e) => setAddEquations(e.target.checked)}
-                    />
-                  </div>
-                  <label
-                    className=' ml-2 block text-gray-800 text-sm font-medium'
-                    htmlFor='addEquations'
-                  >
-                    Select to <b>add equations and formulas</b> to my content,
-                    recommended for Math/Science subjects
-                  </label>
-                </div>
-              </div> */}
             </div>
           </div>
 

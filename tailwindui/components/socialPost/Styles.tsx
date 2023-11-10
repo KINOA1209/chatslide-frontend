@@ -1,28 +1,31 @@
-// title
+// keywords
 const h1Style: React.CSSProperties = {
-    fontSize: '30pt',
-    fontWeight: 'bold',
-    color: '#2563EB',
-};
-
-// topic
-const h2Style: React.CSSProperties = {
     fontSize: '15pt',
     fontWeight: 'bold',
-    marginTop: '10px',
-    color: '#2563EB'
+    color: '#ABBEFF',
 };
 
 // subtopic
-const h3Style: React.CSSProperties = {
-    fontSize: '20pt',
+const h2Style: React.CSSProperties = {
+    fontSize: '22pt',
     fontWeight: 'bold',
+    marginTop: '10px',
+    color: '#FBFBFB'
 };
 
-// content
+// cover page title
+const h3Style: React.CSSProperties = {
+    fontSize: '45pt',
+    fontWeight: 'bold',
+    color: '#FFF',
+    transform: 'skew(-6deg, 0deg)'
+};
+
+// cover page keywords
 const h4Style: React.CSSProperties = {
-    fontSize: '20pt',
-    color: 'rgb(180,180,180)',
+    fontSize: '11pt',
+    fontWeight: 'bold',
+    color: '#FFF',
 };
 
 
@@ -31,8 +34,7 @@ const listStyle: React.CSSProperties = {
     display: 'list-item',
     listStyleType: 'disc',
     listStylePosition: 'inside',
-    fontSize: '18pt',
-    marginLeft: '20px',
+    fontSize: '11pt',
 }
 
 export { h1Style, h2Style, h3Style, h4Style, listStyle };
