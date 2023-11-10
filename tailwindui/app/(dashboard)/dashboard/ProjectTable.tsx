@@ -97,7 +97,7 @@ const ProjectTable: React.FC<Props> = ({
               <span className='ml-1'>{project.task}</span>
             </div>
             <div
-              className='p-2 flex cursor-pointer items-center text-start border-b-2 text-ellipsis overflow-hidden text-gray-600 text-[17px] font-bold font-creato-medium leading-normal tracking-wide'
+              className='p-2 flex cursor-pointer items-center text-start border-b-2 text-ellipsis overflow-hidden text-[17px] font-creato-medium leading-normal tracking-wide'
               onClick={() => onProjectClick(project.id)}
             >
               {project.name}
