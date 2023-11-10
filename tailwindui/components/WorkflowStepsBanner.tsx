@@ -3,6 +3,7 @@ import React, { FunctionComponent } from 'react';
 import {DrLambdaBackButton} from '@/components/button/DrlambdaButton';
 import ProjectProgress from '@/components/newWorkflowSteps';
 import DrlambdaButton from '@/components/button/DrlambdaButton';
+import { GPTToggleWithExplanation } from './button/NewWorkflowGPTToggle';
 
 interface YourComponentProps {
   currentIndex: number;
@@ -11,7 +12,9 @@ interface YourComponentProps {
   isPaidUser: boolean;
   contentRef: React.RefObject<HTMLDivElement>;
   nextIsPaidFeature?: boolean;
-
+  showGPTToggle?: boolean;
+  nextText?: string;
+  setIsGpt35?: (isGpt35: boolean) => void;
 }
 
 const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
@@ -21,8 +24,9 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
   isPaidUser,
   contentRef,
   nextIsPaidFeature = false,
-
-  
+  showGPTToggle = false,
+  nextText = 'Next',
+  setIsGpt35,
 }) => {
 
   function getPrevHref(){
@@ -40,7 +44,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
   }
 
   return (
-    <div className='fixed mt-[3rem] flex items-center w-full bg-Grey-50 z-10 py-[0.75rem] border-b-2 px-[5rem]'>
+    <div className='mt-[3rem] flex items-end w-full bg-Grey-50 z-10 pt-[4rem] pb-[1rem] border-b-2 px-[5rem]'>
       {/* flex row container for backlink, title*/}
       <div className="absolute left-10">
         <DrLambdaBackButton href={getPrevHref()} />
@@ -51,12 +55,14 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
       </div>
 
       <div className="absolute right-10">
+
+        { showGPTToggle && typeof setIsGpt35!=='undefined' && <GPTToggleWithExplanation setIsGpt35={setIsGpt35} />}
         <DrlambdaButton 
           isSubmitting={isSubmitting} 
           isPaidUser={isPaidUser} 
           isPaidFeature={nextIsPaidFeature} 
           onClick={e => setIsSubmitting(true)}>
-          {!isSubmitting ? 'Next' : 'Writing Scripts'}
+          {nextText}
         </DrlambdaButton>
       </div>
 

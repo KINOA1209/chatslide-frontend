@@ -1,10 +1,11 @@
 'use client'
 
 
-import React, { useEffect, useState } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import NewWorkflowToggle from './NewWorkflowToggle'
 import UserService from '../utils/UserService'
 import PaywallModal from '@/components/forms/paywallModal'
+import { QuestionExplainIcon } from '@/app/(feature)/icons'
 
 interface GPTToggleProps {
   setIsGpt35: (value: boolean) => void
@@ -19,7 +20,7 @@ const GPTToggle: React.FC<GPTToggleProps> = ({ setIsGpt35 }) => {
     return storedValue ? JSON.parse(storedValue) : true
   })
   useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       const isPaidUser = await UserService.isPaidUser()
       setIsPaidUser(isPaidUser)
     })()
@@ -66,4 +67,49 @@ const GPTToggle: React.FC<GPTToggleProps> = ({ setIsGpt35 }) => {
   )
 }
 
-export default GPTToggle
+export default GPTToggle;
+
+interface GPTToggleWithExplanationProps {
+  setIsGpt35: (isGpt35: boolean) => void;
+  // Add any other props you might need
+}
+
+export const GPTToggleWithExplanation: FunctionComponent<GPTToggleWithExplanationProps> = ({ setIsGpt35 }) => {
+  const [showPopup, setShowPopup] = useState(false);
+
+  const openPopup = () => setShowPopup(true);
+  const closePopup = () => setShowPopup(false);
+
+  return (
+    <div>
+      {/* gpt model switch area */}
+      <div className='self-end flex flex-row gap-4 cursor-pointer'>
+        <GPTToggle setIsGpt35={setIsGpt35} />
+        <div className='cursor-pointer' onClick={openPopup}>
+          <QuestionExplainIcon />
+        </div>
+      </div>
+
+      {/* Popup for explaining model difference */}
+      {showPopup && (
+        <div className='fixed top-[15%] left-[70%] w-[27rem] h-48 bg-gradient-to-l from-gray-950 to-slate-600 rounded-md shadow backdrop-blur-2xl flex flex-col'>
+          {/* Popup content */}
+          <div onClick={closePopup} className='text-gray-50 cursor-pointer self-end px-4 py-2'>
+            Close
+          </div>
+          {/* columns for two models */}
+          <div className='grid grid-cols-2 gap-8'>
+            {/* Column for GPT-3.5 */}
+            <div className='flex flex-col justify-center items-center border-r-2 border-black/25'>
+              {/* Add content for GPT-3.5 */}
+            </div>
+            {/* Column for GPT-4.0 */}
+            <div className='flex flex-col justify-center items-center'>
+              {/* Add content for GPT-4.0 */}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};

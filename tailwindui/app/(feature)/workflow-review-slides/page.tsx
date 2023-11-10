@@ -19,11 +19,6 @@ export default function WorkflowStep3() {
       ? sessionStorage.getItem('slide_files') || []
       : []
   const contentRef = useRef<HTMLDivElement>(null)
-  // fetch isGpt35 from sessionStorage
-  const isGpt35 =
-    typeof sessionStorage !== 'undefined'
-      ? JSON.parse(sessionStorage.getItem('isGpt35') || 'true')
-      : true
   // script data
   const transcriptData =
     typeof sessionStorage !== 'undefined'
@@ -32,6 +27,9 @@ export default function WorkflowStep3() {
   const transcripts = transcriptData ? JSON.parse(transcriptData) : []
   const [transcriptList, setTranscriptList] = useState<string[]>(transcripts)
   const [isPaidUser, setIsPaidUser] = useState(false);
+  const [isGpt35, setIsGpt35] = useState(typeof sessionStorage !== 'undefined'
+    ? JSON.parse(sessionStorage.getItem('isGpt35') || 'true')
+    : true)
 
   useEffect(() => {
     ; (async () => {
@@ -46,12 +44,22 @@ export default function WorkflowStep3() {
     <div className='bg-gradient-to-b from-[#6A7EF9] to-[#415AF1]'>
       {/* flex col container for steps, title, etc */}
       
-      <WorkflowStepsBanner currentIndex={3} isSubmitting={isSubmitting} setIsSubmitting={setIsSubmitting} isPaidUser={isPaidUser} contentRef={contentRef} nextIsPaidFeature={false} />
+      <WorkflowStepsBanner 
+        currentIndex={2} 
+        isSubmitting={isSubmitting} 
+        setIsSubmitting={setIsSubmitting} 
+        isPaidUser={isPaidUser} 
+        contentRef={contentRef} 
+        nextIsPaidFeature={true} 
+        nextText={!isSubmitting? 'Next' : 'Writing Scripts'}
+        showGPTToggle={true}
+        setIsGpt35={setIsGpt35}
+      />
 
       <ToastContainer enableMultiContainer containerId={'slides'} />
 
       <div
-        className={`mt-[10rem] max-w-4xl ${transcriptList !== null && transcriptList.length > 0
+        className={`mt-[2rem] max-w-4xl ${transcriptList !== null && transcriptList.length > 0
           ? 'max-w-7xl'
           : ''
           } px-6 flex flex-row relative mx-auto`}
