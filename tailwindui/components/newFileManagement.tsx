@@ -161,7 +161,7 @@ const FileManagement: React.FC<UserFileList> = ({
             {thumbnail ? getThumbnail(thumbnail) : getIcon(filename)}
           </div>
           {/* filename */}
-          <div className='grow text-ellipsis mx-4 overflow-hidden text-gray-600 text-[17px] font-bold font-creato-medium leading-normal tracking-wide'>
+          <div className='grow text-ellipsis mx-4 overflow-hidden text-[17px] font-creato-medium leading-normal tracking-wide'>
             {filename}
           </div>
         </div>
