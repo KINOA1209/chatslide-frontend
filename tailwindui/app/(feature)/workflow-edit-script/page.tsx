@@ -758,7 +758,7 @@ export default function WorkflowStep4() {
           <ol className='list-none px-4 py-4'>
             {titles.map((title, index) => (
               <li
-                className='pb-2 opacity-60 text-neutral-900 text-s font-medium font-creato-medium leading-normal tracking-tight cursor-pointer hover:text-black  hover:rounded-md hover:bg-gray-200'
+                className='pb-2 opacity-60 text-neutral-900 text-s tracking-wider font-medium font-creato-medium leading-normal tracking-tight cursor-pointer hover:text-black  hover:rounded-md hover:bg-gray-200'
                 key={index}
                 onClick={() => scrollToSection(index)}
               >
