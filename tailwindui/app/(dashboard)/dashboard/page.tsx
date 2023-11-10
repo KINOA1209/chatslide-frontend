@@ -8,6 +8,7 @@ import AuthService from '@/components/utils/AuthService'
 import { Dialog, Transition } from '@headlessui/react'
 import { useRouter } from 'next/navigation'
 import ProjectTable from './ProjectTable'
+import DrlambdaButton from '@/components/button/DrlambdaButton'
 // interface Project {
 //   id: number
 //   name: string
@@ -99,8 +100,8 @@ export default function Dashboard() {
       if (response.ok) {
         const data = await response.json()
         console.log('project data: ', data.projects)
-        data.projects.forEach((item:Project) => {
-          if (item.task === null){
+        data.projects.forEach((item: Project) => {
+          if (item.task === null) {
             item.task = 'presentation';
           }
         })
@@ -202,26 +203,27 @@ export default function Dashboard() {
     <section className='grow flex flex-col h-full'>
       <ToastContainer />
       {/* top background container of my projects title text and  */}
-      <div className='bg-gray-200 pt-16 md:pt-18 flex justify-center '>
+      <div className='mt-[3rem] flex items-end w-full bg-Grey-50 z-10 pt-[4rem] border-b-2 px-[5rem]'>
         {/* flex container controlling max width */}
-        <div className='w-full h-[6.25rem] max-w-7xl flex flex-wrap items-center justify-center lg:items-end lg:justify-between '>
-           {/* my project title text */}
-           <div className='w-full lg:w-40 rounded-md justify-center items-center inline-flex'>
+        <div className='w-full max-w-7xl flex flex-wrap items-center justify-center lg:items-end lg:justify-between '>
+          {/* my project title text */}
+          <div className='w-full lg:w-40 rounded-md justify-center items-center inline-flex'>
             <div className='text-neutral-900 text-base font-bold font-creato-medium leading-10 tracking-wide border-black lg:border-b-2'>
               My Projects
             </div>
           </div>
-          
+
           {/* create new project button */}
-          <div className='h-8 px-5 py-1.5 bg-button-color rounded-3xl justify-center items-center inline-flex self-start whitespace-no-wrap'>
-            <div
-              className='text-center text-zinc-100 text-sm font-medium font-creato-medium leading-none tracking-tight cursor-pointer'
+          <div className="absolute right-10 pb-[1rem] ">
+
+            <DrlambdaButton
+              isPaidFeature={false}
               onClick={handleStartNewProject}
             >
-              Create New Project (20⭐️)
-            </div>
+              Start New Project
+            </DrlambdaButton>
           </div>
-         
+
         </div>
       </div>
 
@@ -235,9 +237,9 @@ export default function Dashboard() {
           onProjectClick={handleProjectClick}
           onDelete={handleDelete}
         />) :
-        (
-          <div className='flex items-center mt-[1rem] md:mt-[6rem] justify-center text-gray-600 text-[14px] md:text-[20px] font-normal font-creato-medium leading-normal tracking-wide'>You haven't created any project yet.</div>
-        )}
+          (
+            <div className='flex items-center mt-[1rem] md:mt-[6rem] justify-center text-gray-600 text-[14px] md:text-[20px] font-normal font-creato-medium leading-normal tracking-wide'>You haven't created any project yet.</div>
+          )}
       </div>
 
       {/* Delete modal */}
