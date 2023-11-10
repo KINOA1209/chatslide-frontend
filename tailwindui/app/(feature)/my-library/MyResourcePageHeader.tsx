@@ -28,7 +28,7 @@ const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
           {/* my project title text */}
           <div className='w-full lg:w-40 rounded-md justify-center items-center inline-flex'>
             <div className='text-neutral-900 text-base font-bold font-creato-medium leading-10 tracking-wide border-black lg:border-b-2'>
-              My Projects
+              My Resources
             </div>
           </div>
 
