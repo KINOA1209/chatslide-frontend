@@ -470,7 +470,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
                                         <path d="M6.28564 9.75977H9.71422" stroke="#121212" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
                                 </div>
-                                My Library
+                                My Resources
                             </button>
                             <button className='cursor-pointer whitespace-nowrap py-2 flex flex-row'
                                 onClick={e => { setSelectedQueryMode(ImgQueryMode.SEARCH); setSearchResult([]); setKeyword(''); }}

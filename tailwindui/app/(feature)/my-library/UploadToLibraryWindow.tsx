@@ -364,9 +364,9 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
         ></div>
         {/* pop up modal box container */}
         <div id='main_container' className='w-full md:w-[34rem] h-[35rem] relative rounded-lg flex flex-col items-center'>
-          {/* Upload to my library text */}
+          {/* Upload to my resources text */}
           <div className='pt-[1.25rem] w-[444px] text-center text-gray-700 text-lg font-bold font-creato-medium leading-normal tracking-wide'>
-            Upload to My Library
+            Upload to My Resources
           </div>
           {/* flex row container for two tabs */}
           <div className='flex flex-row w-full px-5'>

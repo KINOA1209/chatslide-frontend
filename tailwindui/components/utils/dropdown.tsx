@@ -114,7 +114,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
                             className="block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200"
                             role="menuitem"
                         >
-                            My Library
+                            My Resources
                         </a>
                         <a
                             href="/account"
