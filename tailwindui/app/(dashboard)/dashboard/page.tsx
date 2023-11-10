@@ -43,10 +43,6 @@ export default function Dashboard() {
     setIsOpen(false)
   }
 
-  function openModal() {
-    setIsOpen(true)
-  }
-
   // const projectsPerPage = 10;
   // const totalPages = Math.ceil(projects.length / projectsPerPage);
   // const indexOfLastProject = currentPage * projectsPerPage;
@@ -57,14 +53,6 @@ export default function Dashboard() {
 
   // place holder data
   // const currentProjects = fakeProjects
-
-  const goToNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1)
-  }
-
-  const goToPreviousPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1)
-  }
 
   useEffect(() => {
     if (contentRef.current) {
@@ -84,6 +72,7 @@ export default function Dashboard() {
     fetchUserAndProject()
   }, [])
 
+  // get projects from backend
   const handleRequest = async (token: string) => {
     const headers = new Headers()
     if (token) {
@@ -199,8 +188,72 @@ export default function Dashboard() {
     // router.push('/workflow-type-choice')
   }
 
+  const deleteModal = (
+    <Dialog as='div' className='relative z-10' onClose={closeModal}>
+      <Transition.Child
+        as={Fragment}
+        enter='ease-out duration-300'
+        enterFrom='opacity-0'
+        enterTo='opacity-100'
+        leave='ease-in duration-200'
+        leaveFrom='opacity-100'
+        leaveTo='opacity-0'
+      >
+        <div className='fixed inset-0 bg-black bg-opacity-25' />
+      </Transition.Child>
+
+      {/* delete project pop up */}
+      <div className='fixed inset-0 overflow-y-auto'>
+        <div className='flex min-h-full items-center justify-center p-4 text-center'>
+          <Transition.Child
+            as={Fragment}
+            enter='ease-out duration-300'
+            enterFrom='opacity-0 scale-95'
+            enterTo='opacity-100 scale-100'
+            leave='ease-in duration-200'
+            leaveFrom='opacity-100 scale-100'
+            leaveTo='opacity-0 scale-95'
+          >
+            <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
+              <Dialog.Title
+                as='h3'
+                className='text-lg font-medium leading-6 text-gray-900'
+              >
+                Are you sure you want to delete this project?
+              </Dialog.Title>
+              <div className='mt-2'>
+                <p className='text-sm text-gray-500'>
+                  Deleted Project cannot be restored.
+                </p>
+              </div>
+
+              <div className='flex'>
+                <div className='flex justify-center mt-4'>
+                  <button
+                    className='bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded mr-2 btn-size'
+                    onClick={confirmDelete}
+                  >
+                    Confirm
+                  </button>
+                </div>
+                <div className='flex justify-center mt-4'>
+                  <button
+                    className='bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded mr-2 btn-size'
+                    onClick={closeModal}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </Dialog.Panel>
+          </Transition.Child>
+        </div>
+      </div>
+    </Dialog>
+  )
+
   return (
-    <section className='grow flex flex-col h-full'>
+    <section className='grow flex flex-col'>
       <ToastContainer />
       {/* top background container of my projects title text and button */}
       <div className='mt-[3rem] flex items-end w-full bg-Grey-50 z-10 pt-[4rem] border-b-2 px-[5rem]'>
@@ -215,7 +268,6 @@ export default function Dashboard() {
 
           {/* create new project button */}
           <div className="absolute right-10 pb-[1rem] ">
-
             <DrlambdaButton
               isPaidFeature={false}
               onClick={handleStartNewProject}
@@ -223,13 +275,12 @@ export default function Dashboard() {
               Start New Project
             </DrlambdaButton>
           </div>
-
         </div>
       </div>
 
       {/* projects details area */}
       <div
-        className='w-full px-8 pt-8 flex flex-col grow overflow-y-auto bg-gray-100'
+        className='pb-[1rem] w-full px-8 pt-8 flex flex-col grow overflow-auto'
         ref={contentRef}
       >
         {projects && projects.length > 0 ? (<ProjectTable
@@ -244,67 +295,7 @@ export default function Dashboard() {
 
       {/* Delete modal */}
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as='div' className='relative z-10' onClose={closeModal}>
-          <Transition.Child
-            as={Fragment}
-            enter='ease-out duration-300'
-            enterFrom='opacity-0'
-            enterTo='opacity-100'
-            leave='ease-in duration-200'
-            leaveFrom='opacity-100'
-            leaveTo='opacity-0'
-          >
-            <div className='fixed inset-0 bg-black bg-opacity-25' />
-          </Transition.Child>
-
-          {/* delete project pop up */}
-          <div className='fixed inset-0 overflow-y-auto'>
-            <div className='flex min-h-full items-center justify-center p-4 text-center'>
-              <Transition.Child
-                as={Fragment}
-                enter='ease-out duration-300'
-                enterFrom='opacity-0 scale-95'
-                enterTo='opacity-100 scale-100'
-                leave='ease-in duration-200'
-                leaveFrom='opacity-100 scale-100'
-                leaveTo='opacity-0 scale-95'
-              >
-                <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
-                  <Dialog.Title
-                    as='h3'
-                    className='text-lg font-medium leading-6 text-gray-900'
-                  >
-                    Are you sure you want to delete this project?
-                  </Dialog.Title>
-                  <div className='mt-2'>
-                    <p className='text-sm text-gray-500'>
-                      Deleted Project cannot be restored.
-                    </p>
-                  </div>
-
-                  <div className='flex'>
-                    <div className='flex justify-center mt-4'>
-                      <button
-                        className='bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded mr-2 btn-size'
-                        onClick={confirmDelete}
-                      >
-                        Confirm
-                      </button>
-                    </div>
-                    <div className='flex justify-center mt-4'>
-                      <button
-                        className='bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded mr-2 btn-size'
-                        onClick={closeModal}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
+        {deleteModal}
       </Transition>
     </section>
   )

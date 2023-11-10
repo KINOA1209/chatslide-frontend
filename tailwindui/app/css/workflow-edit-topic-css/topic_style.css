@@ -30,6 +30,7 @@
     font-family: 'Creato Display', sans-serif;
     font-weight: 700;
     font-size: 16px;
+    letter-spacing: 0.5px
 }
 
 #after1 {
@@ -42,6 +43,7 @@
     font-family: 'Creato Display', sans-serif;
     font-weight: 700;
     font-size: 16px;
+    letter-spacing: 0.5px
 }
 
 #after2 {
@@ -73,6 +75,7 @@
     font-family: 'Creato Display', sans-serif;
     font-weight: 700;
     font-size: 14px;
+    letter-spacing: 0.5px
 }
 
 
@@ -134,12 +137,14 @@
     display: flex;
     align-items: center;
     gap:2%;
+    letter-spacing: 0.5px
 }
 
 .language {
     display: flex;
     align-items: center;
     gap:2%;
+    letter-spacing: 0.5px
 }
 
 .audience_container {
@@ -179,7 +184,9 @@
     margin: 0;
     font-family: 'Creato Display', sans-serif;
     font-weight: 700;
+    font-size: 14px;
     display: inline;
+    letter-spacing: 0.5px
 }
 
 .youtube_container {
