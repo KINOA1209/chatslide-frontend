@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import CSS from 'csstype'
 import AuthService from '@/components/utils/AuthService'
 import { RightArrowIcon } from '@/app/(feature)/icons'
+import { NewStepIcon, CurrentStepIcon, FinishedStepIcon } from './icons';
 
 interface StepProps {
   id: number
@@ -72,8 +73,8 @@ const OneStep: React.FC<StepProps> = ({
         >
           {id}
         </div> */}
-        <span className='text-neutral-800 text-sm font-medium font-creato-bold leading-normal tracking-tight mx-3'>
-          {desc}
+        <span className='text-neutral-800 text-sm font-medium font-creato-bold leading-normal tracking-tight mx-3 overflow-x-auto inline-flex items-center gap-1'>
+          <CurrentStepIcon />{desc}
         </span>
         {renderRightArrow}
       </div>
@@ -90,9 +91,9 @@ const OneStep: React.FC<StepProps> = ({
           {id}
         </div> */}
         <span
-          className={` mx-3 text-gray-600 text-sm font-normal font-creato-medium leading-normal tracking-tight ${textClass}`}
+          className={` mx-3 text-gray-600 text-sm font-normal font-creato-medium leading-normal tracking-tight ${textClass} overflow-x-auto inline-flex items-center gap-1`}
         >
-          {desc}
+          <FinishedStepIcon />{desc}
         </span>
         {renderRightArrow}
       </div>
@@ -106,8 +107,8 @@ const OneStep: React.FC<StepProps> = ({
         >
           {id}
         </div> */}
-        <span className='text-gray-600 text-sm font-normal font-creato-medium leading-normal tracking-tight mx-3 '>
-          {desc}
+        <span className='text-gray-600 text-sm font-normal font-creato-medium leading-normal tracking-tight mx-3 overflow-x-auto inline-flex items-center gap-1'>
+          <NewStepIcon />{desc}
         </span>
         {renderRightArrow}
       </div>
@@ -121,8 +122,8 @@ const OneStep: React.FC<StepProps> = ({
         >
           {id}
         </div> */}
-        <span className='text-gray-600 text-sm font-normal font-creato-medium leading-normal tracking-tight mx-3'>
-          {desc}
+        <span className='text-gray-600 text-sm font-normal font-creato-medium leading-normal tracking-tight mx-3 overflow-x-auto inline-flex items-center gap-1'>
+          <NewStepIcon />{desc}
         </span>
         {renderRightArrow}
       </div>

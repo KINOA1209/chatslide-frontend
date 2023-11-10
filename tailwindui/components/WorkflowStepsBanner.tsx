@@ -4,6 +4,7 @@ import {DrLambdaBackButton} from '@/components/button/DrlambdaButton';
 import ProjectProgress from '@/components/newWorkflowSteps';
 import DrlambdaButton from '@/components/button/DrlambdaButton';
 import { GPTToggleWithExplanation } from './button/NewWorkflowGPTToggle';
+import { NewStepIcon, CurrentStepIcon, FinishedStepIcon } from './icons';
 
 interface YourComponentProps {
   currentIndex: number;
