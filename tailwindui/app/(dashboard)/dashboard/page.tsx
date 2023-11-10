@@ -43,10 +43,6 @@ export default function Dashboard() {
     setIsOpen(false)
   }
 
-  function openModal() {
-    setIsOpen(true)
-  }
-
   // const projectsPerPage = 10;
   // const totalPages = Math.ceil(projects.length / projectsPerPage);
   // const indexOfLastProject = currentPage * projectsPerPage;
@@ -57,14 +53,6 @@ export default function Dashboard() {
 
   // place holder data
   // const currentProjects = fakeProjects
-
-  const goToNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1)
-  }
-
-  const goToPreviousPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1)
-  }
 
   useEffect(() => {
     if (contentRef.current) {
@@ -84,6 +72,7 @@ export default function Dashboard() {
     fetchUserAndProject()
   }, [])
 
+  // get projects from backend
   const handleRequest = async (token: string) => {
     const headers = new Headers()
     if (token) {
