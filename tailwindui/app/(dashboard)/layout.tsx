@@ -12,14 +12,16 @@ export default function DashBoardLayout({
   children: React.ReactNode
 }) {
   return (
-    <>
+    <main className='flex flex-col min-h-[100vh]'>
+      <div
+        className='w-[100vw] h-[100vh] -z-1 fixed bg-[#F4F4F4]'
+      ></div>
       <Header loginRequired={true} isLanding={false} refList={[]} />
-      <main className="flex flex-col" style={{ minHeight: '100vh' }}>
-        <div className='grow flex flex-col'>
-          {children}
-        </div>
-        <WorkflowFooter />
-      </main>
-    </>
+      <section className='grow flex flex-col'>
+        {/* Content */}
+        {children}
+      </section>
+      <WorkflowFooter />
+    </main>
   )
 }
