@@ -15,6 +15,7 @@ import {
   SlidePagesIndicator,
   AddSlideButton,
   DeleteSlideButton,
+  ChangeTemplateOptions,
 } from './SlideButtons'
 
 import SlideContainer from './SlideContainer'
@@ -75,7 +76,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     typeof sessionStorage !== 'undefined'
       ? sessionStorage.getItem('foldername')
       : ''
-  const [selectedTemplate, setSelectedTemplate] = useState('')
   const project_id =
     typeof sessionStorage !== 'undefined'
       ? sessionStorage.getItem('project_id')
@@ -117,14 +117,26 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     saveSlides()
   }, [finalSlides])
 
-  // Function to change the template of a slide
+  // Function to change the template of slides starting from the second one
   const changeTemplate = (newTemplate: string) => {
-    const newSlides = slides.map((slide) => {
+    console.log('Changing template to:', newTemplate)
+    const newSlides = slides.map((slide, index) => {
+      // Keep the template of the first slide unchanged
+      if (index === 0) {
+        return slide
+      }
+      // Update the template for slides starting from the second one
       return { ...slide, template: newTemplate }
     })
+    console.log('Slides after changing template:', newSlides)
     setSlides(newSlides)
 
-    const newFinalSlides = finalSlides.map((slide) => {
+    const newFinalSlides = finalSlides.map((slide, index) => {
+      // Keep the template of the first slide unchanged
+      if (index === 0) {
+        return slide
+      }
+      // Update the template for slides starting from the second one
       return { ...slide, template: newTemplate }
     })
     setFinalSlides(newFinalSlides)
@@ -298,9 +310,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       return elements
     })
 
-    newSlides.forEach((slide, index) => {
-      changeTemplate(selectedTemplate)
-    })
     console.log('new slides: ', newSlides)
     setFinalSlides(newSlides)
     setSlides(newSlides)
@@ -583,6 +592,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         slides={slides}
         goToSlide={goToSlide}
       />
+      {!isViewing && currentSlideIndex != 0 && (
+        <ChangeTemplateOptions
+          templateOptions={Object.keys(templates)}
+          onChangeTemplate={changeTemplate}
+        />
+      )}
 
       {/* preview little image */}
 

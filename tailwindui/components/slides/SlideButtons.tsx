@@ -263,8 +263,9 @@ export const DeleteSlideButton: React.FC<{
   )
 }
 
+// use to change the template. selection box
 export const ChangeTemplateOptions: React.FC<{
-  templateOptions: string
+  templateOptions: string[]
   onChangeTemplate: (newTemplate: string) => void
 }> = ({ templateOptions, onChangeTemplate }) => {
   const [selectedTemplate, setSelectedTemplate] = useState('')
@@ -279,13 +280,27 @@ export const ChangeTemplateOptions: React.FC<{
     }
   }
   return (
-    <div className='col-span-1 hidden sm:block'>
-      <div className='w-fit h-fit'>
-        <div
-          className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300  hover:bg-Workflow-slides-button-hover-bg-color flex justify-center items-center cursor-pointer'
-          onClick={deletePage}
-        ></div>
-      </div>
+    <div className='relative'>
+      <select
+        className='border border-gray-300 rounded-md px-3 py-1 mr-2'
+        onChange={handleTemplateChange}
+        value={selectedTemplate}
+      >
+        <option value='' disabled>
+          Select Template
+        </option>
+        {templateOptions.map((template) => (
+          <option key={template} value={template}>
+            {template}
+          </option>
+        ))}
+      </select>
+      <button
+        className='bg-blue-500 text-white px-3 py-1 rounded-md cursor-pointer'
+        onClick={applyTemplateChange}
+      >
+        Apply
+      </button>
     </div>
   )
 }
