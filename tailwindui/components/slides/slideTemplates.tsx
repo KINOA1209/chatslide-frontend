@@ -118,14 +118,13 @@ export const Standford_school_template = ({
   canEdit,
   autoSave,
 }: MainSlideProps) => {
-  const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback)
-
   return (
     <div
       className='rounded-md overflow-hidden'
       style={{
         width: '100%',
         height: '100%',
+        color: 'red',
         backgroundSize: 'cover',
         display: 'flex',
         flexDirection: 'column',
@@ -133,26 +132,42 @@ export const Standford_school_template = ({
         alignItems: 'flex-start',
         boxSizing: 'border-box',
         border: 'none',
-        // boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
         position: 'relative',
         backgroundColor: 'white',
         padding: '28px',
       }}
     >
-      <div>
-        <div>{topic}</div>
+      <div className='mb-4'>
+        <div className='text-5xl' style={{ color: 'red !important' }}>
+          {topic}
+        </div>
       </div>
-      <div>{subtopic}</div>
-      <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr>
-      <div className='h-full w-full flex flex-row overflow-hidden gap-[32px]'>
-        <div className='w-full h-full grow p-1'>{content}</div>
-        <div className='w-full h-full grow rounded-md overflow-hidden'>
-          <ImgModule
-            imgsrc={localImgs[0]}
-            updateSingleCallback={updateImgAtIndex(0)}
-            canEdit={canEdit}
-            autoSave={autoSave}
-          />
+      <div className='text-2xl font-semibold mb-4'>{subtopic}</div>
+      <hr className='border border-[#E7E9EB] w-full mt-4 mb-6'></hr>
+      <div
+        className='flex-grow p-1'
+        style={{
+          display: 'list-item',
+          listStyleType: 'disc',
+          listStylePosition: 'inside',
+          fontSize: '18pt',
+          marginLeft: '20px',
+        }}
+      >
+        {content}
+        {/* Add your content here */}
+      </div>
+      <div className='flex items-center justify-between mt-6'>
+        {/* School Logo (Replace the placeholder with the actual logo URL) */}
+        <img
+          src='path/to/your/logo.png'
+          alt='School Logo'
+          className='w-16 h-16 mr-4'
+        />
+
+        {/* Additional Content or Styling */}
+        <div className='fixed right-0 bottom-0 text-lg font-bold text-red-500'>
+          Standford School Presentation
         </div>
       </div>
     </div>
@@ -316,6 +331,7 @@ export default {
   First_page_img_1: First_page_img_1,
   Col_1_img_0: Col_1_img_0,
   Col_3_img_2: Col_3_img_2,
+  Standford_school_template: Standford_school_template,
 }
 
 export const templateSamples = {
