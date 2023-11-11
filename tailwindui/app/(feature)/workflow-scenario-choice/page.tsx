@@ -25,25 +25,42 @@ const ScenarioChoicePage = () => {
         <div className='w-96 h-8 text-center text-gray-600 text-base font-normal font-creato-medium leading-normal tracking-tight'>
           We’ll create contents tailored to your audiences.
         </div>
-        {/* four types of scenarios */}
+        {/* three types of scenarios */}
         <div className='flex flex-col gap-4 md:gap-5' id='choice_container'>
-          <div 
-            className='w-full h-[200px] bg-gray-300 rounded-lg shadow flex justify-center items-center cursor-pointer'
-            onClick={() => navigateToScenarioChoice('casual_topic')}
-          >
-            <img className='w-[281px] h-[174px]' src="/images/socialpost/casual_topic.png" />
+          <div className='flex flex-col w-full'>
+            <div 
+              className='w-full h-[200px] bg-gray-300 rounded-lg shadow flex justify-center items-center cursor-pointer'
+              onClick={() => navigateToScenarioChoice('casual_topic')}
+            >
+              <img className='w-[281px] h-[174px] mx-[20px]' src="/images/socialpost/casual_topic.png" />
+            </div>
+            <div className='text-center my-2 font-creato-medium leading-snug tracking-tight whitespace-nowrap font-bold'>
+              Casual Topic
+            </div>
           </div>
-          <div 
-            className='w-full h-[200px] bg-gray-300 rounded-lg shadow flex justify-center items-center cursor-pointer'
-            onClick={() => navigateToScenarioChoice('serious_topic')}
-          >
-            <img className='w-[281px] h-[174px]' src="/images/socialpost/serious_topic.png" />
+          
+          <div className='flex flex-col w-full'>
+            <div 
+              className='w-full h-[200px] bg-gray-300 rounded-lg shadow flex justify-center items-center cursor-pointer'
+              onClick={() => navigateToScenarioChoice('serious_topic')}
+            >
+              <img className='w-[281px] h-[174px] mx-[20px]' src="/images/socialpost/serious_topic.png" />
+            </div>
+            <div className='text-center my-2 font-creato-medium leading-snug tracking-tight whitespace-nowrap font-bold'>
+              Serious Topic
+            </div>
           </div>
-          <div 
-            className='w-full h-[200px] bg-gray-300 rounded-lg shadow flex justify-center items-center cursor-pointer'
-            onClick={() => navigateToScenarioChoice('reading_notes')}
-          >
-            <img className='w-[281px] h-[174px]' src="/images/socialpost/reading_notes.png" />
+          
+          <div className='flex flex-col w-full'>
+            <div 
+              className='w-full h-[200px] bg-gray-300 rounded-lg shadow flex justify-center items-center cursor-pointer'
+              onClick={() => navigateToScenarioChoice('reading_notes')}
+            >
+              <img className='w-[281px] h-[174px] mx-[20px]' src="/images/socialpost/reading_notes.png" />
+            </div>
+            <div className='text-center my-2 font-creato-medium leading-snug tracking-tight whitespace-nowrap font-bold'>
+              Reading Notes
+            </div>
           </div>
         </div>
       </div>
