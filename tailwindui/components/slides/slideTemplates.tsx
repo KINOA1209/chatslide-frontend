@@ -1,11 +1,11 @@
-import { StaticImageData } from 'next/image'
+import Image, { StaticImageData } from 'next/image'
 import { ImgModule } from '@/components/imgModule'
 import { useEffect, useMemo, useState } from 'react'
 import cover_png from '@/public/images/template/cover.png' // Cover
 import col1img0_png from '@/public/images/template/col1img0.png'
 import col2img1_png from '@/public/images/template/col2img1.png'
 import col3img2_png from '@/public/images/template/col3img2.png'
-
+import StandfordLogo from '@/public/images/template/Standford/StandfordLogo.png'
 interface MainSlideProps {
   user_name: JSX.Element
   title: JSX.Element
@@ -133,42 +133,50 @@ export const Standford_school_template = ({
         boxSizing: 'border-box',
         border: 'none',
         position: 'relative',
-        backgroundColor: 'white',
+        backgroundColor: '#F0E9E9',
         padding: '28px',
       }}
     >
-      <div className='mb-4'>
-        <div className='text-5xl' style={{ color: 'red !important' }}>
+      <div className='h-auto '>
+        <div
+          className='h-full flex items-center justify-center text-red-800 text-8xl font-bold leading-10 whitespace-nowrap'
+          //   style={{
+          //     fontSize: '15pt',
+          //     fontWeight: 'bold',
+          //     marginTop: '10px',
+          //     color: 'red',
+          //   }}
+        >
           {topic}
         </div>
       </div>
-      <div className='text-2xl font-semibold mb-4'>{subtopic}</div>
-      <hr className='border border-[#E7E9EB] w-full mt-4 mb-6'></hr>
+      <div className='opacity-70 text-red-800 text-opacity-40 text-5xl font-normal leading-10'>
+        {subtopic}
+      </div>
+      <hr className='border border-[#E7E9EB] w-full mt-6 mb-6'></hr>
       <div
-        className='flex-grow p-1'
+        className='flex flex-row text-zinc-800 text-2xl font-normal leading-9 justify-between text-center'
         style={{
-          display: 'list-item',
-          listStyleType: 'disc',
+          //   display: 'list-item',
+          listStyleType: 'none',
           listStylePosition: 'inside',
-          fontSize: '18pt',
-          marginLeft: '20px',
+          //   fontSize: '18pt',
+          //   marginLeft: '20px',
         }}
       >
         {content}
         {/* Add your content here */}
       </div>
-      <div className='flex items-center justify-between mt-6'>
-        {/* School Logo (Replace the placeholder with the actual logo URL) */}
-        <img
-          src='path/to/your/logo.png'
-          alt='School Logo'
+
+      {/* School Logo (Replace the placeholder with the actual logo URL) */}
+      <div className='fixed inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex'>
+        <Image
+          src={StandfordLogo}
+          alt='Standford Logo'
           className='w-16 h-16 mr-4'
         />
-
-        {/* Additional Content or Styling */}
-        <div className='fixed right-0 bottom-0 text-lg font-bold text-red-500'>
-          Standford School Presentation
-        </div>
+        <div className='grow basis-0 opacity-50 border border-red-800 border-opacity-40'></div>
+        {/* <div className='text-red-800 text-2xl font-normal '>Caption</div> */}
       </div>
     </div>
   )
@@ -255,12 +263,32 @@ export const Col_1_img_0 = ({
       }}
     >
       <div>
-        <div>{topic}</div>
+        <div
+          style={{
+            fontSize: '15pt',
+            fontWeight: 'bold',
+            marginTop: '10px',
+            color: '#2563EB',
+          }}
+        >
+          {topic}
+        </div>
       </div>
       <div>{subtopic}</div>
       <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr>
       <div className='h-full w-full flex flex-row overflow-hidden gap-[32px]'>
-        <div className='w-full h-full grow p-1'>{content}</div>
+        <div
+          className='w-full h-full grow p-1'
+          style={{
+            //   display: 'list-item',
+            listStyleType: 'disc',
+            listStylePosition: 'inside',
+            fontSize: '18pt',
+            marginLeft: '20px',
+          }}
+        >
+          {content}
+        </div>
       </div>
     </div>
   )
