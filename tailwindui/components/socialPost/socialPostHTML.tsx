@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import sanitizeHtml from 'sanitize-html'
 import { MathJax, MathJaxContext } from 'better-react-mathjax'
 import '@/components/slides/slidesHTML.css'
 import dynamic from 'next/dynamic'
-import templates, { templateSamples } from '@/components/slides/slideTemplates'
 import ClickableLink from '../ui/ClickableLink'
 import LayoutChanger from '../slides/LayoutChanger'
 import {
@@ -17,9 +15,7 @@ import {
     DeleteSlideButton,
 } from '@/components/slides/SlideButtons'
 
-import socialMediaSlideContainer from '@/components/socialPost/socialPostSlideContainer'
 import SocialPostContainer from '@/components/socialPost/socialPostContainer'
-import { h1Style, h2Style, h3Style, h4Style, listStyle } from '../slides/Styles'
 import ButtonWithExplanation from '../button/ButtonWithExplanation'
 import { templateDispatch } from '@/components/socialPost/socialPostTemplateDispatch'
 
@@ -156,8 +152,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
             setFinalSlides(slidesArray)
         };
     }, []);
-
-    console.log(finalSlides)
 
     // Function to send a request to auto-save finalSlides
     const saveSlides = () => {

@@ -2,15 +2,12 @@
 
 import React, {
   useState,
-  ChangeEvent,
   FormEvent,
   useEffect,
-  MouseEvent,
   useRef,
 } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import '@/app/css/workflow-edit-topic-css/topic_style.css'
-import GuestUploadModal from '@/components/forms/uploadModal'
 import 'react-toastify/dist/ReactToastify.css'
 import SocialPostProjectProgress from '@/components/newWorkflowStepsSocialpost'
 import NewWorkflowGPTToggle from '@/components/button/NewWorkflowGPTToggle'
@@ -20,7 +17,6 @@ import { Transition } from '@headlessui/react'
 import MyFiles from '@/components/fileManagement'
 import PaywallModal from '@/components/forms/paywallModal'
 import Timer from '@/components/ui/Timer'
-import FileManagement from '@/components/fileManagement'
 import FeedbackButton from '@/components/slides/feedback'
 
 import { QuestionExplainIcon, RightTurnArrowIcon } from '@/app/(feature)/icons'
@@ -192,10 +188,6 @@ export default function Topic_SocialPost() {
       sessionStorage.setItem('project_id', outlinesJson.data.project_id)
       sessionStorage.setItem('socialPost', outlinesJson.data.res)
       sessionStorage.setItem('socialPostImages', JSON.stringify(searchImagesResponse.data.images))
-      // sessionStorage.setItem(
-      //   'pdf_images',
-      //   JSON.stringify(outlinesJson.data.pdf_images)
-      // )
 
       // Retrieve the existing resources from sessionStorage and parse them
       const resources: string[] = JSON.parse(

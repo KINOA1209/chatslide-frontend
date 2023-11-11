@@ -78,7 +78,7 @@ export const templateDispatch = (
             key={keyPrefix + index.toString()}
             subtopic={
                 <div
-                    key={1}
+                    key={0}
                     className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                     contentEditable={canEdit}
                     onFocus={() => {
