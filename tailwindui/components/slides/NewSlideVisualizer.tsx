@@ -14,15 +14,15 @@ const SlidesHTML = dynamic(() => import('@/components/slides/NewSlidesHTML'), {
 })
 
 type SlideVisualizerProps = {
-  isGpt35: boolean;
-  isSubmitting: boolean;
-  setIsSubmitting: (isSubmitting: boolean) => void;
-};
+  isGpt35: boolean
+  isSubmitting: boolean
+  setIsSubmitting: (isSubmitting: boolean) => void
+}
 
 const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
   isGpt35,
   isSubmitting,
-  setIsSubmitting
+  setIsSubmitting,
 }) => {
   const [host, setHost] = useState('https://drlambda.ai')
 
@@ -32,7 +32,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
   const router = useRouter()
 
   useEffect(() => {
-    ; (async () => {
+    ;(async () => {
       const isPaidUser = await UserService.isPaidUser()
       setIsPaidUser(isPaidUser)
     })()
@@ -55,24 +55,24 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
   }, [])
 
   async function handleSubmitTranscript() {
-    console.log('submitting');
+    console.log('submitting')
 
-    const html_filename = 'html_init.html';
+    const html_filename = 'html_init.html'
     const foldername =
       typeof sessionStorage !== 'undefined'
         ? sessionStorage.getItem('foldername')
-        : null;
+        : null
     const topic =
       typeof sessionStorage !== 'undefined'
         ? sessionStorage.getItem('topic')
-        : null;
+        : null
     const language =
       typeof window !== 'undefined'
         ? sessionStorage.getItem('language')
-        : 'English';
+        : 'English'
 
     const project_id =
-      typeof window !== 'undefined' ? sessionStorage.getItem('project_id') : '';
+      typeof window !== 'undefined' ? sessionStorage.getItem('project_id') : ''
     const formData = {
       html_filename: html_filename,
       foldername: foldername,
@@ -81,10 +81,10 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
       language: language,
       html: finalSlides,
       model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
-    };
+    }
 
     try {
-      const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+      const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
 
       const response = await fetch('/api/transcript_html', {
         method: 'POST',
@@ -93,32 +93,35 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-      });
+      })
 
       if (response.ok) {
-        const resp = await response.json();
-        setIsSubmitting(false);
-        console.log(resp.data.res);
-        sessionStorage.setItem('transcripts', JSON.stringify(resp.data.res));
-        sessionStorage.setItem('image_files', JSON.stringify(resp.data.image_files));
+        const resp = await response.json()
+        setIsSubmitting(false)
+        console.log(resp.data.res)
+        sessionStorage.setItem('transcripts', JSON.stringify(resp.data.res))
+        sessionStorage.setItem(
+          'image_files',
+          JSON.stringify(resp.data.image_files)
+        )
         // Redirect to a new page with the data
-        router.push('/workflow-edit-script');
+        router.push('/workflow-edit-script')
       } else {
-        alert('Request failed: ' + response.status);
-        console.log(response);
-        setIsSubmitting(false);
+        alert('Request failed: ' + response.status)
+        console.log(response)
+        setIsSubmitting(false)
       }
     } catch (error) {
-      console.error('Error:', error);
-      setIsSubmitting(false);
+      console.error('Error:', error)
+      setIsSubmitting(false)
     }
   }
 
   useEffect(() => {
     if (isSubmitting) {
-      handleSubmitTranscript();
+      handleSubmitTranscript()
     }
-  }, [isSubmitting]);
+  }, [isSubmitting])
 
   return (
     <div>
