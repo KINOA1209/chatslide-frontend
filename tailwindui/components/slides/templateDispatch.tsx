@@ -5,7 +5,7 @@ import { MathJax, MathJaxContext } from 'better-react-mathjax'
 
 function wrapWithLiTags(content: string): string {
   if (!content.includes('<li>') || !content.includes('</li>')) {
-    return `<li">${content}</li>`
+    return `<li>${content}</li>`
   }
   return content
 }
@@ -100,7 +100,7 @@ export const templateDispatch = (
         topic={
           <div
             key={0}
-            className={`rounded-md outline-2 ${
+            className={`rounded-md outline-2 py-6 flex-nowrap  ${
               !exportToPdfMode && 'overflow-hidden'
             } ${
               canEdit
@@ -114,7 +114,7 @@ export const templateDispatch = (
               }
             }}
             onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
-            style={h2Style}
+            // style={h2Style}
             dangerouslySetInnerHTML={{ __html: slide.title }}
           />
         }
@@ -157,7 +157,7 @@ export const templateDispatch = (
                       : ''
                   }`}
                   contentEditable={canEdit}
-                  style={listStyle}
+                  // style={listStyle}
                   onFocus={() => {
                     if (canEdit) {
                       setIsEditMode(true)
@@ -169,7 +169,7 @@ export const templateDispatch = (
                     handleSlideEdit(modifiedContent, index, 'content')
                   }}
                 >
-                  {content}
+                  {wrapWithLiTags(content)}
                 </div>
               )
             } else {
@@ -189,9 +189,9 @@ export const templateDispatch = (
                           ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline'
                           : ''
                       }`}
-                      style={listStyle}
+                      // style={listStyle}
                     >
-                      {content}
+                      {wrapWithLiTags(content)}
                     </div>
                   </MathJax>
                 </MathJaxContext>
@@ -209,7 +209,7 @@ export const templateDispatch = (
                   : ''
               }`}
               contentEditable={canEdit}
-              style={listStyle}
+              // style={listStyle}
               onFocus={() => {
                 if (canEdit) {
                   setIsEditMode(true)
