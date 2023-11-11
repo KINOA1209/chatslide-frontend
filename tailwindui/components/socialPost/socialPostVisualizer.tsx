@@ -27,7 +27,6 @@ const SocialPostVisualizer = () => {
 
     useEffect(() => {
         setShare(sessionStorage.getItem('is_shared') === 'true')
-        // console.log('share', sessionStorage.getItem('is_shared'));
     }, [])
 
     useEffect(() => {
@@ -40,7 +39,7 @@ const SocialPostVisualizer = () => {
             setHost(window.location.hostname)
         }
     }, [])
-    console.log(finalSlides)
+    
     return (
         <div>
             <div className='px-4 sm:px-6 flex flex-col justify-center items-center gap-4'>

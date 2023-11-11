@@ -7,12 +7,7 @@ import SocialPostVisualizer from '@/components/socialPost/socialPostVisualizer';
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import {
-  DownloadIcon,
   LeftTurnArrowIcon,
-  PresentationModeIcon,
-  ChangeLayoutIcon,
-  AddSlideIcon,
-  DeleteSlideIcon,
 } from '@/app/(feature)/icons'
 
 import { useRouter } from 'next/navigation';
@@ -54,8 +49,6 @@ export default function SocialMediaTemplate() {
       </div>
 
       <ToastContainer enableMultiContainer containerId={'slides'} />
-
-      
 
       <div className='mt-[10rem] max-w-4xl mx-auto px-6' ref={contentRef}>
         <SocialPostVisualizer />
