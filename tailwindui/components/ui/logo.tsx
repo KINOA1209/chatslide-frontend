@@ -36,10 +36,9 @@ export function ColorLogo() {
       href='/'
       className='block'
       aria-label='Cruip'
-      style={{ backgroundColor: 'black' }}
     >
       <img
-        src='/images/logo_no_text.png'
+        src='/images/Logo_Color.png'
         alt='DrLambda'
         className='w-16 h-16'
       />
