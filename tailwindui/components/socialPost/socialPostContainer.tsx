@@ -30,7 +30,7 @@ const SocialPostContainer: React.FC<SlideContainerProps> = ({
     return (
         <div
             id="slideContainer"
-            className={`${isPresenting ? 'fixed top-0 left-0 w-full h-full z-50 flex justify-center' : 'rounded-md'}`}
+            className={`${isPresenting ? 'fixed top-0 left-0 w-full h-full z-50 flex justify-center' : ''}`}
             ref={containerRef}
             style={{
                 boxSizing: 'border-box',
@@ -43,7 +43,7 @@ const SocialPostContainer: React.FC<SlideContainerProps> = ({
             {/* 0.75 width = 1 height */}
             {slides.length > 0 && (
                 <div
-                    className="slide h-full w-full rounded-md"
+                    className="slide h-full w-full"
                     ref={slideRef}
                     style={{
                         width: '450px',
