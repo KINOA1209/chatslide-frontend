@@ -48,12 +48,12 @@ const useLocalImgs = (imgs: string[], imgCount: number, update_callback: (imgs: 
     return { localImgs, updateImgAtIndex };
 };
 
-export const Col_2_img_1 = ({subtopic, content, canEdit, autoSave }: MainSlideProps) => {
+export const Col_2_img_1 = ({subtopic, content, keywords, canEdit, imgs, update_callback, autoSave }: MainSlideProps) => {
 
-    //const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback);
+    const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback);
 
     return <div
-        className="rounded-md overflow-hidden"
+        className="overflow-hidden"
         style={{
             width: '100%',
             height: '100%',
@@ -64,21 +64,18 @@ export const Col_2_img_1 = ({subtopic, content, canEdit, autoSave }: MainSlidePr
             alignItems: 'flex-start',
             boxSizing: 'border-box',
             border: 'none',
-            // boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
             position: 'relative',
-            backgroundColor: 'white',
+            backgroundColor: '#444',
             padding: '28px',
         }}>
-        <div>
-            <div>{subtopic}</div>
-        </div>
-        <hr className="border border-[#E7E9EB] w-full mt-[20px] mb-[12px]"></hr>
-        <div className="h-full w-full flex flex-row overflow-hidden gap-[32px]">
-            <div className="w-full h-full grow p-1">{content}</div>
-            {/* <div className="w-full h-full grow rounded-md overflow-hidden">
-                <ImgModule imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} canEdit={canEdit} autoSave={autoSave} />
-            </div> */}
-        </div>
+            <div className="w-full px-[15px]">{keywords}</div>
+            <div className='w-full px-[15px]'>{subtopic}</div>
+            <div id='container_gradient'className="h-full w-full flex flex-col overflow-hidden rounded-lg mt">
+                <div className="grow mt-[10px] mx-[30px] ">{content}</div>
+                <div className="w-full h-full grow rounded-md overflow-hidden">
+                    <ImgModule imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} canEdit={canEdit} autoSave={autoSave} />
+                </div> 
+            </div>
     </div>
 }
 
@@ -89,7 +86,7 @@ export const First_page_img_1 = ({ subtopic, keywords, canEdit, imgs, update_cal
 
     return (
         <div
-            className="rounded-md overflow-hidden gap-[32px]"
+            className="overflow-hidden gap-[32px]"
             style={{
                 width: '100%',
                 height: '100%',
@@ -100,10 +97,8 @@ export const First_page_img_1 = ({ subtopic, keywords, canEdit, imgs, update_cal
                 alignItems: 'flex-start',
                 boxSizing: 'border-box',
                 border: 'none',
-                // boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
                 position: 'relative',
                 backgroundColor: 'white',
-                //padding: '28px',
             }}>
             <div 
                 id="container_cover_gradient" 
@@ -138,7 +133,7 @@ export const Col_1_img_0 = ({ subtopic, keywords, content, canEdit, autoSave }: 
 
     return (
         <div
-            className="rounded-md overflow-hidden"
+            className="overflow-hidden"
             style={{
                 width: '100%',
                 height: '100%',
@@ -149,7 +144,6 @@ export const Col_1_img_0 = ({ subtopic, keywords, content, canEdit, autoSave }: 
                 alignItems: 'flex-start',
                 boxSizing: 'border-box',
                 border: 'none',
-                // boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
                 position: 'relative',
                 backgroundColor: '#444',
                 padding: '28px',
@@ -164,46 +158,10 @@ export const Col_1_img_0 = ({ subtopic, keywords, content, canEdit, autoSave }: 
 }
 
 
-export const Col_3_img_2 = ({ subtopic, content,canEdit, autoSave }: MainSlideProps) => {
-
-    // const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 2, update_callback);
-
-    return <div
-        className="rounded-md overflow-hidden"
-        style={{
-            width: '100%',
-            height: '100%',
-            backgroundSize: 'cover',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
-            boxSizing: 'border-box',
-            border: 'none',
-            // boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
-            position: 'relative',
-            backgroundColor: 'white',
-            padding: '28px',
-        }}>
-        <div>{subtopic}</div>
-        <hr className="border border-[#E7E9EB] w-full mt-[20px] mb-[12px]"></hr>
-        <div className="h-full w-full flex flex-row overflow-hidden gap-[32px]">
-            <div className="w-full h-full grow p-1">{content}</div>
-            {/* <div className="w-full h-full grow rounded-md overflow-hidden">
-                <ImgModule imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} canEdit={canEdit} autoSave={autoSave} />
-            </div>
-            <div className="w-full h-full grow rounded-md overflow-hidden">
-                <ImgModule imgsrc={localImgs[1]} updateSingleCallback={updateImgAtIndex(1)} canEdit={canEdit} autoSave={autoSave} />
-            </div> */}
-        </div>
-    </div>
-}
-
 export default {
     'Col_2_img_1': Col_2_img_1,
     'First_page_img_1': First_page_img_1,
     'Col_1_img_0': Col_1_img_0,
-    'Col_3_img_2': Col_3_img_2,
 }
 
 export const templateSamples = {
@@ -217,10 +175,6 @@ export const templateSamples = {
     }, {
         name: 'Col_2_img_1',
         img: col2img1_png.src,
-    },
-    {
-        name: 'Col_3_img_2',
-        img: col3img2_png.src,
     },
     ]
 };

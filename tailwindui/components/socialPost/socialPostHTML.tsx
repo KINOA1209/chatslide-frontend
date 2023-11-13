@@ -5,7 +5,7 @@ import { MathJax, MathJaxContext } from 'better-react-mathjax'
 import '@/components/slides/slidesHTML.css'
 import dynamic from 'next/dynamic'
 import ClickableLink from '../ui/ClickableLink'
-import LayoutChanger from '../slides/LayoutChanger'
+import LayoutChanger from '@/components/socialPost/socialPostLayoutChanger'
 import {
     PresentButton,
     SlideLeftNavigator,
@@ -13,12 +13,12 @@ import {
     SlidePagesIndicator,
     AddSlideButton,
     DeleteSlideButton,
-} from '@/components/slides/SlideButtons'
+} from '@/components/socialPost/socialPostButtons'
 
 import SocialPostContainer from '@/components/socialPost/socialPostContainer'
 import ButtonWithExplanation from '../button/ButtonWithExplanation'
 import { templateDispatch } from '@/components/socialPost/socialPostTemplateDispatch'
-
+import templates, { templateSamples } from '@/components/socialPost/socialPostTemplates'
 
 export interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div'
@@ -143,7 +143,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                     slide.subtopic = slideData.subtopic
                     slide.template = 'Col_1_img_0'
                 }
-                slide.keywords = slideData.keywords || ['Your keywords here'],
+                slide.keywords = slideData.keywords || [''],
                 slide.content = slideData.content || ['Your content here']
                 return slide
             });
@@ -251,48 +251,57 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
         }
     }
 
-    // function handleSlideEdit(
-    //     content: string | string[],
-    //     slideIndex: number,
-    //     tag: SlideKeys
-    // ) {
-    //     setIsEditMode(false)
-    //     const newSlides = [...slides]
-    //     const newFinalSlides = [...finalSlides]
+    function handleSlideEdit(
+        content: string | string[],
+        slideIndex: number,
+        tag: SlideKeys
+    ) {
+        setIsEditMode(false)
+        const newSlides = [...slides]
+        const newFinalSlides = [...finalSlides]
 
-    //     const currentSlide = newSlides[slideIndex]
-    //     const currNewFinalSlides = newFinalSlides[slideIndex]
-    //     const className = tag
+        const currentSlide = newSlides[slideIndex]
+        const currNewFinalSlides = newFinalSlides[slideIndex]
+        const className = tag
 
-    //     if (className === 'subtopic') {
-    //         currentSlide.subtopic = content as string
-    //         currNewFinalSlides.subtopic = content as string
-    //     } 
-    //     else if (className === 'keywords') {
-    //         currentSlide.keywords = content as string
-    //         currNewFinalSlides.keywords = content as string
-    //     } 
+        if (className === 'subtopic') {
+            currentSlide.subtopic = content as string
+            currNewFinalSlides.subtopic = content as string
+        } 
+        else if (className === 'keywords') {
+            currentSlide.keywords = content as string[]
+            currNewFinalSlides.keywords = content as string[]
+        } 
+        else if (className === 'content') {
+            let newContent: string[] = []
+            content = content as string[]
+            content.forEach((str) => {
+                newContent.push(...str.split('\n'))
+            })
+            newContent = newContent.filter((item) => item !== '')
 
-    //     else if (className === 'content') {
-    //         let newContent: string[] = []
-    //         content = content as string[]
-    //         content.forEach((str) => {
-    //             newContent.push(...str.split('\n'))
-    //         })
-    //         newContent = newContent.filter((item) => item !== '')
+            if (newContent.length === 0) { // leave one empty line for editing
+                newContent.push('')
+            }
 
-    //         if (newContent.length === 0) { // leave one empty line for editing
-    //             newContent.push('')
-    //         }
-
-    //         currentSlide.content = newContent
-    //         currNewFinalSlides.content = newContent
-    //     } else {
-    //         console.error(`Unknown tag: ${tag}`)
-    //     }
-    //     setSlides(newSlides)
-    //     setFinalSlides(newFinalSlides)
-    // }
+            currentSlide.content = newContent
+            currNewFinalSlides.content = newContent
+        }
+        else if (className === 'template'){
+            currentSlide.template = content as string
+            currNewFinalSlides.template = content as string
+        }
+        else if (className === 'images') {
+            currentSlide.images = content as string[]
+            currNewFinalSlides.images = content as string[]
+        }
+        else {
+            console.error(`Unknown tag: ${tag}`)
+        }
+        console.log(newSlides)
+        setSlides(newSlides)
+        setFinalSlides(newFinalSlides)
+    }
 
     function goToSlide(index: number) {
         console.log('Goinng to slide', index)
@@ -370,7 +379,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                         button={<PresentButton openPresent={openPresent} />}
                         explanation='Present'
                     />
-{/* 
+
                     {!isViewing && (currentSlideIndex!=0) &&(
                         <ButtonWithExplanation
                             button={
@@ -386,7 +395,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                             }
                             explanation='Change Layout'
                         />
-                    )} */}
+                    )}
 
                     {!isViewing && (currentSlideIndex!=0) && (
                         <ButtonWithExplanation
