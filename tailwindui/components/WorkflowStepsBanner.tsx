@@ -51,7 +51,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
           <DrLambdaBackButton href={getPrevHref()} />
         </div>
 
-        <div className="flex-grow hidden md:flex justify-center">
+        <div className="flex-grow flex justify-center">
           <ProjectProgress currentInd={currentIndex} contentRef={contentRef} />
         </div>
 
