@@ -272,7 +272,7 @@ export default function Dashboard() {
               isPaidFeature={false}
               onClick={handleStartNewProject}
             >
-              Start New Project
+              Start
             </DrlambdaButton>
           </div>
         </div>

@@ -42,7 +42,7 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSu
         id='generate_button'
         disabled={isSubmitting}
         onClick={checkPaidUser}
-        className={`w-[12rem] h-[36px] px-5 py-1.5 ${getButtonBg()} rounded-[15px] flex justify-center items-center gap-2 mx-auto cursor-pointer lg:mr-[1%] }`}
+        className={`w-[6rem] sm:w-[12rem] h-[36px] px-5 ${getButtonBg()} rounded-[15px] flex justify-center items-center gap-2 mx-auto cursor-pointer lg:mr-[1%] }`}
       >
         {isSubmitting && <SpinIcon />}
         <span className='text-white font-semibold tracking-tight whitespace-nowrap'>
@@ -68,11 +68,11 @@ export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({ href }) 
   const router =  useRouter();
   return (
   <div
-    className='flex-row justify-center items-center gap-4 cursor-pointer flex'
+      className='h-[36px] flex-row justify-center items-center gap-4 cursor-pointer flex'
     onClick={() => router.push(href)}
   >
     <LeftTurnArrowIcon></LeftTurnArrowIcon>
-    <div className='text-center self-center text-gray-700 font-medium font-creato-medium leading-normal tracking-[0.035rem] whitespace-nowrap block'>
+      <div className='text-center self-center text-gray-700 font-medium font-creato-medium leading-normal tracking-[0.035rem] whitespace-nowrap block'>
       Back
     </div>
   </div>
