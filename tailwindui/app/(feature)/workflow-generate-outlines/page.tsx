@@ -63,7 +63,7 @@ export default function Topic() {
   const [showAudiencePopup, setAudiencePopup] = useState(false)
   const [showLanguagePopup, setLanguagePopup] = useState(false)
   const [showSupportivePopup, setSupportivePopup] = useState(false)
-  const [selectedFileList, setselectedFileList] = useState([])
+  const [selectedFileList, setselectedFileList] = useState<UserFile[]>([])
   const [selectedFileListName, setselectedFileListName] = useState<string[]>([])
   const [isPaidUser, setIsPaidUser] = useState(false)
 
@@ -267,26 +267,15 @@ export default function Topic() {
 
   const handleSelectResources = (resource: Array<string>) => {
     sessionStorage.setItem('resources', JSON.stringify(resource))
-    const selectedResourcesJson = sessionStorage.getItem('resources')
     const allHistoryResourcesJson = sessionStorage.getItem('history_resource')
 
-    if (selectedResourcesJson && allHistoryResourcesJson) {
-      const selectedResources = JSON.parse(selectedResourcesJson)
-      setselectedFileList(selectedResources)
-
-      //find the corresponding file name
-      const selectedResourcesIdArray: string[] = JSON.parse(
-        selectedResourcesJson
-      )
-      const allHistoryResourcesArray: Array<{ id: string; filename: string }> =
+    if (resource && allHistoryResourcesJson) {
+      const allHistoryResourcesArray: Array<UserFile> =
         JSON.parse(allHistoryResourcesJson)
-      const fileNamesArray = selectedResourcesIdArray.map((id) => {
-        const correspondingFile = allHistoryResourcesArray.find(
-          (file) => file.id === id
-        )
-        return correspondingFile ? correspondingFile.filename : 'Unkown File'
-      })
-      setselectedFileListName(fileNamesArray)
+      const selectedResources = resource.map((id) => {
+        return allHistoryResourcesArray.find((file) => file.id === id);
+      }).filter(file => file !== undefined) as UserFile[];
+      setselectedFileList(selectedResources)
     }
   }
 
@@ -714,19 +703,22 @@ export default function Topic() {
               </div>
             </div>
             <hr id='add_hr' />
-            <div className='h-[290px] mt-[10px]'>
+            <div className='min-h-[100px] mt-[10px]'>
               <ul
                 className='flex flex-col gap-4'
-                style={{ maxHeight: '280px', overflowY: 'auto' }}
+                style={{ overflowY: 'auto' }}
               >
-                {selectedFileListName.map((selectedFile, index) => (
+                {selectedFileList.map((selectedFile, index) => (
                   <li key={index}>
                     <div
                       id='selectedfile_each'
                       className='flex items-center gap-2 bg-white rounded h-[50px] pl-[1rem]'
                     >
-                      <img src='/icons/selectedFiles_icon.png' />
-                      <span>{selectedFile}</span>
+                      {selectedFile.thumbnail_name ?
+                        <img src={selectedFile.thumbnail_name} className='w-[40px]' /> :
+                        <FaFilePdf className='w-[40px]'/>
+                      }
+                      <span>{selectedFile.filename}</span>
                     </div>
                   </li>
                 ))}
