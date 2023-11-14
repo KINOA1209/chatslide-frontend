@@ -19,6 +19,7 @@ import FeedbackButton from '@/components/slides/feedback'
 
 import { QuestionExplainIcon, RightTurnArrowIcon } from '@/app/(feature)/icons'
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner'
+import PaywallModal from '@/components/forms/paywallModal'
 
 const audienceList = [
   'Researchers',
@@ -398,6 +399,8 @@ export default function Topic() {
 
   return (
     <section>
+      {showPaymentModal && <PaywallModal setShowModal={setShowPaymentModal} message='Upgrade for more ⭐️credits.' />}
+
         <Transition
           className='h-full w-full z-50 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
           show={showFileModal}
