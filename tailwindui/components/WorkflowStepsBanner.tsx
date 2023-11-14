@@ -47,7 +47,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
     <>
       <div className='fixed mt-[3rem] flex items-end w-full bg-Grey-50 z-10 pt-[4rem] pb-[1rem] border-b-2 px-[5rem]'>
         {/* flex row container for backlink, title*/}
-        <div className="absolute left-10">
+        <div className="absolute left-2 sm:left-10">
           <DrLambdaBackButton href={getPrevHref()} />
         </div>
 
@@ -55,7 +55,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
           <ProjectProgress currentInd={currentIndex} contentRef={contentRef} />
         </div>
 
-        <div className="absolute right-10">
+        <div className="absolute right-2 sm:right-10 flex flex-col xl:flex-row items-end xl:items-center space-x-4">
 
           {showGPTToggle && typeof setIsGpt35 !== 'undefined' && <GPTToggleWithExplanation setIsGpt35={setIsGpt35} />}
           <DrlambdaButton
