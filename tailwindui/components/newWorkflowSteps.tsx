@@ -62,7 +62,7 @@ const OneStep: React.FC<StepProps> = ({
   }
 
   // Conditionally render the RightArrowIcon based on whether it's the last step
-  const renderRightArrow = !isLastStep ? <RightArrowIcon /> : null
+  const renderRightArrow = <div className='hidden md:flex'>{!isLastStep ? <RightArrowIcon /> : null}</div>
 
   if (current) {
     return (
@@ -82,7 +82,7 @@ const OneStep: React.FC<StepProps> = ({
   } else if (finished) {
     return (
       <div
-        className='w-full flex items-center cursor-pointer'
+        className='w-full flex items-center cursor-pointer hidden md:flex'
         onClick={handleClick}
         onMouseEnter={handleHoverEnter}
         onMouseLeave={handleHoverLeave}
@@ -100,7 +100,7 @@ const OneStep: React.FC<StepProps> = ({
     )
   } else if (unavailable) {
     return (
-      <div className='w-full flex items-center'>
+      <div className='w-full flex items-center hidden md:flex'>
         {/* <div
           className='bg-gray-400 border-gray-400 text-white text-center'
           style={StepStyle}
@@ -115,7 +115,7 @@ const OneStep: React.FC<StepProps> = ({
     )
   } else {
     return (
-      <div className='w-full flex items-center'>
+      <div className='w-full flex items-center hidden md:flex'>
         {/* <div
           className='bg-gray-400 border-gray-400 text-white text-center'
           style={StepStyle}
