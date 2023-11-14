@@ -402,7 +402,7 @@ export default function Topic() {
       {showPaymentModal && <PaywallModal setShowModal={setShowPaymentModal} message='Upgrade for more ⭐️credits.' />}
 
         <Transition
-          className='h-full w-full z-50 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
+          className='h-full w-full z-50 bg-slate-200/80 fixed top-0 left-0 flex flex-col'
           show={showFileModal}
           onClick={closeFile}
           enter='transition ease duration-300 transform'
