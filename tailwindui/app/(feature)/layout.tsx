@@ -14,7 +14,7 @@ export default function WorkflowLayout({
   return (
     <main className='flex flex-col min-h-[100vh]'>
       <div
-        className='w-[100vw] h-[100vh] -z-1 fixed bg-[#F4F4F4]'
+        className='w-[100vw] h-[100vh] -z-1 fixed'
       ></div>
       <Header loginRequired={true} isLanding={false} refList={[]} />
       <section className='grow flex flex-col'>
