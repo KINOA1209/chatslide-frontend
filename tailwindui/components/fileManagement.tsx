@@ -577,7 +577,7 @@ const MyFiles: React.FC<filesInterface> = ({
   }
 
   return (
-    <section className='bg-gradient-to-b from-gray-100 to-white grow flex flex-col h-full'>
+    <section className='bg-white grow flex flex-col h-full'>
       <ToastContainer enableMultiContainer containerId={'fileManagement'} />
       <div
         className={`max-w-7xl w-full mx-auto px-4 ${
