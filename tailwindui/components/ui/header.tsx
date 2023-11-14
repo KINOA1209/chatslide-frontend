@@ -98,26 +98,26 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
     // Render a loading state or a blank placeholder
     return (
       <header
-        className={`fixed w-full z-30 bg-gray-800 md:bg-opacity-90 transition duration-300 ease-in-out ${
+        className={`fixed w-full z-30 bg-gray-800 bg-opacity-90 transition duration-300 ease-in-out ${
           !top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
         }`}
       >
-        <div className='max-w-4/5 mx-auto px-5 sm:px-6'>
+        <div className='max-w-4/5 mx-auto px-5'>
           <div className='flex items-center justify-between h-12'>
             {/* Site branding */}
-            <div className='flex flex-row justify-center items-center gap-[0.37rem] md:items-end grow md:grow-0'>
+            <div className='flex flex-row justify-center items-center gap-[0.37rem] grow-0'>
               <Logo />
-              <div className='grow md:grow-0 flex justify-center md:justify-start'>
-                <div className='w-fit h-[1.5rem] text-xl md:text-[1.3125rem] text-gray-200 bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500 md:relative md:bottom-[3px] font-creato-medium'>
+              <div className='grow-0 flex justify-start'>
+                <div className='w-fit h-[1.5rem] text-[1.3125rem] text-gray-200 bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500 relative bottom-[3px] font-creato-medium'>
                   <a href='/dashboard'>DrLambda</a>
                 </div>
               </div>
             </div>
 
             {/* Desktop navigation */}
-            <nav className='hidden lg:flex w-[272px]'></nav>
+            <nav className='flex w-[272px]'></nav>
 
-            <MobileMenu refList={refList} />
+            {/* <MobileMenu refList={refList} /> */}
           </div>
         </div>
         <GoogleAnalytics />
@@ -128,24 +128,24 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
 
   return (
     <header
-      className={`fixed w-full z-30 bg-gray-800 md:bg-opacity-90 transition duration-300 ease-in-out ${
+      className={`fixed w-full z-30 bg-gray-800 bg-opacity-90 transition duration-300 ease-in-out ${
         !top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
       }`}
     >
-      <div className='max-w-4/5 mx-auto px-5 sm:px-6'>
+      <div className='max-w-4/5 mx-auto px-5'>
         <div className='flex items-center justify-between h-12'>
           {/* Site branding */}
-          <div className='flex flex-row items-center md:items-end grow md:grow-0 gap-[0.37rem]'>
+          <div className='flex flex-row items-center'>
             <Logo />
-            <div className='grow md:grow-0 flex flex-row justify-center item-center md:justify-start'>
-              <div className='w-fit h-[1.5rem] text-xl md:text-[1.3125rem] text-gray-200 bg-clip-text bg-gradient-to-r md:relative md:bottom-[3px] font-creato-medium'>
+            <div className='grow flex flex-row justify-center item-center justify-start'>
+              <div className='w-fit h-[1.5rem] text-xl text-gray-200 bg-clip-text bg-gradient-to-r relative bottom-[3px] font-creato-medium'>
                 <a href='/dashboard'>DrLambda</a>
               </div>
             </div>
           </div>
 
           {/* Desktop navigation */}
-          <nav className='hidden lg:flex w-[272px]'>
+          <nav className='flex w-[272px]'>
             {/* Desktop sign in links */}
             {userId ? (
               <ul className='flex grow justify-end flex-wrap items-center'>
@@ -156,7 +156,7 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
                 <li>
                   <Link
                     href='/signin'
-                    className='btn-sm drop-shadow-xl rounded-full text-white w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer mr-4'
+                    className='btn-sm drop-shadow-xl rounded-full text-white w-full mb-4 cursor-pointer mr-4'
                     style={{
                       backgroundColor: '#1D222A',
                       backgroundSize: '100%',
@@ -169,7 +169,7 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
                 <li>
                   <Link
                     href='/signup'
-                    className='btn-sm drop-shadow-xl rounded-full text-white w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer'
+                    className='btn-sm drop-shadow-xl rounded-full text-white w-full mb-4 cursor-pointer'
                     style={{
                       backgroundColor: '#1D222A',
                       backgroundSize: '100%',
@@ -183,7 +183,7 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
             )}
           </nav>
 
-          <MobileMenu refList={refList} />
+          {/* <MobileMenu refList={refList} /> */}
         </div>
       </div>
 
