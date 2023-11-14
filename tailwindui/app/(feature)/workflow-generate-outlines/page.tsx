@@ -414,7 +414,7 @@ export default function Topic() {
         >
           <div className='grow md:grow-0'></div>
           <Transition
-            className='bg-gray-100 w-full h-3/4 md:h-2/3
+            className='w-full h-3/4 md:h-2/3
                                 md:max-w-2xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
                                 overflow-hidden flex flex-col p-4'
             show={showFileModal}
