@@ -89,7 +89,7 @@ const MobileMenu = ({ refList = [] }: HeaderProps) => {
   }
 
   return (
-    <div className="flex lg:hidden">
+    <div className="flex sm:hidden">
       {/* Hamburger button */}
       <button
         ref={trigger}
