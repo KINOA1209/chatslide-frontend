@@ -7,7 +7,7 @@
 }
 
 #container_cover_gradient{
-    border: 20px solid transparent;
+    border: 12px solid transparent;
     border-image: linear-gradient(to bottom right, #FB40FF, #886DFE) 1;
     border-image-slice: fill;
 }

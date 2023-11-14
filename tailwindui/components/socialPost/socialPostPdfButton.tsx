@@ -44,7 +44,7 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
     },
     overrides: {
       pdf: {
-        compress: false,
+        compress: true,
       },
       canvas: {
         useCORS: true,

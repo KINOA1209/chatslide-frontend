@@ -28,6 +28,40 @@ const h4Style: React.CSSProperties = {
     color: '#FFF',
 };
 
+// template2 cover page English title
+const h5Style: React.CSSProperties = {
+    fontSize: '15pt',
+    fontWeight: 'bold',
+    color: 'rgba(27, 28, 34, 0.60)'
+};
+
+// template2 cover page Original title
+const h6Style: React.CSSProperties = {
+    fontSize: '40pt',
+    fontWeight: 'bold',
+    color: '#1B1C22'
+};
+
+// template2 content page original title
+const h7Style: React.CSSProperties = {
+    fontSize: '9pt',
+    fontWeight: 'bold',
+    color: 'rgba(27, 27, 27, 0.50)'
+};
+
+// template2 content page section title
+const h8Style: React.CSSProperties = {
+    fontSize: '20pt',
+    fontWeight: 'bold',
+    color: '#1B1B1B'
+};
+
+// template2 content page content
+const h9Style: React.CSSProperties = {
+    fontSize: '9pt',
+    color: '#1B1B1B'
+};
+
 
 // 
 const listStyle: React.CSSProperties = {
@@ -37,4 +71,4 @@ const listStyle: React.CSSProperties = {
     fontSize: '11pt',
 }
 
-export { h1Style, h2Style, h3Style, h4Style, listStyle };
+export { h1Style, h2Style, h3Style, h4Style, h5Style, h6Style, h7Style, h8Style, h9Style, listStyle };

@@ -12,6 +12,9 @@ interface MainSlideProps {
     subtopic: JSX.Element,
     keywords: JSX.Element[] | JSX.Element,
     content: JSX.Element[],
+    original_title: JSX.Element,
+    English_title: JSX.Element,
+    section_title: JSX.Element,
     imgs: string[],
     update_callback: (imgs: string[]) => void,
     canEdit: boolean,
@@ -130,7 +133,6 @@ export const First_page_img_1 = ({ subtopic, keywords, canEdit, imgs, update_cal
 }
 
 export const Col_1_img_0 = ({ subtopic, keywords, content, canEdit, autoSave }: MainSlideProps) => {
-
     return (
         <div
             className="overflow-hidden"
@@ -150,23 +152,132 @@ export const Col_1_img_0 = ({ subtopic, keywords, content, canEdit, autoSave }: 
             }}>
             <div className="w-full px-[15px]">{keywords}</div>
             <div className='w-full px-[15px]'>{subtopic}</div>
-                <div id='container_gradient'className="h-full w-full flex flex-row overflow-hidden gap-[32px] rounded-lg mt">
+                <div id='container_gradient'className="h-full w-full flex flex-row overflow-hidden gap-[32px] rounded-lg">
                     <div className="grow mt-[10px] mx-[30px] ">{content}</div>
                 </div>
         </div>
     )
 }
 
+export const First_page_img_1_template2 = ({ original_title, English_title, imgs, update_callback, canEdit, autoSave }: MainSlideProps) => {
+    const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback);
+    return (
+        <div
+            className="overflow-hidden gap-[32px]"
+            style={{
+                width: '100%',
+                height: '100%',
+                backgroundSize: 'cover',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+                boxSizing: 'border-box',
+                border: 'none',
+                position: 'relative',
+                backgroundColor: '#CED0CC',
+                padding: '22px',
+            }}>
+            <div className="w-full h-full flex flex-col justify-between">
+                <div className="w-full flex flex-col bg-red">
+                    <div className="w-full">
+                        <div className="w-full">{English_title}</div>
+                        <div className="">{original_title}</div>
+                    </div>
+                </div>
+                <div 
+                    className="w-full h-1/2"
+                    style={{
+                        borderRadius: '20px',
+                        backgroundImage: `url(${localImgs[0]})`,
+                        backgroundSize: 'cover',
+                    }}>
+
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export const img_0_template2 = ({ section_title, original_title, content, update_callback, canEdit, autoSave }: MainSlideProps) => {
+
+    return (
+        <div
+            className="overflow-hidden"
+            style={{
+                width: '100%',
+                height: '100%',
+                backgroundSize: 'cover',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+                boxSizing: 'border-box',
+                border: 'none',
+                position: 'relative',
+                backgroundColor: '#CED0CC',
+                backgroundImage: `url('/images/socialpost/template2_bg.png')`,
+        }}>
+            <div 
+                className="w-full h-[45px]" 
+                style={{
+                    borderBottom: '2px solid #E7E5E5',
+                }}>
+                <div 
+                    className='w-full h-full px-[6%] flex justify-start items-end'
+                    style={{
+                        borderLeft: '2px solid #E7E5E5',
+                        borderRight: '2px solid #E7E5E5',
+                    }}>
+                    {original_title}
+                </div>
+            </div>
+            <div 
+                className="w-full h-[90px] border-b-[2px]"
+                style={{
+                    borderBottomColor: '#E7E5E5'
+                }}>
+                <div 
+                    className='w-full h-full px-[6%] flex justify-start items-end'
+                    style={{
+                        borderLeft: '2px solid #E7E5E5',
+                        borderRight: '2px solid #E7E5E5',
+                    }}>
+                    {section_title}
+                </div>
+            </div>
+            <div 
+                className="w-full h-[450px] border-b-[2px]"
+                style={{
+                    borderBottomColor: '#E7E5E5'
+                }}>
+                <div 
+                    className='w-full h-full px-[6%] flex justify-start items-end flex-col'
+                    style={{
+                        borderLeft: '2px solid #E7E5E5',
+                        borderRight: '2px solid #E7E5E5',
+                    }}>
+                    {content}
+                </div>
+            </div>
+        </div>
+    )
+}
 
 export default {
     'Col_2_img_1': Col_2_img_1,
     'First_page_img_1': First_page_img_1,
     'Col_1_img_0': Col_1_img_0,
+    'First_page_img_1_template2': First_page_img_1_template2,
+    'img_0_template2': img_0_template2,
 }
 
 export const templateSamples = {
     cover: [{
         name: 'First_page_img_1',
+        img: cover_png.src,
+    },{
+        name: 'First_page_img_1_template2',
         img: cover_png.src,
     }],
     main: [{
@@ -175,6 +286,9 @@ export const templateSamples = {
     }, {
         name: 'Col_2_img_1',
         img: col2img1_png.src,
-    },
+    }, {
+        name: 'img_0_template2',
+        img: col1img0_png.src,
+    }
     ]
 };

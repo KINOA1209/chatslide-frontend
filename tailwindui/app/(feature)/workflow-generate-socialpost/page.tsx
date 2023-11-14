@@ -87,6 +87,7 @@ export default function Topic_SocialPost() {
 
   // bind form data between input and sessionStorage
   const [topic, setTopic] = useState('')
+  const [selectedScenario, setSelectedScenario] = useState('')
   const [audience, setAudience] = useState(
     typeof window !== 'undefined' && sessionStorage.audience != undefined
       ? sessionStorage.audience
@@ -107,6 +108,10 @@ export default function Topic_SocialPost() {
     const clientTopic = sessionStorage.getItem('topic')
     if (clientTopic) {
       setTopic(clientTopic)
+    }
+    const currScenario = sessionStorage.getItem('selectedScenario')
+    if (currScenario){
+      setSelectedScenario(currScenario)
     }
   }, [])
 
@@ -172,13 +177,14 @@ export default function Topic_SocialPost() {
       youtube_url: (event.target as HTMLFormElement).youtube.value,
       resources: JSON.parse(sessionStorage.getItem('resources') || '[]'),
       model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
-      post_style: 'casual_topic',
+      post_style: selectedScenario,
     }
     sessionStorage.setItem('topic', formData.topic)
     sessionStorage.setItem('language', formData.language)
 
     try {
       const outlinesJson = await callSocialPost(formData as FormatData)
+      console.log(outlinesJson)
       const searchImagesResponse = await callSearchImages(JSON.stringify(formData.topic))
       setIsSubmitting(false)
 
