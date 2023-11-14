@@ -22,7 +22,7 @@ import templates, { templateSamples } from '@/components/socialPost/socialPostTe
 
 export interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div'
-    className: 'subtopic' | 'keywords' | 'content' | 'template' | 'images'
+    className: 'subtopic' | 'keywords' | 'content' | 'template' | 'images' | 'section_title' | 'brief' | 'original_title' | 'English_title'
     content: string | string[]
 }
 
@@ -32,6 +32,10 @@ export type SlideKeys =
     | 'content'
     | 'template'
     | 'images'
+    | 'section_title'
+    | 'brief'
+    | 'original_title'
+    | 'English_title'
 
 export class SocialPostSlide {
     subtopic: string
@@ -39,13 +43,22 @@ export class SocialPostSlide {
     content: string[]
     template: string
     images: string[]
+    section_title: string
+    brief: string
+    original_title: string
+    English_title: string
+
 
     constructor() {
-        this.subtopic = 'New Slide';
-        this.keywords = ['New Slide'];
-        this.content = ['Your content here'];
+        this.subtopic = 'New Slide'
+        this.keywords = ['New Slide']
+        this.content = ['Your content here']
         this.template = 'Col_1_img_0'
         this.images = ['']
+        this.section_title = ''
+        this.brief = ''
+        this.original_title = ''
+        this.English_title = ''
     }
 }
 
@@ -86,6 +99,11 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
         typeof sessionStorage !== 'undefined'
         ? sessionStorage.getItem('topic')
         : ''
+    
+    const res_scenario =
+        typeof sessionStorage !== 'undefined'
+        ? sessionStorage.getItem('selectedScenario')
+        : ''
 
     const [showLayout, setShowLayout] = useState(false)
     const [present, setPresent] = useState(false)
@@ -102,7 +120,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 
     const presentScale = Math.min(dimensions.width / 450, dimensions.height / 600)
     const nonPresentScale = Math.min(1, presentScale * 0.6)
-
+    console.log(slides)
     useEffect(() => {
         if (unsavedChanges) {
             setSaveStatus('Unsaved changes')
@@ -136,18 +154,32 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                     slide.images = ['']
                 }
                 if (index === 0) {
-                    slide.subtopic = cover_title || 'Your topic here'
-                    slide.template = 'First_page_img_1'
+                    if (res_scenario === 'casual_topic'){
+                        slide.subtopic = cover_title || 'Your topic here'
+                        slide.template = 'First_page_img_1'
+                    }
+                    else if (res_scenario === 'serious_subject'){
+                        slide.English_title = slideData.English_title
+                        slide.template = 'First_page_img_1_template2'
+                    }
                 }
                 else {
-                    slide.subtopic = slideData.subtopic
-                    slide.template = 'Col_1_img_0'
+                    if (res_scenario === 'casual_topic'){
+                        slide.subtopic = slideData.subtopic
+                        slide.template = 'Col_1_img_0'
+                    }
+                    else if (res_scenario === 'serious_subject'){
+                        slide.template = 'img_0_template2'
+                    }      
                 }
-                slide.keywords = slideData.keywords || [''],
+                slide.keywords = slideData.keywords || ['']
                 slide.content = slideData.content || ['Your content here']
+                slide.section_title = slideData.section_title || ['Your section title here']
+                slide.brief = slideData.brief || ['Your brief here']
+                slide.original_title = slideData.original_title || cover_title
+
                 return slide
             });
-            //console.log(slidesArray)
             setSlides(slidesArray);
             setFinalSlides(slidesArray)
         };

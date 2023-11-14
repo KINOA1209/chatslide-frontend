@@ -9,13 +9,10 @@ const ScenarioChoicePage = () => {
   
   // Function to navigate to the "workflow-scenario-choice" page
   const navigateToScenarioChoice = (scenarioType:string) => {
-    router.push('/workflow-generate-socialpost') // Specify the route you want to navigate to?scenarioType=${scenarioType}
+    sessionStorage.setItem('selectedScenario', scenarioType)
+    router.push('/workflow-generate-socialpost') // Specify the route you want to navigate to
   }
-  const customBreakpointStyles = {
-    '@media (max-width: 960px)': {
-      width: '100%',
-    },
-  };
+
   return (
     <div className='bg-zinc-100 min-h-screen mt-[10rem]'>
       <div className='flex flex-col justify-center items-center gap-4 sm:gap-12 p-4 sm:p-8'>
@@ -43,12 +40,12 @@ const ScenarioChoicePage = () => {
           <div className='flex flex-col w-full'>
             <div 
               className='w-full h-[200px] bg-gray-300 rounded-lg shadow flex justify-center items-center cursor-pointer'
-              onClick={() => navigateToScenarioChoice('serious_topic')}
+              onClick={() => navigateToScenarioChoice('serious_subject')}
             >
-              <img className='w-[281px] h-[174px] mx-[20px]' src="/images/socialpost/serious_topic.png" />
+              <img className='w-[281px] h-[174px] mx-[20px]' src="/images/socialpost/serious_subject.png" />
             </div>
             <div className='text-center my-2 font-creato-medium leading-snug tracking-tight whitespace-nowrap font-bold'>
-              Serious Topic
+              Serious Subject
             </div>
           </div>
           

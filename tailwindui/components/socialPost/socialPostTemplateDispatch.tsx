@@ -1,4 +1,4 @@
-import { h1Style, h2Style, h3Style, h4Style, listStyle } from '@/components/socialPost/Styles'
+import { h1Style, h2Style, h3Style, h4Style, h5Style, h6Style, h7Style, h8Style, h9Style, listStyle } from '@/components/socialPost/Styles'
 import { SocialPostSlide, SlideKeys } from '@/components/socialPost/socialPostHTML'
 import templates, { templateSamples } from '@/components/socialPost/socialPostTemplates'
 import { MathJax, MathJaxContext } from 'better-react-mathjax'
@@ -50,7 +50,6 @@ export const templateDispatch = (
                     dangerouslySetInnerHTML={{ __html: slide.subtopic }}
                 />
             }
-            content={[<></>]}
             keywords={
                 <div
                     key={1}
@@ -66,9 +65,41 @@ export const templateDispatch = (
                     dangerouslySetInnerHTML={{ __html: keywordsString }}
                 />
             }
+            original_title={
+                <div
+                    key={2}
+                    className={`rounded-md outline-2 px-[4px] ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                    contentEditable={canEdit}
+                    onFocus={() => {
+                        if (canEdit) {
+                            setIsEditMode(true);
+                        }
+                    }}
+                    //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
+                    style={h6Style}
+                    dangerouslySetInnerHTML={{ __html: slide.original_title }}
+                />
+            }
+            English_title={
+                <div
+                    key={3}
+                    className={`rounded-md outline-2 px-[4px] ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                    contentEditable={canEdit}
+                    onFocus={() => {
+                        if (canEdit) {
+                            setIsEditMode(true);
+                        }
+                    }}
+                    //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
+                    style={h5Style}
+                    dangerouslySetInnerHTML={{ __html: slide.English_title }}
+                />
+            }
+            content={[<></>]}
             update_callback={updateImgUrlArray(index)}
             canEdit={canEdit}
             imgs={slide.images}
+            section_title={<></>}
         />
     } 
     else {
@@ -174,6 +205,37 @@ export const templateDispatch = (
 
             imgs={(slide.images) as string[]}
             update_callback={updateImgUrlArray(index)}
+            English_title={<></>}
+            section_title={
+                <div
+                    key={2}
+                    className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                    contentEditable={canEdit}
+                    onFocus={() => {
+                        if (canEdit) {
+                            setIsEditMode(true);
+                        }
+                    }}
+                    //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
+                    style={h8Style}
+                    dangerouslySetInnerHTML={{ __html: slide.section_title }}
+                />
+            }
+            original_title={
+                <div
+                key={3}
+                className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                contentEditable={canEdit}
+                onFocus={() => {
+                    if (canEdit) {
+                        setIsEditMode(true);
+                    }
+                }}
+                //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
+                style={h7Style}
+                dangerouslySetInnerHTML={{ __html: slide.original_title }}
+            />
+            }
         />
     }
 }
