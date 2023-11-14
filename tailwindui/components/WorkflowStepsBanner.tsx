@@ -51,7 +51,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
           <DrLambdaBackButton href={getPrevHref()} />
         </div>
 
-        <div className="flex-grow flex justify-center">
+        <div className="flex-grow hidden md:flex justify-center">
           <ProjectProgress currentInd={currentIndex} contentRef={contentRef} />
         </div>
 
@@ -66,13 +66,13 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
             {nextText}
           </DrlambdaButton>
         </div>
-
-        <div className='flex-auto text-center self-center text-neutral-900 font-medium font-creato-medium leading-snug tracking-tight whitespace-nowrap sm:hidden'>
-          Use our desktop version to see all the functionalities!
-        </div>
       </div>
 
       <div className='mt-[3rem] flex items-end w-full bg-Grey-50 z-10 pt-[4rem] pb-[1rem] border-b-2 px-[5rem]>'>
+      </div>
+
+      <div className='py-4 flex-auto text-center self-center bg-Grey-50  text-neutral-900 font-medium font-creato-medium leading-snug tracking-tight whitespace-nowrap sm:hidden'>
+        Use our desktop version to see all the functionalities!
       </div>
     </>
   );
