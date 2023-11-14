@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 
 import Link from 'next/link'
-import { Logo } from './logo'
+import { Home, Logo } from './logo'
 import DropdownButton from '@/components/utils/dropdown'
 import MobileMenu from './mobile-menu'
 import { useRouter } from 'next/navigation'
@@ -135,11 +135,11 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
       <div className='max-w-4/5 mx-auto px-5'>
         <div className='flex items-center justify-between h-12'>
           {/* Site branding */}
-          <div className='flex flex-row items-center'>
-            <Logo />
+          <div className='flex flex-row items-center gap-x-2'>
+            { isLanding ? <Logo /> : <Home /> }
             <div className='grow flex flex-row justify-center item-center justify-start'>
               <div className='w-fit h-[1.5rem] text-xl text-gray-200 bg-clip-text bg-gradient-to-r relative bottom-[3px] font-creato-medium'>
-                <a href='/dashboard'>DrLambda</a>
+                <a href={ isLanding ? '/dashboard' : '/'}>DrLambda</a>
               </div>
             </div>
           </div>
