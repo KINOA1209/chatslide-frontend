@@ -9,18 +9,6 @@
     url("https://db.onlinewebfonts.com/t/c456ecaa67ab8ddf91e221ee3ccaa6b3.svg#Creato Display")format("svg");
 }
 
-/* main page */
-.main_container {
-}
-
-@media (min-width: 1024px){
-    .main_container {
-        padding: 2% 8% 4% 8%;
-        gap: 1%;
-        justify-content: center;
-        
-    }
-}
 
 .title1 p{
     display: inline;
@@ -49,22 +37,14 @@
 }
 
 .project_container {
-    background-color: #E7E9EB;
     border-radius: 7px;
     padding: 16px 24px 23px 24px;
 }
 
 .additional_container {
     height: 550px;
-    background-color: #E7E9EB;
     border-radius: 7px;
     padding: 16px 20px;
-}
-
-.project_topic {
-    display: flex;
-    align-items: center;
-    gap:1%;
 }
 
 .project_topic p{
@@ -79,7 +59,6 @@
 .textfield {
     background-color: white;
     border-radius: 11px;
-    height: 300px;
     margin-top: 15px;
     resize: none;
 }
@@ -87,7 +66,6 @@
     border: None;
     width: 100%;
     border-radius: 11px;
-    height: 270px;
     resize: none;
     padding: 20px;
     font-family: 'Creato Display', sans-serif;
@@ -113,7 +91,6 @@
 @media (min-width: 1024px){
     .dropdown_container {
         align-items: center;
-        gap: 1%;
     }
 }
 
@@ -133,14 +110,12 @@
 .your_audience {
     display: flex;
     align-items: center;
-    gap:2%;
     letter-spacing: 0.5px
 }
 
 .language {
     display: flex;
     align-items: center;
-    gap:2%;
     letter-spacing: 0.5px
 }
 
@@ -174,7 +149,6 @@
 .upload {
     display: flex;
     align-items: center;
-    gap:2%;
 }
 
 .upload span{
@@ -189,7 +163,6 @@
 .youtube_container {
     margin-top: 15px;
     border-radius: 6px;
-    border: 2px dashed var(--Grey-400, #919DAA);
 }
 
 
@@ -198,7 +171,6 @@
     padding-left: 16px;
     padding-top: 28px;
     border-radius: 6px;
-    border: 2px dashed var(--Grey-400, #919DAA);
     height: 84px;
 }
 
@@ -221,8 +193,6 @@
 }
 
 #browse_btn {
-    margin-left: 2%;
-    color: var(--Grey-100, #E7E9EB);
     text-align: center;
     font-family: 'Creato Display', sans-serif;
     font-style: normal;
@@ -230,8 +200,6 @@
     line-height: 18.869px;
     letter-spacing: 0.26px;
     border-radius: 4px;
-    background: var(--Grey-600, #525C6A);
-    border: none;
     padding: 4px 12px;
 }
 
@@ -244,12 +212,8 @@
 
 #youtube {
     padding-left: 2%;
-    background-color: #E7E9EB;
-    border: None;
     width: 100%;
-    border-radius: 11px;
     font-family: 'Creato Display', sans-serif;
-    color: var(--Grey-500, #707C8A);
     font-style: normal;
     font-weight: 400;
     line-height: 18px; /* 138.462% */
