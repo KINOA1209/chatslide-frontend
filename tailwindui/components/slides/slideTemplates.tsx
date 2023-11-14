@@ -139,7 +139,7 @@ export const Standford_school_template = ({
     >
       <div className='h-auto '>
         <div
-          className='h-full flex items-center justify-center text-red-800 text-8xl font-bold leading-10 whitespace-nowrap'
+          className='h-full flex items-center justify-center text-red-800 text-7xl font-bold leading-10 whitespace-nowrap'
           //   style={{
           //     fontSize: '15pt',
           //     fontWeight: 'bold',
@@ -165,6 +165,7 @@ export const Standford_school_template = ({
         }}
       >
         {content}
+
         {/* Add your content here */}
       </div>
 
