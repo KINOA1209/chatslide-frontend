@@ -169,7 +169,7 @@ export const templateDispatch = (
                     handleSlideEdit(modifiedContent, index, 'content')
                   }}
                 >
-                  {wrapWithLiTags(content)}
+                  {content}
                 </div>
               )
             } else {
@@ -191,7 +191,7 @@ export const templateDispatch = (
                       }`}
                       // style={listStyle}
                     >
-                      {wrapWithLiTags(content)}
+                      {content}
                     </div>
                   </MathJax>
                 </MathJaxContext>
