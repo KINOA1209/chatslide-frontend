@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
 import { templateDispatch as defaultTemplateDispatch } from '@/components/socialPost/socialPostTemplateDispatch';
+import { templateDispatch as defaultTemplateDispatch2 } from '@/components/socialPost//socialPostTemplate2Dispatch';
+import { templateDispatch as defaultTemplateDispatch3 } from '@/components/socialPost/socialPostTemplate3Dispatch';
 
 type SlideContainerProps = {
     slides: SocialPostSlide[]; // You can replace 'any' with the actual type of the slides if known
@@ -21,12 +23,25 @@ const SocialPostContainer: React.FC<SlideContainerProps> = ({
     isViewing = false,
     isPresenting = false,
     scale = 1,
-    templateDispatch = defaultTemplateDispatch,
+    //templateDispatch = defaultTemplateDispatch,
     containerRef = useRef(null),
     slideRef = useRef(null),
     exportToPdfMode = false,
 }) => {
-
+    const selectedScenario = sessionStorage.getItem('selectedScenario') || ''
+    let templateDispatch
+    if (selectedScenario === 'casual_topic') {
+        templateDispatch = defaultTemplateDispatch
+    }
+    else if (selectedScenario === 'serious_subject') {
+        templateDispatch = defaultTemplateDispatch2
+    }
+    else if (selectedScenario === 'reading_notes') {
+        templateDispatch = defaultTemplateDispatch3
+    }
+    else {
+        templateDispatch = defaultTemplateDispatch
+    }
     return (
         <div
             id="slideContainer"

@@ -15,7 +15,9 @@ interface MainSlideProps {
     original_title: JSX.Element,
     English_title: JSX.Element,
     section_title: JSX.Element,
+    brief: JSX.Element,
     imgs: string[],
+    icon: JSX.Element,
     update_callback: (imgs: string[]) => void,
     canEdit: boolean,
     autoSave: Function,
@@ -159,7 +161,7 @@ export const Col_1_img_0 = ({ subtopic, keywords, content, canEdit, autoSave }: 
     )
 }
 
-export const First_page_img_1_template2 = ({ original_title, English_title, imgs, update_callback, canEdit, autoSave }: MainSlideProps) => {
+export const First_page_img_1_template2 = ({ original_title, English_title, imgs, icon, update_callback, canEdit, autoSave }: MainSlideProps) => {
     const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback);
     return (
         <div
@@ -186,20 +188,19 @@ export const First_page_img_1_template2 = ({ original_title, English_title, imgs
                     </div>
                 </div>
                 <div 
-                    className="w-full h-1/2"
+                    className="w-full h-1/2 flex"
                     style={{
                         borderRadius: '20px',
                         backgroundImage: `url(${localImgs[0]})`,
                         backgroundSize: 'cover',
                     }}>
-
                 </div>
             </div>
         </div>
     )
 }
 
-export const img_0_template2 = ({ section_title, original_title, content, update_callback, canEdit, autoSave }: MainSlideProps) => {
+export const img_0_template2 = ({ section_title, original_title, brief, content, icon, update_callback, canEdit, autoSave }: MainSlideProps) => {
 
     return (
         <div
@@ -219,45 +220,58 @@ export const img_0_template2 = ({ section_title, original_title, content, update
                 backgroundImage: `url('/images/socialpost/template2_bg.png')`,
         }}>
             <div 
-                className="w-full h-[45px]" 
+                className="w-full h-[7%]" 
                 style={{
-                    borderBottom: '2px solid #E7E5E5',
+                    borderBottom: '1px solid #E7E5E5',
                 }}>
                 <div 
-                    className='w-full h-full px-[6%] flex justify-start items-end'
+                    className='h-full px-[2%] mx-[4%] flex justify-start items-end'
                     style={{
-                        borderLeft: '2px solid #E7E5E5',
-                        borderRight: '2px solid #E7E5E5',
+                        borderLeft: '1px solid #E7E5E5',
+                        borderRight: '1px solid #E7E5E5',
                     }}>
                     {original_title}
                 </div>
             </div>
             <div 
-                className="w-full h-[90px] border-b-[2px]"
+                className="w-full h-[12%]"
                 style={{
-                    borderBottomColor: '#E7E5E5'
+                    borderBottom: '1px solid #E7E5E5',
                 }}>
                 <div 
-                    className='w-full h-full px-[6%] flex justify-start items-end'
+                    className='h-full px-[2%] mx-[4%] flex justify-start items-end'
                     style={{
-                        borderLeft: '2px solid #E7E5E5',
-                        borderRight: '2px solid #E7E5E5',
+                        borderLeft: '1px solid #E7E5E5',
+                        borderRight: '1px solid #E7E5E5',
                     }}>
                     {section_title}
                 </div>
             </div>
             <div 
-                className="w-full h-[450px] border-b-[2px]"
+                className="overflow-hidden w-full h-[75%]"
                 style={{
-                    borderBottomColor: '#E7E5E5'
+                    borderBottom: '1px solid #E7E5E5',
                 }}>
                 <div 
-                    className='w-full h-full px-[6%] flex justify-start items-end flex-col'
+                    className='h-full px-[2%] mx-[4%] flex justify-start items-end flex-col'
                     style={{
-                        borderLeft: '2px solid #E7E5E5',
-                        borderRight: '2px solid #E7E5E5',
+                        borderLeft: '1px solid #E7E5E5',
+                        borderRight: '1px solid #E7E5E5',
                     }}>
+                    {brief}
                     {content}
+                </div>
+            </div>
+            <div className="w-full h-[6%]">
+                <div 
+                    className='h-full px-[2%] mx-[4%] flex justify-center items-center'
+                    style={{
+                        borderLeft: '1px solid #E7E5E5',
+                        borderRight: '1px solid #E7E5E5',
+                    }}>
+                    <div className="flex flex-row justify-center items-center font-creato-medium leading-normal tracking-wide text-[15px]">
+                        {icon}DrLambda
+                    </div>
                 </div>
             </div>
         </div>

@@ -44,19 +44,19 @@ const h6Style: React.CSSProperties = {
 
 // template2 content page original title
 const h7Style: React.CSSProperties = {
-    fontSize: '9pt',
+    fontSize: '10pt',
     fontWeight: 'bold',
     color: 'rgba(27, 27, 27, 0.50)'
 };
 
 // template2 content page section title
 const h8Style: React.CSSProperties = {
-    fontSize: '20pt',
+    fontSize: '18pt',
     fontWeight: 'bold',
     color: '#1B1B1B'
 };
 
-// template2 content page content
+// template2 content page content and brief
 const h9Style: React.CSSProperties = {
     fontSize: '9pt',
     color: '#1B1B1B'
