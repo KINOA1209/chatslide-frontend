@@ -177,6 +177,7 @@ export default function Topic() {
 
       if (!videoDetails?.id) {
         setYoutubeError('The Youtube link is invalid.');
+        setIsAddingYoutube(false);
         return;
       }
 
