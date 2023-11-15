@@ -18,6 +18,7 @@ import MyFiles from '@/components/fileManagement'
 import PaywallModal from '@/components/forms/paywallModal'
 import Timer from '@/components/ui/Timer'
 import FeedbackButton from '@/components/slides/feedback'
+import WorkflowStepsBanner from '@/components/socialPost/socialPostWorkflowStep';
 
 import { QuestionExplainIcon, RightTurnArrowIcon } from '@/app/(feature)/icons'
 
@@ -45,22 +46,6 @@ interface FormatData {
   post_style: string | null;
 }
 
-interface OutlineResponse {
-  data:{
-    foldername: string;
-    project_id: string;
-    res: string;
-  }
-}
-
-interface ImageResponse {
-  images: string[];
-}
-
-interface IllustrationResponse{
-  illustration: string[];
-}
-
 export default function Topic_SocialPost() {
   const contentRef = useRef<HTMLDivElement>(null)
   const [showPopup, setShowPopup] = useState(false)
@@ -82,8 +67,7 @@ export default function Topic_SocialPost() {
   const [showSupportivePopup, setSupportivePopup] = useState(false)
   const [selectedFileList, setselectedFileList] = useState([])
   const [selectedFileListName, setselectedFileListName] = useState<string[]>([])
-  //const searchParams = useSearchParams();
-  //const scenarioType = searchParams.get('scenarioType');
+  const [isPaidUser, setIsPaidUser] = useState(false)
 
   // bind form data between input and sessionStorage
   const [topic, setTopic] = useState('')
@@ -114,6 +98,20 @@ export default function Topic_SocialPost() {
       setSelectedScenario(currScenario)
     }
   }, [])
+
+  useEffect(() => {
+    UserService.isPaidUser().then(
+      (isPaidUser) => {
+        setIsPaidUser(isPaidUser)
+      }
+    )
+  }, [])
+
+  useEffect(() => {
+    if (isSubmitting) {
+      handleSubmit()
+    }
+  }, [isSubmitting])
 
   useEffect(() => {
     const fetchHistoricalData = async () => {
@@ -157,8 +155,7 @@ export default function Topic_SocialPost() {
     openFile()
   }
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+  const handleSubmit = async () => {
     if (youtubeError) {
       return
     }
@@ -171,10 +168,10 @@ export default function Topic_SocialPost() {
     setIsSubmitting(true)
 
     const formData = {
-      topic: (event.target as HTMLFormElement).topic.value,
-      language: (event.target as HTMLFormElement).language.value,
+      topic: topic,
+      language: language,
       project_id: project_id,
-      youtube_url: (event.target as HTMLFormElement).youtube.value,
+      youtube_url: youtube,
       resources: JSON.parse(sessionStorage.getItem('resources') || '[]'),
       model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
       post_style: selectedScenario,
@@ -452,101 +449,17 @@ export default function Topic_SocialPost() {
           </Transition>
         </Transition>
 
-        {/* questionmark after gpt toggle */}
-        {showPopup && (
-          <div className='fixed top-[15%] left-[70%] w-[27rem] h-48 bg-gradient-to-l from-gray-950 to-slate-600 rounded-md shadow backdrop-blur-2xl flex flex-col'>
-            {/* Popup content */}
-            {/* You can add content, explanations, and close button here */}
-            <div
-              onClick={closePopup}
-              className='text-gray-50 cursor-pointer self-end px-4 py-2'
-            >
-              Close
-            </div>
-            {/* columns for two models */}
-            <div className='grid grid-cols-2 gap-8'>
-              <div className='flex flex-col justify-center items-center border-r-2 border-black/25'>
-                <div className='w-32 h-10 text-center mb-4'>
-                  <span className='text-zinc-100 text-2xl font-normal font-creato-medium leading-loose tracking-wide'>
-                    GPT
-                  </span>
-                  <span className='text-zinc-100 text-2xl font-bold font-creato-medium leading-loose tracking-wide'>
-                    {' '}
-                    3.5
-                  </span>
-                </div>
-                <div className="w-40 h-12 text-center text-neutral-300 text-xs font-normal font-['Creato Display'] leading-tight tracking-tight mb-[1.5rem]">
-                  Fast generation, great for small projects.
-                </div>
-                <div className="w-40 h-5 text-center text-zinc-100 text-xs font-medium font-['Creato Display'] leading-tight tracking-tight">
-                  Available to All Users
-                </div>
-              </div>
-              <div className='flex flex-col justify-center items-center'>
-                <div className='w-32 h-10 text-center mb-4'>
-                  <span className='text-zinc-100 text-2xl font-normal font-creato-medium leading-loose tracking-wide'>
-                    GPT
-                  </span>
-                  <span className='text-zinc-100 text-2xl font-bold font-creato-medium leading-loose tracking-wide'>
-                    {' '}
-                  </span>
-                  <span className='text-violet-500 text-2xl font-bold font-creato-medium leading-loose tracking-wide'>
-                    4.0
-                  </span>
-                </div>
-                <div className='w-40 h-12 text-center text-neutral-300 text-xs font-normal font-creato-medium leading-tight tracking-tight mb-[1.5rem]'>
-                  Master of deep & complex subjects.
-                </div>
-                <div className='w-40 h-5 text-center text-zinc-100 text-xs font-medium font-creato-medium leading-tight tracking-tight'>
-                  Exclusive to Plus & Pro Users
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* project progress section */}
-        <div className='mt-[3rem] flex flex-col w-full bg-Grey-50 justify-center gap-1 py-[0.75rem] border-b-2'>
-          <div className='self-center'>
-            <SocialPostProjectProgress currentInd={0} contentRef={contentRef} />
-          </div>
-
-          <div className='self-end mx-auto lg:mx-[5rem] flex flex-row gap-4 cursor-pointer'>
-            <NewWorkflowGPTToggle setIsGpt35={setIsGpt35} />
-            <div className='cursor-pointer' onClick={openPopup}>
-              <QuestionExplainIcon />
-            </div>
-          </div>
-
-          <div className='self-end w-full mx-auto lg:mx-[5rem] flex gap-4'>
-            <div
-              id='progress_title'
-              className='flex-auto text-center self-center text-neutral-900 text-xl hidden md:block hidden font-medium font-creato-medium leading-snug tracking-tight whitespace-nowrap lg:pl-[35%]'
-            >
-              To get started, give us some high-level intro about your project.
-            </div>
-            <div className='flex flex-col w-full lg:mx-[0rem] lg:w-[23rem]'>
-              <button
-                id='generate_button'
-                disabled={isSubmitting}
-                className='w-[11rem] mx-auto h-8 px-5 py-1.5 bg-button-color rounded-3xl justify-center items-center gap-5 inline-flex cursor-pointer disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400 lg:mr-[1%]'
-                type='submit'
-              >
-                <div className='w-[6rem] text-zinc-100 text-sm font-medium font-creato-medium leading-none tracking-tight whitespace-nowrap'>
-                  Generate Outline
-                </div>
-                <div>
-                  <RightTurnArrowIcon />
-                </div>
-              </button>
-              <div className='mx-auto py-1.5 lg:mr-[0%]'>
-                <Timer expectedSeconds={15} isSubmitting={isSubmitting} />
-              </div>
-            </div>
-          </div>
-          <div className='w-[9rem]'></div>
-        </div>
-
+        <WorkflowStepsBanner
+          currentIndex={0}
+          isSubmitting={isSubmitting}
+          setIsSubmitting={setIsSubmitting}
+          isPaidUser={isPaidUser}
+          contentRef={contentRef}
+          nextIsPaidFeature={false}
+          showGPTToggle={true}
+          nextText={!isSubmitting ? 'Next' : 'Creating Social Post ...'}
+          setIsGpt35={setIsGpt35}
+        />
         {/* main content */}
         <div className='main_container w-full lg:flex'>
           {/* Project Summary section */}

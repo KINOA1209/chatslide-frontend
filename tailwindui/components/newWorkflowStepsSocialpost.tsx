@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import CSS from 'csstype'
 import AuthService from '@/components/utils/AuthService'
 import { RightArrowIcon } from '@/app/(feature)/icons'
+import { NewStepIcon, CurrentStepIcon, FinishedStepIcon } from './icons';
 
 interface StepProps {
   id: number
@@ -61,7 +62,7 @@ const OneStep: React.FC<StepProps> = ({
   }
 
   // Conditionally render the RightArrowIcon based on whether it's the last step
-  const renderRightArrow = !isLastStep ? <RightArrowIcon /> : null
+  const renderRightArrow = <div className='hidden lg:flex'>{!isLastStep ? <RightArrowIcon /> : null}</div>
 
   if (current) {
     return (
@@ -72,8 +73,8 @@ const OneStep: React.FC<StepProps> = ({
         >
           {id}
         </div> */}
-        <span className='text-neutral-800 text-sm font-medium font-creato-bold leading-normal tracking-tight mx-3'>
-          {desc}
+        <span className='text-neutral-800 text-sm font-medium font-creato-bold leading-normal tracking-tight mx-3 overflow-x-auto inline-flex items-center gap-1'>
+          <CurrentStepIcon />{desc}
         </span>
         {renderRightArrow}
       </div>
@@ -81,7 +82,7 @@ const OneStep: React.FC<StepProps> = ({
   } else if (finished) {
     return (
       <div
-        className='w-full flex items-center cursor-pointer'
+        className='w-full flex items-center cursor-pointer hidden md:flex'
         onClick={handleClick}
         onMouseEnter={handleHoverEnter}
         onMouseLeave={handleHoverLeave}
@@ -90,39 +91,39 @@ const OneStep: React.FC<StepProps> = ({
           {id}
         </div> */}
         <span
-          className={` mx-3 text-gray-600 text-sm font-normal font-creato-medium leading-normal tracking-tight ${textClass}`}
+          className={` mx-3 text-gray-600 text-sm font-normal font-creato-medium leading-normal tracking-tight ${textClass} overflow-x-auto inline-flex items-center gap-1`}
         >
-          {desc}
+          <FinishedStepIcon />{desc}
         </span>
         {renderRightArrow}
       </div>
     )
   } else if (unavailable) {
     return (
-      <div className='w-full flex items-center'>
+      <div className='w-full flex items-center hidden md:flex'>
         {/* <div
           className='bg-gray-400 border-gray-400 text-white text-center'
           style={StepStyle}
         >
           {id}
         </div> */}
-        <span className='text-gray-600 text-sm font-normal font-creato-medium leading-normal tracking-tight mx-3 '>
-          {desc}
+        <span className='text-gray-600 text-sm font-normal font-creato-medium leading-normal tracking-tight mx-3 overflow-x-auto inline-flex items-center gap-1'>
+          <NewStepIcon />{desc}
         </span>
         {renderRightArrow}
       </div>
     )
   } else {
     return (
-      <div className='w-full flex items-center'>
+      <div className='w-full flex items-center hidden md:flex'>
         {/* <div
           className='bg-gray-400 border-gray-400 text-white text-center'
           style={StepStyle}
         >
           {id}
         </div> */}
-        <span className='text-gray-600 text-sm font-normal font-creato-medium leading-normal tracking-tight mx-3'>
-          {desc}
+        <span className='text-gray-600 text-sm font-normal font-creato-medium leading-normal tracking-tight mx-3 overflow-x-auto inline-flex items-center gap-1'>
+          <NewStepIcon />{desc}
         </span>
         {renderRightArrow}
       </div>
@@ -312,7 +313,7 @@ const ProgressBox = (
 }
 
 // Set up actual progress indicators with texts and redirections
-const SocialPostProjectProgress = () => {
+const ProjectProgress = () => {
   const steps = ['Summary', 'Post']
   const redirect = [
     '/workflow-generate-socialpost',
@@ -382,4 +383,4 @@ const SocialPostProjectProgress = () => {
   )
 }
 
-export default SocialPostProjectProgress()
+export default ProjectProgress()

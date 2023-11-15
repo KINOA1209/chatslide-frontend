@@ -18,6 +18,10 @@ interface MainSlideProps {
     brief: JSX.Element,
     imgs: string[],
     icon: JSX.Element,
+    illustration: string[],
+    title: JSX.Element,
+    quote: JSX.Element,
+    source: JSX.Element,
     update_callback: (imgs: string[]) => void,
     canEdit: boolean,
     autoSave: Function,
@@ -151,6 +155,7 @@ export const Col_1_img_0 = ({ subtopic, keywords, content, canEdit, autoSave }: 
                 position: 'relative',
                 backgroundColor: '#444',
                 padding: '28px',
+                backgroundImage: `url('/images/socialpost/template1_bg.png')`
             }}>
             <div className="w-full px-[15px]">{keywords}</div>
             <div className='w-full px-[15px]'>{subtopic}</div>
@@ -278,12 +283,120 @@ export const img_0_template2 = ({ section_title, original_title, brief, content,
     )
 }
 
+export const First_page_img_1_template3 = ({illustration, title, update_callback, canEdit, autoSave }: MainSlideProps) => {
+    const { localImgs, updateImgAtIndex } = useLocalImgs(illustration, 1, update_callback);
+    return (
+        <div
+            className="overflow-hidden gap-[32px]"
+            style={{
+                width: '100%',
+                height: '100%',
+                backgroundSize: 'cover',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+                boxSizing: 'border-box',
+                border: 'none',
+                position: 'relative',
+                backgroundColor: 'white',
+            }}>
+            <div 
+                id="container_template3_cover" 
+                className="w-full h-full flex flex-col justify-between"
+            >
+                <div 
+                    className="mx-[auto] mt-[15%] text-center"
+                    style={{
+                        fontSize: '60px',
+                        fontStyle: 'normal',
+                        fontWeight: '500',
+                        lineHeight: '70px',
+                        color: '#121212'
+                    }}
+                >
+                    {title}
+                </div>
+                <div 
+                    className="w-full h-1/2 flex"
+                    style={{
+                        borderRadius: '20px',
+                        backgroundImage: `url(${localImgs[0]})`,
+                        backgroundSize: 'cover',
+                    }}>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export const img_1_template3 = ({ illustration, quote, source, update_callback, canEdit, autoSave }: MainSlideProps) => {
+    const { localImgs, updateImgAtIndex } = useLocalImgs(illustration, 1, update_callback);
+    return (
+        <div
+            className="overflow-hidden gap-[32px]"
+            style={{
+                width: '100%',
+                height: '100%',
+                backgroundSize: 'cover',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+                boxSizing: 'border-box',
+                border: 'none',
+                position: 'relative',
+                backgroundColor: 'white',
+            }}>
+            <div 
+                id="container_template3_cover" 
+                className="w-full h-full flex flex-col justify-between"
+            >
+                <div 
+                    className="w-full h-1/2 flex"
+                    style={{
+                        borderRadius: '20px',
+                        backgroundImage: `url(${localImgs[0]})`,
+                        backgroundSize: 'cover',
+                    }}>
+                </div>
+                <div
+                    id='asterisk_section'
+                    className="mx-[auto] text-center">
+                    *
+                </div>
+                <div 
+                    className="mx-[auto] px-[7%] text-center"
+                    style={{
+                        fontSize: '18px',
+                        fontStyle: 'normal',
+                        fontWeight: '500',
+                        lineHeight: '155%',
+                        color: '#1D222A'
+                    }}
+                >
+                    {quote}
+                </div>
+                <div
+                    id='source_section'
+                    className="mx-[auto] mb-[10%] text-center"
+                >
+                    {source}
+                </div>
+               
+            </div>
+        </div>
+    )
+}
+
 export default {
     'Col_2_img_1': Col_2_img_1,
     'First_page_img_1': First_page_img_1,
     'Col_1_img_0': Col_1_img_0,
     'First_page_img_1_template2': First_page_img_1_template2,
     'img_0_template2': img_0_template2,
+    'First_page_img_1_template3': First_page_img_1_template3,
+    'img_1_template3': img_1_template3,
 }
 
 export const templateSamples = {
@@ -292,6 +405,9 @@ export const templateSamples = {
         img: cover_png.src,
     },{
         name: 'First_page_img_1_template2',
+        img: cover_png.src,
+    },{
+        name: 'First_page_img_1_template3',
         img: cover_png.src,
     }],
     main: [{
@@ -302,6 +418,9 @@ export const templateSamples = {
         img: col2img1_png.src,
     }, {
         name: 'img_0_template2',
+        img: col1img0_png.src,
+    }, {
+        name: 'img_1_template3',
         img: col1img0_png.src,
     }
     ]

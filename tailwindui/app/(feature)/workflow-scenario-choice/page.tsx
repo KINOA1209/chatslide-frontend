@@ -15,10 +15,10 @@ const ScenarioChoicePage = () => {
   }
 
   return (
-    <div className='bg-zinc-100 min-h-screen mt-[10rem]'>
+    <div className='bg-zinc-100 min-h-screen'>
       <div className='flex flex-col justify-center items-center gap-4 sm:gap-12 p-4 sm:p-8'>
         {/* title */}
-        <div className='w-96 text-center text-neutral-800 text-2xl font-normal font-creato-medium leading-9 tracking-wide'>
+        <div className='w-96 mt-[12rem] text-center text-neutral-800 text-2xl font-normal font-creato-medium leading-9 tracking-wide'>
           Which style do you prefer?
         </div>
         <div className='w-96 h-8 text-center text-gray-600 text-base font-normal font-creato-medium leading-normal tracking-tight'>

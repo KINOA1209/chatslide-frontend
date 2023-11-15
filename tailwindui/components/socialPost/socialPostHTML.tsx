@@ -22,7 +22,20 @@ import templates, { templateSamples } from '@/components/socialPost/socialPostTe
 
 export interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div'
-    className: 'subtopic' | 'keywords' | 'content' | 'template' | 'images' | 'section_title' | 'brief' | 'original_title' | 'English_title'
+    className: 
+    | 'subtopic' 
+    | 'keywords' 
+    | 'content' 
+    | 'template' 
+    | 'images' 
+    | 'section_title' 
+    | 'brief' 
+    | 'original_title' 
+    | 'English_title'
+    | 'title'
+    | 'illustration'
+    | 'quote'
+    | 'source'
     content: string | string[]
 }
 
@@ -36,6 +49,10 @@ export type SlideKeys =
     | 'brief'
     | 'original_title'
     | 'English_title'
+    | 'title'
+    | 'illustration'
+    | 'quote'
+    | 'source'
 
 export class SocialPostSlide {
     subtopic: string
@@ -47,6 +64,10 @@ export class SocialPostSlide {
     brief: string
     original_title: string
     English_title: string
+    title: string
+    illustration: string[]
+    quote: string
+    source: string
 
 
     constructor() {
@@ -59,6 +80,10 @@ export class SocialPostSlide {
         this.brief = ''
         this.original_title = ''
         this.English_title = ''
+        this.title = ''
+        this.illustration = ['']
+        this.quote = ''
+        this.source = ''
     }
 }
 
@@ -162,6 +187,9 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                         slide.English_title = slideData.English_title
                         slide.template = 'First_page_img_1_template2'
                     }
+                    else if (res_scenario === 'reading_notes'){
+                        slide.template = 'First_page_img_1_template3'
+                    }
                 }
                 else {
                     if (res_scenario === 'casual_topic'){
@@ -170,6 +198,9 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                     }
                     else if (res_scenario === 'serious_subject'){
                         slide.template = 'img_0_template2'
+                    }
+                    else if (res_scenario === 'reading_notes'){
+                        slide.template = 'img_1_template3'
                     }      
                 }
                 slide.keywords = slideData.keywords || ['']
@@ -177,6 +208,10 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                 slide.section_title = slideData.section_title || ['Your section title here']
                 slide.brief = slideData.brief || ['Your brief here']
                 slide.original_title = slideData.original_title || cover_title
+                slide.title = slideData.title || ''
+                slide.illustration = [slideData.illustration] || ['']
+                slide.quote = slideData.quote || ''
+                slide.source = slideData.source || ''
 
                 return slide
             });
