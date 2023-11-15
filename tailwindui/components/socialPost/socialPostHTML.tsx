@@ -412,7 +412,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                         explanation='Present'
                     />
 
-                    {!isViewing && (currentSlideIndex!=0) &&(
+                    {res_scenario === 'casual_topic' && !isViewing && (currentSlideIndex!=0) &&(
                         <ButtonWithExplanation
                             button={
                                 <LayoutChanger

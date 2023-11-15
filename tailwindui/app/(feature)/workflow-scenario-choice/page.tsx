@@ -3,6 +3,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import '@/app/css/workflow-scenario-choice.css'
+import Image from 'next/image'
 
 const ScenarioChoicePage = () => {
   const router = useRouter() // Initialize the router
@@ -30,7 +31,7 @@ const ScenarioChoicePage = () => {
               className='w-full h-[200px] bg-gray-300 rounded-lg shadow flex justify-center items-center cursor-pointer'
               onClick={() => navigateToScenarioChoice('casual_topic')}
             >
-              <img className='w-[281px] h-[174px] mx-[20px]' src="/images/socialpost/casual_topic.png" />
+              <Image className='mx-[20px]' width={281} height={174} alt='casual_topic' src="/images/socialpost/casual_topic.png" />
             </div>
             <div className='text-center my-2 font-creato-medium leading-snug tracking-tight whitespace-nowrap font-bold'>
               Casual Topic
@@ -42,7 +43,7 @@ const ScenarioChoicePage = () => {
               className='w-full h-[200px] bg-gray-300 rounded-lg shadow flex justify-center items-center cursor-pointer'
               onClick={() => navigateToScenarioChoice('serious_subject')}
             >
-              <img className='w-[281px] h-[174px] mx-[20px]' src="/images/socialpost/serious_subject.png" />
+              <Image className='mx-[20px]' width={281} height={174} alt='serious_subject' src="/images/socialpost/serious_subject.png" />
             </div>
             <div className='text-center my-2 font-creato-medium leading-snug tracking-tight whitespace-nowrap font-bold'>
               Serious Subject
@@ -54,7 +55,7 @@ const ScenarioChoicePage = () => {
               className='w-full h-[200px] bg-gray-300 rounded-lg shadow flex justify-center items-center cursor-pointer'
               onClick={() => navigateToScenarioChoice('reading_notes')}
             >
-              <img className='w-[281px] h-[174px] mx-[20px]' src="/images/socialpost/reading_notes.png" />
+              <Image className='mx-[20px]' width={281} height={174} alt='reading_notes' src="/images/socialpost/reading_notes.png" />
             </div>
             <div className='text-center my-2 font-creato-medium leading-snug tracking-tight whitespace-nowrap font-bold'>
               Reading Notes

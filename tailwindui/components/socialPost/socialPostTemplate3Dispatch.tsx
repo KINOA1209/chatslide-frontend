@@ -3,7 +3,8 @@ import { SocialPostSlide, SlideKeys } from '@/components/socialPost/socialPostHT
 import templates, { templateSamples } from '@/components/socialPost/socialPostTemplates'
 import { MathJax, MathJaxContext } from 'better-react-mathjax'
 import {
-    CompanyIconBlack
+    CompanyIconBlack,
+    CompanyIconWhite,
 } from '@/components/socialPost/socialPostIcons'
 
 function wrapWithLiTags(content: string): string {
@@ -98,13 +99,13 @@ export const templateDispatch = (
                     dangerouslySetInnerHTML={{ __html: slide.English_title }}
                 />
             }
-            icon={<></>}
             content={[<></>]}
-            brief={<></>}
             update_callback={updateImgUrlArray(index)}
             canEdit={canEdit}
             imgs={slide.images}
             section_title={<></>}
+            icon={<CompanyIconWhite />}
+            brief={<></>}
         />
     } 
     else {
@@ -188,7 +189,7 @@ export const templateDispatch = (
                             key={keyPrefix + index.toString() + '_' + contentIndex.toString()}
                             className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                             contentEditable={canEdit}
-                            style={listStyle}
+                            style={h9Style}
                             onFocus={() => {
                                 if (canEdit) {
                                     setIsEditMode(true);
@@ -202,7 +203,6 @@ export const templateDispatch = (
                             dangerouslySetInnerHTML={{ __html: content }}
                         >
                         </div>
-                        <hr className='my-[15px]'></hr>
                         </>    
                     );
                 })
@@ -241,8 +241,22 @@ export const templateDispatch = (
                 dangerouslySetInnerHTML={{ __html: slide.original_title }}
             />
             }
-            icon={<></>}
-            brief={<></>}
+            brief={
+                <div
+                key={4}
+                className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                contentEditable={canEdit}
+                onFocus={() => {
+                    if (canEdit) {
+                        setIsEditMode(true);
+                    }
+                }}
+                //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
+                style={h9Style}
+                dangerouslySetInnerHTML={{ __html: slide.brief }}
+            />
+            }
+            icon={<CompanyIconBlack />}
         />
     }
 }
