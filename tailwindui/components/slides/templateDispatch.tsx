@@ -142,6 +142,7 @@ export const templateDispatch = (
           />
         }
         content={slide.content.map((content: string, contentIndex: number) => {
+          // math mode
           if (content.includes('$$') || content.includes('\\(')) {
             if (editMathMode) {
               return (
@@ -169,7 +170,7 @@ export const templateDispatch = (
                     handleSlideEdit(modifiedContent, index, 'content')
                   }}
                 >
-                  {wrapWithLiTags(content)}
+                  {content}
                 </div>
               )
             } else {
@@ -191,7 +192,7 @@ export const templateDispatch = (
                       }`}
                       // style={listStyle}
                     >
-                      {wrapWithLiTags(content)}
+                      {content}
                     </div>
                   </MathJax>
                 </MathJaxContext>
