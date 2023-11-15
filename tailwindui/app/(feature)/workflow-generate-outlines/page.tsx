@@ -21,6 +21,7 @@ import { QuestionExplainIcon, RightTurnArrowIcon } from '@/app/(feature)/icons'
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner'
 import PaywallModal from '@/components/forms/paywallModal'
 import { FaFilePdf, FaYoutube } from 'react-icons/fa'
+import YoutubeService from '@/components/utils/YoutubeService'
 
 const audienceList = [
   'Researchers',
@@ -36,11 +37,11 @@ interface Project {
   audience: string
 }
 
-interface UserFile {
+interface Resource {
   id: string
   uid: string
-  filename: string
-  thumbnail_name: string
+  title: string
+  thumbnail_url: string
   timestamp: string
 }
 
@@ -63,8 +64,8 @@ export default function Topic() {
   const [showAudiencePopup, setAudiencePopup] = useState(false)
   const [showLanguagePopup, setLanguagePopup] = useState(false)
   const [showSupportivePopup, setSupportivePopup] = useState(false)
-  const [selectedFileList, setselectedFileList] = useState<UserFile[]>([])
-  const [selectedFileListName, setselectedFileListName] = useState<string[]>([])
+  const [selectedResourceId, setSelectedResourceId] = useState<string[]>([])
+  const [selectedResources, setSelectedResources] = useState<Resource[]>([])
   const [isPaidUser, setIsPaidUser] = useState(false)
 
   // bind form data between input and sessionStorage
@@ -161,6 +162,44 @@ export default function Topic() {
     event.preventDefault()
     setAudience(audience)
   }
+
+  async function addYoutubeLink(link: string) {
+    if (!link) {
+      setYoutubeError('Please enter a YouTube link.');
+      return;
+    }
+
+
+
+    try {
+      const {userId, idToken} = await AuthService.getCurrentUserTokenAndId();
+      const videoDetails = await YoutubeService.getYoutubeInfo(link, idToken);
+
+      if (!videoDetails?.id) {
+        setYoutubeError('The Youtube link is invalid.');
+        return;
+      }
+
+      console.log('videoDetails', videoDetails);
+
+      const newFile = {
+        id: videoDetails.id, 
+        uid: '',
+        title: videoDetails.title,
+        thumbnail_url: videoDetails.thumbnail,
+        timestamp: new Date().toISOString()
+      };
+
+      console.log('newFile', newFile);
+
+      setSelectedResources(prevList => [...prevList, newFile]);
+      setSelectedResourceId(prevList => [...prevList, newFile.id]);
+    } catch (error: any) {
+      console.error("Error fetching YouTube video details: ", error);
+      setYoutubeError("Error fetching YouTube video details");
+    }
+  }
+
 
   useEffect(() => {
     if (isSubmitting) {
@@ -262,20 +301,6 @@ export default function Topic() {
     } catch (error) {
       console.error('Error:', error)
       setIsSubmitting(false)
-    }
-  }
-
-  const handleSelectResources = (resource: Array<string>) => {
-    sessionStorage.setItem('resources', JSON.stringify(resource))
-    const allHistoryResourcesJson = sessionStorage.getItem('history_resource')
-
-    if (resource && allHistoryResourcesJson) {
-      const allHistoryResourcesArray: Array<UserFile> =
-        JSON.parse(allHistoryResourcesJson)
-      const selectedResources = resource.map((id) => {
-        return allHistoryResourcesArray.find((file) => file.id === id);
-      }).filter(file => file !== undefined) as UserFile[];
-      setselectedFileList(selectedResources)
     }
   }
 
@@ -421,7 +446,7 @@ export default function Topic() {
           <h4 className='h4 text-blue-600 text-center'>
             Select Supporting Material
           </h4>
-          <MyFiles selectable={true} callback={handleSelectResources} />
+          <MyFiles selectable={true} selectedResources={selectedResourceId} setSelectedResources={setSelectedResourceId} />
           <div className='max-w-sm mx-auto'>
             <div className='flex flex-wrap -mx-3 mt-6'>
               <div className='w-full px-3'>
@@ -686,6 +711,9 @@ export default function Topic() {
                     placeholder='Paste YouTube link here'
                   />
                 </div>
+                <button onClick={(e) => addYoutubeLink(youtube)} className='mx-2 border border-1 border-blue-600 rounded text-blue-600 px-3 py-1'>
+                  Add
+                </button>
               </div>
 
               {youtubeError && (
@@ -697,7 +725,7 @@ export default function Topic() {
               <div className='flex items-center w-full'>
                 <FaFilePdf />
                 <span>Drop files here or </span>
-                <button id='browse_btn' onClick={(e) => handleOpenFile(e)} className='mx-2 border border-1 border-blue-600 text-blue-600'>
+                <button onClick={(e) => handleOpenFile(e)} className='mx-2 border border-1 border-blue-600 rounded text-blue-600 px-3 py-1'>
                   Browse File
                 </button>
               </div>
@@ -708,17 +736,17 @@ export default function Topic() {
                 className='flex flex-col gap-4'
                 style={{ overflowY: 'auto' }}
               >
-                {selectedFileList.map((selectedFile, index) => (
+                {selectedResources.map((resource, index) => (
                   <li key={index}>
                     <div
                       id='selectedfile_each'
                       className='flex items-center gap-2 bg-white rounded h-[50px] pl-[1rem]'
                     >
-                      {selectedFile.thumbnail_name ?
-                        <img src={selectedFile.thumbnail_name} className='w-[40px]' /> :
+                      {resource.thumbnail_url ?
+                        <img src={resource.thumbnail_url} className='w-[40px]' /> :
                         <FaFilePdf className='w-[40px]'/>
                       }
-                      <span>{selectedFile.filename}</span>
+                      <span>{resource.title}</span>
                     </div>
                   </li>
                 ))}

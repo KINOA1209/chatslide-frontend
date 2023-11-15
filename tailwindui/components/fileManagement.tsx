@@ -232,19 +232,20 @@ const FileManagement: React.FC<UserFileList> = ({
 
 interface filesInterface {
   selectable: boolean
-  callback?: Function
+  selectedResources?: Array<string> 
+  setSelectedResources?: Function
 }
 
 const MyFiles: React.FC<filesInterface> = ({
   selectable = false,
-  callback,
+  selectedResources,
+  setSelectedResources,
 }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [resources, setResources] = useState<UserFile[]>([])
   const promptRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const [rendered, setRendered] = useState<boolean>(false)
-  const [selectedResources, setSelectedResources] = useState<Array<string>>([])
   const [isPaid, setIsPaid] = useState<boolean>(false)
 
   useEffect(() => {
@@ -276,10 +277,6 @@ const MyFiles: React.FC<filesInterface> = ({
     if (!selectable) {
       return
     }
-    const resourcesFromStorage = sessionStorage.getItem('resources')
-    const selected: Array<string> =
-      resourcesFromStorage !== null ? JSON.parse(resourcesFromStorage) : []
-    setSelectedResources(selected)
   }, [])
 
   useEffect(() => {
@@ -288,11 +285,6 @@ const MyFiles: React.FC<filesInterface> = ({
     }
   }, [resources, rendered])
 
-  useEffect(() => {
-    if (callback !== undefined) {
-      callback(selectedResources)
-    }
-  }, [selectedResources])
   const fetchFiles = async (token: string) => {
     const headers = new Headers()
     if (token) {
@@ -418,6 +410,11 @@ const MyFiles: React.FC<filesInterface> = ({
   }
 
   const handleClick = (id: string) => {
+    if (!selectedResources || !setSelectedResources){
+      console.log('selectedResources or setSelectedResources is null')
+      return
+    }
+    console.log('handleClick', id)
     const ind = selectedResources.indexOf(id)
     let resources: Array<string> = []
     if (isPaid) {
@@ -674,7 +671,7 @@ const MyFiles: React.FC<filesInterface> = ({
             userfiles={resources}
             deleteCallback={handleFileDeleted}
             clickCallback={handleClick}
-            selectedResources={selectedResources}
+            selectedResources={selectedResources || []}
           />
         )}
         {resources.length === 0 && (
