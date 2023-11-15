@@ -65,16 +65,30 @@ type DrLambdaBackButtonProps = {
 };
 
 export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({ href }) => {
-  const router =  useRouter();
+  const router = useRouter();
   return (
-  <div
+    <div
       className='h-[36px] flex-row justify-center items-center gap-4 cursor-pointer flex'
-    onClick={() => router.push(href)}
-  >
-    <LeftTurnArrowIcon></LeftTurnArrowIcon>
+      onClick={() => router.push(href)}
+    >
+      <LeftTurnArrowIcon></LeftTurnArrowIcon>
       <div className='text-center self-center text-gray-700 font-medium font-creato-medium leading-normal tracking-[0.035rem] whitespace-nowrap block'>
-      Back
+        Back
+      </div>
     </div>
-  </div>
+  )
+}
+
+export const SmallBlueButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSubmitting=false, isPaidUser, isPaidFeature = false }) => {
+  function getButtonStyle() {
+    if (isSubmitting) {
+      return 'border-gray-600 text-gray-600'
+    }
+    return 'border-blue-600 text-blue-600'
+  }
+  return (
+    <button onClick={onClick} className={`mx-2 border border-1 ${getButtonStyle()} rounded text-blue-600 px-3 py-1`} disabled={isSubmitting}>
+      {children}
+    </button>
   )
 }

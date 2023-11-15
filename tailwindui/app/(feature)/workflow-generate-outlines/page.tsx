@@ -22,6 +22,7 @@ import WorkflowStepsBanner from '@/components/WorkflowStepsBanner'
 import PaywallModal from '@/components/forms/paywallModal'
 import { FaFilePdf, FaYoutube } from 'react-icons/fa'
 import YoutubeService from '@/components/utils/YoutubeService'
+import { SmallBlueButton } from '@/components/button/DrlambdaButton'
 
 const audienceList = [
   'Researchers',
@@ -67,6 +68,7 @@ export default function Topic() {
   const [selectedResourceId, setSelectedResourceId] = useState<string[]>([])
   const [selectedResources, setSelectedResources] = useState<Resource[]>([])
   const [isPaidUser, setIsPaidUser] = useState(false)
+  const [isAddingYoutube, setIsAddingYoutube] = useState(false)
 
   // bind form data between input and sessionStorage
   const [topic, setTopic] = useState('')
@@ -168,11 +170,13 @@ export default function Topic() {
       setYoutubeError('Please enter a YouTube link.');
       return;
     }
-
-
-
+    if (!isPaidUser && selectedResources.length >= 1) {
+      setYoutubeError('Free users can only add one resource.');
+      return;
+    }
+    setIsAddingYoutube(true);
     try {
-      const {userId, idToken} = await AuthService.getCurrentUserTokenAndId();
+      const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
       const videoDetails = await YoutubeService.getYoutubeInfo(link, idToken);
 
       if (!videoDetails?.id) {
@@ -180,17 +184,13 @@ export default function Topic() {
         return;
       }
 
-      console.log('videoDetails', videoDetails);
-
       const newFile = {
-        id: videoDetails.id, 
+        id: videoDetails.id,
         uid: '',
         title: videoDetails.title,
         thumbnail_url: videoDetails.thumbnail,
         timestamp: new Date().toISOString()
       };
-
-      console.log('newFile', newFile);
 
       setSelectedResources(prevList => [...prevList, newFile]);
       setSelectedResourceId(prevList => [...prevList, newFile.id]);
@@ -198,6 +198,7 @@ export default function Topic() {
       console.error("Error fetching YouTube video details: ", error);
       setYoutubeError("Error fetching YouTube video details");
     }
+    setIsAddingYoutube(false);
   }
 
 
@@ -711,9 +712,9 @@ export default function Topic() {
                     placeholder='Paste YouTube link here'
                   />
                 </div>
-                <button onClick={(e) => addYoutubeLink(youtube)} className='mx-2 border border-1 border-blue-600 rounded text-blue-600 px-3 py-1'>
-                  Add
-                </button>
+                <SmallBlueButton onClick={e => {addYoutubeLink(youtube)}} isSubmitting={isAddingYoutube}>
+                  {isAddingYoutube ? 'Adding...' : 'Add'}
+                </SmallBlueButton>
               </div>
 
               {youtubeError && (
@@ -725,9 +726,9 @@ export default function Topic() {
               <div className='flex items-center w-full'>
                 <FaFilePdf />
                 <span>Drop files here or </span>
-                <button onClick={(e) => handleOpenFile(e)} className='mx-2 border border-1 border-blue-600 rounded text-blue-600 px-3 py-1'>
+                <SmallBlueButton onClick={handleOpenFile}>
                   Browse File
-                </button>
+                </SmallBlueButton>
               </div>
             </div>
             <hr id='add_hr' />
@@ -744,7 +745,7 @@ export default function Topic() {
                     >
                       {resource.thumbnail_url ?
                         <img src={resource.thumbnail_url} className='w-[40px]' /> :
-                        <FaFilePdf className='w-[40px]'/>
+                        <FaFilePdf className='w-[40px]' />
                       }
                       <span>{resource.title}</span>
                     </div>
