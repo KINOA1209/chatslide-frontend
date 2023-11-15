@@ -14,7 +14,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import AuthService from '@/components/utils/AuthService'
 import UserService from '@/components/utils/UserService'
 import { Transition } from '@headlessui/react'
-import MyFiles from '@/components/fileManagement'
+import MyFiles, { Resource } from '@/components/fileManagement'
 import FeedbackButton from '@/components/slides/feedback'
 
 import { QuestionExplainIcon, RightTurnArrowIcon } from '@/app/(feature)/icons'
@@ -36,14 +36,6 @@ const audienceList = [
 interface Project {
   topic: string
   audience: string
-}
-
-interface Resource {
-  id: string
-  uid: string
-  title: string
-  thumbnail_url: string
-  timestamp: string
 }
 
 export default function Topic() {
@@ -266,24 +258,6 @@ export default function Topic() {
           JSON.stringify(outlinesJson.data.pdf_images)
         )
 
-        // Retrieve the existing resources from sessionStorage and parse them
-        const resources: string[] = JSON.parse(
-          sessionStorage.getItem('resources') || '[]'
-        )
-
-        // Add the new YouTube URL to the resources list if it's not empty
-        const youtube_id: string = outlinesJson.data.youtube_id
-
-        if (youtube_id.trim() !== '') {
-          resources.push(youtube_id)
-        }
-
-        // Convert the updated list to a JSON string
-        const updatedResourcesJSON: string = JSON.stringify(resources)
-
-        // Store the updated JSON string back in sessionStorage
-        sessionStorage.setItem('resources', updatedResourcesJSON)
-
         // Redirect to a new page with the data
         router.push('workflow-edit-outlines')
       } else if (response.status == 402) {
@@ -445,7 +419,13 @@ export default function Topic() {
           <h4 className='h4 text-blue-600 text-center'>
             Select Supporting Material
           </h4>
-          <MyFiles selectable={true} selectedResources={selectedResourceId} setSelectedResources={setSelectedResourceId} />
+          <MyFiles
+            selectable={true}
+            selectedResourceId={selectedResourceId}
+            setSelectedResourceId={setSelectedResourceId}
+            selectedResources={selectedResources}
+            setSelectedResources={setSelectedResources}
+          />
           <div className='max-w-sm mx-auto'>
             <div className='flex flex-wrap -mx-3 mt-6'>
               <div className='w-full px-3'>
@@ -710,7 +690,7 @@ export default function Topic() {
                     placeholder='Paste YouTube link here'
                   />
                 </div>
-                <SmallBlueButton onClick={e => { addYoutubeLink(youtubeUrl)}} isSubmitting={isAddingYoutube}>
+                <SmallBlueButton onClick={e => { addYoutubeLink(youtubeUrl) }} isSubmitting={isAddingYoutube}>
                   {isAddingYoutube ? 'Adding...' : 'Add'}
                 </SmallBlueButton>
               </div>
