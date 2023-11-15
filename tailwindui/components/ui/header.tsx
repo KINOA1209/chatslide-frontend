@@ -26,11 +26,18 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
   const [loading, setLoading] = useState(true)
 
   const router = useRouter()
+  const [isMobile, setIsMobile] = useState<boolean>(false)
 
   // detect whether user has scrolled the page down by 10px
   const scrollHandler = () => {
     window.scrollY > 10 ? setTop(false) : setTop(true)
   }
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768)
+    console.log('isMobile', isMobile)
+  }, [])
+
 
   useEffect(() => {
     scrollHandler()
@@ -98,9 +105,8 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
     // Render a loading state or a blank placeholder
     return (
       <header
-        className={`fixed w-full z-30 bg-gray-800 bg-opacity-90 transition duration-300 ease-in-out ${
-          !top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
-        }`}
+        className={`fixed w-full z-30 bg-gray-800 bg-opacity-90 transition duration-300 ease-in-out ${!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
+          }`}
       >
         <div className='max-w-4/5 mx-auto px-5'>
           <div className='flex items-center justify-between h-12'>
@@ -121,25 +127,26 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
           </div>
         </div>
         <GoogleAnalytics />
-        <Hotjar />
+
+        {/* only render hotjar on desktop for performance */}
+        {!isMobile && <Hotjar />}
       </header>
     )
   }
 
   return (
     <header
-      className={`fixed w-full z-30 bg-gray-800 bg-opacity-90 transition duration-300 ease-in-out ${
-        !top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
-      }`}
+      className={`fixed w-full z-30 bg-gray-800 bg-opacity-90 transition duration-300 ease-in-out ${!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
+        }`}
     >
       <div className='max-w-4/5 mx-auto px-5'>
         <div className='flex items-center justify-between h-12'>
           {/* Site branding */}
           <div className='flex flex-row items-center gap-x-2'>
-            { isLanding ? <Logo /> : <Home /> }
+            {isLanding ? <Logo /> : <Home />}
             <div className='grow flex flex-row justify-center item-center justify-start'>
               <div className='w-fit h-[1.5rem] text-xl text-gray-200 bg-clip-text bg-gradient-to-r relative bottom-[3px] font-creato-medium'>
-                <a href={ !isLanding ? '/dashboard' : '/'}>DrLambda</a>
+                <a href={!isLanding ? '/dashboard' : '/'}>DrLambda</a>
               </div>
             </div>
           </div>
@@ -188,6 +195,9 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
       </div>
 
       <GoogleAnalytics />
+
+      {/* only render hotjar on desktop for performance */}
+      {!isMobile && <Hotjar />}
     </header>
   )
 }
