@@ -53,6 +53,7 @@ export default function Topic() {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showFileModal, setShowFileModal] = useState(false)
+  const [youtubeUrl, setYoutubeUrl] = useState('' as string)
   const [youtubeError, setYoutubeError] = useState('')
   const [isGpt35, setIsGpt35] = useState(true)
   const [showPaymentModal, setShowPaymentModal] = useState(false)
@@ -65,13 +66,16 @@ export default function Topic() {
   const [showAudiencePopup, setAudiencePopup] = useState(false)
   const [showLanguagePopup, setLanguagePopup] = useState(false)
   const [showSupportivePopup, setSupportivePopup] = useState(false)
-  const [selectedResourceId, setSelectedResourceId] = useState<string[]>([])
   const [selectedResources, setSelectedResources] = useState<Resource[]>([])
   const [isPaidUser, setIsPaidUser] = useState(false)
   const [isAddingYoutube, setIsAddingYoutube] = useState(false)
 
   // bind form data between input and sessionStorage
-  const [topic, setTopic] = useState('')
+  const [topic, setTopic] = useState(
+    typeof window !== 'undefined' && sessionStorage.topic != undefined
+      ? sessionStorage.topic
+      : ''
+  )
   const [audience, setAudience] = useState(
     typeof window !== 'undefined' && sessionStorage.audience != undefined
       ? sessionStorage.audience
@@ -82,23 +86,17 @@ export default function Topic() {
       ? sessionStorage.language
       : 'English'
   )
-  const [youtube, setYoutube] = useState(
-    typeof window !== 'undefined' && sessionStorage.youtube != undefined
-      ? sessionStorage.youtube
-      : ''
-  )
   const [addEquations, setAddEquations] = useState(
     typeof window !== 'undefined' && sessionStorage.addEquations != undefined
       ? JSON.parse(sessionStorage.addEquations)
       : false
   )
-
-  useEffect(() => {
-    const clientTopic = sessionStorage.getItem('topic')
-    if (clientTopic) {
-      setTopic(clientTopic)
-    }
-  }, [])
+  const [selectedResourceId, setSelectedResourceId] = useState<string[]>(
+    typeof window !== 'undefined' &&
+      sessionStorage.selectedResourceId != undefined
+      ? JSON.parse(sessionStorage.selectedResourceId)
+      : []
+  )
 
   useEffect(() => {
     UserService.isPaidUser().then(
@@ -228,8 +226,7 @@ export default function Topic() {
       language: language,
       addEquations: addEquations,
       project_id: project_id,
-      youtube_url: youtube,
-      resources: JSON.parse(sessionStorage.getItem('resources') || '[]'),
+      resources: selectedResourceId,
       model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
     }
 
@@ -237,6 +234,7 @@ export default function Topic() {
     sessionStorage.setItem('audience', formData.audience)
     sessionStorage.setItem('language', formData.language)
     sessionStorage.setItem('addEquations', formData.addEquations)
+    sessionStorage.setItem('selectedResourceId', JSON.stringify(formData.resources))
 
     try {
       const { userId, idToken: token } =
@@ -334,11 +332,11 @@ export default function Topic() {
     // sample: https://www.youtube.com/v/-wtIMTCHWuI?app=desktop
 
     if (link === '') {
-      setYoutube('')
+      setYoutubeUrl('')
       setYoutubeError('')
       return
     }
-    setYoutube(link)
+    setYoutubeUrl(link)
     setYoutubeError('')
     // validate url
     const regex1 = /youtube\.com\/watch\?v=[a-zA-z0-9_-]{11}/
@@ -347,14 +345,14 @@ export default function Topic() {
     if (regex1.test(link)) {
       const essentialLink = link.match(regex1)
       if (essentialLink && essentialLink.length > 0) {
-        setYoutube('https://www.' + essentialLink[0])
+        setYoutubeUrl('https://www.' + essentialLink[0])
       }
     } else if (regex2.test(link)) {
       const essentialLink = link.match(regex2)
       if (essentialLink && essentialLink.length > 0) {
         const vID = essentialLink[0].match(/[A-Za-z0-9_-]{11}/)
         if (vID && vID.length > 0) {
-          setYoutube('https://www.youtube.com/watch?v=' + vID[0])
+          setYoutubeUrl('https://www.youtube.com/watch?v=' + vID[0])
         }
       }
     } else if (regex3.test(link)) {
@@ -362,7 +360,7 @@ export default function Topic() {
       if (essentialLink && essentialLink.length > 0) {
         const vID = essentialLink[0].match(/[A-Za-z0-9_-]{11}/)
         if (vID && vID.length > 0) {
-          setYoutube('https://www.youtube.com/watch?v=' + vID[0])
+          setYoutubeUrl('https://www.youtube.com/watch?v=' + vID[0])
         }
       }
     } else {
@@ -707,12 +705,12 @@ export default function Topic() {
                     id='youtube'
                     type='text'
                     className='form-input w-full border-none bg-gray-100'
-                    value={youtube}
+                    value={youtubeUrl}
                     onChange={(e) => handleYoutubeChange(e.target.value)}
                     placeholder='Paste YouTube link here'
                   />
                 </div>
-                <SmallBlueButton onClick={e => {addYoutubeLink(youtube)}} isSubmitting={isAddingYoutube}>
+                <SmallBlueButton onClick={e => { addYoutubeLink(youtubeUrl)}} isSubmitting={isAddingYoutube}>
                   {isAddingYoutube ? 'Adding...' : 'Add'}
                 </SmallBlueButton>
               </div>
