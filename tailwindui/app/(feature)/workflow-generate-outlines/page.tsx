@@ -17,7 +17,7 @@ import { Transition } from '@headlessui/react'
 import MyFiles, { Resource } from '@/components/fileManagement'
 import FeedbackButton from '@/components/slides/feedback'
 
-import { QuestionExplainIcon, RightTurnArrowIcon } from '@/app/(feature)/icons'
+import { DeleteIcon, QuestionExplainIcon, RightTurnArrowIcon } from '@/app/(feature)/icons'
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner'
 import PaywallModal from '@/components/forms/paywallModal'
 import { FaFilePdf, FaYoutube } from 'react-icons/fa'
@@ -392,6 +392,16 @@ export default function Topic() {
     setSupportivePopup(false)
   }
 
+  const removeResourceAtIndex = (indexToRemove: number) => {
+    setSelectedResources(currentResources =>
+      currentResources.filter((_, index) => index !== indexToRemove)
+    );
+    setSelectedResourceId(currentResourceIds =>
+      currentResourceIds.filter((_, index) => index !== indexToRemove)
+    );
+  };
+
+
   return (
     <section>
       {showPaymentModal && <PaywallModal setShowModal={setShowPaymentModal} message='Upgrade for more ⭐️credits.' />}
@@ -726,13 +736,16 @@ export default function Topic() {
                   <li key={index}>
                     <div
                       id='selectedfile_each'
-                      className='flex items-center gap-2 bg-white rounded h-[50px] pl-[1rem]'
+                      className='flex items-center bg-white rounded h-[50px] px-[1rem] justify-between'
                     >
+                      <div className='flex items-center gap-2'>
                       {resource.thumbnail_url ?
                         <img src={resource.thumbnail_url} className='w-[40px]' /> :
                         <FaFilePdf className='w-[40px]' />
                       }
                       <span>{resource.title}</span>
+                      </div>
+                      <button className='' onClick={e => removeResourceAtIndex(index)}><DeleteIcon/></button>
                     </div>
                   </li>
                 ))}
