@@ -1,39 +1,37 @@
-import * as ytdl from 'ytdl-core';
-
 import { parse } from 'url';
 
-class YoutubeService {
-    private getYoutubeVideoId(url: string): string | null {
-        // Parse the URL
-        const parsedUrl = parse(url, true);
+export default class YoutubeService {
+  private static getYoutubeVideoId(url: string): string | null {
+    // Parse the URL
+    const parsedUrl = parse(url, true);
 
-        // Extract the "v" parameter from the query string
-        const videoId = parsedUrl.query.v as string;
+    // Extract the "v" parameter from the query string
+    const videoId = parsedUrl.query.v as string;
 
-        return videoId || null;
+    console.log('videoId', videoId)
+
+    return videoId || null;
+  }
+
+  static async getYoutubeInfo(url: string, userToken: string): Promise<{ id: string, title: string; thumbnail: string } | null> {
+    try {
+      const response = await fetch('/api/save_youtube_url', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${userToken}` // Replace this with your actual auth header
+        },
+        body: JSON.stringify({ youtube_url: url })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json()
+      console.log('data', data.data)
+      return { id: data.data.id, title: data.data.title, thumbnail: data.data.thumbnail };
+    } catch (error) {
+      throw error;
     }
-
-    async getYoutubeInfo(url: string): Promise<{ title: string; thumbnail: string } | null> {
-        try {
-            const videoId = this.getYoutubeVideoId(url);
-
-            if (!videoId) {
-                console.error('Invalid YouTube URL or Video ID');
-                return null;
-            }
-
-            const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
-            const videoInfo = await ytdl.getInfo(videoUrl);
-
-            const title = videoInfo.videoDetails.title;
-            const thumbnail = videoInfo.videoDetails.thumbnails[0].url;
-
-            return { title, thumbnail };
-        } catch (error) {
-            console.error('Error fetching YouTube data:', error);
-            return null;
-        }
-    }
+  }
 }
-
-
