@@ -62,7 +62,7 @@ const OneStep: React.FC<StepProps> = ({
   }
 
   // Conditionally render the RightArrowIcon based on whether it's the last step
-  const renderRightArrow = <div className='hidden md:flex'>{!isLastStep ? <RightArrowIcon /> : null}</div>
+  const renderRightArrow = <div className='hidden lg:flex'>{!isLastStep ? <RightArrowIcon /> : null}</div>
 
   if (current) {
     return (
@@ -314,7 +314,7 @@ const ProgressBox = (
 
 // Set up actual progress indicators with texts and redirections
 const ProjectProgress = () => {
-  const steps = ['Summery', 'Outlines', 'Slides', 'Script']
+  const steps = ['Summary', 'Outlines', 'Slides', 'Script']
   const redirect = [
     '/workflow-generate-outlines',
     '/workflow-edit-outlines',

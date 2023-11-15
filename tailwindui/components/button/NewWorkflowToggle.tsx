@@ -14,26 +14,19 @@ const NewToggle: React.FC<ToggleProps> = ({
   setIsLeft,
   leftText,
   rightText,
-  leftColor = 'bg-indigo-600',
-  rightColor = 'bg-indigo-600',
+  leftColor = 'bg-teal-500',
+  rightColor = 'bg-purple-700',
 }) => {
+  const activeBox = "shadow-[0px_2.688084602355957px_6.720211505889893px_rgba(10.01,19.13,8.53,0.12)] rounded-[15px]"
+
   return (
     <div className='toggle items-center md:flex'>
-      <div className='flex items-center pb-2'>
-        <div className='left-text' onClick={() => setIsLeft(true)}>
-          {leftText || 'Monthly'}
+      <div className='flex items-center rounded-[15px] border bg-gray-200 px-0.5 py-0.5 my-1'>
+        <div className={`w-[110px] h-[36px] px-2 py-1 flex justify-center items-center ${isLeft ? activeBox : ''} ${isLeft ? leftColor : ''}`} onClick={() => setIsLeft(true)}>
+          <div className={`text-[16px] font-medium break-words ${!isLeft ? 'text-blue-600' : 'text-white'}`}>{leftText}</div>
         </div>
-        <div
-          onClick={() => setIsLeft(!isLeft)}
-          className={`flex flex-row items-center w-9 h-5 rounded-full mx-[0.5rem] ${
-            isLeft ? `justify-start ${leftColor}` : `justify-end ${rightColor}`
-          }`}
-        >
-            {/* ball */}
-          <div className={`w-4 h-4 bg-zinc-100 rounded-full mx-0.5`} />
-        </div>
-        <div className='right-text' onClick={() => setIsLeft(false)}>
-          {rightText || 'Yearly (17% off)'}
+        <div className={`w-[110px] h-[36px] px-2 py-1 flex justify-center items-center ${!isLeft ? activeBox : ''} ${!isLeft ? rightColor : ''}`} onClick={() => setIsLeft(false)}>
+          <div className={`text-[16px] font-medium break-words ${isLeft ? 'text-blue-600' : 'text-white'}`}>{rightText}</div>
         </div>
       </div>
     </div>
