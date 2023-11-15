@@ -51,10 +51,8 @@ const GPTToggle: React.FC<GPTToggleProps> = ({ setIsGpt35 }) => {
       <NewWorkflowToggle
         isLeft={isGpt35}
         setIsLeft={handleToggle}
-        leftText='GPT 3.5'
-        rightText='GPT 4'
-        leftColor='bg-[#A6B1BB]'
-        rightColor='bg-[#455BE8]'
+        leftText='GPT3.5 ⚡️'
+        rightText='GPT4 🚀'
       />
 
       {showPaymentModal && (
@@ -85,9 +83,9 @@ export const GPTToggleWithExplanation: FunctionComponent<GPTToggleWithExplanatio
       {/* gpt model switch area */}
       <div className='self-end flex flex-row gap-4 cursor-pointer'>
         <GPTToggle setIsGpt35={setIsGpt35} />
-        <div className='cursor-pointer' onClick={openPopup}>
+        {/* <div className='cursor-pointer' onClick={openPopup}>
           <QuestionExplainIcon />
-        </div>
+        </div> */}
       </div>
 
       {/* Popup for explaining model difference */}

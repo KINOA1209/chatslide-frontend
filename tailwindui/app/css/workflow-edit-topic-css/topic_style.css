@@ -11,13 +11,10 @@
 
 /* main page */
 .main_container {
-    background-color: #F4F4F4;
-    
 }
 
 @media (min-width: 1024px){
     .main_container {
-        background-color: #F4F4F4;
         padding: 2% 8% 4% 8%;
         gap: 1%;
         justify-content: center;
