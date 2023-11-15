@@ -19,6 +19,7 @@
     "aws-crt": "^1.15.18",
     "better-react-mathjax": "^2.0.2",
     "carbon-connect": "^1.5.40",
+    "cheerio": "^1.0.0-rc.12",
     "encoding": "^0.1.13",
     "file-saver": "^2.0.5",
     "firebase": "^9.23.0",
@@ -44,7 +45,8 @@
     "react-toastify": "^9.1.3",
     "react-twitter-embed": "^4.0.4",
     "redux": "^4.1.0",
-    "sanitize-html": "^2.9.0"
+    "sanitize-html": "^2.9.0",
+    "ytdl-core": "^4.11.5"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
