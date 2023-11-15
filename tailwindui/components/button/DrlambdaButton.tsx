@@ -42,7 +42,7 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSu
         id='generate_button'
         disabled={isSubmitting}
         onClick={checkPaidUser}
-        className={`w-[12rem] h-[36px] px-5 ${getButtonBg()} rounded-[15px] flex justify-center items-center gap-2 mx-auto cursor-pointer lg:mr-[1%] }`}
+        className={`w-[8rem] lg:w-[12rem] h-[36px] ${getButtonBg()} rounded-[15px] flex justify-center items-center gap-2 cursor-pointer }`}
       >
         {isSubmitting && <SpinIcon />}
         <span className='text-white font-semibold tracking-tight whitespace-nowrap'>
