@@ -105,6 +105,10 @@ export const templateDispatch = (
             canEdit={canEdit}
             imgs={slide.images}
             section_title={<></>}
+            illustration={['']}
+            title={<></>}
+            quote={<></>}
+            source={<></>}
         />
     } 
     else {
@@ -243,6 +247,10 @@ export const templateDispatch = (
             }
             icon={<></>}
             brief={<></>}
+            illustration={['']}
+            title={<></>}
+            quote={<></>}
+            source={<></>}
         />
     }
 }

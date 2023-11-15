@@ -106,6 +106,10 @@ export const templateDispatch = (
             section_title={<></>}
             icon={<CompanyIconWhite />}
             brief={<></>}
+            illustration={['']}
+            title={<></>}
+            quote={<></>}
+            source={<></>}
         />
     } 
     else {
@@ -257,6 +261,10 @@ export const templateDispatch = (
             />
             }
             icon={<CompanyIconBlack />}
+            illustration={['']}
+            title={<></>}
+            quote={<></>}
+            source={<></>}
         />
     }
 }

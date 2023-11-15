@@ -106,6 +106,23 @@ export const templateDispatch = (
             section_title={<></>}
             icon={<CompanyIconWhite />}
             brief={<></>}
+            illustration={(slide.illustration) as string[]}
+            title={
+                <div
+                    key={4}
+                    className={`rounded-md outline-2 px-[4px] ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                    contentEditable={canEdit}
+                    onFocus={() => {
+                        if (canEdit) {
+                            setIsEditMode(true);
+                        }
+                    }}
+                    //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
+                    dangerouslySetInnerHTML={{ __html: slide.title }}
+                />
+            }
+            quote={<></>}
+            source={<></>}
         />
     } 
     else {
@@ -254,9 +271,39 @@ export const templateDispatch = (
                 //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
                 style={h9Style}
                 dangerouslySetInnerHTML={{ __html: slide.brief }}
-            />
+                />
             }
             icon={<CompanyIconBlack />}
+            illustration={(slide.illustration) as string[]}
+            title={<></>}
+            quote={
+                <div
+                key={5}
+                className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                contentEditable={canEdit}
+                onFocus={() => {
+                    if (canEdit) {
+                        setIsEditMode(true);
+                    }
+                }}
+                //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
+                dangerouslySetInnerHTML={{ __html: '"' + slide.quote + '"' }}
+                />
+            }
+            source={
+                <div
+                key={6}
+                className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                contentEditable={canEdit}
+                onFocus={() => {
+                    if (canEdit) {
+                        setIsEditMode(true);
+                    }
+                }}
+                //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
+                dangerouslySetInnerHTML={{ __html: slide.source }}
+                />
+            }
         />
     }
 }
