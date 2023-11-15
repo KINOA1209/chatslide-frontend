@@ -90,7 +90,7 @@ export default function WorkflowStep2() {
   //     console.log('session storage isGpt35', sessionStorage.getItem('isGpt35'))
   //   }, [])
   return (
-    <div className=' bg-zinc-100'>
+    <div className=''>
       {/* flex col container for steps, title, generate slides button etc */}
       <WorkflowStepsBanner 
         currentIndex={1} 
