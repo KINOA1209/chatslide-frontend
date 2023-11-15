@@ -281,7 +281,7 @@ export const Col_1_img_0 = ({
         <div
           className='w-full h-full grow p-1'
           style={{
-            //   display: 'list-item',
+            display: 'list-item',
             listStyleType: 'disc',
             listStylePosition: 'inside',
             fontSize: '18pt',
