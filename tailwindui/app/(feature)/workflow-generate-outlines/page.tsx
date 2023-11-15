@@ -58,7 +58,6 @@ export default function Topic() {
   const [showAudiencePopup, setAudiencePopup] = useState(false)
   const [showLanguagePopup, setLanguagePopup] = useState(false)
   const [showSupportivePopup, setSupportivePopup] = useState(false)
-  const [selectedResources, setSelectedResources] = useState<Resource[]>([])
   const [isPaidUser, setIsPaidUser] = useState(false)
   const [isAddingYoutube, setIsAddingYoutube] = useState(false)
 
@@ -89,6 +88,13 @@ export default function Topic() {
       ? JSON.parse(sessionStorage.selectedResourceId)
       : []
   )
+  const [selectedResources, setSelectedResources] = useState<Resource[]>(
+    typeof window !== 'undefined' &&
+      sessionStorage.selectedResources != undefined
+      ? JSON.parse(sessionStorage.selectedResources)
+      : []
+  )
+  
 
   useEffect(() => {
     UserService.isPaidUser().then(
@@ -227,6 +233,7 @@ export default function Topic() {
     sessionStorage.setItem('language', formData.language)
     sessionStorage.setItem('addEquations', formData.addEquations)
     sessionStorage.setItem('selectedResourceId', JSON.stringify(formData.resources))
+    sessionStorage.setItem('selectedResources', JSON.stringify(selectedResources))
 
     try {
       const { userId, idToken: token } =

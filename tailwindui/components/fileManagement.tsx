@@ -322,6 +322,10 @@ const MyFiles: React.FC<filesInterface> = ({
           }
         })
         setResources(resourceTemps)
+
+        if(setSelectedResources) {
+          setSelectedResources(resourceTemps.filter((resource: Resource) => selectedResourceId?.includes(resource.id)));
+        }
         setRendered(true)
       } else {
         // Handle error cases
