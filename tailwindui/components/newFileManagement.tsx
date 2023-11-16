@@ -118,7 +118,7 @@ const FileManagement: React.FC<UserFileList> = ({
       <img
         src={thumbnailUrl}
         alt='Thumbnail'
-        className='w-full h-full object-cover'
+        className='object-contain'
       />
     )
   }
@@ -156,13 +156,13 @@ const FileManagement: React.FC<UserFileList> = ({
         }}
       >
         {/* thumbnail, filename */}
-        <div className='h-full flex items-center w-full py-4 px-2'>
+        <div className='h-full flex items-center justify-left w-full py-4 px-2'>
           {/* thumbnail */}
-          <div className='w-8 flex'>
+          <div className='w-8 h-8'>
             {thumbnail ? getThumbnail(thumbnail) : getIcon(filename)}
           </div>
           {/* filename */}
-          <div className='grow text-ellipsis mx-4 overflow-hidden text-[17px] font-creato-medium leading-normal tracking-wide'>
+          <div className='text-ellipsis mx-4 overflow-hidden text-[17px] font-creato-medium leading-normal tracking-wide'>
             {filename}
           </div>
         </div>
