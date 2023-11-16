@@ -41,7 +41,7 @@ export default function WorkflowStep3() {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   return (
-    <div className='bg-gradient-to-b from-[#6A7EF9] to-[#415AF1]'>
+    <div className='min-h-[90vh] bg-gradient-to-b from-[#6A7EF9] to-[#415AF1]'>
       {/* flex col container for steps, title, etc */}
       
       <WorkflowStepsBanner 
