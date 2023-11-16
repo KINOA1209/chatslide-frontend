@@ -112,7 +112,7 @@ export const templateDispatch = (
           // }}
           // onBlur={(e) =>
           //     handleSlideEdit(e.target.innerText, index, 'userName')}
-          style={h4Style}
+          // style={h4Style}
           dangerouslySetInnerHTML={{ __html: slide.userName }}
         />
       }
@@ -133,7 +133,7 @@ export const templateDispatch = (
             }
           }}
           onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'head')}
-          style={h1Style}
+          // style={h1Style}
           dangerouslySetInnerHTML={{ __html: slide.head }}
         />
       }
@@ -177,7 +177,7 @@ export const templateDispatch = (
           onBlur={(e) => {
             handleSlideEdit(e.target.innerText, index, 'subtopic')
           }}
-          style={h3Style}
+          // style={h3Style}
           dangerouslySetInnerHTML={{ __html: slide.subtopic }}
         />
       }
