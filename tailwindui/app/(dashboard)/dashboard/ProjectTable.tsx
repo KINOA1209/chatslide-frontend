@@ -11,6 +11,7 @@ import {
   FaFileWord,
   FaYoutube,
 } from 'react-icons/fa'
+import { DeleteIcon } from '@/app/(feature)/icons';
 
 interface Resource {
   id: string
@@ -123,7 +124,7 @@ const ProjectTable: React.FC<Props> = ({
                   className='cursor-pointer'
                   onClick={(e) => onDelete(e, project.id)}
                 >
-                  <FaTrash />
+                  <DeleteIcon />
                 </div>
               </div>
             </div>

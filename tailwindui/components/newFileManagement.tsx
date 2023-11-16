@@ -10,6 +10,7 @@ import moment from 'moment'
 // import mixpanel from 'mixpanel-browser'
 import { DeleteResourceIcon } from '@/app/(feature)/my-resources/icons'
 import { CarbonConnect, IntegrationName } from 'carbon-connect'
+import { DeleteIcon } from '@/app/(feature)/icons'
 
 interface UserFile {
   id: string
@@ -176,7 +177,7 @@ const FileManagement: React.FC<UserFileList> = ({
           {!selectable ? (
             <div className='w-8 flex flex-row-reverse cursor-pointer'>
               <div onClick={(e) => handleDeleteFile(e, id)}>
-                <DeleteResourceIcon></DeleteResourceIcon>
+                <DeleteIcon />
               </div>
             </div>
           ) : (
