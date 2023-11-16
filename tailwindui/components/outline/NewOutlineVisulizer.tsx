@@ -308,8 +308,10 @@ const OutlineVisualizer = ({
       // Store the data in local storage
       // console.log(resp.data);
       sessionStorage.setItem('transcripts', JSON.stringify(resp.data.res))
-      // Redirect to a new page with the data
-      router.push('workflow-edit-script')
+
+      // do not redir, view scripts in the current page
+      // router.push('workflow-edit-script')
+      setIsSubmittingScript(false)
     } else {
       alert('Request failed: ' + response.status)
       // console.log(response)
