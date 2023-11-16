@@ -69,14 +69,14 @@ const ProjectTable: React.FC<Props> = ({
 }) => {
 
   return (
-    <div className="w-2/3 mx-auto">
+    <div className="w-full md:w-2/3 mx-auto">
       <div
-        className='grid bg-[#ECF1FE] border border-gray-200 grid-cols-2 md:grid-cols-4'
+        className='grid bg-[#ECF1FE] border border-gray-200 grid-cols-3 md:grid-cols-5'
       >
         <div className='hidden md:flex items-center justify-center w-full text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
           Type
         </div>
-        <div className='flex items-center justify-center w-full text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+        <div className='col-span-2 flex items-center justify-center w-full text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
           Topic
         </div>
         <div className='hidden md:flex items-center justify-center w-full text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
@@ -87,7 +87,7 @@ const ProjectTable: React.FC<Props> = ({
         </div>
       </div>
       <div
-        className='grid border bg-[white] border-gray-200 grid-cols-2 md:grid-cols-4'
+        className='grid border bg-[white] border-gray-200 grid-cols-3 md:grid-cols-5'
       >
         {' '}
         {currentProjects.map((project, index) => (
@@ -97,7 +97,7 @@ const ProjectTable: React.FC<Props> = ({
               <span className='ml-1'>{project.task}</span>
             </div>
             <div
-              className='p-2 flex cursor-pointer items-center text-start border-b-2 text-ellipsis overflow-hidden text-[17px] font-creato-medium leading-normal tracking-wide'
+              className='col-span-2 p-2 flex cursor-pointer items-center text-start border-b-2 text-ellipsis overflow-hidden text-[17px] font-creato-medium leading-normal tracking-wide'
               onClick={() => onProjectClick(project.id)}
             >
               {project.name}
