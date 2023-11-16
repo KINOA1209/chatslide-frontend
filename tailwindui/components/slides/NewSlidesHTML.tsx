@@ -661,7 +661,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         </div>
       </div>
 
-      <div className='absolute -left-[15rem] h-full hidden lg:block max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
+      <div className='absolute -left-[15rem] h-1/2 hidden lg:block max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
         <div className='py-6 flex flex-col flex-nowrap overflow-y-auto overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
           {Array(slides.length)
             .fill(0)
