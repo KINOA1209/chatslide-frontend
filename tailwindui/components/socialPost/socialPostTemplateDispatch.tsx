@@ -32,7 +32,6 @@ export const templateDispatch = (
     } else if (!canEdit){
         keyPrefix = 'preview'
     }
-    console.log(handleSlideEdit)
     const Template = templates[slide.template as keyof typeof templates]
     if (index === 0) {
         const keywordsString = slide.keywords.join(' | ')
@@ -40,6 +39,10 @@ export const templateDispatch = (
           <Template
             autoSave={saveSlides}
             key={keyPrefix + index.toString()}
+            icon={<CompanyIconWhite />}
+            update_callback={updateImgUrlArray(index)}
+            canEdit={canEdit}
+            imgs={slide.images}
             subtopic={
                 <div
                     key={0}
@@ -58,22 +61,19 @@ export const templateDispatch = (
             keywords={
                 <div
                     key={1}
-                    className={`rounded-md outline-2 px-[4px] ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
-                    contentEditable={canEdit}
-                    onFocus={() => {
-                        if (canEdit) {
-                            setIsEditMode(true);
-                        }
-                    }}
-                    onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'keywords')}
+                    //className={`rounded-md outline-2 px-[4px] ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                    contentEditable={false}
+                    className={`rounded-md outline-2 px-[4px] ${!exportToPdfMode && 'overflow-hidden'}`}
+                    // onFocus={() => {
+                    //     if (canEdit) {
+                    //         setIsEditMode(true);
+                    //     }
+                    // }}
+                    //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'keywords')}
                     style={h4Style}
                     dangerouslySetInnerHTML={{ __html: keywordsString }}
                 />
             }
-            icon={<CompanyIconWhite />}
-            update_callback={updateImgUrlArray(index)}
-            canEdit={canEdit}
-            imgs={slide.images}
             original_title={<></>}
             English_title={<></>}
             content={[<></>]}
@@ -92,6 +92,9 @@ export const templateDispatch = (
             autoSave={saveSlides}
             canEdit={canEdit}
             key={keyPrefix + index.toString()}
+            icon={<CompanyIconWhite />}
+            imgs={(slide.images) as string[]}
+            update_callback={updateImgUrlArray(index)}   
             subtopic={
                 <div
                     key={0}
@@ -186,10 +189,7 @@ export const templateDispatch = (
                         </>    
                     );
                 })
-            }
-            icon={<CompanyIconWhite />}
-            imgs={(slide.images) as string[]}
-            update_callback={updateImgUrlArray(index)}           
+            }       
             section_title={<></>}
             original_title={<></>}
             illustration={['']}

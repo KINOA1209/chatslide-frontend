@@ -16,6 +16,8 @@ import {
 import SocialPostContainer from '@/components/socialPost/socialPostContainer'
 import ButtonWithExplanation from '../button/ButtonWithExplanation'
 import { templateDispatch } from '@/components/socialPost/socialPostTemplateDispatch'
+import { templateDispatch as templateDispatch2 } from '@/components/socialPost//socialPostTemplate2Dispatch';
+import { templateDispatch as templateDispatch3 } from '@/components/socialPost/socialPostTemplate3Dispatch';
 import templates, { templateSamples } from '@/components/socialPost/socialPostTemplates'
 
 export interface SlideElement {
@@ -207,7 +209,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                 slide.original_title = slideData.original_title || cover_title
                 slide.title = slideData.title || ''
                 slide.illustration = slideData.illustration !== null ? [slideData.illustration] : ['https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png']
-                slide.quote = slideData.quote || ''
+                slide.quote = '"' + slideData.quote + '"' || ''
                 slide.source = slideData.source || ''
 
                 return slide
@@ -366,6 +368,38 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
             currentSlide.images = content as string[]
             currNewFinalSlides.images = content as string[]
         }
+        else if (className == 'section_title'){
+            currentSlide.section_title = content as string
+            currNewFinalSlides.section_title = content as string
+        }
+        else if (className == 'brief'){
+            currentSlide.brief = content as string
+            currNewFinalSlides.brief = content as string
+        }
+        else if (className == 'original_title'){
+            currentSlide.original_title = content as string
+            currNewFinalSlides.original_title = content as string
+        }
+        else if (className == 'English_title'){
+            currentSlide.English_title = content as string
+            currNewFinalSlides.English_title = content as string
+        }
+        else if (className == 'title'){
+            currentSlide.title = content as string
+            currNewFinalSlides.title = content as string
+        }
+        else if (className == 'illustration'){
+            currentSlide.illustration = content as string[]
+            currNewFinalSlides.illustration = content as string[]
+        }
+        else if (className == 'quote'){
+            currentSlide.quote = content as string
+            currNewFinalSlides.quote = content as string
+        }
+        else if (className == 'source'){
+            currentSlide.source = content as string
+            currNewFinalSlides.source = content as string
+        }
         else {
             console.error(`Unknown tag: ${tag}`)
         }
@@ -425,25 +459,23 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
         return updateImgUrl
     }
 
-    
-
+    console.log(slides)
     const editableTemplateDispatch = (
         slide: SocialPostSlide, 
         index: number, 
         canEdit: boolean
-    ) => 
-        templateDispatch(
-            slide, 
-            index, 
-            canEdit, 
-            false, 
-            isEditMode, 
-            saveSlides, 
-            setIsEditMode,
-            handleSlideEdit,
-            updateImgUrlArray,
-            toggleEditMode,
-);
+    ) => {
+        if (res_scenario === 'serious_subject'){
+            return templateDispatch2(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode,handleSlideEdit,updateImgUrlArray,toggleEditMode)
+        }
+        else if (res_scenario === 'reading_notes'){
+            return templateDispatch3(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode,handleSlideEdit,updateImgUrlArray,toggleEditMode)
+        }
+        else{
+            return templateDispatch(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode,handleSlideEdit,updateImgUrlArray,toggleEditMode)
+        }
+    }
+        
 
     return (
         <div className='flex flex-col items-center justify-center gap-4'>
@@ -562,6 +594,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                                     currentSlideIndex={index}
                                     scale={0.1}
                                     isViewing={true}
+                                    templateDispatch={editableTemplateDispatch}
                                 />
                             </div>
                         ))}

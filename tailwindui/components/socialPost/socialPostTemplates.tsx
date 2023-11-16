@@ -333,7 +333,7 @@ export const First_page_img_1_template3 = ({illustration, title, update_callback
                         borderRadius: '20px',
                         backgroundImage: `url(${localImgs[0]})`,
                         backgroundSize: 'cover',
-                    }}>
+                }}>
                 </div>
             </div>
         </div>
