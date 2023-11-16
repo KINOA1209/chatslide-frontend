@@ -122,24 +122,25 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     console.log('Changing template to:', newTemplate)
     const newSlides = slides.map((slide, index) => {
       // Keep the template of the first slide unchanged
-      if (index === 0) {
-        return slide
-      }
+      //   if (index === 0) {
+      //     return slide
+      //   }
       // Update the template for slides starting from the second one
       return { ...slide, template: newTemplate }
     })
-    console.log('Slides after changing template:', newSlides)
+    // console.log('Slides after changing template:', newSlides)
     setSlides(newSlides)
 
     const newFinalSlides = finalSlides.map((slide, index) => {
       // Keep the template of the first slide unchanged
-      if (index === 0) {
-        return slide
-      }
+      //   if (index === 0) {
+      //     return slide
+      //   }
       // Update the template for slides starting from the second one
       return { ...slide, template: newTemplate }
     })
     setFinalSlides(newFinalSlides)
+    console.log('Slides after changing template:', newSlides)
 
     setUnsavedChanges(true)
     saveSlides()
@@ -238,6 +239,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     }
   })
 
+  useEffect(() => console.log('slides contents changed', slides), [slides])
+
   const scrollContainerRef = useRef<HTMLDivElement | null>(null) // Specify the type as HTMLDivElement
 
   useEffect(() => {
@@ -247,6 +250,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
   }, [])
 
   function loadHtmlFile(foldername: string, filename: string) {
+    console.log('start reloading html file')
     fetch(`/api/html?foldername=${foldername}&filename=${filename}`)
       .then((response) => {
         if (!response.ok) {
@@ -268,16 +272,19 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
   function displaySlides(doc: Document) {
     const slideElements = Array.from(doc.getElementsByClassName('slide'))
+    console.log('display slides information', slideElements)
     const newSlides: Slide[] = slideElements.map((slide, index) => {
       const elements = new Slide()
       const slideChildren = Array.from(slide.children)
       for (const child of slideChildren) {
         let className = child.className
-        if (className === 'head') {
+        // console.log('className:', className)
+        // console.log('child inner html:', child.innerHTML.trim())
+        if (className === 'head' && child.innerHTML.trim() !== '') {
           elements.head = sanitizeHtml(child.innerHTML)
-        } else if (className === 'title') {
+        } else if (className === 'title' && child.innerHTML.trim() !== '') {
           elements.title = sanitizeHtml(child.innerHTML)
-        } else if (className === 'userName') {
+        } else if (className === 'userName' && child.innerHTML.trim() !== '') {
           elements.userName = sanitizeHtml(child.innerHTML)
         } else if (className === 'subtopic') {
           elements.subtopic = sanitizeHtml(child.innerHTML)
@@ -300,18 +307,20 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         }
       }
 
+      // default template
       if (elements.template === '') {
-        if (index === 0) {
-          elements.template = 'First_page_img_1'
-        } else {
-          elements.template = 'Col_1_img_0'
-        }
+        // if (index === 0) {
+        //   elements.template = 'First_page_img_1'
+        // } else {
+        //   elements.template = 'Col_1_img_0'
+        // }
+        elements.template = 'Col_1_img_0'
       }
       return elements
     })
 
-    console.log('new slides: ', newSlides)
     setFinalSlides(newSlides)
+    console.log('new slides: ', newSlides)
     setSlides(newSlides)
   }
 
@@ -482,7 +491,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       handleSlideEdit,
       updateImgUrlArray,
       toggleEditMode,
-      changeTemplate
+      index === 0
     )
 
   return (
@@ -592,7 +601,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         slides={slides}
         goToSlide={goToSlide}
       />
-      {!isViewing && currentSlideIndex != 0 && (
+      {!isViewing && (
         <ChangeTemplateOptions
           templateOptions={Object.keys(templates)}
           onChangeTemplate={changeTemplate}
@@ -617,6 +626,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                   currentSlideIndex={index}
                   scale={0.1}
                   isViewing={true}
+                  templateDispatch={editableTemplateDispatch}
                 />
               </div>
             ))}
