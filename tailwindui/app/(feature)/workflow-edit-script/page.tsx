@@ -106,10 +106,10 @@ const UpdateButton = ({ callback, text, ind }: UpdateButtonProps) => {
 const TranscriptVisualizer = ({
   transcripts,
 }: //   imageUrls,
-{
-  transcripts: TranscriptWithTitle[]
-  //   imageUrls: []
-}) => {
+  {
+    transcripts: TranscriptWithTitle[]
+    //   imageUrls: []
+  }) => {
   // const [transcriptList, setTranscriptList] = useState<string[]>(transcripts)
   // const [transcriptList, setTranscriptList] =
   //   useState<TranscriptWithTitle[]>(transcripts)
@@ -451,7 +451,7 @@ const TranscriptVisualizer = ({
                           onMouseLeave={() => {
                             setHoveredIcons((prev) =>
                               prev.sectionIndex === index &&
-                              prev.subsectionIndex === subIndex
+                                prev.subsectionIndex === subIndex
                                 ? { ...prev, iconIndex: null }
                                 : prev
                             )
@@ -499,16 +499,15 @@ const TranscriptVisualizer = ({
                   {/* <div className='bg-[#FCFCFC] block form-input w-full text-gray-800 resize-none border-none p-4'>{subsection.script}</div> */}
                   <textarea
                     key={subIndex}
-                    className={`h-80 ${
-                      subIndex === hoveredIcons.subsectionIndex
+                    className={`h-80 ${subIndex === hoveredIcons.subsectionIndex
                         ? 'hover:bg-gray-300'
                         : 'bg-[#FCFCFC] '
-                    }  block w-full text-gray-800 mb-2 resize-none border-none p-4 `}
+                      }  block w-full text-gray-800 mb-2 resize-none border-none p-4 `}
                     value={subsection.script}
                     onChange={(event) =>
                       handleChangeScriptText(index, subIndex, event)
                     }
-                    // readOnly
+                  // readOnly
                   />
                 </div>
               ))}
@@ -554,12 +553,12 @@ export default function WorkflowStep4() {
 
   const flattenedOutline = outlineRes
     ? Object.keys(outlineRes).flatMap((sectionIndex) => {
-        const section = outlineRes[sectionIndex]
-        return section.content.map((subtitle: string) => ({
-          title: section.title,
-          subtitle,
-        }))
-      })
+      const section = outlineRes[sectionIndex]
+      return section.content.map((subtitle: string) => ({
+        title: section.title,
+        subtitle,
+      }))
+    })
     : []
 
   const transcriptWithTitleData = flattenedOutline.map((item, index) => ({
@@ -752,7 +751,7 @@ export default function WorkflowStep4() {
       </div>
 
       {/* overview nav section */}
-      <div className='w-1/4 h-[15rem] fixed top-[12rem]  flex justify-center'>
+      <div className='w-1/4 fixed top-[15.5rem] overflow-y-auto flex justify-center'>
         <div className='w-2/3 bg-neutral-50 rounded-md border border-gray-200 hidden sm:block overflow-y-auto'>
           <div className='h-5 text-neutral-900 text-xs font-bold font-creato-medium leading-tight tracking-wide px-4 py-3'>
             OVERVIEW
@@ -773,8 +772,10 @@ export default function WorkflowStep4() {
         </div>
       </div>
 
-      <div className='mt-[12rem] max-w-4xl mx-auto grow' ref={contentRef}>
-        <TranscriptVisualizer transcripts={transcriptWithTitle} />
+      <div className='flex justify-end'>
+        <div className='mt-[15.5rem] w-full sm:w-3/4 px-5' ref={contentRef}>
+          <TranscriptVisualizer transcripts={transcriptWithTitle} />
+        </div>
       </div>
       <FeedbackButton />
     </div>
