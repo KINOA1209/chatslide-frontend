@@ -123,6 +123,7 @@ export const templateDispatch = (
                     }
                     return (
                         <>
+                        <br></br>
                         <div
                             key={keyPrefix + index.toString() + '_' + contentIndex.toString()}
                             className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}

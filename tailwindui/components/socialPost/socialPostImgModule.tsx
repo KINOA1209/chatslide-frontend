@@ -34,7 +34,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
     const [selectedQueryMode, setSelectedQueryMode] = useState<ImgQueryMode>(ImgQueryMode.RESOURCE);
 
     useEffect(() => {
-        console.log(selectedQueryMode)
+        //console.log(selectedQueryMode)
     }, [selectedQueryMode])
 
     useEffect(() => {
@@ -61,27 +61,24 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
         setSearching(true);
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
 
-        const response = await fetch('/api/search_images', {
-            method: 'POST',
+        const response = await fetch(`/api/search_illustration_images?keyword=${encodeURIComponent(keyword)}`, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${idToken}`
-            },
-            body: JSON.stringify({
-                search_keyword: (e.target as HTMLFormElement).search_keyword.value
-            })
-        }).then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                const error = response.status
-                console.error(error, response);
             }
-        }).then(parsedResponse => {
-            setSearchResult(parsedResponse.data.images);
-        }).catch(e => {
-            console.error(e);
-        });
+        })
+        if (response.ok) {
+            try{
+                const parsedResponse = await response.json()
+                setSearchResult(parsedResponse.data.images);
+            } catch (error) {
+                console.error(e);
+            }
+        } else {
+            const error = response.status
+            console.error(error, response);
+        }
         setSearching(false);
     }
 
@@ -268,12 +265,12 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
 
     const handleMouseOver = (e: React.MouseEvent<HTMLButtonElement>, type: ImgQueryMode) => {
         setHoverQueryMode(type)
-        console.log('hover', type)
+        //console.log('hover', type)
     }
 
     const handleMouseOut = (e: React.MouseEvent<HTMLButtonElement>, type: ImgQueryMode) => {
         setHoverQueryMode(selectedQueryMode);
-        console.log('out', selectedQueryMode)
+        //console.log('out', selectedQueryMode)
     }
 
     const resourceSelectionDiv = (
@@ -566,7 +563,13 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
                 </div>
                 :
                 <img
-                    style={{ objectFit: 'contain' }}
+                    style={{ 
+                        objectFit: 'contain',
+                        maxWidth: '100%', 
+                        maxHeight: '100%', 
+                        width: 'auto',     
+                        height: 'auto',    
+                    }}
                     className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`}
                     src={imgsrc} />
             }

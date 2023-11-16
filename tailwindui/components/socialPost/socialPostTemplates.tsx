@@ -1,5 +1,5 @@
 import { StaticImageData } from "next/image";
-import { ImgModule } from "@/components/imgModule";
+import { ImgModule } from "@/components/socialPost/socialPostImgModule";
 import { useEffect, useMemo, useState } from "react";
 import cover_png from '@/public/images/template/cover.png' // Cover
 import col1img0_png from '@/public/images/template/col1img0.png'
@@ -85,12 +85,12 @@ export const First_page_img_1 = ({ subtopic, keywords, imgs, update_callback, au
                     backgroundSize: 'cover',
                 }}
             >
-                <div className="mt-[8%] px-[4%] text-center">{subtopic}</div>
+                <div className="mt-[10%] px-[4%] text-center">{subtopic}</div>
                 <div
-                className="mb-[4%] mx-[auto] text-center"
+                className="mb-[6%] mx-[auto] text-center"
                 style={{
                     border: '3px solid #FFF',
-                    borderRadius: '10px',
+                    borderRadius: '5px',
                     background: 'rgba(0, 0, 0, 0.4)',
                     backdropFilter: 'blur(24px)',
                 }}
@@ -254,7 +254,7 @@ export const img_0_template2 = ({ section_title, original_title, brief, content,
                     borderBottom: '1px solid #E7E5E5',
                 }}>
                 <div 
-                    className='h-full px-[2%] mx-[4%] flex justify-start items-end'
+                    className='h-full px-[2%] py-[1%] mx-[4%] flex justify-start items-end'
                     style={{
                         borderLeft: '1px solid #E7E5E5',
                         borderRight: '1px solid #E7E5E5',
@@ -316,13 +316,14 @@ export const First_page_img_1_template3 = ({illustration, title, update_callback
                 className="w-full h-full flex flex-col justify-between"
             >
                 <div 
-                    className="mx-[auto] mt-[15%] text-center"
+                    className="mx-[auto] mt-[12%] text-center"
                     style={{
                         fontSize: '60px',
                         fontStyle: 'normal',
                         fontWeight: '500',
                         lineHeight: '70px',
-                        color: '#121212'
+                        color: '#121212',
+                        zIndex: 1
                     }}
                 >
                     {title}
@@ -331,9 +332,13 @@ export const First_page_img_1_template3 = ({illustration, title, update_callback
                     className="w-full h-1/2 flex"
                     style={{
                         borderRadius: '20px',
-                        backgroundImage: `url(${localImgs[0]})`,
-                        backgroundSize: 'cover',
                 }}>
+                    <ImgModule
+                        imgsrc={localImgs[0]}
+                        updateSingleCallback={updateImgAtIndex(0)}
+                        canEdit={canEdit}
+                        autoSave={autoSave}
+                    />
                 </div>
             </div>
         </div>
@@ -366,9 +371,14 @@ export const img_1_template3 = ({ illustration, quote, source, update_callback, 
                     className="w-full h-1/2 flex"
                     style={{
                         borderRadius: '20px',
-                        backgroundImage: `url(${localImgs[0]})`,
-                        backgroundSize: 'cover',
-                    }}>
+                        overflow:"hidden"
+                }}>
+                    <ImgModule
+                        imgsrc={localImgs[0]}
+                        updateSingleCallback={updateImgAtIndex(0)}
+                        canEdit={canEdit}
+                        autoSave={autoSave}
+                    />
                 </div>
                 <div
                     id='asterisk_section'
