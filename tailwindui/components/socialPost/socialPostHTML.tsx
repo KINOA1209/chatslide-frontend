@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { MathJax, MathJaxContext } from 'better-react-mathjax'
+import AuthService from '@/components/utils/AuthService'
 import '@/components/slides/slidesHTML.css'
-import dynamic from 'next/dynamic'
-import ClickableLink from '../ui/ClickableLink'
 import LayoutChanger from '@/components/socialPost/socialPostLayoutChanger'
 import {
     PresentButton,
@@ -76,14 +74,14 @@ export class SocialPostSlide {
         this.content = ['Your content here']
         this.template = 'Col_1_img_0'
         this.images = ['']
-        this.section_title = ''
-        this.brief = ''
-        this.original_title = ''
+        this.section_title = 'Your section title'
+        this.brief = 'Your brief'
+        this.original_title = 'Your Topic'
         this.English_title = ''
         this.title = ''
-        this.illustration = ['']
-        this.quote = ''
-        this.source = ''
+        this.illustration = ['https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png']
+        this.quote = 'Your quote'
+        this.source = 'Your source'
     }
 }
 
@@ -142,10 +140,9 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
     const [unsavedChanges, setUnsavedChanges] = useState(false)
     const isFirstRender = useRef(true)
     const [isEditMode, setIsEditMode] = useState(false)
-
     const presentScale = Math.min(dimensions.width / 450, dimensions.height / 600)
     const nonPresentScale = Math.min(1, presentScale * 0.6)
-    console.log(slides)
+    
     useEffect(() => {
         if (unsavedChanges) {
             setSaveStatus('Unsaved changes')
@@ -209,7 +206,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                 slide.brief = slideData.brief || ['Your brief here']
                 slide.original_title = slideData.original_title || cover_title
                 slide.title = slideData.title || ''
-                slide.illustration = [slideData.illustration] || ['']
+                slide.illustration = slideData.illustration !== null ? [slideData.illustration] : ['https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png']
                 slide.quote = slideData.quote || ''
                 slide.source = slideData.source || ''
 
@@ -221,7 +218,12 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
     }, []);
 
     // Function to send a request to auto-save finalSlides
-    const saveSlides = () => {
+    const saveSlides = async () => {
+        if (isViewing) {
+            console.log("Viewing another's shared project, skip saving")
+            return
+        }
+
         if (finalSlides.length === 0) {
             console.log('Final slides not yet loaded, skip saving')
             return
@@ -231,19 +233,21 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
             console.log('Foldername not found, skip saving')
             return 
         }
-
         setSaveStatus('Saving...')
-
+        const { userId, idToken: token } =
+            await AuthService.getCurrentUserTokenAndId()
         const formData = {
             foldername: foldername,
-            html: finalSlides,
+            final_posts: finalSlides,
             project_id: project_id,
         }
+        console.log(formData)
         // Send a POST request to the backend to save finalSlides
-        fetch('/api/auto_save_html', {
+        fetch('/api/save_social_posts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
             },
             body: JSON.stringify(formData),
         })
@@ -389,6 +393,12 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
             newSlides.splice(currentSlideIndex, 0, newSlide)
             newFinalSlides.splice(currentSlideIndex, 0, newSlide)
         }
+        if (res_scenario === 'serious_subject'){
+            newSlide.template = 'img_0_template2'
+        }
+        else if (res_scenario === 'reading_notes'){
+            newSlide.template = 'img_1_template3'
+        }
         setSlides(newSlides)
         setFinalSlides(newFinalSlides)
     }
@@ -408,8 +418,32 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
         setFinalSlides(newFinalSlides)
     }
 
-    const editableTemplateDispatch = (slide: SocialPostSlide, index: number, canEdit: boolean) => 
-    templateDispatch(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode);
+    const updateImgUrlArray = (slideIndex: number) => {
+        const updateImgUrl = (urls: string[]) => {
+          handleSlideEdit(urls, slideIndex, 'images')
+        }
+        return updateImgUrl
+    }
+
+    
+
+    const editableTemplateDispatch = (
+        slide: SocialPostSlide, 
+        index: number, 
+        canEdit: boolean
+    ) => 
+        templateDispatch(
+            slide, 
+            index, 
+            canEdit, 
+            false, 
+            isEditMode, 
+            saveSlides, 
+            setIsEditMode,
+            handleSlideEdit,
+            updateImgUrlArray,
+            toggleEditMode,
+);
 
     return (
         <div className='flex flex-col items-center justify-center gap-4'>

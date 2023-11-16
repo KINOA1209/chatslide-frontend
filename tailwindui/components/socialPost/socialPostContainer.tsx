@@ -23,7 +23,6 @@ const SocialPostContainer: React.FC<SlideContainerProps> = ({
     isViewing = false,
     isPresenting = false,
     scale = 1,
-    //templateDispatch = defaultTemplateDispatch,
     containerRef = useRef(null),
     slideRef = useRef(null),
     exportToPdfMode = false,

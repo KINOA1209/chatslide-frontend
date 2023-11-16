@@ -57,39 +57,7 @@ const useLocalImgs = (imgs: string[], imgCount: number, update_callback: (imgs: 
     return { localImgs, updateImgAtIndex };
 };
 
-export const Col_2_img_1 = ({subtopic, content, keywords, canEdit, imgs, update_callback, autoSave }: MainSlideProps) => {
-
-    const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback);
-
-    return <div
-        className="overflow-hidden"
-        style={{
-            width: '100%',
-            height: '100%',
-            backgroundSize: 'cover',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
-            boxSizing: 'border-box',
-            border: 'none',
-            position: 'relative',
-            backgroundColor: '#444',
-            padding: '28px',
-        }}>
-            <div className="w-full px-[15px]">{keywords}</div>
-            <div className='w-full px-[15px]'>{subtopic}</div>
-            <div id='container_gradient'className="h-full w-full flex flex-col overflow-hidden rounded-lg mt">
-                <div className="grow mt-[10px] mx-[30px] ">{content}</div>
-                <div className="w-full h-full grow rounded-md overflow-hidden">
-                    <ImgModule imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} canEdit={canEdit} autoSave={autoSave} />
-                </div> 
-            </div>
-    </div>
-}
-
-
-export const First_page_img_1 = ({ subtopic, keywords, canEdit, imgs, update_callback, autoSave }: MainSlideProps) => {
+export const First_page_img_1 = ({ subtopic, keywords, imgs, update_callback, autoSave, canEdit }: MainSlideProps) => {
 
     const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback);
 
@@ -117,9 +85,9 @@ export const First_page_img_1 = ({ subtopic, keywords, canEdit, imgs, update_cal
                     backgroundSize: 'cover',
                 }}
             >
-                <div className="mt-[40px] px-[20px] text-center">{subtopic}</div>
+                <div className="mt-[8%] px-[4%] text-center">{subtopic}</div>
                 <div
-                className="mb-[20px] mx-[auto] text-center"
+                className="mb-[4%] mx-[auto] text-center"
                 style={{
                     border: '3px solid #FFF',
                     borderRadius: '10px',
@@ -130,15 +98,11 @@ export const First_page_img_1 = ({ subtopic, keywords, canEdit, imgs, update_cal
                     {keywords}
                 </div>
             </div>
-
-        {/* <div className="w-1/2 h-full rounded-md overflow-hidden">
-            <ImgModule imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} canEdit={canEdit} autoSave={autoSave} />
-        </div> */}
         </div>
     )
 }
 
-export const Col_1_img_0 = ({ subtopic, keywords, content, canEdit, autoSave }: MainSlideProps) => {
+export const Col_1_img_0 = ({ subtopic, keywords, content, icon, canEdit, autoSave }: MainSlideProps) => {
     return (
         <div
             className="overflow-hidden"
@@ -154,16 +118,62 @@ export const Col_1_img_0 = ({ subtopic, keywords, content, canEdit, autoSave }: 
                 border: 'none',
                 position: 'relative',
                 backgroundColor: '#444',
-                padding: '28px',
+                padding: '5% 6% 0% 6%',
                 backgroundImage: `url('/images/socialpost/template1_bg.png')`
             }}>
-            <div className="w-full px-[15px]">{keywords}</div>
-            <div className='w-full px-[15px]'>{subtopic}</div>
-                <div id='container_gradient'className="h-full w-full flex flex-row overflow-hidden gap-[32px] rounded-lg">
-                    <div className="grow mt-[10px] mx-[30px] ">{content}</div>
+            <div className="w-full h-full flex flex-col justify-between">
+                <div className="w-full px-[4%]">{keywords}</div>
+                <div className='w-full px-[4%]'>{subtopic}</div>
+                    <div id='container_gradient'className="h-full w-full flex flex-row overflow-hidden rounded-lg">
+                        <div className="grow mt-[5%] mx-[5%] ">{content}</div>
+                    </div>
+                <div className="w-full h-[7%] mt-[2%]"> 
+                    <div className="flex flex-row justify-center items-center font-creato-medium leading-normal tracking-wide text-[15px] text-[white]">
+                        {icon}DrLambda
+                    </div>
                 </div>
+            </div>
         </div>
     )
+}
+
+export const Col_2_img_1 = ({subtopic, content, keywords, imgs, icon, update_callback, canEdit, autoSave }: MainSlideProps) => {
+
+    const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback);
+
+    return <div
+        className="overflow-hidden"
+        style={{
+            width: '100%',
+            height: '100%',
+            backgroundSize: 'cover',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            boxSizing: 'border-box',
+            border: 'none',
+            position: 'relative',
+            backgroundColor: '#444',
+            padding: '5% 6% 0% 6%',
+            backgroundImage: `url('/images/socialpost/template1_bg.png')`
+        }}>
+            <div className="w-full h-full flex flex-col justify-between">
+                <div className="w-full px-[4%]">{keywords}</div>
+                <div className='w-full px-[4%]'>{subtopic}</div>
+                <div id='container_gradient'className="h-full w-full flex flex-col overflow-hidden rounded-lg">
+                    <div className="grow mt-[5%] mx-[5%] ">{content}</div>
+                    <div className="w-full h-full grow rounded-md overflow-hidden">
+                        <ImgModule imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} canEdit={canEdit} autoSave={autoSave} />
+                    </div> 
+                </div>
+                <div className="w-full h-[7%] mt-[2%]"> 
+                    <div className="flex flex-row justify-center items-center font-creato-medium leading-normal tracking-wide text-[15px] text-[white]">
+                        {icon}DrLambda
+                    </div>
+                </div>
+            </div>
+    </div>
 }
 
 export const First_page_img_1_template2 = ({ original_title, English_title, imgs, icon, update_callback, canEdit, autoSave }: MainSlideProps) => {
@@ -258,7 +268,7 @@ export const img_0_template2 = ({ section_title, original_title, brief, content,
                     borderBottom: '1px solid #E7E5E5',
                 }}>
                 <div 
-                    className='h-full px-[2%] mx-[4%] flex justify-start items-end flex-col'
+                    className='h-full px-[2%] mx-[4%] flex justify-start flex-col'
                     style={{
                         borderLeft: '1px solid #E7E5E5',
                         borderRight: '1px solid #E7E5E5',
@@ -403,12 +413,6 @@ export const templateSamples = {
     cover: [{
         name: 'First_page_img_1',
         img: cover_png.src,
-    },{
-        name: 'First_page_img_1_template2',
-        img: cover_png.src,
-    },{
-        name: 'First_page_img_1_template3',
-        img: cover_png.src,
     }],
     main: [{
         name: 'Col_1_img_0',
@@ -416,12 +420,5 @@ export const templateSamples = {
     }, {
         name: 'Col_2_img_1',
         img: col2img1_png.src,
-    }, {
-        name: 'img_0_template2',
-        img: col1img0_png.src,
-    }, {
-        name: 'img_1_template3',
-        img: col1img0_png.src,
-    }
-    ]
+    }]
 };
