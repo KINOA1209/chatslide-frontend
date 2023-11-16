@@ -134,7 +134,7 @@ const GenerateSlidesSubmit = ({
         ? sessionStorage.getItem('project_id')
         : null
     const resources =
-      typeof window !== 'undefined' ? sessionStorage.getItem('resources') : null
+      typeof window !== 'undefined' ? sessionStorage.getItem('selectedResourceId') : null
     const addEquations =
       typeof window !== 'undefined'
         ? sessionStorage.getItem('addEquations')
