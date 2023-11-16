@@ -605,7 +605,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
       {/* scriptlist textbox */}
       {transcriptList !== null && transcriptList.length > 0 && (
-        <div className='w-[960px] h-[200px] bg-zinc-100 rounded shadow flex flex-col overflow-y-auto my-4 ml-2'>
+        <div className={`w-screen max-w-[960px] h-[200px] bg-zinc-100 rounded shadow flex flex-col overflow-y-auto my-4 ml-2`}>
           <div className='px-4 py-2 h-8 bg-zinc-100 flex flex-row justify-between items-center sticky top-0 border-b-2 border-gray-300'>
             <div className='text-neutral-900 text-s font-creato-medium '>
               Script
@@ -636,8 +636,31 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         goToSlide={goToSlide}
       />
 
-      <div className='max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
+        {/* horizontal  */}
+      <div className='block lg:hidden max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
         <div className='w-full py-6 flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
+          {Array(slides.length)
+            .fill(0)
+            .map((_, index) => (
+              <div
+                key={`previewContainer` + index.toString()}
+                className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
+                onClick={() => setCurrentSlideIndex(index)} // Added onClick handler
+              >
+                {/* {index + 1} */}
+                <SlideContainer
+                  slides={slides}
+                  currentSlideIndex={index}
+                  scale={0.1}
+                  isViewing={true}
+                />
+              </div>
+            ))}
+        </div>
+      </div>
+
+      <div className='absolute -left-[15rem] h-full hidden lg:block max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
+        <div className='py-6 flex flex-col flex-nowrap overflow-y-auto overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
           {Array(slides.length)
             .fill(0)
             .map((_, index) => (
