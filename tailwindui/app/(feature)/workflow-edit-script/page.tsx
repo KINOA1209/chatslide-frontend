@@ -648,8 +648,16 @@ export default function WorkflowStep4() {
   const scrollToSection = (sectionId: number) => {
     const sectionElement = document.getElementById(String(sectionId))
     if (sectionElement) {
-      sectionElement.scrollIntoView({ behavior: 'smooth' })
-      setActiveSection(sectionId)
+      const offset = 240; // Adjust this value based on your rem size
+      const elementPosition = sectionElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+
+      setActiveSection(sectionId);
     }
   }
 
