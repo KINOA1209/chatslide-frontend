@@ -630,13 +630,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         </div>
       )}
 
-      <SlidePagesIndicator
-        currentSlideIndex={currentSlideIndex}
-        slides={slides}
-        goToSlide={goToSlide}
-      />
+      <div className="mb-8">
+        <SlidePagesIndicator
+          currentSlideIndex={currentSlideIndex}
+          slides={slides}
+          goToSlide={goToSlide}
+        />
+      </div>
 
-        {/* horizontal  */}
+      {/* horizontal  */}
       <div className='block lg:hidden max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
         <div className='w-full py-6 flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
           {Array(slides.length)
