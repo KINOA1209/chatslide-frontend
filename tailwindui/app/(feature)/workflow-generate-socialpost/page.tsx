@@ -9,18 +9,17 @@ import React, {
 import { useRouter } from 'next/navigation';
 import '@/app/css/workflow-edit-topic-css/topic_style.css'
 import 'react-toastify/dist/ReactToastify.css'
-import SocialPostProjectProgress from '@/components/newWorkflowStepsSocialpost'
-import NewWorkflowGPTToggle from '@/components/button/NewWorkflowGPTToggle'
 import AuthService from '@/components/utils/AuthService'
 import UserService from '@/components/utils/UserService'
 import { Transition } from '@headlessui/react'
-import MyFiles from '@/components/fileManagement'
+import MyFiles, { Resource } from '@/components/fileManagement'
 import PaywallModal from '@/components/forms/paywallModal'
-import Timer from '@/components/ui/Timer'
 import FeedbackButton from '@/components/slides/feedback'
 import WorkflowStepsBanner from '@/components/socialPost/socialPostWorkflowStep';
-
-import { QuestionExplainIcon, RightTurnArrowIcon } from '@/app/(feature)/icons'
+import { DeleteIcon, QuestionExplainIcon, RightTurnArrowIcon } from '@/app/(feature)/icons'
+import { FaFilePdf, FaYoutube } from 'react-icons/fa'
+import YoutubeService from '@/components/utils/YoutubeService'
+import { SmallBlueButton } from '@/components/button/DrlambdaButton'
 
 const audienceList = [
   'Researchers',
@@ -53,6 +52,7 @@ export default function Topic_SocialPost() {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showFileModal, setShowFileModal] = useState(false)
+  const [youtubeUrl, setYoutubeUrl] = useState('' as string)
   const [youtubeError, setYoutubeError] = useState('')
   const [isGpt35, setIsGpt35] = useState(true)
   const [showPaymentModal, setShowPaymentModal] = useState(false)
@@ -68,10 +68,21 @@ export default function Topic_SocialPost() {
   const [selectedFileList, setselectedFileList] = useState([])
   const [selectedFileListName, setselectedFileListName] = useState<string[]>([])
   const [isPaidUser, setIsPaidUser] = useState(false)
+  const [isAddingYoutube, setIsAddingYoutube] = useState(false)
 
   // bind form data between input and sessionStorage
-  const [topic, setTopic] = useState('')
-  const [selectedScenario, setSelectedScenario] = useState('')
+  const [topic, setTopic] = useState(
+    typeof window !== 'undefined' && sessionStorage.topic != undefined
+      ? sessionStorage.topic
+      : ''
+  )
+
+  const [selectedScenario, setSelectedScenario] = useState(
+    typeof window !== 'undefined' && sessionStorage.selectedScenario != undefined
+      ? sessionStorage.selectedScenario
+      : ''
+  )
+
   const [audience, setAudience] = useState(
     typeof window !== 'undefined' && sessionStorage.audience != undefined
       ? sessionStorage.audience
@@ -82,10 +93,17 @@ export default function Topic_SocialPost() {
       ? sessionStorage.language
       : 'English'
   )
-  const [youtube, setYoutube] = useState(
-    typeof window !== 'undefined' && sessionStorage.youtube != undefined
-      ? sessionStorage.youtube
-      : ''
+  const [selectedResourceId, setSelectedResourceId] = useState<string[]>(
+    typeof window !== 'undefined' &&
+      sessionStorage.selectedResourceId != undefined
+      ? JSON.parse(sessionStorage.selectedResourceId)
+      : []
+  )
+  const [selectedResources, setSelectedResources] = useState<Resource[]>(
+    typeof window !== 'undefined' &&
+      sessionStorage.selectedResources != undefined
+      ? JSON.parse(sessionStorage.selectedResources)
+      : []
   )
 
   useEffect(() => {
@@ -171,7 +189,7 @@ export default function Topic_SocialPost() {
       topic: topic,
       language: language,
       project_id: project_id,
-      youtube_url: youtube,
+      //youtube_url: youtube,
       resources: JSON.parse(sessionStorage.getItem('resources') || '[]'),
       model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
       post_style: selectedScenario,
@@ -268,29 +286,41 @@ export default function Topic_SocialPost() {
   }
 
 
-  const handleSelectResources = (resource: Array<string>) => {
-    sessionStorage.setItem('resources', JSON.stringify(resource))
-    const selectedResourcesJson = sessionStorage.getItem('resources')
-    const allHistoryResourcesJson = sessionStorage.getItem('history_resource')
-
-    if (selectedResourcesJson && allHistoryResourcesJson) {
-      const selectedResources = JSON.parse(selectedResourcesJson)
-      setselectedFileList(selectedResources)
-
-      //find the corresponding file name
-      const selectedResourcesIdArray: string[] = JSON.parse(
-        selectedResourcesJson
-      )
-      const allHistoryResourcesArray: Array<{ id: string; filename: string }> =
-        JSON.parse(allHistoryResourcesJson)
-      const fileNamesArray = selectedResourcesIdArray.map((id) => {
-        const correspondingFile = allHistoryResourcesArray.find(
-          (file) => file.id === id
-        )
-        return correspondingFile ? correspondingFile.filename : 'Unkown File'
-      })
-      setselectedFileListName(fileNamesArray)
+  async function addYoutubeLink(link: string) {
+    if (!link) {
+      setYoutubeError('Please enter a YouTube link.');
+      return;
     }
+    if (!isPaidUser && selectedResources.length >= 1) {
+      setYoutubeError('Free users can only add one resource.');
+      return;
+    }
+    setIsAddingYoutube(true);
+    try {
+      const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+      const videoDetails = await YoutubeService.getYoutubeInfo(link, idToken);
+
+      if (!videoDetails?.id) {
+        setYoutubeError('The Youtube link is invalid.');
+        setIsAddingYoutube(false);
+        return;
+      }
+
+      const newFile = {
+        id: videoDetails.id,
+        uid: '',
+        title: videoDetails.title,
+        thumbnail_url: videoDetails.thumbnail,
+        timestamp: new Date().toISOString()
+      };
+
+      setSelectedResources(prevList => [...prevList, newFile]);
+      setSelectedResourceId(prevList => [...prevList, newFile.id]);
+    } catch (error: any) {
+      console.error("Error fetching YouTube video details: ", error);
+      setYoutubeError("Error fetching YouTube video details");
+    }
+    setIsAddingYoutube(false);
   }
 
   // Show/hide audience input based on `audience` value
@@ -312,11 +342,11 @@ export default function Topic_SocialPost() {
     // sample: https://www.youtube.com/v/-wtIMTCHWuI?app=desktop
 
     if (link === '') {
-      setYoutube('')
+      setYoutubeUrl('')
       setYoutubeError('')
       return
     }
-    setYoutube(link)
+    setYoutubeUrl(link)
     setYoutubeError('')
     // validate url
     const regex1 = /youtube\.com\/watch\?v=[a-zA-z0-9_-]{11}/
@@ -325,14 +355,14 @@ export default function Topic_SocialPost() {
     if (regex1.test(link)) {
       const essentialLink = link.match(regex1)
       if (essentialLink && essentialLink.length > 0) {
-        setYoutube('https://www.' + essentialLink[0])
+        setYoutubeUrl('https://www.' + essentialLink[0])
       }
     } else if (regex2.test(link)) {
       const essentialLink = link.match(regex2)
       if (essentialLink && essentialLink.length > 0) {
         const vID = essentialLink[0].match(/[A-Za-z0-9_-]{11}/)
         if (vID && vID.length > 0) {
-          setYoutube('https://www.youtube.com/watch?v=' + vID[0])
+          setYoutubeUrl('https://www.youtube.com/watch?v=' + vID[0])
         }
       }
     } else if (regex3.test(link)) {
@@ -340,7 +370,7 @@ export default function Topic_SocialPost() {
       if (essentialLink && essentialLink.length > 0) {
         const vID = essentialLink[0].match(/[A-Za-z0-9_-]{11}/)
         if (vID && vID.length > 0) {
-          setYoutube('https://www.youtube.com/watch?v=' + vID[0])
+          setYoutubeUrl('https://www.youtube.com/watch?v=' + vID[0])
         }
       }
     } else {
@@ -390,6 +420,15 @@ export default function Topic_SocialPost() {
     setSupportivePopup(false)
   }
 
+  const removeResourceAtIndex = (indexToRemove: number) => {
+    setSelectedResources(currentResources =>
+      currentResources.filter((_, index) => index !== indexToRemove)
+    );
+    setSelectedResourceId(currentResourceIds =>
+      currentResourceIds.filter((_, index) => index !== indexToRemove)
+    );
+  };
+
   return (
     <section>
       {showPaymentModal && (
@@ -429,7 +468,14 @@ export default function Topic_SocialPost() {
             <h4 className='h4 text-blue-600 text-center'>
               Select Supporting Material
             </h4>
-            <MyFiles selectable={true} callback={handleSelectResources} />
+            <MyFiles 
+              selectable={true}
+              selectedResourceId={selectedResourceId}
+              setSelectedResourceId={setSelectedResourceId}
+              selectedResources={selectedResources}
+              setSelectedResources={setSelectedResources} 
+            />
+
             <div className='max-w-sm mx-auto'>
               <div className='flex flex-wrap -mx-3 mt-6'>
                 <div className='w-full px-3'>
@@ -457,13 +503,13 @@ export default function Topic_SocialPost() {
           contentRef={contentRef}
           nextIsPaidFeature={false}
           showGPTToggle={true}
-          nextText={!isSubmitting ? 'Next' : 'Creating Social Post ...'}
+          nextText={!isSubmitting ? 'Next' : 'Creating Post'}
           setIsGpt35={setIsGpt35}
         />
         {/* main content */}
-        <div className='main_container w-full lg:flex'>
+        <div className='py-10 w-full flex flex-col items-center'>
           {/* Project Summary section */}
-          <div className='summary_container w-full lg:w-1/2 px-3 my-3 lg:my-1'>
+          <div className='w-full lg:w-2/3  px-3 my-3 lg:my-1'>
             {/* title */}
             <div className='title1'>
               <p>Project Summary</p>
@@ -471,9 +517,9 @@ export default function Topic_SocialPost() {
             </div>
 
             {/* text area section */}
-            <div className='project_container w-full h-[665px] lg:h-[550px] my-2 lg:my-5'>
-              <div className='project_topic'>
-                <p>Project Topic</p>
+            <div className='project_container w-full my-2 lg:my-5 border border-2 border-gray-200'>
+              <div className='flex items-center gap-1'>
+                <p>Topic</p>
                 <div className='relative inline-block'>
                   <div
                     className='cursor-pointer'
@@ -498,12 +544,12 @@ export default function Topic_SocialPost() {
               <div className='textfield'>
                 <textarea
                   onChange={(e) => setTopic(e.target.value)}
-                  className='focus:ring-0 text-xl'
+                  className='focus:ring-0 text-xl bg-gray-100'
                   id='topic'
                   value={topic}
                   maxLength={80}
                   required
-                  placeholder='e.g. How to make healthy & yummy salad. Talk about multi aspects, from ingredients selection to secret sauce making, perfect recipes, etc.'
+                  placeholder='How to use ultrasound to detect breast cancer'
                 ></textarea>
                 {
                   <div className='charcnt' id='charcnt'>
@@ -513,9 +559,9 @@ export default function Topic_SocialPost() {
               </div>
 
               {/* DropDown menu section */}
-              <div className='dropdown_container w-full lg:w-1/2 lg:flex'>
+              <div className='dropdown_container w-full gap-2 lg:flex'>
                 <div className='language_container mt-[1rem] lg:mt-[0rem]'>
-                  <div className='language '>
+                  <div className='language gap-1'>
                     <span>Language</span>
                     <div className='relative inline-block'>
                       <div
@@ -539,7 +585,7 @@ export default function Topic_SocialPost() {
                   </div>
                   <div className='language_drop'>
                     <select
-                      className='focus:ring-0'
+                      className='focus:ring-0 bg-gray-100 border border-2 border-gray-200'
                       id='language'
                       value={language}
                       onChange={(e) => setLanguage(e.target.value)}
@@ -555,14 +601,14 @@ export default function Topic_SocialPost() {
           </div>
 
           {/* supplementary section */}
-          <div className='supp_container w-full lg:w-2/5 px-3 my-3 lg:my-1'>
+          <div className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1'>
             <div className='title2'>
               <p>Supplementary Materials</p>
               <p id='after2'> (Optional)</p>
             </div>
 
-            <div className='additional_container my-2 lg:my-5'>
-              <div className='upload'>
+            <div className='additional_container my-2 lg:my-5 border border-2 border-gray-200'>
+              <div className='upload gap-1'>
                 <span>Upload Files</span>
                 {/* <QuestionExplainIcon /> */}
                 <div className='relative inline-block'>
@@ -588,55 +634,65 @@ export default function Topic_SocialPost() {
                 </div>
               </div>
 
-              <div className='youtube_container'>
+              <div className='youtube_container bg-gray-100 border border-2 border-gray-200'>
                 <div
                   id='youtube_text_container'
                   className='flex items-center w-full'
                 >
-                  <img className='w-4 h-4' src='/icons/youtube_icon.png' />
+                  <FaYoutube />
                   <div className='w-full'>
                     <label htmlFor='youtube_text'></label>
                     <input
                       id='youtube'
                       type='text'
-                      className='form-input w-full'
-                      value={youtube}
+                      className='form-input w-full border-none bg-gray-100'
+                      value={youtubeUrl}
                       onChange={(e) => handleYoutubeChange(e.target.value)}
                       placeholder='Paste YouTube link here'
                     />
                   </div>
+                  <SmallBlueButton onClick={e => { addYoutubeLink(youtubeUrl) }} isSubmitting={isAddingYoutube}>
+                    {isAddingYoutube ? 'Adding...' : 'Add'}
+                  </SmallBlueButton>
                 </div>
+
                 {youtubeError && (
-                  <div className='text-sm text-red-500'>{youtubeError}</div>
+                  <div id='youtube_error' className='text-sm text-red-500'>{youtubeError}</div>
                 )}
               </div>
 
-              <div className='drop_file'>
+              <div className='drop_file bg-gray-100 border border-2 border-gray-200'>
                 <div className='flex items-center w-full'>
-                  <img className='' src='/icons/drop_files_icon.png' />
+                  <FaFilePdf />
                   <span>Drop files here or </span>
-                  <button id='browse_btn' onClick={(e) => handleOpenFile(e)}>
+                  <SmallBlueButton onClick={handleOpenFile}>
                     Browse File
-                  </button>
+                  </SmallBlueButton>
                 </div>
               </div>
               <hr id='add_hr' />
-              <div className='h-[290px] mt-[10px]'>
+              <div className='min-h-[100px] mt-[10px]'>
                 <ul
                   className='flex flex-col gap-4'
-                  style={{ maxHeight: '280px', overflowY: 'auto' }}
+                  style={{ overflowY: 'auto' }}
                 >
-                  {selectedFileListName.map((selectedFile, index) => (
-                    <li key={index}>
-                      <div
-                        id='selectedfile_each'
-                        className='flex items-center gap-2 bg-white rounded h-[50px] pl-[1rem]'
-                      >
-                        <img src='/icons/selectedFiles_icon.png' />
-                        <span>{selectedFile}</span>
+                  {selectedResources.map((resource, index) => (
+                  <li key={index}>
+                    <div
+                      id='selectedfile_each'
+                      className='flex items-center bg-white rounded h-[50px] px-[1rem] justify-between'
+                    >
+                      <div className='flex items-center gap-2'>
+                      {resource.thumbnail_url ?
+                        <img src={resource.thumbnail_url} className='w-[40px]' /> :
+                        <FaFilePdf className='w-[40px]' />
+                      }
+                      <span>{resource.title}</span>
                       </div>
-                    </li>
-                  ))}
+                      <button className='' onClick={e => removeResourceAtIndex(index)}><DeleteIcon/></button>
+                    </div>
+                  </li>
+                ))}
                 </ul>
               </div>
             </div>
