@@ -19,6 +19,7 @@ import {
 import NewWorkflowGPTToggle from '@/components/button/NewWorkflowGPTToggle'
 import { useRouter } from 'next/navigation'
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner'
+import { ToastContainer } from 'react-toastify'
 
 interface OutlineSection {
   title: string
@@ -100,6 +101,8 @@ export default function WorkflowStep2() {
   return (
     <div className=''>
       {/* flex col container for steps, title, generate slides button etc */}
+      <ToastContainer />
+      
       <WorkflowStepsBanner
         currentIndex={1}
         isSubmitting={isSubmitting}
