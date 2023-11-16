@@ -92,7 +92,8 @@ const GenerateSlidesSubmit = ({
       const resp = await response.json()
       setIsSubmittingSlide(false)
       sessionStorage.setItem('html', JSON.stringify(resp.data.res))
-      router.push('workflow-review-slides')
+      // use the slides page to view scripts, and use the scripts to edit scripts
+      // router.push('workflow-review-slides')
     } else {
       alert(
         `Server is busy now. Please try again later. Reference code: ` +
