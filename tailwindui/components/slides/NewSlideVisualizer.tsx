@@ -17,12 +17,14 @@ type SlideVisualizerProps = {
   isGpt35: boolean
   isSubmitting: boolean
   setIsSubmitting: (isSubmitting: boolean) => void
+  transcriptList?: string[]
 }
 
 const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
   isGpt35,
   isSubmitting,
   setIsSubmitting,
+  transcriptList = [],
 }) => {
   const [host, setHost] = useState('https://drlambda.ai')
 
@@ -144,7 +146,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
           </div>
         )}
         {/* slides contents */}
-        <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} />
+        <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} transcriptList={transcriptList} />
 
         {/* <PreviousTranscriptForm
           isSubmitting={isSubmitting}
