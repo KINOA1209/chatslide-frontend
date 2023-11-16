@@ -11,6 +11,7 @@ import BerkeleyLogo from '@/public/images/template/Berkeley/Berkeley_logo.png'
 import MaskedBackground from '@/public/images/template/Berkeley/Mask Background.png'
 import BerkeleyLogoWhite from '@/public/images/template/Berkeley/Berkeley_logo_white.png'
 import HarvardLogo from '@/public/images/template/Harvard/Harvard_logo.png'
+import HarvardCoverVector from '@/public/images/template/Harvard/cover_vector_1.png'
 interface MainSlideProps {
   user_name: JSX.Element
   title: JSX.Element
@@ -356,7 +357,7 @@ export const Stanford_school_template = ({
         </div>
         <hr className='border border-[#E7E9EB] w-full mt-6 mb-6'></hr>
         <div
-          className='flex flex-row text-zinc-800 text-xl font-normal leading-9 justify-between text-center'
+          className='flex flex-row text-zinc-800 text-xl font-normal leading-9 justify-between text-start'
           style={{
             //   display: 'list-item',
             listStyleType: 'none',
@@ -435,16 +436,16 @@ export const Berkeley_school_template = ({
         }`}
       >
         <div className='h-auto '>
-          <div className='h-full flex items-center justify-center <div className="text-[#003262] text-5xl leading-[120%] font-bold whitespace-nowrap'>
+          <div className='h-full flex items-center justify-center text-[#003262] text-5xl leading-[120%] font-sans font-bold whitespace-nowrap'>
             {topic}
           </div>
         </div>
-        <div className='text-[#3B7EA1] text-3xl font-semibold leading-[120%]'>
+        <div className='text-[#3B7EA1] text-3xl font-semibold leading-[120%] font-sans'>
           {subtopic}
         </div>
         <hr className='border border-[#E7E9EB] w-full mt-6 mb-6'></hr>
         <div
-          className='flex flex-col text-[#1B1B1B] text-xl font-normal leading-[160%] justify-center text-left items-start'
+          className='flex flex-col text-[#1B1B1B] text-xl font-normal font-sans leading-[160%] justify-center text-left items-start'
           style={{
             //   display: 'list-item',
             listStyleType: 'none',
@@ -470,7 +471,7 @@ export const Berkeley_school_template = ({
           <div className='text-white text-6xl font-bold font-sans leading-[100%]'>
             {title}
           </div>
-          <div className=' text-white text-3xl font-normal leading-[100%]'>
+          <div className=' text-white text-3xl font-normal font-sans leading-[100%]'>
             {user_name}
           </div>
         </div>
@@ -481,7 +482,6 @@ export const Berkeley_school_template = ({
             alt='MaskedBackground'
             className='w-[70rem]'
           />
-          {/* <div className='text-red-800 text-2xl font-normal '>Caption</div> */}
         </div>
       </div>
 
@@ -517,29 +517,21 @@ export const Harvard_school_template = ({
       <div
         className={`${
           !isCoverPage
-            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-col justify-start items-start box-border border-none relative bg-white p-[28px]'
+            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-col justify-start items-start box-border border-none relative bg-[#F0F0F2] p-[28px]'
             : 'hidden'
         }`}
       >
         <div className='h-auto '>
-          <div
-            className='h-full flex items-center justify-center text-red-800 text-7xl font-bold leading-10 whitespace-nowrap'
-            //   style={{
-            //     fontSize: '15pt',
-            //     fontWeight: 'bold',
-            //     marginTop: '10px',
-            //     color: 'red',
-            //   }}
-          >
+          <div className="h-full flex items-center justify-center text-neutral-800 text-5xl font-normal font-['Georgia'] leading-[120%] whitespace-nowrap">
             {topic}
           </div>
         </div>
-        <div className='opacity-70 text-red-800 text-opacity-40 text-5xl font-normal leading-10'>
+        <div className="text-center text-neutral-700 text-3xl font-bold font-['Arial'] leading-[120%]">
           {subtopic}
         </div>
         <hr className='border border-[#E7E9EB] w-full mt-6 mb-6'></hr>
         <div
-          className='flex flex-row text-zinc-800 text-2xl font-normal leading-9 justify-between text-center'
+          className="flex flex-col opacity-70 text-neutral-700 text-xl font-normal font-['Arial'] leading-loose"
           style={{
             //   display: 'list-item',
             listStyleType: 'none',
@@ -557,38 +549,38 @@ export const Harvard_school_template = ({
       <div
         className={`${
           isCoverPage
-            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-row justify-start items-start box-border border-none relativep-[28px] gap-[32px] bg-[#8C1515] text-white'
+            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-row justify-start items-start box-border border-none relative p-[28px] gap-[32px] bg-[#F0F0F2]'
             : 'hidden'
         } `}
       >
         <div className={`flex flex-col justify-center h-full pl-[5rem]`}>
-          <Image
-            src={StanfordLogoLetters}
-            alt='Standford Logo Letters'
-            className='w-[26rem] h-[3rem]'
-          />
-          <div className='text-white text-9xl font-bold leading-[100%]'>
+          <div className="text-neutral-800 text-6xl font-normal font-['Gorgia'] leading-[120%]">
             {title}
           </div>
-          <div className=' text-white text-5xl font-normal leading-[100%]'>
+          <div className="opacity-70 text-center text-neutral-700 text-3xl font-normal font-['Arial'] leading-loose">
             {user_name}
+          </div>
+          <div className='absolute top-[50%] right-[0%] gap-7 inline-flex pl-[3rem]'>
+            <Image
+              src={HarvardCoverVector}
+              alt='MaskedBackground'
+              className='w-[20rem]'
+            />
           </div>
         </div>
       </div>
 
       {/* School Logo (Replace the placeholder with the actual logo URL) */}
-      <div className='fixed inset-0 top-[10%] w-full h-14 justify-start items-center gap-7 inline-flex'>
+      <div
+        className={`fixed inset-0 ${
+          isCoverPage ? 'top-[5%]' : 'top-[85%]'
+        } w-full h-14 justify-start items-center gap-7 inline-flex pl-[4rem]`}
+      >
         <Image
           src={HarvardLogo}
           alt='Standford Logo'
-          className='w-[20rem] h-auto'
+          className='w-[10rem] h-auto'
         />
-        <div
-          className={`grow basis-0 opacity-50 border ${
-            isCoverPage ? 'border-white' : 'border-red-800'
-          }  border-opacity-40`}
-        ></div>
-        {/* <div className='text-red-800 text-2xl font-normal '>Caption</div> */}
       </div>
     </>
   )
