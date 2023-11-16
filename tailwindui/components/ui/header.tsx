@@ -163,7 +163,7 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
                 <li>
                   <Link
                     href='/signin'
-                    className='btn-sm drop-shadow-xl rounded-full text-white w-auto mb-0 cursor-pointer mr-4'
+                    className='hidden sm:flex btn-sm drop-shadow-xl rounded-full text-white w-auto mb-0 cursor-pointer mr-4'
                     style={{
                       backgroundColor: '#1D222A',
                       backgroundSize: '100%',
