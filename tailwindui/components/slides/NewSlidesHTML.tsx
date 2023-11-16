@@ -592,12 +592,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         slides={slides}
         goToSlide={goToSlide}
       />
-      {!isViewing && currentSlideIndex != 0 && (
+      {/* {!isViewing && currentSlideIndex != 0 && (
         <ChangeTemplateOptions
           templateOptions={Object.keys(templates)}
           onChangeTemplate={changeTemplate}
         />
-      )}
+      )} */}
 
       {/* preview little image */}
 
