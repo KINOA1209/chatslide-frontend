@@ -25,6 +25,7 @@ interface Project {
     pdf_file: string;
     video_file: string;
     resource_ids: string;
+    resources: string;
     html: string;
     pdf_images: string;
     is_shared: boolean;
@@ -101,7 +102,10 @@ const ProjectLoading = () => {
                 sessionStorage.setItem('video_file', project.video_file);
             }
             if (project.resource_ids) {
-                sessionStorage.setItem('resources', JSON.stringify(project.resource_ids));
+                sessionStorage.setItem('selectedResourceId', JSON.stringify(project.resource_ids));
+            }
+            if (project.resources) {
+                sessionStorage.setItem('selectedResources', JSON.stringify(project.resources));
             }
             if (project.is_shared) {
                 sessionStorage.setItem('is_shared', project.is_shared.toString());

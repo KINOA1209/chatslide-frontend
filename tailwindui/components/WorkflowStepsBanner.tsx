@@ -9,7 +9,7 @@ interface YourComponentProps {
   currentIndex: number;
   isSubmitting: boolean;
   setIsSubmitting: (submitting: boolean) => void;
-  isPaidUser: boolean;
+  isPaidUser?: boolean;
   contentRef: React.RefObject<HTMLDivElement>;
   nextIsPaidFeature?: boolean;
   showGPTToggle?: boolean;
@@ -21,7 +21,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
   currentIndex,
   isSubmitting,
   setIsSubmitting,
-  isPaidUser,
+  isPaidUser = false,
   contentRef,
   nextIsPaidFeature = false,
   showGPTToggle = false,
