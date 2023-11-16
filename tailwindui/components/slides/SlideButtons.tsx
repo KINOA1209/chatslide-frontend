@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AuthService from '../utils/AuthService'
 import {
   LeftSlideNavIcon,
@@ -279,6 +279,7 @@ export const ChangeTemplateOptions: React.FC<{
       onChangeTemplate(selectedTemplate)
     }
   }
+  useEffect(() => console.log('templateOptions are:', templateOptions), [])
   return (
     <div className='relative'>
       <select

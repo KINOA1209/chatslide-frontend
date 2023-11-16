@@ -13,9 +13,11 @@ interface MainSlideProps {
   subtopic: JSX.Element
   content: JSX.Element[]
   imgs: string[]
+  //   imgs: JSX.Element
   update_callback: (imgs: string[]) => void
   canEdit: boolean
   autoSave: Function
+  isCoverPage: boolean
 }
 
 const useLocalImgs = (
@@ -107,7 +109,7 @@ export const Col_2_img_1 = ({
   )
 }
 
-export const Standford_school_template = ({
+export const Stanford_school_template = ({
   user_name,
   title,
   topic,
@@ -183,6 +185,56 @@ export const Standford_school_template = ({
   )
 }
 
+export const Stanford_school_template_cover = ({
+  user_name,
+  title,
+  topic,
+  subtopic,
+  content,
+  imgs,
+  update_callback,
+  canEdit,
+  autoSave,
+}: MainSlideProps) => {
+  const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback)
+
+  return (
+    <div
+      className='rounded-md overflow-hidden gap-[32px]'
+      style={{
+        width: '100%',
+        height: '100%',
+        backgroundSize: 'cover',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        boxSizing: 'border-box',
+        border: 'none',
+        // boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
+        position: 'relative',
+        backgroundColor: 'white',
+        padding: '28px',
+      }}
+    >
+      <div className='w-1/2 flex flex-col justify-between h-full'>
+        <div>{user_name}</div>
+
+        <div>{title}</div>
+      </div>
+
+      <div className='w-1/2 h-full rounded-md overflow-hidden'>
+        <ImgModule
+          imgsrc={localImgs[0]}
+          updateSingleCallback={updateImgAtIndex(0)}
+          canEdit={canEdit}
+          autoSave={autoSave}
+        />
+      </div>
+    </div>
+  )
+}
+
 export const First_page_img_1 = ({
   user_name,
   title,
@@ -243,27 +295,42 @@ export const Col_1_img_0 = ({
   update_callback,
   canEdit,
   autoSave,
+  isCoverPage,
 }: MainSlideProps) => {
+  const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback)
   return (
-    <div
-      className='rounded-md overflow-hidden'
-      style={{
-        width: '100%',
-        height: '100%',
-        backgroundSize: 'cover',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        boxSizing: 'border-box',
-        border: 'none',
-        // boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
-        position: 'relative',
-        backgroundColor: 'white',
-        padding: '28px',
-      }}
-    >
-      <div>
+    <>
+      {/* for cover page slide */}
+      <div
+        className={`${
+          isCoverPage
+            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-row justify-start items-start box-border border-none relative bg-white p-[28px] gap-[32px]'
+            : 'hidden'
+        } `}
+      >
+        <div className={`w-1/2 flex flex-col justify-between h-full`}>
+          <div>{user_name}</div>
+
+          <div>{title}</div>
+        </div>
+        <div className={`w-1/2 h-full rounded-md overflow-hidden`}>
+          <ImgModule
+            imgsrc={localImgs[0]}
+            updateSingleCallback={updateImgAtIndex(0)}
+            canEdit={canEdit}
+            autoSave={autoSave}
+          />
+        </div>
+      </div>
+
+      {/* for non-cover page slides */}
+      <div
+        className={`${
+          !isCoverPage
+            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-col justify-start items-start box-border border-none relative bg-white p-[28px]'
+            : 'hidden'
+        }`}
+      >
         <div
           style={{
             fontSize: '15pt',
@@ -274,24 +341,24 @@ export const Col_1_img_0 = ({
         >
           {topic}
         </div>
-      </div>
-      <div>{subtopic}</div>
-      <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr>
-      <div className='h-full w-full flex flex-row overflow-hidden gap-[32px]'>
-        <div
-          className='w-full h-full grow p-1'
-          style={{
-            display: 'list-item',
-            listStyleType: 'disc',
-            listStylePosition: 'inside',
-            fontSize: '18pt',
-            marginLeft: '20px',
-          }}
-        >
-          {content}
+        <div>{subtopic}</div>
+        <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr>
+        <div className='h-full w-full flex flex-row overflow-hidden gap-[32px]'>
+          <div
+            className='w-full h-full grow p-1'
+            style={{
+              // display: 'list-item',
+              listStyleType: 'disc',
+              listStylePosition: 'inside',
+              fontSize: '18pt',
+              marginLeft: '20px',
+            }}
+          >
+            {content}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
@@ -360,7 +427,8 @@ export default {
   First_page_img_1: First_page_img_1,
   Col_1_img_0: Col_1_img_0,
   Col_3_img_2: Col_3_img_2,
-  Standford_school_template: Standford_school_template,
+  Stanford: Stanford_school_template,
+  // Stanford_school_template_cover: Stanford_school_template_cover,
 }
 
 export const templateSamples = {
