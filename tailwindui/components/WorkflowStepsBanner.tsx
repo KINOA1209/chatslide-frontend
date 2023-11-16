@@ -55,7 +55,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
           <ProjectProgress currentInd={currentIndex} contentRef={contentRef} />
         </div>
 
-        <div className="absolute right-10 flex flex-col xl:flex-row items-end xl:items-center space-x-4">
+        <div className="absolute right-10 flex flex-col items-end space-x-4">
 
           {showGPTToggle && typeof setIsGpt35 !== 'undefined' && <GPTToggleWithExplanation setIsGpt35={setIsGpt35} />}
           <DrlambdaButton
