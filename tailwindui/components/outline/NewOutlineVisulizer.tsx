@@ -608,7 +608,7 @@ const OutlineVisualizer = ({
                         handleDeleteSection(e, sectionIndex)
                       }}
                     >
-                      <DeleteIcon></DeleteIcon>
+                      <DeleteIcon shadow={true}/>
                     </div>
                   )}
                 <div className='mt-4'>
@@ -652,7 +652,7 @@ const OutlineVisualizer = ({
                                     )
                                   }
                                 >
-                                  <DeleteIcon />
+                                  <DeleteIcon shadow={true}/>
                                 </div>
                               )}
 
