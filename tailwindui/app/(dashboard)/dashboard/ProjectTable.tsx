@@ -57,20 +57,20 @@ export const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
   fileType = fileType.toLowerCase()
   switch (fileType) {
     case 'doc':
-      return <FaFilePdf size='32px'/>
+      return <FaFilePdf size='32px' fill='#505050'/>
     case 'url':
-      return <FaYoutube size='32px'/>
+      return <FaYoutube size='32px' fill='#505050'/>
     case 'youtube':
-      return <FaYoutube size='32px'/>
+      return <FaYoutube size='32px' fill='#505050'/>
     case 'pdf':
-      return <FaFilePdf size='32px'/>
+      return <FaFilePdf size='32px' fill='#505050'/>
     case 'docx':
-      return <FaFileWord size='32px'/>
+      return <FaFileWord size='32px' fill='#505050'/>
     case 'jpg':
     case 'jpeg':
     case 'png':
     case 'gif':
-      return <FaFileImage size='32px'/>
+      return <FaFileImage size='32px' fill='#505050'/>
     default:
       return null
   }
