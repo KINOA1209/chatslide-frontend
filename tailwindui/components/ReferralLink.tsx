@@ -49,8 +49,7 @@ const ReferralLink: React.FC = () =>  {
         <div className='w-fit mx-auto'>
             <ClickableLink link={host + referralLink} />
             <div className='text-center mt-5 text-[#707C8A] text-[16px]'>
-                You get <b>50</b> credit for free when someone registers using your referral link.
-                Meanwhile, we will also gift your friend <b>50</b> credit for gratitude.
+                You get and your friend will both get 50 ⭐️credits.
             </div>
         </div>
     );
