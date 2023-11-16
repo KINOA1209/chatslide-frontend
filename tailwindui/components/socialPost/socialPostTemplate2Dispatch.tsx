@@ -7,14 +7,6 @@ import {
     CompanyIconWhite,
 } from '@/components/socialPost/socialPostIcons'
 
-function wrapWithLiTags(content: string): string {
-    if (!content.includes('<li>') || !content.includes('</li>')) {
-        return `<li">${content}</li>`
-    }
-    return content
-}
-
-
 export const templateDispatch = (
     slide: SocialPostSlide,
     index: number,
@@ -35,26 +27,29 @@ export const templateDispatch = (
     }
     const Template = templates[slide.template as keyof typeof templates]
     if (index === 0) {
-        const keywordsString = slide.keywords.join(' | ')
         return <Template
             autoSave={saveSlides}
             key={keyPrefix + index.toString()}
-            subtopic={
+            update_callback={updateImgUrlArray(index)}
+            canEdit={canEdit}
+            imgs={slide.images}
+            icon={<CompanyIconWhite />}
+            original_title={
                 <div
                     key={0}
-                    className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                    className={`rounded-md outline-2 px-[4px] ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                     contentEditable={canEdit}
                     onFocus={() => {
                         if (canEdit) {
                             setIsEditMode(true);
                         }
                     }}
-                    //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
-                    style={h3Style}
-                    dangerouslySetInnerHTML={{ __html: slide.subtopic }}
+                    onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'original_title')}
+                    style={h6Style}
+                    dangerouslySetInnerHTML={{ __html: slide.original_title }}
                 />
             }
-            keywords={
+            English_title={
                 <div
                     key={1}
                     className={`rounded-md outline-2 px-[4px] ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
@@ -64,47 +59,15 @@ export const templateDispatch = (
                             setIsEditMode(true);
                         }
                     }}
-                    //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
-                    style={h4Style}
-                    dangerouslySetInnerHTML={{ __html: keywordsString }}
-                />
-            }
-            original_title={
-                <div
-                    key={2}
-                    className={`rounded-md outline-2 px-[4px] ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
-                    contentEditable={canEdit}
-                    onFocus={() => {
-                        if (canEdit) {
-                            setIsEditMode(true);
-                        }
-                    }}
-                    //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
-                    style={h6Style}
-                    dangerouslySetInnerHTML={{ __html: slide.original_title }}
-                />
-            }
-            English_title={
-                <div
-                    key={3}
-                    className={`rounded-md outline-2 px-[4px] ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
-                    contentEditable={canEdit}
-                    onFocus={() => {
-                        if (canEdit) {
-                            setIsEditMode(true);
-                        }
-                    }}
-                    //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
+                    onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'English_title')}
                     style={h5Style}
                     dangerouslySetInnerHTML={{ __html: slide.English_title }}
                 />
             }
             content={[<></>]}
-            update_callback={updateImgUrlArray(index)}
-            canEdit={canEdit}
-            imgs={slide.images}
+            subtopic={<></>}
+            keywords={[<></>]}
             section_title={<></>}
-            icon={<CompanyIconWhite />}
             brief={<></>}
             illustration={['']}
             title={<></>}
@@ -117,37 +80,8 @@ export const templateDispatch = (
             autoSave={saveSlides}
             canEdit={canEdit}
             key={keyPrefix + index.toString()}
-            subtopic={
-                <div
-                    key={0}
-                    className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
-                    contentEditable={canEdit}
-                    onFocus={() => {
-                        if (canEdit) {
-                            setIsEditMode(true);
-                        }
-                    }}
-                    //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
-                    style={h2Style}
-                    dangerouslySetInnerHTML={{ __html: slide.subtopic }}
-                />
-            }
-            keywords={
-                <div
-                    key={1}
-                    className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
-                    contentEditable={canEdit}
-                    onFocus={() => {
-                        if (canEdit) {
-                            setIsEditMode(true);
-                        }
-                    }}
-                    //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
-                    style={h1Style}
-                    dangerouslySetInnerHTML={{ __html: slide.keywords }}
-                />
-            }
-
+            icon={<CompanyIconBlack />}
+            update_callback={updateImgUrlArray(index)}
             content={
                 slide.content.map((content: string, contentIndex: number) => {
                     if (content.includes('$$') || content.includes('\\(')) {
@@ -163,11 +97,11 @@ export const templateDispatch = (
                                             setIsEditMode(true);
                                         }
                                     }}
-                                    // onBlur={(e) => {
-                                    //     const modifiedContent = [...slide.content];
-                                    //     modifiedContent[contentIndex] = e.target.innerText;
-                                    //     handleSlideEdit(modifiedContent, index, 'content');
-                                    // }}
+                                    onBlur={(e) => {
+                                        const modifiedContent = [...slide.content];
+                                        modifiedContent[contentIndex] = e.target.innerText;
+                                        handleSlideEdit(modifiedContent, index, 'content');
+                                    }}
                                 >
                                     {content}
                                 </div>
@@ -199,11 +133,11 @@ export const templateDispatch = (
                                     setIsEditMode(true);
                                 }
                             }}
-                            // onBlur={(e) => {
-                            //     const modifiedContent = [...slide.content];
-                            //     modifiedContent[contentIndex] = e.target.innerText;
-                            //     handleSlideEdit(modifiedContent, index, 'content');
-                            // }}
+                            onBlur={(e) => {
+                                const modifiedContent = [...slide.content];
+                                modifiedContent[contentIndex] = e.target.innerText;
+                                handleSlideEdit(modifiedContent, index, 'content');
+                            }}
                             dangerouslySetInnerHTML={{ __html: content }}
                         >
                         </div>
@@ -211,13 +145,9 @@ export const templateDispatch = (
                     );
                 })
             }
-
-            imgs={(slide.images) as string[]}
-            update_callback={updateImgUrlArray(index)}
-            English_title={<></>}
             section_title={
                 <div
-                    key={2}
+                    key={0}
                     className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                     contentEditable={canEdit}
                     onFocus={() => {
@@ -225,14 +155,14 @@ export const templateDispatch = (
                             setIsEditMode(true);
                         }
                     }}
-                    //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
+                    onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'section_title')}
                     style={h8Style}
                     dangerouslySetInnerHTML={{ __html: slide.section_title }}
                 />
             }
             original_title={
                 <div
-                key={3}
+                key={1}
                 className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                 contentEditable={canEdit}
                 onFocus={() => {
@@ -240,14 +170,14 @@ export const templateDispatch = (
                         setIsEditMode(true);
                     }
                 }}
-                //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
+                onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'original_title')}
                 style={h7Style}
                 dangerouslySetInnerHTML={{ __html: slide.original_title }}
             />
             }
             brief={
                 <div
-                key={4}
+                key={2}
                 className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                 contentEditable={canEdit}
                 onFocus={() => {
@@ -255,13 +185,16 @@ export const templateDispatch = (
                         setIsEditMode(true);
                     }
                 }}
-                //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'title')}
+                onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'brief')}
                 style={h9Style}
                 dangerouslySetInnerHTML={{ __html: slide.brief }}
             />
             }
-            icon={<CompanyIconBlack />}
             illustration={['']}
+            imgs={['']}
+            English_title={<></>}
+            subtopic={<></>}
+            keywords={[<></>]}
             title={<></>}
             quote={<></>}
             source={<></>}
