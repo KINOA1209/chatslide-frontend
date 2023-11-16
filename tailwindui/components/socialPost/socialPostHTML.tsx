@@ -243,7 +243,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
             final_posts: finalSlides,
             project_id: project_id,
         }
-        console.log(formData)
         // Send a POST request to the backend to save finalSlides
         fetch('/api/save_social_posts', {
             method: 'POST',
@@ -403,7 +402,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
         else {
             console.error(`Unknown tag: ${tag}`)
         }
-        console.log(newSlides)
         setSlides(newSlides)
         setFinalSlides(newFinalSlides)
     }
@@ -458,8 +456,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
         }
         return updateImgUrl
     }
-
-    console.log(slides)
     const editableTemplateDispatch = (
         slide: SocialPostSlide, 
         index: number, 

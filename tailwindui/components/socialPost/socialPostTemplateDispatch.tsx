@@ -63,7 +63,7 @@ export const templateDispatch = (
                     key={1}
                     //className={`rounded-md outline-2 px-[4px] ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                     contentEditable={false}
-                    className={`rounded-md outline-2 px-[4px] ${!exportToPdfMode && 'overflow-hidden'}`}
+                    className={`rounded-md outline-2 px-[4px] py-[2%] ${!exportToPdfMode && 'overflow-hidden'}`}
                     // onFocus={() => {
                     //     if (canEdit) {
                     //         setIsEditMode(true);
