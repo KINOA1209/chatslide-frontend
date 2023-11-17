@@ -62,7 +62,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
         const dummyParam = `dummy=${Math.random()}`;
         const response = await fetch(`/api/search_illustration_images?keyword=${encodeURIComponent(keyword)}&${dummyParam}`, {
-            //mode: 'cors',
+            mode: 'cors',
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
