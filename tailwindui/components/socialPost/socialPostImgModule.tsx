@@ -351,15 +351,17 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
             <div className='w-full h-full overflow-y-auto p-1'>
                 <div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-2'>
                     {searchResult.map((url, index) => {
+                        const randomParam = `random=${Math.random()}`;
+                        const imageUrlWithRandomParam = `${url}?${randomParam}`;
                         if (url === selectedImg) {
                             return <div onClick={handleImageClick}
                                 key={index} className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-[3px]`}>
-                                <img className='w-full h-full object-cover' src={url} />
+                                <img className='w-full h-full object-cover' src={imageUrlWithRandomParam} />
                             </div>
                         } else {
                             return <div onClick={handleImageClick}
                                 key={index} className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-[3px]`}>
-                                <img className='w-full h-full object-cover' src={url} />
+                                <img className='w-full h-full object-cover' src={imageUrlWithRandomParam} />
                             </div>
                         }
                     })}
