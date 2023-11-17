@@ -19,6 +19,7 @@ import {
 import NewWorkflowGPTToggle from '@/components/button/NewWorkflowGPTToggle'
 import { useRouter } from 'next/navigation'
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner'
+import { ToastContainer } from 'react-toastify'
 
 interface OutlineSection {
   title: string
@@ -61,8 +62,16 @@ export default function WorkflowStep2() {
   const scrollToSection = (sectionId: number) => {
     const sectionElement = document.getElementById(String(sectionId))
     if (sectionElement) {
-      sectionElement.scrollIntoView({ behavior: 'smooth' })
-      setActiveSection(sectionId)
+      const offset = 240; // Adjust this value based on your rem size
+      const elementPosition = sectionElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+
+      setActiveSection(sectionId);
     }
   }
 
@@ -92,25 +101,27 @@ export default function WorkflowStep2() {
   return (
     <div className=''>
       {/* flex col container for steps, title, generate slides button etc */}
-      <WorkflowStepsBanner 
-        currentIndex={1} 
-        isSubmitting={isSubmitting} 
-        setIsSubmitting={setIsSubmitting} 
-        isPaidUser={true} 
-        contentRef={contentRef} 
-        nextIsPaidFeature={false} 
-        showGPTToggle={true} 
-        setIsGpt35={setIsGpt35} 
-        nextText={!isSubmitting? 'Next' : 'Creating Slides'}
+      <ToastContainer />
+      
+      <WorkflowStepsBanner
+        currentIndex={1}
+        isSubmitting={isSubmitting}
+        setIsSubmitting={setIsSubmitting}
+        isPaidUser={true}
+        contentRef={contentRef}
+        nextIsPaidFeature={false}
+        showGPTToggle={true}
+        setIsGpt35={setIsGpt35}
+        nextText={!isSubmitting ? 'Next' : 'Creating Slides'}
       />
 
       {outlineContent && (
-        <GenerateSlidesSubmit outline={outlineContent} isGPT35={isGpt35} isSubmitting={isSubmitting} setIsSubmitting={setIsSubmitting}/>
+        <GenerateSlidesSubmit outline={outlineContent} isGPT35={isGpt35} isSubmitting={isSubmitting} setIsSubmitting={setIsSubmitting} />
       )}
 
       <div className='mb-[3rem]'>
         {/* overview nav section */}
-        <div className='w-1/4 fixed top-[14.5rem] overflow-y-auto flex justify-center'>
+        <div className='w-1/4 fixed top-[15.5rem] overflow-y-auto flex justify-center'>
           <div className='w-2/3 bg-neutral-50 rounded-md border border-gray-200 hidden sm:block'>
             <div className='h-5 text-neutral-900 text-xs font-bold font-creato-medium leading-tight tracking-wide px-4 py-3'>
               OVERVIEW

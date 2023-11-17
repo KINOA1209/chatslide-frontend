@@ -258,12 +258,10 @@ export default function Dashboard() {
       {/* top background container of my projects title text and button */}
       <div className='mt-[3rem] flex items-end w-full z-10 pt-[4rem] border-b-2 px-[5rem]'>
         {/* flex container controlling max width */}
-        <div className='w-full max-w-7xl flex flex-wrap items-center justify-center lg:items-end lg:justify-between '>
+        <div className='w-full max-w-7xl flex flex-wrap items-end justify-between md:justify-center'>
           {/* my project title text */}
-          <div className='w-full lg:w-40 rounded-md justify-center items-center inline-flex'>
-            <div className='text-neutral-900 text-base font-bold font-creato-medium leading-10 tracking-wide border-black lg:border-b-2'>
-              My Projects
-            </div>
+          <div className='text-neutral-900 text-base font-bold font-creato-medium leading-10 tracking-wide border-black border-b-2'>
+            My Projects
           </div>
 
           {/* create new project button */}

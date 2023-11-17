@@ -124,8 +124,8 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose }) => {
     }
 
     return (
-        <div className='fixed bottom-10 right-10 z-10 hidden sm:block '>
-            <div className='flex min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0'>
+        <div className='fixed bottom-5 right-5 hidden sm:block '>
+            <div className='z-50 flex min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0'>
                 {/* overlay that block clicking on screen */}
                 <div className='fixed inset-0 transition-opacity' aria-hidden='true'>
                     <div className='absolute inset-0 bg-gray-500 opacity-75'></div>
@@ -137,7 +137,7 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose }) => {
                     &#8203;
                 </span>
                 <div
-                    className='inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full'
+                    className='z-50 inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full'
                     role='dialog'
                     aria-modal='true'
                     aria-labelledby='modal-headline'
@@ -165,8 +165,7 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose }) => {
                                         <div>
                                             <span>
                                                 {' '}
-                                                Let your friends know you love DrLambda by referring
-                                                them.
+                                                Share your 💚 for DrLambda:
                                             </span>
                                             <div className='mt-4'>
                                                 <ReferralLink />
@@ -225,7 +224,13 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose }) => {
                                         onChange={handleFeedbackTextChange}
                                     ></textarea>
                                 </div>
-                                <div className='mt-4 flex justify-end'>
+                                <div className='mt-4 flex justify-end gap-x-4'>
+                                    <button
+                                        className='px-4 py-2 font-bold text-blue-500 rounded focus:outline-none'
+                                        onClick={onClose}
+                                    >
+                                        Cancel
+                                    </button>
                                     <button
                                         type='submit'
                                         className='px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-700'
