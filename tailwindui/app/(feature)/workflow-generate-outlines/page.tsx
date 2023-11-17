@@ -14,13 +14,15 @@ import 'react-toastify/dist/ReactToastify.css'
 import AuthService from '@/components/utils/AuthService'
 import UserService from '@/components/utils/UserService'
 import { Transition } from '@headlessui/react'
-import MyFiles from '@/components/fileManagement'
+import MyFiles, { Resource } from '@/components/fileManagement'
 import FeedbackButton from '@/components/slides/feedback'
 
-import { QuestionExplainIcon, RightTurnArrowIcon } from '@/app/(feature)/icons'
+import { DeleteIcon, QuestionExplainIcon, RightTurnArrowIcon } from '@/app/(feature)/icons'
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner'
 import PaywallModal from '@/components/forms/paywallModal'
 import { FaFilePdf, FaYoutube } from 'react-icons/fa'
+import YoutubeService from '@/components/utils/YoutubeService'
+import { SmallBlueButton } from '@/components/button/DrlambdaButton'
 
 const audienceList = [
   'Researchers',
@@ -36,14 +38,6 @@ interface Project {
   audience: string
 }
 
-interface UserFile {
-  id: string
-  uid: string
-  filename: string
-  thumbnail_name: string
-  timestamp: string
-}
-
 export default function Topic() {
   const contentRef = useRef<HTMLDivElement>(null)
   const [showPopup, setShowPopup] = useState(false)
@@ -51,6 +45,7 @@ export default function Topic() {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showFileModal, setShowFileModal] = useState(false)
+  const [youtubeUrl, setYoutubeUrl] = useState('' as string)
   const [youtubeError, setYoutubeError] = useState('')
   const [isGpt35, setIsGpt35] = useState(true)
   const [showPaymentModal, setShowPaymentModal] = useState(false)
@@ -63,12 +58,15 @@ export default function Topic() {
   const [showAudiencePopup, setAudiencePopup] = useState(false)
   const [showLanguagePopup, setLanguagePopup] = useState(false)
   const [showSupportivePopup, setSupportivePopup] = useState(false)
-  const [selectedFileList, setselectedFileList] = useState<UserFile[]>([])
-  const [selectedFileListName, setselectedFileListName] = useState<string[]>([])
   const [isPaidUser, setIsPaidUser] = useState(false)
+  const [isAddingYoutube, setIsAddingYoutube] = useState(false)
 
   // bind form data between input and sessionStorage
-  const [topic, setTopic] = useState('')
+  const [topic, setTopic] = useState(
+    typeof window !== 'undefined' && sessionStorage.topic != undefined
+      ? sessionStorage.topic
+      : ''
+  )
   const [audience, setAudience] = useState(
     typeof window !== 'undefined' && sessionStorage.audience != undefined
       ? sessionStorage.audience
@@ -79,23 +77,24 @@ export default function Topic() {
       ? sessionStorage.language
       : 'English'
   )
-  const [youtube, setYoutube] = useState(
-    typeof window !== 'undefined' && sessionStorage.youtube != undefined
-      ? sessionStorage.youtube
-      : ''
-  )
   const [addEquations, setAddEquations] = useState(
     typeof window !== 'undefined' && sessionStorage.addEquations != undefined
       ? JSON.parse(sessionStorage.addEquations)
       : false
   )
-
-  useEffect(() => {
-    const clientTopic = sessionStorage.getItem('topic')
-    if (clientTopic) {
-      setTopic(clientTopic)
-    }
-  }, [])
+  const [selectedResourceId, setSelectedResourceId] = useState<string[]>(
+    typeof window !== 'undefined' &&
+      sessionStorage.selectedResourceId != undefined
+      ? JSON.parse(sessionStorage.selectedResourceId)
+      : []
+  )
+  const [selectedResources, setSelectedResources] = useState<Resource[]>(
+    typeof window !== 'undefined' &&
+      sessionStorage.selectedResources != undefined
+      ? JSON.parse(sessionStorage.selectedResources)
+      : []
+  )
+  
 
   useEffect(() => {
     UserService.isPaidUser().then(
@@ -162,6 +161,44 @@ export default function Topic() {
     setAudience(audience)
   }
 
+  async function addYoutubeLink(link: string) {
+    if (!link) {
+      setYoutubeError('Please enter a YouTube link.');
+      return;
+    }
+    if (!isPaidUser && selectedResources.length >= 1) {
+      setYoutubeError('Free users can only add one resource.');
+      return;
+    }
+    setIsAddingYoutube(true);
+    try {
+      const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+      const videoDetails = await YoutubeService.getYoutubeInfo(link, idToken);
+
+      if (!videoDetails?.id) {
+        setYoutubeError('The Youtube link is invalid.');
+        setIsAddingYoutube(false);
+        return;
+      }
+
+      const newFile = {
+        id: videoDetails.id,
+        uid: '',
+        title: videoDetails.title,
+        thumbnail_url: videoDetails.thumbnail,
+        timestamp: new Date().toISOString()
+      };
+
+      setSelectedResources(prevList => [...prevList, newFile]);
+      setSelectedResourceId(prevList => [...prevList, newFile.id]);
+    } catch (error: any) {
+      console.error("Error fetching YouTube video details: ", error);
+      setYoutubeError("Error fetching YouTube video details");
+    }
+    setIsAddingYoutube(false);
+  }
+
+
   useEffect(() => {
     if (isSubmitting) {
       handleSubmit()
@@ -188,8 +225,7 @@ export default function Topic() {
       language: language,
       addEquations: addEquations,
       project_id: project_id,
-      youtube_url: youtube,
-      resources: JSON.parse(sessionStorage.getItem('resources') || '[]'),
+      resources: selectedResourceId,
       model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
     }
 
@@ -197,6 +233,8 @@ export default function Topic() {
     sessionStorage.setItem('audience', formData.audience)
     sessionStorage.setItem('language', formData.language)
     sessionStorage.setItem('addEquations', formData.addEquations)
+    sessionStorage.setItem('selectedResourceId', JSON.stringify(formData.resources))
+    sessionStorage.setItem('selectedResources', JSON.stringify(selectedResources))
 
     try {
       const { userId, idToken: token } =
@@ -228,24 +266,6 @@ export default function Topic() {
           JSON.stringify(outlinesJson.data.pdf_images)
         )
 
-        // Retrieve the existing resources from sessionStorage and parse them
-        const resources: string[] = JSON.parse(
-          sessionStorage.getItem('resources') || '[]'
-        )
-
-        // Add the new YouTube URL to the resources list if it's not empty
-        const youtube_id: string = outlinesJson.data.youtube_id
-
-        if (youtube_id.trim() !== '') {
-          resources.push(youtube_id)
-        }
-
-        // Convert the updated list to a JSON string
-        const updatedResourcesJSON: string = JSON.stringify(resources)
-
-        // Store the updated JSON string back in sessionStorage
-        sessionStorage.setItem('resources', updatedResourcesJSON)
-
         // Redirect to a new page with the data
         router.push('workflow-edit-outlines')
       } else if (response.status == 402) {
@@ -262,20 +282,6 @@ export default function Topic() {
     } catch (error) {
       console.error('Error:', error)
       setIsSubmitting(false)
-    }
-  }
-
-  const handleSelectResources = (resource: Array<string>) => {
-    sessionStorage.setItem('resources', JSON.stringify(resource))
-    const allHistoryResourcesJson = sessionStorage.getItem('history_resource')
-
-    if (resource && allHistoryResourcesJson) {
-      const allHistoryResourcesArray: Array<UserFile> =
-        JSON.parse(allHistoryResourcesJson)
-      const selectedResources = resource.map((id) => {
-        return allHistoryResourcesArray.find((file) => file.id === id);
-      }).filter(file => file !== undefined) as UserFile[];
-      setselectedFileList(selectedResources)
     }
   }
 
@@ -308,11 +314,11 @@ export default function Topic() {
     // sample: https://www.youtube.com/v/-wtIMTCHWuI?app=desktop
 
     if (link === '') {
-      setYoutube('')
+      setYoutubeUrl('')
       setYoutubeError('')
       return
     }
-    setYoutube(link)
+    setYoutubeUrl(link)
     setYoutubeError('')
     // validate url
     const regex1 = /youtube\.com\/watch\?v=[a-zA-z0-9_-]{11}/
@@ -321,14 +327,14 @@ export default function Topic() {
     if (regex1.test(link)) {
       const essentialLink = link.match(regex1)
       if (essentialLink && essentialLink.length > 0) {
-        setYoutube('https://www.' + essentialLink[0])
+        setYoutubeUrl('https://www.' + essentialLink[0])
       }
     } else if (regex2.test(link)) {
       const essentialLink = link.match(regex2)
       if (essentialLink && essentialLink.length > 0) {
         const vID = essentialLink[0].match(/[A-Za-z0-9_-]{11}/)
         if (vID && vID.length > 0) {
-          setYoutube('https://www.youtube.com/watch?v=' + vID[0])
+          setYoutubeUrl('https://www.youtube.com/watch?v=' + vID[0])
         }
       }
     } else if (regex3.test(link)) {
@@ -336,7 +342,7 @@ export default function Topic() {
       if (essentialLink && essentialLink.length > 0) {
         const vID = essentialLink[0].match(/[A-Za-z0-9_-]{11}/)
         if (vID && vID.length > 0) {
-          setYoutube('https://www.youtube.com/watch?v=' + vID[0])
+          setYoutubeUrl('https://www.youtube.com/watch?v=' + vID[0])
         }
       }
     } else {
@@ -387,6 +393,16 @@ export default function Topic() {
     setSupportivePopup(false)
   }
 
+  const removeResourceAtIndex = (indexToRemove: number) => {
+    setSelectedResources(currentResources =>
+      currentResources.filter((_, index) => index !== indexToRemove)
+    );
+    setSelectedResourceId(currentResourceIds =>
+      currentResourceIds.filter((_, index) => index !== indexToRemove)
+    );
+  };
+
+
   return (
     <section>
       {showPaymentModal && <PaywallModal setShowModal={setShowPaymentModal} message='Upgrade for more ⭐️credits.' />}
@@ -421,7 +437,13 @@ export default function Topic() {
           <h4 className='h4 text-blue-600 text-center'>
             Select Supporting Material
           </h4>
-          <MyFiles selectable={true} callback={handleSelectResources} />
+          <MyFiles
+            selectable={true}
+            selectedResourceId={selectedResourceId}
+            setSelectedResourceId={setSelectedResourceId}
+            selectedResources={selectedResources}
+            setSelectedResources={setSelectedResources}
+          />
           <div className='max-w-sm mx-auto'>
             <div className='flex flex-wrap -mx-3 mt-6'>
               <div className='w-full px-3'>
@@ -681,11 +703,14 @@ export default function Topic() {
                     id='youtube'
                     type='text'
                     className='form-input w-full border-none bg-gray-100'
-                    value={youtube}
+                    value={youtubeUrl}
                     onChange={(e) => handleYoutubeChange(e.target.value)}
                     placeholder='Paste YouTube link here'
                   />
                 </div>
+                <SmallBlueButton onClick={e => { addYoutubeLink(youtubeUrl) }} isSubmitting={isAddingYoutube}>
+                  {isAddingYoutube ? 'Adding...' : 'Add'}
+                </SmallBlueButton>
               </div>
 
               {youtubeError && (
@@ -697,9 +722,9 @@ export default function Topic() {
               <div className='flex items-center w-full'>
                 <FaFilePdf />
                 <span>Drop files here or </span>
-                <button id='browse_btn' onClick={(e) => handleOpenFile(e)} className='mx-2 border border-1 border-blue-600 text-blue-600'>
+                <SmallBlueButton onClick={handleOpenFile}>
                   Browse File
-                </button>
+                </SmallBlueButton>
               </div>
             </div>
             <hr id='add_hr' />
@@ -708,17 +733,20 @@ export default function Topic() {
                 className='flex flex-col gap-4'
                 style={{ overflowY: 'auto' }}
               >
-                {selectedFileList.map((selectedFile, index) => (
+                {selectedResources.map((resource, index) => (
                   <li key={index}>
                     <div
                       id='selectedfile_each'
-                      className='flex items-center gap-2 bg-white rounded h-[50px] pl-[1rem]'
+                      className='flex items-center bg-white rounded h-[50px] px-[1rem] justify-between'
                     >
-                      {selectedFile.thumbnail_name ?
-                        <img src={selectedFile.thumbnail_name} className='w-[40px]' /> :
-                        <FaFilePdf className='w-[40px]'/>
+                      <div className='flex items-center gap-2'>
+                      {resource.thumbnail_url ?
+                        <img src={resource.thumbnail_url} className='w-[40px]' /> :
+                        <FaFilePdf className='w-[40px]' />
                       }
-                      <span>{selectedFile.filename}</span>
+                      <span>{resource.title}</span>
+                      </div>
+                      <button className='' onClick={e => removeResourceAtIndex(index)}><DeleteIcon/></button>
                     </div>
                   </li>
                 ))}

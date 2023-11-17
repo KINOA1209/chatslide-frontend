@@ -10,17 +10,17 @@ import moment from 'moment'
 // import mixpanel from 'mixpanel-browser'
 import { CarbonConnect, IntegrationName } from 'carbon-connect'
 
-interface UserFile {
+export interface Resource {
   id: string
   uid: string
-  filename: string
-  thumbnail_name: string
+  title: string
+  thumbnail_url: string
   timestamp: string
 }
 
 interface UserFileList {
   selectable: boolean
-  userfiles: Array<UserFile>
+  userfiles: Array<Resource>
   deleteCallback: Function
   clickCallback: Function
   selectedResources: Array<string>
@@ -221,9 +221,9 @@ const FileManagement: React.FC<UserFileList> = ({
         return entry(
           file.id,
           file.uid,
-          file.filename,
+          file.title,
           file.timestamp,
-          file.thumbnail_name
+          file.thumbnail_url
         )
       })}
     </div>
@@ -232,19 +232,24 @@ const FileManagement: React.FC<UserFileList> = ({
 
 interface filesInterface {
   selectable: boolean
-  callback?: Function
+  selectedResourceId?: Array<string>
+  setSelectedResourceId?: Function
+  selectedResources?: Array<Resource>
+  setSelectedResources?: Function
 }
 
 const MyFiles: React.FC<filesInterface> = ({
   selectable = false,
-  callback,
+  selectedResourceId,
+  setSelectedResourceId,
+  selectedResources,
+  setSelectedResources,
 }) => {
   const [currentPage, setCurrentPage] = useState(1)
-  const [resources, setResources] = useState<UserFile[]>([])
+  const [resources, setResources] = useState<Resource[]>([])
   const promptRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const [rendered, setRendered] = useState<boolean>(false)
-  const [selectedResources, setSelectedResources] = useState<Array<string>>([])
   const [isPaid, setIsPaid] = useState<boolean>(false)
 
   useEffect(() => {
@@ -266,7 +271,7 @@ const MyFiles: React.FC<filesInterface> = ({
   }, [])
 
   useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       const paid = await UserService.isPaidUser()
       setIsPaid(paid)
     })()
@@ -276,10 +281,6 @@ const MyFiles: React.FC<filesInterface> = ({
     if (!selectable) {
       return
     }
-    const resourcesFromStorage = sessionStorage.getItem('resources')
-    const selected: Array<string> =
-      resourcesFromStorage !== null ? JSON.parse(resourcesFromStorage) : []
-    setSelectedResources(selected)
   }, [])
 
   useEffect(() => {
@@ -288,11 +289,6 @@ const MyFiles: React.FC<filesInterface> = ({
     }
   }, [resources, rendered])
 
-  useEffect(() => {
-    if (callback !== undefined) {
-      callback(selectedResources)
-    }
-  }, [selectedResources])
   const fetchFiles = async (token: string) => {
     const headers = new Headers()
     if (token) {
@@ -302,8 +298,8 @@ const MyFiles: React.FC<filesInterface> = ({
 
     const resource_type = selectable
       ? {
-          resource_type: ['doc', 'url'],
-        }
+        resource_type: ['doc', 'url'],
+      }
       : {}
 
     try {
@@ -320,16 +316,16 @@ const MyFiles: React.FC<filesInterface> = ({
           return {
             id: resource.id,
             uid: resource.uid,
-            filename: resource.resource_name,
-            thumbnail_name: resource.thumbnail_url,
+            title: resource.resource_name,
+            thumbnail_url: resource.thumbnail_url,
             timestamp: resource.timestamp,
           }
         })
         setResources(resourceTemps)
-        sessionStorage.setItem(
-          'history_resource',
-          JSON.stringify(resourceTemps)
-        )
+
+        if(setSelectedResources) {
+          setSelectedResources(resourceTemps.filter((resource: Resource) => selectedResourceId?.includes(resource.id)));
+        }
         setRendered(true)
       } else {
         // Handle error cases
@@ -356,7 +352,7 @@ const MyFiles: React.FC<filesInterface> = ({
     //   'File Name': file.name,
     //   'File Type': file.type,
     // })
-    try{
+    try {
       const response = await fetch('/api/upload_user_file', {
         method: 'POST',
         headers: {
@@ -365,7 +361,7 @@ const MyFiles: React.FC<filesInterface> = ({
         body: body,
       });
 
-      if (response.ok){
+      if (response.ok) {
         toast.success('File uploaded successfully', {
           position: 'top-center',
           autoClose: 2000,
@@ -381,12 +377,12 @@ const MyFiles: React.FC<filesInterface> = ({
         await fetchFiles(idToken)
         handleClick(data.data.file_id)
       }
-      else{
+      else {
         throw Error(`${response.text}`)
       }
-    } catch (error)  {
+    } catch (error) {
       console.error(error)
-      if (error instanceof Error){
+      if (error instanceof Error) {
         toast.error(`File upload failed ${error.message}`, {
           position: 'top-center',
           autoClose: 5000,
@@ -418,22 +414,27 @@ const MyFiles: React.FC<filesInterface> = ({
   }
 
   const handleClick = (id: string) => {
-    const ind = selectedResources.indexOf(id)
-    let resources: Array<string> = []
+    if (!selectedResourceId || !setSelectedResourceId) {
+      console.log('selectedResources or setSelectedResources is null')
+      return
+    }
+    console.log('handleClick', id)
+    const ind = selectedResourceId.indexOf(id)
+    let newSelectedResourceId: Array<string> = []
     if (isPaid) {
-      resources = [...selectedResources]
+      newSelectedResourceId = [...selectedResourceId]
       if (ind !== -1) {
-        resources.splice(ind, 1)
+        newSelectedResourceId.splice(ind, 1)
       } else {
-        resources.push(id)
+        newSelectedResourceId.push(id)
       }
     } else {
       if (ind !== -1) {
-        resources = []
+        newSelectedResourceId = []
       } else {
-        resources = [id]
+        newSelectedResourceId = [id]
       }
-      if (resources.length > 0 && selectedResources.length > 0) {
+      if (newSelectedResourceId.length > 0 && selectedResourceId.length > 0) {
         toast.info('Only subscribed user can select multiple files!', {
           position: 'top-center',
           autoClose: 5000,
@@ -447,7 +448,10 @@ const MyFiles: React.FC<filesInterface> = ({
         })
       }
     }
-    setSelectedResources(resources)
+    setSelectedResourceId(newSelectedResourceId)
+    if (setSelectedResources) {
+      setSelectedResources(resources.filter((resource) => newSelectedResourceId.includes(resource.id)));
+    }
   }
 
   const tokenFetcher = async () => {
@@ -580,9 +584,8 @@ const MyFiles: React.FC<filesInterface> = ({
     <section className='bg-white grow flex flex-col h-full'>
       <ToastContainer enableMultiContainer containerId={'fileManagement'} />
       <div
-        className={`max-w-7xl w-full mx-auto px-4 ${
-          !selectable ? 'pt-16 md:pt-32' : ''
-        } flex flex-wrap justify-around`}
+        className={`max-w-7xl w-full mx-auto px-4 ${!selectable ? 'pt-16 md:pt-32' : ''
+          } flex flex-wrap justify-around`}
       >
         {/* {!selectable ? (
           <div className='pt-4 grow pr-4'>
@@ -650,7 +653,7 @@ const MyFiles: React.FC<filesInterface> = ({
               open={false}
               chunkSize={1500}
               overlapSize={20}
-              // entryPoint="LOCAL_FILES"
+            // entryPoint="LOCAL_FILES"
             >
               <div className='max-w-sm flex flex-col items-center z-[50]'>
                 <button
@@ -674,7 +677,7 @@ const MyFiles: React.FC<filesInterface> = ({
             userfiles={resources}
             deleteCallback={handleFileDeleted}
             clickCallback={handleClick}
-            selectedResources={selectedResources}
+            selectedResources={selectedResourceId || []}
           />
         )}
         {resources.length === 0 && (
@@ -692,8 +695,6 @@ const MyFiles: React.FC<filesInterface> = ({
 export default MyFiles
 
 const getIcon = (filename: string) => {
-  const ext = filename.split('.').pop()?.toLowerCase()
-
   const pdfIcon = (
     <svg
       className='w-8'
@@ -844,17 +845,25 @@ const getIcon = (filename: string) => {
   const regex2 = /youtu\.be\/[A-Za-z0-9_-]{11}/
   const regex3 = /youtube\.com\/v\/[a-zA-z0-9_-]{11}/
 
-  if (regex1.test(filename) || regex2.test(filename) || regex3.test(filename)) {
-    return videoIcon
+  try {
+    const ext = filename.split('.').pop()?.toLowerCase()
+
+    if (regex1.test(filename) || regex2.test(filename) || regex3.test(filename)) {
+      return videoIcon
+    }
+    if (ext === 'docx') {
+      return docxIcon
+    }
+    if (ext === 'pdf') {
+      return pdfIcon
+    }
+    if (ext && ['jpg', 'jpeg', 'png', 'gif'].includes(ext)) {
+      return imageIcon
+    }
+    return fileIcon
   }
-  if (ext === 'docx') {
-    return docxIcon
+  catch (error) {
+    console.error(error)
+    return fileIcon
   }
-  if (ext === 'pdf') {
-    return pdfIcon
-  }
-  if (ext && ['jpg', 'jpeg', 'png', 'gif'].includes(ext)) {
-    return imageIcon
-  }
-  return fileIcon
 }
