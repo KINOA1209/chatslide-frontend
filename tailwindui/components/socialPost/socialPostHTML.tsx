@@ -456,19 +456,27 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
         }
         return updateImgUrl
     }
+
+    const updateIllustrationUrlArray = (slideIndex: number) => {
+        const updateIllustrationUrl = (urls: string[]) => {
+          handleSlideEdit(urls, slideIndex, 'illustration')
+        }
+        return updateIllustrationUrl
+    }
+
     const editableTemplateDispatch = (
         slide: SocialPostSlide, 
         index: number, 
         canEdit: boolean
     ) => {
         if (res_scenario === 'serious_subject'){
-            return templateDispatch2(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode,handleSlideEdit,updateImgUrlArray,toggleEditMode)
+            return templateDispatch2(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode,handleSlideEdit,updateImgUrlArray, updateIllustrationUrlArray, toggleEditMode)
         }
         else if (res_scenario === 'reading_notes'){
-            return templateDispatch3(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode,handleSlideEdit,updateImgUrlArray,toggleEditMode)
+            return templateDispatch3(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode,handleSlideEdit,updateImgUrlArray, updateIllustrationUrlArray, toggleEditMode)
         }
         else{
-            return templateDispatch(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode,handleSlideEdit,updateImgUrlArray,toggleEditMode)
+            return templateDispatch(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode,handleSlideEdit,updateImgUrlArray, updateIllustrationUrlArray, toggleEditMode)
         }
     }
         

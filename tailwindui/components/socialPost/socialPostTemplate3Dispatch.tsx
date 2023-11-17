@@ -17,6 +17,7 @@ export const templateDispatch = (
     setIsEditMode: (isEditMode: boolean) => void = () => {},  // Replace with your default function if you have one
     handleSlideEdit: (content: string | string[], index: number, tag: SlideKeys) => void = () => {},  // Replace with your default function if you have one
     updateImgUrlArray: (slideIndex: number) => (urls: string[]) => void = () => () => {},  // Replace with your default function if you have one
+    updateIllustrationUrlArray: (slideIndex: number) => (urls: string[]) => void = () => () => {},
     toggleEditMathMode: () => void = () => {},  // Replace with your default function if you have one
 ): JSX.Element => {
     let keyPrefix = ''
@@ -30,7 +31,7 @@ export const templateDispatch = (
         return <Template
             autoSave={saveSlides}
             key={keyPrefix + index.toString()}
-            update_callback={updateImgUrlArray(index)}
+            update_callback={updateIllustrationUrlArray(index)}
             canEdit={canEdit}
             imgs={slide.images}
             icon={<CompanyIconWhite />}
@@ -66,7 +67,7 @@ export const templateDispatch = (
             canEdit={canEdit}
             key={keyPrefix + index.toString()}
             imgs={[]}
-            update_callback={updateImgUrlArray(index)}
+            update_callback={updateIllustrationUrlArray(index)}
             icon={<CompanyIconBlack />}
             illustration={(slide.illustration) as string[]}
             
