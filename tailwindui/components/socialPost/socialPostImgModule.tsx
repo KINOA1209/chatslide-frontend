@@ -60,8 +60,9 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
         setSearchResult([]);
         setSearching(true);
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-
-        const response = await fetch(`/api/search_illustration_images?keyword=${encodeURIComponent(keyword)}`, {
+        const dummyParam = `dummy=${Math.random()}`;
+        const response = await fetch(`/api/search_illustration_images?keyword=${encodeURIComponent(keyword)}&${dummyParam}`, {
+            //mode: 'cors',
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -73,7 +74,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
                 const parsedResponse = await response.json()
                 setSearchResult(parsedResponse.data.images);
             } catch (error) {
-                console.error(e);
+                console.error(error);
             }
         } else {
             const error = response.status
