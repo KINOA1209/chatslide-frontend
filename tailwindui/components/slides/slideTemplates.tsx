@@ -348,7 +348,7 @@ export const Stanford_school_template = ({
         }`}
       >
         <div className='h-auto '>
-          <div className='h-full flex items-center justify-center text-red-800 text-5xl font-bold leading-[110%] whitespace-nowrap'>
+          <div className="h-full flex items-center justify-center text-red-800 text-5xl font-['Nimbus-Sans'] font-bold leading-[110%] whitespace-nowrap">
             {topic}
           </div>
         </div>
