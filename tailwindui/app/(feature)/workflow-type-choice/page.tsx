@@ -1,15 +1,19 @@
 'use client'
 
 import React from 'react'
+import { useState, useEffect } from 'react'
 import {
   PresentationTypeIcon,
   SocialPostTypeIcon,
 } from '@/app/(feature)/workflow-type-choice/icons'
 import { useRouter } from 'next/navigation'
+import AuthService from '@/components/utils/AuthService'
+
 const TypeChoicePage = () => {
   const router = useRouter() // Initialize the router
   // Function to navigate to the "workflow-scenario-choice" page
   // Specify the route you want to navigate to
+  const [username, setUsername] = useState(null)
   const navigateToScenarioChoice = (workflowType:string) => {
     if (workflowType === 'presentation'){
       router.push('/workflow-generate-outlines')
@@ -17,12 +21,26 @@ const TypeChoicePage = () => {
       router.push('/workflow-scenario-choice') 
     }
   }
+
+  useEffect(() => {
+    const fetchUser = async () => {
+        try {
+          const username = await AuthService.getCurrentUserDisplayName();
+            setUsername(username);
+        } catch (error) {
+            console.log('No authenticated user.');
+        }
+    };
+
+    fetchUser(); 
+}, []);
+
   return (
     <div className='bg-zinc-100 min-h-screen'>
       <div className='flex flex-col justify-center items-center gap-4 sm:gap-12 p-4 sm:p-8'>
         {/* title */}
         <div className='w-full mt-[12rem] max-w-screen-lg text-center text-neutral-800 text-lg sm:text-2xl font-normal font-creato-medium leading-7 sm:leading-9 tracking-wide'>
-          Hey, polumage! <br />
+          Hey, {username}! <br />
           What are you planning to create today?
         </div>
         {/* two types choices */}
