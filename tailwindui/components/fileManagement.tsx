@@ -378,12 +378,24 @@ const MyFiles: React.FC<filesInterface> = ({
         handleClick(data.data.file_id)
       }
       else {
-        throw Error(`${response.text}`)
+        response.json().then((data) => {
+          toast.error(data.message, {
+            position: 'top-center',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+            containerId: 'fileManagement',
+          })
+        })
       }
     } catch (error) {
       console.error(error)
       if (error instanceof Error) {
-        toast.error(`File upload failed ${error.message}`, {
+        toast.error(`File upload failed.`, {
           position: 'top-center',
           autoClose: 5000,
           hideProgressBar: false,
