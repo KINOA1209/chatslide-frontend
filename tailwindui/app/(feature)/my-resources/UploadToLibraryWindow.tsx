@@ -262,6 +262,7 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
       }
       else {
         setUploadedResources([...uploadedResources, file])
+        setUploadedResourcesClicked([...uploadedResourcesClicked, true])
       }
     }
   }
