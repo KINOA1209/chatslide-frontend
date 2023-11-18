@@ -83,7 +83,7 @@ const ProjectTable: React.FC<Props> = ({
 }) => {
 
   return (
-    <div className="w-full md:w-2/3 mx-auto">
+    <div className="w-full mx-auto">
       <div
         className='grid bg-[#ECF1FE] border border-gray-200 grid-cols-3 md:grid-cols-5'
       >
