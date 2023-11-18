@@ -258,9 +258,9 @@ export default function Dashboard() {
       {/* top background container of my projects title text and button */}
       <div className='mt-[3rem] flex items-end w-full z-10 pt-[4rem] border-b-2 px-[5rem]'>
         {/* flex container controlling max width */}
-        <div className='w-full max-w-7xl flex flex-wrap items-end justify-between md:justify-center'>
+        <div className='w-full max-w-7xl flex flex-wrap items-end justify-center'>
           {/* my project title text */}
-          <div className='text-neutral-900 text-base font-bold font-creato-medium leading-10 tracking-wide border-black border-b-2'>
+          <div className='absolute right-[50%] text-neutral-900 text-base font-bold font-creato-medium leading-10 tracking-wide border-black border-b-2'>
             My Projects
           </div>
 

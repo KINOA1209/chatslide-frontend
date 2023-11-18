@@ -32,13 +32,15 @@ interface UserFileList {
 // Define a new component for the table header
 const FileTableHeader = () => (
   <div
-    className='grid grid-cols-3 bg-[#ECF1FE] border border-gray-200'
-    style={{ gridTemplateColumns: '2fr 1fr' }}
+    className='grid bg-[#ECF1FE] border border-gray-200 grid-cols-2 md:grid-cols-3'
   >
-    <div className='px-[2.5rem] py-[1rem] text-start w-[37px] text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
-      File
+    {/* <div className='hidden md:flex w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+          Type
+        </div> */}
+    <div className='col-span-2 flex w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+      Title
     </div>
-    <div className='px-[2.5rem] py-[1rem] text-start w-[37px] text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide hidden sm:block'>
+    <div className='hidden md:flex w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
       Date
     </div>
   </div>
