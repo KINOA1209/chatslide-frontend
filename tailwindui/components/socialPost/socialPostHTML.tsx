@@ -91,12 +91,16 @@ type SlidesHTMLProps = {
     finalSlides: SocialPostSlide[]
     setFinalSlides: Function
     isViewing?: boolean // viewing another's shared project
+    finalSlideIndex: number
+    setFinalSlideIndex: Function
 }
 
 const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
     finalSlides,
     setFinalSlides,
     isViewing = false,
+    finalSlideIndex,
+    setFinalSlideIndex,
 }) => {
     const [slides, setSlides] = useState<SocialPostSlide[]>([])
     const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0)
@@ -410,6 +414,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
         console.log('Goinng to slide', index)
         isFirstRender.current = true
         setCurrentSlideIndex(index)
+        setFinalSlideIndex(index)
     }
 
 
@@ -444,6 +449,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 
             if (currentSlideIndex >= newSlides.length) {
                 setCurrentSlideIndex(newSlides.length - 1)
+                setFinalSlideIndex(newSlides.length - 1)
             }
         }
         setSlides(newSlides)
@@ -590,8 +596,10 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                             <div
                                 key={`previewContainer` + index.toString()}
                                 className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
-                                onClick={() => setCurrentSlideIndex(index)} // Added onClick handler
-                            >
+                                onClick={() => {
+                                    setCurrentSlideIndex(index) // Added onClick handler
+                                    setFinalSlideIndex(index)
+                                }}>
                                 {/* {index + 1} */}
                                 <SocialPostContainer
                                     slides={slides}

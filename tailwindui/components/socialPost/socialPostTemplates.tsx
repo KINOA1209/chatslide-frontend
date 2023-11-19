@@ -63,23 +63,25 @@ export const First_page_img_1 = ({ subtopic, keywords, imgs, update_callback, au
 
     return (
         <div
-            className="overflow-hidden gap-[32px]"
+            className="overflow-hidden gap-[32px] flex justify-center items-center"
             style={{
                 width: '100%',
                 height: '100%',
-                backgroundSize: 'cover',
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
-                boxSizing: 'border-box',
+                // backgroundSize: '100% 100%',
+                // display: 'flex',
+                // flexDirection: 'row',
+                // justifyContent: 'flex-start',
+                // alignItems: 'flex-start',
+                // boxSizing: 'border-box',
+                // position: 'relative',
+                background: 'linear-gradient(180deg, #FB40FF, #886DFE)',
                 border: 'none',
-                position: 'relative',
-                backgroundColor: 'white',
+                //borderImage: 'linear-gradient(180deg, #FB40FF, #886DFE)',
+                //borderImageSlice: '1',
             }}>
             <div 
-                id="container_cover_gradient" 
-                className="w-full h-full flex flex-col justify-between"
+                //id="container_cover_gradient" 
+                className="w-[95%] h-[96%] flex flex-col justify-between"
                 style={{
                     backgroundImage: `linear-gradient(180deg, #E54BFF 0%, rgba(217, 217, 217, 0.00) 40%), url(${localImgs[0]})`,
                     backgroundSize: 'cover',
@@ -87,13 +89,13 @@ export const First_page_img_1 = ({ subtopic, keywords, imgs, update_callback, au
             >
                 <div className="mt-[10%] px-[4%] text-center">{subtopic}</div>
                 <div
-                className="mb-[6%] mx-[auto] text-center"
-                style={{
-                    border: '3px solid #FFF',
-                    borderRadius: '5px',
-                    background: 'rgba(0, 0, 0, 0.4)',
-                    backdropFilter: 'blur(24px)',
-                }}
+                    className="mb-[6%] mx-[auto] text-center"
+                    style={{
+                        border: '3px solid #FFF',
+                        borderRadius: '5px',
+                        background: 'rgba(0, 0, 0, 0.4)',
+                        backdropFilter: 'blur(24px)',
+                     }}
                 >
                     {keywords}
                 </div>
