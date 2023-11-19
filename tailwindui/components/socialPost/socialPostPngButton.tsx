@@ -12,22 +12,18 @@ import generatePDF, { Resolution, Margin, Options } from 'react-to-pdf'
 import { templateDispatch as defaultTemplateDispatch } from '@/components/socialPost/socialPostTemplateDispatch';
 import { templateDispatch as defaultTemplateDispatch2 } from '@/components/socialPost//socialPostTemplate2Dispatch';
 import { templateDispatch as defaultTemplateDispatch3 } from '@/components/socialPost/socialPostTemplate3Dispatch';
-
-type SlidesHTMLProps = {
-  finalSlides: SocialPostSlide[]
-  setFinalSlides: React.Dispatch<React.SetStateAction<SocialPostSlide[]>>
-}
+import html2canvas from 'html2canvas'
 
 interface ExportToPdfProps {
   finalSlides: SocialPostSlide[]
+  currentSlideIndex: number
   //setFinalSlides: React.Dispatch<React.SetStateAction<Slide[]>>;
 }
-
-const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
+const ExportToPngButton: React.FC<ExportToPdfProps> = ({ finalSlides, currentSlideIndex }) => {
   const topic =
     typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('topic') : ''
 
-  const res_scenario =
+const res_scenario =
     typeof sessionStorage !== 'undefined'
     ? sessionStorage.getItem('selectedScenario')
     : ''
@@ -35,8 +31,8 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
   const [downloadingPDF, setDownloadingPDF] = useState(false)
   const [showPaymentModal, setShowPaymentModal] = useState(false)
   const exportSlidesRef = useRef<HTMLDivElement>(null)
+  const [slideRef, setSlideRef] = useState(React.createRef<HTMLDivElement>());
   let pdfIsBeingGenerated = false
-
   const exportOptions: Options = {
     filename: (topic ? topic : 'drlambda') + '.pdf',
     method: 'save',
@@ -53,7 +49,6 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
     overrides: {
       pdf: {
         compress: true,
-        precision: 2,
       },
       canvas: {
         useCORS: true,
@@ -73,36 +68,23 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
     fetchUser()
   }, [])
 
-  function exportToPdf() {
-    generatePDF(exportSlidesRef, exportOptions)
-  }
-
-  const handleSavePDF = async () => {
-    setDownloadingPDF(true)
-    const element = document.getElementById('pdf-content')
-
+  async function exportToPNG(ref: React.RefObject<HTMLDivElement>): Promise<void> {
     try {
-      const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
-
-      const response = await fetch('/api/save_final_html_pdf', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${idToken}`,
-          'Content-Type': 'application/json',
-        },
-      })
-
-      if (response.ok) {
-        exportToPdf()
-      } else if (response.status === 402) {
-        setShowPaymentModal(true)
-      } else {
-        console.error('Failed to save PDF.')
+        if (ref.current) {
+          const canvas = await html2canvas(ref.current);
+          const dataURL = canvas.toDataURL('image/png');
+          console.log(canvas)
+          const link = document.createElement('a');
+          link.href = dataURL;
+          link.download = 'current_slide.png';
+          link.click();
+        } 
+        else {
+          console.error('Ref not found');
+        }
+      } catch (error) {
+        console.error('An error occurred:', error);
       }
-    } catch (error) {
-      console.error('An error occurred:', error)
-    }
-    setDownloadingPDF(false)
   }
 
   function selectTemplateDispatch() {
@@ -118,6 +100,32 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
     }
   }
 
+  const handleSaveImage = async () => {
+    setDownloadingPDF(true)
+
+    try {
+      const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
+      const response = await fetch('/api/save_final_html_pdf', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
+
+      if (response.ok) {
+        exportToPNG(slideRef)
+      } else if (response.status === 402) {
+        setShowPaymentModal(true)
+      } else {
+        console.error('Failed to save PDF.')
+      }
+    } catch (error) {
+      console.error('An error occurred:', error)
+    }
+    setDownloadingPDF(false)
+  }
+
   return (
     <div className='flex flex-wrap flex-grow-0'>
       <div className='px-3'>
@@ -131,10 +139,10 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
         
         <div
             className='h-8 px-3 py-1 bg-zinc-100 rounded-lg justify-center items-center gap-2.5 cursor-pointer hidden sm:flex'
-            onClick={handleSavePDF}
+            onClick={handleSaveImage}
         >
             <div className='text-center text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide'>
-                Export to PDF (10⭐️)
+                Export to PNG (Current Page)
             </div>
             <div className='w-4 h-4 relative' hidden={downloadingPDF}>
                 <DownloadIcon />
@@ -148,21 +156,20 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
       {/* hidden div for export to pdf */}
       <div style={{ display: downloadingPDF ? 'block' : 'none', zIndex: -1 }}>
         <div ref={exportSlidesRef}>
-          {/* Render all of your slides here. This can be a map of your slides array */}
-          {finalSlides.map((slide, index) => (
-            <div key={`exportToPdfContainer` + index.toString()} style={{ pageBreakAfter: 'always' }}>
+            <div key={`exportToPdfContainer` + currentSlideIndex.toString()}>
               <SocialPostContainer
                 slides={finalSlides}
-                currentSlideIndex={index}
+                currentSlideIndex={currentSlideIndex}
                 exportToPdfMode={true}
                 templateDispatch={selectTemplateDispatch()}
+                slideRef={slideRef}
+                onSlideRefUpdate={setSlideRef}
               />
             </div>
-          ))}
         </div>
       </div>
     </div>
   )
 }
 
-export default ExportToPdfButton
+export default ExportToPngButton

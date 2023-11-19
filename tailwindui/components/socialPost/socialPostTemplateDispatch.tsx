@@ -47,7 +47,7 @@ export const templateDispatch = (
             subtopic={
                 <div
                     key={0}
-                    className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                    className={`${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                     contentEditable={canEdit}
                     onFocus={() => {
                         if (canEdit) {
@@ -64,7 +64,7 @@ export const templateDispatch = (
                     key={1}
                     //className={`rounded-md outline-2 px-[4px] ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                     contentEditable={false}
-                    className={`rounded-md outline-2 px-[4px] py-[2%] ${!exportToPdfMode && 'overflow-hidden'}`}
+                    className={`px-[4px] py-[2%] ${!exportToPdfMode && 'overflow-hidden'}`}
                     // onFocus={() => {
                     //     if (canEdit) {
                     //         setIsEditMode(true);
@@ -99,7 +99,7 @@ export const templateDispatch = (
             subtopic={
                 <div
                     key={0}
-                    className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                    className={`${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                     contentEditable={canEdit}
                     onFocus={() => {
                         if (canEdit) {
@@ -114,7 +114,7 @@ export const templateDispatch = (
             keywords={
                 <div
                     key={1}
-                    className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                    className={`${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                     contentEditable={canEdit}
                     onFocus={() => {
                         if (canEdit) {
@@ -134,7 +134,7 @@ export const templateDispatch = (
                             return (
                                 <div
                                     key={keyPrefix + index.toString() + '_' + contentIndex.toString()}
-                                    className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                                    className={`${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                                     contentEditable={canEdit}
                                     style={listStyle}
                                     onFocus={() => {
@@ -157,7 +157,7 @@ export const templateDispatch = (
                                 <MathJaxContext key={keyPrefix + index.toString() + '_' + contentIndex.toString()}>
                                     <MathJax>
                                         <div onClick={toggleEditMathMode}
-                                            className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                                            className={`${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                                             style={listStyle}>
                                             {content}
                                         </div>
@@ -170,7 +170,7 @@ export const templateDispatch = (
                         <>
                         <div
                             key={keyPrefix + index.toString() + '_' + contentIndex.toString()}
-                            className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                            className={`${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                             contentEditable={canEdit}
                             style={listStyle}
                             onFocus={() => {
