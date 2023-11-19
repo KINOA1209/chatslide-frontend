@@ -67,10 +67,16 @@ const TypeChoicePage = () => {
             <div className='w-[7.5rem] h-[6.75rem]'>
               <SocialPostTypeIcon />
             </div>
-            <div className='text-center text-neutral-800 text-2xl font-bold font-creato-medium leading-snug tracking-wide'>
-              Social Post
+            <div className='flex flex-row items-end text-center text-neutral-800 text-2xl font-bold font-creato-medium leading-snug tracking-wide'>
+              <div className='text-center text-neutral-800 text-2xl font-bold font-creato-medium leading-snug tracking-wide'>
+                Social Post
+              </div>
+              <div className='text-center text-neutral-800 text-xs font-bold font-creato-medium leading-snug tracking-wide bg-gray-200 rounded px-1 py-0.5 ml-2'>
+                Beta
+              </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
