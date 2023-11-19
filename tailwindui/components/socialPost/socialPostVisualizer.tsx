@@ -53,7 +53,7 @@ const SocialPostVisualizer = () => {
                 {/* want some more script Form submission */}
                 {(res_scenario === 'serious_subject' || res_scenario === 'reading_notes') && <ExportToPdfButton finalSlides={finalSlides} />}
                 {/* <ExportToPngButton finalSlides={finalSlides} currentSlideIndex={finalSlideIndex}/> */}
-                <ShareToggleButton setShare={setShare} share={share} />
+                {/* <ShareToggleButton setShare={setShare} share={share} /> */}
                 </div>
                 <SocialPostHTML 
                     finalSlides={finalSlides} 
