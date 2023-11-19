@@ -262,6 +262,7 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
       }
       else {
         setUploadedResources([...uploadedResources, file])
+        setUploadedResourcesClicked([...uploadedResourcesClicked, true])
       }
     }
   }
@@ -295,7 +296,19 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
           return response.json()
         }
         else {
-          throw Error(`${response.text}`)
+          response.json().then((data) => {
+            toast.error(data.message, {
+              position: 'top-center',
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'light',
+              containerId: 'fileManagement',
+            })
+          })
         }
       })
       .then(parsedResponse => {
@@ -324,7 +337,7 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
         fetchFiles(idToken);
         onFilesUploaded();
         console.error(error);
-        toast.error(`Some file uploads failed ${error.message}`, {
+        toast.error(error, {
           position: 'top-center',
           autoClose: 5000,
           hideProgressBar: false,
