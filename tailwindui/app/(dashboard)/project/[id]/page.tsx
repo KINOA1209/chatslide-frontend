@@ -229,13 +229,13 @@ const ProjectLoading = () => {
     ];
     const socialPostFinishedSteps: () => number[] = () => {
         const finishedStepsArray: number[] = [];
-        if (typeof window !== 'undefined' && sessionStorage.getItem('post_type')) {
+        if (typeof window !== 'undefined' && sessionStorage.getItem('selectedScenario')) {
             finishedStepsArray.push(0);
         }
         if (typeof window !== 'undefined' && sessionStorage.getItem('topic')) {
             finishedStepsArray.push(1);
         }
-        if (typeof window !== 'undefined' && sessionStorage.getItem('social_posts')) {
+        if (typeof window !== 'undefined' && sessionStorage.getItem('socialPost')) {
             finishedStepsArray.push(2);
         }
         return finishedStepsArray;
