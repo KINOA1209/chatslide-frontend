@@ -653,8 +653,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                 <SlideContainer
                   slides={slides}
                   currentSlideIndex={index}
-                  scale={0.1}
+                  scale={0.12}
                   isViewing={true}
+                  highlightBorder={currentSlideIndex === index}
                 />
               </div>
             ))}
@@ -675,8 +676,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                 <SlideContainer
                   slides={slides}
                   currentSlideIndex={index}
-                  scale={0.1}
+                  scale={0.12}
                   isViewing={true}
+                  highlightBorder={currentSlideIndex === index}
                 />
               </div>
             ))}
