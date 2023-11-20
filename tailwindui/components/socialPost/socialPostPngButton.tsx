@@ -13,6 +13,7 @@ import { templateDispatch as defaultTemplateDispatch } from '@/components/social
 import { templateDispatch as defaultTemplateDispatch2 } from '@/components/socialPost//socialPostTemplate2Dispatch';
 import { templateDispatch as defaultTemplateDispatch3 } from '@/components/socialPost/socialPostTemplate3Dispatch';
 import html2canvas from 'html2canvas'
+import { toPng } from 'html-to-image';
 
 interface ExportToPdfProps {
   finalSlides: SocialPostSlide[]
@@ -33,28 +34,6 @@ const res_scenario =
   const exportSlidesRef = useRef<HTMLDivElement>(null)
   const [slideRef, setSlideRef] = useState(React.createRef<HTMLDivElement>());
   let pdfIsBeingGenerated = false
-  const exportOptions: Options = {
-    filename: (topic ? topic : 'drlambda') + '.pdf',
-    method: 'save',
-    resolution: Resolution.MEDIUM,
-    page: {
-      margin: Margin.NONE,
-      format: [119.0625, 158.75], // 450x600 px in mm
-      orientation: 'portrait',
-    },
-    canvas: {
-      mimeType: 'image/jpeg',
-      qualityRatio: 1,
-    },
-    overrides: {
-      pdf: {
-        compress: true,
-      },
-      canvas: {
-        useCORS: true,
-      },
-    },
-  }
 
   useEffect(() => {
     // Create a scoped async function within the hook.
@@ -68,24 +47,34 @@ const res_scenario =
     fetchUser()
   }, [])
 
-  async function exportToPNG(ref: React.RefObject<HTMLDivElement>): Promise<void> {
-    try {
-        if (ref.current) {
-          const canvas = await html2canvas(ref.current);
-          const dataURL = canvas.toDataURL('image/png');
-          console.log(canvas)
-          const link = document.createElement('a');
-          link.href = dataURL;
-          link.download = 'current_slide.png';
-          link.click();
-        } 
-        else {
-          console.error('Ref not found');
+  const areAllImagesLoaded = (container: HTMLElement) => {
+    const images = container.getElementsByTagName('img');
+    for (let i = 0; i < images.length; i++) {
+        if (!images[i].complete || images[i].naturalWidth === 0) {
+            return false;
         }
-      } catch (error) {
-        console.error('An error occurred:', error);
-      }
-  }
+    }
+    return true;
+};
+
+  const downloadImage = async (ref: React.RefObject<HTMLDivElement>): Promise<void> => {
+    if (ref.current && areAllImagesLoaded(ref.current)) {
+        try {
+            const dataUrl = await toPng(ref.current);
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = (topic ? topic : 'drlambda') + '.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } catch (error) {
+            console.error('Error capturing image:', error);
+        }
+    }
+    else{
+        console.log('Waiting for images to load')
+    }
+};
 
   function selectTemplateDispatch() {
     switch (res_scenario) {
@@ -114,7 +103,7 @@ const res_scenario =
       })
 
       if (response.ok) {
-        exportToPNG(slideRef)
+        downloadImage(slideRef)
       } else if (response.status === 402) {
         setShowPaymentModal(true)
       } else {
