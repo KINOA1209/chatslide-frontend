@@ -20,6 +20,7 @@ import { DeleteIcon, QuestionExplainIcon, RightTurnArrowIcon } from '@/app/(feat
 import { FaFilePdf, FaYoutube } from 'react-icons/fa'
 import YoutubeService from '@/components/utils/YoutubeService'
 import { SmallBlueButton } from '@/components/button/DrlambdaButton'
+import WebService from '@/components/utils/WebpageService';
 
 const audienceList = [
   'Researchers',
@@ -52,8 +53,9 @@ export default function Topic_SocialPost() {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showFileModal, setShowFileModal] = useState(false)
-  const [youtubeUrl, setYoutubeUrl] = useState('' as string)
-  const [youtubeError, setYoutubeError] = useState('')
+  const [linkUrl, setLinkUrl] = useState('' as string)
+  const [linkError, setLinkError] = useState('')
+  const [urlIsYoutube, setUrlIsYoutube] = useState(false)
   const [isGpt35, setIsGpt35] = useState(true)
   const [showPaymentModal, setShowPaymentModal] = useState(false)
   const [topicSuggestions, setTopicSuggestions] = useState<string[]>([
@@ -68,7 +70,7 @@ export default function Topic_SocialPost() {
   const [selectedFileList, setselectedFileList] = useState([])
   const [selectedFileListName, setselectedFileListName] = useState<string[]>([])
   const [isPaidUser, setIsPaidUser] = useState(false)
-  const [isAddingYoutube, setIsAddingYoutube] = useState(false)
+  const [isAddingLink, setIsAddingLink] = useState(false)
 
   // bind form data between input and sessionStorage
   const [topic, setTopic] = useState(
@@ -174,8 +176,9 @@ export default function Topic_SocialPost() {
   }
 
   const handleSubmit = async () => {
-    if (youtubeError) {
-      return
+    console.log('submitting')
+    if (linkError) {
+      console.log(linkError) // continue without the valid link
     }
 
     const project_id =
@@ -286,23 +289,32 @@ export default function Topic_SocialPost() {
   }
 
 
-  async function addYoutubeLink(link: string) {
+  async function addLink(link: string) {
     if (!link) {
-      setYoutubeError('Please enter a YouTube link.');
+      setLinkError('Please enter a valid link.');
       return;
     }
     if (!isPaidUser && selectedResources.length >= 1) {
-      setYoutubeError('Free users can only add one resource.');
+      setLinkError('Free users can only add one resource.');
       return;
     }
-    setIsAddingYoutube(true);
+    setLinkError('');
+    setIsAddingLink(true);
+    if (urlIsYoutube) {
+      addYoutubeLink(link)
+    } else {
+      addWebpageLink(link)
+    }
+  }
+
+  async function addYoutubeLink(link: string) {
     try {
       const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
       const videoDetails = await YoutubeService.getYoutubeInfo(link, idToken);
 
       if (!videoDetails?.id) {
-        setYoutubeError('The Youtube link is invalid.');
-        setIsAddingYoutube(false);
+        setLinkError('The Youtube link is invalid.');
+        setIsAddingLink(false);
         return;
       }
 
@@ -318,9 +330,37 @@ export default function Topic_SocialPost() {
       setSelectedResourceId(prevList => [...prevList, newFile.id]);
     } catch (error: any) {
       console.error("Error fetching YouTube video details: ", error);
-      setYoutubeError("Error fetching YouTube video details");
+      setLinkError("Error fetching YouTube video details");
     }
-    setIsAddingYoutube(false);
+    setIsAddingLink(false)
+  }
+
+  async function addWebpageLink(link: string) {
+    try {
+      const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+      const pageDetails = await WebService.getWebpageInfo(link, idToken);
+
+      if (!pageDetails?.id) {
+        setLinkError('The webpage link is invalid.');
+        setIsAddingLink(false)
+        return;
+      }
+
+      const newFile = {
+        id: pageDetails.id,
+        uid: '',
+        title: pageDetails.title,
+        thumbnail_url: pageDetails.thumbnail,
+        timestamp: new Date().toISOString()
+      };
+
+      setSelectedResources(prevList => [...prevList, newFile]);
+      setSelectedResourceId(prevList => [...prevList, newFile.id]);
+    } catch (error: any) {
+      console.error("Error fetching webpage details: ", error);
+      setLinkError("Error fetching webpage details");
+    }
+    setIsAddingLink(false)
   }
 
   // Show/hide audience input based on `audience` value
@@ -334,7 +374,7 @@ export default function Topic_SocialPost() {
     }
   }, [audience])
 
-  const handleYoutubeChange = (link: string) => {
+  const handleLinkChange = (link: string) => {
     // url format: https://gist.github.com/rodrigoborgesdeoliveira/987683cfbfcc8d800192da1e73adc486
     // search params will be ignored
     // sample: https://www.youtube.com/watch?v=Ir3eJ1t13fk
@@ -342,27 +382,29 @@ export default function Topic_SocialPost() {
     // sample: https://www.youtube.com/v/-wtIMTCHWuI?app=desktop
 
     if (link === '') {
-      setYoutubeUrl('')
-      setYoutubeError('')
+      setLinkUrl('')
+      setLinkError('')
       return
     }
-    setYoutubeUrl(link)
-    setYoutubeError('')
-    // validate url
+    setLinkUrl(link)
+    setLinkError('')
+    // validate url against youtube 
     const regex1 = /youtube\.com\/watch\?v=[a-zA-z0-9_-]{11}/
     const regex2 = /youtu\.be\/[A-Za-z0-9_-]{11}/
     const regex3 = /youtube\.com\/v\/[a-zA-z0-9_-]{11}/
     if (regex1.test(link)) {
       const essentialLink = link.match(regex1)
       if (essentialLink && essentialLink.length > 0) {
-        setYoutubeUrl('https://www.' + essentialLink[0])
+        setLinkUrl('https://www.' + essentialLink[0])
+        setUrlIsYoutube(true)
       }
     } else if (regex2.test(link)) {
       const essentialLink = link.match(regex2)
       if (essentialLink && essentialLink.length > 0) {
         const vID = essentialLink[0].match(/[A-Za-z0-9_-]{11}/)
         if (vID && vID.length > 0) {
-          setYoutubeUrl('https://www.youtube.com/watch?v=' + vID[0])
+          setLinkUrl('https://www.youtube.com/watch?v=' + vID[0])
+          setUrlIsYoutube(true)
         }
       }
     } else if (regex3.test(link)) {
@@ -370,11 +412,13 @@ export default function Topic_SocialPost() {
       if (essentialLink && essentialLink.length > 0) {
         const vID = essentialLink[0].match(/[A-Za-z0-9_-]{11}/)
         if (vID && vID.length > 0) {
-          setYoutubeUrl('https://www.youtube.com/watch?v=' + vID[0])
+          setLinkUrl('https://www.youtube.com/watch?v=' + vID[0])
+          setUrlIsYoutube(true)
         }
       }
     } else {
-      setYoutubeError('Please use a valid YouTube video link')
+      // url is not youtube, assuming it is a web link
+      setUrlIsYoutube(false)
     }
   }
 
@@ -634,30 +678,30 @@ export default function Topic_SocialPost() {
                 </div>
               </div>
 
-              <div className='youtube_container bg-gray-100 border border-2 border-gray-200'>
+              <div className='link_container bg-gray-100 border border-2 border-gray-200'>
                 <div
-                  id='youtube_text_container'
+                  id='link_text_container'
                   className='flex items-center w-full'
                 >
                   <FaYoutube />
                   <div className='w-full'>
-                    <label htmlFor='youtube_text'></label>
+                    <label htmlFor='link_text'></label>
                     <input
-                      id='youtube'
+                      id='link'
                       type='text'
                       className='form-input w-full border-none bg-gray-100'
-                      value={youtubeUrl}
-                      onChange={(e) => handleYoutubeChange(e.target.value)}
-                      placeholder='Paste YouTube link here'
+                      value={linkUrl}
+                      onChange={(e) => handleLinkChange(e.target.value)}
+                      placeholder='Paste YouTube or webpage link here'
                     />
                   </div>
-                  <SmallBlueButton onClick={e => { addYoutubeLink(youtubeUrl) }} isSubmitting={isAddingYoutube}>
-                    {isAddingYoutube ? 'Adding...' : 'Add'}
+                  <SmallBlueButton onClick={e => { addLink(linkUrl) }} isSubmitting={isAddingLink}>
+                    {isAddingLink ? 'Adding...' : 'Add'}
                   </SmallBlueButton>
                 </div>
 
-                {youtubeError && (
-                  <div id='youtube_error' className='text-sm text-red-500'>{youtubeError}</div>
+                {linkError && (
+                  <div id='link_error' className='text-sm text-red-500'>{linkError}</div>
                 )}
               </div>
 
