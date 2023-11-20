@@ -550,7 +550,7 @@ export default function Topic() {
                   {showProjectPopup && (
                     <div
                       id='project_popup'
-                      className='absolute z-10 p-2 bg-gray-800 text-white text-sm rounded shadow-md w-[15rem] h-[5rem] md:w-80 md:h-[4rem] flex justify-center items-center'
+                      className='absolute z-10 p-2 bg-gray-800 text-white text-sm rounded shadow-md w-[15rem] h-[6rem] md:w-80 md:h-[4rem] flex justify-center items-center'
                     >
                       The main subject or theme of your project. It will set
                       the direction and focus of the contents.
@@ -715,7 +715,7 @@ export default function Topic() {
 
           <div className='additional_container my-2 lg:my-5  border border-2 border-gray-200'>
             <div className='upload gap-1'>
-              <span>Upload Files</span>
+              <span>Add Resources</span>
               <div className='relative inline-block'>
                 <div
                   className='cursor-pointer'
@@ -785,14 +785,14 @@ export default function Topic() {
                   <li key={index}>
                     <div
                       id='selectedfile_each'
-                      className='flex items-center bg-white rounded h-[50px] px-[1rem] justify-between'
+                      className='flex items-center bg-white rounded min-h-[50px] px-[1rem] justify-between'
                     >
                       <div className='flex items-center gap-2'>
                       {resource.thumbnail_url ?
                         <img src={resource.thumbnail_url} className='w-[40px]' /> :
                         <FaFilePdf className='w-[40px]' />
                       }
-                      <span>{resource.title}</span>
+                      <div className='flex-wrap'>{resource.title}</div>
                       </div>
                       <button className='' onClick={e => removeResourceAtIndex(index)}><DeleteIcon/></button>
                     </div>
