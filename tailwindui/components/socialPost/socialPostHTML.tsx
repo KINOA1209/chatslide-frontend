@@ -246,6 +246,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
             foldername: foldername,
             final_posts: finalSlides,
             project_id: project_id,
+            images: res_images,
         }
         // Send a POST request to the backend to save finalSlides
         fetch('/api/save_social_posts', {
