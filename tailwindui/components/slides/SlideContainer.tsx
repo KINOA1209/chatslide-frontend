@@ -18,6 +18,7 @@ type SlideContainerProps = {
   containerRef?: React.RefObject<HTMLDivElement>
   slideRef?: React.RefObject<HTMLDivElement>
   exportToPdfMode?: boolean
+  highlightBorder?: boolean
 }
 
 const SlideContainer: React.FC<SlideContainerProps> = ({
@@ -30,6 +31,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
   containerRef = useRef(null),
   slideRef = useRef(null),
   exportToPdfMode = false,
+  highlightBorder = false,
 }) => {
   return (
     <div
@@ -41,7 +43,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
       style={{
         boxSizing: 'border-box',
         border: 'none',
-        boxShadow: isPresenting ? 'none' : '0 2px 10px rgba(0, 0, 0, 0.5)',
+        boxShadow: isPresenting ? 'none' : !highlightBorder ? '0 2px 10px rgba(0, 0, 0, 0.5)' : '0 2px 10px rgba(255, 255, 0, 0.8)',
         width: isPresenting ? '100vw' : `${960 * scale}px`,
         height: isPresenting ? '100vh' : `${540 * scale}px`,
       }}
