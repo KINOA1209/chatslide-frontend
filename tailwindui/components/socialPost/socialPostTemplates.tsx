@@ -126,9 +126,9 @@ export const Col_1_img_0 = ({ subtopic, keywords, content, icon, canEdit, autoSa
             <div className="w-full h-full flex flex-col justify-between">
                 <div className="w-full px-[4%]">{keywords}</div>
                 <div className='w-full px-[4%]'>{subtopic}</div>
-                    <div id='container_gradient'className="h-full w-full flex flex-row overflow-hidden rounded-lg">
-                        <div className="grow mt-[5%] mx-[5%] ">{content}</div>
-                    </div>
+                <div id='container_gradient' className="h-full w-full flex flex-row overflow-hidden rounded-lg">
+                    <div className="mt-[5%] mx-[5%] ">{content}</div>
+                </div>
                 <div className="w-full h-[7%] mt-[2%]"> 
                     <div className="flex flex-row justify-center items-center font-creato-medium leading-normal tracking-wide text-[15px] text-[white]">
                         {icon}DrLambda
