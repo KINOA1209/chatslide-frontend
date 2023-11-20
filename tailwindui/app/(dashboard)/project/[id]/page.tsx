@@ -35,6 +35,7 @@ interface Project {
     post_type: string;
     social_platform: string;
     social_posts: string;
+    social_post_images: string;
 }
 
 const ProjectLoading = () => {
@@ -136,7 +137,10 @@ const ProjectLoading = () => {
                     sessionStorage.setItem('social_platform', project.social_platform);
                 }
                 if (project.social_posts) {
-                    sessionStorage.setItem('social_posts', project.social_posts);
+                    sessionStorage.setItem('socialPost', project.social_posts);
+                }
+                if (project.social_post_images) {
+                    sessionStorage.setItem('socialPostImages', project.social_post_images);
                 }
             }
             handleRedirect(content_type);
