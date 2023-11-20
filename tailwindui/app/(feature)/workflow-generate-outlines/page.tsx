@@ -550,7 +550,7 @@ export default function Topic() {
                   {showProjectPopup && (
                     <div
                       id='project_popup'
-                      className='absolute z-10 p-2 bg-gray-800 text-white text-sm rounded shadow-md w-[15rem] h-[6rem] md:w-80 md:h-[4rem] flex justify-center items-center'
+                      className='absolute z-10 p-2 bg-gray-800 text-white text-sm rounded shadow-md w-[15rem] h-[5rem] md:w-80 md:h-[4rem] flex justify-center items-center'
                     >
                       The main subject or theme of your project. It will set
                       the direction and focus of the contents.
@@ -562,7 +562,7 @@ export default function Topic() {
             <div className='textfield'>
               <textarea
                 onChange={(e) => setTopic(e.target.value)}
-                className='focus:ring-0 text-xl bg-gray-100'
+                className='focus:ring-0 text-l md:text-xl bg-gray-100'
                 id='topic'
                 value={topic}
                 maxLength={80}
@@ -750,10 +750,10 @@ export default function Topic() {
                   <input
                     id='link'
                     type='text'
-                    className='form-input w-full border-none bg-gray-100'
+                    className='text-sm md:text-l form-input w-full border-none bg-gray-100'
                     value={linkUrl}
                     onChange={(e) => handleLinkChange(e.target.value)}
-                    placeholder='Paste YouTube or webpage link here'
+                    placeholder='Paste YouTube or webpage link'
                   />
                 </div>
                 <SmallBlueButton onClick={e => { addLink(linkUrl) }} isSubmitting={isAddingLink}>
@@ -769,7 +769,7 @@ export default function Topic() {
             <div className='drop_file bg-gray-100 border border-2 border-gray-200'>
               <div className='flex items-center w-full'>
                 <FaFilePdf />
-                <span>Drop files here or </span>
+                <span className="text-sm md:text-l">Drop files here or </span>
                 <SmallBlueButton onClick={handleOpenFile}>
                   Browse File
                 </SmallBlueButton>
