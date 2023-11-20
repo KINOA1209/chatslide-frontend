@@ -733,14 +733,14 @@ export default function Topic() {
               </div>
             </div>
 
-            <div className='youtube_container bg-gray-100 border border-2 border-gray-200'>
+            <div className='link_container bg-gray-100 border border-2 border-gray-200'>
               <div
-                id='youtube_text_container'
+                id='link_text_container'
                 className='flex justify-center items-center w-full'
               >
                 <FaYoutube />
                 <div className='w-full'>
-                  <label htmlFor='youtube_text'></label>
+                  <label htmlFor='link_text'></label>
                   <input
                     id='link'
                     type='text'
