@@ -10,10 +10,13 @@ import 'react-toastify/dist/ReactToastify.css';
 interface Project {
     project_name: string;
     topic: string;
-    requirements: string;
-    audience: string;
+    content_type: string;
     language: string;
     foldername: string;
+    resource_ids: string;
+    // fields for Presentation start here
+    requirements: string;
+    audience: string;
     add_equations: boolean;
     page_count: string;
     outline: string;
@@ -24,15 +27,19 @@ interface Project {
     audio_files: string;
     pdf_file: string;
     video_file: string;
-    resource_ids: string;
     resources: string;
     html: string;
     pdf_images: string;
     is_shared: boolean;
+    // fields for Social Post start here
+    post_type: string;
+    social_platform: string;
+    social_posts: string;
 }
 
 const ProjectLoading = () => {
     const [project, setProject] = useState<Project | null>(null);
+    const [contentType, setContentType] = useState<string>();
     const pathname = usePathname();
     const router = useRouter();
     
@@ -59,62 +66,80 @@ const ProjectLoading = () => {
             if (project.topic) {
                 sessionStorage.setItem('topic', project.topic);
             }
-            if (project.requirements) {
-                sessionStorage.setItem('requirements', project.requirements);
-            }
-            if (project.audience) {
-                sessionStorage.setItem('audience', project.audience);
-            }
             if (project.language) {
                 sessionStorage.setItem('language', project.language);
             }
             if (project.foldername) {
                 sessionStorage.setItem('foldername', project.foldername);
             }
-            if (project.add_equations) {
-                sessionStorage.setItem('addEquations', project.add_equations.toString());
-            }
-            if (project.page_count) {
-                sessionStorage.setItem('page_count', project.page_count);
-            }
-            if (project.outline) {
-                sessionStorage.setItem('outline', JSON.stringify(project.outline));
-            }
-            if (project.html) {
-                sessionStorage.setItem('html', project.html);
-            }
-            if (project.transcripts) {
-                sessionStorage.setItem('transcripts', JSON.stringify(project.transcripts));
-            }
-            if (project.image_files) {
-                sessionStorage.setItem('image_files', JSON.stringify(project.image_files));
-            }
-            if (project.pdf_file) {
-                sessionStorage.setItem('pdf_file', project.pdf_file);
-            }
-            if (project.pdf_images) {
-                sessionStorage.setItem('pdf_images', JSON.stringify(project.pdf_images));
-            }
-            if (project.audio_files) {
-                sessionStorage.setItem('audio_files', JSON.stringify(project.audio_files));
-            }
-            if (project.video_file) {
-                sessionStorage.setItem('video_file', project.video_file);
+            if (project.project_name) {
+                sessionStorage.setItem('project_name', project.project_name);
             }
             if (project.resource_ids) {
                 sessionStorage.setItem('selectedResourceId', JSON.stringify(project.resource_ids));
             }
-            if (project.resources) {
-                sessionStorage.setItem('selectedResources', JSON.stringify(project.resources));
-            }
-            if (project.is_shared) {
-                sessionStorage.setItem('is_shared', project.is_shared.toString());
-            }
-            if (project.extra_knowledge) {
-                sessionStorage.setItem('extraKnowledge', project.extra_knowledge);
-            }
-            if (project.outline_item_counts) {
-                sessionStorage.setItem('outline_item_counts', JSON.stringify(project.outline_item_counts));
+            const content_type = project.content_type ?? 'presentation';
+            setContentType(content_type);
+            sessionStorage.setItem('content_type', project.content_type);
+            if (content_type == 'presentation') {
+                if (project.requirements) {
+                    sessionStorage.setItem('requirements', project.requirements);
+                }
+                if (project.audience) {
+                    sessionStorage.setItem('audience', project.audience);
+                }
+                if (project.add_equations) {
+                    sessionStorage.setItem('addEquations', project.add_equations.toString());
+                }
+                if (project.page_count) {
+                    sessionStorage.setItem('page_count', project.page_count);
+                }
+                if (project.outline) {
+                    sessionStorage.setItem('outline', JSON.stringify(project.outline));
+                }
+                if (project.html) {
+                    sessionStorage.setItem('html', project.html);
+                }
+                if (project.transcripts) {
+                    sessionStorage.setItem('transcripts', JSON.stringify(project.transcripts));
+                }
+                if (project.image_files) {
+                    sessionStorage.setItem('image_files', JSON.stringify(project.image_files));
+                }
+                if (project.pdf_file) {
+                    sessionStorage.setItem('pdf_file', project.pdf_file);
+                }
+                if (project.pdf_images) {
+                    sessionStorage.setItem('pdf_images', JSON.stringify(project.pdf_images));
+                }
+                if (project.audio_files) {
+                    sessionStorage.setItem('audio_files', JSON.stringify(project.audio_files));
+                }
+                if (project.video_file) {
+                    sessionStorage.setItem('video_file', project.video_file);
+                }
+                if (project.resources) {
+                    sessionStorage.setItem('selectedResources', JSON.stringify(project.resources));
+                }
+                if (project.is_shared) {
+                    sessionStorage.setItem('is_shared', project.is_shared.toString());
+                }
+                if (project.extra_knowledge) {
+                    sessionStorage.setItem('extraKnowledge', project.extra_knowledge);
+                }
+                if (project.outline_item_counts) {
+                    sessionStorage.setItem('outline_item_counts', JSON.stringify(project.outline_item_counts));
+                }
+            } else if (content_type == 'social_post') {
+                if (project.post_type) {
+                    sessionStorage.setItem('post_type', project.post_type);
+                }
+                if (project.social_platform) {
+                    sessionStorage.setItem('social_platform', project.social_platform);
+                }
+                if (project.social_posts) {
+                    sessionStorage.setItem('social_posts', project.social_posts);
+                }
             }
             handleRedirect();
         }
@@ -166,13 +191,13 @@ const ProjectLoading = () => {
     };
 
 
-    const redirect = ['/workflow-generate-outlines',
+    const presentationRedirect = ['/workflow-generate-outlines',
         '/workflow-edit-outlines',
         '/workflow-review-slides',
         '/workflow-edit-script',
         '/workflow-review-audio',
         '/workflow-review-video'];
-    const projectFinishedSteps: () => number[] = () => {
+    const presentationFinishedSteps: () => number[] = () => {
         const finishedStepsArray: number[] = [];
         if (typeof window !== 'undefined' && sessionStorage.getItem('topic')) {
             finishedStepsArray.push(0);
@@ -195,15 +220,46 @@ const ProjectLoading = () => {
         return finishedStepsArray;
     }
 
-    const handleRedirect = async () => {
-        const finishedSteps = projectFinishedSteps();
+    const socialPostRedirect = [
+        '/workflow-scenario-choice',
+        '/workflow-generate-socialpost',
+        '/workflow-review-socialpost',
+    ];
+    const socialPostFinishedSteps: () => number[] = () => {
+        const finishedStepsArray: number[] = [];
+        if (typeof window !== 'undefined' && sessionStorage.getItem('post_type')) {
+            finishedStepsArray.push(0);
+        }
+        if (typeof window !== 'undefined' && sessionStorage.getItem('topic')) {
+            finishedStepsArray.push(1);
+        }
+        if (typeof window !== 'undefined' && sessionStorage.getItem('social_posts')) {
+            finishedStepsArray.push(2);
+        }
+        return finishedStepsArray;
+    }
 
-        if (finishedSteps.length > 0) {
-            const lastFinishedStep = finishedSteps[finishedSteps.length - 1];
-            const redirectURL = redirect[lastFinishedStep];
-            router.push(redirectURL);
-        } else {
-            router.push('/workflow-generate-outlines');
+    const handleRedirect = async () => {
+        if (contentType == 'presentation') {
+            const finishedSteps = presentationFinishedSteps();
+
+            if (finishedSteps.length > 0) {
+                const lastFinishedStep = finishedSteps[finishedSteps.length - 1];
+                const redirectURL = presentationRedirect[lastFinishedStep];
+                router.push(redirectURL);
+            } else {
+                router.push('/workflow-generate-outlines');
+            }
+        } else if (contentType == 'social_post') {
+            const finishedSteps = socialPostFinishedSteps();
+
+            if (finishedSteps.length > 0) {
+                const lastFinishedStep = finishedSteps[finishedSteps.length - 1];
+                const redirectURL = presentationRedirect[lastFinishedStep];
+                router.push(redirectURL);
+            } else {
+                router.push('/workflow-scenario-choice');
+            }
         }
     };
 
