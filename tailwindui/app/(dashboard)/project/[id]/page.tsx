@@ -131,7 +131,7 @@ const ProjectLoading = () => {
                 }
             } else if (content_type == 'social_posts') {
                 if (project.post_type) {
-                    sessionStorage.setItem('post_type', project.post_type);
+                    sessionStorage.setItem('selectedScenario', project.post_type);
                 }
                 if (project.social_platform) {
                     sessionStorage.setItem('social_platform', project.social_platform);
