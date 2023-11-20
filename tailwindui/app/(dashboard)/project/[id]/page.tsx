@@ -250,7 +250,7 @@ const ProjectLoading = () => {
             } else {
                 router.push('/workflow-generate-outlines');
             }
-        } else if (contentType == 'social_post') {
+        } else if (contentType == 'social_posts') {
             const finishedSteps = socialPostFinishedSteps();
 
             if (finishedSteps.length > 0) {
