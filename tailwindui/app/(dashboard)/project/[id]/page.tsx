@@ -79,8 +79,9 @@ const ProjectLoading = () => {
                 sessionStorage.setItem('selectedResourceId', JSON.stringify(project.resource_ids));
             }
             const content_type = project.content_type ?? 'presentation';
+            console.log('content_type = ', content_type);
             setContentType(content_type);
-            sessionStorage.setItem('content_type', project.content_type);
+            sessionStorage.setItem('content_type', content_type);
             if (content_type == 'presentation') {
                 if (project.requirements) {
                     sessionStorage.setItem('requirements', project.requirements);
@@ -240,8 +241,10 @@ const ProjectLoading = () => {
     }
 
     const handleRedirect = async () => {
+        console.log('handleRedirect content type = ', contentType);
         if (contentType == 'presentation') {
             const finishedSteps = presentationFinishedSteps();
+            console.log('handleRedirect presentation finished steps = ', finishedSteps);
 
             if (finishedSteps.length > 0) {
                 const lastFinishedStep = finishedSteps[finishedSteps.length - 1];
@@ -252,6 +255,7 @@ const ProjectLoading = () => {
             }
         } else if (contentType == 'social_posts') {
             const finishedSteps = socialPostFinishedSteps();
+            console.log('handleRedirect social posts finished steps = ', finishedSteps);
 
             if (finishedSteps.length > 0) {
                 const lastFinishedStep = finishedSteps[finishedSteps.length - 1];
