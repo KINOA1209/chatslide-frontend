@@ -159,7 +159,7 @@
     letter-spacing: 0.5px
 }
 
-.youtube_container {
+.link_container {
     margin-top: 15px;
     border-radius: 6px;
 }
@@ -207,7 +207,7 @@
     margin-right: -6px;
 }
 
-#youtube {
+#link {
     padding-left: 2%;
     width: 100%;
     font-family: 'Creato Display', sans-serif;
@@ -217,7 +217,7 @@
     letter-spacing: 0.26px;
 }
 
-#youtube_text_container {
+#link_text_container {
     padding: 13px 16px 4px;
 }
 
@@ -255,7 +255,7 @@
     font-weight: 700;
 }
 
-#youtube_error{
+#link_error{
     padding-left: calc(2% + 2rem);
     margin-bottom: 3px;
 }
