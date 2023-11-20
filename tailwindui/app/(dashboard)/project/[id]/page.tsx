@@ -130,7 +130,7 @@ const ProjectLoading = () => {
                 if (project.outline_item_counts) {
                     sessionStorage.setItem('outline_item_counts', JSON.stringify(project.outline_item_counts));
                 }
-            } else if (content_type == 'social_post') {
+            } else if (content_type == 'social_posts') {
                 if (project.post_type) {
                     sessionStorage.setItem('post_type', project.post_type);
                 }
