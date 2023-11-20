@@ -22,6 +22,8 @@ import YoutubeService from '@/components/utils/YoutubeService'
 import { SmallBlueButton } from '@/components/button/DrlambdaButton'
 import WebService from '@/components/utils/WebpageService';
 
+const MAX_TOPIC_LENGTH = 80
+
 const audienceList = [
   'Researchers',
   'Students',
@@ -330,7 +332,7 @@ export default function Topic_SocialPost() {
       setSelectedResourceId(prevList => [...prevList, newFile.id]);
 
       if (!topic) {
-        setTopic(videoDetails.title);
+        setTopic(videoDetails.title.slice(0, MAX_TOPIC_LENGTH));
       }
     } catch (error: any) {
       console.error("Error fetching YouTube video details: ", error);
@@ -362,7 +364,7 @@ export default function Topic_SocialPost() {
       setSelectedResourceId(prevList => [...prevList, newFile.id]);
 
       if (!topic) {
-        setTopic(pageDetails.title);
+        setTopic(pageDetails.title.slice(0, MAX_TOPIC_LENGTH));
       }
     } catch (error: any) {
       console.error("Error fetching webpage details: ", error);
@@ -599,13 +601,13 @@ export default function Topic_SocialPost() {
                   className='focus:ring-0 text-l md:text-xl bg-gray-100'
                   id='topic'
                   value={topic}
-                  maxLength={80}
+                  maxLength={MAX_TOPIC_LENGTH}
                   required
                   placeholder='How to use ultrasound to detect breast cancer'
                 ></textarea>
                 {
                   <div className='charcnt' id='charcnt'>
-                    {80 - topic.length} characters left
+                    {MAX_TOPIC_LENGTH - topic.length} characters left
                   </div>
                 }
               </div>
