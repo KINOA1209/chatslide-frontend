@@ -39,7 +39,6 @@ interface Project {
 
 const ProjectLoading = () => {
     const [project, setProject] = useState<Project | null>(null);
-    const [contentType, setContentType] = useState<string>();
     const pathname = usePathname();
     const router = useRouter();
     
@@ -80,7 +79,6 @@ const ProjectLoading = () => {
             }
             const content_type = project.content_type ?? 'presentation';
             console.log('content_type = ', content_type);
-            setContentType(content_type);
             sessionStorage.setItem('content_type', content_type);
             if (content_type == 'presentation') {
                 if (project.requirements) {
@@ -142,7 +140,7 @@ const ProjectLoading = () => {
                     sessionStorage.setItem('social_posts', project.social_posts);
                 }
             }
-            handleRedirect();
+            handleRedirect(content_type);
         }
     }, [project]);
 
@@ -240,7 +238,7 @@ const ProjectLoading = () => {
         return finishedStepsArray;
     }
 
-    const handleRedirect = async () => {
+    const handleRedirect = async (contentType: string) => {
         console.log('handleRedirect content type = ', contentType);
         if (contentType == 'presentation') {
             const finishedSteps = presentationFinishedSteps();
