@@ -44,16 +44,14 @@ const SocialPostVisualizer = () => {
             setHost(window.location.hostname)
         }
     }, [])
-    console.log(finalSlides)
     return (
         <div>
             <div className='px-4 sm:px-6 flex flex-col justify-center items-center gap-4'>
                 {/* slides contents */}
                 <div className='flex flex-row justify-end items-center'>
                 {/* want some more script Form submission */}
-                {(res_scenario === 'serious_subject' || res_scenario === 'reading_notes') && <ExportToPdfButton finalSlides={finalSlides} />}
-                {/* <ExportToPngButton finalSlides={finalSlides} currentSlideIndex={finalSlideIndex}/> */}
-                {/* <ShareToggleButton setShare={setShare} share={share} /> */}
+                <ExportToPngButton finalSlides={finalSlides} currentSlideIndex={finalSlideIndex}/>
+                <ShareToggleButton setShare={setShare} share={share} />
                 </div>
                 <SocialPostHTML 
                     finalSlides={finalSlides} 

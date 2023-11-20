@@ -6,14 +6,6 @@ import {
     CompanyIconWhite,
 } from '@/components/socialPost/socialPostIcons'
 
-function wrapWithLiTags(content: string): string {
-    if (!content.includes('<li>') || !content.includes('</li>')) {
-        return `<li">${content}</li>`
-    }
-    return content
-}
-
-
 export const templateDispatch = (
     slide: SocialPostSlide,
     index: number,
@@ -183,7 +175,7 @@ export const templateDispatch = (
                                  modifiedContent[contentIndex] = e.target.innerText;
                                  handleSlideEdit(modifiedContent, index, 'content');
                              }}
-                            dangerouslySetInnerHTML={{ __html: wrapWithLiTags(content) }}
+                            dangerouslySetInnerHTML={{ __html: content}}
                         >
                         </div>
                         <hr className='my-[15px]'></hr>

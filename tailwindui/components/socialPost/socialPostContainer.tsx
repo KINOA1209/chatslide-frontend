@@ -33,7 +33,6 @@ const SocialPostContainer: React.FC<SlideContainerProps> = ({
             onSlideRefUpdate(slideRef)
         }
     }, [slideRef, onSlideRefUpdate])
-    console.log(slideRef)
     return (
         <div
             id="slideContainer"
