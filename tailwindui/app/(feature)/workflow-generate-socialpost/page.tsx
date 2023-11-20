@@ -328,6 +328,10 @@ export default function Topic_SocialPost() {
 
       setSelectedResources(prevList => [...prevList, newFile]);
       setSelectedResourceId(prevList => [...prevList, newFile.id]);
+
+      if (!topic) {
+        setTopic(videoDetails.title);
+      }
     } catch (error: any) {
       console.error("Error fetching YouTube video details: ", error);
       setLinkError("Error fetching YouTube video details");
@@ -356,6 +360,10 @@ export default function Topic_SocialPost() {
 
       setSelectedResources(prevList => [...prevList, newFile]);
       setSelectedResourceId(prevList => [...prevList, newFile.id]);
+
+      if (!topic) {
+        setTopic(pageDetails.title);
+      }
     } catch (error: any) {
       console.error("Error fetching webpage details: ", error);
       setLinkError("Error fetching webpage details");
