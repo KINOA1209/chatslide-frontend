@@ -1,37 +1,25 @@
 import * as cheerio from 'cheerio';
 
-class WebService {
-  async getTitleFromUrl(url: string): Promise<string> {
+export default class WebService {
+  static async getWebpageInfo(url: string, userToken: string): Promise<{ id: string, title: string; thumbnail: string } | null> {
     try {
-      const response = await fetch(url);
+      const response = await fetch('/api/scrape_webpage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${userToken}` // Replace this with your actual auth header
+        },
+        body: JSON.stringify({ url: url })
+      });
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch URL: ${response.statusText}`);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-
-      const htmlText = await response.text();
-      const title = this.getTitleFromHtml(htmlText);
-
-      // Use a default identifier if title is null
-      const defaultIdentifier = this.getDefaultIdentifier(url);
-
-      return title || defaultIdentifier;
-    } catch (error: any) {
-      console.error(`Error fetching URL: ${error.message}`);
-      return '';
+      const data = await response.json()
+      console.log('data', data.data)
+      return { id: data.data.id, title: data.data.title, thumbnail: data.data.thumbnail };
+    } catch (error) {
+      throw error;
     }
-  }
-
-  private getTitleFromHtml(html: string): string | null {
-    const $ = cheerio.load(html);
-    const title = $('title').text();
-
-    return title || null;
-  }
-
-  private getDefaultIdentifier(url: string): string {
-    const parsedUrl = new URL(url);
-    const pathWithoutSlashes = parsedUrl.pathname.replace(/\//g, '_');
-    return `${parsedUrl.hostname}_${pathWithoutSlashes}`;
   }
 }
