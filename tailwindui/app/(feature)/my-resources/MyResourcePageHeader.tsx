@@ -26,7 +26,7 @@ const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
         {/* flex container controlling max width */}
         <div className='w-full max-w-7xl flex flex-wrap justify-center items-end'>
           {/* my project title text */}
-          <div className='absolute right-[50%] text-neutral-900 text-base font-bold font-creato-medium leading-10 tracking-wide border-black border-b-2'>
+          <div className='absolute left-10 md:left-[50%] text-neutral-900 text-base font-bold font-creato-medium leading-10 tracking-wide border-black border-b-2'>
             My Resources
           </div>
 
