@@ -143,16 +143,6 @@ export default function Dashboard() {
         const projectDeleteFeedback = await response.json()
         if (response.status === 200) {
           setProjects(projects.filter((proj) => proj.id !== deleteInd))
-          toast.success('Project deleted successfully', {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'light',
-          })
         } else {
           // error handling does not work
           toast.error(projectDeleteFeedback.message, {
