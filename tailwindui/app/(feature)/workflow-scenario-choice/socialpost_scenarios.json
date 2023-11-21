@@ -1,0 +1,21 @@
+{
+  "message": "Which style do you prefer?",
+  "description": "We'll create contents tailored to your audience.",
+  "options": [
+    {
+      "id": "casual_topic",
+      "title": "Casual Topic",
+      "imageSrc": "/images/socialpost/casual_topic.png"
+    },
+    {
+      "id": "serious_subject",
+      "title": "Serious Subject",
+      "imageSrc": "/images/socialpost/serious_subject.png"
+    },
+    {
+      "id": "reading_notes",
+      "title": "Reading Notes",
+      "imageSrc": "/images/socialpost/reading_notes.png"
+    }
+  ]
+}
