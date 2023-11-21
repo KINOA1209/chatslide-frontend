@@ -8,6 +8,7 @@ import {
 } from '@/app/(feature)/workflow-type-choice/icons'
 import { useRouter } from 'next/navigation'
 import AuthService from '@/components/utils/AuthService'
+import { GrayLabel } from '@/components/ui/GrayLabel'
 
 const TypeChoicePage = () => {
   const router = useRouter() // Initialize the router
@@ -71,9 +72,7 @@ const TypeChoicePage = () => {
               <div className='text-center text-neutral-800 text-2xl font-bold font-creato-medium leading-snug tracking-wide'>
                 Social Post
               </div>
-              <div className='text-center text-neutral-800 text-xs font-bold font-creato-medium leading-snug tracking-wide bg-gray-200 rounded px-1 py-0.5 ml-2'>
-                Beta
-              </div>
+              <GrayLabel>Beta</GrayLabel>
             </div>
           </div>
 

@@ -1,13 +1,14 @@
 import React from 'react'
 import { FinishedStepIcon } from '../icons'
 import { InputBox } from './InputBox'
+import { GrayLabel } from './GrayLabel'
 
 interface ClickableLinkProps {
   link: string
 }
 
 const ClickableLink: React.FC<ClickableLinkProps> = ({ link }) => {
-  const [showTick, setShowTick] = React.useState(false) 
+  const [showTick, setShowTick] = React.useState(false)
 
   const handleOnMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
@@ -46,11 +47,14 @@ const ClickableLink: React.FC<ClickableLinkProps> = ({ link }) => {
       <input
         id='search_keyword'
         type='text'
-        className='md:w-[30rem] border-0 p-0 focus:outline-none focus:ring-0 mx-3 my-1 overflow-hidden cursor-text text-[#707C8A] bg-gray-100'
+        className='w-full border-0 p-0 focus:outline-none focus:ring-0 px-1 mx-3 my-1 cursor-text text-[#707C8A] bg-gray-100'
         readOnly
         value={link}
       />
-      {showTick && <FinishedStepIcon/>}
+      {showTick ?
+        <FinishedStepIcon /> :
+        <GrayLabel>Copy</GrayLabel>
+      }
     </InputBox>
   )
 }

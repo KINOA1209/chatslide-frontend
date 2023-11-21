@@ -138,7 +138,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
         {/* <Timer expectedSeconds={60} isSubmitting={isSubmitting} /> */}
         {/* shareable link */}
         {share && (
-          <div className='w-fit flex-grow'>
+          <div className='w-[40rem] flex-grow'>
             <label className='text-sm text-zinc-100'>View only link:</label>
             <ClickableLink
               link={`${host}/shared/${sessionStorage.getItem('project_id')}`}
