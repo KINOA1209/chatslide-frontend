@@ -51,7 +51,6 @@ const SocialPostVisualizer = () => {
                 <div className='flex flex-row justify-end items-center'>
                 {/* want some more script Form submission */}
                 <ExportToPngButton finalSlides={finalSlides} currentSlideIndex={finalSlideIndex}/>
-                <ShareToggleButton setShare={setShare} share={share} />
                 </div>
                 <SocialPostHTML 
                     finalSlides={finalSlides} 
