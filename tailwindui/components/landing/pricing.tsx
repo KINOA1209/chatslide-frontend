@@ -157,7 +157,7 @@ export function Pricing({ fewerCards = false }: PricingProps) {
     const handleClick = async (tier: string) => {
       if(clickedSubscribe) {
         // refresh the page
-        router.refresh()
+        window.location.reload()
         return
       }
 
