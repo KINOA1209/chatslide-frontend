@@ -142,7 +142,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
                                       currentSlideIndex
                                     )
                                   }
-                                  className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'
+                                  className='w-full aspect-[0.75/1] bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'
                                 >
                                   <img
                                     src={temp.img}
@@ -160,7 +160,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
                                       currentSlideIndex
                                     )
                                   }
-                                  className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'
+                                  className='w-full aspect-[0.75/1] bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'
                                 >
                                   <img
                                     src={temp.img}

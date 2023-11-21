@@ -3,9 +3,8 @@ import { ImgModule } from "@/components/socialPost/socialPostIllustrationModule"
 import { ImgModule as ImgModuleSlide } from "@/components/socialPost/socialPostImgModule"
 import { useEffect, useMemo, useState } from "react";
 import cover_png from '@/public/images/template/cover.png' // Cover
-import col1img0_png from '@/public/images/template/col1img0.png'
-import col2img1_png from '@/public/images/template/col2img1.png'
-import col3img2_png from '@/public/images/template/col3img2.png'
+import withimg_png from '@/public/images/template/socialpost_t1_img.png'
+import noimg_png from '@/public/images/template/socialpost_t1_no_img.png'
 import { color } from "html2canvas/dist/types/css/types/color";
 import '@/components/socialPost/templates.css'
 import AuthService from '@/components/utils/AuthService'
@@ -85,7 +84,7 @@ export const First_page_img_1 = ({ subtopic, keywords, imgs, update_callback, au
             }}>
             <div id='container_cover_gradient' className="absolute top-0 left-0 w-full h-full z-10">
                 {/* Assuming ImgModule can accept a style prop for custom styling */}
-                <ImgModuleSlide imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} canEdit={canEdit} autoSave={autoSave} />
+                <ImgModuleSlide imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} canEdit={canEdit} autoSave={autoSave} isCover={true} />
             </div>
             <div 
                 //id="container_cover_gradient" 
@@ -171,7 +170,7 @@ export const Col_2_img_1 = ({subtopic, content, keywords, imgs, icon, update_cal
                 <div id='container_gradient'className="h-full w-full flex flex-col overflow-hidden rounded-lg">
                     <div className="grow mt-[5%] mx-[5%] ">{content}</div>
                     <div className="w-full h-full grow rounded-md overflow-hidden">
-                        <ImgModuleSlide imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} canEdit={canEdit} autoSave={autoSave} />
+                        <ImgModuleSlide imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} canEdit={canEdit} autoSave={autoSave} isCover={false}/>
                     </div> 
                 </div>
                 <div className="w-full h-[7%] mt-[2%]"> 
@@ -227,6 +226,7 @@ export const First_page_img_1_template2 = ({ original_title, English_title, imgs
                         updateSingleCallback={updateImgAtIndex(0)}
                         canEdit={canEdit}
                         autoSave={autoSave}
+                        isCover={false}
                     />
                 </div>
             </div>
@@ -445,9 +445,9 @@ export const templateSamples = {
     }],
     main: [{
         name: 'Col_1_img_0',
-        img: col1img0_png.src,
+        img: noimg_png.src,
     }, {
         name: 'Col_2_img_1',
-        img: col2img1_png.src,
+        img: withimg_png.src,
     }]
 };
