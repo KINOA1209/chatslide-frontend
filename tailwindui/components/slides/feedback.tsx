@@ -5,13 +5,15 @@ import Modal from '../ui/Modal'
 
 interface FeedbackFormProps {
   onClose: () => void
+  message?: string
 }
 
 interface FeedbackButtonProps {
   timeout?: number
+  message?: string
 }
 
-const FeedbackButton: React.FC<FeedbackButtonProps> = ({ timeout = 0 }) => {
+const FeedbackButton: React.FC<FeedbackButtonProps> = ({ timeout = 0, message = '' }) => {
 
   const [showModal, setShowModal] = useState(false);
   const [timerFinished, setTimerFinished] = useState(false)
@@ -40,6 +42,13 @@ const FeedbackButton: React.FC<FeedbackButtonProps> = ({ timeout = 0 }) => {
     return () => clearTimeout(timer)
   }, [])
 
+  // Check if the message prop is to open the modal
+  useEffect(() => {
+    if(message){
+      handleOpenModal()
+    }
+  }, [message]) 
+
   // Check if the timer has finished before opening the modal
   useEffect(() => {
     if (timerFinished && window.location.hostname !== 'localhost') {
@@ -55,11 +64,11 @@ const FeedbackButton: React.FC<FeedbackButtonProps> = ({ timeout = 0 }) => {
       Feedback
     </button>
 
-    {showModal && <FeedbackForm onClose={handleCloseModal} />}
+    {showModal && <FeedbackForm onClose={handleCloseModal} message={message} />}
   </div>
 }
 
-const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose }) => {
+const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose, message }) => {
   const [rating, setRating] = useState<number>(0)
   const [feedbackText, setFeedbackText] = useState<string>('')
   const [submitSuccessful, setSubmitSuccessful] = useState<boolean>(false)
@@ -75,6 +84,27 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose }) => {
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setFeedbackText(event.target.value)
+  }
+
+  function getEmojiForStar(star: number) {
+    switch (star) {
+      case 5: return '😃'; // Happy Face
+      case 4: return '😊'; // Smiling Face
+      case 3: return '😐'; // Neutral Face
+      case 2: return '😔'; // Sad Face
+      case 1: return '😢'; // Crying Face
+      default: return '⭐'; // Default Star
+    }
+  }
+
+  function getEmojiForStarAndRating(star: number, rating: number) {
+    if (rating === 0) {
+      return getEmojiForStar(star)
+    }
+    if (star <= rating) {
+      return getEmojiForStar(rating)
+    }
+    return '🌑'
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -170,10 +200,10 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose }) => {
                 className='text-lg leading-6 font-bold text-gray-900'
                 id='modal-headline'
               >
-                Your Feedback
+                {message ? message : `We'd love to hear from you!`}
               </h3>
               <p className='text-sm text-gray-500 mt-2'>
-                We'd love to hear from you! You can also send us an email at{' '}
+                You can also send us an email at{' '}
                 <a href='mailto:contact@drlambda.ai' className='underline'>
                   contact@drlambda.ai
                 </a>
@@ -185,16 +215,15 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose }) => {
           {submitSuccessful ? null : (
             <form onSubmit={handleSubmit} className='w-full mt-4'>
               <div className='mt-4'>
-                <div className='flex items-center justify-center'>
+                <div className='flex items-center justify-center gap-x-4'>
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
                       key={star}
                       type='button'
                       onClick={() => handleRatingChange(star)}
-                      className={`${star <= rating ? 'text-yellow-500' : 'text-gray-400'
-                        } text-5xl focus:outline-none`}
+                      className={`text-5xl focus:outline-none hover:scale-110 transform transition-all`}
                     >
-                      ★
+                      {getEmojiForStarAndRating(star, rating)}
                     </button>
                   ))}
                 </div>
@@ -231,26 +260,7 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose }) => {
             </form>
           )}
         </div>
-        <button
-          onClick={onClose}
-          className='absolute top-2 right-2 text-gray-400 hover:text-gray-800 focus:outline-none'
-        >
-          <svg
-            className='h-6 w-6'
-            xmlns='http://www.w3.org/2000/svg'
-            fill='none'
-            viewBox='0 0 24 24'
-            stroke='currentColor'
-            aria-hidden='true'
-          >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth='2'
-              d='M6 18L18 6M6 6l12 12'
-            />
-          </svg>
-        </button>
+
       </div>
     </Modal>
   )
