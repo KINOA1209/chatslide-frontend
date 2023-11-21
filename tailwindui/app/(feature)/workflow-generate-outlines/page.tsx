@@ -26,6 +26,7 @@ import { SmallBlueButton } from '@/components/button/DrlambdaButton'
 import WebService from '@/components/utils/WebpageService'
 
 const MAX_TOPIC_LENGTH = 80
+const MIN_TOPIC_LENGTH = 6
 
 const audienceList = [
   'Researchers',
@@ -51,6 +52,7 @@ export default function Topic() {
   const [linkUrl, setLinkUrl] = useState('' as string)
   const [urlIsYoutube, setUrlIsYoutube] = useState(false)
   const [linkError, setLinkError] = useState('')
+  const [topicError, setTopicError] = useState('')
   const [isGpt35, setIsGpt35] = useState(true)
   const [showPaymentModal, setShowPaymentModal] = useState(false)
   const [topicSuggestions, setTopicSuggestions] = useState<string[]>([
@@ -98,7 +100,7 @@ export default function Topic() {
       ? JSON.parse(sessionStorage.selectedResources)
       : []
   )
-  
+
 
   useEffect(() => {
     UserService.isPaidUser().then(
@@ -157,6 +159,17 @@ export default function Topic() {
     setTopic(topic)
   }
 
+  const updateTopic = (topic: string) => {
+    if (topic.length >= MIN_TOPIC_LENGTH) {
+      setTopicError('')
+    }
+    if (topic.length > MAX_TOPIC_LENGTH) {
+      setTopic(topic.slice(0, MAX_TOPIC_LENGTH))
+    } else {
+      setTopic(topic)
+    }
+  }
+
   const handleAudienceSuggestionClick = (
     audience: string,
     event: MouseEvent<HTMLButtonElement>
@@ -164,8 +177,8 @@ export default function Topic() {
     event.preventDefault()
     setAudience(audience)
   }
-  
-  async function addLink(link: string){
+
+  async function addLink(link: string) {
     if (!link) {
       setLinkError('Please enter a valid link.');
       return;
@@ -176,7 +189,7 @@ export default function Topic() {
     }
     setLinkError('');
     setIsAddingLink(true);
-    if (urlIsYoutube){
+    if (urlIsYoutube) {
       addYoutubeLink(link)
     } else {
       addWebpageLink(link)
@@ -204,7 +217,7 @@ export default function Topic() {
 
       setSelectedResources(prevList => [...prevList, newFile]);
       setSelectedResourceId(prevList => [...prevList, newFile.id]);
-      if(!topic){
+      if (!topic) {
         setTopic(videoDetails.title.slice(0, MAX_TOPIC_LENGTH))
       }
     } catch (error: any) {
@@ -235,7 +248,7 @@ export default function Topic() {
 
       setSelectedResources(prevList => [...prevList, newFile]);
       setSelectedResourceId(prevList => [...prevList, newFile.id]);
-      if(!topic){
+      if (!topic) {
         setTopic(pageDetails.title.slice(0, MAX_TOPIC_LENGTH))
       }
     } catch (error: any) {
@@ -254,8 +267,16 @@ export default function Topic() {
 
   const handleSubmit = async () => {
     console.log('submitting')
+    if (topic.length < MIN_TOPIC_LENGTH) {
+      setTopicError(`Please enter at least ${MIN_TOPIC_LENGTH} characters.`)
+      setIsSubmitting(false)
+      return
+    }
+
     if (linkError) {
       console.log(linkError) // continue without the valid link
+      setIsSubmitting(false)
+      return 
     }
 
     const project_id =
@@ -455,7 +476,7 @@ export default function Topic() {
 
   return (
     <section>
-      {showPaymentModal && <PaywallModal setShowModal={setShowPaymentModal} message='Upgrade for more ⭐️credits.' showReferralLink={true}/>}
+      {showPaymentModal && <PaywallModal setShowModal={setShowPaymentModal} message='Upgrade for more ⭐️credits.' showReferralLink={true} />}
 
       <Transition
         className='h-full w-full z-50 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
@@ -563,7 +584,7 @@ export default function Topic() {
             </div>
             <div className='textfield'>
               <textarea
-                onChange={(e) => setTopic(e.target.value)}
+                onChange={(e) => updateTopic(e.target.value)}
                 className='focus:ring-0 text-l md:text-xl bg-gray-100'
                 id='topic'
                 value={topic}
@@ -572,9 +593,12 @@ export default function Topic() {
                 placeholder='How to use ultrasound to detect breast cancer'
               ></textarea>
               {
-                <div className='charcnt' id='charcnt'>
+                <div className='text-gray-500 text-sm mt-1'>
                   {MAX_TOPIC_LENGTH - topic.length} characters left
                 </div>
+              }
+              {topicError && 
+                <div className='text-red-500 text-sm mt-1'>{topicError}</div>
               }
             </div>
 
@@ -790,13 +814,13 @@ export default function Topic() {
                       className='flex items-center bg-white rounded min-h-[50px] px-[1rem] justify-between'
                     >
                       <div className='flex items-center gap-2'>
-                      {resource.thumbnail_url ?
-                        <img src={resource.thumbnail_url} className='w-[40px]' /> :
-                        <FaFilePdf className='w-[40px]' />
-                      }
-                      <div className='flex-wrap'>{resource.title}</div>
+                        {resource.thumbnail_url ?
+                          <img src={resource.thumbnail_url} className='w-[40px]' /> :
+                          <FaFilePdf className='w-[40px]' />
+                        }
+                        <div className='flex-wrap'>{resource.title}</div>
                       </div>
-                      <button className='' onClick={e => removeResourceAtIndex(index)}><DeleteIcon/></button>
+                      <button className='' onClick={e => removeResourceAtIndex(index)}><DeleteIcon /></button>
                     </div>
                   </li>
                 ))}
