@@ -324,26 +324,8 @@ const ProjectProgress = () => {
     if (typeof window !== 'undefined' && sessionStorage.getItem('topic')) {
       finishedStepsArray.push(0)
     }
-    if (typeof window !== 'undefined' && sessionStorage.getItem('outline')) {
+    if (typeof window !== 'undefined' && sessionStorage.getItem('socialPost')) {
       finishedStepsArray.push(1)
-    }
-    if (typeof window !== 'undefined' && sessionStorage.getItem('html')) {
-      finishedStepsArray.push(2)
-    }
-    if (
-      typeof window !== 'undefined' &&
-      sessionStorage.getItem('transcripts')
-    ) {
-      finishedStepsArray.push(3)
-    }
-    if (
-      typeof window !== 'undefined' &&
-      sessionStorage.getItem('audio_files')
-    ) {
-      finishedStepsArray.push(4)
-    }
-    if (typeof window !== 'undefined' && sessionStorage.getItem('video_file')) {
-      finishedStepsArray.push(5)
     }
     return finishedStepsArray
   }

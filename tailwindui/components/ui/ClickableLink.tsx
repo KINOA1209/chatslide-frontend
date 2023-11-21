@@ -1,33 +1,23 @@
 import React from 'react'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import { FinishedStepIcon } from '../icons'
+import { InputBox } from './InputBox'
 
 interface ClickableLinkProps {
   link: string
 }
 
 const ClickableLink: React.FC<ClickableLinkProps> = ({ link }) => {
+  const [showTick, setShowTick] = React.useState(false) 
+
   const handleOnMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
     e.stopPropagation()
     navigator.clipboard.writeText(link)
-    toast.success('Link copied.', {
-      position: 'top-center',
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-    })
+    setShowTick(true)
   }
 
   return (
-    <div
-      className='h-fit w-full form-input flex flex-row flex-nowrap border border-gray-500 px-2 py-1 cursor-text rounded-xl mb-6'
-      onClick={(e) => handleOnMouseDown(e)}
-    >
+    <InputBox onClick={handleOnMouseDown}>
       <svg
         className='my-1 ml-3 w-6 h-6 mt-3'
         viewBox='0 0 15 15'
@@ -56,11 +46,12 @@ const ClickableLink: React.FC<ClickableLinkProps> = ({ link }) => {
       <input
         id='search_keyword'
         type='text'
-        className='w-full border-0 p-0 h-6 focus:outline-none focus:ring-0 mx-3 my-3 overflow-hidden cursor-text text-[#707C8A]'
+        className='md:w-[30rem] border-0 p-0 focus:outline-none focus:ring-0 mx-3 my-1 overflow-hidden cursor-text text-[#707C8A] bg-gray-100'
         readOnly
         value={link}
       />
-    </div>
+      {showTick && <FinishedStepIcon/>}
+    </InputBox>
   )
 }
 

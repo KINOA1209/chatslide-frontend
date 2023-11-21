@@ -17,10 +17,10 @@ import { toPng } from 'html-to-image';
 
 interface ExportToPdfProps {
   finalSlides: SocialPostSlide[]
-  currentSlideIndex: number
+  currentSlideIndex?: number
   //setFinalSlides: React.Dispatch<React.SetStateAction<Slide[]>>;
 }
-const ExportToPngButton: React.FC<ExportToPdfProps> = ({ finalSlides, currentSlideIndex }) => {
+const ExportToPngButton: React.FC<ExportToPdfProps> = ({ finalSlides, currentSlideIndex = 0 }) => {
   const topic =
     typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('topic') : ''
 
@@ -31,8 +31,8 @@ const res_scenario =
   const [user, setUser] = useState(null)
   const [downloadingPDF, setDownloadingPDF] = useState(false)
   const [showPaymentModal, setShowPaymentModal] = useState(false)
-  const exportSlidesRef = useRef<HTMLDivElement>(null)
   const [slideRef, setSlideRef] = useState(React.createRef<HTMLDivElement>());
+  const [slideIndex, setSlideIndex] = useState(0)
   let pdfIsBeingGenerated = false
 
   useEffect(() => {
@@ -57,13 +57,13 @@ const res_scenario =
     return true;
 };
 
-  const downloadImage = async (ref: React.RefObject<HTMLDivElement>): Promise<void> => {
+  const downloadImage = async (ref: React.RefObject<HTMLDivElement>, index: number): Promise<void> => {
     if (ref.current && areAllImagesLoaded(ref.current)) {
         try {
             const dataUrl = await toPng(ref.current);
             const link = document.createElement('a');
             link.href = dataUrl;
-            link.download = (topic ? topic : 'drlambda') + '.png';
+            link.download = (topic ? topic : 'drlambda') + '_' + index.toString() + '.png';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -94,6 +94,8 @@ const res_scenario =
 
     try {
       const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
+      
+      
       const response = await fetch('/api/save_final_html_pdf', {
         method: 'POST',
         headers: {
@@ -103,12 +105,21 @@ const res_scenario =
       })
 
       if (response.ok) {
-        downloadImage(slideRef)
+
+        // iterate through posts and download each one
+        for (let i = 0; i < finalSlides.length; i++) {
+          setSlideIndex(i)
+          await new Promise(resolve => setTimeout(resolve, 100));
+          console.log('Downloading image ' + i.toString())
+          await downloadImage(slideRef, i + 1);
+        }
+        
       } else if (response.status === 402) {
         setShowPaymentModal(true)
       } else {
         console.error('Failed to save PDF.')
       }
+
     } catch (error) {
       console.error('An error occurred:', error)
     }
@@ -122,6 +133,7 @@ const res_scenario =
           <PaywallModal
             setShowModal={setShowPaymentModal}
             message='Upgrade for more ⭐️credits.'
+            showReferralLink={true}
           />
         )}
 
@@ -131,7 +143,7 @@ const res_scenario =
             onClick={handleSaveImage}
         >
             <div className='text-center text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide'>
-                Export to PNG (Current Page)
+                Export to PNG (10⭐️)
             </div>
             <div className='w-4 h-4 relative' hidden={downloadingPDF}>
                 <DownloadIcon />
@@ -144,11 +156,11 @@ const res_scenario =
 
       {/* hidden div for export to pdf */}
       <div style={{ display: downloadingPDF ? 'block' : 'none', zIndex: -1 }}>
-        <div ref={exportSlidesRef}>
-            <div key={`exportToPdfContainer` + currentSlideIndex.toString()}>
+        <div>
+          <div key={`exportToPdfContainer` + slideIndex.toString()}>
               <SocialPostContainer
                 slides={finalSlides}
-                currentSlideIndex={currentSlideIndex}
+                currentSlideIndex={slideIndex}
                 exportToPdfMode={true}
                 templateDispatch={selectTemplateDispatch()}
                 slideRef={slideRef}

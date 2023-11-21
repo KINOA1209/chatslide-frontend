@@ -21,9 +21,12 @@ export function Pricing({ fewerCards = false }: PricingProps) {
     const [showPlus, setShowPlus] = useState(true);
     const [showPro, setShowPro] = useState(false);
     const [showEnt, setShowEnt] = useState(false);
+    const [clickedSubscribe, setClickedSubscribe] = useState(false);
 
     const [tier, setTier] = useState('')
     const [expiration, setExpiration] = useState(0)
+
+    const [cta, setCta] = useState('Sign up to Start')
 
     const showPricingPanel = (index: number) => {
         setShowFree(false);
@@ -46,6 +49,7 @@ export function Pricing({ fewerCards = false }: PricingProps) {
         const fetchCurrentUser = async () => {
             const user = await AuthService.getCurrentUser();
             setCurrentUser(user);
+            setCta('Claim Offer')
         }
         fetchCurrentUser();
     }, []);
@@ -150,6 +154,28 @@ export function Pricing({ fewerCards = false }: PricingProps) {
         }
     };
 
+    const handleClick = async (tier: string) => {
+      if(clickedSubscribe) {
+        // refresh the page
+        window.location.reload()
+        return
+      }
+
+      if(!currentUser) {
+        router.push('/signup')
+        return
+      }
+      
+      if(tier=='pro') {
+        handleProSubscription()
+      } else if(tier=='plus') {
+        handlePlusSubscription()
+      }
+
+      setClickedSubscribe(true)
+      setCta('Refresh to unlock 🚀')
+    }
+
     useEffect(() => {
         const fetchTier = async () => {
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
@@ -178,7 +204,7 @@ export function Pricing({ fewerCards = false }: PricingProps) {
 
     return (
 
-        <div className="w-full  px-4 sm:px-6 mb-12" style={{ fontFamily: 'Lexend, sans-serif' }}>
+        <div className="w-full  px-4 sm:px-6 mb-2" style={{ fontFamily: 'Lexend, sans-serif' }}>
             <div className="w-full flex flex-col items-center" data-aos="fade-right">
                 <Toggle isLeft={isMonthly} setIsLeft={setIsMonthly} leftText="Monthly" rightText="Yearly (17% off)" />
                 <div className="changeCard items-center flex md:hidden">
@@ -308,8 +334,8 @@ export function Pricing({ fewerCards = false }: PricingProps) {
                                             <div>
                                                 {(!currentUser || (tier === 'FREE' || tier === '')) && <div ref={buttonRef} className="btn drop-shadow-xl text-lg rounded-full text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer"
                                                     style={{ backgroundImage: 'linear-gradient(-45deg, #5A24B4, #9271CB, #2E8BC0)', backgroundSize: '200%' }}
-                                                    onClick={() => { currentUser ? handlePlusSubscription() : router.push('/signup') }}>
-                                                    {currentUser ? 'Claim Offer' : 'Sign up to Start'}
+                                                    onClick={() => { handleClick('plus') }}>
+                                                    {cta}
                                                 </div>}
 
                                                 {(currentUser && (tier === 'PLUS_MONTHLY' || tier === 'PLUS_YEARLY')) && <>
@@ -366,8 +392,8 @@ export function Pricing({ fewerCards = false }: PricingProps) {
                                             <div>
                                                 {(!currentUser || (tier === 'FREE' || tier === '')) && <div ref={buttonRef} className="btn drop-shadow-xl text-lg rounded-full text-white bg-blue-600 hover:bg-blue-700 w-full mb-4 sm:w-auto sm:mb-0 cursor-pointer"
                                                     style={{ backgroundImage: 'linear-gradient(-45deg, #002366, #003366, #004466)', backgroundSize: '200%' }}
-                                                    onClick={() => { currentUser ? handleProSubscription() : router.push('/signup') }}>
-                                                    {currentUser ? 'Claim Offer' : 'Sign up to Start'}
+                                                    onClick={ () => handleClick('pro') }>
+                                                    {cta}
                                                 </div>}
                                                 {(currentUser && (tier === 'PRO_MONTHLY' || tier === 'PRO_YEARLY')) && <>
                                                     {/* <div className="w-full text-center">Expiring: {moment.utc(expiration).format('L')}</div> */}

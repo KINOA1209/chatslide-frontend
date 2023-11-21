@@ -15,6 +15,7 @@ interface YourComponentProps {
   showGPTToggle?: boolean;
   nextText?: string;
   setIsGpt35?: (isGpt35: boolean) => void;
+  showNextButton?: boolean;
 }
 
 const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
@@ -27,6 +28,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
   showGPTToggle = false,
   nextText = 'Next',
   setIsGpt35,
+  showNextButton = true,
 }) => {
 
   function getPrevHref() {
@@ -56,13 +58,13 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
         <div className="absolute right-10 flex flex-col xl:flex-row items-end xl:items-center space-x-4">
 
           {showGPTToggle && typeof setIsGpt35 !== 'undefined' && <GPTToggleWithExplanation setIsGpt35={setIsGpt35} />}
-          <DrlambdaButton
+          {showNextButton  && <DrlambdaButton
             isSubmitting={isSubmitting}
             isPaidUser={isPaidUser}
             isPaidFeature={nextIsPaidFeature}
             onClick={e => setIsSubmitting(true)}>
             {nextText}
-          </DrlambdaButton>
+          </DrlambdaButton>}
         </div>
       </div>
 
