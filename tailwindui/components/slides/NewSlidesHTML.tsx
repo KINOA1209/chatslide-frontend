@@ -493,14 +493,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
   return (
     <div className='flex flex-col items-center justify-center gap-4'>
-      {/* {share && (
-        <div>
-          <label className='text-sm text-zinc-100'>View only link:</label>
-          <ClickableLink
-            link={`${host}/shared/${sessionStorage.getItem('project_id')}`}
-          />
-        </div>
-      )} */}
 
       {/* buttons and contents */}
       <div className='max-w-4xl relative flex flex-row items-center justify-center gap-4'>
