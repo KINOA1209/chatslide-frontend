@@ -12,7 +12,8 @@ import MaskedBackground from '@/public/images/template/Berkeley/Mask Background.
 import BerkeleyLogoWhite from '@/public/images/template/Berkeley/Berkeley_logo_white.png'
 import HarvardLogo from '@/public/images/template/Harvard/Harvard_logo.png'
 import HarvardCoverVector from '@/public/images/template/Harvard/cover_vector_1.png'
-interface MainSlideProps {
+import { Col_2_img_1_layout } from './slideLayout'
+export interface MainSlideProps {
   user_name: JSX.Element
   title: JSX.Element
   topic: JSX.Element
@@ -24,6 +25,7 @@ interface MainSlideProps {
   canEdit: boolean
   autoSave: Function
   isCoverPage: boolean
+  layoutOption: string
 }
 
 const useLocalImgs = (
@@ -73,6 +75,8 @@ export const Col_2_img_1 = ({
   update_callback,
   canEdit,
   autoSave,
+  isCoverPage,
+  layoutOption,
 }: MainSlideProps) => {
   const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback)
 
@@ -100,7 +104,7 @@ export const Col_2_img_1 = ({
       </div>
       <div>{subtopic}</div>
       <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr>
-      <div className='h-full w-full flex flex-row overflow-hidden gap-[32px]'>
+      {/* <div className='h-full w-full flex flex-row overflow-hidden gap-[32px]'>
         <div className='w-full h-full grow p-1'>{content}</div>
         <div className='w-full h-full grow rounded-md overflow-hidden'>
           <ImgModule
@@ -110,7 +114,20 @@ export const Col_2_img_1 = ({
             autoSave={autoSave}
           />
         </div>
-      </div>
+      </div> */}
+      <Col_2_img_1_layout
+        content={content}
+        user_name={user_name}
+        title={title}
+        topic={topic}
+        subtopic={subtopic}
+        imgs={imgs}
+        update_callback={update_callback}
+        canEdit={canEdit}
+        autoSave={autoSave}
+        isCoverPage={false}
+        layoutOption={layoutOption}
+      ></Col_2_img_1_layout>
     </div>
   )
 }

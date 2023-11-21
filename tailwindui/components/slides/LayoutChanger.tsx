@@ -1,9 +1,7 @@
 import React from 'react'
 import { Transition } from '@headlessui/react' // Assuming you're using Headless UI for Transitions
 import { SlideKeys } from '@/components/slides/NewSlidesHTML'
-import {
-  ChangeLayoutIcon,
-} from '@/app/(feature)/icons'
+import { ChangeLayoutIcon } from '@/app/(feature)/icons'
 type LayoutProps = {
   openModal: () => void
   showLayout: boolean
@@ -46,6 +44,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
                     className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
                     onClick={openModal}>Change Layout</button>
             </div> */}
+      {/* change layout icon */}
       <div
         className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300  hover:bg-Workflow-slides-button-hover-bg-color flex justify-center items-center cursor-pointer'
         onClick={openModal}

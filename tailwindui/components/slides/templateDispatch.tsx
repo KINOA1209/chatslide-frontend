@@ -27,7 +27,8 @@ export const templateDispatch = (
     () => {}, // Replace with your default function if you have one
   toggleEditMathMode: () => void = () => {}, // Replace with your default function if you have one
 
-  isCoverPage: boolean
+  isCoverPage: boolean,
+  layoutOption: string
 ): JSX.Element => {
   let keyPrefix = ''
   if (exportToPdfMode) {
@@ -271,6 +272,7 @@ export const templateDispatch = (
       imgs={slide.images as string[]}
       update_callback={updateImgUrlArray(index)}
       isCoverPage={isCoverPage}
+      layoutOption={slide.layout}
     />
   )
   // }
