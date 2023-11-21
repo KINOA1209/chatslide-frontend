@@ -49,7 +49,7 @@ const PaywallModal: React.FC<PaywallModalProps> = ({ setShowModal, message, show
         </span>
 
         
-        <div ref={modalContentRef} className="relative bg-white rounded-lg shadow w-128 h-[80vh] overflow-y-auto">
+        <div ref={modalContentRef} className="relative bg-white rounded-lg shadow w-128 max-h-[80vh] overflow-y-auto">
           {/* Close button */}
           <button
             className="absolute top-0 right-4 text-2xl text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white focus:outline-none"
