@@ -178,7 +178,7 @@ export function Pricing({ fewerCards = false }: PricingProps) {
 
     return (
 
-        <div className="w-full  px-4 sm:px-6 mb-12" style={{ fontFamily: 'Lexend, sans-serif' }}>
+        <div className="w-full  px-4 sm:px-6 mb-2" style={{ fontFamily: 'Lexend, sans-serif' }}>
             <div className="w-full flex flex-col items-center" data-aos="fade-right">
                 <Toggle isLeft={isMonthly} setIsLeft={setIsMonthly} leftText="Monthly" rightText="Yearly (17% off)" />
                 <div className="changeCard items-center flex md:hidden">

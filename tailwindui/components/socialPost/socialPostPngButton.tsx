@@ -133,6 +133,7 @@ const res_scenario =
           <PaywallModal
             setShowModal={setShowPaymentModal}
             message='Upgrade for more ⭐️credits.'
+            showReferralLink={true}
           />
         )}
 
