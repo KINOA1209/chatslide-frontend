@@ -46,7 +46,7 @@ const ClickableLink: React.FC<ClickableLinkProps> = ({ link }) => {
       <input
         id='search_keyword'
         type='text'
-        className='w-[30rem] border-0 p-0 focus:outline-none focus:ring-0 mx-3 my-1 overflow-hidden cursor-text text-[#707C8A] bg-gray-100'
+        className='md:w-[30rem] border-0 p-0 focus:outline-none focus:ring-0 mx-3 my-1 overflow-hidden cursor-text text-[#707C8A] bg-gray-100'
         readOnly
         value={link}
       />
