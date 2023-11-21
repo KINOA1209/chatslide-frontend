@@ -11,6 +11,7 @@ interface ImgModuleProp {
     updateSingleCallback: Function,
     canEdit: boolean,
     autoSave: Function,
+    isCover: boolean,
 }
 
 enum ImgQueryMode {
@@ -19,7 +20,7 @@ enum ImgQueryMode {
     GENERATION,
 }
 
-export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: ImgModuleProp) => {
+export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave, isCover}: ImgModuleProp) => {
     const [showModal, setShowModal] = useState(false);
     const [keyword, setKeyword] = useState('');
     const [searchResult, setSearchResult] = useState<string[]>([]);
@@ -551,7 +552,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
         <div onClick={openModal}
             className={`w-full h-full transition ease-in-out duration-150 ${selectedImg === '' ? 'bg-[#E7E9EB]' : canEdit ? 'hover:bg-[#CAD0D3] hover:brightness-90' : ''} cursor-pointer`}
             style={{
-                backgroundImage: selectedImg !== '' ? `linear-gradient(180deg, #E54BFF 0%, rgba(217, 217, 217, 0.00) 40%), url(${selectedImg})` : 'none',
+                backgroundImage: selectedImg !== '' ? isCover ? `linear-gradient(180deg, #E54BFF 0%, rgba(217, 217, 217, 0.00) 40%), url(${selectedImg})` : `url(${selectedImg}`: 'none',
                 backgroundSize: 'cover',
             }}
             >
