@@ -18,7 +18,7 @@ export default function SocialMediaTemplate() {
   const contentRef = useRef<HTMLDivElement>(null)
   return (
     <section>
-      <div className='bg-gradient-to-b from-[#6A7EF9] to-[#415AF1]'>
+      <div className='bg-[#E7E9EB]'>
         {/* flex col container for steps, title, etc */}
         <WorkflowStepsBanner
           currentIndex={1}

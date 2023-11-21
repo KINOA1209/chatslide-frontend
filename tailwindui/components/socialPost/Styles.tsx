@@ -41,11 +41,14 @@ const h4Style: React.CSSProperties = {
     fontFamily: 'template1_cover_keyword'
 };
 
-// template2 cover page English title
+// template2 cover page username
 const h5Style: React.CSSProperties = {
-    fontSize: '15pt',
-    fontWeight: 'bold',
-    color: 'rgba(27, 28, 34, 0.60)'
+    fontSize: '9pt',
+    color: '#DAE9EA',
+    backgroundColor: '#1B1B1B',
+    borderRadius: '16px',
+    lineHeight: '25.126px',
+    letterSpacing: '0.628px',
 };
 
 // template2 cover page Original title

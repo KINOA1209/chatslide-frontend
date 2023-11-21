@@ -1,12 +1,14 @@
 import { StaticImageData } from "next/image";
-import { ImgModule } from "@/components/socialPost/socialPostImgModule";
+import { ImgModule } from "@/components/socialPost/socialPostIllustrationModule";
+import { ImgModule as ImgModuleSlide } from "@/components/socialPost/socialPostImgModule"
 import { useEffect, useMemo, useState } from "react";
 import cover_png from '@/public/images/template/cover.png' // Cover
-import col1img0_png from '@/public/images/template/col1img0.png'
-import col2img1_png from '@/public/images/template/col2img1.png'
-import col3img2_png from '@/public/images/template/col3img2.png'
+import withimg_png from '@/public/images/template/socialpost_t1_img.png'
+import noimg_png from '@/public/images/template/socialpost_t1_no_img.png'
 import { color } from "html2canvas/dist/types/css/types/color";
 import '@/components/socialPost/templates.css'
+import AuthService from '@/components/utils/AuthService'
+import { h5Style } from "./Styles";
 
 interface MainSlideProps {
     subtopic: JSX.Element,
@@ -26,6 +28,7 @@ interface MainSlideProps {
     canEdit: boolean,
     autoSave: Function,
 }
+
 
 const useLocalImgs = (imgs: string[], imgCount: number, update_callback: (imgs: string[]) => void) => {
     const initialImgs = useMemo(() => {
@@ -63,7 +66,7 @@ export const First_page_img_1 = ({ subtopic, keywords, imgs, update_callback, au
 
     return (
         <div
-            className="overflow-hidden gap-[32px] flex justify-center items-center"
+            className="relative overflow-hidden gap-[32px] flex justify-center items-center"
             style={{
                 width: '100%',
                 height: '100%',
@@ -74,22 +77,23 @@ export const First_page_img_1 = ({ subtopic, keywords, imgs, update_callback, au
                 // alignItems: 'flex-start',
                 // boxSizing: 'border-box',
                 // position: 'relative',
-                background: 'linear-gradient(180deg, #FB40FF, #886DFE)',
+                background: 'white',
                 border: 'none',
                 //borderImage: 'linear-gradient(180deg, #FB40FF, #886DFE)',
                 //borderImageSlice: '1',
             }}>
+            <div id='container_cover_gradient' className="absolute top-0 left-0 w-full h-full z-10">
+                {/* Assuming ImgModule can accept a style prop for custom styling */}
+                <ImgModuleSlide imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} canEdit={canEdit} autoSave={autoSave} isCover={true} />
+            </div>
             <div 
                 //id="container_cover_gradient" 
-                className="w-[95%] h-[96%] flex flex-col justify-between"
-                style={{
-                    backgroundImage: `linear-gradient(180deg, #E54BFF 0%, rgba(217, 217, 217, 0.00) 40%), url(${localImgs[0]})`,
-                    backgroundSize: 'cover',
-                }}
+                className="w-full h-full flex flex-col justify-between"
+
             >
-                <div className="mt-[10%] px-[4%] text-center">{subtopic}</div>
+                <div className="mt-[10%] px-[4%] text-center z-20">{subtopic}</div>
                 <div
-                    className="mb-[6%] mx-[auto] text-center"
+                    className="mb-[6%] mx-[auto] text-center z-20"
                     style={{
                         border: '3px solid #FFF',
                         borderRadius: '5px',
@@ -166,7 +170,7 @@ export const Col_2_img_1 = ({subtopic, content, keywords, imgs, icon, update_cal
                 <div id='container_gradient'className="h-full w-full flex flex-col overflow-hidden rounded-lg">
                     <div className="grow mt-[5%] mx-[5%] ">{content}</div>
                     <div className="w-full h-full grow rounded-md overflow-hidden">
-                        <ImgModule imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} canEdit={canEdit} autoSave={autoSave} />
+                        <ImgModuleSlide imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} canEdit={canEdit} autoSave={autoSave} isCover={false}/>
                     </div> 
                 </div>
                 <div className="w-full h-[7%] mt-[2%]"> 
@@ -180,37 +184,50 @@ export const Col_2_img_1 = ({subtopic, content, keywords, imgs, icon, update_cal
 
 export const First_page_img_1_template2 = ({ original_title, English_title, imgs, icon, update_callback, canEdit, autoSave }: MainSlideProps) => {
     const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback);
+    const [username, setUsername] = useState(null)
+    
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+            const username = await AuthService.getCurrentUserDisplayName();
+                setUsername(username);
+            } catch (error) {
+                console.log('No authenticated user.');
+            }
+        };
+
+        fetchUser(); 
+    }, []);
+
     return (
         <div
-            className="overflow-hidden gap-[32px]"
+            className="overflow-hidden"
             style={{
                 width: '100%',
                 height: '100%',
                 backgroundSize: 'cover',
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
-                boxSizing: 'border-box',
                 border: 'none',
                 position: 'relative',
                 backgroundColor: '#CED0CC',
                 padding: '22px',
             }}>
             <div className="w-full h-full flex flex-col justify-between">
-                <div className="w-full flex flex-col bg-red">
-                    <div className="w-full">
-                        <div className="w-full">{English_title}</div>
+                <div className="w-full flex flex-col">
+                        <div className="px-[2%] mr-[auto] flex items-end" style={h5Style}>
+                            <div className="flex justify-start" >
+                                by {username}
+                            </div>
+                        </div>
                         <div className="">{original_title}</div>
-                    </div>
                 </div>
-                <div 
-                    className="w-full h-1/2 flex"
-                    style={{
-                        borderRadius: '20px',
-                        backgroundImage: `url(${localImgs[0]})`,
-                        backgroundSize: 'cover',
-                    }}>
+                <div className="w-full h-[auto] flex rounded-md overflow-hidden">
+                    <ImgModuleSlide
+                        imgsrc={localImgs[0]}
+                        updateSingleCallback={updateImgAtIndex(0)}
+                        canEdit={canEdit}
+                        autoSave={autoSave}
+                        isCover={false}
+                    />
                 </div>
             </div>
         </div>
@@ -428,9 +445,9 @@ export const templateSamples = {
     }],
     main: [{
         name: 'Col_1_img_0',
-        img: col1img0_png.src,
+        img: noimg_png.src,
     }, {
         name: 'Col_2_img_1',
-        img: col2img1_png.src,
+        img: withimg_png.src,
     }]
 };

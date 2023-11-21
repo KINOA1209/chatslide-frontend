@@ -11,7 +11,6 @@ interface ImgModuleProp {
     updateSingleCallback: Function,
     canEdit: boolean,
     autoSave: Function,
-    isCover: boolean,
 }
 
 enum ImgQueryMode {
@@ -20,7 +19,7 @@ enum ImgQueryMode {
     GENERATION,
 }
 
-export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave, isCover}: ImgModuleProp) => {
+export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: ImgModuleProp) => {
     const [showModal, setShowModal] = useState(false);
     const [keyword, setKeyword] = useState('');
     const [searchResult, setSearchResult] = useState<string[]>([]);
@@ -35,7 +34,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave, isC
     const [selectedQueryMode, setSelectedQueryMode] = useState<ImgQueryMode>(ImgQueryMode.RESOURCE);
 
     useEffect(() => {
-        console.log(selectedQueryMode)
+        //console.log(selectedQueryMode)
     }, [selectedQueryMode])
 
     useEffect(() => {
@@ -61,28 +60,26 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave, isC
         setSearchResult([]);
         setSearching(true);
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-
-        const response = await fetch('/api/search_images', {
-            method: 'POST',
+        const dummyParam = `dummy=${Math.random()}`;
+        const response = await fetch(`/api/search_illustration_images?keyword=${encodeURIComponent(keyword)}&${dummyParam}`, {
+            mode: 'cors',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${idToken}`
-            },
-            body: JSON.stringify({
-                search_keyword: (e.target as HTMLFormElement).search_keyword.value
-            })
-        }).then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                const error = response.status
-                console.error(error, response);
             }
-        }).then(parsedResponse => {
-            setSearchResult(parsedResponse.data.images);
-        }).catch(e => {
-            console.error(e);
-        });
+        })
+        if (response.ok) {
+            try{
+                const parsedResponse = await response.json()
+                setSearchResult(parsedResponse.data.images);
+            } catch (error) {
+                console.error(error);
+            }
+        } else {
+            const error = response.status
+            console.error(error, response);
+        }
         setSearching(false);
     }
 
@@ -269,12 +266,12 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave, isC
 
     const handleMouseOver = (e: React.MouseEvent<HTMLButtonElement>, type: ImgQueryMode) => {
         setHoverQueryMode(type)
-        console.log('hover', type)
+        //console.log('hover', type)
     }
 
     const handleMouseOut = (e: React.MouseEvent<HTMLButtonElement>, type: ImgQueryMode) => {
         setHoverQueryMode(selectedQueryMode);
-        console.log('out', selectedQueryMode)
+        //console.log('out', selectedQueryMode)
     }
 
     const resourceSelectionDiv = (
@@ -354,15 +351,17 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave, isC
             <div className='w-full h-full overflow-y-auto p-1'>
                 <div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-2'>
                     {searchResult.map((url, index) => {
+                        const randomParam = `random=${Math.random()}`;
+                        const imageUrlWithRandomParam = `${url}?${randomParam}`;
                         if (url === selectedImg) {
                             return <div onClick={handleImageClick}
                                 key={index} className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-[3px]`}>
-                                <img className='w-full h-full object-cover' src={url} />
+                                <img className='w-full h-full object-cover' src={imageUrlWithRandomParam} />
                             </div>
                         } else {
                             return <div onClick={handleImageClick}
                                 key={index} className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-[3px]`}>
-                                <img className='w-full h-full object-cover' src={url} />
+                                <img className='w-full h-full object-cover' src={imageUrlWithRandomParam} />
                             </div>
                         }
                     })}
@@ -436,7 +435,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave, isC
             leaveFrom="opacity-100 translate-y-0"
             leaveTo="opacity-0 translate-y-12"
         >
-          {showPaymentModal && <PaywallModal setShowModal={setShowPaymentModal} message='Upgrade for more ⭐️credits.' showReferralLink={true} />}
+            {showPaymentModal && <PaywallModal setShowModal={setShowPaymentModal} message='Upgrade for more ⭐️credits.' />}
             <div className='grow md:grow-0'></div>
             <Transition
                 className='bg-gray-100 w-full h-3/4 md:h-[65vh]
@@ -550,14 +549,9 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave, isC
 
         {/* image itsefl */}
         <div onClick={openModal}
-            className={`w-full h-full transition ease-in-out duration-150 ${selectedImg === '' ? 'bg-[#E7E9EB]' : canEdit ? 'hover:bg-[#CAD0D3] hover:brightness-90' : ''} cursor-pointer`}
-            style={{
-                backgroundImage: selectedImg !== '' ? isCover ? `linear-gradient(180deg, #E54BFF 0%, rgba(217, 217, 217, 0.00) 40%), url(${selectedImg})` : `url(${selectedImg}`: 'none',
-                backgroundSize: 'cover',
-            }}
-            >
+            className={`w-full h-full transition ease-in-out duration-150 ${selectedImg === '' ? 'bg-[#E7E9EB]' : canEdit ? 'hover:bg-[#CAD0D3]' : ''} flex flex-col items-center justify-center cursor-pointer`}>
 
-            {selectedImg === '' && (
+            {selectedImg === '' ?
                 <div className='flex flex-col items-center justify-center'>
                     <svg className="w-20 h-20 opacity-50" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <rect x="0" fill="none" width="24" height="24" />
@@ -570,7 +564,18 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave, isC
                         {canEdit && 'Click to add image'}
                     </div>
                 </div>
-            )}
+                :
+                <img
+                    style={{ 
+                        objectFit: 'contain',
+                        maxWidth: '100%', 
+                        maxHeight: '100%', 
+                        width: 'auto',     
+                        height: 'auto',    
+                    }}
+                    className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`}
+                    src={imgsrc} />
+            }
         </div>
     </>
 }
