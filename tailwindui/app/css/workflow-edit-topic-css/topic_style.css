@@ -72,17 +72,6 @@
     line-height: 1.5;
 }
 
-#charcnt {
-    height:30px;
-    bottom: 35px;
-    font-family: 'Creato Display', sans-serif;
-    font-weight: 400;
-    font-size: 14px;
-    color: #707C8A;
-    scroll-padding: 20px;
-    padding-left: 20px;
-}
-
 .dropdown_container {
     padding-top: 20px; 
 }

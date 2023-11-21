@@ -23,6 +23,7 @@ import { SmallBlueButton } from '@/components/button/DrlambdaButton'
 import WebService from '@/components/utils/WebpageService';
 
 const MAX_TOPIC_LENGTH = 80
+const MIN_TOPIC_LENGTH = 6
 
 const audienceList = [
   'Researchers',
@@ -57,6 +58,7 @@ export default function Topic_SocialPost() {
   const [showFileModal, setShowFileModal] = useState(false)
   const [linkUrl, setLinkUrl] = useState('' as string)
   const [linkError, setLinkError] = useState('')
+  const [topicError, setTopicError] = useState('')
   const [urlIsYoutube, setUrlIsYoutube] = useState(false)
   const [isGpt35, setIsGpt35] = useState(true)
   const [showPaymentModal, setShowPaymentModal] = useState(false)
@@ -177,10 +179,30 @@ export default function Topic_SocialPost() {
     openFile()
   }
 
+  const updateTopic = (topic: string) => {
+    if (topic.length >= MIN_TOPIC_LENGTH) {
+      setTopicError('')
+    }
+    if (topic.length > MAX_TOPIC_LENGTH) {
+      setTopic(topic.slice(0, MAX_TOPIC_LENGTH))
+    } else {
+      setTopic(topic)
+    }
+  }
+
   const handleSubmit = async () => {
     console.log('submitting')
+
+    if (topic.length < MIN_TOPIC_LENGTH) {
+      setTopicError(`Please enter at least ${MIN_TOPIC_LENGTH} characters.`)
+      setIsSubmitting(false)
+      return
+    }
+
     if (linkError) {
       console.log(linkError) // continue without the valid link
+      setIsSubmitting(false)
+      return
     }
 
     const project_id =
@@ -598,7 +620,7 @@ export default function Topic_SocialPost() {
               </div>
               <div className='textfield'>
                 <textarea
-                  onChange={(e) => setTopic(e.target.value)}
+                  onChange={(e) => updateTopic(e.target.value)}
                   className='focus:ring-0 text-l md:text-xl bg-gray-100'
                   id='topic'
                   value={topic}
@@ -607,9 +629,12 @@ export default function Topic_SocialPost() {
                   placeholder='How to use ultrasound to detect breast cancer'
                 ></textarea>
                 {
-                  <div className='charcnt' id='charcnt'>
+                  <div className='text-gray-500 text-sm mt-1'>
                     {MAX_TOPIC_LENGTH - topic.length} characters left
                   </div>
+                }
+                {topicError &&
+                  <div className='text-red-500 text-sm mt-1'>{topicError}</div>
                 }
               </div>
 
