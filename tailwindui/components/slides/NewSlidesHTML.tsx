@@ -39,6 +39,7 @@ export type SlideKeys =
   | 'template'
   | 'content'
   | 'images'
+  | 'layout'
 
 export class Slide {
   head: string
@@ -48,6 +49,7 @@ export class Slide {
   template: string
   content: string[]
   images: string[]
+  layout: string
 
   constructor() {
     this.head = 'New Slide'
@@ -57,6 +59,7 @@ export class Slide {
     this.template = 'Col_1_img_0'
     this.content = ['Your content here']
     this.images = []
+    this.layout = 'Col_1_img_0_layout'
   }
 }
 
@@ -292,14 +295,17 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
           elements.title = sanitizeHtml(child.innerHTML)
         } else if (className === 'userName' && child.innerHTML.trim() !== '') {
           elements.userName = sanitizeHtml(child.innerHTML)
-        } else if (className === 'subtopic') {
+        } else if (className === 'subtopic' && child.innerHTML.trim() !== '') {
           elements.subtopic = sanitizeHtml(child.innerHTML)
-        } else if (className === 'template') {
+        } else if (className === 'template' && child.innerHTML.trim() !== '') {
           elements.template = sanitizeHtml(child.innerHTML)
-        } else if (className === 'content') {
+        } else if (className === 'content' && child.innerHTML.trim() !== '') {
           const listItems = Array.from(child.getElementsByTagName('li'))
           elements.content = listItems.map((li) => sanitizeHtml(li.innerHTML))
-        } else if (child.className === 'images') {
+        } else if (
+          child.className === 'images' &&
+          child.innerHTML.trim() !== ''
+        ) {
           const listItems = Array.from(child.getElementsByTagName('img'))
           let urls = listItems.map((img) => {
             const src = img.getAttribute('src')
@@ -321,6 +327,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         //   elements.template = 'Col_1_img_0'
         // }
         elements.template = 'Col_1_img_0'
+      }
+
+      // default layout setting
+      if (elements.layout === '') {
+        elements.layout = 'Col_1_img_0_layout'
       }
       return elements
     })
@@ -368,6 +379,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     } else if (className === 'template') {
       currentSlide.template = content as string
       currNewFinalSlides.template = content as string
+    } else if (className === 'layout') {
+      currentSlide.layout = content as string
+      currNewFinalSlides.layout = content as string
     } else if (className === 'images') {
       currentSlide.images = content as string[]
       currNewFinalSlides.images = content as string[]
@@ -497,7 +511,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       handleSlideEdit,
       updateImgUrlArray,
       toggleEditMode,
-      index === 0
+      index === 0,
+      slide.layout
     )
 
   return (
