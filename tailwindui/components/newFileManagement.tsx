@@ -79,17 +79,6 @@ const FileManagement: React.FC<UserFileList> = ({
         const fileDeleteFeedback = await response.json()
         if (response.status === 200) {
           deleteCallback(id)
-          toast.success('File deleted successfully', {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'light',
-            containerId: 'fileManagement',
-          })
         } else {
           // error handling does not work
           toast.error(fileDeleteFeedback.message, {
