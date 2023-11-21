@@ -436,7 +436,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave, isC
             leaveFrom="opacity-100 translate-y-0"
             leaveTo="opacity-0 translate-y-12"
         >
-            {showPaymentModal && <PaywallModal setShowModal={setShowPaymentModal} message='Upgrade for more ⭐️credits.' />}
+          {showPaymentModal && <PaywallModal setShowModal={setShowPaymentModal} message='Upgrade for more ⭐️credits.' showReferralLink={true} />}
             <div className='grow md:grow-0'></div>
             <Transition
                 className='bg-gray-100 w-full h-3/4 md:h-[65vh]

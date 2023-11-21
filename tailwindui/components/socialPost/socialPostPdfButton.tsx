@@ -125,6 +125,7 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
           <PaywallModal
             setShowModal={setShowPaymentModal}
             message='Upgrade for more ⭐️credits.'
+            showReferralLink={true}
           />
         )}
 

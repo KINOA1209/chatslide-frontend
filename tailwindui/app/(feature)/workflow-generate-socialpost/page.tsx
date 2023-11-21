@@ -489,6 +489,7 @@ export default function Topic_SocialPost() {
         <PaywallModal
           setShowModal={setShowPaymentModal}
           message='Upgrade for more ⭐️credits.'
+          showReferralLink={true}
         />
       )}
       <form onSubmit={handleSubmit}>
