@@ -2,6 +2,7 @@ import React from 'react'
 import { Transition } from '@headlessui/react' // Assuming you're using Headless UI for Transitions
 import { SlideKeys } from '@/components/slides/NewSlidesHTML'
 import { ChangeLayoutIcon } from '@/app/(feature)/icons'
+import { LayoutKeys } from './slideTemplates'
 type LayoutProps = {
   openModal: () => void
   showLayout: boolean
@@ -11,12 +12,13 @@ type LayoutProps = {
     cover: { name: string; img: string }[]
     main: { name: string; img: string }[]
   }
-  slides: { template: string }[]
+  slides: { layout: string }[]
   handleSlideEdit: (
     content: string | string[],
     slideIndex: number,
     tag: SlideKeys
   ) => void
+  availableLayouts: { main: { name: LayoutKeys; img: string }[] }
 }
 
 const LayoutChanger: React.FC<LayoutProps> = ({
@@ -27,14 +29,24 @@ const LayoutChanger: React.FC<LayoutProps> = ({
   templateSamples,
   slides,
   handleSlideEdit,
+  availableLayouts,
 }) => {
-  const updateTemplate = (
+  // const updateTemplate = (
+  //   e: React.MouseEvent<HTMLDivElement>,
+  //   templateName: string,
+  //   slideIndex: number
+  // ) => {
+  //   e.preventDefault()
+  //   handleSlideEdit(templateName, slideIndex, 'template')
+  // }
+
+  const updateLayout = (
     e: React.MouseEvent<HTMLDivElement>,
-    templateName: string,
+    layoutName: LayoutKeys,
     slideIndex: number
   ) => {
     e.preventDefault()
-    handleSlideEdit(templateName, slideIndex, 'template')
+    handleSlideEdit(layoutName, slideIndex, 'layout')
   }
 
   return (
@@ -89,7 +101,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
                 <div className='w-full h-full flex flex-col'>
                   <div className='w-full h-full overflow-y-auto'>
                     <div className='w-full h-fit grid grid-cols-2 gap-4 p-2'>
-                      {currentSlideIndex === 0
+                      {/* {currentSlideIndex === 0
                         ? templateSamples.cover.map((temp, index) => {
                             if (!slides[currentSlideIndex]) {
                               return <></>
@@ -174,7 +186,48 @@ const LayoutChanger: React.FC<LayoutProps> = ({
                                 </div>
                               )
                             }
-                          })}
+                        })} */}
+                      {availableLayouts.main.map((currLayout, index) => {
+                        if (
+                          currLayout.name !== slides[currentSlideIndex].layout
+                        ) {
+                          return (
+                            <div
+                              onClick={(e) =>
+                                updateLayout(
+                                  e,
+                                  currLayout.name,
+                                  currentSlideIndex
+                                )
+                              }
+                              className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'
+                            >
+                              <img
+                                src={currLayout.img}
+                                className='w-full h-full object-contain'
+                              />
+                            </div>
+                          )
+                        } else {
+                          return (
+                            <div
+                              onClick={(e) =>
+                                updateLayout(
+                                  e,
+                                  currLayout.name,
+                                  currentSlideIndex
+                                )
+                              }
+                              className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'
+                            >
+                              <img
+                                src={currLayout.img}
+                                className='w-full h-full object-contain'
+                              />
+                            </div>
+                          )
+                        }
+                      })}
                     </div>
                   </div>
                 </div>

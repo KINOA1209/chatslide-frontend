@@ -12,7 +12,18 @@ import MaskedBackground from '@/public/images/template/Berkeley/Mask Background.
 import BerkeleyLogoWhite from '@/public/images/template/Berkeley/Berkeley_logo_white.png'
 import HarvardLogo from '@/public/images/template/Harvard/Harvard_logo.png'
 import HarvardCoverVector from '@/public/images/template/Harvard/cover_vector_1.png'
-import { Col_2_img_1_layout } from './slideLayout'
+// import { layoutOptions } from './slideLayout'
+import {
+  Col_1_img_0_layout,
+  Col_2_img_1_layout,
+  Col_3_img_2_layout,
+} from './slideLayout'
+
+export type LayoutKeys =
+  | ''
+  | 'Col_1_img_0_layout'
+  | 'Col_2_img_1_layout'
+  | 'Col_3_img_2_layout'
 export interface MainSlideProps {
   user_name: JSX.Element
   title: JSX.Element
@@ -25,7 +36,7 @@ export interface MainSlideProps {
   canEdit: boolean
   autoSave: Function
   isCoverPage: boolean
-  layoutOption: string
+  layoutOption: LayoutKeys
 }
 
 const useLocalImgs = (
@@ -65,7 +76,125 @@ const useLocalImgs = (
   return { localImgs, updateImgAtIndex }
 }
 
-export const Col_2_img_1 = ({
+// export const Col_2_img_1 = ({
+//   user_name,
+//   title,
+//   topic,
+//   subtopic,
+//   content,
+//   imgs,
+//   update_callback,
+//   canEdit,
+//   autoSave,
+//   isCoverPage,
+//   layoutOption,
+// }: MainSlideProps) => {
+//   // dynamically choose the layout option from current available options
+//   const ChosenLayout = AllLayouts[layoutOption as keyof typeof AllLayouts]
+//   console.log('choosing layout option', layoutOption)
+//   return (
+//     <div
+//       className='rounded-md overflow-hidden'
+//       style={{
+//         width: '100%',
+//         height: '100%',
+//         backgroundSize: 'cover',
+//         display: 'flex',
+//         flexDirection: 'column',
+//         justifyContent: 'flex-start',
+//         alignItems: 'flex-start',
+//         boxSizing: 'border-box',
+//         border: 'none',
+//         // boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
+//         position: 'relative',
+//         backgroundColor: 'white',
+//         padding: '28px',
+//       }}
+//     >
+//       <div>
+//         <div>{topic}</div>
+//       </div>
+//       <div>{subtopic}</div>
+//       <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr>
+//       {/* <div className='h-full w-full flex flex-row overflow-hidden gap-[32px]'>
+//         <div className='w-full h-full grow p-1'>{content}</div>
+//         <div className='w-full h-full grow rounded-md overflow-hidden'>
+//           <ImgModule
+//             imgsrc={localImgs[0]}
+//             updateSingleCallback={updateImgAtIndex(0)}
+//             canEdit={canEdit}
+//             autoSave={autoSave}
+//           />
+//         </div>
+//       </div> */}
+//       <ChosenLayout
+//         content={content}
+//         user_name={user_name}
+//         title={title}
+//         topic={topic}
+//         subtopic={subtopic}
+//         imgs={imgs}
+//         update_callback={update_callback}
+//         canEdit={canEdit}
+//         autoSave={autoSave}
+//         isCoverPage={false}
+//         layoutOption={layoutOption}
+//       ></ChosenLayout>
+//     </div>
+//   )
+// }
+
+// export const First_page_img_1 = ({
+//   user_name,
+//   title,
+//   topic,
+//   subtopic,
+//   content,
+//   imgs,
+//   update_callback,
+//   canEdit,
+//   autoSave,
+// }: MainSlideProps) => {
+//   const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback)
+
+//   return (
+//     <div
+//       className='rounded-md overflow-hidden gap-[32px]'
+//       style={{
+//         width: '100%',
+//         height: '100%',
+//         backgroundSize: 'cover',
+//         display: 'flex',
+//         flexDirection: 'row',
+//         justifyContent: 'flex-start',
+//         alignItems: 'flex-start',
+//         boxSizing: 'border-box',
+//         border: 'none',
+//         // boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
+//         position: 'relative',
+//         backgroundColor: 'white',
+//         padding: '28px',
+//       }}
+//     >
+//       <div className='w-1/2 flex flex-col justify-between h-full'>
+//         <div>{user_name}</div>
+
+//         <div>{title}</div>
+//       </div>
+
+//       <div className='w-1/2 h-full rounded-md overflow-hidden'>
+//         <ImgModule
+//           imgsrc={localImgs[0]}
+//           updateSingleCallback={updateImgAtIndex(0)}
+//           canEdit={canEdit}
+//           autoSave={autoSave}
+//         />
+//       </div>
+//     </div>
+//   )
+// }
+
+export const Default_template = ({
   user_name,
   title,
   topic,
@@ -79,122 +208,8 @@ export const Col_2_img_1 = ({
   layoutOption,
 }: MainSlideProps) => {
   const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback)
-
-  return (
-    <div
-      className='rounded-md overflow-hidden'
-      style={{
-        width: '100%',
-        height: '100%',
-        backgroundSize: 'cover',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        boxSizing: 'border-box',
-        border: 'none',
-        // boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
-        position: 'relative',
-        backgroundColor: 'white',
-        padding: '28px',
-      }}
-    >
-      <div>
-        <div>{topic}</div>
-      </div>
-      <div>{subtopic}</div>
-      <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr>
-      {/* <div className='h-full w-full flex flex-row overflow-hidden gap-[32px]'>
-        <div className='w-full h-full grow p-1'>{content}</div>
-        <div className='w-full h-full grow rounded-md overflow-hidden'>
-          <ImgModule
-            imgsrc={localImgs[0]}
-            updateSingleCallback={updateImgAtIndex(0)}
-            canEdit={canEdit}
-            autoSave={autoSave}
-          />
-        </div>
-      </div> */}
-      <Col_2_img_1_layout
-        content={content}
-        user_name={user_name}
-        title={title}
-        topic={topic}
-        subtopic={subtopic}
-        imgs={imgs}
-        update_callback={update_callback}
-        canEdit={canEdit}
-        autoSave={autoSave}
-        isCoverPage={false}
-        layoutOption={layoutOption}
-      ></Col_2_img_1_layout>
-    </div>
-  )
-}
-
-export const First_page_img_1 = ({
-  user_name,
-  title,
-  topic,
-  subtopic,
-  content,
-  imgs,
-  update_callback,
-  canEdit,
-  autoSave,
-}: MainSlideProps) => {
-  const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback)
-
-  return (
-    <div
-      className='rounded-md overflow-hidden gap-[32px]'
-      style={{
-        width: '100%',
-        height: '100%',
-        backgroundSize: 'cover',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        boxSizing: 'border-box',
-        border: 'none',
-        // boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
-        position: 'relative',
-        backgroundColor: 'white',
-        padding: '28px',
-      }}
-    >
-      <div className='w-1/2 flex flex-col justify-between h-full'>
-        <div>{user_name}</div>
-
-        <div>{title}</div>
-      </div>
-
-      <div className='w-1/2 h-full rounded-md overflow-hidden'>
-        <ImgModule
-          imgsrc={localImgs[0]}
-          updateSingleCallback={updateImgAtIndex(0)}
-          canEdit={canEdit}
-          autoSave={autoSave}
-        />
-      </div>
-    </div>
-  )
-}
-
-export const Col_1_img_0 = ({
-  user_name,
-  title,
-  topic,
-  subtopic,
-  content,
-  imgs,
-  update_callback,
-  canEdit,
-  autoSave,
-  isCoverPage,
-}: MainSlideProps) => {
-  const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback)
+  //   const ChosenLayout = layoutOptions[layoutOption as keyof typeof layoutOptions]
+  //   console.log('choosing layout option', ChosenLayout)
   return (
     <>
       {/* for cover page slide */}
@@ -262,7 +277,7 @@ export const Col_1_img_0 = ({
           {subtopic}
         </div>
         <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr>
-        <div className='h-full w-full flex flex-row overflow-hidden gap-[32px]'>
+        {/* <div className='h-full w-full flex flex-row overflow-hidden gap-[32px]'>
           <div
             className='w-full h-full grow p-1'
             style={{
@@ -275,71 +290,128 @@ export const Col_1_img_0 = ({
           >
             {content}
           </div>
-        </div>
+        </div> */}
+
+        {/* Use switch statement to render different layouts */}
+        {(() => {
+          switch (layoutOption) {
+            case 'Col_1_img_0_layout':
+              return (
+                <Col_1_img_0_layout
+                  content={content}
+                  user_name={user_name}
+                  title={title}
+                  topic={topic}
+                  subtopic={subtopic}
+                  imgs={imgs}
+                  update_callback={update_callback}
+                  canEdit={canEdit}
+                  autoSave={autoSave}
+                  isCoverPage={isCoverPage}
+                  layoutOption={layoutOption}
+                />
+              )
+            case 'Col_2_img_1_layout':
+              return (
+                <Col_2_img_1_layout
+                  content={content}
+                  user_name={user_name}
+                  title={title}
+                  topic={topic}
+                  subtopic={subtopic}
+                  imgs={imgs}
+                  update_callback={update_callback}
+                  canEdit={canEdit}
+                  autoSave={autoSave}
+                  isCoverPage={isCoverPage}
+                  layoutOption={layoutOption}
+                />
+              )
+            case 'Col_3_img_2_layout':
+              return (
+                <Col_3_img_2_layout
+                  content={content}
+                  user_name={user_name}
+                  title={title}
+                  topic={topic}
+                  subtopic={subtopic}
+                  imgs={imgs}
+                  update_callback={update_callback}
+                  canEdit={canEdit}
+                  autoSave={autoSave}
+                  isCoverPage={isCoverPage}
+                  layoutOption={layoutOption}
+                />
+              )
+            // Add more cases for other layout options
+            default:
+              return null
+          }
+        })()}
       </div>
     </>
   )
 }
 
-export const Col_3_img_2 = ({
-  user_name,
-  title,
-  topic,
-  subtopic,
-  content,
-  imgs,
-  update_callback,
-  canEdit,
-  autoSave,
-}: MainSlideProps) => {
-  const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 2, update_callback)
+// export const Col_3_img_2 = ({
+//   user_name,
+//   title,
+//   topic,
+//   subtopic,
+//   content,
+//   imgs,
+//   update_callback,
+//   canEdit,
+//   autoSave,
+// }: MainSlideProps) => {
+//   const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 2, update_callback)
 
-  return (
-    <div
-      className='rounded-md overflow-hidden'
-      style={{
-        width: '100%',
-        height: '100%',
-        backgroundSize: 'cover',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        boxSizing: 'border-box',
-        border: 'none',
-        // boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
-        position: 'relative',
-        backgroundColor: 'white',
-        padding: '28px',
-      }}
-    >
-      <div>
-        <div>{topic}</div>
-      </div>
-      <div>{subtopic}</div>
-      <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr>
-      <div className='h-full w-full flex flex-row overflow-hidden gap-[32px]'>
-        <div className='w-full h-full grow p-1'>{content}</div>
-        <div className='w-full h-full grow rounded-md overflow-hidden'>
-          <ImgModule
-            imgsrc={localImgs[0]}
-            updateSingleCallback={updateImgAtIndex(0)}
-            canEdit={canEdit}
-            autoSave={autoSave}
-          />
-        </div>
-        <div className='w-full h-full grow rounded-md overflow-hidden'>
-          <ImgModule
-            imgsrc={localImgs[1]}
-            updateSingleCallback={updateImgAtIndex(1)}
-            canEdit={canEdit}
-            autoSave={autoSave}
-          />
-        </div>
-      </div>
-    </div>
-  )
-}
+//   return (
+//     <div
+//       className='rounded-md overflow-hidden'
+//       style={{
+//         width: '100%',
+//         height: '100%',
+//         backgroundSize: 'cover',
+//         display: 'flex',
+//         flexDirection: 'column',
+//         justifyContent: 'flex-start',
+//         alignItems: 'flex-start',
+//         boxSizing: 'border-box',
+//         border: 'none',
+//         // boxShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
+//         position: 'relative',
+//         backgroundColor: 'white',
+//         padding: '28px',
+//       }}
+//     >
+//       <div>
+//         <div>{topic}</div>
+//       </div>
+//       <div>{subtopic}</div>
+//       <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr>
+//       <div className='h-full w-full flex flex-row overflow-hidden gap-[32px]'>
+//         <div className='w-full h-full grow p-1'>{content}</div>
+//         <div className='w-full h-full grow rounded-md overflow-hidden'>
+//           <ImgModule
+//             imgsrc={localImgs[0]}
+//             updateSingleCallback={updateImgAtIndex(0)}
+//             canEdit={canEdit}
+//             autoSave={autoSave}
+//           />
+//         </div>
+//         <div className='w-full h-full grow rounded-md overflow-hidden'>
+//           <ImgModule
+//             imgsrc={localImgs[1]}
+//             updateSingleCallback={updateImgAtIndex(1)}
+//             canEdit={canEdit}
+//             autoSave={autoSave}
+//           />
+//         </div>
+//       </div>
+//     </div>
+//   )
+// }
 
 export const Stanford_school_template = ({
   user_name,
@@ -352,8 +424,11 @@ export const Stanford_school_template = ({
   canEdit,
   autoSave,
   isCoverPage,
+  layoutOption,
 }: MainSlideProps) => {
-  const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback)
+  //   const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback)
+  //   const ChosenLayout = layoutOptions[layoutOption as keyof typeof layoutOptions]
+  console.log('choosing layout option', layoutOption)
   return (
     <>
       {/* for not-cover page slides */}
@@ -603,14 +678,15 @@ export const Harvard_school_template = ({
   )
 }
 
-export default {
-  Col_2_img_1: Col_2_img_1,
-  First_page_img_1: First_page_img_1,
-  Col_1_img_0: Col_1_img_0,
-  Col_3_img_2: Col_3_img_2,
+export const availableTemplates = {
+  //   Col_2_img_1: Col_2_img_1,
+  //   First_page_img_1: First_page_img_1,
+  //   Col_1_img_0: Col_1_img_0,
+  //   Col_3_img_2: Col_3_img_2,
   Stanford: Stanford_school_template,
   Berkeley: Berkeley_school_template,
   Harvard: Harvard_school_template,
+  Default_template: Default_template,
 }
 
 export const templateSamples = {

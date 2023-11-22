@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { ImgModule } from '@/components/imgModule'
-import { MainSlideProps } from './slideTemplates'
-
+import { LayoutKeys, MainSlideProps } from './slideTemplates'
+import col1img0_png from '@/public/images/template/col1img0.png'
+import col2img1_png from '@/public/images/template/col2img1.png'
+import col3img2_png from '@/public/images/template/col3img2.png'
 const useLocalImgs = (
   imgs: string[],
   imgCount: number,
@@ -37,6 +39,37 @@ const useLocalImgs = (
   }
 
   return { localImgs, updateImgAtIndex }
+}
+
+export const Col_1_img_0_layout = ({
+  user_name,
+  title,
+  topic,
+  subtopic,
+  content,
+  imgs,
+  update_callback,
+  canEdit,
+  autoSave,
+  isCoverPage,
+  layoutOption,
+}: MainSlideProps) => {
+  return (
+    <div className='h-full w-full flex flex-row overflow-hidden gap-[32px]'>
+      <div
+        className='w-full h-full grow p-1'
+        style={{
+          // display: 'list-item',
+          listStyleType: 'disc',
+          listStylePosition: 'inside',
+          fontSize: '18pt',
+          marginLeft: '20px',
+        }}
+      >
+        {content}
+      </div>
+    </div>
+  )
 }
 
 export const Col_2_img_1_layout = ({
@@ -78,6 +111,8 @@ export const Col_3_img_2_layout = ({
   update_callback,
   canEdit,
   autoSave,
+  isCoverPage,
+  layoutOption,
 }: MainSlideProps) => {
   const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 2, update_callback)
   return (
@@ -103,7 +138,25 @@ export const Col_3_img_2_layout = ({
   )
 }
 
-export default {
+export const layoutOptions = {
+  Col_1_img_0_layout: Col_1_img_0_layout,
   Col_2_img_1_layout: Col_2_img_1_layout,
   Col_3_img_2_layout: Col_3_img_2_layout,
+}
+
+export const availableLayouts = {
+  main: [
+    {
+      name: 'Col_1_img_0_layout' as LayoutKeys,
+      img: col1img0_png.src,
+    },
+    {
+      name: 'Col_2_img_1_layout' as LayoutKeys,
+      img: col2img1_png.src,
+    },
+    {
+      name: 'Col_3_img_2_layout' as LayoutKeys,
+      img: col3img2_png.src,
+    },
+  ],
 }

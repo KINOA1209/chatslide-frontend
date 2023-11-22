@@ -1,8 +1,11 @@
 import { h1Style, h2Style, h3Style, h4Style, listStyle } from './Styles'
 import { Slide, SlideKeys } from '@/components/slides/NewSlidesHTML'
-import templates, { templateSamples } from '@/components/slides/slideTemplates'
+import {
+  availableTemplates,
+  templateSamples,
+} from '@/components/slides/slideTemplates'
 import { MathJax, MathJaxContext } from 'better-react-mathjax'
-
+import { LayoutKeys } from '@/components/slides/slideTemplates'
 function wrapWithLiTags(content: string): string {
   if (!content.includes('<li>') || !content.includes('</li>')) {
     return `<li>${content}</li>`
@@ -28,7 +31,7 @@ export const templateDispatch = (
   toggleEditMathMode: () => void = () => {}, // Replace with your default function if you have one
 
   isCoverPage: boolean,
-  layoutOption: string
+  layoutOption: LayoutKeys
 ): JSX.Element => {
   let keyPrefix = ''
   if (exportToPdfMode) {
@@ -36,7 +39,9 @@ export const templateDispatch = (
   } else if (!canEdit) {
     keyPrefix = 'preview'
   }
-  const Template = templates[slide.template as keyof typeof templates]
+  const Template =
+    availableTemplates[slide.template as keyof typeof availableTemplates]
+  // console.log('templates are', Template)
   // if (index === 0) {
   //   return (
   //     <Template
@@ -272,7 +277,7 @@ export const templateDispatch = (
       imgs={slide.images as string[]}
       update_callback={updateImgUrlArray(index)}
       isCoverPage={isCoverPage}
-      layoutOption={slide.layout}
+      layoutOption={layoutOption}
     />
   )
   // }

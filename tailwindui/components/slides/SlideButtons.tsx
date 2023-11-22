@@ -331,7 +331,10 @@ export const ChangeTemplateOptions: React.FC<{
     }
   }
 
-  useEffect(() => console.log('templateOptions are:', templateOptions), [])
+  useEffect(
+    () => console.log('templateOptions are:', templateOptions),
+    [selectedTemplate]
+  )
 
   return (
     <div className='relative'>

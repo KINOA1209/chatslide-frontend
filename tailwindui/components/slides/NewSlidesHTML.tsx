@@ -5,7 +5,11 @@ import sanitizeHtml from 'sanitize-html'
 import { MathJax, MathJaxContext } from 'better-react-mathjax'
 import './slidesHTML.css'
 import dynamic from 'next/dynamic'
-import templates, { templateSamples } from '@/components/slides/slideTemplates'
+import {
+  LayoutKeys,
+  availableTemplates,
+  templateSamples,
+} from '@/components/slides/slideTemplates'
 import ClickableLink from '../ui/ClickableLink'
 import LayoutChanger from './LayoutChanger'
 import {
@@ -24,6 +28,7 @@ import ButtonWithExplanation from '../button/ButtonWithExplanation'
 import { templateDispatch } from './templateDispatch'
 import { ScriptEditIcon } from '@/app/(feature)/workflow-review-slides/icons'
 import { useRouter } from 'next/navigation'
+import { availableLayouts } from './slideLayout'
 
 export interface SlideElement {
   type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div'
@@ -49,14 +54,14 @@ export class Slide {
   template: string
   content: string[]
   images: string[]
-  layout: string
+  layout: LayoutKeys
 
   constructor() {
     this.head = 'New Slide'
     this.title = 'New Slide'
     this.subtopic = 'New Slide'
     this.userName = ''
-    this.template = 'Col_1_img_0'
+    this.template = 'Default_template'
     this.content = ['Your content here']
     this.images = []
     this.layout = 'Col_1_img_0_layout'
@@ -286,6 +291,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       const elements = new Slide()
       const slideChildren = Array.from(slide.children)
       for (const child of slideChildren) {
+        // need backend to return the layout class
         let className = child.className
         // console.log('className:', className)
         // console.log('child inner html:', child.innerHTML.trim())
@@ -296,9 +302,18 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         } else if (className === 'userName' && child.innerHTML.trim() !== '') {
           elements.userName = sanitizeHtml(child.innerHTML)
         } else if (className === 'subtopic' && child.innerHTML.trim() !== '') {
+          // console.log('child inner html:', child.innerHTML.trim())
           elements.subtopic = sanitizeHtml(child.innerHTML)
-        } else if (className === 'template' && child.innerHTML.trim() !== '') {
-          elements.template = sanitizeHtml(child.innerHTML)
+        } else if (
+          className === 'template' &&
+          child.textContent?.trim() !== ''
+        ) {
+          // console.log('template child:', child.textContent?.trim())
+          // Use child.textContent for simple string content
+          elements.template = sanitizeHtml(child.textContent ?? '') // Use nullish coalescing
+        } else if (className === 'layout' && child.textContent?.trim() !== '') {
+          // Use child.textContent for simple string content
+          elements.layout = sanitizeHtml(child.textContent ?? '') as LayoutKeys // Use nullish coalescing
         } else if (className === 'content' && child.innerHTML.trim() !== '') {
           const listItems = Array.from(child.getElementsByTagName('li'))
           elements.content = listItems.map((li) => sanitizeHtml(li.innerHTML))
@@ -326,12 +341,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         // } else {
         //   elements.template = 'Col_1_img_0'
         // }
-        elements.template = 'Col_1_img_0'
+        elements.template = 'Default_template'
       }
 
       // default layout setting
       if (elements.layout === '') {
-        elements.layout = 'Col_1_img_0_layout'
+        elements.layout = 'Col_1_img_0_layout' as LayoutKeys
       }
       return elements
     })
@@ -380,8 +395,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       currentSlide.template = content as string
       currNewFinalSlides.template = content as string
     } else if (className === 'layout') {
-      currentSlide.layout = content as string
-      currNewFinalSlides.layout = content as string
+      currentSlide.layout = content as LayoutKeys
+      currNewFinalSlides.layout = content as LayoutKeys
     } else if (className === 'images') {
       currentSlide.images = content as string[]
       currNewFinalSlides.images = content as string[]
@@ -571,6 +586,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                   templateSamples={templateSamples}
                   slides={slides}
                   handleSlideEdit={handleSlideEdit}
+                  availableLayouts={availableLayouts}
                 />
               }
               explanation='Change Layout'
@@ -624,7 +640,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       />
       {!isViewing && (
         <ChangeTemplateOptions
-          templateOptions={Object.keys(templates)}
+          templateOptions={Object.keys(availableTemplates)}
           onChangeTemplate={changeTemplate}
         />
       )}
