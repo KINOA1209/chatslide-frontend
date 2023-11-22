@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { ToastContainer, toast } from 'react-toastify'
+import { Theme, ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import AuthService from '@/components/utils/AuthService'
 import '@/components/slides/slidesHTML.css'
@@ -20,6 +20,7 @@ import { templateDispatch } from '@/components/socialPost/socialPostTemplateDisp
 import { templateDispatch as templateDispatch2 } from '@/components/socialPost//socialPostTemplate2Dispatch';
 import { templateDispatch as templateDispatch3 } from '@/components/socialPost/socialPostTemplate3Dispatch';
 import templates, { templateSamples } from '@/components/socialPost/socialPostTemplates'
+import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger'
 
 export interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div'
@@ -94,6 +95,9 @@ type SlidesHTMLProps = {
     isViewing?: boolean // viewing another's shared project
     finalSlideIndex: number
     setFinalSlideIndex: Function
+    finalTheme: ThemeObject
+    setFinalTheme: (theme: ThemeObject) => void
+    borderColorOptions: ThemeObject[]
 }
 
 const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
@@ -102,6 +106,9 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
     isViewing = false,
     finalSlideIndex,
     setFinalSlideIndex,
+    finalTheme,
+    setFinalTheme,
+    borderColorOptions,
 }) => {
     const [slides, setSlides] = useState<SocialPostSlide[]>([])
     const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0)
@@ -150,19 +157,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
     const presentScale = Math.min(dimensions.width / 450, dimensions.height / 600)
     const nonPresentScale = Math.min(1, presentScale * 0.6)
     const [showTheme, setShowTheme] = useState(false)
-    const borderColorOptions = [
-        {border_start: '#FF7A41', border_end: '#D63300', cover_start: '#B83700 0%', cover_end: 'rgba(0, 0, 0, 0.00) 40%'}, 
-        {border_start: '#FFBE41', border_end: '#D68000', cover_start: '#AB8C1E 0%', cover_end: 'rgba(0, 0, 0, 0.00) 40%'},
-        {border_start: '#96EB2C', border_end: '#23830B', cover_start: '#579C00 0%', cover_end: 'rgba(0, 0, 0, 0.00) 40%'},
-        {border_start: '#FB42FF', border_end: '#767EFF', cover_start: '#9F4FC9 0%', cover_end: 'rgba(0, 0, 0, 0.00) 40%'}, //purple default color
-        {border_start: '#41C6FF', border_end: '#0055D6', cover_start: '#2593C8 0%', cover_end: 'rgba(0, 0, 0, 0.00) 40%'},
-        {border_start: '#937C67', border_end: '#4F361F', cover_start: '#725947 0%', cover_end: 'rgba(0, 0, 0, 0.00) 40%'},
-        {border_start: '#D0BF9E', border_end: '#AC9067', cover_start: '#725E16 0%', cover_end: 'rgba(0, 0, 0, 0.00) 40%'},
-        {border_start: '#AFC593', border_end: '#62735D', cover_start: '#52702D 0%', cover_end: 'rgba(0, 0, 0, 0.00) 40%'},
-        {border_start: '#CCACCD', border_end: '#66589D', cover_start: '#593F66 0%', cover_end: 'rgba(0, 0, 0, 0.00) 40%'},
-        {border_start: '#9DC0CE', border_end: '#556379', cover_start: '#214150 0%', cover_end: 'rgba(0, 0, 0, 0.00) 40%'},
-    ]
-    const [finalTheme, setFinalTheme] = useState(borderColorOptions[3])
 
     
     
@@ -174,11 +168,11 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 
     // Watch for changes in finalSlides
     useEffect(() => {
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
-            console.log('First render, skip saving')
-            return;
-        }
+        // if (isFirstRender.current) {
+        //     isFirstRender.current = false;
+        //     console.log('First render, skip saving')
+        //     return;
+        // }
 
         console.log('finalSlides changed')
         setUnsavedChanges(true)
@@ -201,26 +195,26 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                 if (index === 0) {
                     if (res_scenario === 'casual_topic'){
                         slide.subtopic = cover_title || 'Your topic here'
-                        slide.template = 'First_page_img_1'
+                        slide.template = slideData.template || 'First_page_img_1'
                     }
                     else if (res_scenario === 'serious_subject'){
                         slide.English_title = slideData.English_title
-                        slide.template = 'First_page_img_1_template2'
+                        slide.template = slideData.template || 'First_page_img_1_template2'
                     }
                     else if (res_scenario === 'reading_notes'){
-                        slide.template = 'First_page_img_1_template3'
+                        slide.template = slideData.template || 'First_page_img_1_template3'
                     }
                 }
                 else {
                     if (res_scenario === 'casual_topic'){
                         slide.subtopic = slideData.subtopic
-                        slide.template = 'Col_1_img_0'
+                        slide.template = slideData.template || 'Col_1_img_0'
                     }
                     else if (res_scenario === 'serious_subject'){
-                        slide.template = 'img_0_template2'
+                        slide.template = slideData.template || 'img_0_template2'
                     }
                     else if (res_scenario === 'reading_notes'){
-                        slide.template = 'img_1_template3'
+                        slide.template = slideData.template || 'img_1_template3'
                     }      
                 }
                 slide.keywords = slideData.keywords || ['']
@@ -239,7 +233,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
             setFinalSlides(slidesArray)
         };
     }, []);
-
     // Function to send a request to auto-save finalSlides
     const saveSlides = async () => {
         if (isViewing) {
@@ -259,6 +252,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
         setSaveStatus('Saving...')
         const { userId, idToken: token } =
             await AuthService.getCurrentUserTokenAndId()
+
         const formData = {
             foldername: foldername,
             final_posts: finalSlides,
@@ -434,6 +428,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
         }
         setSlides(newSlides)
         setFinalSlides(newFinalSlides)
+        console.log(finalSlides)
     }
 
     function goToSlide(index: number) {
@@ -505,13 +500,12 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
             return templateDispatch2(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode,handleSlideEdit,updateImgUrlArray, updateIllustrationUrlArray, toggleEditMode)
         }
         else if (res_scenario === 'reading_notes'){
-            return templateDispatch3(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode,handleSlideEdit,updateImgUrlArray, updateIllustrationUrlArray, toggleEditMode)
+            return templateDispatch3(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode,handleSlideEdit,updateImgUrlArray, updateIllustrationUrlArray, toggleEditMode, finalTheme)
         }
         else{
             return templateDispatch(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode,handleSlideEdit,updateImgUrlArray, updateIllustrationUrlArray, toggleEditMode, finalTheme)
         }
     }
-        
     return (
         <div className='flex flex-col items-center justify-center gap-4'>
             {/* buttons and contents */}

@@ -27,10 +27,10 @@ interface MainSlideProps {
     update_callback: (imgs: string[]) => void,
     canEdit: boolean,
     autoSave: Function,
-    border_start: string,
-    border_end: string,
-    cover_start: string,
-    cover_end: string,
+    border_start?: string,
+    border_end?: string,
+    cover_start?: string,
+    cover_end?: string,
 }
 
 
@@ -344,7 +344,7 @@ export const img_0_template2 = ({ section_title, original_title, brief, content,
     )
 }
 
-export const First_page_img_1_template3 = ({illustration, title, update_callback, canEdit, autoSave }: MainSlideProps) => {
+export const First_page_img_1_template3 = ({illustration, title, border_start, border_end, update_callback, canEdit, autoSave }: MainSlideProps) => {
     const { localImgs, updateImgAtIndex } = useLocalImgs(illustration, 1, update_callback);
     return (
         <div
@@ -363,8 +363,14 @@ export const First_page_img_1_template3 = ({illustration, title, update_callback
                 backgroundColor: 'white',
             }}>
             <div 
-                id="container_template3_cover" 
                 className="w-full h-full flex flex-col justify-between"
+                style={{
+                    border: '8px solid transparent',
+                    backgroundImage: `linear-gradient(white, white), radial-gradient(circle at top left, ${border_start}, ${border_end})`,
+                    backgroundOrigin: 'border-box',
+                    backgroundClip: 'content-box, border-box',
+                    fontFamily: 'Cormorant, sans-serif',
+                }}
             >
                 <div 
                     className="mx-[auto] mt-[12%] text-center"
@@ -396,7 +402,7 @@ export const First_page_img_1_template3 = ({illustration, title, update_callback
     )
 }
 
-export const img_1_template3 = ({ illustration, quote, source, update_callback, canEdit, autoSave }: MainSlideProps) => {
+export const img_1_template3 = ({ illustration, quote, source, border_start, border_end, update_callback, canEdit, autoSave }: MainSlideProps) => {
     const { localImgs, updateImgAtIndex } = useLocalImgs(illustration, 1, update_callback);
     return (
         <div
@@ -415,8 +421,14 @@ export const img_1_template3 = ({ illustration, quote, source, update_callback, 
                 backgroundColor: 'white',
             }}>
             <div 
-                id="container_template3_cover" 
                 className="w-full h-full flex flex-col justify-between"
+                style={{
+                    border: '8px solid transparent',
+                    backgroundImage: `linear-gradient(white, white), radial-gradient(circle at top left, ${border_start}, ${border_end})`,
+                    backgroundOrigin: 'border-box',
+                    backgroundClip: 'content-box, border-box',
+                    fontFamily: 'Cormorant, sans-serif',
+                }}
             >
                 <div 
                     className="w-full h-1/2 flex"

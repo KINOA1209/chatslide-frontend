@@ -5,7 +5,7 @@ import { MathJax, MathJaxContext } from 'better-react-mathjax'
 import {
     CompanyIconWhite,
 } from '@/components/socialPost/socialPostIcons'
-import { Theme } from '@/components/socialPost/socialPostThemeChanger'
+import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger'
 
 export const templateDispatch = (
     slide: SocialPostSlide,
@@ -19,7 +19,7 @@ export const templateDispatch = (
     updateImgUrlArray: (slideIndex: number) => (urls: string[]) => void = () => () => {},  // Replace with your default function if you have one
     updateIllustrationUrlArray: (slideIndex: number) => (urls: string[]) => void = () => () => {},
     toggleEditMathMode: () => void = () => {},  // Replace with your default function if you have one
-    theme?: Theme,
+    theme?: ThemeObject,
 ): JSX.Element => {
     let keyPrefix = ''
     if (exportToPdfMode) {
