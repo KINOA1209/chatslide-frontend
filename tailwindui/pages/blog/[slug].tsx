@@ -29,7 +29,7 @@ const BlogPost: React.FC<BlogPostProps> = ({ title, content }) => {
 
   return (
     <div>
-      <h1>{title}</h1>
+      {/* <h1>{title}</h1> */}
       <ReactMarkdown
         className={styles.markdown}
         remarkPlugins={[remarkGfm]}
