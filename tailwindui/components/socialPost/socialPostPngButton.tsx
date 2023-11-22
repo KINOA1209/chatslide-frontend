@@ -17,10 +17,10 @@ import { toPng } from 'html-to-image';
 
 interface ExportToPdfProps {
   finalSlides: SocialPostSlide[]
-  currentSlideIndex?: number
+  currentSlideIndex: number
   //setFinalSlides: React.Dispatch<React.SetStateAction<Slide[]>>;
 }
-const ExportToPngButton: React.FC<ExportToPdfProps> = ({ finalSlides, currentSlideIndex = 0 }) => {
+const ExportToPngButton: React.FC<ExportToPdfProps> = ({ finalSlides, currentSlideIndex }) => {
   const topic =
     typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('topic') : ''
 
@@ -31,8 +31,8 @@ const res_scenario =
   const [user, setUser] = useState(null)
   const [downloadingPDF, setDownloadingPDF] = useState(false)
   const [showPaymentModal, setShowPaymentModal] = useState(false)
+  const exportSlidesRef = useRef<HTMLDivElement>(null)
   const [slideRef, setSlideRef] = useState(React.createRef<HTMLDivElement>());
-  const [slideIndex, setSlideIndex] = useState(0)
   let pdfIsBeingGenerated = false
 
   useEffect(() => {
@@ -94,27 +94,20 @@ const res_scenario =
 
     try {
       const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
-      
-      
-      // const response = await fetch('/api/save_final_html_pdf', {
-      //   method: 'POST',
-      //   headers: {
-      //     Authorization: `Bearer ${idToken}`,
-      //     'Content-Type': 'application/json',
-      //   },
-      // })
+      const response = await fetch('/api/save_final_html_pdf', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
 
-      // if (response.ok) {
-      //   downloadImage(slideRef)
-      // } else if (response.status === 402) {
-      //   setShowPaymentModal(true)
-      // } else {
-      //   console.error('Failed to save PDF.')
-      // }
-      for(let i = 0; i < finalSlides.length; i++){
-        setSlideIndex(i)
-        console.log('slideIndex', slideIndex)
+      if (response.ok) {
         downloadImage(slideRef)
+      } else if (response.status === 402) {
+        setShowPaymentModal(true)
+      } else {
+        console.error('Failed to save PDF.')
       }
     } catch (error) {
       console.error('An error occurred:', error)
@@ -139,7 +132,7 @@ const res_scenario =
             onClick={handleSaveImage}
         >
             <div className='text-center text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide'>
-                Export to PNG
+                Export to PNG (Current Page)
             </div>
             <div className='w-4 h-4 relative' hidden={downloadingPDF}>
                 <DownloadIcon />
@@ -152,11 +145,11 @@ const res_scenario =
 
       {/* hidden div for export to pdf */}
       <div style={{ display: downloadingPDF ? 'block' : 'none', zIndex: -1 }}>
-        <div>
-          <div key={`exportToPdfContainer` + slideIndex.toString()}>
+        <div ref={exportSlidesRef}>
+            <div key={`exportToPdfContainer` + currentSlideIndex.toString()}>
               <SocialPostContainer
                 slides={finalSlides}
-                currentSlideIndex={slideIndex}
+                currentSlideIndex={currentSlideIndex}
                 exportToPdfMode={true}
                 templateDispatch={selectTemplateDispatch()}
                 slideRef={slideRef}
