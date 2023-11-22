@@ -1,7 +1,13 @@
-import fs from 'fs';
 import path from 'path';
 
 export async function getMarkdown(slug: string): Promise<string> {
+
+  let fs;
+  if (typeof window === 'undefined') {
+    // This code runs on the server only
+    fs = require('fs');
+  }
+
   const postsDirectory = path.join(process.cwd(), 'pages/blog/posts');
   const fullPath = path.join(postsDirectory, `${slug}.md`);
   const markdown = fs.readFileSync(fullPath, 'utf8');
@@ -18,6 +24,12 @@ export async function getMeta(slug: string): Promise<Metadata | null> {
   try {
     const postsDirectory = path.join(process.cwd(), 'pages/blog/posts');
     const fullPath = path.join(postsDirectory, `${slug}.json`);
+
+    let fs;
+    if (typeof window === 'undefined') {
+      // This code runs on the server only
+      fs = require('fs');
+    }
 
     // Check if the file exists
     if (!fs.existsSync(fullPath)) {
