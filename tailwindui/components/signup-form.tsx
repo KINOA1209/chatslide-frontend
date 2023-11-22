@@ -144,7 +144,7 @@ const SignupForm: React.FC = () => {
     return (
         <form onSubmit={handleSubmit}>
             <ToastContainer />
-            <div className={`flex flex-wrap -mx-3 mb-4 ${!Boolean(searchParams.get('referral')) && 'hidden'}`}>
+            <div className={`flex flex-wrap -mx-3 mb-4 ${!Boolean(searchParams?.get('referral')) && 'hidden'}`}>
                 <div className="w-full px-3">
                     <label
                         className="block text-green-600 text-sm font-medium mb-1"
@@ -155,7 +155,7 @@ const SignupForm: React.FC = () => {
                     <input
                         id="promo"
                         type="text"
-                        value={searchParams.get('referral') || ''}
+                        value={searchParams?.get('referral') || ''}
                         className="form-input w-full text-gray-800 bg-gray-200 cursor-not-allowed"
                         disabled={true}
                     />

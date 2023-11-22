@@ -22,7 +22,7 @@ export default function SignUp() {
             }
         };
 
-        const promo = searchParams.get('referral');
+        const promo = searchParams?.get('referral');
         if (promo) {
             handlePromoChange(promo);
             setReferralValue(promo);
