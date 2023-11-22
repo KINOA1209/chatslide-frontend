@@ -14,13 +14,21 @@ import { templateDispatch as defaultTemplateDispatch2 } from '@/components/socia
 import { templateDispatch as defaultTemplateDispatch3 } from '@/components/socialPost/socialPostTemplate3Dispatch';
 import html2canvas from 'html2canvas'
 import { toPng } from 'html-to-image';
+import { ThemeObject } from './socialPostThemeChanger'
 
 interface ExportToPdfProps {
   finalSlides: SocialPostSlide[]
   currentSlideIndex?: number
   //setFinalSlides: React.Dispatch<React.SetStateAction<Slide[]>>;
+  finalTheme: ThemeObject
+  borderColorOptions: ThemeObject[]
 }
-const ExportToPngButton: React.FC<ExportToPdfProps> = ({ finalSlides, currentSlideIndex = 0 }) => {
+const ExportToPngButton: React.FC<ExportToPdfProps> = ({ 
+  finalSlides,
+  currentSlideIndex = 0,
+  finalTheme,
+  borderColorOptions,
+ }) => {
   const topic =
     typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('topic') : ''
 
@@ -117,7 +125,7 @@ const res_scenario =
       } else if (response.status === 402) {
         setShowPaymentModal(true)
       } else {
-        console.error('Failed to save PDF.')
+        console.error('Failed to save PNG.')
       }
 
     } catch (error) {
@@ -165,6 +173,7 @@ const res_scenario =
                 templateDispatch={selectTemplateDispatch()}
                 slideRef={slideRef}
                 onSlideRefUpdate={setSlideRef}
+                finalTheme={finalTheme}
               />
             </div>
         </div>

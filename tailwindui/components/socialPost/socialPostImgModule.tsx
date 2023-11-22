@@ -562,7 +562,7 @@ export const ImgModule = ({
         <div onClick={openModal}
             className={`w-full h-full transition ease-in-out duration-150 ${selectedImg === '' ? 'bg-[#E7E9EB]' : canEdit ? 'hover:bg-[#CAD0D3] hover:brightness-90' : ''} flex flex-col items-center justify-center cursor-pointer`}
             style={{
-                backgroundImage: selectedImg !== '' && isTemp1Cover ? `linear-gradient(180deg, ${cover_start}, ${cover_end}), url(${selectedImg})` : '',
+                backgroundImage: selectedImg !== '' && isTemp1Cover ? `linear-gradient(180deg, ${cover_start}, ${cover_end} 40%), url(${selectedImg})` : '',
                 backgroundSize: selectedImg !== '' && isTemp1Cover ? 'cover' : '',
             }}
             >

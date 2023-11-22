@@ -10,12 +10,12 @@ type ThemeProps = {
   openTheme: () => void
   showTheme: boolean
   closeTheme: () => void
-  finalTheme: Theme
-  setFinalTheme: (theme: Theme) => void
-  borderColorOptions: Theme[]
+  finalTheme: ThemeObject
+  setFinalTheme: (theme: ThemeObject) => void
+  borderColorOptions: ThemeObject[]
 }
 
-export interface Theme{
+export interface ThemeObject{
     border_start: string
     border_end: string
     cover_start: string
@@ -31,7 +31,7 @@ const ThemeChanger: React.FC<ThemeProps> = ({
 }) => {
 
     const [selectedTheme, setSelectedTheme] = useState(finalTheme || borderColorOptions[3]);
-    const handleThemeSelect = (option: Theme) => {
+    const handleThemeSelect = (option: ThemeObject) => {
         setSelectedTheme(option);
         setFinalTheme(option)
     };
