@@ -157,7 +157,7 @@ const ProjectLoading = () => {
 
         try {
             // set project_id in sessionStorage
-            const project_id = pathname.split('/').pop();
+            const project_id = pathname?.split('/').pop();
             if (project_id) {
                 console.log('this is project_id', project_id);
                 sessionStorage.setItem('project_id', project_id);
