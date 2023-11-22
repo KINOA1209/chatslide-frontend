@@ -11,7 +11,9 @@ interface ImgModuleProp {
     updateSingleCallback: Function,
     canEdit: boolean,
     autoSave: Function,
-    isCover: boolean,
+    isTemp1Cover: boolean,
+    cover_start?: string,
+    cover_end?: string
 }
 
 enum ImgQueryMode {
@@ -20,7 +22,15 @@ enum ImgQueryMode {
     GENERATION,
 }
 
-export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave, isCover}: ImgModuleProp) => {
+export const ImgModule = ({ 
+    imgsrc, 
+    updateSingleCallback, 
+    canEdit, 
+    autoSave, 
+    isTemp1Cover,
+    cover_start,
+    cover_end,
+}: ImgModuleProp) => {
     const [showModal, setShowModal] = useState(false);
     const [keyword, setKeyword] = useState('');
     const [searchResult, setSearchResult] = useState<string[]>([]);
@@ -550,14 +560,14 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave, isC
 
         {/* image itsefl */}
         <div onClick={openModal}
-            className={`w-full h-full transition ease-in-out duration-150 ${selectedImg === '' ? 'bg-[#E7E9EB]' : canEdit ? 'hover:bg-[#CAD0D3] hover:brightness-90' : ''} cursor-pointer`}
+            className={`w-full h-full transition ease-in-out duration-150 ${selectedImg === '' ? 'bg-[#E7E9EB]' : canEdit ? 'hover:bg-[#CAD0D3] hover:brightness-90' : ''} flex flex-col items-center justify-center cursor-pointer`}
             style={{
-                backgroundImage: selectedImg !== '' ? isCover ? `linear-gradient(180deg, #E54BFF 0%, rgba(217, 217, 217, 0.00) 40%), url(${selectedImg})` : `url(${selectedImg}`: 'none',
-                backgroundSize: 'cover',
+                backgroundImage: selectedImg !== '' && isTemp1Cover ? `linear-gradient(180deg, ${cover_start}, ${cover_end}), url(${selectedImg})` : '',
+                backgroundSize: selectedImg !== '' && isTemp1Cover ? 'cover' : '',
             }}
             >
 
-            {selectedImg === '' && (
+            {selectedImg === '' ?
                 <div className='flex flex-col items-center justify-center'>
                     <svg className="w-20 h-20 opacity-50" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <rect x="0" fill="none" width="24" height="24" />
@@ -570,7 +580,15 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave, isC
                         {canEdit && 'Click to add image'}
                     </div>
                 </div>
-            )}
+                :
+                (!isTemp1Cover && (
+                    <img
+                    style={{ objectFit: 'contain' }}
+                    className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`}
+                    src={imgsrc} 
+                />
+                ))
+            }
         </div>
     </>
 }

@@ -5,6 +5,7 @@ import { MathJax, MathJaxContext } from 'better-react-mathjax'
 import {
     CompanyIconWhite,
 } from '@/components/socialPost/socialPostIcons'
+import { Theme } from '@/components/socialPost/socialPostThemeChanger'
 
 export const templateDispatch = (
     slide: SocialPostSlide,
@@ -18,6 +19,7 @@ export const templateDispatch = (
     updateImgUrlArray: (slideIndex: number) => (urls: string[]) => void = () => () => {},  // Replace with your default function if you have one
     updateIllustrationUrlArray: (slideIndex: number) => (urls: string[]) => void = () => () => {},
     toggleEditMathMode: () => void = () => {},  // Replace with your default function if you have one
+    theme?: Theme,
 ): JSX.Element => {
     let keyPrefix = ''
     if (exportToPdfMode) {
@@ -67,6 +69,10 @@ export const templateDispatch = (
                     dangerouslySetInnerHTML={{ __html: keywordsString }}
                 />
             }
+            border_start = {theme?.border_start || '#FB42FF'}
+            border_end = {theme?.border_end || '#767EFF'}
+            cover_start = {theme?.cover_start || '#9F4FC9 0%'}
+            cover_end = {theme?.cover_end || 'rgba(0, 0, 0, 0.00) 100%'}
             original_title={<></>}
             English_title={<></>}
             content={[<></>]}
@@ -159,9 +165,8 @@ export const templateDispatch = (
                         }
                     }
                     return (
-                        <>
+                        <div key={keyPrefix + index.toString() + '_' + contentIndex.toString()}>
                         <div
-                            key={keyPrefix + index.toString() + '_' + contentIndex.toString()}
                             className={`${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                             contentEditable={canEdit}
                             style={listStyle}
@@ -179,10 +184,14 @@ export const templateDispatch = (
                         >
                         </div>
                         <hr className='my-[15px]'></hr>
-                        </>    
+                        </div>    
                     );
                 })
-            }       
+            }
+            border_start = {theme?.border_start || '#FB42FF'}
+            border_end = {theme?.border_end || '#767EFF'}
+            cover_start = {theme?.cover_start || '#9F4FC9 0%'}
+            cover_end = {theme?.cover_end || 'rgba(0, 0, 0, 0.00) 100%'}       
             section_title={<></>}
             original_title={<></>}
             illustration={['']}
