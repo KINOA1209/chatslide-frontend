@@ -89,6 +89,11 @@ export default function Dashboard() {
       if (response.ok) {
         const data = await response.json()
         console.log('project data: ', data.projects)
+
+        if (data.projects.length === 0) {
+          router.push('/workflow-type-choice')
+        }
+
         data.projects.forEach((item: Project) => {
           if (item.task === null) {
             item.task = 'presentation';
