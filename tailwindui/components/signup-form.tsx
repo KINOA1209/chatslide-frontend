@@ -11,7 +11,7 @@ import Promo from "./signup/Promo";
 const SignupForm: React.FC = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const nextUri = searchParams.get("next");
+    const nextUri = searchParams?.get("next");
 
 
     const [email, setEmail] = useState("");
