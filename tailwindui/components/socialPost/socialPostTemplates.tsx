@@ -27,6 +27,10 @@ interface MainSlideProps {
     update_callback: (imgs: string[]) => void,
     canEdit: boolean,
     autoSave: Function,
+    border_start: string,
+    border_end: string,
+    cover_start: string,
+    cover_end: string,
 }
 
 
@@ -60,7 +64,7 @@ const useLocalImgs = (imgs: string[], imgCount: number, update_callback: (imgs: 
     return { localImgs, updateImgAtIndex };
 };
 
-export const First_page_img_1 = ({ subtopic, keywords, imgs, update_callback, autoSave, canEdit }: MainSlideProps) => {
+export const First_page_img_1 = ({ subtopic, keywords, imgs, border_start, border_end, cover_start, cover_end, update_callback, autoSave, canEdit }: MainSlideProps) => {
 
     const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback);
 
@@ -70,24 +74,29 @@ export const First_page_img_1 = ({ subtopic, keywords, imgs, update_callback, au
             style={{
                 width: '100%',
                 height: '100%',
-                // backgroundSize: '100% 100%',
-                // display: 'flex',
-                // flexDirection: 'row',
-                // justifyContent: 'flex-start',
-                // alignItems: 'flex-start',
-                // boxSizing: 'border-box',
-                // position: 'relative',
                 background: 'white',
                 border: 'none',
-                //borderImage: 'linear-gradient(180deg, #FB40FF, #886DFE)',
-                //borderImageSlice: '1',
             }}>
-            <div id='container_cover_gradient' className="absolute top-0 left-0 w-full h-full z-10">
-                {/* Assuming ImgModule can accept a style prop for custom styling */}
-                <ImgModuleSlide imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} canEdit={canEdit} autoSave={autoSave} isCover={true} />
+            <div 
+                className="absolute top-0 left-0 w-full h-full z-10"
+                style={{
+                    border: '12px solid transparent',
+                    backgroundImage: `linear-gradient(white, white), radial-gradient(circle at top left, ${border_start}, ${border_end})`,
+                    backgroundOrigin: 'border-box',
+                    backgroundClip: 'content-box, border-box'
+                }}
+            >
+                <ImgModuleSlide 
+                    imgsrc={localImgs[0]} 
+                    updateSingleCallback={updateImgAtIndex(0)} 
+                    canEdit={canEdit} 
+                    autoSave={autoSave} 
+                    isTemp1Cover={true}
+                    cover_start={cover_start}
+                    cover_end={cover_end}
+                />
             </div>
             <div 
-                //id="container_cover_gradient" 
                 className="w-full h-full flex flex-col justify-between"
 
             >
@@ -108,7 +117,7 @@ export const First_page_img_1 = ({ subtopic, keywords, imgs, update_callback, au
     )
 }
 
-export const Col_1_img_0 = ({ subtopic, keywords, content, icon, canEdit, autoSave }: MainSlideProps) => {
+export const Col_1_img_0 = ({ subtopic, keywords, content, icon, border_start, border_end, canEdit, autoSave }: MainSlideProps) => {
     return (
         <div
             className="overflow-hidden"
@@ -130,7 +139,16 @@ export const Col_1_img_0 = ({ subtopic, keywords, content, icon, canEdit, autoSa
             <div className="w-full h-full flex flex-col justify-between">
                 <div className="w-full px-[4%]">{keywords}</div>
                 <div className='w-full px-[4%]'>{subtopic}</div>
-                <div id='container_gradient' className="h-full w-full flex flex-row overflow-hidden rounded-lg">
+                <div 
+                    className="h-full w-full flex flex-row overflow-hidden rounded-lg"
+                    style={{
+                        border: 'double 4px transparent',
+                        borderRadius: '30px',
+                        backgroundImage: `linear-gradient(white, white), radial-gradient(circle at top left, ${border_start}, ${border_end})`,
+                        backgroundOrigin: 'border-box',
+                        backgroundClip: 'content-box, border-box'
+                    }}
+                >
                     <div className="mt-[5%] mx-[5%] ">{content}</div>
                 </div>
                 <div className="w-full h-[7%] mt-[2%]"> 
@@ -143,7 +161,7 @@ export const Col_1_img_0 = ({ subtopic, keywords, content, icon, canEdit, autoSa
     )
 }
 
-export const Col_2_img_1 = ({subtopic, content, keywords, imgs, icon, update_callback, canEdit, autoSave }: MainSlideProps) => {
+export const Col_2_img_1 = ({subtopic, content, keywords, imgs, icon, border_start, border_end, update_callback, canEdit, autoSave }: MainSlideProps) => {
 
     const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback);
 
@@ -167,10 +185,24 @@ export const Col_2_img_1 = ({subtopic, content, keywords, imgs, icon, update_cal
             <div className="w-full h-full flex flex-col justify-between">
                 <div className="w-full px-[4%]">{keywords}</div>
                 <div className='w-full px-[4%]'>{subtopic}</div>
-                <div id='container_gradient'className="h-full w-full flex flex-col overflow-hidden rounded-lg">
+                <div 
+                    className="h-full w-full flex flex-col overflow-hidden rounded-lg"
+                    style={{
+                        border: 'double 4px transparent',
+                        borderRadius: '30px',
+                        backgroundImage: `linear-gradient(white, white), radial-gradient(circle at top left, ${border_end}, ${border_start})`,
+                        backgroundOrigin: 'border-box',
+                        backgroundClip: 'content-box, border-box'
+                    }}
+                >
                     <div className="grow mt-[5%] mx-[5%] ">{content}</div>
                     <div className="w-full h-full grow rounded-md overflow-hidden">
-                        <ImgModuleSlide imgsrc={localImgs[0]} updateSingleCallback={updateImgAtIndex(0)} canEdit={canEdit} autoSave={autoSave} isCover={false}/>
+                        <ImgModuleSlide 
+                            imgsrc={localImgs[0]} 
+                            updateSingleCallback={updateImgAtIndex(0)} 
+                            canEdit={canEdit} 
+                            autoSave={autoSave} 
+                            isTemp1Cover={false}/>
                     </div> 
                 </div>
                 <div className="w-full h-[7%] mt-[2%]"> 
@@ -226,7 +258,7 @@ export const First_page_img_1_template2 = ({ original_title, English_title, imgs
                         updateSingleCallback={updateImgAtIndex(0)}
                         canEdit={canEdit}
                         autoSave={autoSave}
-                        isCover={false}
+                        isTemp1Cover={false}
                     />
                 </div>
             </div>

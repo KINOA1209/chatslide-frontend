@@ -93,6 +93,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
                             if (temp.name !== slides[currentSlideIndex].template) {
                               return (
                                 <div
+                                  key={'layout' + currentSlideIndex.toString()}
                                   onClick={(e) =>
                                     updateTemplate(
                                       e,
@@ -112,6 +113,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
                             else {
                               return (
                                 <div
+                                  key={'layout' + currentSlideIndex.toString()}
                                   onClick={(e) =>
                                     updateTemplate(
                                       e,
@@ -135,6 +137,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
                             ) {
                               return (
                                 <div
+                                  key={'layout' + currentSlideIndex.toString()}
                                   onClick={(e) =>
                                     updateTemplate(
                                       e,
@@ -153,6 +156,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
                             } else {
                               return (
                                 <div
+                                  key={'layout' + currentSlideIndex.toString()}
                                   onClick={(e) =>
                                     updateTemplate(
                                       e,
