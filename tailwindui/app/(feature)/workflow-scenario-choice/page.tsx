@@ -10,13 +10,13 @@ import SessionStorage from '@/components/utils/SessionStorage';
 
 const ScenarioChoicePage = () => {
   const router = useRouter() // Initialize the router
-  const contentType = SessionStorage.getItem('contentType', 'presentation')
-  const scenarios = contentType == 'presentation' ? slides_scenarios : socialpost_scenarios
+  const workflowType = SessionStorage.getItem('workflowType', 'presentation')
+  const scenarios = workflowType == 'presentation' ? slides_scenarios : socialpost_scenarios
 
   // Function to navigate to the "workflow-scenario-choice" page
   const navigateToSummary = (scenarioType: string) => {
     sessionStorage.setItem('selectedScenario', scenarioType)
-    if (contentType == 'presentation')
+    if (workflowType == 'presentation')
       router.push('/workflow-generate-outlines') 
     else
       router.push('/workflow-generate-socialpost') 

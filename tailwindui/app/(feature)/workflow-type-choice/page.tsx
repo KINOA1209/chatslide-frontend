@@ -9,6 +9,7 @@ import {
 import { useRouter } from 'next/navigation'
 import AuthService from '@/components/utils/AuthService'
 import { GrayLabel } from '@/components/ui/GrayLabel'
+import SessionStorage from '@/components/utils/SessionStorage'
 
 const TypeChoicePage = () => {
   const router = useRouter() // Initialize the router
@@ -16,11 +17,8 @@ const TypeChoicePage = () => {
   // Specify the route you want to navigate to
   const [username, setUsername] = useState(null)
   const navigateToScenarioChoice = (workflowType:string) => {
-    if (workflowType === 'presentation'){
-      router.push('/workflow-generate-outlines')
-    } else if (workflowType === 'socialpost'){
-      router.push('/workflow-scenario-choice') 
-    }
+    SessionStorage.setItem('workflowType', workflowType)
+    router.push('/workflow-scenario-choice') 
   }
 
   useEffect(() => {
