@@ -62,13 +62,13 @@ const res_scenario =
     return true;
 };
 
-  const downloadImage = async (ref: React.RefObject<HTMLDivElement>, index: number): Promise<void> => {
+  const downloadImage = async (ref: React.RefObject<HTMLDivElement>): Promise<void> => {
     if (ref.current && areAllImagesLoaded(ref.current)) {
         try {
             const dataUrl = await toPng(ref.current);
             const link = document.createElement('a');
             link.href = dataUrl;
-            link.download = (topic ? topic : 'drlambda') + '_' + index.toString() + '.png';
+            link.download = (topic ? topic : 'drlambda') + '.png';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -101,13 +101,13 @@ const res_scenario =
       const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
       
       
-      const response = await fetch('/api/save_final_html_pdf', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${idToken}`,
-          'Content-Type': 'application/json',
-        },
-      })
+      // const response = await fetch('/api/save_final_html_pdf', {
+      //   method: 'POST',
+      //   headers: {
+      //     Authorization: `Bearer ${idToken}`,
+      //     'Content-Type': 'application/json',
+      //   },
+      // })
 
       if (response.ok) {
 
@@ -124,7 +124,6 @@ const res_scenario =
       } else {
         console.error('Failed to save PNG.')
       }
-
     } catch (error) {
       console.error('An error occurred:', error)
     }
@@ -148,7 +147,7 @@ const res_scenario =
             onClick={handleSaveImage}
         >
             <div className='text-center text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide'>
-                Export to PNG (10⭐️)
+                Export to PNG
             </div>
             <div className='w-4 h-4 relative' hidden={downloadingPDF}>
                 <DownloadIcon />
