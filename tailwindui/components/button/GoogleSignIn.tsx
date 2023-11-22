@@ -9,7 +9,7 @@ interface GoogleSignInProps {
   
   const GoogleSignIn: React.FC<GoogleSignInProps> = ({ promo }) => {
   const searchParams = useSearchParams();
-  const nextUri = searchParams.get("next");
+  const nextUri = searchParams?.get("next");
 
   const signInWithGoogle = async () => {
     if (nextUri) {
