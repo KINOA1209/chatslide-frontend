@@ -1,6 +1,10 @@
 // pages/blog/[title]/page.tsx
 import React from 'react';
 import { GetServerSideProps } from 'next';
+import { getMarkdown } from './getMarkdown';
+import ReactMarkdown from 'react-markdown';
+import styles from "./Markdown.module.css";
+import remarkGfm from "remark-gfm";
 
 // Define the type for the component props
 interface BlogPostProps {
@@ -8,32 +12,43 @@ interface BlogPostProps {
   content: string;
 }
 
+function LinkRenderer(props: any) {
+  return (
+    <a href={props.href} target="_blank" rel="noreferrer">
+      {props.children}
+    </a>
+  );
+}
+
+
 const BlogPost: React.FC<BlogPostProps> = ({ title, content }) => {
+  if (!content) {
+    // Content not found, show error message or handle appropriately
+    return <div>Post not found. Please check the URL or go back to the <a href='/'>homepage</a>.</div>;
+  }
+
   return (
     <div>
       <h1>{title}</h1>
-      <p>{content}</p>
+      <ReactMarkdown
+        className={styles.markdown}
+        remarkPlugins={[remarkGfm]}
+        components={{ link: LinkRenderer }}
+      >{content}</ReactMarkdown>
     </div>
   );
 };
 
+
 // Define the type for getServerSideProps context parameter
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  // Access the dynamic 'slug' parameter
-  const slug = context.params?.slug;
+  const slug = context.params?.slug as string;
 
-  // Fetch data based on slug, replace with your data fetching logic
-  // For now, just using the slug as the title for demonstration
-  const title = `Title for ${slug}`;
-  const content = `Content for ${slug}`; // Placeholder content
+  // Fetch markdown content based on slug
+  const content = await getMarkdown(slug);
 
-  // Check if title is undefined and handle it appropriately
-  if (!title) {
-    // You can redirect, return a 404 page, or handle it as needed
-    return {
-      notFound: true, // This will render your 404 page
-    };
-  }
+  // Title is just the slug in this example
+  const title = slug;
 
   return { props: { title, content } };
 };
