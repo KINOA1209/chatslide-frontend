@@ -4,7 +4,7 @@ import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AuthService from '@/components/utils/AuthService';
+import AuthService from '@/services/AuthService';
 
 function CreateProject() {
     const [projectName, setProjectName] = useState('My First Project');

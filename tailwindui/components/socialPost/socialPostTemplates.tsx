@@ -7,7 +7,7 @@ import withimg_png from '@/public/images/template/socialpost_t1_img.png'
 import noimg_png from '@/public/images/template/socialpost_t1_no_img.png'
 import { color } from "html2canvas/dist/types/css/types/color";
 import '@/components/socialPost/templates.css'
-import AuthService from '@/components/utils/AuthService'
+import AuthService from '@/services/AuthService'
 import { h5Style } from "./Styles";
 
 interface MainSlideProps {

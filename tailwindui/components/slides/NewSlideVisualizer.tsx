@@ -5,8 +5,8 @@ import { Slide } from '@/components/slides/NewSlidesHTML'
 import ExportToPdfButton from './exportToPdfButton'
 import dynamic from 'next/dynamic'
 import { ShareToggleButton } from '@/components/slides/SlideButtons'
-import UserService from '../utils/UserService'
-import AuthService from '../utils/AuthService'
+import UserService from '../../services/UserService'
+import AuthService from '../../services/AuthService'
 import { useRouter } from 'next/navigation'
 
 const SlidesHTML = dynamic(() => import('@/components/slides/NewSlidesHTML'), {

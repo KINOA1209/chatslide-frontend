@@ -5,7 +5,7 @@ import { SocialPostSlide } from '@/components/socialPost/socialPostHTML'
 import dynamic from 'next/dynamic'
 import { ShareSlidesIcon } from '@/app/(feature)/workflow-review-slides/icons'
 import { ShareToggleButton } from '@/components/slides/SlideButtons'
-import UserService from '../utils/UserService'
+import UserService from '../../services/UserService'
 import ExportToPngButton from '@/components/socialPost/socialPostPngButton'
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger'
 

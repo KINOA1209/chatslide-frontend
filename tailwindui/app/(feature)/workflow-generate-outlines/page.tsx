@@ -11,8 +11,8 @@ import React, {
 import { useRouter } from 'next/navigation'
 import '@/app/css/workflow-edit-topic-css/topic_style.css'
 import 'react-toastify/dist/ReactToastify.css'
-import AuthService from '@/components/utils/AuthService'
-import UserService from '@/components/utils/UserService'
+import AuthService from '@/services/AuthService'
+import UserService from '@/services/UserService'
 import { Transition } from '@headlessui/react'
 import MyFiles, { Resource } from '@/components/fileManagement'
 import FeedbackButton from '@/components/slides/feedback'
@@ -21,9 +21,9 @@ import { DeleteIcon, QuestionExplainIcon, RightTurnArrowIcon } from '@/app/(feat
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner'
 import PaywallModal from '@/components/forms/paywallModal'
 import { FaFilePdf, FaYoutube } from 'react-icons/fa'
-import YoutubeService from '@/components/utils/YoutubeService'
+import YoutubeService from '@/services/YoutubeService'
 import { SmallBlueButton } from '@/components/button/DrlambdaButton'
-import WebService from '@/components/utils/WebpageService'
+import WebService from '@/services/WebpageService'
 
 const MAX_TOPIC_LENGTH = 80
 const MIN_TOPIC_LENGTH = 6

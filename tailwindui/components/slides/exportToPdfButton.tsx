@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import ExportToPDFModal from './exportToPdfModal'
-import AuthService from '../utils/AuthService'
+import AuthService from '../../services/AuthService'
 import { LoadingIcon } from '@/components/ui/progress'
 import { Slide } from './NewSlidesHTML'
 import PaywallModal from '../forms/paywallModal'

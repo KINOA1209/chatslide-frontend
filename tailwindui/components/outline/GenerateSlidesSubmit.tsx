@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect, Fragment } from 'react'
 import { useRouter } from 'next/navigation'
-import AuthService from '@/components/utils/AuthService'
+import AuthService from '@/services/AuthService'
 import 'react-toastify/dist/ReactToastify.css'
-import UserService from '../utils/UserService'
+import UserService from '../../services/UserService'
 
 interface OutlineSection {
   title: string

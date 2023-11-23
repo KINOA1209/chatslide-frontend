@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import ExportToPDFModal from '@/components/socialPost/socialPostPdfModal'
-import AuthService from '../utils/AuthService'
+import AuthService from '../../services/AuthService'
 import { LoadingIcon } from '@/components/ui/progress'
 import { SocialPostSlide } from '@/components/socialPost/socialPostHTML'
 import PaywallModal from '../forms/paywallModal'

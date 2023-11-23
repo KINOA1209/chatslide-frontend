@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Transition } from '@headlessui/react';
-import AuthService from '@/components/utils/AuthService';
+import AuthService from '@/services/AuthService';
 import { LoadingIcon } from '@/components/ui/progress';
 import { createPortal } from 'react-dom';
 import { toast } from 'react-toastify';
