@@ -36,6 +36,10 @@ interface MainSlideProps {
 
 
 const useLocalImgs = (imgs: string[], imgCount: number, update_callback: (imgs: string[]) => void) => {
+  if (imgs === undefined) {
+      imgs = [];
+    }
+
     const initialImgs = useMemo(() => {
         let cleanedImgs = imgs.filter(url => url !== '');
         if (cleanedImgs.length > imgCount) {
