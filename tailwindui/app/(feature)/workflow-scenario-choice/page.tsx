@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import '@/app/css/workflow-scenario-choice.css'
 import Image from 'next/image'
@@ -10,8 +10,8 @@ import SessionStorage from '@/components/utils/SessionStorage';
 
 const ScenarioChoicePage = () => {
   const router = useRouter() // Initialize the router
-  const workflowType = SessionStorage.getItem('workflowType', 'presentation')
-  const scenarios = workflowType == 'presentation' ? slides_scenarios : socialpost_scenarios
+  const workflowType = SessionStorage.getItem('workflowType', 'slides')
+  const scenarios = workflowType == 'slides' ? slides_scenarios : socialpost_scenarios
 
   // Function to navigate to the "workflow-scenario-choice" page
   const navigateToSummary = (scenarioType: string) => {
@@ -21,6 +21,8 @@ const ScenarioChoicePage = () => {
     else
       router.push('/workflow-generate-socialpost') 
   }
+
+
 
   return (
     <div className='bg-zinc-100 min-h-screen'>
@@ -37,7 +39,7 @@ const ScenarioChoicePage = () => {
           {scenarios.options.map((scenario) => (
             <div key={scenario.id} className='flex flex-col w-full'>
               <div
-                className='w-full h-[200px] bg-gray-300 rounded-lg shadow flex justify-center items-center cursor-pointer mb-4'
+                className='w-full h-[300px] bg-gray-300 rounded-lg shadow flex justify-center items-center cursor-pointer mb-4'
                 onClick={() => navigateToSummary(scenario.id)}
               >
                 <Image className='mx-[20px]' width={281} height={174} alt={scenario.id} src={scenario.imageSrc} />
