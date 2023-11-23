@@ -21,18 +21,18 @@ interface ExportToPdfProps {
   currentSlideIndex?: number
   borderColorOptions: ThemeObject[]
 }
-const ExportToPngButton: React.FC<ExportToPdfProps> = ({ 
+const ExportToPngButton: React.FC<ExportToPdfProps> = ({
   finalSlides,
   currentSlideIndex = 0,
   borderColorOptions,
- }) => {
+}) => {
   const topic =
     typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('topic') : ''
 
-const res_scenario =
+  const res_scenario =
     typeof sessionStorage !== 'undefined'
-    ? sessionStorage.getItem('selectedScenario')
-    : ''
+      ? sessionStorage.getItem('selectedScenario')
+      : ''
   const [user, setUser] = useState(null)
   const [downloadingPDF, setDownloadingPDF] = useState(false)
   const [showPaymentModal, setShowPaymentModal] = useState(false)
@@ -55,31 +55,31 @@ const res_scenario =
   const areAllImagesLoaded = (container: HTMLElement) => {
     const images = container.getElementsByTagName('img');
     for (let i = 0; i < images.length; i++) {
-        if (!images[i].complete || images[i].naturalWidth === 0) {
-            return false;
-        }
+      if (!images[i].complete || images[i].naturalWidth === 0) {
+        return false;
+      }
     }
     return true;
-};
+  };
 
   const downloadImage = async (ref: React.RefObject<HTMLDivElement>): Promise<void> => {
     if (ref.current && areAllImagesLoaded(ref.current)) {
-        try {
-            const dataUrl = await toPng(ref.current);
-            const link = document.createElement('a');
-            link.href = dataUrl;
-            link.download = (topic ? topic : 'drlambda') + '.png';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        } catch (error) {
-            console.error('Error capturing image:', error);
-        }
+      try {
+        const dataUrl = await toPng(ref.current);
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = (topic ? topic : 'drlambda') + '.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (error) {
+        console.error('Error capturing image:', error);
+      }
     }
-    else{
-        console.log('Waiting for images to load')
+    else {
+      console.log('Waiting for images to load')
     }
-};
+  };
 
   function selectTemplateDispatch() {
     switch (res_scenario) {
@@ -90,7 +90,7 @@ const res_scenario =
       case 'reading_notes':
         return defaultTemplateDispatch3;
       default:
-        return defaultTemplateDispatch; 
+        return defaultTemplateDispatch;
     }
   }
 
@@ -108,15 +108,7 @@ const res_scenario =
       })
 
       if (response.ok) {
-
-        // iterate through posts and download each one
-        for (let i = 0; i < finalSlides.length; i++) {
-          setSlideIndex(i)
-          await new Promise(resolve => setTimeout(resolve, 100));
-          console.log('Downloading image ' + i.toString())
-          await downloadImage(slideRef, i + 1);
-        }
-        
+        downloadImage(slideRef);
       } else if (response.status === 402) {
         setShowPaymentModal(true)
       } else {
@@ -139,36 +131,36 @@ const res_scenario =
           />
         )}
 
-        
+
         <div
-            className='h-8 px-3 py-1 bg-zinc-100 rounded-lg justify-center items-center gap-2.5 cursor-pointer hidden sm:flex'
-            onClick={handleSaveImage}
+          className='h-8 px-3 py-1 bg-zinc-100 rounded-lg justify-center items-center gap-2.5 cursor-pointer hidden sm:flex'
+          onClick={handleSaveImage}
         >
-            <div className='text-center text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide'>
-                Save this page (1⭐️)
-            </div>
-            <div className='w-4 h-4 relative' hidden={downloadingPDF}>
-                <DownloadIcon />
-            </div>
-            <div className='text-black h-[22px] mr-2' hidden={!downloadingPDF}>
-                <LoadingIcon />
-            </div>
+          <div className='text-center text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide'>
+            Save this page (1⭐️)
+          </div>
+          <div className='w-4 h-4 relative' hidden={downloadingPDF}>
+            <DownloadIcon />
+          </div>
+          <div className='text-black h-[22px] mr-2' hidden={!downloadingPDF}>
+            <LoadingIcon />
+          </div>
         </div>
       </div>
 
       {/* hidden div for export to pdf */}
       <div style={{ display: downloadingPDF ? 'block' : 'none', zIndex: -1 }}>
         <div ref={exportSlidesRef}>
-            <div key={`exportToPdfContainer` + currentSlideIndex.toString()}>
-              <SocialPostContainer
-                slides={finalSlides}
-                currentSlideIndex={currentSlideIndex}
-                exportToPdfMode={true}
-                templateDispatch={selectTemplateDispatch()}
-                slideRef={slideRef}
-                onSlideRefUpdate={setSlideRef}
-              />
-            </div>
+          <div key={`exportToPdfContainer` + currentSlideIndex.toString()}>
+            <SocialPostContainer
+              slides={finalSlides}
+              currentSlideIndex={currentSlideIndex}
+              exportToPdfMode={true}
+              templateDispatch={selectTemplateDispatch()}
+              slideRef={slideRef}
+              onSlideRefUpdate={setSlideRef}
+            />
+          </div>
         </div>
       </div>
     </div>
