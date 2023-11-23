@@ -22,13 +22,11 @@ const ScenarioChoicePage = () => {
       router.push('/workflow-generate-socialpost') 
   }
 
-
-
   return (
     <div className='bg-zinc-100 min-h-screen'>
       <div className='flex flex-col justify-center items-center gap-4 sm:gap-12 p-4 sm:p-8'>
         {/* title */}
-        <div className='w-[80vh] mt-[12rem] text-center text-neutral-800 text-2xl font-normal font-creato-medium leading-9 tracking-wide'>
+        <div className='w-[80vh] mt-[3rem] sm:mt-[12rem] text-center text-neutral-800 text-xl sm:text-2xl font-normal font-creato-medium leading-9 tracking-wide'>
           {scenarios.message}
         </div>
         <div className='w-[80vh] h-8 text-center text-gray-600 text-base font-normal font-creato-medium leading-normal tracking-tight'>
@@ -39,7 +37,7 @@ const ScenarioChoicePage = () => {
           {scenarios.options.map((scenario) => (
             <div key={scenario.id} className='flex flex-col w-full'>
               <div
-                className='w-full h-[300px] bg-gray-300 rounded-lg shadow flex justify-center items-center cursor-pointer mb-4'
+                className='w-full h-[200px] sm:h-[300px] bg-gray-300 rounded-lg shadow flex justify-center items-center cursor-pointer mb-4'
                 onClick={() => navigateToSummary(scenario.id)}
               >
                 <Image className='mx-[20px]' width={281} height={174} alt={scenario.id} src={scenario.imageSrc} />
