@@ -1,3 +1,4 @@
+import Resource from '@/models/Resource';
 import { parse } from 'url';
 
 export default class YoutubeService {
@@ -13,7 +14,7 @@ export default class YoutubeService {
     return videoId || null;
   }
 
-  static async getYoutubeInfo(url: string, userToken: string): Promise<{ id: string, title: string; thumbnail: string } | null> {
+  static async getYoutubeInfo(url: string, userToken: string): Promise<Resource | null> {
     try {
       const response = await fetch('/api/save_youtube_url', {
         method: 'POST',
@@ -29,7 +30,7 @@ export default class YoutubeService {
       }
       const data = await response.json()
       console.log('data', data.data)
-      return { id: data.data.id, title: data.data.title, thumbnail: data.data.thumbnail };
+      return { id: data.data.id, name: data.data.name, thumbnail_url: data.data.thumbnail_url, type: 'youtube' };
     } catch (error) {
       throw error;
     }

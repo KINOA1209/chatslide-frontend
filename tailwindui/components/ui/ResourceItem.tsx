@@ -1,14 +1,6 @@
 import React from 'react';
 import { FaFileImage, FaFilePdf, FaFileWord, FaYoutube } from 'react-icons/fa';
-
-
-export interface Resource {
-  id: string
-  name: string
-  type: string
-  thumbnail_url?: string
-  timestamp?: string
-}
+import Resource from '@/models/Resource';
 
 const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
   if (!fileType) {

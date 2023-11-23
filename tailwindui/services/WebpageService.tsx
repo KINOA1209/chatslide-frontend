@@ -1,7 +1,7 @@
-import * as cheerio from 'cheerio';
+import Resource from '@/models/Resource';
 
 export default class WebService {
-  static async getWebpageInfo(url: string, userToken: string): Promise<{ id: string, title: string; thumbnail: string } | null> {
+  static async getWebpageInfo(url: string, userToken: string): Promise<Resource | null> {
     try {
       const response = await fetch('/api/scrape_webpage', {
         method: 'POST',
@@ -17,7 +17,7 @@ export default class WebService {
       }
       const data = await response.json()
       console.log('data', data.data)
-      return { id: data.data.id, title: data.data.title, thumbnail: data.data.thumbnail };
+      return { id: data.data.id, name: data.data.name, thumbnail_url: data.data.thumbnail_url, type: 'webpage' };
     } catch (error) {
       throw error;
     }

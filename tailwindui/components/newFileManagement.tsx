@@ -11,7 +11,8 @@ import moment from 'moment'
 import { DeleteResourceIcon } from '@/app/(feature)/my-resources/icons'
 import { CarbonConnect, IntegrationName } from 'carbon-connect'
 import { DeleteIcon } from '@/app/(feature)/icons'
-import { Resource, ResourceItem } from './ui/ResourceItem'
+import { ResourceItem } from './ui/ResourceItem'
+import Resource from '@/models/Resource'
 
 
 interface UserFileList {

@@ -13,7 +13,8 @@ import {
   FaFileImage,
 } from 'react-icons/fa'
 import { DeleteIcon } from '@/app/(feature)/icons';
-import { Resource, ResourceItem } from '@/components/ui/ResourceItem';
+import { ResourceItem } from '@/components/ui/ResourceItem'
+import Resource from '@/models/Resource'
 
 interface Project {
   id: string
