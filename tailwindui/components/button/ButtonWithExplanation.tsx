@@ -17,11 +17,11 @@ function ButtonWithExplanation({
     >
       {button}
       <div
-        className={`absolute top-5 -left-10 z-10 p-1 bg-black text-white rounded-md transition-opacity duration-200 ${
+        className={`flex absolute top-15 z-10 p-1 bg-black text-white rounded-md transition-opacity duration-200 ${
           showExplanation ? 'opacity-100' : 'opacity-0'
         }`}
       >
-        <div className='text-left text-zinc-100 text-sm font-normal font-creato-medium leading-snug tracking-tight'>
+        <div className='whitespace-nowrap text-left text-zinc-100 text-sm font-normal font-creato-medium leading-snug tracking-tight'>
           {explanation}
         </div>
       </div>
