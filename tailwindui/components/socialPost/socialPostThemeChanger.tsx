@@ -10,9 +10,13 @@ type ThemeProps = {
   openTheme: () => void
   showTheme: boolean
   closeTheme: () => void
-  finalTheme: ThemeObject
-  setFinalTheme: (theme: ThemeObject) => void
+  currentSlideIndex: number
   borderColorOptions: ThemeObject[]
+  handleSlideEdit: (
+    content: string | string[] | ThemeObject,
+    slideIndex: number,
+    tag: SlideKeys
+  ) => void
 }
 
 export interface ThemeObject{
@@ -25,15 +29,15 @@ const ThemeChanger: React.FC<ThemeProps> = ({
   openTheme,
   showTheme,
   closeTheme,
-  finalTheme,
-  setFinalTheme,
-  borderColorOptions
+  currentSlideIndex,
+  borderColorOptions,
+  handleSlideEdit,
 }) => {
 
-    const [selectedTheme, setSelectedTheme] = useState(finalTheme || borderColorOptions[3]);
+    const [selectedTheme, setSelectedTheme] = useState(borderColorOptions[5]);
     const handleThemeSelect = (option: ThemeObject) => {
         setSelectedTheme(option);
-        setFinalTheme(option)
+        handleSlideEdit(option, currentSlideIndex, 'theme')
     };
     return (
         <div className='col-span-1 flex flex-row-reverse hidden sm:block'>

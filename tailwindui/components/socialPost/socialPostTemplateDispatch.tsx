@@ -5,7 +5,6 @@ import { MathJax, MathJaxContext } from 'better-react-mathjax'
 import {
     CompanyIconWhite,
 } from '@/components/socialPost/socialPostIcons'
-import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger'
 
 export const templateDispatch = (
     slide: SocialPostSlide,
@@ -19,7 +18,6 @@ export const templateDispatch = (
     updateImgUrlArray: (slideIndex: number) => (urls: string[]) => void = () => () => {},  // Replace with your default function if you have one
     updateIllustrationUrlArray: (slideIndex: number) => (urls: string[]) => void = () => () => {},
     toggleEditMathMode: () => void = () => {},  // Replace with your default function if you have one
-    theme?: ThemeObject,
 ): JSX.Element => {
     let keyPrefix = ''
     if (exportToPdfMode) {
@@ -29,7 +27,6 @@ export const templateDispatch = (
     }
     const Template = templates[slide.template as keyof typeof templates]
     if (index === 0) {
-        const keywordsString = slide.keywords.join(' | ')
         return (
           <Template
             autoSave={saveSlides}
@@ -38,7 +35,7 @@ export const templateDispatch = (
             update_callback={updateImgUrlArray(index)}
             canEdit={canEdit}
             imgs={slide.images}
-            subtopic={
+            topic={
                 <div
                     key={0}
                     className={`${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
@@ -48,31 +45,31 @@ export const templateDispatch = (
                             setIsEditMode(true);
                         }
                     }}
-                    onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'subtopic')}
+                    onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'topic')}
                     style={h3Style}
-                    dangerouslySetInnerHTML={{ __html: slide.subtopic }}
+                    dangerouslySetInnerHTML={{ __html: slide.topic }}
                 />
             }
             keywords={
                 <div
                     key={1}
-                    //className={`rounded-md outline-2 px-[4px] ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
-                    contentEditable={false}
-                    className={`px-[4px] py-[2%] ${!exportToPdfMode && 'overflow-hidden'}`}
-                    // onFocus={() => {
-                    //     if (canEdit) {
-                    //         setIsEditMode(true);
-                    //     }
-                    // }}
-                    //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'keywords')}
+                    className={`rounded-md outline-2 px-[4px] py-[2%] ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                    contentEditable={canEdit}
+                    onFocus={() => {
+                        if (canEdit) {
+                            setIsEditMode(true);
+                        }
+                    }}
+                    onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'keywords')}
                     style={h4Style}
-                    dangerouslySetInnerHTML={{ __html: keywordsString }}
+                    dangerouslySetInnerHTML={{ __html: slide.keywords }}
                 />
             }
-            border_start = {theme?.border_start || '#FB42FF'}
-            border_end = {theme?.border_end || '#767EFF'}
-            cover_start = {theme?.cover_start || '#9F4FC9 0%'}
-            cover_end = {theme?.cover_end || 'rgba(0, 0, 0, 0.00) 100%'}
+            subtopic={<></>}
+            border_start = {slide.theme?.border_start || '#937C67'}
+            border_end = {slide.theme?.border_end || '#4F361F'}
+            cover_start = {slide.theme?.cover_start || '#725947 0%'}
+            cover_end = {slide.theme?.cover_end || 'rgba(0, 0, 0, 0.00) 100%'}
             original_title={<></>}
             English_title={<></>}
             content={[<></>]}
@@ -188,10 +185,10 @@ export const templateDispatch = (
                     );
                 })
             }
-            border_start = {theme?.border_start || '#FB42FF'}
-            border_end = {theme?.border_end || '#767EFF'}
-            cover_start = {theme?.cover_start || '#9F4FC9 0%'}
-            cover_end = {theme?.cover_end || 'rgba(0, 0, 0, 0.00) 100%'}       
+            border_start = {slide.theme?.border_start || '#937C67'}
+            border_end = {slide.theme?.border_end || '#4F361F'}
+            cover_start = {slide.theme?.cover_start || '#725947 0%'}
+            cover_end = {slide.theme?.cover_end || 'rgba(0, 0, 0, 0.00) 100%'}     
             section_title={<></>}
             original_title={<></>}
             illustration={['']}
@@ -200,6 +197,7 @@ export const templateDispatch = (
             quote={<></>}
             source={<></>}
             English_title={<></>}
+            topic={<></>}
         />
       )
     }

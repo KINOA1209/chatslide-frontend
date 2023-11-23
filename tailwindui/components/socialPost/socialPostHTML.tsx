@@ -25,6 +25,7 @@ import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger'
 export interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div'
     className: 
+    | 'topic'
     | 'subtopic' 
     | 'keywords' 
     | 'content' 
@@ -38,10 +39,12 @@ export interface SlideElement {
     | 'illustration'
     | 'quote'
     | 'source'
+    | 'theme'
     content: string | string[]
 }
 
 export type SlideKeys =
+    | 'topic'
     | 'subtopic'
     | 'keywords'
     | 'content'
@@ -55,8 +58,10 @@ export type SlideKeys =
     | 'illustration'
     | 'quote'
     | 'source'
+    | 'theme'
 
 export class SocialPostSlide {
+    topic: string
     subtopic: string
     keywords: string[]
     content: string[]
@@ -70,12 +75,14 @@ export class SocialPostSlide {
     illustration: string[]
     quote: string
     source: string
+    theme: ThemeObject
 
 
     constructor() {
-        this.subtopic = 'New Slide'
-        this.keywords = ['New Slide']
-        this.content = ['Your content here']
+        this.topic = 'Your topic'
+        this.subtopic = 'Your subtopic'
+        this.keywords = ['Your keywords']
+        this.content = ['Your content']
         this.template = 'Col_1_img_0'
         this.images = ['']
         this.section_title = 'Your section title'
@@ -86,6 +93,7 @@ export class SocialPostSlide {
         this.illustration = ['https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png']
         this.quote = 'Your quote'
         this.source = 'Your source'
+        this.theme = {border_start: '', border_end: '', cover_start: '', cover_end: ''}
     }
 }
 
@@ -95,8 +103,6 @@ type SlidesHTMLProps = {
     isViewing?: boolean // viewing another's shared project
     finalSlideIndex: number
     setFinalSlideIndex: Function
-    finalTheme: ThemeObject
-    setFinalTheme: (theme: ThemeObject) => void
     borderColorOptions: ThemeObject[]
 }
 
@@ -106,8 +112,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
     isViewing = false,
     finalSlideIndex,
     setFinalSlideIndex,
-    finalTheme,
-    setFinalTheme,
     borderColorOptions,
 }) => {
     const [slides, setSlides] = useState<SocialPostSlide[]>([])
@@ -126,11 +130,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
         typeof sessionStorage !== 'undefined'
         ? sessionStorage.getItem('socialPost')
         : ''
-
-    const res_images =
-        typeof sessionStorage !== 'undefined'
-        ? JSON.parse(sessionStorage.getItem('socialPostImages') ?? '[]') 
-        : []
     
     const cover_title = 
         typeof sessionStorage !== 'undefined'
@@ -157,7 +156,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
     const presentScale = Math.min(dimensions.width / 450, dimensions.height / 600)
     const nonPresentScale = Math.min(1, presentScale * 0.6)
     const [showTheme, setShowTheme] = useState(false)
-
     
     
     useEffect(() => {
@@ -185,17 +183,10 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
             const slidesArray: SocialPostSlide[] = Object.keys(parse_slide).map((key, index) => {
                 const slideData = parse_slide[key]
                 const slide = new SocialPostSlide()
-                if (index === 0 && res_images && res_images.length > 0){
-                    const randomIndex = Math.floor(Math.random() * res_images.length)
-                    slide.images = [res_images[randomIndex]]
-                }
-                else{
-                    slide.images = ['']
-                }
                 if (index === 0) {
                     if (res_scenario === 'casual_topic'){
-                        slide.subtopic = cover_title || 'Your topic here'
                         slide.template = slideData.template || 'First_page_img_1'
+                        slide.keywords = (slideData.keywords.includes('|') ? slideData.keywords : [slideData.keywords.join(' | ')])
                     }
                     else if (res_scenario === 'serious_subject'){
                         slide.English_title = slideData.English_title
@@ -207,8 +198,8 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                 }
                 else {
                     if (res_scenario === 'casual_topic'){
-                        slide.subtopic = slideData.subtopic
                         slide.template = slideData.template || 'Col_1_img_0'
+                        slide.keywords = slideData.keywords
                     }
                     else if (res_scenario === 'serious_subject'){
                         slide.template = slideData.template || 'img_0_template2'
@@ -217,14 +208,17 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                         slide.template = slideData.template || 'img_1_template3'
                     }      
                 }
-                slide.keywords = slideData.keywords || ['']
+                slide.topic = slideData.topic || 'Your topic here'
+                slide.subtopic = slideData.subtopic
+                slide.images = slideData.images
+                slide.theme = slideData.theme
                 slide.content = slideData.content || ['Your content here']
                 slide.section_title = slideData.section_title || ['Your section title here']
                 slide.brief = slideData.brief || ['Your brief here']
                 slide.original_title = slideData.original_title || cover_title
                 slide.title = slideData.title || ''
-                slide.illustration = slideData.illustration !== null ? [slideData.illustration] : ['https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png']
-                slide.quote = '"' + slideData.quote + '"' || ''
+                slide.illustration = slideData.illustration !== null ? slideData.illustration : ['https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png']
+                slide.quote = slideData.quote !== undefined ? (slideData.quote.includes('"') ? slideData.quote : '"' + slideData.quote + '"') : ''
                 slide.source = slideData.source || ''
 
                 return slide
@@ -250,14 +244,14 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
             return 
         }
         setSaveStatus('Saving...')
+        //console.log(finalSlides)
         const { userId, idToken: token } =
             await AuthService.getCurrentUserTokenAndId()
-
+        
         const formData = {
             foldername: foldername,
             final_posts: finalSlides,
             project_id: project_id,
-            images: res_images,
         }
         // Send a POST request to the backend to save finalSlides
         fetch('/api/save_social_posts', {
@@ -348,7 +342,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
     }
 
     function handleSlideEdit(
-        content: string | string[],
+        content: string | string[] | ThemeObject,
         slideIndex: number,
         tag: SlideKeys
     ) {
@@ -367,6 +361,10 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
         else if (className === 'keywords') {
             currentSlide.keywords = content as string[]
             currNewFinalSlides.keywords = content as string[]
+        } 
+        else if (className === 'topic') {
+            currentSlide.topic = content as string 
+            currNewFinalSlides.topic = content as string
         } 
         else if (className === 'content') {
             let newContent: string[] = []
@@ -423,12 +421,22 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
             currentSlide.source = content as string
             currNewFinalSlides.source = content as string
         }
+        else if (className === 'theme') {
+            // Update theme for all slides
+            newSlides.forEach((slide) => {
+              slide.theme = content as ThemeObject;
+            });
+            newFinalSlides.forEach((slide) => {
+              slide.theme = content as ThemeObject;
+            });
+          }
         else {
             console.error(`Unknown tag: ${tag}`)
         }
+        sessionStorage.setItem('socialPost', JSON.stringify(newSlides))
         setSlides(newSlides)
         setFinalSlides(newFinalSlides)
-        console.log(finalSlides)
+        //console.log(finalSlides)
     }
 
     function goToSlide(index: number) {
@@ -490,7 +498,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
         }
         return updateIllustrationUrl
     }
-
     const editableTemplateDispatch = (
         slide: SocialPostSlide, 
         index: number, 
@@ -500,10 +507,10 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
             return templateDispatch2(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode,handleSlideEdit,updateImgUrlArray, updateIllustrationUrlArray, toggleEditMode)
         }
         else if (res_scenario === 'reading_notes'){
-            return templateDispatch3(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode,handleSlideEdit,updateImgUrlArray, updateIllustrationUrlArray, toggleEditMode, finalTheme)
+            return templateDispatch3(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode,handleSlideEdit,updateImgUrlArray, updateIllustrationUrlArray, toggleEditMode)
         }
         else{
-            return templateDispatch(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode,handleSlideEdit,updateImgUrlArray, updateIllustrationUrlArray, toggleEditMode, finalTheme)
+            return templateDispatch(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode,handleSlideEdit,updateImgUrlArray, updateIllustrationUrlArray, toggleEditMode)
         }
     }
     return (
@@ -527,7 +534,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                     templateDispatch={editableTemplateDispatch}
                     slideRef={slideRef}
                     containerRef={containerRef}
-                    finalTheme={finalTheme}
                 />
 
                 <SlideRightNavigator
@@ -543,18 +549,18 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                         explanation='Present'
                     />
 
-                    <ButtonWithExplanation
+                    {res_scenario !== 'serious_subject' && <ButtonWithExplanation
                         button={
                             <ThemeChanger
                                 openTheme={openTheme}
                                 showTheme={showTheme}
                                 closeTheme={closeTheme}
-                                finalTheme={finalTheme}
-                                setFinalTheme={setFinalTheme}
+                                currentSlideIndex={currentSlideIndex}
                                 borderColorOptions={borderColorOptions}
+                                handleSlideEdit={handleSlideEdit}
                             />}
                         explanation='Change Theme'
-                    />
+                    />}
 
                     {res_scenario === 'casual_topic' && !isViewing && (currentSlideIndex!=0) &&(
                         <ButtonWithExplanation

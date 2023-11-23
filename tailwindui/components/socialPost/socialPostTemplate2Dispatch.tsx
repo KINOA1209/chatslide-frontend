@@ -74,6 +74,7 @@ export const templateDispatch = (
             title={<></>}
             quote={<></>}
             source={<></>}
+            topic={<></>}
         />
     } 
     else {
@@ -200,6 +201,7 @@ export const templateDispatch = (
             title={<></>}
             quote={<></>}
             source={<></>}
+            topic={<></>}
         />
     }
 }
