@@ -12,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import AuthService from '@/services/AuthService'
 import UserService from '@/services/UserService'
 import { Transition } from '@headlessui/react'
-import MyFiles, { Resource } from '@/components/fileManagement'
+import MyFiles from '@/components/fileManagement'
 import PaywallModal from '@/components/forms/paywallModal'
 import FeedbackButton from '@/components/slides/feedback'
 import WorkflowStepsBanner from '@/components/socialPost/socialPostWorkflowStep';
@@ -21,6 +21,7 @@ import { FaFilePdf, FaYoutube } from 'react-icons/fa'
 import YoutubeService from '@/services/YoutubeService'
 import { SmallBlueButton } from '@/components/button/DrlambdaButton'
 import WebService from '@/services/WebpageService';
+import Resource from '@/models/Resource';
 
 const MAX_TOPIC_LENGTH = 80
 const MIN_TOPIC_LENGTH = 6
@@ -342,19 +343,11 @@ export default function Topic_SocialPost() {
         return;
       }
 
-      const newFile = {
-        id: videoDetails.id,
-        uid: '',
-        title: videoDetails.title,
-        thumbnail_url: videoDetails.thumbnail,
-        timestamp: new Date().toISOString()
-      };
-
-      setSelectedResources(prevList => [...prevList, newFile]);
-      setSelectedResourceId(prevList => [...prevList, newFile.id]);
+      setSelectedResources(prevList => [...prevList, videoDetails]);
+      setSelectedResourceId(prevList => [...prevList, videoDetails.id]);
 
       if (!topic) {
-        setTopic(videoDetails.title.slice(0, MAX_TOPIC_LENGTH));
+        setTopic(videoDetails.name.slice(0, MAX_TOPIC_LENGTH));
       }
     } catch (error: any) {
       console.error("Error fetching YouTube video details: ", error);
@@ -374,19 +367,11 @@ export default function Topic_SocialPost() {
         return;
       }
 
-      const newFile = {
-        id: pageDetails.id,
-        uid: '',
-        title: pageDetails.title,
-        thumbnail_url: pageDetails.thumbnail,
-        timestamp: new Date().toISOString()
-      };
-
-      setSelectedResources(prevList => [...prevList, newFile]);
-      setSelectedResourceId(prevList => [...prevList, newFile.id]);
+      setSelectedResources(prevList => [...prevList, pageDetails]);
+      setSelectedResourceId(prevList => [...prevList, pageDetails.id]);
 
       if (!topic) {
-        setTopic(pageDetails.title.slice(0, MAX_TOPIC_LENGTH));
+        setTopic(pageDetails.name.slice(0, MAX_TOPIC_LENGTH));
       }
     } catch (error: any) {
       console.error("Error fetching webpage details: ", error);
@@ -767,7 +752,7 @@ export default function Topic_SocialPost() {
                         <img src={resource.thumbnail_url} className='w-[40px]' /> :
                         <FaFilePdf className='w-[40px]' />
                       }
-                      <div className="flex-wrap">{resource.title}</div>
+                      <div className="flex-wrap">{resource.name}</div>
                       </div>
                       <button className='' onClick={e => removeResourceAtIndex(index)}><DeleteIcon/></button>
                     </div>

@@ -9,14 +9,9 @@ import 'react-toastify/dist/ReactToastify.css'
 import moment from 'moment'
 // import mixpanel from 'mixpanel-browser'
 import { CarbonConnect, IntegrationName } from 'carbon-connect'
+import ResourceService from '@/services/ResourceService'
+import Resource from '@/models/Resource'
 
-export interface Resource {
-  id: string
-  uid: string
-  title: string
-  thumbnail_url: string
-  timestamp: string
-}
 
 interface UserFileList {
   selectable: boolean
@@ -108,24 +103,11 @@ const FileManagement: React.FC<UserFileList> = ({
 
   const entry = (
     id: string,
-    uid: string,
-    filename: string,
-    timestamp: string,
-    thumbnail: string,
-    icon = 'pdf'
+    name: string,
+    timestamp?: string,
+    thumbnail_url?: string,
   ) => {
     return (
-      // <div
-      //   key={id}
-      //   className='w-full h-16 px-4 rounded-2xl md:hover:bg-gray-200'
-      //   onClick={(e) => {
-      //     if (selectable) {
-      //       clickCallback(id)
-      //     } else {
-      //       handleOnClick(e)
-      //     }
-      //   }}
-      // >
       <div
         key={id}
         className='grid grid-cols-3 border border-gray-300'
@@ -142,11 +124,11 @@ const FileManagement: React.FC<UserFileList> = ({
         <div className='h-full flex items-center w-full py-4 px-2'>
           {/* thumbnail */}
           <div className='w-8 flex'>
-            {thumbnail ? getThumbnail(thumbnail) : getIcon(filename)}
+            {thumbnail_url ? getThumbnail(thumbnail_url) : getIcon(name)}
           </div>
           {/* filename */}
           <div className='grow text-ellipsis mx-4 overflow-hidden'>
-            {filename}
+            {name}
           </div>
         </div>
         {/* timestamp and delete icon */}
@@ -206,13 +188,11 @@ const FileManagement: React.FC<UserFileList> = ({
         <div className='w-full border-b border-gray-300'></div>
       </div> */}
       <FileTableHeader /> {/* Render the table header */}
-      {userfiles.map((file, index) => {
+      {userfiles.map((resource, index) => {
         return entry(
-          file.id,
-          file.uid,
-          file.title,
-          file.timestamp,
-          file.thumbnail_url
+          resource.id,
+          resource.name,
+          resource.timestamp,
         )
       })}
     </div>
@@ -279,50 +259,15 @@ const MyFiles: React.FC<filesInterface> = ({
   }, [resources, rendered])
 
   const fetchFiles = async (token: string) => {
-    const headers = new Headers()
-    if (token) {
-      headers.append('Authorization', `Bearer ${token}`)
-    }
-    headers.append('Content-Type', 'application/json')
+    const resource_type = selectable ? ['doc', 'url'] : [] 
 
-    const resource_type = selectable
-      ? {
-        resource_type: ['doc', 'url'],
+    ResourceService.fetchResources(resource_type, token).then((resources) => {
+      if (setSelectedResources) {
+        setSelectedResources(resources.filter((resource: Resource) => selectedResourceId?.includes(resource.id)));
       }
-      : {}
-
-    try {
-      const response = await fetch('/api/resource_info', {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(resource_type),
-      })
-
-      if (response.ok) {
-        const data = await response.json()
-        const files = data.data.resources
-        const resourceTemps = files.map((resource: any) => {
-          return {
-            id: resource.id,
-            uid: resource.uid,
-            title: resource.resource_name,
-            thumbnail_url: resource.thumbnail_url,
-            timestamp: resource.timestamp,
-          }
-        })
-        setResources(resourceTemps)
-
-        if(setSelectedResources) {
-          setSelectedResources(resourceTemps.filter((resource: Resource) => selectedResourceId?.includes(resource.id)));
-        }
-        setRendered(true)
-      } else {
-        // Handle error cases
-        console.error('Failed to fetch projects:', response.status)
-      }
-    } catch (error) {
-      console.error('Error fetching projects:', error)
-    }
+      setResources(resources)
+      setRendered(true)
+    })
   }
 
   const onFileSelected = async (file: File | null) => {
