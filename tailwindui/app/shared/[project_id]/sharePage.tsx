@@ -16,7 +16,7 @@ const SlidesHTML = dynamic(() => import('@/components/slides/NewSlidesHTML'), { 
 const SharePage: React.FC = () => {
     const router = useRouter();
     const pathname = usePathname();
-    const project_id = pathname.split('/').pop();
+    const project_id = pathname?.split('/').pop();
     const [loading, setLoading] = useState(true);
 
     const [finalSlides, setFinalSlides] = useState<Slide[]>([]);
