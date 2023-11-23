@@ -723,6 +723,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                   scale={0.1}
                   isViewing={true}
                   templateDispatch={editableTemplateDispatch}
+                  slideRef={slideRef}
+                  containerRef={containerRef}
                 />
               </div>
             ))}

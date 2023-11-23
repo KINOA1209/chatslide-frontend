@@ -5,13 +5,11 @@ import cover_png from '@/public/images/template/cover.png' // Cover
 import col1img0_png from '@/public/images/template/col1img0.png'
 import col2img1_png from '@/public/images/template/col2img1.png'
 import col3img2_png from '@/public/images/template/col3img2.png'
-import StanfordLogo from '@/public/images/template/Stanford/StanfordLogo.png'
-import StanfordLogoLetters from '@/public/images/template/Stanford/Stanford_logo_letters.png'
-import BerkeleyLogo from '@/public/images/template/Berkeley/Berkeley_logo.png'
-import MaskedBackground from '@/public/images/template/Berkeley/Mask Background.png'
-import BerkeleyLogoWhite from '@/public/images/template/Berkeley/Berkeley_logo_white.png'
-import HarvardLogo from '@/public/images/template/Harvard/Harvard_logo.png'
-import HarvardCoverVector from '@/public/images/template/Harvard/cover_vector_1.png'
+import drlambdaLogo from '@/public/images/template/drlambdaLogo.png'
+import { Berkeley_school_template } from './school_templates/Berkeley_school_template'
+import { Harvard_school_template } from './school_templates/Harvard_school_template'
+import { Stanford_school_template } from './school_templates/Stanford_school_template'
+
 // import { layoutOptions } from './slideLayout'
 import {
   Col_1_img_0_layout,
@@ -248,6 +246,15 @@ export const Default_template = ({
             autoSave={autoSave}
           />
         </div>
+        {/* Logo */}
+        <div className='fixed inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[3rem]'>
+          <Image
+            src={drlambdaLogo}
+            alt='drlambdaLogo'
+            className='w-[8rem] h-auto'
+          />
+          {/* <div className='text-red-800 text-2xl font-normal '>Caption</div> */}
+        </div>
       </div>
 
       {/* for non-cover page slides */}
@@ -412,271 +419,6 @@ export const Default_template = ({
 //     </div>
 //   )
 // }
-
-export const Stanford_school_template = ({
-  user_name,
-  title,
-  topic,
-  subtopic,
-  content,
-  imgs,
-  update_callback,
-  canEdit,
-  autoSave,
-  isCoverPage,
-  layoutOption,
-}: MainSlideProps) => {
-  //   const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback)
-  //   const ChosenLayout = layoutOptions[layoutOption as keyof typeof layoutOptions]
-  console.log('choosing layout option', layoutOption)
-  return (
-    <>
-      {/* for not-cover page slides */}
-      <div
-        className={`${
-          !isCoverPage
-            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-col justify-start items-start box-border border-none relative bg-white p-[28px]'
-            : 'hidden'
-        }`}
-      >
-        <div className='h-auto '>
-          <div className="h-full flex items-center justify-center text-red-800 text-5xl font-['Nimbus-Sans'] font-bold leading-[110%] whitespace-nowrap">
-            {topic}
-          </div>
-        </div>
-        <div className='opacity-70 text-red-800 text-opacity-40 text-3xl font-normal leading-[120%]'>
-          {subtopic}
-        </div>
-        <hr className='border border-[#E7E9EB] w-full mt-6 mb-6'></hr>
-        <div
-          className='flex flex-row text-zinc-800 text-xl font-normal leading-9 justify-between text-start'
-          style={{
-            //   display: 'list-item',
-            listStyleType: 'none',
-            listStylePosition: 'inside',
-            //   fontSize: '18pt',
-            //   marginLeft: '20px',
-          }}
-        >
-          {content}
-
-          {/* Add your content here */}
-        </div>
-      </div>
-      {/* for cover page */}
-      <div
-        className={`${
-          isCoverPage
-            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-row justify-start items-start box-border border-none relativep-[28px] gap-[32px] bg-[#8C1515] text-white'
-            : 'hidden'
-        } `}
-      >
-        <div className={`flex flex-col justify-center h-full pl-[5rem]`}>
-          <Image
-            src={StanfordLogoLetters}
-            alt='Standford Logo Letters'
-            className='w-[20rem] h-auto'
-          />
-          <div className='text-white text-6xl font-bold leading-[100%]'>
-            {title}
-          </div>
-          <div className=' text-white text-3xl font-normal leading-[100%]'>
-            {user_name}
-          </div>
-        </div>
-      </div>
-
-      {/* School Logo (Replace the placeholder with the actual logo URL) */}
-      <div className='fixed inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex'>
-        <Image
-          src={StanfordLogo}
-          alt='Standford Logo'
-          className='w-16 h-16 mr-4'
-        />
-        <div
-          className={`grow basis-0 opacity-50 border ${
-            isCoverPage ? 'border-white' : 'border-red-800'
-          }  border-opacity-40`}
-        ></div>
-        {/* <div className='text-red-800 text-2xl font-normal '>Caption</div> */}
-      </div>
-    </>
-  )
-}
-
-export const Berkeley_school_template = ({
-  user_name,
-  title,
-  topic,
-  subtopic,
-  content,
-  imgs,
-  update_callback,
-  canEdit,
-  autoSave,
-  isCoverPage,
-}: MainSlideProps) => {
-  const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback)
-  return (
-    <>
-      {/* for not-cover page slides */}
-      <div
-        className={`${
-          !isCoverPage
-            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-col justify-start items-start box-border border-none relative bg-[#F0F2F5] p-[28px]'
-            : 'hidden'
-        }`}
-      >
-        <div className='h-auto '>
-          <div className='h-full flex items-center justify-center text-[#003262] text-5xl leading-[120%] font-sans font-bold whitespace-nowrap'>
-            {topic}
-          </div>
-        </div>
-        <div className='text-[#3B7EA1] text-3xl font-semibold leading-[120%] font-sans'>
-          {subtopic}
-        </div>
-        <hr className='border border-[#E7E9EB] w-full mt-6 mb-6'></hr>
-        <div
-          className='flex flex-col text-[#1B1B1B] text-xl font-normal font-sans leading-[160%] justify-center text-left items-start'
-          style={{
-            //   display: 'list-item',
-            listStyleType: 'none',
-            listStylePosition: 'inside',
-            //   fontSize: '18pt',
-            //   marginLeft: '20px',
-          }}
-        >
-          {content}
-
-          {/* Add your content here */}
-        </div>
-      </div>
-      {/* for cover page */}
-      <div
-        className={`${
-          isCoverPage
-            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-row justify-start items-start box-border border-none relative p-[28px] gap-[32px] bg-[#003262]'
-            : 'hidden'
-        } `}
-      >
-        <div className={`flex flex-col justify-center h-full pl-[5rem]`}>
-          <div className='text-white text-6xl font-bold font-sans leading-[100%]'>
-            {title}
-          </div>
-          <div className=' text-white text-3xl font-normal font-sans leading-[100%]'>
-            {user_name}
-          </div>
-        </div>
-        {/* masked background */}
-        <div className='absolute top-[0%] left-[-5%] gap-7 inline-flex pl-[3rem]'>
-          <Image
-            src={MaskedBackground}
-            alt='MaskedBackground'
-            className='w-[70rem]'
-          />
-        </div>
-      </div>
-
-      {/* School Logo (Replace the placeholder with the actual logo URL) */}
-      <div className='fixed inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[3rem]'>
-        <Image
-          src={isCoverPage ? BerkeleyLogoWhite : BerkeleyLogo}
-          alt='Standford Logo'
-          className='w-[5rem] h-auto'
-        />
-        {/* <div className='text-red-800 text-2xl font-normal '>Caption</div> */}
-      </div>
-    </>
-  )
-}
-
-export const Harvard_school_template = ({
-  user_name,
-  title,
-  topic,
-  subtopic,
-  content,
-  imgs,
-  update_callback,
-  canEdit,
-  autoSave,
-  isCoverPage,
-}: MainSlideProps) => {
-  const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback)
-  return (
-    <>
-      {/* for not-cover page slides */}
-      <div
-        className={`${
-          !isCoverPage
-            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-col justify-start items-start box-border border-none relative bg-[#F0F0F2] p-[28px]'
-            : 'hidden'
-        }`}
-      >
-        <div className='h-auto '>
-          <div className="h-full flex items-center justify-center text-neutral-800 text-5xl font-normal font-['Georgia'] leading-[120%] whitespace-nowrap">
-            {topic}
-          </div>
-        </div>
-        <div className="text-center text-neutral-700 text-3xl font-bold font-['Arial'] leading-[120%]">
-          {subtopic}
-        </div>
-        <hr className='border border-[#E7E9EB] w-full mt-6 mb-6'></hr>
-        <div
-          className="flex flex-col opacity-70 text-neutral-700 text-xl font-normal font-['Arial'] leading-loose"
-          style={{
-            //   display: 'list-item',
-            listStyleType: 'none',
-            listStylePosition: 'inside',
-            //   fontSize: '18pt',
-            //   marginLeft: '20px',
-          }}
-        >
-          {content}
-
-          {/* Add your content here */}
-        </div>
-      </div>
-      {/* for cover page */}
-      <div
-        className={`${
-          isCoverPage
-            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-row justify-start items-start box-border border-none relative p-[28px] gap-[32px] bg-[#F0F0F2]'
-            : 'hidden'
-        } `}
-      >
-        <div className={`flex flex-col justify-center h-full pl-[5rem]`}>
-          <div className="text-neutral-800 text-6xl font-normal font-['Gorgia'] leading-[120%]">
-            {title}
-          </div>
-          <div className="opacity-70 text-center text-neutral-700 text-3xl font-normal font-['Arial'] leading-loose">
-            {user_name}
-          </div>
-          <div className='absolute top-[50%] right-[0%] gap-7 inline-flex pl-[3rem]'>
-            <Image
-              src={HarvardCoverVector}
-              alt='MaskedBackground'
-              className='w-[20rem]'
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* School Logo (Replace the placeholder with the actual logo URL) */}
-      <div
-        className={`fixed inset-0 ${
-          isCoverPage ? 'top-[5%]' : 'top-[85%]'
-        } w-full h-14 justify-start items-center gap-7 inline-flex pl-[4rem]`}
-      >
-        <Image
-          src={HarvardLogo}
-          alt='Standford Logo'
-          className='w-[10rem] h-auto'
-        />
-      </div>
-    </>
-  )
-}
 
 export const availableTemplates = {
   //   Col_2_img_1: Col_2_img_1,
