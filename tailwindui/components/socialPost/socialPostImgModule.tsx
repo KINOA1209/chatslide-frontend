@@ -45,7 +45,7 @@ export const ImgModule = ({
     const [selectedQueryMode, setSelectedQueryMode] = useState<ImgQueryMode>(ImgQueryMode.RESOURCE);
 
     useEffect(() => {
-        console.log(selectedQueryMode)
+        //console.log(selectedQueryMode)
     }, [selectedQueryMode])
 
     useEffect(() => {
@@ -564,6 +564,7 @@ export const ImgModule = ({
             style={{
                 backgroundImage: selectedImg !== '' && isTemp1Cover ? `linear-gradient(180deg, ${cover_start}, ${cover_end} 40%), url(${selectedImg})` : '',
                 backgroundSize: selectedImg !== '' && isTemp1Cover ? 'cover' : '',
+                backgroundPosition: selectedImg !== '' && isTemp1Cover ? 'center center' : '',
             }}
             >
 
@@ -583,7 +584,7 @@ export const ImgModule = ({
                 :
                 (!isTemp1Cover && (
                     <img
-                    style={{ objectFit: 'contain' }}
+                    style={{ objectFit: 'contain'}}
                     className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`}
                     src={imgsrc} 
                 />

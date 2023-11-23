@@ -31,6 +31,7 @@ interface MainSlideProps {
     border_end?: string,
     cover_start?: string,
     cover_end?: string,
+    topic: JSX.Element,
 }
 
 
@@ -64,7 +65,7 @@ const useLocalImgs = (imgs: string[], imgCount: number, update_callback: (imgs: 
     return { localImgs, updateImgAtIndex };
 };
 
-export const First_page_img_1 = ({ subtopic, keywords, imgs, border_start, border_end, cover_start, cover_end, update_callback, autoSave, canEdit }: MainSlideProps) => {
+export const First_page_img_1 = ({ topic, keywords, imgs, border_start, border_end, cover_start, cover_end, update_callback, autoSave, canEdit }: MainSlideProps) => {
 
     const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback);
 
@@ -97,10 +98,10 @@ export const First_page_img_1 = ({ subtopic, keywords, imgs, border_start, borde
                 />
             </div>
             <div 
-                className="w-full h-full flex flex-col justify-between"
+                className="w-full h-full mx-[3%] flex flex-col justify-between z-20"
 
             >
-                <div className="mt-[10%] px-[4%] text-center z-20">{subtopic}</div>
+                <div className="mt-[10%] px-[4%] text-center z-20">{topic}</div>
                 <div
                     className="mb-[6%] mx-[auto] text-center z-20"
                     style={{
@@ -108,6 +109,7 @@ export const First_page_img_1 = ({ subtopic, keywords, imgs, border_start, borde
                         borderRadius: '5px',
                         background: 'rgba(0, 0, 0, 0.4)',
                         backdropFilter: 'blur(24px)',
+                        maxWidth: '93%'
                      }}
                 >
                     {keywords}

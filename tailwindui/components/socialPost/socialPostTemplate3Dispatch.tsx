@@ -6,7 +6,6 @@ import {
     CompanyIconBlack,
     CompanyIconWhite,
 } from '@/components/socialPost/socialPostIcons'
-import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger'
 
 export const templateDispatch = (
     slide: SocialPostSlide,
@@ -20,7 +19,6 @@ export const templateDispatch = (
     updateImgUrlArray: (slideIndex: number) => (urls: string[]) => void = () => () => {},  // Replace with your default function if you have one
     updateIllustrationUrlArray: (slideIndex: number) => (urls: string[]) => void = () => () => {},
     toggleEditMathMode: () => void = () => {},  // Replace with your default function if you have one
-    theme?: ThemeObject,
 ): JSX.Element => {
     let keyPrefix = ''
     if (exportToPdfMode) {
@@ -52,10 +50,10 @@ export const templateDispatch = (
                     dangerouslySetInnerHTML={{ __html: slide.title }}
                 />
             }
-            border_start = {theme?.border_start || '#FB42FF'}
-            border_end = {theme?.border_end || '#767EFF'}
-            cover_start = {theme?.cover_start || '#9F4FC9 0%'}
-            cover_end = {theme?.cover_end || 'rgba(0, 0, 0, 0.00) 100%'}
+            border_start = {slide.theme?.border_start || '#937C67'}
+            border_end = {slide.theme?.border_end || '#4F361F'}
+            cover_start = {slide.theme?.cover_start || '#725947 0%'}
+            cover_end = {slide.theme?.cover_end || 'rgba(0, 0, 0, 0.00) 100%'}
             quote={<></>}
             source={<></>}
             subtopic={<></>}
@@ -65,6 +63,7 @@ export const templateDispatch = (
             content={[<></>]}
             brief={<></>}
             section_title={<></>}
+            topic={<></>}
         />
     } 
     else {
@@ -105,10 +104,10 @@ export const templateDispatch = (
                 dangerouslySetInnerHTML={{ __html: slide.source }}
                 />
             }
-            border_start = {theme?.border_start || '#FB42FF'}
-            border_end = {theme?.border_end || '#767EFF'}
-            cover_start = {theme?.cover_start || '#9F4FC9 0%'}
-            cover_end = {theme?.cover_end || 'rgba(0, 0, 0, 0.00) 100%'}
+            border_start = {slide.theme?.border_start || '#937C67'}
+            border_end = {slide.theme?.border_end || '#4F361F'}
+            cover_start = {slide.theme?.cover_start || '#725947 0%'}
+            cover_end = {slide.theme?.cover_end || 'rgba(0, 0, 0, 0.00) 100%'}
             subtopic={<></>}
             keywords={<></>}
             content={[<></>]}
@@ -117,6 +116,7 @@ export const templateDispatch = (
             original_title={<></>}
             brief={<></>}
             title={<></>}
+            topic={<></>}
         />
     }
 }

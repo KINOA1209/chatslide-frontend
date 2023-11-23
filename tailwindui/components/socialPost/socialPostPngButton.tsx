@@ -19,14 +19,11 @@ import { ThemeObject } from './socialPostThemeChanger'
 interface ExportToPdfProps {
   finalSlides: SocialPostSlide[]
   currentSlideIndex?: number
-  //setFinalSlides: React.Dispatch<React.SetStateAction<Slide[]>>;
-  finalTheme: ThemeObject
   borderColorOptions: ThemeObject[]
 }
 const ExportToPngButton: React.FC<ExportToPdfProps> = ({ 
   finalSlides,
   currentSlideIndex = 0,
-  finalTheme,
   borderColorOptions,
  }) => {
   const topic =
@@ -173,7 +170,6 @@ const res_scenario =
                 templateDispatch={selectTemplateDispatch()}
                 slideRef={slideRef}
                 onSlideRefUpdate={setSlideRef}
-                finalTheme={finalTheme}
               />
             </div>
         </div>

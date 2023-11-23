@@ -12,17 +12,16 @@ import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger'
 const SocialPostHTML = dynamic(() => import('@/components/socialPost/socialPostHTML'), { ssr: false })
 
 type SocialPostVisualizerProps = {
-    finalTheme: ThemeObject
-    setFinalTheme: (theme: ThemeObject) => void
+    finalSlides: SocialPostSlide[]
+    setFinalSlides: Function
     borderColorOptions: ThemeObject[]
 }
 const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
-    finalTheme, 
-    setFinalTheme,
+    finalSlides,
+    setFinalSlides,
     borderColorOptions,
 }) => {
     const [host, setHost] = useState('https://drlambda.ai')
-    const [finalSlides, setFinalSlides] = useState<SocialPostSlide[]>([])
     const [share, setShare] = useState(false)
     const [isPaidUser, setIsPaidUser] = useState(false);
     const [finalSlideIndex, setFinalSlideIndex] = useState<number>(0)
@@ -61,7 +60,6 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
                 <ExportToPngButton 
                     finalSlides={finalSlides} 
                     currentSlideIndex={finalSlideIndex} 
-                    finalTheme={finalTheme}
                     borderColorOptions={borderColorOptions}
                 />
                 </div>
@@ -70,8 +68,6 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
                     setFinalSlides={setFinalSlides} 
                     finalSlideIndex={finalSlideIndex} 
                     setFinalSlideIndex={setFinalSlideIndex}
-                    finalTheme={finalTheme}
-                    setFinalTheme={setFinalTheme}
                     borderColorOptions={borderColorOptions}
                 />
             </div>
