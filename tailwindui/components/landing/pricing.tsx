@@ -2,7 +2,7 @@
 
 
 import { useEffect, useRef, useState } from "react";
-import AuthService from "@/components/utils/AuthService";
+import AuthService from "@/services/AuthService";
 import { useRouter } from 'next/navigation';
 import moment from "moment";
 import Toggle from "../button/Toggle";

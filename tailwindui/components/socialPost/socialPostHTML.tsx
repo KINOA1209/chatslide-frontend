@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Theme, ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import AuthService from '@/components/utils/AuthService'
+import AuthService from '@/services/AuthService'
 import '@/components/slides/slidesHTML.css'
 import LayoutChanger from '@/components/socialPost/socialPostLayoutChanger'
 import ThemeChanger from '@/components/socialPost/socialPostThemeChanger'

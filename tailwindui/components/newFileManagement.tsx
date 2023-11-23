@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
-import AuthService from '@/components/utils/AuthService'
-import UserService from '@/components/utils/UserService'
+import AuthService from '@/services/AuthService'
+import UserService from '@/services/UserService'
 import { FileUploadButton } from '@/components/fileUpload'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'

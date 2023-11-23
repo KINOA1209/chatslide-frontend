@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import AuthService from "../../../components/utils/AuthService";
+import AuthService from "../../../services/AuthService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";

@@ -11,7 +11,7 @@ import GoogleAnalytics from '@/components/integrations/GoogleAnalytics'
 import Hotjar from '@/components/integrations/Hotjar'
 // import AuthService from "../utils/AuthService";
 import { Auth, Hub } from 'aws-amplify'
-import AuthService from '../utils/AuthService'
+import AuthService from '../../services/AuthService'
 import { DrlambdaLogoIcon } from '../new_landing/Icons'
 
 interface HeaderProps {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import AuthService from '../utils/AuthService';
+import AuthService from '../../services/AuthService';
 import { useRouter, useSearchParams } from "next/navigation";
-import UserService from '../utils/UserService';
+import UserService from '../../services/UserService';
 
 interface GoogleSignInProps {
     promo?: string;

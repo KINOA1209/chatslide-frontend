@@ -3,7 +3,7 @@
 import React, { useState, useRef, FormEvent, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import ProjectProgress from '@/components/newWorkflowSteps'
-import AuthService from '@/components/utils/AuthService'
+import AuthService from '@/services/AuthService'
 import FeedbackButton from '@/components/slides/feedback'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'

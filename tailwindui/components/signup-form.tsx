@@ -4,8 +4,8 @@ import React, { useState, ChangeEvent, FormEvent, useEffect, useRef, RefObject }
 import { useRouter, useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AuthService from "@/components/utils/AuthService";
-import UserService from "@/components/utils/UserService";
+import AuthService from "@/services/AuthService";
+import UserService from "@/services/UserService";
 import Promo from "./signup/Promo";
 
 const SignupForm: React.FC = () => {

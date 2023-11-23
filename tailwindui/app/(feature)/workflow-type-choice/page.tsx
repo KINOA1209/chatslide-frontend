@@ -6,7 +6,7 @@ import '@/app/css/workflow-scenario-choice.css'
 import Image from 'next/image'
 import scenarios from './choices.json';
 import SessionStorage from '@/components/utils/SessionStorage';
-import AuthService from '@/components/utils/AuthService';
+import AuthService from '@/services/AuthService';
 
 const ScenarioChoicePage = () => {
   const router = useRouter() // Initialize the router

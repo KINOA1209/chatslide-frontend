@@ -3,7 +3,7 @@
 import React, { useState, MouseEvent, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import CSS from 'csstype'
-import AuthService from '@/components/utils/AuthService'
+import AuthService from '@/services/AuthService'
 
 interface StepProps {
   id: number

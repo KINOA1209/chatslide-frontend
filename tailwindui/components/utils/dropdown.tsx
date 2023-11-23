@@ -3,8 +3,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { toast } from 'react-toastify';
-import AuthService from "../utils/AuthService";
-import UserService from "../utils/UserService";
+import AuthService from "../../services/AuthService";
+import UserService from "../../services/UserService";
 
 interface DropdownButtonProps {
 }
