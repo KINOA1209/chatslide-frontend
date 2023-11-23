@@ -99,7 +99,7 @@ const res_scenario =
 
     try {
       const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
-      const response = await fetch('/api/save_final_html_pdf', {
+      const response = await fetch('/api/save_socialpost', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${idToken}`,
@@ -145,7 +145,7 @@ const res_scenario =
             onClick={handleSaveImage}
         >
             <div className='text-center text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide'>
-                Export to PNG (Current Page)
+                Save this page (1⭐️)
             </div>
             <div className='w-4 h-4 relative' hidden={downloadingPDF}>
                 <DownloadIcon />
