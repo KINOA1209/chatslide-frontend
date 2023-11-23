@@ -13,6 +13,7 @@ import { CarbonConnect, IntegrationName } from 'carbon-connect'
 import { DeleteIcon } from '@/app/(feature)/icons'
 import { ResourceItem } from './ui/ResourceItem'
 import Resource from '@/models/Resource'
+import ResourceService from '@/services/ResourceService'
 
 
 interface UserFileList {
@@ -270,51 +271,12 @@ const MyFiles: React.FC<filesInterface> = ({
   }, [selectedResources])
 
   const fetchFiles = async (token: string) => {
-    const headers = new Headers()
-    if (token) {
-      headers.append('Authorization', `Bearer ${token}`)
-    }
-    headers.append('Content-Type', 'application/json')
-
-    const resource_type = selectable
-      ? {
-          resource_type: ['doc', 'url'],
-        }
-      : {}
-
-    try {
-      const response = await fetch('/api/resource_info', {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(resource_type),
-      })
-
-      if (response.ok) {
-        const data = await response.json()
-        const files = data.data.resources
-        const resourceTemps = files.map((resource: any) => {
-          return {
-            id: resource.id,
-            name: resource.resource_name,
-            type: resource.type,
-            thumbnail_url: resource.thumbnail_url,
-            timestamp: resource.timestamp,
-          }
-        })
-        setResources(resourceTemps)
-        console.log(resourceTemps)
-        sessionStorage.setItem(
-          'history_resource',
-          JSON.stringify(resourceTemps)
-        )
-        setRendered(true)
-      } else {
-        // Handle error cases
-        console.error('Failed to fetch projects:', response.status)
-      }
-    } catch (error) {
-      console.error('Error fetching projects:', error)
-    }
+    const resource_type = selectable ? ['doc', 'url'] : []
+    ResourceService.fetchResources(resource_type, token).then((resources) => {
+      setResources(resources)
+      sessionStorage.setItem('history_resource', JSON.stringify(resources))
+      setRendered(true)
+    })
   }
 
   const handleFileDeleted = (id: string) => {
