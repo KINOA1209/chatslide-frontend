@@ -99,7 +99,7 @@ const ExportToPngButton: React.FC<ExportToPdfProps> = ({
 
     try {
       const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
-      const response = await fetch('/api/save_socialpost', {
+      const response = await fetch('/api/export_socialpost', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${idToken}`,
