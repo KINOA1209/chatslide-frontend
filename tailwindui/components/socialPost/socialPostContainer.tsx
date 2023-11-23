@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
 import { templateDispatch as defaultTemplateDispatch } from '@/components/socialPost/socialPostTemplateDispatch';
+import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger'
 
 type SlideContainerProps = {
     slides: SocialPostSlide[]; // You can replace 'any' with the actual type of the slides if known
@@ -14,6 +15,7 @@ type SlideContainerProps = {
     slideRef?: React.RefObject<HTMLDivElement>;
     exportToPdfMode?: boolean;
     onSlideRefUpdate?: (ref: React.RefObject<HTMLDivElement>) => void
+    finalTheme?:ThemeObject
 };
 
 const SocialPostContainer: React.FC<SlideContainerProps> = ({
@@ -27,6 +29,7 @@ const SocialPostContainer: React.FC<SlideContainerProps> = ({
     slideRef = useRef(null),
     exportToPdfMode = false,
     onSlideRefUpdate,
+    finalTheme,
 }) => {
     useEffect(() => {
         if (onSlideRefUpdate){

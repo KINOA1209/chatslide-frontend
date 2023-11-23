@@ -27,7 +27,6 @@ export const templateDispatch = (
     }
     const Template = templates[slide.template as keyof typeof templates]
     if (index === 0) {
-        const keywordsString = slide.keywords.join(' | ')
         return (
           <Template
             autoSave={saveSlides}
@@ -36,7 +35,7 @@ export const templateDispatch = (
             update_callback={updateImgUrlArray(index)}
             canEdit={canEdit}
             imgs={slide.images}
-            subtopic={
+            topic={
                 <div
                     key={0}
                     className={`${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
@@ -46,27 +45,31 @@ export const templateDispatch = (
                             setIsEditMode(true);
                         }
                     }}
-                    onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'subtopic')}
+                    onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'topic')}
                     style={h3Style}
-                    dangerouslySetInnerHTML={{ __html: slide.subtopic }}
+                    dangerouslySetInnerHTML={{ __html: slide.topic }}
                 />
             }
             keywords={
                 <div
                     key={1}
-                    //className={`rounded-md outline-2 px-[4px] ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
-                    contentEditable={false}
-                    className={`px-[4px] py-[2%] ${!exportToPdfMode && 'overflow-hidden'}`}
-                    // onFocus={() => {
-                    //     if (canEdit) {
-                    //         setIsEditMode(true);
-                    //     }
-                    // }}
-                    //onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'keywords')}
+                    className={`rounded-md outline-2 px-[4px] py-[2%] ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                    contentEditable={canEdit}
+                    onFocus={() => {
+                        if (canEdit) {
+                            setIsEditMode(true);
+                        }
+                    }}
+                    onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'keywords')}
                     style={h4Style}
-                    dangerouslySetInnerHTML={{ __html: keywordsString }}
+                    dangerouslySetInnerHTML={{ __html: slide.keywords }}
                 />
             }
+            subtopic={<></>}
+            border_start = {slide.theme?.border_start || '#937C67'}
+            border_end = {slide.theme?.border_end || '#4F361F'}
+            cover_start = {slide.theme?.cover_start || '#725947 0%'}
+            cover_end = {slide.theme?.cover_end || 'rgba(0, 0, 0, 0.00) 100%'}
             original_title={<></>}
             English_title={<></>}
             content={[<></>]}
@@ -159,9 +162,8 @@ export const templateDispatch = (
                         }
                     }
                     return (
-                        <>
+                        <div key={keyPrefix + index.toString() + '_' + contentIndex.toString()}>
                         <div
-                            key={keyPrefix + index.toString() + '_' + contentIndex.toString()}
                             className={`${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                             contentEditable={canEdit}
                             style={listStyle}
@@ -179,10 +181,14 @@ export const templateDispatch = (
                         >
                         </div>
                         <hr className='my-[15px]'></hr>
-                        </>    
+                        </div>    
                     );
                 })
-            }       
+            }
+            border_start = {slide.theme?.border_start || '#937C67'}
+            border_end = {slide.theme?.border_end || '#4F361F'}
+            cover_start = {slide.theme?.cover_start || '#725947 0%'}
+            cover_end = {slide.theme?.cover_end || 'rgba(0, 0, 0, 0.00) 100%'}     
             section_title={<></>}
             original_title={<></>}
             illustration={['']}
@@ -191,6 +197,7 @@ export const templateDispatch = (
             quote={<></>}
             source={<></>}
             English_title={<></>}
+            topic={<></>}
         />
       )
     }
