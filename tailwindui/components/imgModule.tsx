@@ -566,7 +566,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
                 </div>
                 :
                 <img
-                    style={{ objectFit: 'contain' }}
+                    style={{ objectFit: 'contain', objectPosition: 'center' }}
                     className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`}
                     src={imgsrc} />
             }

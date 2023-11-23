@@ -227,7 +227,7 @@ export default function Topic_SocialPost() {
     try {
       const outlinesJson = await callSocialPost(formData as FormatData)
       console.log(outlinesJson)
-      const searchImagesResponse = await callSearchImages(JSON.stringify(formData.topic))
+      //const searchImagesResponse = await callSearchImages(JSON.stringify(formData.topic))
       setIsSubmitting(false)
 
       // Store the data in session storage
@@ -235,7 +235,7 @@ export default function Topic_SocialPost() {
       sessionStorage.setItem('foldername', outlinesJson.data.foldername)
       sessionStorage.setItem('project_id', outlinesJson.data.project_id)
       sessionStorage.setItem('socialPost', outlinesJson.data.res)
-      sessionStorage.setItem('socialPostImages', JSON.stringify(searchImagesResponse.data.images))
+      //sessionStorage.setItem('socialPostImages', JSON.stringify(searchImagesResponse.data.images))
 
       // Retrieve the existing resources from sessionStorage and parse them
       const resources: string[] = JSON.parse(
