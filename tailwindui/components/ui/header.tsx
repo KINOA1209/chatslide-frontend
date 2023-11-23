@@ -153,7 +153,7 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
 
           {/* landing sections */}
           {isLanding && (
-            <div className="w-1/3 flex">
+            <div className="w-1/3 hidden sm:flex">
               <div className='flex-grow flex w-full justify-between items-center'>
                 <a href="#features" className='cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-regular'>
                   <span>Features</span>
@@ -161,7 +161,7 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
                 <a href="#scenarios" className='cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-regular'>
                   <span>Scenarios</span>
                 </a>
-                <a href="#use-cases" className='cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-regular'>
+                <a href="#use-cases" className='whitespace-nowrap cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-regular'>
                   <span>Use Cases</span>
                 </a>
                 <a href="#pricing" className='cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-regular'>
