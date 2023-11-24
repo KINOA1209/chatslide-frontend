@@ -12,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import '@/app/(feature)/my-resources/UploadToLibraryWindow.css';
 import ResourceService from '@/services/ResourceService';
 import Resource from '@/models/Resource';
-import { FileUploadButton } from '@/components/fileUpload';
+import { FileUploadButton } from '@/components/FileUploadButton';
 
 
 interface UploadToLibraryWindowProps {

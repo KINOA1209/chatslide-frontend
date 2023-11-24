@@ -3,14 +3,14 @@
 import React, { useState, useEffect, useRef } from 'react'
 import AuthService from '@/services/AuthService'
 import UserService from '@/services/UserService'
-import { FileUploadButton } from '@/components/fileUpload'
+import { FileUploadButton } from '@/components/FileUploadButton'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import moment from 'moment'
 // import mixpanel from 'mixpanel-browser'
 import { DeleteResourceIcon } from '@/app/(feature)/my-resources/icons'
 import { CarbonConnect, IntegrationName } from 'carbon-connect'
-import { DeleteIcon } from '@/app/(feature)/icons'
+import { DeleteIcon, SpinIcon } from '@/app/(feature)/icons'
 import { ResourceItem } from './ui/ResourceItem'
 import Resource from '@/models/Resource'
 import ResourceService from '@/services/ResourceService'
@@ -48,10 +48,13 @@ const FileManagement: React.FC<UserFileList> = ({
   clickCallback,
   selectedResources,
 }) => {
+  const [deletingId, setDeletingId] = useState<string>("")
+
   const handleDeleteFile = async (
     e: React.MouseEvent<HTMLDivElement>,
     id: string
   ) => {
+    setDeletingId(id)
     e.stopPropagation()
     try {
       const { userId, idToken: token } =
@@ -92,6 +95,7 @@ const FileManagement: React.FC<UserFileList> = ({
     } catch (error) {
       console.error(error)
     }
+    setDeletingId("")
   }
 
   const handleOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -99,7 +103,7 @@ const FileManagement: React.FC<UserFileList> = ({
     // Open thumbnail / Open Youtube link etc.
   }
 
-  const entry = ( resource: Resource ) => {
+  const entry = (resource: Resource) => {
 
     return (
       // <div
@@ -125,8 +129,8 @@ const FileManagement: React.FC<UserFileList> = ({
           }
         }}
       >
-        
-        <ResourceItem {...resource}/>
+
+        <ResourceItem {...resource} />
 
         {/* timestamp and delete icon */}
         <div className='h-full flex justify-between items-center w-full py-4 px-2 text-gray-600 text-[13px] font-normal font-creato-medium leading-normal tracking-[0.12rem]'>
@@ -139,12 +143,15 @@ const FileManagement: React.FC<UserFileList> = ({
           {!selectable ? (
             <div className='w-8 flex flex-row-reverse cursor-pointer'>
               <div onClick={(e) => handleDeleteFile(e, resource.id)}>
-                <DeleteIcon />
+                {deletingId === resource.id ?
+                  <SpinIcon /> : <DeleteIcon />}
               </div>
             </div>
           ) : (
             <></>
           )}
+
+          {/* selected mark */}
           {selectable ? (
             <div className='w-6 flex flex-row-reverse shrink-0'>
               {selectedResources.includes(resource.id) ? (
@@ -521,7 +528,7 @@ const MyFiles: React.FC<filesInterface> = ({
         {/* upload local file button */}
         <div className='max-w-sm w-fit text-center pt-4 mx-4'>
           <div className='w-full mx-auto'>
-            <FileUploadButton onFileSelected={onFileSelected} isSubmitting={isSubmitting}/>
+            <FileUploadButton onFileSelected={onFileSelected} isSubmitting={isSubmitting} />
           </div>
         </div>
 
