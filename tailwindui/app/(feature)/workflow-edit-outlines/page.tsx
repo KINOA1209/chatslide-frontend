@@ -1,10 +1,10 @@
 'use client'
 
 import React, { useState, useRef, useEffect, Fragment } from 'react'
-import ProjectProgress from '@/components/newWorkflowSteps'
+import ProjectProgress from '@/components/WorkflowSteps'
 import FeedbackButton from '@/components/slides/feedback'
 import 'react-toastify/dist/ReactToastify.css'
-import NewOutlineVisualizer from '@/components/outline/NewOutlineVisulizer'
+import OutlineVisualizer from '@/components/outline/OutlineVisulizer'
 import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit'
 import {
   AddSectionIcon,
@@ -16,7 +16,7 @@ import {
   RightTurnArrowIcon,
   QuestionExplainIcon,
 } from '../icons'
-import NewWorkflowGPTToggle from '@/components/button/NewWorkflowGPTToggle'
+import NewWorkflowGPTToggle from '@/components/button/WorkflowGPTToggle'
 import { useRouter } from 'next/navigation'
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner'
 import { ToastContainer } from 'react-toastify'
@@ -145,7 +145,7 @@ export default function WorkflowStep2() {
           <div className='w-full sm:w-3/4 gap-10 auto-rows-min'>
             <div className='lg:col-span-2 flex flex-col'>
               {outlineContent && (
-                <NewOutlineVisualizer
+                <OutlineVisualizer
                   outlineData={outlineContent}
                   setOutlineData={setOutlineContent}
                   isGPT35={isGpt35}

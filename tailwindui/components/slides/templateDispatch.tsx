@@ -1,5 +1,5 @@
 import { h1Style, h2Style, h3Style, h4Style, listStyle } from './Styles'
-import { Slide, SlideKeys } from '@/components/slides/NewSlidesHTML'
+import { Slide, SlideKeys } from '@/components/slides/SlidesHTML'
 import templates, { templateSamples } from '@/components/slides/slideTemplates'
 import { MathJax, MathJaxContext } from 'better-react-mathjax'
 

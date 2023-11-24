@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, FormEvent, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import ProjectProgress from '@/components/newWorkflowSteps'
+import ProjectProgress from '@/components/WorkflowSteps'
 import AuthService from '@/services/AuthService'
 import FeedbackButton from '@/components/slides/feedback'
 import { ToastContainer, toast } from 'react-toastify'
@@ -18,7 +18,7 @@ import {
   AIEditIconActive,
   AIEditIconInactive,
 } from './icons'
-import NewWorkflowGPTToggle from '@/components/button/NewWorkflowGPTToggle'
+import NewWorkflowGPTToggle from '@/components/button/WorkflowGPTToggle'
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner'
 interface UpdateButtonProps {
   callback: Function
