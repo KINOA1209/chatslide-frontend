@@ -1,9 +1,18 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { ImgModule } from '@/components/imgModule'
-import { LayoutKeys, MainSlideProps } from './slideTemplates'
+import { MainSlideProps as BaseMainSlideProps } from './slideTemplates'
 import col1img0_png from '@/public/images/template/col1img0.png'
 import col2img1_png from '@/public/images/template/col2img1.png'
 import col3img2_png from '@/public/images/template/col3img2.png'
+
+export type LayoutKeys =
+  | ''
+  | 'Col_1_img_0_layout'
+  | 'Col_2_img_1_layout'
+  | 'Col_3_img_2_layout'
+// Extend the interface with new fields
+interface MainSlideProps extends BaseMainSlideProps {}
+
 const useLocalImgs = (
   imgs: string[],
   imgCount: number,

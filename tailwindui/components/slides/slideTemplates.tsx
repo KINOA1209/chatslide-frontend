@@ -7,6 +7,7 @@ import col2img1_png from '@/public/images/template/col2img1.png'
 import col3img2_png from '@/public/images/template/col3img2.png'
 import drlambdaLogo from '@/public/images/template/drlambdaLogo.png'
 import drlambdaLogoSingle from '@/public/images/template/drlambdaLogoSingle.png'
+import { LayoutKeys } from './slideLayout'
 import { Berkeley_school_template } from './school_templates/Berkeley_school_template'
 import { Harvard_school_template } from './school_templates/Harvard_school_template'
 import { Stanford_school_template } from './school_templates/Stanford_school_template'
@@ -18,11 +19,6 @@ import {
   Col_3_img_2_layout,
 } from './slideLayout'
 
-export type LayoutKeys =
-  | ''
-  | 'Col_1_img_0_layout'
-  | 'Col_2_img_1_layout'
-  | 'Col_3_img_2_layout'
 export interface MainSlideProps {
   user_name: JSX.Element
   title: JSX.Element
@@ -36,6 +32,7 @@ export interface MainSlideProps {
   autoSave: Function
   isCoverPage: boolean
   layoutOption: LayoutKeys
+  primaryColor?: string
 }
 
 const useLocalImgs = (
@@ -205,6 +202,7 @@ export const Default_template = ({
   autoSave,
   isCoverPage,
   layoutOption,
+  primaryColor = 'bg-[#F0F0F2]',
 }: MainSlideProps) => {
   const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback)
   //   const ChosenLayout = layoutOptions[layoutOption as keyof typeof layoutOptions]
@@ -215,9 +213,9 @@ export const Default_template = ({
       <div
         className={`${
           isCoverPage
-            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-row gap-[2rem] justify-start items-start box-border border-none relative bg-[#F0F0F2]'
+            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-row gap-[2rem] justify-start items-start box-border border-none relative '
             : 'hidden'
-        } `}
+        } ${primaryColor} `}
       >
         <div className={`w-1/2 flex flex-col justify-start h-full`}>
           <div className='text-neutral-700 text-sm font-normal font-creato-medium leading-[120%] tracking-wide'>
@@ -254,9 +252,9 @@ export const Default_template = ({
       <div
         className={`${
           !isCoverPage
-            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-col justify-start items-start box-border border-none relative bg-white p-[28px]'
+            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-col justify-start items-start box-border border-none relative p-[28px] '
             : 'hidden'
-        }`}
+        } ${primaryColor}`}
       >
         <div
           style={{
