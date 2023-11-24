@@ -100,9 +100,9 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
         })}
       </div>
       <div className='text-sm text-gray-400'>Max file size: 16 MB</div>
-      <div className='text-sm text-gray-400'>
+      {/* <div className='text-sm text-gray-400'>
         Subscribed users can select multiple files
-      </div>
+      </div> */}
     </div>
   )
 }

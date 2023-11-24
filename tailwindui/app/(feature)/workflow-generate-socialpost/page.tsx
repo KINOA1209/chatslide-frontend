@@ -12,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import AuthService from '@/services/AuthService'
 import UserService from '@/services/UserService'
 import { Transition } from '@headlessui/react'
-import MyFiles from '@/components/fileManagement'
+import MyFiles from '@/components/FileManagement'
 import PaywallModal from '@/components/forms/paywallModal'
 import FeedbackButton from '@/components/slides/feedback'
 import WorkflowStepsBanner from '@/components/socialPost/socialPostWorkflowStep';

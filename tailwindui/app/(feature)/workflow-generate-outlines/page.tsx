@@ -14,7 +14,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import AuthService from '@/services/AuthService'
 import UserService from '@/services/UserService'
 import { Transition } from '@headlessui/react'
-import MyFiles from '@/components/fileManagement'
+import MyFiles from '@/components/FileManagement'
 import FeedbackButton from '@/components/slides/feedback'
 
 import { DeleteIcon, QuestionExplainIcon, RightTurnArrowIcon } from '@/app/(feature)/icons'
