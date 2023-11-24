@@ -100,7 +100,7 @@ const ProjectTable: React.FC<Props> = ({
               <div className='flex flex-col items-start'>
                 {/* <FileIcon fileType='pdf' /> */}
                 {project.resources && project.resources.map((resource, resourceIndex) => (
-                  <ResourceItem {...resource}/>
+                  <ResourceItem key={resourceIndex} {...resource}/>
                 ))}
               </div>
             </div>
