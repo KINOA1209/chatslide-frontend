@@ -12,7 +12,7 @@ import { Berkeley_school_template } from './school_templates/Berkeley_school_tem
 import { Harvard_school_template } from './school_templates/Harvard_school_template'
 import { Stanford_school_template } from './school_templates/Stanford_school_template'
 
-// import { layoutOptions } from './slideLayout'
+import { layoutOptions } from './slideLayout'
 import {
   Col_1_img_0_layout,
   Col_2_img_1_layout,
@@ -35,7 +35,7 @@ export interface MainSlideProps {
   primaryColor?: string
 }
 
-const useLocalImgs = (
+export const useLocalImgs = (
   imgs: string[],
   imgCount: number,
   update_callback: (imgs: string[]) => void
@@ -201,12 +201,12 @@ export const Default_template = ({
   canEdit,
   autoSave,
   isCoverPage,
-  layoutOption,
+  layoutOption = 'Col_1_img_0_layout',
   primaryColor = 'bg-[#F0F0F2]',
 }: MainSlideProps) => {
   const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback)
-  //   const ChosenLayout = layoutOptions[layoutOption as keyof typeof layoutOptions]
-  //   console.log('choosing layout option', ChosenLayout)
+  const ChosenLayout = layoutOptions[layoutOption as keyof typeof layoutOptions]
+  console.log('choosing layout option', ChosenLayout)
   return (
     <>
       {/* for cover page slide */}
@@ -238,7 +238,7 @@ export const Default_template = ({
           />
         </div>
         {/* Logo */}
-        <div className='fixed inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem]'>
+        <div className='fixed inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]'>
           <Image
             src={drlambdaLogo}
             alt='drlambdaLogo'
@@ -257,20 +257,22 @@ export const Default_template = ({
         } ${primaryColor}`}
       >
         <div
-          style={{
-            fontSize: '15pt',
-            fontWeight: 'bold',
-            marginTop: '10px',
-            color: '#2563EB',
-          }}
+          //   style={{
+          //     fontSize: '15pt',
+          //     fontWeight: 'bold',
+          //     marginTop: '10px',
+          //     color: '#2563EB',
+          //   }}
+          className=' text-black text-3xl font-bold font-creato-medium leading-[100%] pb-[2rem]'
         >
           {topic}
         </div>
         <div
-          style={{
-            fontSize: '20pt',
-            fontWeight: 'bold',
-          }}
+          //   style={{
+          //     fontSize: '20pt',
+          //     fontWeight: 'bold',
+          //   }}
+          className='mix-blend-hard-light text-neutral-900 text-base font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]'
         >
           {subtopic}
         </div>
@@ -291,7 +293,7 @@ export const Default_template = ({
         </div> */}
 
         {/* Use switch statement to render different layouts */}
-        {(() => {
+        {/* {(() => {
           switch (layoutOption) {
             case 'Col_1_img_0_layout':
               return (
@@ -345,7 +347,20 @@ export const Default_template = ({
             default:
               return null
           }
-        })()}
+        })()} */}
+        <ChosenLayout
+          content={content}
+          user_name={user_name}
+          title={title}
+          topic={topic}
+          subtopic={subtopic}
+          imgs={imgs}
+          update_callback={update_callback}
+          canEdit={canEdit}
+          autoSave={autoSave}
+          isCoverPage={isCoverPage}
+          layoutOption={layoutOption}
+        ></ChosenLayout>
         {/* company logo */}
         <div className='fixed inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]'>
           <Image

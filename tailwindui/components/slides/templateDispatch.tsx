@@ -5,7 +5,7 @@ import {
   templateSamples,
 } from '@/components/slides/slideTemplates'
 import { MathJax, MathJaxContext } from 'better-react-mathjax'
-import { LayoutKeys } from '@/components/slides/slideTemplates'
+import { LayoutKeys } from '@/components/slides/slideLayout'
 function wrapWithLiTags(content: string): string {
   if (!content.includes('<li>') || !content.includes('</li>')) {
     return `<li>${content}</li>`
@@ -31,7 +31,8 @@ export const templateDispatch = (
   toggleEditMathMode: () => void = () => {}, // Replace with your default function if you have one
 
   isCoverPage: boolean,
-  layoutOption: LayoutKeys
+  layoutOption: LayoutKeys,
+  brandingColor?: string
 ): JSX.Element => {
   let keyPrefix = ''
   if (exportToPdfMode) {
@@ -192,32 +193,34 @@ export const templateDispatch = (
         if (content.includes('$$') || content.includes('\\(')) {
           if (editMathMode) {
             return (
-              <div
-                key={
-                  keyPrefix + index.toString() + '_' + contentIndex.toString()
-                }
-                className={`rounded-md outline-2 ${
-                  !exportToPdfMode && 'overflow-hidden'
-                } ${
-                  canEdit
-                    ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline'
-                    : ''
-                }${index === 0 ? 'hidden' : ''}`}
-                contentEditable={canEdit}
-                // style={listStyle}
-                onFocus={() => {
-                  if (canEdit) {
-                    setIsEditMode(true)
+              <>
+                <div
+                  key={
+                    keyPrefix + index.toString() + '_' + contentIndex.toString()
                   }
-                }}
-                onBlur={(e) => {
-                  const modifiedContent = [...slide.content]
-                  modifiedContent[contentIndex] = e.target.innerText
-                  handleSlideEdit(modifiedContent, index, 'content')
-                }}
-              >
-                {content}
-              </div>
+                  className={`rounded-md outline-2 border-4 border-black ${
+                    !exportToPdfMode && 'overflow-hidden'
+                  } ${
+                    canEdit
+                      ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline'
+                      : ''
+                  }${index === 0 ? 'hidden' : ''} `}
+                  contentEditable={canEdit}
+                  // style={listStyle}
+                  onFocus={() => {
+                    if (canEdit) {
+                      setIsEditMode(true)
+                    }
+                  }}
+                  onBlur={(e) => {
+                    const modifiedContent = [...slide.content]
+                    modifiedContent[contentIndex] = e.target.innerText
+                    handleSlideEdit(modifiedContent, index, 'content')
+                  }}
+                >
+                  {content}
+                </div>
+              </>
             )
           } else {
             return (
@@ -278,6 +281,7 @@ export const templateDispatch = (
       update_callback={updateImgUrlArray(index)}
       isCoverPage={isCoverPage}
       layoutOption={layoutOption}
+      primaryColor={brandingColor}
     />
   )
   // }

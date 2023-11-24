@@ -473,43 +473,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     return content
   }
 
-  // useEffect(() => {
-  //     console.log(`present: ${present}`)
-  //     if (!containerRef.current || !slideRef.current) {
-  //         return // Exit if containerRef is not loaded
-  //     }
-
-  //     setDimensions({ width: window.innerWidth, height: window.innerHeight })
-
-  //     const resizeSlide = () => {
-  //         if (!present && containerRef.current && slideRef.current) {
-  //             let scale = 1
-  //             const viewWidth = window.innerWidth
-  //             if (viewWidth < 976) {
-  //                 scale = (viewWidth - 80) / 960
-  //                 containerRef.current.style.height = present
-  //                     ? '100%'
-  //                     : `${540 * scale}px`
-  //                 containerRef.current.style.width = present
-  //                     ? '100%'
-  //                     : `${960 * scale}px`
-  //                 slideRef.current.style.transform = `scale(${scale})`
-  //                 slideRef.current.style.left = `-${(960 * (1 - scale)) / 2}px`
-  //                 slideRef.current.style.top = `-${(540 * (1 - scale)) / 2}px`
-  //             } else {
-  //                 ; (containerRef.current.style.height = present ? '100%' : '540px'),
-  //                     (containerRef.current.style.width = present ? '100%' : '960px'),
-  //                     (slideRef.current.style.transform = `scale(1)`)
-  //                 slideRef.current.style.left = ''
-  //                 slideRef.current.style.top = ''
-  //             }
-  //         }
-  //     }
-  //     window.addEventListener('resize', resizeSlide)
-  //     resizeSlide()
-  //     console.log('resize')
-  // }, [slideRef.current, containerRef.current])
-
   const editableTemplateDispatch = (
     slide: Slide,
     index: number,
