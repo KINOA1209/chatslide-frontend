@@ -16,7 +16,7 @@ interface UploadToLibraryWindowProps {
   showModal: boolean
   closeModal: () => void
   selectable: boolean
-  onFilesUploaded: () => void
+  onFilesUploaded: Function
 }
 
 const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
