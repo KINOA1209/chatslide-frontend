@@ -6,6 +6,7 @@ import col1img0_png from '@/public/images/template/col1img0.png'
 import col2img1_png from '@/public/images/template/col2img1.png'
 import col3img2_png from '@/public/images/template/col3img2.png'
 import drlambdaLogo from '@/public/images/template/drlambdaLogo.png'
+import drlambdaLogoSingle from '@/public/images/template/drlambdaLogoSingle.png'
 import { Berkeley_school_template } from './school_templates/Berkeley_school_template'
 import { Harvard_school_template } from './school_templates/Harvard_school_template'
 import { Stanford_school_template } from './school_templates/Stanford_school_template'
@@ -214,27 +215,19 @@ export const Default_template = ({
       <div
         className={`${
           isCoverPage
-            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-row justify-start items-start box-border border-none relative bg-white p-[28px] gap-[32px]'
+            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-row gap-[2rem] justify-start items-start box-border border-none relative bg-[#F0F0F2]'
             : 'hidden'
         } `}
       >
-        <div className={`w-1/2 flex flex-col justify-between h-full`}>
-          <div
-            style={{
-              fontSize: '20pt',
-              color: 'rgb(180,180,180)',
-            }}
-          >
+        <div className={`w-1/2 flex flex-col justify-start h-full`}>
+          <div className='text-neutral-700 text-sm font-normal font-creato-medium leading-[120%] tracking-wide'>
             {user_name}
           </div>
-
           <div
-            style={{
-              fontSize: '30pt',
-              fontWeight: 'bold',
-              color: '#2563EB',
-            }}
-          >
+            className={`pl-[2rem] basis-0 opacity-50 border
+              border-black border-opacity-40 mt-4`}
+          ></div>
+          <div className='text-neutral-800 text-4xl font-normal font-creato-medium leading-[120%] tracking-tight pl-[2rem]'>
             {title}
           </div>
         </div>
@@ -247,7 +240,7 @@ export const Default_template = ({
           />
         </div>
         {/* Logo */}
-        <div className='fixed inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[3rem]'>
+        <div className='fixed inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem]'>
           <Image
             src={drlambdaLogo}
             alt='drlambdaLogo'
@@ -355,6 +348,18 @@ export const Default_template = ({
               return null
           }
         })()}
+        {/* company logo */}
+        <div className='fixed inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]'>
+          <Image
+            src={drlambdaLogoSingle}
+            alt='drlambda logo'
+            className='w-[1.5rem] mr-4'
+          />
+          <div
+            className={`grow basis-0 opacity-50 border border-black border-opacity-40`}
+          ></div>
+          {/* <div className='text-red-800 text-2xl font-normal '>Caption</div> */}
+        </div>
       </div>
     </>
   )
