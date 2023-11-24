@@ -1,6 +1,6 @@
 import React from 'react'
 import { Transition } from '@headlessui/react' // Assuming you're using Headless UI for Transitions
-import { SlideKeys } from '@/components/slides/NewSlidesHTML'
+import { SlideKeys } from '@/components/slides/SlidesHTML'
 import {
   ChangeLayoutIcon,
 } from '@/app/(feature)/icons'

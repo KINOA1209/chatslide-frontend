@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react';
 // Import your custom components and any other required dependencies
 import { DrLambdaBackButton } from '@/components/button/DrlambdaButton';
-import ProjectProgress from '@/components/newWorkflowSteps';
+import ProjectProgress from '@/components/WorkflowSteps';
 import DrlambdaButton from '@/components/button/DrlambdaButton';
-import { GPTToggleWithExplanation } from './button/NewWorkflowGPTToggle';
+import { GPTToggleWithExplanation } from './button/WorkflowGPTToggle';
 
 interface YourComponentProps {
   currentIndex: number;

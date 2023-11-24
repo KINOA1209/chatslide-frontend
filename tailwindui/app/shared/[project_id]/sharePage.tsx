@@ -2,7 +2,7 @@
 
 import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { Slide } from '@/components/slides/NewSlidesHTML';
+import { Slide } from '@/components/slides/SlidesHTML';
 import Footer, { WorkflowFooter } from '@/components/ui/footer';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,7 +10,7 @@ import Header from '@/components/ui/header';
 import dynamic from 'next/dynamic'
 
 
-const SlidesHTML = dynamic(() => import('@/components/slides/NewSlidesHTML'), { ssr: false })
+const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), { ssr: false })
 
 
 const SharePage: React.FC = () => {
