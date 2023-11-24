@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Transition } from '@headlessui/react'
 import Link from 'next/link'
-import AuthService from "../utils/AuthService";
+import AuthService from "../../services/AuthService";
 import { toast } from 'react-toastify';
 import { usePathname } from 'next/navigation';
 

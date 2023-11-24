@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
-import AuthService from '@/components/utils/AuthService'
-import UserService from '@/components/utils/UserService'
+import AuthService from '@/services/AuthService'
+import UserService from '@/services/UserService'
 import { FileUploadButton } from '@/components/fileUpload'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -11,19 +11,14 @@ import moment from 'moment'
 import { DeleteResourceIcon } from '@/app/(feature)/my-resources/icons'
 import { CarbonConnect, IntegrationName } from 'carbon-connect'
 import { DeleteIcon } from '@/app/(feature)/icons'
-import { FileIcon } from '@/app/(dashboard)/dashboard/ProjectTable'
+import { ResourceItem } from './ui/ResourceItem'
+import Resource from '@/models/Resource'
+import ResourceService from '@/services/ResourceService'
 
-interface UserFile {
-  id: string
-  uid: string
-  filename: string
-  thumbnail_name: string
-  timestamp: string
-}
 
 interface UserFileList {
   selectable: boolean
-  userfiles: Array<UserFile>
+  userfiles: Array<Resource>
   deleteCallback: Function
   clickCallback: Function
   selectedResources: Array<string>
@@ -32,13 +27,15 @@ interface UserFileList {
 // Define a new component for the table header
 const FileTableHeader = () => (
   <div
-    className='grid grid-cols-3 bg-[#ECF1FE] border border-gray-200'
-    style={{ gridTemplateColumns: '2fr 1fr' }}
+    className='grid bg-[#ECF1FE] border border-gray-200 grid-cols-2 md:grid-cols-3'
   >
-    <div className='px-[2.5rem] py-[1rem] text-start w-[37px] text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
-      File
+    {/* <div className='hidden md:flex w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+          Type
+        </div> */}
+    <div className='col-span-2 flex w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+      Title
     </div>
-    <div className='px-[2.5rem] py-[1rem] text-start w-[37px] text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide hidden sm:block'>
+    <div className='hidden md:flex w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
       Date
     </div>
   </div>
@@ -77,17 +74,6 @@ const FileManagement: React.FC<UserFileList> = ({
         const fileDeleteFeedback = await response.json()
         if (response.status === 200) {
           deleteCallback(id)
-          toast.success('File deleted successfully', {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'light',
-            containerId: 'fileManagement',
-          })
         } else {
           // error handling does not work
           toast.error(fileDeleteFeedback.message, {
@@ -113,25 +99,9 @@ const FileManagement: React.FC<UserFileList> = ({
     // Open thumbnail / Open Youtube link etc.
   }
 
-  const getThumbnail = (thumbnailUrl: string) => {
-    console.log(thumbnailUrl)
-    return (
-      <img
-        src={thumbnailUrl}
-        alt='Thumbnail'
-        className='object-contain'
-      />
-    )
-  }
+  const entry = ( resource: Resource ) => {
+    console.log(resource)
 
-  const entry = (
-    id: string,
-    uid: string,
-    filename: string,
-    timestamp: string,
-    thumbnail: string,
-    icon = 'pdf'
-  ) => {
     return (
       // <div
       //   key={id}
@@ -145,39 +115,31 @@ const FileManagement: React.FC<UserFileList> = ({
       //   }}
       // >
       <div
-        key={id}
+        key={resource.id}
         className='grid grid-cols-3 border border-gray-300 bg-white'
         style={{ gridTemplateColumns: '2fr 1fr' }}
         onClick={(e) => {
           if (selectable) {
-            clickCallback(id)
+            clickCallback(resource.id)
           } else {
             handleOnClick(e)
           }
         }}
       >
-        {/* thumbnail, filename */}
-        <div className='h-full flex items-center justify-left w-full py-4 px-2'>
-          {/* thumbnail */}
-          <div className='min-w-[32px] max-w-[32px]'>
-            {thumbnail ? getThumbnail(thumbnail) : getIcon(filename)}
-          </div>
-          {/* filename */}
-          <div className='text-ellipsis mx-4 overflow-hidden text-[17px] font-creato-medium leading-normal tracking-wide'>
-            {filename}
-          </div>
-        </div>
+        
+        <ResourceItem {...resource}/>
+
         {/* timestamp and delete icon */}
         <div className='h-full flex justify-between items-center w-full py-4 px-2 text-gray-600 text-[13px] font-normal font-creato-medium leading-normal tracking-[0.12rem]'>
           {' '}
-          {timestamp && (
+          {resource.timestamp && (
             <div className='hidden md:block'>
-              {moment(timestamp).format('L')}
+              {moment(resource.timestamp).format('L')}
             </div>
           )}
           {!selectable ? (
             <div className='w-8 flex flex-row-reverse cursor-pointer'>
-              <div onClick={(e) => handleDeleteFile(e, id)}>
+              <div onClick={(e) => handleDeleteFile(e, resource.id)}>
                 <DeleteIcon />
               </div>
             </div>
@@ -186,7 +148,7 @@ const FileManagement: React.FC<UserFileList> = ({
           )}
           {selectable ? (
             <div className='w-6 flex flex-row-reverse shrink-0'>
-              {selectedResources.includes(id) ? (
+              {selectedResources.includes(resource.id) ? (
                 <svg
                   className='h-6 w-6'
                   viewBox='0 0 24 24'
@@ -216,14 +178,8 @@ const FileManagement: React.FC<UserFileList> = ({
         <div className='w-full border-b border-gray-300'></div>
       </div> */}
       <FileTableHeader /> {/* Render the table header */}
-      {userfiles.map((file, index) => {
-        return entry(
-          file.id,
-          file.uid,
-          file.filename,
-          file.timestamp,
-          file.thumbnail_name
-        )
+      {userfiles.map((resource) => {
+        return entry(resource)
       })}
     </div>
   )
@@ -244,7 +200,7 @@ const MyFiles: React.FC<filesInterface> = ({
   setFilesUpdated,
 }) => {
   const [currentPage, setCurrentPage] = useState(1)
-  const [resources, setResources] = useState<UserFile[]>([])
+  const [resources, setResources] = useState<Resource[]>([])
   const promptRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const [rendered, setRendered] = useState<boolean>(false)
@@ -315,50 +271,12 @@ const MyFiles: React.FC<filesInterface> = ({
   }, [selectedResources])
 
   const fetchFiles = async (token: string) => {
-    const headers = new Headers()
-    if (token) {
-      headers.append('Authorization', `Bearer ${token}`)
-    }
-    headers.append('Content-Type', 'application/json')
-
-    const resource_type = selectable
-      ? {
-          resource_type: ['doc', 'url'],
-        }
-      : {}
-
-    try {
-      const response = await fetch('/api/resource_info', {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(resource_type),
-      })
-
-      if (response.ok) {
-        const data = await response.json()
-        const files = data.data.resources
-        const resourceTemps = files.map((resource: any) => {
-          return {
-            id: resource.id,
-            uid: resource.uid,
-            filename: resource.resource_name,
-            thumbnail_name: resource.thumbnail_url,
-            timestamp: resource.timestamp,
-          }
-        })
-        setResources(resourceTemps)
-        sessionStorage.setItem(
-          'history_resource',
-          JSON.stringify(resourceTemps)
-        )
-        setRendered(true)
-      } else {
-        // Handle error cases
-        console.error('Failed to fetch projects:', response.status)
-      }
-    } catch (error) {
-      console.error('Error fetching projects:', error)
-    }
+    const resource_type = selectable ? ['doc', 'url'] : []
+    ResourceService.fetchResources(resource_type, token).then((resources) => {
+      setResources(resources)
+      sessionStorage.setItem('history_resource', JSON.stringify(resources))
+      setRendered(true)
+    })
   }
 
   const handleFileDeleted = (id: string) => {
@@ -443,12 +361,3 @@ const MyFiles: React.FC<filesInterface> = ({
 }
 
 export default MyFiles
-
-const getIcon = (filename: string) => {
-  let ext = filename.split('.').pop()?.toLowerCase()
-  if (ext === undefined){
-    ext = 'doc'
-  }
-
-  return FileIcon({ fileType: ext })
-}

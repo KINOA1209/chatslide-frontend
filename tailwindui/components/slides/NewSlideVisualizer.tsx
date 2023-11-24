@@ -5,8 +5,8 @@ import { Slide } from '@/components/slides/NewSlidesHTML'
 import ExportToPdfButton from './exportToPdfButton'
 import dynamic from 'next/dynamic'
 import { ShareToggleButton } from '@/components/slides/SlideButtons'
-import UserService from '../utils/UserService'
-import AuthService from '../utils/AuthService'
+import UserService from '../../services/UserService'
+import AuthService from '../../services/AuthService'
 import { useRouter } from 'next/navigation'
 
 const SlidesHTML = dynamic(() => import('@/components/slides/NewSlidesHTML'), {
@@ -138,7 +138,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
         {/* <Timer expectedSeconds={60} isSubmitting={isSubmitting} /> */}
         {/* shareable link */}
         {share && (
-          <div className='w-fit flex-grow'>
+          <div className='w-[40rem] flex-grow'>
             <label className='text-sm text-zinc-100'>View only link:</label>
             <ClickableLink
               link={`${host}/shared/${sessionStorage.getItem('project_id')}`}

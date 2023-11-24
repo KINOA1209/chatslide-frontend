@@ -11,7 +11,7 @@ import GoogleAnalytics from '@/components/integrations/GoogleAnalytics'
 import Hotjar from '@/components/integrations/Hotjar'
 // import AuthService from "../utils/AuthService";
 import { Auth, Hub } from 'aws-amplify'
-import AuthService from '../utils/AuthService'
+import AuthService from '../../services/AuthService'
 import { DrlambdaLogoIcon } from '../new_landing/Icons'
 
 interface HeaderProps {
@@ -143,13 +143,35 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
         <div className='flex items-center justify-between h-12'>
           {/* Site branding */}
           <div className='flex flex-row items-center gap-x-2'>
-            {isLanding ? <Logo /> : <Home />}
+            <div className='min-w-[1.5rem]'>
+            <Logo />
+            </div>
             <div className='grow flex flex-row justify-center item-center justify-start'>
               <div className='w-fit h-[1.5rem] text-xl text-gray-200 bg-clip-text bg-gradient-to-r relative bottom-[3px] font-creato-medium'>
                 <a href={!isLanding ? '/dashboard' : '/'}>DrLambda</a>
               </div>
             </div>
           </div>
+
+          {/* landing sections */}
+          {isLanding && (
+            <div className="w-1/3 hidden sm:flex">
+              <div className='flex-grow flex w-full justify-between items-center'>
+                <a href="#features" className='cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-regular'>
+                  <span>Features</span>
+                </a>
+                <a href="#scenarios" className='cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-regular'>
+                  <span>Scenarios</span>
+                </a>
+                <a href="#use-cases" className='whitespace-nowrap cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-regular'>
+                  <span>Use Cases</span>
+                </a>
+                <a href="#pricing" className='cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-regular'>
+                  <span>Pricing</span>
+                </a>
+              </div>
+            </div>
+          )}
 
           {/* Desktop navigation */}
           <nav className='flex w-[272px]'>

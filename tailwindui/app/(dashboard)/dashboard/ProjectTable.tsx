@@ -13,12 +13,9 @@ import {
   FaFileImage,
 } from 'react-icons/fa'
 import { DeleteIcon } from '@/app/(feature)/icons';
+import { ResourceItem } from '@/components/ui/ResourceItem'
+import Resource from '@/models/Resource'
 
-interface Resource {
-  id: string
-  name: string
-  type: string
-}
 interface Project {
   id: string
   //   task: 'video' | 'scripts' | 'slides'
@@ -53,29 +50,6 @@ const TaskIcon: React.FC<{ task: 'video' | 'scripts' | 'slides' | 'presentation'
   }
 }
 
-export const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
-  fileType = fileType.toLowerCase()
-  switch (fileType) {
-    case 'doc':
-      return <FaFilePdf size='32px' fill='#505050'/>
-    case 'url':
-      return <FaYoutube size='32px' fill='#505050'/>
-    case 'youtube':
-      return <FaYoutube size='32px' fill='#505050'/>
-    case 'pdf':
-      return <FaFilePdf size='32px' fill='#505050'/>
-    case 'docx':
-      return <FaFileWord size='32px' fill='#505050'/>
-    case 'jpg':
-    case 'jpeg':
-    case 'png':
-    case 'gif':
-      return <FaFileImage size='32px' fill='#505050'/>
-    default:
-      return null
-  }
-}
-
 const ProjectTable: React.FC<Props> = ({
   currentProjects,
   onProjectClick,
@@ -83,7 +57,7 @@ const ProjectTable: React.FC<Props> = ({
 }) => {
 
   return (
-    <div className="w-full md:w-2/3 mx-auto">
+    <div className="w-full lg:w-2/3 mx-auto">
       <div
         className='grid bg-[#ECF1FE] border border-gray-200 grid-cols-3 md:grid-cols-5'
       >
@@ -97,7 +71,7 @@ const ProjectTable: React.FC<Props> = ({
           Resources
         </div>
         <div className='hidden md:flex w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
-          Created Date
+          Date
         </div>
       </div>
       <div
@@ -126,22 +100,14 @@ const ProjectTable: React.FC<Props> = ({
               <div className='flex flex-col items-start'>
                 {/* <FileIcon fileType='pdf' /> */}
                 {project.resources && project.resources.map((resource, resourceIndex) => (
-                  <div
-                    key={resourceIndex}
-                    className='flex items-center justify-center gap-[0.5rem] bg-gray-100 p-1 m-1 rounded'
-                  >
-                    <div className='max-w-[32px] min-w-[32px]'>
-                      <FileIcon fileType={resource.type} />
-                    </div>
-                    {resource.name}
-                  </div>
+                  <ResourceItem {...resource}/>
                 ))}
               </div>
             </div>
 
             {/* create date */}
-            <div className='p-2 border-b-2 flex items-center justify-center'>
-              <div className='flex justify-center items-center text-gray-600 text-[13px] gap-2 font-normal font-creato-medium leading-normal tracking-[0.12rem]'>
+            <div className='p-2 border-b-2 flex'>
+              <div className='h-full flex justify-between items-center w-full py-4 px-2 text-gray-600 text-[13px] font-normal font-creato-medium leading-normal tracking-[0.12rem]'>
                 <span className='hidden md:flex'>{moment(project.created_datetime).format('L')}</span>
                 <div
                   className='cursor-pointer'

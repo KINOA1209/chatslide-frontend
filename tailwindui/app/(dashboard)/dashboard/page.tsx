@@ -4,7 +4,7 @@ import Link from 'next/link'
 import React, { useState, useEffect, Fragment, useRef } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import AuthService from '@/components/utils/AuthService'
+import AuthService from '@/services/AuthService'
 import { Dialog, Transition } from '@headlessui/react'
 import { useRouter } from 'next/navigation'
 import ProjectTable from './ProjectTable'
@@ -89,6 +89,11 @@ export default function Dashboard() {
       if (response.ok) {
         const data = await response.json()
         console.log('project data: ', data.projects)
+
+        if (data.projects.length === 0) {
+          router.push('/workflow-type-choice')
+        }
+
         data.projects.forEach((item: Project) => {
           if (item.task === null) {
             item.task = 'presentation';
@@ -143,16 +148,6 @@ export default function Dashboard() {
         const projectDeleteFeedback = await response.json()
         if (response.status === 200) {
           setProjects(projects.filter((proj) => proj.id !== deleteInd))
-          toast.success('Project deleted successfully', {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'light',
-          })
         } else {
           // error handling does not work
           toast.error(projectDeleteFeedback.message, {
@@ -183,7 +178,7 @@ export default function Dashboard() {
   const handleStartNewProject = () => {
     sessionStorage.clear()
     //route to workflow-generate-outlines
-    router.push('/workflow-generate-outlines')
+    router.push('/workflow-type-choice')
     //route to type choosing page (new workflow)
     // router.push('/workflow-type-choice')
   }
@@ -258,9 +253,9 @@ export default function Dashboard() {
       {/* top background container of my projects title text and button */}
       <div className='mt-[3rem] flex items-end w-full z-10 pt-[4rem] border-b-2 px-[5rem]'>
         {/* flex container controlling max width */}
-        <div className='w-full max-w-7xl flex flex-wrap items-end justify-between md:justify-center'>
+        <div className='w-full max-w-7xl flex flex-wrap items-end justify-center'>
           {/* my project title text */}
-          <div className='text-neutral-900 text-base font-bold font-creato-medium leading-10 tracking-wide border-black border-b-2'>
+          <div className='absolute left-10 md:left-[50%] text-neutral-900 text-base font-bold font-creato-medium leading-10 tracking-wide border-black border-b-2'>
             My Projects
           </div>
 

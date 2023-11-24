@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect, Fragment, FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
-import AuthService from '@/components/utils/AuthService'
+import AuthService from '@/services/AuthService'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import UserService from '../utils/UserService'
+import UserService from '../../services/UserService'
 import {
   AddSectionIcon,
   AddTopicIcon,

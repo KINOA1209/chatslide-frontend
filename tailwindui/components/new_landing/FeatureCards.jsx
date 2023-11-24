@@ -10,7 +10,7 @@ const FeatureCards = () => {
     return (
         <>
             <div className='grid grid-cols-1 lg:grid-cols-3 grid-rows-1 gap-6 mt-4 pt-4'>
-                <div className='transition-transform duration-150 transform hover:scale-110 w-auto lg:w-[28rem] bg-gray-200 rounded-3xl flex flex-col px-4 py-4 mx-1'>
+                <div className='transition-transform duration-150 transform w-auto lg:w-[28rem] bg-gray-200 rounded-3xl flex flex-col px-4 py-4 mx-1'>
                     <div className='w-auto lg:w-[15rem] opacity-95 text-neutral-800 text-xl lg:text-2xl font-bold font-creato-bold leading-8 tracking-wide'>
                         Content Creation
                     </div>
@@ -36,7 +36,7 @@ const FeatureCards = () => {
                         </div>
                     </div>
                 </div>
-                <div className='transition-transform duration-150 transform hover:scale-110 w-auto lg:w-[28rem] bg-gray-200 rounded-3xl flex flex-col px-4 py-4 mx-1'>
+                <div className='transition-transform duration-150 transform w-auto lg:w-[28rem] bg-gray-200 rounded-3xl flex flex-col px-4 py-4 mx-1'>
                     <div className='w-auto lg:w-[15rem] opacity-95 text-neutral-800 text-xl lg:text-2xl font-bold font-creato-bold leading-8 tracking-wide'>
                         Researching
                     </div>
@@ -60,7 +60,7 @@ const FeatureCards = () => {
                         </div>
                     </div>
                 </div>
-                {/* <div className='transition-transform duration-150 transform hover:scale-110 w-auto lg:w-[20rem] bg-gray-200 rounded-3xl flex flex-col px-4 py-4 mx-1'>
+                {/* <div className='transition-transform duration-150 transform w-auto lg:w-[20rem] bg-gray-200 rounded-3xl flex flex-col px-4 py-4 mx-1'>
                     <div className='w-auto lg:w-[15rem] opacity-95 text-neutral-800 text-xl lg:text-2xl font-bold font-creato-bold leading-8 tracking-wide'>
                         Self Learning
                     </div>
@@ -86,7 +86,7 @@ const FeatureCards = () => {
                         </div>
                     </div>
                 </div> */}
-                <div className='transition-transform duration-150 transform hover:scale-110 w-auto lg:w-[28rem] bg-gray-200 rounded-3xl flex flex-col px-4 py-4 mx-1'>
+                <div className='transition-transform duration-150 transform w-auto lg:w-[28rem] bg-gray-200 rounded-3xl flex flex-col px-4 py-4 mx-1'>
                     <div className='w-auto lg:w-[15rem] opacity-95 text-neutral-800 text-xl lg:text-2xl font-bold font-creato-bold leading-8 tracking-wide'>
                         Lecture Design
                     </div>

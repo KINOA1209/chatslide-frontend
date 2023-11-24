@@ -1,14 +1,24 @@
-import FileManagementClient from '@/app/(feature)/my-resources/page_client'
-export const metadata = {
-  title: 'My Resources - DrLambda',
-  description: 'Convert your documents to slides',
-}
+'use client'
+
+import { useState } from 'react';
+import MyResourcePageHeader from './MyResourcePageHeader';
+import MyFiles from '@/components/newFileManagement';
 
 
 export default function FileManagementServer() {
+
+  // State to trigger update
+  const [filesUpdated, setFilesUpdated] = useState(false);
+
+  // Callback function to be called after files are uploaded
+  const handleFilesUploaded = () => {
+    setFilesUpdated(true);
+  };
+
   return (
-    <div className='h-screen'>
-      <FileManagementClient />
-    </div>
+    <section className='grow flex flex-col'>
+      <MyResourcePageHeader onFilesUploaded={handleFilesUploaded} />
+      <MyFiles selectable={false} filesUpdated={filesUpdated} setFilesUpdated={setFilesUpdated} />
+    </section>
   )
 }

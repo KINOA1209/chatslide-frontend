@@ -11,18 +11,23 @@ import React, {
 import { useRouter } from 'next/navigation'
 import '@/app/css/workflow-edit-topic-css/topic_style.css'
 import 'react-toastify/dist/ReactToastify.css'
-import AuthService from '@/components/utils/AuthService'
-import UserService from '@/components/utils/UserService'
+import AuthService from '@/services/AuthService'
+import UserService from '@/services/UserService'
 import { Transition } from '@headlessui/react'
-import MyFiles, { Resource } from '@/components/fileManagement'
+import MyFiles from '@/components/fileManagement'
 import FeedbackButton from '@/components/slides/feedback'
 
 import { DeleteIcon, QuestionExplainIcon, RightTurnArrowIcon } from '@/app/(feature)/icons'
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner'
 import PaywallModal from '@/components/forms/paywallModal'
 import { FaFilePdf, FaYoutube } from 'react-icons/fa'
-import YoutubeService from '@/components/utils/YoutubeService'
+import YoutubeService from '@/services/YoutubeService'
 import { SmallBlueButton } from '@/components/button/DrlambdaButton'
+import WebService from '@/services/WebpageService'
+import Resource from '@/models/Resource'
+
+const MAX_TOPIC_LENGTH = 80
+const MIN_TOPIC_LENGTH = 6
 
 const audienceList = [
   'Researchers',
@@ -45,8 +50,10 @@ export default function Topic() {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showFileModal, setShowFileModal] = useState(false)
-  const [youtubeUrl, setYoutubeUrl] = useState('' as string)
-  const [youtubeError, setYoutubeError] = useState('')
+  const [linkUrl, setLinkUrl] = useState('' as string)
+  const [urlIsYoutube, setUrlIsYoutube] = useState(false)
+  const [linkError, setLinkError] = useState('')
+  const [topicError, setTopicError] = useState('')
   const [isGpt35, setIsGpt35] = useState(true)
   const [showPaymentModal, setShowPaymentModal] = useState(false)
   const [topicSuggestions, setTopicSuggestions] = useState<string[]>([
@@ -59,7 +66,7 @@ export default function Topic() {
   const [showLanguagePopup, setLanguagePopup] = useState(false)
   const [showSupportivePopup, setSupportivePopup] = useState(false)
   const [isPaidUser, setIsPaidUser] = useState(false)
-  const [isAddingYoutube, setIsAddingYoutube] = useState(false)
+  const [isAddingLink, setIsAddingLink] = useState(false)
 
   // bind form data between input and sessionStorage
   const [topic, setTopic] = useState(
@@ -94,7 +101,7 @@ export default function Topic() {
       ? JSON.parse(sessionStorage.selectedResources)
       : []
   )
-  
+
 
   useEffect(() => {
     UserService.isPaidUser().then(
@@ -153,6 +160,17 @@ export default function Topic() {
     setTopic(topic)
   }
 
+  const updateTopic = (topic: string) => {
+    if (topic.length >= MIN_TOPIC_LENGTH) {
+      setTopicError('')
+    }
+    if (topic.length > MAX_TOPIC_LENGTH) {
+      setTopic(topic.slice(0, MAX_TOPIC_LENGTH))
+    } else {
+      setTopic(topic)
+    }
+  }
+
   const handleAudienceSuggestionClick = (
     audience: string,
     event: MouseEvent<HTMLButtonElement>
@@ -161,41 +179,69 @@ export default function Topic() {
     setAudience(audience)
   }
 
-  async function addYoutubeLink(link: string) {
+  async function addLink(link: string) {
     if (!link) {
-      setYoutubeError('Please enter a YouTube link.');
+      setLinkError('Please enter a valid link.');
       return;
     }
     if (!isPaidUser && selectedResources.length >= 1) {
-      setYoutubeError('Free users can only add one resource.');
+      setLinkError('Free users can only add one resource.');
       return;
     }
-    setIsAddingYoutube(true);
+    setLinkError('');
+    setIsAddingLink(true);
+    if (urlIsYoutube) {
+      addYoutubeLink(link)
+    } else {
+      addWebpageLink(link)
+    }
+  }
+
+  async function addYoutubeLink(link: string) {
     try {
       const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
       const videoDetails = await YoutubeService.getYoutubeInfo(link, idToken);
 
       if (!videoDetails?.id) {
-        setYoutubeError('The Youtube link is invalid.');
-        setIsAddingYoutube(false);
+        setLinkError('The Youtube link is invalid.');
+        setIsAddingLink(false);
         return;
       }
 
-      const newFile = {
-        id: videoDetails.id,
-        uid: '',
-        title: videoDetails.title,
-        thumbnail_url: videoDetails.thumbnail,
-        timestamp: new Date().toISOString()
-      };
 
-      setSelectedResources(prevList => [...prevList, newFile]);
-      setSelectedResourceId(prevList => [...prevList, newFile.id]);
+      setSelectedResources(prevList => [...prevList, videoDetails]);
+      setSelectedResourceId(prevList => [...prevList, videoDetails.id]);
+      if (!topic) {
+        setTopic(videoDetails.name.slice(0, MAX_TOPIC_LENGTH))
+      }
     } catch (error: any) {
       console.error("Error fetching YouTube video details: ", error);
-      setYoutubeError("Error fetching YouTube video details");
+      setLinkError("Error fetching YouTube video details");
     }
-    setIsAddingYoutube(false);
+    setIsAddingLink(false)
+  }
+
+  async function addWebpageLink(link: string) {
+    try {
+      const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+      const pageDetails = await WebService.getWebpageInfo(link, idToken);
+
+      if (!pageDetails?.id) {
+        setLinkError('The webpage link is invalid.');
+        setIsAddingLink(false)
+        return;
+      }
+
+      setSelectedResources(prevList => [...prevList, pageDetails]);
+      setSelectedResourceId(prevList => [...prevList, pageDetails.id]);
+      if (!topic) {
+        setTopic(pageDetails.name.slice(0, MAX_TOPIC_LENGTH))
+      }
+    } catch (error: any) {
+      console.error("Error fetching webpage details: ", error);
+      setLinkError("Error fetching webpage details");
+    }
+    setIsAddingLink(false)
   }
 
 
@@ -207,9 +253,16 @@ export default function Topic() {
 
   const handleSubmit = async () => {
     console.log('submitting')
-    if (youtubeError) {
-      console.log('youtube error')
+    if (topic.length < MIN_TOPIC_LENGTH) {
+      setTopicError(`Please enter at least ${MIN_TOPIC_LENGTH} characters.`)
+      setIsSubmitting(false)
       return
+    }
+
+    if (linkError) {
+      console.log(linkError) // continue without the valid link
+      setIsSubmitting(false)
+      return 
     }
 
     const project_id =
@@ -306,7 +359,7 @@ export default function Topic() {
     }
   }, [audience])
 
-  const handleYoutubeChange = (link: string) => {
+  const handleLinkChange = (link: string) => {
     // url format: https://gist.github.com/rodrigoborgesdeoliveira/987683cfbfcc8d800192da1e73adc486
     // search params will be ignored
     // sample: https://www.youtube.com/watch?v=Ir3eJ1t13fk
@@ -314,27 +367,29 @@ export default function Topic() {
     // sample: https://www.youtube.com/v/-wtIMTCHWuI?app=desktop
 
     if (link === '') {
-      setYoutubeUrl('')
-      setYoutubeError('')
+      setLinkUrl('')
+      setLinkError('')
       return
     }
-    setYoutubeUrl(link)
-    setYoutubeError('')
-    // validate url
+    setLinkUrl(link)
+    setLinkError('')
+    // validate url against youtube 
     const regex1 = /youtube\.com\/watch\?v=[a-zA-z0-9_-]{11}/
     const regex2 = /youtu\.be\/[A-Za-z0-9_-]{11}/
     const regex3 = /youtube\.com\/v\/[a-zA-z0-9_-]{11}/
     if (regex1.test(link)) {
       const essentialLink = link.match(regex1)
       if (essentialLink && essentialLink.length > 0) {
-        setYoutubeUrl('https://www.' + essentialLink[0])
+        setLinkUrl('https://www.' + essentialLink[0])
+        setUrlIsYoutube(true)
       }
     } else if (regex2.test(link)) {
       const essentialLink = link.match(regex2)
       if (essentialLink && essentialLink.length > 0) {
         const vID = essentialLink[0].match(/[A-Za-z0-9_-]{11}/)
         if (vID && vID.length > 0) {
-          setYoutubeUrl('https://www.youtube.com/watch?v=' + vID[0])
+          setLinkUrl('https://www.youtube.com/watch?v=' + vID[0])
+          setUrlIsYoutube(true)
         }
       }
     } else if (regex3.test(link)) {
@@ -342,11 +397,13 @@ export default function Topic() {
       if (essentialLink && essentialLink.length > 0) {
         const vID = essentialLink[0].match(/[A-Za-z0-9_-]{11}/)
         if (vID && vID.length > 0) {
-          setYoutubeUrl('https://www.youtube.com/watch?v=' + vID[0])
+          setLinkUrl('https://www.youtube.com/watch?v=' + vID[0])
+          setUrlIsYoutube(true)
         }
       }
     } else {
-      setYoutubeError('Please use a valid YouTube video link')
+      // url is not youtube, assuming it is a web link
+      setUrlIsYoutube(false)
     }
   }
 
@@ -405,7 +462,7 @@ export default function Topic() {
 
   return (
     <section>
-      {showPaymentModal && <PaywallModal setShowModal={setShowPaymentModal} message='Upgrade for more ⭐️credits.' />}
+      {showPaymentModal && <PaywallModal setShowModal={setShowPaymentModal} message='Upgrade for more ⭐️credits.' showReferralLink={true} />}
 
       <Transition
         className='h-full w-full z-50 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
@@ -513,18 +570,21 @@ export default function Topic() {
             </div>
             <div className='textfield'>
               <textarea
-                onChange={(e) => setTopic(e.target.value)}
-                className='focus:ring-0 text-xl bg-gray-100'
+                onChange={(e) => updateTopic(e.target.value)}
+                className='focus:ring-0 text-l md:text-xl bg-gray-100'
                 id='topic'
                 value={topic}
-                maxLength={80}
+                maxLength={MAX_TOPIC_LENGTH}
                 required
                 placeholder='How to use ultrasound to detect breast cancer'
               ></textarea>
               {
-                <div className='charcnt' id='charcnt'>
-                  {80 - topic.length} characters left
+                <div className='text-gray-500 text-sm mt-1'>
+                  {MAX_TOPIC_LENGTH - topic.length} characters left
                 </div>
+              }
+              {topicError && 
+                <div className='text-red-500 text-sm mt-1'>{topicError}</div>
               }
             </div>
 
@@ -667,7 +727,7 @@ export default function Topic() {
 
           <div className='additional_container my-2 lg:my-5  border border-2 border-gray-200'>
             <div className='upload gap-1'>
-              <span>Upload Files</span>
+              <span>Add Resources</span>
               <div className='relative inline-block'>
                 <div
                   className='cursor-pointer'
@@ -691,37 +751,37 @@ export default function Topic() {
               </div>
             </div>
 
-            <div className='youtube_container bg-gray-100 border border-2 border-gray-200'>
+            <div className='link_container bg-gray-100 border border-2 border-gray-200'>
               <div
-                id='youtube_text_container'
+                id='link_text_container'
                 className='flex justify-center items-center w-full'
               >
                 <FaYoutube />
                 <div className='w-full'>
-                  <label htmlFor='youtube_text'></label>
+                  <label htmlFor='link_text'></label>
                   <input
-                    id='youtube'
+                    id='link'
                     type='text'
-                    className='form-input w-full border-none bg-gray-100'
-                    value={youtubeUrl}
-                    onChange={(e) => handleYoutubeChange(e.target.value)}
-                    placeholder='Paste YouTube link here'
+                    className='text-sm md:text-l form-input w-full border-none bg-gray-100'
+                    value={linkUrl}
+                    onChange={(e) => handleLinkChange(e.target.value)}
+                    placeholder='Paste YouTube or webpage link'
                   />
                 </div>
-                <SmallBlueButton onClick={e => { addYoutubeLink(youtubeUrl) }} isSubmitting={isAddingYoutube}>
-                  {isAddingYoutube ? 'Adding...' : 'Add'}
+                <SmallBlueButton onClick={e => { addLink(linkUrl) }} isSubmitting={isAddingLink}>
+                  {isAddingLink ? 'Adding...' : 'Add'}
                 </SmallBlueButton>
               </div>
 
-              {youtubeError && (
-                <div id='youtube_error' className='text-sm text-red-500'>{youtubeError}</div>
+              {linkError && (
+                <div id='link_error' className='text-sm text-red-500'>{linkError}</div>
               )}
             </div>
 
             <div className='drop_file bg-gray-100 border border-2 border-gray-200'>
               <div className='flex items-center w-full'>
                 <FaFilePdf />
-                <span>Drop files here or </span>
+                <span className="text-sm md:text-l">Drop files here or </span>
                 <SmallBlueButton onClick={handleOpenFile}>
                   Browse File
                 </SmallBlueButton>
@@ -737,16 +797,16 @@ export default function Topic() {
                   <li key={index}>
                     <div
                       id='selectedfile_each'
-                      className='flex items-center bg-white rounded h-[50px] px-[1rem] justify-between'
+                      className='flex items-center bg-white rounded min-h-[50px] px-[1rem] justify-between'
                     >
                       <div className='flex items-center gap-2'>
-                      {resource.thumbnail_url ?
-                        <img src={resource.thumbnail_url} className='w-[40px]' /> :
-                        <FaFilePdf className='w-[40px]' />
-                      }
-                      <span>{resource.title}</span>
+                        {resource.thumbnail_url ?
+                          <img src={resource.thumbnail_url} className='w-[40px]' /> :
+                          <FaFilePdf className='w-[40px]' />
+                        }
+                        <div className='flex-wrap'>{resource.name}</div>
                       </div>
-                      <button className='' onClick={e => removeResourceAtIndex(index)}><DeleteIcon/></button>
+                      <button className='' onClick={e => removeResourceAtIndex(index)}><DeleteIcon /></button>
                     </div>
                   </li>
                 ))}

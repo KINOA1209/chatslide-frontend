@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Transition } from '@headlessui/react';
-import AuthService from '@/components/utils/AuthService';
+import AuthService from '@/services/AuthService';
 import { LoadingIcon } from '@/components/ui/progress';
 import { createPortal } from 'react-dom';
 import { toast } from 'react-toastify';
 import PaywallModal from './forms/paywallModal';
+import ResourceService from '@/services/ResourceService';
+import Resource from '@/models/Resource';
 
 interface ImgModuleProp {
     imgsrc: string,
@@ -23,7 +25,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
     const [showModal, setShowModal] = useState(false);
     const [keyword, setKeyword] = useState('');
     const [searchResult, setSearchResult] = useState<string[]>([]);
-    const [resources, setResources] = useState<string[]>([]);
+    const [resources, setResources] = useState<Resource[]>([]);
     const [searching, setSearching] = useState(false);
     const [selectedImg, setSelectedImg] = useState<string>('')
     const searchRef = useRef<HTMLInputElement>(null);
@@ -132,43 +134,25 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
 
     const fetchFiles = async (file_id?: string) => {
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-        const headers = new Headers();
-        if (idToken) {
-            headers.append('Authorization', `Bearer ${idToken}`);
-        }
-        headers.append('Content-Type', 'application/json');
 
-        const resource_type = {
-            resource_type: 'media',
-        }
-
-        try {
-            const response = await fetch('/api/resource_info', {
-                method: 'POST',
-                headers: headers,
-                body: JSON.stringify(resource_type)
+        ResourceService.fetchResources(['media'], idToken).then((resources) => {
+            const resourceTemps = resources.map((resource) => {
+                if (file_id && resource.id === file_id) {
+                    updateSingleCallback(resource.thumbnail_url);
+                }
+                return resource.thumbnail_url;
             });
-            if (response.ok) {
-                const data = await response.json();
-                const files = data.data.resources;
-                const resourceTemps = files.map((resource: any) => {
-                    if (file_id && resource.id === file_id) {
-                        updateSingleCallback(resource.direct_url);
-                    }
-                    return resource.direct_url;
-                });
 
-                // extend the array to include images from pdf_images inside sessionStorage
-                const pdf_images = JSON.parse(sessionStorage.getItem('pdf_images') || '[]');
-                resourceTemps.push(...pdf_images);
-                setResources(resourceTemps);
-            } else {
-                // Handle error cases
-                console.error('Failed to fetch images', response.status);
-            }
-        } catch (error) {
-            console.error('Error fetching images:', error);
-        }
+            // extend the array to include images from pdf_images inside sessionStorage
+            const pdf_images = JSON.parse(sessionStorage.getItem('pdf_images') || '[]');
+            const pdfImageResources = pdf_images.map((pdf_image: string) => {
+              return {
+                thumbnail_url: pdf_image,
+              }
+            })
+            resourceTemps.push(...pdfImageResources);
+            setResources(pdfImageResources);
+        })
     };
 
     const onFileSelected = async (file: File | null) => {
@@ -302,16 +286,16 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
                             </svg>
                             <div className='text-[#A6B1BB]'>Upload</div>
                         </div>
-                        {resources.map((url, index) => {
-                            if (url === selectedImg) {
+                        {resources.map((resource, index) => {
+                            if (resource.thumbnail_url === selectedImg) {
                                 return <div onClick={handleImageClick}
                                     key={index} className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-2`}>
-                                    <img className='w-full h-full object-cover' src={url} />
+                                  <img className='w-full h-full object-cover' src={resource.thumbnail_url} />
                                 </div>
                             } else {
                                 return <div onClick={handleImageClick}
                                     key={index} className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-2`}>
-                                    <img className='w-full h-full object-cover' src={url} />
+                                  <img className='w-full h-full object-cover' src={resource.thumbnail_url} />
                                 </div>
                             }
                         })}
@@ -435,7 +419,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
             leaveFrom="opacity-100 translate-y-0"
             leaveTo="opacity-0 translate-y-12"
         >
-            {showPaymentModal && <PaywallModal setShowModal={setShowPaymentModal} message='Upgrade for more ⭐️credits.' />}
+          {showPaymentModal && <PaywallModal setShowModal={setShowPaymentModal} message='Upgrade for more ⭐️credits.' showReferralLink={true} />}
             <div className='grow md:grow-0'></div>
             <Transition
                 className='bg-gray-100 w-full h-3/4 md:h-[65vh]
@@ -566,7 +550,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
                 </div>
                 :
                 <img
-                    style={{ objectFit: 'contain' }}
+                    style={{ objectFit: 'contain', objectPosition: 'center' }}
                     className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`}
                     src={imgsrc} />
             }
