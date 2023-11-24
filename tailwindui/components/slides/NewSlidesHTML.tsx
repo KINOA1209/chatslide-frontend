@@ -6,10 +6,10 @@ import { MathJax, MathJaxContext } from 'better-react-mathjax'
 import './slidesHTML.css'
 import dynamic from 'next/dynamic'
 import {
-  LayoutKeys,
   availableTemplates,
   templateSamples,
 } from '@/components/slides/slideTemplates'
+import { LayoutKeys } from '@/components/slides/slideLayout'
 import ClickableLink from '../ui/ClickableLink'
 import LayoutChanger from './LayoutChanger'
 import {
