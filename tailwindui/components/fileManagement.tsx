@@ -100,7 +100,6 @@ const FileManagement: React.FC<UserFileList> = ({
   }
 
   const entry = ( resource: Resource ) => {
-    console.log(resource)
 
     return (
       // <div
@@ -205,6 +204,7 @@ const MyFiles: React.FC<filesInterface> = ({
   const contentRef = useRef<HTMLDivElement>(null)
   const [rendered, setRendered] = useState<boolean>(false)
   const [isPaid, setIsPaid] = useState<boolean>(false)
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
   useEffect(() => {
     if (contentRef.current) {
@@ -256,6 +256,7 @@ const MyFiles: React.FC<filesInterface> = ({
   }
 
   const onFileSelected = async (file: File | null) => {
+    setIsSubmitting(true)
     console.log('will upload file', file)
     if (file == null) {
       // alert("Please select non-null file");
@@ -281,17 +282,6 @@ const MyFiles: React.FC<filesInterface> = ({
       });
 
       if (response.ok) {
-        toast.success('File uploaded successfully', {
-          position: 'top-center',
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-          containerId: 'fileManagement',
-        })
         const data = await response.json();
         await fetchFiles(idToken)
         handleClick(data.data.file_id)
@@ -327,6 +317,7 @@ const MyFiles: React.FC<filesInterface> = ({
         })
       }
     }
+    setIsSubmitting(false)
   }
 
   const handleFileDeleted = (id: string) => {
@@ -530,7 +521,7 @@ const MyFiles: React.FC<filesInterface> = ({
         {/* upload local file button */}
         <div className='max-w-sm w-fit text-center pt-4 mx-4'>
           <div className='w-full mx-auto'>
-            <FileUploadButton onFileSelected={onFileSelected} />
+            <FileUploadButton onFileSelected={onFileSelected} isSubmitting={isSubmitting}/>
           </div>
         </div>
 
