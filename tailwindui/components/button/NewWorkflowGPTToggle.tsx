@@ -3,7 +3,7 @@
 
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import NewWorkflowToggle from './NewWorkflowToggle'
-import UserService from '../utils/UserService'
+import UserService from '../../services/UserService'
 import PaywallModal from '@/components/forms/paywallModal'
 import { QuestionExplainIcon } from '@/app/(feature)/icons'
 

@@ -532,15 +532,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
   return (
     <div className='flex flex-col items-center justify-center gap-4'>
-      {/* {share && (
-        <div>
-          <label className='text-sm text-zinc-100'>View only link:</label>
-          <ClickableLink
-            link={`${host}/shared/${sessionStorage.getItem('project_id')}`}
-          />
-        </div>
-      )} */}
-
       {/* buttons and contents */}
       <div className='max-w-4xl relative flex flex-row items-center justify-center gap-4'>
         <ToastContainer />
@@ -697,9 +688,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                 <SlideContainer
                   slides={slides}
                   currentSlideIndex={index}
-                  scale={0.1}
+                  scale={0.12}
                   isViewing={true}
                   templateDispatch={editableTemplateDispatch}
+                  highlightBorder={currentSlideIndex === index}
                 />
               </div>
             ))}
@@ -720,11 +712,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                 <SlideContainer
                   slides={slides}
                   currentSlideIndex={index}
-                  scale={0.1}
+                  scale={0.12}
                   isViewing={true}
                   templateDispatch={editableTemplateDispatch}
                   slideRef={slideRef}
                   containerRef={containerRef}
+                  highlightBorder={currentSlideIndex === index}
                 />
               </div>
             ))}

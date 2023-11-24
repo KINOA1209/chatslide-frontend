@@ -1,11 +1,11 @@
 "use client"
-import AuthService from '@/components/utils/AuthService';
+import AuthService from '@/services/AuthService';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect, useRef, RefObject } from 'react';
 import { Pricing } from '@/components/landing/pricing'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import UserService from "@/components/utils/UserService";
+import UserService from "@/services/UserService";
 import Link from 'next/link';
 import AOS from 'aos'
 import 'aos/dist/aos.css'

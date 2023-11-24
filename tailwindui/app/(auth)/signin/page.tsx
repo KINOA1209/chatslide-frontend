@@ -14,8 +14,8 @@ import { Auth, Hub } from 'aws-amplify';
 
 
 export default function SignIn() {
-    const searchParams = useSearchParams();
-    const nextUri = searchParams.get("next");
+  const searchParams = useSearchParams();
+  const nextUri = searchParams?.get("next");
 
     return (
         <section className="bg-gradient-to-b from-gray-100 to-white">

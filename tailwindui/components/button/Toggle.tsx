@@ -11,7 +11,7 @@ interface ToggleProps {
 const Toggle: React.FC<ToggleProps> = ({ isLeft, setIsLeft, leftText, rightText }) => {
     return (
         <div className="toggle items-center md:flex">
-            <div className="flex items-center pb-8">
+            <div className="flex items-center pb-2">
                 <button
                     type="button"
                     onClick={() => setIsLeft(true)}

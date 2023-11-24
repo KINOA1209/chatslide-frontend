@@ -1,10 +1,10 @@
 import { useRouter } from 'next/navigation'
 import React, { useState, useEffect, FormEvent, use } from 'react'
 
-import AuthService from '../utils/AuthService'
+import AuthService from '../../services/AuthService'
 
 import { Slide } from '@/components/slides/NewSlidesHTML'
-import UserService from '../utils/UserService'
+import UserService from '../../services/UserService'
 import GptToggle from '../button/GPTToggle'
 import PaywallModal from './paywallModal'
 

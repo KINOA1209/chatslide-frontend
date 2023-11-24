@@ -4,14 +4,14 @@ import React, { useState, ChangeEvent, FormEvent, useEffect, useRef, RefObject }
 import { useRouter, useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AuthService from "@/components/utils/AuthService";
-import UserService from "@/components/utils/UserService";
+import AuthService from "@/services/AuthService";
+import UserService from "@/services/UserService";
 import Promo from "./signup/Promo";
 
 const SignupForm: React.FC = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const nextUri = searchParams.get("next");
+    const nextUri = searchParams?.get("next");
 
 
     const [email, setEmail] = useState("");
@@ -144,7 +144,7 @@ const SignupForm: React.FC = () => {
     return (
         <form onSubmit={handleSubmit}>
             <ToastContainer />
-            <div className={`flex flex-wrap -mx-3 mb-4 ${!Boolean(searchParams.get('referral')) && 'hidden'}`}>
+            <div className={`flex flex-wrap -mx-3 mb-4 ${!Boolean(searchParams?.get('referral')) && 'hidden'}`}>
                 <div className="w-full px-3">
                     <label
                         className="block text-green-600 text-sm font-medium mb-1"
@@ -155,7 +155,7 @@ const SignupForm: React.FC = () => {
                     <input
                         id="promo"
                         type="text"
-                        value={searchParams.get('referral') || ''}
+                        value={searchParams?.get('referral') || ''}
                         className="form-input w-full text-gray-800 bg-gray-200 cursor-not-allowed"
                         disabled={true}
                     />

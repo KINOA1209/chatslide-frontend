@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { ScriptEditIcon } from './icons'
 import { useRouter } from 'next/navigation'
 import ButtonWithExplanation from '@/components/button/ButtonWithExplanation'
-import UserService from '@/components/utils/UserService'
+import UserService from '@/services/UserService'
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner'
 
 export default function WorkflowStep3() {

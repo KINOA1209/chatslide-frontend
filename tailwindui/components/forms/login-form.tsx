@@ -5,14 +5,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
-import AuthService from "../utils/AuthService";
+import AuthService from "../../services/AuthService";
 
 
 
 const LoginForm: React.FC = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const nextUri = searchParams.get("next");
+    const nextUri = searchParams?.get("next");
 
     /* write a function that will take the form data and send it to the backend */
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {

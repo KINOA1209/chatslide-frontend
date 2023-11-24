@@ -1,7 +1,7 @@
 "use client";
 
-import AuthService from '@/components/utils/AuthService';
-import UserService from '@/components/utils/UserService';
+import AuthService from '@/services/AuthService';
+import UserService from '@/services/UserService';
 import { init } from 'aos';
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect } from 'react';
