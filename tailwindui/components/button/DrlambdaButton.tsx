@@ -23,7 +23,7 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSu
     if (isPaidFeature) {
       return 'bg-gradient-to-r from-purple-500 to-purple-700'
     }
-    return 'bg-gradient-to-r from-blue-600 to-blue-600'
+    return 'bg-gradient-to-r from-blue-500 to-blue-700'
   }
 
   function checkPaidUser(event: MouseEvent<HTMLButtonElement>) {
