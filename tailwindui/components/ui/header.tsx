@@ -95,12 +95,6 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
     }
   }, [])
 
-  const handScrollTo = (e: React.MouseEvent<HTMLDivElement>, index: number) => {
-    if (isLanding && refList && refList[index].current) {
-      refList[index].current?.scrollIntoView()
-    }
-  }
-
   if (loading) {
     // Render a loading state or a blank placeholder
     return (
