@@ -8,7 +8,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import moment from 'moment'
 // import mixpanel from 'mixpanel-browser'
-import { DeleteResourceIcon } from '@/app/(feature)/my-resources/icons'
+import { deleteResource } from '@/app/(feature)/my-resources/icons'
 import { CarbonConnect, IntegrationName } from 'carbon-connect'
 import { DeleteIcon, SpinIcon } from '@/app/(feature)/icons'
 import { ResourceItem } from './ui/ResourceItem'
@@ -59,41 +59,25 @@ const FileManagement: React.FC<UserFileList> = ({
     try {
       const { userId, idToken: token } =
         await AuthService.getCurrentUserTokenAndId()
-      const fileDeleteData = {
-        resource_id: id,
+      const deleted = await ResourceService.deleteResource(id, token)
+      if (deleted) {
+        deleteCallback(id)
+      } else {
+        throw new Error('Failed to delete file')
       }
-      // mixpanel.track('File Deleted', {
-      //   'File ID': id,
-      // })
-      const response = await fetch('/api/delete_user_resource', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(fileDeleteData),
-      })
-      if (response.ok) {
-        const fileDeleteFeedback = await response.json()
-        if (response.status === 200) {
-          deleteCallback(id)
-        } else {
-          // error handling does not work
-          toast.error(fileDeleteFeedback.message, {
-            position: 'top-center',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'light',
-            containerId: 'fileManagement',
-          })
-        }
-      }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error)
+      toast.error(error.message, {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        containerId: 'fileManagement',
+      })
     }
     setDeletingId("")
   }
