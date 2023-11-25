@@ -521,7 +521,7 @@ const MyFiles: React.FC<filesInterface> = ({
           <div className='w-full mx-auto'>
             <CarbonConnect
               orgName='DrLambda'
-              brandIcon='https://drlambda.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo_no_text.0a4e5a6b.png&w=1920&q=75'
+              brandIcon='https://drlambda.ai/images/Logo_Color.png'
               tokenFetcher={tokenFetcher}
               tags={{
                 tag1: 'tag1_value',
