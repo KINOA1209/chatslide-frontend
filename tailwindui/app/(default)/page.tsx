@@ -7,6 +7,7 @@ import FeatureCards from '../../components/new_landing/FeatureCards'
 import Header from '@/components/ui/header'
 import PricingSection from '@/components/new_landing/PricingPlans'
 import LandingButton from '@/components/new_landing/LandingButton'
+import BlackFridayBanner from '@/components/new_landing/HolidayBanner'
 
 
 const fileTypes = [
@@ -59,6 +60,9 @@ function App() {
   return (
     <>
       <Header loginRequired={false} isLanding={true} />
+
+      <BlackFridayBanner /> 
+
       {/* background container */}
       <div className='background w-full relative bg-zinc-100'>
         {/* Section: Transform Knowledge */}
