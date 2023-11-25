@@ -85,8 +85,8 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
         onChange={handleFileChange}
         style={{ display: 'none' }}
       />
-      <DrlambdaButton onClick={handleClick} isSubmitting={isSubmitting}>
-        { !isSubmitting ? "Select Local File" : "Uploading File" }
+      <DrlambdaButton onClick={handleClick} isSubmitting={isSubmitting} showArrow={false}>
+        { !isSubmitting ? "Upload from Local 💻" : "Uploading File..." }
       </DrlambdaButton>
       <div className='text-sm text-gray-400'>
         Supported file formats:{' '}
