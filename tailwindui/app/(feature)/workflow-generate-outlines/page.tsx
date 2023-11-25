@@ -238,8 +238,8 @@ export default function Topic() {
         setTopic(pageDetails.name.slice(0, MAX_TOPIC_LENGTH))
       }
     } catch (error: any) {
-      console.error("Error fetching webpage details: ", error);
-      setLinkError("Error fetching webpage details");
+      console.error("Error reading webpage details: ", error);
+      setLinkError("Error reading webpage details");
     }
     setIsAddingLink(false)
   }
