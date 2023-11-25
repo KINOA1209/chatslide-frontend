@@ -9,12 +9,12 @@ interface ToggleProps {
   rightColor?: string
 }
 
-const NewToggle: React.FC<ToggleProps> = ({
+const WorkflowGPTToggle: React.FC<ToggleProps> = ({
   isLeft,
   setIsLeft,
   leftText,
   rightText,
-  leftColor = 'bg-teal-500',
+  leftColor = 'bg-blue-600',
   rightColor = 'bg-purple-700',
 }) => {
   const activeBox = "shadow-[0px_2.688084602355957px_6.720211505889893px_rgba(10.01,19.13,8.53,0.12)] rounded-[15px]"
@@ -33,4 +33,4 @@ const NewToggle: React.FC<ToggleProps> = ({
   )
 }
 
-export default NewToggle
+export default WorkflowGPTToggle
