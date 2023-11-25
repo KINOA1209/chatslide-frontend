@@ -374,8 +374,8 @@ export default function Topic_SocialPost() {
         setTopic(pageDetails.name.slice(0, MAX_TOPIC_LENGTH));
       }
     } catch (error: any) {
-      console.error("Error fetching webpage details: ", error);
-      setLinkError("Error fetching webpage details");
+      console.error("Error reading webpage details: ", error);
+      setLinkError("Error reading webpage details");
     }
     setIsAddingLink(false)
   }
@@ -668,7 +668,7 @@ export default function Topic_SocialPost() {
           {/* supplementary section */}
           <div className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1'>
             <div className='title2'>
-              <p>Supplementary Materials</p>
+              <p>Supporting Documents</p>
               <p id='after2'> (Optional)</p>
             </div>
 
