@@ -9,9 +9,10 @@ type DrlambdaButtonProps = {
   isSubmitting?: boolean;
   isPaidUser?: boolean;
   isPaidFeature?: boolean;
+  showArrow?: boolean;
 };
 
-const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSubmitting, isPaidUser, isPaidFeature = false }) => {
+const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSubmitting, isPaidUser, isPaidFeature = false, showArrow = true }) => {
 
   const [showPaywallModal, setShowPaywallModal] = useState(false);
 
@@ -51,7 +52,7 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSu
           {children}
         </span>
         {/* Replace with the actual icon component or element */}
-        {!isSubmitting && <RightTurnArrowIcon />}
+        {!isSubmitting && showArrow && <RightTurnArrowIcon />}
       </button>
     </>
   );

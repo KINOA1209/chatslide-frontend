@@ -13,6 +13,7 @@ import { DeleteIcon, SpinIcon } from '@/app/(feature)/icons'
 import { ResourceItem } from './ui/ResourceItem'
 import Resource from '@/models/Resource'
 import ResourceService from '@/services/ResourceService'
+import DrlambdaButton from './button/DrlambdaButton'
 
 
 interface UserFileList {
@@ -566,14 +567,10 @@ const MyFiles: React.FC<filesInterface> = ({
               overlapSize={20}
             // entryPoint="LOCAL_FILES"
             >
-              <div className='max-w-sm flex flex-col items-center z-[50]'>
-                <button
-                  className='w-full btn text-white font-bold bg-black from-blue-600  to-teal-500'
-                  type='button'
-                >
-                  Connect to Cloud Storage
-                </button>
-              </div>
+
+              <DrlambdaButton onClick={() => { }} isSubmitting={false} showArrow={false}>
+                Upload from Cloud ☁️
+              </DrlambdaButton>
             </CarbonConnect>
           </div>
         </div>
