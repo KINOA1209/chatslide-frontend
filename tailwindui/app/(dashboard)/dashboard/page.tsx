@@ -13,7 +13,6 @@ import Project from '@/models/Project'
 
 
 export default function Dashboard() {
-  const [currentPage, setCurrentPage] = useState(1)
   const [projects, setProjects] = useState<Project[]>([])
   const [deleteInd, setDeleteInd] = useState('')
   const router = useRouter()
