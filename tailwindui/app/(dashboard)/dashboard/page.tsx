@@ -9,16 +9,8 @@ import { Dialog, Transition } from '@headlessui/react'
 import { useRouter } from 'next/navigation'
 import ProjectTable from './ProjectTable'
 import DrlambdaButton from '@/components/button/DrlambdaButton'
-import Resource from '@/models/Resource'
+import Project from '@/models/Project'
 
-interface Project {
-  id: string
-  //   task: 'video' | 'scripts' | 'slides'
-  task: 'video' | 'scripts' | 'slides' | 'presentation' | 'social post'
-  name: string
-  resources: Resource[]
-  created_datetime: string
-}
 
 export default function Dashboard() {
   const [currentPage, setCurrentPage] = useState(1)
