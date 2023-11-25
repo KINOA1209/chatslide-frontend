@@ -12,7 +12,7 @@ import {
   FaYoutube,
   FaFileImage,
 } from 'react-icons/fa'
-import { DeleteIcon } from '@/app/(feature)/icons';
+import { DeleteIcon, SpinIcon } from '@/app/(feature)/icons';
 import { ResourceItem } from '@/components/ui/ResourceItem'
 import Resource from '@/models/Resource'
 
@@ -29,25 +29,6 @@ interface Props {
   currentProjects: Project[]
   onProjectClick: (projectId: string) => void
   onDelete: (e: React.MouseEvent<HTMLDivElement>, projectId: string) => void
-}
-
-const TaskIcon: React.FC<{ task: 'video' | 'scripts' | 'slides' | 'presentation' | 'social post' }> = ({
-  task,
-}) => {
-  switch (task) {
-    case 'video':
-      return <FaFilm />
-    case 'scripts':
-      return <FaFileWord />
-    case 'slides':
-      return <FaFilePowerpoint />
-    case 'social post':
-      return <FaFileAlt />
-    case 'presentation':
-      return <FaFilePowerpoint />
-    default:
-      return null
-  }
 }
 
 const ProjectTable: React.FC<Props> = ({
@@ -113,7 +94,7 @@ const ProjectTable: React.FC<Props> = ({
                   className='cursor-pointer'
                   onClick={(e) => onDelete(e, project.id)}
                 >
-                  <DeleteIcon />
+                  <DeleteIcon/>
                 </div>
               </div>
             </div>
