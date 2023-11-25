@@ -30,13 +30,12 @@ const BlackFridayBanner: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-screen pt-[48px] bg-black text-white text-center p-4 rounded-lg shadow-md">
-      <h2 className="text-3xl font-bold mb-2">🎉 Black Friday Limited Deal! 🎉</h2>
-      <p className="text-xl mb-4">Save <span className="text-red-500">90%</span> on your DrLambda subscription! 💸</p>
-      <a href="#pricing" className="mt-2 bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-600 transition duration-300 inline-block text-center">
+    <div className="w-screen pt-[48px] bg-black text-white text-center p-4 shadow-md">
+      <p className="text-xl my-4">🎉 Black Friday Limited Deal! 🎉 Save <span className="text-red-500">90%</span> on your DrLambda subscription! 💸</p>
+      <a href="#pricing" className="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-600 transition duration-300 inline-block text-center">
         Get This Deal Now!
       </a>
-      <p className="text-lg font-semibold mt-2">⏰ <span className="text-white test-sm">{timeRemaining}</span> ⏰</p>
+      <p className="text-xs font-semibold mt-2">⏰ {timeRemaining} ⏰</p>
     </div>
   );
 };
