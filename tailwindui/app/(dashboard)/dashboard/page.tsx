@@ -31,7 +31,6 @@ interface Project {
 export default function Dashboard() {
   const [currentPage, setCurrentPage] = useState(1)
   const [projects, setProjects] = useState<Project[]>([])
-  // const [deleteInd, setDeleteInd] = useState(-1)
   const [deleteInd, setDeleteInd] = useState('')
   const router = useRouter()
   const promptRef = useRef<HTMLDivElement>(null)
@@ -39,20 +38,13 @@ export default function Dashboard() {
   const [rendered, setRendered] = useState<boolean>(false)
 
   const [isOpen, setIsOpen] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
+
   function closeModal() {
     setIsOpen(false)
   }
 
-  // const projectsPerPage = 10;
-  // const totalPages = Math.ceil(projects.length / projectsPerPage);
-  // const indexOfLastProject = currentPage * projectsPerPage;
-  // const indexOfFirstProject = indexOfLastProject - projectsPerPage;
-  // const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
-
   const currentProjects = projects
-
-  // place holder data
-  // const currentProjects = fakeProjects
 
   useEffect(() => {
     if (contentRef.current) {
@@ -126,7 +118,7 @@ export default function Dashboard() {
   }
 
   const confirmDelete = async () => {
-    setIsOpen(false)
+    setIsDeleting(true)
     if (deleteInd === '') {
       throw 'Error'
     }
@@ -165,6 +157,8 @@ export default function Dashboard() {
     } catch (error) {
       console.error(error)
     }
+    setIsDeleting(false)
+    setIsOpen(false)
     setDeleteInd('')
   }
 
@@ -225,10 +219,11 @@ export default function Dashboard() {
               <div className='flex'>
                 <div className='flex justify-center mt-4'>
                   <button
-                    className='bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded mr-2 btn-size'
+                    className='bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white py-2 px-4 rounded mr-2 btn-size'
                     onClick={confirmDelete}
+                    disabled={isDeleting}
                   >
-                    Confirm
+                    {isDeleting ? "Deleting..." : "Confirm" } 
                   </button>
                 </div>
                 <div className='flex justify-center mt-4'>
