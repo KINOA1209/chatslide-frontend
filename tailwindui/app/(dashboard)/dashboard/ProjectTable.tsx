@@ -1,29 +1,9 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-import {
-  FaArrowUp,
-  FaArrowDown,
-  FaTrash,
-  FaFilm,
-  FaFileAlt,
-  FaFilePdf,
-  FaFilePowerpoint,
-  FaFileWord,
-  FaYoutube,
-  FaFileImage,
-} from 'react-icons/fa'
 import { DeleteIcon, SpinIcon } from '@/app/(feature)/icons';
 import { ResourceItem } from '@/components/ui/ResourceItem'
-import Resource from '@/models/Resource'
+import Project from '@/models/Project';
 
-interface Project {
-  id: string
-  //   task: 'video' | 'scripts' | 'slides'
-  task: 'video' | 'scripts' | 'slides' | 'presentation' | 'social post'
-  name: string
-  resources: Resource[]
-  created_datetime: string
-}
 
 interface Props {
   currentProjects: Project[]
