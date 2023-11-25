@@ -1,6 +1,6 @@
 export default class VideoService {
 
-  static async createVideo(project_id: string, userToken: string): Promise<boolean> {
+  static async generateVideo(project_id: string, userToken: string): Promise<boolean> {
     try {
       const response = await fetch('/api/generate_video', {
         method: 'POST',
