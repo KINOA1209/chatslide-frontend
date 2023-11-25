@@ -93,7 +93,6 @@ function App() {
             <LandingButton />
           </div>
 
-
           <div className='transition-transform duration-150 transform w-[90%] lg:w-[70rem] lg:h-[35rem] mx-auto max-w-7xl'>
             <Image
               src={GenerationPreviewImg}
