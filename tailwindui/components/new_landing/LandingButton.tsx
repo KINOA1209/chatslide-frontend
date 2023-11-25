@@ -27,7 +27,7 @@ const LandingButton = () => {
     {/* start for free button */ }
     return (
         <button
-            className='md:bottom-[48%] w-[10rem] h-8 md:w-[16rem] md:h-[3.75rem] mb-[3rem] py-2 bg-gradient-to-b from-teal-400 to-blue-600 rounded-lg justify-center items-center gap-2.5 flex z-10 text-center text-zinc-100 text-m md:text-xl font-creato-medium capitalize tracking-wide'
+        className='md:bottom-[48%] w-[10rem] h-8 md:w-[16rem] md:h-[3.75rem] mb-[3rem] py-2 bg-gradient-to-r from-blue-500 to-blue-700 hover:scale-110 rounded-lg justify-center items-center gap-2.5 flex z-10 text-center text-zinc-100 text-m md:text-xl font-creato-medium capitalize tracking-wide'
             onClick={() => {
                 if (user) {
                     window.location.href = '/dashboard'; // Example action to navigate
