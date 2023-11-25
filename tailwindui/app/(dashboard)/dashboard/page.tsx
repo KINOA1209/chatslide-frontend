@@ -9,16 +9,8 @@ import { Dialog, Transition } from '@headlessui/react'
 import { useRouter } from 'next/navigation'
 import ProjectTable from './ProjectTable'
 import DrlambdaButton from '@/components/button/DrlambdaButton'
-// interface Project {
-//   id: number
-//   name: string
-//   description: string
-// }
-interface Resource {
-  id: string
-  name: string
-  type: string
-}
+import Resource from '@/models/Resource'
+
 interface Project {
   id: string
   //   task: 'video' | 'scripts' | 'slides'
