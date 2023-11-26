@@ -222,6 +222,8 @@ export default function Topic_SocialPost() {
     }
     sessionStorage.setItem('topic', formData.topic)
     sessionStorage.setItem('language', formData.language)
+    sessionStorage.setItem('selectedResources', JSON.stringify(selectedResources))
+    sessionStorage.setItem('selectedResourceId', JSON.stringify(selectedResourceId))
 
     try {
       const outlinesJson = await callSocialPost(formData as FormatData)
