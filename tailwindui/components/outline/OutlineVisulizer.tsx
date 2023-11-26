@@ -157,7 +157,7 @@ const OutlineVisualizer = ({
   ) => {
     e.preventDefault()
     let newOutlineData = [...outlineData]
-    newOutlineData[sectionIndex].content.splice(detailIndex + 1, 0, '')
+    newOutlineData[sectionIndex].content.splice(detailIndex, 0, '')
     setOutlineData(newOutlineData)
     updateOutlineSessionStorage(newOutlineData)
   }
@@ -188,7 +188,7 @@ const OutlineVisualizer = ({
   const handleAddSection = (sectionIndex: number) => {
     console.log('Add section after section index: ' + sectionIndex)
     let newOutlineData = [...outlineData]
-    newOutlineData.splice(sectionIndex + 1, 0, {
+    newOutlineData.splice(sectionIndex, 0, {
       title: 'New Section',
       content: ['Provide some details about this section'],
       detailLevel: 'Default',
