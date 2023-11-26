@@ -25,6 +25,7 @@ import YoutubeService from '@/services/YoutubeService'
 import { SmallBlueButton } from '@/components/button/DrlambdaButton'
 import WebService from '@/services/WebpageService'
 import Resource from '@/models/Resource'
+import { ToastContainer, toast } from 'react-toastify'
 
 const MAX_TOPIC_LENGTH = 80
 const MIN_TOPIC_LENGTH = 6
@@ -272,14 +273,13 @@ export default function Topic() {
     console.log('submitting')
     if (topic.length < MIN_TOPIC_LENGTH) {
       setTopicError(`Please enter at least ${MIN_TOPIC_LENGTH} characters.`)
+      toast.error(`Please enter at least ${MIN_TOPIC_LENGTH} characters for topic.`)
       setIsSubmitting(false)
       return
     }
 
     if (linkError) {
-      console.log(linkError) // continue without the valid link
-      setIsSubmitting(false)
-      return 
+      console.log(linkError) // continue without the invalid link
     }
 
     const project_id =
@@ -480,6 +480,8 @@ export default function Topic() {
   return (
     <section>
       {showPaymentModal && <PaywallModal setShowModal={setShowPaymentModal} message='Upgrade for more ⭐️credits.' showReferralLink={true} />}
+
+      <ToastContainer />
 
       <Transition
         className='h-full w-full z-50 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
