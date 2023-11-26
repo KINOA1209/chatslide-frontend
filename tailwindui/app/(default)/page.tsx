@@ -8,6 +8,7 @@ import Header from '@/components/ui/header'
 import PricingSection from '@/components/new_landing/PricingPlans'
 import LandingButton from '@/components/new_landing/LandingButton'
 import BlackFridayBanner from '@/components/new_landing/HolidayBanner'
+import HeroText, { TextCarousel } from '@/components/landing/HeroText'
 
 
 const fileTypes = [
@@ -61,15 +62,16 @@ function App() {
     <>
       <Header loginRequired={false} isLanding={true} />
 
-      <BlackFridayBanner /> 
+      <BlackFridayBanner />
 
       {/* background container */}
       <div className='background w-full relative bg-zinc-100'>
         {/* Section: Transform Knowledge */}
         <div id='features' className='relative intro-section flex flex-col justify-center items-center gap-4'>
-          <div className='w-[90%] text-center text-neutral-900 text-4xl md:text-8xl font-creato-medium leading-[4rem] lg:leading-[7.5rem] pt-32'>
-            Documents to Slides
+          <div className='w-[90%] font-creato-medium pt-16'>
+            <HeroText />
           </div>
+         
 
           <a
             href='https://www.producthunt.com/posts/dr-lambda?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-dr&#0045;lambda'
@@ -83,7 +85,7 @@ function App() {
             />
           </a>
 
-          <div className='mt-6 w-50% text-center text-neutral-900 text-l md:text-3xl leading-10 tracking-wide font-creato-medium'>
+          <div className='mt-6 w-50% text-center text-neutral-900 text-l md:text-2xl leading-10 tracking-wide font-creato-medium'>
             Your 🤖 agent to help you create professional slides.
             <br />
             No ctrl F, ctrl C, or ctrl V 👍.
@@ -94,11 +96,14 @@ function App() {
           </div>
 
           <div className='transition-transform duration-150 transform w-[90%] lg:w-[70rem] lg:h-[35rem] mx-auto max-w-7xl'>
-            <Image
-              src={GenerationPreviewImg}
-              alt='my project'
-              className='object-cover lg:object-contain lg:w-full'
-            />
+            <iframe
+              width="100%"
+              height="100%"
+              src="https://www.youtube.com/embed/T5hRlPBcFUU?autoplay=1&mute=1&playlist=T5hRlPBcFUU&loop=1"
+              title="DrLambda - One-click presentation AI tool through multiple sources"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen>
+            </iframe>
           </div>
           {/* <GenerationPreview /> */}
         </div>
