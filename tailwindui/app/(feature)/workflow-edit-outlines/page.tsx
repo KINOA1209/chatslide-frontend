@@ -6,17 +6,6 @@ import FeedbackButton from '@/components/slides/feedback'
 import 'react-toastify/dist/ReactToastify.css'
 import OutlineVisualizer from '@/components/outline/OutlineVisulizer'
 import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit'
-import {
-  AddSectionIcon,
-  AddTopicIcon,
-  DeleteIcon,
-  LeftChangeIcon,
-  RightChangeIcon,
-  LeftTurnArrowIcon,
-  RightTurnArrowIcon,
-  QuestionExplainIcon,
-} from '../icons'
-import NewWorkflowGPTToggle from '@/components/button/WorkflowGPTToggle'
 import { useRouter } from 'next/navigation'
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner'
 import { ToastContainer } from 'react-toastify'
@@ -29,8 +18,6 @@ interface OutlineSection {
 }
 
 export default function WorkflowStep2() {
-  const [activeSection, setActiveSection] = useState(-1)
-  const router = useRouter()
   const storedOutline =
     typeof sessionStorage !== 'undefined'
       ? sessionStorage.getItem('outline')
@@ -38,7 +25,6 @@ export default function WorkflowStep2() {
   const outline = storedOutline ? JSON.parse(storedOutline) : null
   const outlineRes = outline ? JSON.parse(outline.res) : null
   const contentRef = useRef<HTMLDivElement>(null)
-  const [showPopup, setShowPopup] = useState(false) // State for the popup visibility
   const [outlineContent, setOutlineContent] = useState<OutlineSection[] | null>(
     null
   )
@@ -71,33 +57,9 @@ export default function WorkflowStep2() {
         behavior: 'smooth'
       });
 
-      setActiveSection(sectionId);
     }
   }
 
-  // Function to open the popup
-  const openPopup = () => {
-    setShowPopup(true)
-  }
-
-  // Function to close the popup
-  const closePopup = () => {
-    setShowPopup(false)
-  }
-  // useEffect(() => {
-  //   if (typeof window !== 'undefined') {
-  //     // Calculate the offset due to the fixed navbar's height
-  //     // const navbarHeight = 112 // 7rem * 16px/rem
-
-  //     // Scroll to the adjusted position
-  //     window.scrollTo(0, 0)
-  //   }
-  // }, [])
-  // initialize a isGpt35 value in session storagee
-  //   useEffect(() => {
-  //     sessionStorage.setItem('isGpt35', 'true')
-  //     console.log('session storage isGpt35', sessionStorage.getItem('isGpt35'))
-  //   }, [])
   return (
     <div className=''>
       {/* flex col container for steps, title, generate slides button etc */}
