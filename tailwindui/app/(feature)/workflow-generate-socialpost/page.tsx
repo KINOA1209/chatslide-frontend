@@ -72,8 +72,6 @@ export default function Topic_SocialPost() {
   const [showAudiencePopup, setAudiencePopup] = useState(false)
   const [showLanguagePopup, setLanguagePopup] = useState(false)
   const [showSupportivePopup, setSupportivePopup] = useState(false)
-  const [selectedFileList, setselectedFileList] = useState([])
-  const [selectedFileListName, setselectedFileListName] = useState<string[]>([])
   const [isPaidUser, setIsPaidUser] = useState(false)
   const [isAddingLink, setIsAddingLink] = useState(false)
 
@@ -218,7 +216,7 @@ export default function Topic_SocialPost() {
       language: language,
       project_id: project_id,
       //youtube_url: youtube,
-      resources: JSON.parse(sessionStorage.getItem('resources') || '[]'),
+      resources: selectedResourceId,
       model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
       post_style: selectedScenario,
     }
