@@ -102,6 +102,13 @@ export default function Topic() {
       : []
   )
 
+  useEffect(() => {
+    if (selectedResources.length > 0) {
+      if (topic.length == 0) {
+        setTopic(formatName(selectedResources[0].name))
+      }
+    }
+  }, [selectedResources])
 
   useEffect(() => {
     UserService.isPaidUser().then(
@@ -227,9 +234,6 @@ export default function Topic() {
 
       setSelectedResources(prevList => [...prevList, videoDetails]);
       setSelectedResourceId(prevList => [...prevList, videoDetails.id]);
-      if (!topic) {
-        setTopic(formatName(videoDetails.name))
-      }
     } catch (error: any) {
       console.error("Error fetching YouTube video details: ", error);
       setLinkError("Error fetching YouTube video details");
@@ -250,9 +254,6 @@ export default function Topic() {
 
       setSelectedResources(prevList => [...prevList, pageDetails]);
       setSelectedResourceId(prevList => [...prevList, pageDetails.id]);
-      if (!topic) {
-        setTopic(formatName(pageDetails.name));
-      }
     } catch (error: any) {
       console.error("Error reading webpage details: ", error);
       setLinkError("Error reading webpage details");
