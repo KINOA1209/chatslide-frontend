@@ -49,8 +49,8 @@ const HeroText = () => {
     <div className={`flex flex-col items-center transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
       <div className="flex flex-col md:flex-row items-end space-x-4">
         {/* <TextCarousel slides={["Documents", "Youtube", "Webpage", "Notion"]} interval={3000} color="text-blue-700" alignment='right'/> */}
-        <h1 className="text-5xl font-extrabold leading-tighter tracking-tighte font-creato-medium mb-1">Documents to</h1>
-        <TextCarousel slides={["Slides", "Social Posts", "Video"]} interval={3000} color="text-purple-700" />
+        <h1 className="text-5xl font-extrabold leading-tighter tracking-tighte font-creato-medium mb-0.5">Documents to</h1>
+        <TextCarousel slides={["Slides", "Social Posts", "Video"]} interval={3000} color="text-blue-700" />
       </div>
     </div>
   )
