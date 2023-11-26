@@ -180,12 +180,12 @@ export default function Topic() {
   }
 
   async function addLink(link: string) {
-    if (!link) {
-      setLinkError('Please enter a valid link.');
+    if (!isValidUrl(link)) {
+      setLinkError('This does not seem like a valid link.');
       return;
     }
     if (!isPaidUser && selectedResources.length >= 1) {
-      setLinkError('Free users can only add one resource.');
+      setLinkError('Please subscribe to add more resources.');
       return;
     }
     setLinkError('');
@@ -196,6 +196,15 @@ export default function Topic() {
       addWebpageLink(link)
     }
   }
+
+  const isValidUrl = (urlString: string): boolean => {
+    try {
+      new URL(urlString);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
 
   function formatName(name: string) {
     if (name.length > MAX_TOPIC_LENGTH) {
