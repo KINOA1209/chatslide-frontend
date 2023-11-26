@@ -112,6 +112,15 @@ export default function Topic_SocialPost() {
   )
 
   useEffect(() => {
+    if (selectedResources.length > 0) {
+      if (topic.length == 0) {
+        setTopic(formatName(selectedResources[0].name))
+      }
+    }
+  }, [selectedResources])
+
+
+  useEffect(() => {
     const clientTopic = sessionStorage.getItem('topic')
     if (clientTopic) {
       setTopic(clientTopic)
