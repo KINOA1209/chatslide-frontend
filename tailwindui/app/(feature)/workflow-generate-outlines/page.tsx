@@ -197,6 +197,13 @@ export default function Topic() {
     }
   }
 
+  function formatName(name: string) {
+    if (name.length > MAX_TOPIC_LENGTH) {
+      return name.slice(0, MAX_TOPIC_LENGTH - 3) + '...';
+    }
+    return name;
+  }
+
   async function addYoutubeLink(link: string) {
     try {
       const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
@@ -212,7 +219,7 @@ export default function Topic() {
       setSelectedResources(prevList => [...prevList, videoDetails]);
       setSelectedResourceId(prevList => [...prevList, videoDetails.id]);
       if (!topic) {
-        setTopic(videoDetails.name.slice(0, MAX_TOPIC_LENGTH))
+        setTopic(formatName(videoDetails.name))
       }
     } catch (error: any) {
       console.error("Error fetching YouTube video details: ", error);
@@ -235,7 +242,7 @@ export default function Topic() {
       setSelectedResources(prevList => [...prevList, pageDetails]);
       setSelectedResourceId(prevList => [...prevList, pageDetails.id]);
       if (!topic) {
-        setTopic(pageDetails.name.slice(0, MAX_TOPIC_LENGTH))
+        setTopic(formatName(pageDetails.name));
       }
     } catch (error: any) {
       console.error("Error reading webpage details: ", error);
