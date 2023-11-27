@@ -6,7 +6,7 @@ export const FromComputerIcon = () => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <g clip-path='url(#clip0_137_5098)'>
+    <g clipPath='url(#clip0_137_5098)'>
       <path
         d='M15.786 2.92969H1.21456C0.879249 2.92969 0.607422 3.20151 0.607422 3.53683V13.2511C0.607422 13.5864 0.879249 13.8583 1.21456 13.8583H15.786C16.1213 13.8583 16.3931 13.5864 16.3931 13.2511V3.53683C16.3931 3.20151 16.1213 2.92969 15.786 2.92969Z'
         stroke='black'
@@ -43,7 +43,7 @@ export const FromCloudIcon = () => (
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
   >
-    <g clip-path='url(#clip0_137_5104)'>
+    <g clipPath='url(#clip0_137_5104)'>
       <path
         d='M7.89342 9.60938V16.8951M7.89342 9.60938L5.46484 12.0379M7.89342 9.60938L10.322 12.0379'
         stroke='#121212'

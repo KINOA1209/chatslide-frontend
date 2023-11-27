@@ -5,7 +5,7 @@ import { Transition } from '@headlessui/react';
 import DrlambdaButton from '@/components/button/DrlambdaButton';
 
 interface MyResourcePageHeaderProps {
-  onFilesUploaded: () => void;
+  onFilesUploaded?: Function;
 }
 const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
   onFilesUploaded,
@@ -31,13 +31,16 @@ const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
           </div>
 
           {/* create new project button */}
-          <div className="absolute right-10 pb-[1rem] ">
-            <DrlambdaButton
-              onClick={openModal}
-            >
-              Upload File
-            </DrlambdaButton>
-          </div>
+          {
+            onFilesUploaded && 
+            <div className="absolute right-10 pb-[1rem] ">
+              <DrlambdaButton
+                onClick={openModal}
+              >
+                Upload File
+              </DrlambdaButton>
+            </div>
+          }
         </div>
       </div>
 
@@ -55,7 +58,7 @@ const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
         leaveFrom="opacity-100 translate-y-0"
         leaveTo="opacity-0 translate-y-12"
       >
-        {showModal && (
+        {showModal && onFilesUploaded && (
           <UploadToLibraryWindow
             showModal={showModal}
             closeModal={closeModal}
