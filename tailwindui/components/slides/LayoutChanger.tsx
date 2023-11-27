@@ -8,17 +8,20 @@ type LayoutProps = {
   showLayout: boolean
   closeModal: () => void
   currentSlideIndex: number
-  templateSamples: {
-    cover: { name: string; img: string }[]
-    main: { name: string; img: string }[]
-  }
+  // templateSamples: {
+  //   cover: { name: string; img: string }[]
+  //   main: { name: string; img: string }[]
+  // }
   slides: { layout: string }[]
   handleSlideEdit: (
     content: string | string[],
     slideIndex: number,
     tag: SlideKeys
   ) => void
-  availableLayouts: { main: { name: LayoutKeys; img: string }[] }
+  availableLayouts: {
+    cover: { name: LayoutKeys; img: string }[]
+    main: { name: LayoutKeys; img: string }[]
+  }
 }
 
 const LayoutChanger: React.FC<LayoutProps> = ({
@@ -26,7 +29,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
   showLayout,
   closeModal,
   currentSlideIndex,
-  templateSamples,
+  // templateSamples,
   slides,
   handleSlideEdit,
   availableLayouts,

@@ -7,7 +7,7 @@ import './slidesHTML.css'
 import dynamic from 'next/dynamic'
 import {
   availableTemplates,
-  templateSamples,
+  // templateSamples,
 } from '@/components/slides/slideTemplates'
 import { LayoutKeys } from '@/components/slides/slideLayout'
 import ClickableLink from '../ui/ClickableLink'
@@ -537,7 +537,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                   showLayout={showLayout}
                   closeModal={closeModal}
                   currentSlideIndex={currentSlideIndex}
-                  templateSamples={templateSamples}
+                  // templateSamples={templateSamples}
                   slides={slides}
                   handleSlideEdit={handleSlideEdit}
                   availableLayouts={availableLayouts}

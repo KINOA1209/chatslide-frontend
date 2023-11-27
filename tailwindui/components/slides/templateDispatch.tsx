@@ -2,7 +2,7 @@ import { h1Style, h2Style, h3Style, h4Style, listStyle } from './Styles'
 import { Slide, SlideKeys } from '@/components/slides/SlidesHTML'
 import {
   availableTemplates,
-  templateSamples,
+  // templateSamples,
 } from '@/components/slides/slideTemplates'
 import { MathJax, MathJaxContext } from 'better-react-mathjax'
 import { LayoutKeys } from '@/components/slides/slideLayout'
@@ -30,8 +30,8 @@ export const templateDispatch = (
     () => {}, // Replace with your default function if you have one
   toggleEditMathMode: () => void = () => {}, // Replace with your default function if you have one
 
-  isCoverPage: boolean,
-  layoutOption: LayoutKeys,
+  isCoverPage: boolean = false,
+  layoutOption: LayoutKeys = 'Col_1_img_0_layout',
   brandingColor?: string
 ): JSX.Element => {
   let keyPrefix = ''
@@ -281,7 +281,7 @@ export const templateDispatch = (
       update_callback={updateImgUrlArray(index)}
       isCoverPage={isCoverPage}
       layoutOption={layoutOption}
-      primaryColor={brandingColor}
+      brandingColor={brandingColor}
     />
   )
   // }

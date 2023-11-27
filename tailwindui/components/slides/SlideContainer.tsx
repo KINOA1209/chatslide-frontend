@@ -74,8 +74,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
               slides[currentSlideIndex],
               currentSlideIndex,
               !isViewing && !isPresenting,
-              exportToPdfMode,
-              false
+              exportToPdfMode
             )}
         </div>
       )}
