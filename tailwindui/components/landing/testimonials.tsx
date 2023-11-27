@@ -2,7 +2,7 @@ import { RefObject, useEffect, useRef, useState } from "react";
 import { TwitterTweetEmbed } from "react-twitter-embed";
 import { Transition } from "@headlessui/react";
 
-export default function IframeGallery() {
+export default function Testimonails() {
     const iframeList = [
         <iframe className="w-full" src="https://www.linkedin.com/embed/feed/update/urn:li:share:7099576842361212929" height="500" title="Embedded post"></iframe>,
         <div className="relative w-full scale-[1.05]"><TwitterTweetEmbed tweetId={'1698559011107602603'} /></div>,

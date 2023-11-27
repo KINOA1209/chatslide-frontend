@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, FormEvent, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import ProjectProgress from '@/components/newWorkflowSteps'
+import ProjectProgress from '@/components/WorkflowSteps'
 import AuthService from '@/services/AuthService'
 import FeedbackButton from '@/components/slides/feedback'
 import { ToastContainer, toast } from 'react-toastify'
@@ -18,8 +18,10 @@ import {
   AIEditIconActive,
   AIEditIconInactive,
 } from './icons'
-import NewWorkflowGPTToggle from '@/components/button/NewWorkflowGPTToggle'
+import NewWorkflowGPTToggle from '@/components/button/WorkflowGPTToggle'
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner'
+import Modal from '@/components/ui/Modal'
+import VideoService from '@/services/VideoService'
 interface UpdateButtonProps {
   callback: Function
   text: string
@@ -517,22 +519,6 @@ const TranscriptVisualizer = ({
         </div>
       ))}
 
-      {/* Form */}
-      {/* <div className='max-w-sm mx-auto'>
-        <form onSubmit={handleSubmit}>
-          <div className='flex flex-wrap -mx-3 mt-6'>
-            <div className='w-full px-3'>
-              <button
-                className='btn text-white bg-gradient-to-r from-purple-500 to-purple-700 font-bold hover:bg-blue-700 w-full disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400'
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? 'Generating...' : '🚀 Generate Audio'}
-              </button>
-            </div>
-          </div>
-        </form>
-      </div> */}
-      {/* <Timer expectedSeconds={60} isSubmitting={isSubmitting} /> */}
     </div>
   )
 }
@@ -621,28 +607,28 @@ export default function WorkflowStep4() {
       transcriptWithTitle
     )
   }, [transcriptWithTitle])
-  //   const image_files =
-  //     typeof sessionStorage !== 'undefined'
-  //       ? JSON.parse(sessionStorage.getItem('image_files') || '[]')
-  //       : []
-  //   const imageUrls = image_files.map(
-  //     (filename: string) =>
-  //       `/api/jpg?foldername=${foldername}&filename=${filename}`
-  //   )
-  const contentRef = useRef<HTMLDivElement>(null)
-  const [isGpt35, setIsGpt35] = useState(true)
-  const [showPopup, setShowPopup] = useState(false) // State for the popup visibility
-  const [activeSection, setActiveSection] = useState(-1)
-  const router = useRouter()
-  // Function to open the popup
-  const openPopup = () => {
-    setShowPopup(true)
-  }
 
-  // Function to close the popup
-  const closePopup = () => {
-    setShowPopup(false)
-  }
+  const contentRef = useRef<HTMLDivElement>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  useEffect(() => {
+    console.log('submitting')
+
+    const fetchData = async () => {
+      try {
+        const { userId, idToken: token } =
+          await AuthService.getCurrentUserTokenAndId();
+        const project_id = sessionStorage.getItem('project_id') || "";
+        await VideoService.generateVideo(project_id, token);
+      } catch (error) {
+        console.error('Error in fetchData:', error);
+      }
+    };
+
+    if (isSubmitting) {
+      fetchData();
+    }
+  }, [isSubmitting]);
 
   // Function to scroll to a specific section
   const scrollToSection = (sectionId: number) => {
@@ -657,7 +643,6 @@ export default function WorkflowStep4() {
         behavior: 'smooth'
       });
 
-      setActiveSection(sectionId);
     }
   }
 
@@ -667,8 +652,8 @@ export default function WorkflowStep4() {
 
       <WorkflowStepsBanner
         currentIndex={3}
-        isSubmitting={false}
-        setIsSubmitting={() => { }}
+        isSubmitting={isSubmitting}
+        setIsSubmitting={setIsSubmitting}
         contentRef={contentRef}
       />
 
@@ -699,6 +684,15 @@ export default function WorkflowStep4() {
           <TranscriptVisualizer transcripts={transcriptWithTitle} />
         </div>
       </div>
+
+      {isSubmitting &&
+        <Modal showModal={isSubmitting} setShowModal={setIsSubmitting}>
+          <div className="min-h-[4rem] mx-4 my-4">
+            Your video is being generated ⏳. <br />
+            We will send the finished video to your email address.
+          </div>
+        </Modal>}
+
       <FeedbackButton />
     </div>
   )

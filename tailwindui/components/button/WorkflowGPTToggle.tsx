@@ -2,7 +2,7 @@
 
 
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import NewWorkflowToggle from './NewWorkflowToggle'
+import WorkflowToggle from './WorkflowToggle'
 import UserService from '../../services/UserService'
 import PaywallModal from '@/components/forms/paywallModal'
 import { QuestionExplainIcon } from '@/app/(feature)/icons'
@@ -48,7 +48,7 @@ const GPTToggle: React.FC<GPTToggleProps> = ({ setIsGpt35 }) => {
 
   return (
     <div>
-      <NewWorkflowToggle
+      <WorkflowToggle
         isLeft={isGpt35}
         setIsLeft={handleToggle}
         leftText='GPT3.5 ⚡️'

@@ -9,29 +9,12 @@ import { Dialog, Transition } from '@headlessui/react'
 import { useRouter } from 'next/navigation'
 import ProjectTable from './ProjectTable'
 import DrlambdaButton from '@/components/button/DrlambdaButton'
-// interface Project {
-//   id: number
-//   name: string
-//   description: string
-// }
-interface Resource {
-  id: string
-  name: string
-  type: string
-}
-interface Project {
-  id: string
-  //   task: 'video' | 'scripts' | 'slides'
-  task: 'video' | 'scripts' | 'slides' | 'presentation' | 'social post'
-  name: string
-  resources: Resource[]
-  created_datetime: string
-}
+import Project from '@/models/Project'
+import ProjectService from '@/services/ProjectService'
+
 
 export default function Dashboard() {
-  const [currentPage, setCurrentPage] = useState(1)
   const [projects, setProjects] = useState<Project[]>([])
-  // const [deleteInd, setDeleteInd] = useState(-1)
   const [deleteInd, setDeleteInd] = useState('')
   const router = useRouter()
   const promptRef = useRef<HTMLDivElement>(null)
@@ -39,20 +22,13 @@ export default function Dashboard() {
   const [rendered, setRendered] = useState<boolean>(false)
 
   const [isOpen, setIsOpen] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
+
   function closeModal() {
     setIsOpen(false)
   }
 
-  // const projectsPerPage = 10;
-  // const totalPages = Math.ceil(projects.length / projectsPerPage);
-  // const indexOfLastProject = currentPage * projectsPerPage;
-  // const indexOfFirstProject = indexOfLastProject - projectsPerPage;
-  // const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
-
   const currentProjects = projects
-
-  // place holder data
-  // const currentProjects = fakeProjects
 
   useEffect(() => {
     if (contentRef.current) {
@@ -74,40 +50,13 @@ export default function Dashboard() {
 
   // get projects from backend
   const handleRequest = async (token: string) => {
-    const headers = new Headers()
-    if (token) {
-      headers.append('Authorization', `Bearer ${token}`)
-    }
-    headers.append('Content-Type', 'application/json')
-
-    try {
-      const response = await fetch('/api/get_projects', {
-        method: 'POST',
-        headers: headers,
-      })
-
-      if (response.ok) {
-        const data = await response.json()
-        console.log('project data: ', data.projects)
-
-        if (data.projects.length === 0) {
-          router.push('/workflow-type-choice')
-        }
-
-        data.projects.forEach((item: Project) => {
-          if (item.task === null) {
-            item.task = 'presentation';
-          }
-        })
-        setProjects(data.projects)
-        setRendered(true)
-      } else {
-        // Handle error cases
-        console.error('Failed to fetch projects:', response.status)
+    ProjectService.getProjects(token).then((projects) => {
+      setProjects(projects)
+      setRendered(true)
+      if (projects.length == 0) {
+        router.push('/workflow-type-choice')
       }
-    } catch (error) {
-      console.error('Error fetching projects:', error)
-    }
+    })
   }
 
   const handleProjectClick = (projectId: string) => {
@@ -126,45 +75,29 @@ export default function Dashboard() {
   }
 
   const confirmDelete = async () => {
-    setIsOpen(false)
+    setIsDeleting(true)
     if (deleteInd === '') {
       throw 'Error'
     }
-    const projectDeleteData = {
-      project_id: deleteInd,
-    }
     try {
-      const { userId, idToken: token } =
-        await AuthService.getCurrentUserTokenAndId()
-      const response = await fetch('/api/delete_project', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(projectDeleteData),
-      })
-      if (response.ok) {
-        const projectDeleteFeedback = await response.json()
-        if (response.status === 200) {
-          setProjects(projects.filter((proj) => proj.id !== deleteInd))
-        } else {
-          // error handling does not work
-          toast.error(projectDeleteFeedback.message, {
-            position: 'top-center',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'light',
-          })
-        }
-      }
-    } catch (error) {
-      console.error(error)
+      const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+      const response = await ProjectService.deleteProject(token, deleteInd);
+
+      setProjects(projects.filter((proj) => proj.id !== deleteInd));
+    } catch (error: any) {
+      toast.error(error.message, {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
     }
+    setIsDeleting(false)
+    setIsOpen(false)
     setDeleteInd('')
   }
 
@@ -225,10 +158,11 @@ export default function Dashboard() {
               <div className='flex'>
                 <div className='flex justify-center mt-4'>
                   <button
-                    className='bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded mr-2 btn-size'
+                    className='bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white py-2 px-4 rounded mr-2 btn-size'
                     onClick={confirmDelete}
+                    disabled={isDeleting}
                   >
-                    Confirm
+                    {isDeleting ? "Deleting..." : "Confirm" } 
                   </button>
                 </div>
                 <div className='flex justify-center mt-4'>
