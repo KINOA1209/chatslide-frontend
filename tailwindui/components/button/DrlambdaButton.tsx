@@ -9,9 +9,10 @@ type DrlambdaButtonProps = {
   isSubmitting?: boolean;
   isPaidUser?: boolean;
   isPaidFeature?: boolean;
+  showArrow?: boolean;
 };
 
-const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSubmitting, isPaidUser, isPaidFeature = false }) => {
+const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSubmitting, isPaidUser, isPaidFeature = false, showArrow = true }) => {
 
   const [showPaywallModal, setShowPaywallModal] = useState(false);
 
@@ -22,7 +23,7 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSu
     if (isPaidFeature) {
       return 'bg-gradient-to-r from-purple-500 to-purple-700'
     }
-    return 'bg-gradient-to-r from-blue-600 to-teal-500'
+    return 'bg-gradient-to-r from-blue-500 to-blue-700'
   }
 
   function checkPaidUser(event: MouseEvent<HTMLButtonElement>) {
@@ -51,7 +52,7 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSu
           {children}
         </span>
         {/* Replace with the actual icon component or element */}
-        {!isSubmitting && <RightTurnArrowIcon />}
+        {!isSubmitting && showArrow && <RightTurnArrowIcon />}
       </button>
     </>
   );

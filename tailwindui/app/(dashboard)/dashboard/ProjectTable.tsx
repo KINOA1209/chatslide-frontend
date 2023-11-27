@@ -1,53 +1,14 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-import {
-  FaArrowUp,
-  FaArrowDown,
-  FaTrash,
-  FaFilm,
-  FaFileAlt,
-  FaFilePdf,
-  FaFilePowerpoint,
-  FaFileWord,
-  FaYoutube,
-  FaFileImage,
-} from 'react-icons/fa'
-import { DeleteIcon } from '@/app/(feature)/icons';
+import { DeleteIcon, SpinIcon } from '@/app/(feature)/icons';
 import { ResourceItem } from '@/components/ui/ResourceItem'
-import Resource from '@/models/Resource'
+import Project from '@/models/Project';
 
-interface Project {
-  id: string
-  //   task: 'video' | 'scripts' | 'slides'
-  task: 'video' | 'scripts' | 'slides' | 'presentation' | 'social post'
-  name: string
-  resources: Resource[]
-  created_datetime: string
-}
 
 interface Props {
   currentProjects: Project[]
   onProjectClick: (projectId: string) => void
   onDelete: (e: React.MouseEvent<HTMLDivElement>, projectId: string) => void
-}
-
-const TaskIcon: React.FC<{ task: 'video' | 'scripts' | 'slides' | 'presentation' | 'social post' }> = ({
-  task,
-}) => {
-  switch (task) {
-    case 'video':
-      return <FaFilm />
-    case 'scripts':
-      return <FaFileWord />
-    case 'slides':
-      return <FaFilePowerpoint />
-    case 'social post':
-      return <FaFileAlt />
-    case 'presentation':
-      return <FaFilePowerpoint />
-    default:
-      return null
-  }
 }
 
 const ProjectTable: React.FC<Props> = ({
@@ -100,7 +61,7 @@ const ProjectTable: React.FC<Props> = ({
               <div className='flex flex-col items-start'>
                 {/* <FileIcon fileType='pdf' /> */}
                 {project.resources && project.resources.map((resource, resourceIndex) => (
-                  <ResourceItem {...resource}/>
+                  <ResourceItem key={resourceIndex} {...resource}/>
                 ))}
               </div>
             </div>
@@ -113,7 +74,7 @@ const ProjectTable: React.FC<Props> = ({
                   className='cursor-pointer'
                   onClick={(e) => onDelete(e, project.id)}
                 >
-                  <DeleteIcon />
+                  <DeleteIcon/>
                 </div>
               </div>
             </div>

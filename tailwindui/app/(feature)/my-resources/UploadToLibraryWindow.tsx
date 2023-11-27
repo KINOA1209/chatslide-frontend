@@ -1,7 +1,9 @@
 'use client'
+
+// this file is not actively used
+
 import React, { useState, useEffect, useRef } from 'react';
 import { FromCloudIcon, FromComputerIcon } from '@/app/(feature)/my-resources/icons';
-import { NewFileUploadButton } from '@/components/fileUpload';
 import { toast } from 'react-toastify';
 import AuthService from '@/services/AuthService';
 import UserService from '@/services/UserService';
@@ -10,13 +12,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import '@/app/(feature)/my-resources/UploadToLibraryWindow.css';
 import ResourceService from '@/services/ResourceService';
 import Resource from '@/models/Resource';
+import { FileUploadButton } from '@/components/FileUploadButton';
 
 
 interface UploadToLibraryWindowProps {
   showModal: boolean
   closeModal: () => void
   selectable: boolean
-  onFilesUploaded: () => void
+  onFilesUploaded: Function
 }
 
 const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
@@ -404,7 +407,7 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
               <div id='instruction_container' className={`w-full min-h-[100px] border-0 border-dotted border-gray-400'} bg-gray-200 rounded-lg flex flex-col items-center justify-center`}>
                 {' '}
                 {/* select local file button */}
-                <NewFileUploadButton onFileSelected={localFileUpload} />
+                <FileUploadButton onFileSelected={localFileUpload} />
                 {/* <div className='w-[334.50px] h-[29.16px] text-center text-blue-700 text-[15px] font-medium font-creato-medium leading-tight tracking-tight'>
                   or drop here
                 </div> */}
