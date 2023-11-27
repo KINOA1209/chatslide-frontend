@@ -13,11 +13,11 @@ import { Harvard_school_template } from './school_templates/Harvard_school_templ
 import { Stanford_school_template } from './school_templates/Stanford_school_template'
 
 import { layoutOptions } from './slideLayout'
-import {
-  Col_1_img_0_layout,
-  Col_2_img_1_layout,
-  Col_3_img_2_layout,
-} from './slideLayout'
+// import {
+//   Col_1_img_0_layout,
+//   Col_2_img_1_layout,
+//   Col_3_img_3_layout,
+// } from './slideLayout'
 
 export interface MainSlideProps {
   user_name: JSX.Element
