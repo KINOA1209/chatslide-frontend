@@ -95,12 +95,6 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
     }
   }, [])
 
-  const handScrollTo = (e: React.MouseEvent<HTMLDivElement>, index: number) => {
-    if (isLanding && refList && refList[index].current) {
-      refList[index].current?.scrollIntoView()
-    }
-  }
-
   if (loading) {
     // Render a loading state or a blank placeholder
     return (
@@ -185,12 +179,7 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
                 <li>
                   <Link
                     href='/signin'
-                    className='hidden sm:flex btn-sm drop-shadow-xl rounded-full text-white w-auto mb-0 cursor-pointer mr-4'
-                    style={{
-                      backgroundColor: '#1D222A',
-                      backgroundSize: '100%',
-                      fontFamily: 'Lexend, sans-serif',
-                    }}
+                    className='hidden sm:flex drop-shadow-xl text-white w-auto mb-0 cursor-pointer mr-4 font-creato-medium '
                   >
                     Sign in
                   </Link>
@@ -198,14 +187,9 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
                 <li>
                   <Link
                     href='/signup'
-                    className='btn-sm drop-shadow-xl rounded-full text-white w-auto mb-0 cursor-pointer'
-                    style={{
-                      backgroundColor: '#1D222A',
-                      backgroundSize: '100%',
-                      fontFamily: 'Lexend, sans-serif',
-                    }}
+                    className='btn-sm drop-shadow-xl rounded-full text-white w-auto mb-0 cursor-pointer font-creato-medium bg-blue-700'
                   >
-                    <span>Join for Free</span>
+                    <span>Sign Up</span>
                   </Link>
                 </li>
               </ul>

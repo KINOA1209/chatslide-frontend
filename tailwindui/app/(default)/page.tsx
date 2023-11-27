@@ -7,6 +7,8 @@ import FeatureCards from '../../components/new_landing/FeatureCards'
 import Header from '@/components/ui/header'
 import PricingSection from '@/components/new_landing/PricingPlans'
 import LandingButton from '@/components/new_landing/LandingButton'
+import BlackFridayBanner from '@/components/new_landing/HolidayBanner'
+import HeroText, { TextCarousel } from '@/components/landing/HeroText'
 
 
 const fileTypes = [
@@ -59,27 +61,21 @@ function App() {
   return (
     <>
       <Header loginRequired={false} isLanding={true} />
+
+      <BlackFridayBanner />
+
       {/* background container */}
       <div className='background w-full relative bg-zinc-100'>
         {/* Section: Transform Knowledge */}
-        <div id='features' className='relative intro-section flex flex-col justify-center items-center gap-4'>
-          <div className='w-[90%] text-center text-neutral-900 text-4xl md:text-8xl font-creato-medium leading-[4rem] lg:leading-[7.5rem] pt-32'>
-            Documents to Slides
+        <div id='features' className='relative intro-section flex flex-col justify-center items-center gap-2 md:gap-4'>
+          <div className='w-[90%] font-creato-medium pt-16'>
+            <HeroText />
           </div>
+         
 
-          <a
-            href='https://www.producthunt.com/posts/dr-lambda?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-dr&#0045;lambda'
-            target='_blank'
-            className='fixed bottom-0 right-0 m-4 z-50'
-          >
-            <img
-              src='https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=412747&theme=light&period=daily'
-              alt='DrLambda - One&#0045;click&#0032;presentation&#0032;AI&#0032;tool&#0032;through&#0032;multiple&#0032;sources | Product Hunt'
-              className='w-[11rem] lg:w-[15rem] z-50'
-            />
-          </a>
+          <a href="https://www.producthunt.com/posts/drlambda-social?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-drlambda&#0045;social" target="_blank" className="fixed bottom-5 right-5 z-40"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=427030&theme=light" alt="DrLambda&#0045;Social - AI&#0032;content&#0032;generator&#0032;for&#0032;social&#0032;media | Product Hunt" width="250" height="54" /></a>
 
-          <div className='mt-6 w-50% text-center text-neutral-900 text-l md:text-3xl leading-10 tracking-wide font-creato-medium'>
+          <div className='mt-6 w-50% text-center text-neutral-900 text-l md:text-2xl leading-10 tracking-wide font-creato-medium'>
             Your 🤖 agent to help you create professional slides.
             <br />
             No ctrl F, ctrl C, or ctrl V 👍.
@@ -89,19 +85,21 @@ function App() {
             <LandingButton />
           </div>
 
-
-          <div className='transition-transform duration-150 transform w-[90%] lg:w-[70rem] lg:h-[35rem] mx-auto max-w-7xl'>
-            <Image
-              src={GenerationPreviewImg}
-              alt='my project'
-              className='object-cover lg:object-contain lg:w-full'
-            />
+          <div className='transition-transform duration-150 transform w-full h-[56vw] lg:w-[70rem] lg:h-[39.3rem] mx-auto max-w-7xl'>
+            <iframe
+              width="100%"
+              height="100%"
+              src="https://www.youtube.com/embed/T5hRlPBcFUU?autoplay=1&mute=1&playlist=T5hRlPBcFUU&loop=1"
+              title="DrLambda - One-click presentation AI tool through multiple sources"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen>
+            </iframe>
           </div>
           {/* <GenerationPreview /> */}
         </div>
 
         <div id="scenarios" className='pt-[3rem] flex flex-col justify-center items-center'>
-          <div className='w-[90%] text-center text-neutral-900 text-3xl lg:text-7xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
+          <div className='w-[90%] text-center text-neutral-900 text-3xl lg:text-5xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
             Professional slides for all scenarios
           </div>
           <div className='w-[90%] text-center text-md lg:text-xl'>
@@ -136,7 +134,7 @@ function App() {
         </div>
 
         <div id="use-cases" className='pt-[3rem] relative flex flex-col justify-center items-center'>
-          <div className='w-[90%] h-full text-center text-neutral-900 text-3xl lg:text-7xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
+          <div className='w-[90%] h-full text-center text-neutral-900 text-3xl lg:text-5xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
             Extract information from any source
           </div>
           <div className='w-[90%] text-center text-md lg:text-xl  '>

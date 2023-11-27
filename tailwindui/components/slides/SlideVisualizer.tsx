@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import 'react-toastify/dist/ReactToastify.css'
 import ClickableLink from '@/components/ui/ClickableLink'
-import { Slide } from '@/components/slides/NewSlidesHTML'
+import { Slide } from '@/components/slides/SlidesHTML'
 import ExportToPdfButton from './exportToPdfButton'
 import dynamic from 'next/dynamic'
 import { ShareToggleButton } from '@/components/slides/SlideButtons'
@@ -9,7 +9,7 @@ import UserService from '../../services/UserService'
 import AuthService from '../../services/AuthService'
 import { useRouter } from 'next/navigation'
 
-const SlidesHTML = dynamic(() => import('@/components/slides/NewSlidesHTML'), {
+const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
   ssr: false,
 })
 
