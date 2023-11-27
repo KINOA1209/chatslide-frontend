@@ -8,7 +8,7 @@ import Header from '@/components/ui/header'
 import PricingSection from '@/components/new_landing/PricingPlans'
 import LandingButton from '@/components/new_landing/LandingButton'
 import BlackFridayBanner from '@/components/new_landing/HolidayBanner'
-import HeroText, { TextCarousel } from '@/components/landing/HeroText'
+import HeroText from '@/components/landing/HeroText'
 
 
 const fileTypes = [
