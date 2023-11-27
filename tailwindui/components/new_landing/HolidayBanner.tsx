@@ -1,33 +1,21 @@
-'use client';
-
 import React, { useEffect, useState } from 'react';
 
 const BlackFridayBanner: React.FC = () => {
-  const [timeRemaining, setTimeRemaining] = useState<string>('');
+  const targetDate = new Date('2023-11-28T00:00:00');
+  const now = new Date();
+  const difference = targetDate.getTime() - now.getTime();
+  const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((difference / (1000 * 60)) % 60);
+  let initialTimeRemaining = 'Loading...';
 
-  useEffect(() => {
-    const targetDate = new Date('2023-11-28T00:00:00');
-
-    const interval = setInterval(() => {
-      const now = new Date();
-      const difference = targetDate.getTime() - now.getTime();
-
-      if (difference <= 0) {
-        clearInterval(interval);
-        setTimeRemaining('The offer has ended.');
-        return;
-      }
-
-      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-      setTimeRemaining(`${days}d ${hours}h ${minutes}m ${seconds}s remaining`);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
+  if (difference > 0) {
+    // Calculate initial time remaining
+    // ...
+    initialTimeRemaining = `${hours}h ${minutes}min remaining`;
+  } else {
+    initialTimeRemaining = 'The offer has ended.';
+  }
 
   return (
     <div className="w-screen pt-[48px] bg-black text-white text-center p-4 shadow-md">
@@ -35,7 +23,7 @@ const BlackFridayBanner: React.FC = () => {
       <a href="#pricing" className="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-600 transition duration-300 inline-block text-center">
         Get This Deal Now!
       </a>
-      <p className="text-xs font-semibold mt-2">⏰ {timeRemaining} ⏰</p>
+      <p className="text-xs font-semibold mt-2">⏰ {initialTimeRemaining} ⏰</p>
     </div>
   );
 };
