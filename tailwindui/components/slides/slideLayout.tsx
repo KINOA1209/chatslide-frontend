@@ -113,6 +113,34 @@ export const Col_3_img_0_layout = ({
   )
 }
 
+export const Col_1_img_1_layout = ({
+  user_name,
+  title,
+  topic,
+  subtopic,
+  content,
+  imgs,
+  update_callback,
+  canEdit,
+  autoSave,
+  isCoverPage,
+  layoutOption,
+}: MainSlideProps) => {
+  const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback)
+  return (
+    <div className='h-full w-full flex flex-row overflow-hidden gap-[32px]'>
+      <div className='w-full h-full grow p-1'>{content}</div>
+      <div className='w-full h-full grow rounded-md overflow-hidden'>
+        <ImgModule
+          imgsrc={localImgs[0]}
+          updateSingleCallback={updateImgAtIndex(0)}
+          canEdit={canEdit}
+          autoSave={autoSave}
+        />
+      </div>
+    </div>
+  )
+}
 export const Col_2_img_1_layout = ({
   user_name,
   title,
@@ -142,7 +170,7 @@ export const Col_2_img_1_layout = ({
   )
 }
 
-export const Col_3_img_2_layout = ({
+export const Col_3_img_3_layout = ({
   user_name,
   title,
   topic,
@@ -178,13 +206,43 @@ export const Col_3_img_2_layout = ({
     </div>
   )
 }
+export const Col_2_img_2_layout = ({
+  user_name,
+  title,
+  topic,
+  subtopic,
+  content,
+  imgs,
+  update_callback,
+  canEdit,
+  autoSave,
+  isCoverPage,
+  layoutOption,
+}: MainSlideProps) => {
+  const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback)
+  return (
+    <div className='h-full w-full flex flex-row overflow-hidden gap-[32px]'>
+      <div className='w-full h-full grow p-1'>{content}</div>
+      <div className='w-full h-full grow rounded-md overflow-hidden'>
+        <ImgModule
+          imgsrc={localImgs[0]}
+          updateSingleCallback={updateImgAtIndex(0)}
+          canEdit={canEdit}
+          autoSave={autoSave}
+        />
+      </div>
+    </div>
+  )
+}
 
 export const layoutOptions = {
   Col_1_img_0_layout: Col_1_img_0_layout,
   Col_2_img_0_layout: Col_2_img_0_layout,
   Col_3_img_0_layout: Col_3_img_0_layout,
+  Col_1_img_1_layout: Col_1_img_1_layout,
   Col_2_img_1_layout: Col_2_img_1_layout,
-  Col_3_img_2_layout: Col_3_img_2_layout,
+  Col_2_img_2_layout: Col_2_img_2_layout,
+  Col_3_img_3_layout: Col_3_img_3_layout,
 }
 
 export const availableLayouts = {
@@ -207,13 +265,13 @@ export const availableLayouts = {
       name: 'Col_3_img_0_layout' as LayoutKeys,
       img: col3img0_png.src,
     },
-    {
-      name: 'Col_2_img_1_layout' as LayoutKeys,
-      img: col2img1_png.src,
-    },
-    {
-      name: 'Col_3_img_2_layout' as LayoutKeys,
-      img: col3img2_png.src,
-    },
+    // {
+    //   name: 'Col_2_img_1_layout' as LayoutKeys,
+    //   img: col2img1_png.src,
+    // },
+    // {
+    //   name: 'Col_3_img_3_layout' as LayoutKeys,
+    //   img: col3img2_png.src,
+    // },
   ],
 }
