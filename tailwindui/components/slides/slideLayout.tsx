@@ -16,7 +16,9 @@ export type LayoutKeys =
   | 'Col_3_img_2_layout'
 
 // Extend the interface with new fields
-interface MainSlideProps extends BaseMainSlideProps {}
+interface MainSlideProps extends BaseMainSlideProps {
+  brandingColor?: string
+}
 
 export const Col_1_img_0_layout = ({
   user_name,
@@ -30,22 +32,18 @@ export const Col_1_img_0_layout = ({
   autoSave,
   isCoverPage,
   layoutOption,
+  brandingColor,
 }: MainSlideProps) => {
   return (
-    <div className='h-full w-full flex flex-row overflow-hidden gap-[32px]'>
-      <div
-        className='w-full h-full grow p-1 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem]'
-        style={
-          {
-            // display: 'list-item',
-            //   listStyleType: 'disc',
-            //   listStylePosition: 'inside',
-            //   fontSize: '18pt',
-            //   marginLeft: '20px',
-          }
-        }
-      >
-        {content}
+    <div className='h-full w-full flex flex-row overflow-hidden gap-[2.5rem]'>
+      <div className='flex flex-col gap-[1rem]'>
+        {/* <div className="mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-['Creato Display'] uppercase leading-10 tracking-widest">
+          01
+        </div> */}
+        <div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
+        <div className='w-full h-full grow p-1 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-none'>
+          {content}
+        </div>
       </div>
     </div>
   )
@@ -64,19 +62,21 @@ export const Col_2_img_0_layout = ({
   layoutOption,
 }: MainSlideProps) => {
   return (
-    <div className='h-full w-full flex flex-row overflow-hidden gap-[32px]'>
-      <div
-        className='w-full h-full grow p-1'
-        style={{
-          // display: 'list-item',
-          listStyleType: 'disc',
-          listStylePosition: 'inside',
-          fontSize: '18pt',
-          marginLeft: '20px',
-        }}
-      >
-        {content}
-      </div>
+    <div className='h-full w-full grid grid-cols-2 gap-[2.5rem] overflow-hidden'>
+      {content.map((item, index) => (
+        <div className='flex flex-col gap-[1rem]'>
+          <div className="mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-['Creato Display'] uppercase leading-10 tracking-widest">
+            {index + 1}
+          </div>
+          <div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
+          <div
+            key={index}
+            className='flex flex-row w-full h-full grow p-1 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-none'
+          >
+            {item}
+          </div>
+        </div>
+      ))}
     </div>
   )
 }
@@ -94,19 +94,21 @@ export const Col_3_img_0_layout = ({
   layoutOption,
 }: MainSlideProps) => {
   return (
-    <div className='h-full w-full flex flex-row overflow-hidden gap-[32px]'>
-      <div
-        className='w-full h-full grow p-1'
-        style={{
-          // display: 'list-item',
-          listStyleType: 'disc',
-          listStylePosition: 'inside',
-          fontSize: '18pt',
-          marginLeft: '20px',
-        }}
-      >
-        {content}
-      </div>
+    <div className='h-full w-full grid grid-cols-3 gap-[2.5rem] overflow-hidden'>
+      {content.map((item, index) => (
+        <div className='flex flex-col gap-[1rem]'>
+          <div className="mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-['Creato Display'] uppercase leading-10 tracking-widest">
+            {index + 1}
+          </div>
+          <div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
+          <div
+            key={index}
+            className='flex flex-row w-full h-full grow p-1 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-none'
+          >
+            {item}
+          </div>
+        </div>
+      ))}
     </div>
   )
 }
@@ -186,6 +188,12 @@ export const layoutOptions = {
 }
 
 export const availableLayouts = {
+  cover: [
+    {
+      name: 'Col_1_img_0_layout' as LayoutKeys,
+      img: col1img0_png.src,
+    },
+  ],
   main: [
     {
       name: 'Col_1_img_0_layout' as LayoutKeys,
