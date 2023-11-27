@@ -6,7 +6,7 @@ const BlackFridayBanner: React.FC = () => {
   const [timeRemaining, setTimeRemaining] = useState<string>('');
 
   useEffect(() => {
-    const targetDate = new Date('2023-11-27T00:00:00');
+    const targetDate = new Date('2023-11-28T00:00:00');
 
     const interval = setInterval(() => {
       const now = new Date();
