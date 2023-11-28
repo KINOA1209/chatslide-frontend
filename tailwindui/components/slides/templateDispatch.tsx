@@ -31,7 +31,8 @@ export const templateDispatch = (
   toggleEditMathMode: () => void = () => {}, // Replace with your default function if you have one
 
   isCoverPage: boolean = false,
-  layoutOption: LayoutKeys = 'Col_1_img_0_layout',
+  layoutOptionNonCover: LayoutKeys = 'Col_1_img_0_layout',
+  layoutOptionCover: LayoutKeys = 'Cover_img_1_layout',
   brandingColor?: string
 ): JSX.Element => {
   let keyPrefix = ''
@@ -280,7 +281,8 @@ export const templateDispatch = (
       imgs={slide.images as string[]}
       update_callback={updateImgUrlArray(index)}
       isCoverPage={isCoverPage}
-      layoutOption={layoutOption}
+      layoutOptionNonCover={layoutOptionNonCover}
+      layoutOptionCover={layoutOptionCover}
       brandingColor={brandingColor}
     />
   )

@@ -93,6 +93,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       ? sessionStorage.getItem('project_id')
       : ''
 
+  const [chosenLayout, setChosenLayout] = useState<LayoutKeys>('')
+
   const [showLayout, setShowLayout] = useState(false)
   const [present, setPresent] = useState(false)
   const slideRef = useRef<HTMLDivElement>(null)
@@ -130,6 +132,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     setUnsavedChanges(true)
     saveSlides()
   }, [finalSlides])
+
+  useEffect(() => {
+    console.log('layout Changed to: ', chosenLayout)
+    setUnsavedChanges(true)
+    saveSlides()
+  }, [chosenLayout])
 
   // Function to change the template of slides starting from the second one
   const changeTemplate = (newTemplate: string) => {
@@ -314,6 +322,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         } else if (className === 'layout' && child.textContent?.trim() !== '') {
           // Use child.textContent for simple string content
           elements.layout = sanitizeHtml(child.textContent ?? '') as LayoutKeys // Use nullish coalescing
+          console.log('layout: ', elements.layout)
         } else if (className === 'content' && child.innerHTML.trim() !== '') {
           const listItems = Array.from(child.getElementsByTagName('li'))
           elements.content = listItems.map((li) => sanitizeHtml(li.innerHTML))
@@ -345,8 +354,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       }
 
       // default layout setting
-      if (elements.layout === '') {
+
+      if (index === 0) {
+        elements.layout = 'Cover_img_1_layout' as LayoutKeys
+        setChosenLayout(elements.layout)
+        // console.log('current page is cover page: ', elements.layout)
+      } else if (index !== 0) {
         elements.layout = 'Col_1_img_0_layout' as LayoutKeys
+        setChosenLayout(elements.layout)
+        // console.log('current page is non cover page: ', elements.layout)
       }
       return elements
     })
@@ -490,6 +506,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       updateImgUrlArray,
       toggleEditMode,
       index === 0,
+      slide.layout,
       slide.layout
     )
 
@@ -529,7 +546,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
             explanation='Present'
           />
 
-          {!isViewing && currentSlideIndex != 0 && (
+          {!isViewing && (
             <ButtonWithExplanation
               button={
                 <LayoutChanger
