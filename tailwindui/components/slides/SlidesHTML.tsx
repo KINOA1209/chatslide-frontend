@@ -64,7 +64,7 @@ export class Slide {
     this.template = 'Default_template'
     this.content = ['Your content here']
     this.images = []
-    this.layout = 'Col_1_img_0_layout'
+    this.layout = 'Col_2_img_1_layout'
   }
 }
 
@@ -283,6 +283,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       .then((html) => {
         const parser = new DOMParser()
         const doc = parser.parseFromString(html, 'text/html')
+        console.log('doc info:', doc)
         displaySlides(doc)
         console.log('loaded slides information', doc)
         sessionStorage.setItem('html', 'html_init.html')
@@ -326,11 +327,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         } else if (className === 'content' && child.innerHTML.trim() !== '') {
           const listItems = Array.from(child.getElementsByTagName('li'))
           elements.content = listItems.map((li) => sanitizeHtml(li.innerHTML))
-        } else if (
-          child.className === 'images' &&
-          child.innerHTML.trim() !== ''
-        ) {
+        } else if (child.className === 'images') {
           const listItems = Array.from(child.getElementsByTagName('img'))
+          console.log('listItems of imgs:', listItems)
           let urls = listItems.map((img) => {
             const src = img.getAttribute('src')
             if (src) {
@@ -359,7 +358,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         elements.layout = 'Cover_img_1_layout' as LayoutKeys
         setChosenLayout(elements.layout)
         // console.log('current page is cover page: ', elements.layout)
-      } else if (index !== 0) {
+      } else if (index !== 0 && index % 2 === 0) {
+        elements.layout = 'Col_2_img_1_layout' as LayoutKeys
+        setChosenLayout(elements.layout)
+        // console.log('current page is non cover page: ', elements.layout)
+      } else if (index !== 0 && index % 2 !== 0) {
         elements.layout = 'Col_1_img_0_layout' as LayoutKeys
         setChosenLayout(elements.layout)
         // console.log('current page is non cover page: ', elements.layout)
