@@ -29,10 +29,18 @@ import { templateDispatch } from './templateDispatch'
 import { ScriptEditIcon } from '@/app/(feature)/workflow-review-slides/icons'
 import { useRouter } from 'next/navigation'
 import { availableLayouts } from './slideLayout'
-
+import TestSlidesData from './TestSlidesData.json'
 export interface SlideElement {
   type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div'
-  className: 'head' | 'title' | 'subtopic' | 'content' | 'userName' | 'images'
+  className:
+    | 'head'
+    | 'title'
+    | 'subtopic'
+    | 'content'
+    | 'userName'
+    | 'images'
+    | 'template'
+    | 'layout'
   content: string | string[]
 }
 
@@ -91,6 +99,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
   const project_id =
     typeof sessionStorage !== 'undefined'
       ? sessionStorage.getItem('project_id')
+      : ''
+  // default to use test data for slides
+  const res_slide =
+    typeof sessionStorage !== 'undefined'
+      ? sessionStorage.getItem('presentation_slides') ||
+        JSON.stringify(TestSlidesData)
       : ''
 
   const [chosenLayout, setChosenLayout] = useState<LayoutKeys>('')
@@ -246,11 +260,38 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     }
   }, []) // Empty dependency array to ensure this effect runs only once (similar to componentDidMount)
 
+  // fetch slides data
   useEffect(() => {
-    if (foldername !== null) {
-      loadHtmlFile(foldername, 'html_init.html')
-    } else {
-      console.error('foldername is null')
+    if (res_slide) {
+      // const slides_response_JSON = JSON.stringify(TestSlidesData)
+      const parsed_slides = JSON.parse(res_slide)
+      console.log('parseSlides:', parsed_slides)
+
+      const slidesArray: Slide[] = Object.keys(parsed_slides).map(
+        (key, index) => {
+          const slideData = parsed_slides[key]
+          const slide = new Slide()
+          slide.head = slideData.head || 'New Slide'
+          slide.title = slideData.title || 'New Slide'
+          slide.subtopic = slideData.subtopic || 'New Slide'
+          slide.userName = slideData.userName || ''
+          slide.template = slideData.template || 'Default_template'
+          slide.content = slideData.content || ['Your content here']
+          slide.images = slideData.images || []
+          if (index === 0) {
+            slide.layout =
+              slideData.layout || ('Cover_img_1_layout' as LayoutKeys)
+          } else {
+            slide.layout = slideData.layout || 'Col_2_img_1_layout'
+          }
+
+          // Return the modified slide object
+          return slide
+        }
+      )
+      console.log('the parsed slides array:', slidesArray)
+      setSlides(slidesArray)
+      setFinalSlides(slidesArray)
     }
   }, [])
 
@@ -437,6 +478,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     } else {
       console.error(`Unknown tag: ${tag}`)
     }
+    sessionStorage.setItem('presentation_slides', JSON.stringify(newSlides))
     setSlides(newSlides)
     setFinalSlides(newFinalSlides)
   }

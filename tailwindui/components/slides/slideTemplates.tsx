@@ -191,132 +191,132 @@ export const useLocalImgs = (
 //   )
 // }
 
-export const First_page_img_1 = ({
-  user_name,
-  title,
-  topic,
-  subtopic,
-  content,
-  imgs,
-  update_callback,
-  canEdit,
-  autoSave,
-  isCoverPage,
-  layoutOptionNonCover,
-  layoutOptionCover,
-  brandingColor = 'bg-[#F0F0F2]',
-}: MainSlideProps) => {
-  const ChosenLayoutNonCover =
-    layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions]
-  const ChosenLayoutCover =
-    layoutOptions[layoutOptionCover as keyof typeof layoutOptions]
-  //   console.log('choosing layout option', ChosenLayoutCover)
-  return (
-    <>
-      {/* for cover page slide */}
-      <div
-        className={`${
-          isCoverPage
-            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-row gap-[2rem] justify-start items-start box-border border-none relative '
-            : 'hidden'
-        } ${brandingColor} `}
-      >
-        {/* <div
-          className={`pt-[1rem] px-[2rem] w-1/2 flex flex-col justify-start h-full gap-[2rem]`}
-        >
-          <div className='text-[#3D3D3D] text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]'>
-            {user_name}
-          </div>
-          <div
-            className={`pl-[2rem] basis-0 opacity-50 border
-                border-black border-opacity-40 mt-4`}
-          ></div>
-          <div className='text-neutral-800 text-4xl font-normal font-creato-medium leading-[120%] tracking-tight pl-[2rem]'>
-            {title}
-          </div>
-        </div>
-        <div className={`w-1/2 h-full rounded-md overflow-hidden`}>
-          <ImgModule
-            imgsrc={localImgs[0]}
-            updateSingleCallback={updateImgAtIndex(0)}
-            canEdit={canEdit}
-            autoSave={autoSave}
-          />
-        </div> */}
-        <ChosenLayoutCover
-          content={content}
-          user_name={user_name}
-          title={title}
-          topic={topic}
-          subtopic={subtopic}
-          imgs={imgs}
-          update_callback={update_callback}
-          canEdit={canEdit}
-          autoSave={autoSave}
-          isCoverPage={isCoverPage}
-          layoutOptionNonCover={layoutOptionNonCover}
-          layoutOptionCover={layoutOptionCover}
-          brandingColor={brandingColor}
-        ></ChosenLayoutCover>
+// export const First_page_img_1 = ({
+//   user_name,
+//   title,
+//   topic,
+//   subtopic,
+//   content,
+//   imgs,
+//   update_callback,
+//   canEdit,
+//   autoSave,
+//   isCoverPage,
+//   layoutOptionNonCover,
+//   layoutOptionCover,
+//   brandingColor = 'bg-[#F0F0F2]',
+// }: MainSlideProps) => {
+//   const ChosenLayoutNonCover =
+//     layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions]
+//   const ChosenLayoutCover =
+//     layoutOptions[layoutOptionCover as keyof typeof layoutOptions]
+//   //   console.log('choosing layout option', ChosenLayoutCover)
+//   return (
+//     <>
+//       {/* for cover page slide */}
+//       <div
+//         className={`${
+//           isCoverPage
+//             ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-row gap-[2rem] justify-start items-start box-border border-none relative '
+//             : 'hidden'
+//         } ${brandingColor} `}
+//       >
+//         {/* <div
+//           className={`pt-[1rem] px-[2rem] w-1/2 flex flex-col justify-start h-full gap-[2rem]`}
+//         >
+//           <div className='text-[#3D3D3D] text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]'>
+//             {user_name}
+//           </div>
+//           <div
+//             className={`pl-[2rem] basis-0 opacity-50 border
+//                 border-black border-opacity-40 mt-4`}
+//           ></div>
+//           <div className='text-neutral-800 text-4xl font-normal font-creato-medium leading-[120%] tracking-tight pl-[2rem]'>
+//             {title}
+//           </div>
+//         </div>
+//         <div className={`w-1/2 h-full rounded-md overflow-hidden`}>
+//           <ImgModule
+//             imgsrc={localImgs[0]}
+//             updateSingleCallback={updateImgAtIndex(0)}
+//             canEdit={canEdit}
+//             autoSave={autoSave}
+//           />
+//         </div> */}
+//         <ChosenLayoutCover
+//           content={content}
+//           user_name={user_name}
+//           title={title}
+//           topic={topic}
+//           subtopic={subtopic}
+//           imgs={imgs}
+//           update_callback={update_callback}
+//           canEdit={canEdit}
+//           autoSave={autoSave}
+//           isCoverPage={isCoverPage}
+//           layoutOptionNonCover={layoutOptionNonCover}
+//           layoutOptionCover={layoutOptionCover}
+//           brandingColor={brandingColor}
+//         ></ChosenLayoutCover>
 
-        {/* Logo */}
-        <div className='fixed inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]'>
-          <Image
-            src={drlambdaLogo}
-            alt='drlambdaLogo'
-            className='w-[8rem] h-auto'
-          />
-          {/* <div className='text-red-800 text-2xl font-normal '>Caption</div> */}
-        </div>
-      </div>
+//         {/* Logo */}
+//         <div className='fixed inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]'>
+//           <Image
+//             src={drlambdaLogo}
+//             alt='drlambdaLogo'
+//             className='w-[8rem] h-auto'
+//           />
+//           {/* <div className='text-red-800 text-2xl font-normal '>Caption</div> */}
+//         </div>
+//       </div>
 
-      {/* for non-cover page slides */}
-      <div
-        className={`${
-          !isCoverPage
-            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-col justify-start items-start box-border border-none relative p-[28px] '
-            : 'hidden'
-        } ${brandingColor}`}
-      >
-        <div className=' text-black text-3xl font-bold font-creato-medium leading-[100%] pb-[2rem]'>
-          {topic}
-        </div>
-        <div className='mix-blend-hard-light text-neutral-900 text-base font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]'>
-          {subtopic}
-        </div>
-        <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr>
+//       {/* for non-cover page slides */}
+//       <div
+//         className={`${
+//           !isCoverPage
+//             ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-col justify-start items-start box-border border-none relative p-[28px] '
+//             : 'hidden'
+//         } ${brandingColor}`}
+//       >
+//         <div className=' text-black text-3xl font-bold font-creato-medium leading-[100%] pb-[2rem]'>
+//           {topic}
+//         </div>
+//         <div className='mix-blend-hard-light text-neutral-900 text-base font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]'>
+//           {subtopic}
+//         </div>
+//         <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr>
 
-        <ChosenLayoutNonCover
-          content={content}
-          user_name={user_name}
-          title={title}
-          topic={topic}
-          subtopic={subtopic}
-          imgs={imgs}
-          update_callback={update_callback}
-          canEdit={canEdit}
-          autoSave={autoSave}
-          isCoverPage={isCoverPage}
-          layoutOptionNonCover={layoutOptionNonCover}
-          layoutOptionCover={layoutOptionCover}
-          brandingColor={brandingColor}
-        ></ChosenLayoutNonCover>
-        {/* company logo */}
-        <div className='fixed inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]'>
-          <Image
-            src={drlambdaLogoSingle}
-            alt='drlambda logo'
-            className='w-[1.5rem] mr-4'
-          />
-          <div
-            className={`grow basis-0 opacity-50 border border-black border-opacity-40`}
-          ></div>
-          {/* <div className='text-red-800 text-2xl font-normal '>Caption</div> */}
-        </div>
-      </div>
-    </>
-  )
-}
+//         <ChosenLayoutNonCover
+//           content={content}
+//           user_name={user_name}
+//           title={title}
+//           topic={topic}
+//           subtopic={subtopic}
+//           imgs={imgs}
+//           update_callback={update_callback}
+//           canEdit={canEdit}
+//           autoSave={autoSave}
+//           isCoverPage={isCoverPage}
+//           layoutOptionNonCover={layoutOptionNonCover}
+//           layoutOptionCover={layoutOptionCover}
+//           brandingColor={brandingColor}
+//         ></ChosenLayoutNonCover>
+//         {/* company logo */}
+//         <div className='fixed inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]'>
+//           <Image
+//             src={drlambdaLogoSingle}
+//             alt='drlambda logo'
+//             className='w-[1.5rem] mr-4'
+//           />
+//           <div
+//             className={`grow basis-0 opacity-50 border border-black border-opacity-40`}
+//           ></div>
+//           {/* <div className='text-red-800 text-2xl font-normal '>Caption</div> */}
+//         </div>
+//       </div>
+//     </>
+//   )
+// }
 
 export const Default_template = ({
   user_name,
@@ -506,10 +506,7 @@ export const Default_template = ({
 // }
 
 export const availableTemplates = {
-  //   Col_2_img_1: Col_2_img_1,
-  First_page_img_1: First_page_img_1,
-  //   Col_1_img_0: Col_1_img_0,
-  //   Col_3_img_2: Col_3_img_2,
+  //   First_page_img_1: First_page_img_1,
   Stanford: Stanford_school_template,
   Berkeley: Berkeley_school_template,
   Harvard: Harvard_school_template,

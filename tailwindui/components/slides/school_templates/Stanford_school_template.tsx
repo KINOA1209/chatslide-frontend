@@ -13,11 +13,12 @@ export const Stanford_school_template = ({
   canEdit,
   autoSave,
   isCoverPage,
-  layoutOption,
+  layoutOptionNonCover,
+  layoutOptionCover,
 }: MainSlideProps) => {
   //   const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback)
   //   const ChosenLayout = layoutOptions[layoutOption as keyof typeof layoutOptions]
-  console.log('choosing layout option', layoutOption)
+  //   console.log('choosing layout option', layoutOption)
   return (
     <>
       {/* for not-cover page slides */}
