@@ -22,7 +22,7 @@ interface GoogleSignInProps {
       }
     }
     try {
-      const { uid, token } = await AuthService.googleSingIn();
+      const { uid, token } = await AuthService.googleSignIn();
 
     } catch (error) {
       console.error(error);
