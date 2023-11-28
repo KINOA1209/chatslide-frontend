@@ -10,15 +10,19 @@ type DrlambdaButtonProps = {
   isPaidUser?: boolean;
   isPaidFeature?: boolean;
   showArrow?: boolean;
+  bgColor?: string;
 };
 
-const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSubmitting, isPaidUser, isPaidFeature = false, showArrow = true }) => {
+const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSubmitting, isPaidUser, isPaidFeature = false, showArrow = true, bgColor }) => {
 
   const [showPaywallModal, setShowPaywallModal] = useState(false);
 
   function getButtonBg() {
     if (isSubmitting) {
       return 'bg-gray-600'
+    }
+    if (bgColor) {
+      return bgColor;
     }
     if (isPaidFeature) {
       return 'bg-gradient-to-r from-purple-500 to-purple-700'
