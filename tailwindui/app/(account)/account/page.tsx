@@ -11,6 +11,8 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 import ClickableLink from '@/components/ui/ClickableLink';
 import ReferralLink from '@/components/ReferralLink';
+import Modal from '@/components/ui/Modal';
+import { FeedbackForm } from '@/components/slides/feedback';
 
 const Profile = () => {
   const [username, setUsername] = useState('');
@@ -236,6 +238,7 @@ const Referral = () => {
 
 const Subscription = () => {
   const [portalURL, setPortalURL] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchTier = async () => {
@@ -251,17 +254,32 @@ const Subscription = () => {
     fetchTier();
   }, [])
 
-
-  return <div className='w-full'>
-    <div className="mb-8 w-full max-w-none 2xl:max-w-[80%] mx-auto px-4 sm:px-6">
-      <div className="w-fit text-[#363E4A] text-[17px] font-bold">Subscription</div>
-      <div className="w-fit text-[#212121] text-[80px]">Plans</div>
+  const cancelButton = (
+    <div>
+      <Link href={portalURL} target='_blank'>Cancel Subscription</Link>
     </div>
-    <Pricing />
-    {portalURL && <div className='w-full px-4 sm:px-6 flex flex-col justify-center items-center max-w-none 2xl:max-w-[80%] mx-auto'>
-      <button className='btn max-w-sm text-white font-bold bg-gradient-to-r from-blue-600 to-teal-500 whitespace-nowrap rounded-xl'><Link href={portalURL} target='_blank'>Manage Subscription</Link></button>
-    </div>}
-  </div>
+  )
+
+
+  return (
+
+    <div className='w-full pb-4'>
+      {showModal &&
+        <FeedbackForm onClose={() => setShowModal(false)} successDiv={cancelButton}/>
+      }
+
+      <div className="mb-8 w-full max-w-none 2xl:max-w-[80%] mx-auto px-4 sm:px-6">
+        <div className="w-fit text-[#363E4A] text-[17px] font-bold">Subscription</div>
+        <div className="w-fit text-[#212121] text-[80px]">Plans</div>
+      </div>
+      <Pricing />
+      {portalURL &&
+        <button onClick={()=>{setShowModal(true)}} className='w-full py-4 sm:px-6 flex flex-col justify-center items-center max-w-none 2xl:max-w-[80%] mx-auto'>
+          Cancel Subscription
+        </button>
+      }
+    </div>
+  )
 }
 
 const CreditHistory = () => {
