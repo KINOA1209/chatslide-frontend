@@ -31,7 +31,8 @@ export interface MainSlideProps {
   canEdit: boolean
   autoSave: Function
   isCoverPage: boolean
-  layoutOption: LayoutKeys
+  layoutOptionNonCover: LayoutKeys
+  layoutOptionCover: LayoutKeys
   brandingColor?: string
 }
 
@@ -201,12 +202,15 @@ export const First_page_img_1 = ({
   canEdit,
   autoSave,
   isCoverPage,
-  layoutOption = 'Col_1_img_0_layout',
+  layoutOptionNonCover,
+  layoutOptionCover,
   brandingColor = 'bg-[#F0F0F2]',
 }: MainSlideProps) => {
-  const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback)
-  const ChosenLayout = layoutOptions[layoutOption as keyof typeof layoutOptions]
-  console.log('choosing layout option', ChosenLayout)
+  const ChosenLayoutNonCover =
+    layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions]
+  const ChosenLayoutCover =
+    layoutOptions[layoutOptionCover as keyof typeof layoutOptions]
+  //   console.log('choosing layout option', ChosenLayoutCover)
   return (
     <>
       {/* for cover page slide */}
@@ -217,7 +221,7 @@ export const First_page_img_1 = ({
             : 'hidden'
         } ${brandingColor} `}
       >
-        <div
+        {/* <div
           className={`pt-[1rem] px-[2rem] w-1/2 flex flex-col justify-start h-full gap-[2rem]`}
         >
           <div className='text-[#3D3D3D] text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]'>
@@ -238,7 +242,23 @@ export const First_page_img_1 = ({
             canEdit={canEdit}
             autoSave={autoSave}
           />
-        </div>
+        </div> */}
+        <ChosenLayoutCover
+          content={content}
+          user_name={user_name}
+          title={title}
+          topic={topic}
+          subtopic={subtopic}
+          imgs={imgs}
+          update_callback={update_callback}
+          canEdit={canEdit}
+          autoSave={autoSave}
+          isCoverPage={isCoverPage}
+          layoutOptionNonCover={layoutOptionNonCover}
+          layoutOptionCover={layoutOptionCover}
+          brandingColor={brandingColor}
+        ></ChosenLayoutCover>
+
         {/* Logo */}
         <div className='fixed inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]'>
           <Image
@@ -258,29 +278,15 @@ export const First_page_img_1 = ({
             : 'hidden'
         } ${brandingColor}`}
       >
-        <div
-          //   style={{
-          //     fontSize: '15pt',
-          //     fontWeight: 'bold',
-          //     marginTop: '10px',
-          //     color: '#2563EB',
-          //   }}
-          className=' text-black text-3xl font-bold font-creato-medium leading-[100%] pb-[2rem]'
-        >
+        <div className=' text-black text-3xl font-bold font-creato-medium leading-[100%] pb-[2rem]'>
           {topic}
         </div>
-        <div
-          //   style={{
-          //     fontSize: '20pt',
-          //     fontWeight: 'bold',
-          //   }}
-          className='mix-blend-hard-light text-neutral-900 text-base font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]'
-        >
+        <div className='mix-blend-hard-light text-neutral-900 text-base font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]'>
           {subtopic}
         </div>
         <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr>
 
-        <ChosenLayout
+        <ChosenLayoutNonCover
           content={content}
           user_name={user_name}
           title={title}
@@ -291,9 +297,10 @@ export const First_page_img_1 = ({
           canEdit={canEdit}
           autoSave={autoSave}
           isCoverPage={isCoverPage}
-          layoutOption={layoutOption}
+          layoutOptionNonCover={layoutOptionNonCover}
+          layoutOptionCover={layoutOptionCover}
           brandingColor={brandingColor}
-        ></ChosenLayout>
+        ></ChosenLayoutNonCover>
         {/* company logo */}
         <div className='fixed inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]'>
           <Image
@@ -322,12 +329,15 @@ export const Default_template = ({
   canEdit,
   autoSave,
   isCoverPage,
-  layoutOption = 'Col_1_img_0_layout',
+  layoutOptionNonCover,
+  layoutOptionCover,
   brandingColor = 'bg-[#F0F0F2]',
 }: MainSlideProps) => {
-  const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback)
-  const ChosenLayout = layoutOptions[layoutOption as keyof typeof layoutOptions]
-  console.log('choosing layout option', ChosenLayout)
+  const ChosenLayoutNonCover =
+    layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions]
+  const ChosenLayoutCover =
+    layoutOptions[layoutOptionCover as keyof typeof layoutOptions]
+  //   console.log('choosing layout option', ChosenLayout)
   return (
     <>
       {/* for cover page slide */}
@@ -338,28 +348,44 @@ export const Default_template = ({
             : 'hidden'
         } ${brandingColor} `}
       >
-        <div
-          className={`pt-[1rem] px-[2rem] w-1/2 flex flex-col justify-start h-full gap-[2rem]`}
-        >
-          <div className='text-[#3D3D3D] text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]'>
-            {user_name}
+        {/* <div
+            className={`pt-[1rem] px-[2rem] w-1/2 flex flex-col justify-start h-full gap-[2rem]`}
+          >
+            <div className='text-[#3D3D3D] text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]'>
+              {user_name}
+            </div>
+            <div
+              className={`pl-[2rem] basis-0 opacity-50 border
+                  border-black border-opacity-40 mt-4`}
+            ></div>
+            <div className='text-neutral-800 text-4xl font-normal font-creato-medium leading-[120%] tracking-tight pl-[2rem]'>
+              {title}
+            </div>
           </div>
-          <div
-            className={`pl-[2rem] basis-0 opacity-50 border
-                border-black border-opacity-40 mt-4`}
-          ></div>
-          <div className='text-neutral-800 text-4xl font-normal font-creato-medium leading-[120%] tracking-tight pl-[2rem]'>
-            {title}
-          </div>
-        </div>
-        <div className={`w-1/2 h-full rounded-md overflow-hidden`}>
-          <ImgModule
-            imgsrc={localImgs[0]}
-            updateSingleCallback={updateImgAtIndex(0)}
-            canEdit={canEdit}
-            autoSave={autoSave}
-          />
-        </div>
+          <div className={`w-1/2 h-full rounded-md overflow-hidden`}>
+            <ImgModule
+              imgsrc={localImgs[0]}
+              updateSingleCallback={updateImgAtIndex(0)}
+              canEdit={canEdit}
+              autoSave={autoSave}
+            />
+          </div> */}
+        <ChosenLayoutCover
+          content={content}
+          user_name={user_name}
+          title={title}
+          topic={topic}
+          subtopic={subtopic}
+          imgs={imgs}
+          update_callback={update_callback}
+          canEdit={canEdit}
+          autoSave={autoSave}
+          isCoverPage={isCoverPage}
+          layoutOptionNonCover={layoutOptionNonCover}
+          layoutOptionCover={layoutOptionCover}
+          brandingColor={brandingColor}
+        ></ChosenLayoutCover>
+
         {/* Logo */}
         <div className='fixed inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]'>
           <Image
@@ -387,7 +413,7 @@ export const Default_template = ({
         </div>
         <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr>
 
-        <ChosenLayout
+        <ChosenLayoutNonCover
           content={content}
           user_name={user_name}
           title={title}
@@ -398,9 +424,10 @@ export const Default_template = ({
           canEdit={canEdit}
           autoSave={autoSave}
           isCoverPage={isCoverPage}
-          layoutOption={layoutOption}
+          layoutOptionNonCover={layoutOptionNonCover}
+          layoutOptionCover={layoutOptionCover}
           brandingColor={brandingColor}
-        ></ChosenLayout>
+        ></ChosenLayoutNonCover>
         {/* company logo */}
         <div className='fixed inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]'>
           <Image

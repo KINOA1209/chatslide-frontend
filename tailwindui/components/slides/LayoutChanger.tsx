@@ -42,6 +42,11 @@ const LayoutChanger: React.FC<LayoutProps> = ({
   //   e.preventDefault()
   //   handleSlideEdit(templateName, slideIndex, 'template')
   // }
+  const availableLayoutsNonCover = availableLayouts.main // Assuming main contains non-cover layouts
+  const availableLayoutsCover = availableLayouts.cover // Add your cover layouts here
+  // Filter layouts based on the currentSlideIndex
+  const layoutsToDisplay =
+    currentSlideIndex === 0 ? availableLayoutsCover : availableLayoutsNonCover
 
   const updateLayout = (
     e: React.MouseEvent<HTMLDivElement>,
@@ -190,8 +195,11 @@ const LayoutChanger: React.FC<LayoutProps> = ({
                               )
                             }
                         })} */}
-                      {availableLayouts.main.map((currLayout, index) => {
+
+                      {layoutsToDisplay.map((currLayout, index) => {
+                        // Check if slides[currentSlideIndex] is defined
                         if (
+                          slides[currentSlideIndex] &&
                           currLayout.name !== slides[currentSlideIndex].layout
                         ) {
                           return (
@@ -211,7 +219,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
                               />
                             </div>
                           )
-                        } else {
+                        } else if (slides[currentSlideIndex]) {
                           return (
                             <div
                               onClick={(e) =>
@@ -229,6 +237,9 @@ const LayoutChanger: React.FC<LayoutProps> = ({
                               />
                             </div>
                           )
+                        } else {
+                          // Handle the case when slides[currentSlideIndex] is undefined
+                          return <></>
                         }
                       })}
                     </div>
