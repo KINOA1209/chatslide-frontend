@@ -30,8 +30,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
                     setTier(fetched.tier)
                 })
                 .catch(() => {
-                    setCredits(0)
-                    setTier('FREE')
+                    router.push('/signup')
                 })
             }
         };

@@ -84,7 +84,7 @@ class UserService {
 
       if (!response.ok) {
         console.log('Failed to fetch user credits:', response.status);
-        return { credits: 0, tier: 'FREE' }; // Return a default value or handle accordingly
+        throw new Error(`Error fetching user credits: ${response.status}`);
       }
 
       const data = await response.json();
@@ -97,7 +97,7 @@ class UserService {
 
     } catch (error) {
       console.error('Failed to fetch user credits:', error);
-      return { credits: 0, tier: 'FREE' }; // Return a default value or handle accordingly
+      throw new Error(`Error fetching user credits: ${error}`);
     }
   }
 

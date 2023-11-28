@@ -6,6 +6,7 @@ import Modal from '../ui/Modal'
 interface FeedbackFormProps {
   onClose: () => void
   message?: string
+  successDiv?: JSX.Element
 }
 
 interface FeedbackButtonProps {
@@ -44,10 +45,10 @@ const FeedbackButton: React.FC<FeedbackButtonProps> = ({ timeout = 0, message = 
 
   // Check if the message prop is to open the modal
   useEffect(() => {
-    if(message){
+    if (message) {
       handleOpenModal()
     }
-  }, [message]) 
+  }, [message])
 
   // Check if the timer has finished before opening the modal
   useEffect(() => {
@@ -68,7 +69,7 @@ const FeedbackButton: React.FC<FeedbackButtonProps> = ({ timeout = 0, message = 
   </div>
 }
 
-const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose, message }) => {
+export const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose, message, successDiv }) => {
   const [rating, setRating] = useState<number>(0)
   const [feedbackText, setFeedbackText] = useState<string>('')
   const [submitSuccessful, setSubmitSuccessful] = useState<boolean>(false)
@@ -113,7 +114,9 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose, message }) => {
     // Check if rating is not 0 (meaning the user has selected a rating).
     if (rating === 0) {
       setRatingError('Please select a rating.')
-    } else {
+    } else if (feedbackText==='') {
+      setRatingError('Please leave your feedback.')
+    }else {
       try {
         const { userId, idToken: token } =
           await AuthService.getCurrentUserTokenAndId()
@@ -154,6 +157,41 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose, message }) => {
     }
   }
 
+  if (!successDiv) {
+    successDiv = (
+      <div className='flex flex-col text-green-500'>
+        <svg
+          className='h-12 w-12 mx-auto mb-4'
+          fill='none'
+          stroke='currentColor'
+          viewBox='0 0 24 24'
+          xmlns='http://www.w3.org/2000/svg'
+        >
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            strokeWidth='2'
+            d='M5 13l4 4L19 7'
+          ></path>
+        </svg>
+        <p className='text-xl font-semibold text-center'>
+          Feedback submitted, thank you!
+          {rating === 5 && (
+            <div>
+              <span>
+                {' '}
+                Share your 💚 for DrLambda:
+              </span>
+              <div className='mt-4'>
+                <ReferralLink />
+              </div>
+            </div>
+          )}
+        </p>
+      </div>
+    )
+  }
+
   return (
     <Modal showModal={true} setShowModal={onClose}>
       <div
@@ -164,36 +202,7 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose, message }) => {
       >
         <div className='bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 shadow-lg'>
           {submitSuccessful ? (
-            <div className='flex flex-col text-green-500'>
-              <svg
-                className='h-12 w-12 mx-auto mb-4'
-                fill='none'
-                stroke='currentColor'
-                viewBox='0 0 24 24'
-                xmlns='http://www.w3.org/2000/svg'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth='2'
-                  d='M5 13l4 4L19 7'
-                ></path>
-              </svg>
-              <p className='text-xl font-semibold text-center'>
-                Feedback submitted, thank you!
-                {rating === 5 && (
-                  <div>
-                    <span>
-                      {' '}
-                      Share your 💚 for DrLambda:
-                    </span>
-                    <div className='mt-4'>
-                      <ReferralLink />
-                    </div>
-                  </div>
-                )}
-              </p>
-            </div>
+            successDiv
           ) : (
             <div>
               <h3
