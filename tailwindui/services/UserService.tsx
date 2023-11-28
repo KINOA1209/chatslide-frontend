@@ -84,7 +84,8 @@ class UserService {
 
       if (!response.ok) {
         console.log('Failed to fetch user credits:', response.status);
-        throw new Error(`Error fetching user credits: ${response.status}`);
+        await UserService.initializeUser(idToken); // if user does not exist in db, initialize the user
+        await UserService.getUserCreditsAndTier(idToken); // try again
       }
 
       const data = await response.json();
