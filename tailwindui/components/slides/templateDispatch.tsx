@@ -31,7 +31,7 @@ export const templateDispatch = (
   toggleEditMathMode: () => void = () => {}, // Replace with your default function if you have one
 
   isCoverPage: boolean = false,
-  layoutOptionNonCover: LayoutKeys = 'Col_1_img_0_layout',
+  layoutOptionNonCover: LayoutKeys = 'Col_2_img_1_layout',
   layoutOptionCover: LayoutKeys = 'Cover_img_1_layout',
   brandingColor?: string
 ): JSX.Element => {
