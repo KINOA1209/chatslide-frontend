@@ -106,7 +106,7 @@ class AuthService {
             const user = await AmplifyAuth.currentAuthenticatedUser();
             return user;
         } catch (error) {
-            console.error('Error getting current user: ', error);
+            // console.error('Error getting current user: ', error);
             return null;
         }
     }
