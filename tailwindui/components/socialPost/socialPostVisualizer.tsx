@@ -5,8 +5,6 @@ import dynamic from 'next/dynamic'
 import UserService from '../../services/UserService'
 import ExportToPngButton from '@/components/socialPost/socialPostPngButton'
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger'
-import 'react-quill/dist/quill.snow.css';
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const SocialPostHTML = dynamic(() => import('@/components/socialPost/socialPostHTML'), { ssr: false })
 
