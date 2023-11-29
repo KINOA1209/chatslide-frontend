@@ -121,17 +121,32 @@ export const Col_1_img_0_layout = ({
   brandingColor,
 }: MainSlideProps) => {
   return (
-    <div className='h-full w-full flex flex-row overflow-hidden gap-[2.5rem]'>
-      <div className='flex flex-col gap-[1rem]'>
-        {/* <div className="mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-['Creato Display'] uppercase leading-10 tracking-widest">
-          01
-        </div> */}
-        <div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
-        <div className='w-full h-full grow p-1 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-none'>
-          {content}
+    <>
+      <div className=' text-black text-3xl font-bold font-creato-medium leading-[100%] pb-[2rem]'>
+        {topic}
+      </div>
+      <div className='mix-blend-hard-light text-neutral-900 text-base font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]'>
+        {subtopic}
+      </div>
+      <div className='h-full w-full flex flex-row overflow-hidden gap-[2.5rem] mt-[1rem] overflow-y-scroll'>
+        <div className='flex flex-col gap-[1rem]'>
+          <div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
+          <div className='w-full h-full'>
+            {content.map((item, index) => (
+              <div className='py-[0.5rem]'>
+                {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
+                <div
+                  key={index}
+                  className='text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-none'
+                >
+                  {item}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 export const Col_2_img_0_layout = ({
@@ -149,22 +164,31 @@ export const Col_2_img_0_layout = ({
   layoutOptionCover,
 }: MainSlideProps) => {
   return (
-    <div className='h-full w-full grid grid-cols-2 gap-[2.5rem] overflow-hidden'>
-      {content.map((item, index) => (
-        <div className='flex flex-col gap-[1rem]'>
-          <div className="mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-['Creato Display'] uppercase leading-10 tracking-widest">
-            {index + 1}
+    <>
+      {' '}
+      <div className=' text-black text-3xl font-bold font-creato-medium leading-[100%] pb-[2rem]'>
+        {topic}
+      </div>
+      <div className='mix-blend-hard-light text-neutral-900 text-base font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]'>
+        {subtopic}
+      </div>{' '}
+      <div className='h-full w-full grid grid-cols-2 gap-[2.5rem] overflow-y-scroll'>
+        {content.map((item, index) => (
+          <div className='flex flex-col gap-[1rem]'>
+            <div className='mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-creato-medium uppercase leading-10 tracking-widest pt-[2rem]'>
+              {index + 1}
+            </div>
+            <div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
+            <div
+              key={index}
+              className='flex flex-row w-full h-full grow p-1 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-none'
+            >
+              {item}
+            </div>
           </div>
-          <div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
-          <div
-            key={index}
-            className='flex flex-row w-full h-full grow p-1 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-none'
-          >
-            {item}
-          </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </>
   )
 }
 export const Col_3_img_0_layout = ({
@@ -182,22 +206,31 @@ export const Col_3_img_0_layout = ({
   layoutOptionCover,
 }: MainSlideProps) => {
   return (
-    <div className='h-full w-full grid grid-cols-3 gap-[2.5rem] overflow-hidden'>
-      {content.map((item, index) => (
-        <div className='flex flex-col gap-[1rem]'>
-          <div className="mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-['Creato Display'] uppercase leading-10 tracking-widest">
-            {index + 1}
+    <>
+      {' '}
+      <div className=' text-black text-3xl font-bold font-creato-medium leading-[100%] pb-[2rem]'>
+        {topic}
+      </div>
+      <div className='mix-blend-hard-light text-neutral-900 text-base font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]'>
+        {subtopic}
+      </div>{' '}
+      <div className='h-full w-full grid grid-cols-3 gap-[2.5rem] overflow-y-scroll'>
+        {content.map((item, index) => (
+          <div className='flex flex-col gap-[1rem]'>
+            <div className='mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-creato-medium uppercase leading-10 tracking-widest  pt-[2rem]'>
+              {index + 1}
+            </div>
+            <div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
+            <div
+              key={index}
+              className='flex flex-row w-full h-full grow p-1 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-none'
+            >
+              {item}
+            </div>
           </div>
-          <div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
-          <div
-            key={index}
-            className='flex flex-row w-full h-full grow p-1 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-none'
-          >
-            {item}
-          </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </>
   )
 }
 
@@ -217,9 +250,41 @@ export const Col_1_img_1_layout = ({
 }: MainSlideProps) => {
   const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback)
   return (
-    <div className='h-full w-full flex flex-row overflow-hidden gap-[32px]'>
-      <div className='w-full h-full grow p-1'>{content}</div>
-      <div className='w-full h-full grow rounded-md overflow-hidden'>
+    <>
+      {/* area for topic, subtopic and contents */}
+      <div className='h-1/3 w-full grid grid-cols-2 gap-[2.5rem]'>
+        {/* col1 for topic and subtopic */}
+        <div className='flex flex-col gap-[0.5rem]'>
+          <div className=' text-black text-3xl font-bold font-creato-medium leading-[100%]'>
+            {topic}
+          </div>
+          <div className='mix-blend-hard-light text-neutral-900 text-base font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]'>
+            {subtopic}
+          </div>
+        </div>
+        {/* col 2 for contents */}
+        <div className='h-full w-full flex flex-row overflow-hidden gap-[2.5rem] overflow-y-scroll'>
+          <div className='flex flex-col gap-[1rem]'>
+            <div className='opacity-50'></div>
+            <div className='w-full h-full'>
+              {content.map((item, index) => (
+                <div className='py-[0.5rem]'>
+                  {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
+                  <div
+                    key={index}
+                    className='text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-none'
+                  >
+                    {item}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/*  */}
+      <div className='mt-[3rem] w-full h-2/3 grow rounded-md overflow-hidden'>
         <ImgModule
           imgsrc={localImgs[0]}
           updateSingleCallback={updateImgAtIndex(0)}
@@ -227,7 +292,7 @@ export const Col_1_img_1_layout = ({
           autoSave={autoSave}
         />
       </div>
-    </div>
+    </>
   )
 }
 export const Col_2_img_1_layout = ({

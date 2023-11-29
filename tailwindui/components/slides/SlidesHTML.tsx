@@ -267,6 +267,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       const parsed_slides = JSON.parse(res_slide)
       console.log('parseSlides:', parsed_slides)
 
+      // mapping data to slides
       const slidesArray: Slide[] = Object.keys(parsed_slides).map(
         (key, index) => {
           const slideData = parsed_slides[key]

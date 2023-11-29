@@ -348,28 +348,6 @@ export const Default_template = ({
             : 'hidden'
         } ${brandingColor} `}
       >
-        {/* <div
-            className={`pt-[1rem] px-[2rem] w-1/2 flex flex-col justify-start h-full gap-[2rem]`}
-          >
-            <div className='text-[#3D3D3D] text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]'>
-              {user_name}
-            </div>
-            <div
-              className={`pl-[2rem] basis-0 opacity-50 border
-                  border-black border-opacity-40 mt-4`}
-            ></div>
-            <div className='text-neutral-800 text-4xl font-normal font-creato-medium leading-[120%] tracking-tight pl-[2rem]'>
-              {title}
-            </div>
-          </div>
-          <div className={`w-1/2 h-full rounded-md overflow-hidden`}>
-            <ImgModule
-              imgsrc={localImgs[0]}
-              updateSingleCallback={updateImgAtIndex(0)}
-              canEdit={canEdit}
-              autoSave={autoSave}
-            />
-          </div> */}
         <ChosenLayoutCover
           content={content}
           user_name={user_name}
@@ -401,17 +379,11 @@ export const Default_template = ({
       <div
         className={`${
           !isCoverPage
-            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-col justify-start items-start box-border border-none relative p-[28px] '
+            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-col justify-start items-start box-border border-none relative p-[28px]'
             : 'hidden'
         } ${brandingColor}`}
       >
-        <div className=' text-black text-3xl font-bold font-creato-medium leading-[100%] pb-[2rem]'>
-          {topic}
-        </div>
-        <div className='mix-blend-hard-light text-neutral-900 text-base font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]'>
-          {subtopic}
-        </div>
-        <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr>
+        {/* <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr> */}
 
         <ChosenLayoutNonCover
           content={content}
