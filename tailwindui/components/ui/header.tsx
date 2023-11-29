@@ -170,7 +170,7 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
           {/* Desktop navigation */}
           <nav className='flex w-[272px]'>
             {/* Desktop sign in links */}
-            {userId ? (
+            {userId && loginRequired ? (
               <ul className='flex grow justify-end flex-wrap items-center'>
                 <DropdownButton />
               </ul>
