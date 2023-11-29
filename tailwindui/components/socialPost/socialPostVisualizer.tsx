@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
 import 'react-toastify/dist/ReactToastify.css'
-import ClickableLink from '@/components/ui/ClickableLink'
 import { SocialPostSlide } from '@/components/socialPost/socialPostHTML'
 import dynamic from 'next/dynamic'
-import { ShareSlidesIcon } from '@/app/(feature)/workflow-review-slides/icons'
-import { ShareToggleButton } from '@/components/slides/SlideButtons'
 import UserService from '../../services/UserService'
 import ExportToPngButton from '@/components/socialPost/socialPostPngButton'
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger'
+import 'react-quill/dist/quill.snow.css';
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const SocialPostHTML = dynamic(() => import('@/components/socialPost/socialPostHTML'), { ssr: false })
 
@@ -25,10 +24,16 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
     const [share, setShare] = useState(false)
     const [isPaidUser, setIsPaidUser] = useState(false);
     const [finalSlideIndex, setFinalSlideIndex] = useState<number>(0)
-    const res_scenario =
-    typeof sessionStorage !== 'undefined'
-    ? sessionStorage.getItem('selectedScenario')
-    : ''
+    const [currentEditingProperty, setCurrentEditingProperty] = useState<string>("topic");
+
+    const updateSlideProperty = (newValue: string) => {
+        const updatedSlides = [...finalSlides];
+        updatedSlides[finalSlideIndex] = {
+            ...updatedSlides[finalSlideIndex],
+            [currentEditingProperty]: newValue,
+        };
+        setFinalSlides(updatedSlides);
+    };
 
     useEffect(() => {
         (async () => {
@@ -51,6 +56,7 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
             setHost(window.location.hostname)
         }
     }, [])
+
     return (
         <div>
             <div className='px-4 sm:px-6 flex flex-col justify-center items-center gap-4'>
@@ -63,6 +69,7 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
                     borderColorOptions={borderColorOptions}
                 />
                 </div>
+                
                 <SocialPostHTML 
                     finalSlides={finalSlides} 
                     setFinalSlides={setFinalSlides} 
