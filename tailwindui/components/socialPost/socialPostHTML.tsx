@@ -156,7 +156,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
     const presentScale = Math.min(dimensions.width / 450, dimensions.height / 600)
     const nonPresentScale = Math.min(1, presentScale * 0.6)
     const [showTheme, setShowTheme] = useState(false)
-
     
     
     useEffect(() => {
