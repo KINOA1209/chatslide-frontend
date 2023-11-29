@@ -136,7 +136,7 @@ interface PricingCardProps {
 
 const PricingSection = () => {
     return (
-        <div className='mt-[10rem] mb-[6rem] flex flex-col justify-center items-center'>
+        <div className='mb-[6rem] flex flex-col justify-center items-center'>
             <div className='w-[90%] text-center text-neutral-900 text-4xl lg:text-5xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
                 Pricing
             </div>
