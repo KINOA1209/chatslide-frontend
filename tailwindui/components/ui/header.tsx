@@ -18,8 +18,9 @@ interface HeaderProps {
   loginRequired: boolean
   isLanding: boolean
   refList?: Array<React.RefObject<HTMLDivElement>>
+  isAuth?: boolean
 }
-const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
+const Header = ({ loginRequired, isLanding = false, refList, isAuth = false }: HeaderProps) => {
   const [top, setTop] = useState<boolean>(true)
   const [userId, setUserId] = useState(null)
   // const [username, setUsername] = useState(null);
@@ -171,7 +172,7 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
           <nav className='flex w-[272px]'>
             {/* Desktop sign in links */}
             {userId ? (
-              ( loginRequired && <ul className='flex grow justify-end flex-wrap items-center'>
+              ( !isAuth && <ul className='flex grow justify-end flex-wrap items-center'>
                 <DropdownButton />
               </ul>)
             ) : (
