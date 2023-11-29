@@ -14,7 +14,7 @@ import UserService from '@/services/UserService'
 import { Transition } from '@headlessui/react'
 import MyFiles from '@/components/FileManagement'
 import PaywallModal from '@/components/forms/paywallModal'
-import FeedbackButton from '@/components/slides/feedback'
+import FeedbackButton from '@/components/ui/feedback'
 import WorkflowStepsBanner from '@/components/socialPost/socialPostWorkflowStep';
 import { DeleteIcon, QuestionExplainIcon, RightTurnArrowIcon } from '@/app/(feature)/icons'
 import { FaFilePdf, FaYoutube } from 'react-icons/fa'

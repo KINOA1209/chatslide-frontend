@@ -9,7 +9,7 @@ import GoBackButton from '@/components/button/GoBackButton'
 import ImageList from '@/components/ImageList'
 import ProjectProgress from '@/components/steps'
 import AuthService from '@/services/AuthService'
-import FeedbackButton from '@/components/slides/feedback'
+import FeedbackButton from '@/components/ui/feedback'
 
 const TranscriptAudioVisualizer = ({
   transcripts,

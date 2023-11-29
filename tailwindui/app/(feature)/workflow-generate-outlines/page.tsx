@@ -15,7 +15,7 @@ import AuthService from '@/services/AuthService'
 import UserService from '@/services/UserService'
 import { Transition } from '@headlessui/react'
 import MyFiles from '@/components/FileManagement'
-import FeedbackButton from '@/components/slides/feedback'
+import FeedbackButton from '@/components/ui/feedback'
 
 import { DeleteIcon, QuestionExplainIcon, RightTurnArrowIcon } from '@/app/(feature)/icons'
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner'
