@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import 'react-toastify/dist/ReactToastify.css'
-import FeedbackButton from '@/components/slides/feedback'
+import FeedbackButton from '@/components/ui/feedback'
 import SlideVisualizer from '@/components/slides/SlideVisualizer'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
