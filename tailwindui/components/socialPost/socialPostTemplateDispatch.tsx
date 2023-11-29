@@ -5,9 +5,6 @@ import { MathJax, MathJaxContext } from 'better-react-mathjax'
 import {
     CompanyIconWhite,
 } from '@/components/socialPost/socialPostIcons'
-import 'react-quill/dist/quill.snow.css';
-import dynamic from 'next/dynamic'
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 export const templateDispatch = (
     slide: SocialPostSlide,
