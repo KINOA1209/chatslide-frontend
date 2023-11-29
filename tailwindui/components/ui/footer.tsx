@@ -23,6 +23,23 @@ export default function Footer() {
             </div>
           </div>
 
+          <div className=''>
+            <h6 className='text-gray-800 font-medium mb-2'>Product</h6>
+            <ul className='text-sm'>
+              <li className='mb-2'>
+                <a
+                  href='/privacy'
+                  className='text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out'
+                >
+                  Privacy Policy
+                </a>
+              </li>
+              <li className="mb-2">
+                <a href="/terms" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Terms and Services</a>
+              </li>
+            </ul>
+          </div>
+
           {/* 4th block */}
           <div className=''>
             <h6 className='text-gray-800 font-medium mb-2'>Company</h6>
@@ -35,23 +52,22 @@ export default function Footer() {
                   Career
                 </a>
               </li>
-              {/* <li className="mb-2">
+              <li className='mb-2'>
+                <a
+                  href='/affiliate'
+                  className='text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out'
+                >
+                  Affliate Program
+                </a>
+              </li>
+              <li className="mb-2">
                 <a href="/about_us" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">About us</a>
-              </li> */}
-              {/* <li className="mb-2">
-                <a href="/terms" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Terms and Services</a>
-              </li> */}
+              </li>
+
               {/* <li className="mb-2">
                 <a href="#0" className="text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out">Pricing</a>
               </li> */}
-              <li className='mb-2'>
-                <a
-                  href='/privacy'
-                  className='text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out'
-                >
-                  Privacy Policy
-                </a>
-              </li>
+
             </ul>
           </div>
 
