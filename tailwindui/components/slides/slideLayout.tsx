@@ -396,7 +396,7 @@ export const Col_2_img_2_layout = ({
           <div className='h-[11.25rem] grow rounded-md overflow-hidden'>
             <ImgModule
               imgsrc={localImgs[1]}
-              updateSingleCallback={updateImgAtIndex(0)}
+              updateSingleCallback={updateImgAtIndex(1)}
               canEdit={canEdit}
               autoSave={autoSave}
             />
@@ -459,7 +459,7 @@ export const Col_3_img_3_layout = ({
           <div className='h-[11.25rem] grow rounded-md overflow-hidden'>
             <ImgModule
               imgsrc={localImgs[1]}
-              updateSingleCallback={updateImgAtIndex(0)}
+              updateSingleCallback={updateImgAtIndex(1)}
               canEdit={canEdit}
               autoSave={autoSave}
             />
@@ -467,7 +467,7 @@ export const Col_3_img_3_layout = ({
           <div className='h-[11.25rem] grow rounded-md overflow-hidden'>
             <ImgModule
               imgsrc={localImgs[2]}
-              updateSingleCallback={updateImgAtIndex(0)}
+              updateSingleCallback={updateImgAtIndex(2)}
               canEdit={canEdit}
               autoSave={autoSave}
             />
