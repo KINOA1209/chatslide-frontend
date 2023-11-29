@@ -5,6 +5,9 @@ import { MathJax, MathJaxContext } from 'better-react-mathjax'
 import {
     CompanyIconWhite,
 } from '@/components/socialPost/socialPostIcons'
+import 'react-quill/dist/quill.snow.css';
+import dynamic from 'next/dynamic'
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 export const templateDispatch = (
     slide: SocialPostSlide,
@@ -18,6 +21,7 @@ export const templateDispatch = (
     updateImgUrlArray: (slideIndex: number) => (urls: string[]) => void = () => () => {},  // Replace with your default function if you have one
     updateIllustrationUrlArray: (slideIndex: number) => (urls: string[]) => void = () => () => {},
     toggleEditMathMode: () => void = () => {},  // Replace with your default function if you have one
+    //handleFocus: (index: number, tag: SlideKeys, content: string) => void = () => {},
 ): JSX.Element => {
     let keyPrefix = ''
     if (exportToPdfMode) {
@@ -43,9 +47,12 @@ export const templateDispatch = (
                     onFocus={() => {
                         if (canEdit) {
                             setIsEditMode(true);
+                            // handleFocus(index, 'topic', slide.topic)      
                         }
                     }}
-                    onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'topic')}
+                    onBlur={(e) => {
+                        handleSlideEdit(e.target.innerText, index, 'topic')
+                    }}
                     style={h3Style}
                     dangerouslySetInnerHTML={{ __html: slide.topic }}
                 />
@@ -58,6 +65,7 @@ export const templateDispatch = (
                     onFocus={() => {
                         if (canEdit) {
                             setIsEditMode(true);
+                            // handleFocus(index, 'keywords', slide.keywords)    
                         }
                     }}
                     onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'keywords')}
@@ -180,6 +188,19 @@ export const templateDispatch = (
                             dangerouslySetInnerHTML={{ __html: content}}
                         >
                         </div>
+                      
+                            {/* <ReactQuill
+                                value={content}
+                                onChange={(value) => {
+                                    const modifiedContent = [...slide.content];
+                                    modifiedContent[contentIndex] = value;
+                                    handleSlideEdit(modifiedContent, index, 'content');
+                                }}
+                                style={listStyle}
+                            />
+                        
+                            <div dangerouslySetInnerHTML={{ __html: content }} style={listStyle}/> */}
+                            
                         <hr className='my-[15px]'></hr>
                         </div>    
                     );

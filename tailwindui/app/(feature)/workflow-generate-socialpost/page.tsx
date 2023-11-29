@@ -680,6 +680,13 @@ export default function Topic_SocialPost() {
                     >
                       <option value='English'>English</option>
                       <option value='Chinese'>中文</option>
+                      <option key='Spanish' value='Spanish'>Español</option>
+                      <option key='French' value='French'>Français</option>
+                      <option key='German' value='German'>Deutsch</option>
+                      <option key='Russian' value='Russian'>Русский</option>
+                      <option key='Japanese' value='Japanese'>日本語</option>
+                      <option key='Portuguese' value='Portuguese'>Português</option>
+                      <option key='Ukrainian' value='Ukrainian'>Українська</option>
                     </select>
                   </div>
                 </div>
