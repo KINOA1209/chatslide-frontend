@@ -3,7 +3,7 @@ import { ISignUpResult, CognitoUser, MFAOption, CognitoUserSession, CognitoUserA
 
 class UserService {
 
-  static async initializeUser(token: string) {
+  static async initializeUser(token: string): Promise<boolean>{
     const headers = new Headers();
     // console.log("Token: ", token)
     if (token) {
@@ -30,6 +30,7 @@ class UserService {
       });
       if (createUserResponse.ok) {
         console.log("Initialized successfully.")
+        return true;
       } else {
         console.error('Failed to initialize user:', createUserResponse.status);
         const errorData = await createUserResponse.json();
@@ -84,8 +85,9 @@ class UserService {
 
       if (!response.ok) {
         console.log('Failed to fetch user credits:', response.status);
-        await UserService.initializeUser(idToken); // if user does not exist in db, initialize the user
-        await UserService.getUserCreditsAndTier(idToken); // try again
+        const resp = await UserService.initializeUser(idToken); // if user does not exist in db, initialize the user
+        if(resp) 
+          return UserService.getUserCreditsAndTier(idToken); // try again
       }
 
       const data = await response.json();
