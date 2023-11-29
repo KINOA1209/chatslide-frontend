@@ -24,16 +24,6 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
     const [share, setShare] = useState(false)
     const [isPaidUser, setIsPaidUser] = useState(false);
     const [finalSlideIndex, setFinalSlideIndex] = useState<number>(0)
-    const [currentEditingProperty, setCurrentEditingProperty] = useState<string>("topic");
-
-    const updateSlideProperty = (newValue: string) => {
-        const updatedSlides = [...finalSlides];
-        updatedSlides[finalSlideIndex] = {
-            ...updatedSlides[finalSlideIndex],
-            [currentEditingProperty]: newValue,
-        };
-        setFinalSlides(updatedSlides);
-    };
 
     useEffect(() => {
         (async () => {
@@ -56,7 +46,6 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
             setHost(window.location.hostname)
         }
     }, [])
-
     return (
         <div>
             <div className='px-4 sm:px-6 flex flex-col justify-center items-center gap-4'>
@@ -69,7 +58,6 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
                     borderColorOptions={borderColorOptions}
                 />
                 </div>
-                
                 <SocialPostHTML 
                     finalSlides={finalSlides} 
                     setFinalSlides={setFinalSlides} 

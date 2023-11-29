@@ -22,10 +22,6 @@ import { templateDispatch as templateDispatch3 } from '@/components/socialPost/s
 import templates, { templateSamples } from '@/components/socialPost/socialPostTemplates'
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger'
 
-import 'react-quill/dist/quill.snow.css';
-import dynamic from 'next/dynamic'
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
-
 export interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div'
     className: 
@@ -160,9 +156,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
     const presentScale = Math.min(dimensions.width / 450, dimensions.height / 600)
     const nonPresentScale = Math.min(1, presentScale * 0.6)
     const [showTheme, setShowTheme] = useState(false)
-    const [editingSlideIndex, setEditingSlideIndex] = useState<number | null>(null);
-    const [editingProperty, setEditingProperty] = useState<SlideKeys | null>(null);
-    const [editorContent, setEditorContent] = useState<string>('');
+
     
     
     useEffect(() => {
@@ -360,8 +354,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
         const currentSlide = newSlides[slideIndex]
         const currNewFinalSlides = newFinalSlides[slideIndex]
         const className = tag
-
-        setEditingProperty(className)
 
         if (className === 'subtopic') {
             currentSlide.subtopic = content as string
