@@ -26,6 +26,8 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
   const [clickedSubscribe, setClickedSubscribe] = useState(false);
 
   const [tier, setTier] = useState('')
+  const [expiration, setExpiration] = useState('')
+  const [canceled, setCanceled] = useState(false)
 
   const showPricingPanel = (index: number) => {
     setShowFree(false);
@@ -194,6 +196,9 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
         }
       }).then(data => {
         setTier(data.tier)
+        setExpiration(data.expiry_date)
+        setCanceled(data.cancelled)
+        console.log(canceled)
       }).catch(error => console.error)
     }
     fetchTier();
@@ -323,9 +328,13 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
                             {getCta()}
                           </DrlambdaButton>
                         }
-                        {(currentUser && (tier === 'PLUS_MONTHLY' || tier === 'PLUS_YEARLY')) && <>
+                        {(currentUser && (tier === 'PLUS_MONTHLY' || tier === 'PLUS_YEARLY')) && 
+                        <>
                           {/* <div className="w-full text-center">Expiring: {moment.utc(expiration).format('L')}</div> */}
-                          <div className="text-xl text-center">Current Subscription</div></>}
+                          <div className="text-xl text-center">Current Subscription</div>
+                          </>
+                          }
+                          
                       </div>
                     </div>
                   </div>
@@ -411,6 +420,7 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
             </div>
           </div>
         </div>
+        {canceled && <div className="w-full text-center text-red-700 my-2">Your subscription will expire on {expiration}.</div>}
         {clickedSubscribe &&
           <div className="my-4">
             <DrlambdaButton
