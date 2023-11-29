@@ -1,5 +1,6 @@
 'use client'
 
+import Pricing from '../landing/pricing'
 import { StarterIcon, PlusIcon, ProIcon, EnterpriseIcon } from './Icons'
 import { pricingPlansMonthlyData } from './data/pricingPlansData'
 import { pricingPlansYearlyData } from './data/pricingPlansData'
@@ -134,55 +135,13 @@ interface PricingCardProps {
 }
 
 const PricingSection = () => {
-
-    const [pricingPlansData, setPricingPlansData] = useState(
-        pricingPlansMonthlyData
-    )
-
-    const [isYearlyData, setIsYearlyData] = useState(false)
-
-    const handleMonthlyClick = () => {
-        setIsYearlyData(false)
-        setPricingPlansData(pricingPlansMonthlyData)
-    }
-
-    const handleYearlyClick = () => {
-        setIsYearlyData(true)
-        setPricingPlansData(pricingPlansYearlyData)
-    }
-
     return (
         <div className='mt-[10rem] mb-[6rem] flex flex-col justify-center items-center'>
             <div className='w-[90%] text-center text-neutral-900 text-4xl lg:text-5xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
                 Pricing
             </div>
-            <div className='w-[90%] mx-auto max-w-7xl mb-[3rem] flex justify-center lg:justify-end items-center'>
-                <div className='billing-options flex justify-center items-center rounded-xl bg-Grey-100'>
-                    <div
-                        className='billing-option text-[0.7rem] lg:text-base px-2 py-2 cursor-pointer'
-                        onClick={handleMonthlyClick}
-                    >
-                        <span
-                            className={`rounded-md ${isYearlyData ? '' : 'bg-Grey-50'
-                                } px-[1rem] py-[0.1rem] font-medium`}
-                        >
-                            Monthly billing
-                        </span>
-                    </div>
-                    <div
-                        className='billing-option text-[0.7rem] lg:text-base px-2 py-2 cursor-pointer'
-                        onClick={handleYearlyClick}
-                    >
-                        <span
-                            className={`rounded-md px-[1rem] py-[0.1rem] text-Grey-600 ${isYearlyData ? 'bg-Grey-50' : ''
-                                } font-normal `}
-                        >
-                            Yearly Billing (save 17%)
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <PricingCards pricingPlansData={pricingPlansData}/>
+            <Pricing />
+            {/* <PricingCards pricingPlansData={pricingPlansData}/> */}
         </div>
     )
 }
