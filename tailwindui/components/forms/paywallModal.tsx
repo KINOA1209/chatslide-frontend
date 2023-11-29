@@ -1,6 +1,5 @@
-import Link from 'next/link';
 import React, { useState } from 'react';
-import { Pricing } from '@/components/landing/pricing'
+import Pricing from '@/components/landing/pricing'
 import ReferralLink from '../ReferralLink';
 import Modal from '../ui/Modal';
 

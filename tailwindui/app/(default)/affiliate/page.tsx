@@ -66,7 +66,7 @@ export default function Affiliate() {
               <h2 className="h3 text-2xl">Ready to Earn? 💰</h2>
               <p className="text-base text-gray-600 mt-4">Book a call to meet with our partnership manager and start your journey!</p>
               <div className='w-full flex flex-col items-center my-2'>
-                <DrlambdaLink link="https://calendly.com/drlambda" text="Book a call" />
+                <DrlambdaLink link="https://calendly.com/drlambda/30min" text="Book a call" />
               </div>
             </div>
           </div>
