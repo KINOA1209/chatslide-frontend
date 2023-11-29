@@ -2,7 +2,7 @@
 import AuthService from '@/services/AuthService';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect, useRef, RefObject } from 'react';
-import { Pricing } from '@/components/landing/pricing'
+import Pricing from '@/components/landing/pricing'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import UserService from "@/services/UserService";
