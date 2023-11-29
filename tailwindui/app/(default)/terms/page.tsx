@@ -1,3 +1,4 @@
+import Footer from '@/components/ui/footer';
 import Header from '@/components/ui/header';
 
 export const metadata = {
@@ -183,6 +184,7 @@ export default function Terms() {
           </div>
         </div>
       </div>
+      <Footer />
     </section>
   );
 }
