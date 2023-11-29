@@ -275,7 +275,7 @@ const Subscription = () => {
       <Pricing />
       {portalURL &&
         <button onClick={()=>{setShowModal(true)}} className='w-full py-4 sm:px-6 flex flex-col justify-center items-center max-w-none 2xl:max-w-[80%] mx-auto'>
-          Cancel Subscription
+          Manage Subscription
         </button>
       }
     </div>
