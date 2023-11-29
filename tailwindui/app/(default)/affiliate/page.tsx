@@ -1,4 +1,5 @@
 import DrlambdaButton, { DrlambdaLink } from '@/components/button/DrlambdaButton';
+import Footer from '@/components/ui/footer';
 import Header from '@/components/ui/header';
 import { MouseEventHandler } from 'react';
 
@@ -8,10 +9,6 @@ export const metadata = {
 };
 
 export default function Affiliate() {
-
-  const onClick: MouseEventHandler<HTMLButtonElement> = (event) => {
-    window.open('https://calendly.com/drlambda');
-  };
 
   return (
     <section className="bg-gradient-to-b from-gray-100 to-white">
@@ -75,6 +72,7 @@ export default function Affiliate() {
           </div>
         </div>
       </div>
+      <Footer />
     </section>
   );
 }
