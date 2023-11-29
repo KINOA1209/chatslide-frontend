@@ -7,7 +7,7 @@ export const UserStudy: React.FC = () => {
   return (
     show ? (
       <div
-        className='fixed right-5 bottom-5 border boerder-2 inline-block align-bottom rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full'
+        className='fixed right-5 bottom-5 border boerder-2 inline-block align-bottom rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full hidden sm:block'
         role='dialog'
         aria-modal='true'
         aria-labelledby='modal-headline'
