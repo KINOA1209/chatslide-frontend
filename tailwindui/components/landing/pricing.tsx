@@ -13,7 +13,7 @@ interface PricingProps {
   fewerCards?: boolean;
 }
 
-export function Pricing({ fewerCards = false }: PricingProps) {
+export default function Pricing({ fewerCards = false }: PricingProps) {
   const [isMonthly, setIsMonthly] = useState(true);
   const [currentUser, setCurrentUser] = useState(null);
   const buttonRef = useRef<HTMLDivElement>(null);
@@ -169,6 +169,8 @@ export function Pricing({ fewerCards = false }: PricingProps) {
       handleProSubscription()
     } else if (tier == 'plus') {
       handlePlusSubscription()
+    } else if (tier == 'free') {
+      router.push('/signup')
     }
 
     setClickedSubscribe(true)
@@ -243,7 +245,7 @@ export function Pricing({ fewerCards = false }: PricingProps) {
                       <div className="text-2xl text-white">Free</div>
                     </div>
 
-                    <div className="p-4 bg-white/90 mx-2 mb-2 rounded-lg h-full flex flex-col">
+                    <div className="p-2 bg-white/90 mx-2 mb-2 rounded-lg h-full flex flex-col">
                       <div className="w-full text-center text-md"><br /><br />Join us for free!</div>
                       <div className="w-full text-center text-3xl md:text-4xl">$0</div>
 
@@ -253,15 +255,13 @@ export function Pricing({ fewerCards = false }: PricingProps) {
                         <li>Usage of GPT-3.5</li>
                         <li>Up to 1 file upload for each project</li>
                       </ul>
-
-                      <div className="mt-auto h-10 mx-auto flex-col flex justify-center items-center my-2">
+                      <div className="grow"></div>
+                      <div className="h-10 max-w-xs mx-auto sm:max-w-none flex-col flex justify-center items-center my-3">
                         <div>
                           {!currentUser &&
-                            <div ref={buttonRef} className="btn drop-shadow-md text-sm rounded-full text-white bg-blue-600 hover:bg-blue-700 w-full sm:w-auto cursor-pointer"
-                              style={{ backgroundImage: 'linear-gradient(-45deg, #FFA63D, #FF3D77, #338AFF, #3CF0C5)', backgroundSize: '600%' }}
-                              onClick={() => { currentUser ? router.push('/dashboard') : router.push('/signup') }}>
-                              Join Now
-                            </div>
+                            <DrlambdaButton onClick={() => handleClick('free')} showArrow={false} bgColor='bg-gray-400'>
+                              Sign up to Start
+                            </DrlambdaButton>
                           }
 
                           {currentUser && (tier === 'FREE' || tier === '') &&
@@ -399,7 +399,7 @@ export function Pricing({ fewerCards = false }: PricingProps) {
                       <div className="w-full text-center text-md">Contact us at contact@drlabmda.ai or book a call.<br />We will give you a quote.</div>
                       <div className="h-10 max-w-xs mx-auto sm:max-w-none flex-col flex justify-center items-center my-3">
                         <div>
-                          <DrlambdaButton onClick={() => window.location.href = "https://calendly.com/quanlai/30min"} showArrow={false} bgColor="bg-black">
+                          <DrlambdaButton onClick={() => window.location.href = "https://calendly.com/drlambda/30min"} showArrow={false} bgColor="bg-black">
                             Book a call
                           </DrlambdaButton>
                         </div>
@@ -424,13 +424,4 @@ export function Pricing({ fewerCards = false }: PricingProps) {
     </div>
 
   )
-}
-
-export default function PricingSection() {
-  return <section>
-    <div className="max-w-6xl mx-auto mb-8 w-full px-4 sm:px-6" style={{ fontFamily: 'Lexend, sans-serif' }}>
-      <h3 className="h3 mb-3 w-fit text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-500">Pricing</h3>
-    </div>
-    <Pricing />
-  </section>
 }
