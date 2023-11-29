@@ -1,3 +1,5 @@
+'use client'
+
 import { LeftTurnArrowIcon, RightTurnArrowIcon, SpinIcon } from '@/app/(feature)/icons';
 import React, { MouseEventHandler, ReactNode, useState, MouseEvent } from 'react';
 import PaywallModal from '../forms/paywallModal';
@@ -44,7 +46,6 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSu
     <>
       {showPaywallModal && <PaywallModal setShowModal={setShowPaywallModal} message='Upgrade to unlock more features. 🚀' />}
       <button
-        id='generate_button'
         disabled={isSubmitting}
         onClick={checkPaidUser}
         className={`min-w-[10rem] lg:w-[12rem] h-[36px] ${getButtonBg()} rounded-[15px] flex justify-center items-center gap-2 cursor-pointer }`}
@@ -64,6 +65,28 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSu
 
 export default DrlambdaButton;
 
+type DrlambdaLinkProps = {
+  link: string;
+  text: string;
+  bgColor?: string;
+  newWindow?: boolean;
+};
+
+export const DrlambdaLink: React.FC<DrlambdaLinkProps> = ({ link, text, bgColor = 'bg-gradient-to-r from-blue-500 to-blue-700', newWindow = true }) => {
+
+  return (
+    <a
+      href={link}
+      target={newWindow ? '_blank' : '_self'} 
+      rel={newWindow ? 'noopener noreferrer' : undefined} // Important for security reasons
+      className={`min-w-[10rem] lg:w-[12rem] h-[36px] ${bgColor} rounded-[15px] flex justify-center items-center gap-2 cursor-pointer`}
+    >
+      <span className='text-white font-semibold tracking-tight whitespace-nowrap'>
+        {text}
+      </span>
+    </a>
+  );
+};
 
 type DrLambdaBackButtonProps = {
   href: string;
