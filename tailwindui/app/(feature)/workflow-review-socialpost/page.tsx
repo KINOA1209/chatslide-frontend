@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import SocialPostProjectProgress from '@/components/WorkflowStepsSocialpost';
-import FeedbackButton from '@/components/slides/feedback';
+import FeedbackButton from '@/components/ui/feedback';
 import SocialPostVisualizer from '@/components/socialPost/socialPostVisualizer';
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
