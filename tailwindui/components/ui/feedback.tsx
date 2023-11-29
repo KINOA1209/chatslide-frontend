@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import AuthService from '../../services/AuthService'
 import ReferralLink from '../ReferralLink'
-import Modal from '../ui/Modal'
+import Modal from './Modal'
 
 interface FeedbackFormProps {
   onClose: () => void

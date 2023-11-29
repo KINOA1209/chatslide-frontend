@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Video from '@/components/Video';
 import ProjectProgress from "@/components/steps";
-import FeedbackButton from '@/components/slides/feedback';
+import FeedbackButton from '@/components/ui/feedback';
 
 const VideoVisualizer = ({ videoFile, foldername }: { videoFile: string, foldername: string }) => {
     const router = useRouter();

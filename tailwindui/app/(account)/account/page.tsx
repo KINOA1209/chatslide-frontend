@@ -12,7 +12,7 @@ import 'aos/dist/aos.css'
 import ClickableLink from '@/components/ui/ClickableLink';
 import ReferralLink from '@/components/ReferralLink';
 import Modal from '@/components/ui/Modal';
-import { FeedbackForm } from '@/components/slides/feedback';
+import { FeedbackForm } from '@/components/ui/feedback';
 
 const Profile = () => {
   const [username, setUsername] = useState('');

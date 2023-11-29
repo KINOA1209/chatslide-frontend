@@ -11,6 +11,7 @@ import ProjectTable from './ProjectTable'
 import DrlambdaButton from '@/components/button/DrlambdaButton'
 import Project from '@/models/Project'
 import ProjectService from '@/services/ProjectService'
+import { UserStudy } from '@/components/ui/UserStudy'
 
 
 export default function Dashboard() {
@@ -224,6 +225,8 @@ export default function Dashboard() {
       <Transition appear show={isOpen} as={Fragment}>
         {deleteModal}
       </Transition>
+
+      <UserStudy />
     </section>
   )
 }
