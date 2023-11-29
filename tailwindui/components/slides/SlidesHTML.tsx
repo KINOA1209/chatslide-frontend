@@ -30,6 +30,7 @@ import { ScriptEditIcon } from '@/app/(feature)/workflow-review-slides/icons'
 import { useRouter } from 'next/navigation'
 import { availableLayouts } from './slideLayout'
 import TestSlidesData from './TestSlidesData.json'
+import AuthService from '@/services/AuthService'
 export interface SlideElement {
   type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div'
   className:
@@ -106,7 +107,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       ? sessionStorage.getItem('presentation_slides') ||
         JSON.stringify(TestSlidesData)
       : ''
-
+  
   const [chosenLayout, setChosenLayout] = useState<LayoutKeys>('')
 
   const [showLayout, setShowLayout] = useState(false)
@@ -183,7 +184,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
   }
 
   // Function to send a request to auto-save finalSlides
-  const saveSlides = () => {
+  const saveSlides = async () => {
     if (isViewing) {
       console.log("Viewing another's shared project, skip saving")
       return
@@ -201,16 +202,19 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
     setSaveStatus('Saving...')
 
+    const { userId, idToken: token } =
+            await AuthService.getCurrentUserTokenAndId()
     const formData = {
       foldername: foldername,
-      html: finalSlides,
+      final_slides: finalSlides,
       project_id: project_id,
     }
     // Send a POST request to the backend to save finalSlides
-    fetch('/api/auto_save_html', {
+    fetch('/api/save_slides', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(formData),
     })
@@ -263,14 +267,18 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
   // fetch slides data
   useEffect(() => {
     if (res_slide) {
+      console.log('typeof res_slide:', typeof res_slide)
       // const slides_response_JSON = JSON.stringify(TestSlidesData)
       const parsed_slides = JSON.parse(res_slide)
-      console.log('parseSlides:', parsed_slides)
+      // console.log('parseSlides:', parsed_slides)
+      // log the type of parsed_slides
+      console.log('typeof parsed_slides:', typeof parsed_slides)
 
       // mapping data to slides
       const slidesArray: Slide[] = Object.keys(parsed_slides).map(
         (key, index) => {
           const slideData = parsed_slides[key]
+          console.log('slideData:', slideData)
           const slide = new Slide()
           slide.head = slideData.head || 'New Slide'
           slide.title = slideData.title || 'New Slide'

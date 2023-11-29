@@ -28,6 +28,7 @@ export default interface Project {
   html: string;
   pdf_images: string;
   is_shared: boolean;
+  presentation_slides: string;
   // fields for Social Post start here
   post_type: string;
   social_platform: string;
