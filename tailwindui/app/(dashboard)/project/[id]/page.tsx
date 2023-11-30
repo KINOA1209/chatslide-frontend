@@ -70,6 +70,9 @@ const ProjectLoading = () => {
                 if (project.html) {
                     sessionStorage.setItem('html', project.html);
                 }
+                if (project.presentation_slides) {
+                    sessionStorage.setItem('presentation_slides', project.presentation_slides);
+                }
                 if (project.transcripts) {
                     sessionStorage.setItem('transcripts', JSON.stringify(project.transcripts));
                 }
@@ -169,7 +172,7 @@ const ProjectLoading = () => {
         if (typeof window !== 'undefined' && sessionStorage.getItem('outline')) {
             finishedStepsArray.push(1);
         }
-        if (typeof window !== 'undefined' && sessionStorage.getItem('html')) {
+        if (typeof window !== 'undefined' && sessionStorage.getItem('presentation_slides')) {
             finishedStepsArray.push(2);
         }
         if (typeof window !== 'undefined' && sessionStorage.getItem('transcripts')) {
