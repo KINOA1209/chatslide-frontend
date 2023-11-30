@@ -107,7 +107,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       ? sessionStorage.getItem('presentation_slides') ||
         JSON.stringify(TestSlidesData)
       : ''
-  
+
   const [chosenLayout, setChosenLayout] = useState<LayoutKeys>('')
 
   const [showLayout, setShowLayout] = useState(false)
@@ -203,7 +203,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     setSaveStatus('Saving...')
 
     const { userId, idToken: token } =
-            await AuthService.getCurrentUserTokenAndId()
+      await AuthService.getCurrentUserTokenAndId()
     const formData = {
       foldername: foldername,
       final_slides: finalSlides,
@@ -698,14 +698,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
           </div>
         </div>
       )}
-
-      <div className='mb-8'>
-        <SlidePagesIndicator
-          currentSlideIndex={currentSlideIndex}
-          slides={slides}
-          goToSlide={goToSlide}
-        />
-      </div>
 
       {/* horizontal  */}
       <div className='block lg:hidden max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
