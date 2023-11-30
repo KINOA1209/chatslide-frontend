@@ -77,9 +77,9 @@ function App() {
           <a href="https://www.producthunt.com/posts/drlambda-social?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-drlambda&#0045;social" target="_blank" className="fixed bottom-5 right-5 z-40"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=427030&theme=light" alt="DrLambda&#0045;Social - AI&#0032;content&#0032;generator&#0032;for&#0032;social&#0032;media | Product Hunt" width="250" height="54" /></a>
 
           <div className='mt-6 w-50% text-center text-neutral-900 text-l md:text-2xl leading-10 tracking-wide font-creato-medium'>
-            Your 🤖 agent to help you create professional slides.
+            Get a 🤖 robo-assistant for pro slides and posts. 
             <br />
-            No ctrl F, ctrl C, or ctrl V 👍.
+            No more copy-pasting or reformatting hassles! 👍
           </div>
 
           <div className="py-6">
