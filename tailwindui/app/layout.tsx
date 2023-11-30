@@ -5,7 +5,7 @@ import { datadogRum } from '@datadog/browser-rum';
 datadogRum.init({
   applicationId: 'd713204e-96f9-4150-bf28-c09c3ffb1740',
   clientToken: 'pubdf732668a5fce7c34ceca49fce22608b',
-  site: 'datadoghq.com',
+  site: 'browser-intake-datadoghq.com',
   service: 'drlambda-frontend',
   env: 'prod',
   // Specify a version number to identify the deployed version of your application in Datadog
