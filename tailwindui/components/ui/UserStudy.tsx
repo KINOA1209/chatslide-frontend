@@ -23,18 +23,15 @@ export const UserStudy: React.FC = () => {
             <p className='text-sm text-gray-500 mt-2'>
               We want to learn more about what you think of DrLambda, and how you use DrLambda.
             </p>
-            <div className="py-2 flex flex-col items-center">
+            <div className="py-2 flex flex-rol justify-between">
               <DrlambdaLink link='https://calendar.app.google/2uGV3B6h9UdYBHPB8' text='Book a session' />
+              <button
+                className='px-4 py-2 font-bold text-blue-500 rounded focus:outline-none'
+                onClick={e => setShow(false)}
+              >
+                Cancel
+              </button>
             </div>
-          </div>
-
-          <div className='flex justify-end gap-x-4'>
-            <button
-              className='px-4 py-2 font-bold text-blue-500 rounded focus:outline-none'
-              onClick={e => setShow(false)}
-            >
-              Cancel
-            </button>
           </div>
         </div>
       </div>
