@@ -134,7 +134,7 @@ export const Default_template = ({
       <div
         className={`${
           !isCoverPage
-            ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-col justify-start items-start box-border border-none relative p-[28px]'
+            ? 'rounded-md overflow-hidden w-full h-full bg-cover box-border border-none relative p-[28px]'
             : 'hidden'
         } ${brandingColor}`}
       >
@@ -173,8 +173,8 @@ export const Default_template = ({
 }
 
 export const availableTemplates = {
-  Stanford: Stanford_school_template,
-  Berkeley: Berkeley_school_template,
-  Harvard: Harvard_school_template,
+  //   Stanford: Stanford_school_template,
+  //   Berkeley: Berkeley_school_template,
+  //   Harvard: Harvard_school_template,
   Default_template: Default_template,
 }
