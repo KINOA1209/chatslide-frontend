@@ -283,7 +283,7 @@ export const Col_1_img_1_layout = ({
       </div>
 
       {/* image section */}
-      <div className='mt-[3rem] w-full h-2/3 grow rounded-md overflow-hidden'>
+      <div className='mt-[3rem] h-[15rem] grow rounded-md overflow-hidden'>
         <ImgModule
           imgsrc={localImgs[0]}
           updateSingleCallback={updateImgAtIndex(0)}
@@ -310,43 +310,37 @@ export const Col_2_img_1_layout = ({
 }: MainSlideProps) => {
   const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback)
   return (
-    // two columns layout (left is text and right is one image)
-    <div className='w-full grid grid-cols-2 gap-[2.5rem]'>
-      {/* col1 for topic, subtopic and contents */}
-      <div className='h-full'>
-        <div className='flex flex-col gap-[0.5rem]'>
-          {/* topic */}
-          <div className=' text-black text-3xl font-bold font-creato-medium leading-[100%]'>
-            {topic}
-          </div>
-          {/* subtopic */}
-          <div className='mix-blend-hard-light text-neutral-900 text-base font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]'>
-            {subtopic}
-          </div>
-          {/* contents */}
-          <div className='h-full w-full flex flex-row overflow-hidden gap-[2.5rem] overflow-y-scroll'>
-            <div className='flex flex-col gap-[1rem]'>
-              <div className='opacity-50'></div>
-              <div className='w-full h-full'>
-                {content.map((item, index) => (
-                  <div className='py-[0.5rem]'>
-                    {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
-                    <div
-                      key={index}
-                      className='text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-none'
-                    >
-                      {item}
-                    </div>
+    <div className='w-full h-full flex flex-row gap-[2rem] justify-start items-start'>
+      <div className={`w-1/2 flex flex-col items-start h-full gap-[0.5rem]`}>
+        {/* topic */}
+        <div className=' text-black text-3xl font-bold font-creato-medium leading-[100%]'>
+          {topic}
+        </div>
+        {/* subtopic */}
+        <div className='mix-blend-hard-light text-neutral-900 text-base font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]'>
+          {subtopic}
+        </div>
+        {/* contents */}
+        <div className='h-full w-full flex flex-row overflow-hidden gap-[2.5rem] overflow-y-scroll'>
+          <div className='flex flex-col gap-[1rem]'>
+            <div className='opacity-50'></div>
+            <div className='w-full h-full'>
+              {content.map((item, index) => (
+                <div className='py-[0.5rem]'>
+                  {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
+                  <div
+                    key={index}
+                    className='text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-none'
+                  >
+                    {item}
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
-
-      {/* col2 for image section */}
-      <div className='h-full grow rounded-md overflow-hidden'>
+      <div className={`w-1/2 h-[90%] rounded-md overflow-hidden items-center`}>
         <ImgModule
           imgsrc={localImgs[0]}
           updateSingleCallback={updateImgAtIndex(0)}
@@ -355,6 +349,7 @@ export const Col_2_img_1_layout = ({
         />
       </div>
     </div>
+    // two columns layout (left is text and right is one image)
   )
 }
 export const Col_2_img_2_layout = ({
