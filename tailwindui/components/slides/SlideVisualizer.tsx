@@ -81,14 +81,14 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
       topic: topic,
       project_id: project_id,
       language: language,
-      html: finalSlides,
+      json_list: finalSlides,
       model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
     }
 
     try {
       const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
 
-      const response = await fetch('/api/transcript_html', {
+      const response = await fetch('/api/transcript_json', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${idToken}`,

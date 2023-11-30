@@ -1,24 +1,27 @@
 import React from 'react'
 import { Transition } from '@headlessui/react' // Assuming you're using Headless UI for Transitions
 import { SlideKeys } from '@/components/slides/SlidesHTML'
-import {
-  ChangeLayoutIcon,
-} from '@/app/(feature)/icons'
+import { ChangeLayoutIcon } from '@/app/(feature)/icons'
+import { LayoutKeys } from './slideLayout'
 type LayoutProps = {
   openModal: () => void
   showLayout: boolean
   closeModal: () => void
   currentSlideIndex: number
-  templateSamples: {
-    cover: { name: string; img: string }[]
-    main: { name: string; img: string }[]
-  }
-  slides: { template: string }[]
+  // templateSamples: {
+  //   cover: { name: string; img: string }[]
+  //   main: { name: string; img: string }[]
+  // }
+  slides: { layout: string }[]
   handleSlideEdit: (
     content: string | string[],
     slideIndex: number,
     tag: SlideKeys
   ) => void
+  availableLayouts: {
+    cover: { name: LayoutKeys; img: string }[]
+    main: { name: LayoutKeys; img: string }[]
+  }
 }
 
 const LayoutChanger: React.FC<LayoutProps> = ({
@@ -26,17 +29,32 @@ const LayoutChanger: React.FC<LayoutProps> = ({
   showLayout,
   closeModal,
   currentSlideIndex,
-  templateSamples,
+  // templateSamples,
   slides,
   handleSlideEdit,
+  availableLayouts,
 }) => {
-  const updateTemplate = (
+  // const updateTemplate = (
+  //   e: React.MouseEvent<HTMLDivElement>,
+  //   templateName: string,
+  //   slideIndex: number
+  // ) => {
+  //   e.preventDefault()
+  //   handleSlideEdit(templateName, slideIndex, 'template')
+  // }
+  const availableLayoutsNonCover = availableLayouts.main // Assuming main contains non-cover layouts
+  const availableLayoutsCover = availableLayouts.cover // Add your cover layouts here
+  // Filter layouts based on the currentSlideIndex
+  const layoutsToDisplay =
+    currentSlideIndex === 0 ? availableLayoutsCover : availableLayoutsNonCover
+
+  const updateLayout = (
     e: React.MouseEvent<HTMLDivElement>,
-    templateName: string,
+    layoutName: LayoutKeys,
     slideIndex: number
   ) => {
     e.preventDefault()
-    handleSlideEdit(templateName, slideIndex, 'template')
+    handleSlideEdit(layoutName, slideIndex, 'layout')
   }
 
   return (
@@ -46,6 +64,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
                     className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
                     onClick={openModal}>Change Layout</button>
             </div> */}
+      {/* change layout icon */}
       <div
         className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300  hover:bg-Workflow-slides-button-hover-bg-color flex justify-center items-center cursor-pointer'
         onClick={openModal}
@@ -90,7 +109,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
                 <div className='w-full h-full flex flex-col'>
                   <div className='w-full h-full overflow-y-auto'>
                     <div className='w-full h-fit grid grid-cols-2 gap-4 p-2'>
-                      {currentSlideIndex === 0
+                      {/* {currentSlideIndex === 0
                         ? templateSamples.cover.map((temp, index) => {
                             if (!slides[currentSlideIndex]) {
                               return <></>
@@ -175,7 +194,54 @@ const LayoutChanger: React.FC<LayoutProps> = ({
                                 </div>
                               )
                             }
-                          })}
+                        })} */}
+
+                      {layoutsToDisplay.map((currLayout, index) => {
+                        // Check if slides[currentSlideIndex] is defined
+                        if (
+                          slides[currentSlideIndex] &&
+                          currLayout.name !== slides[currentSlideIndex].layout
+                        ) {
+                          return (
+                            <div
+                              onClick={(e) =>
+                                updateLayout(
+                                  e,
+                                  currLayout.name,
+                                  currentSlideIndex
+                                )
+                              }
+                              className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'
+                            >
+                              <img
+                                src={currLayout.img}
+                                className='w-full h-full object-contain'
+                              />
+                            </div>
+                          )
+                        } else if (slides[currentSlideIndex]) {
+                          return (
+                            <div
+                              onClick={(e) =>
+                                updateLayout(
+                                  e,
+                                  currLayout.name,
+                                  currentSlideIndex
+                                )
+                              }
+                              className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'
+                            >
+                              <img
+                                src={currLayout.img}
+                                className='w-full h-full object-contain'
+                              />
+                            </div>
+                          )
+                        } else {
+                          // Handle the case when slides[currentSlideIndex] is undefined
+                          return <></>
+                        }
+                      })}
                     </div>
                   </div>
                 </div>
