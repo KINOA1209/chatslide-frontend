@@ -663,11 +663,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         slides={slides}
         goToSlide={goToSlide}
       />
+
       {!isViewing && (
+        <div className='py-2'>
         <ChangeTemplateOptions
           templateOptions={Object.keys(availableTemplates)}
           onChangeTemplate={changeTemplate}
         />
+        </div>
       )}
 
       {/* preview little image */}
@@ -698,14 +701,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
           </div>
         </div>
       )}
-
-      <div className='mb-8'>
-        <SlidePagesIndicator
-          currentSlideIndex={currentSlideIndex}
-          slides={slides}
-          goToSlide={goToSlide}
-        />
-      </div>
 
       {/* horizontal  */}
       <div className='block lg:hidden max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>

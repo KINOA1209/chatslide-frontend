@@ -339,7 +339,7 @@ export const ChangeTemplateOptions: React.FC<{
   return (
     <div className='relative'>
       <select
-        className='border border-gray-300 rounded-md px-3 py-1 mr-2'
+        className='border border-gray-300 rounded-md px-3 py-1 mr-2 w-[20rem]'
         onChange={handleTemplateChange}
         value={selectedTemplate}
       >
