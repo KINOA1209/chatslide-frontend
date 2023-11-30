@@ -665,7 +665,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       />
 
       {!isViewing && (
-        <div className='py-2'>
+        <div className='py-2 hidden sm:block'>
         <ChangeTemplateOptions
           templateOptions={Object.keys(availableTemplates)}
           onChangeTemplate={changeTemplate}
