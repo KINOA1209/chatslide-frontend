@@ -5,6 +5,8 @@ import { MathJax, MathJaxContext } from 'better-react-mathjax'
 import {
     CompanyIconWhite,
 } from '@/components/socialPost/socialPostIcons'
+import React, { useEffect, useRef } from 'react';
+import QuillEditable from './quillEditor'
 
 export const templateDispatch = (
     slide: SocialPostSlide,
@@ -18,7 +20,8 @@ export const templateDispatch = (
     updateImgUrlArray: (slideIndex: number) => (urls: string[]) => void = () => () => {},  // Replace with your default function if you have one
     updateIllustrationUrlArray: (slideIndex: number) => (urls: string[]) => void = () => () => {},
     toggleEditMathMode: () => void = () => {},  // Replace with your default function if you have one
-    //handleFocus: (index: number, tag: SlideKeys, content: string) => void = () => {},
+    //handleFocus: (event: React.FocusEvent<HTMLDivElement>, slideIndex: number, tag: SlideKeys) => void = () => {},
+    //handleBlur: (event: React.FocusEvent<HTMLDivElement>, slideIndex: number, tag: SlideKeys) => void = () => {},
 ): JSX.Element => {
     let keyPrefix = ''
     if (exportToPdfMode) {
@@ -27,6 +30,9 @@ export const templateDispatch = (
         keyPrefix = 'preview'
     }
     const Template = templates[slide.template as keyof typeof templates]
+    const arrayToHtml = (contentArray: Array<string>) => {
+        return contentArray.map(item => `<p>${item}</p>`).join('');
+    };
     if (index === 0) {
         return (
           <Template
@@ -37,21 +43,29 @@ export const templateDispatch = (
             canEdit={canEdit}
             imgs={slide.images}
             topic={
-                <div
-                    key={0}
-                    className={`${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
-                    contentEditable={canEdit}
-                    onFocus={() => {
-                        if (canEdit) {
-                            setIsEditMode(true);
-                            // handleFocus(index, 'topic', slide.topic)      
-                        }
-                    }}
-                    onBlur={(e) => {
-                        handleSlideEdit(e.target.innerText, index, 'topic')
-                    }}
+                // <div
+                //     key={0}
+                //     id='topic_coverpage_template1'
+                //     className={`${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                //     contentEditable={canEdit}
+                //     onFocus={(e) => {
+                //         if (canEdit) {
+                //             setIsEditMode(true);
+                //             //handleFocus(e, index, 'topic')      
+                //         }
+                //     }}
+                //     onBlur={(e) => {
+                //         //handleBlur(e, index, 'topic')
+                //         handleSlideEdit(e.target.innerText, index, 'topic')
+                //     }}
+                //     //style={h3Style}
+                //     dangerouslySetInnerHTML={{ __html: slide.topic }}
+                // />
+
+                <QuillEditable
+                    content={slide.topic}
+                    handleBlur={(newContent) => handleSlideEdit(newContent, index, 'topic')}
                     style={h3Style}
-                    dangerouslySetInnerHTML={{ __html: slide.topic }}
                 />
             }
             keywords={
@@ -62,13 +76,17 @@ export const templateDispatch = (
                     onFocus={() => {
                         if (canEdit) {
                             setIsEditMode(true);
-                            // handleFocus(index, 'keywords', slide.keywords)    
                         }
                     }}
                     onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'keywords')}
                     style={h4Style}
                     dangerouslySetInnerHTML={{ __html: slide.keywords }}
                 />
+                // <QuillEditable
+                //     content={Array.isArray(slide.keywords) ? arrayToHtml(slide.keywords) : slide.keywords}
+                //     handleBlur={(newContent) => handleSlideEdit(newContent, index, 'keywords')}
+                //     style={h4Style}
+                // />
             }
             subtopic={<></>}
             border_start = {slide.theme?.border_start || '#937C67'}
@@ -99,7 +117,7 @@ export const templateDispatch = (
             subtopic={
                 <div
                     key={0}
-                    className={`${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
+                    //className={`${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
                     contentEditable={canEdit}
                     onFocus={() => {
                         if (canEdit) {
@@ -110,6 +128,11 @@ export const templateDispatch = (
                     style={h2Style}
                     dangerouslySetInnerHTML={{ __html: slide.subtopic }}
                 />
+                // <QuillEditable
+                //     content={slide.subtopic}
+                //     handleBlur={(newContent) => handleSlideEdit(newContent, index, 'subtopic')}
+                //     style={h2Style}
+                // />
             }
             keywords={
                 <div
@@ -125,6 +148,11 @@ export const templateDispatch = (
                     style={h1Style}
                     dangerouslySetInnerHTML={{ __html: slide.keywords }}
                 />
+                // <QuillEditable
+                //     content={slide.keywords}
+                //     handleBlur={(newContent) => handleSlideEdit(newContent, index, 'keywords')}
+                //     style={h1Style}
+                // />
             }
 
             content={

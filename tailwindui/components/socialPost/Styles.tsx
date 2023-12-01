@@ -5,7 +5,7 @@ const h1Style: React.CSSProperties = {
     fontSize: '15pt',
     fontWeight: 700,
     color: '#ABBEFF',
-    fontFamily: 'template1_cover_keyword',
+    fontFamily: 'Nunito',
     letterSpacing: '0.6px',
     fontStyle: 'normal',
 };
@@ -16,29 +16,29 @@ const h2Style: React.CSSProperties = {
     fontWeight: 'bold',
     marginTop: '10px',
     color: '#FBFBFB',
-    fontFamily: 'template1_cover_title',
+    fontFamily: 'Nunito',
     letterSpacing: '0.56px',
 };
 
 // cover page title
 const h3Style: React.CSSProperties = {
     fontSize: '45pt',
-    fontWeight: 700,
     color: '#FFF',
-    fontFamily: 'template1_cover_title',
+    fontFamily: 'Nunito',
     lineHeight: '110%',
-    letterSpacing: '-1.04px'
+    letterSpacing: '-1.04px',
+    //textAlign: 'center'
 };
 
 // cover page keywords
 const h4Style: React.CSSProperties = {
-    fontSize: '11pt',
+    fontSize: '10pt',
     fontWeight: 600,
     color: '#FFF',
     letterSpacing: '0.36px',
     lineHeight: '133%',
     fontStyle: 'normal',
-    fontFamily: 'template1_cover_keyword'
+    fontFamily: 'Nunito'
 };
 
 // template2 cover page username

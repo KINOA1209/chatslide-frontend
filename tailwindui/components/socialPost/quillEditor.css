@@ -1,0 +1,3 @@
+.ql-container:hover, .ql-container:focus {
+    outline: 2px solid #CAD0D3;
+}
