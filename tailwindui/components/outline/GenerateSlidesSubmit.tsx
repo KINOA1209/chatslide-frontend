@@ -79,7 +79,7 @@ const GenerateSlidesSubmit = ({
   }
 
   async function generateSlidesPreview(formData: any, token: string) {
-    const response = await fetch('/api/generate_html', {
+    const response = await fetch('/api/generate_slides', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -91,7 +91,7 @@ const GenerateSlidesSubmit = ({
     if (response.ok) {
       const resp = await response.json()
       setIsSubmittingSlide(false)
-      sessionStorage.setItem('html', JSON.stringify(resp.data.res))
+      sessionStorage.setItem('presentation_slides', JSON.stringify(resp.data.res))
       router.push('workflow-review-slides')
     } else {
       alert(

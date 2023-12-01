@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import AuthService from '../../services/AuthService'
 import {
   LeftSlideNavIcon,
@@ -264,25 +264,82 @@ export const DeleteSlideButton: React.FC<{
 }
 
 // use to change the template. selection box
+// export const ChangeTemplateOptions: React.FC<{
+//   templateOptions: string[]
+//   onChangeTemplate: (newTemplate: string) => void
+// }> = ({ templateOptions, onChangeTemplate }) => {
+//   const [selectedTemplate, setSelectedTemplate] = useState('')
+//   const handleTemplateChange = (
+//     event: React.ChangeEvent<HTMLSelectElement>
+//   ) => {
+//     setSelectedTemplate(event.target.value)
+//   }
+//   const applyTemplateChange = () => {
+//     if (selectedTemplate) {
+//       onChangeTemplate(selectedTemplate)
+//     }
+//   }
+//   useEffect(() => console.log('templateOptions are:', templateOptions), [])
+//   return (
+//     <div className='relative'>
+//       <select
+//         className='border border-gray-300 rounded-md px-3 py-1 mr-2'
+//         onChange={handleTemplateChange}
+//         value={selectedTemplate}
+//       >
+//         <option value='' disabled>
+//           Select Template
+//         </option>
+//         {templateOptions.map((template) => (
+//           <option key={template} value={template}>
+//             {template}
+//           </option>
+//         ))}
+//       </select>
+//       <button
+//         className='bg-blue-500 text-white px-3 py-1 rounded-md cursor-pointer'
+//         onClick={applyTemplateChange}
+//       >
+//         Apply
+//       </button>
+//     </div>
+//   )
+// }
 export const ChangeTemplateOptions: React.FC<{
   templateOptions: string[]
   onChangeTemplate: (newTemplate: string) => void
 }> = ({ templateOptions, onChangeTemplate }) => {
-  const [selectedTemplate, setSelectedTemplate] = useState('')
+  const [selectedTemplate, setSelectedTemplate] = useState(() => {
+    // Try to get the selected template from sessionStorage
+    const storedTemplate = sessionStorage.getItem('selectedTemplate')
+    return storedTemplate || ''
+  })
+
   const handleTemplateChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setSelectedTemplate(event.target.value)
+    const newTemplate = event.target.value
+    setSelectedTemplate(newTemplate)
+
+    // Save the selected template to sessionStorage
+    sessionStorage.setItem('selectedTemplate', newTemplate)
   }
+
   const applyTemplateChange = () => {
     if (selectedTemplate) {
       onChangeTemplate(selectedTemplate)
     }
   }
+
+  useEffect(
+    () => console.log('templateOptions are:', templateOptions),
+    [selectedTemplate]
+  )
+
   return (
     <div className='relative'>
       <select
-        className='border border-gray-300 rounded-md px-3 py-1 mr-2'
+        className='border border-gray-300 rounded-md px-3 py-1 mr-2 w-[20rem]'
         onChange={handleTemplateChange}
         value={selectedTemplate}
       >

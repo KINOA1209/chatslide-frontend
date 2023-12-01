@@ -37,6 +37,9 @@ const SharePage: React.FC = () => {
                         const foldername = data.foldername;
                         sessionStorage.setItem('foldername', foldername);
                         // console.log(`foldername: ${foldername}`);
+
+                        const slides = data.slides;
+                        sessionStorage.setItem('presentation_slides', slides);
                         setLoading(false);
                     }
                 })

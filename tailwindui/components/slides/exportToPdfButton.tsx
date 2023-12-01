@@ -70,29 +70,7 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
 
   const handleSavePDF = async () => {
     setDownloadingPDF(true)
-    const element = document.getElementById('pdf-content')
-
-    try {
-      const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
-
-      const response = await fetch('/api/save_final_html_pdf', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${idToken}`,
-          'Content-Type': 'application/json',
-        },
-      })
-
-      if (response.ok) {
-        exportToPdf()
-      } else if (response.status === 402) {
-        setShowPaymentModal(true)
-      } else {
-        console.error('Failed to save PDF.')
-      }
-    } catch (error) {
-      console.error('An error occurred:', error)
-    }
+    exportToPdf()
     setDownloadingPDF(false)
   }
 
@@ -113,7 +91,7 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
             onClick={handleSavePDF}
         >
             <div className='text-center text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide'>
-                Export to PDF (10⭐️)
+                Export to PDF
             </div>
             <div className='w-4 h-4 relative' hidden={downloadingPDF}>
                 <DownloadIcon />

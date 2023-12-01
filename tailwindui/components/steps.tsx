@@ -370,7 +370,7 @@ const ProjectProgress = () => {
     if (typeof window !== 'undefined' && sessionStorage.getItem('outline')) {
       finishedStepsArray.push(1)
     }
-    if (typeof window !== 'undefined' && sessionStorage.getItem('html')) {
+    if (typeof window !== 'undefined' && sessionStorage.getItem('presentation_slides')) {
       finishedStepsArray.push(2)
     }
     if (

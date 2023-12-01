@@ -202,9 +202,10 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
         }).catch(error => console.error);
     };
 
-    useEffect(() => {
-        fetchFiles();
-    }, [])
+    // useEffect(() => {
+    //     fetchFiles();
+    //     console.log('fetching files');
+    // }, [])
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const extensions = ["png", "jpg", "jpeg", "gif"]; // For checking logic
