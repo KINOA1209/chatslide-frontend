@@ -113,7 +113,7 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
             onClick={handleSavePDF}
         >
             <div className='text-center text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide'>
-                Export to PDF (10⭐️)
+                Export to PDF
             </div>
             <div className='w-4 h-4 relative' hidden={downloadingPDF}>
                 <DownloadIcon />
