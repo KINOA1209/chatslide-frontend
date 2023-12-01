@@ -90,10 +90,10 @@ export const Default_template = ({
     //   console.log('choosing layout option', ChosenLayout)
     // Load customizable elements for the current template
     const customizableElements = loadCustomizableElements('Default_template');
-    console.log(
-        'customizable elements for default template',
-        customizableElements
-    );
+    // console.log(
+    //     'customizable elements for default template',
+    //     customizableElements
+    // );
     return (
         <>
             {/* for cover page slide */}
