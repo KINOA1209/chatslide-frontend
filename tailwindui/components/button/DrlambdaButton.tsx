@@ -4,6 +4,7 @@ import { LeftTurnArrowIcon, RightTurnArrowIcon, SpinIcon } from '@/app/(feature)
 import React, { MouseEventHandler, ReactNode, useState, MouseEvent } from 'react';
 import PaywallModal from '../forms/paywallModal';
 import { useRouter } from 'next/navigation';
+import { GrayLabel } from '../ui/GrayLabel';
 
 type DrlambdaButtonProps = {
   children: ReactNode;
@@ -70,9 +71,10 @@ type DrlambdaLinkProps = {
   text: string;
   bgColor?: string;
   newWindow?: boolean;
+  label?: string;
 };
 
-export const DrlambdaLink: React.FC<DrlambdaLinkProps> = ({ link, text, bgColor = 'bg-gradient-to-r from-blue-500 to-blue-700', newWindow = true }) => {
+export const DrlambdaLink: React.FC<DrlambdaLinkProps> = ({ link, text, bgColor = 'bg-gradient-to-r from-blue-500 to-blue-700', newWindow = true, label='' }) => {
 
   return (
     <a
@@ -81,9 +83,13 @@ export const DrlambdaLink: React.FC<DrlambdaLinkProps> = ({ link, text, bgColor 
       rel={newWindow ? 'noopener noreferrer' : undefined} // Important for security reasons
       className={`min-w-[10rem] lg:w-[12rem] h-[36px] ${bgColor} rounded-[15px] flex justify-center items-center gap-2 cursor-pointer`}
     >
+      <div className="flex flex-row justify-center items-center">
       <span className='text-white font-semibold tracking-tight whitespace-nowrap'>
         {text}
+        
       </span>
+      {label && <GrayLabel bgColor="bg-blue-300">{label}</GrayLabel>}
+      </div>
     </a>
   );
 };
