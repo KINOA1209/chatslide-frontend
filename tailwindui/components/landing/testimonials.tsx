@@ -2,42 +2,24 @@
 
 import { RefObject, useEffect, useRef, useState } from "react";
 import { TwitterTweetEmbed } from "react-twitter-embed";
-import { Transition } from "@headlessui/react";
+import TiktokEmbed from "./TiktokEmbed";
 
-const TikTokEmbed = () => {
-  return (
-    <blockquote
-      className="tiktok-embed"
-      cite="https://www.tiktok.com/@computer_geeks/video/7276394400819776786"
-      data-video-id="7276394400819776786"
-      style={{ maxWidth: '605px', minWidth: '325px' }}
-    >
-      <section>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          title="@computer_geeks"
-          href="https://www.tiktok.com/@computer_geeks?refer=embed"
-        >
-          @computer_geeks
-        </a>
-      </section>
-    </blockquote>
-  );
+const videoData = {
+  "@context": "http://schema.org",
+  "@type": "VideoObject",
+  "name": "Name of the Video",
+  "thumbnailUrl": "https://example.com/thumbnail.jpg",
+  "uploadDate": "2023-11-30"
 };
+
 
 export default function Testimonails() {
   const iframeList = [
     <iframe className="w-full" src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7134734556737196032" height="500" title="Embedded post"></iframe>,
-    <iframe
-      src="https://www.tiktok.com/embed/7276394400819776786"
-      className='w-full aspect-[9/16]'
-      allow="encrypted-media;"
-    ></iframe>,
+    <TiktokEmbed src="https://www.tiktok.com/embed/7304055660713381162"/>,
     <div className="relative w-full scale-[1.05]"><TwitterTweetEmbed tweetId={'1698559011107602603'} /></div>,
+    <TiktokEmbed src="https://www.tiktok.com/embed/7276394400819776786" />,
     <iframe className="w-full" src="https://cards.producthunt.com/cards/comments/2713233?v=1" height="400"></iframe>,
-    <iframe className="w-full" src="https://cards.producthunt.com/cards/comments/2976352?v=1" height="400"></iframe>,
-
     <iframe className="w-full" src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7134729820302696448" height="500" title="Embedded post"></iframe>,
   ]
 
@@ -173,7 +155,6 @@ export default function Testimonails() {
               )
             }
             )}
-            <TikTokEmbed />
           </div>
         </div>
       </div>

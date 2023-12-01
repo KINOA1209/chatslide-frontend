@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@datadog/browser-rum": "5.4.0",
     "@headlessui/react": "^1.7.13",
     "@radix-ui/react-dialog": "^1.0.5",
     "@reduxjs/toolkit": "^1.9.5",
@@ -20,6 +21,7 @@
     "better-react-mathjax": "^2.0.2",
     "carbon-connect": "^1.5.40",
     "cheerio": "^1.0.0-rc.12",
+    "datadog": "^1.0.1",
     "encoding": "^0.1.13",
     "file-saver": "^2.0.5",
     "firebase": "^9.23.0",
