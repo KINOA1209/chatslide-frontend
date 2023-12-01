@@ -96,7 +96,27 @@ const ExportToPngButton: React.FC<ExportToPdfProps> = ({
 
   const handleSaveImage = async () => {
     setDownloadingPDF(true)
-    downloadImage(slideRef);
+
+    try {
+      const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
+      const response = await fetch('/api/export_socialpost', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
+
+      if (response.ok) {
+        downloadImage(slideRef);
+      } else if (response.status === 402) {
+        setShowPaymentModal(true)
+      } else {
+        console.error('Failed to save PNG.')
+      }
+    } catch (error) {
+      console.error('An error occurred:', error)
+    }
     setDownloadingPDF(false)
   }
 
@@ -117,7 +137,7 @@ const ExportToPngButton: React.FC<ExportToPdfProps> = ({
           onClick={handleSaveImage}
         >
           <div className='text-center text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide'>
-            Save this page
+            Save this page (1⭐️)
           </div>
           <div className='w-4 h-4 relative' hidden={downloadingPDF}>
             <DownloadIcon />
