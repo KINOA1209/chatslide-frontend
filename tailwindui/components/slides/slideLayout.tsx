@@ -26,6 +26,7 @@ export type LayoutKeys =
 // Extend the interface with new fields
 interface MainSlideProps extends BaseMainSlideProps {
     brandingColor?: string;
+    customizableElements: {};
 }
 
 export const Cover_img_0_layout = ({

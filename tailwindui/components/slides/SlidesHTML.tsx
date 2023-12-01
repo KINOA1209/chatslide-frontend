@@ -31,6 +31,7 @@ import { useRouter } from 'next/navigation';
 import { availableLayouts } from './slideLayout';
 import TestSlidesData from './TestSlidesData.json';
 import AuthService from '@/services/AuthService';
+import customizable_elements from './templates_customizable_elements/customizable_elements.json';
 export interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
     className:
@@ -84,6 +85,14 @@ type SlidesHTMLProps = {
     transcriptList?: string[];
 };
 
+// Load customizable elements from session storage or use default values
+export const loadCustomizableElements = (templateName: string) => {
+    const customizableElements = JSON.parse(
+        sessionStorage.getItem('customizableElements') || '{}'
+    );
+    return customizableElements[templateName] || {};
+};
+
 // it will render the slides fetched from `foldername` in sessionStorage
 const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     finalSlides,
@@ -107,7 +116,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
             ? sessionStorage.getItem('presentation_slides') ||
               JSON.stringify(TestSlidesData)
             : '';
-
+    // styles for each templates
+    const customizableElements =
+        typeof sessionStorage !== 'undefined'
+            ? sessionStorage.getItem('customizableElements') ||
+              JSON.stringify(customizable_elements)
+            : '';
     const [chosenLayout, setChosenLayout] = useState<LayoutKeys>('');
 
     const [showLayout, setShowLayout] = useState(false);
@@ -137,6 +151,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
             setSaveStatus('Unsaved changes');
         }
     });
+
+    // set customizableElements for templates
+    useEffect(() => {
+        sessionStorage.setItem(
+            'customizableElements',
+            JSON.stringify(customizable_elements)
+        );
+    }, []);
 
     // Watch for changes in finalSlides
     useEffect(() => {
