@@ -1,11 +1,9 @@
-import { StaticImageData } from "next/image";
 import { ImgModule } from "@/components/socialPost/socialPostIllustrationModule";
 import { ImgModule as ImgModuleSlide } from "@/components/socialPost/socialPostImgModule"
 import { useEffect, useMemo, useState } from "react";
-import cover_png from '@/public/images/template/cover.png' // Cover
+import cover_png from '@/public/images/template/cover.png'
 import withimg_png from '@/public/images/template/socialpost_t1_img.png'
 import noimg_png from '@/public/images/template/socialpost_t1_no_img.png'
-import { color } from "html2canvas/dist/types/css/types/color";
 import '@/components/socialPost/templates.css'
 import AuthService from '@/services/AuthService'
 import { h5Style } from "./Styles";
@@ -75,7 +73,7 @@ export const First_page_img_1 = ({ topic, keywords, imgs, border_start, border_e
 
     return (
         <div
-            className="relative overflow-hidden gap-[32px] flex justify-center items-center"
+            className="relative gap-[32px] flex justify-center items-center"
             style={{
                 width: '100%',
                 height: '100%',
@@ -83,7 +81,7 @@ export const First_page_img_1 = ({ topic, keywords, imgs, border_start, border_e
                 border: 'none',
             }}>
             <div 
-                className="absolute top-0 left-0 w-full h-full z-10"
+                className="absolute top-0 left-0 w-full h-full z-[10]"
                 style={{
                     border: '12px solid transparent',
                     backgroundImage: `linear-gradient(white, white), radial-gradient(circle at top left, ${border_start}, ${border_end})`,
@@ -102,12 +100,12 @@ export const First_page_img_1 = ({ topic, keywords, imgs, border_start, border_e
                 />
             </div>
             <div 
-                className="w-full h-full mx-[3%] flex flex-col justify-between z-20"
+                className="w-full h-full mx-[3%] flex flex-col justify-between"
 
             >
-                <div className="mt-[10%] px-[4%] text-center z-20">{topic}</div>
+                <div className="mt-[10%] px-[4%] z-[30]">{topic}</div>
                 <div
-                    className="mb-[6%] mx-[auto] text-center z-20"
+                    className="mb-[6%] mx-[auto] text-center z-[20]"
                     style={{
                         border: '3px solid #FFF',
                         borderRadius: '5px',
