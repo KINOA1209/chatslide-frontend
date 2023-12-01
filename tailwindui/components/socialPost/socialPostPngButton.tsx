@@ -137,7 +137,7 @@ const ExportToPngButton: React.FC<ExportToPdfProps> = ({
           onClick={handleSaveImage}
         >
           <div className='text-center text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide'>
-            Save this page (1⭐️)
+            Save this page
           </div>
           <div className='w-4 h-4 relative' hidden={downloadingPDF}>
             <DownloadIcon />
