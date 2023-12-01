@@ -1,5 +1,6 @@
 import './css/style.css'
 import React from 'react';
+import Script from "next/script";
 
 export const metadata = {
   title: 'DrLambda',
@@ -50,7 +51,7 @@ export default function RootLayout({
         </div>
       </body>
 
-      <script id="datadog-rum">
+      <Script id="datadog-rum">
         {
           `(function(h,o,u,n,d) {
             h=h[d]=h[d]||{q:[],onReady:function(c){h.q.push(c)}}
@@ -75,7 +76,7 @@ export default function RootLayout({
             });
           })
       `}
-      </script>
+      </Script>
     </html>
   )
 }
