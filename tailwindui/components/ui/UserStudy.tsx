@@ -28,8 +28,8 @@ export const UserStudy: React.FC = () => {
               Or you can fill out a form to earn 100 ⭐️credits.
             </p>
             <div className="py-2 flex flex-rol justify-between">
-              <DrlambdaLink link='https://calendar.app.google/2uGV3B6h9UdYBHPB8' text='Book a session' label="+1000⭐️" />
-              <DrlambdaLink link='https://forms.gle/kncWqBjU4n5xps1w8' text='Fill out form' label="+100⭐️"/>
+              <DrlambdaLink link='https://calendar.app.google/2uGV3B6h9UdYBHPB8' secondaryColor={true} text='Book a session' label="+1000⭐️" />
+              <DrlambdaLink link='https://forms.gle/kncWqBjU4n5xps1w8' secondaryColor={true} text='Fill out form' label="+100⭐️"/>
             </div>
           </div>
           <div className="flex flex-row justify-end">
