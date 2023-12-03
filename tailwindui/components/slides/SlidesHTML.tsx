@@ -34,14 +34,14 @@ import AuthService from '@/services/AuthService'
 export interface SlideElement {
   type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div'
   className:
-    | 'head'
-    | 'title'
-    | 'subtopic'
-    | 'content'
-    | 'userName'
-    | 'images'
-    | 'template'
-    | 'layout'
+  | 'head'
+  | 'title'
+  | 'subtopic'
+  | 'content'
+  | 'userName'
+  | 'images'
+  | 'template'
+  | 'layout'
   content: string | string[]
 }
 
@@ -105,9 +105,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
   const res_slide =
     typeof sessionStorage !== 'undefined'
       ? sessionStorage.getItem('presentation_slides') ||
-        JSON.stringify(TestSlidesData)
+      JSON.stringify(TestSlidesData)
       : ''
-  
+
   const [chosenLayout, setChosenLayout] = useState<LayoutKeys>('')
 
   const [showLayout, setShowLayout] = useState(false)
@@ -203,7 +203,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     setSaveStatus('Saving...')
 
     const { userId, idToken: token } =
-            await AuthService.getCurrentUserTokenAndId()
+      await AuthService.getCurrentUserTokenAndId()
     const formData = {
       foldername: foldername,
       final_slides: finalSlides,
@@ -427,9 +427,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
   function handleKeyDown(event: KeyboardEvent) {
     if (!isEditMode) {
-      if (event.key === 'ArrowRight' && currentSlideIndex < slides.length - 1) {
+      if ((event.key === 'ArrowRight' || event.key === 'ArrowDown')
+        && currentSlideIndex < slides.length - 1) {
+        event.preventDefault()
         goToSlide(currentSlideIndex + 1)
-      } else if (event.key === 'ArrowLeft' && currentSlideIndex > 0) {
+      }
+      else if ((event.key === 'ArrowLeft' || event.key === 'ArrowUp')
+        && currentSlideIndex > 0) {
+        event.preventDefault()
         goToSlide(currentSlideIndex - 1)
       }
     }
@@ -667,10 +672,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
       {!isViewing && (
         <div className='py-2 hidden sm:block'>
-        <ChangeTemplateOptions
-          templateOptions={Object.keys(availableTemplates)}
-          onChangeTemplate={changeTemplate}
-        />
+          <ChangeTemplateOptions
+            templateOptions={Object.keys(availableTemplates)}
+            onChangeTemplate={changeTemplate}
+          />
         </div>
       )}
 
