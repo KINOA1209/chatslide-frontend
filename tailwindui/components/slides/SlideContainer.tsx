@@ -19,6 +19,7 @@ type SlideContainerProps = {
   slideRef?: React.RefObject<HTMLDivElement>
   exportToPdfMode?: boolean
   highlightBorder?: boolean
+  setIsPresenting?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const SlideContainer: React.FC<SlideContainerProps> = ({
@@ -32,6 +33,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
   slideRef = useRef(null),
   exportToPdfMode = false,
   highlightBorder = false,
+  setIsPresenting,
 }) => {
   return (
     <div
@@ -52,6 +54,19 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
         height: isPresenting ? '100vh' : `${540 * scale}px`,
       }}
     >
+      {isPresenting && setIsPresenting && (
+        <button
+          className="fixed top-10 right-10 p-2 w-10 h-10 bg-gray-400 text-white rounded-full cursor-pointer hover:bg-gray-600"
+          onClick={e => {
+            e.preventDefault()
+            e.stopPropagation()
+            console.log('close present')
+            setIsPresenting(false)
+          }}
+        >
+          ❌
+        </button>)
+      }
       {slides.length > 0 && (
         <div
           className='slide h-full w-full'

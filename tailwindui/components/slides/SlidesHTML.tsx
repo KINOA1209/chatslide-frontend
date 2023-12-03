@@ -243,9 +243,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
   }
 
   const openPresent = () => {
-    toast.success(
-      'Use ESC to exit presentation mode, use arrow keys to navigate slides.'
-    )
+    // toast.success(
+    //   'Use ESC to exit presentation mode, use arrow keys to navigate slides.'
+    // )
     setPresent(true)
   }
 
@@ -566,10 +566,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
   return (
     <div className='flex flex-col items-center justify-center gap-4'>
+
+
       {/* buttons and contents */}
       <div className='max-w-4xl relative flex flex-row items-center justify-center gap-4'>
-        <ToastContainer />
-
         <SlideLeftNavigator
           currentSlideIndex={currentSlideIndex}
           slides={slides}
@@ -585,6 +585,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
           templateDispatch={editableTemplateDispatch}
           slideRef={slideRef}
           containerRef={containerRef}
+          setIsPresenting={setPresent}
         />
 
         <SlideRightNavigator
