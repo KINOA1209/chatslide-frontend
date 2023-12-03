@@ -55,6 +55,7 @@ export default function Dashboard() {
       setProjects(projects)
       setRendered(true)
       if (projects.length == 0) {
+        sessionStorage.clear()
         router.push('/workflow-type-choice')
       }
     })
