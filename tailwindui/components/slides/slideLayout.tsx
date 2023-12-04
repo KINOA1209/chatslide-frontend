@@ -27,6 +27,7 @@ export type LayoutKeys =
 interface MainSlideProps extends BaseMainSlideProps {
     brandingColor?: string;
     customizableElements: {};
+    showContentBulletPoint?: boolean;
 }
 
 export const Cover_img_0_layout = ({
@@ -140,12 +141,12 @@ export const Col_1_img_0_layout = ({
                         {content.map((item, index) => (
                             <div className='py-[0.5rem]'>
                                 {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
-                                <div
+                                <ul
                                     key={index}
-                                    className='text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-none'
+                                    className='flex flex-row w-full h-full grow pl-4 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-disc'
                                 >
-                                    {item}
-                                </div>
+                                    <li>{item}</li>
+                                </ul>
                             </div>
                         ))}
                     </div>
@@ -184,12 +185,12 @@ export const Col_2_img_0_layout = ({
                             {index + 1}
                         </div>
                         <div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
-                        <div
+                        <ul
                             key={index}
-                            className='flex flex-row w-full h-full grow p-1 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-none'
+                            className='flex flex-row w-full h-full grow pl-4 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-disc'
                         >
-                            {item}
-                        </div>
+                            <li>{item}</li>
+                        </ul>
                     </div>
                 ))}
             </div>
@@ -222,16 +223,16 @@ export const Col_3_img_0_layout = ({
             <div className='h-full w-full grid grid-cols-3 gap-[2.5rem] overflow-y-scroll'>
                 {content.map((item, index) => (
                     <div className='flex flex-col gap-[1rem]'>
-                        <div className='mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-creato-medium uppercase leading-10 tracking-widest  pt-[2rem]'>
+                        <div className='mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-creato-medium uppercase leading-10 tracking-widest pt-[2rem]'>
                             {index + 1}
                         </div>
                         <div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
-                        <div
+                        <ul
                             key={index}
-                            className='flex flex-row w-full h-full grow p-1 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-none'
+                            className='flex flex-row w-full h-full grow pl-4 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-disc'
                         >
-                            {item}
-                        </div>
+                            <li>{item}</li>
+                        </ul>
                     </div>
                 ))}
             </div>
@@ -278,12 +279,12 @@ export const Col_1_img_1_layout = ({
                             {content.map((item, index) => (
                                 <div className='py-[0.5rem]'>
                                     {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
-                                    <div
+                                    <ul
                                         key={index}
-                                        className='text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-none'
+                                        className='flex flex-row w-full h-full grow pl-4 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-disc'
                                     >
-                                        {item}
-                                    </div>
+                                        <li>{item}</li>
+                                    </ul>
                                 </div>
                             ))}
                         </div>
@@ -343,12 +344,12 @@ export const Col_2_img_1_layout = ({
                             {content.map((item, index) => (
                                 <div className='py-[0.5rem]'>
                                     {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
-                                    <div
+                                    <ul
                                         key={index}
-                                        className='text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-none'
+                                        className='flex flex-row w-full h-full grow pl-4 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-disc'
                                     >
-                                        {item}
-                                    </div>
+                                        <li>{item}</li>
+                                    </ul>
                                 </div>
                             ))}
                         </div>
@@ -423,12 +424,12 @@ export const Col_2_img_2_layout = ({
                     {content.map((item, index) => (
                         <div className='flex flex-col gap-[1rem]'>
                             {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
-                            <div
+                            <ul
                                 key={index}
-                                className='flex flex-row w-full h-full text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-none'
+                                className='flex flex-row w-full h-full grow pl-4 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-disc'
                             >
-                                {item}
-                            </div>
+                                <li>{item}</li>
+                            </ul>
                         </div>
                     ))}
                 </div>
@@ -498,12 +499,12 @@ export const Col_3_img_3_layout = ({
                     {content.map((item, index) => (
                         <div className='flex flex-col gap-[1rem]'>
                             {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
-                            <div
+                            <ul
                                 key={index}
-                                className='flex flex-row w-full h-full text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-none'
+                                className='flex flex-row w-full h-full grow pl-4 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-disc'
                             >
-                                {item}
-                            </div>
+                                <li>{item}</li>
+                            </ul>
                         </div>
                     ))}
                 </div>

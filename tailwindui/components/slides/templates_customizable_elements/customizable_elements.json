@@ -1,5 +1,6 @@
 {
     "Stanford": {
+        "backgroundColorCover": "bg-[#8C1515]",
         "backgroundColor": "bg-blue-500",
         "topicFont": "text-xl font-bold",
         "topicFontColor": "text-white",
@@ -8,7 +9,8 @@
         "contentFont": "text-sm",
         "contentFontColor": "text-gray-800"
     },
-    "Default_template": {
+    "Default": {
+        "backgroundColorCover": "bg-blue-500",
         "backgroundColor": "bg-[#F0F0F2]",
         "topicFont": "text-2xl font-bold",
         "topicFontColor": "text-black",

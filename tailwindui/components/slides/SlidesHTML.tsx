@@ -71,7 +71,7 @@ export class Slide {
         this.title = 'New Slide';
         this.subtopic = 'New Slide';
         this.userName = '';
-        this.template = 'Default_template';
+        this.template = 'Default';
         this.content = ['Your content here'];
         this.images = [];
         this.layout = 'Col_2_img_1_layout';
@@ -309,13 +309,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                     slide.title = slideData.title || 'New Slide';
                     slide.subtopic = slideData.subtopic || 'New Slide';
                     slide.userName = slideData.userName || '';
-                    slide.template = slideData.template || 'Default_template';
+                    slide.template = slideData.template || 'Default';
                     slide.content = slideData.content || ['Your content here'];
                     slide.images = slideData.images || [];
-                    console.log(
-                        'slideData.content.length',
-                        slideData.content.length
-                    );
+                    // console.log(
+                    //     'slideData.content.length',
+                    //     slideData.content.length
+                    // );
                     if (index === 0) {
                         slide.layout =
                             slideData.layout ||
@@ -331,9 +331,18 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                                 slideData.layout ||
                                 ('Col_2_img_2_layout' as LayoutKeys);
                         } else if (slideData.content.length === 3) {
-                            slide.layout =
-                                slideData.layout ||
-                                ('Col_3_img_3_layout' as LayoutKeys);
+                            // Generate a random number between 0 and 1
+                            const randomNumber = Math.random();
+                            // Choose layout based on probability distribution
+                            if (randomNumber < 0.7) {
+                                slide.layout =
+                                    slideData.layout ||
+                                    ('Col_3_img_0_layout' as LayoutKeys);
+                            } else {
+                                slide.layout =
+                                    slideData.layout ||
+                                    ('Col_3_img_3_layout' as LayoutKeys);
+                            }
                         }
                     }
 
@@ -465,7 +474,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                 // } else {
                 //   elements.template = 'Col_1_img_0'
                 // }
-                elements.template = 'Default_template';
+                elements.template = 'Default';
             }
 
             // default layout setting

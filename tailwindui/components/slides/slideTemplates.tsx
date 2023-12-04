@@ -7,11 +7,11 @@ import col2img1_png from '@/public/images/template/col2img1.png';
 import col3img2_png from '@/public/images/template/col3img2.png';
 import drlambdaLogo from '@/public/images/template/drlambdaLogo.png';
 import drlambdaLogoSingle from '@/public/images/template/drlambdaLogoSingle.png';
-import { LayoutKeys } from './slideLayout';
+
 import { Berkeley_school_template } from './school_templates/Berkeley_school_template';
 import { Harvard_school_template } from './school_templates/Harvard_school_template';
 import { Stanford_school_template } from './school_templates/Stanford_school_template';
-
+import { LayoutKeys } from './slideLayout';
 import { layoutOptions } from './slideLayout';
 import { loadCustomizableElements } from './SlidesHTML';
 export interface MainSlideProps {
@@ -68,7 +68,7 @@ export const useLocalImgs = (
     return { localImgs, updateImgAtIndex };
 };
 
-export const Default_template = ({
+export const Default = ({
     user_name,
     title,
     topic,
@@ -89,7 +89,7 @@ export const Default_template = ({
         layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
     //   console.log('choosing layout option', ChosenLayout)
     // Load customizable elements for the current template
-    const customizableElements = loadCustomizableElements('Default_template');
+    const customizableElements = loadCustomizableElements('Default');
     // console.log(
     //     'customizable elements for default template',
     //     customizableElements
@@ -179,5 +179,5 @@ export const availableTemplates = {
     Stanford: Stanford_school_template,
     //   Berkeley: Berkeley_school_template,
     //   Harvard: Harvard_school_template,
-    Default_template: Default_template,
+    Default: Default,
 };
