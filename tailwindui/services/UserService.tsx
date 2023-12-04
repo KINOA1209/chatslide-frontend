@@ -32,7 +32,7 @@ class UserService {
         console.log("Initialized successfully.")
         return true;
       } else {
-        console.error('Failed to initialize user:', createUserResponse.status);
+        console.error(`Failed to initialize user: ${user}`, createUserResponse.status);
         const errorData = await createUserResponse.json();
         throw new Error(errorData.message);
       }
@@ -84,7 +84,8 @@ class UserService {
       });
 
       if (!response.ok) {
-        console.log('Failed to fetch user credits:', response.status);
+        const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
+        console.error(`Failed to fetch user credits: ${userId}`, response.status);
         const resp = await UserService.initializeUser(idToken); // if user does not exist in db, initialize the user
         if(resp) 
           return UserService.getUserCreditsAndTier(idToken); // try again
@@ -99,7 +100,8 @@ class UserService {
       return { credits, tier };
 
     } catch (error) {
-      console.error('Failed to fetch user credits:', error);
+      const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
+      console.error(`Failed to fetch user credits: ${userId}`, error);
       throw new Error(`Error fetching user credits: ${error}`);
     }
   }
