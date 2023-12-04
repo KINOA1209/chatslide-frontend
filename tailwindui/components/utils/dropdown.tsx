@@ -13,9 +13,13 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const [username, setUsername] = useState(null);
+  const [username, setUsername] = useState('');
   const [credits, setCredits] = useState(0);
   const [tier, setTier] = useState<string>('');
+
+  function userFirstName() {
+    return username.split(" ")[0];
+  }
 
 
 useEffect(() => {
@@ -92,7 +96,7 @@ return (
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
-        Hi, {username}
+        Hi, {userFirstName()}
       </button>
     </div>
 

@@ -15,10 +15,14 @@ import Modal from '@/components/ui/Modal';
 import { FeedbackForm } from '@/components/ui/feedback';
 
 const Profile = () => {
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState<string>('');
   const [editUsername, setEditUsername] = useState('');
   const [email, setEmail] = useState('abcdefg@gmail.com');
   const [changed, setChanged] = useState(false);
+
+  function userFirstName(): string {
+    return username.split(' ')[0];
+  }
 
   const fetchUser = async () => {
     const user = await AuthService.getCurrentUser();
@@ -128,7 +132,7 @@ const Profile = () => {
   return <div className='w-full px-4 sm:px-6'>
     <div className="mb-8 w-full">
       <div className="w-fit text-[#525C6A] text-[17px] font-bold">Profile</div>
-      <div className="w-fit text-[#212121] text-[50px] md:text-[80px] font-light">Hi, {username}</div>
+      <div className="w-fit text-[#212121] text-[50px] md:text-[80px] font-light">Hi, {userFirstName()}</div>
     </div>
     <div className='w-fit mx-auto'>
       <div className="w-full">
