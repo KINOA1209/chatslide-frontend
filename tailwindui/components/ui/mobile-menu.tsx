@@ -18,9 +18,13 @@ const MobileMenu = ({ refList = [] }: HeaderProps) => {
 
   const trigger = useRef<HTMLButtonElement>(null)
   const mobileNav = useRef<HTMLDivElement>(null)
-  const [username, setUsername] = useState(null);
+  const [username, setUsername] = useState<string>('');
   const [landingPage, setLandingPage] = useState(false);
   const pathname = usePathname();
+
+  function userFirstName() {
+    return username.split(" ")[0];
+  }
 
   useEffect(() => {
     // Create a scoped async function within the hook.
@@ -67,7 +71,7 @@ const MobileMenu = ({ refList = [] }: HeaderProps) => {
       await AuthService.signOut();
       sessionStorage.clear();
       console.log('You have signed out!');
-      setUsername(null);
+      setUsername('');
     } catch (error: any) {
       console.error(error);
       toast.error(error.message, {
@@ -142,7 +146,7 @@ const MobileMenu = ({ refList = [] }: HeaderProps) => {
               : <></>}
             {username ?
               (<>
-                <div className='text-2xl py-4 text-blue-500'>Hi, {username}</div>
+                <div className='text-2xl py-4 text-blue-500'>Hi, {userFirstName()}</div>
                 <li>
                   <Link href="/dashboard" className="flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center" onClick={() => setMobileNavOpen(false)}>My Projects</Link>
                 </li>

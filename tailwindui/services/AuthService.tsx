@@ -156,7 +156,7 @@ class AuthService {
 
       return { userId, idToken };
     } catch (error) {
-      console.error('Error getting user token and id: ', error);
+      console.warn('Error getting user token and id: ', error);
       throw error;
     }
   }
