@@ -256,11 +256,17 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       }
     }
 
+    const handleDoubleClick = () => {
+      setPresent(false);
+    }
+
     window.addEventListener('keydown', handleKeyDown)
+    window.addEventListener('dblclick', handleDoubleClick)
 
     // Cleanup: remove the event listener when the component is unmounted
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener('dblclick', handleDoubleClick)
     }
   }, []) // Empty dependency array to ensure this effect runs only once (similar to componentDidMount)
 
