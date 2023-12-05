@@ -4,6 +4,7 @@ import { LeftTurnArrowIcon, RightTurnArrowIcon, SpinIcon } from '@/app/(feature)
 import React, { MouseEventHandler, ReactNode, useState, MouseEvent } from 'react';
 import PaywallModal from '../forms/paywallModal';
 import { useRouter } from 'next/navigation';
+import { GrayLabel } from '../ui/GrayLabel';
 
 type DrlambdaButtonProps = {
   children: ReactNode;
@@ -68,22 +69,36 @@ export default DrlambdaButton;
 type DrlambdaLinkProps = {
   link: string;
   text: string;
-  bgColor?: string;
+  style?: string;
   newWindow?: boolean;
+  label?: string;
+  secondaryColor?: boolean;
 };
 
-export const DrlambdaLink: React.FC<DrlambdaLinkProps> = ({ link, text, bgColor = 'bg-gradient-to-r from-blue-500 to-blue-700', newWindow = true }) => {
+export const DrlambdaLink: React.FC<DrlambdaLinkProps> = ({ link, text, style, newWindow = true, label = '', secondaryColor = false }) => {
+
+  if (!style) {
+    if (secondaryColor) {
+      style = 'border border-2 border-blue-500 text-blue-500'
+    } else {
+      style = 'bg-gradient-to-r from-blue-500 to-blue-700 text-white  '
+    }
+  }
 
   return (
     <a
       href={link}
-      target={newWindow ? '_blank' : '_self'} 
+      target={newWindow ? '_blank' : '_self'}
       rel={newWindow ? 'noopener noreferrer' : undefined} // Important for security reasons
-      className={`min-w-[10rem] lg:w-[12rem] h-[36px] ${bgColor} rounded-[15px] flex justify-center items-center gap-2 cursor-pointer`}
+      className={`min-w-[10rem] lg:w-[12rem] h-[36px] ${style} rounded-[15px] flex justify-center items-center gap-2 cursor-pointer`}
     >
-      <span className='text-white font-semibold tracking-tight whitespace-nowrap'>
-        {text}
-      </span>
+      <div className="flex flex-row justify-center items-center">
+        <span className='font-semibold tracking-tight whitespace-nowrap'>
+          {text}
+
+        </span>
+        {label && <GrayLabel>{label}</GrayLabel>}
+      </div>
     </a>
   );
 };
@@ -107,7 +122,7 @@ export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({ href }) 
   )
 }
 
-export const SmallBlueButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSubmitting=false, isPaidUser, isPaidFeature = false }) => {
+export const SmallBlueButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSubmitting = false, isPaidUser, isPaidFeature = false }) => {
   function getButtonStyle() {
     if (isSubmitting) {
       return 'border-gray-600 text-gray-600'
