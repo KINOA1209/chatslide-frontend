@@ -1,0 +1,28 @@
+.ql-editor:hover, .ql-editor:focus {
+    outline: 2px solid #CAD0D3;
+}
+
+
+.ql-editor ul{
+    padding-left: 0 !important;
+}
+
+.ql-bubble .ql-picker .ql-picker-options {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.ql-tooltip {
+    z-index: 1000;
+    padding: 2% 3% 2% 3%
+}
+
+@for $i from 8 through 60{
+    @if $i % 2 == 0{
+        .ql-bubble .ql-picker.ql-size .ql-picker-label[data-value="#{$i}pt"]::before,
+        .ql-bubble .ql-picker.ql-size .ql-picker-item[data-value="#{$i}pt"]::before {
+            content: '#{$i}pt';
+            font-size: 12pt;
+          }
+    }
+}

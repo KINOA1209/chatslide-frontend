@@ -81,7 +81,7 @@ export const First_page_img_1 = ({ topic, keywords, imgs, border_start, border_e
                 border: 'none',
             }}>
             <div 
-                className="absolute top-0 left-0 w-full h-full z-[10]"
+                className="absolute top-0 left-0 w-full h-full z-[20]"
                 style={{
                     border: '12px solid transparent',
                     backgroundImage: `linear-gradient(white, white), radial-gradient(circle at top left, ${border_start}, ${border_end})`,
@@ -124,7 +124,6 @@ export const First_page_img_1 = ({ topic, keywords, imgs, border_start, border_e
 export const Col_1_img_0 = ({ subtopic, keywords, content, icon, border_start, border_end, canEdit, autoSave }: MainSlideProps) => {
     return (
         <div
-            className="overflow-hidden"
             style={{
                 width: '100%',
                 height: '100%',
@@ -141,10 +140,10 @@ export const Col_1_img_0 = ({ subtopic, keywords, content, icon, border_start, b
                 backgroundImage: `url('/images/socialpost/template1_bg.png')`
             }}>
             <div className="w-full h-full flex flex-col justify-between">
-                <div className="w-full px-[4%]">{keywords}</div>
-                <div className='w-full px-[4%]'>{subtopic}</div>
+                <div className="w-full">{keywords}</div>
+                <div className='w-full'>{subtopic}</div>
                 <div 
-                    className="h-full w-full flex flex-row overflow-hidden rounded-lg"
+                    className="h-full w-full flex flex-row rounded-lg"
                     style={{
                         border: 'double 4px transparent',
                         borderRadius: '30px',
@@ -153,7 +152,7 @@ export const Col_1_img_0 = ({ subtopic, keywords, content, icon, border_start, b
                         backgroundClip: 'content-box, border-box'
                     }}
                 >
-                    <div className="mt-[5%] mx-[5%] ">{content}</div>
+                    <div className="mt-[5%]">{content}</div>
                 </div>
                 <div className="w-full h-[7%] mt-[2%]"> 
                     <div className="flex flex-row justify-center items-center font-creato-medium leading-normal tracking-wide text-[15px] text-[white]">
@@ -190,7 +189,7 @@ export const Col_2_img_1 = ({subtopic, content, keywords, imgs, icon, border_sta
                 <div className="w-full px-[4%]">{keywords}</div>
                 <div className='w-full px-[4%]'>{subtopic}</div>
                 <div 
-                    className="h-full w-full flex flex-col overflow-hidden rounded-lg"
+                    className="h-full w-full flex flex-col rounded-lg"
                     style={{
                         border: 'double 4px transparent',
                         borderRadius: '30px',
@@ -200,7 +199,7 @@ export const Col_2_img_1 = ({subtopic, content, keywords, imgs, icon, border_sta
                     }}
                 >
                     <div className="grow mt-[5%] mx-[5%] ">{content}</div>
-                    <div className="w-full h-full grow rounded-md overflow-hidden">
+                    <div className="w-full h-full grow rounded-md">
                         <ImgModuleSlide 
                             imgsrc={localImgs[0]} 
                             updateSingleCallback={updateImgAtIndex(0)} 

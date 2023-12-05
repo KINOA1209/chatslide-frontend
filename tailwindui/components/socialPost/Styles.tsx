@@ -1,43 +1,42 @@
 import '@/components/socialPost/socialPostCustomFonts.css'
 
-// keywords
+// template1 keywords
 const h1Style: React.CSSProperties = {
     fontSize: '15pt',
-    fontWeight: 700,
     color: '#ABBEFF',
     fontFamily: 'Nunito',
     letterSpacing: '0.6px',
-    fontStyle: 'normal',
 };
 
-// subtopic
+// template1 subtopic
 const h2Style: React.CSSProperties = {
     fontSize: '22pt',
-    fontWeight: 'bold',
-    marginTop: '10px',
+    //marginTop: '10px',
     color: '#FBFBFB',
     fontFamily: 'Nunito',
     letterSpacing: '0.56px',
 };
 
-// cover page title
+// template1 content
+const listStyle: React.CSSProperties = {
+    fontSize: '11pt',
+    fontFamily: 'Nunito',
+    letterSpacing: '0.36px',
+}
+
+// template1 cover page title
 const h3Style: React.CSSProperties = {
-    fontSize: '45pt',
     color: '#FFF',
     fontFamily: 'Nunito',
-    lineHeight: '110%',
     letterSpacing: '-1.04px',
-    //textAlign: 'center'
 };
 
-// cover page keywords
+// template1 cover page keywords
 const h4Style: React.CSSProperties = {
     fontSize: '10pt',
-    fontWeight: 600,
     color: '#FFF',
     letterSpacing: '0.36px',
     lineHeight: '133%',
-    fontStyle: 'normal',
     fontFamily: 'Nunito'
 };
 
@@ -83,16 +82,5 @@ const h9Style: React.CSSProperties = {
     letterSpacing: '0.48px',
 };
 
-
-// 
-const listStyle: React.CSSProperties = {
-    display: 'list-item',
-    listStyleType: 'disc',
-    listStylePosition: 'inside',
-    fontSize: '11pt',
-    fontFamily: 'template1_cover_keyword',
-    fontWeight: 400,
-    letterSpacing: '0.36px',
-}
 
 export { h1Style, h2Style, h3Style, h4Style, h5Style, h6Style, h7Style, h8Style, h9Style, listStyle };
