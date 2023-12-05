@@ -7,14 +7,16 @@ interface FeedbackFormProps {
   onClose: () => void
   message?: string
   successDiv?: JSX.Element
+  textRequired?: boolean
 }
 
 interface FeedbackButtonProps {
   timeout?: number
   message?: string
+  textRequired?: boolean
 }
 
-const FeedbackButton: React.FC<FeedbackButtonProps> = ({ timeout = 0, message = '' }) => {
+const FeedbackButton: React.FC<FeedbackButtonProps> = ({ timeout = 0, message = '', textRequired=false }) => {
 
   const [showModal, setShowModal] = useState(false);
   const [timerFinished, setTimerFinished] = useState(false)
@@ -65,11 +67,11 @@ const FeedbackButton: React.FC<FeedbackButtonProps> = ({ timeout = 0, message = 
       Feedback
     </button>
 
-    {showModal && <FeedbackForm onClose={handleCloseModal} message={message} />}
+    {showModal && <FeedbackForm onClose={handleCloseModal} message={message} textRequired={textRequired}/>}
   </div>
 }
 
-export const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose, message, successDiv }) => {
+export const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose, message, successDiv, textRequired }) => {
   const [rating, setRating] = useState<number>(0)
   const [feedbackText, setFeedbackText] = useState<string>('')
   const [submitSuccessful, setSubmitSuccessful] = useState<boolean>(false)
@@ -114,7 +116,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose, message, su
     // Check if rating is not 0 (meaning the user has selected a rating).
     if (rating === 0) {
       setRatingError('Please select a rating.')
-    } else if (feedbackText==='') {
+    } else if (feedbackText==='' && textRequired) {
       setRatingError('Please leave your feedback.')
     }else {
       try {
