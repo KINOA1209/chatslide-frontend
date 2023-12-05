@@ -587,7 +587,7 @@ export default function Topic_SocialPost() {
           contentRef={contentRef}
           nextIsPaidFeature={false}
           showGPTToggle={true}
-          nextText={!isSubmitting ? 'Next' : 'Creating Post'}
+          nextText={!isSubmitting ? 'Create Post' : 'Creating Post'}
           setIsGpt35={setIsGpt35}
         />
         {/* main content */}

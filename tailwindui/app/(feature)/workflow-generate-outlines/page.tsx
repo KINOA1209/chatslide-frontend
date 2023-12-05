@@ -548,7 +548,7 @@ export default function Topic() {
         contentRef={contentRef}
         nextIsPaidFeature={false}
         showGPTToggle={true}
-        nextText={!isSubmitting ? 'Next' : 'Writing Outline...'}
+        nextText={!isSubmitting ? 'Write Outline' : 'Writing Outline...'}
         setIsGpt35={setIsGpt35}
       />
 
