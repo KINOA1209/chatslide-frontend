@@ -1,39 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.bubble.css';
-import '@/components/socialPost/quillEditor.css'
+import '@/components/socialPost/quillEditor.scss';
 
 type QuillEditableProps = {
     content: string;
     handleBlur: (newContent: string) => void;
     style?: React.CSSProperties;
 };
-
-type QuillRange = {
-    index: number;
-    length: number;
-} | null;
-
-
-var toolbarOptions = [
-    ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-    ['code-block'],
-  
-    [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-    [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-    //[{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-    //[{ 'direction': 'rtl' }],                         // text direction
-  
-    [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-  
-    [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-    [{ 'font': [] }],
-    [{ 'align': [] }],
-  
-    ['clean']                                         // remove formatting button
-  ];
 
 const QuillEditable: React.FC<QuillEditableProps> = ({ 
     content, 
@@ -43,9 +17,34 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
     const editorRef = useRef<HTMLDivElement>(null);
     const quillInstanceRef = useRef<Quill | null>(null);
 
+    const generateFontSizes = (): string[] => {
+        const sizes = [];
+        for (let i = 8; i <= 60; i+=2) {
+            sizes.push(`${i}pt`);
+        }
+        return sizes;
+    };
+
     // Initialize Quill instance
     useEffect(() => {
         if (editorRef.current && !quillInstanceRef.current) {
+            const fontSizes = generateFontSizes();
+            let Size = Quill.import('attributors/style/size');
+            Size.whitelist = fontSizes;
+            Quill.register(Size, true);
+
+            const toolbarOptions = [
+                [{ 'size':  fontSizes}, { 'header': [1, 2, 3, 4, 5, 6, false]}, { 'font': [] }], //['small', false, 'large', 'huge']
+                ['bold', 'italic', 'underline', 'strike', 'code-block'],
+                //['code-block'],
+                [{ 'header': 1 }, { 'header': 2 }],   
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                [{ 'script': 'sub'}, { 'script': 'super' }],
+                [{ 'color': [] }, { 'background': [] }],
+                [{ 'align': [] }],
+                ['clean']
+              ];
+        
             quillInstanceRef.current = new Quill(editorRef.current, {
                 modules: { toolbar: toolbarOptions },
                 theme: 'bubble',

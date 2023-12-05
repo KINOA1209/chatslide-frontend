@@ -21,12 +21,6 @@ import { templateDispatch as templateDispatch2 } from '@/components/socialPost//
 import { templateDispatch as templateDispatch3 } from '@/components/socialPost/socialPostTemplate3Dispatch';
 import templates, { templateSamples } from '@/components/socialPost/socialPostTemplates'
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger'
-import 'react-quill/dist/quill.snow.css';
-import dynamic from 'next/dynamic'
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
-import Quill from 'quill';
-//import 'quill/dist/quill.bubble.css';
-import 'quill/dist/quill.snow.css';
 
 export interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div'
@@ -189,6 +183,8 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
     useEffect(() => {
         if (res_slide) {
             const parse_slide = JSON.parse(res_slide)
+            //parse_slide.topic = `<p class="ql-align-center"><strong><em>${parse_slide.topic}</em></strong></p>`
+           // console.log(parse_slide)
             const slidesArray: SocialPostSlide[] = Object.keys(parse_slide).map((key, index) => {
                 const slideData = parse_slide[key]
                 const slide = new SocialPostSlide()
@@ -208,7 +204,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                 else {
                     if (res_scenario === 'casual_topic'){
                         slide.template = slideData.template || 'Col_1_img_0'
-                        slide.keywords = slideData.keywords
+                        slide.keywords = slideData.keywords || ''
                     }
                     else if (res_scenario === 'serious_subject'){
                         slide.template = slideData.template || 'img_0_template2'
@@ -217,13 +213,13 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                         slide.template = slideData.template || 'img_1_template3'
                     }      
                 }
-                //slide.topic = slideData.topic
+                //slide.topic = slideData.topic || 'Your topic here'
                 //slide.topic = `<p class="ql-align-center"><strong><em>${slideData.topic}</em></strong></p>`
                 if (slideData.topic) {
                     if (slideData.topic.includes('<p class="ql-align-center">')) {
                         slide.topic = slideData.topic;
                     } else {
-                        slide.topic = `<p class="ql-align-center"><strong><em>${slideData.topic}</em></strong></p>`;
+                        slide.topic = `<p class="ql-align-center"><strong style="font-size: 44pt; line-height:110%"><em>${slideData.topic}</em></strong></p>`;
                     }
                 } else {
                     slide.topic = 'Your topic here';
@@ -363,7 +359,8 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
     function handleSlideEdit(
         content: string | string[] | ThemeObject,
         slideIndex: number,
-        tag: SlideKeys | null
+        tag: SlideKeys | null,
+        contentIndex?: number,
     ) {
         setIsEditMode(false)
         const newSlides = [...slides]
@@ -386,19 +383,26 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
             currNewFinalSlides.topic = content as string
         } 
         else if (className === 'content') {
-            let newContent: string[] = []
-            content = content as string[]
-            content.forEach((str) => {
-                newContent.push(...str.split('\n'))
-            })
-            newContent = newContent.filter((item) => item !== '')
+            // let newContent: string[] = []
+            // content = content as string[]
+            // content.forEach((str) => {
+            //     newContent.push(...str.split('\n'))
+            // })
+            // newContent = newContent.filter((item) => item !== '')
 
-            if (newContent.length === 0) { // leave one empty line for editing
-                newContent.push('')
+            // if (newContent.length === 0) { // leave one empty line for editing
+            //     newContent.push('')
+            // }
+
+            // currentSlide.content = newContent
+            // currNewFinalSlides.content = newContent
+            if (typeof contentIndex === 'number' && contentIndex >= 0){
+                currentSlide.content[contentIndex] = content as string
+                currNewFinalSlides.content[contentIndex] = content as string
             }
-
-            currentSlide.content = newContent
-            currNewFinalSlides.content = newContent
+            else{
+                console.error(`Invalid contentIndex: ${contentIndex}`);
+            }
         }
         else if (className === 'template'){
             currentSlide.template = content as string
@@ -533,6 +537,8 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
         }
     }
 
+    console.log(finalSlides)
+
     return (
         <div>
         {/* <div className='flex justify-center items-center'>
@@ -651,7 +657,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 
             {/* preview little image */}
 
-            <div className='max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
+            <div className='max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center z-[-1]'>
                 <div className='w-full py-6 flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
                     {Array(slides.length)
                         .fill(0)
