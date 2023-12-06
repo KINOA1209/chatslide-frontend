@@ -29,68 +29,63 @@ export const Stanford_school_template = ({
     return (
         <>
             {/* for not-cover page slides */}
+
             <div
                 className={`${
                     !isCoverPage
-                        ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-col justify-start items-start box-border border-none relative bg-white p-[28px]'
-                        : 'hidden'
-                }`}
+                        ? 'rounded-md overflow-hidden w-full h-full bg-cover box-border border-none relative p-[28px]'
+                        : 'hidden '
+                } ${customizableElements.backgroundColor}`}
             >
-                <div className='h-auto '>
-                    <div className="h-full flex items-center justify-center text-red-800 text-5xl font-['Nimbus-Sans'] font-bold leading-[110%] whitespace-nowrap">
-                        {topic}
-                    </div>
-                </div>
-                <div className='opacity-70 text-red-800 text-opacity-40 text-3xl font-normal leading-[120%]'>
-                    {subtopic}
-                </div>
-                <hr className='border border-[#E7E9EB] w-full mt-6 mb-6'></hr>
-                <div
-                    className='flex flex-row text-zinc-800 text-xl font-normal leading-9 justify-between text-start'
-                    style={{
-                        //   display: 'list-item',
-                        listStyleType: 'none',
-                        listStylePosition: 'inside',
-                        //   fontSize: '18pt',
-                        //   marginLeft: '20px',
-                    }}
-                >
-                    {content}
+                {/* <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr> */}
 
-                    {/* Add your content here */}
-                </div>
+                <ChosenLayoutNonCover
+                    content={content}
+                    user_name={user_name}
+                    title={title}
+                    topic={topic}
+                    subtopic={subtopic}
+                    imgs={imgs}
+                    update_callback={update_callback}
+                    canEdit={canEdit}
+                    autoSave={autoSave}
+                    isCoverPage={isCoverPage}
+                    layoutOptionNonCover={layoutOptionNonCover}
+                    layoutOptionCover={layoutOptionCover}
+                    customizableElements={customizableElements}
+                ></ChosenLayoutNonCover>
             </div>
             {/* for cover page */}
+
             <div
                 className={`${
                     isCoverPage
-                        ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-row justify-start items-start box-border border-none relativep-[28px] gap-[32px]  text-white'
+                        ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-row gap-[2rem] justify-start items-start box-border border-none relative '
                         : 'hidden'
-                } ${customizableElements.backgroundColorCover}`}
+                } ${customizableElements.backgroundColorCover} `}
             >
-                <div
-                    className={`flex flex-col justify-center h-full pl-[5rem]`}
-                >
-                    <Image
-                        src={StanfordLogoLetters}
-                        alt='Standford Logo Letters'
-                        className='w-[20rem] h-auto'
-                    />
-                    <div className='text-white text-6xl font-bold leading-[100%]'>
-                        {title}
-                    </div>
-                    <div className=' text-white text-3xl font-normal leading-[100%]'>
-                        {user_name}
-                    </div>
-                </div>
+                <ChosenLayoutCover
+                    content={content}
+                    user_name={user_name}
+                    title={title}
+                    topic={topic}
+                    subtopic={subtopic}
+                    imgs={imgs}
+                    update_callback={update_callback}
+                    canEdit={canEdit}
+                    autoSave={autoSave}
+                    isCoverPage={isCoverPage}
+                    layoutOptionNonCover={layoutOptionNonCover}
+                    layoutOptionCover={layoutOptionCover}
+                    customizableElements={customizableElements}
+                ></ChosenLayoutCover>
             </div>
-
             {/* School Logo (Replace the placeholder with the actual logo URL) */}
-            <div className='fixed inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex'>
+            <div className='fixed inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]'>
                 <Image
                     src={StanfordLogo}
                     alt='Standford Logo'
-                    className='w-16 h-16 mr-4'
+                    className='w-[3.75rem] h-auto'
                 />
                 <div
                     className={`grow basis-0 opacity-50 border ${
