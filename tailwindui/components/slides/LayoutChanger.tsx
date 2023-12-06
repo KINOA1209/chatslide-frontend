@@ -86,7 +86,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
         <div className='grow md:grow-0'></div>
         <Transition
           className='bg-gray-100 w-full h-3/4 md:h-fit
-                    md:max-w-2xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
+                    md:max-w-3xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
                     overflow-hidden flex flex-col p-4'
           show={showLayout}
           enter='transition ease duration-500 transform delay-300'
@@ -108,7 +108,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
               <div className='w-full h-full'>
                 <div className='w-full h-full flex flex-col'>
                   <div className='w-full h-full overflow-y-auto'>
-                    <div className='w-full h-fit grid grid-cols-2 gap-4 p-2'>
+                    <div className='w-full h-fit grid grid-cols-3 gap-4 p-2'>
                       {/* {currentSlideIndex === 0
                         ? templateSamples.cover.map((temp, index) => {
                             if (!slides[currentSlideIndex]) {

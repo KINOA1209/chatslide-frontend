@@ -269,7 +269,7 @@ const Subscription = () => {
 
     <div className='w-full pb-4'>
       {showModal &&
-        <FeedbackForm onClose={() => setShowModal(false)} message="😭 We are sorry to see you go!" successDiv={cancelButton}/>
+        <FeedbackForm onClose={() => setShowModal(false)} message="😭 We are sorry to see you go!" successDiv={cancelButton} textRequired={true}/>
       }
 
       <div className="mb-8 w-full max-w-none 2xl:max-w-[80%] mx-auto px-4 sm:px-6">

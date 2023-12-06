@@ -115,7 +115,7 @@ export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({ href }) 
       onClick={() => router.push(href)}
     >
       <LeftTurnArrowIcon></LeftTurnArrowIcon>
-      <div className='text-center self-center text-gray-700 font-medium font-creato-medium leading-normal tracking-[0.035rem] whitespace-nowrap block'>
+      <div className='text-center self-center text-gray-700 font-medium font-creato-medium leading-normal tracking-[0.035rem] whitespace-nowrap hidden sm:block'>
         Back
       </div>
     </div>

@@ -74,7 +74,7 @@ export default function WorkflowStep2() {
         nextIsPaidFeature={false}
         showGPTToggle={true}
         setIsGpt35={setIsGpt35}
-        nextText={!isSubmitting ? 'Next' : 'Creating Slides'}
+        nextText={!isSubmitting ? 'Create Slides' : 'Creating Slides'}
       />
 
       {outlineContent && (
