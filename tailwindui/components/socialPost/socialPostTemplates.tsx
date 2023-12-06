@@ -59,7 +59,7 @@ const useLocalImgs = (imgs: string[], imgCount: number, update_callback: (imgs: 
             const newLocalImgs = [...localImgs];
             newLocalImgs[index] = url;
             setLocalImgs(newLocalImgs);
-            console.log('updateLocalImgs', newLocalImgs)
+            //console.log('updateLocalImgs', newLocalImgs)
         };
         return updateLocalImgs;
     };
@@ -376,7 +376,7 @@ export const First_page_img_1_template3 = ({illustration, title, border_start, b
                     backgroundClip: 'content-box, border-box',
                 }}
             >
-                <div className="mx-[auto] mt-[12%]">{title}</div>
+                <div className="mx-[auto]">{title}</div>
                 <div 
                     className="w-full h-1/2 flex"
                     style={{
