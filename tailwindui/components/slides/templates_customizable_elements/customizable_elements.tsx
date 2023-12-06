@@ -17,6 +17,8 @@ export type TemplateElements = {
 
 type Config = {
     Stanford: TemplateElements;
+    Berkeley: TemplateElements;
+    Harvard: TemplateElements;
     Default: TemplateElements;
 };
 
@@ -28,14 +30,48 @@ const configData: Config = {
             'text-3xl font-nimbus-sans-bold font-bold leading-[110%] whitespace-nowrap',
         titleFontColor: 'text-[#8C1515]',
         subtopicFont:
-            'opacity-70 text-opacity-40 text-xl font-normal leading-[150%]',
+            'opacity-70 font-nimbus-sans-bold text-opacity-40 text-xl font-normal leading-[150%]',
         subtopicFontColor: 'text-red-800',
-        contentFont: 'text-base font-normal leading-9 ',
+        contentFont:
+            'text-base font-nimbus-sans-regular font-normal leading-9 ',
         contentFontColor: 'text-zinc-800',
-        userNameFont: 'text-sm font-normal leading-[120%]',
+        userNameFont:
+            'text-sm font-nimbus-sans-regular font-normal leading-[120%]',
         userNameFontColor: 'text-white',
-        headFont: 'text-4xl font-bold leading-[120%]',
+        headFont: 'text-4xl font-nimbus-sans-bold font-bold leading-[120%]',
         headFontColor: 'text-white',
+    },
+    Berkeley: {
+        backgroundColorCover: 'bg-[#003262]',
+        backgroundColor: 'bg-[#F0F2F5]',
+        titleFont:
+            'text-3xl leading-[120%] font-sans font-bold whitespace-nowrap',
+        titleFontColor: 'text-[#003262]',
+        subtopicFont: 'text-xl font-semibold leading-[120%] font-sans',
+        subtopicFontColor: 'text-[#525252]',
+        contentFont: 'text-base font-normal font-sans leading-[120%]',
+        contentFontColor: 'text-[#1B1B1B]',
+        userNameFont: 'text-sm font-normal font-sans leading-[120%]',
+        userNameFontColor: 'text-white',
+        headFont: 'text-4xl font-bold font-sans leading-[120%]',
+        headFontColor: 'text-white',
+    },
+    Harvard: {
+        backgroundColorCover: 'bg-[#F0F0F2]',
+        backgroundColor: 'bg-[#F0F0F2]',
+        titleFont:
+            "text-3xl font-normal font-['Georgia'] leading-[120%] whitespace-nowrap",
+        titleFontColor: 'text-neutral-800 ',
+        subtopicFont: "text-xxl font-bold font-['Arial'] leading-[120%]",
+        subtopicFontColor: 'text-neutral-700',
+        contentFont:
+            "opacity-70 text-base font-normal font-['Arial'] leading-loose",
+        contentFontColor: 'text-neutral-700 ',
+        userNameFont:
+            "opacity-70 text-sm font-normal font-['Arial'] leading-loose",
+        userNameFontColor: 'text-neutral-700',
+        headFont: "text-4xl font-normal font-['Gorgia'] leading-[120%]",
+        headFontColor: 'text-neutral-800',
     },
     Default: {
         backgroundColorCover: 'bg-[#F0F0F2]',
