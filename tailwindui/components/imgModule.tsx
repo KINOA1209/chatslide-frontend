@@ -44,8 +44,10 @@ export const ImgModule = ({
         ImgQueryMode.RESOURCE
     );
 
+    const [uploading, setUploading] = useState(false);
+
     useEffect(() => {
-        // console.log(selectedQueryMode);
+        console.log(selectedQueryMode);
     }, [selectedQueryMode]);
 
     useEffect(() => {
@@ -192,6 +194,7 @@ export const ImgModule = ({
         const { userId, idToken } =
             await AuthService.getCurrentUserTokenAndId();
         const body = new FormData();
+        setUploading(true);
         body.append('file', file);
         const response = await fetch('/api/upload_user_file', {
             method: 'POST',
@@ -202,17 +205,6 @@ export const ImgModule = ({
         })
             .then((response) => {
                 if (response.ok) {
-                    toast.success('File uploaded successfully', {
-                        position: 'top-center',
-                        autoClose: 2000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: 'light',
-                        containerId: 'slides',
-                    });
                     return response.json();
                 } else {
                     toast.error('File upload failed', {
@@ -234,6 +226,7 @@ export const ImgModule = ({
                 fetchFiles(file_id);
             })
             .catch((error) => console.error);
+        setUploading(false);
     };
 
     // useEffect(() => {
@@ -792,15 +785,20 @@ export const ImgModule = ({
                             <div className='w-full flex flex-wrap'>
                                 <div className='w-full'>
                                     <button
-                                        className='btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full rounded-lg'
+                                        className='btn text-white font-bold bg-blue-600 disabled:bg-gray-400 w-full rounded-lg '
                                         type='button'
+                                        disabled={uploading || searching}
                                         onClick={(e) => {
                                             e.preventDefault();
                                             closeModal();
                                             autoSave();
                                         }}
                                     >
-                                        Done
+                                        {uploading
+                                            ? 'Uploading'
+                                            : searching
+                                            ? 'Searching'
+                                            : 'Done'}
                                     </button>
                                 </div>
                             </div>
