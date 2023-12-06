@@ -148,11 +148,6 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
         {/* slides contents */}
         <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} transcriptList={transcriptList} />
 
-        {/* <PreviousTranscriptForm
-          isSubmitting={isSubmitting}
-          setIsSubmitting={setIsSubmitting}
-          finalSlides={finalSlides}
-        /> */}
       </div>
     </div>
   )
