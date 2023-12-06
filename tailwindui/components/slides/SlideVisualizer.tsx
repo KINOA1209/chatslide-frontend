@@ -106,8 +106,6 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
           'image_files',
           JSON.stringify(resp.data.image_files)
         )
-        // Redirect to a new page with the data
-        router.push('/workflow-edit-script')
       } else {
         alert('Request failed: ' + response.status)
         console.log(response)
