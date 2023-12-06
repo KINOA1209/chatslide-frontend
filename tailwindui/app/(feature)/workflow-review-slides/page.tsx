@@ -51,7 +51,7 @@ export default function WorkflowStep3() {
         isPaidUser={isPaidUser} 
         contentRef={contentRef} 
         nextIsPaidFeature={true} 
-        nextText={!isSubmitting? 'Next' : 'Writing Scripts'}
+        nextText={!isSubmitting? 'Write Scripts' : 'Writing Scripts'}
         showGPTToggle={true}
         setIsGpt35={setIsGpt35}
       />
