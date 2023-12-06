@@ -189,7 +189,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                 if (index === 0) {
                     if (res_scenario === 'casual_topic'){
                         slide.template = slideData.template || 'First_page_img_1'
-                        slide.keywords = (slideData.keywords.includes('|') && slideData.keywords.length > 1 ? slideData.keywords : [slideData.keywords.join(' | ')])
                     }
                     else if (res_scenario === 'serious_subject'){
                         slide.English_title = slideData.English_title
@@ -201,8 +200,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                 }
                 else {
                     if (res_scenario === 'casual_topic'){
-                        slide.template = slideData.template || 'Col_1_img_0'
-                        slide.keywords = slideData.keywords || ''
+                        slide.template = slideData.template || 'Col_1_img_0'  
                     }
                     else if (res_scenario === 'serious_subject'){
                         slide.template = slideData.template || 'img_0_template2'
@@ -211,6 +209,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                         slide.template = slideData.template || 'img_1_template3'
                     }      
                 }
+                slide.keywords = slideData.keywords || ''
                 slide.topic = slideData.topic || 'Your topic here'
                 slide.subtopic = slideData.subtopic
                 slide.images = slideData.images
