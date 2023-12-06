@@ -33,5 +33,4 @@ export default interface Project {
   post_type: string;
   social_platform: string;
   social_posts: string;
-  social_post_images: string;
 }
