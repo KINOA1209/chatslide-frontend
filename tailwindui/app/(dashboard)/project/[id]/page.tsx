@@ -113,9 +113,6 @@ const ProjectLoading = () => {
                 if (project.social_posts) {
                     sessionStorage.setItem('socialPost', project.social_posts);
                 }
-                if (project.social_post_images) {
-                    sessionStorage.setItem('socialPostImages', project.social_post_images);
-                }
             }
             handleRedirect(content_type);
         }
