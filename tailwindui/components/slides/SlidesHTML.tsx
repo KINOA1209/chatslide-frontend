@@ -642,8 +642,16 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
     return (
         <div className='flex flex-col items-center justify-center gap-4'>
+            {!isViewing && (
+                <div className='py-2 hidden sm:block'>
+                    <ChangeTemplateOptions
+                        templateOptions={Object.keys(availableTemplates)}
+                        onChangeTemplate={changeTemplate}
+                    />
+                </div>
+            )}
             {/* buttons and contents */}
-            <div className='max-w-4xl relative flex flex-row items-center justify-center gap-4'>
+            <div className='max-w-4xl relative flex flex-row items-center justify-center gap-4 '>
                 <ToastContainer />
 
                 <SlideLeftNavigator
@@ -734,20 +742,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                     ></div>
                 )}
             </div>
-            <SlidePagesIndicator
-                currentSlideIndex={currentSlideIndex}
-                slides={slides}
-                goToSlide={goToSlide}
-            />
-
-            {!isViewing && (
-                <div className='py-2 hidden sm:block'>
-                    <ChangeTemplateOptions
-                        templateOptions={Object.keys(availableTemplates)}
-                        onChangeTemplate={changeTemplate}
-                    />
-                </div>
-            )}
+            <div className='py-[1rem]'>
+                <SlidePagesIndicator
+                    currentSlideIndex={currentSlideIndex}
+                    slides={slides}
+                    goToSlide={goToSlide}
+                />
+            </div>
 
             {/* preview little image */}
 
