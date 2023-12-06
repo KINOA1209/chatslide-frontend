@@ -41,7 +41,6 @@ export const templateDispatch = (
                 content={slide.title}
                 handleBlur={(newContent) => handleSlideEdit(newContent, index, 'title')}
                 style={{
-                    //fontSize: '60px',
                     color: '#121212',
                     fontFamily: 'Cormorant, sans-serif',
                 }}
