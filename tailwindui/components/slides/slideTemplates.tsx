@@ -177,7 +177,7 @@ export const Default = ({
 
 export const availableTemplates = {
     Stanford: Stanford_school_template,
-    //   Berkeley: Berkeley_school_template,
-    //   Harvard: Harvard_school_template,
+    Berkeley: Berkeley_school_template,
+    Harvard: Harvard_school_template,
     Default: Default,
 };
