@@ -102,7 +102,7 @@ export const Default = ({
                     isCoverPage
                         ? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-row gap-[2rem] justify-start items-start box-border border-none relative '
                         : 'hidden'
-                } ${customizableElements.backgroundColor} `}
+                } ${customizableElements.backgroundColorCover} `}
             >
                 <ChosenLayoutCover
                     content={content}

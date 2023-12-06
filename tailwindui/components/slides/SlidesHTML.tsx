@@ -31,7 +31,7 @@ import { useRouter } from 'next/navigation';
 import { availableLayouts } from './slideLayout';
 import TestSlidesData from './TestSlidesData.json';
 import AuthService from '@/services/AuthService';
-import customizable_elements from './templates_customizable_elements/customizable_elements.json';
+import customizable_elements from './templates_customizable_elements/customizable_elements';
 export interface SlideElement {
     type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
     className:

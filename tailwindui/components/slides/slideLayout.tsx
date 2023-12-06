@@ -11,6 +11,7 @@ import col1img1_png from '@/public/images/template/layout/col1img1.png';
 import col3img3_png from '@/public/images/template/layout/col3img3.png';
 import col2img2_png from '@/public/images/template/layout/col2img2.png';
 import { useLocalImgs } from './slideTemplates';
+import { TemplateElements } from './templates_customizable_elements/customizable_elements';
 export type LayoutKeys =
     | ''
     | 'Cover_img_0_layout'
@@ -26,7 +27,7 @@ export type LayoutKeys =
 // Extend the interface with new fields
 interface MainSlideProps extends BaseMainSlideProps {
     brandingColor?: string;
-    customizableElements: {};
+    customizableElements: TemplateElements;
     showContentBulletPoint?: boolean;
 }
 
@@ -44,20 +45,25 @@ export const Cover_img_0_layout = ({
     layoutOptionNonCover,
     layoutOptionCover,
     brandingColor,
+    customizableElements,
 }: MainSlideProps) => {
     return (
         <>
             <div
                 className={`pt-[1rem] px-[2rem] w-full flex flex-col justify-start h-full gap-[2rem]`}
             >
-                <div className='text-[#3D3D3D] text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]'>
+                <div
+                    className={`${customizableElements.userNameFont} ${customizableElements.userNameFontColor}`}
+                >
                     {user_name}
                 </div>
                 <div
                     className={`pl-[2rem] basis-0 opacity-50 border
                 border-black border-opacity-40 mt-4`}
                 ></div>
-                <div className='text-neutral-800 text-4xl font-normal font-creato-medium leading-[120%] tracking-tight pl-[2rem]'>
+                <div
+                    className={`${customizableElements.headFont} ${customizableElements.headFontColor} pl-[2rem]`}
+                >
                     {title}
                 </div>
             </div>
@@ -78,6 +84,7 @@ export const Cover_img_1_layout = ({
     layoutOptionNonCover,
     layoutOptionCover,
     brandingColor,
+    customizableElements,
 }: MainSlideProps) => {
     const { localImgs, updateImgAtIndex } = useLocalImgs(
         imgs,
@@ -89,14 +96,18 @@ export const Cover_img_1_layout = ({
             <div
                 className={`pt-[1rem] px-[2rem] w-1/2 flex flex-col justify-start h-full gap-[2rem]`}
             >
-                <div className='text-[#3D3D3D] text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]'>
+                <div
+                    className={`${customizableElements.userNameFont} ${customizableElements.userNameFontColor}`}
+                >
                     {user_name}
                 </div>
                 <div
                     className={`pl-[2rem] basis-0 opacity-50 border
                 border-black border-opacity-40 mt-4`}
                 ></div>
-                <div className='text-neutral-800 text-4xl font-normal font-creato-medium leading-[120%] tracking-tight pl-[2rem]'>
+                <div
+                    className={`${customizableElements.headFont} ${customizableElements.headFontColor} pl-[2rem]`}
+                >
                     {title}
                 </div>
             </div>
@@ -125,13 +136,18 @@ export const Col_1_img_0_layout = ({
     layoutOptionNonCover,
     layoutOptionCover,
     brandingColor,
+    customizableElements,
 }: MainSlideProps) => {
     return (
         <>
-            <div className=' text-black text-3xl font-bold font-creato-medium leading-[100%] pb-[2rem]'>
+            <div
+                className={`${customizableElements.titleFont} ${customizableElements.titleFontColor} pb-[2rem]`}
+            >
                 {topic}
             </div>
-            <div className='mix-blend-hard-light text-neutral-900 text-base font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]'>
+            <div
+                className={`mix-blend-hard-light ${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
+            >
                 {subtopic}
             </div>
             <div className='h-full w-full flex flex-row overflow-hidden gap-[2.5rem] mt-[1rem] overflow-y-scroll'>
@@ -143,7 +159,7 @@ export const Col_1_img_0_layout = ({
                                 {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
                                 <ul
                                     key={index}
-                                    className='flex flex-row w-full h-full grow pl-4 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-disc'
+                                    className={`flex flex-row w-full h-full grow pl-4 list-disc ${customizableElements.contentFont} ${customizableElements.contentFontColor}`}
                                 >
                                     <li>{item}</li>
                                 </ul>
@@ -168,16 +184,20 @@ export const Col_2_img_0_layout = ({
     isCoverPage,
     layoutOptionNonCover,
     layoutOptionCover,
+    customizableElements,
 }: MainSlideProps) => {
     return (
         <>
-            {' '}
-            <div className=' text-black text-3xl font-bold font-creato-medium leading-[100%] pb-[2rem]'>
+            <div
+                className={`${customizableElements.titleFont} ${customizableElements.titleFontColor} pb-[2rem]`}
+            >
                 {topic}
             </div>
-            <div className='mix-blend-hard-light text-neutral-900 text-base font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]'>
+            <div
+                className={`mix-blend-hard-light ${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
+            >
                 {subtopic}
-            </div>{' '}
+            </div>
             <div className='h-full w-full grid grid-cols-2 gap-[2.5rem] overflow-y-scroll'>
                 {content.map((item, index) => (
                     <div className='flex flex-col gap-[1rem]'>
@@ -187,7 +207,7 @@ export const Col_2_img_0_layout = ({
                         <div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
                         <ul
                             key={index}
-                            className='flex flex-row w-full h-full grow pl-4 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-disc'
+                            className={`flex flex-row w-full h-full grow pl-4 list-disc ${customizableElements.contentFont} ${customizableElements.contentFontColor}`}
                         >
                             <li>{item}</li>
                         </ul>
@@ -210,16 +230,20 @@ export const Col_3_img_0_layout = ({
     isCoverPage,
     layoutOptionNonCover,
     layoutOptionCover,
+    customizableElements,
 }: MainSlideProps) => {
     return (
         <>
-            {' '}
-            <div className=' text-black text-3xl font-bold font-creato-medium leading-[100%] pb-[2rem]'>
+            <div
+                className={`${customizableElements.titleFont} ${customizableElements.titleFontColor} pb-[2rem]`}
+            >
                 {topic}
             </div>
-            <div className='mix-blend-hard-light text-neutral-900 text-base font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]'>
+            <div
+                className={`mix-blend-hard-light ${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
+            >
                 {subtopic}
-            </div>{' '}
+            </div>
             <div className='h-full w-full grid grid-cols-3 gap-[2.5rem] overflow-y-scroll'>
                 {content.map((item, index) => (
                     <div className='flex flex-col gap-[1rem]'>
@@ -229,7 +253,7 @@ export const Col_3_img_0_layout = ({
                         <div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
                         <ul
                             key={index}
-                            className='flex flex-row w-full h-full grow pl-4 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-disc'
+                            className={`flex flex-row w-full h-full grow pl-4 list-disc ${customizableElements.contentFont} ${customizableElements.contentFontColor}`}
                         >
                             <li>{item}</li>
                         </ul>
@@ -252,6 +276,7 @@ export const Col_1_img_1_layout = ({
     isCoverPage,
     layoutOptionNonCover,
     layoutOptionCover,
+    customizableElements,
 }: MainSlideProps) => {
     const { localImgs, updateImgAtIndex } = useLocalImgs(
         imgs,
@@ -264,10 +289,14 @@ export const Col_1_img_1_layout = ({
             <div className='h-1/3 w-full grid grid-cols-2 gap-[2.5rem]'>
                 {/* col1 for topic and subtopic */}
                 <div className='flex flex-col gap-[0.5rem]'>
-                    <div className=' text-black text-3xl font-bold font-creato-medium leading-[100%]'>
+                    <div
+                        className={`${customizableElements.titleFont} ${customizableElements.titleFontColor} pb-[2rem]`}
+                    >
                         {topic}
                     </div>
-                    <div className='mix-blend-hard-light text-neutral-900 text-base font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]'>
+                    <div
+                        className={`mix-blend-hard-light ${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
+                    >
                         {subtopic}
                     </div>
                 </div>
@@ -281,7 +310,7 @@ export const Col_1_img_1_layout = ({
                                     {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
                                     <ul
                                         key={index}
-                                        className='flex flex-row w-full h-full grow pl-4 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-disc'
+                                        className={`flex flex-row w-full h-full grow pl-4 list-disc ${customizableElements.contentFont} ${customizableElements.contentFontColor}`}
                                     >
                                         <li>{item}</li>
                                     </ul>
@@ -317,6 +346,7 @@ export const Col_2_img_1_layout = ({
     isCoverPage,
     layoutOptionNonCover,
     layoutOptionCover,
+    customizableElements,
 }: MainSlideProps) => {
     const { localImgs, updateImgAtIndex } = useLocalImgs(
         imgs,
@@ -328,12 +358,14 @@ export const Col_2_img_1_layout = ({
             <div
                 className={`w-1/2 flex flex-col items-start h-full gap-[0.5rem]`}
             >
-                {/* topic */}
-                <div className=' text-black text-3xl font-bold font-creato-medium leading-[100%]'>
+                <div
+                    className={`${customizableElements.titleFont} ${customizableElements.titleFontColor} pb-[2rem]`}
+                >
                     {topic}
                 </div>
-                {/* subtopic */}
-                <div className='mix-blend-hard-light text-neutral-900 text-base font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]'>
+                <div
+                    className={`mix-blend-hard-light ${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
+                >
                     {subtopic}
                 </div>
                 {/* contents */}
@@ -346,7 +378,7 @@ export const Col_2_img_1_layout = ({
                                     {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
                                     <ul
                                         key={index}
-                                        className='flex flex-row w-full h-full grow pl-4 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-disc'
+                                        className={`flex flex-row w-full h-full grow pl-4 list-disc ${customizableElements.contentFont} ${customizableElements.contentFontColor}`}
                                     >
                                         <li>{item}</li>
                                     </ul>
@@ -383,6 +415,7 @@ export const Col_2_img_2_layout = ({
     isCoverPage,
     layoutOptionNonCover,
     layoutOptionCover,
+    customizableElements,
 }: MainSlideProps) => {
     const { localImgs, updateImgAtIndex } = useLocalImgs(
         imgs,
@@ -392,12 +425,14 @@ export const Col_2_img_2_layout = ({
     return (
         <>
             <div className='flex flex-col justify-center items-center gap-[0.5rem] overflow-y-scroll'>
-                {/* topic */}
-                <div className=' text-black text-3xl font-bold font-creato-medium leading-[100%]'>
+                <div
+                    className={`${customizableElements.titleFont} ${customizableElements.titleFontColor} pb-[2rem]`}
+                >
                     {topic}
                 </div>
-                {/* subtopic */}
-                <div className='mix-blend-hard-light text-neutral-900 text-base font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]'>
+                <div
+                    className={`mix-blend-hard-light ${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
+                >
                     {subtopic}
                 </div>
                 {/* two columns of images */}
@@ -426,7 +461,7 @@ export const Col_2_img_2_layout = ({
                             {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
                             <ul
                                 key={index}
-                                className='flex flex-row w-full h-full grow pl-4 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-disc'
+                                className={`flex flex-row w-full h-full grow pl-4 list-disc ${customizableElements.contentFont} ${customizableElements.contentFontColor}`}
                             >
                                 <li>{item}</li>
                             </ul>
@@ -450,6 +485,7 @@ export const Col_3_img_3_layout = ({
     isCoverPage,
     layoutOptionNonCover,
     layoutOptionCover,
+    customizableElements,
 }: MainSlideProps) => {
     const { localImgs, updateImgAtIndex } = useLocalImgs(
         imgs,
@@ -459,12 +495,14 @@ export const Col_3_img_3_layout = ({
     return (
         <>
             <div className='flex flex-col justify-center items-center gap-[0.5rem] overflow-y-scroll'>
-                {/* topic */}
-                <div className=' text-black text-3xl font-bold font-creato-medium leading-[100%]'>
+                <div
+                    className={`${customizableElements.titleFont} ${customizableElements.titleFontColor} pb-[2rem]`}
+                >
                     {topic}
                 </div>
-                {/* subtopic */}
-                <div className='mix-blend-hard-light text-neutral-900 text-base font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]'>
+                <div
+                    className={`mix-blend-hard-light ${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
+                >
                     {subtopic}
                 </div>
                 {/* three columns of images */}
@@ -501,7 +539,7 @@ export const Col_3_img_3_layout = ({
                             {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
                             <ul
                                 key={index}
-                                className='flex flex-row w-full h-full grow pl-4 text-neutral-900 text-opacity-70 text-sm font-normal font-creato-medium leading-[140%] tracking-[0.025rem] list-disc'
+                                className={`flex flex-row w-full h-full grow pl-4 list-disc ${customizableElements.contentFont} ${customizableElements.contentFontColor}`}
                             >
                                 <li>{item}</li>
                             </ul>
