@@ -105,7 +105,7 @@ export const First_page_img_1 = ({ topic, keywords, imgs, border_start, border_e
             >
                 <div className="mt-[10%] px-[4%] z-[30]">{topic}</div>
                 <div
-                    className="mb-[6%] mx-[auto] text-center z-[20]"
+                    className="mb-[6%] mx-[auto] z-[20]"
                     style={{
                         border: '3px solid #FFF',
                         borderRadius: '5px',
@@ -169,7 +169,6 @@ export const Col_2_img_1 = ({subtopic, content, keywords, imgs, icon, border_sta
     const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback);
 
     return <div
-        className="overflow-hidden"
         style={{
             width: '100%',
             height: '100%',
@@ -186,10 +185,10 @@ export const Col_2_img_1 = ({subtopic, content, keywords, imgs, icon, border_sta
             backgroundImage: `url('/images/socialpost/template1_bg.png')`
         }}>
             <div className="w-full h-full flex flex-col justify-between">
-                <div className="w-full px-[4%]">{keywords}</div>
-                <div className='w-full px-[4%]'>{subtopic}</div>
+                <div className="w-full">{keywords}</div>
+                <div className='w-full'>{subtopic}</div>
                 <div 
-                    className="h-full w-full flex flex-col rounded-lg"
+                    className="h-[73%] w-full flex flex-col rounded-lg"
                     style={{
                         border: 'double 4px transparent',
                         borderRadius: '30px',
@@ -198,8 +197,14 @@ export const Col_2_img_1 = ({subtopic, content, keywords, imgs, icon, border_sta
                         backgroundClip: 'content-box, border-box'
                     }}
                 >
-                    <div className="grow mt-[5%] mx-[5%] ">{content}</div>
-                    <div className="w-full h-full grow rounded-md">
+                    <div className="mt-[5%]">{content}</div>
+                    <div 
+                        className="w-full h-[auto] rounded-md overflow-hidden"
+                        style={{
+                            borderBottomLeftRadius: '26px',
+                            borderBottomRightRadius: '26px',
+                        }}
+                    >
                         <ImgModuleSlide 
                             imgsrc={localImgs[0]} 
                             updateSingleCallback={updateImgAtIndex(0)} 
@@ -217,7 +222,7 @@ export const Col_2_img_1 = ({subtopic, content, keywords, imgs, icon, border_sta
     </div>
 }
 
-export const First_page_img_1_template2 = ({ original_title, English_title, imgs, icon, update_callback, canEdit, autoSave }: MainSlideProps) => {
+export const First_page_img_1_template2 = ({ original_title, imgs, icon, update_callback, canEdit, autoSave }: MainSlideProps) => {
     const { localImgs, updateImgAtIndex } = useLocalImgs(imgs, 1, update_callback);
     const [username, setUsername] = useState(null)
     
@@ -236,7 +241,6 @@ export const First_page_img_1_template2 = ({ original_title, English_title, imgs
 
     return (
         <div
-            className="overflow-hidden"
             style={{
                 width: '100%',
                 height: '100%',
@@ -248,7 +252,7 @@ export const First_page_img_1_template2 = ({ original_title, English_title, imgs
             }}>
             <div className="w-full h-full flex flex-col justify-between">
                 <div className="w-full flex flex-col">
-                        <div className="px-[2%] mr-[auto] flex items-end" style={h5Style}>
+                        <div className="mx-[3%] px-[2%] mr-[auto] flex items-end" style={h5Style}>
                             <div className="flex justify-start" >
                                 by {username}
                             </div>
@@ -273,7 +277,6 @@ export const img_0_template2 = ({ section_title, original_title, brief, content,
 
     return (
         <div
-            className="overflow-hidden"
             style={{
                 width: '100%',
                 height: '100%',
@@ -289,7 +292,7 @@ export const img_0_template2 = ({ section_title, original_title, brief, content,
                 backgroundImage: `url('/images/socialpost/template2_bg.png')`,
         }}>
             <div 
-                className="w-full h-[7%]" 
+                className="w-full h-[8%]" 
                 style={{
                     borderBottom: '1px solid #E7E5E5',
                 }}>
@@ -317,12 +320,12 @@ export const img_0_template2 = ({ section_title, original_title, brief, content,
                 </div>
             </div>
             <div 
-                className="overflow-hidden w-full h-[75%]"
+                className="w-full h-[75%]"
                 style={{
                     borderBottom: '1px solid #E7E5E5',
                 }}>
                 <div 
-                    className='h-full px-[2%] mx-[4%] flex justify-start flex-col'
+                    className='h-[auto] px-[2%] mx-[4%] flex justify-start flex-col'
                     style={{
                         borderLeft: '1px solid #E7E5E5',
                         borderRight: '1px solid #E7E5E5',
@@ -351,7 +354,6 @@ export const First_page_img_1_template3 = ({illustration, title, border_start, b
     const { localImgs, updateImgAtIndex } = useLocalImgs(illustration, 1, update_callback);
     return (
         <div
-            className="overflow-hidden gap-[32px]"
             style={{
                 width: '100%',
                 height: '100%',
@@ -372,22 +374,9 @@ export const First_page_img_1_template3 = ({illustration, title, border_start, b
                     backgroundImage: `linear-gradient(white, white), radial-gradient(circle at top left, ${border_start}, ${border_end})`,
                     backgroundOrigin: 'border-box',
                     backgroundClip: 'content-box, border-box',
-                    fontFamily: 'Cormorant, sans-serif',
                 }}
             >
-                <div 
-                    className="mx-[auto] mt-[12%] text-center"
-                    style={{
-                        fontSize: '60px',
-                        fontStyle: 'normal',
-                        fontWeight: '500',
-                        lineHeight: '70px',
-                        color: '#121212',
-                        zIndex: 1
-                    }}
-                >
-                    {title}
-                </div>
+                <div className="mx-[auto] mt-[12%]">{title}</div>
                 <div 
                     className="w-full h-1/2 flex"
                     style={{
@@ -409,7 +398,6 @@ export const img_1_template3 = ({ illustration, quote, source, border_start, bor
     const { localImgs, updateImgAtIndex } = useLocalImgs(illustration, 1, update_callback);
     return (
         <div
-            className="overflow-hidden gap-[32px]"
             style={{
                 width: '100%',
                 height: '100%',
@@ -446,30 +434,9 @@ export const img_1_template3 = ({ illustration, quote, source, border_start, bor
                         autoSave={autoSave}
                     />
                 </div>
-                <div
-                    id='asterisk_section'
-                    className="mx-[auto] text-center">
-                    *
-                </div>
-                <div 
-                    className="mx-[auto] px-[7%] text-center"
-                    style={{
-                        fontSize: '18px',
-                        fontStyle: 'normal',
-                        fontWeight: '500',
-                        lineHeight: '155%',
-                        color: '#1D222A'
-                    }}
-                >
-                    {quote}
-                </div>
-                <div
-                    id='source_section'
-                    className="mx-[auto] mb-[10%] text-center"
-                >
-                    {source}
-                </div>
-               
+                <div id='asterisk_section' className="mx-[auto] text-center">*</div>
+                <div className="px-[7%]">{quote}</div>
+                <div id='source_section' className="mb-[10%]">{source}</div>
             </div>
         </div>
     )
