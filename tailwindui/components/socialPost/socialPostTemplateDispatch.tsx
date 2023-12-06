@@ -6,7 +6,9 @@ import {
     CompanyIconWhite,
 } from '@/components/socialPost/socialPostIcons'
 import React, { useEffect, useRef } from 'react';
-import QuillEditable from './quillEditor'
+import dynamic from 'next/dynamic';
+
+const QuillEditable = dynamic(() => import('./quillEditor'), { ssr: false });
 
 export const templateDispatch = (
     slide: SocialPostSlide,
