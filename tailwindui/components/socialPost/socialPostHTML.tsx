@@ -511,8 +511,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
         }
     }
 
-    console.log(finalSlides)
-
     return (
         <div>
         <div className='flex flex-col items-center justify-center gap-4'>
