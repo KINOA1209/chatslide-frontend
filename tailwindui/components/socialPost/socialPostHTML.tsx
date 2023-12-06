@@ -220,7 +220,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                 slide.original_title = slideData.original_title || cover_title
                 slide.title = slideData.title || ''
                 slide.illustration = slideData.illustration !== null ? slideData.illustration : ['https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png']
-                slide.quote = slideData.quote !== undefined ? (slideData.quote.includes('"') ? slideData.quote : '"' + slideData.quote + '"') : ''
+                slide.quote = slideData.quote || 'Your quote here'
                 slide.source = slideData.source || ''
 
                 return slide
