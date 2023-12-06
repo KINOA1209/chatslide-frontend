@@ -27,16 +27,16 @@
 }
 
 @font-face {
-    font-family: 'template1_cover_keyword';
-    src: url('/fonts/casual_topic_fonts/Nunito-Regular_Content.ttf')format('truetype');
+    font-family: 'BDOGrotesk';
+    src: url('/fonts/serious_topic_fonts/BDOGrotesk-Regular.ttf')format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
 @font-face {
-    font-family: 'template2_content';
-    src: url('/fonts/serious_topic_fonts/BDOGrotesk-Regular.otf')format('opentype');
+    font-family: 'BDOGrotesk';
+    src: url('/fonts/casual_topic_fonts/BDOGrotesk-Bold.ttf')format('truetype');
+    font-weight: bold;
+    font-style: normal;
 }
 
-@font-face {
-    font-family: 'template2_section_title';
-    src: url('/fonts/serious_topic_fonts/BDOGrotesk-Bold.otf')format('opentype');
-}

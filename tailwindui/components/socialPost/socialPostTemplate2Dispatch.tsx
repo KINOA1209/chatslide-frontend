@@ -6,6 +6,7 @@ import {
     CompanyIconBlack,
     CompanyIconWhite,
 } from '@/components/socialPost/socialPostIcons'
+import QuillEditable from './quillEditor'
 
 export const templateDispatch = (
     slide: SocialPostSlide,
@@ -15,7 +16,7 @@ export const templateDispatch = (
     editMathMode: boolean = false,
     saveSlides: (slides: SocialPostSlide[]) => void = () => {},  // Replace with your default function if you have one
     setIsEditMode: (isEditMode: boolean) => void = () => {},  // Replace with your default function if you have one
-    handleSlideEdit: (content: string | string[], index: number, tag: SlideKeys) => void = () => {},  // Replace with your default function if you have one
+    handleSlideEdit: (content: string | string[], index: number, tag: SlideKeys, contentIndex?:number) => void = () => {},  // Replace with your default function if you have one
     updateImgUrlArray: (slideIndex: number) => (urls: string[]) => void = () => () => {},  // Replace with your default function if you have one
     updateIllustrationUrlArray: (slideIndex: number) => (urls: string[]) => void = () => () => {},
     toggleEditMathMode: () => void = () => {},  // Replace with your default function if you have one
@@ -36,35 +37,13 @@ export const templateDispatch = (
             imgs={slide.images}
             icon={<CompanyIconWhite />}
             original_title={
-                <div
-                    key={0}
-                    className={`rounded-md outline-2 px-[4px] ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
-                    contentEditable={canEdit}
-                    onFocus={() => {
-                        if (canEdit) {
-                            setIsEditMode(true);
-                        }
-                    }}
-                    onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'original_title')}
-                    style={h6Style}
-                    dangerouslySetInnerHTML={{ __html: slide.original_title }}
+                <QuillEditable
+                content={slide.original_title}
+                handleBlur={(newContent) => handleSlideEdit(newContent, index, 'original_title')}
+                style={h6Style}
                 />
             }
-            English_title={
-                <div
-                    key={1}
-                    className={`rounded-md outline-2 px-[4px] ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
-                    contentEditable={canEdit}
-                    onFocus={() => {
-                        if (canEdit) {
-                            setIsEditMode(true);
-                        }
-                    }}
-                    onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'English_title')}
-                    style={h5Style}
-                    dangerouslySetInnerHTML={{ __html: slide.English_title }}
-                />
-            }
+            English_title={<></>}
             content={[<></>]}
             subtopic={<></>}
             keywords={[<></>]}
@@ -124,74 +103,35 @@ export const templateDispatch = (
                         }
                     }
                     return (
-                        <>
-                        <br></br>
-                        <div
-                            key={keyPrefix + index.toString() + '_' + contentIndex.toString()}
-                            className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
-                            contentEditable={canEdit}
-                            style={h9Style}
-                            onFocus={() => {
-                                if (canEdit) {
-                                    setIsEditMode(true);
-                                }
-                            }}
-                            onBlur={(e) => {
-                                const modifiedContent = [...slide.content];
-                                modifiedContent[contentIndex] = e.target.innerText;
-                                handleSlideEdit(modifiedContent, index, 'content');
-                            }}
-                            dangerouslySetInnerHTML={{ __html: content }}
-                        >
-                        </div>
-                        </>    
+                        <QuillEditable
+                        content={content}
+                        handleBlur={(newContent) => handleSlideEdit(newContent, index, 'content', contentIndex)}
+                        style={h9Style}
+                        />
                     );
                 })
             }
             section_title={
-                <div
-                    key={0}
-                    className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
-                    contentEditable={canEdit}
-                    onFocus={() => {
-                        if (canEdit) {
-                            setIsEditMode(true);
-                        }
-                    }}
-                    onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'section_title')}
-                    style={h8Style}
-                    dangerouslySetInnerHTML={{ __html: slide.section_title }}
+                <QuillEditable
+                content={slide.section_title}
+                handleBlur={(newContent) => handleSlideEdit(newContent, index, 'section_title')}
+                style={h8Style}
                 />
             }
             original_title={
-                <div
-                key={1}
-                className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
-                contentEditable={canEdit}
-                onFocus={() => {
-                    if (canEdit) {
-                        setIsEditMode(true);
-                    }
-                }}
-                onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'original_title')}
+
+                <QuillEditable
+                content={slide.original_title}
+                handleBlur={(newContent) => handleSlideEdit(newContent, index, 'original_title')}
                 style={h7Style}
-                dangerouslySetInnerHTML={{ __html: slide.original_title }}
-            />
+                />
             }
             brief={
-                <div
-                key={2}
-                className={`rounded-md outline-2 ${!exportToPdfMode && 'overflow-hidden'} ${canEdit ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline' : ''}`}
-                contentEditable={canEdit}
-                onFocus={() => {
-                    if (canEdit) {
-                        setIsEditMode(true);
-                    }
-                }}
-                onBlur={(e) => handleSlideEdit(e.target.innerText, index, 'brief')}
+                <QuillEditable
+                content={slide.brief}
+                handleBlur={(newContent) => handleSlideEdit(newContent, index, 'brief')}
                 style={h9Style}
-                dangerouslySetInnerHTML={{ __html: slide.brief }}
-            />
+                />
             }
             illustration={['']}
             imgs={['']}

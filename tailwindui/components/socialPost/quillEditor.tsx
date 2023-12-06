@@ -19,13 +19,12 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 
     const generateFontSizes = (): string[] => {
         const sizes = [];
-        for (let i = 8; i <= 60; i+=2) {
+        for (let i = 8; i <= 80; i+=1) {
             sizes.push(`${i}pt`);
         }
         return sizes;
     };
 
-    // Initialize Quill instance
     useEffect(() => {
         if (editorRef.current && !quillInstanceRef.current) {
             const fontSizes = generateFontSizes();
@@ -34,9 +33,8 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
             Quill.register(Size, true);
 
             const toolbarOptions = [
-                [{ 'size':  fontSizes}, { 'header': [1, 2, 3, 4, 5, 6, false]}, { 'font': [] }], //['small', false, 'large', 'huge']
+                [{ 'size':  fontSizes}, { 'font': [] }],
                 ['bold', 'italic', 'underline', 'strike', 'code-block'],
-                //['code-block'],
                 [{ 'header': 1 }, { 'header': 2 }],   
                 [{ 'list': 'ordered'}, { 'list': 'bullet' }],
                 [{ 'script': 'sub'}, { 'script': 'super' }],

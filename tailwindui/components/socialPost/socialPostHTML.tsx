@@ -183,8 +183,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
     useEffect(() => {
         if (res_slide) {
             const parse_slide = JSON.parse(res_slide)
-            //parse_slide.topic = `<p class="ql-align-center"><strong><em>${parse_slide.topic}</em></strong></p>`
-           // console.log(parse_slide)
             const slidesArray: SocialPostSlide[] = Object.keys(parse_slide).map((key, index) => {
                 const slideData = parse_slide[key]
                 const slide = new SocialPostSlide()
@@ -213,17 +211,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                         slide.template = slideData.template || 'img_1_template3'
                     }      
                 }
-                //slide.topic = slideData.topic || 'Your topic here'
-                //slide.topic = `<p class="ql-align-center"><strong><em>${slideData.topic}</em></strong></p>`
-                if (slideData.topic) {
-                    if (slideData.topic.includes('<p class="ql-align-center">')) {
-                        slide.topic = slideData.topic;
-                    } else {
-                        slide.topic = `<p class="ql-align-center"><strong style="font-size: 44pt; line-height:110%"><em>${slideData.topic}</em></strong></p>`;
-                    }
-                } else {
-                    slide.topic = 'Your topic here';
-                }
+                slide.topic = slideData.topic || 'Your topic here'
                 slide.subtopic = slideData.subtopic
                 slide.images = slideData.images
                 slide.theme = slideData.theme
@@ -383,19 +371,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
             currNewFinalSlides.topic = content as string
         } 
         else if (className === 'content') {
-            // let newContent: string[] = []
-            // content = content as string[]
-            // content.forEach((str) => {
-            //     newContent.push(...str.split('\n'))
-            // })
-            // newContent = newContent.filter((item) => item !== '')
-
-            // if (newContent.length === 0) { // leave one empty line for editing
-            //     newContent.push('')
-            // }
-
-            // currentSlide.content = newContent
-            // currNewFinalSlides.content = newContent
             if (typeof contentIndex === 'number' && contentIndex >= 0){
                 currentSlide.content[contentIndex] = content as string
                 currNewFinalSlides.content[contentIndex] = content as string
@@ -459,7 +434,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
         sessionStorage.setItem('socialPost', JSON.stringify(newSlides))
         setSlides(newSlides)
         setFinalSlides(newFinalSlides)
-        //console.log(finalSlides)
     }
 
     function goToSlide(index: number) {
@@ -541,9 +515,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 
     return (
         <div>
-        {/* <div className='flex justify-center items-center'>
-            <ReactQuill value={editorContent} onChange={handleEditorChange}/>
-        </div>  */}
         <div className='flex flex-col items-center justify-center gap-4'>
             {/* buttons and contents */}
             <div className='max-w-4xl relative flex flex-row items-center justify-center gap-4'>
@@ -657,14 +628,14 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 
             {/* preview little image */}
 
-            <div className='max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center z-[-1]'>
+            <div className='max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
                 <div className='w-full py-6 flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
                     {Array(slides.length)
                         .fill(0)
                         .map((_, index) => (
                             <div
                                 key={`previewContainer` + index.toString()}
-                                className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
+                                className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2 z-[-1]`}
                                 onClick={() => {
                                     setCurrentSlideIndex(index) // Added onClick handler
                                     setFinalSlideIndex(index)
