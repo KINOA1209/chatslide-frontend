@@ -116,12 +116,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
             ? sessionStorage.getItem('presentation_slides') ||
               JSON.stringify(TestSlidesData)
             : '';
-    // styles for each templates
-    const customizableElements =
-        typeof sessionStorage !== 'undefined'
-            ? sessionStorage.getItem('customizableElements') ||
-              JSON.stringify(customizable_elements)
-            : '';
+
     const [chosenLayout, setChosenLayout] = useState<LayoutKeys>('');
 
     const [showLayout, setShowLayout] = useState(false);
@@ -746,7 +741,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
             />
 
             {!isViewing && (
-                <div className='py-2'>
+                <div className='py-2 hidden sm:block'>
                     <ChangeTemplateOptions
                         templateOptions={Object.keys(availableTemplates)}
                         onChangeTemplate={changeTemplate}
