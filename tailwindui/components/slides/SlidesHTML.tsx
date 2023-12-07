@@ -511,7 +511,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     function handleSlideEdit(
         content: string | string[],
         slideIndex: number,
-        tag: SlideKeys
+        tag: SlideKeys,
+        contentIndex?: number,
     ) {
         setIsEditMode(false);
         const newSlides = [...slides];
@@ -543,20 +544,27 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
             currentSlide.images = content as string[];
             currNewFinalSlides.images = content as string[];
         } else if (className === 'content') {
-            let newContent: string[] = [];
-            content = content as string[];
-            content.forEach((str) => {
-                newContent.push(...str.split('\n'));
-            });
-            newContent = newContent.filter((item) => item !== '');
+            // let newContent: string[] = [];
+            // content = content as string[];
+            // content.forEach((str) => {
+            //     newContent.push(...str.split('\n'));
+            // });
+            // newContent = newContent.filter((item) => item !== '');
 
-            if (newContent.length === 0) {
-                // leave one empty line for editing
-                newContent.push('');
+            // if (newContent.length === 0) {
+            //     // leave one empty line for editing
+            //     newContent.push('');
+            // }
+
+            // currentSlide.content = newContent;
+            // currNewFinalSlides.content = newContent;
+            if (typeof contentIndex === 'number' && contentIndex >= 0){
+                currentSlide.content[contentIndex] = content as string
+                currNewFinalSlides.content[contentIndex] = content as string
             }
-
-            currentSlide.content = newContent;
-            currNewFinalSlides.content = newContent;
+            else{
+                console.error(`Invalid contentIndex: ${contentIndex}`);
+            }
         } else {
             console.error(`Unknown tag: ${tag}`);
         }

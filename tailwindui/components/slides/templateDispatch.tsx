@@ -6,6 +6,10 @@ import {
 } from '@/components/slides/slideTemplates';
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
 import { LayoutKeys } from '@/components/slides/slideLayout';
+import dynamic from 'next/dynamic';
+
+const QuillEditable = dynamic(() => import('@/components/socialPost/quillEditor'), {ssr: false})
+
 function wrapWithLiTags(content: string): string {
     if (!content.includes('<li>') || !content.includes('</li>')) {
         return `<li>${content}</li>`;
@@ -24,7 +28,8 @@ export const templateDispatch = (
     handleSlideEdit: (
         content: string | string[],
         index: number,
-        tag: SlideKeys
+        tag: SlideKeys,
+        contentIndex?: number
     ) => void = () => {}, // Replace with your default function if you have one
     updateImgUrlArray: (slideIndex: number) => (urls: string[]) => void = () =>
         () => {}, // Replace with your default function if you have one
@@ -125,73 +130,85 @@ export const templateDispatch = (
                 />
             }
             title={
-                <div
-                    key={1}
-                    className={`rounded-md outline-2 ${
-                        !exportToPdfMode && 'overflow-hidden'
-                    } ${
-                        canEdit
-                            ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline'
-                            : ''
-                    } ${index !== 0 ? 'hidden' : ''}`}
-                    contentEditable={canEdit}
-                    onFocus={() => {
-                        if (canEdit) {
-                            setIsEditMode(true);
-                        }
-                    }}
-                    onBlur={(e) =>
-                        handleSlideEdit(e.target.innerText, index, 'head')
-                    }
-                    // style={h1Style}
-                    dangerouslySetInnerHTML={{ __html: slide.head }}
+                // <div
+                //     key={1}
+                //     className={`rounded-md outline-2 ${
+                //         !exportToPdfMode && 'overflow-hidden'
+                //     } ${
+                //         canEdit
+                //             ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline'
+                //             : ''
+                //     } ${index !== 0 ? 'hidden' : ''}`}
+                //     contentEditable={canEdit}
+                //     onFocus={() => {
+                //         if (canEdit) {
+                //             setIsEditMode(true);
+                //         }
+                //     }}
+                //     onBlur={(e) =>
+                //         handleSlideEdit(e.target.innerText, index, 'head')
+                //     }
+                //     // style={h1Style}
+                //     dangerouslySetInnerHTML={{ __html: slide.head }}
+                // />
+                <QuillEditable
+                    content={slide.head}
+                    handleBlur={(newContent) => handleSlideEdit(newContent, index, 'head')}
                 />
             }
             topic={
-                <div
-                    key={2}
-                    className={`rounded-md outline-2 flex-nowrap  ${
-                        !exportToPdfMode && 'overflow-hidden'
-                    } ${
-                        canEdit
-                            ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline'
-                            : ''
-                    }${index === 0 ? 'hidden' : ''}`}
-                    contentEditable={canEdit}
-                    onFocus={() => {
-                        if (canEdit) {
-                            setIsEditMode(true);
-                        }
-                    }}
-                    onBlur={(e) =>
-                        handleSlideEdit(e.target.innerText, index, 'title')
-                    }
-                    // style={h2Style}
-                    dangerouslySetInnerHTML={{ __html: slide.title }}
+                // <div
+                //     key={2}
+                //     className={`rounded-md outline-2 flex-nowrap  ${
+                //         !exportToPdfMode && 'overflow-hidden'
+                //     } ${
+                //         canEdit
+                //             ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline'
+                //             : ''
+                //     }${index === 0 ? 'hidden' : ''}`}
+                //     contentEditable={canEdit}
+                //     onFocus={() => {
+                //         if (canEdit) {
+                //             setIsEditMode(true);
+                //         }
+                //     }}
+                //     onBlur={(e) =>
+                //         handleSlideEdit(e.target.innerText, index, 'title')
+                //     }
+                //     // style={h2Style}
+                //     dangerouslySetInnerHTML={{ __html: slide.title }}
+                // />
+                <QuillEditable
+                    content={slide.title}
+                    handleBlur={(newContent) => handleSlideEdit(newContent, index, 'title')}
                 />
             }
             subtopic={
-                <div
-                    key={3}
-                    className={`rounded-md outline-2 ${
-                        !exportToPdfMode && 'overflow-hidden'
-                    } ${
-                        canEdit
-                            ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline'
-                            : ''
-                    }${index === 0 ? 'hidden' : ''}`}
-                    contentEditable={canEdit}
-                    onFocus={() => {
-                        if (canEdit) {
-                            setIsEditMode(true);
-                        }
-                    }}
-                    onBlur={(e) => {
-                        handleSlideEdit(e.target.innerText, index, 'subtopic');
-                    }}
-                    // style={h3Style}
-                    dangerouslySetInnerHTML={{ __html: slide.subtopic }}
-                />
+                // <div
+                //     key={3}
+                //     className={`rounded-md outline-2 ${
+                //         !exportToPdfMode && 'overflow-hidden'
+                //     } ${
+                //         canEdit
+                //             ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline'
+                //             : ''
+                //     }${index === 0 ? 'hidden' : ''}`}
+                //     contentEditable={canEdit}
+                //     onFocus={() => {
+                //         if (canEdit) {
+                //             setIsEditMode(true);
+                //         }
+                //     }}
+                //     onBlur={(e) => {
+                //         handleSlideEdit(e.target.innerText, index, 'subtopic');
+                //     }}
+                //     // style={h3Style}
+                //     dangerouslySetInnerHTML={{ __html: slide.subtopic }}
+                // />
+                <QuillEditable
+                    content={slide.subtopic}
+                    handleBlur={(newContent) => handleSlideEdit(newContent, index, 'subtopic')}
+            />
             }
             content={slide.content.map(
                 (content: string, contentIndex: number) => {
@@ -275,41 +292,45 @@ export const templateDispatch = (
                         }
                     }
                     return (
-                        <div
-                            key={
-                                keyPrefix +
-                                index.toString() +
-                                '_' +
-                                contentIndex.toString()
-                            }
-                            className={`rounded-md outline-2 ${
-                                !exportToPdfMode && 'overflow-hidden'
-                            } ${
-                                canEdit
-                                    ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline'
-                                    : ''
-                            } ${index === 0 ? 'hidden' : ''}`}
-                            contentEditable={canEdit}
-                            // style={listStyle}
-                            onFocus={() => {
-                                if (canEdit) {
-                                    setIsEditMode(true);
-                                }
-                            }}
-                            onBlur={(e) => {
-                                const modifiedContent = [...slide.content];
-                                modifiedContent[contentIndex] =
-                                    e.target.innerText;
-                                handleSlideEdit(
-                                    modifiedContent,
-                                    index,
-                                    'content'
-                                );
-                            }}
-                            dangerouslySetInnerHTML={{
-                                __html: wrapWithLiTags(content),
-                            }}
-                        ></div>
+                        // <div
+                        //     key={
+                        //         keyPrefix +
+                        //         index.toString() +
+                        //         '_' +
+                        //         contentIndex.toString()
+                        //     }
+                        //     className={`rounded-md outline-2 ${
+                        //         !exportToPdfMode && 'overflow-hidden'
+                        //     } ${
+                        //         canEdit
+                        //             ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline'
+                        //             : ''
+                        //     } ${index === 0 ? 'hidden' : ''}`}
+                        //     contentEditable={canEdit}
+                        //     // style={listStyle}
+                        //     onFocus={() => {
+                        //         if (canEdit) {
+                        //             setIsEditMode(true);
+                        //         }
+                        //     }}
+                        //     onBlur={(e) => {
+                        //         const modifiedContent = [...slide.content];
+                        //         modifiedContent[contentIndex] =
+                        //             e.target.innerText;
+                        //         handleSlideEdit(
+                        //             modifiedContent,
+                        //             index,
+                        //             'content'
+                        //         );
+                        //     }}
+                        //     dangerouslySetInnerHTML={{
+                        //         __html: wrapWithLiTags(content),
+                        //     }}
+                        // ></div>
+                        <QuillEditable
+                        content={content}
+                        handleBlur={(newContent) => handleSlideEdit(newContent, index, 'content', contentIndex)}
+                    />
                     );
                 }
             )}
