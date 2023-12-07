@@ -16,7 +16,7 @@ export default function WorkflowLayout({
       <div
         className='w-[100vw] h-[100vh] -z-1 fixed'
       ></div>
-      <Header loginRequired={true} isLanding={false} refList={[]} />
+      <Header loginRequired={true} isLanding={false} refList={[]} isWorkflow={true} />
       <section className='grow flex flex-col'>
         {/* Content */}
         {children}
