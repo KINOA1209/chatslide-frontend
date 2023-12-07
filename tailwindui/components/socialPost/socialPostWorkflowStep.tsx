@@ -45,9 +45,9 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 
   return (
     <>
-      <div className='fixed h-[120px] flex items-end w-full bg-Grey-50 z-10 pb-[1rem] border-b-2 px-[5rem]'>
+      <div className='relative stiky top-0 h-[120px] flex items-end w-full bg-Grey-50 z-10 pb-[1rem] border-b-2 px-[5rem]'>
         {/* flex row container for backlink, title*/}
-        <div className="absolute left-10">
+        <div className="absolute left-5">
           <DrLambdaBackButton href={getPrevHref()} />
         </div>
 
@@ -55,7 +55,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
           <ProjectProgress currentInd={currentIndex} contentRef={contentRef} />
         </div>
 
-        <div className="absolute right-10 flex flex-col xl:flex-row items-end xl:items-center space-x-4">
+        <div className="absolute right-5 flex flex-col xl:flex-row items-end xl:items-center space-x-4">
 
           {showGPTToggle && typeof setIsGpt35 !== 'undefined' && <GPTToggleWithExplanation setIsGpt35={setIsGpt35} />}
           {showNextButton  && <DrlambdaButton
@@ -66,9 +66,6 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
             {nextText}
           </DrlambdaButton>}
         </div>
-      </div>
-
-      <div className='mt-[3rem] h-[120px] flex items-end w-full bg-Grey-50 z-10 pt-[4rem] pb-[1rem] border-b-2 px-[5rem]>'>
       </div>
 
       <div className='py-2 flex-auto text-center self-center bg-yellow-100 font-small leading-snug tracking-tight whitespace-nowrap sm:hidden'>
