@@ -154,6 +154,11 @@ export const templateDispatch = (
                 <QuillEditable
                     content={slide.head}
                     handleBlur={(newContent) => handleSlideEdit(newContent, index, 'head')}
+                    style={{
+                        color: '#1f2937',
+                        fontWeight: 'bold',
+                        fontSize: '27pt',
+                    }}
                 />
             }
             topic={
