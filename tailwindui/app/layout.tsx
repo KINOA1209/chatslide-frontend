@@ -64,7 +64,7 @@ export default function RootLayout({
               applicationId: 'd713204e-96f9-4150-bf28-c09c3ffb1740',
               site: 'datadoghq.com',
               service: 'drlambda-frontend',
-              env: 'prod',
+              env: ${process.env.TIER === 'prod' ? "'prod'" : "'dev'"},
               // Specify a version number to identify the deployed version of your application in Datadog
               // version: '1.0.0',
               sessionSampleRate: 100,
