@@ -74,6 +74,8 @@ module.exports = {
         'creato-regular': ['Creato Display Regular', 'sans'],
         'creato-medium': ['Creato Display Medium', 'sans'],
         'creato-bold': ['Creato Display Bold', 'sans'],
+        'nimbus-sans-regular': ['Nimbus Sans Regular', 'sans'],
+        'nimbus-sans-bold': ['Nimbus Sans Bold', 'sans']
       },
       fontSize: {
         xs: '0.75rem',
