@@ -45,7 +45,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 
   return (
     <>
-      <div className='relative stiky top-0 h-[120px] flex items-end w-full bg-Grey-50 z-10 pb-[1rem] border-b-2 px-[5rem]'>
+      <div className='relative sticky top-0 h-[120px] flex items-end w-full bg-Grey-50 z-10 pb-[1rem] border-b-2 px-[5rem]'>
         {/* flex row container for backlink, title*/}
         <div className="absolute left-5">
           <DrLambdaBackButton href={getPrevHref()} />
