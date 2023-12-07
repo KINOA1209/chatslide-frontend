@@ -48,12 +48,30 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
                 theme: 'bubble',
             });
 
-            quillInstanceRef.current.clipboard.dangerouslyPasteHTML(content);
+            //quillInstanceRef.current.clipboard.dangerouslyPasteHTML(content);
+            const delta = quillInstanceRef.current.clipboard.convert(content as any);
+            quillInstanceRef.current.setContents(delta);
 
             quillInstanceRef.current.on('selection-change', () => {
                 const currentContent = quillInstanceRef.current?.root.innerHTML;
                 if (currentContent !== undefined) {
                     handleBlur(currentContent);
+                }
+            });
+
+            editorRef.current.addEventListener('focusin', () => {
+                const toolbar = editorRef.current?.querySelector('.ql-tooltip');
+                if (toolbar && toolbar instanceof HTMLElement) {
+                    toolbar.style.display = 'block';
+                }
+            });
+            
+            editorRef.current.addEventListener('focusout', (event) => {
+                const toolbar = editorRef.current?.querySelector('.ql-tooltip');
+                const relatedTarget = event.relatedTarget as Node;
+            
+                if (toolbar && toolbar instanceof HTMLElement && !toolbar.contains(relatedTarget)) {
+                    toolbar.style.display = 'none';
                 }
             });
         }
