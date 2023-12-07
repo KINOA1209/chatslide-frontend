@@ -11,6 +11,7 @@ import drlambdaLogoSingle from '@/public/images/template/drlambdaLogoSingle.png'
 import { Berkeley_school_template } from './school_templates/Berkeley_school_template';
 import { Harvard_school_template } from './school_templates/Harvard_school_template';
 import { Stanford_school_template } from './school_templates/Stanford_school_template';
+import { MIT_school_template } from './school_templates/MIT_school_template';
 import { LayoutKeys } from './slideLayout';
 import { layoutOptions } from './slideLayout';
 import { loadCustomizableElements } from './SlidesHTML';
@@ -179,5 +180,6 @@ export const availableTemplates = {
     Stanford: Stanford_school_template,
     Berkeley: Berkeley_school_template,
     Harvard: Harvard_school_template,
+    // MIT: MIT_school_template,
     Default: Default,
 };
