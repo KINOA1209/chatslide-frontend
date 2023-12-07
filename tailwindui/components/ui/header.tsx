@@ -13,6 +13,7 @@ import Hotjar from '@/components/integrations/Hotjar'
 import { Auth, Hub } from 'aws-amplify'
 import AuthService from '../../services/AuthService'
 import { DrlambdaLogoIcon } from '../new_landing/Icons'
+import UserService from '@/services/UserService'
 
 interface HeaderProps {
   loginRequired: boolean
@@ -31,11 +32,27 @@ const Header = ({ loginRequired, isLanding = false, refList, isAuth = false, isW
 
   const router = useRouter()
   const [isMobile, setIsMobile] = useState<boolean>(false)
+  
 
   // detect whether user has scrolled the page down by 10px
   const scrollHandler = () => {
     window.scrollY > 10 ? setTop(false) : setTop(true)
   }
+
+  useEffect(() => {
+    // get credits and tier
+    const getCredits = async () => {
+      try {
+        const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
+        const { credits, tier } = await UserService.getUserCreditsAndTier(idToken)
+        setCredits(credits)
+        setTier(tier)
+      } catch (error: any) {
+        console.error(error)
+      }
+    }
+    getCredits()
+  }, [])
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 768)
@@ -111,7 +128,93 @@ const Header = ({ loginRequired, isLanding = false, refList, isAuth = false, isW
     }
   }, [])
 
-  if (loading) {
+
+  if (isWorkflow) {
+    return (
+      <header
+        className={`hidden sm:flex sticky left-0 top-0 w-[10rem] h-[100vh] flex flex-col justify-between z-30 bg-gray-800 bg-opacity-90 transition duration-300 ease-in-out ${!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
+          }`}
+      >
+        <div className='px-2 py-4 gap-y-2 flex flex-col items-center justify-between'>
+          {/* Site branding */}
+          <div className='flex flex-row items-center gap-x-2'>
+            <div className='min-w-[1.5rem]'>
+              <Logo />
+            </div>
+            <div className='grow flex flex-row justify-center item-center justify-start'>
+              <div className='w-fit h-[1.5rem] text-xl text-gray-200 bg-clip-text bg-gradient-to-r relative bottom-[3px] font-creato-medium'>
+                <a href={loginRequired ? '/dashboard' : '/'}>DrLambda</a>
+              </div>
+            </div>
+          </div>
+
+          <div className="py-1" role="none">
+            <a
+              href="/dashboard"
+              className="block  py-1 text-sm text-white "
+              role="menuitem"
+            >
+              🗂️ Projects
+            </a>
+            <a
+              href="/my-resources"
+              className="block  py-1 text-sm text-white "
+              role="menuitem"
+            >
+              📚 Resources
+            </a>
+            <a
+              href="/account"
+              className="block  py-1 text-sm text-white "
+              role="menuitem"
+            >
+              ⚙️ Account
+            </a>
+          </div>
+          </div>
+
+        <div className='flex flex-col items-center justify-between'>
+          <div className="block py-1 text-sm text-white">
+            <a
+              href="https://forms.gle/kncWqBjU4n5xps1w8"
+              className="block  py-1 text-sm text-white "
+              role="menuitem"
+            >
+              💸 User Study
+            </a>
+
+
+            <a
+              href="/account"
+              className="block  py-1 text-sm text-white "
+              role="menuitem"
+            >
+              ⭐️ Credits: {credits}
+            </a>
+            <a
+              href="/account"
+              className="block  py-1 text-sm text-white "
+              role="menuitem"
+            >
+              💙 Tier: {tier.split('_')[0]}
+            </a>
+            <a
+              onClick={signOut}
+              className="block py-1 text-sm text-white "
+              role="menuitem"
+            >
+              ⬅️ Sign out
+            </a>
+          </div>
+        </div>
+
+        <GoogleAnalytics />
+
+        {/* only render hotjar on desktop for performance */}
+        {!isMobile && <Hotjar />}
+      </header>
+    )
+  } else if (loading) {
     // Render a loading state or a blank placeholder
     return (
       <header
@@ -142,91 +245,7 @@ const Header = ({ loginRequired, isLanding = false, refList, isAuth = false, isW
         {!isMobile && <Hotjar />}
       </header>
     )
-  }
-
-  if (isWorkflow) {
-    return (
-      <header
-        className={`fixed h-full flex flex-col justify-between z-30 bg-gray-800 bg-opacity-90 transition duration-300 ease-in-out ${!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
-          }`}
-      >
-        <div className='px-2 py-4 gap-y-2 flex flex-col items-center justify-between'>
-          {/* Site branding */}
-          <div className='flex flex-row items-center gap-x-2'>
-            <div className='min-w-[1.5rem]'>
-              <Logo />
-            </div>
-            <div className='grow flex flex-row justify-center item-center justify-start'>
-              <div className='w-fit h-[1.5rem] text-xl text-gray-200 bg-clip-text bg-gradient-to-r relative bottom-[3px] font-creato-medium'>
-                <a href={loginRequired ? '/dashboard' : '/'}>DrLambda</a>
-              </div>
-            </div>
-          </div>
-
-          <div className="py-1" role="none">
-            <a
-              href="/dashboard"
-              className="block  py-1 text-sm text-white hover:bg-gray-200"
-              role="menuitem"
-            >
-              My Projects
-            </a>
-            <a
-              href="/my-resources"
-              className="block  py-1 text-sm text-white hover:bg-gray-200"
-              role="menuitem"
-            >
-              My Resources
-            </a>
-            <a
-              href="/account"
-              className="block  py-1 text-sm text-white hover:bg-gray-200"
-              role="menuitem"
-            >
-              Account Settings
-            </a>
-          </div>
-          </div>
-
-        <div className='flex flex-col items-center justify-between'>
-          <div className="block py-1 text-sm text-white">
-            <a
-              href="/account"
-              className="block  py-1 text-sm text-white hover:bg-gray-200"
-              role="menuitem"
-            >
-              Credits: {credits}⭐️
-            </a>
-            <a
-              href="/account"
-              className="block  py-1 text-sm text-white hover:bg-gray-200"
-              role="menuitem"
-            >
-              Tier: {tier.split('_')[0]}
-            </a>
-          </div>
-          <div className="py-1" role="none">
-            <div className="py-0.2" role="none">
-              <a
-                onClick={signOut}
-                className="block  py-1 text-sm text-white hover:bg-gray-200 cursor-pointer"
-                role="menuitem"
-              >
-                Sign out
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <GoogleAnalytics />
-
-        {/* only render hotjar on desktop for performance */}
-        {!isMobile && <Hotjar />}
-      </header>
-    )
-  }
-
-  return (
+  } else return (
     <header
       className={`fixed w-full z-30 bg-gray-800 bg-opacity-90 transition duration-300 ease-in-out ${!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
         }`}
