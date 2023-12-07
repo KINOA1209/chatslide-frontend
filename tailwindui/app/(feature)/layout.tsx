@@ -12,16 +12,15 @@ export default function WorkflowLayout({
   children: React.ReactNode
 }) {
   return (
-    <main className='flex flex-col min-h-[100vh]'>
-      <div
-        className='w-[100vw] h-[100vh] -z-1 fixed'
-      ></div>
-      <Header loginRequired={true} isLanding={false} refList={[]} />
-      <section className='grow flex flex-col'>
-        {/* Content */}
-        {children}
-      </section>
-      <WorkflowFooter />
+    <main className='flex flex-row min-h-[100vh]'>
+      <Header loginRequired={true} isLanding={false} refList={[]} isWorkflow={true} />
+      <div className='flex flex-col w-full'>
+        <section className='grow flex flex-col'>
+          {/* Content */}
+          {children}
+        </section>
+        <WorkflowFooter />
+      </div>
     </main>
   )
 }

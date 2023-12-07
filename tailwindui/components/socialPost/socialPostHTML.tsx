@@ -63,7 +63,7 @@ export type SlideKeys =
 export class SocialPostSlide {
     topic: string
     subtopic: string
-    keywords: string[]
+    keywords: string
     content: string[]
     template: string
     images: string[]
@@ -81,7 +81,7 @@ export class SocialPostSlide {
     constructor() {
         this.topic = 'Your topic'
         this.subtopic = 'Your subtopic'
-        this.keywords = ['Your keywords']
+        this.keywords = 'Your keywords'
         this.content = ['Your content']
         this.template = 'Col_1_img_0'
         this.images = ['']
@@ -156,6 +156,9 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
     const presentScale = Math.min(dimensions.width / 450, dimensions.height / 600)
     const nonPresentScale = Math.min(1, presentScale * 0.6)
     const [showTheme, setShowTheme] = useState(false)
+    const [editingSlideIndex, setEditingSlideIndex] = useState<number | null>(null);
+    const [editingProperty, setEditingProperty] = useState<SlideKeys | null>(null);
+    const [editorContent, setEditorContent] = useState<string>('');
     
     
     useEffect(() => {
@@ -186,7 +189,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                 if (index === 0) {
                     if (res_scenario === 'casual_topic'){
                         slide.template = slideData.template || 'First_page_img_1'
-                        slide.keywords = (slideData.keywords.includes('|') ? slideData.keywords : [slideData.keywords.join(' | ')])
                     }
                     else if (res_scenario === 'serious_subject'){
                         slide.English_title = slideData.English_title
@@ -198,8 +200,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                 }
                 else {
                     if (res_scenario === 'casual_topic'){
-                        slide.template = slideData.template || 'Col_1_img_0'
-                        slide.keywords = slideData.keywords
+                        slide.template = slideData.template || 'Col_1_img_0'  
                     }
                     else if (res_scenario === 'serious_subject'){
                         slide.template = slideData.template || 'img_0_template2'
@@ -208,6 +209,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                         slide.template = slideData.template || 'img_1_template3'
                     }      
                 }
+                slide.keywords = slideData.keywords || ''
                 slide.topic = slideData.topic || 'Your topic here'
                 slide.subtopic = slideData.subtopic
                 slide.images = slideData.images
@@ -218,7 +220,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                 slide.original_title = slideData.original_title || cover_title
                 slide.title = slideData.title || ''
                 slide.illustration = slideData.illustration !== null ? slideData.illustration : ['https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png']
-                slide.quote = slideData.quote !== undefined ? (slideData.quote.includes('"') ? slideData.quote : '"' + slideData.quote + '"') : ''
+                slide.quote = slideData.quote || 'Your quote here'
                 slide.source = slideData.source || ''
 
                 return slide
@@ -344,7 +346,8 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
     function handleSlideEdit(
         content: string | string[] | ThemeObject,
         slideIndex: number,
-        tag: SlideKeys
+        tag: SlideKeys | null,
+        contentIndex?: number,
     ) {
         setIsEditMode(false)
         const newSlides = [...slides]
@@ -359,27 +362,21 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
             currNewFinalSlides.subtopic = content as string
         } 
         else if (className === 'keywords') {
-            currentSlide.keywords = content as string[]
-            currNewFinalSlides.keywords = content as string[]
+            currentSlide.keywords = content as string
+            currNewFinalSlides.keywords = content as string
         } 
         else if (className === 'topic') {
             currentSlide.topic = content as string 
             currNewFinalSlides.topic = content as string
         } 
         else if (className === 'content') {
-            let newContent: string[] = []
-            content = content as string[]
-            content.forEach((str) => {
-                newContent.push(...str.split('\n'))
-            })
-            newContent = newContent.filter((item) => item !== '')
-
-            if (newContent.length === 0) { // leave one empty line for editing
-                newContent.push('')
+            if (typeof contentIndex === 'number' && contentIndex >= 0){
+                currentSlide.content[contentIndex] = content as string
+                currNewFinalSlides.content[contentIndex] = content as string
             }
-
-            currentSlide.content = newContent
-            currNewFinalSlides.content = newContent
+            else{
+                console.error(`Invalid contentIndex: ${contentIndex}`);
+            }
         }
         else if (className === 'template'){
             currentSlide.template = content as string
@@ -436,7 +433,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
         sessionStorage.setItem('socialPost', JSON.stringify(newSlides))
         setSlides(newSlides)
         setFinalSlides(newFinalSlides)
-        //console.log(finalSlides)
     }
 
     function goToSlide(index: number) {
@@ -513,7 +509,9 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
             return templateDispatch(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode,handleSlideEdit,updateImgUrlArray, updateIllustrationUrlArray, toggleEditMode)
         }
     }
+
     return (
+        <div>
         <div className='flex flex-col items-center justify-center gap-4'>
             {/* buttons and contents */}
             <div className='max-w-4xl relative flex flex-row items-center justify-center gap-4'>
@@ -634,7 +632,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                         .map((_, index) => (
                             <div
                                 key={`previewContainer` + index.toString()}
-                                className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
+                                className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2 z-[-1]`}
                                 onClick={() => {
                                     setCurrentSlideIndex(index) // Added onClick handler
                                     setFinalSlideIndex(index)
@@ -651,6 +649,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                         ))}
                 </div>
             </div>
+        </div>
         </div>
     )
 }
