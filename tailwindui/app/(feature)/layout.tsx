@@ -1,3 +1,4 @@
+import SideBar from '@/components/ui/SideBar'
 import { WorkflowFooter } from '@/components/ui/footer'
 import Header from '@/components/ui/header'
 
@@ -12,15 +13,22 @@ export default function WorkflowLayout({
   children: React.ReactNode
 }) {
   return (
-    <main className='flex flex-row min-h-[100vh]'>
-      <Header loginRequired={true} isLanding={false} refList={[]} isWorkflow={true} />
+    <div className='flex flex-row min-h-[100vh]'>
+      <div className='hidden sm:block'>
+        {/* only show SideBar on mid-large screen */}
+        <SideBar />
+      </div>
       <div className='flex flex-col w-full'>
-        <section className='grow flex flex-col'>
+        <div className='block sm:hidden'>
+          {/* only show Header on small screen */}
+          <Header loginRequired={true} isLanding={false} isAuth={false}/>
+        </div>
+        <main className='grow flex flex-col'>
           {/* Content */}
           {children}
-        </section>
+        </main>
         <WorkflowFooter />
       </div>
-    </main>
+    </div>
   )
 }
