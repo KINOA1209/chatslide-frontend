@@ -37,7 +37,7 @@ const LandingButton = () => {
           }
         }}
       >
-        {user ? 'Go to Dashboard' : 'Start for Free'}
+        {user ? 'Start Now' : 'Start for Free'}
       </button>
       <div className="flex items-center justify-center font-creato-medium my-2">
         💙 Loved by 170,000+ happy users
