@@ -602,7 +602,10 @@ export default function Topic() {
             {/* main content */}
             <div className='py-10 w-full flex flex-col items-center'>
                 {/* Project Summary section */}
-                <div className='w-full lg:w-2/3  px-3 my-3 lg:my-1'>
+                <div
+                    className='w-full lg:w-2/3  px-3 my-3 lg:my-1'
+                    id='SummaryStep-2'
+                >
                     {/* title */}
                     <div className='title1'>
                         <p>Project Summary</p>
@@ -892,7 +895,10 @@ export default function Topic() {
                 </div>
 
                 {/* supplementary section */}
-                <div className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1'>
+                <div
+                    className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1'
+                    id='SummaryStep-3'
+                >
                     <div className='title2'>
                         <p>Supporting Documents</p>
                         <p id='after2'> (Optional)</p>
