@@ -156,12 +156,12 @@ const SideBar = ({ }: SideBarProps) => {
           <div className="block py-1 text-sm text-white">
             <a
               href="https://forms.gle/kncWqBjU4n5xps1w8"
+              target='_blank'
               className="block  py-1 text-sm text-white "
               role="menuitem"
             >
               💸 User Study
             </a>
-
 
             <a
               href="/account"
