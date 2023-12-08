@@ -133,7 +133,7 @@ export const templateDispatch = (
                         canEdit
                             ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline'
                             : ''
-                    } ${index !== 0 ? 'hidden' : ''}`}
+                    } ${index !== 0 ? 'hidden' : ''} px-2 py-1`}
                     contentEditable={canEdit}
                     onFocus={() => {
                         if (canEdit) {
@@ -156,7 +156,7 @@ export const templateDispatch = (
                         canEdit
                             ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline'
                             : ''
-                    }${index === 0 ? 'hidden' : ''}`}
+                    }${index === 0 ? 'hidden' : ''} px-2 py-1`}
                     contentEditable={canEdit}
                     onFocus={() => {
                         if (canEdit) {
@@ -179,7 +179,7 @@ export const templateDispatch = (
                         canEdit
                             ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline'
                             : ''
-                    }${index === 0 ? 'hidden' : ''}`}
+                    }${index === 0 ? 'hidden' : ''} px-2 py-1`}
                     contentEditable={canEdit}
                     onFocus={() => {
                         if (canEdit) {
@@ -214,7 +214,9 @@ export const templateDispatch = (
                                             canEdit
                                                 ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline'
                                                 : ''
-                                        }${index === 0 ? 'hidden' : ''} `}
+                                        }${
+                                            index === 0 ? 'hidden' : ''
+                                        }  px-2 py-1`}
                                         contentEditable={canEdit}
                                         // style={listStyle}
                                         onFocus={() => {
@@ -263,7 +265,7 @@ export const templateDispatch = (
                                                     canEdit
                                                         ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline'
                                                         : ''
-                                                }`}
+                                                }  px-2 py-1`}
                                                 // style={listStyle}
                                             >
                                                 {content}
@@ -288,7 +290,7 @@ export const templateDispatch = (
                                 canEdit
                                     ? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline'
                                     : ''
-                            } ${index === 0 ? 'hidden' : ''}`}
+                            } ${index === 0 ? 'hidden' : ''}  px-2 py-1`}
                             contentEditable={canEdit}
                             // style={listStyle}
                             onFocus={() => {
