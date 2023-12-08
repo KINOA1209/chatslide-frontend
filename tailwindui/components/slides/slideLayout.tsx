@@ -146,7 +146,7 @@ export const Col_1_img_0_layout = ({
                 {topic}
             </div>
             <div
-                className={`mix-blend-hard-light ${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
+                className={`${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
             >
                 {subtopic}
             </div>
@@ -194,7 +194,7 @@ export const Col_2_img_0_layout = ({
                 {topic}
             </div>
             <div
-                className={`mix-blend-hard-light ${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
+                className={`${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
             >
                 {subtopic}
             </div>
@@ -240,7 +240,7 @@ export const Col_3_img_0_layout = ({
                 {topic}
             </div>
             <div
-                className={`mix-blend-hard-light ${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
+                className={`${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
             >
                 {subtopic}
             </div>
@@ -295,7 +295,7 @@ export const Col_1_img_1_layout = ({
                         {topic}
                     </div>
                     <div
-                        className={`mix-blend-hard-light ${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
+                        className={`${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
                     >
                         {subtopic}
                     </div>
@@ -364,7 +364,7 @@ export const Col_2_img_1_layout = ({
                     {topic}
                 </div>
                 <div
-                    className={`mix-blend-hard-light ${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
+                    className={`${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
                 >
                     {subtopic}
                 </div>
@@ -431,7 +431,7 @@ export const Col_2_img_2_layout = ({
                     {topic}
                 </div>
                 <div
-                    className={`mix-blend-hard-light ${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
+                    className={`${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
                 >
                     {subtopic}
                 </div>
@@ -501,7 +501,7 @@ export const Col_3_img_3_layout = ({
                     {topic}
                 </div>
                 <div
-                    className={`mix-blend-hard-light ${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
+                    className={`${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
                 >
                     {subtopic}
                 </div>
