@@ -184,6 +184,9 @@ export default function Dashboard() {
   )
 
   return (
+
+
+    
     <section className='grow flex flex-col'>
       <ToastContainer />
       {/* top background container of my projects title text and button */}
