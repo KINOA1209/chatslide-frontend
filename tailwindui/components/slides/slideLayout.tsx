@@ -374,7 +374,10 @@ export const Col_2_img_1_layout = ({
                         <div className='opacity-50'></div>
                         <div className='w-full h-full'>
                             {content.map((item, index) => (
-                                <div className='py-[0.5rem]'>
+                                <div
+                                    className='py-[0.5rem]'
+                                    key={index}
+                                >
                                     {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
                                     <ul
                                         key={index}
@@ -501,7 +504,7 @@ export const Col_3_img_3_layout = ({
                     {topic}
                 </div>
                 <div
-                    className={`mix-blend-hard-light ${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
+                    className={`${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
                 >
                     {subtopic}
                 </div>
@@ -535,7 +538,10 @@ export const Col_3_img_3_layout = ({
                 {/* three columns of text */}
                 <div className='w-full grid grid-cols-3 gap-[2.5rem] overflow-y-scroll mt-[1.5rem]'>
                     {content.map((item, index) => (
-                        <div className='flex flex-col gap-[1rem]'>
+                        <div
+                            className='flex flex-col gap-[1rem]'
+                            key={index}
+                        >
                             {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
                             <ul
                                 key={index}
