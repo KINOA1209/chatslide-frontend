@@ -1,17 +1,17 @@
-'use client'
+'use client';
 
-import React, { useState, MouseEvent, useEffect, useRef } from 'react'
-import { useRouter } from 'next/navigation'
-import CSS from 'csstype'
-import AuthService from '@/services/AuthService'
+import React, { useState, MouseEvent, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import CSS from 'csstype';
+import AuthService from '@/services/AuthService';
 
 interface StepProps {
-  id: number
-  current: boolean
-  finished: boolean
-  desc: string
-  redirect: string
-  unavailable?: boolean
+  id: number;
+  current: boolean;
+  finished: boolean;
+  desc: string;
+  redirect: string;
+  unavailable?: boolean;
 }
 
 const StepStyle: CSS.Properties = {
@@ -21,7 +21,7 @@ const StepStyle: CSS.Properties = {
   borderStyle: 'solid',
   borderWidth: '3px',
   fontSize: '15px',
-}
+};
 
 const OneStep: React.FC<StepProps> = ({
   id,
@@ -31,31 +31,31 @@ const OneStep: React.FC<StepProps> = ({
   redirect,
   unavailable = false,
 }) => {
-  const router = useRouter()
+  const router = useRouter();
 
-  let exitClass = 'bg-blue-500 border-blue-500 text-white text-center'
-  let enterClass = 'bg-blue-700 border-blue-700 text-white text-center'
-  let textEnterClass = 'text-blue-700 ml-3'
+  let exitClass = 'bg-blue-500 border-blue-500 text-white text-center';
+  let enterClass = 'bg-blue-700 border-blue-700 text-white text-center';
+  let textEnterClass = 'text-blue-700 ml-3';
 
-  const [circleClass, setCircleClass] = useState(exitClass)
-  const [textClass, setTextClass] = useState('ml-3')
+  const [circleClass, setCircleClass] = useState(exitClass);
+  const [textClass, setTextClass] = useState('ml-3');
 
   const handleClick = (e: MouseEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    router.push(redirect)
-  }
+    e.preventDefault();
+    router.push(redirect);
+  };
 
   const handleHoverEnter = (e: MouseEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    setCircleClass(enterClass)
-    setTextClass(textEnterClass)
-  }
+    e.preventDefault();
+    setCircleClass(enterClass);
+    setTextClass(textEnterClass);
+  };
 
   const handleHoverLeave = (e: MouseEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    setCircleClass(exitClass)
-    setTextClass('ml-3')
-  }
+    e.preventDefault();
+    setCircleClass(exitClass);
+    setTextClass('ml-3');
+  };
 
   if (current) {
     return (
@@ -68,7 +68,7 @@ const OneStep: React.FC<StepProps> = ({
         </div>
         <span className='text-blue-500 ml-3'>{desc}</span>
       </div>
-    )
+    );
   } else if (finished) {
     return (
       <div
@@ -82,7 +82,7 @@ const OneStep: React.FC<StepProps> = ({
         </div>
         <span className={textClass}>{desc}</span>
       </div>
-    )
+    );
   } else if (unavailable) {
     return (
       <div className='w-full h-14 flex items-center'>
@@ -94,7 +94,7 @@ const OneStep: React.FC<StepProps> = ({
         </div>
         <span className='text-gray-400 ml-3 line-through'>{desc}</span>
       </div>
-    )
+    );
   } else {
     return (
       <div className='w-full h-14 flex items-center'>
@@ -106,13 +106,13 @@ const OneStep: React.FC<StepProps> = ({
         </div>
         <span className='text-gray-400 ml-3'>{desc}</span>
       </div>
-    )
+    );
   }
-}
+};
 
 interface Current {
-  currentInd: number
-  contentRef: React.RefObject<HTMLDivElement>
+  currentInd: number;
+  contentRef: React.RefObject<HTMLDivElement>;
 }
 
 // General progress indicator component
@@ -123,124 +123,124 @@ const ProgressBox = (
   unavailableStepsFunc: () => number[]
 ) => {
   const stepRedirectPair = steps.map((desc, index) => {
-    return [desc, redirect[index]]
-  })
+    return [desc, redirect[index]];
+  });
   const CurrentProgress: React.FC<Current> = ({ currentInd, contentRef }) => {
-    const progressRefDesktop = useRef<HTMLDivElement>(null)
-    const progressRefMobile = useRef<HTMLDivElement>(null)
+    const progressRefDesktop = useRef<HTMLDivElement>(null);
+    const progressRefMobile = useRef<HTMLDivElement>(null);
     const [mobileDisplay, setMobileDisplay] =
-      useState<CSS.Property.Display>('none')
+      useState<CSS.Property.Display>('none');
     const [desktopVisibility, setDesktopVisibility] =
-      useState<CSS.Property.Visibility>('hidden')
-    const [mobileOpended, setMobileOpened] = useState<boolean>(false)
+      useState<CSS.Property.Visibility>('hidden');
+    const [mobileOpended, setMobileOpened] = useState<boolean>(false);
     const [mobileButtonDisplay, setMobileButtonDisplay] =
-      useState<CSS.Property.Display>('none')
-    const router = useRouter()
-    const [user, setUser] = useState(null)
+      useState<CSS.Property.Display>('none');
+    const router = useRouter();
+    const [user, setUser] = useState(null);
 
-    const [finishedSteps, setFinishedSteps] = useState<number[]>([])
-    const [unavailableSteps, setUnavailableSteps] = useState<number[]>([])
+    const [finishedSteps, setFinishedSteps] = useState<number[]>([]);
+    const [unavailableSteps, setUnavailableSteps] = useState<number[]>([]);
 
     useEffect(() => {
-      setFinishedSteps(finishedStepsFunc())
-      setUnavailableSteps(unavailableStepsFunc())
-    }, [])
+      setFinishedSteps(finishedStepsFunc());
+      setUnavailableSteps(unavailableStepsFunc());
+    }, []);
 
     // fire on every window resize
     const handSidebarPosition = () => {
       if (window && document) {
         // Constants -> working for workflow now
-        const minTitleHeight = 100
-        const headerHeight = 80
-        const gap = 20
+        const minTitleHeight = 100;
+        const headerHeight = 80;
+        const gap = 20;
 
-        const viewWidth = window.innerWidth
-        const viewHeight = window.innerHeight
-        const pageHeight = document.body.scrollHeight
-        const scrollPos = window.scrollY
+        const viewWidth = window.innerWidth;
+        const viewHeight = window.innerHeight;
+        const pageHeight = document.body.scrollHeight;
+        const scrollPos = window.scrollY;
 
-        var contentWidth = viewWidth
+        var contentWidth = viewWidth;
         if (contentRef.current) {
-          contentWidth = contentRef.current.offsetWidth
+          contentWidth = contentRef.current.offsetWidth;
         }
-        var progressWidth = 0
-        var progressHeight = 0
+        var progressWidth = 0;
+        var progressHeight = 0;
         if (
           progressRefDesktop.current &&
           progressRefDesktop.current.offsetWidth > 0
         ) {
-          progressWidth = progressRefDesktop.current.offsetWidth
-          progressHeight = progressRefDesktop.current.offsetHeight
+          progressWidth = progressRefDesktop.current.offsetWidth;
+          progressHeight = progressRefDesktop.current.offsetHeight;
         }
-        const marginAvailable = (viewWidth - contentWidth) / 2
+        const marginAvailable = (viewWidth - contentWidth) / 2;
         if (
           progressRefDesktop.current &&
           marginAvailable >= gap + progressWidth
         ) {
-          setDesktopVisibility('visible')
-          setMobileButtonDisplay('none')
-          setMobileOpened(false)
+          setDesktopVisibility('visible');
+          setMobileButtonDisplay('none');
+          setMobileOpened(false);
           progressRefDesktop.current.style.left = `${
             marginAvailable - gap - progressWidth
-          }px`
+          }px`;
           progressRefDesktop.current.style.top = `${Math.max(
             (viewHeight - headerHeight - progressHeight) / 2,
             minTitleHeight
-          )}px`
-          progressRefDesktop.current.style.bottom = ''
+          )}px`;
+          progressRefDesktop.current.style.bottom = '';
           if (viewHeight < 650 && pageHeight - scrollPos - viewHeight < 100) {
-            const footerHeight = 100 - (pageHeight - scrollPos - viewHeight)
-            progressRefDesktop.current.style.top = ''
-            progressRefDesktop.current.style.bottom = `${footerHeight}px`
+            const footerHeight = 100 - (pageHeight - scrollPos - viewHeight);
+            progressRefDesktop.current.style.top = '';
+            progressRefDesktop.current.style.bottom = `${footerHeight}px`;
           }
         } else {
-          setDesktopVisibility('hidden')
-          setMobileButtonDisplay('flex')
+          setDesktopVisibility('hidden');
+          setMobileButtonDisplay('flex');
         }
       }
-    }
+    };
 
     useEffect(() => {
-      handSidebarPosition()
-      window.addEventListener('resize', handSidebarPosition)
-      window.addEventListener('scroll', handSidebarPosition)
-    }, [])
+      handSidebarPosition();
+      window.addEventListener('resize', handSidebarPosition);
+      window.addEventListener('scroll', handSidebarPosition);
+    }, []);
 
     // Mobile sidebar panel is only determined by mobileOpened
     useEffect(() => {
       if (mobileOpended) {
-        setMobileDisplay('flex')
+        setMobileDisplay('flex');
       } else {
-        setMobileDisplay('none')
+        setMobileDisplay('none');
       }
-    }, [mobileOpended])
+    }, [mobileOpended]);
 
     useEffect(() => {
       // Create a scoped async function within the hook.
       const fetchUser = async () => {
         try {
-          const currentUser = await AuthService.getCurrentUser()
-          setUser(currentUser)
+          const currentUser = await AuthService.getCurrentUser();
+          setUser(currentUser);
         } catch (error: any) {}
-      }
+      };
       // Execute the created function directly
-      fetchUser()
-    }, [])
+      fetchUser();
+    }, []);
 
     const handleMobileClose = (e: React.MouseEvent<HTMLDivElement>) => {
-      e.stopPropagation()
-      setMobileOpened(false)
-    }
+      e.stopPropagation();
+      setMobileOpened(false);
+    };
 
     const handleMobileOpen = (e: React.MouseEvent<HTMLDivElement>) => {
-      e.stopPropagation()
-      setMobileOpened(true)
-    }
+      e.stopPropagation();
+      setMobileOpened(true);
+    };
 
     const handleDashboard = (e: MouseEvent<HTMLDivElement>) => {
-      e.preventDefault()
-      router.push('/dashboard')
-    }
+      e.preventDefault();
+      router.push('/dashboard');
+    };
 
     const dashboardButton = user ? (
       <div
@@ -256,7 +256,7 @@ const ProgressBox = (
       </div>
     ) : (
       <></>
-    )
+    );
 
     return (
       <>
@@ -306,7 +306,7 @@ const ProgressBox = (
             className='w-fit select-none grow-0 drop-shadow-xl border-solid border-2 border-blue-600 rounded-lg bg-white z-20 fixed'
             ref={progressRefMobile}
             onClick={(e) => {
-              e.stopPropagation()
+              e.stopPropagation();
             }}
           >
             <div className='-top-4 flex justify-center sticky'>
@@ -331,7 +331,7 @@ const ProgressBox = (
                   {dashboardButton}
                   {stepRedirectPair.map((pair, index) => (
                     <OneStep
-                      key={index} // Add a unique key prop here
+                      key={`step` + index.toString()} // Add a unique key prop here
                       id={index + 1}
                       current={currentInd === index}
                       finished={finishedSteps.includes(index)}
@@ -346,14 +346,14 @@ const ProgressBox = (
           </div>
         </div>
       </>
-    )
-  }
-  return CurrentProgress
-}
+    );
+  };
+  return CurrentProgress;
+};
 
 // Set up actual progress indicators with texts and redirections
 const ProjectProgress = () => {
-  const steps = ['Topic', 'Outlines', 'Slides', 'Script', 'Audio', 'Video']
+  const steps = ['Topic', 'Outlines', 'Slides', 'Script', 'Audio', 'Video'];
   const redirect = [
     '/workflow-generate-outlines',
     '/workflow-edit-outlines',
@@ -361,69 +361,72 @@ const ProjectProgress = () => {
     '/workflow-edit-script',
     '/workflow-review-audio',
     '/workflow-review-video',
-  ]
+  ];
   const projectFinishedSteps: () => number[] = () => {
-    const finishedStepsArray: number[] = []
+    const finishedStepsArray: number[] = [];
     if (typeof window !== 'undefined' && sessionStorage.getItem('topic')) {
-      finishedStepsArray.push(0)
+      finishedStepsArray.push(0);
     }
     if (typeof window !== 'undefined' && sessionStorage.getItem('outline')) {
-      finishedStepsArray.push(1)
+      finishedStepsArray.push(1);
     }
-    if (typeof window !== 'undefined' && sessionStorage.getItem('presentation_slides')) {
-      finishedStepsArray.push(2)
+    if (
+      typeof window !== 'undefined' &&
+      sessionStorage.getItem('presentation_slides')
+    ) {
+      finishedStepsArray.push(2);
     }
     if (
       typeof window !== 'undefined' &&
       sessionStorage.getItem('transcripts')
     ) {
-      finishedStepsArray.push(3)
+      finishedStepsArray.push(3);
     }
     if (
       typeof window !== 'undefined' &&
       sessionStorage.getItem('audio_files')
     ) {
-      finishedStepsArray.push(4)
+      finishedStepsArray.push(4);
     }
     if (typeof window !== 'undefined' && sessionStorage.getItem('video_file')) {
-      finishedStepsArray.push(5)
+      finishedStepsArray.push(5);
     }
-    return finishedStepsArray
-  }
+    return finishedStepsArray;
+  };
   const projectUnavailableSteps: () => number[] = () => {
-    const unavailableStepsArray: number[] = []
+    const unavailableStepsArray: number[] = [];
     if (
       typeof window !== 'undefined' &&
       sessionStorage.getItem('has_slides') == 'false'
     ) {
-      unavailableStepsArray.push(2)
+      unavailableStepsArray.push(2);
     }
     if (
       typeof window !== 'undefined' &&
       sessionStorage.getItem('has_script') == 'false'
     ) {
-      unavailableStepsArray.push(3)
+      unavailableStepsArray.push(3);
     }
     if (
       typeof window !== 'undefined' &&
       sessionStorage.getItem('has_audio') == 'false'
     ) {
-      unavailableStepsArray.push(4)
+      unavailableStepsArray.push(4);
     }
     if (
       typeof window !== 'undefined' &&
       sessionStorage.getItem('has_video') == 'false'
     ) {
-      unavailableStepsArray.push(5)
+      unavailableStepsArray.push(5);
     }
-    return unavailableStepsArray
-  }
+    return unavailableStepsArray;
+  };
   return ProgressBox(
     steps,
     redirect,
     projectFinishedSteps,
     projectUnavailableSteps
-  )
-}
+  );
+};
 
-export default ProjectProgress()
+export default ProjectProgress();

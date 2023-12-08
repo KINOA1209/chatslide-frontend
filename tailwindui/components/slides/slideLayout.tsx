@@ -155,7 +155,10 @@ export const Col_1_img_0_layout = ({
                     <div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
                     <div className='w-full h-full'>
                         {content.map((item, index) => (
-                            <div className='py-[0.5rem]'>
+                            <div
+                                className='py-[0.5rem]'
+                                key={index}
+                            >
                                 {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
                                 <ul
                                     key={index}
@@ -200,7 +203,10 @@ export const Col_2_img_0_layout = ({
             </div>
             <div className='h-full w-full grid grid-cols-2 gap-[2.5rem] overflow-y-scroll'>
                 {content.map((item, index) => (
-                    <div className='flex flex-col gap-[1rem]'>
+                    <div
+                        className='flex flex-col gap-[1rem]'
+                        key={index}
+                    >
                         <div className='mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-creato-medium uppercase leading-10 tracking-widest pt-[2rem]'>
                             {index + 1}
                         </div>
@@ -246,7 +252,10 @@ export const Col_3_img_0_layout = ({
             </div>
             <div className='h-full w-full grid grid-cols-3 gap-[2.5rem] overflow-y-scroll'>
                 {content.map((item, index) => (
-                    <div className='flex flex-col gap-[1rem]'>
+                    <div
+                        className='flex flex-col gap-[1rem]'
+                        key={index}
+                    >
                         <div className='mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-creato-medium uppercase leading-10 tracking-widest pt-[2rem]'>
                             {index + 1}
                         </div>
@@ -306,7 +315,10 @@ export const Col_1_img_1_layout = ({
                         <div className='opacity-50'></div>
                         <div className='w-full h-full'>
                             {content.map((item, index) => (
-                                <div className='py-[0.5rem]'>
+                                <div
+                                    className='py-[0.5rem]'
+                                    key={index}
+                                >
                                     {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
                                     <ul
                                         key={index}
@@ -374,7 +386,10 @@ export const Col_2_img_1_layout = ({
                         <div className='opacity-50'></div>
                         <div className='w-full h-full'>
                             {content.map((item, index) => (
-                                <div className='py-[0.5rem]'>
+                                <div
+                                    className='py-[0.5rem]'
+                                    key={index}
+                                >
                                     {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
                                     <ul
                                         key={index}
@@ -457,7 +472,10 @@ export const Col_2_img_2_layout = ({
                 {/* two columns of text */}
                 <div className='w-full grid grid-cols-2 gap-[2.5rem] overflow-y-scroll mt-[1.5rem]'>
                     {content.map((item, index) => (
-                        <div className='flex flex-col gap-[1rem]'>
+                        <div
+                            className='flex flex-col gap-[1rem]'
+                            key={index}
+                        >
                             {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
                             <ul
                                 key={index}
@@ -535,7 +553,10 @@ export const Col_3_img_3_layout = ({
                 {/* three columns of text */}
                 <div className='w-full grid grid-cols-3 gap-[2.5rem] overflow-y-scroll mt-[1.5rem]'>
                     {content.map((item, index) => (
-                        <div className='flex flex-col gap-[1rem]'>
+                        <div
+                            className='flex flex-col gap-[1rem]'
+                            key={index}
+                        >
                             {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
                             <ul
                                 key={index}
