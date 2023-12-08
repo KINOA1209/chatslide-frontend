@@ -172,7 +172,7 @@ const SideBar = ({ }: SideBarProps) => {
               className="block  py-1 text-sm text-white px-2 rounded-lg hover:bg-gray-400"
               role="menuitem"
             >
-              📄 Fill out Form
+              📄 Fill a Survey
             </a>
 
             <br /> 
