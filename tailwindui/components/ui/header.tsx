@@ -20,7 +20,7 @@ interface HeaderProps {
   isLanding: boolean
   isAuth?: boolean
 }
-const Header = ({ loginRequired, isLanding = false, isAuth = false}: HeaderProps) => {
+const Header = ({ loginRequired, isLanding = false, isAuth = false }: HeaderProps) => {
   const [top, setTop] = useState<boolean>(true)
   const [userId, setUserId] = useState(null)
   // const [username, setUsername] = useState(null);
@@ -30,7 +30,7 @@ const Header = ({ loginRequired, isLanding = false, isAuth = false}: HeaderProps
 
   const router = useRouter()
   const [isMobile, setIsMobile] = useState<boolean>(false)
-  
+
 
   // detect whether user has scrolled the page down by 10px
   const scrollHandler = () => {
@@ -126,39 +126,9 @@ const Header = ({ loginRequired, isLanding = false, isAuth = false}: HeaderProps
     }
   }, [])
 
-
-  if (loading) {
-    // Render a loading state or a blank placeholder
-    return (
-      <header
-        className={`fixed w-full z-30 bg-gray-800 bg-opacity-90 transition duration-300 ease-in-out ${!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
-          }`}
-      >
-        <div className='max-w-4/5 mx-auto px-5'>
-          <div className='flex items-center justify-between h-12'>
-            {/* Site branding */}
-            <div className='flex flex-row justify-center items-center gap-[0.37rem] grow-0'>
-              <Logo />
-              <div className='grow-0 flex justify-start'>
-                <div className='w-fit h-[1.5rem] text-[1.3125rem] text-gray-200 bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500 relative bottom-[3px] font-creato-medium'>
-                  <a href={loginRequired ? '/dashboard' : '/'}>DrLambda</a>
-                </div>
-              </div>
-            </div>
-
-            {/* Desktop navigation */}
-            <nav className='flex w-[272px]'></nav>
-          </div>
-        </div>
-        <GoogleAnalytics />
-
-        {/* only render hotjar on desktop for performance */}
-        {!isMobile && <Hotjar />}
-      </header>
-    )
-  } else return (
+  return (
     <header
-      className={`fixed w-full z-30 bg-gray-800 bg-opacity-90 transition duration-300 ease-in-out ${!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
+      className={`relative sticky top-0 w-full z-30 bg-gray-800 bg-opacity-90 transition duration-300 ease-in-out ${!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
         }`}
     >
       <div className='max-w-4/5 mx-auto px-5'>
@@ -196,7 +166,7 @@ const Header = ({ loginRequired, isLanding = false, isAuth = false}: HeaderProps
           )}
 
           {/* Desktop navigation */}
-          <nav className='flex w-[272px]'>
+          {!loading && <nav className='flex w-[272px]'>
             {/* Desktop sign in links */}
             {userId ? (
               (!isAuth && <ul className='flex grow justify-end flex-wrap items-center'>
@@ -222,7 +192,7 @@ const Header = ({ loginRequired, isLanding = false, isAuth = false}: HeaderProps
                 </li>
               </ul>
             )}
-          </nav>
+          </nav>}
         </div>
       </div>
 
