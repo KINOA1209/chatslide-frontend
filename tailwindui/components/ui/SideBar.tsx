@@ -14,9 +14,6 @@ interface SideBarProps {
 }
 const SideBar = ({ }: SideBarProps) => {
   const [top, setTop] = useState<boolean>(true)
-  const [username, setUsername] = useState(null);
-  const [userId, setUserId] = useState(null)
-  const [idToken, setIdToken] = useState('')
   const [loading, setLoading] = useState(true)
   const [credits, setCredits] = useState(0)
   const [tier, setTier] = useState<string>('')
@@ -58,19 +55,17 @@ const SideBar = ({ }: SideBarProps) => {
     const checkUser = async () => {
       try {
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
-        setUserId(userId)
-        setIdToken(idToken)
+        await getCredits(idToken)
+        setLoading(false)
       } catch {
         console.log('No authenticated user.')
         router.push('/signin')
       }
     }
 
-    const getCredits = async () => {
+    const getCredits = async (idToken: string) => {
       try {
-        const { username } = await Auth.currentUserInfo()
         const { credits, tier } = await UserService.getUserCreditsAndTier(idToken)
-        setUsername(username)
         setCredits(credits)
         setTier(tier)
       } catch (error: any) {
@@ -80,8 +75,6 @@ const SideBar = ({ }: SideBarProps) => {
 
     // check the current user when component loads
     checkUser()
-    getCredits()
-    setLoading(false)
 
     const listener = (data: any) => {
       switch (data.payload.event) {
@@ -91,7 +84,6 @@ const SideBar = ({ }: SideBarProps) => {
           break
         case 'signOut':
           console.log('user signed out')
-          setUserId(null)
           break
         default:
           break
