@@ -32,7 +32,7 @@ class UserService {
         console.log("Initialized successfully.")
         return true;
       } else {
-        console.error(`Failed to initialize user: ${user}`, createUserResponse.status);
+        console.error(`Failed to initialize user: ${username}`, createUserResponse.status, createUserResponse.statusText);
         const errorData = await createUserResponse.json();
         throw new Error(errorData.message);
       }
