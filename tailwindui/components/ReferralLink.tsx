@@ -1,5 +1,5 @@
 "use client"
-import AuthService from '@/components/utils/AuthService';
+import AuthService from '@/services/AuthService';
 import { useState, useEffect, useRef, RefObject } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 // import 'aos/dist/aos.css'

@@ -1,21 +1,21 @@
-import React, { useState } from 'react'
-import AuthService from '../utils/AuthService'
+import React, { useState, useEffect } from 'react';
+import AuthService from '../../services/AuthService';
 import {
   LeftSlideNavIcon,
   RightSlideNavIcon,
   ShareSlidesIcon,
-} from '@/app/(feature)/workflow-review-slides/icons'
+} from '@/app/(feature)/workflow-review-slides/icons';
 import {
   PresentationModeIcon,
   ChangeLayoutIcon,
   AddSlideIcon,
   DeleteSlideIcon,
   ScriptsIcon,
-} from '@/app/(feature)/icons'
-import { current } from '@reduxjs/toolkit'
+} from '@/app/(feature)/icons';
+import { current } from '@reduxjs/toolkit';
 type SaveButtonProps = {
-  saveSlides: () => void
-}
+  saveSlides: () => void;
+};
 
 export const SaveButton: React.FC<SaveButtonProps> = ({ saveSlides }) => {
   return (
@@ -29,12 +29,12 @@ export const SaveButton: React.FC<SaveButtonProps> = ({ saveSlides }) => {
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
 type PresentButtonProps = {
-  openPresent: () => void
-}
+  openPresent: () => void;
+};
 
 export const PresentButton: React.FC<PresentButtonProps> = ({
   openPresent,
@@ -56,24 +56,24 @@ export const PresentButton: React.FC<PresentButtonProps> = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 type ShareToggleButtonProps = {
-  share: boolean
-  setShare: (share: boolean) => void
-}
+  share: boolean;
+  setShare: (share: boolean) => void;
+};
 
 export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
   share,
   setShare,
 }) => {
   const toggleShare = async () => {
-    const newShareStatus = !share
+    const newShareStatus = !share;
     // console.log('newShareStatus', newShareStatus);
-    setShare(newShareStatus)
+    setShare(newShareStatus);
     const { userId, idToken: token } =
-      await AuthService.getCurrentUserTokenAndId()
+      await AuthService.getCurrentUserTokenAndId();
     try {
       const response = await fetch('/api/share_project', {
         method: 'POST',
@@ -85,21 +85,21 @@ export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
           project_id: sessionStorage.getItem('project_id'), // Replace with your project's ID
           is_shared: newShareStatus,
         }),
-      })
+      });
 
-      const responseData = await response.json()
+      const responseData = await response.json();
 
       if (response.ok) {
-        sessionStorage.setItem('is_shared', newShareStatus.toString())
+        sessionStorage.setItem('is_shared', newShareStatus.toString());
       } else {
         // Handle error (e.g., show a notification to the user)
-        console.error(responseData.error)
+        console.error(responseData.error);
       }
     } catch (error) {
-      console.error('Failed to toggle share status:', error)
+      console.error('Failed to toggle share status:', error);
       // Handle error (e.g., show a notification to the user)
     }
-  }
+  };
 
   return (
     <div className='col-span-1'>
@@ -119,13 +119,13 @@ export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export const SlideNavigator: React.FC<{
-  currentSlideIndex: number
-  slides: any[] // Replace 'any' with the appropriate type if known
-  goToSlide: (index: number) => void
+  currentSlideIndex: number;
+  slides: any[]; // Replace 'any' with the appropriate type if known
+  goToSlide: (index: number) => void;
 }> = ({ currentSlideIndex, slides, goToSlide }) => {
   return (
     <div className='col-span-1'>
@@ -151,13 +151,13 @@ export const SlideNavigator: React.FC<{
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export const SlidePagesIndicator: React.FC<{
-  currentSlideIndex: number
-  slides: any[] // Replace 'any' with the appropriate type if known
-  goToSlide: (index: number) => void
+  currentSlideIndex: number;
+  slides: any[]; // Replace 'any' with the appropriate type if known
+  goToSlide: (index: number) => void;
 }> = ({ currentSlideIndex, slides, goToSlide }) => {
   return (
     <div className='col-span-1'>
@@ -182,13 +182,13 @@ export const SlidePagesIndicator: React.FC<{
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export const SlideLeftNavigator: React.FC<{
-  currentSlideIndex: number
-  slides: any[] // Replace 'any' with the appropriate type if known
-  goToSlide: (index: number) => void
+  currentSlideIndex: number;
+  slides: any[]; // Replace 'any' with the appropriate type if known
+  goToSlide: (index: number) => void;
 }> = ({ currentSlideIndex, slides, goToSlide }) => {
   return (
     <div className='col-span-1'>
@@ -203,13 +203,13 @@ export const SlideLeftNavigator: React.FC<{
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export const SlideRightNavigator: React.FC<{
-  currentSlideIndex: number
-  slides: any[] // Replace 'any' with the appropriate type if known
-  goToSlide: (index: number) => void
+  currentSlideIndex: number;
+  slides: any[]; // Replace 'any' with the appropriate type if known
+  goToSlide: (index: number) => void;
 }> = ({ currentSlideIndex, slides, goToSlide }) => {
   return (
     <div className='col-span-1'>
@@ -224,12 +224,12 @@ export const SlideRightNavigator: React.FC<{
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export const AddSlideButton: React.FC<{
-  currentSlideIndex: number
-  addPage: () => void
+  currentSlideIndex: number;
+  addPage: () => void;
 }> = ({ currentSlideIndex, addPage }) => {
   return (
     <div className='col-span-1 hidden sm:block'>
@@ -242,12 +242,12 @@ export const AddSlideButton: React.FC<{
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export const DeleteSlideButton: React.FC<{
-  currentSlideIndex: number
-  deletePage: () => void
+  currentSlideIndex: number;
+  deletePage: () => void;
 }> = ({ currentSlideIndex, deletePage }) => {
   return (
     <div className='col-span-1 hidden sm:block'>
@@ -260,37 +260,94 @@ export const DeleteSlideButton: React.FC<{
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 // use to change the template. selection box
+// export const ChangeTemplateOptions: React.FC<{
+//   templateOptions: string[]
+//   onChangeTemplate: (newTemplate: string) => void
+// }> = ({ templateOptions, onChangeTemplate }) => {
+//   const [selectedTemplate, setSelectedTemplate] = useState('')
+//   const handleTemplateChange = (
+//     event: React.ChangeEvent<HTMLSelectElement>
+//   ) => {
+//     setSelectedTemplate(event.target.value)
+//   }
+//   const applyTemplateChange = () => {
+//     if (selectedTemplate) {
+//       onChangeTemplate(selectedTemplate)
+//     }
+//   }
+//   useEffect(() => console.log('templateOptions are:', templateOptions), [])
+//   return (
+//     <div className='relative'>
+//       <select
+//         className='border border-gray-300 rounded-md px-3 py-1 mr-2'
+//         onChange={handleTemplateChange}
+//         value={selectedTemplate}
+//       >
+//         <option value='' disabled>
+//           Select Template
+//         </option>
+//         {templateOptions.map((template) => (
+//           <option key={template} value={template}>
+//             {template}
+//           </option>
+//         ))}
+//       </select>
+//       <button
+//         className='bg-blue-500 text-white px-3 py-1 rounded-md cursor-pointer'
+//         onClick={applyTemplateChange}
+//       >
+//         Apply
+//       </button>
+//     </div>
+//   )
+// }
 export const ChangeTemplateOptions: React.FC<{
-  templateOptions: string[]
-  onChangeTemplate: (newTemplate: string) => void
+  templateOptions: string[];
+  onChangeTemplate: (newTemplate: string) => void;
 }> = ({ templateOptions, onChangeTemplate }) => {
-  const [selectedTemplate, setSelectedTemplate] = useState('')
+  const [selectedTemplate, setSelectedTemplate] = useState(() => {
+    // Try to get the selected template from sessionStorage
+    const storedTemplate = sessionStorage.getItem('selectedTemplate');
+    return storedTemplate || '';
+  });
+
   const handleTemplateChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setSelectedTemplate(event.target.value)
-  }
+    const newTemplate = event.target.value;
+    setSelectedTemplate(newTemplate);
+
+    // Save the selected template to sessionStorage
+    sessionStorage.setItem('selectedTemplate', newTemplate);
+  };
+
   const applyTemplateChange = () => {
     if (selectedTemplate) {
-      onChangeTemplate(selectedTemplate)
+      onChangeTemplate(selectedTemplate);
     }
-  }
+  };
+
+  useEffect(
+    () => console.log('templateOptions are:', templateOptions),
+    [selectedTemplate]
+  );
+
   return (
     <div className='relative'>
       <select
-        className='border border-gray-300 rounded-md px-3 py-1 mr-2'
+        className='border border-gray-300 rounded-md px-3 py-1 mr-2 w-[20rem]'
         onChange={handleTemplateChange}
         value={selectedTemplate}
       >
         <option value='' disabled>
           Select Template
         </option>
-        {templateOptions.map((template) => (
-          <option key={template} value={template}>
+        {templateOptions.map((template, index) => (
+          <option key={`${template}-${index}`} value={template}>
             {template}
           </option>
         ))}
@@ -302,5 +359,5 @@ export const ChangeTemplateOptions: React.FC<{
         Apply
       </button>
     </div>
-  )
-}
+  );
+};

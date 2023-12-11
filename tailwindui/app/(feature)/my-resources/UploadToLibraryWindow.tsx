@@ -1,28 +1,25 @@
 'use client'
-import React, { useState, useEffect,  useRef } from 'react';
+
+// this file is not actively used
+
+import React, { useState, useEffect, useRef } from 'react';
 import { FromCloudIcon, FromComputerIcon } from '@/app/(feature)/my-resources/icons';
-import { NewFileUploadButton } from '@/components/fileUpload';
 import { toast } from 'react-toastify';
-import AuthService from '@/components/utils/AuthService';
-import UserService from '@/components/utils/UserService';
+import AuthService from '@/services/AuthService';
+import UserService from '@/services/UserService';
 import { CarbonConnect, IntegrationName } from 'carbon-connect';
 import 'react-toastify/dist/ReactToastify.css';
 import '@/app/(feature)/my-resources/UploadToLibraryWindow.css';
+import ResourceService from '@/services/ResourceService';
+import Resource from '@/models/Resource';
+import { FileUploadButton } from '@/components/FileUploadButton';
 
 
 interface UploadToLibraryWindowProps {
   showModal: boolean
   closeModal: () => void
   selectable: boolean
-  onFilesUploaded: () => void
-}
-
-interface UserFile {
-  id: string
-  uid: string
-  filename: string
-  thumbnail_name: string
-  timestamp: string
+  onFilesUploaded: Function
 }
 
 const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
@@ -37,7 +34,7 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
 
   //new part
   const [activeTab, setActiveTab] = useState('computer')
-  const [resources, setResources] = useState<UserFile[]>([])
+  const [resources, setResources] = useState<Resource[]>([])
   const [rendered, setRendered] = useState<boolean>(false)
   const promptRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
@@ -46,7 +43,7 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
   const [uploadedResourcesClicked, setUploadedResourcesClicked] = useState(new Array(uploadedResources.length).fill(false))
 
   // function to keep tracking of current tab
-  const handleTabClick = (tab:string) => {
+  const handleTabClick = (tab: string) => {
     setActiveTab(tab)
   }
 
@@ -151,44 +148,15 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
     }
     headers.append('Content-Type', 'application/json')
 
-    const resource_type = selectable
-      ? {
-          resource_type: ['doc', 'url'],
-        }
-      : {}
+    const resource_type = selectable ? ['doc', 'url'] : []
 
-    try {
-      const response = await fetch('/api/resource_info', {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(resource_type),
-      })
-
-      if (response.ok) {
-        const data = await response.json()
-        const files = data.data.resources
-        const resourceTemps = files.map((resource: any) => {
-          return {
-            id: resource.id,
-            uid: resource.uid,
-            filename: resource.resource_name,
-            thumbnail_name: resource.thumbnail_url,
-            timestamp: resource.timestamp,
-          }
-        })
-        setResources(resourceTemps)
-        sessionStorage.setItem(
-          'history_resource',
-          JSON.stringify(resourceTemps)
-        )
+    ResourceService.fetchResources(resource_type, token).then(
+      (resources) => {
+        setResources(resources)
+        sessionStorage.setItem('history_resource', JSON.stringify(resources))
         setRendered(true)
-      } else {
-        // Handle error cases
-        console.error('Failed to fetch projects:', response.status)
       }
-    } catch (error) {
-      console.error('Error fetching projects:', error)
-    }
+    )
   }
 
 
@@ -252,7 +220,7 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
   // function to update the uploadedResources when the user uploads the file locally
   // uploadedResources: <Array<File>>([]) ex: [File, File, File]
   const localFileUpload = async (file: File | null) => {
-    if (file == null){
+    if (file == null) {
       return
     }
     //check for duplicate file
@@ -277,7 +245,7 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
       return
     }
     const validFiles = files.filter(file => file !== null) as File[]
-    if (validFiles.length === 0){
+    if (validFiles.length === 0) {
       return
     }
     const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
@@ -291,29 +259,29 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
         },
         body: body,
       })
-      .then((response) => {
-        if (response.ok){
-          return response.json()
-        }
-        else {
-          response.json().then((data) => {
-            toast.error(data.message, {
-              position: 'top-center',
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: 'light',
-              containerId: 'fileManagement',
+        .then((response) => {
+          if (response.ok) {
+            return response.json()
+          }
+          else {
+            response.json().then((data) => {
+              toast.error(data.message, {
+                position: 'top-center',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'light',
+                containerId: 'fileManagement',
+              })
             })
-          })
-        }
-      })
-      .then(parsedResponse => {
-        const file_id = parsedResponse.data.file_id
-      })
+          }
+        })
+        .then(parsedResponse => {
+          const file_id = parsedResponse.data.file_id
+        })
     })
 
     Promise.all(uploadPromises)
@@ -352,14 +320,14 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
   }
 
   //function to handle the toggle in upload local file section
-  const handleUploadResourcesClick = (idx:number) => {
+  const handleUploadResourcesClick = (idx: number) => {
     //update boolean array to keep tracking the selected/unselected state of upload file
     const newClickedState = [...uploadedResourcesClicked];
     newClickedState[idx] = !newClickedState[idx];
     setUploadedResourcesClicked(newClickedState);
     //update file array to upload the selected file to db
     const newSelectedFileArray = [...selectedUploadedResources];
-    if (newClickedState[idx] === true){
+    if (newClickedState[idx] === true) {
       newSelectedFileArray[idx] = uploadedResources[idx]
     }
     else {
@@ -385,10 +353,10 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
           <div className='flex flex-row w-full px-5'>
             {/* From computer tab */}
             <div className={`flex-1 h-10 px-3 py-1 ${activeTab === 'computer' ? 'border-b-2' : 'border-b-0 opacity-50'} bg-neutral-800 bg-opacity-0 justify-center items-center gap-2.5 inline-flex border-black cursor-pointer`}
-            onClick={(e) => {
-              e.stopPropagation();
-              handleTabClick('computer');
-            }}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleTabClick('computer');
+              }}
             >
               <div className='w-[17px] h-[18px] relative'>
                 <div className='w-[15.79px] h-3.5 left-[0.61px] absolute'>
@@ -401,10 +369,10 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
             </div>
             {/* from cloud tab */}
             <div className={`flex-1 h-10 px-3 py-1 ${activeTab === 'cloud' ? 'border-b-2' : 'border-b-0 opacity-50'} bg-neutral-800 bg-opacity-0 justify-center items-center gap-2.5 inline-flex border-black cursor-pointer`}
-            onClick={(e) => {
-              e.stopPropagation();
-              handleTabClick('cloud');
-            }}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleTabClick('cloud');
+              }}
             >
               <div className='w-[17px] h-[17px] relative'>
                 <div className='w-[15.79px] h-[15.79px] left-[0.61px] top-[0.60px] absolute'>
@@ -417,29 +385,29 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
             </div>
           </div>
           {/* File upload area */}
-          { activeTab === 'computer' && (
+          {activeTab === 'computer' && (
             <div className='h-[400px] my-[20px] px-2 md:px-5 w-full flex-1 flex flex-col'>
               <div className='flex-1 overflow-auto max-h-[280px] z-[20]'>
                 {uploadedResources.map((uploadedFile, index) => (
-                    <li className='list-none flex' key={index}>
-                        <div id='uploadfile_each' className='flex w-full justify-between items-center gap-2 rounded h-[45px] pl-[1rem] mt-[10px]'>
-                            <div className='flex items-center gap-2'>
-                              <img src="/icons/selectedFiles_icon.png"/>
-                              <span>{uploadedFile.name}</span>
-                            </div>
-                            <button
-                              className={`uploadButton ${uploadedResourcesClicked[index] ? 'clicked' : ''} flex-end w-[17px] h-[17px] mr-[20px] rounded-full hover:bg-gray-400 transition duration-300`}
-                              onClick={() => handleUploadResourcesClick(index)}
-                            >
-                            </button>
-                        </div>
-                    </li>
+                  <li className='list-none flex' key={index}>
+                    <div id='uploadfile_each' className='flex w-full justify-between items-center gap-2 rounded h-[45px] pl-[1rem] mt-[10px]'>
+                      <div className='flex items-center gap-2'>
+                        <img src="/icons/selectedFiles_icon.png" />
+                        <span>{uploadedFile.name}</span>
+                      </div>
+                      <button
+                        className={`uploadButton ${uploadedResourcesClicked[index] ? 'clicked' : ''} flex-end w-[17px] h-[17px] mr-[20px] rounded-full hover:bg-gray-400 transition duration-300`}
+                        onClick={() => handleUploadResourcesClick(index)}
+                      >
+                      </button>
+                    </div>
+                  </li>
                 ))}
               </div>
               <div id='instruction_container' className={`w-full min-h-[100px] border-0 border-dotted border-gray-400'} bg-gray-200 rounded-lg flex flex-col items-center justify-center`}>
                 {' '}
                 {/* select local file button */}
-                <NewFileUploadButton onFileSelected={localFileUpload} />
+                <FileUploadButton onFileSelected={localFileUpload} />
                 {/* <div className='w-[334.50px] h-[29.16px] text-center text-blue-700 text-[15px] font-medium font-creato-medium leading-tight tracking-tight'>
                   or drop here
                 </div> */}
@@ -460,7 +428,7 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
             </div>
           )}
           {/* From cloud area */}
-          { activeTab === 'cloud' && (
+          {activeTab === 'cloud' && (
             <CarbonConnect
               orgName='DrLambda'
               brandIcon='https://drlambda.ai/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo_no_text.0a4e5a6b.png&w=1920&q=75'
@@ -507,7 +475,7 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
               open={false}
               chunkSize={1500}
               overlapSize={20}
-              // entryPoint="LOCAL_FILES"
+            // entryPoint="LOCAL_FILES"
             >
               <div className='h-[385px] my-[20px] flex items-center justify-center'>
                 <button
@@ -521,27 +489,27 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
           )}
           {/* container of last row */}
           <div className='flex flex-row w-full items-center h-[50px] justify-between px-5'>
-              {/* cancel button */}
-              <div className='w-[68.48px] h-7 rounded-[4.94px] border-2 border-zinc-800 justify-center items-center inline-flex'>
-                <div
-                  className='text-center text-zinc-800 text-sm font-medium font-creato-medium leading-[14.81px] tracking-wide cursor-pointer'
-                  onClick={closeModal}
-                >
-                  Cancel
-                </div>
+            {/* cancel button */}
+            <div className='w-[68.48px] h-7 rounded-[4.94px] border-2 border-zinc-800 justify-center items-center inline-flex'>
+              <div
+                className='text-center text-zinc-800 text-sm font-medium font-creato-medium leading-[14.81px] tracking-wide cursor-pointer'
+                onClick={closeModal}
+              >
+                Cancel
               </div>
- 
-              {/* continue button */}
-              <div className='w-[80.81px] h-7 bg-zinc-600 rounded-[4.94px] justify-center items-center inline-flex'>
-                <div className='text-center text-zinc-100 text-sm font-medium font-creato-medium leading-[14.81px] tracking-wide cursor-pointer'
-                 onClick={() => {
+            </div>
+
+            {/* continue button */}
+            <div className='w-[80.81px] h-7 bg-zinc-600 rounded-[4.94px] justify-center items-center inline-flex'>
+              <div className='text-center text-zinc-100 text-sm font-medium font-creato-medium leading-[14.81px] tracking-wide cursor-pointer'
+                onClick={() => {
                   onFileSelected(selectedUploadedResources);
                   closeModal();
                 }}
-                >
-                  Continue
-                </div>
+              >
+                Continue
               </div>
+            </div>
           </div>
         </div>
       </div>

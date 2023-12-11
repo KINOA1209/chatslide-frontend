@@ -11,27 +11,46 @@ import GoogleAnalytics from '@/components/integrations/GoogleAnalytics'
 import Hotjar from '@/components/integrations/Hotjar'
 // import AuthService from "../utils/AuthService";
 import { Auth, Hub } from 'aws-amplify'
-import AuthService from '../utils/AuthService'
+import AuthService from '../../services/AuthService'
 import { DrlambdaLogoIcon } from '../new_landing/Icons'
+import UserService from '@/services/UserService'
 
 interface HeaderProps {
   loginRequired: boolean
   isLanding: boolean
-  refList?: Array<React.RefObject<HTMLDivElement>>
+  isAuth?: boolean
 }
-const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
+const Header = ({ loginRequired, isLanding = false, isAuth = false }: HeaderProps) => {
   const [top, setTop] = useState<boolean>(true)
   const [userId, setUserId] = useState(null)
   // const [username, setUsername] = useState(null);
   const [loading, setLoading] = useState(true)
+  const [credits, setCredits] = useState(0)
+  const [tier, setTier] = useState<string>('')
 
   const router = useRouter()
   const [isMobile, setIsMobile] = useState<boolean>(false)
+
 
   // detect whether user has scrolled the page down by 10px
   const scrollHandler = () => {
     window.scrollY > 10 ? setTop(false) : setTop(true)
   }
+
+  useEffect(() => {
+    // get credits and tier
+    const getCredits = async () => {
+      try {
+        const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
+        const { credits, tier } = await UserService.getUserCreditsAndTier(idToken)
+        setCredits(credits)
+        setTier(tier)
+      } catch (error: any) {
+        console.error(error)
+      }
+    }
+    getCredits()
+  }, [])
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 768)
@@ -44,6 +63,18 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
     window.addEventListener('scroll', scrollHandler)
     return () => window.removeEventListener('scroll', scrollHandler)
   }, [top])
+
+  const signOut = async () => {
+    try {
+      await AuthService.signOut();
+      sessionStorage.clear();
+      localStorage.clear();
+      console.log('You have signed out!');
+      router.push('/');
+    } catch (error: any) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     // mixpanel.init('22044147cd36f20bf805d416e1235329', {
@@ -95,80 +126,58 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
     }
   }, [])
 
-  const handScrollTo = (e: React.MouseEvent<HTMLDivElement>, index: number) => {
-    if (isLanding && refList && refList[index].current) {
-      refList[index].current?.scrollIntoView()
-    }
-  }
-
-  if (loading) {
-    // Render a loading state or a blank placeholder
-    return (
-      <header
-        className={`fixed w-full z-30 bg-gray-800 bg-opacity-90 transition duration-300 ease-in-out ${!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
-          }`}
-      >
-        <div className='max-w-4/5 mx-auto px-5'>
-          <div className='flex items-center justify-between h-12'>
-            {/* Site branding */}
-            <div className='flex flex-row justify-center items-center gap-[0.37rem] grow-0'>
-              <Logo />
-              <div className='grow-0 flex justify-start'>
-                <div className='w-fit h-[1.5rem] text-[1.3125rem] text-gray-200 bg-clip-text bg-gradient-to-r from-blue-600  to-purple-500 relative bottom-[3px] font-creato-medium'>
-                  <a href='/dashboard'>DrLambda</a>
-                </div>
-              </div>
-            </div>
-
-            {/* Desktop navigation */}
-            <nav className='flex w-[272px]'></nav>
-
-            {/* <MobileMenu refList={refList} /> */}
-          </div>
-        </div>
-        <GoogleAnalytics />
-
-        {/* only render hotjar on desktop for performance */}
-        {!isMobile && <Hotjar />}
-      </header>
-    )
-  }
-
   return (
     <header
-      className={`fixed w-full z-30 bg-gray-800 bg-opacity-90 transition duration-300 ease-in-out ${!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
+      className={`relative sticky top-0 w-full z-30 bg-gray-800 bg-opacity-90 transition duration-300 ease-in-out ${!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
         }`}
     >
       <div className='max-w-4/5 mx-auto px-5'>
         <div className='flex items-center justify-between h-12'>
           {/* Site branding */}
           <div className='flex flex-row items-center gap-x-2'>
-            {isLanding ? <Logo /> : <Home />}
+            <div className='min-w-[1.5rem]'>
+              <Logo />
+            </div>
             <div className='grow flex flex-row justify-center item-center justify-start'>
               <div className='w-fit h-[1.5rem] text-xl text-gray-200 bg-clip-text bg-gradient-to-r relative bottom-[3px] font-creato-medium'>
-                <a href={!isLanding ? '/dashboard' : '/'}>DrLambda</a>
+                <a href={loginRequired ? '/dashboard' : '/'}>DrLambda</a>
               </div>
             </div>
           </div>
 
+          {/* landing sections */}
+          {isLanding && (
+            <div className="w-1/3 hidden sm:flex">
+              <div className='flex-grow flex w-full justify-between items-center'>
+                <a href="#scenarios" className='cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-regular'>
+                  <span>Scenarios</span>
+                </a>
+                <a href="#use-cases" className='whitespace-nowrap cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-regular'>
+                  <span>Features</span>
+                </a>
+                <a href="#testimonials" className='whitespace-nowrap cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-regular'>
+                  <span>Testimonials</span>
+                </a>
+                <a href="#pricing" className='cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-regular'>
+                  <span>Pricing</span>
+                </a>
+              </div>
+            </div>
+          )}
+
           {/* Desktop navigation */}
-          <nav className='flex w-[272px]'>
+          {!loading && <nav className='flex w-[272px]'>
             {/* Desktop sign in links */}
             {userId ? (
-              <ul className='flex grow justify-end flex-wrap items-center'>
+              (!isAuth && <ul className='flex grow justify-end flex-wrap items-center'>
                 <DropdownButton />
-              </ul>
+              </ul>)
             ) : (
               <ul className='flex grow justify-end flex-nowrap items-center'>
                 <li>
                   <Link
                     href='/signin'
-                    className='hidden sm:flex btn-sm drop-shadow-xl rounded-full text-white w-auto mb-0 cursor-pointer mr-4'
-                    style={{
-                      backgroundColor: '#1D222A',
-                      backgroundSize: '100%',
-                      fontFamily: 'Lexend, sans-serif',
-                    }}
+                    className='hidden sm:flex drop-shadow-xl text-white w-auto mb-0 cursor-pointer mr-4 font-creato-medium '
                   >
                     Sign in
                   </Link>
@@ -176,21 +185,14 @@ const Header = ({ loginRequired, isLanding = false, refList }: HeaderProps) => {
                 <li>
                   <Link
                     href='/signup'
-                    className='btn-sm drop-shadow-xl rounded-full text-white w-auto mb-0 cursor-pointer'
-                    style={{
-                      backgroundColor: '#1D222A',
-                      backgroundSize: '100%',
-                      fontFamily: 'Lexend, sans-serif',
-                    }}
+                    className='btn-sm drop-shadow-xl rounded-full text-white w-auto mb-0 cursor-pointer font-creato-medium bg-blue-700'
                   >
-                    <span>Join for Free</span>
+                    <span>Sign Up</span>
                   </Link>
                 </li>
               </ul>
             )}
-          </nav>
-
-          {/* <MobileMenu refList={refList} /> */}
+          </nav>}
         </div>
       </div>
 

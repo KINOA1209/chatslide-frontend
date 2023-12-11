@@ -4,8 +4,8 @@ import React, { useState, ChangeEvent, FormEvent, useEffect, useRef, RefObject }
 import { useRouter, useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AuthService from "@/components/utils/AuthService";
-import UserService from "@/components/utils/UserService";
+import AuthService from "@/services/AuthService";
+import UserService from "@/services/UserService";
 import Promo from "./signup/Promo";
 
 const SignupForm: React.FC = () => {
@@ -215,7 +215,7 @@ const SignupForm: React.FC = () => {
                 <div className="w-full px-3">
                     <button className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400"
                         disabled={submitting}>
-                        {!submitting ? 'Sign up' : 'Singing up...'}
+                        {!submitting ? 'Sign up' : 'Signing up...'}
                     </button>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Slide } from '@/components/slides/NewSlidesHTML'
+import { Slide } from '@/components/slides/SlidesHTML'
 import { templateDispatch as defaultTemplateDispatch } from './templateDispatch'
 
 type SlideContainerProps = {
@@ -19,6 +19,7 @@ type SlideContainerProps = {
   slideRef?: React.RefObject<HTMLDivElement>
   exportToPdfMode?: boolean
   highlightBorder?: boolean
+  setIsPresenting?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const SlideContainer: React.FC<SlideContainerProps> = ({
@@ -32,6 +33,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
   slideRef = useRef(null),
   exportToPdfMode = false,
   highlightBorder = false,
+  setIsPresenting,
 }) => {
   return (
     <div
@@ -43,11 +45,29 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
       style={{
         boxSizing: 'border-box',
         border: 'none',
-        boxShadow: isPresenting ? 'none' : !highlightBorder ? '0 2px 10px rgba(0, 0, 0, 0.5)' : '0 2px 10px rgba(255, 255, 0, 0.8)',
+        boxShadow: isPresenting
+          ? 'none'
+          : !highlightBorder
+          ? '0 0 10px rgba(0, 0, 0, 0.5)'
+          : '0 0 10px rgba(255, 255, 0, 1)',
+        borderRadius: isPresenting ? '0' : '5px',
         width: isPresenting ? '100vw' : `${960 * scale}px`,
         height: isPresenting ? '100vh' : `${540 * scale}px`,
       }}
     >
+      {isPresenting && setIsPresenting && (
+        <button
+          className="fixed top-10 right-10 p-2 w-10 h-10 bg-gray-400 text-white rounded-full cursor-pointer hover:bg-gray-600"
+          onClick={e => {
+            e.preventDefault()
+            e.stopPropagation()
+            console.log('close present')
+            setIsPresenting(false)
+          }}
+        >
+          ❌
+        </button>)
+      }
       {slides.length > 0 && (
         <div
           className='slide h-full w-full'

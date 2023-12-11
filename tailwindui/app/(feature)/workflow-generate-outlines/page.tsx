@@ -11,19 +11,21 @@ import React, {
 import { useRouter } from 'next/navigation'
 import '@/app/css/workflow-edit-topic-css/topic_style.css'
 import 'react-toastify/dist/ReactToastify.css'
-import AuthService from '@/components/utils/AuthService'
-import UserService from '@/components/utils/UserService'
+import AuthService from '@/services/AuthService'
+import UserService from '@/services/UserService'
 import { Transition } from '@headlessui/react'
-import MyFiles, { Resource } from '@/components/fileManagement'
-import FeedbackButton from '@/components/slides/feedback'
+import MyFiles from '@/components/FileManagement'
+import FeedbackButton from '@/components/ui/feedback'
 
 import { DeleteIcon, QuestionExplainIcon, RightTurnArrowIcon } from '@/app/(feature)/icons'
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner'
 import PaywallModal from '@/components/forms/paywallModal'
 import { FaFilePdf, FaYoutube } from 'react-icons/fa'
-import YoutubeService from '@/components/utils/YoutubeService'
+import YoutubeService from '@/services/YoutubeService'
 import { SmallBlueButton } from '@/components/button/DrlambdaButton'
-import WebService from '@/components/utils/WebpageService'
+import WebService from '@/services/WebpageService'
+import Resource from '@/models/Resource'
+import { ToastContainer, toast } from 'react-toastify'
 
 import Image from 'next/image'
 
@@ -110,6 +112,13 @@ export default function Topic() {
       : []
   )
 
+  useEffect(() => {
+    if (selectedResources.length > 0) {
+      if (topic.length == 0) {
+        setTopic(formatName(selectedResources[0].name))
+      }
+    }
+  }, [selectedResources])
 
   useEffect(() => {
     UserService.isPaidUser().then(
@@ -188,12 +197,12 @@ export default function Topic() {
   }
 
   async function addLink(link: string) {
-    if (!link) {
-      setLinkError('Please enter a valid link.');
+    if (!isValidUrl(link)) {
+      setLinkError('This does not seem like a valid link.');
       return;
     }
     if (!isPaidUser && selectedResources.length >= 1) {
-      setLinkError('Free users can only add one resource.');
+      setLinkError('Please subscribe to add more resources.');
       return;
     }
     setLinkError('');
@@ -203,6 +212,22 @@ export default function Topic() {
     } else {
       addWebpageLink(link)
     }
+  }
+
+  const isValidUrl = (urlString: string): boolean => {
+    try {
+      new URL(urlString);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+
+  function formatName(name: string) {
+    if (name.length > MAX_TOPIC_LENGTH) {
+      return name.slice(0, MAX_TOPIC_LENGTH - 3) + '...';
+    }
+    return name;
   }
 
   async function addYoutubeLink(link: string) {
@@ -216,19 +241,9 @@ export default function Topic() {
         return;
       }
 
-      const newFile = {
-        id: videoDetails.id,
-        uid: '',
-        title: videoDetails.title,
-        thumbnail_url: videoDetails.thumbnail,
-        timestamp: new Date().toISOString()
-      };
 
-      setSelectedResources(prevList => [...prevList, newFile]);
-      setSelectedResourceId(prevList => [...prevList, newFile.id]);
-      if (!topic) {
-        setTopic(videoDetails.title.slice(0, MAX_TOPIC_LENGTH))
-      }
+      setSelectedResources(prevList => [...prevList, videoDetails]);
+      setSelectedResourceId(prevList => [...prevList, videoDetails.id]);
     } catch (error: any) {
       console.error("Error fetching YouTube video details: ", error);
       setLinkError("Error fetching YouTube video details");
@@ -247,22 +262,11 @@ export default function Topic() {
         return;
       }
 
-      const newFile = {
-        id: pageDetails.id,
-        uid: '',
-        title: pageDetails.title,
-        thumbnail_url: pageDetails.thumbnail,
-        timestamp: new Date().toISOString()
-      };
-
-      setSelectedResources(prevList => [...prevList, newFile]);
-      setSelectedResourceId(prevList => [...prevList, newFile.id]);
-      if (!topic) {
-        setTopic(pageDetails.title.slice(0, MAX_TOPIC_LENGTH))
-      }
+      setSelectedResources(prevList => [...prevList, pageDetails]);
+      setSelectedResourceId(prevList => [...prevList, pageDetails.id]);
     } catch (error: any) {
-      console.error("Error fetching webpage details: ", error);
-      setLinkError("Error fetching webpage details");
+      console.error("Error reading webpage details: ", error);
+      setLinkError("Error reading webpage details");
     }
     setIsAddingLink(false)
   }
@@ -278,14 +282,13 @@ export default function Topic() {
     console.log('submitting')
     if (topic.length < MIN_TOPIC_LENGTH) {
       setTopicError(`Please enter at least ${MIN_TOPIC_LENGTH} characters.`)
+      toast.error(`Please enter at least ${MIN_TOPIC_LENGTH} characters for topic.`)
       setIsSubmitting(false)
       return
     }
 
     if (linkError) {
-      console.log(linkError) // continue without the valid link
-      setIsSubmitting(false)
-      return
+      console.log(linkError) // continue without the invalid link
     }
 
     const project_id =
@@ -487,6 +490,8 @@ export default function Topic() {
     <section>
       {showPaymentModal && <PaywallModal setShowModal={setShowPaymentModal} message='Upgrade for more ⭐️credits.' showReferralLink={true} />}
 
+      <ToastContainer />
+
       <Transition
         className='h-full w-full z-50 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
         show={showFileModal}
@@ -552,7 +557,7 @@ export default function Topic() {
         contentRef={contentRef}
         nextIsPaidFeature={false}
         showGPTToggle={true}
-        nextText={!isSubmitting ? 'Next' : 'Writing Outline...'}
+        nextText={!isSubmitting ? 'Write Outline' : 'Writing Outline...'}
         setIsGpt35={setIsGpt35}
       />
 
@@ -703,15 +708,21 @@ export default function Topic() {
                     onChange={(e) => setLanguage(e.target.value)}
                     required
                   >
-                    <option key='English' value='English'>English</option>
-                    <option key='Chinese' value='Chinese'>中文</option>
-                    <option key='Spanish' value='Spanish'>Español</option>
-                    <option key='French' value='French'>Français</option>
-                    <option key='German' value='German'>Deutsch</option>
-                    <option key='Russian' value='Russian'>Русский</option>
-                    <option key='Japanese' value='Japanese'>日本語</option>
-                    <option key='Portuguese' value='Portuguese'>Português</option>
-                    <option key='Ukrainian' value='Ukrainian'>Українська</option>
+                    <option key='English' value='English'>🇺🇸 English (United States)</option>
+                    <option key='British English' value='British English'>🇬🇧 English (British)</option>
+                    <option key='Spanish' value='Spanish'>🌎 Español (Latinoamérica)</option>
+                    <option key='Continental Spanish' value='Continental Spanish'>🇪🇸 Español (España)</option>
+                    <option key='Chinese' value='Chinese'>🇨🇳 中文 (简体)</option>
+                    <option key='Traditional Chinese' value='Traditional Chinese'>🇹🇼 中文 (繁體)</option>
+                    <option key='Russian' value='Russian'>🇷🇺 Русский</option>
+                    <option key='Ukrainian' value='Ukrainian'>🇺🇦 Українська</option>
+                    <option key='Hindi' value='Hindi'>🇮🇳 हिन्दी</option>
+                    <option key='French' value='French'>🇫🇷 Français</option>
+                    <option key='German' value='German'>🇩🇪 Deutsch</option>
+                    <option key='Portuguese' value='Portuguese'>🇵🇹 Português</option>
+                    <option key='Japanese' value='Japanese'>🇯🇵 日本語</option>
+                    <option key='Korean' value='Korean'>🇰🇷 한국어</option>
+                    <option key='Arabic' value='Arabic'>🇸🇦 العربية</option>
                   </select>
                 </div>
               </div>
@@ -827,7 +838,7 @@ export default function Topic() {
                           <img src={resource.thumbnail_url} className='w-[40px]' /> :
                           <FaFilePdf className='w-[40px]' />
                         }
-                        <div className='flex-wrap'>{resource.title}</div>
+                        <div className='flex-wrap'>{resource.name}</div>
                       </div>
                       <button className='' onClick={e => removeResourceAtIndex(index)}><DeleteIcon /></button>
                     </div>

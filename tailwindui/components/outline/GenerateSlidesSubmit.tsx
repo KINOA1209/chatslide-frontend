@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect, Fragment } from 'react'
 import { useRouter } from 'next/navigation'
-import AuthService from '@/components/utils/AuthService'
+import AuthService from '@/services/AuthService'
 import 'react-toastify/dist/ReactToastify.css'
-import UserService from '../utils/UserService'
+import UserService from '../../services/UserService'
 
 interface OutlineSection {
   title: string
@@ -79,7 +79,7 @@ const GenerateSlidesSubmit = ({
   }
 
   async function generateSlidesPreview(formData: any, token: string) {
-    const response = await fetch('/api/generate_html', {
+    const response = await fetch('/api/generate_slides', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -91,7 +91,7 @@ const GenerateSlidesSubmit = ({
     if (response.ok) {
       const resp = await response.json()
       setIsSubmittingSlide(false)
-      sessionStorage.setItem('html', JSON.stringify(resp.data.res))
+      sessionStorage.setItem('presentation_slides', JSON.stringify(resp.data.res))
       router.push('workflow-review-slides')
     } else {
       alert(
@@ -134,7 +134,7 @@ const GenerateSlidesSubmit = ({
         ? sessionStorage.getItem('project_id')
         : null
     const resources =
-      typeof window !== 'undefined' ? sessionStorage.getItem('selectedResourceId') : null
+      typeof window !== 'undefined' ? JSON.parse(sessionStorage.getItem('selectedResourceId') || '') : null
     const addEquations =
       typeof window !== 'undefined'
         ? sessionStorage.getItem('addEquations')
@@ -167,6 +167,7 @@ const GenerateSlidesSubmit = ({
 
     if (resources && resources.length > 0 && !extraKnowledge) {
       try {
+        console.log('resources', resources)
         console.log('querying vector database')
         const extraKnowledge = await query_resources(
           project_id,
@@ -185,7 +186,7 @@ const GenerateSlidesSubmit = ({
         formData.outline_item_counts = extraKnowledge.data.outline_item_counts
         console.log('formData', formData)
       } catch (error) {
-        console.log('Error querying vector database', error)
+        console.error('Error querying vector database', error)
         // return;
       }
     } else {

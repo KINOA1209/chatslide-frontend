@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react';
 // Import your custom components and any other required dependencies
 import { DrLambdaBackButton } from '@/components/button/DrlambdaButton';
-import ProjectProgress from '@/components/newWorkflowSteps';
+import ProjectProgress from '@/components/WorkflowSteps';
 import DrlambdaButton from '@/components/button/DrlambdaButton';
-import { GPTToggleWithExplanation } from './button/NewWorkflowGPTToggle';
+import { GPTToggleWithExplanation } from './button/WorkflowGPTToggle';
 
 interface YourComponentProps {
   currentIndex: number;
@@ -45,9 +45,9 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 
   return (
     <>
-      <div className='fixed mt-[3rem] h-[120px] flex items-end w-full bg-Grey-50 z-10 pt-[4rem] pb-[1rem] border-b-2 px-[5rem]'>
+      <div className='relative sticky top-0 w-full h-[120px] flex items-end w-full bg-sky-100 z-10 pt-[4rem] pb-[1rem] border-b-2 px-[5rem]'>
         {/* flex row container for backlink, title*/}
-        <div className="absolute left-10">
+        <div className="absolute left-5">
           <DrLambdaBackButton href={getPrevHref()} />
         </div>
 
@@ -55,7 +55,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
           <ProjectProgress currentInd={currentIndex} contentRef={contentRef} />
         </div>
 
-        <div className="absolute right-10 flex flex-col items-end space-x-4">
+        <div className="absolute right-5 flex flex-col items-end space-x-4">
 
           {showGPTToggle && typeof setIsGpt35 !== 'undefined' && <GPTToggleWithExplanation setIsGpt35={setIsGpt35} />}
           <DrlambdaButton
@@ -68,10 +68,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
         </div>
       </div>
 
-      <div className='mt-[3rem] h-[120px] flex items-end w-full bg-Grey-50 z-10 pt-[4rem] pb-[1rem] border-b-2 px-[5rem]>'>
-      </div>
-
-      <div className='py-2 flex-auto text-center self-center bg-yellow-100 font-small leading-snug tracking-tight whitespace-nowrap sm:hidden'>
+      <div className='py-2 w-full flex-auto text-center self-center bg-yellow-100 font-small leading-snug tracking-tight whitespace-nowrap sm:hidden'>
         Use our desktop version to see all the functionalities!
       </div>
     </>

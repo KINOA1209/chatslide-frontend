@@ -9,18 +9,20 @@ import React, {
 import { useRouter } from 'next/navigation';
 import '@/app/css/workflow-edit-topic-css/topic_style.css'
 import 'react-toastify/dist/ReactToastify.css'
-import AuthService from '@/components/utils/AuthService'
-import UserService from '@/components/utils/UserService'
+import AuthService from '@/services/AuthService'
+import UserService from '@/services/UserService'
 import { Transition } from '@headlessui/react'
-import MyFiles, { Resource } from '@/components/fileManagement'
+import MyFiles from '@/components/FileManagement'
 import PaywallModal from '@/components/forms/paywallModal'
-import FeedbackButton from '@/components/slides/feedback'
+import FeedbackButton from '@/components/ui/feedback'
 import WorkflowStepsBanner from '@/components/socialPost/socialPostWorkflowStep';
 import { DeleteIcon, QuestionExplainIcon, RightTurnArrowIcon } from '@/app/(feature)/icons'
 import { FaFilePdf, FaYoutube } from 'react-icons/fa'
-import YoutubeService from '@/components/utils/YoutubeService'
+import YoutubeService from '@/services/YoutubeService'
 import { SmallBlueButton } from '@/components/button/DrlambdaButton'
-import WebService from '@/components/utils/WebpageService';
+import WebService from '@/services/WebpageService';
+import Resource from '@/models/Resource';
+import { ToastContainer, toast } from 'react-toastify';
 
 const MAX_TOPIC_LENGTH = 80
 const MIN_TOPIC_LENGTH = 6
@@ -71,8 +73,6 @@ export default function Topic_SocialPost() {
   const [showAudiencePopup, setAudiencePopup] = useState(false)
   const [showLanguagePopup, setLanguagePopup] = useState(false)
   const [showSupportivePopup, setSupportivePopup] = useState(false)
-  const [selectedFileList, setselectedFileList] = useState([])
-  const [selectedFileListName, setselectedFileListName] = useState<string[]>([])
   const [isPaidUser, setIsPaidUser] = useState(false)
   const [isAddingLink, setIsAddingLink] = useState(false)
 
@@ -111,6 +111,15 @@ export default function Topic_SocialPost() {
       ? JSON.parse(sessionStorage.selectedResources)
       : []
   )
+
+  useEffect(() => {
+    if (selectedResources.length > 0) {
+      if (topic.length == 0) {
+        setTopic(formatName(selectedResources[0].name))
+      }
+    }
+  }, [selectedResources])
+
 
   useEffect(() => {
     const clientTopic = sessionStorage.getItem('topic')
@@ -195,14 +204,13 @@ export default function Topic_SocialPost() {
 
     if (topic.length < MIN_TOPIC_LENGTH) {
       setTopicError(`Please enter at least ${MIN_TOPIC_LENGTH} characters.`)
+      toast.error(`Please enter at least ${MIN_TOPIC_LENGTH} characters for topic.`)
       setIsSubmitting(false)
       return
     }
 
     if (linkError) {
-      console.log(linkError) // continue without the valid link
-      setIsSubmitting(false)
-      return
+      console.log(linkError) // continue without the invalid link
     }
 
     const project_id =
@@ -217,17 +225,19 @@ export default function Topic_SocialPost() {
       language: language,
       project_id: project_id,
       //youtube_url: youtube,
-      resources: JSON.parse(sessionStorage.getItem('resources') || '[]'),
+      resources: selectedResourceId,
       model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
       post_style: selectedScenario,
     }
     sessionStorage.setItem('topic', formData.topic)
     sessionStorage.setItem('language', formData.language)
+    sessionStorage.setItem('selectedResources', JSON.stringify(selectedResources))
+    sessionStorage.setItem('selectedResourceId', JSON.stringify(selectedResourceId))
 
     try {
       const outlinesJson = await callSocialPost(formData as FormatData)
-      console.log(outlinesJson)
-      const searchImagesResponse = await callSearchImages(JSON.stringify(formData.topic))
+      //console.log(outlinesJson)
+      //const searchImagesResponse = await callSearchImages(JSON.stringify(formData.topic))
       setIsSubmitting(false)
 
       // Store the data in session storage
@@ -235,7 +245,7 @@ export default function Topic_SocialPost() {
       sessionStorage.setItem('foldername', outlinesJson.data.foldername)
       sessionStorage.setItem('project_id', outlinesJson.data.project_id)
       sessionStorage.setItem('socialPost', outlinesJson.data.res)
-      sessionStorage.setItem('socialPostImages', JSON.stringify(searchImagesResponse.data.images))
+      //sessionStorage.setItem('socialPostImages', JSON.stringify(searchImagesResponse.data.images))
 
       // Retrieve the existing resources from sessionStorage and parse them
       const resources: string[] = JSON.parse(
@@ -314,12 +324,12 @@ export default function Topic_SocialPost() {
 
 
   async function addLink(link: string) {
-    if (!link) {
-      setLinkError('Please enter a valid link.');
+    if (!isValidUrl(link)) {
+      setLinkError('This does not seem like a valid link.');
       return;
     }
     if (!isPaidUser && selectedResources.length >= 1) {
-      setLinkError('Free users can only add one resource.');
+      setLinkError('Please subscribe to add more resources.');
       return;
     }
     setLinkError('');
@@ -329,6 +339,22 @@ export default function Topic_SocialPost() {
     } else {
       addWebpageLink(link)
     }
+  }
+
+  const isValidUrl = (urlString: string): boolean => {
+    try {
+      new URL(urlString);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+
+  function formatName(name: string) {
+    if (name.length > MAX_TOPIC_LENGTH) {
+      return name.slice(0, MAX_TOPIC_LENGTH - 3) + '...';
+    }
+    return name;
   }
 
   async function addYoutubeLink(link: string) {
@@ -342,20 +368,9 @@ export default function Topic_SocialPost() {
         return;
       }
 
-      const newFile = {
-        id: videoDetails.id,
-        uid: '',
-        title: videoDetails.title,
-        thumbnail_url: videoDetails.thumbnail,
-        timestamp: new Date().toISOString()
-      };
+      setSelectedResources(prevList => [...prevList, videoDetails]);
+      setSelectedResourceId(prevList => [...prevList, videoDetails.id]);
 
-      setSelectedResources(prevList => [...prevList, newFile]);
-      setSelectedResourceId(prevList => [...prevList, newFile.id]);
-
-      if (!topic) {
-        setTopic(videoDetails.title.slice(0, MAX_TOPIC_LENGTH));
-      }
     } catch (error: any) {
       console.error("Error fetching YouTube video details: ", error);
       setLinkError("Error fetching YouTube video details");
@@ -374,23 +389,12 @@ export default function Topic_SocialPost() {
         return;
       }
 
-      const newFile = {
-        id: pageDetails.id,
-        uid: '',
-        title: pageDetails.title,
-        thumbnail_url: pageDetails.thumbnail,
-        timestamp: new Date().toISOString()
-      };
+      setSelectedResources(prevList => [...prevList, pageDetails]);
+      setSelectedResourceId(prevList => [...prevList, pageDetails.id]);
 
-      setSelectedResources(prevList => [...prevList, newFile]);
-      setSelectedResourceId(prevList => [...prevList, newFile.id]);
-
-      if (!topic) {
-        setTopic(pageDetails.title.slice(0, MAX_TOPIC_LENGTH));
-      }
     } catch (error: any) {
-      console.error("Error fetching webpage details: ", error);
-      setLinkError("Error fetching webpage details");
+      console.error("Error reading webpage details: ", error);
+      setLinkError("Error reading webpage details");
     }
     setIsAddingLink(false)
   }
@@ -514,6 +518,9 @@ export default function Topic_SocialPost() {
           showReferralLink={true}
         />
       )}
+
+      <ToastContainer />
+
       <form onSubmit={handleSubmit}>
         <Transition
           className='h-full w-full z-50 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
@@ -580,7 +587,7 @@ export default function Topic_SocialPost() {
           contentRef={contentRef}
           nextIsPaidFeature={false}
           showGPTToggle={true}
-          nextText={!isSubmitting ? 'Next' : 'Creating Post'}
+          nextText={!isSubmitting ? 'Create Post' : 'Creating Post'}
           setIsGpt35={setIsGpt35}
         />
         {/* main content */}
@@ -671,8 +678,21 @@ export default function Topic_SocialPost() {
                       onChange={(e) => setLanguage(e.target.value)}
                       required
                     >
-                      <option value='English'>English</option>
-                      <option value='Chinese'>中文</option>
+                      <option key='English' value='English'>🇺🇸 English (United States)</option>
+                      <option key='British English' value='British English'>🇬🇧 English (British)</option>
+                      <option key='Spanish' value='Spanish'>🌎 Español (Latinoamérica)</option>
+                      <option key='Continental Spanish' value='Continental Spanish'>🇪🇸 Español (España)</option>
+                      <option key='Chinese' value='Chinese'>🇨🇳 中文 (简体)</option>
+                      <option key='Traditional Chinese' value='Traditional Chinese'>🇹🇼 中文 (繁體)</option>
+                      <option key='Russian' value='Russian'>🇷🇺 Русский</option>
+                      <option key='Ukrainian' value='Ukrainian'>🇺🇦 Українська</option>
+                      <option key='Hindi' value='Hindi'>🇮🇳 हिन्दी</option>
+                      <option key='French' value='French'>🇫🇷 Français</option>
+                      <option key='German' value='German'>🇩🇪 Deutsch</option>
+                      <option key='Portuguese' value='Portuguese'>🇵🇹 Português</option>
+                      <option key='Japanese' value='Japanese'>🇯🇵 日本語</option>
+                      <option key='Korean' value='Korean'>🇰🇷 한국어</option>
+                      <option key='Arabic' value='Arabic'>🇸🇦 العربية</option>
                     </select>
                   </div>
                 </div>
@@ -683,7 +703,7 @@ export default function Topic_SocialPost() {
           {/* supplementary section */}
           <div className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1'>
             <div className='title2'>
-              <p>Supplementary Materials</p>
+              <p>Supporting Documents</p>
               <p id='after2'> (Optional)</p>
             </div>
 
@@ -767,7 +787,7 @@ export default function Topic_SocialPost() {
                         <img src={resource.thumbnail_url} className='w-[40px]' /> :
                         <FaFilePdf className='w-[40px]' />
                       }
-                      <div className="flex-wrap">{resource.title}</div>
+                      <div className="flex-wrap">{resource.name}</div>
                       </div>
                       <button className='' onClick={e => removeResourceAtIndex(index)}><DeleteIcon/></button>
                     </div>

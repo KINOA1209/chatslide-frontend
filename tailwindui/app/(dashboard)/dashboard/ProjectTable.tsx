@@ -1,79 +1,14 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-import {
-  FaArrowUp,
-  FaArrowDown,
-  FaTrash,
-  FaFilm,
-  FaFileAlt,
-  FaFilePdf,
-  FaFilePowerpoint,
-  FaFileWord,
-  FaYoutube,
-  FaFileImage,
-} from 'react-icons/fa'
-import { DeleteIcon } from '@/app/(feature)/icons';
+import { DeleteIcon, SpinIcon } from '@/app/(feature)/icons';
+import { ResourceItem } from '@/components/ui/ResourceItem'
+import Project from '@/models/Project';
 
-interface Resource {
-  id: string
-  name: string
-  type: string
-}
-interface Project {
-  id: string
-  //   task: 'video' | 'scripts' | 'slides'
-  task: 'video' | 'scripts' | 'slides' | 'presentation' | 'social post'
-  name: string
-  resources: Resource[]
-  created_datetime: string
-}
 
 interface Props {
   currentProjects: Project[]
   onProjectClick: (projectId: string) => void
   onDelete: (e: React.MouseEvent<HTMLDivElement>, projectId: string) => void
-}
-
-const TaskIcon: React.FC<{ task: 'video' | 'scripts' | 'slides' | 'presentation' | 'social post' }> = ({
-  task,
-}) => {
-  switch (task) {
-    case 'video':
-      return <FaFilm />
-    case 'scripts':
-      return <FaFileWord />
-    case 'slides':
-      return <FaFilePowerpoint />
-    case 'social post':
-      return <FaFileAlt />
-    case 'presentation':
-      return <FaFilePowerpoint />
-    default:
-      return null
-  }
-}
-
-export const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
-  fileType = fileType.toLowerCase()
-  switch (fileType) {
-    case 'doc':
-      return <FaFilePdf size='32px' fill='#505050'/>
-    case 'url':
-      return <FaYoutube size='32px' fill='#505050'/>
-    case 'youtube':
-      return <FaYoutube size='32px' fill='#505050'/>
-    case 'pdf':
-      return <FaFilePdf size='32px' fill='#505050'/>
-    case 'docx':
-      return <FaFileWord size='32px' fill='#505050'/>
-    case 'jpg':
-    case 'jpeg':
-    case 'png':
-    case 'gif':
-      return <FaFileImage size='32px' fill='#505050'/>
-    default:
-      return null
-  }
 }
 
 const ProjectTable: React.FC<Props> = ({
@@ -126,15 +61,7 @@ const ProjectTable: React.FC<Props> = ({
               <div className='flex flex-col items-start'>
                 {/* <FileIcon fileType='pdf' /> */}
                 {project.resources && project.resources.map((resource, resourceIndex) => (
-                  <div
-                    key={resourceIndex}
-                    className='flex items-center justify-center gap-[0.5rem] bg-gray-100 p-1 m-1 rounded'
-                  >
-                    <div className='max-w-[32px] min-w-[32px]'>
-                      <FileIcon fileType={resource.type} />
-                    </div>
-                    {resource.name}
-                  </div>
+                  <ResourceItem key={resourceIndex} {...resource}/>
                 ))}
               </div>
             </div>
@@ -147,7 +74,7 @@ const ProjectTable: React.FC<Props> = ({
                   className='cursor-pointer'
                   onClick={(e) => onDelete(e, project.id)}
                 >
-                  <DeleteIcon />
+                  <DeleteIcon/>
                 </div>
               </div>
             </div>

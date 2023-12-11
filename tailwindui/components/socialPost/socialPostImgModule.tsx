@@ -1,17 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Transition } from '@headlessui/react';
-import AuthService from '@/components/utils/AuthService';
+import AuthService from '@/services/AuthService';
 import { LoadingIcon } from '@/components/ui/progress';
 import { createPortal } from 'react-dom';
 import { toast } from 'react-toastify';
 import PaywallModal from '@/components/forms/paywallModal';
+import ResourceService from '@/services/ResourceService';
 
 interface ImgModuleProp {
     imgsrc: string,
     updateSingleCallback: Function,
     canEdit: boolean,
     autoSave: Function,
-    isCover: boolean,
+    isTemp1Cover: boolean,
+    cover_start?: string,
+    cover_end?: string
 }
 
 enum ImgQueryMode {
@@ -20,7 +23,15 @@ enum ImgQueryMode {
     GENERATION,
 }
 
-export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave, isCover}: ImgModuleProp) => {
+export const ImgModule = ({ 
+    imgsrc, 
+    updateSingleCallback, 
+    canEdit, 
+    autoSave, 
+    isTemp1Cover,
+    cover_start,
+    cover_end,
+}: ImgModuleProp) => {
     const [showModal, setShowModal] = useState(false);
     const [keyword, setKeyword] = useState('');
     const [searchResult, setSearchResult] = useState<string[]>([]);
@@ -35,7 +46,7 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave, isC
     const [selectedQueryMode, setSelectedQueryMode] = useState<ImgQueryMode>(ImgQueryMode.RESOURCE);
 
     useEffect(() => {
-        console.log(selectedQueryMode)
+        //console.log(selectedQueryMode)
     }, [selectedQueryMode])
 
     useEffect(() => {
@@ -131,46 +142,28 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave, isC
         updateSingleCallback((e.target as HTMLImageElement).getAttribute('src'));
     }
 
-    const fetchFiles = async (file_id?: string) => {
-        const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-        const headers = new Headers();
-        if (idToken) {
-            headers.append('Authorization', `Bearer ${idToken}`);
-        }
-        headers.append('Content-Type', 'application/json');
+  const fetchFiles = async (file_id?: string) => {
+    const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
 
-        const resource_type = {
-            resource_type: 'media',
+    ResourceService.fetchResources(['media'], idToken).then((resources) => {
+      const resourceTemps = resources.map((resource) => {
+        if (file_id && resource.id === file_id) {
+          updateSingleCallback(resource.thumbnail_url);
         }
+        return resource.thumbnail_url;
+      });
 
-        try {
-            const response = await fetch('/api/resource_info', {
-                method: 'POST',
-                headers: headers,
-                body: JSON.stringify(resource_type)
-            });
-            if (response.ok) {
-                const data = await response.json();
-                const files = data.data.resources;
-                const resourceTemps = files.map((resource: any) => {
-                    if (file_id && resource.id === file_id) {
-                        updateSingleCallback(resource.direct_url);
-                    }
-                    return resource.direct_url;
-                });
-
-                // extend the array to include images from pdf_images inside sessionStorage
-                const pdf_images = JSON.parse(sessionStorage.getItem('pdf_images') || '[]');
-                resourceTemps.push(...pdf_images);
-                setResources(resourceTemps);
-            } else {
-                // Handle error cases
-                console.error('Failed to fetch images', response.status);
-            }
-        } catch (error) {
-            console.error('Error fetching images:', error);
+      // extend the array to include images from pdf_images inside sessionStorage
+      const pdf_images = JSON.parse(sessionStorage.getItem('pdf_images') || '[]');
+      const pdfImageResources = pdf_images.map((pdf_image: string) => {
+        return {
+          thumbnail_url: pdf_image,
         }
-    };
+      })
+      resourceTemps.push(...pdfImageResources);
+      setResources(pdfImageResources);
+    })
+  };
 
     const onFileSelected = async (file: File | null) => {
         if (file == null) {
@@ -550,14 +543,15 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave, isC
 
         {/* image itsefl */}
         <div onClick={openModal}
-            className={`w-full h-full transition ease-in-out duration-150 ${selectedImg === '' ? 'bg-[#E7E9EB]' : canEdit ? 'hover:bg-[#CAD0D3] hover:brightness-90' : ''} cursor-pointer`}
+            className={`w-full h-full transition ease-in-out duration-150 ${selectedImg === '' ? 'bg-[#E7E9EB]' : canEdit ? 'hover:bg-[#CAD0D3] hover:brightness-90' : ''} flex flex-col items-center justify-center cursor-pointer`}
             style={{
-                backgroundImage: selectedImg !== '' ? isCover ? `linear-gradient(180deg, #E54BFF 0%, rgba(217, 217, 217, 0.00) 40%), url(${selectedImg})` : `url(${selectedImg}`: 'none',
-                backgroundSize: 'cover',
+                backgroundImage: selectedImg !== '' && isTemp1Cover ? `linear-gradient(180deg, ${cover_start}, ${cover_end} 40%), url(${selectedImg})` : '',
+                backgroundSize: selectedImg !== '' && isTemp1Cover ? 'cover' : '',
+                backgroundPosition: selectedImg !== '' && isTemp1Cover ? 'center center' : '',
             }}
             >
 
-            {selectedImg === '' && (
+            {selectedImg === '' ?
                 <div className='flex flex-col items-center justify-center'>
                     <svg className="w-20 h-20 opacity-50" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <rect x="0" fill="none" width="24" height="24" />
@@ -570,7 +564,15 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave, isC
                         {canEdit && 'Click to add image'}
                     </div>
                 </div>
-            )}
+                :
+                (!isTemp1Cover && (
+                    <img
+                    style={{ objectFit: 'contain'}}
+                    className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`}
+                    src={imgsrc} 
+                />
+                ))
+            }
         </div>
     </>
 }

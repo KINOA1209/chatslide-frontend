@@ -2,14 +2,14 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import 'react-toastify/dist/ReactToastify.css'
-import FeedbackButton from '@/components/slides/feedback'
-import SlideVisualizer from '@/components/slides/NewSlideVisualizer'
+import FeedbackButton from '@/components/ui/feedback'
+import SlideVisualizer from '@/components/slides/SlideVisualizer'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { ScriptEditIcon } from './icons'
 import { useRouter } from 'next/navigation'
 import ButtonWithExplanation from '@/components/button/ButtonWithExplanation'
-import UserService from '@/components/utils/UserService'
+import UserService from '@/services/UserService'
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner'
 
 export default function WorkflowStep3() {
@@ -41,7 +41,7 @@ export default function WorkflowStep3() {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   return (
-    <div className='min-h-[90vh] bg-gradient-to-b from-[#6A7EF9] to-[#415AF1]'>
+    <div className='min-h-[90vh] w-full bg-white'>
       {/* flex col container for steps, title, etc */}
       
       <WorkflowStepsBanner 
@@ -51,7 +51,7 @@ export default function WorkflowStep3() {
         isPaidUser={isPaidUser} 
         contentRef={contentRef} 
         nextIsPaidFeature={true} 
-        nextText={!isSubmitting? 'Next' : 'Writing Scripts'}
+        nextText={!isSubmitting? 'Write Scripts' : 'Writing Scripts'}
         showGPTToggle={true}
         setIsGpt35={setIsGpt35}
       />
