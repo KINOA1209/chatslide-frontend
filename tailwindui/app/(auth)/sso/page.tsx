@@ -50,6 +50,9 @@ export default function SSORedirect() {
         }
 
         router.push("/dashboard");
+      } else {
+        console.error("Error fetching token, need to sign up again.");
+        router.push("/signup");
       }
     }
     initUser();
