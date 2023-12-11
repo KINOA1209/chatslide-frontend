@@ -5,7 +5,7 @@ class UserService {
 
   static async initializeUser(token: string): Promise<boolean>{
     const headers = new Headers();
-    // console.log("Token: ", token)
+    console.log("Token: ", token)
     if (token) {
       headers.append('Authorization', `Bearer ${token}`);
     }
@@ -74,6 +74,8 @@ class UserService {
   }
 
   static async getUserCreditsAndTier(idToken: string): Promise<{ credits: number, tier: string }> {
+    if (!idToken) throw new Error('No idToken provided');
+
     try {
 
       const response = await fetch(`/api/user/credits`, {
