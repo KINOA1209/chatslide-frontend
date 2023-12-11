@@ -679,7 +679,7 @@ export default function Topic_SocialPost() {
                       required
                     >
                       <option key='English' value='English'>🇺🇸 English (United States)</option>
-                      <option key='BritishEnglish' value='BritishEnglish'>🇬🇧 English (British)</option>
+                      <option key='British English' value='British English'>🇬🇧 English (British)</option>
                       <option key='Spanish' value='Spanish'>🌎 Español (Latinoamérica)</option>
                       <option key='Continental Spanish' value='Continental Spanish'>🇪🇸 Español (España)</option>
                       <option key='Chinese' value='Chinese'>🇨🇳 中文 (简体)</option>
