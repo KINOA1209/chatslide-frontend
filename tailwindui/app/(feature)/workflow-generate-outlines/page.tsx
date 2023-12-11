@@ -76,6 +76,7 @@ export default function Topic() {
   const [isAddingLink, setIsAddingLink] = useState(false)
 
   const [useSchoolTemplate, setUseSchoolTemplate] = useState(false)
+  const [schoolTemplate, setSchoolTemplate] = useState('' as string)
   const [theme, setTheme] = useState('content_with_image')
 
   // bind form data between input and sessionStorage
@@ -306,6 +307,7 @@ export default function Topic() {
       project_id: project_id,
       resources: selectedResourceId,
       model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
+      schoolTemplate: schoolTemplate
     }
 
     sessionStorage.setItem('topic', formData.topic)
@@ -314,6 +316,7 @@ export default function Topic() {
     sessionStorage.setItem('addEquations', formData.addEquations)
     sessionStorage.setItem('selectedResourceId', JSON.stringify(formData.resources))
     sessionStorage.setItem('selectedResources', JSON.stringify(selectedResources))
+    sessionStorage.setItem('schoolTemplate', schoolTemplate)
 
     try {
       const { userId, idToken: token } =
@@ -915,17 +918,11 @@ export default function Topic() {
               {useSchoolTemplate && (
                 <div className='gap-1 flex flex-col justify-start'>
                   <span>Select your school:</span>
-                  <select className='border border-2 border-gray-400 rounded-lg bg-gray-100'>
-                    <option value='Harvard University'>Harvard University</option>
-                    <option value='Massachusetts Institute of Technology (MIT)'>Massachusetts Institute of Technology (MIT)</option>
-                    <option value='Stanford University'>Stanford University</option>
-                    <option value='California Institute of Technology (Caltech)'>California Institute of Technology (Caltech)</option>
-                    <option value='University of Chicago'>University of Chicago</option>
-                    <option value='Princeton University'>Princeton University</option>
-                    <option value='Yale University'>Yale University</option>
-                    <option value='Columbia University'>Columbia University</option>
-                    <option value='University of Pennsylvania'>University of Pennsylvania</option>
-                    <option value='Johns Hopkins University'>Johns Hopkins University</option>
+                  <select className='border border-2 border-gray-400 rounded-lg bg-gray-100'
+                    onChange={(e) => setSchoolTemplate(e.target.value)}>
+                    <option value='Harvard'>Harvard University</option>
+                    <option value='Stanford'>Stanford University</option>
+                    <option value='Berkeley'>UC Berkeley</option>
                   </select>
                 </div>
               )}
