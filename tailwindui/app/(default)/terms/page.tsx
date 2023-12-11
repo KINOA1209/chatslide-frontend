@@ -1,3 +1,4 @@
+import Footer from '@/components/ui/footer';
 import Header from '@/components/ui/header';
 
 export const metadata = {
@@ -8,7 +9,7 @@ export const metadata = {
 export default function Terms() {
   return (
     <section className="bg-gradient-to-b from-gray-100 to-white">
-      <Header loginRequired={false} isLanding={false} refList={[]} />
+      <Header loginRequired={false} isLanding={false}/>
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="pt-32 pb-12 md:pt-40 md:pb-20">
           {/* Page header */}
@@ -183,6 +184,7 @@ export default function Terms() {
           </div>
         </div>
       </div>
+      <Footer />
     </section>
   );
 }

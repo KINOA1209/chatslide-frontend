@@ -1,0 +1,52 @@
+[
+  {
+    "school": "Harvard University",
+    "main_color": "#A51C30",
+    "secondary_color": "#FFFFFF"
+  },
+  {
+    "school": "Massachusetts Institute of Technology (MIT)",
+    "main_color": "#A31919",
+    "secondary_color": "#8A8D8F"
+  },
+  {
+    "school": "Stanford University",
+    "main_color": "#8C1515",
+    "secondary_color": "#FFFFFF"
+  },
+  {
+    "school": "California Institute of Technology (Caltech)",
+    "main_color": "#F2A900",
+    "secondary_color": "#FFFFFF"
+  },
+  {
+    "school": "University of Chicago",
+    "main_color": "#800000",
+    "secondary_color": "#FFFFFF"
+  },
+  {
+    "school": "Princeton University",
+    "main_color": "#FF8F00",
+    "secondary_color": "#000000"
+  },
+  {
+    "school": "Yale University",
+    "main_color": "#0F4D92",
+    "secondary_color": "#FFFFFF"
+  },
+  {
+    "school": "Columbia University",
+    "main_color": "#9BDDFF",
+    "secondary_color": "#FFFFFF"
+  },
+  {
+    "school": "University of Pennsylvania",
+    "main_color": "#990000",
+    "secondary_color": "#011F5B"
+  },
+  {
+    "school": "Johns Hopkins University",
+    "main_color": "#1E3264",
+    "secondary_color": "#000000"
+  }
+]

@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import ExportToPDFModal from './exportToPdfModal'
-import AuthService from '../utils/AuthService'
+import AuthService from '../../services/AuthService'
 import { LoadingIcon } from '@/components/ui/progress'
-import { Slide } from './NewSlidesHTML'
+import { Slide } from './SlidesHTML'
 import PaywallModal from '../forms/paywallModal'
 import { DownloadIcon } from '@/app/(feature)/icons'
 import SlideContainer from './SlideContainer'
@@ -113,7 +113,7 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
             onClick={handleSavePDF}
         >
             <div className='text-center text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide'>
-                Export to PDF (10⭐️)
+                Export to PDF
             </div>
             <div className='w-4 h-4 relative' hidden={downloadingPDF}>
                 <DownloadIcon />

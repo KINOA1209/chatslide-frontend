@@ -2,41 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import AuthService from '@/components/utils/AuthService';
+import AuthService from '@/services/AuthService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ProjectService from '@/services/ProjectService';
+import Project from '@/models/Project';
 
-
-interface Project {
-    project_name: string;
-    topic: string;
-    content_type: string;
-    language: string;
-    foldername: string;
-    resource_ids: string;
-    // fields for Presentation start here
-    requirements: string;
-    audience: string;
-    add_equations: boolean;
-    page_count: string;
-    outline: string;
-    extra_knowledge: string;
-    outline_item_counts: string;
-    transcripts: string;
-    image_files: string;
-    audio_files: string;
-    pdf_file: string;
-    video_file: string;
-    resources: string;
-    html: string;
-    pdf_images: string;
-    is_shared: boolean;
-    // fields for Social Post start here
-    post_type: string;
-    social_platform: string;
-    social_posts: string;
-    social_post_images: string;
-}
 
 const ProjectLoading = () => {
     const [project, setProject] = useState<Project | null>(null);
@@ -99,6 +70,9 @@ const ProjectLoading = () => {
                 if (project.html) {
                     sessionStorage.setItem('html', project.html);
                 }
+                if (project.presentation_slides) {
+                    sessionStorage.setItem('presentation_slides', project.presentation_slides);
+                }
                 if (project.transcripts) {
                     sessionStorage.setItem('transcripts', JSON.stringify(project.transcripts));
                 }
@@ -139,9 +113,6 @@ const ProjectLoading = () => {
                 if (project.social_posts) {
                     sessionStorage.setItem('socialPost', project.social_posts);
                 }
-                if (project.social_post_images) {
-                    sessionStorage.setItem('socialPostImages', project.social_post_images);
-                }
             }
             handleRedirect(content_type);
         }
@@ -161,34 +132,25 @@ const ProjectLoading = () => {
             if (project_id) {
                 console.log('this is project_id', project_id);
                 sessionStorage.setItem('project_id', project_id);
-            }
 
-            // fetch project details
-            const response = await fetch('/api/get_project_details', {
-                method: 'POST',
-                headers: headers,
-                body: JSON.stringify({ project_id: project_id }),
-            });
-            if (response.ok) {
-                const data = await response.json();
-                console.log('this is data', data);
-                setProject(data);
-            } else {
-                console.error('Error fetching project details', response.status);
-                toast.error('The project is not found or you do not have access to it.', {
-                    position: "top-center",
-                    autoClose: 2000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
+              ProjectService.getProjectDetails(token, project_id)
+                .then(project => {
+                  setProject(project);
+                })
+
             }
 
         } catch (error) {
-            console.error('Error fetching project details:', error);
+          toast.error('The project is not found or you do not have access to it.', {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         }
     };
 
@@ -207,7 +169,7 @@ const ProjectLoading = () => {
         if (typeof window !== 'undefined' && sessionStorage.getItem('outline')) {
             finishedStepsArray.push(1);
         }
-        if (typeof window !== 'undefined' && sessionStorage.getItem('html')) {
+        if (typeof window !== 'undefined' && sessionStorage.getItem('presentation_slides')) {
             finishedStepsArray.push(2);
         }
         if (typeof window !== 'undefined' && sessionStorage.getItem('transcripts')) {

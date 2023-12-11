@@ -1,27 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@500&family=Oooh+Baby&display=swap');
 
-#container_gradient{
-    border: double 4px transparent;
-    border-radius: 30px;
-    background-image: linear-gradient(white, white), radial-gradient(circle at top left, #886DFE,#FB40FF);
-    background-origin: border-box;
-    background-clip: content-box, border-box
-}
-
-#container_cover_gradient{
-    border: 12px solid transparent;
-    border-image: linear-gradient(to bottom right, #FB40FF, #886DFE) 1;
-    border-image-slice: fill;
-}
-
-#container_template3_cover{
-    border: 8px solid transparent;
-    border-image: linear-gradient(to bottom right, #FB40FF, #886DFE) 1;
-    border-image-slice: fill;
-    font-family: 'Cormorant', sans-serif;
-}
-
 #asterisk_section{
     font-family: 'Oooh Baby', sans-serif;
     color: #A4A4A4;
@@ -29,12 +8,4 @@
     font-style: normal;
     font-weight: 400;
     line-height: 50px;
-}
-
-#source_section{
-    font-family: 'Cormorant', sans-serif;
-    color: #3A3A3A;
-    font-size: 18px;
-    line-height: 222%;
-    font-weight: 700;
 }

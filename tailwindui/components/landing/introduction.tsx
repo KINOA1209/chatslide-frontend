@@ -4,7 +4,7 @@ import Image from 'next/image'
 import background from '@/public/images/landing.jpeg'
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import AuthService from "../utils/AuthService";
+import AuthService from "../../services/AuthService";
 import HeroText from './HeroText';
 
 const InternalIntroduction = () => {
