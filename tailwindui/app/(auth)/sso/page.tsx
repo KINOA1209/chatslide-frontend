@@ -64,6 +64,7 @@ export default function SSORedirect() {
       <ToastContainer />
       <div className="text-center">
         <div>You should be redirected soon. </div>
+        <a href="/dashboard" className="text-blue-600">If not, click here.</a>
       </div>
     </div>
   );
