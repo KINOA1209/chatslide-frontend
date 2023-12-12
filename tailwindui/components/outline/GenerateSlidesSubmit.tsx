@@ -43,6 +43,18 @@ const GenerateSlidesSubmit = ({
     sessionStorage.setItem('outline', JSON.stringify(entireOutline))
   }
 
+  const checkOutlineChanged = (updatedOutline: any) => {
+    const entireOutline = JSON.parse(sessionStorage.outline)
+    const originalOutline = JSON.parse(entireOutline.res)
+    entireOutline.res = JSON.stringify({ ...updatedOutline })
+    if (JSON.stringify(originalOutline) === entireOutline.res) {
+      return false
+    } else {
+      return true
+    }
+  }
+
+
   const [isSubmittingSlide, setIsSubmittingSlide] = useState(false)
   const [timer, setTimer] = useState(0)
 
@@ -114,6 +126,12 @@ const GenerateSlidesSubmit = ({
         return s.length > 0
       })
     }
+
+    if (checkOutlineChanged(outlineCopy) === true) {
+      sessionStorage.removeItem('extraKnowledge');
+      sessionStorage.removeItem('outline_item_counts');
+    }
+
     setOutlineData(outlineCopy)
     updateOutlineSessionStorage(outlineCopy)
 
