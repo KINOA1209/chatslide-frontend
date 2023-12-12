@@ -28,10 +28,14 @@ class UserService {
         headers: headers,
         body: JSON.stringify(userData)
       });
-      if (createUserResponse.ok) {
+      if (createUserResponse.status === 201) {
         console.log("Initialized successfully.")
         return true;
-      } else {
+      } else if (createUserResponse.status === 200){
+        console.log("User already initialized before.")
+        return true;
+      }
+        else {
         console.error(`Failed to initialize user: ${username}`, createUserResponse.status, createUserResponse.statusText);
         const errorData = await createUserResponse.json();
         throw new Error(errorData.message);
