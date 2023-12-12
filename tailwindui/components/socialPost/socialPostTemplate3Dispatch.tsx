@@ -6,6 +6,7 @@ import {
     CompanyIconWhite,
 } from '@/components/socialPost/socialPostIcons'
 import dynamic from 'next/dynamic';
+import React, { CSSProperties, useEffect, useRef } from 'react';
 
 const QuillEditable = dynamic(() => import('./quillEditor'), { ssr: false });
 
@@ -29,6 +30,44 @@ export const templateDispatch = (
         keyPrefix = 'preview'
     }
     const Template = templates[slide.template as keyof typeof templates]
+
+    const generateContentElement = (
+        content: string, 
+        contentTag: SlideKeys, 
+        style: CSSProperties,
+        contentIndex?: number,
+        ) => {
+        if (!canEdit) {
+            return (
+                <div
+                    className='ql-editor non-editable-ql-editor'
+                    style={{...style, outline: 'none'}}
+                    dangerouslySetInnerHTML={{ __html: content }}
+                />
+            )
+        }
+        else {
+            if(contentIndex !== undefined){
+                return (
+                    <QuillEditable
+                    content={content}
+                    handleBlur={(newContent) => handleSlideEdit(newContent, index, contentTag, contentIndex)}
+                    style={style}
+                    />
+                )
+            }
+            else{
+                return (
+                    <QuillEditable
+                        content={content}
+                        handleBlur={(newContent) => handleSlideEdit(newContent, index, contentTag)}
+                        style={style}
+                    />
+                )
+            }
+        }
+    }
+
     if (index === 0) {
         return <Template
             autoSave={saveSlides}
@@ -38,16 +77,7 @@ export const templateDispatch = (
             imgs={slide.images}
             icon={<CompanyIconWhite />}
             illustration={(slide.illustration) as string[]}
-            title={
-                <QuillEditable
-                content={slide.title}
-                handleBlur={(newContent) => handleSlideEdit(newContent, index, 'title')}
-                style={{
-                    color: '#121212',
-                    fontFamily: 'Cormorant, sans-serif',
-                }}
-                />
-            }
+            title={generateContentElement(slide.title, 'title', {color: '#121212', fontFamily: 'Cormorant, sans-serif'})}
             border_start = {slide.theme?.border_start || '#937C67'}
             border_end = {slide.theme?.border_end || '#4F361F'}
             cover_start = {slide.theme?.cover_start || '#725947 0%'}
@@ -73,27 +103,8 @@ export const templateDispatch = (
             update_callback={updateIllustrationUrlArray(index)}
             icon={<CompanyIconBlack />}
             illustration={(slide.illustration) as string[]}
-            
-            quote={(
-                <QuillEditable
-                content={slide.quote}
-                handleBlur={(newContent) => handleSlideEdit(newContent, index, 'quote')}
-                style={{
-                    color: '#1D222A',
-                    fontFamily: 'Cormorant, sans-serif',
-                }}
-                />
-            )}
-            source={
-                <QuillEditable
-                content={slide.source}
-                handleBlur={(newContent) => handleSlideEdit(newContent, index, 'source')}
-                style={{
-                    color: '#3A3A3A',
-                    fontFamily: 'Cormorant, sans-serif',
-                }}
-                />
-            }
+            quote={generateContentElement(slide.quote, 'quote', {color: '#1D222A',fontFamily: 'Cormorant, sans-serif',})}
+            source={generateContentElement(slide.source, 'source', {color: '#3A3A3A', fontFamily: 'Cormorant, sans-serif'})}
             border_start = {slide.theme?.border_start || '#937C67'}
             border_end = {slide.theme?.border_end || '#4F361F'}
             cover_start = {slide.theme?.cover_start || '#725947 0%'}

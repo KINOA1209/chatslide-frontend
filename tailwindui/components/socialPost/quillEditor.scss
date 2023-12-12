@@ -17,6 +17,9 @@
     padding: 2% 3% 2% 3%
 }
 
+.non-editable-ql-editor, .non-editable-ql-editor * {
+    cursor: pointer !important;
+}
 
 $i: 8;
 @while $i <= 80 {
