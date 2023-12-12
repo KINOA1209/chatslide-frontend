@@ -19,10 +19,12 @@ import WorkflowStepsBanner from '@/components/socialPost/socialPostWorkflowStep'
 import { DeleteIcon, QuestionExplainIcon, RightTurnArrowIcon } from '@/app/(feature)/icons'
 import { FaFilePdf, FaYoutube } from 'react-icons/fa'
 import YoutubeService from '@/services/YoutubeService'
-import { SmallBlueButton } from '@/components/button/DrlambdaButton'
+import { BigBlueButton, SmallBlueButton } from '@/components/button/DrlambdaButton'
 import WebService from '@/services/WebpageService';
 import Resource from '@/models/Resource';
 import { ToastContainer, toast } from 'react-toastify';
+import Modal from '@/components/ui/Modal';
+import FileUploadModal from '@/components/forms/FileUploadModal';
 
 const MAX_TOPIC_LENGTH = 80
 const MIN_TOPIC_LENGTH = 6
@@ -522,63 +524,14 @@ export default function Topic_SocialPost() {
       <ToastContainer />
 
       <form onSubmit={handleSubmit}>
-        <Transition
-          className='h-full w-full z-50 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
-          show={showFileModal}
-          onClick={closeFile}
-          enter='transition ease duration-300 transform'
-          enterFrom='opacity-0 translate-y-12'
-          enterTo='opacity-100 translate-y-0'
-          leave='transition ease duration-300 transform'
-          leaveFrom='opacity-100 translate-y-0'
-          leaveTo='opacity-0 translate-y-12'
-        >
-          <div className='grow md:grow-0'></div>
-          <Transition
-            className='bg-gray-100 w-full h-3/4 md:h-2/3
-                                md:max-w-2xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
-                                overflow-hidden flex flex-col p-4'
-            show={showFileModal}
-            enter='transition ease duration-500 transform delay-300'
-            enterFrom='opacity-0 translate-y-12'
-            enterTo='opacity-100 translate-y-0'
-            leave='transition ease duration-300 transform'
-            leaveFrom='opacity-100 translate-y-0'
-            leaveTo='opacity-0 translate-y-12'
-            onClick={(e) => {
-              e.stopPropagation()
-            }}
-          >
-            <h4 className='h4 text-blue-600 text-center'>
-              Select Supporting Material
-            </h4>
-            <MyFiles 
-              selectable={true}
-              selectedResourceId={selectedResourceId}
-              setSelectedResourceId={setSelectedResourceId}
-              selectedResources={selectedResources}
-              setSelectedResources={setSelectedResources} 
-            />
-
-            <div className='max-w-sm mx-auto'>
-              <div className='flex flex-wrap -mx-3 mt-6'>
-                <div className='w-full px-3'>
-                  <button
-                    className='btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full'
-                    type='button'
-                    onClick={(e) => {
-                      e.preventDefault()
-                      closeFile()
-                    }}
-                  >
-                    OK
-                  </button>
-                </div>
-              </div>
-            </div>
-          </Transition>
-        </Transition>
-
+        <FileUploadModal
+          selectedResourceId={selectedResourceId}
+          setSelectedResourceId={setSelectedResourceId}
+          selectedResources={selectedResources}
+          setSelectedResources={setSelectedResources}
+          showModal={showFileModal}
+          setShowModal={setShowFileModal}/>
+        
         <WorkflowStepsBanner
           currentIndex={0}
           isSubmitting={isSubmitting}

@@ -22,7 +22,7 @@ import WorkflowStepsBanner from '@/components/WorkflowStepsBanner'
 import PaywallModal from '@/components/forms/paywallModal'
 import { FaFilePdf, FaYoutube } from 'react-icons/fa'
 import YoutubeService from '@/services/YoutubeService'
-import { SmallBlueButton } from '@/components/button/DrlambdaButton'
+import { BigBlueButton, SmallBlueButton } from '@/components/button/DrlambdaButton'
 import WebService from '@/services/WebpageService'
 import Resource from '@/models/Resource'
 import { ToastContainer, toast } from 'react-toastify'
@@ -32,6 +32,8 @@ import Image from 'next/image'
 import ContentWithImageImg from '@/public/images/summary/content_with_image.png'
 import ContentOnlyImg from '@/public/images/summary/content_only.png'
 import ContentInBrandingColorImg from '@/public/images/summary/content_in_branding_color.png'
+import { FileUploadButton } from '@/components/FileUploadButton'
+import FileUploadModal from '@/components/forms/FileUploadModal'
 
 const MAX_TOPIC_LENGTH = 80
 const MIN_TOPIC_LENGTH = 6
@@ -119,6 +121,8 @@ export default function Topic() {
         setTopic(formatName(selectedResources[0].name))
       }
     }
+
+    console.log('selectedResources', selectedResources)
   }, [selectedResources])
 
   useEffect(() => {
@@ -158,18 +162,6 @@ export default function Topic() {
     fetchUser()
   }, [])
 
-  const openFile = () => {
-    setShowFileModal(true)
-  }
-
-  const closeFile = () => {
-    setShowFileModal(false)
-  }
-
-  const handleOpenFile = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    openFile()
-  }
   const handleTopicSuggestionClick = (
     topic: string,
     event: MouseEvent<HTMLButtonElement>
@@ -495,61 +487,14 @@ export default function Topic() {
 
       <ToastContainer />
 
-      <Transition
-        className='h-full w-full z-50 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
-        show={showFileModal}
-        onClick={closeFile}
-        enter='transition ease duration-300 transform'
-        enterFrom='opacity-0 translate-y-12'
-        enterTo='opacity-100 translate-y-0'
-        leave='transition ease duration-300 transform'
-        leaveFrom='opacity-100 translate-y-0'
-        leaveTo='opacity-0 translate-y-12'
-      >
-        <div className='grow md:grow-0'></div>
-        <Transition
-          className='w-full h-3/4 md:h-2/3
-                                md:max-w-2xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
-                                overflow-hidden flex flex-col p-4 bg-white'
-          show={showFileModal}
-          enter='transition ease duration-500 transform delay-300'
-          enterFrom='opacity-0 translate-y-12'
-          enterTo='opacity-100 translate-y-0'
-          leave='transition ease duration-300 transform'
-          leaveFrom='opacity-100 translate-y-0'
-          leaveTo='opacity-0 translate-y-12'
-          onClick={(e) => {
-            e.stopPropagation()
-          }}
-        >
-          <h4 className='h4 text-blue-600 text-center'>
-            Select Supporting Material
-          </h4>
-          <MyFiles
-            selectable={true}
-            selectedResourceId={selectedResourceId}
-            setSelectedResourceId={setSelectedResourceId}
-            selectedResources={selectedResources}
-            setSelectedResources={setSelectedResources}
-          />
-          <div className='max-w-sm mx-auto'>
-            <div className='flex flex-wrap -mx-3 mt-6'>
-              <div className='w-full px-3'>
-                <button
-                  className='btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full'
-                  type='button'
-                  onClick={(e) => {
-                    e.preventDefault()
-                    closeFile()
-                  }}
-                >
-                  OK
-                </button>
-              </div>
-            </div>
-          </div>
-        </Transition>
-      </Transition>
+      <FileUploadModal
+        selectedResourceId={selectedResourceId}
+        setSelectedResourceId={setSelectedResourceId}
+        selectedResources={selectedResources}
+        setSelectedResources={setSelectedResources}
+        showModal={showFileModal}
+        setShowModal={setShowFileModal}
+        />
 
       {/* project progress section */}
       <WorkflowStepsBanner
@@ -819,7 +764,11 @@ export default function Topic() {
               <div className='flex items-center w-full'>
                 <FaFilePdf />
                 <span className="text-sm md:text-l">Drop files here or </span>
-                <SmallBlueButton onClick={handleOpenFile}>
+                <SmallBlueButton 
+                onClick={e => {
+                  e.preventDefault()
+                  setShowFileModal(true)
+                }}>
                   Browse File
                 </SmallBlueButton>
               </div>

@@ -49,7 +49,7 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSu
       <button
         disabled={isSubmitting}
         onClick={checkPaidUser}
-        className={`min-w-[10rem] lg:w-[12rem] h-[36px] ${getButtonBg()} rounded-[15px] flex justify-center items-center gap-2 cursor-pointer }`}
+        className={`min-w-[10rem] lg:min-w-[12rem] px-2 h-[36px] ${getButtonBg()} rounded-[15px] flex justify-center items-center gap-2 cursor-pointer }`}
       >
         {isSubmitting && <SpinIcon />}
         <span className='text-white font-semibold tracking-tight whitespace-nowrap'>
@@ -119,6 +119,20 @@ export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({ href }) 
         Back
       </div>
     </div>
+  )
+}
+
+export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSubmitting = false, isPaidUser, isPaidFeature = false }) => {
+  function getButtonStyle() {
+    if (isSubmitting) {
+      return 'bg-gray-600'
+    }
+    return 'bg-blue-600'
+  }
+  return (
+    <button onClick={onClick} className={`mx-2 ${getButtonStyle()} rounded text-white px-3 py-1 m-2`} disabled={isSubmitting}>
+      {children}
+    </button>
   )
 }
 
