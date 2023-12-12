@@ -177,19 +177,6 @@ export default function Topic_SocialPost() {
     fetchUser()
   }, [])
 
-  const openFile = () => {
-    setShowFileModal(true)
-  }
-
-  const closeFile = () => {
-    setShowFileModal(false)
-  }
-
-  const handleOpenFile = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    openFile()
-  }
-
   const updateTopic = (topic: string) => {
     if (topic.length >= MIN_TOPIC_LENGTH) {
       setTopicError('')
@@ -523,14 +510,15 @@ export default function Topic_SocialPost() {
 
       <ToastContainer />
 
+      <FileUploadModal
+        selectedResourceId={selectedResourceId}
+        setSelectedResourceId={setSelectedResourceId}
+        selectedResources={selectedResources}
+        setSelectedResources={setSelectedResources}
+        showModal={showFileModal}
+        setShowModal={setShowFileModal} />
+
       <form onSubmit={handleSubmit}>
-        <FileUploadModal
-          selectedResourceId={selectedResourceId}
-          setSelectedResourceId={setSelectedResourceId}
-          selectedResources={selectedResources}
-          setSelectedResources={setSelectedResources}
-          showModal={showFileModal}
-          setShowModal={setShowFileModal}/>
         
         <WorkflowStepsBanner
           currentIndex={0}
@@ -718,7 +706,11 @@ export default function Topic_SocialPost() {
                 <div className='flex items-center w-full'>
                   <FaFilePdf />
                   <span className="text-sm md:text-l">Drop files here or </span>
-                  <SmallBlueButton onClick={handleOpenFile}>
+                  <SmallBlueButton onClick={
+                    e => {
+                      e.preventDefault()
+                      setShowFileModal(true)
+                    }}>
                     Browse File
                   </SmallBlueButton>
                 </div>
