@@ -93,7 +93,7 @@ const Header = ({ loginRequired, isLanding = false, isAuth = false }: HeaderProp
       } catch {
         console.log('No authenticated user.')
         if (loginRequired) {
-          router.push('/signin')
+          router.push('/signup')
         }
         setLoading(false)
       }
