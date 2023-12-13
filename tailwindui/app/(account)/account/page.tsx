@@ -13,11 +13,12 @@ import ClickableLink from '@/components/ui/ClickableLink';
 import ReferralLink from '@/components/ReferralLink';
 import Modal from '@/components/ui/Modal';
 import { FeedbackForm } from '@/components/ui/feedback';
+import { BigBlueButton } from '@/components/button/DrlambdaButton';
 
 const Profile = () => {
   const [username, setUsername] = useState<string>('');
   const [editUsername, setEditUsername] = useState('');
-  const [email, setEmail] = useState('abcdefg@gmail.com');
+  const [email, setEmail] = useState('drlambda@gmail.com');
   const [changed, setChanged] = useState(false);
 
   function userFirstName(): string {
@@ -235,8 +236,31 @@ const Referral = () => {
     <div className="mb-8 w-full">
       <div className="w-fit text-[#363E4A] text-[17px] font-bold">Referral</div>
       <div className="w-fit text-[#212121] text-[80px]">50<span className='text-[24px]'>credit/invite</span></div>
+      <ReferralLink />
     </div>
-    <ReferralLink />
+  </div>
+}
+
+const OpenAIKey = () => {
+  const [key, setKey] = useState('sk-......');
+
+  return <div className='w-full px-4 sm:px-6'>
+    <div className="mb-8 w-full">
+      <div className="w-fit text-[#363E4A] text-[17px] font-bold">Your OpenAI Key</div>
+      <div>Paste your own OpenAI key here so that generation does not cost credits:</div>
+      <div className='flex w-full flex-row gap-4 justify-center mt-2'>
+        <div className="h-fit w-full max-w-[40rem] form-input flex flex-row flex-nowrap border border-gray-500 p-0 cursor-text rounded-xl">
+          <input
+            id="key"
+            type="text"
+            className=" grow border-0 p-0 h-6 focus:outline-none focus:ring-0 mx-3 my-3 w-full overflow-hidden cursor-text text-[#707C8A]"
+            onChange={e => setKey(e.target.value)}
+            value={key}
+          />
+        </div>
+        <button className='btn text-white font-bold bg-gradient-to-r from-blue-600 to-teal-500 whitespace-nowrap rounded-xl'>Update</button>
+      </div>
+    </div>
   </div>
 }
 
@@ -269,16 +293,17 @@ const Subscription = () => {
 
     <div className='w-full pb-4'>
       {showModal &&
-        <FeedbackForm onClose={() => setShowModal(false)} message="😭 We are sorry to see you go!" successDiv={cancelButton} textRequired={true}/>
+        <FeedbackForm onClose={() => setShowModal(false)} message="😭 We are sorry to see you go!" successDiv={cancelButton} textRequired={true} />
       }
 
       <div className="mb-8 w-full max-w-none 2xl:max-w-[80%] mx-auto px-4 sm:px-6">
         <div className="w-fit text-[#363E4A] text-[17px] font-bold">Subscription</div>
         <div className="w-fit text-[#212121] text-[80px]">Plans</div>
       </div>
+
       <Pricing />
       {portalURL &&
-        <button onClick={()=>{setShowModal(true)}} className='w-full py-4 sm:px-6 flex flex-col justify-center items-center max-w-none 2xl:max-w-[80%] mx-auto'>
+        <button onClick={() => { setShowModal(true) }} className='w-full py-4 sm:px-6 flex flex-col justify-center items-center max-w-none 2xl:max-w-[80%] mx-auto'>
           Manage Subscription
         </button>
       }
@@ -456,6 +481,7 @@ export default function Account() {
       {bar}
       <div className='w-full max-w-none 2xl:max-w-[80%]' ref={ref4}><CreditHistory /></div>
       <div className='w-full max-w-none 2xl:max-w-[80%]' ref={ref2}><Referral /></div>
+      <div className='w-full max-w-none 2xl:max-w-[80%]'><OpenAIKey /></div>
       {bar}
       <div className='w-full' ref={ref3}><Subscription /></div>
 
