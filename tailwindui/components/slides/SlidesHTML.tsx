@@ -10,7 +10,6 @@ import {
   // templateSamples,
 } from '@/components/slides/slideTemplates';
 import { LayoutKeys } from '@/components/slides/slideLayout';
-import ClickableLink from '../ui/ClickableLink';
 import LayoutChanger from './LayoutChanger';
 import {
   PresentButton,
