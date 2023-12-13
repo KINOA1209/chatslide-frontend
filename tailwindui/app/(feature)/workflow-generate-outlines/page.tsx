@@ -54,7 +54,6 @@ interface Project {
 
 export default function Topic() {
   const contentRef = useRef<HTMLDivElement>(null)
-  const [showPopup, setShowPopup] = useState(false)
   const [user, setUser] = useState(null)
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -426,16 +425,6 @@ export default function Topic() {
       // url is not youtube, assuming it is a web link
       setUrlIsYoutube(false)
     }
-  }
-
-  // Function to open the popup
-  const openPopup = () => {
-    setShowPopup(true)
-  }
-
-  // Function to close the popup
-  const closePopup = () => {
-    setShowPopup(false)
   }
 
   // The functions that manage the pop-up windows for questionmark
