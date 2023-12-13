@@ -184,6 +184,9 @@ export default function Dashboard() {
   )
 
   return (
+
+
+    
     <section className='grow flex flex-col'>
       <ToastContainer />
       {/* top background container of my projects title text and button */}
@@ -227,7 +230,7 @@ export default function Dashboard() {
         {deleteModal}
       </Transition>
 
-      <UserStudy />
+      {/* <UserStudy /> */}
     </section>
   )
 }

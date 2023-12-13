@@ -497,7 +497,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
     const editableTemplateDispatch = (
         slide: SocialPostSlide, 
         index: number, 
-        canEdit: boolean
+        canEdit: boolean,
     ) => {
         if (res_scenario === 'serious_subject'){
             return templateDispatch2(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode,handleSlideEdit,updateImgUrlArray, updateIllustrationUrlArray, toggleEditMode)
@@ -509,7 +509,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
             return templateDispatch(slide, index, canEdit, false, isEditMode, saveSlides, setIsEditMode,handleSlideEdit,updateImgUrlArray, updateIllustrationUrlArray, toggleEditMode)
         }
     }
-
     return (
         <div>
         <div className='flex flex-col items-center justify-center gap-4'>
@@ -632,11 +631,12 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
                         .map((_, index) => (
                             <div
                                 key={`previewContainer` + index.toString()}
-                                className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2 z-[-1]`}
+                                className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
                                 onClick={() => {
                                     setCurrentSlideIndex(index) // Added onClick handler
                                     setFinalSlideIndex(index)
-                                }}>
+                                }}
+                            >
                                 {/* {index + 1} */}
                                 <SocialPostContainer
                                     slides={slides}

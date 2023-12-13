@@ -22,10 +22,19 @@ import WorkflowStepsBanner from '@/components/WorkflowStepsBanner'
 import PaywallModal from '@/components/forms/paywallModal'
 import { FaFilePdf, FaYoutube } from 'react-icons/fa'
 import YoutubeService from '@/services/YoutubeService'
-import { SmallBlueButton } from '@/components/button/DrlambdaButton'
+import { BigBlueButton, SmallBlueButton } from '@/components/button/DrlambdaButton'
 import WebService from '@/services/WebpageService'
 import Resource from '@/models/Resource'
 import { ToastContainer, toast } from 'react-toastify'
+
+import Image from 'next/image'
+
+import ContentWithImageImg from '@/public/images/summary/content_with_image.png'
+import ContentOnlyImg from '@/public/images/summary/content_only.png'
+import ContentInBrandingColorImg from '@/public/images/summary/content_in_branding_color.png'
+import { FileUploadButton } from '@/components/FileUploadButton'
+import FileUploadModal from '@/components/forms/FileUploadModal'
+import SelectedResourcesList from '@/components/SelectedResources'
 
 const MAX_TOPIC_LENGTH = 80
 const MIN_TOPIC_LENGTH = 6
@@ -46,7 +55,6 @@ interface Project {
 
 export default function Topic() {
   const contentRef = useRef<HTMLDivElement>(null)
-  const [showPopup, setShowPopup] = useState(false)
   const [user, setUser] = useState(null)
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -68,6 +76,10 @@ export default function Topic() {
   const [showSupportivePopup, setSupportivePopup] = useState(false)
   const [isPaidUser, setIsPaidUser] = useState(false)
   const [isAddingLink, setIsAddingLink] = useState(false)
+
+  const [useSchoolTemplate, setUseSchoolTemplate] = useState(false)
+  const [schoolTemplate, setSchoolTemplate] = useState('' as string)
+  const [theme, setTheme] = useState('content_with_image')
 
   // bind form data between input and sessionStorage
   const [topic, setTopic] = useState(
@@ -109,6 +121,8 @@ export default function Topic() {
         setTopic(formatName(selectedResources[0].name))
       }
     }
+
+    console.log('selectedResources', selectedResources)
   }, [selectedResources])
 
   useEffect(() => {
@@ -148,18 +162,6 @@ export default function Topic() {
     fetchUser()
   }, [])
 
-  const openFile = () => {
-    setShowFileModal(true)
-  }
-
-  const closeFile = () => {
-    setShowFileModal(false)
-  }
-
-  const handleOpenFile = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    openFile()
-  }
   const handleTopicSuggestionClick = (
     topic: string,
     event: MouseEvent<HTMLButtonElement>
@@ -297,6 +299,7 @@ export default function Topic() {
       project_id: project_id,
       resources: selectedResourceId,
       model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
+      schoolTemplate: schoolTemplate
     }
 
     sessionStorage.setItem('topic', formData.topic)
@@ -305,6 +308,7 @@ export default function Topic() {
     sessionStorage.setItem('addEquations', formData.addEquations)
     sessionStorage.setItem('selectedResourceId', JSON.stringify(formData.resources))
     sessionStorage.setItem('selectedResources', JSON.stringify(selectedResources))
+    sessionStorage.setItem('schoolTemplate', schoolTemplate)
 
     try {
       const { userId, idToken: token } =
@@ -424,16 +428,6 @@ export default function Topic() {
     }
   }
 
-  // Function to open the popup
-  const openPopup = () => {
-    setShowPopup(true)
-  }
-
-  // Function to close the popup
-  const closePopup = () => {
-    setShowPopup(false)
-  }
-
   // The functions that manage the pop-up windows for questionmark
   const openProjectPopup = () => {
     setProjectPopup(true)
@@ -483,61 +477,14 @@ export default function Topic() {
 
       <ToastContainer />
 
-      <Transition
-        className='h-full w-full z-50 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
-        show={showFileModal}
-        onClick={closeFile}
-        enter='transition ease duration-300 transform'
-        enterFrom='opacity-0 translate-y-12'
-        enterTo='opacity-100 translate-y-0'
-        leave='transition ease duration-300 transform'
-        leaveFrom='opacity-100 translate-y-0'
-        leaveTo='opacity-0 translate-y-12'
-      >
-        <div className='grow md:grow-0'></div>
-        <Transition
-          className='w-full h-3/4 md:h-2/3
-                                md:max-w-2xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
-                                overflow-hidden flex flex-col p-4 bg-white'
-          show={showFileModal}
-          enter='transition ease duration-500 transform delay-300'
-          enterFrom='opacity-0 translate-y-12'
-          enterTo='opacity-100 translate-y-0'
-          leave='transition ease duration-300 transform'
-          leaveFrom='opacity-100 translate-y-0'
-          leaveTo='opacity-0 translate-y-12'
-          onClick={(e) => {
-            e.stopPropagation()
-          }}
-        >
-          <h4 className='h4 text-blue-600 text-center'>
-            Select Supporting Material
-          </h4>
-          <MyFiles
-            selectable={true}
-            selectedResourceId={selectedResourceId}
-            setSelectedResourceId={setSelectedResourceId}
-            selectedResources={selectedResources}
-            setSelectedResources={setSelectedResources}
-          />
-          <div className='max-w-sm mx-auto'>
-            <div className='flex flex-wrap -mx-3 mt-6'>
-              <div className='w-full px-3'>
-                <button
-                  className='btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full'
-                  type='button'
-                  onClick={(e) => {
-                    e.preventDefault()
-                    closeFile()
-                  }}
-                >
-                  OK
-                </button>
-              </div>
-            </div>
-          </div>
-        </Transition>
-      </Transition>
+      <FileUploadModal
+        selectedResourceId={selectedResourceId}
+        setSelectedResourceId={setSelectedResourceId}
+        selectedResources={selectedResources}
+        setSelectedResources={setSelectedResources}
+        showModal={showFileModal}
+        setShowModal={setShowFileModal}
+        />
 
       {/* project progress section */}
       <WorkflowStepsBanner
@@ -602,7 +549,7 @@ export default function Topic() {
                   {MAX_TOPIC_LENGTH - topic.length} characters left
                 </div>
               }
-              {topicError && 
+              {topicError &&
                 <div className='text-red-500 text-sm mt-1'>{topicError}</div>
               }
             </div>
@@ -700,7 +647,7 @@ export default function Topic() {
                     required
                   >
                     <option key='English' value='English'>🇺🇸 English (United States)</option>
-                    <option key='BritishEnglish' value='BritishEnglish'>🇬🇧 English (British)</option>
+                    <option key='British English' value='British English'>🇬🇧 English (British)</option>
                     <option key='Spanish' value='Spanish'>🌎 Español (Latinoamérica)</option>
                     <option key='Continental Spanish' value='Continental Spanish'>🇪🇸 Español (España)</option>
                     <option key='Chinese' value='Chinese'>🇨🇳 中文 (简体)</option>
@@ -743,7 +690,7 @@ export default function Topic() {
           </div>
         </div>
 
-        {/* supplementary section */}
+        {/* supporting docs  section */}
         <div className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1'>
           <div className='title2'>
             <p>Supporting Documents</p>
@@ -807,35 +754,96 @@ export default function Topic() {
               <div className='flex items-center w-full'>
                 <FaFilePdf />
                 <span className="text-sm md:text-l">Drop files here or </span>
-                <SmallBlueButton onClick={handleOpenFile}>
+                <SmallBlueButton 
+                onClick={e => {
+                  e.preventDefault()
+                  setShowFileModal(true)
+                }}>
                   Browse File
                 </SmallBlueButton>
               </div>
             </div>
-            <hr id='add_hr' />
-            <div className='min-h-[100px] mt-[10px]'>
-              <ul
-                className='flex flex-col gap-4'
-                style={{ overflowY: 'auto' }}
-              >
-                {selectedResources.map((resource, index) => (
-                  <li key={index}>
-                    <div
-                      id='selectedfile_each'
-                      className='flex items-center bg-white rounded min-h-[50px] px-[1rem] justify-between'
-                    >
-                      <div className='flex items-center gap-2'>
-                        {resource.thumbnail_url ?
-                          <img src={resource.thumbnail_url} className='w-[40px]' /> :
-                          <FaFilePdf className='w-[40px]' />
-                        }
-                        <div className='flex-wrap'>{resource.name}</div>
-                      </div>
-                      <button className='' onClick={e => removeResourceAtIndex(index)}><DeleteIcon /></button>
+            { selectedResources.length > 0 && <hr id='add_hr' />}
+            <div className='mt-[10px]'>
+              <SelectedResourcesList selectedResources={selectedResources} removeResourceAtIndex={removeResourceAtIndex} />
+            </div>
+          </div>
+        </div>
+
+        {/* design */}
+        <div className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1 font-creato-regular'>
+          <div className='title2'>
+            <p>Design</p>
+            <p id='after2'> (Optional)</p>
+          </div>
+
+          <div className='additional_container my-2 lg:my-5 border border-2 border-gray-200 flex flex-col gap-y-4'>
+
+            {/* theme */}
+            <span>What theme do you want to choose?</span>
+            <div className="grid grid-cols-3 gap-x-4">
+              {[
+                { img: ContentWithImageImg, value: 'content_with_image', alt: 'Content with image' },
+                { img: ContentOnlyImg, value: 'content_only', alt: 'Content only' },
+                { img: ContentInBrandingColorImg, value: 'content_in_branding_color', alt: 'Content in branding color' },
+              ].map(({ img, value, alt }) => (
+                <div key={value} className={`border border-2 rounded-lg border-gray-400 px-2 py-2 ${theme === value ? 'border-gray-400' : 'border-white'}`}>
+                  <label>
+                    <input
+                      type="radio"
+                      name="theme"
+                      value={value}
+                      checked={theme === value}
+                      onChange={() => setTheme(value)}
+                      style={{ display: 'none' }} // Hides the radio button
+                    />
+                    <div onClick={() => setTheme(value)}>
+                      <Image src={img} alt={alt} />
                     </div>
-                  </li>
-                ))}
-              </ul>
+                    {alt}
+                  </label>
+                </div>
+              ))}
+            </div>
+
+            {/* school */}
+            <div className="grid grid-cols-2 gap-x-4">
+              <div className='gap-1 flex flex-col justify-start'>
+                <span>Do you want to use a school deck template?</span>
+                <form className="flex flex-row gap-x-4 mt-2">
+                  <label>
+                    <input
+                      type="radio"
+                      value="yes"
+                      checked={useSchoolTemplate}
+                      onChange={e => setUseSchoolTemplate(true)}
+                    />
+                    Yes
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      value="no"
+                      checked={!useSchoolTemplate}
+                      onChange={e => setUseSchoolTemplate(false)}
+                    />
+                    No
+                  </label>
+                </form>
+
+              </div>
+
+              {useSchoolTemplate && (
+                <div className='gap-1 flex flex-col justify-start'>
+                  <span>Select your school:</span>
+                  <select className='border border-2 border-gray-400 rounded-lg bg-gray-100'
+                    onChange={(e) => setSchoolTemplate(e.target.value)}>
+                    <option value='Harvard'>Harvard University</option>
+                    <option value='Stanford'>Stanford University</option>
+                    <option value='Berkeley'>UC Berkeley</option>
+                  </select>
+                </div>
+              )}
             </div>
           </div>
         </div>

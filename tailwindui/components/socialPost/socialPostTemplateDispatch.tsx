@@ -5,8 +5,10 @@ import { MathJax, MathJaxContext } from 'better-react-mathjax'
 import {
     CompanyIconWhite,
 } from '@/components/socialPost/socialPostIcons'
-import React, { useEffect, useRef } from 'react';
+import React, { CSSProperties, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
+import 'quill/dist/quill.bubble.css';
+import '@/components/socialPost/quillEditor.scss';
 
 const QuillEditable = dynamic(() => import('./quillEditor'), { ssr: false });
 
@@ -33,6 +35,44 @@ export const templateDispatch = (
     const arrayToHtml = (contentArray: Array<string>) => {
         return contentArray.map(item => `<p>${item}</p>`).join('');
     };
+    
+    const generateContentElement = (
+        content: string, 
+        contentTag: SlideKeys, 
+        style: CSSProperties,
+        contentIndex?: number,
+        ) => {
+        if (!canEdit) {
+            return (
+                <div
+                    className='ql-editor non-editable-ql-editor'
+                    style={{...style, outline: 'none'}}
+                    dangerouslySetInnerHTML={{ __html: content }}
+                />
+            )
+        }
+        else {
+            if(contentIndex !== undefined){
+                return (
+                    <QuillEditable
+                    content={content}
+                    handleBlur={(newContent) => handleSlideEdit(newContent, index, contentTag, contentIndex)}
+                    style={style}
+                    />
+                )
+            }
+            else{
+                return (
+                    <QuillEditable
+                        content={content}
+                        handleBlur={(newContent) => handleSlideEdit(newContent, index, contentTag)}
+                        style={style}
+                    />
+                )
+            }
+        }
+    }
+
     if (index === 0) {
         return (
           <Template
@@ -42,20 +82,8 @@ export const templateDispatch = (
             update_callback={updateImgUrlArray(index)}
             canEdit={canEdit}
             imgs={slide.images}
-            topic={
-                <QuillEditable
-                    content={slide.topic}
-                    handleBlur={(newContent) => handleSlideEdit(newContent, index, 'topic')}
-                    style={h3Style}
-                />
-            }
-            keywords={
-                <QuillEditable
-                    content={Array.isArray(slide.keywords) ? arrayToHtml(slide.keywords) : slide.keywords}
-                    handleBlur={(newContent) => handleSlideEdit(newContent, index, 'keywords')}
-                    style={h4Style}
-                />
-            }
+            topic={generateContentElement(slide.topic, 'topic', h3Style)}
+            keywords={generateContentElement(Array.isArray(slide.keywords) ? arrayToHtml(slide.keywords) : slide.keywords, 'keywords', h4Style)}
             subtopic={<></>}
             border_start = {slide.theme?.border_start || '#937C67'}
             border_end = {slide.theme?.border_end || '#4F361F'}
@@ -82,21 +110,8 @@ export const templateDispatch = (
             icon={<CompanyIconWhite />}
             imgs={(slide.images) as string[]}
             update_callback={updateImgUrlArray(index)}   
-            subtopic={
-                <QuillEditable
-                    content={slide.subtopic}
-                    handleBlur={(newContent) => handleSlideEdit(newContent, index, 'subtopic')}
-                    style={h2Style}
-                />
-            }
-            keywords={
-                <QuillEditable
-                    content={slide.keywords}
-                    handleBlur={(newContent) => handleSlideEdit(newContent, index, 'keywords')}
-                    style={h1Style}
-                />
-            }
-
+            subtopic={generateContentElement(slide.subtopic, 'subtopic', h2Style)}
+            keywords={generateContentElement(slide.keywords, 'keywords', h1Style)}
             content={
                 slide.content.map((content: string, contentIndex: number) => {
                     if (content.includes('$$') || content.includes('\\(')) {
@@ -138,12 +153,7 @@ export const templateDispatch = (
                     }
                     return (
                         <div key={keyPrefix + index.toString() + '_' + contentIndex.toString()}>
-                        <QuillEditable
-                            content={content}
-                            handleBlur={(newContent) => handleSlideEdit(newContent, index, 'content', contentIndex)}
-                            style={listStyle}
-                        />
-                            
+                        {generateContentElement(content, 'content', listStyle, contentIndex)}                  
                         <hr className='my-[15px]'></hr>
                         </div>    
                     );

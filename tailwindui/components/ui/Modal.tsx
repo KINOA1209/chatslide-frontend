@@ -12,6 +12,7 @@ const Modal: React.FC<ModalProps> = ({ children, showModal, setShowModal }) => {
   const modalContentRef = React.useRef<HTMLDivElement>(null);
 
   const handleCloseModal = () => {
+    console.log('handleCloseModal')
     setShowModal(false);
   };
 
@@ -24,6 +25,7 @@ const Modal: React.FC<ModalProps> = ({ children, showModal, setShowModal }) => {
 
   return (
     <>
+      {showModal && (
       <div
         ref={modalRef}
         id="staticModal"
@@ -58,6 +60,7 @@ const Modal: React.FC<ModalProps> = ({ children, showModal, setShowModal }) => {
           {children}
         </div>
       </div>
+      )}
     </>
   );
 };
