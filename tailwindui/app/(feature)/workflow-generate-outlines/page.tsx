@@ -17,27 +17,36 @@ import { Transition } from '@headlessui/react';
 import MyFiles from '@/components/FileManagement';
 import FeedbackButton from '@/components/ui/feedback';
 
-import { DeleteIcon, QuestionExplainIcon, RightTurnArrowIcon } from '@/app/(feature)/icons'
-import WorkflowStepsBanner from '@/components/WorkflowStepsBanner'
-import PaywallModal from '@/components/forms/paywallModal'
-import { FaFilePdf, FaYoutube } from 'react-icons/fa'
-import YoutubeService from '@/services/YoutubeService'
-import { BigBlueButton, SmallBlueButton } from '@/components/button/DrlambdaButton'
-import WebService from '@/services/WebpageService'
-import Resource from '@/models/Resource'
-import { ToastContainer, toast } from 'react-toastify'
+import {
+  DeleteIcon,
+  QuestionExplainIcon,
+  RightTurnArrowIcon,
+} from '@/app/(feature)/icons';
+import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
+import PaywallModal from '@/components/forms/paywallModal';
+import { FaFilePdf, FaYoutube } from 'react-icons/fa';
+import YoutubeService from '@/services/YoutubeService';
+import {
+  BigBlueButton,
+  SmallBlueButton,
+} from '@/components/button/DrlambdaButton';
+import WebService from '@/services/WebpageService';
+import Resource from '@/models/Resource';
+import { ToastContainer, toast } from 'react-toastify';
 
-import Image from 'next/image'
+import Image from 'next/image';
 
-import ContentWithImageImg from '@/public/images/summary/content_with_image.png'
-import ContentOnlyImg from '@/public/images/summary/content_only.png'
-import ContentInBrandingColorImg from '@/public/images/summary/content_in_branding_color.png'
-import { FileUploadButton } from '@/components/FileUploadButton'
-import FileUploadModal from '@/components/forms/FileUploadModal'
-import SelectedResourcesList from '@/components/SelectedResources'
-
-const MAX_TOPIC_LENGTH = 80
-const MIN_TOPIC_LENGTH = 6
+import ContentWithImageImg from '@/public/images/summary/content_with_image.png';
+import ContentOnlyImg from '@/public/images/summary/content_only.png';
+import ContentInBrandingColorImg from '@/public/images/summary/content_in_branding_color.png';
+import { FileUploadButton } from '@/components/FileUploadButton';
+import FileUploadModal from '@/components/forms/FileUploadModal';
+import SelectedResourcesList from '@/components/SelectedResources';
+import Joyride, { STATUS, Step } from 'react-joyride';
+import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
+import StepsSummaryPage from '@/components/user_onboarding/StepsSummaryPage';
+const MAX_TOPIC_LENGTH = 80;
+const MIN_TOPIC_LENGTH = 6;
 
 const audienceList = [
   'Researchers',
@@ -54,32 +63,32 @@ interface Project {
 }
 
 export default function Topic() {
-  const contentRef = useRef<HTMLDivElement>(null)
-  const [user, setUser] = useState(null)
-  const router = useRouter()
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [showFileModal, setShowFileModal] = useState(false)
-  const [linkUrl, setLinkUrl] = useState('' as string)
-  const [urlIsYoutube, setUrlIsYoutube] = useState(false)
-  const [linkError, setLinkError] = useState('')
-  const [topicError, setTopicError] = useState('')
-  const [isGpt35, setIsGpt35] = useState(true)
-  const [showPaymentModal, setShowPaymentModal] = useState(false)
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [user, setUser] = useState(null);
+  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showFileModal, setShowFileModal] = useState(false);
+  const [linkUrl, setLinkUrl] = useState('' as string);
+  const [urlIsYoutube, setUrlIsYoutube] = useState(false);
+  const [linkError, setLinkError] = useState('');
+  const [topicError, setTopicError] = useState('');
+  const [isGpt35, setIsGpt35] = useState(true);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [topicSuggestions, setTopicSuggestions] = useState<string[]>([
     'Ultrasound',
-  ])
-  const [audienceSuggestions, setAudienceSuggestions] = useState<string[]>([])
-  const [showAudienceInput, setShowAudienceInput] = useState(false)
-  const [showProjectPopup, setProjectPopup] = useState(false)
-  const [showAudiencePopup, setAudiencePopup] = useState(false)
-  const [showLanguagePopup, setLanguagePopup] = useState(false)
-  const [showSupportivePopup, setSupportivePopup] = useState(false)
-  const [isPaidUser, setIsPaidUser] = useState(false)
-  const [isAddingLink, setIsAddingLink] = useState(false)
+  ]);
+  const [audienceSuggestions, setAudienceSuggestions] = useState<string[]>([]);
+  const [showAudienceInput, setShowAudienceInput] = useState(false);
+  const [showProjectPopup, setProjectPopup] = useState(false);
+  const [showAudiencePopup, setAudiencePopup] = useState(false);
+  const [showLanguagePopup, setLanguagePopup] = useState(false);
+  const [showSupportivePopup, setSupportivePopup] = useState(false);
+  const [isPaidUser, setIsPaidUser] = useState(false);
+  const [isAddingLink, setIsAddingLink] = useState(false);
 
-  const [useSchoolTemplate, setUseSchoolTemplate] = useState(false)
-  const [schoolTemplate, setSchoolTemplate] = useState('' as string)
-  const [theme, setTheme] = useState('content_with_image')
+  const [useSchoolTemplate, setUseSchoolTemplate] = useState(false);
+  const [schoolTemplate, setSchoolTemplate] = useState('' as string);
+  const [theme, setTheme] = useState('content_with_image');
 
   // bind form data between input and sessionStorage
   const [topic, setTopic] = useState(
@@ -129,8 +138,8 @@ export default function Topic() {
       }
     }
 
-    console.log('selectedResources', selectedResources)
-  }, [selectedResources])
+    console.log('selectedResources', selectedResources);
+  }, [selectedResources]);
 
   useEffect(() => {
     UserService.isPaidUser().then((isPaidUser) => {
@@ -304,16 +313,22 @@ export default function Topic() {
       project_id: project_id,
       resources: selectedResourceId,
       model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
-      schoolTemplate: schoolTemplate
-    }
+      schoolTemplate: schoolTemplate,
+    };
 
-    sessionStorage.setItem('topic', formData.topic)
-    sessionStorage.setItem('audience', formData.audience)
-    sessionStorage.setItem('language', formData.language)
-    sessionStorage.setItem('addEquations', formData.addEquations)
-    sessionStorage.setItem('selectedResourceId', JSON.stringify(formData.resources))
-    sessionStorage.setItem('selectedResources', JSON.stringify(selectedResources))
-    sessionStorage.setItem('schoolTemplate', schoolTemplate)
+    sessionStorage.setItem('topic', formData.topic);
+    sessionStorage.setItem('audience', formData.audience);
+    sessionStorage.setItem('language', formData.language);
+    sessionStorage.setItem('addEquations', formData.addEquations);
+    sessionStorage.setItem(
+      'selectedResourceId',
+      JSON.stringify(formData.resources)
+    );
+    sessionStorage.setItem(
+      'selectedResources',
+      JSON.stringify(selectedResources)
+    );
+    sessionStorage.setItem('schoolTemplate', schoolTemplate);
 
     try {
       const { userId, idToken: token } =
@@ -431,7 +446,7 @@ export default function Topic() {
       // url is not youtube, assuming it is a web link
       setUrlIsYoutube(false);
     }
-  }
+  };
 
   // The functions that manage the pop-up windows for questionmark
   const openProjectPopup = () => {
@@ -495,7 +510,7 @@ export default function Topic() {
         setSelectedResources={setSelectedResources}
         showModal={showFileModal}
         setShowModal={setShowFileModal}
-        />
+      />
 
       {/* project progress section */}
       <WorkflowStepsBanner
@@ -560,7 +575,7 @@ export default function Topic() {
                   {MAX_TOPIC_LENGTH - topic.length} characters left
                 </div>
               }
-              {topicError &&
+              {topicError && (
                 <div className='text-red-500 text-sm mt-1'>{topicError}</div>
               )}
             </div>
@@ -660,21 +675,57 @@ export default function Topic() {
                     onChange={(e) => setLanguage(e.target.value)}
                     required
                   >
-                    <option key='English' value='English'>🇺🇸 English (United States)</option>
-                    <option key='British English' value='British English'>🇬🇧 English (British)</option>
-                    <option key='Spanish' value='Spanish'>🌎 Español (Latinoamérica)</option>
-                    <option key='Continental Spanish' value='Continental Spanish'>🇪🇸 Español (España)</option>
-                    <option key='Chinese' value='Chinese'>🇨🇳 中文 (简体)</option>
-                    <option key='Traditional Chinese' value='Traditional Chinese'>🇹🇼 中文 (繁體)</option>
-                    <option key='Russian' value='Russian'>🇷🇺 Русский</option>
-                    <option key='Ukrainian' value='Ukrainian'>🇺🇦 Українська</option>
-                    <option key='Hindi' value='Hindi'>🇮🇳 हिन्दी</option>
-                    <option key='French' value='French'>🇫🇷 Français</option>
-                    <option key='German' value='German'>🇩🇪 Deutsch</option>
-                    <option key='Portuguese' value='Portuguese'>🇵🇹 Português</option>
-                    <option key='Japanese' value='Japanese'>🇯🇵 日本語</option>
-                    <option key='Korean' value='Korean'>🇰🇷 한국어</option>
-                    <option key='Arabic' value='Arabic'>🇸🇦 العربية</option>
+                    <option key='English' value='English'>
+                      🇺🇸 English (United States)
+                    </option>
+                    <option key='British English' value='British English'>
+                      🇬🇧 English (British)
+                    </option>
+                    <option key='Spanish' value='Spanish'>
+                      🌎 Español (Latinoamérica)
+                    </option>
+                    <option
+                      key='Continental Spanish'
+                      value='Continental Spanish'
+                    >
+                      🇪🇸 Español (España)
+                    </option>
+                    <option key='Chinese' value='Chinese'>
+                      🇨🇳 中文 (简体)
+                    </option>
+                    <option
+                      key='Traditional Chinese'
+                      value='Traditional Chinese'
+                    >
+                      🇹🇼 中文 (繁體)
+                    </option>
+                    <option key='Russian' value='Russian'>
+                      🇷🇺 Русский
+                    </option>
+                    <option key='Ukrainian' value='Ukrainian'>
+                      🇺🇦 Українська
+                    </option>
+                    <option key='Hindi' value='Hindi'>
+                      🇮🇳 हिन्दी
+                    </option>
+                    <option key='French' value='French'>
+                      🇫🇷 Français
+                    </option>
+                    <option key='German' value='German'>
+                      🇩🇪 Deutsch
+                    </option>
+                    <option key='Portuguese' value='Portuguese'>
+                      🇵🇹 Português
+                    </option>
+                    <option key='Japanese' value='Japanese'>
+                      🇯🇵 日本語
+                    </option>
+                    <option key='Korean' value='Korean'>
+                      🇰🇷 한국어
+                    </option>
+                    <option key='Arabic' value='Arabic'>
+                      🇸🇦 العربية
+                    </option>
                   </select>
                 </div>
               </div>
@@ -774,19 +825,23 @@ export default function Topic() {
             <div className='drop_file bg-gray-100 border border-2 border-gray-200'>
               <div className='flex items-center w-full'>
                 <FaFilePdf />
-                <span className="text-sm md:text-l">Drop files here or </span>
-                <SmallBlueButton 
-                onClick={e => {
-                  e.preventDefault()
-                  setShowFileModal(true)
-                }}>
+                <span className='text-sm md:text-l'>Drop files here or </span>
+                <SmallBlueButton
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowFileModal(true);
+                  }}
+                >
                   Browse File
                 </SmallBlueButton>
               </div>
             </div>
-            { selectedResources.length > 0 && <hr id='add_hr' />}
+            {selectedResources.length > 0 && <hr id='add_hr' />}
             <div className='mt-[10px]'>
-              <SelectedResourcesList selectedResources={selectedResources} removeResourceAtIndex={removeResourceAtIndex} />
+              <SelectedResourcesList
+                selectedResources={selectedResources}
+                removeResourceAtIndex={removeResourceAtIndex}
+              />
             </div>
           </div>
         </div>
@@ -799,20 +854,36 @@ export default function Topic() {
           </div>
 
           <div className='additional_container my-2 lg:my-5 border border-2 border-gray-200 flex flex-col gap-y-4'>
-
             {/* theme */}
             <span>What theme do you want to choose?</span>
-            <div className="grid grid-cols-3 gap-x-4">
+            <div className='grid grid-cols-3 gap-x-4'>
               {[
-                { img: ContentWithImageImg, value: 'content_with_image', alt: 'Content with image' },
-                { img: ContentOnlyImg, value: 'content_only', alt: 'Content only' },
-                { img: ContentInBrandingColorImg, value: 'content_in_branding_color', alt: 'Content in branding color' },
+                {
+                  img: ContentWithImageImg,
+                  value: 'content_with_image',
+                  alt: 'Content with image',
+                },
+                {
+                  img: ContentOnlyImg,
+                  value: 'content_only',
+                  alt: 'Content only',
+                },
+                {
+                  img: ContentInBrandingColorImg,
+                  value: 'content_in_branding_color',
+                  alt: 'Content in branding color',
+                },
               ].map(({ img, value, alt }) => (
-                <div key={value} className={`border border-2 rounded-lg border-gray-400 px-2 py-2 ${theme === value ? 'border-gray-400' : 'border-white'}`}>
+                <div
+                  key={value}
+                  className={`border border-2 rounded-lg border-gray-400 px-2 py-2 ${
+                    theme === value ? 'border-gray-400' : 'border-white'
+                  }`}
+                >
                   <label>
                     <input
-                      type="radio"
-                      name="theme"
+                      type='radio'
+                      name='theme'
                       value={value}
                       checked={theme === value}
                       onChange={() => setTheme(value)}
@@ -828,37 +899,38 @@ export default function Topic() {
             </div>
 
             {/* school */}
-            <div className="grid grid-cols-2 gap-x-4">
+            <div className='grid grid-cols-2 gap-x-4'>
               <div className='gap-1 flex flex-col justify-start'>
                 <span>Do you want to use a school deck template?</span>
-                <form className="flex flex-row gap-x-4 mt-2">
+                <form className='flex flex-row gap-x-4 mt-2'>
                   <label>
                     <input
-                      type="radio"
-                      value="yes"
+                      type='radio'
+                      value='yes'
                       checked={useSchoolTemplate}
-                      onChange={e => setUseSchoolTemplate(true)}
+                      onChange={(e) => setUseSchoolTemplate(true)}
                     />
                     Yes
                   </label>
                   <label>
                     <input
-                      type="radio"
-                      value="no"
+                      type='radio'
+                      value='no'
                       checked={!useSchoolTemplate}
-                      onChange={e => setUseSchoolTemplate(false)}
+                      onChange={(e) => setUseSchoolTemplate(false)}
                     />
                     No
                   </label>
                 </form>
-
               </div>
 
               {useSchoolTemplate && (
                 <div className='gap-1 flex flex-col justify-start'>
                   <span>Select your school:</span>
-                  <select className='border border-2 border-gray-400 rounded-lg bg-gray-100'
-                    onChange={(e) => setSchoolTemplate(e.target.value)}>
+                  <select
+                    className='border border-2 border-gray-400 rounded-lg bg-gray-100'
+                    onChange={(e) => setSchoolTemplate(e.target.value)}
+                  >
                     <option value='Harvard'>Harvard University</option>
                     <option value='Stanford'>Stanford University</option>
                     <option value='Berkeley'>UC Berkeley</option>

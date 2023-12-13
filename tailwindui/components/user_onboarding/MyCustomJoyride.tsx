@@ -53,26 +53,51 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
         styles={{
           options: {
             arrowColor: '#FF5733', // Customize arrow color
-            backgroundColor: '#6A1B9A', // Customize the background color of the tooltip
+            backgroundColor: '#FFF', // Customize the background color of the tooltip
             overlayColor: 'rgba(0, 0, 0, 0.5)', // Customize the overlay color
-            primaryColor: '#2196F3', // Customize the primary color (text color, button color, etc.)
-            textColor: '#ffffff', // Customize the text color
+            primaryColor: 'none', // Customize the primary color (text color, button color, etc.)
+            textColor: 'none', // Customize the text color
           },
           buttonBack: {
-            color: '#ffffff', // Customize the back button color
-            background: '#FF5733', // Customize the back button background color
+            // color: '#ffffff', // Customize the back button color
+            // background: '#FF5733', // Customize the back button background color
+            // border: '2px solid #FF5733',
+            // borderRadius: '8px',
+            // padding: '10px 20px',
+            // marginRight: '10px',
+            // cursor: 'pointer',
+            // fontWeight: 'bold',
           },
-          // buttonClose: {
-          //   color: '#ffffff', // Customize the close button color
-          //   background: '#FF5733', // Customize the close button background color
-          // },
+          buttonClose: {
+            color: '#707C8A', // Customize the close button color
+            // background: '#FF5733', // Customize the close button background color
+          },
           buttonNext: {
-            color: '#ffffff', // Customize the next button color
-            background: '#FF5733', // Customize the next button background color
+            // width: 100,
+            // height: 40,
+            // paddingLeft: 7.4,
+            // paddingRight: 7.4,
+            // paddingTop: 2.47,
+            // paddingBottom: 2.47,
+            // background: '#2943E9',
+            // borderRadius: 4.94,
+            // overflow: 'hidden',
+            // justifyContent: 'center',
+            // alignItems: 'center',
+            // gap: 6.17,
+            // display: 'inline-flex',
+            // textAlign: 'center',
+            // color: '#F4F4F4',
+            // fontSize: 15,
+            // fontFamily: 'Creato Display',
+            // fontWeight: '500',
+            // lineHeight: 14.81,
+            // letterSpacing: 0.6,
+            // wordWrap: 'break-word',
           },
           buttonSkip: {
-            color: '#ffffff', // Customize the skip button color
-            background: '#FF5733', // Customize the skip button background color
+            // color: '#ffffff', // Customize the skip button color
+            // background: '#FF5733', // Customize the skip button background color
           },
         }}
         callback={handleJoyrideCallback}
