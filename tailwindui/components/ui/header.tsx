@@ -49,7 +49,8 @@ const Header = ({ loginRequired, isLanding = false, isAuth = false }: HeaderProp
         console.error(error)
       }
     }
-    getCredits()
+    if(!isAuth)
+      getCredits()
   }, [])
 
   useEffect(() => {
