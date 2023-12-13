@@ -361,7 +361,9 @@ const MyFiles: React.FC<filesInterface> = ({
         })
       }
     }
+    console.log('newSelectedResourceId', newSelectedResourceId)
     setSelectedResourceId(newSelectedResourceId)
+    console.log('selectedResourceId', selectedResourceId)
     if (setSelectedResources) {
       setSelectedResources(resources.filter((resource) => newSelectedResourceId.includes(resource.id)));
     }

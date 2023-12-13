@@ -7,6 +7,8 @@ import noimg_png from '@/public/images/template/socialpost_t1_no_img.png'
 import '@/components/socialPost/templates.css'
 import AuthService from '@/services/AuthService'
 import { h5Style } from "./Styles";
+import 'quill/dist/quill.bubble.css';
+import '@/components/socialPost/quillEditor.scss';
 
 interface MainSlideProps {
     subtopic: JSX.Element,
@@ -81,7 +83,7 @@ export const First_page_img_1 = ({ topic, keywords, imgs, border_start, border_e
                 border: 'none',
             }}>
             <div 
-                className="absolute top-0 left-0 w-full h-full z-[20]"
+                className="absolute top-0 left-0 w-full h-full"
                 style={{
                     border: '12px solid transparent',
                     backgroundImage: `linear-gradient(white, white), radial-gradient(circle at top left, ${border_start}, ${border_end})`,
@@ -103,9 +105,9 @@ export const First_page_img_1 = ({ topic, keywords, imgs, border_start, border_e
                 className="w-full h-full mx-[3%] flex flex-col justify-between"
 
             >
-                <div className="mt-[10%] px-[4%] z-[30]">{topic}</div>
+                <div className="mt-[10%] px-[4%] z-[10]">{topic}</div>
                 <div
-                    className="mb-[6%] mx-[auto] z-[20]"
+                    className="mb-[6%] mx-[auto]"
                     style={{
                         border: '3px solid #FFF',
                         borderRadius: '5px',

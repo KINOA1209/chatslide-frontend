@@ -304,7 +304,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
           slide.title = slideData.title || 'New Slide';
           slide.subtopic = slideData.subtopic || 'New Slide';
           slide.userName = slideData.userName || '';
-          slide.template = slideData.template || 'Default';
+          slide.template = slideData.template || sessionStorage.getItem('schoolTemplate') || 'Default';
           slide.content = slideData.content || ['Your content here'];
           slide.images = slideData.images || [];
           // console.log(

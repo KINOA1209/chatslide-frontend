@@ -5,7 +5,7 @@ class UserService {
 
   static async initializeUser(token: string): Promise<boolean>{
     const headers = new Headers();
-    // console.log("Token: ", token)
+    console.log("Token: ", token)
     if (token) {
       headers.append('Authorization', `Bearer ${token}`);
     }
@@ -28,11 +28,15 @@ class UserService {
         headers: headers,
         body: JSON.stringify(userData)
       });
-      if (createUserResponse.ok) {
+      if (createUserResponse.status === 201) {
         console.log("Initialized successfully.")
         return true;
-      } else {
-        console.error(`Failed to initialize user: ${user}`, createUserResponse.status);
+      } else if (createUserResponse.status === 200){
+        console.log("User already initialized before.")
+        return true;
+      }
+        else {
+        console.error(`Failed to initialize user: ${username}`, createUserResponse.status, createUserResponse.statusText);
         const errorData = await createUserResponse.json();
         throw new Error(errorData.message);
       }
@@ -74,6 +78,8 @@ class UserService {
   }
 
   static async getUserCreditsAndTier(idToken: string): Promise<{ credits: number, tier: string }> {
+    if (!idToken) throw new Error('No idToken provided');
+
     try {
 
       const response = await fetch(`/api/user/credits`, {
