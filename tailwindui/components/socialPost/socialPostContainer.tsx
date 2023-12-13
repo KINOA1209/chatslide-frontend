@@ -42,11 +42,10 @@ const SocialPostContainer: React.FC<SlideContainerProps> = ({
             className={`${isPresenting ? 'fixed top-0 left-0 w-full h-full z-50 flex justify-center' : ''}`}
             ref={containerRef}
             style={{
-                //boxSizing: 'border-box',
-                //border: 'none',
                 boxShadow: (isPresenting) ? 'none' : '0 2px 10px rgba(0, 0, 0, 0.5)',
                 width: isPresenting ? '80vw' : `${450 * scale}px`,
                 height: isPresenting ? '100vh' : `${600 * scale}px`,
+                zIndex: (!isViewing && !isPresenting) ? 10 : 50,
             }}
         >
             {/* 0.75 width = 1 height */}

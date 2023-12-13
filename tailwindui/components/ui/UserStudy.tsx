@@ -1,3 +1,5 @@
+// this is no longer used, replaced by sidebar
+
 import React, { useState } from "react";
 import Modal from "./Modal";
 import { DrlambdaLink } from "../button/DrlambdaButton";

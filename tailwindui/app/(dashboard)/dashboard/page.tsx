@@ -230,7 +230,7 @@ export default function Dashboard() {
         {deleteModal}
       </Transition>
 
-      <UserStudy />
+      {/* <UserStudy /> */}
     </section>
   )
 }

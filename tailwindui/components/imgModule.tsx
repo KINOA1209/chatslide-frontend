@@ -59,6 +59,7 @@ export const ImgModule = ({
     const openModal = () => {
         if (canEdit) {
             setShowModal(true);
+            fetchFiles();
         }
     };
 
@@ -170,7 +171,7 @@ export const ImgModule = ({
                 if (file_id && resource.id === file_id) {
                     updateSingleCallback(resource.thumbnail_url);
                 }
-                return resource.thumbnail_url;
+                return { thumbnail_url: resource.thumbnail_url, };
             });
 
             // extend the array to include images from pdf_images inside sessionStorage
@@ -183,7 +184,7 @@ export const ImgModule = ({
                 };
             });
             resourceTemps.push(...pdfImageResources);
-            setResources(pdfImageResources);
+            setResources(resourceTemps as Resource[]);
         });
     };
 

@@ -7,6 +7,7 @@ import {
     CompanyIconWhite,
 } from '@/components/socialPost/socialPostIcons'
 import dynamic from 'next/dynamic';
+import React, { CSSProperties, useEffect, useRef } from 'react';
 
 const QuillEditable = dynamic(() => import('./quillEditor'), { ssr: false });
 
@@ -30,6 +31,44 @@ export const templateDispatch = (
         keyPrefix = 'preview'
     }
     const Template = templates[slide.template as keyof typeof templates]
+
+    const generateContentElement = (
+        content: string, 
+        contentTag: SlideKeys, 
+        style: CSSProperties,
+        contentIndex?: number,
+        ) => {
+        if (!canEdit) {
+            return (
+                <div
+                    className='ql-editor non-editable-ql-editor'
+                    style={{...style, outline: 'none'}}
+                    dangerouslySetInnerHTML={{ __html: content }}
+                />
+            )
+        }
+        else {
+            if(contentIndex !== undefined){
+                return (
+                    <QuillEditable
+                    content={content}
+                    handleBlur={(newContent) => handleSlideEdit(newContent, index, contentTag, contentIndex)}
+                    style={style}
+                    />
+                )
+            }
+            else{
+                return (
+                    <QuillEditable
+                        content={content}
+                        handleBlur={(newContent) => handleSlideEdit(newContent, index, contentTag)}
+                        style={style}
+                    />
+                )
+            }
+        }
+    }
+
     if (index === 0) {
         return <Template
             autoSave={saveSlides}
@@ -38,13 +77,7 @@ export const templateDispatch = (
             canEdit={canEdit}
             imgs={slide.images}
             icon={<CompanyIconWhite />}
-            original_title={
-                <QuillEditable
-                content={slide.original_title}
-                handleBlur={(newContent) => handleSlideEdit(newContent, index, 'original_title')}
-                style={h6Style}
-                />
-            }
+            original_title={generateContentElement(slide.original_title, 'original_title', h6Style)}
             English_title={<></>}
             content={[<></>]}
             subtopic={<></>}
@@ -105,36 +138,15 @@ export const templateDispatch = (
                         }
                     }
                     return (
-                        <QuillEditable
-                        content={content}
-                        handleBlur={(newContent) => handleSlideEdit(newContent, index, 'content', contentIndex)}
-                        style={h9Style}
-                        />
+                        <div key={keyPrefix + index.toString() + '_' + contentIndex.toString()}>
+                        {generateContentElement(content, 'content', h9Style, contentIndex)}
+                        </div>
                     );
                 })
             }
-            section_title={
-                <QuillEditable
-                content={slide.section_title}
-                handleBlur={(newContent) => handleSlideEdit(newContent, index, 'section_title')}
-                style={h8Style}
-                />
-            }
-            original_title={
-
-                <QuillEditable
-                content={slide.original_title}
-                handleBlur={(newContent) => handleSlideEdit(newContent, index, 'original_title')}
-                style={h7Style}
-                />
-            }
-            brief={
-                <QuillEditable
-                content={slide.brief}
-                handleBlur={(newContent) => handleSlideEdit(newContent, index, 'brief')}
-                style={h9Style}
-                />
-            }
+            section_title={generateContentElement(slide.section_title, 'section_title', h8Style)}
+            original_title={generateContentElement(slide.original_title, 'original_title', h7Style)}
+            brief={generateContentElement(slide.brief, 'brief', h9Style)}
             illustration={['']}
             imgs={['']}
             English_title={<></>}
