@@ -35,6 +35,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
             setTier(fetched.tier)
           })
           .catch(() => { // if amplify has the record, but db does not have the record, initialize the user
+            console.error(`Failed to fetch user credits: ${userId}, initialize the user`);
             UserService.initializeUser(idToken)
           })
       } else {  // if amplify does not have the record, ask user to sign up
