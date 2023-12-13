@@ -51,9 +51,28 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
           skip: 'Skip Tour',
         }}
         styles={{
-          tooltip: {
-            backgroundColor: '#6A1B9A',
-            color: '#2196F3',
+          options: {
+            arrowColor: '#FF5733', // Customize arrow color
+            backgroundColor: '#6A1B9A', // Customize the background color of the tooltip
+            overlayColor: 'rgba(0, 0, 0, 0.5)', // Customize the overlay color
+            primaryColor: '#2196F3', // Customize the primary color (text color, button color, etc.)
+            textColor: '#ffffff', // Customize the text color
+          },
+          buttonBack: {
+            color: '#ffffff', // Customize the back button color
+            background: '#FF5733', // Customize the back button background color
+          },
+          // buttonClose: {
+          //   color: '#ffffff', // Customize the close button color
+          //   background: '#FF5733', // Customize the close button background color
+          // },
+          buttonNext: {
+            color: '#ffffff', // Customize the next button color
+            background: '#FF5733', // Customize the next button background color
+          },
+          buttonSkip: {
+            color: '#ffffff', // Customize the skip button color
+            background: '#FF5733', // Customize the skip button background color
           },
         }}
         callback={handleJoyrideCallback}
