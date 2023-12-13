@@ -41,7 +41,8 @@ class UserService {
         throw new Error(errorData.message);
       }
     } catch (error) {
-      throw error
+      console.error(error);
+      throw error;
     }
   }
 
