@@ -7,6 +7,7 @@ import {
 import { MathJax, MathJaxContext } from 'better-react-mathjax';
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import dynamic from 'next/dynamic';
+import React, { CSSProperties, useEffect, useRef } from 'react';
 
 const QuillEditable = dynamic(() => import('@/components/socialPost/quillEditor'), {ssr: false})
 
@@ -104,6 +105,43 @@ export const templateDispatch = (
     //     />
     //   )
     // } else {
+
+    const generateContentElement = (
+        content: string, 
+        contentTag: SlideKeys, 
+        style: CSSProperties,
+        contentIndex?: number,
+        ) => {
+        if (!canEdit) {
+            return (
+                <div
+                    className='ql-editor non-editable-ql-editor'
+                    style={{...style, outline: 'none'}}
+                    dangerouslySetInnerHTML={{ __html: content }}
+                />
+            )
+        }
+        else {
+            if(contentIndex !== undefined){
+                return (
+                    <QuillEditable
+                    content={content}
+                    handleBlur={(newContent) => handleSlideEdit(newContent, index, contentTag, contentIndex)}
+                    style={style}
+                    />
+                )
+            }
+            else{
+                return (
+                    <QuillEditable
+                        content={content}
+                        handleBlur={(newContent) => handleSlideEdit(newContent, index, contentTag)}
+                        style={style}
+                    />
+                )
+            }
+        }
+    }
     return (
         <Template
             autoSave={saveSlides}
@@ -151,15 +189,16 @@ export const templateDispatch = (
                 //     // style={h1Style}
                 //     dangerouslySetInnerHTML={{ __html: slide.head }}
                 // />
-                <QuillEditable
-                    content={slide.head}
-                    handleBlur={(newContent) => handleSlideEdit(newContent, index, 'head')}
-                    style={{
-                        color: '#1f2937',
-                        fontWeight: 'bold',
-                        fontSize: '27pt',
-                    }}
-                />
+                generateContentElement(slide.head, 'head', {color: '#1f2937',fontWeight: 'bold',fontSize: '27pt'})
+                // <QuillEditable
+                //     content={slide.head}
+                //     handleBlur={(newContent) => handleSlideEdit(newContent, index, 'head')}
+                //     style={{
+                //         color: '#1f2937',
+                //         fontWeight: 'bold',
+                //         fontSize: '27pt',
+                //     }}
+                // />
             }
             topic={
                 // <div
@@ -183,10 +222,7 @@ export const templateDispatch = (
                 //     // style={h2Style}
                 //     dangerouslySetInnerHTML={{ __html: slide.title }}
                 // />
-                <QuillEditable
-                    content={slide.title}
-                    handleBlur={(newContent) => handleSlideEdit(newContent, index, 'title')}
-                />
+                generateContentElement(slide.title, 'title', {})
             }
             subtopic={
                 // <div
@@ -210,10 +246,7 @@ export const templateDispatch = (
                 //     // style={h3Style}
                 //     dangerouslySetInnerHTML={{ __html: slide.subtopic }}
                 // />
-                <QuillEditable
-                    content={slide.subtopic}
-                    handleBlur={(newContent) => handleSlideEdit(newContent, index, 'subtopic')}
-            />
+                generateContentElement(slide.subtopic, 'subtopic', {})
             }
             content={slide.content.map(
                 (content: string, contentIndex: number) => {
@@ -334,10 +367,9 @@ export const templateDispatch = (
                         //         __html: wrapWithLiTags(content),
                         //     }}
                         // ></div>
-                        <QuillEditable
-                        content={content}
-                        handleBlur={(newContent) => handleSlideEdit(newContent, index, 'content', contentIndex)}
-                    />
+                        <div key={keyPrefix + index.toString() + '_' + contentIndex.toString()}>
+                        {generateContentElement(content, 'content', {}, contentIndex)}
+                        </div>
                     );
                 }
             )}
