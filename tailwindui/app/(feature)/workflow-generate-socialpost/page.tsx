@@ -25,6 +25,7 @@ import Resource from '@/models/Resource';
 import { ToastContainer, toast } from 'react-toastify';
 import Modal from '@/components/ui/Modal';
 import FileUploadModal from '@/components/forms/FileUploadModal';
+import SelectedResourcesList from '@/components/SelectedResources';
 
 const MAX_TOPIC_LENGTH = 80
 const MIN_TOPIC_LENGTH = 6
@@ -698,28 +699,7 @@ export default function Topic_SocialPost() {
               </div>
               { selectedResources.length > 0 && <hr id='add_hr' /> }
               <div className='mt-[10px]'>
-                <ul
-                  className='flex flex-col gap-4'
-                  style={{ overflowY: 'auto' }}
-                >
-                  {selectedResources.map((resource, index) => (
-                  <li key={index}>
-                    <div
-                      id='selectedfile_each'
-                      className='flex items-center bg-white rounded min-h-[50px] px-[1rem] justify-between'
-                    >
-                      <div className='flex items-center gap-2'>
-                      {resource.thumbnail_url ?
-                        <img src={resource.thumbnail_url} className='w-[40px]' /> :
-                        <FaFilePdf className='w-[40px]' />
-                      }
-                      <div className="flex-wrap">{resource.name}</div>
-                      </div>
-                      <button className='' onClick={e => removeResourceAtIndex(index)}><DeleteIcon/></button>
-                    </div>
-                  </li>
-                ))}
-                </ul>
+                <SelectedResourcesList selectedResources={selectedResources} removeResourceAtIndex={removeResourceAtIndex} />
               </div>
             </div>
           </div>

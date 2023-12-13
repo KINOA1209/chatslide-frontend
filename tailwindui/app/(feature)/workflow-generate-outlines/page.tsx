@@ -34,6 +34,7 @@ import ContentOnlyImg from '@/public/images/summary/content_only.png'
 import ContentInBrandingColorImg from '@/public/images/summary/content_in_branding_color.png'
 import { FileUploadButton } from '@/components/FileUploadButton'
 import FileUploadModal from '@/components/forms/FileUploadModal'
+import SelectedResourcesList from '@/components/SelectedResources'
 
 const MAX_TOPIC_LENGTH = 80
 const MIN_TOPIC_LENGTH = 6
@@ -764,28 +765,7 @@ export default function Topic() {
             </div>
             { selectedResources.length > 0 && <hr id='add_hr' />}
             <div className='mt-[10px]'>
-              <ul
-                className='flex flex-col gap-4'
-                style={{ overflowY: 'auto' }}
-              >
-                {selectedResources.map((resource, index) => (
-                  <li key={index}>
-                    <div
-                      id='selectedfile_each'
-                      className='flex items-center bg-white rounded min-h-[50px] px-[1rem] justify-between'
-                    >
-                      <div className='flex items-center gap-2'>
-                        {resource.thumbnail_url ?
-                          <img src={resource.thumbnail_url} className='w-[40px]' /> :
-                          <FaFilePdf className='w-[40px]' />
-                        }
-                        <div className='flex-wrap'>{resource.name}</div>
-                      </div>
-                      <button className='' onClick={e => removeResourceAtIndex(index)}><DeleteIcon /></button>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+              <SelectedResourcesList selectedResources={selectedResources} removeResourceAtIndex={removeResourceAtIndex} />
             </div>
           </div>
         </div>
