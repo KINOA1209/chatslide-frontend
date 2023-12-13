@@ -216,7 +216,7 @@ class UserService {
   static async getOpenaiApiKey(idToken: string): Promise<string> {
     try {
       const response = await fetch(`/api/user/get_open_ai_key`, {
-        method: "GET",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${idToken}`,
