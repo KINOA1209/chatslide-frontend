@@ -58,7 +58,7 @@ const SharePage: React.FC = () => {
     return (
 
         <main className="grow">
-            <Header loginRequired={false} isLanding={false} refList={[]} />
+            <Header loginRequired={false} isLanding={false}/>
             <ToastContainer />
             {loading ? (
                 <div>Loading...</div>

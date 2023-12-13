@@ -26,17 +26,3 @@
     font-style: normal
 }
 
-@font-face {
-    font-family: 'BDOGrotesk';
-    src: url('/fonts/serious_topic_fonts/BDOGrotesk-Regular.ttf')format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'BDOGrotesk';
-    src: url('/fonts/casual_topic_fonts/BDOGrotesk-Bold.ttf')format('truetype');
-    font-weight: bold;
-    font-style: normal;
-}
-
