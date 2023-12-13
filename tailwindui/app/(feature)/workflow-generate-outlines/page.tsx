@@ -773,8 +773,8 @@ export default function Topic() {
                 </SmallBlueButton>
               </div>
             </div>
-            <hr id='add_hr' />
-            <div className='min-h-[100px] mt-[10px]'>
+            { selectedResources.length > 0 && <hr id='add_hr' />}
+            <div className='mt-[10px]'>
               <ul
                 className='flex flex-col gap-4'
                 style={{ overflowY: 'auto' }}
