@@ -19,7 +19,7 @@ export default function AccountLayout({
         <SideBar />
       </div>
       <div className='flex flex-col w-full'>
-        <div className='block sm:hidden'>
+        <div className='block sm:hidden sticky top-0'>
           {/* only show Header on small screen */}
           <Header loginRequired={true} isLanding={false} isAuth={false} />
         </div>
