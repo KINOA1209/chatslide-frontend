@@ -55,7 +55,6 @@ interface FormatData {
 
 export default function Topic_SocialPost() {
   const contentRef = useRef<HTMLDivElement>(null)
-  const [showPopup, setShowPopup] = useState(false)
   const [user, setUser] = useState(null)
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -447,30 +446,12 @@ export default function Topic_SocialPost() {
     }
   }
 
-  // Function to open the popup
-  const openPopup = () => {
-    setShowPopup(true)
-  }
-
-  // Function to close the popup
-  const closePopup = () => {
-    setShowPopup(false)
-  }
-
   const openProjectPopup = () => {
     setProjectPopup(true)
   }
 
   const closeProjectPopup = () => {
     setProjectPopup(false)
-  }
-
-  const openAudiencePopup = () => {
-    setAudiencePopup(true)
-  }
-
-  const closeAudiencePopup = () => {
-    setAudiencePopup(false)
   }
 
   const openLanguagePopup = () => {
