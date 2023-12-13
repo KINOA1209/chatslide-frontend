@@ -243,6 +243,28 @@ const Referral = () => {
 
 const OpenAIKey = () => {
   const [key, setKey] = useState('sk-......');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const fetchKey = async () => {
+    const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+    UserService.getOpenaiApiKey(token).then(data => {
+      if(data)
+        setKey(data);
+    })
+  }
+
+  const updateKey = async () => {
+    setIsSubmitting(true);
+    console.log(isSubmitting)
+    const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+    await UserService.updateOpenaiApiKey(token, key)
+    setIsSubmitting(false);
+    console.log(isSubmitting)
+  }
+
+  useEffect(() => {
+    fetchKey();
+  }, [])
 
   return <div className='w-full px-4 sm:px-6'>
     <div className="mb-8 w-full">
@@ -255,10 +277,14 @@ const OpenAIKey = () => {
             type="text"
             className=" grow border-0 p-0 h-6 focus:outline-none focus:ring-0 mx-3 my-3 w-full overflow-hidden cursor-text text-[#707C8A]"
             onChange={e => setKey(e.target.value)}
+            onClick={e => (e.target as HTMLInputElement).select()}
             value={key}
           />
         </div>
-        <button className='btn text-white font-bold bg-gradient-to-r from-blue-600 to-teal-500 whitespace-nowrap rounded-xl'>Update</button>
+        <button className='btn text-white font-bold bg-blue-500 disabled:bg-gray-500 whitespace-nowrap rounded-xl'
+          onClick={updateKey}
+          disabled={isSubmitting}
+        >Update</button>
       </div>
     </div>
   </div>
