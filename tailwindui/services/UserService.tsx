@@ -215,8 +215,8 @@ class UserService {
   // get user's openai api key, send request to /api/user/get_open_ai_key endpoint
   static async getOpenaiApiKey(idToken: string): Promise<string> {
     try {
-      const response = await fetch(`/api/user/get_open_ai_key`, {
-        method: "POST",
+      const response = await fetch(`/api/user/get_openai_api_key`, {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${idToken}`,
