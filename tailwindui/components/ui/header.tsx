@@ -167,9 +167,9 @@ const Header = ({ loginRequired, isLanding = false, isAuth = false }: HeaderProp
           )}
 
           {/* Desktop navigation */}
-          {!loading && <nav className='flex w-[272px]'>
+          <nav className='flex w-[272px]'>
             {/* Desktop sign in links */}
-            {userId ? (
+            {!loading && userId ? (
               (!isAuth && <ul className='flex grow justify-end flex-wrap items-center'>
                 <DropdownButton />
               </ul>)
@@ -193,7 +193,7 @@ const Header = ({ loginRequired, isLanding = false, isAuth = false }: HeaderProp
                 </li>
               </ul>
             )}
-          </nav>}
+          </nav>
         </div>
       </div>
 
