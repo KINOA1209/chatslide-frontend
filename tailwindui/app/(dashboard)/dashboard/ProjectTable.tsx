@@ -3,6 +3,7 @@ import moment from 'moment';
 import { DeleteIcon, SpinIcon } from '@/app/(feature)/icons';
 import { ResourceItem } from '@/components/ui/ResourceItem'
 import Project from '@/models/Project';
+import { FaAd, FaMedium, FaPhone, FaPhotoVideo, FaSlideshare } from 'react-icons/fa';
 
 
 interface Props {
@@ -42,17 +43,12 @@ const ProjectTable: React.FC<Props> = ({
         {currentProjects.map((project, index) => (
           <React.Fragment key={project.id}>
 
-            {/* type */}
-            {/* <div className='p-[2rem] hidden md:flex items-center border-b-2 justify-center text-gray-600 text-[17px] font-normal font-creato-medium leading-normal tracking-wide'>
-              <TaskIcon task={project.task} />
-              <span className='ml-1'>{project.task}</span>
-            </div> */}
-
             {/* topic */}
             <div
-              className='col-span-2 p-2 flex cursor-pointer items-center text-start border-b-2 text-ellipsis overflow-hidden text-[17px] font-creato-medium leading-normal tracking-wide'
+              className='col-span-2 p-2 flex cursor-pointer items-center text-start border-b-2 text-ellipsis overflow-hidden text-[17px] font-creato-medium leading-normal tracking-wide gap-x-2'
               onClick={() => onProjectClick(project.id)}
             >
+              {project.task === 'presentation' ? <FaSlideshare className='text-gray-600' /> : <FaPhotoVideo className='text-gray-600' />}
               {project.name}
             </div>
 
