@@ -1,6 +1,7 @@
 // MyCustomJoyride.tsx
 import React, { useState, useEffect } from 'react';
 import Joyride, { CallBackProps, Step } from 'react-joyride';
+import { UserOnboardingButton } from '../button/DrlambdaButton';
 
 export interface CustomStep extends Step {
   // Add custom properties if needed
@@ -12,15 +13,17 @@ interface MyCustomJoyrideProps {
 
 const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
   const [isTourActive, setIsTourActive] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleJoyrideCallback = (data: CallBackProps) => {
     console.log(data);
 
-    if (
-      data.action === 'skip' ||
-      data.action === 'close' ||
-      data.action === 'reset'
-    ) {
+    if (data.action === 'skip') {
+      // Show the confirmation tooltip when skipping the tour
+      setShowConfirmation(true);
+      setIsTourActive(true);
+    } else if (data.action === 'close' || data.action === 'reset') {
+      // If CLOSE (End Tour) or RESET (outside click) occurs, reset the tour
       setIsTourActive(false);
     }
   };
@@ -29,14 +32,28 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
     setIsTourActive(true);
   };
 
+  const handleConfirmation = (confirmed: boolean) => {
+    // Handle the user's choice (confirmed or not)
+    if (confirmed) {
+      // User confirmed, reset the tour or perform other actions
+      setIsTourActive(false);
+      setShowConfirmation(false);
+    } else {
+      // User chose not to skip the tour, hide the confirmation tooltip
+      setIsTourActive(true);
+      setShowConfirmation(false);
+    }
+  };
+
   return (
     <>
-      <button
-        className='fixed top-4 left-[10rem] bg-purple-500 text-blue-500 px-4 py-2 rounded cursor-pointer z-50'
+      {/* <button
+        className='fixed top-4 left-[10rem] bg-purple-500 text-blue-500 px-4 py-2 rounded cursor-pointer z-40'
         onClick={startTour}
       >
         Begin a user guide tour
-      </button>
+      </button> */}
+      <UserOnboardingButton onClick={startTour}></UserOnboardingButton>
       <Joyride
         steps={steps}
         continuous
@@ -103,6 +120,29 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
         callback={handleJoyrideCallback}
         run={isTourActive}
       />
+      {showConfirmation && (
+        <>
+          <div
+            className='confirmation-overlay fixed inset-0 bg-black bg-opacity-50 z-40'
+            onClick={() => handleConfirmation(false)} // Close the confirmation on overlay click
+          ></div>
+          <div className='confirmation-tooltip bg-white p-8 rounded-lg shadow-lg fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50'>
+            <p className='text-lg mb-4'>Are you sure you want to quit?</p>
+            <button
+              onClick={() => handleConfirmation(true)}
+              className='bg-red-500 text-white px-4 py-2 rounded mr-4'
+            >
+              Quit
+            </button>
+            <button
+              onClick={() => handleConfirmation(false)}
+              className='bg-gray-300 text-gray-700 px-4 py-2 rounded'
+            >
+              Not now
+            </button>
+          </div>
+        </>
+      )}
     </>
   );
 };

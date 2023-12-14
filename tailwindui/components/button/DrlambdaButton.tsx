@@ -1,7 +1,16 @@
-'use client'
+'use client';
 
-import { LeftTurnArrowIcon, RightTurnArrowIcon, SpinIcon } from '@/app/(feature)/icons';
-import React, { MouseEventHandler, ReactNode, useState, MouseEvent } from 'react';
+import {
+  LeftTurnArrowIcon,
+  RightTurnArrowIcon,
+  SpinIcon,
+} from '@/app/(feature)/icons';
+import React, {
+  MouseEventHandler,
+  ReactNode,
+  useState,
+  MouseEvent,
+} from 'react';
 import PaywallModal from '../forms/paywallModal';
 import { useRouter } from 'next/navigation';
 import { GrayLabel } from '../ui/GrayLabel';
@@ -16,36 +25,47 @@ type DrlambdaButtonProps = {
   bgColor?: string;
 };
 
-const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSubmitting, isPaidUser, isPaidFeature = false, showArrow = true, bgColor }) => {
-
+const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
+  children,
+  onClick,
+  isSubmitting,
+  isPaidUser,
+  isPaidFeature = false,
+  showArrow = true,
+  bgColor,
+}) => {
   const [showPaywallModal, setShowPaywallModal] = useState(false);
 
   function getButtonBg() {
     if (isSubmitting) {
-      return 'bg-gray-600'
+      return 'bg-gray-600';
     }
     if (bgColor) {
       return bgColor;
     }
     if (isPaidFeature) {
-      return 'bg-gradient-to-r from-purple-500 to-purple-700'
+      return 'bg-gradient-to-r from-purple-500 to-purple-700';
     }
-    return 'bg-gradient-to-r from-blue-500 to-blue-700'
+    return 'bg-gradient-to-r from-blue-500 to-blue-700';
   }
 
   function checkPaidUser(event: MouseEvent<HTMLButtonElement>) {
     if (isPaidFeature && !isPaidUser) {
       event.preventDefault();
       setShowPaywallModal(true);
-    }
-    else {
+    } else {
       onClick(event);
     }
   }
 
   return (
     <>
-      {showPaywallModal && <PaywallModal setShowModal={setShowPaywallModal} message='Upgrade to unlock more features. 🚀' />}
+      {showPaywallModal && (
+        <PaywallModal
+          setShowModal={setShowPaywallModal}
+          message='Upgrade to unlock more features. 🚀'
+        />
+      )}
       <button
         disabled={isSubmitting}
         onClick={checkPaidUser}
@@ -53,8 +73,8 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSu
       >
         {isSubmitting && <SpinIcon />}
         <span className='text-white font-semibold tracking-tight whitespace-nowrap'>
-          {(isPaidFeature && !isPaidUser) && '🔒 '}
-          {(isPaidFeature && isPaidUser) && '🚀 '}
+          {isPaidFeature && !isPaidUser && '🔒 '}
+          {isPaidFeature && isPaidUser && '🚀 '}
           {children}
         </span>
         {/* Replace with the actual icon component or element */}
@@ -75,13 +95,19 @@ type DrlambdaLinkProps = {
   secondaryColor?: boolean;
 };
 
-export const DrlambdaLink: React.FC<DrlambdaLinkProps> = ({ link, text, style, newWindow = true, label = '', secondaryColor = false }) => {
-
+export const DrlambdaLink: React.FC<DrlambdaLinkProps> = ({
+  link,
+  text,
+  style,
+  newWindow = true,
+  label = '',
+  secondaryColor = false,
+}) => {
   if (!style) {
     if (secondaryColor) {
-      style = 'border border-2 border-blue-500 text-blue-500'
+      style = 'border border-2 border-blue-500 text-blue-500';
     } else {
-      style = 'bg-gradient-to-r from-blue-500 to-blue-700 text-white  '
+      style = 'bg-gradient-to-r from-blue-500 to-blue-700 text-white  ';
     }
   }
 
@@ -92,10 +118,9 @@ export const DrlambdaLink: React.FC<DrlambdaLinkProps> = ({ link, text, style, n
       rel={newWindow ? 'noopener noreferrer' : undefined} // Important for security reasons
       className={`min-w-[10rem] lg:w-[12rem] h-[36px] ${style} rounded-[15px] flex justify-center items-center gap-2 cursor-pointer`}
     >
-      <div className="flex flex-row justify-center items-center">
+      <div className='flex flex-row justify-center items-center'>
         <span className='font-semibold tracking-tight whitespace-nowrap'>
           {text}
-
         </span>
         {label && <GrayLabel>{label}</GrayLabel>}
       </div>
@@ -107,7 +132,9 @@ type DrLambdaBackButtonProps = {
   href: string;
 };
 
-export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({ href }) => {
+export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({
+  href,
+}) => {
   const router = useRouter();
   return (
     <div
@@ -119,33 +146,71 @@ export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({ href }) 
         Back
       </div>
     </div>
-  )
-}
+  );
+};
 
-export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSubmitting = false, isPaidUser, isPaidFeature = false }) => {
+export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
+  children,
+  onClick,
+  isSubmitting = false,
+  isPaidUser,
+  isPaidFeature = false,
+}) => {
   function getButtonStyle() {
     if (isSubmitting) {
-      return 'bg-gray-600'
+      return 'bg-gray-600';
     }
-    return 'bg-blue-600'
+    return 'bg-blue-600';
   }
   return (
-    <button onClick={onClick} className={`mx-2 ${getButtonStyle()} rounded text-white px-3 py-1 m-2`} disabled={isSubmitting}>
+    <button
+      onClick={onClick}
+      className={`mx-2 ${getButtonStyle()} rounded text-white px-3 py-1 m-2`}
+      disabled={isSubmitting}
+    >
       {children}
     </button>
-  )
-}
+  );
+};
 
-export const SmallBlueButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSubmitting = false, isPaidUser, isPaidFeature = false }) => {
+export const SmallBlueButton: React.FC<DrlambdaButtonProps> = ({
+  children,
+  onClick,
+  isSubmitting = false,
+  isPaidUser,
+  isPaidFeature = false,
+}) => {
   function getButtonStyle() {
     if (isSubmitting) {
-      return 'border-gray-600 text-gray-600'
+      return 'border-gray-600 text-gray-600';
     }
-    return 'border-blue-600 text-blue-600'
+    return 'border-blue-600 text-blue-600';
   }
   return (
-    <button onClick={onClick} className={`mx-2 border border-1 ${getButtonStyle()} rounded text-blue-600 px-3 py-1`} disabled={isSubmitting}>
+    <button
+      onClick={onClick}
+      className={`mx-2 border border-1 ${getButtonStyle()} rounded text-blue-600 px-3 py-1`}
+      disabled={isSubmitting}
+    >
       {children}
     </button>
-  )
+  );
+};
+interface UserOnboardingButtonProps {
+  onClick: () => void;
 }
+export const UserOnboardingButton: React.FC<UserOnboardingButtonProps> = ({
+  onClick,
+}) => {
+  return (
+    <button
+      onClick={onClick}
+      className={`fixed top-[24px] z-50 left-[11rem] min-w-[10rem] lg:min-w-[12rem] px-2 h-[36px] rounded-[15px] flex justify-center items-center gap-2 cursor-pointer bg-gradient-to-r from-purple-500 to-purple-700`}
+    >
+      <span className='text-white font-semibold tracking-tight whitespace-nowrap'>
+        {' '}
+        Begin a user guide tour{' '}
+      </span>
+    </button>
+  );
+};
