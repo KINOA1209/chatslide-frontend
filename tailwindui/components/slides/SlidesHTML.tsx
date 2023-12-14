@@ -512,20 +512,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
             currentSlide.images = content as string[];
             currNewFinalSlides.images = content as string[];
         } else if (className === 'content') {
-            // let newContent: string[] = [];
-            // content = content as string[];
-            // content.forEach((str) => {
-            //     newContent.push(...str.split('\n'));
-            // });
-            // newContent = newContent.filter((item) => item !== '');
-
-            // if (newContent.length === 0) {
-            //     // leave one empty line for editing
-            //     newContent.push('');
-            // }
-
-            // currentSlide.content = newContent;
-            // currNewFinalSlides.content = newContent;
             if (typeof contentIndex === 'number' && contentIndex >= 0){
                 currentSlide.content[contentIndex] = content as string
                 currNewFinalSlides.content[contentIndex] = content as string
@@ -588,17 +574,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     return updateImgUrl;
   };
 
-  function wrapWithLiTags(content: string): string {
-    if (!content.includes('<li>') || !content.includes('</li>')) {
-      return `<li style="font-size: 18pt;">${content}</li>`;
-    }
-    return content;
-  }
 
   const editableTemplateDispatch = (
     slide: Slide,
     index: number,
-    canEdit: boolean
+    canEdit: boolean,
   ) =>
     templateDispatch(
       slide,
@@ -613,7 +593,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       toggleEditMode,
       index === 0,
       slide.layout,
-      slide.layout
+      slide.layout,
+      index === currentSlideIndex
     );
 
   return (
