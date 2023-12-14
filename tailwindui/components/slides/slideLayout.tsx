@@ -319,7 +319,7 @@ export const Col_2_img_1_layout = ({
         <div className={``}>{topic}</div>
         <div className={``}>{subtopic}</div>
         {/* contents */}
-        <div className='h-full w-full flex flex-row overflow-hidden gap-[2.5rem] overflow-y-scroll'>
+        <div className='h-full w-full flex flex-row gap-[2.5rem]'>
           <div className='flex flex-col gap-[1rem]'>
             <div className='opacity-50'></div>
             <div className='w-full h-full'>
