@@ -229,12 +229,11 @@ const OpenAIKey = () => {
     await UserService.updateOpenaiApiKey(token, key)
     setIsSubmitting(false);
     console.log(isSubmitting)
-
-
-    useEffect(() => {
-      fetchKey();
-    }, [])
   }
+
+  useEffect(() => {
+    fetchKey();
+  }, [])
 
   return (
     <div className='w-full px-4 sm:px-6'>
