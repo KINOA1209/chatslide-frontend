@@ -13,11 +13,14 @@ import ClickableLink from '@/components/ui/ClickableLink';
 import ReferralLink from '@/components/ReferralLink';
 import Modal from '@/components/ui/Modal';
 import { FeedbackForm } from '@/components/ui/feedback';
+import { BigBlueButton } from '@/components/button/DrlambdaButton';
+import { InputBox } from '@/components/ui/InputBox';
+import { FaInbox, FaKey, FaLock, FaMailBulk, FaUser, FaVoicemail } from 'react-icons/fa';
 
 const Profile = () => {
   const [username, setUsername] = useState<string>('');
   const [editUsername, setEditUsername] = useState('');
-  const [email, setEmail] = useState('abcdefg@gmail.com');
+  const [email, setEmail] = useState('drlambda@gmail.com');
   const [changed, setChanged] = useState(false);
 
   function userFirstName(): string {
@@ -137,79 +140,45 @@ const Profile = () => {
     <div className='w-fit mx-auto'>
       <div className="w-full">
         <label
-          className="block text-[14px] mb-1 text-[#919DAA]"
+          className="block text-[14px] mb-1 text-gray-700"
           htmlFor="email"
         >
           Email
         </label>
-        <div className="h-fit w-full form-input flex flex-row flex-nowrap border border-gray-500 p-0 cursor-text rounded-xl">
-          <svg className='my-1 ml-3 w-9 h-6 mt-3 pr-3 border-r-2 border-[#CAD0D3]' viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M1.23077 0.5H14.7692C15.2084 0.5 15.5 0.822065 15.5 1.14286V10.8571C15.5 11.1779 15.2084 11.5 14.7692 11.5H1.23077C0.791636 11.5 0.5 11.1779 0.5 10.8571V1.14286C0.5 0.822066 0.791636 0.5 1.23077 0.5Z"
-              stroke="#707C8A" strokeLinecap="round" strokeLinejoin="round" />
-            <mask id="path-2-inside-1_300_1046" fill="white">
-              <path
-                d="M0.5 0.5L7.21231 6.15385C7.43346 6.33805 7.71218 6.43892 8 6.43892C8.28782 6.43892 8.56654 6.33805 8.78769 6.15385L15.5 0.5" />
-            </mask>
-            <path
-              d="M1.14423 -0.264834C0.721821 -0.620631 0.0909631 -0.566634 -0.264834 -0.144228C-0.620631 0.278179 -0.566634 0.909037 -0.144228 1.26483L1.14423 -0.264834ZM7.21231 6.15385L6.56807 6.91869L6.57231 6.92222L7.21231 6.15385ZM8 6.43892V5.43892V6.43892ZM8.78769 6.15385L9.4277 6.92223L9.43192 6.91868L8.78769 6.15385ZM16.1442 1.26483C16.5666 0.909037 16.6206 0.278179 16.2648 -0.144228C15.909 -0.566634 15.2782 -0.620631 14.8558 -0.264834L16.1442 1.26483ZM-0.144228 1.26483L6.56808 6.91868L7.85654 5.38901L1.14423 -0.264834L-0.144228 1.26483ZM6.57231 6.92222C6.97315 7.25609 7.47832 7.43892 8 7.43892V5.43892C7.94603 5.43892 7.89378 5.42001 7.85231 5.38547L6.57231 6.92222ZM8 7.43892C8.52168 7.43892 9.02685 7.25609 9.42769 6.92222L8.14769 5.38547C8.10622 5.42001 8.05397 5.43892 8 5.43892V7.43892ZM9.43192 6.91868L16.1442 1.26483L14.8558 -0.264834L8.14346 5.38901L9.43192 6.91868Z"
-              fill="#707C8A" mask="url(#path-2-inside-1_300_1046)" />
-          </svg>
+
+        <InputBox >
+          <FaInbox className='text-gray-600' />
           <input
             id="email"
             type="text"
-            className=" grow border-0 p-0 h-6 focus:outline-none focus:ring-0 mx-3 my-3 w-full overflow-hidden cursor-text text-[#A6B1BB]"
+            className="w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100"
             // disabled
             value={email}
             readOnly
           />
-          <svg className='my-1 mr-3 w-7 h-7 mt-[10px]' viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="20" height="20" fill="white" />
-            <path
-              d="M5.07647 8.65381H14.9226C15.3262 8.65381 15.6534 8.98099 15.6534 9.38458V16.7692C15.6534 17.1728 15.3262 17.5 14.9226 17.5H5.07647C4.67288 17.5 4.3457 17.1728 4.3457 16.7692V9.38458C4.3457 8.98099 4.67288 8.65381 5.07647 8.65381Z"
-              fill="#A6B1BB" stroke="#A6B1BB" strokeLinecap="round" strokeLinejoin="round" />
-            <mask id="path-2-inside-1_298_4618" fill="white">
-              <path
-                d="M14.3087 8.15385V6.30769C14.3087 5.16522 13.8549 4.06954 13.047 3.26169C12.2392 2.45384 11.1435 2 10.0011 2C8.85858 2 7.7629 2.45384 6.95505 3.26169C6.1472 4.06954 5.69336 5.16522 5.69336 6.30769V8.15385" />
-            </mask>
-            <path
-              d="M13.3087 8.15385C13.3087 8.70613 13.7565 9.15385 14.3087 9.15385C14.861 9.15385 15.3087 8.70613 15.3087 8.15385H13.3087ZM14.3087 6.30769H13.3087H14.3087ZM10.0011 2V1V2ZM5.69336 6.30769H4.69336H5.69336ZM4.69336 8.15385C4.69336 8.70613 5.14107 9.15385 5.69336 9.15385C6.24564 9.15385 6.69336 8.70613 6.69336 8.15385H4.69336ZM15.3087 8.15385V6.30769H13.3087V8.15385H15.3087ZM15.3087 6.30769C15.3087 4.9 14.7495 3.54997 13.7542 2.55459L12.3399 3.9688C12.9603 4.58911 13.3087 5.43044 13.3087 6.30769H15.3087ZM13.7542 2.55459C12.7588 1.5592 11.4087 1 10.0011 1V3C10.8783 3 11.7196 3.34849 12.3399 3.9688L13.7542 2.55459ZM10.0011 1C8.59336 1 7.24333 1.5592 6.24795 2.55459L7.66216 3.9688C8.28247 3.34849 9.1238 3 10.0011 3V1ZM6.24795 2.55459C5.25256 3.54997 4.69336 4.9 4.69336 6.30769H6.69336C6.69336 5.43044 7.04185 4.58911 7.66216 3.9688L6.24795 2.55459ZM4.69336 6.30769V8.15385H6.69336V6.30769H4.69336Z"
-              fill="#A6B1BB" mask="url(#path-2-inside-1_298_4618)" />
-            <path
-              d="M10 14C10.5523 14 11 13.5523 11 13C11 12.4477 10.5523 12 10 12C9.44772 12 9 12.4477 9 13C9 13.5523 9.44772 14 10 14Z"
-              fill="#F4F4F4" stroke="#F4F4F4" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
+          <FaLock className='text-gray-600' />
+        </InputBox>
       </div>
       <form onSubmit={handleSubmitUsername}>
         <div className="w-full mt-4">
           <label
-            className="block text-[14px] mb-1 text-[#363E4A]"
+            className="block text-[14px] mb-1 text-gray-700"
             htmlFor="username"
           >
             Username
           </label>
-          <div className='flex flex-row gap-4'>
-            {/* {editUsername ?<> */}
-            <div className="h-fit w-full form-input flex flex-row flex-nowrap border border-gray-500 p-0 cursor-text rounded-xl">
-              <svg className='my-1 ml-[10px] w-10 h-6 mt-3 pr-[10px] border-r-2 border-[#CAD0D3]' viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="20.5926" height="20" fill="white" />
-                <path
-                  d="M3.14552 12.8653C2.7579 11.9564 2.55859 10.9829 2.55859 10C2.55859 9.01715 2.7579 8.04355 3.14552 7.13468C3.53316 6.22577 4.10173 5.39895 4.81952 4.70182C5.53734 4.00466 6.3903 3.4509 7.33006 3.07283C8.26985 2.69476 9.2776 2.5 10.2956 2.5C11.3137 2.5 12.3214 2.69476 13.2612 3.07283C14.201 3.4509 15.0539 4.00466 15.7717 4.70182C16.4895 5.39895 17.0581 6.22577 17.4457 7.13468C17.8334 8.04355 18.0327 9.01715 18.0327 10C18.0327 10.9829 17.8334 11.9564 17.4457 12.8653C17.0581 13.7742 16.4895 14.601 15.7717 15.2982C15.0539 15.9953 14.201 16.5491 13.2612 16.9272C12.3214 17.3052 11.3137 17.5 10.2956 17.5C9.27759 17.5 8.26985 17.3052 7.33006 16.9272C6.3903 16.5491 5.53734 15.9953 4.81952 15.2982C4.10173 14.601 3.53316 13.7742 3.14552 12.8653Z"
-                  stroke="#707C8A" strokeLinecap="round" strokeLinejoin="round" />
-                <path
-                  d="M5.14844 15.4032C5.36689 14.7083 5.81388 14.0993 6.42312 13.6664C7.03235 13.2335 7.77136 12.9998 8.53052 13H12.0609C12.821 12.9997 13.5609 13.234 14.1706 13.6679C14.7803 14.1018 15.2271 14.7122 15.4447 15.4083M7.64793 8.53058C7.64793 9.20173 7.92689 9.84539 8.42345 10.32C8.92 10.7945 9.59347 11.0612 10.2957 11.0612C10.9979 11.0612 11.6714 10.7945 12.168 10.32C12.6645 9.84539 12.9435 9.20173 12.9435 8.53058C12.9435 7.85943 12.6645 7.21576 12.168 6.74119C11.6714 6.26661 10.9979 6 10.2957 6C9.59347 6 8.92 6.26661 8.42345 6.74119C7.92689 7.21576 7.64793 7.85943 7.64793 8.53058Z"
-                  stroke="#707C8A" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+          <div className='flex w-full flex-row gap-4 justify-center mt-2'>
+            <InputBox>
+            <FaUser className='text-gray-600' />
               <input
                 id="username"
                 type="text"
-                className=" grow border-0 p-0 h-6 focus:outline-none focus:ring-0 mx-3 my-3 w-full overflow-hidden cursor-text text-[#707C8A]"
+                className="w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100"
                 onChange={e => handleUsernameChange(e)}
                 value={editUsername}
               />
-            </div>
-            <button className='btn text-white font-bold bg-gradient-to-r from-blue-600 to-teal-500 whitespace-nowrap rounded-xl'>Update</button>
+            </InputBox>
+            <button className='btn text-white bg-blue-600 whitespace-nowrap rounded-lg'>Update</button>
           </div>
         </div>
 
@@ -218,6 +187,7 @@ const Profile = () => {
   </div>
 }
 
+// no longer used 
 const PasswordModule = () => {
   const router = useRouter();
 
@@ -235,9 +205,62 @@ const Referral = () => {
     <div className="mb-8 w-full">
       <div className="w-fit text-[#363E4A] text-[17px] font-bold">Referral</div>
       <div className="w-fit text-[#212121] text-[80px]">50<span className='text-[24px]'>credit/invite</span></div>
+      <ReferralLink />
     </div>
-    <ReferralLink />
   </div>
+}
+
+const OpenAIKey = () => {
+  const [key, setKey] = useState('sk-......');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const fetchKey = async () => {
+    const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+    UserService.getOpenaiApiKey(token).then(data => {
+      if (data)
+        setKey(data);
+    })
+  }
+
+  const updateKey = async () => {
+    setIsSubmitting(true);
+    console.log(isSubmitting)
+    const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
+    await UserService.updateOpenaiApiKey(token, key)
+    setIsSubmitting(false);
+    console.log(isSubmitting)
+
+
+    useEffect(() => {
+      fetchKey();
+    }, [])
+  }
+
+  return (
+    <div className='w-full px-4 sm:px-6'>
+      <div className="mb-8 w-full">
+        <div className="w-fit text-[#363E4A] text-[17px] font-bold">Your OpenAI Key</div>
+        <div>Paste your own OpenAI key here so that generation does not cost credits:</div>
+        <div className='flex w-full flex-row gap-4 justify-center mt-2'>
+          <InputBox onClick={e => (e.target as HTMLInputElement).select()}>
+            <FaKey className='text-gray-600' />
+            <input
+              id="key"
+              type="text"
+              className="w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100"
+              onChange={e => setKey(e.target.value)}
+              onClick={e => (e.target as HTMLInputElement).select()}
+              value={key}
+            />
+          </InputBox>
+          <button className='btn text-white font-bold bg-blue-600 disabled:bg-gray-500 whitespace-nowrap rounded-xl'
+            onClick={updateKey}
+            disabled={isSubmitting}
+          >Update</button>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 const Subscription = () => {
@@ -269,16 +292,17 @@ const Subscription = () => {
 
     <div className='w-full pb-4'>
       {showModal &&
-        <FeedbackForm onClose={() => setShowModal(false)} message="😭 We are sorry to see you go!" successDiv={cancelButton} textRequired={true}/>
+        <FeedbackForm onClose={() => setShowModal(false)} message="😭 We are sorry to see you go!" successDiv={cancelButton} textRequired={true} />
       }
 
       <div className="mb-8 w-full max-w-none 2xl:max-w-[80%] mx-auto px-4 sm:px-6">
         <div className="w-fit text-[#363E4A] text-[17px] font-bold">Subscription</div>
         <div className="w-fit text-[#212121] text-[80px]">Plans</div>
       </div>
+
       <Pricing />
       {portalURL &&
-        <button onClick={()=>{setShowModal(true)}} className='w-full py-4 sm:px-6 flex flex-col justify-center items-center max-w-none 2xl:max-w-[80%] mx-auto'>
+        <button onClick={() => { setShowModal(true) }} className='w-full py-4 sm:px-6 flex flex-col justify-center items-center max-w-none 2xl:max-w-[80%] mx-auto'>
           Manage Subscription
         </button>
       }
@@ -452,10 +476,11 @@ export default function Account() {
                 </div> */}
       {/* </div> */}
       <div className='w-full mt-[20px] md:mt-0 max-w-none 2xl:max-w-[80%]' ref={ref1}><Profile /></div>
-      <div className='w-full max-w-none 2xl:max-w-[80%]'><PasswordModule /></div>
+      {/* <div className='w-full max-w-none 2xl:max-w-[80%]'><PasswordModule /></div> */}
       {bar}
       <div className='w-full max-w-none 2xl:max-w-[80%]' ref={ref4}><CreditHistory /></div>
       <div className='w-full max-w-none 2xl:max-w-[80%]' ref={ref2}><Referral /></div>
+      <div className='w-full max-w-none 2xl:max-w-[80%]'><OpenAIKey /></div>
       {bar}
       <div className='w-full' ref={ref3}><Subscription /></div>
 
