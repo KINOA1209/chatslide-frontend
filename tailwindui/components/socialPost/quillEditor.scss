@@ -12,7 +12,7 @@
 }
 
 .ql-editor p {
-  overflow: scroll;
+  overflow: auto !important;
 }
 
 .ql-bubble .ql-picker .ql-picker-options {
