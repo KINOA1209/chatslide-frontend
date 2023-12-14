@@ -5,7 +5,7 @@ import { MathJax, MathJaxContext } from 'better-react-mathjax';
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import dynamic from 'next/dynamic';
 import React, { CSSProperties, useEffect, useRef } from 'react';
-
+import { loadCustomizableElements } from './SlidesHTML';
 const QuillEditable = dynamic(
   () => import('@/components/socialPost/quillEditor'),
   { ssr: false }
@@ -41,9 +41,14 @@ export const templateDispatch = (
   } else if (!canEdit) {
     keyPrefix = 'preview';
   }
+  useEffect(() => {
+    console.log('chosen template string:', slide.template);
+    console.log('template config:', customizableElements);
+  }, []);
   const Template =
     availableTemplates[slide.template as keyof typeof availableTemplates];
 
+  const customizableElements = loadCustomizableElements(slide.template);
   const generateContentElement = (
     content: string,
     contentTag: SlideKeys,
@@ -97,13 +102,21 @@ export const templateDispatch = (
           dangerouslySetInnerHTML={{ __html: slide.userName }}
         />
       }
-      title={generateContentElement(slide.head, 'head', {
-        // color: '#1f2937',
-        // fontWeight: 'bold',
-        // fontSize: '100pt',
-      })}
-      topic={generateContentElement(slide.title, 'title', {})}
-      subtopic={generateContentElement(slide.subtopic, 'subtopic', {})}
+      title={generateContentElement(
+        slide.head,
+        'head',
+        customizableElements.headFontCSS
+      )}
+      topic={generateContentElement(
+        slide.title,
+        'title',
+        customizableElements.titleFontCSS
+      )}
+      subtopic={generateContentElement(
+        slide.subtopic,
+        'subtopic',
+        customizableElements.subtopicFontCSS
+      )}
       content={slide.content.map((content: string, contentIndex: number) => {
         // math mode
         if (content.includes('$$') || content.includes('\\(')) {
@@ -167,7 +180,12 @@ export const templateDispatch = (
           <div
             key={keyPrefix + index.toString() + '_' + contentIndex.toString()}
           >
-            {generateContentElement(content, 'content', {}, contentIndex)}
+            {generateContentElement(
+              content,
+              'content',
+              customizableElements.contentFontCSS,
+              contentIndex
+            )}
           </div>
         );
       })}
