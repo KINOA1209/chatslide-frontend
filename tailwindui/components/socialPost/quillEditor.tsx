@@ -35,7 +35,7 @@ let Size = Quill.import('attributors/style/size');
 Size.whitelist = fontSizes;
 Quill.register(Size, true);
 
-const QuillEditable: React.FC<QuillEditableProps> = React.memo(({ 
+const QuillEditable: React.FC<QuillEditableProps> = ({ 
     content, 
     handleBlur,
     style
@@ -86,6 +86,6 @@ const QuillEditable: React.FC<QuillEditableProps> = React.memo(({
     }, [style]);
 
     return <div ref={editorRef}></div>;
-});
+};
 
-export default QuillEditable;
+export default React.memo(QuillEditable);
