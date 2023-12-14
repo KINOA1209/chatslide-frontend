@@ -1,4 +1,5 @@
 import React from "react";
+import { FaTimes } from "react-icons/fa";
 
 interface ModalProps {
   children: React.ReactNode;
@@ -47,13 +48,14 @@ const Modal: React.FC<ModalProps> = ({ children, showModal, setShowModal }) => {
         </span>
 
 
-        <div ref={modalContentRef} className="z-50 relative bg-white rounded-lg shadow w-128 max-h-[90vh] overflow-y-auto">
+        <div ref={modalContentRef} className="z-50 relative bg-white rounded-lg shadow w-128 max-h-[90vh] overflow-y-auto p-2 sm:p-4"
+          onClick={(e) => e.stopPropagation()}>
           {/* Close button */}
           <button
-            className="absolute top-0 right-4 text-2xl text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white focus:outline-none"
+            className="absolute top-2 right-2 text-2xl  dark:text-gray-300 dark:hover:text-white focus:outline-none"
             onClick={handleCloseModal}
           >
-            &times;
+              <FaTimes className="text-gray-600 hover:text-gray-800" />
           </button>
 
           {/* Modal body */}
