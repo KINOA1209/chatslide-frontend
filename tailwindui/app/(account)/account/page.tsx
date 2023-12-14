@@ -21,7 +21,7 @@ const Profile = () => {
   const [username, setUsername] = useState<string>('');
   const [editUsername, setEditUsername] = useState('');
   const [email, setEmail] = useState('drlambda@gmail.com');
-  const [changed, setChanged] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   function userFirstName(): string {
     return username.split(' ')[0];
@@ -31,7 +31,6 @@ const Profile = () => {
     const user = await AuthService.getCurrentUser();
     setEmail(user.attributes.email);
     setUsername(user.attributes.name);
-    setChanged(false);
   };
 
   useEffect(() => {
@@ -47,25 +46,12 @@ const Profile = () => {
   }, [username])
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setChanged(true);
     setEditUsername(e.target.value);
   };
 
   const handleSubmitUsername = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!changed) {
-      toast.error('This username is the same as your old username.', {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      return;
-    }
+    setIsSubmitting(true);
 
     // Set the character limit for editUsername
     const maxCharacterLimit = 50;
@@ -127,7 +113,7 @@ const Profile = () => {
       });
     });
 
-    setChanged(false);
+    setIsSubmitting(false);
     fetchUser();
   };
 
@@ -178,7 +164,9 @@ const Profile = () => {
                 value={editUsername}
               />
             </InputBox>
-            <button className='btn text-white bg-blue-600 whitespace-nowrap rounded-lg'>Update</button>
+            <BigBlueButton onClick={()=> {} } isSubmitting={isSubmitting}>
+              Update
+            </BigBlueButton>
           </div>
         </div>
 
@@ -253,10 +241,10 @@ const OpenAIKey = () => {
                 value={key}
               />
             </InputBox>
-            <button className='btn text-white font-bold bg-blue-600 disabled:bg-gray-500 whitespace-nowrap rounded-xl'
-              onClick={updateKey}
-              disabled={isSubmitting}
-            >Update</button>
+
+            <BigBlueButton onClick={updateKey} isSubmitting={isSubmitting}>
+              Update
+            </BigBlueButton>
           </div>
         </div>
       </div>
@@ -479,9 +467,9 @@ export default function Account() {
       <div className='w-full mt-[20px] md:mt-0 max-w-[100%] lg:max-w-[80%]' ref={ref1}><Profile /></div>
       {/* <div className='w-full max-w-none 2xl:max-w-[80%]'><PasswordModule /></div> */}
       {bar}
-      <div className='w-full max-w-[80%] lg:max-w-[80%]' ref={ref4}><CreditHistory /></div>
-      <div className='w-full max-w-[80%] lg:max-w-[80%]' ref={ref2}><Referral /></div>
-      <div className='w-full max-w-[80%] lg:max-w-[80%]'><OpenAIKey /></div>
+      <div className='w-full max-w-[100%] lg:max-w-[80%]' ref={ref4}><CreditHistory /></div>
+      <div className='w-full max-w-[100%] lg:max-w-[80%]' ref={ref2}><Referral /></div>
+      <div className='w-full max-w-[100%] lg:max-w-[80%]'><OpenAIKey /></div>
       {bar}
       <div className='w-full' ref={ref3}><Subscription /></div>
 
