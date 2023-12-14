@@ -169,7 +169,7 @@ const Profile = () => {
           </label>
           <div className='flex w-full flex-row gap-4 justify-center mt-2'>
             <InputBox>
-            <FaUser className='text-gray-600' />
+              <FaUser className='text-gray-600' />
               <input
                 id="username"
                 type="text"
@@ -240,22 +240,24 @@ const OpenAIKey = () => {
       <div className="mb-8 w-full">
         <div className="w-fit text-[#363E4A] text-[17px] font-bold">Your OpenAI Key</div>
         <div>Paste your own OpenAI key here so that generation does not cost credits:</div>
-        <div className='flex w-full flex-row gap-4 justify-center mt-2'>
-          <InputBox onClick={e => (e.target as HTMLInputElement).select()}>
-            <FaKey className='text-gray-600' />
-            <input
-              id="key"
-              type="text"
-              className="w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100"
-              onChange={e => setKey(e.target.value)}
-              onClick={e => (e.target as HTMLInputElement).select()}
-              value={key}
-            />
-          </InputBox>
-          <button className='btn text-white font-bold bg-blue-600 disabled:bg-gray-500 whitespace-nowrap rounded-xl'
-            onClick={updateKey}
-            disabled={isSubmitting}
-          >Update</button>
+        <div className='w-full justify-center flex flex-row'>
+          <div className='flex grow max-w-[60rem] flex-row gap-4 justify-center mt-2'>
+            <InputBox onClick={e => (e.target as HTMLInputElement).select()}>
+              <FaKey className='text-gray-600' />
+              <input
+                id="key"
+                type="text"
+                className="w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100"
+                onChange={e => setKey(e.target.value)}
+                onClick={e => (e.target as HTMLInputElement).select()}
+                value={key}
+              />
+            </InputBox>
+            <button className='btn text-white font-bold bg-blue-600 disabled:bg-gray-500 whitespace-nowrap rounded-xl'
+              onClick={updateKey}
+              disabled={isSubmitting}
+            >Update</button>
+          </div>
         </div>
       </div>
     </div>
@@ -462,7 +464,7 @@ export default function Account() {
   })
 
   return (
-    <div className='flex flex-col items-center gap-[70px] mx-auto'>
+    <div className='flex flex-col items-center gap-[70px] mx-auto w-full'>
       <ToastContainer />
       {/* <div className='fixed w-full top-0 h-[130px] md:h-[160px] bg-[#E7E9EB] flex flex-col z-20 max-w-none 2xl:max-w-[80%]'> */}
       {/* <div className='grow flex flex-row mb-2 items-end'>
@@ -474,12 +476,12 @@ export default function Account() {
                     <div className='border-b-2 w-fit border-black h-0 overflow-hidden text-[16px] mx-1 md:mx-5 transition-all duration-300' ref={tabUnderlineRef}></div>
                 </div> */}
       {/* </div> */}
-      <div className='w-full mt-[20px] md:mt-0 max-w-none 2xl:max-w-[80%]' ref={ref1}><Profile /></div>
+      <div className='w-full mt-[20px] md:mt-0 max-w-[100%] lg:max-w-[80%]' ref={ref1}><Profile /></div>
       {/* <div className='w-full max-w-none 2xl:max-w-[80%]'><PasswordModule /></div> */}
       {bar}
-      <div className='w-full max-w-none 2xl:max-w-[80%]' ref={ref4}><CreditHistory /></div>
-      <div className='w-full max-w-none 2xl:max-w-[80%]' ref={ref2}><Referral /></div>
-      <div className='w-full max-w-none 2xl:max-w-[80%]'><OpenAIKey /></div>
+      <div className='w-full max-w-[80%] lg:max-w-[80%]' ref={ref4}><CreditHistory /></div>
+      <div className='w-full max-w-[80%] lg:max-w-[80%]' ref={ref2}><Referral /></div>
+      <div className='w-full max-w-[80%] lg:max-w-[80%]'><OpenAIKey /></div>
       {bar}
       <div className='w-full' ref={ref3}><Subscription /></div>
 
