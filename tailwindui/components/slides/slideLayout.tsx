@@ -61,11 +61,7 @@ export const Cover_img_0_layout = ({
           className={`pl-[2rem] basis-0 opacity-50 border
                 border-black border-opacity-40 mt-4`}
         ></div>
-        <div
-          className={`${customizableElements.headFont} ${customizableElements.headFontColor} pl-[2rem]`}
-        >
-          {title}
-        </div>
+        <div className={` pl-[2rem]`}>{title}</div>
       </div>
     </>
   );
@@ -105,12 +101,7 @@ export const Cover_img_1_layout = ({
           className={`pl-[2rem] basis-0 opacity-50 border
                 border-black border-opacity-40 mt-4`}
         ></div>
-        <div
-          className={`${customizableElements.headFont} ${customizableElements.headFontColor} pl-[2rem]`}
-          style={{ fontSize: '100pt' }}
-        >
-          {title}
-        </div>
+        <div className={` pl-[2rem]`}>{title}</div>
       </div>
       <div className={`w-1/2 h-full rounded-md overflow-hidden`}>
         <ImgModule
@@ -141,17 +132,8 @@ export const Col_1_img_0_layout = ({
 }: MainSlideProps) => {
   return (
     <>
-      <div
-        className={`${customizableElements.titleFont} ${customizableElements.titleFontColor} pb-[2rem]`}
-        style={{}}
-      >
-        {topic}
-      </div>
-      <div
-        className={`${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
-      >
-        {subtopic}
-      </div>
+      <div className={``}>{topic}</div>
+      <div className={``}>{subtopic}</div>
       <div className='h-full w-full flex flex-row overflow-hidden gap-[2.5rem] mt-[1rem] overflow-y-scroll'>
         <div className='flex flex-col gap-[1rem]'>
           <div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
@@ -161,7 +143,7 @@ export const Col_1_img_0_layout = ({
                 {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
                 <ul
                   key={index}
-                  className={`flex flex-row w-full h-full grow pl-4 list-disc ${customizableElements.contentFont} ${customizableElements.contentFontColor}`}
+                  className={`flex flex-row w-full h-full grow pl-4 list-disc `}
                 >
                   <li>{item}</li>
                 </ul>
@@ -190,16 +172,8 @@ export const Col_2_img_0_layout = ({
 }: MainSlideProps) => {
   return (
     <>
-      <div
-        className={`${customizableElements.titleFont} ${customizableElements.titleFontColor} pb-[2rem]`}
-      >
-        {topic}
-      </div>
-      <div
-        className={`${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
-      >
-        {subtopic}
-      </div>
+      <div className={``}>{topic}</div>
+      <div className={``}>{subtopic}</div>
       <div className='h-full w-full grid grid-cols-2 gap-[2.5rem] overflow-y-scroll'>
         {content.map((item, index) => (
           <div className='flex flex-col gap-[1rem]' key={index}>
@@ -209,7 +183,7 @@ export const Col_2_img_0_layout = ({
             <div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
             <ul
               key={index}
-              className={`flex flex-row w-full h-full grow pl-4 list-disc ${customizableElements.contentFont} ${customizableElements.contentFontColor}`}
+              className={`flex flex-row w-full h-full grow pl-4 list-disc `}
             >
               <li>{item}</li>
             </ul>
@@ -236,16 +210,8 @@ export const Col_3_img_0_layout = ({
 }: MainSlideProps) => {
   return (
     <>
-      <div
-        className={`${customizableElements.titleFont} ${customizableElements.titleFontColor} pb-[2rem]`}
-      >
-        {topic}
-      </div>
-      <div
-        className={`${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
-      >
-        {subtopic}
-      </div>
+      <div className={``}>{topic}</div>
+      <div className={``}>{subtopic}</div>
       <div className='h-full w-full grid grid-cols-3 gap-[2.5rem] overflow-y-scroll'>
         {content.map((item, index) => (
           <div className='flex flex-col gap-[1rem]' key={index}>
@@ -255,7 +221,7 @@ export const Col_3_img_0_layout = ({
             <div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
             <ul
               key={index}
-              className={`flex flex-row w-full h-full grow pl-4 list-disc ${customizableElements.contentFont} ${customizableElements.contentFontColor}`}
+              className={`flex flex-row w-full h-full grow pl-4 list-disc`}
             >
               <li>{item}</li>
             </ul>
@@ -291,19 +257,11 @@ export const Col_1_img_1_layout = ({
       <div className='h-1/3 w-full grid grid-cols-2 gap-[2.5rem]'>
         {/* col1 for topic and subtopic */}
         <div className='flex flex-col gap-[0.5rem]'>
-          <div
-            className={`${customizableElements.titleFont} ${customizableElements.titleFontColor} pb-[2rem]`}
-          >
-            {topic}
-          </div>
-          <div
-            className={`${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
-          >
-            {subtopic}
-          </div>
+          <div className={``}>{topic}</div>
+          <div className={``}>{subtopic}</div>
         </div>
         {/* col 2 for contents */}
-        <div className='h-full w-full flex flex-row overflow-hidden gap-[2.5rem] overflow-y-scroll'>
+        <div className='h-full w-full flex flex-row gap-[2.5rem]'>
           <div className='flex flex-col gap-[1rem]'>
             <div className='opacity-50'></div>
             <div className='w-full h-full'>
@@ -312,7 +270,7 @@ export const Col_1_img_1_layout = ({
                   {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
                   <ul
                     key={index}
-                    className={`flex flex-row w-full h-full grow pl-4 list-disc ${customizableElements.contentFont} ${customizableElements.contentFontColor}`}
+                    className={`flex flex-row w-full h-full grow pl-4 list-disc `}
                   >
                     <li>{item}</li>
                   </ul>
@@ -358,16 +316,8 @@ export const Col_2_img_1_layout = ({
   return (
     <div className='w-full h-full flex flex-row gap-[2rem] justify-start items-start'>
       <div className={`w-1/2 flex flex-col items-start h-full gap-[0.5rem]`}>
-        <div
-          className={`${customizableElements.titleFont} ${customizableElements.titleFontColor} pb-[2rem]`}
-        >
-          {topic}
-        </div>
-        <div
-          className={`${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
-        >
-          {subtopic}
-        </div>
+        <div className={``}>{topic}</div>
+        <div className={``}>{subtopic}</div>
         {/* contents */}
         <div className='h-full w-full flex flex-row overflow-hidden gap-[2.5rem] overflow-y-scroll'>
           <div className='flex flex-col gap-[1rem]'>
@@ -378,7 +328,7 @@ export const Col_2_img_1_layout = ({
                   {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
                   <ul
                     key={index}
-                    className={`flex flex-row w-full h-full grow pl-4 list-disc ${customizableElements.contentFont} ${customizableElements.contentFontColor}`}
+                    className={`flex flex-row w-full h-full grow pl-4 list-disc`}
                   >
                     <li>{item}</li>
                   </ul>
@@ -423,16 +373,8 @@ export const Col_2_img_2_layout = ({
   return (
     <>
       <div className='flex flex-col justify-center items-center gap-[0.5rem]'>
-        <div
-          className={`${customizableElements.titleFont} ${customizableElements.titleFontColor} pb-[2rem]`}
-        >
-          {topic}
-        </div>
-        <div
-          className={`${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
-        >
-          {subtopic}
-        </div>
+        <div className={``}>{topic}</div>
+        <div className={``}>{subtopic}</div>
         {/* two columns of images */}
         <div className='mt-[2rem] w-full grid grid-cols-2 gap-[2.5rem] '>
           <div className='h-[11.25rem] grow rounded-md overflow-hidden'>
@@ -459,7 +401,7 @@ export const Col_2_img_2_layout = ({
               {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
               <ul
                 key={index}
-                className={`flex flex-row w-full h-full grow pl-4 list-disc ${customizableElements.contentFont} ${customizableElements.contentFontColor}`}
+                className={`flex flex-row w-full h-full grow pl-4 list-disc`}
               >
                 <li>{item}</li>
               </ul>
@@ -492,17 +434,9 @@ export const Col_3_img_3_layout = ({
   );
   return (
     <>
-      <div className='flex flex-col justify-center items-center gap-[0.5rem]'>
-        <div
-          className={`${customizableElements.titleFont} ${customizableElements.titleFontColor} pb-[2rem]`}
-        >
-          {topic}
-        </div>
-        <div
-          className={`${customizableElements.subtopicFont} ${customizableElements.subtopicFontColor}`}
-        >
-          {subtopic}
-        </div>
+      <div className='flex flex-col justify-center items-center'>
+        <div className={``}>{topic}</div>
+        <div className={``}>{subtopic}</div>
         {/* three columns of images */}
         <div className='mt-[2rem] w-full grid grid-cols-3 gap-[2.5rem] '>
           <div className='h-[11.25rem] grow rounded-md overflow-hidden'>
@@ -537,7 +471,7 @@ export const Col_3_img_3_layout = ({
               {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
               <ul
                 key={index}
-                className={`flex flex-row w-full h-full grow pl-4 list-disc ${customizableElements.contentFont} ${customizableElements.contentFontColor}`}
+                className={`flex flex-row w-full h-full grow pl-4 list-disc `}
               >
                 <li>{item}</li>
               </ul>
