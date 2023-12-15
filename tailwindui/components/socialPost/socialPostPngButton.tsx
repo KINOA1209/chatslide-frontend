@@ -15,6 +15,8 @@ import { templateDispatch as defaultTemplateDispatch3 } from '@/components/socia
 import html2canvas from 'html2canvas'
 import { toPng } from 'html-to-image';
 import { ThemeObject } from './socialPostThemeChanger'
+import { BigGrayButton } from '../button/DrlambdaButton'
+import { FaDownload } from 'react-icons/fa'
 
 interface ExportToPdfProps {
   finalSlides: SocialPostSlide[]
@@ -131,21 +133,13 @@ const ExportToPngButton: React.FC<ExportToPdfProps> = ({
           />
         )}
 
-
-        <div
-          className='h-8 px-3 py-1 bg-zinc-100 rounded-lg justify-center items-center gap-2.5 cursor-pointer hidden sm:flex'
-          onClick={handleSaveImage}
-        >
-          <div className='text-center text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide'>
+        <BigGrayButton onClick={handleSaveImage} isSubmitting={downloadingPDF}>
+          <div className='flex flex-row items-center gap-x-2'>
             Save this page
+            <FaDownload className='text-gray-800' />
           </div>
-          <div className='w-4 h-4 relative' hidden={downloadingPDF}>
-            <DownloadIcon />
-          </div>
-          <div className='text-black h-[22px] mr-2' hidden={!downloadingPDF}>
-            <LoadingIcon />
-          </div>
-        </div>
+        </BigGrayButton>
+
       </div>
 
       {/* hidden div for export to pdf */}

@@ -9,6 +9,8 @@ import PaywallModal from '../forms/paywallModal'
 import { DownloadIcon } from '@/app/(feature)/icons'
 import SlideContainer from './SlideContainer'
 import generatePDF, { Resolution, Margin, Options } from 'react-to-pdf'
+import { BigGrayButton } from '../button/DrlambdaButton'
+import { FaDownload, FaRing, FaTruckLoading } from 'react-icons/fa'
 
 type SlidesHTMLProps = {
   finalSlides: Slide[]
@@ -107,21 +109,15 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
           />
         )}
 
-        
-        <div
-            className='h-8 px-3 py-1 bg-zinc-100 rounded-lg justify-center items-center gap-2.5 cursor-pointer hidden sm:flex'
-            onClick={handleSavePDF}
+        <BigGrayButton
+          onClick={handleSavePDF}
+          isSubmitting={downloadingPDF}
         >
-            <div className='text-center text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide'>
-                Export to PDF
-            </div>
-            <div className='w-4 h-4 relative' hidden={downloadingPDF}>
-                <DownloadIcon />
-            </div>
-            <div className='text-black h-[22px] mr-2' hidden={!downloadingPDF}>
-                <LoadingIcon />
-            </div>
-        </div>
+          <div className='flex flex-row items-center gap-x-2'>
+            Export to PDF
+            <FaDownload className='text-gray-800'/>
+          </div>
+        </BigGrayButton>
       </div>
 
       {/* hidden div for export to pdf */}
