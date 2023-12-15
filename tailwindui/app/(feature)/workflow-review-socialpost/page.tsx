@@ -35,7 +35,7 @@ export default function SocialMediaTemplate() {
   const [finalSlides, setFinalSlides] = useState<SocialPostSlide[]>([])
   const res_scenario =
     typeof sessionStorage !== 'undefined'
-    ? sessionStorage.getItem('selectedScenario')
+    ? sessionStorage.getItem('scenario_type')
     : ''
 
   function getCover(scenario: string | null): ThemeObject {
