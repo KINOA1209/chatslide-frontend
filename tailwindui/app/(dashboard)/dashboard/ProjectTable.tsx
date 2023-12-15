@@ -51,7 +51,7 @@ const ProjectTable: React.FC<Props> = ({
               <div className='w-[20px]'>
                 {project.task === 'presentation' ? <RiSlideshowLine className='text-gray-600 w-[20px] h-[20px]' /> : <FaPhotoVideo className='text-gray-600 w-[20px] h-[20px]' />}
               </div>
-              <div className='flex-wrap'>{project.name}</div>
+              <div className='flex-wrap cursor-pointer'>{project.name}</div>
             </div>
 
             {/* resources */}
