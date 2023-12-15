@@ -46,9 +46,9 @@ export const ImgModule = ({
 
     const [uploading, setUploading] = useState(false);
 
-    useEffect(() => {
-        console.log(selectedQueryMode);
-    }, [selectedQueryMode]);
+    // useEffect(() => {
+    //     console.log(selectedQueryMode);
+    // }, [selectedQueryMode]);
 
     useEffect(() => {
         if (imgsrc !== '') {

@@ -22,7 +22,9 @@
 
 .ql-tooltip {
   z-index: 100;
-  padding: 2% 3% 2% 3%;
+  padding: 2% 3% 2% 3% !important;
+  height: 100px;
+  width: 450px;
 }
 
 .non-editable-ql-editor,

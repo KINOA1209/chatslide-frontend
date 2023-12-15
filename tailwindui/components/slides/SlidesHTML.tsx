@@ -175,7 +175,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
   // Function to change the template of slides starting from the second one
   const changeTemplate = (newTemplate: string) => {
-    console.log('Changing template to:', newTemplate);
+    //onsole.log('Changing template to:', newTemplate);
     const newSlides = slides.map((slide, index) => {
       // Keep the template of the first slide unchanged
       //   if (index === 0) {
@@ -196,7 +196,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       return { ...slide, template: newTemplate };
     });
     setFinalSlides(newFinalSlides);
-    console.log('Slides after changing template:', newSlides);
+    //console.log('Slides after changing template:', newSlides);
 
     setUnsavedChanges(true);
     saveSlides();
@@ -286,18 +286,18 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
   // fetch slides data
   useEffect(() => {
     if (res_slide) {
-      console.log('typeof res_slide:', typeof res_slide);
+      //console.log('typeof res_slide:', typeof res_slide);
       // const slides_response_JSON = JSON.stringify(TestSlidesData)
       const parsed_slides = JSON.parse(res_slide);
       // console.log('parseSlides:', parsed_slides)
       // log the type of parsed_slides
-      console.log('typeof parsed_slides:', typeof parsed_slides);
+      //console.log('typeof parsed_slides:', typeof parsed_slides);
 
       // mapping data to slides
       const slidesArray: Slide[] = Object.keys(parsed_slides).map(
         (key, index) => {
           const slideData = parsed_slides[key];
-          console.log('slideData:', slideData);
+          //console.log('slideData:', slideData);
           const slide = new Slide();
           slide.head = slideData.head || 'New Slide';
           slide.title = slideData.title || 'New Slide';
@@ -339,7 +339,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
           return slide;
         }
       );
-      console.log('the parsed slides array:', slidesArray);
+      //console.log('the parsed slides array:', slidesArray);
       setSlides(slidesArray);
       setFinalSlides(slidesArray);
     }
