@@ -41,6 +41,27 @@ class ResourceService {
     })
     return response.ok
   }
+
+  static async uploadResource(file: File, token: string): Promise<Resource> {
+    const body = new FormData()
+    body.append('file', file)
+
+    const response = await fetch('/api/upload_user_file', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: body,
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data.data;
+    } else {
+      throw new Error(`Failed to upload resource: ${response.status}`);
+    }
+    
+  }
 }
 
 export default ResourceService;
