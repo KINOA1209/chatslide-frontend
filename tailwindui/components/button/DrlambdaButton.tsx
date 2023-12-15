@@ -129,6 +129,14 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({ children, onClick
   )
 }
 
+export const BigGrayButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSubmitting = false, isPaidUser, isPaidFeature = false }) => {
+  return (
+    <button className='btn min-w-[100px] sm:min-w-[120px] h-[36px] sm:h-[36px] sm:gap-x-2 text-gray-800 text-sm bg-gray-300 disabled:bg-gray-600 disabled:animate-pulse whitespace-nowrap rounded-xl' onClick={onClick} disabled={isSubmitting}>
+      {children}
+    </button>
+  )
+}
+
 export const InversedBigBlueButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSubmitting = false, isPaidUser, isPaidFeature = false }) => {
   return (
     <button className='btn w-[100px] sm:w-[120px] h-[36px] sm:h-[36px] sm:gap-x-2 text-blue-600 sm:font-semibold bg-white disabled:text-gray-600 disabled:animate-pulse whitespace-nowrap rounded-xl' onClick={onClick} disabled={isSubmitting}>
