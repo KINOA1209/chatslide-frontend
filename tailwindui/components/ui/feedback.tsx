@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import AuthService from '../../services/AuthService'
 import ReferralLink from '../ReferralLink'
 import Modal from './Modal'
+import { BigBlueButton, InversedBigBlueButton } from '../button/DrlambdaButton'
 
 interface FeedbackFormProps {
   onClose: () => void
@@ -16,7 +17,7 @@ interface FeedbackButtonProps {
   textRequired?: boolean
 }
 
-const FeedbackButton: React.FC<FeedbackButtonProps> = ({ timeout = 0, message = '', textRequired=false }) => {
+const FeedbackButton: React.FC<FeedbackButtonProps> = ({ timeout = 0, message = '', textRequired = false }) => {
 
   const [showModal, setShowModal] = useState(false);
   const [timerFinished, setTimerFinished] = useState(false)
@@ -67,7 +68,7 @@ const FeedbackButton: React.FC<FeedbackButtonProps> = ({ timeout = 0, message = 
       Feedback
     </button>
 
-    {showModal && <FeedbackForm onClose={handleCloseModal} message={message} textRequired={textRequired}/>}
+    {showModal && <FeedbackForm onClose={handleCloseModal} message={message} textRequired={textRequired} />}
   </div>
 }
 
@@ -116,9 +117,9 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose, message, su
     // Check if rating is not 0 (meaning the user has selected a rating).
     if (rating === 0) {
       setRatingError('Please select a rating.')
-    } else if (feedbackText==='' && textRequired) {
+    } else if (feedbackText === '' && textRequired) {
       setRatingError('Please leave your feedback.')
-    }else {
+    } else {
       try {
         const { userId, idToken: token } =
           await AuthService.getCurrentUserTokenAndId()
@@ -195,84 +196,72 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({ onClose, message, su
   }
 
   return (
-    <Modal showModal={true} setShowModal={onClose}>
-      <div
-        className='fixed right-5 bottom-5 inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full'
-        role='dialog'
-        aria-modal='true'
-        aria-labelledby='modal-headline'
-      >
-        <div className='bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 shadow-lg'>
-          {submitSuccessful ? (
-            successDiv
-          ) : (
-            <div>
-              <h3
-                className='text-lg leading-6 font-bold text-gray-900'
-                id='modal-headline'
-              >
-                {message ? message : `We'd love to hear from you!`}
-              </h3>
-              <p className='text-sm text-gray-500 mt-2'>
-                You can also send us an email at{' '}
-                <a href='mailto:contact@drlambda.ai' className='underline'>
-                  contact@drlambda.ai
-                </a>
-                .
-              </p>
+    <Modal showModal={true} setShowModal={onClose} position='fixed bottom-5 right-5'>
+      <div className='bg-white'>
+        {submitSuccessful ? (
+          successDiv
+        ) : (
+          <div>
+            <h3
+              className='text-lg leading-6 font-bold text-gray-900'
+              id='modal-headline'
+            >
+              {message ? message : `We'd love to hear from you!`}
+            </h3>
+            <p className='text-sm text-gray-500 mt-2'>
+              You can also send us an email at{' '}
+              <a href='mailto:contact@drlambda.ai' className='underline'>
+                contact@drlambda.ai
+              </a>
+              .
+            </p>
+          </div>
+        )}
+
+        {submitSuccessful ? null : (
+          <form onSubmit={handleSubmit} className='w-full mt-4'>
+            <div className='mt-4'>
+              <div className='flex items-center justify-center gap-x-4'>
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button
+                    key={star}
+                    type='button'
+                    onClick={() => handleRatingChange(star)}
+                    className={`text-5xl focus:outline-none hover:scale-110 transform transition-all`}
+                  >
+                    {getEmojiForStarAndRating(star, rating)}
+                  </button>
+                ))}
+              </div>
+              {ratingError && (
+                <p className='text-red-500 text-sm mt-1'>{ratingError}</p>
+              )}
             </div>
-          )}
+            <div className='mt-4'>
+              <label className='block text-gray-700 text-sm font-bold mb-2'>
+                Please leave your feedback below:
+              </label>
+              {/* Increase the number of rows for the textarea to make it taller */}
+              <textarea
+                className='resize-none w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500'
+                rows={3} // Increase the number of rows here to make the text field larger
+                value={feedbackText}
+                onChange={handleFeedbackTextChange}
+              ></textarea>
+            </div>
+            <div className='mt-4 flex justify-end gap-x-4'>
+              <InversedBigBlueButton onClick={onClose}>
+                Close
+              </InversedBigBlueButton>
 
-          {submitSuccessful ? null : (
-            <form onSubmit={handleSubmit} className='w-full mt-4'>
-              <div className='mt-4'>
-                <div className='flex items-center justify-center gap-x-4'>
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <button
-                      key={star}
-                      type='button'
-                      onClick={() => handleRatingChange(star)}
-                      className={`text-5xl focus:outline-none hover:scale-110 transform transition-all`}
-                    >
-                      {getEmojiForStarAndRating(star, rating)}
-                    </button>
-                  ))}
-                </div>
-                {ratingError && (
-                  <p className='text-red-500 text-sm mt-1'>{ratingError}</p>
-                )}
-              </div>
-              <div className='mt-4'>
-                <label className='block text-gray-700 text-sm font-bold mb-2'>
-                  Please leave your feedback below:
-                </label>
-                {/* Increase the number of rows for the textarea to make it taller */}
-                <textarea
-                  className='resize-none w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500'
-                  rows={3} // Increase the number of rows here to make the text field larger
-                  value={feedbackText}
-                  onChange={handleFeedbackTextChange}
-                ></textarea>
-              </div>
-              <div className='mt-4 flex justify-end gap-x-4'>
-                <button
-                  className='px-4 py-2 font-bold text-blue-500 rounded focus:outline-none'
-                  onClick={onClose}
-                >
-                  Cancel
-                </button>
-                <button
-                  type='submit'
-                  className='px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-700'
-                >
-                  Submit
-                </button>
-              </div>
-            </form>
-          )}
-        </div>
-
+              <BigBlueButton onClick={() => { }}>
+                Submit
+              </BigBlueButton>
+            </div>
+          </form>
+        )}
       </div>
+
     </Modal>
   )
 }
