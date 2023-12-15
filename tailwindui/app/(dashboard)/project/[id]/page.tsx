@@ -58,6 +58,9 @@ const ProjectLoading = () => {
                 if (project.requirements) {
                     sessionStorage.setItem('requirements', project.requirements);
                 }
+                if (project.scenario_type) {
+                    sessionStorage.setItem('scenario_type', project.scenario_type);
+                }
                 if (project.audience) {
                     sessionStorage.setItem('audience', project.audience);
                 }
