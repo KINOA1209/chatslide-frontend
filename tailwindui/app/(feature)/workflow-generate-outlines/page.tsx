@@ -289,7 +289,7 @@ export default function Topic() {
       language: language,
       addEquations: addEquations,
       project_id: project_id,
-      resources: selectedResources.map((resource) => resource.id),
+      resources: selectedResources.map((resource: Resource) => resource.id),
       model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
       schoolTemplate: schoolTemplate
     }

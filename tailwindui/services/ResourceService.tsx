@@ -60,7 +60,28 @@ class ResourceService {
     } else {
       throw new Error(`Failed to upload resource: ${response.status}`);
     }
-    
+  }
+
+  static async queryResource(project_id: string, resource_id: string[], outlineData: any, token: string): Promise<any> {
+    const headers = new Headers()
+    if (token) {
+      headers.append('Authorization', `Bearer ${token}`)
+    }
+    const response = await fetch('/api/query_resources', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        outlines: JSON.stringify({ ...outlineData }),
+        resources: resource_id,
+        project_id: project_id,
+      }),
+    })
+
+    if (response.ok) {
+      return await response.json()
+    } else {
+      throw new Error(`Failed to query resources: ${response.status}`)
+    }
   }
 }
 
