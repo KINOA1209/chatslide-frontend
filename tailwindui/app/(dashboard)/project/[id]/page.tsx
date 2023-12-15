@@ -108,7 +108,7 @@ const ProjectLoading = () => {
                 }
             } else if (content_type == 'social_posts') {
                 if (project.post_type) {
-                    sessionStorage.setItem('selectedScenario', project.post_type);
+                    sessionStorage.setItem('scenario_type', project.post_type);
                 }
                 if (project.social_platform) {
                     sessionStorage.setItem('social_platform', project.social_platform);
@@ -194,7 +194,7 @@ const ProjectLoading = () => {
     ];
     const socialPostFinishedSteps: () => number[] = () => {
         const finishedStepsArray: number[] = [];
-        if (typeof window !== 'undefined' && sessionStorage.getItem('selectedScenario')) {
+        if (typeof window !== 'undefined' && sessionStorage.getItem('scenario_type')) {
             finishedStepsArray.push(0);
         }
         if (typeof window !== 'undefined' && sessionStorage.getItem('topic')) {

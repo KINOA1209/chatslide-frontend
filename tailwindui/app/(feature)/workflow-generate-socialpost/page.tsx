@@ -85,9 +85,9 @@ export default function Topic_SocialPost() {
       : ''
   )
 
-  const [selectedScenario, setSelectedScenario] = useState(
-    typeof window !== 'undefined' && sessionStorage.selectedScenario != undefined
-      ? sessionStorage.selectedScenario
+  const [scenario_type, setscenario_type] = useState(
+    typeof window !== 'undefined' && sessionStorage.scenario_type != undefined
+      ? sessionStorage.scenario_type
       : ''
   )
 
@@ -122,9 +122,9 @@ export default function Topic_SocialPost() {
     if (clientTopic) {
       setTopic(clientTopic)
     }
-    const currScenario = sessionStorage.getItem('selectedScenario')
+    const currScenario = sessionStorage.getItem('scenario_type')
     if (currScenario){
-      setSelectedScenario(currScenario)
+      setscenario_type(currScenario)
     }
   }, [])
 
@@ -210,7 +210,7 @@ export default function Topic_SocialPost() {
       //youtube_url: youtube,
       resources: selectedResources.map((resource: Resource) => resource.id),
       model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
-      post_style: selectedScenario,
+      post_style: scenario_type,
     }
     sessionStorage.setItem('topic', formData.topic)
     sessionStorage.setItem('language', formData.language)
