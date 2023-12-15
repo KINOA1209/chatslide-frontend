@@ -39,7 +39,7 @@ class ResourceService {
         resource_id: resource_id,
       }),
     })
-    return response.ok
+    return response.ok || response.status === 404 // 404 means resource already deleted
   }
 
   static async uploadResource(file: File, token: string): Promise<Resource> {
