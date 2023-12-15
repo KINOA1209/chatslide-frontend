@@ -20,7 +20,7 @@ import { FaInbox, FaKey, FaLock, FaMailBulk, FaUser, FaVoicemail } from 'react-i
 const Profile = () => {
   const [username, setUsername] = useState<string>('');
   const [editUsername, setEditUsername] = useState('');
-  const [email, setEmail] = useState('drlambda@gmail.com');
+  const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   function userFirstName(): string {
