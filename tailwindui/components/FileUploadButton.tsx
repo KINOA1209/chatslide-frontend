@@ -30,7 +30,7 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 
   useEffect(() => {
     console.log('isSubmitting', isSubmitting)
-  }, [])
+  }, [isSubmitting])
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null

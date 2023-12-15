@@ -225,6 +225,7 @@ const MyFiles: React.FC<filesInterface> = ({
     try {
       ResourceService.uploadResource(file, idToken).then((newResource) => {
         setResources([newResource, ...resources])
+        setIsSubmitting(false)
         if (setSelectedResources && selectedResources)
           setSelectedResources([newResource, ...selectedResources])
       })
@@ -244,7 +245,6 @@ const MyFiles: React.FC<filesInterface> = ({
         })
       }
     }
-    setIsSubmitting(false)
   }
 
   const handleFileDeleted = (id: string) => {
