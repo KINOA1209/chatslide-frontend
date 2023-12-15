@@ -11,7 +11,7 @@ type InputBoxProps = {
 export const InputBox: React.FC<InputBoxProps> = ({ children, onClick }) => {
   return (
     <div
-      className='h-[36px] sm:h-[48px] w-full flex flex-row flex-nowrap items-center justify-center border border-2 border-gray-200 bg-gray-100 px-3 py-2.5 gap-x-2 cursor-text rounded-lg overflow-visible'
+      className='h-[36px] sm:h-[36px] w-full flex flex-row flex-nowrap items-center justify-center border border-2 border-gray-200 bg-gray-100 px-3 py-2.5 gap-x-2 cursor-text rounded-lg overflow-visible'
       onClick={onClick}
     >
       {children}
