@@ -250,48 +250,20 @@ const MyFiles: React.FC<filesInterface> = ({
     setIsSubmitting(true)
     console.log('will upload file', file)
     if (file == null) {
-      // alert("Please select non-null file");
+      setIsSubmitting(false)
       return
     }
-    console.log('file name: ', file.name) //.split('.', 1)
-    console.log('file name split: ', file.name.split('.', 1))
+
     const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
-    const body = new FormData()
-    body.append('file', file)
 
-    // mixpanel.track('File Uploaded', {
-    //   'File Name': file.name,
-    //   'File Type': file.type,
-    // })
     try {
-      const response = await fetch('/api/upload_user_file', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${idToken}`,
-        },
-        body: body,
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        await fetchFiles(idToken)
-        handleClick(data.data.file_id)
-      }
-      else {
-        response.json().then((data) => {
-          toast.error(data.message, {
-            position: 'top-center',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'light',
-            containerId: 'fileManagement',
-          })
-        })
-      }
+      ResourceService.uploadResource(file, idToken).then((newResource) => {
+        setResources([newResource, ...resources])
+        if (setSelectedResources && selectedResources)
+          setSelectedResources([newResource, ...selectedResources])
+        if (setSelectedResourceId && selectedResourceId)
+          setSelectedResourceId([newResource.id, ...selectedResourceId]);
+      })
     } catch (error) {
       console.error(error)
       if (error instanceof Error) {
@@ -365,6 +337,7 @@ const MyFiles: React.FC<filesInterface> = ({
     setSelectedResourceId(newSelectedResourceId)
     console.log('selectedResourceId', selectedResourceId)
     if (setSelectedResources) {
+      console.log(resources)
       setSelectedResources(resources.filter((resource) => newSelectedResourceId.includes(resource.id)));
     }
   }
