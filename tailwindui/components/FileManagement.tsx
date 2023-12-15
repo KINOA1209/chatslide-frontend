@@ -14,6 +14,7 @@ import { ResourceItem } from './ui/ResourceItem'
 import Resource from '@/models/Resource'
 import ResourceService from '@/services/ResourceService'
 import DrlambdaButton from './button/DrlambdaButton'
+import { FaCheckCircle } from 'react-icons/fa'
 
 
 interface UserFileList {
@@ -21,7 +22,7 @@ interface UserFileList {
   userfiles: Array<Resource>
   deleteCallback: Function
   clickCallback: Function
-  selectedResources: Array<string>
+  selectedResources: Array<Resource>
 }
 
 // Define a new component for the table header
@@ -90,17 +91,6 @@ const FileManagement: React.FC<UserFileList> = ({
   const entry = (resource: Resource) => {
 
     return (
-      // <div
-      //   key={id}
-      //   className='w-full h-16 px-4 rounded-2xl md:hover:bg-gray-200'
-      //   onClick={(e) => {
-      //     if (selectable) {
-      //       clickCallback(id)
-      //     } else {
-      //       handleOnClick(e)
-      //     }
-      //   }}
-      // >
       <div
         key={resource.id}
         className='grid grid-cols-3 border border-gray-300 bg-white'
@@ -136,27 +126,10 @@ const FileManagement: React.FC<UserFileList> = ({
           )}
 
           {/* selected mark */}
-          {selectable ? (
-            <div className='w-6 flex flex-row-reverse shrink-0'>
-              {selectedResources.includes(resource.id) ? (
-                <svg
-                  className='h-6 w-6'
-                  viewBox='0 0 24 24'
-                  fill='none'
-                  xmlns='http://www.w3.org/2000/svg'
-                >
-                  <path
-                    d='M12 2C6.49 2 2 6.49 2 12C2 17.51 6.49 22 12 22C17.51 22 22 17.51 22 12C22 6.49 17.51 2 12 2ZM16.78 9.7L11.11 15.37C10.97 15.51 10.78 15.59 10.58 15.59C10.38 15.59 10.19 15.51 10.05 15.37L7.22 12.54C6.93 12.25 6.93 11.77 7.22 11.48C7.51 11.19 7.99 11.19 8.28 11.48L10.58 13.78L15.72 8.64C16.01 8.35 16.49 8.35 16.78 8.64C17.07 8.93 17.07 9.4 16.78 9.7Z'
-                    fill='#0070f4'
-                  />
-                </svg>
-              ) : (
-                <></>
-              )}
-            </div>
-          ) : (
-            <></>
-          )}
+          <div className='flex flex-row-reverse shrink-0'>
+            {selectable && selectedResources.find((r) => r.id === resource.id) 
+              && <FaCheckCircle className='text-green-500' />}
+          </div>
         </div>
       </div>
     )
@@ -176,16 +149,12 @@ const FileManagement: React.FC<UserFileList> = ({
 }
 interface filesInterface {
   selectable: boolean
-  selectedResourceId?: Array<string>
-  setSelectedResourceId?: Function
   selectedResources?: Array<Resource>
   setSelectedResources?: Function
 }
 
 const MyFiles: React.FC<filesInterface> = ({
   selectable = false,
-  selectedResourceId,
-  setSelectedResourceId,
   selectedResources,
   setSelectedResources,
 }) => {
@@ -238,9 +207,6 @@ const MyFiles: React.FC<filesInterface> = ({
     const resource_type = selectable ? ['doc', 'url'] : []
 
     ResourceService.fetchResources(resource_type, token).then((resources) => {
-      if (setSelectedResources) {
-        setSelectedResources(resources.filter((resource: Resource) => selectedResourceId?.includes(resource.id)));
-      }
       setResources(resources)
       setRendered(true)
     })
@@ -250,48 +216,18 @@ const MyFiles: React.FC<filesInterface> = ({
     setIsSubmitting(true)
     console.log('will upload file', file)
     if (file == null) {
-      // alert("Please select non-null file");
+      setIsSubmitting(false)
       return
     }
-    console.log('file name: ', file.name) //.split('.', 1)
-    console.log('file name split: ', file.name.split('.', 1))
+
     const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
-    const body = new FormData()
-    body.append('file', file)
 
-    // mixpanel.track('File Uploaded', {
-    //   'File Name': file.name,
-    //   'File Type': file.type,
-    // })
     try {
-      const response = await fetch('/api/upload_user_file', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${idToken}`,
-        },
-        body: body,
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        await fetchFiles(idToken)
-        handleClick(data.data.file_id)
-      }
-      else {
-        response.json().then((data) => {
-          toast.error(data.message, {
-            position: 'top-center',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'light',
-            containerId: 'fileManagement',
-          })
-        })
-      }
+      ResourceService.uploadResource(file, idToken).then((newResource) => {
+        setResources([newResource, ...resources])
+        if (setSelectedResources && selectedResources)
+          setSelectedResources([newResource, ...selectedResources])
+      })
     } catch (error) {
       console.error(error)
       if (error instanceof Error) {
@@ -327,11 +263,8 @@ const MyFiles: React.FC<filesInterface> = ({
   }
 
   const handleClick = (id: string) => {
-    if (!selectedResourceId || !setSelectedResourceId) {
-      console.log('selectedResources or setSelectedResources is null')
-      return
-    }
     console.log('handleClick', id)
+    let selectedResourceId = selectedResources?.map((resource) => resource.id) || []
     const ind = selectedResourceId.indexOf(id)
     let newSelectedResourceId: Array<string> = []
     if (isPaid) {
@@ -362,9 +295,9 @@ const MyFiles: React.FC<filesInterface> = ({
       }
     }
     console.log('newSelectedResourceId', newSelectedResourceId)
-    setSelectedResourceId(newSelectedResourceId)
     console.log('selectedResourceId', selectedResourceId)
     if (setSelectedResources) {
+      console.log(resources)
       setSelectedResources(resources.filter((resource) => newSelectedResourceId.includes(resource.id)));
     }
   }
@@ -578,7 +511,7 @@ const MyFiles: React.FC<filesInterface> = ({
         </div>
       </div>
       <div
-        className='max-w-6xl w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto'
+        className='max-w-6xl w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto border border-gray-200'
         ref={contentRef}
       >
         {resources.length > 0 && (
@@ -587,7 +520,7 @@ const MyFiles: React.FC<filesInterface> = ({
             userfiles={resources}
             deleteCallback={handleFileDeleted}
             clickCallback={handleClick}
-            selectedResources={selectedResourceId || []}
+            selectedResources={selectedResources || []}
           />
         )}
         {resources.length === 0 && (

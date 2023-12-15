@@ -169,8 +169,9 @@ export function WorkflowFooter() {
           {socialMediaBlock}
 
           {/* Copyrights note */}
-          <div className='flex justify-center md:justify-start text-sm text-gray-600 mb-2 md:mb-0'>
-            &copy; drlambda.ai. All rights reserved.
+          <div className='flex flex-col justify-center md:justify-start text-sm text-gray-600 mb-2 md:mb-0'>
+            <span>&copy; drlambda.ai. All rights reserved.</span>
+            <span>Some images designed by <a href='https://www.freepik.com'>Freepik</a>.</span>
           </div>
         </div>
       </div>

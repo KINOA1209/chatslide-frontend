@@ -15,8 +15,10 @@ To do this,
 - test if the backend is connected by going to http://localhost/api/test and see if there is result
 
 - `cd tailwindui`
-- `rew install nvm`
+- `brew install nvm`
+- register `nvm` into PATH if not as the shell instructs
 - `nvm install 19.8.1`
+- `nvm use 19.8.1`
 - `npm install`
 
 

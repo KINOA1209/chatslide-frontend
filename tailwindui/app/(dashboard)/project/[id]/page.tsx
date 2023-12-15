@@ -46,8 +46,11 @@ const ProjectLoading = () => {
             if (project.project_name) {
                 sessionStorage.setItem('project_name', project.project_name);
             }
-            if (project.resource_ids) {
-                sessionStorage.setItem('selectedResourceId', JSON.stringify(project.resource_ids));
+            // if (project.resource_ids) {
+            //     sessionStorage.setItem('selectedResourceId', JSON.stringify(project.resource_ids));
+            // }
+            if (project.resources) {
+              sessionStorage.setItem('selectedResources', JSON.stringify(project.resources));
             }
             const content_type = project.content_type ?? 'presentation';
             sessionStorage.setItem('content_type', content_type);
@@ -90,9 +93,6 @@ const ProjectLoading = () => {
                 }
                 if (project.video_file) {
                     sessionStorage.setItem('video_file', project.video_file);
-                }
-                if (project.resources) {
-                    sessionStorage.setItem('selectedResources', JSON.stringify(project.resources));
                 }
                 if (project.is_shared) {
                     sessionStorage.setItem('is_shared', project.is_shared.toString());
