@@ -36,7 +36,7 @@ import { FileUploadButton } from '@/components/FileUploadButton'
 import FileUploadModal from '@/components/forms/FileUploadModal'
 import SelectedResourcesList from '@/components/SelectedResources'
 
-const MAX_TOPIC_LENGTH = 80
+const MAX_TOPIC_LENGTH = 128
 const MIN_TOPIC_LENGTH = 6
 
 const audienceList = [
