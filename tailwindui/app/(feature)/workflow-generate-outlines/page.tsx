@@ -32,7 +32,6 @@ import Image from 'next/image'
 import ContentWithImageImg from '@/public/images/summary/content_with_image.png'
 import ContentOnlyImg from '@/public/images/summary/content_only.png'
 import ContentInBrandingColorImg from '@/public/images/summary/content_in_branding_color.png'
-import { FileUploadButton } from '@/components/FileUploadButton'
 import FileUploadModal from '@/components/forms/FileUploadModal'
 import SelectedResourcesList from '@/components/SelectedResources'
 
