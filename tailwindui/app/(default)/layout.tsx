@@ -6,6 +6,7 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 
 import Footer from '@/components/ui/footer'
+import useHydrated from "@/hooks/use-hydrated";
 
 export default function DefaultLayout({
   children,
@@ -21,6 +22,9 @@ export default function DefaultLayout({
       easing: 'ease-out-cubic',
     })
   })
+  
+  // avoid hydration error during development caused by persistence
+  if(!useHydrated()) return 
 
   return (
     <>
