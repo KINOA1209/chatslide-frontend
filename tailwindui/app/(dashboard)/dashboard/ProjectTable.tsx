@@ -4,7 +4,7 @@ import { DeleteIcon, SpinIcon } from '@/app/(feature)/icons';
 import { ResourceItem } from '@/components/ui/ResourceItem'
 import Project from '@/models/Project';
 import { FaAd, FaMedium, FaPhone, FaPhotoVideo, FaSlideshare } from 'react-icons/fa';
-
+import { RiSlideshowLine } from "react-icons/ri";
 
 interface Props {
   currentProjects: Project[]
@@ -48,7 +48,7 @@ const ProjectTable: React.FC<Props> = ({
               className='col-span-2 p-2 flex cursor-pointer items-center text-start border-b-2 text-ellipsis overflow-hidden text-[17px] font-creato-medium leading-normal tracking-wide gap-x-2'
               onClick={() => onProjectClick(project.id)}
             >
-              {project.task === 'presentation' ? <FaSlideshare className='text-gray-600' /> : <FaPhotoVideo className='text-gray-600' />}
+              {project.task === 'presentation' ? <RiSlideshowLine className='text-gray-600' /> : <FaPhotoVideo className='text-gray-600' />}
               {project.name}
             </div>
 
