@@ -8,10 +8,11 @@ import AuthService from '@/services/AuthService'
 import { Dialog, Transition } from '@headlessui/react'
 import { useRouter } from 'next/navigation'
 import ProjectTable from './ProjectTable'
-import DrlambdaButton from '@/components/button/DrlambdaButton'
+import DrlambdaButton, { BigBlueButton, InversedBigBlueButton } from '@/components/button/DrlambdaButton'
 import Project from '@/models/Project'
 import ProjectService from '@/services/ProjectService'
 import { UserStudy } from '@/components/ui/UserStudy'
+import Modal from '@/components/ui/Modal'
 
 
 export default function Dashboard() {
@@ -118,75 +119,7 @@ export default function Dashboard() {
     // router.push('/workflow-type-choice')
   }
 
-  const deleteModal = (
-    <Dialog as='div' className='relative z-10' onClose={closeModal}>
-      <Transition.Child
-        as={Fragment}
-        enter='ease-out duration-300'
-        enterFrom='opacity-0'
-        enterTo='opacity-100'
-        leave='ease-in duration-200'
-        leaveFrom='opacity-100'
-        leaveTo='opacity-0'
-      >
-        <div className='fixed inset-0 bg-black bg-opacity-25' />
-      </Transition.Child>
-
-      {/* delete project pop up */}
-      <div className='fixed inset-0 overflow-y-auto'>
-        <div className='flex min-h-full items-center justify-center p-4 text-center'>
-          <Transition.Child
-            as={Fragment}
-            enter='ease-out duration-300'
-            enterFrom='opacity-0 scale-95'
-            enterTo='opacity-100 scale-100'
-            leave='ease-in duration-200'
-            leaveFrom='opacity-100 scale-100'
-            leaveTo='opacity-0 scale-95'
-          >
-            <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
-              <Dialog.Title
-                as='h3'
-                className='text-lg font-medium leading-6 text-gray-900'
-              >
-                Are you sure you want to delete this project?
-              </Dialog.Title>
-              <div className='mt-2'>
-                <p className='text-sm text-gray-500'>
-                  Deleted Project cannot be restored.
-                </p>
-              </div>
-
-              <div className='flex'>
-                <div className='flex justify-center mt-4'>
-                  <button
-                    className='bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white py-2 px-4 rounded mr-2 btn-size'
-                    onClick={confirmDelete}
-                    disabled={isDeleting}
-                  >
-                    {isDeleting ? "Deleting..." : "Confirm" } 
-                  </button>
-                </div>
-                <div className='flex justify-center mt-4'>
-                  <button
-                    className='bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded mr-2 btn-size'
-                    onClick={closeModal}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </Dialog.Panel>
-          </Transition.Child>
-        </div>
-      </div>
-    </Dialog>
-  )
-
   return (
-
-
-    
     <section className='grow flex flex-col'>
       <ToastContainer />
       {/* top background container of my projects title text and button */}
@@ -226,9 +159,25 @@ export default function Dashboard() {
       </div>
 
       {/* Delete modal */}
-      <Transition appear show={isOpen} as={Fragment}>
-        {deleteModal}
-      </Transition>
+      <Modal showModal={isOpen} setShowModal={setIsOpen}>
+        <div className='flex flex-col gap-y-2'>
+          <h4 className='h4 text-center'>
+            Delete Project
+          </h4>
+          <div className=''>
+            Are you sure you want to delete this project?
+          </div>
+
+          <div className='flex gap-x-2 justify-end'>
+            <BigBlueButton onClick={confirmDelete} isSubmitting={isDeleting}>
+              Confirm
+            </BigBlueButton>
+            <InversedBigBlueButton onClick={closeModal}>
+              Cancel
+            </InversedBigBlueButton>
+          </div>
+        </div>
+      </Modal>
 
       {/* <UserStudy /> */}
     </section>
