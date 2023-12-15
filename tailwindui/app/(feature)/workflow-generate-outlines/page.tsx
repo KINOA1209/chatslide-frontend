@@ -102,12 +102,6 @@ export default function Topic() {
       ? JSON.parse(sessionStorage.addEquations)
       : false
   )
-  const [selectedResourceId, setSelectedResourceId] = useState<string[]>(
-    typeof window !== 'undefined' &&
-      sessionStorage.selectedResourceId != undefined
-      ? JSON.parse(sessionStorage.selectedResourceId)
-      : []
-  )
   const [selectedResources, setSelectedResources] = useState<Resource[]>(
     typeof window !== 'undefined' &&
       sessionStorage.selectedResources != undefined
@@ -236,7 +230,6 @@ export default function Topic() {
 
 
       setSelectedResources(prevList => [...prevList, videoDetails]);
-      setSelectedResourceId(prevList => [...prevList, videoDetails.id]);
     } catch (error: any) {
       console.error("Error fetching YouTube video details: ", error);
       setLinkError("Error fetching YouTube video details");
@@ -256,7 +249,6 @@ export default function Topic() {
       }
 
       setSelectedResources(prevList => [...prevList, pageDetails]);
-      setSelectedResourceId(prevList => [...prevList, pageDetails.id]);
     } catch (error: any) {
       console.error("Error reading webpage details: ", error);
       setLinkError("Error reading webpage details");
@@ -297,7 +289,7 @@ export default function Topic() {
       language: language,
       addEquations: addEquations,
       project_id: project_id,
-      resources: selectedResourceId,
+      resources: selectedResources.map((resource) => resource.id),
       model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
       schoolTemplate: schoolTemplate
     }
@@ -306,7 +298,6 @@ export default function Topic() {
     sessionStorage.setItem('audience', formData.audience)
     sessionStorage.setItem('language', formData.language)
     sessionStorage.setItem('addEquations', formData.addEquations)
-    sessionStorage.setItem('selectedResourceId', JSON.stringify(formData.resources))
     sessionStorage.setItem('selectedResources', JSON.stringify(selectedResources))
     sessionStorage.setItem('schoolTemplate', schoolTemplate)
 
@@ -465,9 +456,6 @@ export default function Topic() {
     setSelectedResources(currentResources =>
       currentResources.filter((_, index) => index !== indexToRemove)
     );
-    setSelectedResourceId(currentResourceIds =>
-      currentResourceIds.filter((_, index) => index !== indexToRemove)
-    );
   };
 
 
@@ -478,8 +466,6 @@ export default function Topic() {
       <ToastContainer />
 
       <FileUploadModal
-        selectedResourceId={selectedResourceId}
-        setSelectedResourceId={setSelectedResourceId}
         selectedResources={selectedResources}
         setSelectedResources={setSelectedResources}
         showModal={showFileModal}

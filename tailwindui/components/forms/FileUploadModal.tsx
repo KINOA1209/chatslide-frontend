@@ -5,8 +5,6 @@ import Modal from '../ui/Modal';
 import Resource from '@/models/Resource';
 
 type FileUploadModalProps = {
-  selectedResourceId: string[];
-  setSelectedResourceId: (resourceId: string[]) => void;
   selectedResources: Resource[]; // Replace 'any' with a more specific type if possible
   setSelectedResources: (resources: Resource[]) => void;
   showModal: boolean;
@@ -14,8 +12,6 @@ type FileUploadModalProps = {
 };
 
 const FileUploadModal: React.FC<FileUploadModalProps> = ({
-  selectedResourceId,
-  setSelectedResourceId,
   selectedResources,
   setSelectedResources,
   showModal,
@@ -30,8 +26,6 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
       <div className='h-[60vh] max-w-[80vw] overflow-y-auto '>
         <MyFiles
           selectable={true}
-          selectedResourceId={selectedResourceId}
-          setSelectedResourceId={setSelectedResourceId}
           selectedResources={selectedResources}
           setSelectedResources={setSelectedResources}
         />
