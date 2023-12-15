@@ -49,9 +49,8 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSu
       <button
         disabled={isSubmitting}
         onClick={checkPaidUser}
-        className={`min-w-[10rem] lg:min-w-[12rem] px-2 h-[36px] ${getButtonBg()} rounded-[15px] flex justify-center items-center gap-2 cursor-pointer }`}
+        className={`min-w-[10rem] lg:min-w-[12rem] px-2 h-[36px] sm:h-[36px] ${getButtonBg()} disabled:animate-pulse rounded-xl sm:rounded-3xl flex justify-center items-center gap-2 cursor-pointer }`}
       >
-        {isSubmitting && <SpinIcon />}
         <span className='text-white font-semibold tracking-tight whitespace-nowrap'>
           {(isPaidFeature && !isPaidUser) && '🔒 '}
           {(isPaidFeature && isPaidUser) && '🚀 '}
@@ -90,7 +89,7 @@ export const DrlambdaLink: React.FC<DrlambdaLinkProps> = ({ link, text, style, n
       href={link}
       target={newWindow ? '_blank' : '_self'}
       rel={newWindow ? 'noopener noreferrer' : undefined} // Important for security reasons
-      className={`min-w-[10rem] lg:w-[12rem] h-[36px] ${style} rounded-[15px] flex justify-center items-center gap-2 cursor-pointer`}
+      className={`min-w-[10rem] lg:w-[12rem] h-[36px] sm:h-[36px] ${style} rounded-[15px] flex justify-center items-center gap-2 cursor-pointer`}
     >
       <div className="flex flex-row justify-center items-center">
         <span className='font-semibold tracking-tight whitespace-nowrap'>
@@ -111,7 +110,7 @@ export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({ href }) 
   const router = useRouter();
   return (
     <div
-      className='h-[36px] flex-row justify-center items-center gap-4 cursor-pointer flex'
+      className='h-[36px] sm:h-[36px] flex-row justify-center items-center gap-4 cursor-pointer flex'
       onClick={() => router.push(href)}
     >
       <LeftTurnArrowIcon></LeftTurnArrowIcon>
@@ -123,14 +122,24 @@ export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({ href }) 
 }
 
 export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSubmitting = false, isPaidUser, isPaidFeature = false }) => {
-  function getButtonStyle() {
-    if (isSubmitting) {
-      return 'bg-gray-600'
-    }
-    return 'bg-blue-600'
-  }
   return (
-    <button onClick={onClick} className={`mx-2 ${getButtonStyle()} rounded text-white px-3 py-1 m-2`} disabled={isSubmitting}>
+    <button className='btn w-[100px] sm:w-[120px] h-[36px] sm:h-[36px] sm:gap-x-2 text-white sm:font-semibold bg-blue-600 disabled:bg-gray-600 disabled:animate-pulse whitespace-nowrap rounded-xl' onClick={onClick} disabled={isSubmitting}>
+      {children}
+    </button>
+  )
+}
+
+export const BigGrayButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSubmitting = false, isPaidUser, isPaidFeature = false }) => {
+  return (
+    <button className='btn min-w-[100px] sm:min-w-[120px] h-[36px] sm:h-[36px] sm:gap-x-2 text-gray-800 text-sm bg-gray-300 disabled:bg-gray-600 disabled:animate-pulse whitespace-nowrap rounded-xl' onClick={onClick} disabled={isSubmitting}>
+      {children}
+    </button>
+  )
+}
+
+export const InversedBigBlueButton: React.FC<DrlambdaButtonProps> = ({ children, onClick, isSubmitting = false, isPaidUser, isPaidFeature = false }) => {
+  return (
+    <button className='btn w-[100px] sm:w-[120px] h-[36px] sm:h-[36px] sm:gap-x-2 text-blue-600 sm:font-semibold bg-white disabled:text-gray-600 disabled:animate-pulse whitespace-nowrap rounded-xl' onClick={onClick} disabled={isSubmitting}>
       {children}
     </button>
   )

@@ -13,6 +13,8 @@ import {
   ScriptsIcon,
 } from '@/app/(feature)/icons';
 import { current } from '@reduxjs/toolkit';
+import { BigGrayButton } from '../button/DrlambdaButton';
+import { FaShare, FaShareAlt } from 'react-icons/fa';
 type SaveButtonProps = {
   saveSlides: () => void;
 };
@@ -103,21 +105,12 @@ export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
 
   return (
     <div className='col-span-1'>
-      <div
-        className='h-8 px-3 py-1 bg-zinc-100 rounded-lg justify-center items-center gap-2.5 inline-flex cursor-pointer'
-        onClick={toggleShare}
-      >
-        <div className='text-center text-gray-700 text-sm font-medium font-creto-medium leading-normal tracking-wide whitespace-nowrap overflow-hidden text-ellipsis'>
+      <BigGrayButton onClick={toggleShare}>
+        <div className='flex flex-row items-center gap-x-2'>
           {!share ? 'Share' : 'Stop Sharing'}
+          <FaShareAlt />
         </div>
-        <div className='w-5 h-5 p-0.5 bg-zinc-100 justify-center items-center flex'>
-          <div className='w-4 h-4 relative flex-col justify-start items-start flex'>
-            <div className='w-3.5 h-3.5 relative'>
-              <ShareSlidesIcon />
-            </div>
-          </div>
-        </div>
-      </div>
+      </BigGrayButton>
     </div>
   );
 };

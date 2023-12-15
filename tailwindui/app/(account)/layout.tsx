@@ -24,12 +24,8 @@ export default function AccountLayout({
           <Header loginRequired={true} isLanding={false} isAuth={false} />
         </div>
         <main className='grow flex flex-col'>
-          <div className='grow flex flex-col'>
-            <div className="bg-gradient-to-b from-gray-100 to-white grow flex flex-col h-full pt-16 md:pt-32">
-              <div className='grow h-full w-full max-w-xl md:max-w-none mx-auto px-4 flex flex-row'>
-                <div className='grow w-full'>{children}</div>
-              </div>
-            </div>
+          <div className='grow h-full w-full mx-auto px-4 flex flex-row'>
+            {children}
           </div>
         </main>
         <WorkflowFooter />

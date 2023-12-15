@@ -101,12 +101,6 @@ export default function Topic_SocialPost() {
       ? sessionStorage.language
       : 'English'
   )
-  const [selectedResourceId, setSelectedResourceId] = useState<string[]>(
-    typeof window !== 'undefined' &&
-      sessionStorage.selectedResourceId != undefined
-      ? JSON.parse(sessionStorage.selectedResourceId)
-      : []
-  )
   const [selectedResources, setSelectedResources] = useState<Resource[]>(
     typeof window !== 'undefined' &&
       sessionStorage.selectedResources != undefined
@@ -214,14 +208,13 @@ export default function Topic_SocialPost() {
       language: language,
       project_id: project_id,
       //youtube_url: youtube,
-      resources: selectedResourceId,
+      resources: selectedResources.map((resource: Resource) => resource.id),
       model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
       post_style: selectedScenario,
     }
     sessionStorage.setItem('topic', formData.topic)
     sessionStorage.setItem('language', formData.language)
     sessionStorage.setItem('selectedResources', JSON.stringify(selectedResources))
-    sessionStorage.setItem('selectedResourceId', JSON.stringify(selectedResourceId))
 
     try {
       const outlinesJson = await callSocialPost(formData as FormatData)
@@ -358,7 +351,6 @@ export default function Topic_SocialPost() {
       }
 
       setSelectedResources(prevList => [...prevList, videoDetails]);
-      setSelectedResourceId(prevList => [...prevList, videoDetails.id]);
 
     } catch (error: any) {
       console.error("Error fetching YouTube video details: ", error);
@@ -379,7 +371,6 @@ export default function Topic_SocialPost() {
       }
 
       setSelectedResources(prevList => [...prevList, pageDetails]);
-      setSelectedResourceId(prevList => [...prevList, pageDetails.id]);
 
     } catch (error: any) {
       console.error("Error reading webpage details: ", error);
@@ -475,9 +466,6 @@ export default function Topic_SocialPost() {
     setSelectedResources(currentResources =>
       currentResources.filter((_, index) => index !== indexToRemove)
     );
-    setSelectedResourceId(currentResourceIds =>
-      currentResourceIds.filter((_, index) => index !== indexToRemove)
-    );
   };
 
   return (
@@ -493,8 +481,6 @@ export default function Topic_SocialPost() {
       <ToastContainer />
 
       <FileUploadModal
-        selectedResourceId={selectedResourceId}
-        setSelectedResourceId={setSelectedResourceId}
         selectedResources={selectedResources}
         setSelectedResources={setSelectedResources}
         showModal={showFileModal}

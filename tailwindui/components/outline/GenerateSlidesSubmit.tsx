@@ -3,6 +3,8 @@ import { useRouter } from 'next/navigation'
 import AuthService from '@/services/AuthService'
 import 'react-toastify/dist/ReactToastify.css'
 import UserService from '../../services/UserService'
+import Resource from '@/models/Resource'
+import ResourceService from '@/services/ResourceService'
 
 interface OutlineSection {
   title: string
@@ -58,37 +60,7 @@ const GenerateSlidesSubmit = ({
   const [isSubmittingSlide, setIsSubmittingSlide] = useState(false)
   const [timer, setTimer] = useState(0)
 
-  async function query_resources(
-    project_id: any,
-    resources: any,
-    outlineData: any
-  ) {
-    const { userId, idToken: token } =
-      await AuthService.getCurrentUserTokenAndId()
-    const headers = new Headers()
-    if (token) {
-      headers.append('Authorization', `Bearer ${token}`)
-    }
-
-    const response = await fetch('/api/query_resources', {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify({
-        outlines: JSON.stringify({ ...outlineData }),
-        resources: resources,
-        project_id: project_id,
-      }),
-    })
-
-    if (response.ok) {
-      return await response.json()
-    } else {
-      // alert("Request failed: " + response.status);
-      console.log(response)
-      // setIsSubmittingScript(false);
-      // setIsSubmittingSlide(false);
-    }
-  }
+  
 
   async function generateSlidesPreview(formData: any, token: string) {
     const response = await fetch('/api/generate_slides', {
@@ -151,8 +123,8 @@ const GenerateSlidesSubmit = ({
       typeof window !== 'undefined'
         ? sessionStorage.getItem('project_id')
         : null
-    const resources =
-      typeof window !== 'undefined' ? JSON.parse(sessionStorage.getItem('selectedResourceId') || '') : null
+    const selectedResources =
+      typeof window !== 'undefined' ? JSON.parse(sessionStorage.getItem('selectedResources') || '') : null
     const addEquations =
       typeof window !== 'undefined'
         ? sessionStorage.getItem('addEquations')
@@ -183,14 +155,16 @@ const GenerateSlidesSubmit = ({
       // endIndex: 2,  // generate first 2 sections only
     }
 
-    if (resources && resources.length > 0 && !extraKnowledge) {
+    if (selectedResources && selectedResources.length > 0 && !extraKnowledge) {
       try {
-        console.log('resources', resources)
+        console.log('resources', selectedResources)
         console.log('querying vector database')
-        const extraKnowledge = await query_resources(
-          project_id,
-          resources,
-          outlineData
+        const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId()
+        const extraKnowledge = await ResourceService.queryResource(
+          project_id || '',
+          selectedResources.map((r: Resource) => r.id),
+          outlineData,
+          token
         )
         sessionStorage.setItem(
           'extraKnowledge',
