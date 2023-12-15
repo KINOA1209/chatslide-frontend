@@ -11,7 +11,7 @@ export default interface Project {
   content_type: string;
   language: string;
   foldername: string;
-  resource_ids: string;
+  // resource_ids: string;
   // fields for Presentation start here
   requirements: string;
   audience: string;

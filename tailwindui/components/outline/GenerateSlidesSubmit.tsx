@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation'
 import AuthService from '@/services/AuthService'
 import 'react-toastify/dist/ReactToastify.css'
 import UserService from '../../services/UserService'
+import Resource from '@/models/Resource'
 
 interface OutlineSection {
   title: string
@@ -151,8 +152,8 @@ const GenerateSlidesSubmit = ({
       typeof window !== 'undefined'
         ? sessionStorage.getItem('project_id')
         : null
-    const resources =
-      typeof window !== 'undefined' ? JSON.parse(sessionStorage.getItem('selectedResourceId') || '') : null
+    const selectedResources =
+      typeof window !== 'undefined' ? JSON.parse(sessionStorage.getItem('selectedResources') || '') : null
     const addEquations =
       typeof window !== 'undefined'
         ? sessionStorage.getItem('addEquations')
@@ -183,13 +184,13 @@ const GenerateSlidesSubmit = ({
       // endIndex: 2,  // generate first 2 sections only
     }
 
-    if (resources && resources.length > 0 && !extraKnowledge) {
+    if (selectedResources && selectedResources.length > 0 && !extraKnowledge) {
       try {
-        console.log('resources', resources)
+        console.log('resources', selectedResources)
         console.log('querying vector database')
         const extraKnowledge = await query_resources(
           project_id,
-          resources,
+          selectedResources.map((r: Resource) => r.id),
           outlineData
         )
         sessionStorage.setItem(
