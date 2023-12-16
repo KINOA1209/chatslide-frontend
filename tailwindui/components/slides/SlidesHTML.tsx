@@ -721,10 +721,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       </div>
 
       {/* transcripotList */}
-      <ScriptEditor
+      {transcriptList.length > 0 &&
+       <ScriptEditor
         transcriptList={transcriptList}
         setTranscriptList={setTranscriptList}
-        currentSlideIndex={currentSlideIndex} />
+        currentSlideIndex={currentSlideIndex} />}
 
       {/* horizontal  */}
       <div className='block lg:hidden max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
