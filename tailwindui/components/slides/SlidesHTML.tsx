@@ -2,9 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import sanitizeHtml from 'sanitize-html';
-import { MathJax, MathJaxContext } from 'better-react-mathjax';
 import './slidesHTML.css';
-import dynamic from 'next/dynamic';
 import {
   availableTemplates,
   // templateSamples,
@@ -22,15 +20,14 @@ import {
 } from './SlideButtons';
 
 import SlideContainer from './SlideContainer';
-import { h1Style, h2Style, h3Style, h4Style, listStyle } from './Styles';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import { templateDispatch } from './templateDispatch';
-import { ScriptEditIcon } from '@/app/(feature)/workflow-review-slides/icons';
 import { useRouter } from 'next/navigation';
 import { availableLayouts } from './slideLayout';
 import TestSlidesData from './TestSlidesData.json';
 import AuthService from '@/services/AuthService';
 import customizable_elements from './templates_customizable_elements/customizable_elements';
+import ScriptEditor from './ScriptEditor';
 export interface SlideElement {
   type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
   className:
@@ -82,6 +79,7 @@ type SlidesHTMLProps = {
   setFinalSlides: Function;
   isViewing?: boolean; // viewing another's shared project
   transcriptList?: string[];
+  setTranscriptList?: (transcriptList: string[]) => void;
 };
 
 // Load customizable elements from session storage or use default values
@@ -98,6 +96,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
   setFinalSlides,
   isViewing = false,
   transcriptList = [],
+  setTranscriptList = () => { },
 }) => {
   const [slides, setSlides] = useState<Slide[]>([]);
   const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
@@ -558,6 +557,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       newSlides.splice(currentSlideIndex, 1);
       newFinalSlides.splice(currentSlideIndex, 1);
 
+      if (transcriptList.length > 0) {
+        const newTranscriptList = [...transcriptList];
+        newTranscriptList.splice(currentSlideIndex, 1);
+        setTranscriptList(newTranscriptList);
+      }
+
       if (currentSlideIndex >= newSlides.length) {
         setCurrentSlideIndex(newSlides.length - 1);
       }
@@ -715,34 +720,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         />
       </div>
 
-      {/* preview little image */}
-
-      {/* scriptlist textbox */}
-      {transcriptList !== null && transcriptList.length > 0 && (
-        <div
-          className={`w-screen max-w-[960px] h-[200px] bg-zinc-100 rounded shadow flex flex-col overflow-y-auto my-4 ml-2`}
-        >
-          <div className='px-4 py-2 h-8 bg-zinc-100 flex flex-row justify-between items-center sticky top-0 border-b-2 border-gray-300'>
-            <div className='text-neutral-900 text-s font-creato-medium '>
-              Script
-            </div>
-            <div
-              className='cursor-pointer'
-              onClick={() => router.push('/workflow-edit-script')}
-            >
-              <ButtonWithExplanation
-                button={<ScriptEditIcon />}
-                explanation='Edit Script'
-              />
-            </div>
-          </div>
-          <div className='flex flex-col gap-4 '>
-            <div className='px-4 py-2 w-full text-gray-700 text-xs font-normal font-creato-medium leading-[1.125rem] tracking-[0.015rem]'>
-              {transcriptList[currentSlideIndex]}
-            </div>
-          </div>
-        </div>
-      )}
+      {/* transcripotList */}
+      <ScriptEditor
+        transcriptList={transcriptList}
+        setTranscriptList={setTranscriptList}
+        currentSlideIndex={currentSlideIndex} />
 
       {/* horizontal  */}
       <div className='block lg:hidden max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>

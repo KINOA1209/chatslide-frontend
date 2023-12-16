@@ -6,26 +6,11 @@ import FeedbackButton from '@/components/ui/feedback'
 import SlideVisualizer from '@/components/slides/SlideVisualizer'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { ScriptEditIcon } from './icons'
-import { useRouter } from 'next/navigation'
-import ButtonWithExplanation from '@/components/button/ButtonWithExplanation'
 import UserService from '@/services/UserService'
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner'
 
 export default function WorkflowStep3() {
-  const router = useRouter()
-  const slide_files =
-    typeof sessionStorage !== 'undefined'
-      ? sessionStorage.getItem('slide_files') || []
-      : []
   const contentRef = useRef<HTMLDivElement>(null)
-  // script data
-  const transcriptData =
-    typeof sessionStorage !== 'undefined'
-      ? sessionStorage.getItem('transcripts')
-      : null
-  const transcripts = transcriptData ? JSON.parse(transcriptData) : []
-  const [transcriptList, setTranscriptList] = useState<string[]>(transcripts)
   const [isPaidUser, setIsPaidUser] = useState(false);
   const [isGpt35, setIsGpt35] = useState(typeof sessionStorage !== 'undefined'
     ? JSON.parse(sessionStorage.getItem('isGpt35') || 'true')
@@ -63,7 +48,7 @@ export default function WorkflowStep3() {
         ref={contentRef}
       >
         {/* slides */}
-        <SlideVisualizer isGpt35={isGpt35} isSubmitting={isSubmitting} setIsSubmitting={setIsSubmitting} transcriptList={transcriptList}/>
+        <SlideVisualizer isGpt35={isGpt35} isSubmitting={isSubmitting} setIsSubmitting={setIsSubmitting}/>
 
       </div>
 

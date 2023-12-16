@@ -5,9 +5,8 @@ import { Slide } from '@/components/slides/SlidesHTML'
 import ExportToPdfButton from './exportToPdfButton'
 import dynamic from 'next/dynamic'
 import { ShareToggleButton } from '@/components/slides/SlideButtons'
-import UserService from '../../services/UserService'
 import AuthService from '../../services/AuthService'
-import { useRouter } from 'next/navigation'
+import ScriptEditor from './ScriptEditor'
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
   ssr: false,
@@ -17,28 +16,25 @@ type SlideVisualizerProps = {
   isGpt35: boolean
   isSubmitting: boolean
   setIsSubmitting: (isSubmitting: boolean) => void
-  transcriptList?: string[]
 }
 
 const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
   isGpt35,
   isSubmitting,
   setIsSubmitting,
-  transcriptList = [],
 }) => {
   const [host, setHost] = useState('https://drlambda.ai')
 
   const [finalSlides, setFinalSlides] = useState<Slide[]>([])
   const [share, setShare] = useState(false)
-  const [isPaidUser, setIsPaidUser] = useState(false)
-  const router = useRouter()
 
-  useEffect(() => {
-    ;(async () => {
-      const isPaidUser = await UserService.isPaidUser()
-      setIsPaidUser(isPaidUser)
-    })()
-  }, [])
+  // script data
+  const transcriptData =
+    typeof sessionStorage !== 'undefined'
+      ? sessionStorage.getItem('transcripts')
+      : null
+  const transcripts = transcriptData ? JSON.parse(transcriptData) : []
+  const [transcriptList, setTranscriptList] = useState<string[]>(transcripts)
 
   useEffect(() => {
     setShare(sessionStorage.getItem('is_shared') === 'true')
@@ -102,6 +98,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
         setIsSubmitting(false)
         console.log(resp.data.res)
         sessionStorage.setItem('transcripts', JSON.stringify(resp.data.res))
+        setTranscriptList(resp.data.res)
       } else {
         alert('Request failed: ' + response.status)
         console.log(response)
@@ -140,7 +137,12 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
           </div>
         )}
         {/* slides contents */}
-        <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} transcriptList={transcriptList} />
+        <SlidesHTML
+          finalSlides={finalSlides}
+          setFinalSlides={setFinalSlides}
+          transcriptList={transcriptList}
+          setTranscriptList={setTranscriptList}
+        />
 
       </div>
     </div>
