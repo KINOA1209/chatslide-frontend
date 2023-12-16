@@ -1,12 +1,9 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
-import ExportToPDFModal from './exportToPdfModal'
 import AuthService from '../../services/AuthService'
-import { LoadingIcon } from '@/components/ui/progress'
 import { Slide } from './SlidesHTML'
 import PaywallModal from '../forms/paywallModal'
-import { DownloadIcon } from '@/app/(feature)/icons'
 import SlideContainer from './SlideContainer'
 import generatePDF, { Resolution, Margin, Options } from 'react-to-pdf'
 import { BigGrayButton } from '../button/DrlambdaButton'
