@@ -32,7 +32,7 @@ const configData: Config = {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold
 			fontFamily: "'nimbus-sans-bold', sans-serif", // font-nimbus-sans-bold
-			lineHeight: 1.1, // leading-[110%] is equivalent to a line height of 1.1
+			lineHeight: 1.8, // leading-[110%] is equivalent to a line height of 1.1
 			whiteSpace: 'nowrap', // whitespace-nowrap},
 			color: '#8C1515', // text-[#8C1515] color
 		},
@@ -44,7 +44,7 @@ const configData: Config = {
 			fontWeight: 'bold', // font-nimbus-sans-bold
 			fontSize: '18pt', // text-xl in points
 			fontStyle: 'normal', // font-normal
-			lineHeight: 1.5, // leading-[150%] is equivalent to a line height of 1.5
+			lineHeight: 1.8, // leading-[150%] is equivalent to a line height of 1.5
 			color: '#EF4444', // text-red-800 color
 		},
 		// contentFont: 'text-base font-nimbus-sans-regular font-normal leading-9 ',
@@ -64,7 +64,7 @@ const configData: Config = {
 			fontSize: '32pt', // text-4xl in points (assuming 1rem is 1pt)
 			fontWeight: 'bold', // font-bold
 			fontFamily: "'nimbus-sans-bold', sans-serif", // font-nimbus-sans-bold
-			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
+			lineHeight: 1.5, // leading-[120%] is equivalent to a line height of 1.2
 			color: '#FFFFFF', // text-white color
 		},
 	},
@@ -286,7 +286,7 @@ const configData: Config = {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
-			lineHeight: 1, // leading-[100%] is equivalent to a line height of 1},
+			lineHeight: 1.5, // leading-[100%] is equivalent to a line height of 1},
 			color: '#000', // text-black color
 		},
 		// subtopicFont:
@@ -308,7 +308,7 @@ const configData: Config = {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
-			lineHeight: 1.4, // leading-[140%]
+			lineHeight: 1.2, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
 		},
@@ -322,7 +322,7 @@ const configData: Config = {
 			fontSize: '32pt', // text-4xl in points
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
-			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
+			lineHeight: 1.5, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
 			color: '#374151', // text-neutral-800 color},
 		},
