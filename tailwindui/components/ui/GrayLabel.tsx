@@ -12,3 +12,11 @@ export const GrayLabel: React.FC<InputBoxProps> = ({ children, bgColor='bg-gray-
     </div>
   )
 }
+
+export const TextLabel: React.FC<InputBoxProps> = ({ children }) => {
+  return (
+    <div className={`text-sm text-gray-700`}>
+      {children}
+    </div>
+  )
+}
