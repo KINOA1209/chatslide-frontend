@@ -9,6 +9,8 @@ import { loadCustomizableElements } from './SlidesHTML';
 const QuillEditable = dynamic(
 	() => import('@/components/socialPost/quillEditor'),
 	{ ssr: false },
+	() => import('@/components/slides/quillEditorSlide'),
+	{ ssr: false },
 );
 
 export const templateDispatch = (
@@ -45,6 +47,14 @@ export const templateDispatch = (
 		console.log('chosen template string:', slide.template);
 		console.log('template config:', customizableElements);
 	}, []);
+	const Template =
+		availableTemplates[slide.template as keyof typeof availableTemplates];
+	let keyPrefix = '';
+	if (exportToPdfMode) {
+		keyPrefix = 'exportToPdf';
+	} else if (!canEdit) {
+		keyPrefix = 'preview';
+	}
 	const Template =
 		availableTemplates[slide.template as keyof typeof availableTemplates];
 
