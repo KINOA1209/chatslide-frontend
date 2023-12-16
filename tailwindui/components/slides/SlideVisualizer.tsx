@@ -102,10 +102,6 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
         setIsSubmitting(false)
         console.log(resp.data.res)
         sessionStorage.setItem('transcripts', JSON.stringify(resp.data.res))
-        sessionStorage.setItem(
-          'image_files',
-          JSON.stringify(resp.data.image_files)
-        )
       } else {
         alert('Request failed: ' + response.status)
         console.log(response)
