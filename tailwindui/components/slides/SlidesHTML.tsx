@@ -601,7 +601,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
       {/* hidden div for export to pdf */}
       <div 
-      className='fixed right-0 bottom-0 -z-1'
+      className='absolute left-[-9999px] top-[-9999px] -z-1'
       >
         <div ref={exportSlidesRef}>
           {/* Render all of your slides here. This can be a map of your slides array */}
