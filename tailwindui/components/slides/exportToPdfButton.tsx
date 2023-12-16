@@ -11,16 +11,16 @@ import { FaDownload, FaRing, FaTruckLoading } from 'react-icons/fa'
 
 
 interface ExportToPdfProps {
-  slides: Slide[]
+  slides: Slide[],
+  exportSlidesRef: React.RefObject<HTMLDivElement>
 }
 
-const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ slides }) => {
+const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ slides, exportSlidesRef }) => {
   const topic =
     typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('topic') : ''
   const [user, setUser] = useState(null)
   const [downloadingPDF, setDownloadingPDF] = useState(false)
   const [showPaymentModal, setShowPaymentModal] = useState(false)
-  const exportSlidesRef = useRef<HTMLDivElement>(null)
   let pdfIsBeingGenerated = false
 
   const exportOptions: Options = {
@@ -58,8 +58,8 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ slides }) => {
     fetchUser()
   }, [])
 
-  function exportToPdf() {
-    generatePDF(exportSlidesRef, exportOptions)
+  async function exportToPdf() {
+    await generatePDF(exportSlidesRef, exportOptions)
   }
 
   const handleSavePDF = async () => {
@@ -78,7 +78,7 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ slides }) => {
       })
 
       if (response.ok) {
-        exportToPdf()
+        await exportToPdf()
       } else if (response.status === 402) {
         setShowPaymentModal(true)
       } else {
@@ -110,22 +110,6 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ slides }) => {
             <FaDownload className='text-gray-800'/>
           </div>
         </BigGrayButton>
-      </div>
-
-      {/* hidden div for export to pdf */}
-      <div >
-        <div ref={exportSlidesRef}>
-          {/* Render all of your slides here. This can be a map of your slides array */}
-          {slides.map((slide, index) => (
-            <div key={`exportToPdfContainer` + index.toString()} style={{ pageBreakAfter: 'always' }}>
-              <SlideContainer
-                slides={slides}
-                currentSlideIndex={index}
-                exportToPdfMode={true}
-              />
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   )

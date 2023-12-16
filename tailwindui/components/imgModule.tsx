@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import PaywallModal from './forms/paywallModal';
 import ResourceService from '@/services/ResourceService';
 import Resource from '@/models/Resource';
+import Image from 'next/image';
 
 interface ImgModuleProp {
     imgsrc: string;
@@ -559,7 +560,7 @@ export const ImgModule = ({
             {/* select image modal */}
             {createPortal(
                 <Transition
-                    className='hidden sm:flex h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex-col md:items-center md:justify-center'
+                    className='flex h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex-col md:items-center md:justify-center'
                     show={showModal}
                     onClick={closeModal}
                     enter='transition ease duration-300 transform'
@@ -812,7 +813,7 @@ export const ImgModule = ({
             {/* image itself */}
             <div
                 onClick={openModal}
-                className={`w-full h-full transition ease-in-out duration-150 ${
+                className={`w-full h-full transition ease-in-out duration-150 relative ${
                     selectedImg === ''
                         ? 'bg-[#E7E9EB]'
                         : canEdit
@@ -842,16 +843,33 @@ export const ImgModule = ({
                         </div>
                     </div>
                 ) : (
-                    <img
-                        style={{
-                            objectFit: 'contain',
-                            objectPosition: 'center',
-                        }}
-                        className={`transition ease-in-out duration-150 ${
-                            canEdit ? 'hover:brightness-90' : 'cursor-default'
-                        }`}
-                        src={imgsrc}
-                    />
+
+                  // ignore cors
+                <Image
+                  src={imgsrc}
+                  alt="Your image description" // Add an alt attribute for accessibility
+                  layout="contain"
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  className={`w-full h-auto ${canEdit ? 'hover:brightness-90' : 'cursor-default'
+                    }`}
+                  style={{ // for save to pdf
+                    objectFit: 'contain',
+                    objectPosition: 'center',
+                  }}
+                />
+                // <img
+                //     src={imgsrc}
+                //     alt='Your image description' // Add an alt attribute for accessibility
+                //     className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'
+                //         }`}
+                //     style={{ // for save to pdf
+                //         width: '100%', // or specific dimensions as needed
+                //         objectFit: 'contain',
+                //         objectPosition: 'center',
+                //     }}
+                //     />
                 )}
             </div>
         </>
