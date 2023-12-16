@@ -10,6 +10,7 @@ import { Auth, Hub } from 'aws-amplify'
 import AuthService from '../../services/AuthService'
 import UserService from '@/services/UserService'
 import { FaBars, FaTimes } from 'react-icons/fa'
+import { useLocation } from 'react-router-dom';
 
 interface SideBarProps {
 }
@@ -100,11 +101,24 @@ const SideBar = ({ }: SideBarProps) => {
     }
   }, [])
 
+
+
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  useEffect(() => {
+    if (window.innerWidth < 1080) {
+      setIsSidebarOpen(false);
+    }
+
+    if (location.pathname.includes('/workflow-review-slides') && window.innerWidth < 1600) {
+      setIsSidebarOpen(false);
+    }
+  },);
 
 
   return (
@@ -120,7 +134,7 @@ const SideBar = ({ }: SideBarProps) => {
       </button>
 
       {isSidebarOpen &&
-      <>
+        <>
           <div className='py-4 flex flex-col items-top justify-between'>
             {/* Site branding */}
             <div className='px-2 gap-x-2 flex flex-row items-center justify-start'>
