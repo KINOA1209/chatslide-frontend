@@ -36,6 +36,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
       : null
   const transcripts = transcriptData ? JSON.parse(transcriptData) : []
   const [transcriptList, setTranscriptList] = useState<string[]>(transcripts)
+  const exportSlidesRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setShare(sessionStorage.getItem('is_shared') === 'true')
@@ -121,7 +122,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
     <div className='flex flex-col justify-center items-center gap-4 my-4'>
       {/* buttons: export and scripts and share slides */}
       <div className='flex flex-row justify-end items-center'>
-        <ExportToPdfButton slides={slides} />
+        <ExportToPdfButton slides={slides} exportSlidesRef={exportSlidesRef} />
         <ShareToggleButton setShare={setShare} share={share} />
       </div>
       {/* shareable link */}
@@ -140,6 +141,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
         setSlides={setSlides}
         transcriptList={transcriptList}
         setTranscriptList={setTranscriptList}
+        exportSlidesRef={exportSlidesRef}
       />
 
     </div>

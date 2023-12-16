@@ -37,6 +37,13 @@ const nextConfig = {
       );
     return config;
   },
+
+  images: {
+    domains: [
+      'img.freepik.com',
+      'unsplash.com',
+  ],
+  },
 }
 
 module.exports = nextConfig

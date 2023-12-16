@@ -80,6 +80,7 @@ type SlidesHTMLProps = {
   isViewing?: boolean; // viewing another's shared project
   transcriptList?: string[];
   setTranscriptList?: (transcriptList: string[]) => void;
+  exportSlidesRef?: React.RefObject<HTMLDivElement>;
 };
 
 // Load customizable elements from session storage or use default values
@@ -97,6 +98,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
   isViewing = false,
   transcriptList = [],
   setTranscriptList = () => { },
+  exportSlidesRef = useRef<HTMLDivElement>(null),
 }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
   const foldername =
@@ -120,7 +122,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
   const [present, setPresent] = useState(false);
   const slideRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const allSlidesRef = useRef<HTMLDivElement>(null);
   const [saveStatus, setSaveStatus] = useState('Up to date');
   const [dimensions, setDimensions] = useState({
     width: typeof window !== 'undefined' ? window.innerWidth : 960,
@@ -576,13 +577,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
   const editableTemplateDispatch = (
     slide: Slide,
     index: number,
-    canEdit: boolean
+    canEdit: boolean,
+    exportToPdfMode: boolean = false
   ) =>
     templateDispatch(
       slide,
       index,
       canEdit,
-      false,
+      exportToPdfMode,
       isEditMode,
       saveSlides,
       setIsEditMode,
@@ -596,6 +598,26 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
   return (
     <div className='flex flex-col items-center justify-center gap-4'>
+
+      {/* hidden div for export to pdf */}
+      <div 
+      className='fixed right-0 bottom-0 -z-1'
+      >
+        <div ref={exportSlidesRef}>
+          {/* Render all of your slides here. This can be a map of your slides array */}
+          {slides.map((slide, index) => (
+            <div key={`exportToPdfContainer` + index.toString()} style={{ pageBreakAfter: 'always' }}>
+              <SlideContainer
+                slides={slides}
+                currentSlideIndex={index}
+                templateDispatch={editableTemplateDispatch}
+                exportToPdfMode={true}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
       {!isViewing && (
         <div className='py-2 hidden sm:block'>
           <ChangeTemplateOptions
