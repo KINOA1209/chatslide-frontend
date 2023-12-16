@@ -131,13 +131,26 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
   const isFirstRender = useRef(true);
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const router = useRouter();
-
-  const presentScale = Math.min(
+  const [presentScale, setPresentScale] = useState(Math.min(
     dimensions.width / 960,
     dimensions.height / 540
-  );
-  const nonPresentScale = Math.min(1, presentScale * 0.9);
+  ))
+  const [nonPresentScale, setNonPresentScale] = useState(Math.min(1, presentScale * 0.9));
+
+  useEffect(() => {
+    const handleResize = () => {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+      console.log('window.innerWidth', window.innerWidth);
+      setNonPresentScale(Math.min(1, window.innerWidth / 960 * 0.9));
+      console.log('nonPresentScale', nonPresentScale);
+    };
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     if (unsavedChanges) {
