@@ -620,9 +620,37 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
           />
         </div>
       )}
+
       {/* buttons and contents */}
-      <div className='max-w-4xl relative flex flex-row items-center justify-center gap-4 '>
+      <div className='max-w-4xl relative flex flex-row items-center justify-center gap-4'>
         <ToastContainer />
+
+        {/* vertical bar */}
+        <div className='h-[540px] w-[128px] hidden lg:block mx-auto justify-center items-center'>
+          <div className='h-full flex flex-col flex-nowrap overflow-y-auto  overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
+            {Array(slides.length)
+              .fill(0)
+              .map((_, index) => (
+                <div
+                  key={`previewContainer` + index.toString()}
+                  className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
+                  onClick={() => setCurrentSlideIndex(index)} // Added onClick handler
+                >
+                  {/* {index + 1} */}
+                  <SlideContainer
+                    slides={slides}
+                    currentSlideIndex={index}
+                    scale={0.12}
+                    isViewing={true}
+                    templateDispatch={editableTemplateDispatch}
+                    slideRef={slideRef}
+                    containerRef={containerRef}
+                    highlightBorder={currentSlideIndex === index}
+                  />
+                </div>
+              ))}
+          </div>
+        </div>
 
         <SlideLeftNavigator
           currentSlideIndex={currentSlideIndex}
@@ -648,7 +676,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         />
 
         {/* 4 buttons for change layout, present, add and add / delete slide */}
-        <div className='absolute -right-[10rem] top-[7rem] flex flex-col justify-between items-center mb-6 gap-[1.25rem] ml-[6rem]'>
+        <div className='min-w-[128px] flex flex-col justify-between items-start gap-[1.25rem]'>
           <ButtonWithExplanation
             button={<PresentButton openPresent={openPresent} />}
             explanation='Present'
@@ -712,6 +740,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
           ></div>
         )}
       </div>
+      
       <div className='py-[1rem]'>
         <SlidePagesIndicator
           currentSlideIndex={currentSlideIndex}
@@ -752,31 +781,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         </div>
       </div>
 
-      <div className='absolute top-[32px] -left-[15rem] h-4/5 hidden lg:block mx-auto justify-center items-center'>
-        <div className='h-full flex flex-col flex-nowrap overflow-y-auto  overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
-          {Array(slides.length)
-            .fill(0)
-            .map((_, index) => (
-              <div
-                key={`previewContainer` + index.toString()}
-                className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
-                onClick={() => setCurrentSlideIndex(index)} // Added onClick handler
-              >
-                {/* {index + 1} */}
-                <SlideContainer
-                  slides={slides}
-                  currentSlideIndex={index}
-                  scale={0.12}
-                  isViewing={true}
-                  templateDispatch={editableTemplateDispatch}
-                  slideRef={slideRef}
-                  containerRef={containerRef}
-                  highlightBorder={currentSlideIndex === index}
-                />
-              </div>
-            ))}
-        </div>
-      </div>
     </div>
   );
 };

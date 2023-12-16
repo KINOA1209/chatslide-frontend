@@ -44,7 +44,7 @@ export default function WorkflowStep3() {
       <ToastContainer enableMultiContainer containerId={'slides'} />
 
       <div
-        className={`mt-[2rem] max-w-4xl px-6 flex flex-col relative mx-auto`}
+        className={`max-w-4xl px-6 flex flex-col relative mx-auto`}
         ref={contentRef}
       >
         {/* slides */}

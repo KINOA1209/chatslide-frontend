@@ -117,34 +117,30 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
   }, [isSubmitting])
 
   return (
-    <div>
-      <div className='px-4 sm:px-6 flex flex-col justify-center items-center gap-4'>
-        {/* buttons: export and scripts and share slides */}
-        <div className='flex flex-row justify-end items-center'>
-          {/* want some more script Form submission */}
-          <ExportToPdfButton finalSlides={finalSlides} />
-          <ShareToggleButton setShare={setShare} share={share} />
-        </div>
-        {/* Timer */}
-        {/* <Timer expectedSeconds={60} isSubmitting={isSubmitting} /> */}
-        {/* shareable link */}
-        {share && (
-          <div className='w-[100] md:w-[40rem] flex-grow'>
-            <label className='text-sm text-gray-700'>View only link:</label>
-            <ClickableLink
-              link={`${host}/shared/${sessionStorage.getItem('project_id')}`}
-            />
-          </div>
-        )}
-        {/* slides contents */}
-        <SlidesHTML
-          finalSlides={finalSlides}
-          setFinalSlides={setFinalSlides}
-          transcriptList={transcriptList}
-          setTranscriptList={setTranscriptList}
-        />
-
+    <div className='flex flex-col justify-center items-center gap-4 my-4'>
+      {/* buttons: export and scripts and share slides */}
+      <div className='flex flex-row justify-end items-center'>
+        <ExportToPdfButton finalSlides={finalSlides} />
+        <ShareToggleButton setShare={setShare} share={share} />
       </div>
+      {/* shareable link */}
+      {share && (
+        <div className='w-[100] md:w-[40rem] flex-grow'>
+          <label className='text-sm text-gray-700'>View only link:</label>
+          <ClickableLink
+            link={`${host}/shared/${sessionStorage.getItem('project_id')}`}
+          />
+        </div>
+      )}
+
+      {/* slides and scripts contents */}
+      <SlidesHTML
+        finalSlides={finalSlides}
+        setFinalSlides={setFinalSlides}
+        transcriptList={transcriptList}
+        setTranscriptList={setTranscriptList}
+      />
+
     </div>
   )
 }

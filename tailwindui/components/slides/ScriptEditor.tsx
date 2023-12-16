@@ -18,7 +18,13 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({ transcriptList, setTran
 
   return (
     <div
-      className={`w-screen max-w-[960px] h-[200px] bg-zinc-100 rounded shadow flex flex-col overflow-y-auto my-4 ml-2`}
+      className={`w-screen max-w-[960px] h-[200px] bg-zinc-100 rounded shadow flex flex-col overflow-y-auto ml-5`} // shift left to align with slide
+      style={{
+        boxSizing: 'border-box',
+        border: 'none',
+        boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
+        borderRadius: '5px',
+      }}
     >
       <div className='px-4 py-2 h-8 bg-zinc-100 flex flex-row justify-between items-center sticky top-0 border-b-2 border-gray-300'>
         <div className='text-neutral-900 text-s font-creato-medium'>
