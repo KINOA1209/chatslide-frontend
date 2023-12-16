@@ -75,8 +75,8 @@ export class Slide {
 }
 
 type SlidesHTMLProps = {
-  finalSlides: Slide[];
-  setFinalSlides: Function;
+  slides: Slide[];
+  setSlides: Function;
   isViewing?: boolean; // viewing another's shared project
   transcriptList?: string[];
   setTranscriptList?: (transcriptList: string[]) => void;
@@ -92,13 +92,12 @@ export const loadCustomizableElements = (templateName: string) => {
 
 // it will render the slides fetched from `foldername` in sessionStorage
 const SlidesHTML: React.FC<SlidesHTMLProps> = ({
-  finalSlides,
-  setFinalSlides,
+  slides,
+  setSlides,
   isViewing = false,
   transcriptList = [],
   setTranscriptList = () => { },
 }) => {
-  const [slides, setSlides] = useState<Slide[]>([]);
   const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
   const foldername =
     typeof sessionStorage !== 'undefined'
@@ -166,7 +165,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     );
   }, []);
 
-  // Watch for changes in finalSlides
+  // Watch for changes in slides
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
@@ -174,10 +173,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       return;
     }
 
-    console.log('finalSlides changed');
+    console.log('slides changed');
     setUnsavedChanges(true);
     saveSlides();
-  }, [finalSlides]);
+  }, [slides]);
 
   useEffect(() => {
     console.log('layout Changed to: ', chosenLayout);
@@ -199,30 +198,21 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     // console.log('Slides after changing template:', newSlides)
     setSlides(newSlides);
 
-    const newFinalSlides = finalSlides.map((slide, index) => {
-      // Keep the template of the first slide unchanged
-      //   if (index === 0) {
-      //     return slide
-      //   }
-      // Update the template for slides starting from the second one
-      return { ...slide, template: newTemplate };
-    });
-    setFinalSlides(newFinalSlides);
     console.log('Slides after changing template:', newSlides);
 
     setUnsavedChanges(true);
     saveSlides();
   };
 
-  // Function to send a request to auto-save finalSlides
+  // Function to send a request to auto-save slides
   const saveSlides = async () => {
     if (isViewing) {
       console.log("Viewing another's shared project, skip saving");
       return;
     }
 
-    if (finalSlides.length === 0) {
-      console.log('Final slides not yet loaded, skip saving');
+    if (slides.length === 0) {
+      console.log('slides not yet loaded, skip saving');
       return;
     }
 
@@ -237,7 +227,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       await AuthService.getCurrentUserTokenAndId();
     const formData = {
       foldername: foldername,
-      final_slides: finalSlides,
+      final_slides: slides,
       project_id: project_id,
     };
     // Send a POST request to the backend to save finalSlides
@@ -353,7 +343,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       );
       console.log('the parsed slides array:', slidesArray);
       setSlides(slidesArray);
-      setFinalSlides(slidesArray);
     }
   }, []);
 
@@ -473,7 +462,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       return elements;
     });
 
-    setFinalSlides(newSlides);
     console.log('new slides: ', newSlides);
     setSlides(newSlides);
   }
@@ -495,33 +483,24 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
   ) {
     setIsEditMode(false);
     const newSlides = [...slides];
-    const newFinalSlides = [...finalSlides];
 
     const currentSlide = newSlides[slideIndex];
-    const currNewFinalSlides = newFinalSlides[slideIndex];
     const className = tag;
 
     if (className === 'head') {
       currentSlide.head = content as string;
-      currNewFinalSlides.head = content as string;
     } else if (className === 'title') {
       currentSlide.title = content as string;
-      currNewFinalSlides.title = content as string;
     } else if (className === 'subtopic') {
       currentSlide.subtopic = content as string;
-      currNewFinalSlides.subtopic = content as string;
     } else if (className === 'userName') {
       currentSlide.userName = content as string;
-      currNewFinalSlides.userName = content as string;
     } else if (className === 'template') {
       currentSlide.template = content as string;
-      currNewFinalSlides.template = content as string;
     } else if (className === 'layout') {
       currentSlide.layout = content as LayoutKeys;
-      currNewFinalSlides.layout = content as LayoutKeys;
     } else if (className === 'images') {
       currentSlide.images = content as string[];
-      currNewFinalSlides.images = content as string[];
     } else if (className === 'content') {
       let newContent: string[] = [];
       content = content as string[];
@@ -536,13 +515,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       }
 
       currentSlide.content = newContent;
-      currNewFinalSlides.content = newContent;
     } else {
       console.error(`Unknown tag: ${tag}`);
     }
     sessionStorage.setItem('presentation_slides', JSON.stringify(newSlides));
     setSlides(newSlides);
-    setFinalSlides(newFinalSlides);
   }
 
   function goToSlide(index: number) {
@@ -553,22 +530,17 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
   function handleAddPage() {
     const newSlides = [...slides];
-    const newFinalSlides = [...finalSlides];
     const newSlide = new Slide();
     if (currentSlideIndex != 0) {
       newSlides.splice(currentSlideIndex, 0, newSlide);
-      newFinalSlides.splice(currentSlideIndex, 0, newSlide);
     }
     setSlides(newSlides);
-    setFinalSlides(newFinalSlides);
   }
 
   function handleDeletePage() {
     const newSlides = [...slides];
-    const newFinalSlides = [...finalSlides];
     if (currentSlideIndex != 0) {
       newSlides.splice(currentSlideIndex, 1);
-      newFinalSlides.splice(currentSlideIndex, 1);
 
       if (transcriptList.length > 0) {
         const newTranscriptList = [...transcriptList];
@@ -581,7 +553,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       }
     }
     setSlides(newSlides);
-    setFinalSlides(newFinalSlides);
   }
 
   function toggleEditMode() {
@@ -690,7 +661,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
         {/* vertical bar */}
         <div className='h-[540px] w-[128px] hidden xl:block mx-auto justify-center items-center'>
-          <div className='h-full flex flex-col flex-nowrap overflow-y-auto  overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
+          <div
+            className='h-full flex flex-col flex-nowrap overflow-y-auto  overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'
+            >
             {Array(slides.length)
               .fill(0)
               .map((_, index) => (
