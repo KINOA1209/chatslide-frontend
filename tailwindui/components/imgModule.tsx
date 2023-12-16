@@ -844,32 +844,17 @@ export const ImgModule = ({
                     </div>
                 ) : (
 
-                  // ignore cors
-                <Image
-                  src={imgsrc}
-                  alt="Your image description" // Add an alt attribute for accessibility
-                  layout="contain"
-                  width="0"
-                  height="0"
-                  sizes="100vw"
-                  className={`w-full h-auto ${canEdit ? 'hover:brightness-90' : 'cursor-default'
-                    }`}
-                  style={{ // for save to pdf
-                    objectFit: 'contain',
-                    objectPosition: 'center',
-                  }}
-                />
-                // <img
-                //     src={imgsrc}
-                //     alt='Your image description' // Add an alt attribute for accessibility
-                //     className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'
-                //         }`}
-                //     style={{ // for save to pdf
-                //         width: '100%', // or specific dimensions as needed
-                //         objectFit: 'contain',
-                //         objectPosition: 'center',
-                //     }}
-                //     />
+                <img
+                    src={imgsrc}
+                    alt='Your image description' // Add an alt attribute for accessibility
+                    className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'
+                        }`}
+                    style={{ // for save to pdf
+                        width: '100%', // or specific dimensions as needed
+                        objectFit: 'contain',
+                        objectPosition: 'center',
+                    }}
+                    />
                 )}
             </div>
         </>
