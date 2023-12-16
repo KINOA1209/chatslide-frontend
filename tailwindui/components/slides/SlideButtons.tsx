@@ -15,6 +15,8 @@ import {
 import { current } from '@reduxjs/toolkit';
 import { BigGrayButton } from '../button/DrlambdaButton';
 import { FaShare, FaShareAlt } from 'react-icons/fa';
+import { InputBox } from '../ui/InputBox';
+import { TextLabel } from '../ui/GrayLabel';
 type SaveButtonProps = {
   saveSlides: () => void;
 };
@@ -308,32 +310,22 @@ export const ChangeTemplateOptions: React.FC<{
     return storedTemplate || '';
   });
 
-  const handleTemplateChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const newTemplate = event.target.value;
-    setSelectedTemplate(newTemplate);
-
-    // Save the selected template to sessionStorage
-    sessionStorage.setItem('selectedTemplate', newTemplate);
-  };
-
-  const applyTemplateChange = () => {
-    if (selectedTemplate) {
-      onChangeTemplate(selectedTemplate);
-    }
-  };
-
   useEffect(
     () => console.log('templateOptions are:', templateOptions),
     [selectedTemplate]
   );
 
   return (
-    <div className='relative'>
+    <div className='flex flex-col'>
+      <TextLabel>
+        Select Template:
+      </TextLabel>
       <select
-        className='border border-gray-300 rounded-md px-3 py-1 mr-2 w-[20rem]'
-        onChange={handleTemplateChange}
+        className='h-[36px] flex border border-2 border-gray-200 bg-gray-100 rounded-lg text-sm py-0 overflow-visible w-[20rem]'
+        onChange={e => {
+          setSelectedTemplate(e.target.value);
+          onChangeTemplate(e.target.value);
+        }}
         value={selectedTemplate}
       >
         <option value='' disabled>
@@ -345,12 +337,6 @@ export const ChangeTemplateOptions: React.FC<{
           </option>
         ))}
       </select>
-      <button
-        className='bg-blue-500 text-white px-3 py-1 rounded-md cursor-pointer'
-        onClick={applyTemplateChange}
-      >
-        Apply
-      </button>
     </div>
   );
 };
