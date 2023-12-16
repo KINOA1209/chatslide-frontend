@@ -22,13 +22,28 @@
 
 .ql-tooltip {
   z-index: 100;
-  padding: 2% 3% 2% 3%;
+  padding: 2% 3% 2% 3% !important;
+  height: 100px;
+  width: 450px;
 }
 
 .non-editable-ql-editor,
 .non-editable-ql-editor * {
   cursor: pointer !important;
 }
+
+// .ql-color .ql-picker-options [data-value=color-picker]:before {
+//     content: 'Pick Color';
+// }
+
+// .ql-color .ql-picker-options [data-value=color-picker] {
+//     background: none !important;
+//     width: 100% !important;
+//     height: 25px !important;
+//     text-align: center;
+//     color: blue;
+//     text-decoration: underline;
+// }
 
 $i: 8;
 @while $i <= 80 {
