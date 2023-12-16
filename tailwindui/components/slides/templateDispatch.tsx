@@ -7,8 +7,6 @@ import dynamic from 'next/dynamic';
 import React, { CSSProperties, useEffect, useRef } from 'react';
 import { loadCustomizableElements } from './SlidesHTML';
 const QuillEditable = dynamic(
-	() => import('@/components/socialPost/quillEditor'),
-	{ ssr: false },
 	() => import('@/components/slides/quillEditorSlide'),
 	{ ssr: false },
 );
@@ -37,18 +35,10 @@ export const templateDispatch = (
 	isCurrentSlide: boolean = false,
 	brandingColor?: string,
 ): JSX.Element => {
-	let keyPrefix = '';
-	if (exportToPdfMode) {
-		keyPrefix = 'exportToPdf';
-	} else if (!canEdit) {
-		keyPrefix = 'preview';
-	}
-	useEffect(() => {
-		console.log('chosen template string:', slide.template);
-		console.log('template config:', customizableElements);
-	}, []);
-	const Template =
-		availableTemplates[slide.template as keyof typeof availableTemplates];
+	// useEffect(() => {
+	// 	console.log('chosen template string:', slide.template);
+	// 	console.log('template config:', customizableElements);
+	// }, []);
 	let keyPrefix = '';
 	if (exportToPdfMode) {
 		keyPrefix = 'exportToPdf';
