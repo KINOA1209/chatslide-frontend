@@ -26,7 +26,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 }) => {
   const [host, setHost] = useState('https://drlambda.ai')
 
-  const [finalSlides, setFinalSlides] = useState<Slide[]>([])
+  const [slides, setSlides] = useState<Slide[]>([])
   const [share, setShare] = useState(false)
 
   // script data
@@ -78,7 +78,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
       topic: topic,
       project_id: project_id,
       language: language,
-      json_list: finalSlides,
+      json_list: slides,
       model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
     }
 
@@ -121,7 +121,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
     <div className='flex flex-col justify-center items-center gap-4 my-4'>
       {/* buttons: export and scripts and share slides */}
       <div className='flex flex-row justify-end items-center'>
-        <ExportToPdfButton finalSlides={finalSlides} />
+        <ExportToPdfButton slides={slides} />
         <ShareToggleButton setShare={setShare} share={share} />
       </div>
       {/* shareable link */}
@@ -136,8 +136,8 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 
       {/* slides and scripts contents */}
       <SlidesHTML
-        finalSlides={finalSlides}
-        setFinalSlides={setFinalSlides}
+        slides={slides}
+        setSlides={setSlides}
         transcriptList={transcriptList}
         setTranscriptList={setTranscriptList}
       />

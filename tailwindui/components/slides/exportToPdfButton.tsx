@@ -9,17 +9,12 @@ import generatePDF, { Resolution, Margin, Options } from 'react-to-pdf'
 import { BigGrayButton } from '../button/DrlambdaButton'
 import { FaDownload, FaRing, FaTruckLoading } from 'react-icons/fa'
 
-type SlidesHTMLProps = {
-  finalSlides: Slide[]
-  setFinalSlides: React.Dispatch<React.SetStateAction<Slide[]>>
-}
 
 interface ExportToPdfProps {
-  finalSlides: Slide[]
-  //setFinalSlides: React.Dispatch<React.SetStateAction<Slide[]>>;
+  slides: Slide[]
 }
 
-const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
+const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ slides }) => {
   const topic =
     typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('topic') : ''
   const [user, setUser] = useState(null)
@@ -118,13 +113,13 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
       </div>
 
       {/* hidden div for export to pdf */}
-      <div style={{ display: downloadingPDF ? 'block' : 'none', zIndex: -1 }}>
+      <div >
         <div ref={exportSlidesRef}>
           {/* Render all of your slides here. This can be a map of your slides array */}
-          {finalSlides.map((slide, index) => (
+          {slides.map((slide, index) => (
             <div key={`exportToPdfContainer` + index.toString()} style={{ pageBreakAfter: 'always' }}>
               <SlideContainer
-                slides={finalSlides}
+                slides={slides}
                 currentSlideIndex={index}
                 exportToPdfMode={true}
               />
