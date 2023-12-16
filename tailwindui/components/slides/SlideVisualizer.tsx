@@ -7,6 +7,7 @@ import dynamic from 'next/dynamic'
 import { ShareToggleButton } from '@/components/slides/SlideButtons'
 import AuthService from '../../services/AuthService'
 import ScriptEditor from './ScriptEditor'
+import { TextLabel } from '../ui/GrayLabel'
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
   ssr: false,
@@ -126,7 +127,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
       {/* shareable link */}
       {share && (
         <div className='w-[100] md:w-[40rem] flex-grow'>
-          <label className='text-sm text-gray-700'>View only link:</label>
+          <TextLabel>View only link:</TextLabel>
           <ClickableLink
             link={`${host}/shared/${sessionStorage.getItem('project_id')}`}
           />
