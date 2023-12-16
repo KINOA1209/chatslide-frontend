@@ -559,7 +559,7 @@ export const ImgModule = ({
             {/* select image modal */}
             {createPortal(
                 <Transition
-                    className='h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
+                    className='flex h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex-col md:items-center md:justify-center'
                     show={showModal}
                     onClick={closeModal}
                     enter='transition ease duration-300 transform'
@@ -809,7 +809,7 @@ export const ImgModule = ({
                 document.body
             )}
 
-            {/* image itsefl */}
+            {/* image itself */}
             <div
                 onClick={openModal}
                 className={`w-full h-full transition ease-in-out duration-150 ${
