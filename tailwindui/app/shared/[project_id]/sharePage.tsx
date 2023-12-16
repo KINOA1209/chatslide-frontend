@@ -19,7 +19,7 @@ const SharePage: React.FC = () => {
     const project_id = pathname?.split('/').pop();
     const [loading, setLoading] = useState(true);
 
-    const [finalSlides, setFinalSlides] = useState<Slide[]>([]);
+    const [slides, setSlides] = useState<Slide[]>([]);
 
     useEffect(() => {
         // Assume fetchSlideHtml is a function to get slide_html from your project table
@@ -65,7 +65,7 @@ const SharePage: React.FC = () => {
             ) : (
                 <div className="flex items-center justify-center min-h-screen">
                     <div>
-                        <SlidesHTML finalSlides={finalSlides} setFinalSlides={setFinalSlides} isViewing={true} />
+                        <SlidesHTML slides={slides} setSlides={setSlides} isViewing={true} />
                     </div>
                 </div>
             )}
