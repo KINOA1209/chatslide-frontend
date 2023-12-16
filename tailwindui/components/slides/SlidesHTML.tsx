@@ -31,14 +31,14 @@ import ScriptEditor from './ScriptEditor';
 export interface SlideElement {
   type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
   className:
-    | 'head'
-    | 'title'
-    | 'subtopic'
-    | 'content'
-    | 'userName'
-    | 'images'
-    | 'template'
-    | 'layout';
+  | 'head'
+  | 'title'
+  | 'subtopic'
+  | 'content'
+  | 'userName'
+  | 'images'
+  | 'template'
+  | 'layout';
   content: string | string[];
 }
 
@@ -112,7 +112,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
   const res_slide =
     typeof sessionStorage !== 'undefined'
       ? sessionStorage.getItem('presentation_slides') ||
-        JSON.stringify(TestSlidesData)
+      JSON.stringify(TestSlidesData)
       : '';
 
   const [chosenLayout, setChosenLayout] = useState<LayoutKeys>('');
@@ -621,12 +621,62 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         </div>
       )}
 
+      {/* 4 buttons on smaller screen */}
+      <div className='flex xl:hidden flex-row justify-between items-center gap-[1.25rem]'>
+        <ButtonWithExplanation
+          button={<PresentButton openPresent={openPresent} />}
+          explanation='Present'
+        />
+
+        {!isViewing && (
+          <ButtonWithExplanation
+            button={
+              <LayoutChanger
+                openModal={openModal}
+                showLayout={showLayout}
+                closeModal={closeModal}
+                currentSlideIndex={currentSlideIndex}
+                // templateSamples={templateSamples}
+                slides={slides}
+                handleSlideEdit={handleSlideEdit}
+                availableLayouts={availableLayouts}
+              />
+            }
+            explanation='Change Layout'
+          />
+        )}
+
+        {!isViewing && currentSlideIndex != 0 && (
+          <ButtonWithExplanation
+            button={
+              <AddSlideButton
+                addPage={handleAddPage}
+                currentSlideIndex={currentSlideIndex}
+              />
+            }
+            explanation='Add Page'
+          />
+        )}
+
+        {!isViewing && currentSlideIndex != 0 && (
+          <ButtonWithExplanation
+            button={
+              <DeleteSlideButton
+                deletePage={handleDeletePage}
+                currentSlideIndex={currentSlideIndex}
+              />
+            }
+            explanation='Delete Page'
+          />
+        )}
+      </div>
+
       {/* buttons and contents */}
       <div className='max-w-4xl relative flex flex-row items-center justify-center gap-4'>
         <ToastContainer />
 
         {/* vertical bar */}
-        <div className='h-[540px] w-[128px] hidden lg:block mx-auto justify-center items-center'>
+        <div className='h-[540px] w-[128px] hidden xl:block mx-auto justify-center items-center'>
           <div className='h-full flex flex-col flex-nowrap overflow-y-auto  overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
             {Array(slides.length)
               .fill(0)
@@ -652,11 +702,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
           </div>
         </div>
 
-        <SlideLeftNavigator
-          currentSlideIndex={currentSlideIndex}
-          slides={slides}
-          goToSlide={goToSlide}
-        />
+        <div className="hidden lg:block">
+          <SlideLeftNavigator
+            currentSlideIndex={currentSlideIndex}
+            slides={slides}
+            goToSlide={goToSlide}
+          />
+        </div>
 
         <SlideContainer
           isPresenting={present}
@@ -669,14 +721,16 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
           containerRef={containerRef}
         />
 
-        <SlideRightNavigator
-          currentSlideIndex={currentSlideIndex}
-          slides={slides}
-          goToSlide={goToSlide}
-        />
+        <div className="hidden lg:block">
+          <SlideRightNavigator
+            currentSlideIndex={currentSlideIndex}
+            slides={slides}
+            goToSlide={goToSlide}
+          />
+        </div>
 
         {/* 4 buttons for change layout, present, add and add / delete slide */}
-        <div className='min-w-[128px] flex flex-col justify-between items-start gap-[1.25rem]'>
+        <div className='hidden min-w-[128px] xl:flex flex-col justify-between items-start gap-[1.25rem]'>
           <ButtonWithExplanation
             button={<PresentButton openPresent={openPresent} />}
             explanation='Present'
@@ -740,24 +794,39 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
           ></div>
         )}
       </div>
-      
-      <div className='py-[1rem]'>
+
+      <div className='py-[1rem] flex flex-row items-center'>
+
+        <div className='block lg:hidden'>
+          <SlideLeftNavigator
+            currentSlideIndex={currentSlideIndex}
+            slides={slides}
+            goToSlide={goToSlide}
+          />
+        </div>
         <SlidePagesIndicator
           currentSlideIndex={currentSlideIndex}
           slides={slides}
           goToSlide={goToSlide}
         />
+        <div className='block lg:hidden'>
+          <SlideRightNavigator
+            currentSlideIndex={currentSlideIndex}
+            slides={slides}
+            goToSlide={goToSlide}
+          />
+        </div>
       </div>
 
       {/* transcripotList */}
       {transcriptList.length > 0 &&
-       <ScriptEditor
-        transcriptList={transcriptList}
-        setTranscriptList={setTranscriptList}
-        currentSlideIndex={currentSlideIndex} />}
+        <ScriptEditor
+          transcriptList={transcriptList}
+          setTranscriptList={setTranscriptList}
+          currentSlideIndex={currentSlideIndex} />}
 
       {/* horizontal  */}
-      <div className='block lg:hidden max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
+      <div className='block xl:hidden max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
         <div className='w-full py-6 flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
           {Array(slides.length)
             .fill(0)
