@@ -1,7 +1,7 @@
 import Image, { StaticImageData } from 'next/image';
 import { MainSlideProps } from '../slideTemplates';
-import StanfordLogo from '@/public/images/template/Stanford/StanfordLogo.png';
-import StanfordLogoLetters from '@/public/images/template/Stanford/Stanford_logo_letters.png';
+import ColumbiaLogo from '@/public/images/template/Columbia/ColumbiaLogo.png';
+
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import { layoutOptions } from '@/components/slides/slideLayout';
 import { loadCustomizableElements } from '@/components/slides/SlidesHTML';
@@ -25,7 +25,7 @@ export const Columbia_school_template = ({
 		layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
 	//   console.log('choosing layout option', ChosenLayout)
 	// Load customizable elements for the current template
-	const customizableElements = loadCustomizableElements('Stanford');
+	const customizableElements = loadCustomizableElements('Columbia');
 	return (
 		<>
 			{/* for not-cover page slides */}
@@ -83,7 +83,7 @@ export const Columbia_school_template = ({
 			{/* School Logo (Replace the placeholder with the actual logo URL) */}
 			<div className='fixed inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]'>
 				<Image
-					src={StanfordLogo}
+					src={ColumbiaLogo}
 					alt='Standford Logo'
 					className='w-[3.75rem] h-auto'
 				/>

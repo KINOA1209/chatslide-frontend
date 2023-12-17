@@ -14,6 +14,7 @@ import { Stanford_school_template } from './school_templates/Stanford_school_tem
 import { MIT_school_template } from './school_templates/MIT_school_template';
 import { Princeton_school_template } from './school_templates/Princeton_University_school_template';
 import { Caltech_school_template } from './school_templates/Caltech_school_template';
+import { Columbia_school_template } from './school_templates/Columbia_University_school_template';
 import { LayoutKeys } from './slideLayout';
 import { layoutOptions } from './slideLayout';
 import { loadCustomizableElements } from './SlidesHTML';
@@ -185,5 +186,6 @@ export const availableTemplates = {
 	MIT: MIT_school_template,
 	Princeton: Princeton_school_template,
 	Caltech: Caltech_school_template,
+	Columbia: Columbia_school_template,
 	Default: Default,
 };
