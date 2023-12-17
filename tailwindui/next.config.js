@@ -42,7 +42,7 @@ const nextConfig = {
     domains: [
       'img.freepik.com',
       'unsplash.com',
-  ],
+    ],
   },
 }
 
