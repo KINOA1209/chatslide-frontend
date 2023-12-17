@@ -49,13 +49,14 @@ const FileManagement: React.FC<UserFileList> = ({
   clickCallback,
   selectedResources,
 }) => {
-  const [deletingId, setDeletingId] = useState<string>("")
+  const [deletingIds, setDeletingIds] = useState<Array<string>>([])
 
   const handleDeleteFile = async (
     e: React.MouseEvent<HTMLDivElement>,
     id: string
   ) => {
-    setDeletingId(id)
+    setDeletingIds([...deletingIds, id])
+    console.log('deletingIds', deletingIds)
     e.stopPropagation()
     try {
       const { userId, idToken: token } =
@@ -80,7 +81,7 @@ const FileManagement: React.FC<UserFileList> = ({
         containerId: 'fileManagement',
       })
     }
-    setDeletingId("")
+    setDeletingIds(deletingIds.filter((i) => i !== id))
   }
 
   const handleOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -117,7 +118,7 @@ const FileManagement: React.FC<UserFileList> = ({
           {!selectable ? (
             <div className='w-8 flex flex-row-reverse cursor-pointer'>
               <div onClick={(e) => handleDeleteFile(e, resource.id)}>
-                {deletingId === resource.id ?
+                {deletingIds.includes(resource.id) ?
                   <SpinIcon /> : <DeleteIcon />}
               </div>
             </div>
@@ -158,7 +159,6 @@ const MyFiles: React.FC<filesInterface> = ({
   selectedResources,
   setSelectedResources,
 }) => {
-  const [currentPage, setCurrentPage] = useState(1)
   const [resources, setResources] = useState<Resource[]>([])
   const promptRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
@@ -225,6 +225,7 @@ const MyFiles: React.FC<filesInterface> = ({
     try {
       ResourceService.uploadResource(file, idToken).then((newResource) => {
         setResources([newResource, ...resources])
+        setIsSubmitting(false)
         if (setSelectedResources && selectedResources)
           setSelectedResources([newResource, ...selectedResources])
       })
@@ -244,22 +245,10 @@ const MyFiles: React.FC<filesInterface> = ({
         })
       }
     }
-    setIsSubmitting(false)
   }
 
   const handleFileDeleted = (id: string) => {
-    let ind = -1
-    for (let i = 0; i < resources.length; i++) {
-      if (resources[i].id === id) {
-        ind = i
-        break
-      }
-    }
-    if (ind !== -1) {
-      const newFiles = [...resources]
-      newFiles.splice(ind, 1)
-      setResources(newFiles)
-    }
+    setResources(prevResources => prevResources.filter(resource => resource.id !== id));  // prevents race condition
   }
 
   const handleClick = (id: string) => {

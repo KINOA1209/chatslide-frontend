@@ -2,16 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import sanitizeHtml from 'sanitize-html';
-import { MathJax, MathJaxContext } from 'better-react-mathjax';
 import './slidesHTML.css';
-import dynamic from 'next/dynamic';
 import {
 	availableTemplates,
 	// templateSamples,
 } from '@/components/slides/slideTemplates';
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import LayoutChanger from './LayoutChanger';
-import ExportToPdfButton from './exportToPdfButton';
 import {
 	PresentButton,
 	SlideLeftNavigator,
@@ -23,15 +20,14 @@ import {
 } from './SlideButtons';
 
 import SlideContainer from './SlideContainer';
-import { h1Style, h2Style, h3Style, h4Style, listStyle } from './Styles';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import { templateDispatch } from './templateDispatch';
-import { ScriptEditIcon } from '@/app/(feature)/workflow-review-slides/icons';
 import { useRouter } from 'next/navigation';
 import { availableLayouts } from './slideLayout';
 import TestSlidesData from './TestSlidesData.json';
 import AuthService from '@/services/AuthService';
 import customizable_elements from './templates_customizable_elements/customizable_elements';
+import ScriptEditor from './ScriptEditor';
 export interface SlideElement {
 	type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
 	className:
@@ -79,10 +75,12 @@ export class Slide {
 }
 
 type SlidesHTMLProps = {
-	finalSlides: Slide[];
-	setFinalSlides: Function;
+	slides: Slide[];
+	setSlides: Function;
 	isViewing?: boolean; // viewing another's shared project
 	transcriptList?: string[];
+	setTranscriptList?: (transcriptList: string[]) => void;
+	exportSlidesRef?: React.RefObject<HTMLDivElement>;
 };
 
 // Load customizable elements from session storage or use default values
@@ -95,12 +93,13 @@ export const loadCustomizableElements = (templateName: string) => {
 
 // it will render the slides fetched from `foldername` in sessionStorage
 const SlidesHTML: React.FC<SlidesHTMLProps> = ({
-	finalSlides,
-	setFinalSlides,
+	slides,
+	setSlides,
 	isViewing = false,
 	transcriptList = [],
+	setTranscriptList = () => {},
+	exportSlidesRef = useRef<HTMLDivElement>(null),
 }) => {
-	const [slides, setSlides] = useState<Slide[]>([]);
 	const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
 	const foldername =
 		typeof sessionStorage !== 'undefined'
@@ -123,7 +122,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const [present, setPresent] = useState(false);
 	const slideRef = useRef<HTMLDivElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
-	const allSlidesRef = useRef<HTMLDivElement>(null);
 	const [saveStatus, setSaveStatus] = useState('Up to date');
 	const [dimensions, setDimensions] = useState({
 		width: typeof window !== 'undefined' ? window.innerWidth : 960,
@@ -133,13 +131,27 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const isFirstRender = useRef(true);
 	const [isEditMode, setIsEditMode] = useState(false);
 
-	const router = useRouter();
-
-	const presentScale = Math.min(
-		dimensions.width / 960,
-		dimensions.height / 540,
+	const [presentScale, setPresentScale] = useState(
+		Math.min(dimensions.width / 960, dimensions.height / 540),
 	);
-	const nonPresentScale = Math.min(1, presentScale * 0.9);
+	const [nonPresentScale, setNonPresentScale] = useState(
+		Math.min(1, presentScale * 0.9),
+	);
+
+	useEffect(() => {
+		const handleResize = () => {
+			setDimensions({
+				width: window.innerWidth,
+				height: window.innerHeight,
+			});
+			console.log('window.innerWidth', window.innerWidth);
+			setNonPresentScale(Math.min(1, (window.innerWidth / 960) * 0.9));
+			console.log('nonPresentScale', nonPresentScale);
+		};
+		window.addEventListener('resize', handleResize);
+
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
 
 	useEffect(() => {
 		if (unsavedChanges) {
@@ -155,7 +167,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		);
 	}, []);
 
-	// Watch for changes in finalSlides
+	// Watch for changes in slides
 	useEffect(() => {
 		if (isFirstRender.current) {
 			isFirstRender.current = false;
@@ -163,10 +175,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			return;
 		}
 
-		console.log('finalSlides changed');
+		console.log('slides changed');
 		setUnsavedChanges(true);
 		saveSlides();
-	}, [finalSlides]);
+	}, [slides]);
 
 	useEffect(() => {
 		console.log('layout Changed to: ', chosenLayout);
@@ -188,31 +200,21 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		// console.log('Slides after changing template:', newSlides)
 		setSlides(newSlides);
 
-		const newFinalSlides = finalSlides.map((slide, index) => {
-			// Keep the template of the first slide unchanged
-			//   if (index === 0) {
-			//     return slide
-			//   }
-			// Update the template for slides starting from the second one
-			return { ...slide, template: newTemplate };
-		});
-		setFinalSlides(newFinalSlides);
-		sessionStorage.setItem('schoolTemplate', newTemplate);
 		console.log('Slides after changing template:', newSlides);
 
 		setUnsavedChanges(true);
 		saveSlides();
 	};
 
-	// Function to send a request to auto-save finalSlides
+	// Function to send a request to auto-save slides
 	const saveSlides = async () => {
 		if (isViewing) {
 			console.log("Viewing another's shared project, skip saving");
 			return;
 		}
 
-		if (finalSlides.length === 0) {
-			console.log('Final slides not yet loaded, skip saving');
+		if (slides.length === 0) {
+			console.log('slides not yet loaded, skip saving');
 			return;
 		}
 
@@ -227,7 +229,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			await AuthService.getCurrentUserTokenAndId();
 		const formData = {
 			foldername: foldername,
-			final_slides: finalSlides,
+			final_slides: slides,
 			project_id: project_id,
 		};
 		// Send a POST request to the backend to save finalSlides
@@ -301,10 +303,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					const slideData = parsed_slides[key];
 					console.log('slideData:', slideData);
 					const slide = new Slide();
-					slide.head = slideData.head || 'New Slide head';
-					slide.title = slideData.title || 'New Slide title';
-					slide.subtopic = slideData.subtopic || 'New Slide subtopic';
-					slide.userName = slideData.userName || 'New Slide userName';
+					slide.head = slideData.head || 'New Slide';
+					slide.title = slideData.title || 'New Slide';
+					slide.subtopic = slideData.subtopic || 'New Slide';
+					slide.userName = slideData.userName || '';
 					slide.template =
 						slideData.template ||
 						sessionStorage.getItem('schoolTemplate') ||
@@ -346,7 +348,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			);
 			console.log('the parsed slides array:', slidesArray);
 			setSlides(slidesArray);
-			setFinalSlides(slidesArray);
 		}
 	}, []);
 
@@ -466,7 +467,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			return elements;
 		});
 
-		setFinalSlides(newSlides);
 		console.log('new slides: ', newSlides);
 		setSlides(newSlides);
 	}
@@ -485,50 +485,46 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		content: string | string[],
 		slideIndex: number,
 		tag: SlideKeys,
-		contentIndex?: number,
 	) {
 		setIsEditMode(false);
 		const newSlides = [...slides];
-		const newFinalSlides = [...finalSlides];
 
 		const currentSlide = newSlides[slideIndex];
-		const currNewFinalSlides = newFinalSlides[slideIndex];
 		const className = tag;
 
 		if (className === 'head') {
 			currentSlide.head = content as string;
-			currNewFinalSlides.head = content as string;
 		} else if (className === 'title') {
 			currentSlide.title = content as string;
-			currNewFinalSlides.title = content as string;
 		} else if (className === 'subtopic') {
 			currentSlide.subtopic = content as string;
-			currNewFinalSlides.subtopic = content as string;
 		} else if (className === 'userName') {
 			currentSlide.userName = content as string;
-			currNewFinalSlides.userName = content as string;
 		} else if (className === 'template') {
 			currentSlide.template = content as string;
-			currNewFinalSlides.template = content as string;
 		} else if (className === 'layout') {
 			currentSlide.layout = content as LayoutKeys;
-			currNewFinalSlides.layout = content as LayoutKeys;
 		} else if (className === 'images') {
 			currentSlide.images = content as string[];
-			currNewFinalSlides.images = content as string[];
 		} else if (className === 'content') {
-			if (typeof contentIndex === 'number' && contentIndex >= 0) {
-				currentSlide.content[contentIndex] = content as string;
-				currNewFinalSlides.content[contentIndex] = content as string;
-			} else {
-				console.error(`Invalid contentIndex: ${contentIndex}`);
+			let newContent: string[] = [];
+			content = content as string[];
+			content.forEach((str) => {
+				newContent.push(...str.split('\n'));
+			});
+			newContent = newContent.filter((item) => item !== '');
+
+			if (newContent.length === 0) {
+				// leave one empty line for editing
+				newContent.push('');
 			}
+
+			currentSlide.content = newContent;
 		} else {
 			console.error(`Unknown tag: ${tag}`);
 		}
 		sessionStorage.setItem('presentation_slides', JSON.stringify(newSlides));
 		setSlides(newSlides);
-		setFinalSlides(newFinalSlides);
 	}
 
 	function goToSlide(index: number) {
@@ -539,29 +535,29 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	function handleAddPage() {
 		const newSlides = [...slides];
-		const newFinalSlides = [...finalSlides];
 		const newSlide = new Slide();
 		if (currentSlideIndex != 0) {
 			newSlides.splice(currentSlideIndex, 0, newSlide);
-			newFinalSlides.splice(currentSlideIndex, 0, newSlide);
 		}
 		setSlides(newSlides);
-		setFinalSlides(newFinalSlides);
 	}
 
 	function handleDeletePage() {
 		const newSlides = [...slides];
-		const newFinalSlides = [...finalSlides];
 		if (currentSlideIndex != 0) {
 			newSlides.splice(currentSlideIndex, 1);
-			newFinalSlides.splice(currentSlideIndex, 1);
+
+			if (transcriptList.length > 0) {
+				const newTranscriptList = [...transcriptList];
+				newTranscriptList.splice(currentSlideIndex, 1);
+				setTranscriptList(newTranscriptList);
+			}
 
 			if (currentSlideIndex >= newSlides.length) {
 				setCurrentSlideIndex(newSlides.length - 1);
 			}
 		}
 		setSlides(newSlides);
-		setFinalSlides(newFinalSlides);
 	}
 
 	function toggleEditMode() {
@@ -575,16 +571,24 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		return updateImgUrl;
 	};
 
+	function wrapWithLiTags(content: string): string {
+		if (!content.includes('<li>') || !content.includes('</li>')) {
+			return `<li style="font-size: 18pt;">${content}</li>`;
+		}
+		return content;
+	}
+
 	const editableTemplateDispatch = (
 		slide: Slide,
 		index: number,
 		canEdit: boolean,
+		exportToPdfMode: boolean = false,
 	) =>
 		templateDispatch(
 			slide,
 			index,
 			canEdit,
-			false,
+			exportToPdfMode,
 			isEditMode,
 			saveSlides,
 			setIsEditMode,
@@ -594,12 +598,30 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			index === 0,
 			slide.layout,
 			slide.layout,
-			index === currentSlideIndex,
 		);
 
 	return (
 		<div className='flex flex-col items-center justify-center gap-4'>
-			<ExportToPdfButton finalSlides={finalSlides} />
+			{/* hidden div for export to pdf */}
+			<div className='absolute left-[-9999px] top-[-9999px] -z-1'>
+				<div ref={exportSlidesRef}>
+					{/* Render all of your slides here. This can be a map of your slides array */}
+					{slides.map((slide, index) => (
+						<div
+							key={`exportToPdfContainer` + index.toString()}
+							style={{ pageBreakAfter: 'always' }}
+						>
+							<SlideContainer
+								slides={slides}
+								currentSlideIndex={index}
+								templateDispatch={editableTemplateDispatch}
+								exportToPdfMode={true}
+							/>
+						</div>
+					))}
+				</div>
+			</div>
+
 			{!isViewing && (
 				<div className='py-2 hidden sm:block'>
 					<ChangeTemplateOptions
@@ -608,15 +630,95 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					/>
 				</div>
 			)}
+
+			{/* 4 buttons on smaller screen */}
+			<div className='flex xl:hidden flex-row justify-between items-center gap-[1.25rem]'>
+				<ButtonWithExplanation
+					button={<PresentButton openPresent={openPresent} />}
+					explanation='Present'
+				/>
+
+				{!isViewing && (
+					<ButtonWithExplanation
+						button={
+							<LayoutChanger
+								openModal={openModal}
+								showLayout={showLayout}
+								closeModal={closeModal}
+								currentSlideIndex={currentSlideIndex}
+								// templateSamples={templateSamples}
+								slides={slides}
+								handleSlideEdit={handleSlideEdit}
+								availableLayouts={availableLayouts}
+							/>
+						}
+						explanation='Change Layout'
+					/>
+				)}
+
+				{!isViewing && currentSlideIndex != 0 && (
+					<ButtonWithExplanation
+						button={
+							<AddSlideButton
+								addPage={handleAddPage}
+								currentSlideIndex={currentSlideIndex}
+							/>
+						}
+						explanation='Add Page'
+					/>
+				)}
+
+				{!isViewing && currentSlideIndex != 0 && (
+					<ButtonWithExplanation
+						button={
+							<DeleteSlideButton
+								deletePage={handleDeletePage}
+								currentSlideIndex={currentSlideIndex}
+							/>
+						}
+						explanation='Delete Page'
+					/>
+				)}
+			</div>
+
 			{/* buttons and contents */}
-			<div className='max-w-4xl relative flex flex-row items-center justify-center gap-4 '>
+			<div className='max-w-4xl relative flex flex-row items-center justify-center gap-4'>
 				<ToastContainer />
 
-				<SlideLeftNavigator
-					currentSlideIndex={currentSlideIndex}
-					slides={slides}
-					goToSlide={goToSlide}
-				/>
+				{/* vertical bar */}
+				<div className='h-[540px] w-[128px] hidden xl:block mx-auto justify-center items-center'>
+					<div className='h-full flex flex-col flex-nowrap overflow-y-auto  overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
+						{Array(slides.length)
+							.fill(0)
+							.map((_, index) => (
+								<div
+									key={`previewContainer` + index.toString()}
+									className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
+									onClick={() => setCurrentSlideIndex(index)} // Added onClick handler
+								>
+									{/* {index + 1} */}
+									<SlideContainer
+										slides={slides}
+										currentSlideIndex={index}
+										scale={0.12}
+										isViewing={true}
+										templateDispatch={editableTemplateDispatch}
+										slideRef={slideRef}
+										containerRef={containerRef}
+										highlightBorder={currentSlideIndex === index}
+									/>
+								</div>
+							))}
+					</div>
+				</div>
+
+				<div className='hidden lg:block'>
+					<SlideLeftNavigator
+						currentSlideIndex={currentSlideIndex}
+						slides={slides}
+						goToSlide={goToSlide}
+					/>
+				</div>
 
 				<SlideContainer
 					isPresenting={present}
@@ -629,14 +731,16 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					containerRef={containerRef}
 				/>
 
-				<SlideRightNavigator
-					currentSlideIndex={currentSlideIndex}
-					slides={slides}
-					goToSlide={goToSlide}
-				/>
+				<div className='hidden lg:block'>
+					<SlideRightNavigator
+						currentSlideIndex={currentSlideIndex}
+						slides={slides}
+						goToSlide={goToSlide}
+					/>
+				</div>
 
 				{/* 4 buttons for change layout, present, add and add / delete slide */}
-				<div className='absolute -right-[10rem] top-[7rem] flex flex-col justify-between items-center mb-6 gap-[1.25rem] ml-[6rem]'>
+				<div className='hidden min-w-[128px] xl:flex flex-col justify-between items-start gap-[1.25rem]'>
 					<ButtonWithExplanation
 						button={<PresentButton openPresent={openPresent} />}
 						explanation='Present'
@@ -700,45 +804,40 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					></div>
 				)}
 			</div>
-			<div className='py-[1rem]'>
+
+			<div className='py-[1rem] flex flex-row items-center'>
+				<div className='block lg:hidden'>
+					<SlideLeftNavigator
+						currentSlideIndex={currentSlideIndex}
+						slides={slides}
+						goToSlide={goToSlide}
+					/>
+				</div>
 				<SlidePagesIndicator
 					currentSlideIndex={currentSlideIndex}
 					slides={slides}
 					goToSlide={goToSlide}
 				/>
+				<div className='block lg:hidden'>
+					<SlideRightNavigator
+						currentSlideIndex={currentSlideIndex}
+						slides={slides}
+						goToSlide={goToSlide}
+					/>
+				</div>
 			</div>
 
-			{/* preview little image */}
-
-			{/* scriptlist textbox */}
-			{transcriptList !== null && transcriptList.length > 0 && (
-				<div
-					className={`w-screen max-w-[960px] h-[200px] bg-zinc-100 rounded shadow flex flex-col overflow-y-auto my-4 ml-2`}
-				>
-					<div className='px-4 py-2 h-8 bg-zinc-100 flex flex-row justify-between items-center sticky top-0 border-b-2 border-gray-300'>
-						<div className='text-neutral-900 text-s font-creato-medium '>
-							Script
-						</div>
-						<div
-							className='cursor-pointer'
-							onClick={() => router.push('/workflow-edit-script')}
-						>
-							<ButtonWithExplanation
-								button={<ScriptEditIcon />}
-								explanation='Edit Script'
-							/>
-						</div>
-					</div>
-					<div className='flex flex-col gap-4 '>
-						<div className='px-4 py-2 w-full text-gray-700 text-xs font-normal font-creato-medium leading-[1.125rem] tracking-[0.015rem]'>
-							{transcriptList[currentSlideIndex]}
-						</div>
-					</div>
-				</div>
+			{/* transcripotList */}
+			{transcriptList.length > 0 && (
+				<ScriptEditor
+					transcriptList={transcriptList}
+					setTranscriptList={setTranscriptList}
+					currentSlideIndex={currentSlideIndex}
+				/>
 			)}
 
 			{/* horizontal  */}
-			<div className='block lg:hidden max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
+			<div className='block xl:hidden max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
 				<div className='w-full py-6 flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
 					{Array(slides.length)
 						.fill(0)
@@ -755,32 +854,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 									scale={0.12}
 									isViewing={true}
 									templateDispatch={editableTemplateDispatch}
-									highlightBorder={currentSlideIndex === index}
-								/>
-							</div>
-						))}
-				</div>
-			</div>
-
-			<div className='absolute top-[32px] -left-[15rem] h-4/5 hidden lg:block mx-auto justify-center items-center'>
-				<div className='h-full flex flex-col flex-nowrap overflow-y-auto  overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
-					{Array(slides.length)
-						.fill(0)
-						.map((_, index) => (
-							<div
-								key={`previewContainer` + index.toString()}
-								className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
-								onClick={() => setCurrentSlideIndex(index)} // Added onClick handler
-							>
-								{/* {index + 1} */}
-								<SlideContainer
-									slides={slides}
-									currentSlideIndex={index}
-									scale={0.12}
-									isViewing={true}
-									templateDispatch={editableTemplateDispatch}
-									slideRef={slideRef}
-									containerRef={containerRef}
 									highlightBorder={currentSlideIndex === index}
 								/>
 							</div>

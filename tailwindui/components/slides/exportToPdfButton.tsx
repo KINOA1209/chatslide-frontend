@@ -1,28 +1,22 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import ExportToPDFModal from './exportToPdfModal';
 import AuthService from '../../services/AuthService';
-import { LoadingIcon } from '@/components/ui/progress';
 import { Slide } from './SlidesHTML';
 import PaywallModal from '../forms/paywallModal';
-import { DownloadIcon } from '@/app/(feature)/icons';
-import SlideContainer from './SlideContainer';
 import generatePDF, { Resolution, Margin, Options } from 'react-to-pdf';
 import { BigGrayButton } from '../button/DrlambdaButton';
 import { FaDownload, FaRing, FaTruckLoading } from 'react-icons/fa';
 
-type SlidesHTMLProps = {
-	finalSlides: Slide[];
-	setFinalSlides: React.Dispatch<React.SetStateAction<Slide[]>>;
-};
-
 interface ExportToPdfProps {
-	finalSlides: Slide[];
-	//setFinalSlides: React.Dispatch<React.SetStateAction<Slide[]>>;
+	slides: Slide[];
+	exportSlidesRef: React.RefObject<HTMLDivElement>;
 }
 
-const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
+const ExportToPdfButton: React.FC<ExportToPdfProps> = ({
+	slides,
+	exportSlidesRef,
+}) => {
 	const topic =
 		typeof sessionStorage !== 'undefined'
 			? sessionStorage.getItem('topic')
@@ -30,7 +24,6 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
 	const [user, setUser] = useState(null);
 	const [downloadingPDF, setDownloadingPDF] = useState(false);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
-	const exportSlidesRef = useRef<HTMLDivElement>(null);
 	let pdfIsBeingGenerated = false;
 
 	const exportOptions: Options = {
@@ -68,8 +61,8 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
 		fetchUser();
 	}, []);
 
-	function exportToPdf() {
-		generatePDF(exportSlidesRef, exportOptions);
+	async function exportToPdf() {
+		await generatePDF(exportSlidesRef, exportOptions);
 	}
 
 	const handleSavePDF = async () => {
@@ -88,7 +81,7 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
 			});
 
 			if (response.ok) {
-				exportToPdf();
+				await exportToPdf();
 			} else if (response.status === 402) {
 				setShowPaymentModal(true);
 			} else {
@@ -117,25 +110,6 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
 						<FaDownload className='text-gray-800' />
 					</div>
 				</BigGrayButton>
-			</div>
-
-			{/* hidden div for export to pdf */}
-			<div style={{ display: downloadingPDF ? 'block' : 'none', zIndex: -1 }}>
-				<div ref={exportSlidesRef}>
-					{/* Render all of your slides here. This can be a map of your slides array */}
-					{finalSlides.map((slide, index) => (
-						<div
-							key={`exportToPdfContainer` + index.toString()}
-							style={{ pageBreakAfter: 'always' }}
-						>
-							<SlideContainer
-								slides={finalSlides}
-								currentSlideIndex={index}
-								exportToPdfMode={true}
-							/>
-						</div>
-					))}
-				</div>
 			</div>
 		</div>
 	);
