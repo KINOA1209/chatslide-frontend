@@ -18,6 +18,7 @@ type Config = {
 	MIT: TemplateElements;
 	Princeton: TemplateElements;
 	Caltech: TemplateElements;
+	Columbia: TemplateElements;
 	Default: TemplateElements;
 };
 
@@ -236,6 +237,45 @@ const configData: Config = {
 		},
 	},
 	Caltech: {
+		backgroundColorCover: 'bg-[#F0F0F2]',
+		backgroundColor: 'bg-[#F0F0F2]',
+		titleFontCSS: {
+			fontSize: '24pt', // text-3xl in points
+			fontWeight: 'bold', // font-bold
+			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			lineHeight: 1, // leading-[100%] is equivalent to a line height of 1},
+			color: '#000', // text-black color
+		},
+		subtopicFontCSS: {
+			fontSize: '18pt', // text-xl in points
+			fontWeight: 'normal', // font-normal
+			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			textTransform: 'uppercase', // Uppercase for font style
+			lineHeight: 1.5, // leading-[150%] is equivalent to a line height of 1.5
+			letterSpacing: '0.15rem', // tracking-[0.15rem]},
+			color: '#111827', // text-neutral-900 color
+		},
+		contentFontCSS: {
+			fontSize: '12pt', // base size sent from backend
+			fontWeight: 'normal', // font-normal
+			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			lineHeight: 1.4, // leading-[140%]
+			letterSpacing: '0.025rem', // tracking-[0.025rem]
+			color: '#111827', // text-neutral-900 color
+		},
+		userNameFont:
+			'text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
+		userNameFontColor: 'text-[#3D3D3D]',
+		headFontCSS: {
+			fontSize: '32pt', // text-4xl in points
+			fontWeight: 'normal', // font-normal
+			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
+			letterSpacing: '-0.0125rem', // tracking-tight
+			color: '#374151', // text-neutral-800 color},
+		},
+	},
+	Columbia: {
 		backgroundColorCover: 'bg-[#F0F0F2]',
 		backgroundColor: 'bg-[#F0F0F2]',
 		titleFontCSS: {
