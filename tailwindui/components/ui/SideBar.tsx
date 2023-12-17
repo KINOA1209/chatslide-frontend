@@ -106,6 +106,16 @@ const SideBar = ({ }: SideBarProps) => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  useEffect(() => {
+    if (window.innerWidth < 1080) {
+      setIsSidebarOpen(false);
+    }
+
+    if (location.pathname.includes('/workflow-review-slides') && window.innerWidth < 1600) {
+      setIsSidebarOpen(false);
+    }
+  }, []);
+
 
   return (
     <header
@@ -120,7 +130,7 @@ const SideBar = ({ }: SideBarProps) => {
       </button>
 
       {isSidebarOpen &&
-      <>
+        <>
           <div className='py-4 flex flex-col items-top justify-between'>
             {/* Site branding */}
             <div className='px-2 gap-x-2 flex flex-row items-center justify-start'>
