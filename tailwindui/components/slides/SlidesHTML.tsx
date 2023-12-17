@@ -481,13 +481,60 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		}
 	}
 
+	// function handleSlideEdit(
+	// 	content: string | string[],
+	// 	slideIndex: number,
+	// 	tag: SlideKeys,
+	// ) {
+	// 	setIsEditMode(false);
+	// 	const newSlides = [...slides];
+
+	// 	const currentSlide = newSlides[slideIndex];
+	// 	const className = tag;
+
+	// 	if (className === 'head') {
+	// 		currentSlide.head = content as string;
+	// 	} else if (className === 'title') {
+	// 		currentSlide.title = content as string;
+	// 	} else if (className === 'subtopic') {
+	// 		currentSlide.subtopic = content as string;
+	// 	} else if (className === 'userName') {
+	// 		currentSlide.userName = content as string;
+	// 	} else if (className === 'template') {
+	// 		currentSlide.template = content as string;
+	// 	} else if (className === 'layout') {
+	// 		currentSlide.layout = content as LayoutKeys;
+	// 	} else if (className === 'images') {
+	// 		currentSlide.images = content as string[];
+	// 	} else if (className === 'content') {
+	// 		let newContent: string[] = [];
+	// 		content = content as string[];
+	// 		content.forEach((str) => {
+	// 			newContent.push(...str.split('\n'));
+	// 		});
+	// 		newContent = newContent.filter((item) => item !== '');
+
+	// 		if (newContent.length === 0) {
+	// 			// leave one empty line for editing
+	// 			newContent.push('');
+	// 		}
+
+	// 		currentSlide.content = newContent;
+	// 	} else {
+	// 		console.error(`Unknown tag: ${tag}`);
+	// 	}
+	// 	sessionStorage.setItem('presentation_slides', JSON.stringify(newSlides));
+	// 	setSlides(newSlides);
+	// }
 	function handleSlideEdit(
 		content: string | string[],
 		slideIndex: number,
 		tag: SlideKeys,
+		contentIndex?: number,
 	) {
 		setIsEditMode(false);
 		const newSlides = [...slides];
+		// const newFinalSlides = [...finalSlides];
 
 		const currentSlide = newSlides[slideIndex];
 		const className = tag;
@@ -507,19 +554,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		} else if (className === 'images') {
 			currentSlide.images = content as string[];
 		} else if (className === 'content') {
-			let newContent: string[] = [];
-			content = content as string[];
-			content.forEach((str) => {
-				newContent.push(...str.split('\n'));
-			});
-			newContent = newContent.filter((item) => item !== '');
-
-			if (newContent.length === 0) {
-				// leave one empty line for editing
-				newContent.push('');
+			if (typeof contentIndex === 'number' && contentIndex >= 0) {
+				currentSlide.content[contentIndex] = content as string;
+			} else {
+				console.error(`Invalid contentIndex: ${contentIndex}`);
 			}
-
-			currentSlide.content = newContent;
 		} else {
 			console.error(`Unknown tag: ${tag}`);
 		}
@@ -598,6 +637,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			index === 0,
 			slide.layout,
 			slide.layout,
+			index === currentSlideIndex,
 		);
 
 	return (
