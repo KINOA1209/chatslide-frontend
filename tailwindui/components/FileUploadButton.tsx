@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState, useRef } from 'react'
+import React, { ChangeEvent, FC, useState, useRef, useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import DrlambdaButton, { DrLambdaBackButton } from './button/DrlambdaButton'
@@ -27,6 +27,10 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 }) => {
   const [fileName, setFileName] = useState<string | null>(null)
   const inputFileRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    console.log('isSubmitting', isSubmitting)
+  }, [isSubmitting])
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null

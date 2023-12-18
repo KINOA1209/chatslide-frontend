@@ -1,89 +1,93 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.bubble.css';
 import '@/components/socialPost/quillEditor.scss';
 
 type QuillEditableProps = {
-    content: string;
-    handleBlur: (newContent: string) => void;
-    style?: React.CSSProperties;
+	content: string;
+	handleBlur: (newContent: string) => void;
+	style?: React.CSSProperties;
 };
 
-const QuillEditable: React.FC<QuillEditableProps> = ({ 
-    content, 
-    handleBlur,
-    style
+const generateFontSizes = (): string[] => {
+	const sizes = [];
+	for (let i = 8; i <= 80; i += 1) {
+		sizes.push(`${i}pt`);
+	}
+	return sizes;
+};
+
+const fontSizes = generateFontSizes();
+
+const toolbarOptions = [
+	[{ size: fontSizes }, { font: [] }],
+	['bold', 'italic', 'underline', 'strike', 'code-block'],
+	[{ header: 1 }, { header: 2 }],
+	[{ list: 'ordered' }, { list: 'bullet' }],
+	[{ script: 'sub' }, { script: 'super' }],
+	[{ color: [] }, { background: [] }],
+	[{ align: [] }],
+	['clean'],
+];
+
+let Size = Quill.import('attributors/style/size');
+Size.whitelist = fontSizes;
+Quill.register(Size, true);
+
+const QuillEditable: React.FC<QuillEditableProps> = ({
+	content,
+	handleBlur,
+	style,
 }) => {
-    const editorRef = useRef<HTMLDivElement>(null);
-    const quillInstanceRef = useRef<Quill | null>(null);
+	const editorRef = useRef<HTMLDivElement>(null);
+	const quillInstanceRef = useRef<Quill | null>(null);
+	useEffect(() => {
+		if (editorRef.current && !quillInstanceRef.current) {
+			quillInstanceRef.current = new Quill(editorRef.current, {
+				modules: { toolbar: toolbarOptions },
+				theme: 'bubble',
+			});
 
-    const generateFontSizes = (): string[] => {
-        const sizes = [];
-        for (let i = 8; i <= 80; i+=1) {
-            sizes.push(`${i}pt`);
-        }
-        return sizes;
-    };
+			//quillInstanceRef.current.clipboard.dangerouslyPasteHTML(content);
+			const delta = quillInstanceRef.current.clipboard.convert(content as any);
+			quillInstanceRef.current.setContents(delta);
 
-    useEffect(() => {
-        if (editorRef.current && !quillInstanceRef.current) {
-            const fontSizes = generateFontSizes();
-            let Size = Quill.import('attributors/style/size');
-            Size.whitelist = fontSizes;
-            Quill.register(Size, true);
+			quillInstanceRef.current.on('selection-change', () => {
+				const currentContent = quillInstanceRef.current?.root.innerHTML;
+				if (currentContent !== undefined) {
+					handleBlur(currentContent);
+				}
+			});
 
-            const toolbarOptions = [
-                [{ 'size':  fontSizes}, { 'font': [] }],
-                ['bold', 'italic', 'underline', 'strike', 'code-block'],
-                [{ 'header': 1 }, { 'header': 2 }],   
-                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                [{ 'script': 'sub'}, { 'script': 'super' }],
-                [{ 'color': [] }, { 'background': [] }],
-                [{ 'align': [] }],
-                ['clean']
-              ];
-        
-            quillInstanceRef.current = new Quill(editorRef.current, {
-                modules: { toolbar: toolbarOptions },
-                theme: 'bubble',
-            });
+			editorRef.current.addEventListener('focusin', () => {
+				const toolbar = editorRef.current?.querySelector('.ql-tooltip');
+				if (toolbar && toolbar instanceof HTMLElement) {
+					toolbar.style.display = 'block';
+				}
+			});
 
-            //quillInstanceRef.current.clipboard.dangerouslyPasteHTML(content);
-            const delta = quillInstanceRef.current.clipboard.convert(content as any);
-            quillInstanceRef.current.setContents(delta);
+			editorRef.current.addEventListener('focusout', (event) => {
+				const toolbar = editorRef.current?.querySelector('.ql-tooltip');
+				const relatedTarget = event.relatedTarget as Node;
 
-            quillInstanceRef.current.on('selection-change', () => {
-                const currentContent = quillInstanceRef.current?.root.innerHTML;
-                if (currentContent !== undefined) {
-                    handleBlur(currentContent);
-                }
-            });
+				if (
+					toolbar &&
+					toolbar instanceof HTMLElement &&
+					!toolbar.contains(relatedTarget)
+				) {
+					toolbar.style.display = 'none';
+				}
+			});
+		}
+	}, [handleBlur, content]);
 
-            editorRef.current.addEventListener('focusin', () => {
-                const toolbar = editorRef.current?.querySelector('.ql-tooltip');
-                if (toolbar && toolbar instanceof HTMLElement) {
-                    toolbar.style.display = 'block';
-                }
-            });
-            
-            editorRef.current.addEventListener('focusout', (event) => {
-                const toolbar = editorRef.current?.querySelector('.ql-tooltip');
-                const relatedTarget = event.relatedTarget as Node;
-            
-                if (toolbar && toolbar instanceof HTMLElement && !toolbar.contains(relatedTarget)) {
-                    toolbar.style.display = 'none';
-                }
-            });
-        }
-    }, [handleBlur, content]);
+	useEffect(() => {
+		if (quillInstanceRef.current && style) {
+			Object.assign(quillInstanceRef.current.root.style, style);
+		}
+	}, [style]);
 
-    useEffect(() => {
-        if (quillInstanceRef.current && style) {
-            Object.assign(quillInstanceRef.current.root.style, style);
-        }
-    }, [style]);
-
-    return <div ref={editorRef}></div>;
+	return <div ref={editorRef}></div>;
 };
 
-export default QuillEditable;
+export default React.memo(QuillEditable);

@@ -1,4 +1,4 @@
-import Resource from "./Resource"
+import Resource from './Resource';
 
 export default interface Project {
   id: string

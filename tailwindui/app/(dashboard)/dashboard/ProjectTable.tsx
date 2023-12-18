@@ -3,7 +3,7 @@ import moment from 'moment';
 import { DeleteIcon, SpinIcon } from '@/app/(feature)/icons';
 import { ResourceItem } from '@/components/ui/ResourceItem'
 import Project from '@/models/Project';
-import { FaAd, FaMedium, FaPhone, FaPhotoVideo, FaSlideshare } from 'react-icons/fa';
+import { FaPhotoVideo, } from 'react-icons/fa';
 import { RiSlideshowLine } from "react-icons/ri";
 
 interface Props {
@@ -45,11 +45,13 @@ const ProjectTable: React.FC<Props> = ({
 
             {/* topic */}
             <div
-              className='col-span-2 p-2 flex cursor-pointer items-center text-start border-b-2 text-ellipsis overflow-hidden text-[17px] font-creato-medium leading-normal tracking-wide gap-x-2'
+              className='col-span-2 p-2 flex items-center border-b-2  font-creato-medium leading-normal gap-x-2'
               onClick={() => onProjectClick(project.id)}
             >
-              {project.task === 'presentation' ? <RiSlideshowLine className='text-gray-600' /> : <FaPhotoVideo className='text-gray-600' />}
-              {project.name}
+              <div className='w-[20px]'>
+                {project.task === 'presentation' ? <RiSlideshowLine className='text-gray-600 w-[20px] h-[20px]' /> : <FaPhotoVideo className='text-gray-600 w-[20px] h-[20px]' />}
+              </div>
+              <div className='flex-wrap cursor-pointer'>{project.name}</div>
             </div>
 
             {/* resources */}
@@ -57,7 +59,7 @@ const ProjectTable: React.FC<Props> = ({
               <div className='flex flex-col items-start'>
                 {/* <FileIcon fileType='pdf' /> */}
                 {project.resources && project.resources.map((resource, resourceIndex) => (
-                  <ResourceItem key={resourceIndex} {...resource}/>
+                  <ResourceItem key={resourceIndex} {...resource} />
                 ))}
               </div>
             </div>
@@ -70,7 +72,7 @@ const ProjectTable: React.FC<Props> = ({
                   className='cursor-pointer'
                   onClick={(e) => onDelete(e, project.id)}
                 >
-                  <DeleteIcon/>
+                  <DeleteIcon />
                 </div>
               </div>
             </div>
