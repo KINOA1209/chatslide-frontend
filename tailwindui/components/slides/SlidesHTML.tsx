@@ -358,7 +358,31 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		};
 	});
 
-	useEffect(() => console.log('slides contents changed', slides), [slides]);
+	useEffect(() => {
+    console.log('slides contents changed', slides)
+
+    // process current slide content
+    const currentSlide = slides[currentSlideIndex]
+    console.log('currentSlide:', currentSlide)
+    if (currentSlide?.layout === "Col_1_img_0_layout" || currentSlide?.layout === "Col_2_img_1_layout") {
+      const currentSlideContent = currentSlide.content
+
+      // if there is new line, split into another item
+      const newContent: string[] = []
+      currentSlideContent.forEach((str) => {
+        // if str removed all tags is empty, do not add to newContent
+        if (str.replace(/<[^>]*>/g, "").trim() !== '') {
+          console.log('str:', str)
+          newContent.push(...str.split('<p><br></p>')) // if str contains <p><br></p>, slipt it
+        }
+      })
+
+      slides[currentSlideIndex].content = newContent
+
+      setSlides(slides)
+    }
+
+  }, [slides]);
 
 	const scrollContainerRef = useRef<HTMLDivElement | null>(null); // Specify the type as HTMLDivElement
 
