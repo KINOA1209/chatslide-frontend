@@ -357,7 +357,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
       const newContent: string[] = []
 
-      currentSlideContent.forEach((str) => {
+      const allContent = currentSlideContent.join('<p><br></p>').split('<p><br></p>')
+      
+      allContent.forEach((str) => {
         // if str removed all tags is empty, do not add to newContent
         if (str.replace(/<[^>]*>/g, "").trim() !== '') {
           console.log('str:', str)
