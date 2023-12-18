@@ -68,7 +68,7 @@ export class Slide {
 		this.subtopic = 'New Slide';
 		this.userName = '';
 		this.template = 'Default';
-		this.content = ['Your content here'];
+    this.content = ['Some content here', 'Some more content here', 'Even more content here'];
 		this.images = [];
 		this.layout = 'Col_2_img_1_layout';
 	}
@@ -298,7 +298,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						slideData.template ||
 						sessionStorage.getItem('schoolTemplate') ||
 						'Default';
-					slide.content = slideData.content || ['Your content here'];
+					slide.content = slideData.content || ['Some content here', 'Some more content here', 'Even more content here'];
 					slide.images = slideData.images || [];
 					// console.log(
 					//     'slideData.content.length',
