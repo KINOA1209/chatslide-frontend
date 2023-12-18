@@ -359,7 +359,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	});
 
 	useEffect(() => {
-    console.log('slides contents changed', slides)
+    // console.log('slides contents changed', slides)
 
     // process current slide content
     const currentSlide = slides[currentSlideIndex]
@@ -373,13 +373,18 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         // if str removed all tags is empty, do not add to newContent
         if (str.replace(/<[^>]*>/g, "").trim() !== '') {
           console.log('str:', str)
-          newContent.push(...str.split('<p><br></p>')) // if str contains <p><br></p>, slipt it
+          newContent.push(...str.split('<p><br></p>').filter(line => line.trim() !== ''));
         }
       })
 
-      slides[currentSlideIndex].content = newContent
+      // Only update state if the content has actually changed
+      if (JSON.stringify(slides[currentSlideIndex].content) !== JSON.stringify(newContent)) {
+        const updatedSlides = slides.map((slide, index) =>
+          index === currentSlideIndex ? { ...slide, content: newContent } : slide
+        );
 
-      setSlides(slides)
+        setSlides(updatedSlides);
+      }
     }
 
   }, [slides]);
