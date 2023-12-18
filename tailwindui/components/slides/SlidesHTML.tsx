@@ -167,19 +167,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		);
 	}, []);
 
-	// Watch for changes in slides
-	useEffect(() => {
-		if (isFirstRender.current) {
-			isFirstRender.current = false;
-			console.log('First render, skip saving');
-			return;
-		}
-
-		console.log('slides changed');
-		setUnsavedChanges(true);
-		saveSlides();
-	}, [slides]);
-
 	useEffect(() => {
 		console.log('layout Changed to: ', chosenLayout);
 		setUnsavedChanges(true);
@@ -364,18 +351,25 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     // process current slide content
     const currentSlide = slides[currentSlideIndex]
     console.log('currentSlide:', currentSlide)
+
     if (currentSlide?.layout === "Col_1_img_0_layout" || currentSlide?.layout === "Col_2_img_1_layout") {
       const currentSlideContent = currentSlide.content
 
-      // if there is new line, split into another item
       const newContent: string[] = []
+
       currentSlideContent.forEach((str) => {
         // if str removed all tags is empty, do not add to newContent
         if (str.replace(/<[^>]*>/g, "").trim() !== '') {
           console.log('str:', str)
-          newContent.push(...str.split('<p><br></p>').filter(line => line.trim() !== ''));
+          newContent.push(str)
         }
       })
+
+      if(newContent.length === 0) {
+        newContent.push('')
+      }
+      
+      console.log('newContent:', newContent)
 
       // Only update state if the content has actually changed
       if (JSON.stringify(slides[currentSlideIndex].content) !== JSON.stringify(newContent)) {
@@ -385,6 +379,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
         setSlides(updatedSlides);
       }
+    }
+
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      console.log('First render, skip saving');
+    } else {
+      console.log('slides changed');
+      setUnsavedChanges(true);
+      saveSlides();
     }
 
   }, [slides]);
