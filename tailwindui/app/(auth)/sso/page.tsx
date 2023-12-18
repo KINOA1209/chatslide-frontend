@@ -4,7 +4,7 @@ import AuthService from '@/services/AuthService';
 import UserService from '@/services/UserService';
 import { init } from 'aos';
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
 
@@ -59,12 +59,23 @@ export default function SSORedirect() {
 
   }, []);
 
+  const [showLink, setShowLink] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowLink(true);
+    }, 2000);
+
+    // Clean up the timer if the component is unmounted
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="flex items-center justify-center min-h-screen">
       <ToastContainer />
       <div className="text-center">
         <div>You should be redirected soon. </div>
-        <a href="/dashboard" className="text-blue-600">If not, click here.</a>
+        {showLink && <a href="/dashboard" className="text-blue-600">If not, click here.</a>}
       </div>
     </div>
   );
