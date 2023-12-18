@@ -282,7 +282,7 @@ const OutlineVisualizer = ({
               <div
                 id={String(sectionIndex)}
                 key={sectionIndex + 1}
-                className='relative w-full sm:w-3/4 bg-neutral-50 rounded-md shadow border border-gray-200 px-4 py-2'
+                className='relative w-full sm:w-3/4 bg-neutral-50 rounded-md shadow border border-gray-200 px-1 sm:px-4 py-2'
                 onMouseEnter={() => setHoveredSectionIndex(sectionIndex)}
                 onMouseLeave={() => setHoveredSectionIndex(-1)}
               >
@@ -298,6 +298,7 @@ const OutlineVisualizer = ({
                     key={sectionIndex}
                     className='border-none outline-none focus:outline-slate-300 bg-neutral-50 rounded inline text-xl font-bold grow overflow-ellipsis'
                     value={section.title}
+                    onClick={e => (e.target as HTMLInputElement).select()}
                     onChange={(e) => handleSectionChange(e, sectionIndex)}
                     onBlur={(e) => handleBlur(e, sectionIndex)}
                   />
@@ -315,7 +316,7 @@ const OutlineVisualizer = ({
                   )}
                 <div className='mt-4'>
                   {section.content.map((content: any, detailIndex: number) => (
-                    <ul key={detailIndex} className='flex mb-2 list-disc px-8'>
+                    <ul key={detailIndex} className='flex mb-2 sm:list-disc px-2 sm:px-8'>
                       <li
                         className='w-full relative '
                         onMouseEnter={() => setHoveredDetailIndex(detailIndex)}
@@ -330,6 +331,7 @@ const OutlineVisualizer = ({
                               : 'bg-neutral-50 '
                           }`}
                           value={content}
+                          onClick={e => (e.target as HTMLInputElement).select()}
                           onChange={(e) =>
                             handleDetailChange(
                               e,

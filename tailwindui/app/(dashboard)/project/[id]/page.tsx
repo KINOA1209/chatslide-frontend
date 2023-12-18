@@ -82,9 +82,6 @@ const ProjectLoading = () => {
                 if (project.transcripts) {
                     sessionStorage.setItem('transcripts', JSON.stringify(project.transcripts));
                 }
-                if (project.image_files) {
-                    sessionStorage.setItem('image_files', JSON.stringify(project.image_files));
-                }
                 if (project.pdf_file) {
                     sessionStorage.setItem('pdf_file', project.pdf_file);
                 }
@@ -162,7 +159,6 @@ const ProjectLoading = () => {
         '/workflow-edit-outlines',
         '/workflow-review-slides',
         '/workflow-edit-script',
-        '/workflow-review-audio',
         '/workflow-review-video'];
     const presentationFinishedSteps: () => number[] = () => {
         const finishedStepsArray: number[] = [];

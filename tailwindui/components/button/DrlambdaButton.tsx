@@ -89,12 +89,11 @@ export const DrlambdaLink: React.FC<DrlambdaLinkProps> = ({ link, text, style, n
       href={link}
       target={newWindow ? '_blank' : '_self'}
       rel={newWindow ? 'noopener noreferrer' : undefined} // Important for security reasons
-      className={`min-w-[10rem] lg:w-[12rem] h-[36px] sm:h-[36px] ${style} rounded-[15px] flex justify-center items-center gap-2 cursor-pointer`}
+      className={`min-w-[10rem] lg:w-[12rem] h-[36px] sm:h-[36px] ${style} rounded-3xl flex justify-center items-center gap-2 cursor-pointer`}
     >
       <div className="flex flex-row justify-center items-center">
         <span className='font-semibold tracking-tight whitespace-nowrap'>
           {text}
-
         </span>
         {label && <GrayLabel>{label}</GrayLabel>}
       </div>

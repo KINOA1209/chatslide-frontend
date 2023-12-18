@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import PaywallModal from './forms/paywallModal';
 import ResourceService from '@/services/ResourceService';
 import Resource from '@/models/Resource';
+import Image from 'next/image';
 
 interface ImgModuleProp {
     imgsrc: string;
@@ -559,7 +560,7 @@ export const ImgModule = ({
             {/* select image modal */}
             {createPortal(
                 <Transition
-                    className='h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
+                    className='flex h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex-col md:items-center md:justify-center'
                     show={showModal}
                     onClick={closeModal}
                     enter='transition ease duration-300 transform'
@@ -809,10 +810,10 @@ export const ImgModule = ({
                 document.body
             )}
 
-            {/* image itsefl */}
+            {/* image itself */}
             <div
                 onClick={openModal}
-                className={`w-full h-full transition ease-in-out duration-150 ${
+                className={`w-full h-full transition ease-in-out duration-150 relative ${
                     selectedImg === ''
                         ? 'bg-[#E7E9EB]'
                         : canEdit
@@ -842,15 +843,17 @@ export const ImgModule = ({
                         </div>
                     </div>
                 ) : (
-                    <img
-                        style={{
-                            objectFit: 'contain',
-                            objectPosition: 'center',
-                        }}
-                        className={`transition ease-in-out duration-150 ${
-                            canEdit ? 'hover:brightness-90' : 'cursor-default'
+
+                <img
+                    src={imgsrc}
+                    alt='Your image description' // Add an alt attribute for accessibility
+                    className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'
                         }`}
-                        src={imgsrc}
+                    style={{ // for save to pdf
+                        width: '100%', // or specific dimensions as needed
+                        objectFit: 'contain',
+                        objectPosition: 'center',
+                    }}
                     />
                 )}
             </div>

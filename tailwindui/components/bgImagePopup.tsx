@@ -179,7 +179,6 @@ const BgImagePopup: React.FC<bgImagePopupProps> = ({ onClose }) =>{
                 setIsSubmitting(false);
                 // Store the data in local storage
                 console.log(resp.data);
-                sessionStorage.setItem('image_files', JSON.stringify(resp.data.image_files));
                 sessionStorage.setItem('pdf_file', resp.data.pdf_file);
                 
 
