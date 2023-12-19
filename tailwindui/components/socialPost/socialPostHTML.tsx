@@ -138,7 +138,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
     
     const res_scenario =
         typeof sessionStorage !== 'undefined'
-        ? sessionStorage.getItem('scenario_type')
+        ? sessionStorage.getItem('scenarioType')
         : ''
 
     const [showLayout, setShowLayout] = useState(false)

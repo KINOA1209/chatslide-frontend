@@ -87,11 +87,11 @@ export default function Topic_SocialPost() {
 			: '',
 	);
 
-  const [scenario_type, setscenario_type] = useState(
-    typeof window !== 'undefined' && sessionStorage.scenario_type != undefined
-      ? sessionStorage.scenario_type
-      : ''
-  )
+	const [scenarioType, setscenarioType] = useState(
+		typeof window !== 'undefined' && sessionStorage.scenarioType != undefined
+			? sessionStorage.scenarioType
+			: '',
+	);
 
 	const [audience, setAudience] = useState(
 		typeof window !== 'undefined' && sessionStorage.audience != undefined
@@ -118,16 +118,16 @@ export default function Topic_SocialPost() {
 		}
 	}, [selectedResources]);
 
-  useEffect(() => {
-    const clientTopic = sessionStorage.getItem('topic')
-    if (clientTopic) {
-      setTopic(clientTopic)
-    }
-    const currScenario = sessionStorage.getItem('scenario_type')
-    if (currScenario){
-      setscenario_type(currScenario)
-    }
-  }, [])
+	useEffect(() => {
+		const clientTopic = sessionStorage.getItem('topic');
+		if (clientTopic) {
+			setTopic(clientTopic);
+		}
+		const currScenario = sessionStorage.getItem('scenarioType');
+		if (currScenario) {
+			setscenarioType(currScenario);
+		}
+	}, []);
 
 	useEffect(() => {
 		UserService.isPaidUser().then((isPaidUser) => {
@@ -204,24 +204,27 @@ export default function Topic_SocialPost() {
 
 		setIsSubmitting(true);
 
-    const formData = {
-      topic: topic,
-      language: language,
-      project_id: project_id,
-      //youtube_url: youtube,
-      resources: selectedResources.map((resource: Resource) => resource.id),
-      model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
-      post_style: scenario_type,
-    }
-    sessionStorage.setItem('topic', formData.topic)
-    sessionStorage.setItem('language', formData.language)
-    sessionStorage.setItem('selectedResources', JSON.stringify(selectedResources))
+		const formData = {
+			topic: topic,
+			language: language,
+			project_id: project_id,
+			//youtube_url: youtube,
+			resources: selectedResources.map((resource: Resource) => resource.id),
+			model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
+			post_style: scenarioType,
+		};
+		sessionStorage.setItem('topic', formData.topic);
+		sessionStorage.setItem('language', formData.language);
+		sessionStorage.setItem(
+			'selectedResources',
+			JSON.stringify(selectedResources),
+		);
 
-    try {
-      const outlinesJson = await callSocialPost(formData as FormatData)
-      //console.log(outlinesJson)
-      //const searchImagesResponse = await callSearchImages(JSON.stringify(formData.topic))
-      setIsSubmitting(false)
+		try {
+			const outlinesJson = await callSocialPost(formData as FormatData);
+			//console.log(outlinesJson)
+			//const searchImagesResponse = await callSearchImages(JSON.stringify(formData.topic))
+			setIsSubmitting(false);
 
 			// Store the data in session storage
 			sessionStorage.setItem('outline', JSON.stringify(outlinesJson.data));

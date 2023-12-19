@@ -33,7 +33,7 @@ const ExportToPngButton: React.FC<ExportToPdfProps> = ({
 
   const res_scenario =
     typeof sessionStorage !== 'undefined'
-      ? sessionStorage.getItem('scenario_type')
+      ? sessionStorage.getItem('scenarioType')
       : ''
   const [user, setUser] = useState(null)
   const [downloadingPDF, setDownloadingPDF] = useState(false)
