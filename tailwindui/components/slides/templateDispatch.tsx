@@ -35,7 +35,7 @@ export const templateDispatch = (
 	layoutOptionNonCover: LayoutKeys = 'Col_2_img_1_layout',
 	layoutOptionCover: LayoutKeys = 'Cover_img_1_layout',
 	isCurrentSlide: boolean = false,
-	// templateLogo: JSX.Element,
+	// templateLogo: string,
 	brandingColor?: string,
 ): JSX.Element => {
 	// useEffect(() => {
@@ -51,7 +51,9 @@ export const templateDispatch = (
 	const Template =
 		availableTemplates[slide.template as keyof typeof availableTemplates];
 	const ChosenTemplateLogo =
-		TemplatesLogos[slide.logo as keyof typeof TemplatesLogos];
+		TemplatesLogos[slide.template as keyof typeof TemplatesLogos];
+	// const ChosenTemplateLogo =
+	// 	TemplatesLogos[templateLogo as keyof typeof TemplatesLogos];
 	const customizableElements = loadCustomizableElements(slide.template);
 	const generateContentElement = (
 		content: string,

@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import drlambdaLogo from '@/public/images/template/drlambdaLogo.png';
 import drlambdaLogoSingle from '@/public/images/template/drlambdaLogoSingle.png';
+import BerkeleyLogo from '@/public/images/template/Berkeley/Berkeley_logo.png';
+import BerkeleyLogoWhite from '@/public/images/template/Berkeley/Berkeley_logo_white.png';
 
 // Inside DefaultTemplateLogo component
 export const DefaultTemplateLogo = ({
@@ -10,7 +12,7 @@ export const DefaultTemplateLogo = ({
 }) => {
 	if (isCoverPage) {
 		return (
-			<div className='fixed inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
+			<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
 				<Image
 					src={drlambdaLogo}
 					alt='drlambdaLogo'
@@ -21,7 +23,7 @@ export const DefaultTemplateLogo = ({
 		);
 	} else {
 		return (
-			<div className='fixed inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
+			<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
 				<Image
 					src={drlambdaLogoSingle}
 					alt='drlambda logo'
@@ -36,6 +38,23 @@ export const DefaultTemplateLogo = ({
 	}
 };
 
+export const BerkeleyTemplateLogo = ({
+	isCoverPage,
+}: {
+	isCoverPage: boolean;
+}) => {
+	return (
+		<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
+			<Image
+				src={isCoverPage ? BerkeleyLogoWhite : BerkeleyLogo}
+				alt='Standford Logo'
+				className='w-[5rem] h-auto'
+			/>
+		</div>
+	);
+};
+
 export const TemplatesLogos = {
 	Default: DefaultTemplateLogo,
+	Berkeley: BerkeleyTemplateLogo,
 };

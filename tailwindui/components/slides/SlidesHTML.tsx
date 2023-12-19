@@ -609,6 +609,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			currentSlide.template = content as string;
 		} else if (className === 'layout') {
 			currentSlide.layout = content as LayoutKeys;
+		} else if (className === 'logo') {
+			currentSlide.logo = content as string;
 		} else if (className === 'images') {
 			currentSlide.images = content as string[];
 		} else if (className === 'content') {
@@ -696,6 +698,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			slide.layout,
 			slide.layout,
 			index === currentSlideIndex,
+			slide.logo,
 		);
 
 	return (
