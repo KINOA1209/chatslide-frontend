@@ -332,7 +332,7 @@ export const Col_2_img_1_layout = ({
 	return (
 		<div className='w-full h-full flex flex-row gap-[2rem] justify-start items-start'>
 			<div className={`w-1/2 flex flex-col items-start h-full gap-[0.1rem]`}>
-				<div className={``}>{topic}</div>
+				<div className={`z-50`}>{topic}</div>
 				<div className={``}>{subtopic}</div>
 				{/* contents */}
 				<div className='h-full w-full flex flex-row gap-[2rem]'>
