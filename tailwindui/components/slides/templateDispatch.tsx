@@ -6,6 +6,8 @@ import { LayoutKeys } from '@/components/slides/slideLayout';
 import dynamic from 'next/dynamic';
 import React, { CSSProperties, useEffect, useRef } from 'react';
 import { loadCustomizableElements } from './SlidesHTML';
+import { TemplatesLogos } from './templates_customizable_elements/Templates_logos';
+import ReactDOMServer from 'react-dom/server';
 const QuillEditable = dynamic(
 	() => import('@/components/slides/quillEditorSlide'),
 	{ ssr: false },
@@ -33,6 +35,7 @@ export const templateDispatch = (
 	layoutOptionNonCover: LayoutKeys = 'Col_2_img_1_layout',
 	layoutOptionCover: LayoutKeys = 'Cover_img_1_layout',
 	isCurrentSlide: boolean = false,
+	// templateLogo: string,
 	brandingColor?: string,
 ): JSX.Element => {
 	// useEffect(() => {
@@ -47,7 +50,10 @@ export const templateDispatch = (
 	}
 	const Template =
 		availableTemplates[slide.template as keyof typeof availableTemplates];
-
+	const ChosenTemplateLogo =
+		TemplatesLogos[slide.template as keyof typeof TemplatesLogos];
+	// const ChosenTemplateLogo =
+	// 	TemplatesLogos[templateLogo as keyof typeof TemplatesLogos];
 	const customizableElements = loadCustomizableElements(slide.template);
 	const generateContentElement = (
 		content: string,
@@ -87,6 +93,7 @@ export const templateDispatch = (
 			}
 		}
 	};
+
 	return (
 		<Template
 			autoSave={saveSlides}
@@ -200,6 +207,7 @@ export const templateDispatch = (
 			layoutOptionNonCover={layoutOptionNonCover}
 			layoutOptionCover={layoutOptionCover}
 			brandingColor={brandingColor}
+			templateLogo={<ChosenTemplateLogo isCoverPage={isCoverPage} />}
 		/>
 	);
 	// }
