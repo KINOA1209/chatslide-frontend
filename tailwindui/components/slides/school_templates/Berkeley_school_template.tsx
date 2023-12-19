@@ -7,6 +7,7 @@ import BerkeleyLogoWhite from '@/public/images/template/Berkeley/Berkeley_logo_w
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import { layoutOptions } from '@/components/slides/slideLayout';
 import { loadCustomizableElements } from '@/components/slides/SlidesHTML';
+import { TemplateKeys } from '../slideTemplates';
 export const Berkeley_school_template = ({
 	user_name,
 	title,
@@ -28,7 +29,9 @@ export const Berkeley_school_template = ({
 		layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
 	//   console.log('choosing layout option', ChosenLayout)
 	// Load customizable elements for the current template
-	const customizableElements = loadCustomizableElements('Berkeley');
+	const customizableElements = loadCustomizableElements(
+		'Berkeley' as TemplateKeys,
+	);
 	return (
 		<>
 			{/* for not-cover page slides */}
@@ -89,14 +92,6 @@ export const Berkeley_school_template = ({
 						src={MaskedBackground}
 						alt='MaskedBackground'
 						className='w-[70rem]'
-					/>
-				</div>
-
-				<div className='absolute inset-0 top-[50%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]z-50'>
-					<Image
-						src={isCoverPage ? BerkeleyLogoWhite : BerkeleyLogo}
-						alt='Berkeley Logo'
-						className='w-[5rem] h-auto'
 					/>
 				</div>
 			</div>
