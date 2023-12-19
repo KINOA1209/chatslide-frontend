@@ -1,6 +1,5 @@
 import { Auth as AmplifyAuth, Hub } from 'aws-amplify';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
-import { setUserToken, setCredits, setTier, setUsername, setEmail, unsetUser } from '@/store/userSlice';
 
 import awsConfig from '../aws-exports';
 
