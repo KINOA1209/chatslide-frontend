@@ -15,7 +15,7 @@ const ScenarioChoicePage = () => {
 
   // Function to navigate to the "workflow-scenario-choice" page
   const navigateToSummary = (scenarioType: string) => {
-    sessionStorage.setItem('selectedScenario', scenarioType)
+    sessionStorage.setItem('scenarioType', scenarioType)
     if (workflowType == 'slides')
       router.push('/workflow-generate-outlines') 
     else
