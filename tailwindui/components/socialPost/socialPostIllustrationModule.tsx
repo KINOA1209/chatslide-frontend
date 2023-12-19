@@ -553,8 +553,8 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
                 :
                 <Image src={imgsrc}
                   alt="Image"
-                  width={500}
-                  height={500}
+                  height={270}
+                  width={300}
                   className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`} />
         }
         </div>
