@@ -1,12 +1,12 @@
 import { toPng } from 'html-to-image';
 
 const areAllImagesLoaded = (container: HTMLElement) => {
-  const images = container.getElementsByTagName('img');
-  for (let i = 0; i < images.length; i++) {
-    if (!images[i].complete || images[i].naturalWidth === 0) {
-      return false;
-    }
-  }
+  // const images = container.getElementsByTagName('img');
+  // for (let i = 0; i < images.length; i++) {
+  //   if (!images[i].complete || images[i].naturalWidth === 0) {
+  //     return false;
+  //   }
+  // }
   return true;
 };
 

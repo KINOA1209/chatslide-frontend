@@ -572,8 +572,7 @@ export const ImgModule = ({
           // style={{ objectFit: 'contain'}}
           // className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`}
           // src={imgsrc} 
-          <Image src=""
-
+          <Image src={imgsrc}
             alt="Image"
             width={500}
             height={500}
