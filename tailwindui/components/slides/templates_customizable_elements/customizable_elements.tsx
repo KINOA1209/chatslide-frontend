@@ -76,7 +76,7 @@ const configData: Config = {
 		// titleFontColor: 'text-[#003262]',
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points (assuming 1rem is 1pt)
-			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
+			lineHeight: 2.0, // leading-[120%] is equivalent to a line height of 1.2
 			fontWeight: 'bold', // font-bold
 			fontFamily: 'sans-serif', // font-sans (assuming sans-serif as a default)
 			whiteSpace: 'nowrap', // whitespace-nowrap
@@ -87,7 +87,7 @@ const configData: Config = {
 		subtopicFontCSS: {
 			fontSize: '18pt', // text-xl in points (assuming 1rem is 1pt)
 			fontWeight: 'bold', // font-semibold
-			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
+			lineHeight: 2.0, // leading-[120%] is equivalent to a line height of 1.2
 			fontFamily: 'sans-serif', // font-sans (assuming sans-serif as a default)
 			color: '#525252', // text-[#525252] color
 		},
@@ -96,7 +96,7 @@ const configData: Config = {
 		contentFontCSS: {
 			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal
-			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
+			lineHeight: 2.0, // leading-[120%] is equivalent to a line height of 1.2
 			fontFamily: 'sans-serif', // font-sans (assuming sans-serif as a default)
 			color: '#1B1B1B', // text-[#1B1B1B] color
 		},
@@ -108,7 +108,7 @@ const configData: Config = {
 			fontSize: '32pt', // text-4xl in points (assuming 1rem is 1pt)
 			fontWeight: 'bold', // font-bold
 			fontFamily: 'sans-serif', // font-sans (assuming sans-serif as a default)
-			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
+			lineHeight: 2.0, // leading-[120%] is equivalent to a line height of 1.2
 			color: '#FFFFFF', // text-white color
 		},
 	},
