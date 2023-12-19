@@ -20,6 +20,7 @@ export const Berkeley_school_template = ({
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
+	templateLogo,
 }: MainSlideProps) => {
 	const ChosenLayoutNonCover =
 		layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
@@ -54,6 +55,7 @@ export const Berkeley_school_template = ({
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
 					customizableElements={customizableElements}
+					templateLogo={templateLogo}
 				></ChosenLayoutNonCover>
 			</div>
 			{/* for cover page */}
@@ -78,6 +80,7 @@ export const Berkeley_school_template = ({
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
 					customizableElements={customizableElements}
+					templateLogo={templateLogo}
 				></ChosenLayoutCover>
 
 				{/* masked background */}
@@ -88,16 +91,14 @@ export const Berkeley_school_template = ({
 						className='w-[70rem]'
 					/>
 				</div>
-			</div>
 
-			{/* School Logo (Replace the placeholder with the actual logo URL) */}
-			<div className='fixed inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]'>
-				<Image
-					src={isCoverPage ? BerkeleyLogoWhite : BerkeleyLogo}
-					alt='Standford Logo'
-					className='w-[5rem] h-auto'
-				/>
-				{/* <div className='text-red-800 text-2xl font-normal '>Caption</div> */}
+				<div className='absolute inset-0 top-[50%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]z-50'>
+					<Image
+						src={isCoverPage ? BerkeleyLogoWhite : BerkeleyLogo}
+						alt='Berkeley Logo'
+						className='w-[5rem] h-auto'
+					/>
+				</div>
 			</div>
 		</>
 	);
