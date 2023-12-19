@@ -19,14 +19,8 @@ import { BigGrayButton } from '../button/DrlambdaButton'
 import { FaDownload } from 'react-icons/fa'
 
 interface ExportToPdfProps {
-  finalSlides: SocialPostSlide[]
-  currentSlideIndex?: number
-  borderColorOptions: ThemeObject[]
 }
 const ExportToPngButton: React.FC<ExportToPdfProps> = ({
-  finalSlides,
-  currentSlideIndex = 0,
-  borderColorOptions,
 }) => {
   const topic =
     typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('topic') : ''
@@ -110,7 +104,7 @@ const ExportToPngButton: React.FC<ExportToPdfProps> = ({
       })
 
       if (response.ok) {
-        downloadImage(slideRef);
+        await downloadImage(slideRef);
       } else if (response.status === 402) {
         setShowPaymentModal(true)
       } else {
@@ -140,22 +134,6 @@ const ExportToPngButton: React.FC<ExportToPdfProps> = ({
           </div>
         </BigGrayButton>
 
-      </div>
-
-      {/* hidden div for export to pdf */}
-      <div style={{ display: downloadingPDF ? 'block' : 'none', zIndex: -1 }}>
-        <div ref={exportSlidesRef}>
-          <div key={`exportToPdfContainer` + currentSlideIndex.toString()}>
-            <SocialPostContainer
-              slides={finalSlides}
-              currentSlideIndex={currentSlideIndex}
-              exportToPdfMode={true}
-              templateDispatch={selectTemplateDispatch()}
-              slideRef={slideRef}
-              onSlideRefUpdate={setSlideRef}
-            />
-          </div>
-        </div>
       </div>
     </div>
   )
