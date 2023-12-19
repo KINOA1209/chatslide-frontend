@@ -326,7 +326,7 @@ const configData: Config = {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
-			lineHeight: 1.5, // leading-[100%] is equivalent to a line height of 1},
+			lineHeight: 1.8, // leading-[100%] is equivalent to a line height of 1},
 			color: '#000', // text-black color
 		},
 		// subtopicFont:
@@ -337,7 +337,7 @@ const configData: Config = {
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			textTransform: 'uppercase', // Uppercase for font style
-			lineHeight: 1.5, // leading-[150%] is equivalent to a line height of 1.5
+			lineHeight: 1.8, // leading-[150%] is equivalent to a line height of 1.5
 			letterSpacing: '0.15rem', // tracking-[0.15rem]},
 			color: '#111827', // text-neutral-900 color
 		},
@@ -348,7 +348,7 @@ const configData: Config = {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
-			lineHeight: 1.2, // leading-[140%]
+			lineHeight: 1.5, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
 		},
@@ -362,7 +362,7 @@ const configData: Config = {
 			fontSize: '32pt', // text-4xl in points
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
-			lineHeight: 1.5, // leading-[120%] is equivalent to a line height of 1.2
+			lineHeight: 1.8, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
 			color: '#374151', // text-neutral-800 color},
 		},
