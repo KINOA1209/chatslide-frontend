@@ -1,26 +1,24 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
-import ExportToPDFModal from '@/components/socialPost/socialPostPdfModal'
 import AuthService from '../../services/AuthService'
-import { LoadingIcon } from '@/components/ui/progress'
 import { SocialPostSlide } from '@/components/socialPost/socialPostHTML'
 import PaywallModal from '../forms/paywallModal'
-import { DownloadIcon } from '@/app/(feature)/icons'
 import SocialPostContainer from '@/components/socialPost/socialPostContainer'
-import generatePDF, { Resolution, Margin, Options } from 'react-to-pdf'
 import { templateDispatch as defaultTemplateDispatch } from '@/components/socialPost/socialPostTemplateDispatch';
 import { templateDispatch as defaultTemplateDispatch2 } from '@/components/socialPost//socialPostTemplate2Dispatch';
 import { templateDispatch as defaultTemplateDispatch3 } from '@/components/socialPost/socialPostTemplate3Dispatch';
-import html2canvas from 'html2canvas'
 import { toPng } from 'html-to-image';
-import { ThemeObject } from './socialPostThemeChanger'
 import { BigGrayButton } from '../button/DrlambdaButton'
 import { FaDownload } from 'react-icons/fa'
 
 interface ExportToPdfProps {
+  socialPostSlide: SocialPostSlide[]
+  currentSlideIndex: number
 }
 const ExportToPngButton: React.FC<ExportToPdfProps> = ({
+  socialPostSlide,
+  currentSlideIndex,
 }) => {
   const topic =
     typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('topic') : ''
@@ -133,6 +131,22 @@ const ExportToPngButton: React.FC<ExportToPdfProps> = ({
             <FaDownload className='text-gray-800' />
           </div>
         </BigGrayButton>
+
+        {/* hidden div for export to pdf */}
+        <div className='absolute left-[-9999px] top-[-9999px] -z-1'>
+          <div ref={exportSlidesRef}>
+            <div key={`exportToPdfContainer` + currentSlideIndex.toString()}>
+              <SocialPostContainer
+                slides={socialPostSlide}
+                currentSlideIndex={currentSlideIndex}
+                exportToPdfMode={true}
+                templateDispatch={selectTemplateDispatch()}
+                slideRef={slideRef}
+                onSlideRefUpdate={setSlideRef}
+              />
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>
