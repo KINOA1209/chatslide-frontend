@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Image, { StaticImageData } from 'next/image';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import sanitizeHtml from 'sanitize-html';
@@ -28,6 +29,7 @@ import TestSlidesData from './TestSlidesData.json';
 import AuthService from '@/services/AuthService';
 import customizable_elements from './templates_customizable_elements/customizable_elements';
 import ScriptEditor from './ScriptEditor';
+import drlambdaLogo from '@/public/images/template/drlambdaLogo.png';
 export interface SlideElement {
 	type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
 	className:
@@ -38,7 +40,8 @@ export interface SlideElement {
 		| 'userName'
 		| 'images'
 		| 'template'
-		| 'layout';
+		| 'layout'
+		| 'logo';
 	content: string | string[];
 }
 
@@ -50,7 +53,8 @@ export type SlideKeys =
 	| 'template'
 	| 'content'
 	| 'images'
-	| 'layout';
+	| 'layout'
+	| 'logo';
 
 export class Slide {
 	head: string;
@@ -61,6 +65,7 @@ export class Slide {
 	content: string[];
 	images: string[];
 	layout: LayoutKeys;
+	logo: string;
 
 	constructor() {
 		this.head = 'New Slide';
@@ -68,9 +73,14 @@ export class Slide {
 		this.subtopic = 'New Slide';
 		this.userName = '';
 		this.template = 'Default';
-    this.content = ['Some content here', 'Some more content here', 'Even more content here'];
+		this.content = [
+			'Some content here',
+			'Some more content here',
+			'Even more content here',
+		];
 		this.images = [];
 		this.layout = 'Col_2_img_1_layout';
+		this.logo = 'Default';
 	}
 }
 
@@ -298,12 +308,17 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						slideData.template ||
 						sessionStorage.getItem('schoolTemplate') ||
 						'Default';
-					slide.content = slideData.content || ['Some content here', 'Some more content here', 'Even more content here'];
+					slide.content = slideData.content || [
+						'Some content here',
+						'Some more content here',
+						'Even more content here',
+					];
 					slide.images = slideData.images || [];
 					// console.log(
 					//     'slideData.content.length',
 					//     slideData.content.length
 					// );
+					slide.logo = slideData.logo || 'Default';
 					if (index === 0) {
 						slide.layout =
 							slideData.layout || ('Cover_img_1_layout' as LayoutKeys);
@@ -346,53 +361,62 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	});
 
 	useEffect(() => {
-    // console.log('slides contents changed', slides)
+		// console.log('slides contents changed', slides)
 
-    // process current slide content
-    const currentSlide = slides[currentSlideIndex]
-    console.log('currentSlide:', currentSlide)
+		// process current slide content
+		const currentSlide = slides[currentSlideIndex];
+		console.log('currentSlide:', currentSlide);
 
-    if (currentSlide?.layout === "Col_1_img_0_layout" || currentSlide?.layout === "Col_2_img_1_layout") {
-      const currentSlideContent = currentSlide.content
+		if (
+			currentSlide?.layout === 'Col_1_img_0_layout' ||
+			currentSlide?.layout === 'Col_2_img_1_layout'
+		) {
+			const currentSlideContent = currentSlide.content;
 
-      const newContent: string[] = []
+			const newContent: string[] = [];
 
-      const allContent = currentSlideContent.join('<p><br></p>').split('<p><br></p>')
-      
-      allContent.forEach((str) => {
-        // if str removed all tags is empty, do not add to newContent
-        if (str.replace(/<[^>]*>/g, "").trim() !== '') {
-          console.log('str:', str)
-          newContent.push(str)
-        }
-      })
+			const allContent = currentSlideContent
+				.join('<p><br></p>')
+				.split('<p><br></p>');
 
-      if(newContent.length === 0) {
-        newContent.push('')
-      }
-      
-      console.log('newContent:', newContent)
+			allContent.forEach((str) => {
+				// if str removed all tags is empty, do not add to newContent
+				if (str.replace(/<[^>]*>/g, '').trim() !== '') {
+					console.log('str:', str);
+					newContent.push(str);
+				}
+			});
 
-      // Only update state if the content has actually changed
-      if (JSON.stringify(slides[currentSlideIndex].content) !== JSON.stringify(newContent)) {
-        const updatedSlides = slides.map((slide, index) =>
-          index === currentSlideIndex ? { ...slide, content: newContent } : slide
-        );
+			if (newContent.length === 0) {
+				newContent.push('');
+			}
 
-        setSlides(updatedSlides);
-      }
-    }
+			console.log('newContent:', newContent);
 
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      console.log('First render, skip saving');
-    } else {
-      console.log('slides changed');
-      setUnsavedChanges(true);
-      saveSlides();
-    }
+			// Only update state if the content has actually changed
+			if (
+				JSON.stringify(slides[currentSlideIndex].content) !==
+				JSON.stringify(newContent)
+			) {
+				const updatedSlides = slides.map((slide, index) =>
+					index === currentSlideIndex
+						? { ...slide, content: newContent }
+						: slide,
+				);
 
-  }, [slides]);
+				setSlides(updatedSlides);
+			}
+		}
+
+		if (isFirstRender.current) {
+			isFirstRender.current = false;
+			console.log('First render, skip saving');
+		} else {
+			console.log('slides changed');
+			setUnsavedChanges(true);
+			saveSlides();
+		}
+	}, [slides]);
 
 	const scrollContainerRef = useRef<HTMLDivElement | null>(null); // Specify the type as HTMLDivElement
 
