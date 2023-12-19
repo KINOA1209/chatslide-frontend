@@ -844,17 +844,23 @@ export const ImgModule = ({
                     </div>
                 ) : (
 
-                <img
-                    src={imgsrc}
-                    alt='Your image description' // Add an alt attribute for accessibility
-                    className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'
-                        }`}
-                    style={{ // for save to pdf
-                        width: '100%', // or specific dimensions as needed
-                        objectFit: 'contain',
-                        objectPosition: 'center',
-                    }}
-                    />
+                // <img
+                //     src={imgsrc + '?timestamp=' + new Date().getTime()}
+                //     alt='Your image description' // Add an alt attribute for accessibility
+                //     className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'
+                //         }`}
+                //     style={{ // for save to pdf
+                //         width: '100%', // or specific dimensions as needed
+                //         objectFit: 'contain',
+                //         objectPosition: 'center',
+                //     }}
+                //     />
+              <Image src={imgsrc + '?timestamp=' + new Date().getTime()}
+
+                alt="Image"
+                width={500}
+                height={500}
+                className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`} />
                 )}
             </div>
         </>
