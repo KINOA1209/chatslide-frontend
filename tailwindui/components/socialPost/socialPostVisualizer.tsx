@@ -51,6 +51,8 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
         <div className='flex flex-row justify-end items-center'>
           {/* want some more script Form submission */}
           <ExportToPngButton
+            socialPostSlide={socialPostSlides}
+            currentSlideIndex={finalSlideIndex}
           />
         </div>
         <SocialPostHTML
