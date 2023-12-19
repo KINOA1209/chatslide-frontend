@@ -195,3 +195,11 @@ export const availableTemplates = {
 	Columbia: Columbia_school_template,
 	Default: Default,
 };
+
+// Define a type for template keys
+export type TemplateKeys = keyof typeof availableTemplates;
+
+// Define templateKeys with the type TemplateKeys
+// export const templateKeys: TemplateKeys[] = Object.keys(
+// 	availableTemplates,
+// ) as TemplateKeys[];

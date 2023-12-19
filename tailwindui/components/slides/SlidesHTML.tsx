@@ -9,6 +9,7 @@ import {
 	// templateSamples,
 } from '@/components/slides/slideTemplates';
 import { LayoutKeys } from '@/components/slides/slideLayout';
+import { TemplateKeys } from '@/components/slides/slideTemplates';
 import LayoutChanger from './LayoutChanger';
 import {
 	PresentButton,
@@ -61,7 +62,7 @@ export class Slide {
 	title: string;
 	subtopic: string;
 	userName: string;
-	template: string;
+	template: TemplateKeys;
 	content: string[];
 	images: string[];
 	layout: LayoutKeys;
@@ -195,6 +196,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			return { ...slide, template: newTemplate };
 		});
 		// console.log('Slides after changing template:', newSlides)
+		sessionStorage.setItem('schoolTemplate', newTemplate);
 		setSlides(newSlides);
 
 		console.log('Slides after changing template:', newSlides);
@@ -307,7 +309,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					slide.template =
 						slideData.template ||
 						sessionStorage.getItem('schoolTemplate') ||
-						'Default';
+						('Default' as TemplateKeys);
 					slide.content = slideData.content || [
 						'Some content here',
 						'Some more content here',
@@ -474,7 +476,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				) {
 					// console.log('template child:', child.textContent?.trim())
 					// Use child.textContent for simple string content
-					elements.template = sanitizeHtml(child.textContent ?? ''); // Use nullish coalescing
+					elements.template = sanitizeHtml(
+						child.textContent ?? '',
+					) as TemplateKeys; // Use nullish coalescing
 				} else if (className === 'layout' && child.textContent?.trim() !== '') {
 					// Use child.textContent for simple string content
 					elements.layout = sanitizeHtml(child.textContent ?? '') as LayoutKeys; // Use nullish coalescing
@@ -498,7 +502,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			}
 
 			// default template
-			if (elements.template === '') {
+			if (elements.template === ('' as TemplateKeys)) {
 				// if (index === 0) {
 				//   elements.template = 'First_page_img_1'
 				// } else {
@@ -606,7 +610,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		} else if (className === 'userName') {
 			currentSlide.userName = content as string;
 		} else if (className === 'template') {
-			currentSlide.template = content as string;
+			currentSlide.template = content as TemplateKeys;
 		} else if (className === 'layout') {
 			currentSlide.layout = content as LayoutKeys;
 		} else if (className === 'logo') {

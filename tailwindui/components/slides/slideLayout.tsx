@@ -271,8 +271,8 @@ export const Col_1_img_1_layout = ({
 			<div className='h-1/3 w-full grid grid-cols-2 gap-[2rem]'>
 				{/* col1 for topic and subtopic */}
 				<div className='flex flex-col gap-[0.1rem]'>
-					<div className={``}>{topic}</div>
-					<div className={``}>{subtopic}</div>
+					<div className={`z-50`}>{topic}</div>
+					<div className={`z-50`}>{subtopic}</div>
 				</div>
 				{/* col 2 for contents */}
 				<div className='h-full w-full flex flex-row gap-[2rem]'>
@@ -332,7 +332,7 @@ export const Col_2_img_1_layout = ({
 	return (
 		<div className='w-full h-full flex flex-row gap-[2rem] justify-start items-start'>
 			<div className={`w-1/2 flex flex-col items-start h-full gap-[0.1rem]`}>
-				<div className={``}>{topic}</div>
+				<div className={`z-50`}>{topic}</div>
 				<div className={``}>{subtopic}</div>
 				{/* contents */}
 				<div className='h-full w-full flex flex-row gap-[2rem]'>
