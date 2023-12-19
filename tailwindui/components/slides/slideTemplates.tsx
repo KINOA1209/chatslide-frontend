@@ -7,7 +7,7 @@ import col2img1_png from '@/public/images/template/col2img1.png';
 import col3img2_png from '@/public/images/template/col3img2.png';
 import drlambdaLogo from '@/public/images/template/drlambdaLogo.png';
 import drlambdaLogoSingle from '@/public/images/template/drlambdaLogoSingle.png';
-
+// import { TemplatesLogos } from './templates_customizable_elements/Templates_logos';
 import { Berkeley_school_template } from './school_templates/Berkeley_school_template';
 import { Harvard_school_template } from './school_templates/Harvard_school_template';
 import { Stanford_school_template } from './school_templates/Stanford_school_template';
@@ -33,6 +33,7 @@ export interface MainSlideProps {
 	layoutOptionNonCover: LayoutKeys;
 	layoutOptionCover: LayoutKeys;
 	brandingColor?: string;
+	templateLogo?: JSX.Element;
 }
 
 export const useLocalImgs = (
@@ -86,7 +87,9 @@ export const Default = ({
 	layoutOptionNonCover,
 	layoutOptionCover,
 	brandingColor = 'bg-[#F0F0F2]',
-}: MainSlideProps) => {
+	templateLogo,
+}: // templateLogo = TemplatesLogos.DefaultTemplateLogo,
+MainSlideProps) => {
 	const ChosenLayoutNonCover =
 		layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
 	const ChosenLayoutCover =
@@ -98,6 +101,7 @@ export const Default = ({
 	//     'customizable elements for default template',
 	//     customizableElements
 	// );
+
 	return (
 		<>
 			{/* for cover page slide */}
@@ -123,17 +127,18 @@ export const Default = ({
 					layoutOptionCover={layoutOptionCover}
 					brandingColor={brandingColor}
 					customizableElements={customizableElements}
+					templateLogo={templateLogo}
 				></ChosenLayoutCover>
 
 				{/* Logo */}
-				<div className='fixed inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]'>
+				{/* <div className='fixed inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]'>
 					<Image
 						src={drlambdaLogo}
 						alt='drlambdaLogo'
 						className='w-[8rem] h-auto'
 					/>
-					{/* <div className='text-red-800 text-2xl font-normal '>Caption</div> */}
-				</div>
+		
+				</div> */}
 			</div>
 
 			{/* for non-cover page slides */}
@@ -161,9 +166,10 @@ export const Default = ({
 					layoutOptionCover={layoutOptionCover}
 					brandingColor={brandingColor}
 					customizableElements={customizableElements}
+					templateLogo={templateLogo}
 				></ChosenLayoutNonCover>
 				{/* company logo */}
-				<div className='fixed inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]'>
+				{/* <div className='fixed inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]'>
 					<Image
 						src={drlambdaLogoSingle}
 						alt='drlambda logo'
@@ -172,9 +178,9 @@ export const Default = ({
 					<div
 						className={`grow basis-0 opacity-50 border border-black border-opacity-40`}
 					></div>
-					{/* <div className='text-red-800 text-2xl font-normal '>Caption</div> */}
-				</div>
+				</div> */}
 			</div>
+			{/* {templateLogo} */}
 		</>
 	);
 };
