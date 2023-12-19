@@ -87,10 +87,9 @@ export default function Topic_SocialPost() {
 			: '',
 	);
 
-	const [selectedScenario, setSelectedScenario] = useState(
-		typeof window !== 'undefined' &&
-			sessionStorage.selectedScenario != undefined
-			? sessionStorage.selectedScenario
+	const [scenarioType, setscenarioType] = useState(
+		typeof window !== 'undefined' && sessionStorage.scenarioType != undefined
+			? sessionStorage.scenarioType
 			: '',
 	);
 
@@ -124,9 +123,9 @@ export default function Topic_SocialPost() {
 		if (clientTopic) {
 			setTopic(clientTopic);
 		}
-		const currScenario = sessionStorage.getItem('selectedScenario');
+		const currScenario = sessionStorage.getItem('scenarioType');
 		if (currScenario) {
-			setSelectedScenario(currScenario);
+			setscenarioType(currScenario);
 		}
 	}, []);
 
@@ -212,7 +211,7 @@ export default function Topic_SocialPost() {
 			//youtube_url: youtube,
 			resources: selectedResources.map((resource: Resource) => resource.id),
 			model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
-			post_style: selectedScenario,
+			post_style: scenarioType,
 		};
 		sessionStorage.setItem('topic', formData.topic);
 		sessionStorage.setItem('language', formData.language);
