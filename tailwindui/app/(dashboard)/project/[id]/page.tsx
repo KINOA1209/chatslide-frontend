@@ -59,7 +59,7 @@ const ProjectLoading = () => {
                     sessionStorage.setItem('requirements', project.requirements);
                 }
                 if (project.scenario_type) {
-                    sessionStorage.setItem('scenario_type', project.scenario_type);
+                    sessionStorage.setItem('scenarioType', project.scenario_type);
                 }
                 if (project.audience) {
                     sessionStorage.setItem('audience', project.audience);
@@ -105,7 +105,7 @@ const ProjectLoading = () => {
                 }
             } else if (content_type == 'social_posts') {
                 if (project.post_type) {
-                    sessionStorage.setItem('scenario_type', project.post_type);
+                    sessionStorage.setItem('scenarioType', project.post_type);
                 }
                 if (project.social_platform) {
                     sessionStorage.setItem('social_platform', project.social_platform);
@@ -190,7 +190,7 @@ const ProjectLoading = () => {
     ];
     const socialPostFinishedSteps: () => number[] = () => {
         const finishedStepsArray: number[] = [];
-        if (typeof window !== 'undefined' && sessionStorage.getItem('scenario_type')) {
+        if (typeof window !== 'undefined' && sessionStorage.getItem('scenarioType')) {
             finishedStepsArray.push(0);
         }
         if (typeof window !== 'undefined' && sessionStorage.getItem('topic')) {

@@ -285,9 +285,9 @@ export default function Topic() {
         ? sessionStorage.project_id
         : ''
     
-    const scenario_type =
-      typeof window !== 'undefined' && sessionStorage.scenario_type != undefined
-        ? sessionStorage.scenario_type
+    const scenarioType =
+      typeof window !== 'undefined' && sessionStorage.scenarioType != undefined
+        ? sessionStorage.scenarioType
         : ''
 
     setIsSubmitting(true)
@@ -301,7 +301,7 @@ export default function Topic() {
       resources: selectedResources.map((resource: Resource) => resource.id),
       model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
       schoolTemplate: schoolTemplate,
-      scenario_type: scenario_type,
+      scenario_type: scenarioType,
     }
 
     sessionStorage.setItem('topic', formData.topic)
