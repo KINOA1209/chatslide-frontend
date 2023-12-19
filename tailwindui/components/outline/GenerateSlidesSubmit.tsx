@@ -137,6 +137,10 @@ const GenerateSlidesSubmit = ({
       typeof window !== 'undefined'
         ? sessionStorage.getItem('outline_item_counts')
         : null
+    const scenarioType =
+      typeof window !== 'undefined'
+        ? sessionStorage.getItem('scenarioType')
+        : null
 
     formData = {
       res: JSON.stringify({ ...outlineData }),
@@ -152,6 +156,7 @@ const GenerateSlidesSubmit = ({
       model_name: isGPT35 ? 'gpt-3.5-turbo' : 'gpt-4',
       slidePages: slidePages,
       wordPerSubpoint: wordPerSubpoint,
+      scenario_type: scenarioType,
       // endIndex: 2,  // generate first 2 sections only
     }
 
