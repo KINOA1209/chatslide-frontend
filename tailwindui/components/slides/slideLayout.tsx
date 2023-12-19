@@ -46,6 +46,7 @@ export const Cover_img_0_layout = ({
 	layoutOptionCover,
 	brandingColor,
 	customizableElements,
+	templateLogo,
 }: MainSlideProps) => {
 	return (
 		<>
@@ -63,6 +64,7 @@ export const Cover_img_0_layout = ({
 				></div>
 				<div className={` pl-[2rem]`}>{title}</div>
 			</div>
+			{templateLogo}
 		</>
 	);
 };
@@ -81,12 +83,16 @@ export const Cover_img_1_layout = ({
 	layoutOptionCover,
 	brandingColor,
 	customizableElements,
+	templateLogo,
 }: MainSlideProps) => {
 	const { localImgs, updateImgAtIndex } = useLocalImgs(
 		imgs,
 		1,
 		update_callback,
 	);
+	useEffect(() => {
+		console.log('chosenLayoutCover', templateLogo);
+	}, []);
 	return (
 		<>
 			<div
@@ -101,7 +107,7 @@ export const Cover_img_1_layout = ({
 					className={`pl-[2rem] basis-0 opacity-50 border
                 border-black border-opacity-40 mt-4`}
 				></div>
-				<div className={` pl-[2rem]`}>{title}</div>
+				<div className={`pl-[2rem] z-20`}>{title}</div>
 			</div>
 			<div className={`w-1/2 h-full rounded-md overflow-hidden`}>
 				<ImgModule
@@ -111,6 +117,7 @@ export const Cover_img_1_layout = ({
 					autoSave={autoSave}
 				/>
 			</div>
+			{templateLogo}
 		</>
 	);
 };
@@ -129,6 +136,7 @@ export const Col_1_img_0_layout = ({
 	layoutOptionCover,
 	brandingColor,
 	customizableElements,
+	templateLogo,
 }: MainSlideProps) => {
 	return (
 		<>
@@ -152,6 +160,7 @@ export const Col_1_img_0_layout = ({
 					</div>
 				</div>
 			</div>
+			{templateLogo}
 		</>
 	);
 };
@@ -169,6 +178,7 @@ export const Col_2_img_0_layout = ({
 	layoutOptionNonCover,
 	layoutOptionCover,
 	customizableElements,
+	templateLogo,
 }: MainSlideProps) => {
 	return (
 		<>
@@ -190,6 +200,7 @@ export const Col_2_img_0_layout = ({
 					</div>
 				))}
 			</div>
+			{templateLogo}
 		</>
 	);
 };
@@ -207,6 +218,7 @@ export const Col_3_img_0_layout = ({
 	layoutOptionNonCover,
 	layoutOptionCover,
 	customizableElements,
+	templateLogo,
 }: MainSlideProps) => {
 	return (
 		<>
@@ -228,6 +240,7 @@ export const Col_3_img_0_layout = ({
 					</div>
 				))}
 			</div>
+			{templateLogo}
 		</>
 	);
 };
@@ -245,6 +258,7 @@ export const Col_1_img_1_layout = ({
 	layoutOptionNonCover,
 	layoutOptionCover,
 	customizableElements,
+	templateLogo,
 }: MainSlideProps) => {
 	const { localImgs, updateImgAtIndex } = useLocalImgs(
 		imgs,
@@ -290,6 +304,7 @@ export const Col_1_img_1_layout = ({
 					autoSave={autoSave}
 				/>
 			</div>
+			{templateLogo}
 		</>
 	);
 };
@@ -307,6 +322,7 @@ export const Col_2_img_1_layout = ({
 	layoutOptionNonCover,
 	layoutOptionCover,
 	customizableElements,
+	templateLogo,
 }: MainSlideProps) => {
 	const { localImgs, updateImgAtIndex } = useLocalImgs(
 		imgs,
@@ -346,6 +362,7 @@ export const Col_2_img_1_layout = ({
 					autoSave={autoSave}
 				/>
 			</div>
+			{templateLogo}
 		</div>
 		// two columns layout (left is text and right is one image)
 	);
@@ -364,6 +381,7 @@ export const Col_2_img_2_layout = ({
 	layoutOptionNonCover,
 	layoutOptionCover,
 	customizableElements,
+	templateLogo,
 }: MainSlideProps) => {
 	const { localImgs, updateImgAtIndex } = useLocalImgs(
 		imgs,
@@ -409,6 +427,7 @@ export const Col_2_img_2_layout = ({
 					))}
 				</div>
 			</div>
+			{templateLogo}
 		</>
 	);
 };
@@ -426,6 +445,7 @@ export const Col_3_img_3_layout = ({
 	layoutOptionNonCover,
 	layoutOptionCover,
 	customizableElements,
+	templateLogo,
 }: MainSlideProps) => {
 	const { localImgs, updateImgAtIndex } = useLocalImgs(
 		imgs,
@@ -479,6 +499,7 @@ export const Col_3_img_3_layout = ({
 					))}
 				</div>
 			</div>
+			{templateLogo}
 		</>
 	);
 };
