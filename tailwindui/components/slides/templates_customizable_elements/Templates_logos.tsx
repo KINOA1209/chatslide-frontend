@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { TemplateKeys } from '../slideTemplates';
 import drlambdaLogo from '@/public/images/template/drlambdaLogo.png';
 import drlambdaLogoSingle from '@/public/images/template/drlambdaLogoSingle.png';
 import BerkeleyLogo from '@/public/images/template/Berkeley/Berkeley_logo.png';
@@ -54,7 +55,40 @@ export const BerkeleyTemplateLogo = ({
 	);
 };
 
-export const TemplatesLogos = {
-	Default: DefaultTemplateLogo,
-	Berkeley: BerkeleyTemplateLogo,
+// Define the type for template logo information
+type TemplateLogoInfo = {
+	templateName: TemplateKeys;
+	templateLogo: React.ComponentType<{ isCoverPage: boolean }>;
 };
+
+// Define the available templates and their logos
+const templatesInfo: TemplateLogoInfo[] = [
+	{
+		templateName: 'Default' as TemplateKeys,
+		templateLogo: DefaultTemplateLogo,
+	},
+	{
+		templateName: 'Berkeley' as TemplateKeys,
+		templateLogo: BerkeleyTemplateLogo,
+	},
+	// Add other templates here
+	// { templateName: 'Stanford' as TemplateKeys, templateLogo: StanfordTemplateLogo },
+	// { templateName: 'Harvard' as TemplateKeys, templateLogo: HarvardTemplateLogo },
+	// ...
+];
+
+export const TemplatesLogos = Object.fromEntries(
+	templatesInfo.map(({ templateName, templateLogo }) => [
+		templateName,
+		templateLogo,
+	]),
+) as Record<TemplateKeys, React.ComponentType<{ isCoverPage: boolean }>>;
+
+/*
+const TemplatesLogos = {
+  Default: DefaultTemplateLogo, // Assuming DefaultTemplateLogo is a React component
+  Berkeley: BerkeleyTemplateLogo, // Assuming BerkeleyTemplateLogo is a React component
+  // ... other template entries
+} as Record<TemplateKeys, React.ComponentType<{ isCoverPage: boolean }>>;
+
+*/

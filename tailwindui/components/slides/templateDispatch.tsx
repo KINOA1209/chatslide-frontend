@@ -7,6 +7,7 @@ import dynamic from 'next/dynamic';
 import React, { CSSProperties, useEffect, useRef } from 'react';
 import { loadCustomizableElements } from './SlidesHTML';
 import { TemplatesLogos } from './templates_customizable_elements/Templates_logos';
+import { TemplateKeys } from '@/components/slides/slideTemplates';
 import ReactDOMServer from 'react-dom/server';
 const QuillEditable = dynamic(
 	() => import('@/components/slides/quillEditorSlide'),
