@@ -101,7 +101,7 @@ export const Cover_img_1_layout = ({
 					className={`pl-[2rem] basis-0 opacity-50 border
                 border-black border-opacity-40 mt-4`}
 				></div>
-				<div className={` pl-[2rem]`}>{title}</div>
+				<div className={`pl-[2rem] z-20`}>{title}</div>
 			</div>
 			<div className={`w-1/2 h-full rounded-md overflow-hidden`}>
 				<ImgModule
