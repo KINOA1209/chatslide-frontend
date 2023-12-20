@@ -4,9 +4,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import AuthService from '../../services/AuthService';
 import { Slide } from './SlidesHTML';
 import PaywallModal from '../forms/paywallModal';
-import generatePDF, { Resolution, Margin, Options } from 'react-to-pdf';
 import { BigGrayButton } from '../button/DrlambdaButton';
 import { FaDownload, FaRing, FaTruckLoading } from 'react-icons/fa';
+import {downloadImage} from '../utils/DownloadImage';
 
 interface ExportToPdfProps {
 	slides: Slide[];
@@ -24,30 +24,29 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({
 	const [user, setUser] = useState(null);
 	const [downloadingPDF, setDownloadingPDF] = useState(false);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
-	let pdfIsBeingGenerated = false;
 
-	const exportOptions: Options = {
-		filename: (topic ? topic : 'drlambda') + '.pdf',
-		method: 'save',
-		resolution: Resolution.MEDIUM,
-		page: {
-			margin: Margin.NONE,
-			format: [254, 143], // 960x540 px in mm
-			orientation: 'landscape',
-		},
-		canvas: {
-			mimeType: 'image/jpeg',
-			qualityRatio: 1,
-		},
-		overrides: {
-			pdf: {
-				compress: true,
-			},
-			canvas: {
-				useCORS: true,
-			},
-		},
-	};
+	// const exportOptions: Options = {
+	// 	filename: (topic ? topic : 'drlambda') + '.pdf',
+	// 	method: 'save',
+	// 	resolution: Resolution.MEDIUM,
+	// 	page: {
+	// 		margin: Margin.NONE,
+	// 		format: [254, 143], // 960x540 px in mm
+	// 		orientation: 'landscape',
+	// 	},
+	// 	canvas: {
+	// 		mimeType: 'image/jpeg',
+	// 		qualityRatio: 1,
+	// 	},
+	// 	overrides: {
+	// 		pdf: {
+	// 			compress: true,
+	// 		},
+	// 		canvas: {
+	// 			useCORS: true,
+	// 		},
+	// 	},
+	// };
 
 	useEffect(() => {
 		// Create a scoped async function within the hook.
@@ -62,34 +61,35 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({
 	}, []);
 
 	async function exportToPdf() {
-		await generatePDF(exportSlidesRef, exportOptions);
+    await downloadImage('download', exportSlidesRef)
+		// await generatePDF(exportSlidesRef, exportOptions);
 	}
 
 	const handleSavePDF = async () => {
 		setDownloadingPDF(true);
-		const element = document.getElementById('pdf-content');
+		// const element = document.getElementById('pdf-content');
 
-		try {
-			const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+		// try {
+		// 	const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
 
-			const response = await fetch('/api/save_final_html_pdf', {
-				method: 'POST',
-				headers: {
-					Authorization: `Bearer ${idToken}`,
-					'Content-Type': 'application/json',
-				},
-			});
+		// 	const response = await fetch('/api/save_final_html_pdf', {
+		// 		method: 'POST',
+		// 		headers: {
+		// 			Authorization: `Bearer ${idToken}`,
+		// 			'Content-Type': 'application/json',
+		// 		},
+		// 	});
 
-			if (response.ok) {
+		// 	if (response.ok) {
 				await exportToPdf();
-			} else if (response.status === 402) {
-				setShowPaymentModal(true);
-			} else {
-				console.error('Failed to save PDF.');
-			}
-		} catch (error) {
-			console.error('An error occurred:', error);
-		}
+		// 	} else if (response.status === 402) {
+		// 		setShowPaymentModal(true);
+		// 	} else {
+		// 		console.error('Failed to save PDF.');
+		// 	}
+		// } catch (error) {
+		// 	console.error('An error occurred:', error);
+		// }
 		setDownloadingPDF(false);
 	};
 

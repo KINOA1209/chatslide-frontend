@@ -855,11 +855,11 @@ export const ImgModule = ({
                 //         objectPosition: 'center',
                 //     }}
                 //     />
-              <Image src={imgsrc + '?timestamp=' + new Date().getTime()}
-
+              <Image src={imgsrc}
                 alt="Image"
-                width={500}
-                height={500}
+                width={720}
+                height={480}
+                objectFit='contain'
                 className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`} />
                 )}
             </div>

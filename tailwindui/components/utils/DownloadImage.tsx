@@ -10,7 +10,7 @@ const areAllImagesLoaded = (container: HTMLElement) => {
   return true;
 };
 
-export default async function downloadImage(topic: string, ref: React.RefObject<HTMLDivElement>): Promise<void> {
+export async function downloadImage(topic: string, ref: React.RefObject<HTMLDivElement>): Promise<void> {
   if (ref.current && areAllImagesLoaded(ref.current)) {
     try {
       const dataUrl = await toPng(ref.current);
@@ -28,3 +28,4 @@ export default async function downloadImage(topic: string, ref: React.RefObject<
     console.log('Waiting for images to load')
   }
 };
+
