@@ -40,6 +40,8 @@ export async function downloadPdf(topic: string, ref: React.RefObject<HTMLDivEle
       const fullCanvasWidth = canvas.width;
       const pageHeightPx = fullCanvasHeight / pageCount; 
 
+      console.log('page size', pageHeightPx, fullCanvasWidth)
+
       const pdf = new jsPDF({
         orientation: fullCanvasWidth > pageHeightPx ? 'landscape' : 'portrait',
         unit: 'px',
@@ -59,7 +61,7 @@ export async function downloadPdf(topic: string, ref: React.RefObject<HTMLDivEle
 
         // Add the sliced part to the PDF
         if (y > 0) pdf.addPage();
-        const imageData = tempCanvas.toDataURL('image/png', 5);  // 5 is the quality
+        const imageData = tempCanvas.toDataURL('image/png', 1);  // 1 is
         pdf.addImage(imageData, 'PNG', 0, 0, fullCanvasWidth, tempCanvas.height);
       }
 
