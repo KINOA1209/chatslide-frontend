@@ -1,5 +1,5 @@
 import React from 'react';
-import { MainSlideProps } from '../slideTemplates';
+import { MainSlideProps, TemplateKeys } from '../slideTemplates';
 import Image, { StaticImageData } from 'next/image';
 import HarvardLogo from '@/public/images/template/Harvard/Harvard_logo.png';
 import HarvardCoverVector from '@/public/images/template/Harvard/cover_vector_1.png';
@@ -19,6 +19,7 @@ export const Harvard_school_template = ({
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
+	templateLogo,
 }: MainSlideProps) => {
 	const ChosenLayoutNonCover =
 		layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
@@ -26,7 +27,9 @@ export const Harvard_school_template = ({
 		layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
 	//   console.log('choosing layout option', ChosenLayout)
 	// Load customizable elements for the current template
-	const customizableElements = loadCustomizableElements('Harvard');
+	const customizableElements = loadCustomizableElements(
+		'Harvard' as TemplateKeys,
+	);
 	return (
 		<>
 			{/* for not-cover page slides */}
@@ -53,6 +56,7 @@ export const Harvard_school_template = ({
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
 					customizableElements={customizableElements}
+					templateLogo={templateLogo}
 				></ChosenLayoutNonCover>
 			</div>
 			{/* for cover page */}
@@ -78,6 +82,7 @@ export const Harvard_school_template = ({
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
 					customizableElements={customizableElements}
+					templateLogo={templateLogo}
 				></ChosenLayoutCover>
 
 				<div className='absolute top-[50%] right-[0%] gap-7 inline-flex pl-[3rem]'>
@@ -87,16 +92,6 @@ export const Harvard_school_template = ({
 						className='w-[20rem]'
 					/>
 				</div>
-			</div>
-			{/* School Logo (Replace the placeholder with the actual logo URL) */}
-			<div
-				className={`fixed inset-0 top-[85%] w-full h-14 justify-start items-center gap-7 inline-flex pb-[2rem] pl-[2rem]`}
-			>
-				<Image
-					src={HarvardLogo}
-					alt='Standford Logo'
-					className='w-[10rem] h-auto'
-				/>
 			</div>
 		</>
 	);
