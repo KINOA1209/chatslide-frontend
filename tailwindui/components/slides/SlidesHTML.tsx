@@ -791,8 +791,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				<ToastContainer />
 
 				{/* vertical bar */}
-				<div className='h-[540px] w-[128px] hidden xl:block mx-auto justify-center items-center'>
-					<div className='h-full flex flex-col flex-nowrap overflow-y-auto  overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
+				<div className='h-[540px] w-[144px] hidden xl:block mx-auto justify-center items-center'>
+					<div className='h-full flex flex-col flex-nowrap py-2 overflow-y-auto  overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
 						{Array(slides.length)
 							.fill(0)
 							.map((_, index) => (
