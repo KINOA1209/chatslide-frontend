@@ -61,7 +61,7 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({
   }, []);
 
   async function exportToPdf() {
-    await downloadPdf('download', exportSlidesRef)
+    await downloadPdf(topic || '', exportSlidesRef, slides.length)
     // await generatePDF(exportSlidesRef, exportOptions);
   }
 
