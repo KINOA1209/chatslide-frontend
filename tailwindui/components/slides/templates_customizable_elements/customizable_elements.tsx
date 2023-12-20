@@ -9,6 +9,7 @@ export type TemplateElements = {
 	userNameFont: string;
 	userNameFontColor: string;
 	headFontCSS: React.CSSProperties;
+    contentFontCSS_non_vertical_content: React.CSSProperties;
 };
 
 type Config = {
@@ -56,6 +57,7 @@ const configData: Config = {
 			fontFamily: "'nimbus-sans-regular', sans-serif", // font-nimbus-sans-regular
 			lineHeight: 1.2, // leading-9 is equivalent to a line height of 1.5
 			color: '#4B5563', // text-zinc-800 color
+            display: 'list-item'
 		},
 		userNameFont: 'text-sm font-nimbus-sans-regular font-normal leading-[120%]',
 		userNameFontColor: 'text-white',
@@ -67,6 +69,13 @@ const configData: Config = {
 			fontFamily: "'nimbus-sans-bold', sans-serif", // font-nimbus-sans-bold
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			color: '#FFFFFF', // text-white color
+		},
+        contentFontCSS_non_vertical_content: {
+			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
+			fontWeight: 'normal', // font-normal
+			fontFamily: "'nimbus-sans-regular', sans-serif", // font-nimbus-sans-regular
+			lineHeight: 1.5, // leading-9 is equivalent to a line height of 1.5
+			color: '#4B5563', // text-zinc-800 color
 		},
 	},
 	Berkeley: {
@@ -99,6 +108,7 @@ const configData: Config = {
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			fontFamily: 'sans-serif', // font-sans (assuming sans-serif as a default)
 			color: '#1B1B1B', // text-[#1B1B1B] color
+            display: 'list-item'
 		},
 		userNameFont: 'text-sm font-normal font-sans leading-[120%]',
 		userNameFontColor: 'text-white',
@@ -110,6 +120,13 @@ const configData: Config = {
 			fontFamily: 'sans-serif', // font-sans (assuming sans-serif as a default)
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			color: '#FFFFFF', // text-white color
+		},
+        contentFontCSS_non_vertical_content: {
+			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
+			fontWeight: 'normal', // font-normal
+			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
+			fontFamily: 'sans-serif', // font-sans (assuming sans-serif as a default)
+			color: '#1B1B1B', // text-[#1B1B1B] color
 		},
 	},
 	Harvard: {
@@ -145,6 +162,7 @@ const configData: Config = {
 			fontFamily: 'Arial, sans-serif', // font-['Arial']
 			lineHeight: 'normal', // leading-loose, assuming 'normal' or '1.5' depending on your design
 			color: '#4A5568', // text-neutral-700 color
+            display: 'list-item'
 		},
 		userNameFont: "opacity-70 text-sm font-normal font-['Arial'] leading-loose",
 		userNameFontColor: 'text-neutral-700',
@@ -156,6 +174,14 @@ const configData: Config = {
 			fontFamily: 'Georgia, sans-serif', // font-['Gorgia']
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			color: '#374151', // text-neutral-800 color
+		},
+        contentFontCSS_non_vertical_content: {
+			opacity: 0.7, // opacity-70
+			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
+			fontWeight: 'normal', // font-normal
+			fontFamily: 'Arial, sans-serif', // font-['Arial']
+			lineHeight: 'normal', // leading-loose, assuming 'normal' or '1.5' depending on your design
+			color: '#4A5568', // text-neutral-700 color
 		},
 	},
 	MIT: {
@@ -184,6 +210,7 @@ const configData: Config = {
 			lineHeight: 1.4, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
+            display: 'list-item'
 		},
 		userNameFont:
 			'text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
@@ -195,6 +222,14 @@ const configData: Config = {
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
 			color: '#374151', // text-neutral-800 color},
+		},
+        contentFontCSS_non_vertical_content: {
+			fontSize: '12pt', // base size sent from backend
+			fontWeight: 'normal', // font-normal
+			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			lineHeight: 1.4, // leading-[140%]
+			letterSpacing: '0.025rem', // tracking-[0.025rem]
+			color: '#111827', // text-neutral-900 color
 		},
 	},
 	Princeton: {
@@ -223,6 +258,7 @@ const configData: Config = {
 			lineHeight: 1.4, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
+            display: 'list-item'
 		},
 		userNameFont:
 			'text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
@@ -234,6 +270,14 @@ const configData: Config = {
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
 			color: '#374151', // text-neutral-800 color},
+		},
+        contentFontCSS_non_vertical_content: {
+			fontSize: '12pt', // base size sent from backend
+			fontWeight: 'normal', // font-normal
+			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			lineHeight: 1.4, // leading-[140%]
+			letterSpacing: '0.025rem', // tracking-[0.025rem]
+			color: '#111827', // text-neutral-900 color
 		},
 	},
 	Caltech: {
@@ -262,6 +306,7 @@ const configData: Config = {
 			lineHeight: 1.4, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
+            display: 'list-item',
 		},
 		userNameFont:
 			'text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
@@ -273,6 +318,14 @@ const configData: Config = {
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
 			color: '#374151', // text-neutral-800 color},
+		},
+        contentFontCSS_non_vertical_content: {
+			fontSize: '12pt', // base size sent from backend
+			fontWeight: 'normal', // font-normal
+			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			lineHeight: 1.4, // leading-[140%]
+			letterSpacing: '0.025rem', // tracking-[0.025rem]
+			color: '#111827', // text-neutral-900 color
 		},
 	},
 	Columbia: {
@@ -301,6 +354,7 @@ const configData: Config = {
 			lineHeight: 1.4, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
+            display: 'list-item',
 		},
 		userNameFont:
 			'text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
@@ -312,6 +366,14 @@ const configData: Config = {
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
 			color: '#374151', // text-neutral-800 color},
+		},
+        contentFontCSS_non_vertical_content: {
+			fontSize: '12pt', // base size sent from backend
+			fontWeight: 'normal', // font-normal
+			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			lineHeight: 1.4, // leading-[140%]
+			letterSpacing: '0.025rem', // tracking-[0.025rem]
+			color: '#111827', // text-neutral-900 color
 		},
 	},
 	Default: {
@@ -351,6 +413,7 @@ const configData: Config = {
 			lineHeight: 1.2, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
+            display: 'list-item',
 		},
 		userNameFont:
 			'text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
@@ -366,6 +429,16 @@ const configData: Config = {
 			letterSpacing: '-0.0125rem', // tracking-tight
 			color: '#374151', // text-neutral-800 color},
 		},
+
+        contentFontCSS_non_vertical_content: {
+			fontSize: '12pt', // base size sent from backend
+			fontWeight: 'normal', // font-normal
+			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			lineHeight: 1.2, // leading-[140%]
+			letterSpacing: '0.025rem', // tracking-[0.025rem]
+			color: '#111827', // text-neutral-900 color
+		},
+        
 	},
 };
 

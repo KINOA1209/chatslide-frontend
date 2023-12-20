@@ -310,10 +310,10 @@ export const ChangeTemplateOptions: React.FC<{
 		return storedTemplate || '';
 	});
 
-	useEffect(
-		() => console.log('templateOptions are:', templateOptions),
-		[selectedTemplate],
-	);
+	// useEffect(
+	// 	() => console.log('templateOptions are:', templateOptions),
+	// 	[selectedTemplate],
+	// );
 
 	return (
 		<div className='flex flex-col'>
