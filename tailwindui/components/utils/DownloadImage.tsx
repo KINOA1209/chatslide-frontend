@@ -64,7 +64,7 @@ export async function downloadPdf(topic: string, ref: React.RefObject<HTMLDivEle
       }
 
       // Save the PDF
-      pdf.save('output.pdf');
+      pdf.save((topic ? topic : 'drlambda') + '.pdf');
       
     } catch (error) {
       console.error('Error capturing image:', error);
