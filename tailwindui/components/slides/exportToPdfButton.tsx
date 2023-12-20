@@ -6,7 +6,7 @@ import { Slide } from './SlidesHTML';
 import PaywallModal from '../forms/paywallModal';
 import { BigGrayButton } from '../button/DrlambdaButton';
 import { FaDownload, FaRing, FaTruckLoading } from 'react-icons/fa';
-import { downloadPdf } from '../utils/DownloadImage';
+import { generatePdf } from '../utils/DownloadImage';
 
 interface ExportToPdfProps {
   slides: Slide[];
@@ -61,7 +61,21 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({
   }, []);
 
   async function exportToPdf() {
-    await downloadPdf(topic || '', exportSlidesRef, slides.length)
+    const file = await generatePdf(topic || '', exportSlidesRef, slides.length)
+    if (file) {
+      //save file to session storage
+      const fileUrl = URL.createObjectURL(file);
+      sessionStorage.setItem('pdfUrl', fileUrl);
+
+      //download file
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(file);
+      link.download = (topic ? topic : 'drlambda') + '.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+    }
     // await generatePDF(exportSlidesRef, exportOptions);
   }
 

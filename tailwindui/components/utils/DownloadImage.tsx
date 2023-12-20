@@ -32,7 +32,7 @@ export async function downloadImage(topic: string, ref: React.RefObject<HTMLDivE
 };
 
 
-export async function downloadPdf(topic: string, ref: React.RefObject<HTMLDivElement>, pageCount: number): Promise<void> {
+export async function generatePdf(topic: string, ref: React.RefObject<HTMLDivElement>, pageCount: number): Promise<File | null> {
   if (ref.current && areAllImagesLoaded(ref.current)) {
     try {
       const canvas = await toCanvas(ref.current);
@@ -65,14 +65,20 @@ export async function downloadPdf(topic: string, ref: React.RefObject<HTMLDivEle
         pdf.addImage(imageData, 'PNG', 0, 0, fullCanvasWidth, tempCanvas.height);
       }
 
-      // Save the PDF
-      pdf.save((topic ? topic : 'drlambda') + '.pdf');
+      // Generate PDF as Blob
+      const pdfBlob = pdf.output('blob');
+
+      // Create a File object from the Blob
+      const pdfFile = new File([pdfBlob], (topic ? topic : 'drlambda') + '.pdf', { type: 'application/pdf' });
+      return pdfFile;
       
     } catch (error) {
       console.error('Error capturing image:', error);
+      return null;
     }
   }
   else {
     console.log('Waiting for images to load')
+    return null;
   }
 };
