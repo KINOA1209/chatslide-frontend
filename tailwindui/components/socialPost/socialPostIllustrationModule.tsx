@@ -7,6 +7,8 @@ import { toast } from 'react-toastify';
 import PaywallModal from '@/components/forms/paywallModal';
 import ResourceService from '@/services/ResourceService';
 import Resource from '@/models/Resource';
+import Image from 'next/image';
+
 
 interface ImgModuleProp {
     imgsrc: string,
@@ -549,17 +551,12 @@ export const ImgModule = ({ imgsrc, updateSingleCallback, canEdit, autoSave }: I
                     </div>
                 </div>
                 :
-                <img
-                    style={{ 
-                        objectFit: 'contain',
-                        maxWidth: '100%', 
-                        maxHeight: '100%', 
-                        width: 'auto',     
-                        height: 'auto',    
-                    }}
-                    className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`}
-                    src={imgsrc} />
-            }
+                <Image src={imgsrc}
+                  alt="Image"
+                  height={270}
+                  width={300}
+                  className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`} />
+        }
         </div>
     </>
 }

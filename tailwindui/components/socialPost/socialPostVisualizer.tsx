@@ -9,63 +9,62 @@ import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger'
 const SocialPostHTML = dynamic(() => import('@/components/socialPost/socialPostHTML'), { ssr: false })
 
 type SocialPostVisualizerProps = {
-    finalSlides: SocialPostSlide[]
-    setFinalSlides: Function
-    borderColorOptions: ThemeObject[]
+  socialPostSlides: SocialPostSlide[]
+  setSocialPostSlides: Function
+  borderColorOptions: ThemeObject[]
 }
 const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
-    finalSlides,
-    setFinalSlides,
-    borderColorOptions,
+  socialPostSlides,
+  setSocialPostSlides,
+  borderColorOptions,
 }) => {
-    const [host, setHost] = useState('https://drlambda.ai')
-    const [share, setShare] = useState(false)
-    const [isPaidUser, setIsPaidUser] = useState(false);
-    const [finalSlideIndex, setFinalSlideIndex] = useState<number>(0)
+  const [host, setHost] = useState('https://drlambda.ai')
+  const [share, setShare] = useState(false)
+  const [isPaidUser, setIsPaidUser] = useState(false);
+  const [finalSlideIndex, setFinalSlideIndex] = useState<number>(0)
 
-    useEffect(() => {
-        (async () => {
-            const isPaidUser = await UserService.isPaidUser();
-            setIsPaidUser(isPaidUser);
-        })();
-    }, []);
+  useEffect(() => {
+    (async () => {
+      const isPaidUser = await UserService.isPaidUser();
+      setIsPaidUser(isPaidUser);
+    })();
+  }, []);
 
-    useEffect(() => {
-        setShare(sessionStorage.getItem('is_shared') === 'true')
-    }, [])
+  useEffect(() => {
+    setShare(sessionStorage.getItem('is_shared') === 'true')
+  }, [])
 
-    useEffect(() => {
-        if (
-            window.location.hostname !== 'localhost' &&
-            window.location.hostname !== '127.0.0.1'
-        ) {
-            setHost('https://' + window.location.hostname)
-        } else {
-            setHost(window.location.hostname)
-        }
-    }, [])
-    return (
-        <div>
-            <div className='px-4 sm:px-6 flex flex-col justify-center items-center gap-4'>
-                {/* slides contents */}
-                <div className='flex flex-row justify-end items-center'>
-                {/* want some more script Form submission */}
-                <ExportToPngButton 
-                    finalSlides={finalSlides} 
-                    currentSlideIndex={finalSlideIndex} 
-                    borderColorOptions={borderColorOptions}
-                />
-                </div>
-                <SocialPostHTML 
-                    finalSlides={finalSlides} 
-                    setFinalSlides={setFinalSlides} 
-                    finalSlideIndex={finalSlideIndex} 
-                    setFinalSlideIndex={setFinalSlideIndex}
-                    borderColorOptions={borderColorOptions}
-                />
-            </div>
+  useEffect(() => {
+    if (
+      window.location.hostname !== 'localhost' &&
+      window.location.hostname !== '127.0.0.1'
+    ) {
+      setHost('https://' + window.location.hostname)
+    } else {
+      setHost(window.location.hostname)
+    }
+  }, [])
+  return (
+    <div>
+      <div className='px-4 sm:px-6 flex flex-col justify-center items-center gap-4'>
+        {/* slides contents */}
+        <div className='flex flex-row justify-end items-center'>
+          {/* want some more script Form submission */}
+          <ExportToPngButton
+            socialPostSlide={socialPostSlides}
+            currentSlideIndex={finalSlideIndex}
+          />
         </div>
-    )
+        <SocialPostHTML
+          socialPostSlides={socialPostSlides}
+          setSocialPostSlides={setSocialPostSlides}
+          finalSlideIndex={finalSlideIndex}
+          setFinalSlideIndex={setFinalSlideIndex}
+          borderColorOptions={borderColorOptions}
+        />
+      </div>
+    </div>
+  )
 }
 
 export default SocialPostVisualizer
