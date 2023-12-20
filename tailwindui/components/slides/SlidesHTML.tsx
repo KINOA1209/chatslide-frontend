@@ -30,6 +30,7 @@ import TestSlidesData from './TestSlidesData.json';
 import AuthService from '@/services/AuthService';
 import customizable_elements from './templates_customizable_elements/customizable_elements';
 import ScriptEditor from './ScriptEditor';
+import { Console } from 'console';
 import drlambdaLogo from '@/public/images/template/drlambdaLogo.png';
 export interface SlideElement {
 	type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
@@ -155,9 +156,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				width: window.innerWidth,
 				height: window.innerHeight,
 			});
-			console.log('window.innerWidth', window.innerWidth);
+			//console.log('window.innerWidth', window.innerWidth);
 			setNonPresentScale(Math.min(1, (window.innerWidth / 960) * 0.9));
-			console.log('nonPresentScale', nonPresentScale);
+			//console.log('nonPresentScale', nonPresentScale);
 		};
 		window.addEventListener('resize', handleResize);
 
@@ -289,18 +290,18 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	// fetch slides data
 	useEffect(() => {
 		if (res_slide) {
-			console.log('typeof res_slide:', typeof res_slide);
+			//console.log('typeof res_slide:', typeof res_slide);
 			// const slides_response_JSON = JSON.stringify(TestSlidesData)
 			const parsed_slides = JSON.parse(res_slide);
 			// console.log('parseSlides:', parsed_slides)
 			// log the type of parsed_slides
-			console.log('typeof parsed_slides:', typeof parsed_slides);
+			//console.log('typeof parsed_slides:', typeof parsed_slides);
 
 			// mapping data to slides
 			const slidesArray: Slide[] = Object.keys(parsed_slides).map(
 				(key, index) => {
 					const slideData = parsed_slides[key];
-					console.log('slideData:', slideData);
+					//console.log('slideData:', slideData);
 					const slide = new Slide();
 					slide.head = slideData.head || 'New Slide';
 					slide.title = slideData.title || 'New Slide';
@@ -350,7 +351,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					return slide;
 				},
 			);
-			console.log('the parsed slides array:', slidesArray);
+			//console.log('the parsed slides array:', slidesArray);
 			setSlides(slidesArray);
 		}
 	}, []);
@@ -363,53 +364,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	});
 
 	useEffect(() => {
-		// console.log('slides contents changed', slides)
-
-		// process current slide content
-		const currentSlide = slides[currentSlideIndex];
-		console.log('currentSlide:', currentSlide);
-
-		if (
-			currentSlide?.layout === 'Col_1_img_0_layout' ||
-			currentSlide?.layout === 'Col_2_img_1_layout'
-		) {
-			const currentSlideContent = currentSlide.content;
-
-			const newContent: string[] = [];
-
-			const allContent = currentSlideContent
-				.join('<p><br></p>')
-				.split('<p><br></p>');
-
-			allContent.forEach((str) => {
-				// if str removed all tags is empty, do not add to newContent
-				if (str.replace(/<[^>]*>/g, '').trim() !== '') {
-					console.log('str:', str);
-					newContent.push(str);
-				}
-			});
-
-			if (newContent.length === 0) {
-				newContent.push('');
-			}
-
-			console.log('newContent:', newContent);
-
-			// Only update state if the content has actually changed
-			if (
-				JSON.stringify(slides[currentSlideIndex].content) !==
-				JSON.stringify(newContent)
-			) {
-				const updatedSlides = slides.map((slide, index) =>
-					index === currentSlideIndex
-						? { ...slide, content: newContent }
-						: slide,
-				);
-
-				setSlides(updatedSlides);
-			}
-		}
-
 		if (isFirstRender.current) {
 			isFirstRender.current = false;
 			console.log('First render, skip saving');
@@ -618,16 +572,23 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		} else if (className === 'images') {
 			currentSlide.images = content as string[];
 		} else if (className === 'content') {
-			if (typeof contentIndex === 'number' && contentIndex >= 0) {
-				currentSlide.content[contentIndex] = content as string;
-			} else {
-				console.error(`Invalid contentIndex: ${contentIndex}`);
-			}
+      if (Array.isArray(content)) {
+        currentSlide.content = content as string[];
+      }
+      else {
+        if (typeof contentIndex === 'number' && contentIndex >= 0){
+          currentSlide.content[contentIndex] = content as string
+        }
+        else{
+            console.error(`Invalid contentIndex: ${contentIndex}`);
+        }
+      }
 		} else {
 			console.error(`Unknown tag: ${tag}`);
 		}
 		sessionStorage.setItem('presentation_slides', JSON.stringify(newSlides));
 		setSlides(newSlides);
+    //console.log(newSlides)
 	}
 
 	function goToSlide(index: number) {

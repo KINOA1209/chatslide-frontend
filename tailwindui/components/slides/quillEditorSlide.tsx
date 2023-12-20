@@ -4,8 +4,9 @@ import 'quill/dist/quill.bubble.css';
 import '@/components/socialPost/quillEditor.scss';
 
 type QuillEditableProps = {
-    content: string;
-    handleBlur: (newContent: string) => void;
+    content: string | string[];
+    handleBlur: (newContent: string | string[]) => void;
+    isVerticalContent: boolean;
     style?: React.CSSProperties;
 };
 
@@ -24,7 +25,7 @@ const toolbarOptions = [
     [{ 'size':  fontSizes}, { 'font': [] }],
     ['bold', 'italic', 'underline', 'strike', 'code-block'],
     [{ 'header': 1 }, { 'header': 2 }],   
-    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+    [{ 'list': 'bullet' }],
     [{ 'script': 'sub'}, { 'script': 'super' }],
     [{ 'color': [  
                 "#000000", "#e60000", "#ff9900", "#ffff00", "#008a00", "#0066cc", "#9933ff",
@@ -50,7 +51,8 @@ const isHTML = (input: string): boolean => {
 const QuillEditable: React.FC<QuillEditableProps> = ({ 
     content, 
     handleBlur,
-    style
+    style,
+    isVerticalContent
 }) => {
     const editorRef = useRef<HTMLDivElement>(null);
     const quillInstanceRef = useRef<Quill | null>(null);
@@ -92,21 +94,59 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
                 bold: style?.fontWeight !== 'normal',
                 italic: style?.fontStyle === 'italic',
                 color: style?.color,
+                list: style?.display === 'list-item' ? 'bullet' : undefined,
+            }
+            const Delta = Quill.import('delta');
+            let initialDelta = new Delta();
+    
+            const insertContent = (item:string) => {
+                if (isHTML(item)) {
+                    const convertedDelta = quillInstanceRef?.current?.clipboard.convert(item as any);
+                    initialDelta = initialDelta.concat(convertedDelta);
+                } else {
+                    initialDelta.insert(`${item}\n`, quillFormats);
+                }
+            };
+    
+            if (Array.isArray(content)) {
+                content.forEach(item => {
+                    if (isHTML(item) && item.trim().startsWith('<li>') && item.trim().endsWith('</li>')){
+                        const listHTML = `<ul>${item}</ul>`;
+                        insertContent(listHTML);
+                    }
+                    else{
+                        insertContent(item)
+                    }
+                })
+            } 
+            else {
+                insertContent(content);
             }
 
-            const Delta = Quill.import('delta')
-            let initialDelta
-            if (isHTML(content)) {
-                initialDelta = quillInstanceRef.current.clipboard.convert(content as any);
-            } else {
-                initialDelta = new Delta().insert(content, quillFormats);
-            }
             quillInstanceRef.current.setContents(initialDelta);
-
             quillInstanceRef.current.on('selection-change', () => {
                 const currentContent = quillInstanceRef.current?.root.innerHTML;
                 if (currentContent !== undefined) {
-                    handleBlur(currentContent);
+                    if (isVerticalContent){
+                        const doc = new DOMParser().parseFromString(currentContent, 'text/html');
+                        let extractedContent: string[] = [];
+                
+                        const bodyChildren = Array.from(doc.body.children);
+                        bodyChildren.forEach(el => {
+                            // Check if the element is a <li> tag elements and process each list item
+                            if (el.tagName.toLowerCase() === 'ul' || el.tagName.toLowerCase() === 'ol') {
+                                const listItems = Array.from(el.querySelectorAll('li')).map(li => li.outerHTML || '');
+                                extractedContent.push(...listItems);
+                            } else {
+                                // For non-list elements like <p> tag, push their outerHTML or text content
+                                extractedContent.push(el.outerHTML || el.textContent?.trim() || '');
+                            }
+                        });
+                        handleBlur(extractedContent);
+                    }
+                    else{
+                        handleBlur(currentContent);
+                    }
                 }
             });
 
@@ -130,7 +170,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 
     useEffect(() => {
         if (quillInstanceRef.current && style) {
-            const excludeProperties = ['fontSize', 'fontWeight', 'fontStyle'];
+            const excludeProperties = ['fontSize', 'fontWeight', 'fontStyle', 'display'];
             const applyStyle: React.CSSProperties = {};
     
             for (const key in style) {

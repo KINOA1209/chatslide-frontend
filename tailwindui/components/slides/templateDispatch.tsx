@@ -57,9 +57,10 @@ export const templateDispatch = (
 	// 	TemplatesLogos[templateLogo as keyof typeof TemplatesLogos];
 	const customizableElements = loadCustomizableElements(slide.template);
 	const generateContentElement = (
-		content: string,
+		content: string | string[],
 		contentTag: SlideKeys,
 		style: CSSProperties,
+        isVerticalContent: boolean,
 		contentIndex?: number,
 	) => {
 		if (!canEdit || !isCurrentSlide) {
@@ -79,6 +80,7 @@ export const templateDispatch = (
 							handleSlideEdit(newContent, index, contentTag, contentIndex)
 						}
 						style={style}
+                        isVerticalContent={isVerticalContent}
 					/>
 				);
 			} else {
@@ -89,6 +91,7 @@ export const templateDispatch = (
 							handleSlideEdit(newContent, index, contentTag)
 						}
 						style={style}
+                        isVerticalContent={isVerticalContent}
 					/>
 				);
 			}
@@ -114,94 +117,45 @@ export const templateDispatch = (
 				slide.head,
 				'head',
 				customizableElements.headFontCSS,
+                false,
 			)}
 			topic={
-				// <div className={`${index === 0 ? 'hidden' : ''}`}>
 				generateContentElement(
 					slide.title,
 					'title',
 					customizableElements.titleFontCSS,
+                    false,
 				)
-				// </div>
 			}
 			subtopic={generateContentElement(
 				slide.subtopic,
 				'subtopic',
 				customizableElements.subtopicFontCSS,
+                false,
 			)}
-			content={slide.content.map((content: string, contentIndex: number) => {
-				// math mode
-				if (content.includes('$$') || content.includes('\\(')) {
-					if (editMathMode) {
-						return (
-							<>
-								<div
-									key={
-										keyPrefix + index.toString() + '_' + contentIndex.toString()
-									}
-									className={`rounded-md outline-2  ${!exportToPdfMode} ${
-										canEdit
-											? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline'
-											: ''
-									}${index === 0 ? 'hidden' : ''}  px-2 py-1`}
-									contentEditable={canEdit}
-									// style={listStyle}
-									onFocus={() => {
-										if (canEdit) {
-											setIsEditMode(true);
-										}
-									}}
-									onBlur={(e) => {
-										const modifiedContent = [...slide.content];
-										modifiedContent[contentIndex] = e.target.innerText;
-										handleSlideEdit(modifiedContent, index, 'content');
-									}}
-								>
-									{content}
-								</div>
-							</>
-						);
-					} else {
-						return (
-							<div className={`${index === 0 ? 'hidden' : ''}`}>
-								{' '}
-								<MathJaxContext
-									key={
-										keyPrefix + index.toString() + '_' + contentIndex.toString()
-									}
-								>
-									<MathJax>
-										<div
-											onClick={toggleEditMathMode}
-											className={`rounded-md outline-2 ${!exportToPdfMode} ${
-												canEdit
-													? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline'
-													: ''
-											}  px-2 py-1`}
-											// style={listStyle}
-										>
-											{content}
-										</div>
-									</MathJax>
-								</MathJaxContext>
-							</div>
-						);
-					}
-				}
-				return (
-					<div
-						key={keyPrefix + index.toString() + '_' + contentIndex.toString()}
-						className={`${index === 0 ? 'hidden' : ''}`}
-					>
-						{generateContentElement(
-							content,
-							'content',
-							customizableElements.contentFontCSS,
-							contentIndex,
-						)}
-					</div>
-				);
-			})}
+            content={
+                slide.layout === "Col_1_img_0_layout" || slide.layout === "Col_2_img_1_layout" ?
+                generateContentElement(
+                    slide.content,
+                    'content',
+                    customizableElements.contentFontCSS,
+                    true,
+                ) :
+                slide.content.map((content, contentIndex) => (
+                    <div 
+                        key={keyPrefix + index.toString() + '_' + contentIndex.toString()} 
+                        className={`${index === 0 ? 'hidden' : ''}`}
+                    >
+                        {generateContentElement(
+                            content,
+                            'content',
+                            customizableElements.contentFontCSS_non_vertical_content,
+                            false,
+                            contentIndex
+                        )}
+                    </div>
+                ))
+            }
 			imgs={slide.images as string[]}
 			update_callback={updateImgUrlArray(index)}
 			isCoverPage={isCoverPage}
