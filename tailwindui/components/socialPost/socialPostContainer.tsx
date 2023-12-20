@@ -38,7 +38,7 @@ const SocialPostContainer: React.FC<SlideContainerProps> = ({
     }, [slideRef, onSlideRefUpdate])
     return (
         <div
-            id="slideContainer"
+            id="socialPostContainer"
             className={`${isPresenting ? 'fixed top-0 left-0 w-full h-full z-50 flex justify-center' : ''}`}
             ref={containerRef}
             style={{

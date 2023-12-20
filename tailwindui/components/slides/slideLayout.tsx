@@ -46,6 +46,7 @@ export const Cover_img_0_layout = ({
 	layoutOptionCover,
 	brandingColor,
 	customizableElements,
+	templateLogo,
 }: MainSlideProps) => {
 	return (
 		<>
@@ -63,6 +64,7 @@ export const Cover_img_0_layout = ({
 				></div>
 				<div className={` pl-[2rem]`}>{title}</div>
 			</div>
+			{templateLogo}
 		</>
 	);
 };
@@ -81,12 +83,16 @@ export const Cover_img_1_layout = ({
 	layoutOptionCover,
 	brandingColor,
 	customizableElements,
+	templateLogo,
 }: MainSlideProps) => {
 	const { localImgs, updateImgAtIndex } = useLocalImgs(
 		imgs,
 		1,
 		update_callback,
 	);
+	useEffect(() => {
+		console.log('chosenLayoutCover', templateLogo);
+	}, []);
 	return (
 		<>
 			<div
@@ -101,7 +107,7 @@ export const Cover_img_1_layout = ({
 					className={`pl-[2rem] basis-0 opacity-50 border
                 border-black border-opacity-40 mt-4`}
 				></div>
-				<div className={` pl-[2rem]`}>{title}</div>
+				<div className={`pl-[2rem] z-20`}>{title}</div>
 			</div>
 			<div className={`w-1/2 h-full rounded-md overflow-hidden`}>
 				<ImgModule
@@ -111,6 +117,7 @@ export const Cover_img_1_layout = ({
 					autoSave={autoSave}
 				/>
 			</div>
+			{templateLogo}
 		</>
 	);
 };
@@ -129,6 +136,7 @@ export const Col_1_img_0_layout = ({
 	layoutOptionCover,
 	brandingColor,
 	customizableElements,
+	templateLogo,
 }: MainSlideProps) => {
 	return (
 		<>
@@ -149,6 +157,7 @@ export const Col_1_img_0_layout = ({
 					</div>
 				</div>
 			</div>
+			{templateLogo}
 		</>
 	);
 };
@@ -166,6 +175,7 @@ export const Col_2_img_0_layout = ({
 	layoutOptionNonCover,
 	layoutOptionCover,
 	customizableElements,
+	templateLogo,
 }: MainSlideProps) => {
 	return (
 		<>
@@ -180,13 +190,14 @@ export const Col_2_img_0_layout = ({
 						<div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
 						<ul
 							key={index}
-							className={`flex flex-row w-full h-full grow pl-2 list-disc `}
+							className={`flex flex-row w-full h-full grow pl-2  `}
 						>
 							<li>{item}</li>
 						</ul>
 					</div>
 				))}
 			</div>
+			{templateLogo}
 		</>
 	);
 };
@@ -204,6 +215,7 @@ export const Col_3_img_0_layout = ({
 	layoutOptionNonCover,
 	layoutOptionCover,
 	customizableElements,
+	templateLogo,
 }: MainSlideProps) => {
 	return (
 		<>
@@ -218,13 +230,14 @@ export const Col_3_img_0_layout = ({
 						<div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
 						<ul
 							key={index}
-							className={`flex flex-row w-full h-full grow pl-2 list-disc`}
+							className={`flex flex-row w-full h-full grow pl-2 `}
 						>
 							<li>{item}</li>
 						</ul>
 					</div>
 				))}
 			</div>
+			{templateLogo}
 		</>
 	);
 };
@@ -242,6 +255,7 @@ export const Col_1_img_1_layout = ({
 	layoutOptionNonCover,
 	layoutOptionCover,
 	customizableElements,
+	templateLogo,
 }: MainSlideProps) => {
 	const { localImgs, updateImgAtIndex } = useLocalImgs(
 		imgs,
@@ -254,8 +268,8 @@ export const Col_1_img_1_layout = ({
 			<div className='h-1/3 w-full grid grid-cols-2 gap-[2rem]'>
 				{/* col1 for topic and subtopic */}
 				<div className='flex flex-col gap-[0.1rem]'>
-					<div className={``}>{topic}</div>
-					<div className={``}>{subtopic}</div>
+					<div className={`z-50`}>{topic}</div>
+					<div className={`z-50`}>{subtopic}</div>
 				</div>
 				{/* col 2 for contents */}
 				<div className='h-full w-full flex flex-row gap-[2rem]'>
@@ -267,7 +281,7 @@ export const Col_1_img_1_layout = ({
 									{/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
 									<ul
 										key={index}
-										className={`flex flex-row w-full h-full grow pl-4 list-disc `}
+										className={`flex flex-row w-full h-full grow pl-4  `}
 									>
 										<li>{item}</li>
 									</ul>
@@ -287,6 +301,7 @@ export const Col_1_img_1_layout = ({
 					autoSave={autoSave}
 				/>
 			</div>
+			{templateLogo}
 		</>
 	);
 };
@@ -304,6 +319,7 @@ export const Col_2_img_1_layout = ({
 	layoutOptionNonCover,
 	layoutOptionCover,
 	customizableElements,
+	templateLogo,
 }: MainSlideProps) => {
 	const { localImgs, updateImgAtIndex } = useLocalImgs(
 		imgs,
@@ -313,7 +329,7 @@ export const Col_2_img_1_layout = ({
 	return (
 		<div className='w-full h-full flex flex-row gap-[2rem] justify-start items-start'>
 			<div className={`w-1/2 flex flex-col items-start h-full gap-[0.1rem]`}>
-				<div className={``}>{topic}</div>
+				<div className={`z-50`}>{topic}</div>
 				<div className={``}>{subtopic}</div>
 				{/* contents */}
 				<div className='h-full w-full flex flex-row gap-[2rem]'>
@@ -340,6 +356,7 @@ export const Col_2_img_1_layout = ({
 					autoSave={autoSave}
 				/>
 			</div>
+			{templateLogo}
 		</div>
 		// two columns layout (left is text and right is one image)
 	);
@@ -358,6 +375,7 @@ export const Col_2_img_2_layout = ({
 	layoutOptionNonCover,
 	layoutOptionCover,
 	customizableElements,
+	templateLogo,
 }: MainSlideProps) => {
 	const { localImgs, updateImgAtIndex } = useLocalImgs(
 		imgs,
@@ -395,7 +413,7 @@ export const Col_2_img_2_layout = ({
 							{/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
 							<ul
 								key={index}
-								className={`flex flex-row w-full h-full grow pl-2 list-disc`}
+								className={`flex flex-row w-full h-full grow pl-2 `}
 							>
 								<li>{item}</li>
 							</ul>
@@ -403,6 +421,7 @@ export const Col_2_img_2_layout = ({
 					))}
 				</div>
 			</div>
+			{templateLogo}
 		</>
 	);
 };
@@ -420,6 +439,7 @@ export const Col_3_img_3_layout = ({
 	layoutOptionNonCover,
 	layoutOptionCover,
 	customizableElements,
+	templateLogo,
 }: MainSlideProps) => {
 	const { localImgs, updateImgAtIndex } = useLocalImgs(
 		imgs,
@@ -465,7 +485,7 @@ export const Col_3_img_3_layout = ({
 							{/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
 							<ul
 								key={index}
-								className={`flex flex-row w-full h-full grow pl-2 list-disc `}
+								className={`flex flex-row w-full h-full grow pl-2  `}
 							>
 								<li>{item}</li>
 							</ul>
@@ -473,6 +493,7 @@ export const Col_3_img_3_layout = ({
 					))}
 				</div>
 			</div>
+			{templateLogo}
 		</>
 	);
 };
