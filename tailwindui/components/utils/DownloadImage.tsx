@@ -3,19 +3,15 @@ import { jsPDF } from 'jspdf';
 
 
 const areAllImagesLoaded = (container: HTMLElement) => {
-  // const images = container.getElementsByTagName('img');
-  // for (let i = 0; i < images.length; i++) {
-  //   if (!images[i].complete || images[i].naturalWidth === 0) {
-  //     return false;
-  //   }
-  // }
   return true;
 };
 
 export async function downloadImage(topic: string, ref: React.RefObject<HTMLDivElement>): Promise<void> {
   if (ref.current && areAllImagesLoaded(ref.current)) {
     try {
-      const dataUrl = await toPng(ref.current);
+
+      console.log('ref', ref.current)
+      const dataUrl = await toPng(ref.current, { includeQueryParams: true });
       const link = document.createElement('a');
       link.href = dataUrl;
       link.download = (topic ? topic : 'drlambda') + '.png';
@@ -38,7 +34,7 @@ export async function generatePdf(topic: string, ref: React.RefObject<HTMLDivEle
       const canvas = await toCanvas(ref.current);
       const fullCanvasHeight = canvas.height;
       const fullCanvasWidth = canvas.width;
-      const pageHeightPx = fullCanvasHeight / pageCount; 
+      const pageHeightPx = fullCanvasHeight / pageCount;
 
       console.log('page size', pageHeightPx, fullCanvasWidth)
 
@@ -71,7 +67,7 @@ export async function generatePdf(topic: string, ref: React.RefObject<HTMLDivEle
       // Create a File object from the Blob
       const pdfFile = new File([pdfBlob], (topic ? topic : 'drlambda') + '.pdf', { type: 'application/pdf' });
       return pdfFile;
-      
+
     } catch (error) {
       console.error('Error capturing image:', error);
       return null;
