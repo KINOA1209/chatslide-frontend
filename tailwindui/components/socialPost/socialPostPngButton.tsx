@@ -9,7 +9,7 @@ import { templateDispatch as defaultTemplateDispatch2 } from '@/components/socia
 import { templateDispatch as defaultTemplateDispatch3 } from '@/components/socialPost/socialPostTemplate3Dispatch';
 import { BigGrayButton } from '../button/DrlambdaButton'
 import { FaDownload } from 'react-icons/fa'
-import downloadImage from '../utils/DownloadImage'
+import {downloadImage} from '../utils/DownloadImage'
 
 interface ExportToPdfProps {
   socialPostSlide: SocialPostSlide[]
