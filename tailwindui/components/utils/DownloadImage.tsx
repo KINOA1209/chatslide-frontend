@@ -32,13 +32,13 @@ export async function downloadImage(topic: string, ref: React.RefObject<HTMLDivE
 };
 
 
-export async function downloadPdf(topic: string, ref: React.RefObject<HTMLDivElement>): Promise<void> {
+export async function downloadPdf(topic: string, ref: React.RefObject<HTMLDivElement>, pageCount: number): Promise<void> {
   if (ref.current && areAllImagesLoaded(ref.current)) {
     try {
       const canvas = await toCanvas(ref.current);
       const fullCanvasHeight = canvas.height;
       const fullCanvasWidth = canvas.width;
-      const pageHeightPx = 781;  // todo: better control the height of the page
+      const pageHeightPx = fullCanvasHeight / pageCount; 
 
       const pdf = new jsPDF({
         orientation: fullCanvasWidth > pageHeightPx ? 'landscape' : 'portrait',
