@@ -23,7 +23,7 @@ export interface MainSlideProps {
 	title: JSX.Element;
 	topic: JSX.Element;
 	subtopic: JSX.Element;
-	content: JSX.Element[];
+	content: JSX.Element | JSX.Element[];
 	imgs: string[];
 	//   imgs: JSX.Element
 	update_callback: (imgs: string[]) => void;
