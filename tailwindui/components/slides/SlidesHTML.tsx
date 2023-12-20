@@ -347,7 +347,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	});
 
 	useEffect(() => {
-    console.log('slides contents changed', slides)
+    //console.log('slides contents changed', slides)
 
     //process current slide content
     // const currentSlide = slides[currentSlideIndex]
@@ -605,7 +605,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		}
 		sessionStorage.setItem('presentation_slides', JSON.stringify(newSlides));
 		setSlides(newSlides);
-    console.log(newSlides)
+    //console.log(newSlides)
 	}
 
 	function goToSlide(index: number) {

@@ -102,7 +102,6 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
             const insertContent = (item:string) => {
                 if (isHTML(item)) {
                     const convertedDelta = quillInstanceRef?.current?.clipboard.convert(item as any);
-                    console.log(convertedDelta)
                     initialDelta = initialDelta.concat(convertedDelta);
                 } else {
                     initialDelta.insert(`${item}\n`, quillFormats);
@@ -110,18 +109,19 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
             };
     
             if (Array.isArray(content)) {
-                if (isHTML(content[0])) {
-                    const listHTML = `<ul>${content.join('')}</ul>`
-                    insertContent(listHTML)
-                }
-                else{
-                    content.forEach(insertContent);
-                }
-            } else {
+                content.forEach(item => {
+                    if (isHTML(item) && item.trim().startsWith('<li>') && item.trim().endsWith('</li>')){
+                        const listHTML = `<ul>${item}</ul>`;
+                        insertContent(listHTML);
+                    }
+                    else{
+                        insertContent(item)
+                    }
+                })
+            } 
+            else {
                 insertContent(content);
             }
-
-            //console.log(initialDelta)
 
             quillInstanceRef.current.setContents(initialDelta);
             quillInstanceRef.current.on('selection-change', () => {
@@ -131,18 +131,18 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
                         const doc = new DOMParser().parseFromString(currentContent, 'text/html');
                         let extractedContent: string[] = [];
                 
-                        const list = doc.body.querySelector('ul, ol');
-                        if (list) {
-                            extractedContent = Array.from(list.querySelectorAll('li')).map(li => li.outerHTML || '');
-                        } else {
-                            const bodyChildren = Array.from(doc.body.children);
-                            if (bodyChildren.length > 0) {
-                                extractedContent = bodyChildren.map(el => el.outerHTML || '');
+                        const bodyChildren = Array.from(doc.body.children);
+                        bodyChildren.forEach(el => {
+                            // Check if the element is a <li> tag elements and process each list item
+                            if (el.tagName.toLowerCase() === 'ul' || el.tagName.toLowerCase() === 'ol') {
+                                const listItems = Array.from(el.querySelectorAll('li')).map(li => li.outerHTML || '');
+                                extractedContent.push(...listItems);
                             } else {
-                                extractedContent = [doc.body.textContent?.trim() || ''];
+                                // For non-list elements like <p> tag, push their outerHTML or text content
+                                extractedContent.push(el.outerHTML || el.textContent?.trim() || '');
                             }
-                        }
-                        handleBlur(extractedContent)
+                        });
+                        handleBlur(extractedContent);
                     }
                     else{
                         handleBlur(currentContent);
