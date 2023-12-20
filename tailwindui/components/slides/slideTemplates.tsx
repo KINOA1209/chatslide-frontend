@@ -15,6 +15,9 @@ import { MIT_school_template } from './school_templates/MIT_school_template';
 import { Princeton_school_template } from './school_templates/Princeton_University_school_template';
 import { Caltech_school_template } from './school_templates/Caltech_school_template';
 import { Columbia_school_template } from './school_templates/Columbia_University_school_template';
+import { JHU_school_template } from './school_templates/Johns_Hopkins_University_school_template';
+import { University_of_Chicago_school_template } from './school_templates/University_of_Chicago_school_template';
+import { Yale_school_template } from './school_templates/Yale_school_template';
 import { LayoutKeys } from './slideLayout';
 import { layoutOptions } from './slideLayout';
 import { loadCustomizableElements } from './SlidesHTML';
@@ -94,13 +97,8 @@ MainSlideProps) => {
 		layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
 	const ChosenLayoutCover =
 		layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
-	//   console.log('choosing layout option', ChosenLayout)
-	// Load customizable elements for the current template
+
 	const customizableElements = loadCustomizableElements('Default');
-	// console.log(
-	//     'customizable elements for default template',
-	//     customizableElements
-	// );
 
 	return (
 		<>
@@ -168,19 +166,7 @@ MainSlideProps) => {
 					customizableElements={customizableElements}
 					templateLogo={templateLogo}
 				></ChosenLayoutNonCover>
-				{/* company logo */}
-				{/* <div className='fixed inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]'>
-					<Image
-						src={drlambdaLogoSingle}
-						alt='drlambda logo'
-						className='w-[1.5rem] mr-4'
-					/>
-					<div
-						className={`grow basis-0 opacity-50 border border-black border-opacity-40`}
-					></div>
-				</div> */}
 			</div>
-			{/* {templateLogo} */}
 		</>
 	);
 };
@@ -190,9 +176,12 @@ export const availableTemplates = {
 	Berkeley: Berkeley_school_template,
 	Harvard: Harvard_school_template,
 	MIT: MIT_school_template,
-	Princeton: Princeton_school_template,
-	Caltech: Caltech_school_template,
-	Columbia: Columbia_school_template,
+	// Princeton: Princeton_school_template,
+	// Caltech: Caltech_school_template,
+	// Columbia: Columbia_school_template,
+	// JHU: JHU_school_template,
+	// UChicago: University_of_Chicago_school_template,
+	// Yale: Yale_school_template,
 	Default: Default,
 };
 
@@ -200,6 +189,6 @@ export const availableTemplates = {
 export type TemplateKeys = keyof typeof availableTemplates;
 
 // Define templateKeys with the type TemplateKeys
-// export const templateKeys: TemplateKeys[] = Object.keys(
+// export const TemplateKeys: TemplateKeys[] = Object.keys(
 // 	availableTemplates,
 // ) as TemplateKeys[];

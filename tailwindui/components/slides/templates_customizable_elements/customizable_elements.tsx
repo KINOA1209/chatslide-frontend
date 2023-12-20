@@ -33,7 +33,7 @@ const configData: Config = {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold
 			fontFamily: "'nimbus-sans-bold', sans-serif", // font-nimbus-sans-bold
-			lineHeight: 1.8, // leading-[110%] is equivalent to a line height of 1.1
+			lineHeight: 1.2, // leading-[110%] is equivalent to a line height of 1.1
 			whiteSpace: 'nowrap', // whitespace-nowrap},
 			color: '#8C1515', // text-[#8C1515] color
 		},
@@ -45,7 +45,7 @@ const configData: Config = {
 			fontWeight: 'bold', // font-nimbus-sans-bold
 			fontSize: '18pt', // text-xl in points
 			fontStyle: 'normal', // font-normal
-			lineHeight: 1.8, // leading-[150%] is equivalent to a line height of 1.5
+			lineHeight: 1.2, // leading-[150%] is equivalent to a line height of 1.5
 			color: '#EF4444', // text-red-800 color
 		},
 		// contentFont: 'text-base font-nimbus-sans-regular font-normal leading-9 ',
@@ -54,7 +54,7 @@ const configData: Config = {
 			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'nimbus-sans-regular', sans-serif", // font-nimbus-sans-regular
-			lineHeight: 1.5, // leading-9 is equivalent to a line height of 1.5
+			lineHeight: 1.2, // leading-9 is equivalent to a line height of 1.5
 			color: '#4B5563', // text-zinc-800 color
 		},
 		userNameFont: 'text-sm font-nimbus-sans-regular font-normal leading-[120%]',
@@ -65,7 +65,7 @@ const configData: Config = {
 			fontSize: '32pt', // text-4xl in points (assuming 1rem is 1pt)
 			fontWeight: 'bold', // font-bold
 			fontFamily: "'nimbus-sans-bold', sans-serif", // font-nimbus-sans-bold
-			lineHeight: 1.5, // leading-[120%] is equivalent to a line height of 1.2
+			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			color: '#FFFFFF', // text-white color
 		},
 	},
