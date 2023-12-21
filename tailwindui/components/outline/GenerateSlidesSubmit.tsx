@@ -1,230 +1,209 @@
-import React, { useState, useRef, useEffect, Fragment } from 'react'
-import { useRouter } from 'next/navigation'
-import AuthService from '@/services/AuthService'
-import 'react-toastify/dist/ReactToastify.css'
-import UserService from '../../services/UserService'
+import React, { useState, useRef, useEffect, Fragment } from 'react';
+import { useRouter } from 'next/navigation';
+import AuthService from '@/services/AuthService';
+import 'react-toastify/dist/ReactToastify.css';
+import UserService from '../../services/UserService';
+import Resource from '@/models/Resource';
+import ResourceService from '@/services/ResourceService';
 
 interface OutlineSection {
-  title: string
-  content: Array<string>
-  detailLevel: string
-  section_style: string
+	title: string;
+	content: Array<string>;
+	detailLevel: string;
+	section_style: string;
 }
 
-interface OutlineDataType extends Array<OutlineSection> { }
+interface OutlineDataType extends Array<OutlineSection> {}
 
 // this class has no UI, it is used to submit the outline to the backend when isSubmitting is true
 const GenerateSlidesSubmit = ({
-  outline,
-  isGPT35,
-  isSubmitting,
-  setIsSubmitting,
+	outline,
+	isGPT35,
+	isSubmitting,
+	setIsSubmitting,
 }: {
-  outline: OutlineDataType
-  isGPT35: boolean
-  isSubmitting: boolean
-  setIsSubmitting: (submitting: boolean) => void
+	outline: OutlineDataType;
+	isGPT35: boolean;
+	isSubmitting: boolean;
+	setIsSubmitting: (submitting: boolean) => void;
 }) => {
-  const router = useRouter()
-  const [outlineData, setOutlineData] = useState(outline)
-  //   const [isGpt35, setIsGpt35] = useState(true)
-  const [slidePages, setSlidePages] = useState(20)
-  const [wordPerSubpoint, setWordPerSubpoint] = useState(10)
+	const router = useRouter();
+	const [outlineData, setOutlineData] = useState(outline);
+	//   const [isGpt35, setIsGpt35] = useState(true)
+	const [slidePages, setSlidePages] = useState(20);
+	const [wordPerSubpoint, setWordPerSubpoint] = useState(10);
 
-  useEffect(() => {
-    if (isSubmitting) {
-      handleSubmit()
-    }
-  }, [isSubmitting])
+	useEffect(() => {
+		if (isSubmitting) {
+			handleSubmit();
+		}
+	}, [isSubmitting]);
 
-  const updateOutlineSessionStorage = (updatedOutline: any) => {
-    const entireOutline = JSON.parse(sessionStorage.outline)
-    entireOutline.res = JSON.stringify({ ...updatedOutline })
-    sessionStorage.setItem('outline', JSON.stringify(entireOutline))
-  }
+	const updateOutlineSessionStorage = (updatedOutline: any) => {
+		const entireOutline = JSON.parse(sessionStorage.outline);
+		entireOutline.res = JSON.stringify({ ...updatedOutline });
+		sessionStorage.setItem('outline', JSON.stringify(entireOutline));
+	};
 
-  const checkOutlineChanged = (updatedOutline: any) => {
-    const entireOutline = JSON.parse(sessionStorage.outline)
-    const originalOutline = JSON.parse(entireOutline.res)
-    entireOutline.res = JSON.stringify({ ...updatedOutline })
-    if (JSON.stringify(originalOutline) === entireOutline.res) {
-      return false
-    } else {
-      return true
-    }
-  }
+	const checkOutlineChanged = (updatedOutline: any) => {
+		const entireOutline = JSON.parse(sessionStorage.outline);
+		const originalOutline = JSON.parse(entireOutline.res);
+		entireOutline.res = JSON.stringify({ ...updatedOutline });
+		if (JSON.stringify(originalOutline) === entireOutline.res) {
+			return false;
+		} else {
+			return true;
+		}
+	};
 
+	const [isSubmittingSlide, setIsSubmittingSlide] = useState(false);
+	const [timer, setTimer] = useState(0);
 
-  const [isSubmittingSlide, setIsSubmittingSlide] = useState(false)
-  const [timer, setTimer] = useState(0)
+	async function generateSlidesPreview(formData: any, token: string) {
+		const response = await fetch('/api/generate_slides', {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${token}`,
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(formData),
+		});
 
-  async function query_resources(
-    project_id: any,
-    resources: any,
-    outlineData: any
-  ) {
-    const { userId, idToken: token } =
-      await AuthService.getCurrentUserTokenAndId()
-    const headers = new Headers()
-    if (token) {
-      headers.append('Authorization', `Bearer ${token}`)
-    }
+		if (response.ok) {
+			const resp = await response.json();
+			setIsSubmittingSlide(false);
+			sessionStorage.setItem(
+				'presentation_slides',
+				JSON.stringify(resp.data.res),
+			);
+			router.push('workflow-review-slides');
+		} else {
+			alert(
+				`Server is busy now. Please try again later. Reference code: ` +
+					sessionStorage.getItem('project_id'),
+			);
+			console.log(response);
+			setIsSubmittingSlide(false);
+		}
+	}
 
-    const response = await fetch('/api/query_resources', {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify({
-        outlines: JSON.stringify({ ...outlineData }),
-        resources: resources,
-        project_id: project_id,
-      }),
-    })
+	const handleSubmit = async () => {
+		setTimer(0);
+		let formData: any = {};
 
-    if (response.ok) {
-      return await response.json()
-    } else {
-      // alert("Request failed: " + response.status);
-      console.log(response)
-      // setIsSubmittingScript(false);
-      // setIsSubmittingSlide(false);
-    }
-  }
+		// remove empty entries
+		const outlineCopy = [...outlineData];
+		for (let i = 0; i < outlineCopy.length; i++) {
+			outlineCopy[i].content = outlineCopy[i].content.filter((s) => {
+				return s.length > 0;
+			});
+		}
 
-  async function generateSlidesPreview(formData: any, token: string) {
-    const response = await fetch('/api/generate_slides', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
+		if (checkOutlineChanged(outlineCopy) === true) {
+			sessionStorage.removeItem('extraKnowledge');
+			sessionStorage.removeItem('outline_item_counts');
+		}
 
-    if (response.ok) {
-      const resp = await response.json()
-      setIsSubmittingSlide(false)
-      sessionStorage.setItem('presentation_slides', JSON.stringify(resp.data.res))
-      router.push('workflow-review-slides')
-    } else {
-      alert(
-        `Server is busy now. Please try again later. Reference code: ` +
-        sessionStorage.getItem('project_id')
-      )
-      console.log(response)
-      setIsSubmittingSlide(false)
-    }
-  }
+		setOutlineData(outlineCopy);
+		updateOutlineSessionStorage(outlineCopy);
 
-  const handleSubmit = async () => {
-    setTimer(0)
-    let formData: any = {}
+		const audience =
+			typeof window !== 'undefined' ? sessionStorage.getItem('audience') : null;
+		const foldername =
+			typeof window !== 'undefined'
+				? sessionStorage.getItem('foldername')
+				: null;
+		const topic =
+			typeof window !== 'undefined' ? sessionStorage.getItem('topic') : null;
+		const language =
+			typeof window !== 'undefined'
+				? sessionStorage.getItem('language')
+				: 'English';
+		const project_id =
+			typeof window !== 'undefined'
+				? sessionStorage.getItem('project_id')
+				: null;
+		const selectedResources =
+			typeof window !== 'undefined'
+				? JSON.parse(sessionStorage.getItem('selectedResources') || '')
+				: null;
+		const addEquations =
+			typeof window !== 'undefined'
+				? sessionStorage.getItem('addEquations')
+				: null;
+		const extraKnowledge =
+			typeof window !== 'undefined'
+				? sessionStorage.getItem('extraKnowledge')
+				: null;
+		const outline_item_counts =
+			typeof window !== 'undefined'
+				? sessionStorage.getItem('outline_item_counts')
+				: null;
+		const scenarioType =
+			typeof window !== 'undefined'
+				? sessionStorage.getItem('scenarioType')
+				: null;
 
-    // remove empty entries
-    const outlineCopy = [...outlineData]
-    for (let i = 0; i < outlineCopy.length; i++) {
-      outlineCopy[i].content = outlineCopy[i].content.filter((s) => {
-        return s.length > 0
-      })
-    }
+		formData = {
+			res: JSON.stringify({ ...outlineData }),
+			outlines: JSON.stringify({ ...outlineData }),
+			audience: audience,
+			foldername: foldername,
+			topic: topic,
+			language: language,
+			project_id: project_id,
+			addEquations: addEquations,
+			extraKnowledge: extraKnowledge,
+			outline_item_counts: outline_item_counts,
+			model_name: isGPT35 ? 'gpt-3.5-turbo' : 'gpt-4',
+			slidePages: slidePages,
+			wordPerSubpoint: wordPerSubpoint,
+			scenario_type: scenarioType,
+			// endIndex: 2,  // generate first 2 sections only
+		};
 
-    if (checkOutlineChanged(outlineCopy) === true) {
-      sessionStorage.removeItem('extraKnowledge');
-      sessionStorage.removeItem('outline_item_counts');
-    }
+		if (selectedResources && selectedResources.length > 0 && !extraKnowledge) {
+			try {
+				console.log('resources', selectedResources);
+				console.log('querying vector database');
+				const { userId, idToken: token } =
+					await AuthService.getCurrentUserTokenAndId();
+				const extraKnowledge = await ResourceService.queryResource(
+					project_id || '',
+					selectedResources.map((r: Resource) => r.id),
+					outlineData,
+					token,
+				);
+				sessionStorage.setItem(
+					'extraKnowledge',
+					JSON.stringify(extraKnowledge.data.res),
+				);
+				sessionStorage.setItem(
+					'outline_item_counts',
+					JSON.stringify(extraKnowledge.data.outline_item_counts),
+				);
+				formData.extraKnowledge = extraKnowledge.data.res;
+				formData.outline_item_counts = extraKnowledge.data.outline_item_counts;
+				console.log('formData', formData);
+			} catch (error) {
+				console.error('Error querying vector database', error);
+				// return;
+			}
+		} else {
+			console.log('no need to query vector database');
+		}
 
-    setOutlineData(outlineCopy)
-    updateOutlineSessionStorage(outlineCopy)
+		try {
+			const { userId, idToken: token } =
+				await AuthService.getCurrentUserTokenAndId();
+			await generateSlidesPreview(formData, token);
+		} catch (error) {
+			console.error('Error:', error);
+			setIsSubmittingSlide(false);
+		}
+	};
 
-    const audience =
-      typeof window !== 'undefined' ? sessionStorage.getItem('audience') : null
-    const foldername =
-      typeof window !== 'undefined'
-        ? sessionStorage.getItem('foldername')
-        : null
-    const topic =
-      typeof window !== 'undefined' ? sessionStorage.getItem('topic') : null
-    const language =
-      typeof window !== 'undefined'
-        ? sessionStorage.getItem('language')
-        : 'English'
-    const project_id =
-      typeof window !== 'undefined'
-        ? sessionStorage.getItem('project_id')
-        : null
-    const resources =
-      typeof window !== 'undefined' ? JSON.parse(sessionStorage.getItem('selectedResourceId') || '') : null
-    const addEquations =
-      typeof window !== 'undefined'
-        ? sessionStorage.getItem('addEquations')
-        : null
-    const extraKnowledge =
-      typeof window !== 'undefined'
-        ? sessionStorage.getItem('extraKnowledge')
-        : null
-    const outline_item_counts =
-      typeof window !== 'undefined'
-        ? sessionStorage.getItem('outline_item_counts')
-        : null
+	return <div></div>;
+};
 
-    formData = {
-      res: JSON.stringify({ ...outlineData }),
-      outlines: JSON.stringify({ ...outlineData }),
-      audience: audience,
-      foldername: foldername,
-      topic: topic,
-      language: language,
-      project_id: project_id,
-      addEquations: addEquations,
-      extraKnowledge: extraKnowledge,
-      outline_item_counts: outline_item_counts,
-      model_name: isGPT35 ? 'gpt-3.5-turbo' : 'gpt-4',
-      slidePages: slidePages,
-      wordPerSubpoint: wordPerSubpoint,
-      // endIndex: 2,  // generate first 2 sections only
-    }
-
-    if (resources && resources.length > 0 && !extraKnowledge) {
-      try {
-        console.log('resources', resources)
-        console.log('querying vector database')
-        const extraKnowledge = await query_resources(
-          project_id,
-          resources,
-          outlineData
-        )
-        sessionStorage.setItem(
-          'extraKnowledge',
-          JSON.stringify(extraKnowledge.data.res)
-        )
-        sessionStorage.setItem(
-          'outline_item_counts',
-          JSON.stringify(extraKnowledge.data.outline_item_counts)
-        )
-        formData.extraKnowledge = extraKnowledge.data.res
-        formData.outline_item_counts = extraKnowledge.data.outline_item_counts
-        console.log('formData', formData)
-      } catch (error) {
-        console.error('Error querying vector database', error)
-        // return;
-      }
-    } else {
-      console.log('no need to query vector database')
-    }
-
-    try {
-      const { userId, idToken: token } =
-        await AuthService.getCurrentUserTokenAndId()
-      await generateSlidesPreview(formData, token)
-    } catch (error) {
-      console.error('Error:', error)
-      setIsSubmittingSlide(false)
-    }
-  }
-
-  return (
-    <div>
-    </div>
-  )
-}
-
-export default GenerateSlidesSubmit
+export default GenerateSlidesSubmit;

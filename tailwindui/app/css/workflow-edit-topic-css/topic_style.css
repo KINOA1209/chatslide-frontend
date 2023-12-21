@@ -1,250 +1,252 @@
 /* navigation bar */
 @font-face {
-    font-family: "Creato Display";
-    src: url("https://db.onlinewebfonts.com/t/c456ecaa67ab8ddf91e221ee3ccaa6b3.eot");
-    src: url("https://db.onlinewebfonts.com/t/c456ecaa67ab8ddf91e221ee3ccaa6b3.eot?#iefix")format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/c456ecaa67ab8ddf91e221ee3ccaa6b3.woff2")format("woff2"),
-    url("https://db.onlinewebfonts.com/t/c456ecaa67ab8ddf91e221ee3ccaa6b3.woff")format("woff"),
-    url("https://db.onlinewebfonts.com/t/c456ecaa67ab8ddf91e221ee3ccaa6b3.ttf")format("truetype"),
-    url("https://db.onlinewebfonts.com/t/c456ecaa67ab8ddf91e221ee3ccaa6b3.svg#Creato Display")format("svg");
+	font-family: 'Creato Display';
+	src: url('https://db.onlinewebfonts.com/t/c456ecaa67ab8ddf91e221ee3ccaa6b3.eot');
+	src:
+		url('https://db.onlinewebfonts.com/t/c456ecaa67ab8ddf91e221ee3ccaa6b3.eot?#iefix')
+			format('embedded-opentype'),
+		url('https://db.onlinewebfonts.com/t/c456ecaa67ab8ddf91e221ee3ccaa6b3.woff2')
+			format('woff2'),
+		url('https://db.onlinewebfonts.com/t/c456ecaa67ab8ddf91e221ee3ccaa6b3.woff')
+			format('woff'),
+		url('https://db.onlinewebfonts.com/t/c456ecaa67ab8ddf91e221ee3ccaa6b3.ttf')
+			format('truetype'),
+		url('https://db.onlinewebfonts.com/t/c456ecaa67ab8ddf91e221ee3ccaa6b3.svg#Creato Display')
+			format('svg');
 }
 
-
-.title1 p{
-    display: inline;
-    font-family: 'Creato Display', sans-serif;
-    font-weight: 700;
-    font-size: 16px;
-    letter-spacing: 0.5px
+.title1 p {
+	display: inline;
+	font-family: 'Creato Display', sans-serif;
+	font-weight: 700;
+	font-size: 16px;
+	letter-spacing: 0.5px;
 }
 
 #after1 {
-    font-weight: 500;
-    color: #707C8A;
+	font-weight: 500;
+	color: #707c8a;
 }
 
-.title2 p{
-    display: inline;
-    font-family: 'Creato Display', sans-serif;
-    font-weight: 700;
-    font-size: 16px;
-    letter-spacing: 0.5px
+.title2 p {
+	display: inline;
+	font-family: 'Creato Display', sans-serif;
+	font-weight: 700;
+	font-size: 16px;
+	letter-spacing: 0.5px;
 }
 
 #after2 {
-    font-weight: 500;
-    color: #707C8A;
+	font-weight: 500;
+	color: #707c8a;
 }
 
 .project_container {
-    border-radius: 7px;
-    padding: 16px 24px 23px 24px;
+	border-radius: 7px;
+	padding: 16px 24px 23px 24px;
 }
 
 .additional_container {
-    border-radius: 7px;
-    padding: 16px 20px;
+	border-radius: 7px;
+	padding: 16px 20px;
 }
 
-.project_topic p{
-    margin: 0;
-    font-family: 'Creato Display', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    letter-spacing: 0.5px
+.project_topic p {
+	margin: 0;
+	font-family: 'Creato Display', sans-serif;
+	font-weight: 700;
+	font-size: 14px;
+	letter-spacing: 0.5px;
 }
-
 
 .textfield {
-    background-color: white;
-    border-radius: 11px;
-    margin-top: 15px;
-    resize: none;
+	background-color: white;
+	border-radius: 11px;
+	margin-top: 15px;
+	resize: none;
 }
 #topic {
-    border: None;
-    width: 100%;
-    border-radius: 11px;
-    resize: none;
-    padding: 20px;
-    font-family: 'Creato Display', sans-serif;
-    font-weight: 400;
-    line-height: 1.5;
+	border: None;
+	width: 100%;
+	border-radius: 11px;
+	resize: none;
+	padding: 20px;
+	font-family: 'Creato Display', sans-serif;
+	font-weight: 400;
+	line-height: 1.5;
 }
 
 .dropdown_container {
-    padding-top: 20px; 
+	padding-top: 20px;
 }
 
-@media (min-width: 1024px){
-    .dropdown_container {
-        align-items: center;
-    }
+@media (min-width: 1024px) {
+	.dropdown_container {
+		align-items: center;
+	}
 }
 
-@media (max-width: 1024px){
-    #progress_title{
-        display: none;
-    }
+@media (max-width: 1024px) {
+	#progress_title {
+		display: none;
+	}
 }
 
-.dropdown_container span{
-    margin: 0;
-    font-family: 'Creato Display', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
+.dropdown_container span {
+	margin: 0;
+	font-family: 'Creato Display', sans-serif;
+	font-weight: 700;
+	font-size: 14px;
 }
 
 .your_audience {
-    display: flex;
-    align-items: center;
-    letter-spacing: 0.5px
+	display: flex;
+	align-items: center;
+	letter-spacing: 0.5px;
 }
 
 .language {
-    display: flex;
-    align-items: center;
-    letter-spacing: 0.5px
+	display: flex;
+	align-items: center;
+	letter-spacing: 0.5px;
 }
 
 .audience_container {
-    flex: 1;
+	flex: 1;
 }
 
-.dropdown_container span{
-    display: inline;
+.dropdown_container span {
+	display: inline;
 }
 
 .language_container {
-    flex: 1;
+	flex: 1;
 }
 
-.dropdown_container select{
-    border: none;
-    border-radius: 7px;
-    padding: 20px;
-    width: 100%;
-    margin-top: 12px;
+.dropdown_container select {
+	border: none;
+	border-radius: 7px;
+	padding: 20px;
+	width: 100%;
+	margin-top: 12px;
 }
 
-.dropdown_container select:focus{
-    outline-style: none;
+.dropdown_container select:focus {
+	outline-style: none;
 }
-
 
 /*upload files*/
 
 .upload {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
 
-.upload span{
-    margin: 0;
-    font-family: 'Creato Display', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    display: inline;
-    letter-spacing: 0.5px
+.upload span {
+	margin: 0;
+	font-family: 'Creato Display', sans-serif;
+	font-weight: 700;
+	font-size: 14px;
+	display: inline;
+	letter-spacing: 0.5px;
 }
 
 .link_container {
-    margin-top: 15px;
-    border-radius: 6px;
+	margin-top: 15px;
+	border-radius: 6px;
 }
 
-
-.drop_file{
-    margin-top: 3px;
-    padding-left: 16px;
-    padding-top: 28px;
-    border-radius: 6px;
-    height: 84px;
+.drop_file {
+	margin-top: 3px;
+	padding-left: 16px;
+	padding-top: 28px;
+	border-radius: 6px;
+	height: 84px;
 }
 
-.drop_file span{
-    margin-left: 2%;
-    font-family: 'Creato Display', sans-serif;
-    font-weight: 400;
-    color: var(--Grey-500, #707C8A);
-    font-style: normal;
-    font-weight: 400;
-    line-height: 18px; /* 138.462% */
-    letter-spacing: 0.26px;
-    display: inline;
+.drop_file span {
+	margin-left: 2%;
+	font-family: 'Creato Display', sans-serif;
+	font-weight: 400;
+	color: var(--Grey-500, #707c8a);
+	font-style: normal;
+	font-weight: 400;
+	line-height: 18px; /* 138.462% */
+	letter-spacing: 0.26px;
+	display: inline;
 }
 
-.drop_file img{
-    width: 16px;
-    height: 16px;
-    display: inline;
+.drop_file img {
+	width: 16px;
+	height: 16px;
+	display: inline;
 }
 
 #browse_btn {
-    text-align: center;
-    font-family: 'Creato Display', sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 18.869px;
-    letter-spacing: 0.26px;
+	text-align: center;
+	font-family: 'Creato Display', sans-serif;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 18.869px;
+	letter-spacing: 0.26px;
 }
 
 #add_hr {
-    border: 1px solid #CAD0D3;
-    margin-top: 20px;
-    margin-left: -6px;
-    margin-right: -6px;
+	border: 1px solid #cad0d3;
+	margin-top: 20px;
+	margin-left: -6px;
+	margin-right: -6px;
 }
 
 #link {
-    padding-left: 2%;
-    width: 100%;
-    font-family: 'Creato Display', sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 18px; /* 138.462% */
-    letter-spacing: 0.26px;
+	padding-left: 2%;
+	width: 100%;
+	font-family: 'Creato Display', sans-serif;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 18px; /* 138.462% */
+	letter-spacing: 0.26px;
 }
 
 #link_text_container {
-    padding: 13px 16px 4px;
+	padding: 13px 16px 4px;
 }
 
-#project_popup{
-    border-radius: 7px;
-    background-color: #525c6A;
-    font-family: 'Creato Display', sans-serif;
-    color: var(--Grey-500, #E7E9EB);
+#project_popup {
+	border-radius: 7px;
+	background-color: #525c6a;
+	font-family: 'Creato Display', sans-serif;
+	color: var(--Grey-500, #e7e9eb);
 }
 
-#audience_popup{
-    border-radius: 7px;
-    background-color: #525c6A;
-    font-family: 'Creato Display', sans-serif;
-    color: var(--Grey-500, #E7E9EB);
+#audience_popup {
+	border-radius: 7px;
+	background-color: #525c6a;
+	font-family: 'Creato Display', sans-serif;
+	color: var(--Grey-500, #e7e9eb);
 }
 
-#language_popup{
-    border-radius: 7px;
-    background-color: #525c6A;
-    font-family: 'Creato Display', sans-serif;
-    color: var(--Grey-500, #E7E9EB);
+#language_popup {
+	border-radius: 7px;
+	background-color: #525c6a;
+	font-family: 'Creato Display', sans-serif;
+	color: var(--Grey-500, #e7e9eb);
 }
 
-#supportive_popup{
-    border-radius: 7px;
-    background-color: #525c6A;
-    font-family: 'Creato Display', sans-serif;
-    color: var(--Grey-500, #E7E9EB);
+#supportive_popup {
+	border-radius: 7px;
+	background-color: #525c6a;
+	font-family: 'Creato Display', sans-serif;
+	color: var(--Grey-500, #e7e9eb);
 }
 
-#selectedfile_each{
-    font-family: 'Creato Display', sans-serif;
-    color: var(--Grey-700, #363E4A);
-    font-weight: 700;
+#selectedfile_each {
+	font-family: 'Creato Display', sans-serif;
+	color: var(--Grey-700, #363e4a);
+	font-weight: 700;
 }
 
-#link_error{
-    padding-left: calc(2% + 2rem);
-    margin-bottom: 3px;
+#link_error {
+	padding-left: calc(2% + 2rem);
+	margin-bottom: 3px;
 }

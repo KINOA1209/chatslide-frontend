@@ -1,16 +1,14 @@
 import Header from '@/components/ui/header';
 
 export default function AuthLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode
+	children: React.ReactNode;
 }) {
-  return (
-    <main className="grow">
-
-      <Header loginRequired={false} isLanding={false} isAuth={true}/>
-      {children}
-
-    </main>
-  )
+	return (
+		<main className='grow'>
+			<Header loginRequired={false} isLanding={false} isAuth={true} />
+			{children}
+		</main>
+	);
 }

@@ -1,18 +1,17 @@
-.ql-clipboard{
-    display: none !important
-}
-
-
-@font-face {
-    font-family: 'CreatoDisplayRegular';
-    src:url('/fonts/CreatoDisplay-Regular.otf') format('opentype');
+.ql-clipboard {
+	display: none !important;
 }
 
 @font-face {
-    font-family: 'ArimoRegular';
-    src:url('/fonts/Arimo-Regular.ttf') format('opentype');
+	font-family: 'CreatoDisplayRegular';
+	src: url('/fonts/CreatoDisplay-Regular.otf') format('opentype');
+}
+
+@font-face {
+	font-family: 'ArimoRegular';
+	src: url('/fonts/Arimo-Regular.ttf') format('opentype');
 }
 
 #slideContainer {
-    font-family: 'ArimoRegular'
+	font-family: 'ArimoRegular';
 }
