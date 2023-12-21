@@ -29,6 +29,7 @@
     "html2pdf.js": "^0.10.1",
     "jspdf": "^2.5.1",
     "katex": "^0.16.8",
+    "modern-screenshot": "^4.4.37",
     "moment": "^2.29.4",
     "next": "^13.4.13",
     "node-sass": "^9.0.0",
