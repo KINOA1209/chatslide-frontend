@@ -14,8 +14,8 @@ const WorkflowGPTToggle: React.FC<ToggleProps> = ({
 	setIsLeft,
 	leftText,
 	rightText,
-	leftColor = 'bg-blue-600',
-	rightColor = 'bg-purple-700',
+	leftColor = 'bg-Blue',
+	rightColor = 'bg-Purple',
 }) => {
 	const activeBox =
 		'shadow-[0px_2.688084602355957px_6.720211505889893px_rgba(10.01,19.13,8.53,0.12)] rounded-3xl';
@@ -31,7 +31,7 @@ const WorkflowGPTToggle: React.FC<ToggleProps> = ({
 				>
 					<div
 						className={`text-[16px] font-medium break-words ${
-							!isLeft ? 'text-blue-600' : 'text-white'
+							!isLeft ? 'text-Blue' : 'text-white'
 						}`}
 					>
 						{leftText}
@@ -45,7 +45,7 @@ const WorkflowGPTToggle: React.FC<ToggleProps> = ({
 				>
 					<div
 						className={`text-[16px] font-medium break-words ${
-							isLeft ? 'text-blue-600' : 'text-white'
+							isLeft ? 'text-Blue' : 'text-white'
 						}`}
 					>
 						{rightText}
