@@ -20,7 +20,7 @@ const Toggle: React.FC<ToggleProps> = ({
 					type='button'
 					onClick={() => setIsLeft(true)}
 					className={`py-2 px-4 rounded-l-full ${
-						isLeft ? 'bg-blue-600 text-white' : 'bg-gray-200'
+						isLeft ? 'bg-Blue text-white' : 'bg-gray-200'
 					}`}
 				>
 					{leftText || 'Monthly'}
@@ -29,7 +29,7 @@ const Toggle: React.FC<ToggleProps> = ({
 					type='button'
 					onClick={() => setIsLeft(false)}
 					className={`py-2 px-4 rounded-r-full ${
-						isLeft ? 'bg-gray-200' : 'bg-purple-600 text-white'
+						isLeft ? 'bg-gray-200' : 'bg-Purple text-white'
 					}`}
 				>
 					{rightText || 'Yearly (17% off)'}
