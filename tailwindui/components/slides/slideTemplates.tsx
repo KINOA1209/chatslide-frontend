@@ -18,6 +18,7 @@ import { Columbia_school_template } from './school_templates/Columbia_University
 import { JHU_school_template } from './school_templates/Johns_Hopkins_University_school_template';
 import { University_of_Chicago_school_template } from './school_templates/University_of_Chicago_school_template';
 import { Yale_school_template } from './school_templates/Yale_school_template';
+import { UPenn_school_template } from './school_templates/University_of_Pennsylvania_school_template';
 import { LayoutKeys } from './slideLayout';
 import { layoutOptions } from './slideLayout';
 import { loadCustomizableElements } from './SlidesHTML';
@@ -176,12 +177,13 @@ export const availableTemplates = {
 	Berkeley: Berkeley_school_template,
 	Harvard: Harvard_school_template,
 	MIT: MIT_school_template,
-	// Princeton: Princeton_school_template,
-	// Caltech: Caltech_school_template,
-	// Columbia: Columbia_school_template,
-	// JHU: JHU_school_template,
-	// UChicago: University_of_Chicago_school_template,
-	// Yale: Yale_school_template,
+	Princeton: Princeton_school_template,
+	Caltech: Caltech_school_template,
+	Columbia: Columbia_school_template,
+	JHU: JHU_school_template,
+	UChicago: University_of_Chicago_school_template,
+	Yale: Yale_school_template,
+	UPenn: UPenn_school_template,
 	Default: Default,
 };
 

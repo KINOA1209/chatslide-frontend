@@ -1,5 +1,5 @@
 import Image, { StaticImageData } from 'next/image';
-import { MainSlideProps } from '../slideTemplates';
+import { MainSlideProps, TemplateKeys } from '../slideTemplates';
 import PrincetonLogo from '@/public/images/template/Princeton/Princeton_University_Logo.png';
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import { layoutOptions } from '@/components/slides/slideLayout';
@@ -17,6 +17,7 @@ export const Princeton_school_template = ({
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
+	templateLogo,
 }: MainSlideProps) => {
 	const ChosenLayoutNonCover =
 		layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
@@ -24,7 +25,9 @@ export const Princeton_school_template = ({
 		layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
 	//   console.log('choosing layout option', ChosenLayout)
 	// Load customizable elements for the current template
-	const customizableElements = loadCustomizableElements('Princeton');
+	const customizableElements = loadCustomizableElements(
+		'Princeton' as TemplateKeys,
+	);
 	return (
 		<>
 			{/* for not-cover page slides */}
@@ -52,6 +55,7 @@ export const Princeton_school_template = ({
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
 					customizableElements={customizableElements}
+					templateLogo={templateLogo}
 				></ChosenLayoutNonCover>
 			</div>
 			{/* for cover page */}
@@ -77,16 +81,8 @@ export const Princeton_school_template = ({
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
 					customizableElements={customizableElements}
+					templateLogo={templateLogo}
 				></ChosenLayoutCover>
-			</div>
-			{/* School Logo (Replace the placeholder with the actual logo URL) */}
-			<div className='fixed inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[1rem] pb-[1rem] '>
-				<Image
-					src={PrincetonLogo}
-					alt='Standford Logo'
-					className='w-[10rem] h-auto'
-				/>
-				{/* <div className='text-red-800 text-2xl font-normal '>Caption</div> */}
 			</div>
 		</>
 	);
