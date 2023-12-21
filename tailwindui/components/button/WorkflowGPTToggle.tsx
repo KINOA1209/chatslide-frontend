@@ -2,9 +2,8 @@
 
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import WorkflowToggle from './WorkflowToggle';
-import UserService from '../../services/UserService';
 import PaywallModal from '@/components/forms/paywallModal';
-import { QuestionExplainIcon } from '@/app/(feature)/icons';
+import { useUser } from '@/hooks/use-user';
 
 interface GPTToggleProps {
 	setIsGpt35: (value: boolean) => void;
@@ -12,7 +11,7 @@ interface GPTToggleProps {
 
 const GPTToggle: React.FC<GPTToggleProps> = ({ setIsGpt35 }) => {
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
-	const [isPaidUser, setIsPaidUser] = useState(false);
+	const { isPaidUser } = useUser();
 	const [isGpt35, setIsGpt35Locally] = useState(() => {
 		// Load the value from sessionStorage, defaulting to true if it's not set
 		const storedValue =
@@ -21,12 +20,6 @@ const GPTToggle: React.FC<GPTToggleProps> = ({ setIsGpt35 }) => {
 				: null;
 		return storedValue ? JSON.parse(storedValue) : true;
 	});
-	useEffect(() => {
-		(async () => {
-			const isPaidUser = await UserService.isPaidUser();
-			setIsPaidUser(isPaidUser);
-		})();
-	}, []);
 
 	useEffect(() => {
 		// Update sessionStorage whenever isGpt35 changes

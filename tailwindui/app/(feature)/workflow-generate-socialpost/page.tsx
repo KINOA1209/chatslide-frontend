@@ -1,33 +1,24 @@
 'use client';
 
-import React, { useState, FormEvent, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import '@/app/css/workflow-edit-topic-css/topic_style.css';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthService from '@/services/AuthService';
 import UserService from '@/services/UserService';
-import { Transition } from '@headlessui/react';
-import MyFiles from '@/components/FileManagement';
 import PaywallModal from '@/components/forms/paywallModal';
 import FeedbackButton from '@/components/ui/feedback';
 import WorkflowStepsBanner from '@/components/socialPost/socialPostWorkflowStep';
-import {
-	DeleteIcon,
-	QuestionExplainIcon,
-	RightTurnArrowIcon,
-} from '@/app/(feature)/icons';
+import { QuestionExplainIcon } from '@/app/(feature)/icons';
 import { FaFilePdf, FaYoutube } from 'react-icons/fa';
 import YoutubeService from '@/services/YoutubeService';
-import {
-	BigBlueButton,
-	SmallBlueButton,
-} from '@/components/button/DrlambdaButton';
+import { SmallBlueButton } from '@/components/button/DrlambdaButton';
 import WebService from '@/services/WebpageService';
 import Resource from '@/models/Resource';
-import { ToastContainer, toast } from 'react-toastify';
-import Modal from '@/components/ui/Modal';
+import { toast, ToastContainer } from 'react-toastify';
 import FileUploadModal from '@/components/forms/FileUploadModal';
 import SelectedResourcesList from '@/components/SelectedResources';
+import { useUser } from '@/hooks/use-user';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 6;
@@ -77,7 +68,7 @@ export default function Topic_SocialPost() {
 	const [showAudiencePopup, setAudiencePopup] = useState(false);
 	const [showLanguagePopup, setLanguagePopup] = useState(false);
 	const [showSupportivePopup, setSupportivePopup] = useState(false);
-	const [isPaidUser, setIsPaidUser] = useState(false);
+	const { isPaidUser } = useUser();
 	const [isAddingLink, setIsAddingLink] = useState(false);
 
 	// bind form data between input and sessionStorage
@@ -127,12 +118,6 @@ export default function Topic_SocialPost() {
 		if (currScenario) {
 			setscenarioType(currScenario);
 		}
-	}, []);
-
-	useEffect(() => {
-		UserService.isPaidUser().then((isPaidUser) => {
-			setIsPaidUser(isPaidUser);
-		});
 	}, []);
 
 	useEffect(() => {

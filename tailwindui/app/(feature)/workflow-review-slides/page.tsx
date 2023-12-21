@@ -1,29 +1,21 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import FeedbackButton from '@/components/ui/feedback';
 import SlideVisualizer from '@/components/slides/SlideVisualizer';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import UserService from '@/services/UserService';
+import { ToastContainer } from 'react-toastify';
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
+import { useUser } from '@/hooks/use-user';
 
 export default function WorkflowStep3() {
 	const contentRef = useRef<HTMLDivElement>(null);
-	const [isPaidUser, setIsPaidUser] = useState(false);
+	const { isPaidUser } = useUser();
 	const [isGpt35, setIsGpt35] = useState(
 		typeof sessionStorage !== 'undefined'
 			? JSON.parse(sessionStorage.getItem('isGpt35') || 'true')
 			: true,
 	);
-
-	useEffect(() => {
-		(async () => {
-			const isPaidUser = await UserService.isPaidUser();
-			setIsPaidUser(isPaidUser);
-		})();
-	}, []);
 
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
