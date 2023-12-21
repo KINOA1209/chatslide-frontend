@@ -60,7 +60,7 @@ export const templateDispatch = (
 		content: string | string[],
 		contentTag: SlideKeys,
 		style: CSSProperties,
-        isVerticalContent: boolean,
+		isVerticalContent: boolean,
 		contentIndex?: number,
 	) => {
 		if (!canEdit || !isCurrentSlide) {
@@ -80,7 +80,7 @@ export const templateDispatch = (
 							handleSlideEdit(newContent, index, contentTag, contentIndex)
 						}
 						style={style}
-                        isVerticalContent={isVerticalContent}
+						isVerticalContent={isVerticalContent}
 					/>
 				);
 			} else {
@@ -91,7 +91,7 @@ export const templateDispatch = (
 							handleSlideEdit(newContent, index, contentTag)
 						}
 						style={style}
-                        isVerticalContent={isVerticalContent}
+						isVerticalContent={isVerticalContent}
 					/>
 				);
 			}
@@ -117,45 +117,46 @@ export const templateDispatch = (
 				slide.head,
 				'head',
 				customizableElements.headFontCSS,
-                false,
+				false,
 			)}
-			topic={
-				generateContentElement(
-					slide.title,
-					'title',
-					customizableElements.titleFontCSS,
-                    false,
-				)
-			}
+			topic={generateContentElement(
+				slide.title,
+				'title',
+				customizableElements.titleFontCSS,
+				false,
+			)}
 			subtopic={generateContentElement(
 				slide.subtopic,
 				'subtopic',
 				customizableElements.subtopicFontCSS,
-                false,
+				false,
 			)}
-            content={
-                slide.layout === "Col_1_img_0_layout" || slide.layout === "Col_2_img_1_layout" ?
-                generateContentElement(
-                    slide.content,
-                    'content',
-                    customizableElements.contentFontCSS,
-                    true,
-                ) :
-                slide.content.map((content, contentIndex) => (
-                    <div 
-                        key={keyPrefix + index.toString() + '_' + contentIndex.toString()} 
-                        className={`${index === 0 ? 'hidden' : ''}`}
-                    >
-                        {generateContentElement(
-                            content,
-                            'content',
-                            customizableElements.contentFontCSS_non_vertical_content,
-                            false,
-                            contentIndex
-                        )}
-                    </div>
-                ))
-            }
+			content={
+				slide.layout === 'Col_1_img_0_layout' ||
+				slide.layout === 'Col_2_img_1_layout'
+					? generateContentElement(
+							slide.content,
+							'content',
+							customizableElements.contentFontCSS,
+							true,
+						)
+					: slide.content.map((content, contentIndex) => (
+							<div
+								key={
+									keyPrefix + index.toString() + '_' + contentIndex.toString()
+								}
+								className={`${index === 0 ? 'hidden' : ''}`}
+							>
+								{generateContentElement(
+									content,
+									'content',
+									customizableElements.contentFontCSS_non_vertical_content,
+									false,
+									contentIndex,
+								)}
+							</div>
+						))
+			}
 			imgs={slide.images as string[]}
 			update_callback={updateImgUrlArray(index)}
 			isCoverPage={isCoverPage}

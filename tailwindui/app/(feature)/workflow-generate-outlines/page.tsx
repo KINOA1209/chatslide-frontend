@@ -280,36 +280,39 @@ export default function Topic() {
 			console.log(linkError); // continue without the invalid link
 		}
 
-    const project_id =
-      typeof window !== 'undefined' && sessionStorage.project_id != undefined
-        ? sessionStorage.project_id
-        : ''
-    
-    const scenarioType =
-      typeof window !== 'undefined' && sessionStorage.scenarioType != undefined
-        ? sessionStorage.scenarioType
-        : ''
+		const project_id =
+			typeof window !== 'undefined' && sessionStorage.project_id != undefined
+				? sessionStorage.project_id
+				: '';
 
-    setIsSubmitting(true)
+		const scenarioType =
+			typeof window !== 'undefined' && sessionStorage.scenarioType != undefined
+				? sessionStorage.scenarioType
+				: '';
 
-    const formData = {
-      topic: topic,
-      audience: audience,
-      language: language,
-      addEquations: addEquations,
-      project_id: project_id,
-      resources: selectedResources.map((resource: Resource) => resource.id),
-      model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
-      schoolTemplate: schoolTemplate,
-      scenario_type: scenarioType,
-    }
+		setIsSubmitting(true);
 
-    sessionStorage.setItem('topic', formData.topic)
-    sessionStorage.setItem('audience', formData.audience)
-    sessionStorage.setItem('language', formData.language)
-    sessionStorage.setItem('addEquations', formData.addEquations)
-    sessionStorage.setItem('selectedResources', JSON.stringify(selectedResources))
-    sessionStorage.setItem('schoolTemplate', schoolTemplate)
+		const formData = {
+			topic: topic,
+			audience: audience,
+			language: language,
+			addEquations: addEquations,
+			project_id: project_id,
+			resources: selectedResources.map((resource: Resource) => resource.id),
+			model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
+			schoolTemplate: schoolTemplate,
+			scenario_type: scenarioType,
+		};
+
+		sessionStorage.setItem('topic', formData.topic);
+		sessionStorage.setItem('audience', formData.audience);
+		sessionStorage.setItem('language', formData.language);
+		sessionStorage.setItem('addEquations', formData.addEquations);
+		sessionStorage.setItem(
+			'selectedResources',
+			JSON.stringify(selectedResources),
+		);
+		sessionStorage.setItem('schoolTemplate', schoolTemplate);
 
 		try {
 			const { userId, idToken: token } =
@@ -592,8 +595,8 @@ export default function Topic() {
 											audienceList.includes(audience)
 												? audience
 												: audience === 'unselected'
-												? 'unselected'
-												: 'other'
+													? 'unselected'
+													: 'other'
 										}
 										onChange={(e) => setAudience(e.target.value)}
 										required
@@ -703,9 +706,9 @@ export default function Topic() {
 										<option key='Arabic' value='Arabic'>
 											🇸🇦 العربية
 										</option>
-                    <option key='Hebrew' value='Hebrew'>
-                      🇮🇱 עברית
-                    </option>
+										<option key='Hebrew' value='Hebrew'>
+											🇮🇱 עברית
+										</option>
 									</select>
 								</div>
 							</div>

@@ -125,7 +125,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const res_slide =
 		typeof sessionStorage !== 'undefined'
 			? sessionStorage.getItem('presentation_slides') ||
-			  JSON.stringify(TestSlidesData)
+				JSON.stringify(TestSlidesData)
 			: '';
 
 	const [chosenLayout, setChosenLayout] = useState<LayoutKeys>('');
@@ -572,23 +572,21 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		} else if (className === 'images') {
 			currentSlide.images = content as string[];
 		} else if (className === 'content') {
-      if (Array.isArray(content)) {
-        currentSlide.content = content as string[];
-      }
-      else {
-        if (typeof contentIndex === 'number' && contentIndex >= 0){
-          currentSlide.content[contentIndex] = content as string
-        }
-        else{
-            console.error(`Invalid contentIndex: ${contentIndex}`);
-        }
-      }
+			if (Array.isArray(content)) {
+				currentSlide.content = content as string[];
+			} else {
+				if (typeof contentIndex === 'number' && contentIndex >= 0) {
+					currentSlide.content[contentIndex] = content as string;
+				} else {
+					console.error(`Invalid contentIndex: ${contentIndex}`);
+				}
+			}
 		} else {
 			console.error(`Unknown tag: ${tag}`);
 		}
 		sessionStorage.setItem('presentation_slides', JSON.stringify(newSlides));
 		setSlides(newSlides);
-    //console.log(newSlides)
+		//console.log(newSlides)
 	}
 
 	function goToSlide(index: number) {

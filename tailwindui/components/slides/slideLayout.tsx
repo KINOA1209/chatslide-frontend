@@ -146,14 +146,12 @@ export const Col_1_img_0_layout = ({
 				<div className='flex flex-col gap-[0.5rem]'>
 					<div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
 					<div className='w-full h-full'>
-                        <div className='py-[0.2rem]'>
-                            {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
-                            <div
-                                className={`flex flex-row w-full h-full grow pl-2 `}
-                            >
-                                {content}
-                            </div>
-                        </div>
+						<div className='py-[0.2rem]'>
+							{/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
+							<div className={`flex flex-row w-full h-full grow pl-2 `}>
+								{content}
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -182,20 +180,21 @@ export const Col_2_img_0_layout = ({
 			<div className={``}>{topic}</div>
 			<div className={``}>{subtopic}</div>
 			<div className='h-full w-full grid grid-cols-2 gap-[2rem] overflow-y-scroll'>
-				{Array.isArray(content) && content.map((item, index) => (
-					<div className='flex flex-col gap-[0.5rem]' key={index}>
-						<div className='mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-creato-medium uppercase leading-10 tracking-widest pt-[2rem]'>
-							{index + 1}
+				{Array.isArray(content) &&
+					content.map((item, index) => (
+						<div className='flex flex-col gap-[0.5rem]' key={index}>
+							<div className='mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-creato-medium uppercase leading-10 tracking-widest pt-[2rem]'>
+								{index + 1}
+							</div>
+							<div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
+							<ul
+								key={index}
+								className={`flex flex-row w-full h-full grow pl-2  `}
+							>
+								<li>{item}</li>
+							</ul>
 						</div>
-						<div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
-						<ul
-							key={index}
-							className={`flex flex-row w-full h-full grow pl-2  `}
-						>
-							<li>{item}</li>
-						</ul>
-					</div>
-				))}
+					))}
 			</div>
 			{templateLogo}
 		</>
@@ -222,20 +221,21 @@ export const Col_3_img_0_layout = ({
 			<div className={``}>{topic}</div>
 			<div className={``}>{subtopic}</div>
 			<div className='h-full w-full grid grid-cols-3 gap-[2rem] overflow-y-scroll'>
-				{Array.isArray(content) && content.map((item, index) => (
-					<div className='flex flex-col gap-[0.5rem]' key={index}>
-						<div className='mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-creato-medium uppercase leading-10 tracking-widest pt-[2rem]'>
-							{index + 1}
+				{Array.isArray(content) &&
+					content.map((item, index) => (
+						<div className='flex flex-col gap-[0.5rem]' key={index}>
+							<div className='mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-creato-medium uppercase leading-10 tracking-widest pt-[2rem]'>
+								{index + 1}
+							</div>
+							<div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
+							<ul
+								key={index}
+								className={`flex flex-row w-full h-full grow pl-2 `}
+							>
+								<li>{item}</li>
+							</ul>
 						</div>
-						<div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
-						<ul
-							key={index}
-							className={`flex flex-row w-full h-full grow pl-2 `}
-						>
-							<li>{item}</li>
-						</ul>
-					</div>
-				))}
+					))}
 			</div>
 			{templateLogo}
 		</>
@@ -276,17 +276,18 @@ export const Col_1_img_1_layout = ({
 					<div className='flex flex-col gap-[0.2rem]'>
 						<div className='opacity-50'></div>
 						<div className='w-full h-full'>
-							{Array.isArray(content) && content.map((item, index) => (
-								<div className='py-[0.2rem]' key={index}>
-									{/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
-									<ul
-										key={index}
-										className={`flex flex-row w-full h-full grow pl-4  `}
-									>
-										<li>{item}</li>
-									</ul>
-								</div>
-							))}
+							{Array.isArray(content) &&
+								content.map((item, index) => (
+									<div className='py-[0.2rem]' key={index}>
+										{/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
+										<ul
+											key={index}
+											className={`flex flex-row w-full h-full grow pl-4  `}
+										>
+											<li>{item}</li>
+										</ul>
+									</div>
+								))}
 						</div>
 					</div>
 				</div>
@@ -335,15 +336,13 @@ export const Col_2_img_1_layout = ({
 				<div className='h-full w-full flex flex-row gap-[2rem]'>
 					<div className='flex flex-col gap-[0.2rem]'>
 						<div className='opacity-50'></div>
-						<div className='w-full h-full'>						
-                            <div className='py-[0.2rem]'>
-                                {/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
-                                <div
-                                    className={`flex flex-row w-full h-full grow`}
-                                >
-                                    {content}
-                                </div>
-                            </div>
+						<div className='w-full h-full'>
+							<div className='py-[0.2rem]'>
+								{/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
+								<div className={`flex flex-row w-full h-full grow`}>
+									{content}
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -408,17 +407,18 @@ export const Col_2_img_2_layout = ({
 				</div>
 				{/* two columns of text */}
 				<div className='w-full grid grid-cols-2 gap-[2rem]'>
-					{Array.isArray(content) && content.map((item, index) => (
-						<div className='flex flex-col gap-[0.5rem]' key={index}>
-							{/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
-							<ul
-								key={index}
-								className={`flex flex-row w-full h-full grow pl-2 `}
-							>
-								<li>{item}</li>
-							</ul>
-						</div>
-					))}
+					{Array.isArray(content) &&
+						content.map((item, index) => (
+							<div className='flex flex-col gap-[0.5rem]' key={index}>
+								{/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
+								<ul
+									key={index}
+									className={`flex flex-row w-full h-full grow pl-2 `}
+								>
+									<li>{item}</li>
+								</ul>
+							</div>
+						))}
 				</div>
 			</div>
 			{templateLogo}
@@ -480,17 +480,18 @@ export const Col_3_img_3_layout = ({
 				</div>
 				{/* three columns of text */}
 				<div className='w-full grid grid-cols-3 gap-[2rem]'>
-					{Array.isArray(content) && content.map((item, index) => (
-						<div className='flex flex-col gap-[0.5rem]' key={index}>
-							{/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
-							<ul
-								key={index}
-								className={`flex flex-row w-full h-full grow pl-2  `}
-							>
-								<li>{item}</li>
-							</ul>
-						</div>
-					))}
+					{Array.isArray(content) &&
+						content.map((item, index) => (
+							<div className='flex flex-col gap-[0.5rem]' key={index}>
+								{/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
+								<ul
+									key={index}
+									className={`flex flex-row w-full h-full grow pl-2  `}
+								>
+									<li>{item}</li>
+								</ul>
+							</div>
+						))}
 				</div>
 			</div>
 			{templateLogo}
