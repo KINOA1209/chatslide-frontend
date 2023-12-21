@@ -5,15 +5,12 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Home, Logo } from './logo';
 import DropdownButton from '@/components/utils/dropdown';
-import MobileMenu from './mobile-menu';
 import { useRouter } from 'next/navigation';
 import GoogleAnalytics from '@/components/integrations/GoogleAnalytics';
 import Hotjar from '@/components/integrations/Hotjar';
 // import AuthService from "../utils/AuthService";
 import { Auth, Hub } from 'aws-amplify';
 import AuthService from '../../services/AuthService';
-import { DrlambdaLogoIcon } from '../new_landing/Icons';
-import UserService from '@/services/UserService';
 
 interface HeaderProps {
 	loginRequired: boolean;
@@ -29,8 +26,6 @@ const Header = ({
 	const [userId, setUserId] = useState(null);
 	// const [username, setUsername] = useState(null);
 	const [loading, setLoading] = useState(true);
-	const [credits, setCredits] = useState(0);
-	const [tier, setTier] = useState<string>('');
 
 	const router = useRouter();
 	const [isMobile, setIsMobile] = useState<boolean>(false);
@@ -39,23 +34,6 @@ const Header = ({
 	const scrollHandler = () => {
 		window.scrollY > 10 ? setTop(false) : setTop(true);
 	};
-
-	useEffect(() => {
-		// get credits and tier
-		const getCredits = async () => {
-			try {
-				const { userId, idToken } =
-					await AuthService.getCurrentUserTokenAndId();
-				const { credits, tier } =
-					await UserService.getUserCreditsAndTier(idToken);
-				setCredits(credits);
-				setTier(tier);
-			} catch (error: any) {
-				console.error(error);
-			}
-		};
-		if (!isAuth) getCredits();
-	}, []);
 
 	useEffect(() => {
 		setIsMobile(window.innerWidth < 768);
@@ -67,18 +45,6 @@ const Header = ({
 		window.addEventListener('scroll', scrollHandler);
 		return () => window.removeEventListener('scroll', scrollHandler);
 	}, [top]);
-
-	const signOut = async () => {
-		try {
-			await AuthService.signOut();
-			sessionStorage.clear();
-			localStorage.clear();
-			console.log('You have signed out!');
-			router.push('/');
-		} catch (error: any) {
-			console.error(error);
-		}
-	};
 
 	useEffect(() => {
 		// mixpanel.init('22044147cd36f20bf805d416e1235329', {
