@@ -1,56 +1,56 @@
 {
-  "0": {
-    "title": "Introduction to TypeScript Programming Language",
-    "content": [
-      "Definition and overview of TypeScript",
-      "Brief history and evolution of TypeScript"
-    ],
-    "detailLevel": "Fewer Slides"
-  },
-  "1": {
-    "title": "Key Concepts in TypeScript",
-    "content": [
-      "Understanding type inference",
-      "Exploring TypeScript type definitions",
-      "Concept of type compatibility",
-      "Working with JavaScript libraries without type definitions"
-    ],
-    "detailLevel": "Default"
-  },
-  "2": {
-    "title": "TypeScript Type System and Design Principles",
-    "content": [
-      "Deep dive into TypeScript type system",
-      "Design principles of TypeScript",
-      "Understanding compiler opt-in types"
-    ],
-    "detailLevel": "Default"
-  },
-  "3": {
-    "title": "Advanced TypeScript Topics",
-    "content": [
-      "Type aliases, unions, intersections, and narrowing types",
-      "Nullable types and the optional property access operator",
-      "Optional element access operator and optional call operator"
-    ],
-    "detailLevel": "Default"
-  },
-  "4": {
-    "title": "Practical Guidelines for TypeScript",
-    "content": [
-      "Setting up a development environment",
-      "Debugging TypeScript applications",
-      "Effective use of @types and built-in types",
-      "Performance implications of TypeScript"
-    ],
-    "detailLevel": "Default"
-  },
-  "5": {
-    "title": "Conclusion and Further Resources",
-    "content": [
-      "Summary of key content covered",
-      "List of additional TypeScript resources, including video tutorials"
-    ],
-    "detailLevel": "Fewer Slides"
-  }
+	"0": {
+		"title": "Introduction to TypeScript Programming Language",
+		"content": [
+			"Definition and overview of TypeScript",
+			"Brief history and evolution of TypeScript"
+		],
+		"detailLevel": "Fewer Slides"
+	},
+	"1": {
+		"title": "Key Concepts in TypeScript",
+		"content": [
+			"Understanding type inference",
+			"Exploring TypeScript type definitions",
+			"Concept of type compatibility",
+			"Working with JavaScript libraries without type definitions"
+		],
+		"detailLevel": "Default"
+	},
+	"2": {
+		"title": "TypeScript Type System and Design Principles",
+		"content": [
+			"Deep dive into TypeScript type system",
+			"Design principles of TypeScript",
+			"Understanding compiler opt-in types"
+		],
+		"detailLevel": "Default"
+	},
+	"3": {
+		"title": "Advanced TypeScript Topics",
+		"content": [
+			"Type aliases, unions, intersections, and narrowing types",
+			"Nullable types and the optional property access operator",
+			"Optional element access operator and optional call operator"
+		],
+		"detailLevel": "Default"
+	},
+	"4": {
+		"title": "Practical Guidelines for TypeScript",
+		"content": [
+			"Setting up a development environment",
+			"Debugging TypeScript applications",
+			"Effective use of @types and built-in types",
+			"Performance implications of TypeScript"
+		],
+		"detailLevel": "Default"
+	},
+	"5": {
+		"title": "Conclusion and Further Resources",
+		"content": [
+			"Summary of key content covered",
+			"List of additional TypeScript resources, including video tutorials"
+		],
+		"detailLevel": "Fewer Slides"
+	}
 }

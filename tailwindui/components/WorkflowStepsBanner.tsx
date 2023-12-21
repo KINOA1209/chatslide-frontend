@@ -6,73 +6,74 @@ import DrlambdaButton from '@/components/button/DrlambdaButton';
 import { GPTToggleWithExplanation } from './button/WorkflowGPTToggle';
 
 interface YourComponentProps {
-  currentIndex: number;
-  isSubmitting: boolean;
-  setIsSubmitting: (submitting: boolean) => void;
-  isPaidUser?: boolean;
-  contentRef: React.RefObject<HTMLDivElement>;
-  nextIsPaidFeature?: boolean;
-  showGPTToggle?: boolean;
-  nextText?: string;
-  setIsGpt35?: (isGpt35: boolean) => void;
+	currentIndex: number;
+	isSubmitting: boolean;
+	setIsSubmitting: (submitting: boolean) => void;
+	isPaidUser?: boolean;
+	contentRef: React.RefObject<HTMLDivElement>;
+	nextIsPaidFeature?: boolean;
+	showGPTToggle?: boolean;
+	nextText?: string;
+	setIsGpt35?: (isGpt35: boolean) => void;
 }
 
 const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
-  currentIndex,
-  isSubmitting,
-  setIsSubmitting,
-  isPaidUser = false,
-  contentRef,
-  nextIsPaidFeature = false,
-  showGPTToggle = false,
-  nextText = 'Next',
-  setIsGpt35,
+	currentIndex,
+	isSubmitting,
+	setIsSubmitting,
+	isPaidUser = false,
+	contentRef,
+	nextIsPaidFeature = false,
+	showGPTToggle = false,
+	nextText = 'Next',
+	setIsGpt35,
 }) => {
+	function getPrevHref() {
+		const redirect = [
+			'/workflow-generate-outlines',
+			'/workflow-edit-outlines',
+			'/workflow-review-slides',
+			'/workflow-edit-script',
+		];
+		if (currentIndex > 0) {
+			return redirect[currentIndex - 1];
+		} else {
+			return '/dashboard';
+		}
+	}
 
-  function getPrevHref() {
-    const redirect = [
-      '/workflow-generate-outlines',
-      '/workflow-edit-outlines',
-      '/workflow-review-slides',
-      '/workflow-edit-script',
-    ]
-    if (currentIndex > 0) {
-      return redirect[currentIndex - 1]
-    } else {
-      return '/dashboard'
-    }
-  }
+	return (
+		<>
+			<div className='relative sticky top-0 w-full h-[120px] flex items-end w-full bg-sky-100 z-10 pt-[4rem] pb-[1rem] border-b-2 px-[5rem]'>
+				{/* flex row container for backlink, title*/}
+				<div className='absolute left-5'>
+					<DrLambdaBackButton href={getPrevHref()} />
+				</div>
 
-  return (
-    <>
-      <div className='relative sticky top-0 w-full h-[120px] flex items-end w-full bg-sky-100 z-10 pt-[4rem] pb-[1rem] border-b-2 px-[5rem]'>
-        {/* flex row container for backlink, title*/}
-        <div className="absolute left-5">
-          <DrLambdaBackButton href={getPrevHref()} />
-        </div>
+				<div className='flex-grow justify-center hidden sm:flex py-2'>
+					<ProjectProgress currentInd={currentIndex} contentRef={contentRef} />
+				</div>
 
-        <div className="flex-grow justify-center hidden sm:flex py-2">
-          <ProjectProgress currentInd={currentIndex} contentRef={contentRef} />
-        </div>
+				<div className='absolute right-5 flex flex-col items-end space-x-4'>
+					{showGPTToggle && typeof setIsGpt35 !== 'undefined' && (
+						<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
+					)}
+					<DrlambdaButton
+						isSubmitting={isSubmitting}
+						isPaidUser={isPaidUser}
+						isPaidFeature={nextIsPaidFeature}
+						onClick={(e) => setIsSubmitting(true)}
+					>
+						{nextText}
+					</DrlambdaButton>
+				</div>
+			</div>
 
-        <div className="absolute right-5 flex flex-col items-end space-x-4">
-
-          {showGPTToggle && typeof setIsGpt35 !== 'undefined' && <GPTToggleWithExplanation setIsGpt35={setIsGpt35} />}
-          <DrlambdaButton
-            isSubmitting={isSubmitting}
-            isPaidUser={isPaidUser}
-            isPaidFeature={nextIsPaidFeature}
-            onClick={e => setIsSubmitting(true)}>
-            {nextText}
-          </DrlambdaButton>
-        </div>
-      </div>
-
-      <div className='py-2 w-full flex-auto text-center self-center bg-yellow-100 font-small leading-snug tracking-tight whitespace-nowrap sm:hidden'>
-        Use our desktop version to see all the functionalities!
-      </div>
-    </>
-  );
+			<div className='py-2 w-full flex-auto text-center self-center bg-yellow-100 font-small leading-snug tracking-tight whitespace-nowrap sm:hidden'>
+				Use our desktop version to see all the functionalities!
+			</div>
+		</>
+	);
 };
 
 export default WorkflowStepsBanner;

@@ -1,13 +1,12 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
 class Hotjar extends React.Component {
-    render() {
-        return (
-            <Helmet>
-                <script>
-                {`
+	render() {
+		return (
+			<Helmet>
+				<script>
+					{`
                     (function(h,o,t,j,a,r){
                         h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
                         h._hjSettings={hjid:3669030,hjsv:6};
@@ -17,10 +16,10 @@ class Hotjar extends React.Component {
                         a.appendChild(r);
                     })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
                 `}
-                </script>
-            </Helmet>
-        );
-    }
+				</script>
+			</Helmet>
+		);
+	}
 }
 
 export default Hotjar;

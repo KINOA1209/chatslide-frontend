@@ -639,9 +639,9 @@ export default function Topic_SocialPost() {
 											<option key='Arabic' value='Arabic'>
 												🇸🇦 العربية
 											</option>
-                      <option key='Hebrew' value='Hebrew'>
-                        🇮🇱 עברית
-                      </option>
+											<option key='Hebrew' value='Hebrew'>
+												🇮🇱 עברית
+											</option>
 										</select>
 									</div>
 								</div>

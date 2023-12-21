@@ -460,7 +460,7 @@ export default function WorkflowStep4() {
 					title: section.title,
 					subtitle,
 				}));
-		  })
+			})
 		: [];
 
 	const transcriptWithTitleData = flattenedOutline.map((item, index) => ({
