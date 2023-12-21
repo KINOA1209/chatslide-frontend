@@ -1,4 +1,5 @@
 import { toCanvas, toPng } from 'html-to-image';
+import { domToPng, domToCanvas } from 'modern-screenshot'
 import { jsPDF } from 'jspdf';
 
 
@@ -9,9 +10,9 @@ const areAllImagesLoaded = (container: HTMLElement) => {
 export async function downloadImage(topic: string, ref: React.RefObject<HTMLDivElement>): Promise<void> {
   if (ref.current && areAllImagesLoaded(ref.current)) {
     try {
-
+      // await new Promise((resolve) => setTimeout(resolve, 1000));
       console.log('ref', ref.current)
-      const dataUrl = await toPng(ref.current, { includeQueryParams: true });
+      const dataUrl = await domToPng(ref.current)
       const link = document.createElement('a');
       link.href = dataUrl;
       link.download = (topic ? topic : 'drlambda') + '.png';
@@ -31,7 +32,7 @@ export async function downloadImage(topic: string, ref: React.RefObject<HTMLDivE
 export async function generatePdf(topic: string, ref: React.RefObject<HTMLDivElement>, pageCount: number): Promise<File | null> {
   if (ref.current && areAllImagesLoaded(ref.current)) {
     try {
-      const canvas = await toCanvas(ref.current);
+      const canvas = await domToCanvas(ref.current);
       const fullCanvasHeight = canvas.height;
       const fullCanvasWidth = canvas.width;
       const pageHeightPx = fullCanvasHeight / pageCount;
