@@ -1,20 +1,20 @@
 {
-  "staging": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-drlambda-staging-25104-authRole",
-      "UnauthRoleArn": "arn:aws:iam::710335349331:role/amplify-drlambda-staging-25104-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::710335349331:role/amplify-drlambda-staging-25104-authRole",
-      "Region": "us-east-2",
-      "DeploymentBucketName": "amplify-drlambda-staging-25104-deployment",
-      "UnauthRoleName": "amplify-drlambda-staging-25104-unauthRole",
-      "StackName": "amplify-drlambda-staging-25104",
-      "StackId": "arn:aws:cloudformation:us-east-2:710335349331:stack/amplify-drlambda-staging-25104/9fd660c0-155e-11ee-95a6-06b427a9d6f5",
-      "AmplifyAppId": "daqrq8r34fiaz"
-    },
-    "categories": {
-      "auth": {
-        "DrLambda": {}
-      }
-    }
-  }
+	"staging": {
+		"awscloudformation": {
+			"AuthRoleName": "amplify-drlambda-staging-25104-authRole",
+			"UnauthRoleArn": "arn:aws:iam::710335349331:role/amplify-drlambda-staging-25104-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::710335349331:role/amplify-drlambda-staging-25104-authRole",
+			"Region": "us-east-2",
+			"DeploymentBucketName": "amplify-drlambda-staging-25104-deployment",
+			"UnauthRoleName": "amplify-drlambda-staging-25104-unauthRole",
+			"StackName": "amplify-drlambda-staging-25104",
+			"StackId": "arn:aws:cloudformation:us-east-2:710335349331:stack/amplify-drlambda-staging-25104/9fd660c0-155e-11ee-95a6-06b427a9d6f5",
+			"AmplifyAppId": "daqrq8r34fiaz"
+		},
+		"categories": {
+			"auth": {
+				"DrLambda": {}
+			}
+		}
+	}
 }

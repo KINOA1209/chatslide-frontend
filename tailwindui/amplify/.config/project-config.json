@@ -1,17 +1,15 @@
 {
-  "providers": [
-    "awscloudformation"
-  ],
-  "projectName": "DrLambda",
-  "version": "3.1",
-  "frontend": "javascript",
-  "javascript": {
-    "framework": "react",
-    "config": {
-      "SourceDir": "src",
-      "DistributionDir": "",
-      "BuildCommand": "npm run-script build",
-      "StartCommand": "npm run-script start"
-    }
-  }
+	"providers": ["awscloudformation"],
+	"projectName": "DrLambda",
+	"version": "3.1",
+	"frontend": "javascript",
+	"javascript": {
+		"framework": "react",
+		"config": {
+			"SourceDir": "src",
+			"DistributionDir": "",
+			"BuildCommand": "npm run-script build",
+			"StartCommand": "npm run-script start"
+		}
+	}
 }

@@ -1,16 +1,16 @@
 {
-  "message": "",
-  "description": "",
-  "options": [
-    {
-      "id": "slides",
-      "title": "Slides",
-      "imageSrc": "/images/scenario/slides.png"
-    },
-    {
-      "id": "socialpost",
-      "title": "Social Post",
-      "imageSrc": "/images/scenario/socialpost.png"
-    }
-  ]
+	"message": "",
+	"description": "",
+	"options": [
+		{
+			"id": "slides",
+			"title": "Slides",
+			"imageSrc": "/images/scenario/slides.png"
+		},
+		{
+			"id": "socialpost",
+			"title": "Social Post",
+			"imageSrc": "/images/scenario/socialpost.png"
+		}
+	]
 }

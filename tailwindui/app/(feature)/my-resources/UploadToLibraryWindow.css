@@ -1,21 +1,21 @@
-#main_container{
-    background-color: #E7E9EB;
+#main_container {
+	background-color: #e7e9eb;
 }
 
-#uploadfile_each{
-    background-color: #f3f3f3;
+#uploadfile_each {
+	background-color: #f3f3f3;
 }
 
-.uploadButton{
-    border: 3px solid;
-    border-color: #E7E9EB;
-    background-color: #f3f3f3;
+.uploadButton {
+	border: 3px solid;
+	border-color: #e7e9eb;
+	background-color: #f3f3f3;
 }
 
 .uploadButton.clicked {
-    background-color: #919DAA;
+	background-color: #919daa;
 }
 
-#instruction_container{
-    background-color: #E7E9EB;
+#instruction_container {
+	background-color: #e7e9eb;
 }

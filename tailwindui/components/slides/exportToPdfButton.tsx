@@ -1,146 +1,131 @@
-'use client'
+'use client';
 
-import React, { useState, useEffect, useRef } from 'react'
-import ExportToPDFModal from './exportToPdfModal'
-import AuthService from '../../services/AuthService'
-import { LoadingIcon } from '@/components/ui/progress'
-import { Slide } from './SlidesHTML'
-import PaywallModal from '../forms/paywallModal'
-import { DownloadIcon } from '@/app/(feature)/icons'
-import SlideContainer from './SlideContainer'
-import generatePDF, { Resolution, Margin, Options } from 'react-to-pdf'
-
-type SlidesHTMLProps = {
-  finalSlides: Slide[]
-  setFinalSlides: React.Dispatch<React.SetStateAction<Slide[]>>
-}
+import React, { useState, useEffect, useRef } from 'react';
+import AuthService from '../../services/AuthService';
+import { Slide } from './SlidesHTML';
+import PaywallModal from '../forms/paywallModal';
+import { BigGrayButton } from '../button/DrlambdaButton';
+import { FaDownload, FaRing, FaTruckLoading } from 'react-icons/fa';
+import { generatePdf } from '../utils/DownloadImage';
 
 interface ExportToPdfProps {
-  finalSlides: Slide[]
-  //setFinalSlides: React.Dispatch<React.SetStateAction<Slide[]>>;
+	slides: Slide[];
+	exportSlidesRef: React.RefObject<HTMLDivElement>;
 }
 
-const ExportToPdfButton: React.FC<ExportToPdfProps> = ({ finalSlides }) => {
-  const topic =
-    typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('topic') : ''
-  const [user, setUser] = useState(null)
-  const [downloadingPDF, setDownloadingPDF] = useState(false)
-  const [showPaymentModal, setShowPaymentModal] = useState(false)
-  const exportSlidesRef = useRef<HTMLDivElement>(null)
-  let pdfIsBeingGenerated = false
+const ExportToPdfButton: React.FC<ExportToPdfProps> = ({
+	slides,
+	exportSlidesRef,
+}) => {
+	const topic =
+		typeof sessionStorage !== 'undefined'
+			? sessionStorage.getItem('topic')
+			: '';
+	const [user, setUser] = useState(null);
+	const [downloadingPDF, setDownloadingPDF] = useState(false);
+	const [showPaymentModal, setShowPaymentModal] = useState(false);
 
-  const exportOptions: Options = {
-    filename: (topic ? topic : 'drlambda') + '.pdf',
-    method: 'save',
-    resolution: Resolution.MEDIUM,
-    page: {
-      margin: Margin.NONE,
-      format: [254, 143], // 960x540 px in mm
-      orientation: 'landscape',
-    },
-    canvas: {
-      mimeType: 'image/jpeg',
-      qualityRatio: 1,
-    },
-    overrides: {
-      pdf: {
-        compress: true,
-      },
-      canvas: {
-        useCORS: true,
-      },
-    },
-  }
+	// const exportOptions: Options = {
+	// 	filename: (topic ? topic : 'drlambda') + '.pdf',
+	// 	method: 'save',
+	// 	resolution: Resolution.MEDIUM,
+	// 	page: {
+	// 		margin: Margin.NONE,
+	// 		format: [254, 143], // 960x540 px in mm
+	// 		orientation: 'landscape',
+	// 	},
+	// 	canvas: {
+	// 		mimeType: 'image/jpeg',
+	// 		qualityRatio: 1,
+	// 	},
+	// 	overrides: {
+	// 		pdf: {
+	// 			compress: true,
+	// 		},
+	// 		canvas: {
+	// 			useCORS: true,
+	// 		},
+	// 	},
+	// };
 
-  useEffect(() => {
-    // Create a scoped async function within the hook.
-    const fetchUser = async () => {
-      const user = await AuthService.getCurrentUser()
-      if (user) {
-        setUser(user)
-      }
-    }
-    // Execute the created function directly
-    fetchUser()
-  }, [])
+	useEffect(() => {
+		// Create a scoped async function within the hook.
+		const fetchUser = async () => {
+			const user = await AuthService.getCurrentUser();
+			if (user) {
+				setUser(user);
+			}
+		};
+		// Execute the created function directly
+		fetchUser();
+	}, []);
 
-  function exportToPdf() {
-    generatePDF(exportSlidesRef, exportOptions)
-  }
+	async function exportToPdf() {
+		const file = await generatePdf(topic || '', exportSlidesRef, slides.length);
+		if (file) {
+			//save file to session storage
+			const fileUrl = URL.createObjectURL(file);
+			sessionStorage.setItem('pdfUrl', fileUrl);
 
-  const handleSavePDF = async () => {
-    setDownloadingPDF(true)
-    const element = document.getElementById('pdf-content')
+			//download file
+			const link = document.createElement('a');
+			link.href = URL.createObjectURL(file);
+			link.download = (topic ? topic : 'drlambda') + '.pdf';
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+		}
+		// await generatePDF(exportSlidesRef, exportOptions);
+	}
 
-    try {
-      const { userId, idToken } = await AuthService.getCurrentUserTokenAndId()
+	const handleSavePDF = async () => {
+		setDownloadingPDF(true);
+		// const element = document.getElementById('pdf-content');
 
-      const response = await fetch('/api/save_final_html_pdf', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${idToken}`,
-          'Content-Type': 'application/json',
-        },
-      })
+		// try {
+		// 	const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
 
-      if (response.ok) {
-        exportToPdf()
-      } else if (response.status === 402) {
-        setShowPaymentModal(true)
-      } else {
-        console.error('Failed to save PDF.')
-      }
-    } catch (error) {
-      console.error('An error occurred:', error)
-    }
-    setDownloadingPDF(false)
-  }
+		// 	const response = await fetch('/api/save_final_html_pdf', {
+		// 		method: 'POST',
+		// 		headers: {
+		// 			Authorization: `Bearer ${idToken}`,
+		// 			'Content-Type': 'application/json',
+		// 		},
+		// 	});
 
-  return (
-    <div className='flex flex-wrap flex-grow-0'>
-      <div className='px-3'>
-        {showPaymentModal && (
-          <PaywallModal
-            setShowModal={setShowPaymentModal}
-            message='Upgrade for more ⭐️credits.'
-            showReferralLink={true}
-          />
-        )}
+		// 	if (response.ok) {
+		await exportToPdf();
+		// 	} else if (response.status === 402) {
+		// 		setShowPaymentModal(true);
+		// 	} else {
+		// 		console.error('Failed to save PDF.');
+		// 	}
+		// } catch (error) {
+		// 	console.error('An error occurred:', error);
+		// }
+		setDownloadingPDF(false);
+	};
 
-        
-        <div
-            className='h-8 px-3 py-1 bg-zinc-100 rounded-lg justify-center items-center gap-2.5 cursor-pointer hidden sm:flex'
-            onClick={handleSavePDF}
-        >
-            <div className='text-center text-gray-700 text-sm font-medium font-creato-medium leading-normal tracking-wide'>
-                Export to PDF
-            </div>
-            <div className='w-4 h-4 relative' hidden={downloadingPDF}>
-                <DownloadIcon />
-            </div>
-            <div className='text-black h-[22px] mr-2' hidden={!downloadingPDF}>
-                <LoadingIcon />
-            </div>
-        </div>
-      </div>
+	return (
+		<div className='flex flex-wrap flex-grow-0'>
+			<div className='px-3'>
+				{showPaymentModal && (
+					<PaywallModal
+						setShowModal={setShowPaymentModal}
+						message='Upgrade for more ⭐️credits.'
+						showReferralLink={true}
+					/>
+				)}
 
-      {/* hidden div for export to pdf */}
-      <div style={{ display: downloadingPDF ? 'block' : 'none', zIndex: -1 }}>
-        <div ref={exportSlidesRef}>
-          {/* Render all of your slides here. This can be a map of your slides array */}
-          {finalSlides.map((slide, index) => (
-            <div key={`exportToPdfContainer` + index.toString()} style={{ pageBreakAfter: 'always' }}>
-              <SlideContainer
-                slides={finalSlides}
-                currentSlideIndex={index}
-                exportToPdfMode={true}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
-}
+				<BigGrayButton onClick={handleSavePDF} isSubmitting={downloadingPDF}>
+					<div className='flex flex-row items-center gap-x-2'>
+						Export to PDF
+						<FaDownload className='text-gray-800' />
+					</div>
+				</BigGrayButton>
+			</div>
+		</div>
+	);
+};
 
-export default ExportToPdfButton
+export default ExportToPdfButton;

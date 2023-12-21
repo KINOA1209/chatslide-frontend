@@ -1,61 +1,61 @@
 {
-  "0": {
-    "head": "Linear Regression",
-    "userName": "Created by Rex using DrLambda",
-    "template": "",
-    "layout": "",
-    "title": "",
-    "subtopic": "",
-    "content": [],
-    "images": [
-      "http://localhost/api/get_searched_image?uri=note-with-chart-economy-decreasing_23-2148543166.jpg"
-    ]
-  },
-  "1": {
-    "head": "",
-    "userName": "",
-    "template": "",
-    "layout": "Col_2_img_1_layout",
-    "title": "Introduction to Linear Regression",
-    "subtopic": "Definition of linear regression",
-    "content": [
-      "Linear regression is a statistical method to model the relationship between a dependent variable and one or more independent variables.",
-      "It aims to find the best-fitting line to describe the relationship between the variables, allowing for prediction and inference."
-    ],
-    "images": [
-      "http://localhost/api/get_searched_image?uri=pointing-camera-choosing-you_1194-400087.jpg"
-    ]
-  },
-  "2": {
-    "head": "",
-    "userName": "",
-    "template": "",
-    "layout": "Col_1_img_0_layout",
-    "title": "Introduction to Linear Regression",
-    "subtopic": "Importance of linear regression in data analysis",
-    "content": [
-      "Linear regression is crucial for understanding and predicting trends, patterns, and relationships within data.",
-      "It provides a foundation for more advanced statistical and machine learning techniques, making it a fundamental tool for data analysis."
-    ],
-    "images": [
-      "http://localhost/api/get_searched_image?uri=note-with-chart-economy-decreasing_23-2148543166.jpg"
-    ]
-  },
-  "3": {
-    "head": "",
-    "userName": "",
-    "template": "",
-    "layout": "Col_1_img_0_layout",
-    "title": "Understanding the Concept of Linear Regression",
-    "subtopic": "Explanation of the basic concept of linear regression",
-    "content": [
-      "Linear regression is a statistical method to model the relationship between a dependent variable and one or more independent variables.",
-      "It assumes a linear relationship between the independent and dependent variables, allowing for prediction and understanding of the data.",
-      "The goal is to find the best-fit line that minimizes the difference between the observed values and the values predicted by the model.",
-      "It is widely used in various fields such as economics, finance, and social sciences for forecasting and understanding relationships."
-    ],
-    "images": [
-      "http://localhost/api/get_searched_image?uri=note-with-chart-economy-decreasing_23-2148543166.jpg"
-    ]
-  }
+	"0": {
+		"head": "Linear Regression",
+		"userName": "Created by Rex using DrLambda",
+		"template": "",
+		"layout": "",
+		"title": "",
+		"subtopic": "",
+		"content": [],
+		"images": [
+			"http://localhost/api/get_searched_image?uri=note-with-chart-economy-decreasing_23-2148543166.jpg"
+		]
+	},
+	"1": {
+		"head": "",
+		"userName": "",
+		"template": "",
+		"layout": "Col_2_img_1_layout",
+		"title": "Introduction to Linear Regression",
+		"subtopic": "Definition of linear regression",
+		"content": [
+			"Linear regression is a statistical method to model the relationship between a dependent variable and one or more independent variables.",
+			"It aims to find the best-fitting line to describe the relationship between the variables, allowing for prediction and inference."
+		],
+		"images": [
+			"http://localhost/api/get_searched_image?uri=pointing-camera-choosing-you_1194-400087.jpg"
+		]
+	},
+	"2": {
+		"head": "",
+		"userName": "",
+		"template": "",
+		"layout": "Col_1_img_0_layout",
+		"title": "Introduction to Linear Regression",
+		"subtopic": "Importance of linear regression in data analysis",
+		"content": [
+			"Linear regression is crucial for understanding and predicting trends, patterns, and relationships within data.",
+			"It provides a foundation for more advanced statistical and machine learning techniques, making it a fundamental tool for data analysis."
+		],
+		"images": [
+			"http://localhost/api/get_searched_image?uri=note-with-chart-economy-decreasing_23-2148543166.jpg"
+		]
+	},
+	"3": {
+		"head": "",
+		"userName": "",
+		"template": "",
+		"layout": "Col_1_img_0_layout",
+		"title": "Understanding the Concept of Linear Regression",
+		"subtopic": "Explanation of the basic concept of linear regression",
+		"content": [
+			"Linear regression is a statistical method to model the relationship between a dependent variable and one or more independent variables.",
+			"It assumes a linear relationship between the independent and dependent variables, allowing for prediction and understanding of the data.",
+			"The goal is to find the best-fit line that minimizes the difference between the observed values and the values predicted by the model.",
+			"It is widely used in various fields such as economics, finance, and social sciences for forecasting and understanding relationships."
+		],
+		"images": [
+			"http://localhost/api/get_searched_image?uri=note-with-chart-economy-decreasing_23-2148543166.jpg"
+		]
+	}
 }

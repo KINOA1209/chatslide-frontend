@@ -1,32 +1,39 @@
-.ql-editor:hover, .ql-editor:focus {
-    outline: 2px solid #545657;
+.ql-editor {
+	padding: 4px 4px;
 }
 
+.ql-editor:hover,
+.ql-editor:focus {
+	outline: 2px solid #545657;
+}
 
-.ql-editor ul{
-    padding-left: 0 !important;
+.ql-editor ul {
+	padding-left: 0 !important;
 }
 
 .ql-bubble .ql-picker .ql-picker-options {
-    max-height: 200px;
-    overflow-y: auto;
+	max-height: 200px;
+	overflow-y: auto;
 }
 
 .ql-tooltip {
-    z-index: 100;
-    padding: 2% 3% 2% 3%
+	z-index: 100;
+	padding: 10px 10px !important;
+	height: 100px;
+	width: 450px;
 }
 
-.non-editable-ql-editor, .non-editable-ql-editor * {
-    cursor: pointer !important;
+.non-editable-ql-editor,
+.non-editable-ql-editor * {
+	cursor: pointer !important;
 }
 
 $i: 8;
 @while $i <= 80 {
-    .ql-bubble .ql-picker.ql-size .ql-picker-label[data-value="#{$i}pt"]::before,
-    .ql-bubble .ql-picker.ql-size .ql-picker-item[data-value="#{$i}pt"]::before {
-        content: '#{$i}pt';
-        font-size: 12pt;
-    }
-    $i: $i + 1;
+	.ql-bubble .ql-picker.ql-size .ql-picker-label[data-value='#{$i}pt']::before,
+	.ql-bubble .ql-picker.ql-size .ql-picker-item[data-value='#{$i}pt']::before {
+		content: '#{$i}pt';
+		font-size: 12pt;
+	}
+	$i: $i + 1;
 }
