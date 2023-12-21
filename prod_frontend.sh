@@ -15,6 +15,9 @@ fi
 
 # Decompress the file
 tar -xzvf $BUILD_FILE
+if [ $? -ne 0 ]; then
+    exit 1
+fi
 
 # archive the file with current timestamp
 if [ -f "$BUILD_FILE" ]; then
