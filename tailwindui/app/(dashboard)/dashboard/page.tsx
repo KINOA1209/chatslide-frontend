@@ -126,11 +126,11 @@ export default function Dashboard() {
 		<section className='grow flex flex-col'>
 			<ToastContainer />
 			{/* top background container of my projects title text and button */}
-			<div className='mt-[3rem] flex items-end w-full z-10 pt-[4rem] border-b-2 px-[5rem]'>
+			<div className='flex items-end w-full z-10 pt-[4rem] bg-Sky border-b-2 px-[5rem]'>
 				{/* flex container controlling max width */}
 				<div className='w-full max-w-7xl flex flex-wrap items-end justify-center'>
 					{/* my project title text */}
-					<div className='absolute left-10 md:left-[50%] text-neutral-900 text-base font-bold font-creato-medium leading-10 tracking-wide border-black border-b-2'>
+          <div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-neutral-900 text-base font-bold font-creato-medium leading-10 tracking-wide border-black border-b-2'>
 						My Projects
 					</div>
 
