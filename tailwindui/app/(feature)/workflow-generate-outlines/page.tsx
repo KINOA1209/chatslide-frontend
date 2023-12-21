@@ -1,38 +1,22 @@
 'use client';
 
-import React, {
-	useState,
-	ChangeEvent,
-	FormEvent,
-	useEffect,
-	MouseEvent,
-	useRef,
-} from 'react';
+import React, { MouseEvent, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import '@/app/css/workflow-edit-topic-css/topic_style.css';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthService from '@/services/AuthService';
 import UserService from '@/services/UserService';
-import { Transition } from '@headlessui/react';
-import MyFiles from '@/components/FileManagement';
 import FeedbackButton from '@/components/ui/feedback';
 
-import {
-	DeleteIcon,
-	QuestionExplainIcon,
-	RightTurnArrowIcon,
-} from '@/app/(feature)/icons';
+import { QuestionExplainIcon } from '@/app/(feature)/icons';
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
 import PaywallModal from '@/components/forms/paywallModal';
 import { FaFilePdf, FaYoutube } from 'react-icons/fa';
 import YoutubeService from '@/services/YoutubeService';
-import {
-	BigBlueButton,
-	SmallBlueButton,
-} from '@/components/button/DrlambdaButton';
+import { SmallBlueButton } from '@/components/button/DrlambdaButton';
 import WebService from '@/services/WebpageService';
 import Resource from '@/models/Resource';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 import Image from 'next/image';
 
@@ -41,6 +25,7 @@ import ContentOnlyImg from '@/public/images/summary/content_only.png';
 import ContentInBrandingColorImg from '@/public/images/summary/content_in_branding_color.png';
 import FileUploadModal from '@/components/forms/FileUploadModal';
 import SelectedResourcesList from '@/components/SelectedResources';
+import { useUser } from '@/hooks/use-user';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 6;
@@ -80,7 +65,7 @@ export default function Topic() {
 	const [showAudiencePopup, setAudiencePopup] = useState(false);
 	const [showLanguagePopup, setLanguagePopup] = useState(false);
 	const [showSupportivePopup, setSupportivePopup] = useState(false);
-	const [isPaidUser, setIsPaidUser] = useState(false);
+	const { isPaidUser } = useUser();
 	const [isAddingLink, setIsAddingLink] = useState(false);
 
 	const [useSchoolTemplate, setUseSchoolTemplate] = useState(false);
@@ -124,12 +109,6 @@ export default function Topic() {
 
 		console.log('selectedResources', selectedResources);
 	}, [selectedResources]);
-
-	useEffect(() => {
-		UserService.isPaidUser().then((isPaidUser) => {
-			setIsPaidUser(isPaidUser);
-		});
-	}, []);
 
 	useEffect(() => {
 		const fetchHistoricalData = async () => {

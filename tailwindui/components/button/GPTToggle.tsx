@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Toggle from './Toggle';
-import UserService from '../../services/UserService';
 import PaywallModal from '@/components/forms/paywallModal';
+import { useUser } from '@/hooks/use-user';
 
 interface GPTToggleProps {
 	isGpt35: boolean;
@@ -10,14 +10,7 @@ interface GPTToggleProps {
 
 const GPTToggle: React.FC<GPTToggleProps> = ({ isGpt35, setIsGpt35 }) => {
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
-	const [isPaidUser, setIsPaidUser] = useState(false);
-
-	useEffect(() => {
-		(async () => {
-			const isPaidUser = await UserService.isPaidUser();
-			setIsPaidUser(isPaidUser);
-		})();
-	}, []);
+	const { isPaidUser } = useUser();
 
 	const handleToggle = (value: boolean) => {
 		if (!value && !isPaidUser) {

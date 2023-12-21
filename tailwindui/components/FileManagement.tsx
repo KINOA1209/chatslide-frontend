@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import AuthService from '@/services/AuthService';
-import UserService from '@/services/UserService';
 import { FileUploadButton } from '@/components/FileUploadButton';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import moment from 'moment';
 // import mixpanel from 'mixpanel-browser'
@@ -15,6 +14,7 @@ import Resource from '@/models/Resource';
 import ResourceService from '@/services/ResourceService';
 import DrlambdaButton from './button/DrlambdaButton';
 import { FaCheckCircle } from 'react-icons/fa';
+import { useUser } from '@/hooks/use-user';
 
 interface UserFileList {
 	selectable: boolean;
@@ -147,6 +147,7 @@ const FileManagement: React.FC<UserFileList> = ({
 		</div>
 	);
 };
+
 interface filesInterface {
 	selectable: boolean;
 	selectedResources?: Array<Resource>;
@@ -162,7 +163,7 @@ const MyFiles: React.FC<filesInterface> = ({
 	const promptRef = useRef<HTMLDivElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
 	const [rendered, setRendered] = useState<boolean>(false);
-	const [isPaid, setIsPaid] = useState<boolean>(false);
+	const { isPaidUser } = useUser();
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
 	useEffect(() => {
@@ -181,13 +182,6 @@ const MyFiles: React.FC<filesInterface> = ({
 		};
 		// Execute the created function directly
 		fetchUserFiles();
-	}, []);
-
-	useEffect(() => {
-		(async () => {
-			const paid = await UserService.isPaidUser();
-			setIsPaid(paid);
-		})();
 	}, []);
 
 	useEffect(() => {
@@ -258,7 +252,7 @@ const MyFiles: React.FC<filesInterface> = ({
 			selectedResources?.map((resource) => resource.id) || [];
 		const ind = selectedResourceId.indexOf(id);
 		let newSelectedResourceId: Array<string> = [];
-		if (isPaid) {
+		if (isPaidUser) {
 			newSelectedResourceId = [...selectedResourceId];
 			if (ind !== -1) {
 				newSelectedResourceId.splice(ind, 1);

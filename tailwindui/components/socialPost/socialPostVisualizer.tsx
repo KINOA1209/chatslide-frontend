@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
 import dynamic from 'next/dynamic';
-import UserService from '../../services/UserService';
 import ExportToPngButton from '@/components/socialPost/socialPostPngButton';
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
 
@@ -23,15 +22,7 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
 }) => {
 	const [host, setHost] = useState('https://drlambda.ai');
 	const [share, setShare] = useState(false);
-	const [isPaidUser, setIsPaidUser] = useState(false);
 	const [finalSlideIndex, setFinalSlideIndex] = useState<number>(0);
-
-	useEffect(() => {
-		(async () => {
-			const isPaidUser = await UserService.isPaidUser();
-			setIsPaidUser(isPaidUser);
-		})();
-	}, []);
 
 	useEffect(() => {
 		setShare(sessionStorage.getItem('is_shared') === 'true');

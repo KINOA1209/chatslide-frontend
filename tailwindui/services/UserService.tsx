@@ -128,19 +128,6 @@ class UserService {
 		}
 	}
 
-	static async isPaidUser() {
-		const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-		const { credits, tier } = await UserService.getUserCreditsAndTier(idToken);
-		const isPaid = [
-			'PRO_MONTHLY',
-			'PLUS_MONTHLY',
-			'PRO_YEARLY',
-			'PLUS_YEARLY',
-		].includes(tier);
-		console.log(`User is ${isPaid ? '' : 'not '}a paid user`);
-		return isPaid;
-	}
-
 	static async getUserHistoricalInput(idToken: string) {
 		try {
 			const response = await fetch(`/api/user/historical_input`, {
