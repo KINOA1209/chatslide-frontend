@@ -44,9 +44,9 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
 			return bgColor;
 		}
 		if (isPaidFeature) {
-			return 'bg-gradient-to-r from-purple-500 to-purple-700';
+			return 'bg-Purple';
 		}
-		return 'bg-gradient-to-r from-blue-500 to-blue-700';
+		return 'bg-Blue';
 	}
 
 	function checkPaidUser(event: MouseEvent<HTMLButtonElement>) {
@@ -104,9 +104,9 @@ export const DrlambdaLink: React.FC<DrlambdaLinkProps> = ({
 }) => {
 	if (!style) {
 		if (secondaryColor) {
-			style = 'border border-2 border-blue-500 text-blue-500';
+			style = 'border border-2 border-Blue text-Blue';
 		} else {
-			style = 'bg-gradient-to-r from-blue-500 to-blue-700 text-white  ';
+			style = 'bg-Blue text-white  ';
 		}
 	}
 
@@ -157,7 +157,7 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 }) => {
 	return (
 		<button
-			className='btn w-[100px] sm:w-[120px] h-[36px] sm:h-[36px] sm:gap-x-2 text-white sm:font-semibold bg-blue-600 disabled:bg-gray-600 disabled:animate-pulse whitespace-nowrap rounded-xl'
+			className='btn w-[100px] sm:w-[120px] h-[36px] sm:h-[36px] sm:gap-x-2 text-white sm:font-semibold bg-Blue disabled:bg-gray-600 disabled:animate-pulse whitespace-nowrap rounded-xl'
 			onClick={onClick}
 			disabled={isSubmitting}
 		>
@@ -193,7 +193,7 @@ export const InversedBigBlueButton: React.FC<DrlambdaButtonProps> = ({
 }) => {
 	return (
 		<button
-			className='btn w-[100px] sm:w-[120px] h-[36px] sm:h-[36px] sm:gap-x-2 text-blue-600 sm:font-semibold bg-white disabled:text-gray-600 disabled:animate-pulse whitespace-nowrap rounded-xl'
+			className='btn w-[100px] sm:w-[120px] h-[36px] sm:h-[36px] sm:gap-x-2 text-Blue sm:font-semibold bg-white disabled:text-gray-600 disabled:animate-pulse whitespace-nowrap rounded-xl'
 			onClick={onClick}
 			disabled={isSubmitting}
 		>
@@ -213,12 +213,12 @@ export const SmallBlueButton: React.FC<DrlambdaButtonProps> = ({
 		if (isSubmitting) {
 			return 'border-gray-600 text-gray-600';
 		}
-		return 'border-blue-600 text-blue-600';
+		return 'border-Blue text-Blue';
 	}
 	return (
 		<button
 			onClick={onClick}
-			className={`mx-2 border border-1 ${getButtonStyle()} rounded text-blue-600 px-3 py-1`}
+			className={`mx-2 border border-1 ${getButtonStyle()} rounded text-Blue px-3 py-1`}
 			disabled={isSubmitting}
 		>
 			{children}

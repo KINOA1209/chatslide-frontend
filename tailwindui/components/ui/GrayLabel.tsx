@@ -18,6 +18,18 @@ export const GrayLabel: React.FC<InputBoxProps> = ({
 	);
 };
 
+export const BlueLabel: React.FC<InputBoxProps> = ({
+  children,
+}) => {
+  return (
+    <div
+      className={`text-center text-Blue text-xs font-bold font-creato-medium leading-snug tracking-wide bg-Sky border border-1 border-Blue rounded px-1 py-0.5`}
+    >
+      {children}
+    </div>
+  );
+};
+
 export const TextLabel: React.FC<InputBoxProps> = ({ children }) => {
 	return <div className={`text-sm text-gray-700`}>{children}</div>;
 };
