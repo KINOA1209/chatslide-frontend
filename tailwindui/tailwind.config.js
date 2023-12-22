@@ -23,6 +23,7 @@ module.exports = {
 				'regal-blue': '#243c5a',
         'Sky': 'var(--Sky, #F4F6FE)',
         'Blue': 'var(--Blue, #2943E9)',
+        'Dark': 'var(--Dark, #2B2C2D)',
 				'Grey-600': 'var(--Grey-600, #525C6A)',
 				gray: {
 					100: '#FBFBFB',

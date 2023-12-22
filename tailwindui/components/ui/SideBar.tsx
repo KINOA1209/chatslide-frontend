@@ -124,11 +124,11 @@ const SideBar = ({ }: SideBarProps) => {
   return (
     <header
       className={`hidden sm:flex sticky left-0 top-0 ${isSidebarOpen ? 'w-[10rem]' : 'w-[3rem]'
-        } h-[100vh] flex flex-col items-center justify-between z-30 bg-gradient-to-b from-[#2B2C2D] to-[#121212] bg-opacity-90 transition duration-300 ease-in-out ${!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
+        } h-[100vh] flex flex-col items-center justify-between z-30 bg-gradient-to-b from-Dark to-[#121212] bg-opacity-90 transition duration-300 ease-in-out ${!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
         }`}
     >
       <button
-        className={`rounded-full p-1.5 bg-[#2B2C2D] text-white fixed top-6 ${isSidebarOpen ? 'left-[9rem]' : 'left-[2rem]'
+        className={`rounded-full p-1.5 bg-Dark text-white fixed top-6 ${isSidebarOpen ? 'left-[9rem]' : 'left-[2rem]'
           } focus:outline-none`}
         onClick={toggleSidebar}
       >
