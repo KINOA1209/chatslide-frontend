@@ -823,7 +823,10 @@ export default function Topic() {
 				</div>
 
 				{/* design */}
-				<div className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1 font-creato-regular'>
+				<div
+					className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1 font-creato-regular'
+					id='SummaryStep-4'
+				>
 					<div className='title2'>
 						<p>Design</p>
 						<p id='after2'> (Optional)</p>

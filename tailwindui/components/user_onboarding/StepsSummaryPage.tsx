@@ -77,6 +77,82 @@ const StepsSummaryPage: () => CustomStep[] = () => {
 					}
 				></TutorialStepContent>
 			),
+			showSkipButton: false,
+			locale: {
+				back: <SecondaryColorButton label={'Back'} />,
+				next: <PrimaryColorButton label={'Next'} />,
+				// last: <PrimaryColorButton label={'End Tour'} />,
+			},
+			placement: 'bottom',
+			styles: {
+				tooltip: {
+					width: '31rem', // Set the width of the tooltip
+					// Add any other styles as needed
+				},
+				// Add styles for other elements as needed
+			},
+		},
+		{
+			target: '#SummaryStep-4',
+			content: (
+				<TutorialStepContent
+					action={'Choose a theme 🎨'}
+					explanation={
+						'You could choose a theme based on your needs - whether you need more images or more charts.'
+					}
+				></TutorialStepContent>
+			),
+			showSkipButton: false,
+			locale: {
+				back: <SecondaryColorButton label={'Back'} />,
+				next: <PrimaryColorButton label={'Next'} />,
+				// last: <PrimaryColorButton label={'End Tour'} />,
+			},
+			placement: 'bottom',
+			styles: {
+				tooltip: {
+					width: '31rem', // Set the width of the tooltip
+					// Add any other styles as needed
+				},
+				// Add styles for other elements as needed
+			},
+		},
+		{
+			target: '.user-onboarding-GPTToggle',
+			content: (
+				<TutorialStepContent
+					action={'More powerful features with GPT 4.0 🤖'}
+					explanation={
+						'GPT-4 is more accurate, creative, and reliable at solving complex problems.'
+					}
+				></TutorialStepContent>
+			),
+			showSkipButton: false,
+			locale: {
+				back: <SecondaryColorButton label={'Back'} />,
+				next: <PrimaryColorButton label={'Next'} />,
+				// last: <PrimaryColorButton label={'End Tour'} />,
+			},
+			placement: 'bottom',
+			styles: {
+				tooltip: {
+					width: '31rem', // Set the width of the tooltip
+					// Add any other styles as needed
+				},
+				// Add styles for other elements as needed
+			},
+		},
+		{
+			target: '.user-onboarding-generate',
+			content: (
+				<TutorialStepContent
+					action={'Click Generate Outline button'}
+					explanation={
+						'Whenever you finish modifying the summary, you could click the Generate Outline button to move forward to the next section. '
+					}
+				></TutorialStepContent>
+			),
+			showSkipButton: false,
 			locale: {
 				back: <SecondaryColorButton label={'Back'} />,
 				// next: <PrimaryColorButton label={'Next'} />,

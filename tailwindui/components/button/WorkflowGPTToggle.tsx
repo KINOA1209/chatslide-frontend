@@ -42,7 +42,7 @@ const GPTToggle: React.FC<GPTToggleProps> = ({ setIsGpt35 }) => {
 	};
 
 	return (
-		<div>
+		<div className='user-onboarding-GPTToggle'>
 			<WorkflowToggle
 				isLeft={isGpt35}
 				setIsLeft={handleToggle}
