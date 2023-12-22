@@ -12,7 +12,6 @@ import {
 	DeleteSlideIcon,
 	ScriptsIcon,
 } from '@/app/(feature)/icons';
-import { current } from '@reduxjs/toolkit';
 import { BigGrayButton } from '../button/DrlambdaButton';
 import { FaShare, FaShareAlt } from 'react-icons/fa';
 import { InputBox } from '../ui/InputBox';

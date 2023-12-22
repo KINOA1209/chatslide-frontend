@@ -1,8 +1,6 @@
 // these components are deprecated
 
 import { useState, useEffect, useRef } from 'react';
-import { Transition } from '@headlessui/react';
-import { listenerCancelled } from '@reduxjs/toolkit/dist/listenerMiddleware/exceptions';
 
 interface ProgressBarProps {
 	percentage: number;

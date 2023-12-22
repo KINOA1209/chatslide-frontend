@@ -12,7 +12,6 @@ import {
 	DeleteSlideIcon,
 	ScriptsIcon,
 } from '@/app/(feature)/icons';
-import { current } from '@reduxjs/toolkit';
 type SaveButtonProps = {
 	saveSlides: () => void;
 };
