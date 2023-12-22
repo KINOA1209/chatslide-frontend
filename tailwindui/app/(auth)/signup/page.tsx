@@ -77,7 +77,7 @@ export default function SignUp() {
 							<div className='w-full px-3'>
 								<a
 									href={href}
-									className='btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full'
+									className='btn text-white font-bold bg-Blue w-full'
 								>
 									Sign up with email
 								</a>
