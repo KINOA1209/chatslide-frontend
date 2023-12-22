@@ -99,7 +99,7 @@ const Header = ({
 
 	return (
 		<header
-			className={`relative sticky top-0 w-full z-30 bg-gray-800 bg-opacity-90 transition duration-300 ease-in-out ${
+      className={`relative sticky top-0 w-full z-30 bg-[#2B2C2D] transition duration-300 ease-in-out ${
 				!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
 			}`}
 		>
@@ -123,25 +123,25 @@ const Header = ({
 							<div className='flex-grow flex w-full justify-between items-center'>
 								<a
 									href='#scenarios'
-									className='cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-regular'
+									className='cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-medium'
 								>
 									<span>Scenarios</span>
 								</a>
 								<a
 									href='#use-cases'
-									className='whitespace-nowrap cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-regular'
+									className='whitespace-nowrap cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-medium'
 								>
 									<span>Features</span>
 								</a>
 								<a
 									href='#testimonials'
-									className='whitespace-nowrap cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-regular'
+									className='whitespace-nowrap cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-medium'
 								>
 									<span>Testimonials</span>
 								</a>
 								<a
 									href='#pricing'
-									className='cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-regular'
+									className='cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-medium'
 								>
 									<span>Pricing</span>
 								</a>
@@ -163,7 +163,7 @@ const Header = ({
 								<li>
 									<Link
 										href='/signin'
-										className='hidden sm:flex drop-shadow-xl text-white w-auto mb-0 cursor-pointer mr-4 font-creato-medium '
+										className='hidden sm:flex drop-shadow-xl text-white w-auto mb-0 cursor-pointer mr-4 font-creato-medium'
 									>
 										Sign in
 									</Link>
@@ -171,7 +171,7 @@ const Header = ({
 								<li>
 									<Link
 										href='/signup'
-										className='btn-sm drop-shadow-xl rounded-full text-white w-auto mb-0 cursor-pointer font-creato-medium bg-blue-700'
+										className='btn-sm drop-shadow-xl rounded-full text-white w-auto mb-0 cursor-pointer font-creato-medium bg-Blue'
 									>
 										<span>Sign Up</span>
 									</Link>
