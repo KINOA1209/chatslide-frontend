@@ -2,8 +2,11 @@
 import { FC } from 'react';
 import { CustomStep } from './MyCustomJoyride';
 import SummaryPageStep1Welcome from '@/public/images/user_onboarding/SummaryPageStep1Welcom.png';
-
 import { TutorialStepContent } from './CustomComponents';
+import {
+	PrimaryColorButton,
+	SecondaryColorButton,
+} from './UserOnboardingButtons';
 
 const StepsSummaryPage: () => CustomStep[] = () => {
 	const getImagePlaceholder = (index: number) => {
@@ -24,21 +27,9 @@ const StepsSummaryPage: () => CustomStep[] = () => {
 				</div>
 			),
 			locale: {
-				skip: (
-					<div className='w-24 h-10 px-2 py-0.5 rounded border border-[#2943E9] justify-center items-center gap-1.5 inline-flex'>
-						<span className='text-center text-[#2943E9] text-base font-medium font-creato-medium leading-none tracking-wide'>
-							Not now
-						</span>
-					</div>
-				),
+				skip: <SecondaryColorButton label={'Not now'} />,
 				back: 'Back',
-				next: (
-					<div className='w-24 h-10 px-2 py-0.5 bg-[#2943E9] rounded justify-center items-center gap-1.5 inline-flex'>
-						<span className='text-center text-zinc-100 text-base font-medium font-creato-medium leading-none tracking-wide'>
-							Sure
-						</span>
-					</div>
-				),
+				next: <PrimaryColorButton label={'Sure'} />,
 			},
 			styles: {
 				tooltip: {
@@ -64,20 +55,8 @@ const StepsSummaryPage: () => CustomStep[] = () => {
 			),
 			showSkipButton: false,
 			locale: {
-				back: (
-					<div className='w-24 h-10 px-2 py-0.5 rounded border border-[#FFFFFF] justify-center items-center gap-1.5 inline-flex'>
-						<span className='text-center text-[#2943E9] text-base font-medium font-creato-medium leading-none tracking-wide'>
-							Back
-						</span>
-					</div>
-				),
-				next: (
-					<div className='w-24 h-10 px-2 py-0.5 bg-[#2943E9] rounded justify-center items-center gap-1.5 inline-flex'>
-						<span className='text-center text-zinc-100 text-base font-medium font-creato-medium leading-none tracking-wide'>
-							Next
-						</span>
-					</div>
-				),
+				back: <SecondaryColorButton label={'Back'} />,
+				next: <PrimaryColorButton label={'Next'} />,
 			},
 			placement: 'bottom',
 			styles: {
@@ -99,20 +78,9 @@ const StepsSummaryPage: () => CustomStep[] = () => {
 				></TutorialStepContent>
 			),
 			locale: {
-				back: (
-					<div className='w-24 h-10 px-2 py-0.5 rounded border border-[#FFFFFF] justify-center items-center gap-1.5 inline-flex'>
-						<span className='text-center text-[#2943E9] text-base font-medium font-creato-medium leading-none tracking-wide'>
-							Back
-						</span>
-					</div>
-				),
-				last: (
-					<div className='w-24 h-10 px-2 py-0.5 bg-[#2943E9] rounded justify-center items-center gap-1.5 inline-flex'>
-						<span className='text-center text-zinc-100 text-base font-medium font-creato-medium leading-none tracking-wide'>
-							End tour
-						</span>
-					</div>
-				),
+				back: <SecondaryColorButton label={'Back'} />,
+				// next: <PrimaryColorButton label={'Next'} />,
+				last: <PrimaryColorButton label={'End Tour'} />,
 			},
 			placement: 'bottom',
 			styles: {
