@@ -1,6 +1,9 @@
 import React, { FC } from 'react';
 import ExitUserGuideWarningImg from '@/public/images/user_onboarding/ExitTourWarning.png';
-
+import {
+	PrimaryColorButton,
+	SecondaryColorButton,
+} from './UserOnboardingButtons';
 interface TutorialStepContentProps {
 	action: string;
 	explanation: string;
@@ -47,22 +50,15 @@ export const ExitConfirmationWindow: FC<ExitConfirmationWindowProps> = ({
 					}
 				></TutorialStepContent>
 				<div className='pt-[3rem] flex flex-row items-center justify-end gap-[0.75rem]'>
-					<div
+					<SecondaryColorButton
+						label={'Quit'}
 						onClick={() => onConfirmation(true)}
-						className='w-24 h-10 px-2 py-0.5 rounded border border-[#2943E9] justify-center items-center gap-1.5 inline-flex cursor-pointer'
-					>
-						<span className='text-center text-[#2943E9] text-base font-medium font-creato-medium leading-none tracking-wide'>
-							Quit
-						</span>
-					</div>
-					<div
+					></SecondaryColorButton>
+
+					<PrimaryColorButton
+						label={'Not now'}
 						onClick={() => onConfirmation(false)}
-						className='w-24 h-10 px-2 py-0.5 bg-[#2943E9] rounded justify-center items-center gap-1.5 inline-flex cursor-pointer'
-					>
-						<span className='text-center text-zinc-100 text-base font-medium font-creato-medium leading-none tracking-wide'>
-							Not now
-						</span>
-					</div>
+					></PrimaryColorButton>
 				</div>
 			</div>
 		</>

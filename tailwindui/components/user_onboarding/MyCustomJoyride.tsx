@@ -18,7 +18,7 @@ interface MyCustomJoyrideProps {
 const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 	const [isTourActive, setIsTourActive] = useState(false);
 	const [showConfirmation, setShowConfirmation] = useState(false);
-	const [showFeedbackWindow, setShowFeedbackWindow] = useState(true);
+	const [showFeedbackWindow, setShowFeedbackWindow] = useState(false);
 	// const [currentStep, setCurrentStep] = useState<number>(0);
 	const handleJoyrideCallback = (data: CallBackProps) => {
 		console.log(data);
