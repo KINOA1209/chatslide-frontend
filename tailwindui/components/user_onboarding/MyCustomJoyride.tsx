@@ -5,6 +5,154 @@ import { UserOnboardingButton } from '../button/DrlambdaButton';
 import ExitUserGuideWarningImg from '@/public/images/user_onboarding/ExitTourWarning.png';
 import { ExitTourButton } from './UserOnboardingButtons';
 import ExitTourButtonImg from '@/public/images/user_onboarding/ExitTourButton.png';
+import { ExitConfirmationWindow } from './CustomComponents';
+import { FeedbackWindow } from './CustomComponents';
+const FeedbackWindowComponent = () => {
+	return (
+		<div
+			style={{
+				width: 510,
+				height: 525,
+				position: 'relative',
+				background: 'white',
+				borderRadius: 8,
+				overflow: 'hidden',
+			}}
+		>
+			<div
+				style={{
+					width: 0,
+					height: 312,
+					left: 592,
+					top: -41,
+					position: 'absolute',
+					borderRadius: 2,
+					border: '4px #E7E9EB solid',
+				}}
+			></div>
+			<div
+				style={{
+					width: 148,
+					height: 40,
+					paddingLeft: 7.4,
+					paddingRight: 7.4,
+					paddingTop: 2.47,
+					paddingBottom: 2.47,
+					left: 329,
+					top: 443,
+					position: 'absolute',
+					background: '#2943E9',
+					borderRadius: 4.94,
+					overflow: 'hidden',
+					justifyContent: 'center',
+					alignItems: 'center',
+					gap: 6.17,
+					display: 'inline-flex',
+				}}
+			>
+				<div
+					style={{
+						width: 99,
+						textAlign: 'center',
+						color: '#F4F4F4',
+						fontSize: 15,
+						fontFamily: 'Creato Display',
+						fontWeight: '500',
+						lineHeight: 14.81,
+						letterSpacing: 0.6,
+						wordWrap: 'break-word',
+					}}
+				>
+					Next Section
+				</div>
+			</div>
+			<div
+				style={{
+					width: 444,
+					left: 33,
+					top: 60,
+					position: 'absolute',
+					color: '#1D222A',
+					fontSize: 16,
+					fontFamily: 'Creato Display',
+					fontWeight: '400',
+					lineHeight: 24,
+					letterSpacing: 0.32,
+					wordWrap: 'break-word',
+				}}
+			>
+				You could always come back via the help section on the header.{' '}
+			</div>
+			<div
+				style={{
+					left: 33,
+					top: 32,
+					position: 'absolute',
+					color: '#121212',
+					fontSize: 20,
+					fontFamily: 'Creato Display',
+					fontWeight: '700',
+					lineHeight: 20,
+					letterSpacing: 0.4,
+					wordWrap: 'break-word',
+				}}
+			>
+				How was your experience on Summary Page?
+			</div>
+			<img
+				style={{
+					width: 400,
+					height: 100.29,
+					left: 50,
+					top: 116,
+					position: 'absolute',
+					mixBlendMode: 'multiply',
+				}}
+				src='https://via.placeholder.com/400x100'
+			/>
+			<div
+				style={{
+					width: 444,
+					height: 184,
+					left: 33,
+					top: 226,
+					position: 'absolute',
+				}}
+			>
+				<div
+					style={{
+						width: 444,
+						height: 184,
+						left: 0,
+						top: 0.39,
+						position: 'absolute',
+						background: 'rgba(244.37, 244.37, 244.37, 0.50)',
+						borderRadius: 6.86,
+						border: '1px #E2E4E5 solid',
+					}}
+				/>
+				<div
+					style={{
+						width: 420,
+						height: 160,
+						left: 12,
+						top: 12,
+						position: 'absolute',
+						color: '#707C8A',
+						fontSize: 16,
+						fontFamily: 'Creato Display',
+						fontWeight: '400',
+						lineHeight: 24,
+						letterSpacing: 0.32,
+						wordWrap: 'break-word',
+					}}
+				>
+					Any thoughts or suggestions will be largely appreciated...
+				</div>
+			</div>
+		</div>
+	);
+};
 export interface CustomStep extends Step {
 	// Add custom properties if needed
 }
@@ -16,6 +164,7 @@ interface MyCustomJoyrideProps {
 const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 	const [isTourActive, setIsTourActive] = useState(false);
 	const [showConfirmation, setShowConfirmation] = useState(false);
+	const [showFeedbackWindow, setShowFeedbackWindow] = useState(false);
 	// const [currentStep, setCurrentStep] = useState<number>(0);
 	const handleJoyrideCallback = (data: CallBackProps) => {
 		console.log(data);
@@ -28,6 +177,9 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 			// If CLOSE (End Tour) or RESET (outside click) occurs, reset the tour
 			setIsTourActive(false);
 			setShowConfirmation(true);
+		} else if (data.action === 'reset') {
+			setIsTourActive(false);
+			setShowFeedbackWindow(true);
 		}
 	};
 	// const shouldShowOverlay = steps[currentStep]?.target !== 'body';
@@ -81,95 +233,38 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 				}}
 				styles={{
 					options: {
-						arrowColor: '#FF5733', // Customize arrow color
-						backgroundColor: '#FFF', // Customize the background color of the tooltip
+						arrowColor: '#FFFFFF', // Customize arrow color
+						backgroundColor: '#FFFFFF', // Customize the background color of the tooltip
 						overlayColor: 'rgba(0, 0, 0, 0.5)', // Customize the overlay color
 						primaryColor: 'none', // Customize the primary color (text color, button color, etc.)
 						textColor: 'none', // Customize the text color
 					},
-					buttonBack: {
-						// color: '#ffffff', // Customize the back button color
-						// background: '#FF5733', // Customize the back button background color
-						// border: '2px solid #FF5733',
-						// borderRadius: '8px',
-						// padding: '10px 20px',
-						// marginRight: '10px',
-						// cursor: 'pointer',
-						// fontWeight: 'bold',
-					},
+
+					buttonBack: {},
 					buttonClose: {
 						color: '#707C8A', // Customize the close button color
 						// background: '#FF5733', // Customize the close button background color
 					},
-					buttonNext: {
-						// width: 100,
-						// height: 40,
-						// paddingLeft: 7.4,
-						// paddingRight: 7.4,
-						// paddingTop: 2.47,
-						// paddingBottom: 2.47,
-						// background: '#2943E9',
-						// borderRadius: 4.94,
-						// overflow: 'hidden',
-						// justifyContent: 'center',
-						// alignItems: 'center',
-						// gap: 6.17,
-						// display: 'inline-flex',
-						// textAlign: 'center',
-						// color: '#F4F4F4',
-						// fontSize: 15,
-						// fontFamily: 'Creato Display',
-						// fontWeight: '500',
-						// lineHeight: 14.81,
-						// letterSpacing: 0.6,
-						// wordWrap: 'break-word',
-					},
-					buttonSkip: {
-						// color: '#ffffff', // Customize the skip button color
-						// background: '#FF5733', // Customize the skip button background color
+					buttonNext: {},
+					buttonSkip: {},
+					tooltipFooterSpacer: {
+						display: 'flex',
+						flexDirection: 'row',
+						alignItems: 'center',
+						justifyContent: 'flex-end',
+						paddingRight: 0,
 					},
 				}}
 				callback={handleJoyrideCallback}
 				run={isTourActive}
 			/>
+			{showFeedbackWindow && (
+				<FeedbackWindow onClose={() => setShowFeedbackWindow(false)} />
+			)}
 			{showConfirmation && (
-				<>
-					<div
-						className='confirmation-overlay fixed inset-0 bg-black bg-opacity-50 z-50'
-						onClick={() => handleConfirmation(false)} // Close the confirmation on overlay click
-					></div>
-					<div className='confirmation-tooltip bg-white p-8 rounded-lg shadow-lg fixed top-1/2 left-1/2 w-[31rem] h-auto transform -translate-x-1/2 -translate-y-1/2 z-50 flex flex-col'>
-						<img src={ExitUserGuideWarningImg.src} alt='Exit warning' />
-						{/* explaining text */}
-						<div className='flex flex-col items-start gap-[0.5rem]'>
-							<div className='pt-[2rem] text-neutral-900 text-xl font-bold font-creato-bold leading-tight tracking-tight'>
-								Are you sure to leave the tutorial?
-							</div>
-							<p className='text-neutral-800 text-base font-normal font-creato=regular leading-normal tracking-tight text-left'>
-								You could always come back via the help section on the header.
-							</p>
-						</div>
-						<div className='pt-[3rem] flex flex-row items-center justify-end gap-[0.75rem]'>
-							<div
-								onClick={() => handleConfirmation(true)}
-								className='w-24 h-10 px-2 py-0.5 rounded border border-[#2943E9] justify-center items-center gap-1.5 inline-flex cursor-pointer'
-							>
-								<span className='text-center text-[#2943E9] text-base font-medium font-creato-medium leading-none tracking-wide'>
-									Quit
-								</span>
-							</div>
-							<div
-								onClick={() => handleConfirmation(false)}
-								className='w-24 h-10 px-2 py-0.5 bg-[#2943E9] rounded justify-center items-center gap-1.5 inline-flex cursor-pointer'
-							>
-								<span className='text-center text-zinc-100 text-base font-medium font-creato-medium leading-none tracking-wide'>
-									Not now
-								</span>
-							</div>
-						</div>
-					</div>
-					{/* <div></div> */}
-				</>
+				<ExitConfirmationWindow
+					onConfirmation={handleConfirmation}
+				></ExitConfirmationWindow>
 			)}
 		</>
 	);
