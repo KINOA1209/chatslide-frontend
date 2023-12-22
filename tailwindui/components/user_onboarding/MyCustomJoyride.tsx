@@ -2,8 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import Joyride, { CallBackProps, Step } from 'react-joyride';
 import { UserOnboardingButton } from '../button/DrlambdaButton';
-import ExitUserGuideWarningPNG from '@/public/images/user_onboarding/ExitTourWarning.png';
-import './user_onboarding.css';
+import ExitUserGuideWarningImg from '@/public/images/user_onboarding/ExitTourWarning.png';
+import { ExitTourButton } from './UserOnboardingButtons';
+import ExitTourButtonImg from '@/public/images/user_onboarding/ExitTourButton.png';
 export interface CustomStep extends Step {
 	// Add custom properties if needed
 }
@@ -48,10 +49,19 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 		}
 	};
 
+	const handleExitTour = () => {
+		setIsTourActive(false);
+		setShowConfirmation(true);
+	};
+
 	return (
 		<>
 			{/* {shouldShowOverlay && <div className='custom-overlay' />} */}
-
+			<ExitTourButton
+				onClick={handleExitTour}
+				imgSRC={ExitTourButtonImg.src}
+				isTourActive={isTourActive}
+			></ExitTourButton>
 			<UserOnboardingButton onClick={startTour}></UserOnboardingButton>
 			<Joyride
 				steps={steps}
@@ -125,11 +135,11 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 			{showConfirmation && (
 				<>
 					<div
-						className='confirmation-overlay fixed inset-0 bg-black bg-opacity-50 z-40'
+						className='confirmation-overlay fixed inset-0 bg-black bg-opacity-50 z-50'
 						onClick={() => handleConfirmation(false)} // Close the confirmation on overlay click
 					></div>
 					<div className='confirmation-tooltip bg-white p-8 rounded-lg shadow-lg fixed top-1/2 left-1/2 w-[31rem] h-auto transform -translate-x-1/2 -translate-y-1/2 z-50 flex flex-col'>
-						<img src={ExitUserGuideWarningPNG.src} alt='Exit warning' />
+						<img src={ExitUserGuideWarningImg.src} alt='Exit warning' />
 						{/* explaining text */}
 						<div className='flex flex-col items-start gap-[0.5rem]'>
 							<div className='pt-[2rem] text-neutral-900 text-xl font-bold font-creato-bold leading-tight tracking-tight'>
