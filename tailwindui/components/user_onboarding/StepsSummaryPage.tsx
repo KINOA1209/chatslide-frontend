@@ -1,6 +1,10 @@
 // stepsSummaryPage.tsx
+import { FC } from 'react';
 import { CustomStep } from './MyCustomJoyride';
 import SummaryPageStep1Welcome from '@/public/images/user_onboarding/SummaryPageStep1Welcom.png';
+
+import { TutorialStepContent } from './CustomComponents';
+
 const StepsSummaryPage: () => CustomStep[] = () => {
 	const getImagePlaceholder = (index: number) => {
 		return `https://via.placeholder.com/300x200.png?text=Step+${index + 1}`;
@@ -11,15 +15,12 @@ const StepsSummaryPage: () => CustomStep[] = () => {
 			content: (
 				<div className='h-auto z-50 flex flex-col'>
 					<img src={SummaryPageStep1Welcome.src} alt='Step 1' />
-					<div className='flex flex-col items-start gap-[0.5rem]'>
-						<div className='pt-[2rem] text-neutral-900 text-xl font-bold font-creato-bold leading-tight tracking-tight'>
-							Welcome onboard 🎉
-						</div>
-						<p className='text-neutral-800 text-base font-normal font-creato=regular leading-normal tracking-tight text-left'>
-							Start creating slides from summary page. Do you want to follow a
-							step-by step tutorial?
-						</p>
-					</div>
+					<TutorialStepContent
+						action={'Welcome onboard 🎉'}
+						explanation={
+							'Start creating slides from summary page. Do you want to follow a step-by step tutorial?'
+						}
+					></TutorialStepContent>
 				</div>
 			),
 			locale: {
@@ -47,21 +48,37 @@ const StepsSummaryPage: () => CustomStep[] = () => {
 				// Add styles for other elements as needed
 			},
 			placement: 'center',
-			disableBeacon: true,
+			// disableBeacon: true,
 			showProgress: true,
 		},
 		// Add more steps as needed
 		{
 			target: '#SummaryStep-2',
 			content: (
-				<div>
-					<h2>Step 2</h2>
-					<p>This step has another placeholder image.</p>
-					<img src={getImagePlaceholder(1)} alt='Step 2' />
-				</div>
+				<TutorialStepContent
+					action={'Enter basic information 💡'}
+					explanation={
+						'Offer more brilliant materials, your decks will been engaged with more depth.'
+					}
+				></TutorialStepContent>
 			),
-
-			locale: { back: 'Back', next: 'Next' },
+			showSkipButton: false,
+			locale: {
+				back: (
+					<div className='w-24 h-10 px-2 py-0.5 rounded border border-[#FFFFFF] justify-center items-center gap-1.5 inline-flex'>
+						<span className='text-center text-[#2943E9] text-base font-medium font-creato-medium leading-none tracking-wide'>
+							Back
+						</span>
+					</div>
+				),
+				next: (
+					<div className='w-24 h-10 px-2 py-0.5 bg-[#2943E9] rounded justify-center items-center gap-1.5 inline-flex'>
+						<span className='text-center text-zinc-100 text-base font-medium font-creato-medium leading-none tracking-wide'>
+							Next
+						</span>
+					</div>
+				),
+			},
 			placement: 'bottom',
 		},
 		{
