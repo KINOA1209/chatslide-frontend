@@ -121,7 +121,7 @@ export default function Career() {
 									<br />
 									Collaborate with our design and backend teams to produce
 									top-notch web applications. This role is perfect for
-									developers proficient in React, Redux, and modern web
+									developers proficient in React, Zustand, and modern web
 									technologies looking to make a significant impact.
 									<br />
 									<br />
@@ -140,15 +140,12 @@ export default function Career() {
 									<br />
 									<strong>What You Bring:</strong>
 									<br />
-									- Strong proficiency in JavaScript, React.js, and Redux.
+									- Strong proficiency in JavaScript, React.js, and context manager like Zustand.
 									<br />
 									- Knowledge of RESTful APIs and modern authentication
 									mechanisms.
 									<br />
-									- Expertise in HTML5, CSS3, and responsive design.
-									<br />
-									- Experience with front-end development tools, such as Babel,
-									Webpack, and NPM.
+									- Expertise in HTML5, Tailwindcss, and responsive design.
 									<br />
 									- The knack to interpret business needs into technical
 									solutions.
@@ -158,9 +155,9 @@ export default function Career() {
 									<br />
 									- A degree in Computer Science or a related field.
 									<br />
-									- Familiarity with CSS pre-processors like LESS and SASS.
+									- Familiarity with CSS pre-processors like SASS.
 									<br />
-									- Hands-on experience with Git or similar versioning tools.
+									- Hands-on experience with Git, project management tool like Jira.
 									<br />
 									<br />
 									<strong>Our Promise:</strong>
