@@ -1,3 +1,5 @@
+import React, { FC } from 'react';
+
 interface ExitTourButtonProps {
 	imgSRC: string;
 	onClick: () => void;
@@ -29,3 +31,37 @@ export const ExitTourButton: React.FC<ExitTourButtonProps> = ({
 		</>
 	);
 };
+
+interface ButtonProps {
+	onClick: () => void;
+	label: string;
+	primary?: boolean;
+}
+
+const PrimaryColorButton: FC<ButtonProps> = ({ onClick, label }) => {
+	return (
+		<button
+			onClick={onClick}
+			className='w-24 h-10 px-2 py-0.5 bg-[#2943E9] rounded justify-center items-center gap-1.5 inline-flex cursor-pointer'
+		>
+			<span className='text-center text-zinc-100 text-base font-medium font-creato-medium leading-none tracking-wide'>
+				{label}
+			</span>
+		</button>
+	);
+};
+
+const SecondaryColorButton: FC<ButtonProps> = ({ onClick, label }) => {
+	return (
+		<button
+			onClick={onClick}
+			className='w-24 h-10 px-2 py-0.5 rounded border border-[#2943E9] justify-center items-center gap-1.5 inline-flex cursor-pointer'
+		>
+			<span className='text-center text-[#2943E9] text-base font-medium font-creato-medium leading-none tracking-wide'>
+				{label}
+			</span>
+		</button>
+	);
+};
+
+export { PrimaryColorButton, SecondaryColorButton };

@@ -6,8 +6,7 @@ import ExitUserGuideWarningImg from '@/public/images/user_onboarding/ExitTourWar
 import { ExitTourButton } from './UserOnboardingButtons';
 import ExitTourButtonImg from '@/public/images/user_onboarding/ExitTourButton.png';
 import { ExitConfirmationWindow } from './CustomComponents';
-import { FeedbackWindow } from './CustomComponents';
-
+import { OnboardingFeedbackForm } from './OnboardingFeedback';
 export interface CustomStep extends Step {
 	// Add custom properties if needed
 }
@@ -19,7 +18,7 @@ interface MyCustomJoyrideProps {
 const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 	const [isTourActive, setIsTourActive] = useState(false);
 	const [showConfirmation, setShowConfirmation] = useState(false);
-	const [showFeedbackWindow, setShowFeedbackWindow] = useState(false);
+	const [showFeedbackWindow, setShowFeedbackWindow] = useState(true);
 	// const [currentStep, setCurrentStep] = useState<number>(0);
 	const handleJoyrideCallback = (data: CallBackProps) => {
 		console.log(data);
@@ -114,7 +113,12 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 				run={isTourActive}
 			/>
 			{showFeedbackWindow && (
-				<FeedbackWindow onClose={() => setShowFeedbackWindow(false)} />
+				// <FeedbackWindow onClose={() => setShowFeedbackWindow(false)} />
+				<OnboardingFeedbackForm
+					onClose={() => setShowFeedbackWindow(false)}
+					message='How was your experience on Current Page?'
+					textRequired={true}
+				/>
 			)}
 			{showConfirmation && (
 				<ExitConfirmationWindow
