@@ -34,7 +34,7 @@ echo "Restarting pm2"
 pm2 restart tailwindui
 
 # archive the file with current timestamp
-ARCHIVE_FILE = "$BUILD_FILE.$timestamp"
+ARCHIVE_FILE="$BUILD_FILE.$timestamp"
 echo "Archiving $BUILD_FILE to $ARCHIVE_FILE"
 if [ -f "$BUILD_FILE" ]; then
     mv $BUILD_FILE $ARCHIVE_FILE
