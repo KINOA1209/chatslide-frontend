@@ -6,6 +6,7 @@ import { Slide } from '@/components/slides/SlidesHTML';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import dynamic from 'next/dynamic';
+import ProjectService from '@/services/ProjectService';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -19,39 +20,12 @@ const SharePage: React.FC = () => {
   const [slides, setSlides] = useState<Slide[]>([]);
 
 	useEffect(() => {
-		// Assume fetchSlideHtml is a function to get slide_html from your project table
-		const fetchFoldername = async () => {
-			sessionStorage.removeItem('foldername');
-			fetch(`/api/get_shared_project_foldername?project_id=${project_id}`)
-				.then((response) => {
-					if (!response.ok) {
-						throw new Error('Network response was not ok');
-					}
-					return response.json();
-				})
-				.then((data) => {
-					if (data.status === 'success' && data.foldername) {
-						const foldername = data.foldername;
-						sessionStorage.setItem('foldername', foldername);
-						// console.log(`foldername: ${foldername}`);
-
-						const slides = data.slides;
-						sessionStorage.setItem('presentation_slides', slides);
-						setLoading(false);
-					}
-				})
-				.catch((error) => {
-					console.log(
-						'There was a problem with the fetch operation:',
-						error.message,
-					);
-					toast.error('The shared project is not found.');
-					setLoading(false);
-				});
-		};
-
 		if (project_id) {
-			fetchFoldername();
+      sessionStorage.removeItem('foldername');
+      setLoading(true);
+      ProjectService.getFolderName(project_id).then( () => {
+        setLoading(false);
+      });
 		}
 	}, [project_id]);
 
