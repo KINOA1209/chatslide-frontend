@@ -93,6 +93,8 @@ type SlidesHTMLProps = {
 	transcriptList?: string[];
 	setTranscriptList?: (transcriptList: string[]) => void;
 	exportSlidesRef?: React.RefObject<HTMLDivElement>;
+  isPresenting?: boolean;
+  initSlideIndex?: number;
 };
 
 // Load customizable elements from session storage or use default values
@@ -111,8 +113,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	transcriptList = [],
 	setTranscriptList = () => {},
 	exportSlidesRef = useRef<HTMLDivElement>(null),
+  isPresenting = false,
+  initSlideIndex = 0,
 }) => {
-	const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
+  const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(initSlideIndex);
 	const foldername =
 		typeof sessionStorage !== 'undefined'
 			? sessionStorage.getItem('foldername')
@@ -131,7 +135,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const [chosenLayout, setChosenLayout] = useState<LayoutKeys>('');
 
 	const [showLayout, setShowLayout] = useState(false);
-	const [present, setPresent] = useState(false);
+  const [present, setPresent] = useState(isPresenting);
 	const slideRef = useRef<HTMLDivElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [saveStatus, setSaveStatus] = useState('Up to date');
