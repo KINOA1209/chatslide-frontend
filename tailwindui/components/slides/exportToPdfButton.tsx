@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import AuthService from '../../services/AuthService';
-import { Slide } from './SlidesHTML';
+import Slide from '../../models/Slide';
 import PaywallModal from '../forms/paywallModal';
 import { BigGrayButton } from '../button/DrlambdaButton';
 import { FaDownload, FaRing, FaTruckLoading } from 'react-icons/fa';

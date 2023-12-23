@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Slide } from '@/components/slides/SlidesHTML';
+import Slide from '@/models/Slide';
 import { templateDispatch as defaultTemplateDispatch } from './templateDispatch';
 
 type SlideContainerProps = {

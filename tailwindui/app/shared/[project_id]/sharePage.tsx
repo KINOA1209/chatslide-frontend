@@ -2,13 +2,13 @@
 
 import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { Slide } from '@/components/slides/SlidesHTML';
 import Footer, { WorkflowFooter } from '@/components/ui/footer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from '@/components/ui/header';
 import dynamic from 'next/dynamic';
 import ProjectService from '@/services/ProjectService';
+import Slide from '@/models/Slide';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,

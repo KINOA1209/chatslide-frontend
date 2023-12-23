@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Image, { StaticImageData } from 'next/image';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import sanitizeHtml from 'sanitize-html';
 import './slidesHTML.css';
 import {
 	availableTemplates,
-	// templateSamples,
 } from '@/components/slides/slideTemplates';
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import { TemplateKeys } from '@/components/slides/slideTemplates';
@@ -24,67 +22,12 @@ import {
 import SlideContainer from './SlideContainer';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import { templateDispatch } from './templateDispatch';
-import { useRouter } from 'next/navigation';
 import { availableLayouts } from './slideLayout';
 import TestSlidesData from './TestSlidesData.json';
 import AuthService from '@/services/AuthService';
 import customizable_elements from './templates_customizable_elements/customizable_elements';
 import ScriptEditor from './ScriptEditor';
-import { Console } from 'console';
-import drlambdaLogo from '@/public/images/template/drlambdaLogo.png';
-export interface SlideElement {
-	type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
-	className:
-		| 'head'
-		| 'title'
-		| 'subtopic'
-		| 'content'
-		| 'userName'
-		| 'images'
-		| 'template'
-		| 'layout'
-		| 'logo';
-	content: string | string[];
-}
-
-export type SlideKeys =
-	| 'head'
-	| 'title'
-	| 'subtopic'
-	| 'userName'
-	| 'template'
-	| 'content'
-	| 'images'
-	| 'layout'
-	| 'logo';
-
-export class Slide {
-	head: string;
-	title: string;
-	subtopic: string;
-	userName: string;
-	template: TemplateKeys;
-	content: string[];
-	images: string[];
-	layout: LayoutKeys;
-	logo: string;
-
-	constructor() {
-		this.head = 'New Slide';
-		this.title = 'New Slide';
-		this.subtopic = 'New Slide';
-		this.userName = '';
-		this.template = 'Default';
-		this.content = [
-			'Some content here',
-			'Some more content here',
-			'Even more content here',
-		];
-		this.images = [];
-		this.layout = 'Col_2_img_1_layout';
-		this.logo = 'Default';
-	}
-}
+import Slide, { SlideKeys } from '@/models/Slide';
 
 type SlidesHTMLProps = {
 	slides: Slide[];
