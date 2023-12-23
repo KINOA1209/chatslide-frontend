@@ -165,6 +165,7 @@ const MyFiles: React.FC<filesInterface> = ({
 	const [rendered, setRendered] = useState<boolean>(false);
 	const { isPaidUser } = useUser();
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+	const [isDragging, setIsDragging] = useState(false);
 
 	useEffect(() => {
 		if (contentRef.current) {
@@ -417,6 +418,30 @@ const MyFiles: React.FC<filesInterface> = ({
 		}
 	};
 
+	const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        setIsDragging(true);
+    };
+
+    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+		if (!isDragging) setIsDragging(true);
+    };
+
+    const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        setIsDragging(false);
+    };
+
+    const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        setIsDragging(false);
+        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+            await onFileSelected(e.dataTransfer.files[0]);
+            e.dataTransfer.clearData();
+        }
+    };
+
 	return (
 		<section className='bg-white grow flex flex-col h-full'>
 			<ToastContainer enableMultiContainer containerId={'fileManagement'} />
@@ -506,7 +531,11 @@ const MyFiles: React.FC<filesInterface> = ({
 				</div>
 			</div>
 			<div
-				className='max-w-6xl w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto border border-gray-200'
+				className={`max-w-6xl w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto border border-gray-200 ${isDragging ? 'bg-blue-100 border-blue-500' : ''}`}
+				onDragEnter={handleDragEnter}
+				onDragOver={handleDragOver}
+				onDragLeave={handleDragLeave}
+				onDrop={handleDrop}
 				ref={contentRef}
 			>
 				{resources.length > 0 && (
