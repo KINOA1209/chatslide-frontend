@@ -44,6 +44,7 @@ const nextConfig = {
 			'unsplash.com',
 			'dev.drlambda.ai',
 			'drlambda.ai',
+      'localhost',
 		],
 	},
 };
