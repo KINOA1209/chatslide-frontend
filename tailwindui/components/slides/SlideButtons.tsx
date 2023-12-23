@@ -53,7 +53,7 @@ export const PresentButton: React.FC<PresentButtonProps> = ({
           Present
         </button> */}
 				<div
-					className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300  hover:bg-Workflow-slides-button-hover-bg-color flex justify-center items-center cursor-pointer'
+					className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300  hover:bg-Lavender flex justify-center items-center cursor-pointer'
 					onClick={openPresent}
 				>
 					<PresentationModeIcon />
@@ -230,7 +230,7 @@ export const AddSlideButton: React.FC<{
 		<div className='col-span-1 hidden sm:block'>
 			<div className='w-fit h-fit'>
 				<div
-					className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300 hover:bg-Workflow-slides-button-hover-bg-color flex justify-center items-center cursor-pointer'
+					className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300 hover:bg-Lavender flex justify-center items-center cursor-pointer'
 					onClick={addPage}
 				>
 					<AddSlideIcon />
@@ -248,7 +248,7 @@ export const DeleteSlideButton: React.FC<{
 		<div className='col-span-1 hidden sm:block'>
 			<div className='w-fit h-fit'>
 				<div
-					className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300  hover:bg-Workflow-slides-button-hover-bg-color flex justify-center items-center cursor-pointer'
+					className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300  hover:bg-Lavender flex justify-center items-center cursor-pointer'
 					onClick={deletePage}
 				>
 					<DeleteSlideIcon />
