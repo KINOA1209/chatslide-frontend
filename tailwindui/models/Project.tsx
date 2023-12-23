@@ -1,4 +1,5 @@
 import Resource from './Resource';
+import Slide from './Slide';
 
 export default interface Project {
 	id: string;
@@ -23,7 +24,7 @@ export default interface Project {
 	transcripts: string;
 	image_files: string;
 	audio_files: string;
-	pdf_file: string;
+	pdf_file: string; 
 	video_file: string;
 	html: string;
 	pdf_images: string;

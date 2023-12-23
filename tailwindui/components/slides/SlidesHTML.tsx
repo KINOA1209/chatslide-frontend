@@ -236,7 +236,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	// fetch slides data
 	useEffect(() => {
-		if (res_slide) {
+    if (res_slide) {
 			//console.log('typeof res_slide:', typeof res_slide);
 			// const slides_response_JSON = JSON.stringify(TestSlidesData)
 			const parsed_slides = JSON.parse(res_slide);

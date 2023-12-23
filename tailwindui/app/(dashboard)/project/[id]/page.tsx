@@ -83,7 +83,7 @@ const ProjectLoading = () => {
 				if (project.presentation_slides) {
 					sessionStorage.setItem(
 						'presentation_slides',
-						project.presentation_slides,
+						JSON.stringify(project.presentation_slides),
 					);
 				}
 				if (project.transcripts) {
