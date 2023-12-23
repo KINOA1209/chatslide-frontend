@@ -1,4 +1,5 @@
 BUILD_PATH="/home/ubuntu/drlambda-frontend/build"
+SERVE_PATH="/home/ubuntu/drlambda-frontend/tailwindui"
 mkdir -p $BUILD_PATH
 cd $BUILD_PATH
 
@@ -11,15 +12,8 @@ curl https://dev.drlambda.ai/api/build_frontend\?key\=ayeP6I0oyRemxMa10sCrAgUtkf
 
 # Check if the download was successful
 if [ $? -ne 0 ]; then
+    echo "Download failed, exiting..."
     exit 1
-fi
-
-echo "Stopping pm2"
-pm2 stop tailwindui
-
-if [ -d ".next" ]; then
-    # If it exists, rename directory 'a' to 'b'
-    mv ".next" ".next.$timestamp"
 fi
 
 # Decompress the file
@@ -28,6 +22,19 @@ tar -xzvf $BUILD_FILE
 if [ $? -ne 0 ]; then
     exit 1
 fi
+
+echo "Stopping pm2"
+pm2 stop tailwindui
+
+echo "Backing up .next dir"
+cd $SERVE_PATH
+if [ -d ".next" ]; then
+    # If it exists, rename directory 'a' to 'b'
+    mv ".next" ".next.backup.$timestamp"
+fi
+
+echo "Moving new .next dir"
+mv "$BUILD_PATH/.next" $SERVE_PATH
 
 # restart frontend
 echo "Restarting pm2"
@@ -39,3 +46,5 @@ echo "Archiving $BUILD_FILE to $ARCHIVE_FILE"
 if [ -f "$BUILD_FILE" ]; then
     mv $BUILD_FILE $ARCHIVE_FILE
 fi
+
+echo "Restarted frontend!"
