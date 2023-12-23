@@ -73,6 +73,7 @@ export default function Topic() {
 	const [useSchoolTemplate, setUseSchoolTemplate] = useState(false);
 	const [schoolTemplate, setSchoolTemplate] = useState('' as string);
 	const [theme, setTheme] = useState('content_with_image');
+	const [numOfPages, setNumOfPages] = useState('moderate');
 
 	// bind form data between input and sessionStorage
 	const [topic, setTopic] = useState(
@@ -459,7 +460,6 @@ export default function Topic() {
 			currentResources.filter((_, index) => index !== indexToRemove),
 		);
 	};
-
 	return (
 		<section>
 			<MyCustomJoyride steps={StepsSummaryPage()} />
@@ -498,17 +498,21 @@ export default function Topic() {
 			{/* main content */}
 			<div className='py-10 w-full flex flex-col items-center'>
 				{/* Project Summary section */}
-				<div className='w-full lg:w-2/3  px-3 my-3 lg:my-1' id='SummaryStep-2'>
-					{/* title */}
-					<div className='title1'>
-						<p>Project Summary</p>
-						<p id='after1'> (Required)</p>
-					</div>
-
+				<div className='w-full lg:w-2/3 px-3 my-3 lg:my-1' id='SummaryStep-2'>
 					{/* text area section */}
 					<div className='project_container w-full my-2 lg:my-5 border border-2 border-gray-200'>
+						{/* title */}
+						<div className='title1'>
+							<p className='text-3xl'>Summary</p>
+							<p id='after1'> (Required)</p>
+						</div>
+						<div className='my-4'>
+							<span className='text-sm text-gray-500'>
+								To get started, give us some high-level intro about your project
+							</span>
+						</div>
 						<div className='flex items-center gap-1'>
-							<p>Topic</p>
+							<p className='text-sm'>Project Topic</p>
 							<div className='relative inline-block'>
 								<div
 									className='cursor-pointer'
@@ -705,7 +709,7 @@ export default function Topic() {
 						</div>
 
 						{/* check equation section */}
-						<div className='flex flex-wrap -mx-3 my-4'>
+						{/* <div className='flex flex-wrap -mx-3 my-4'>
 							<div className='w-full px-3 mt-2 flex flex-row'>
 								<div className='flex items-center'>
 									<input
@@ -725,6 +729,29 @@ export default function Topic() {
 								</label>
 							</div>
 						</div>
+
+						<div className='flex flex-col gap-y-4 flex-wrap my-4'>
+							<span className='text-sm'>
+								<b>How many slides do you want to generate?</b>
+							</span>
+							<div className='flex text-sm'>
+								{[
+									{value: 'less', text:'Less (5-10)'},
+									{value: 'moderate', text:'Moderate (10-20)'},
+									{value: 'more', text:'More (20+)'}
+								].map((option,index) => (
+									<label key={option.value} className={`flex items-center ${index !== 0 ? 'ml-4' : ''}`}>
+									<input
+										type="radio"
+										value={option.value}
+										checked={numOfPages === option.value}
+										onChange={() => setNumOfPages(option.value)}
+									/>
+									<span className='ml-1'>{option.text}</span>
+									</label>
+								))}
+							</div>
+						</div> */}
 					</div>
 				</div>
 
@@ -733,12 +760,17 @@ export default function Topic() {
 					className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1'
 					id='SummaryStep-3'
 				>
-					<div className='title2'>
-						<p>Supporting Documents</p>
-						<p id='after2'> (Optional)</p>
-					</div>
-
 					<div className='additional_container my-2 lg:my-5  border border-2 border-gray-200'>
+						<div className='title2'>
+							<p className='text-3xl'>Supporting Documents</p>
+							<p id='after2'> (Optional)</p>
+						</div>
+						<div className='my-4'>
+							<span className='text-sm text-gray-500'>
+								Offer more brilliant materials, your decks will been engaged
+								with more depth
+							</span>
+						</div>
 						<div className='upload gap-1'>
 							<span>Add Resources</span>
 							<div className='relative inline-block'>
@@ -827,12 +859,14 @@ export default function Topic() {
 					className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1 font-creato-regular'
 					id='SummaryStep-4'
 				>
-					<div className='title2'>
-						<p>Design</p>
-						<p id='after2'> (Optional)</p>
-					</div>
-
 					<div className='additional_container my-2 lg:my-5 border border-2 border-gray-200 flex flex-col gap-y-4'>
+						<div className='title2'>
+							<p className='text-3xl'>Theme</p>
+							<p id='after2'> (Optional)</p>
+						</div>
+						<span className='text-sm text-gray-500'>
+							Select a theme for your slide
+						</span>
 						{/* theme */}
 						<span>What theme do you want to choose?</span>
 						<div className='grid grid-cols-3 gap-x-4'>

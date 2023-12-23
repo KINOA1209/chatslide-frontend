@@ -15,14 +15,15 @@ module.exports = {
 				'Grey-100': 'var(--Grey-100, #E7E9EB)',
 				'Workflow-bg-color': 'var(--Workflow-bg-color, #6A7EF9)',
 				'button-color': 'var(--Blue-600, #2943E9)',
-				'Workflow-slides-button-hover-bg-color':
-					'var(--Workflow-slides-button-hover-bg-color, #9AAEF9)',
+				'Lavender':
+					'var(--Lavender, #9AAEF9)',
 			},
 			colors: {
 				'neutral-100': 'var(--neutral-100, #1E202C)',
 				'regal-blue': '#243c5a',
         'Sky': 'var(--Sky, #F4F6FE)',
         'Blue': 'var(--Blue, #2943E9)',
+        'Dark': 'var(--Dark, #2B2C2D)',
 				'Grey-600': 'var(--Grey-600, #525C6A)',
 				gray: {
 					100: '#FBFBFB',

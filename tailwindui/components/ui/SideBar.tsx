@@ -9,7 +9,7 @@ import Hotjar from '@/components/integrations/Hotjar';
 import { Auth, Hub } from 'aws-amplify';
 import AuthService from '../../services/AuthService';
 import UserService from '@/services/UserService';
-import { FaBars, FaBook, FaHome, FaTimes } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight, FaBars, FaBook, FaChevronLeft, FaChevronRight, FaHome, FaTimes } from 'react-icons/fa';
 import { GoArrowLeft, GoArrowRight, GoDiscussionOutdated, GoFile, GoGear, GoHome } from 'react-icons/go';
 import { BlueLabel, GrayLabel } from './GrayLabel';
 import { IoExitOutline } from 'react-icons/io5';
@@ -123,93 +123,93 @@ const SideBar = ({ }: SideBarProps) => {
 
   return (
     <header
-      className={`hidden sm:flex sticky left-0 top-0 ${isSidebarOpen ? 'w-[10rem]' : 'w-0'
-        } h-[100vh] flex flex-col justify-between z-30 bg-gradient-to-b from-[#2B2C2D] to-[#121212] bg-opacity-90 transition duration-300 ease-in-out ${!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
+      className={`hidden sm:flex sticky left-0 top-0 ${isSidebarOpen ? 'w-[10rem]' : 'w-[3rem]'
+        } h-[100vh] flex flex-col items-center justify-between z-30 bg-gradient-to-b from-Dark to-[#121212] bg-opacity-90 transition duration-300 ease-in-out ${!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
         }`}
     >
       <button
-        className={`rounded-full p-1.5 bg-blue-500 text-white fixed top-4 ${isSidebarOpen ? 'left-[9rem]' : 'left-0'
+        className={`rounded-full p-1.5 bg-Dark text-white fixed top-6 ${isSidebarOpen ? 'left-[9rem]' : 'left-[2rem]'
           } focus:outline-none`}
         onClick={toggleSidebar}
       >
-        {isSidebarOpen ? <FaTimes /> : <FaBars />}
+        {isSidebarOpen ? <FaChevronLeft /> : <FaChevronRight />}
       </button>
 
-      {isSidebarOpen && (
-        <>
-          <div className='py-4 flex flex-col items-top justify-between'>
-            <div className='py-1' role='none'>
-              <a
-                href='/'
-                className='block flex flex-row items-center gap-1 py-1 text-white px-2 rounded-lg hover:bg-gray-400'
-                role='menuitem'
-              >
-                <img
-                  src='/new_landing/svgs/drlambda-logo.svg'
-                  alt='DrLambda'
-                  className='w-[16px] h-[16px]'
-                /> DrLambda
-              </a>
-            </div>
+      <div className='py-4 flex flex-col items-top justify-between'>
+        <div className='py-1' role='none'>
+          <a
+            href='/'
+            className='block flex flex-row items-center gap-1 py-1 text-white px-2 rounded-lg hover:bg-gray-400'
+            role='menuitem'
+          >
+            <img
+              src='/new_landing/svgs/drlambda-logo.svg'
+              alt='DrLambda'
+              className='w-[16px] h-[16px]'
+            />
+            {isSidebarOpen ? "DrLambda" : "\u200B"}
+          </a>
+        </div>
 
-            <hr className="border-t-1 border-grey-400 mx-2 my-2" />
+        <hr className="border-t-1 border-grey-400 mx-2 my-2" />
 
-            <div className='py-1' role='none'>
-              <a
-                href='/dashboard'
-                className='block flex flex-row items-center gap-1 py-1 text-white px-2 rounded-lg hover:bg-gray-400'
-                role='menuitem'
-              >
-                <GoHome /> Projects
-              </a>
-              <a
-                href='/my-resources'
-                className='block flex flex-row items-center gap-1 py-1 text-white px-2 rounded-lg hover:bg-gray-400'
-                role='menuitem'
-              >
-                <GoFile /> Resources
-              </a>
-              <a
-                href='https://discord.gg/mJeAqMdb2m'
-                target='_blank'
-                className='block flex flex-row items-center gap-1 py-1 text-white px-2 rounded-lg hover:bg-gray-400'
-                role='menuitem'
-              >
-                <GoDiscussionOutdated /> Contact Us
-              </a>
-              <a
-                href='/account'
-                className='block flex flex-row items-center gap-1 py-1 text-white px-2 rounded-lg hover:bg-gray-400'
-                role='menuitem'
-              >
-                <GoGear /> Account
-              </a>
-              <a
-                onClick={signOut}
-                className='block flex flex-row items-center gap-1 py-1 text-white px-2 rounded-lg hover:bg-gray-400 cursor-pointer'
-                role='menuitem'
-              >
-                <IoExitOutline />  Sign out
-              </a>
-            </div>
+        <div className='py-1' role='none'>
+          <a
+            href='/dashboard'
+            className='block flex flex-row items-center gap-1 py-1 text-white px-2 rounded-lg hover:bg-gray-400'
+            role='menuitem'
+          >
+            <GoHome /> {isSidebarOpen ? "Dashboard" : "\u200B"}
+          </a>
+          <a
+            href='/my-resources'
+            className='block flex flex-row items-center gap-1 py-1 text-white px-2 rounded-lg hover:bg-gray-400'
+            role='menuitem'
+          >
+            <GoFile /> {isSidebarOpen ? "My Resources" : "\u200B"}
+          </a>
+          <a
+            href='https://discord.gg/mJeAqMdb2m'
+            target='_blank'
+            className='block flex flex-row items-center gap-1 py-1 text-white px-2 rounded-lg hover:bg-gray-400'
+            role='menuitem'
+          >
+            <GoDiscussionOutdated /> {isSidebarOpen ? "Contact Us" : "\u200B"}
+          </a>
+          <a
+            href='/account'
+            className='block flex flex-row items-center gap-1 py-1 text-white px-2 rounded-lg hover:bg-gray-400'
+            role='menuitem'
+          >
+            <GoGear /> {isSidebarOpen ? "Account" : "\u200B"}
+          </a>
+          <a
+            onClick={signOut}
+            className='block flex flex-row items-center gap-1 py-1 text-white px-2 rounded-lg hover:bg-gray-400 cursor-pointer'
+            role='menuitem'
+          >
+            <IoExitOutline />  {isSidebarOpen ? "Sign Out" : "\u200B"}
+          </a>
+        </div>
+      </div>
+
+      <div className='flex flex-col items-left justify-between'>
+        <div className='block py-1 text-sm text-white'>
+
+          <a
+            href='/account'
+            className={`block  py-1 text-sm text-white ${isSidebarOpen ? 'px-2' : 'px-0'} rounded-lg hover:bg-gray-400`}
+            role='menuitem'
+          >
+            {credits} ⭐️ {isSidebarOpen && 'Credits'}
+          </a>
+          <div className={`w-fit ${isSidebarOpen ? 'px-2' : 'px-0'} py-1`}>
+            <BlueLabel>{tier.split('_')[0]} {isSidebarOpen && 'Tier'}</BlueLabel>
           </div>
 
-          <div className='flex flex-col items-left justify-between'>
-            <div className='block py-1 text-sm text-white'>
-
-              <a
-                href='/account'
-                className='block  py-1 text-sm text-white px-2 rounded-lg hover:bg-gray-400'
-                role='menuitem'
-              >
-                {credits} ⭐️ Credits
-              </a>
-              <div className='w-fit px-2 py-1'>
-                <BlueLabel>{tier.split('_')[0]} Tier</BlueLabel>
-              </div>
-
+          {isSidebarOpen &&
+            <>
               <hr className="border-t-1 border-grey-400 mx-2 my-2" />
-
               <div className='text-white px-2'>
                 Join our user study to earn free credits
               </div>
@@ -229,10 +229,10 @@ const SideBar = ({ }: SideBarProps) => {
               >
                 Get 100 ⭐️credits
               </a>
-            </div>
-          </div>
-        </>
-      )}
+            </>
+          }
+        </div>
+      </div>
 
       <GoogleAnalytics />
 

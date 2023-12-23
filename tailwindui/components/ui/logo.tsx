@@ -1,13 +1,12 @@
-import Image from 'next/image';
-import logo from '@/public/new_landing/svgs/drlambda-logo.svg';
-
 export function Logo() {
 	return (
-    <img
-      src='/new_landing/svgs/drlambda-logo.svg'
-      alt='DrLambda'
-      className='w-full h-full'
-    />
+		<a href='/' className='block' aria-label='Cruip'>
+			<img
+				src='/new_landing/svgs/drlambda-logo.svg'
+				alt='DrLambda'
+				className='w-full h-full'
+			/>
+		</a>
 	);
 }
 

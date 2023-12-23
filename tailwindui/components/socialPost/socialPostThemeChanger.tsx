@@ -39,7 +39,7 @@ const ThemeChanger: React.FC<ThemeProps> = ({
 	return (
 		<div className='col-span-1 flex flex-row-reverse hidden sm:block'>
 			<div
-				className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300  hover:bg-Workflow-slides-button-hover-bg-color flex justify-center items-center cursor-pointer'
+				className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300  hover:bg-Lavender flex justify-center items-center cursor-pointer'
 				onClick={openTheme}
 			>
 				<ThemeIcon />
