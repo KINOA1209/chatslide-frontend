@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import ClickableLink from '@/components/ui/ClickableLink';
-import { Slide } from '@/components/slides/SlidesHTML';
 import ExportToPdfButton from './exportToPdfButton';
 import dynamic from 'next/dynamic';
 import { ShareToggleButton } from '@/components/slides/SlideButtons';
 import AuthService from '../../services/AuthService';
 import ScriptEditor from './ScriptEditor';
 import { TextLabel } from '../ui/GrayLabel';
+import Slide from '@/models/Slide';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
