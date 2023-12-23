@@ -28,7 +28,7 @@ const StepsSummaryPage: () => CustomStep[] = () => {
 			),
 			locale: {
 				skip: <SecondaryColorButton label={'Not now'} />,
-				back: 'Back',
+				// back: 'Back',
 				next: <PrimaryColorButton label={'Sure'} />,
 			},
 			styles: {

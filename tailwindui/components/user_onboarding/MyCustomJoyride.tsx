@@ -27,6 +27,7 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 			// Show the confirmation tooltip when skipping the tour
 			setShowConfirmation(true);
 			setIsTourActive(true);
+			setShowFeedbackWindow(false);
 		} else if (data.action === 'close') {
 			// If CLOSE (End Tour) or RESET (outside click) occurs, reset the tour
 			setIsTourActive(false);
@@ -48,10 +49,12 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 			// User confirmed, reset the tour or perform other actions
 			setIsTourActive(false);
 			setShowConfirmation(false);
+			setShowFeedbackWindow(false);
 		} else {
 			// User chose not to skip the tour, hide the confirmation tooltip
 			setIsTourActive(true);
 			setShowConfirmation(false);
+			setShowFeedbackWindow(false);
 		}
 	};
 
