@@ -58,14 +58,16 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 					{showGPTToggle && typeof setIsGpt35 !== 'undefined' && (
 						<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
 					)}
-					<DrlambdaButton
-						isSubmitting={isSubmitting}
-						isPaidUser={isPaidUser}
-						isPaidFeature={nextIsPaidFeature}
-						onClick={(e) => setIsSubmitting(true)}
-					>
-						{nextText}
-					</DrlambdaButton>
+					<div className='user-onboarding-generate'>
+						<DrlambdaButton
+							isSubmitting={isSubmitting}
+							isPaidUser={isPaidUser}
+							isPaidFeature={nextIsPaidFeature}
+							onClick={(e) => setIsSubmitting(true)}
+						>
+							{nextText}
+						</DrlambdaButton>
+					</div>
 				</div>
 			</div>
 

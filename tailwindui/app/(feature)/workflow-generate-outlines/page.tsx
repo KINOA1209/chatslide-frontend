@@ -26,7 +26,9 @@ import ContentInBrandingColorImg from '@/public/images/summary/content_in_brandi
 import FileUploadModal from '@/components/forms/FileUploadModal';
 import SelectedResourcesList from '@/components/SelectedResources';
 import { useUser } from '@/hooks/use-user';
-
+import Joyride, { STATUS, Step } from 'react-joyride';
+import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
+import StepsSummaryPage from '@/components/user_onboarding/StepsSummaryPage';
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 6;
 
@@ -71,7 +73,7 @@ export default function Topic() {
 	const [useSchoolTemplate, setUseSchoolTemplate] = useState(false);
 	const [schoolTemplate, setSchoolTemplate] = useState('' as string);
 	const [theme, setTheme] = useState('content_with_image');
-	const [numOfPages, setNumOfPages] = useState('moderate')
+	const [numOfPages, setNumOfPages] = useState('moderate');
 
 	// bind form data between input and sessionStorage
 	const [topic, setTopic] = useState(
@@ -100,6 +102,14 @@ export default function Topic() {
 			? JSON.parse(sessionStorage.selectedResources)
 			: [],
 	);
+
+	const tourSteps: Step[] = [
+		{
+			target: '.first-element',
+			content: 'This is the first element!',
+		},
+		// Add more steps as needed
+	];
 
 	useEffect(() => {
 		if (selectedResources.length > 0) {
@@ -452,6 +462,7 @@ export default function Topic() {
 	};
 	return (
 		<section>
+			<MyCustomJoyride steps={StepsSummaryPage()} />
 			{showPaymentModal && (
 				<PaywallModal
 					setShowModal={setShowPaymentModal}
@@ -487,7 +498,7 @@ export default function Topic() {
 			{/* main content */}
 			<div className='py-10 w-full flex flex-col items-center'>
 				{/* Project Summary section */}
-				<div className='w-full lg:w-2/3 px-3 my-3 lg:my-1'>
+				<div className='w-full lg:w-2/3 px-3 my-3 lg:my-1' id='SummaryStep-2'>
 					{/* text area section */}
 					<div className='project_container w-full my-2 lg:my-5 border border-2 border-gray-200'>
 						{/* title */}
@@ -578,8 +589,8 @@ export default function Topic() {
 											audienceList.includes(audience)
 												? audience
 												: audience === 'unselected'
-													? 'unselected'
-													: 'other'
+												? 'unselected'
+												: 'other'
 										}
 										onChange={(e) => setAudience(e.target.value)}
 										required
@@ -745,8 +756,10 @@ export default function Topic() {
 				</div>
 
 				{/* supporting docs  section */}
-				<div className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1'>
-
+				<div
+					className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1'
+					id='SummaryStep-3'
+				>
 					<div className='additional_container my-2 lg:my-5  border border-2 border-gray-200'>
 						<div className='title2'>
 							<p className='text-3xl'>Supporting Documents</p>
@@ -754,7 +767,8 @@ export default function Topic() {
 						</div>
 						<div className='my-4'>
 							<span className='text-sm text-gray-500'>
-								Offer more brilliant materials, your decks will been engaged with more depth
+								Offer more brilliant materials, your decks will been engaged
+								with more depth
 							</span>
 						</div>
 						<div className='upload gap-1'>
@@ -841,7 +855,10 @@ export default function Topic() {
 				</div>
 
 				{/* design */}
-				<div className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1 font-creato-regular'>
+				<div
+					className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1 font-creato-regular'
+					id='SummaryStep-4'
+				>
 					<div className='additional_container my-2 lg:my-5 border border-2 border-gray-200 flex flex-col gap-y-4'>
 						<div className='title2'>
 							<p className='text-3xl'>Theme</p>

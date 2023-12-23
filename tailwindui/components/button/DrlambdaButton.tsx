@@ -225,3 +225,22 @@ export const SmallBlueButton: React.FC<DrlambdaButtonProps> = ({
 		</button>
 	);
 };
+
+interface UserOnboardingButtonProps {
+	onClick: () => void;
+}
+export const UserOnboardingButton: React.FC<UserOnboardingButtonProps> = ({
+	onClick,
+}) => {
+	return (
+		<button
+			onClick={onClick}
+			className={`fixed top-[24px] z-50 left-[11rem] min-w-[10rem] lg:min-w-[12rem] px-2 h-[36px] rounded-[15px] flex justify-center items-center gap-2 cursor-pointer bg-gradient-to-r from-purple-500 to-purple-700`}
+		>
+			<span className='text-white font-semibold tracking-tight whitespace-nowrap'>
+				{' '}
+				Begin a user guide tour{' '}
+			</span>
+		</button>
+	);
+};
