@@ -37,7 +37,7 @@ const SharePage: React.FC = () => {
 			<Header loginRequired={false} isLanding={false} />
 			<ToastContainer />
 			{loading ? (
-				<div>Loading...</div>
+        <div className='flex items-center justify-center min-h-screen'>Loading...</div>
 			) : (
 				<div className='flex items-center justify-center min-h-screen'>
 					<div>

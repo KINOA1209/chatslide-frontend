@@ -32,7 +32,7 @@ const SharePage: React.FC = () => {
 	return (
 		<main className='grow'>
 			{loading ? (
-				<div>Loading...</div>
+        <div className='flex items-center justify-center min-h-screen'>Loading...</div>
 			) : (
       <SlidesHTML
         slides={slides}
