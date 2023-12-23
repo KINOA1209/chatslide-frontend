@@ -22,8 +22,12 @@ const SharePage: React.FC = () => {
 	useEffect(() => {
 		if (project_id) {
       setLoading(true);
+      console.log(`token: ${token}`);
+      console.log(`project_id: ${project_id}`);
+      console.log(`page: ${page}`);
       ProjectService.getProjectDetails(token, project_id).then((data) => {
-        setSlides(JSON.parse(data.presentation_slides));
+        console.log(`slides: ${data.presentation_slides}}`);
+        sessionStorage.setItem('presentation_slides', data.presentation_slides);
         setLoading(false);
       });
 		}
