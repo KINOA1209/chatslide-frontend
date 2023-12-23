@@ -19,7 +19,6 @@
 	display: inline;
 	font-family: 'Creato Display', sans-serif;
 	font-weight: 700;
-	font-size: 16px;
 	letter-spacing: 0.5px;
 }
 
@@ -32,7 +31,6 @@
 	display: inline;
 	font-family: 'Creato Display', sans-serif;
 	font-weight: 700;
-	font-size: 16px;
 	letter-spacing: 0.5px;
 }
 
@@ -51,11 +49,10 @@
 	padding: 16px 20px;
 }
 
-.project_topic p {
+.project_container p {
 	margin: 0;
 	font-family: 'Creato Display', sans-serif;
 	font-weight: 700;
-	font-size: 14px;
 	letter-spacing: 0.5px;
 }
 
