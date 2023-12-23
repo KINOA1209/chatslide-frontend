@@ -99,7 +99,7 @@ const Header = ({
 
 	return (
 		<header
-      className={`relative sticky top-0 w-full z-30 bg-[#2B2C2D] transition duration-300 ease-in-out ${
+      className={`relative sticky top-0 w-full z-30 bg-Dark transition duration-300 ease-in-out ${
 				!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
 			}`}
 		>
