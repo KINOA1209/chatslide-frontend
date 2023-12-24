@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 const BlackFridayBanner: React.FC = () => {
-	const targetDate = new Date('2023-11-29T00:00:00');
+	const targetDate = new Date('2024-01-02T00:00:00');
 	const now = new Date();
 	const difference = targetDate.getTime() - now.getTime();
 	const days = Math.floor(difference / (1000 * 60 * 60 * 24));
@@ -20,9 +20,9 @@ const BlackFridayBanner: React.FC = () => {
 	return (
 		<>
 			{difference > 0 && (
-				<div className='w-screen pt-[48px] bg-black text-white text-center p-4 shadow-md'>
+				<div className='w-screen pt-[28px] bg-black text-white text-center p-4 shadow-md'>
 					<p className='text-xl my-4'>
-						🎉 Black Friday Limited Deal! 🎉 Save{' '}
+						❄️ Winter Holidays Limited Deal! 🎉 Save{' '}
 						<span className='text-red-500'>90%</span> on your DrLambda
 						subscription! 💸
 					</p>
