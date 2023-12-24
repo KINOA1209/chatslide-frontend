@@ -1,4 +1,7 @@
+import { LayoutKeys } from '@/components/slides/slideLayout';
+import { TemplateKeys } from '@/components/slides/slideTemplates';
 import Project from '@/models/Project';
+import Slide from '@/models/Slide';
 
 class ProjectService {
 
@@ -56,9 +59,14 @@ class ProjectService {
         throw new Error(`Error fetching project details: ${response.status}`);
       }
 
-      const data = await response.json();
-      console.log('Project data:', data);
-      return data;
+      const project = await response.json() as Project;
+      console.log('Project data:', project);
+
+      if(project?.presentation_slides) {
+        project.parsed_slides = this.parseSlides(project.presentation_slides);
+      }
+
+      return project;
     } catch (error) {
       console.error('Error fetching project details:', error);
       throw error; // Rethrow the error to be handled by the caller
@@ -111,6 +119,69 @@ class ProjectService {
     });
     return response.ok;
   }
+
+  static parseSlides(presentation_slides: string): Slide[] {
+
+    const jsonSlides = JSON.parse(presentation_slides);
+    console.log('jsonSlides:', jsonSlides);
+
+    // mapping data to slides
+    const slidesArray: Slide[] = Object.keys(jsonSlides).map(
+      (key, index) => {
+        const slideData = jsonSlides[key];
+        //console.log('slideData:', slideData);
+        const slide = new Slide();
+        slide.head = slideData.head || 'New Slide';
+        slide.title = slideData.title || 'New Slide';
+        slide.subtopic = slideData.subtopic || 'New Slide';
+        slide.userName = slideData.userName || '';
+        slide.template =
+          slideData.template ||
+          sessionStorage.getItem('schoolTemplate') ||
+          ('Default' as TemplateKeys);
+        slide.content = slideData.content || [
+          'Some content here',
+          'Some more content here',
+          'Even more content here',
+        ];
+        slide.images = slideData.images || [];
+        // console.log(
+        //     'slideData.content.length',
+        //     slideData.content.length
+        // );
+        slide.logo = slideData.logo || 'Default';
+        if (index === 0) {
+          slide.layout =
+            slideData.layout || ('Cover_img_1_layout' as LayoutKeys);
+        } else {
+          // choose default layout based on number of bullet points
+          if (slideData.content.length === 1) {
+            slide.layout =
+              slideData.layout || ('Col_2_img_1_layout' as LayoutKeys);
+          } else if (slideData.content.length === 2) {
+            slide.layout =
+              slideData.layout || ('Col_2_img_2_layout' as LayoutKeys);
+          } else if (slideData.content.length === 3) {
+            // Generate a random number between 0 and 1
+            const randomNumber = Math.random();
+            // Choose layout based on probability distribution
+            if (randomNumber < 0.7) {
+              slide.layout =
+                slideData.layout || ('Col_3_img_0_layout' as LayoutKeys);
+            } else {
+              slide.layout =
+                slideData.layout || ('Col_3_img_3_layout' as LayoutKeys);
+            }
+          }
+        }
+
+        // Return the modified slide object
+        return slide;
+      })
+
+      console.log('slidesArray:', slidesArray);
+      return slidesArray;
+    }
 }
 
 export default ProjectService;
