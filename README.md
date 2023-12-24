@@ -27,3 +27,13 @@ To do this,
 
 ## Local Build
 - `npm run build`: make sure to run this and see if the build passes before commiting
+
+## Production Deployment
+- `./prod_frontend.sh` on the prod server. You can trigger it from local or dev server too, but please refrain from doing so as it is computation heavy for the dev server.
+
+- The production build workload is offloaded to the dev server to avoid prod server from dying. The high level steps are:
+  - a `curl` request is sent from the prod server to the dev server to download the latest frontend build (`/api/build_frontend`)
+  - the backend on the dev server receives the request and trigger a run on the `build_frontend.sh` script
+    - the script runs the build in `~/build/drlambda-frontend` directory, it pulls the latest head in master branch and calls `npm run build` and then compress the `.next` directory to a `latest-build.tar.gz` file which is in `~/build/drlambda-frontend/bin` directory
+  - after the build is successful, dev server sends the binary file to prod server
+  - after prod servers downloads the file, it decompresses it and move the `.next` directory to `~/drlambda-frontend/tailwindui/` and then restart pm2 to host it 
