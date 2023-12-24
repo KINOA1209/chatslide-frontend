@@ -28,6 +28,7 @@ import AuthService from '@/services/AuthService';
 import customizable_elements from './templates_customizable_elements/customizable_elements';
 import ScriptEditor from './ScriptEditor';
 import Slide, { SlideKeys } from '@/models/Slide';
+import ProjectService from '@/services/ProjectService';
 
 type SlidesHTMLProps = {
 	slides: Slide[];
@@ -237,67 +238,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	// fetch slides data
 	useEffect(() => {
     if (res_slide) {
-			//console.log('typeof res_slide:', typeof res_slide);
-			// const slides_response_JSON = JSON.stringify(TestSlidesData)
-			const parsed_slides = JSON.parse(res_slide);
-			// console.log('parseSlides:', parsed_slides)
-			// log the type of parsed_slides
-			//console.log('typeof parsed_slides:', typeof parsed_slides);
-
-			// mapping data to slides
-			const slidesArray: Slide[] = Object.keys(parsed_slides).map(
-				(key, index) => {
-					const slideData = parsed_slides[key];
-					//console.log('slideData:', slideData);
-					const slide = new Slide();
-					slide.head = slideData.head || 'New Slide';
-					slide.title = slideData.title || 'New Slide';
-					slide.subtopic = slideData.subtopic || 'New Slide';
-					slide.userName = slideData.userName || '';
-					slide.template =
-						slideData.template ||
-						sessionStorage.getItem('schoolTemplate') ||
-						('Default' as TemplateKeys);
-					slide.content = slideData.content || [
-						'Some content here',
-						'Some more content here',
-						'Even more content here',
-					];
-					slide.images = slideData.images || [];
-					// console.log(
-					//     'slideData.content.length',
-					//     slideData.content.length
-					// );
-					slide.logo = slideData.logo || 'Default';
-					if (index === 0) {
-						slide.layout =
-							slideData.layout || ('Cover_img_1_layout' as LayoutKeys);
-					} else {
-						// choose default layout based on number of bullet points
-						if (slideData.content.length === 1) {
-							slide.layout =
-								slideData.layout || ('Col_2_img_1_layout' as LayoutKeys);
-						} else if (slideData.content.length === 2) {
-							slide.layout =
-								slideData.layout || ('Col_2_img_2_layout' as LayoutKeys);
-						} else if (slideData.content.length === 3) {
-							// Generate a random number between 0 and 1
-							const randomNumber = Math.random();
-							// Choose layout based on probability distribution
-							if (randomNumber < 0.7) {
-								slide.layout =
-									slideData.layout || ('Col_3_img_0_layout' as LayoutKeys);
-							} else {
-								slide.layout =
-									slideData.layout || ('Col_3_img_3_layout' as LayoutKeys);
-							}
-						}
-					}
-
-					// Return the modified slide object
-					return slide;
-				},
-			);
+      const slidesArray = ProjectService.parseSlides(res_slide);
 			//console.log('the parsed slides array:', slidesArray);
 			setSlides(slidesArray);
 		}
@@ -328,111 +269,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			scrollContainerRef.current.scrollLeft = -20; // Set the scroll position to the left
 		}
 	}, []);
-
-	function loadHtmlFile(foldername: string, filename: string) {
-		console.log('start reloading html file');
-		fetch(`/api/html?foldername=${foldername}&filename=${filename}`)
-			.then((response) => {
-				if (!response.ok) {
-					throw new Error('Network response was not ok');
-				}
-				return response.text();
-			})
-			.then((html) => {
-				const parser = new DOMParser();
-				const doc = parser.parseFromString(html, 'text/html');
-				console.log('doc info:', doc);
-				displaySlides(doc);
-				console.log('loaded slides information', doc);
-				sessionStorage.setItem('html', 'html_init.html');
-			})
-			.catch((error) => {
-				console.error('Failed to load HTML file:', error);
-			});
-	}
-
-	function displaySlides(doc: Document) {
-		const slideElements = Array.from(doc.getElementsByClassName('slide'));
-		console.log('display slides information', slideElements);
-		const newSlides: Slide[] = slideElements.map((slide, index) => {
-			const elements = new Slide();
-			const slideChildren = Array.from(slide.children);
-			for (const child of slideChildren) {
-				// need backend to return the layout class
-				let className = child.className;
-				// console.log('className:', className)
-				// console.log('child inner html:', child.innerHTML.trim())
-				if (className === 'head' && child.innerHTML.trim() !== '') {
-					elements.head = sanitizeHtml(child.innerHTML);
-				} else if (className === 'title' && child.innerHTML.trim() !== '') {
-					elements.title = sanitizeHtml(child.innerHTML);
-				} else if (className === 'userName' && child.innerHTML.trim() !== '') {
-					elements.userName = sanitizeHtml(child.innerHTML);
-				} else if (className === 'subtopic' && child.innerHTML.trim() !== '') {
-					// console.log('child inner html:', child.innerHTML.trim())
-					elements.subtopic = sanitizeHtml(child.innerHTML);
-				} else if (
-					className === 'template' &&
-					child.textContent?.trim() !== ''
-				) {
-					// console.log('template child:', child.textContent?.trim())
-					// Use child.textContent for simple string content
-					elements.template = sanitizeHtml(
-						child.textContent ?? '',
-					) as TemplateKeys; // Use nullish coalescing
-				} else if (className === 'layout' && child.textContent?.trim() !== '') {
-					// Use child.textContent for simple string content
-					elements.layout = sanitizeHtml(child.textContent ?? '') as LayoutKeys; // Use nullish coalescing
-					console.log('layout: ', elements.layout);
-				} else if (className === 'content' && child.innerHTML.trim() !== '') {
-					const listItems = Array.from(child.getElementsByTagName('li'));
-					elements.content = listItems.map((li) => sanitizeHtml(li.innerHTML));
-				} else if (child.className === 'images') {
-					const listItems = Array.from(child.getElementsByTagName('img'));
-					console.log('listItems of imgs:', listItems);
-					let urls = listItems.map((img) => {
-						const src = img.getAttribute('src');
-						if (src) {
-							return src;
-						} else {
-							return '';
-						}
-					});
-					elements.images = urls;
-				}
-			}
-
-			// default template
-			if (elements.template === ('' as TemplateKeys)) {
-				// if (index === 0) {
-				//   elements.template = 'First_page_img_1'
-				// } else {
-				//   elements.template = 'Col_1_img_0'
-				// }
-				elements.template = 'Default';
-			}
-
-			// default layout setting
-
-			if (index === 0) {
-				elements.layout = 'Cover_img_1_layout' as LayoutKeys;
-				setChosenLayout(elements.layout);
-				// console.log('current page is cover page: ', elements.layout)
-			} else if (index !== 0 && index % 2 === 0) {
-				elements.layout = 'Col_2_img_1_layout' as LayoutKeys;
-				setChosenLayout(elements.layout);
-				// console.log('current page is non cover page: ', elements.layout)
-			} else if (index !== 0 && index % 2 !== 0) {
-				elements.layout = 'Col_1_img_0_layout' as LayoutKeys;
-				setChosenLayout(elements.layout);
-				// console.log('current page is non cover page: ', elements.layout)
-			}
-			return elements;
-		});
-
-		console.log('new slides: ', newSlides);
-		setSlides(newSlides);
-	}
 
 	function handleKeyDown(event: KeyboardEvent) {
 		if (!isEditMode) {
