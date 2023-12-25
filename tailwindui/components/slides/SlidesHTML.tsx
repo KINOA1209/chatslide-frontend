@@ -238,6 +238,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	// fetch slides data
 	useEffect(() => {
     if (res_slide) {
+      // console.log('res_slide:', res_slide)
       const slidesArray = ProjectService.parseSlides(res_slide);
 			//console.log('the parsed slides array:', slidesArray);
 			setSlides(slidesArray);
