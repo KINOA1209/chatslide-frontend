@@ -122,14 +122,18 @@ class ProjectService {
 
   static parseSlides(presentation_slides: string): Slide[] {
 
-    const jsonSlides = JSON.parse(presentation_slides);
-    console.log('jsonSlides:', jsonSlides);
+    let jsonSlides = JSON.parse(presentation_slides);
+    if(typeof jsonSlides === 'string') {
+      jsonSlides = JSON.parse(jsonSlides);
+    }
+    // console.log('jsonSlides:', jsonSlides);
+    // console.log('typeof jsonSlides:', typeof jsonSlides);
 
     // mapping data to slides
     const slidesArray: Slide[] = Object.keys(jsonSlides).map(
       (key, index) => {
-        const slideData = jsonSlides[key];
-        //console.log('slideData:', slideData);
+        const slideData = typeof jsonSlides[key] === 'string' ? JSON.parse(jsonSlides[key]) : jsonSlides[key];
+        console.log('slideData:', slideData);
         const slide = new Slide();
         slide.head = slideData.head || 'New Slide';
         slide.title = slideData.title || 'New Slide';
@@ -147,8 +151,7 @@ class ProjectService {
         slide.images = slideData.images || [];
         // console.log(
         //     'slideData.content.length',
-        //     slideData.content.length
-        // );
+        //     slideData.content.length        // );
         slide.logo = slideData.logo || 'Default';
         if (index === 0) {
           slide.layout =
