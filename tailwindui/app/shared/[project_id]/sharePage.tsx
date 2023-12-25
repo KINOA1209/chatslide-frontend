@@ -9,6 +9,7 @@ import Header from '@/components/ui/header';
 import dynamic from 'next/dynamic';
 import ProjectService from '@/services/ProjectService';
 import Slide from '@/models/Slide';
+import Project from '@/models/Project';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -26,7 +27,8 @@ const SharePage: React.FC = () => {
     if (project_id) {
       sessionStorage.removeItem('foldername');
       setLoading(true);
-      ProjectService.getFolderName(project_id).then(() => {
+      ProjectService.getSharedProjectDetails(project_id).then((project: Project) => {
+        sessionStorage.setItem('presentation_slides', project.presentation_slides);
         setLoading(false);
       });
     }

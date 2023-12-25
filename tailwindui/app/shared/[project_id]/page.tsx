@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import SharePage from './sharePage';
+import ProjectService from '@/services/ProjectService';
 
 type Props = {
 	params: { project_id: string };
@@ -7,15 +8,9 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const project_id = params.project_id;
-	let host = process.env.NEXT_PUBLIC_HOST; // this is server side, so we can't use window.location
-	if (host === undefined) {
-		host = 'drlambda.ai';
-	}
-	const data = await fetch(
-		`https://${host}/api/get_shared_project_foldername?project_id=${project_id}`,
-	).then((response) => response.json());
-	const topic = data.topic;
-	const description = data.description;
+  const project = {topic: "drlambda", description: "drlambda"};
+  const topic = project.topic;
+  const description = project.description;
 
 	const metadata: Metadata = {
 		title: topic,

@@ -5,35 +5,37 @@ import Slide from '@/models/Slide';
 
 class ProjectService {
 
-  static async getFolderName(
+  static async getSharedProjectDetails(
     project_id: string,
-  ): Promise<string> {
-    fetch(`/api/get_shared_project_foldername?project_id=${project_id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data.status === 'success' && data.foldername) {
-          const foldername = data.foldername;
-          sessionStorage.setItem('foldername', foldername);
-          // console.log(`foldername: ${foldername}`);
+  ): Promise<Project> {
+    console.log(`Fetching shared project details.`);
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
 
-          const slides = data.slides;
-          sessionStorage.setItem('presentation_slides', slides);
-        }
-      })
-      .catch((error) => {
-        console.error(
-          'There was a problem with the fetch operation:',
-          error.message,
-        );
-        throw error
+    try {
+      // fetch project details
+      const response = await fetch(`/api/get_shared_project?project_id=${project_id}`, {
+        method: 'GET',
+        headers: headers,
       });
-    return '';
-  };
+
+      if (!response.ok) {
+        throw new Error(`Error fetching project details: ${response.status}`);
+      }
+
+      const project = await response.json() as Project;
+      console.log('Project data:', project);
+
+      if (project?.presentation_slides) {
+        project.parsed_slides = this.parseSlides(project.presentation_slides);
+      }
+
+      return project;
+    } catch (error) {
+      console.error('Error fetching project details:', error);
+      throw error; // Rethrow the error to be handled by the caller
+    }
+  }
 
 
   static async getProjectDetails(
