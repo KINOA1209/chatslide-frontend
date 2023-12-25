@@ -28,7 +28,7 @@ const SharePage: React.FC = () => {
       sessionStorage.removeItem('foldername');
       setLoading(true);
       ProjectService.getSharedProjectDetails(project_id).then((project: Project) => {
-        sessionStorage.setItem('presentation_slides', project.presentation_slides);
+        setSlides(project.parsed_slides);
         setLoading(false);
       });
     }
