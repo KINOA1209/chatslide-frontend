@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import dynamic from 'next/dynamic';
 import ProjectService from '@/services/ProjectService';
 import Slide from '@/models/Slide';
+import Project from '@/models/Project';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -25,9 +26,9 @@ const SharePage: React.FC = () => {
       console.log(`token: ${token}`);
       console.log(`project_id: ${project_id}`);
       console.log(`page: ${page}`);
-      ProjectService.getProjectDetails(token, project_id).then((data) => {
-        console.log(`slides: ${data.presentation_slides}}`);
-        sessionStorage.setItem('presentation_slides', data.presentation_slides);
+      ProjectService.getProjectDetails(token, project_id).then((project: Project) => {
+        console.log(`slides: ${project.presentation_slides}}`);
+        setSlides(project.parsed_slides);
         setLoading(false);
       });
 		}
