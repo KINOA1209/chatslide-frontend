@@ -238,7 +238,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
   // fetch slides data from session storage if slides is not passed in
   useEffect(() => {
-    if (slides) {
+    if (slides && slides.length > 0) {
       console.log(`slides is passed in, skip fetching slides data from session storage`);
     }
     else if (res_slide) {
