@@ -7,6 +7,7 @@ import PaywallModal from '../forms/paywallModal';
 import { BigGrayButton } from '../button/DrlambdaButton';
 import { FaDownload, FaRing, FaTruckLoading } from 'react-icons/fa';
 import { generatePdf } from '../utils/DownloadImage';
+import ProjectService from '@/services/ProjectService';
 
 interface ExportToPdfProps {
 	slides: Slide[];
@@ -60,7 +61,7 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({
 		fetchUser();
 	}, []);
 
-	async function exportToPdf() {
+	async function exportToPdfFrontend() {
 		const file = await generatePdf(topic || '', exportSlidesRef, slides.length);
 		if (file) {
 			//save file to session storage
@@ -80,29 +81,9 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({
 
 	const handleSavePDF = async () => {
 		setDownloadingPDF(true);
-		// const element = document.getElementById('pdf-content');
-
-		// try {
-		// 	const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-
-		// 	const response = await fetch('/api/save_final_html_pdf', {
-		// 		method: 'POST',
-		// 		headers: {
-		// 			Authorization: `Bearer ${idToken}`,
-		// 			'Content-Type': 'application/json',
-		// 		},
-		// 	});
-
-		// 	if (response.ok) {
-		await exportToPdf();
-		// 	} else if (response.status === 402) {
-		// 		setShowPaymentModal(true);
-		// 	} else {
-		// 		console.error('Failed to save PDF.');
-		// 	}
-		// } catch (error) {
-		// 	console.error('An error occurred:', error);
-		// }
+    const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+    const project_id = sessionStorage.getItem('project_id') || '';
+    await ProjectService.exportToPdfBackend(idToken, project_id);  
 		setDownloadingPDF(false);
 	};
 
