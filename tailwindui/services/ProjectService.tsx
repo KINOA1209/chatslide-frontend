@@ -187,6 +187,45 @@ class ProjectService {
       console.log('slidesArray:', slidesArray);
       return slidesArray;
     }
+
+
+    static async exportToPdfBackend( token: string, project_id: string ): Promise<void> {
+      const headers = new Headers();
+      if (token) {
+        headers.append('Authorization', `Bearer ${token}`);
+      }
+      headers.append('Content-Type', 'application/json');
+
+      try {
+        const response = await fetch('/api/export_to_pdf', {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify({ project_id: project_id }),
+        });
+        if (response.ok) {
+          const data = await response.json();
+          const url = data.url;
+
+          const topic = sessionStorage.getItem('topic') || 'export';
+
+          //download file
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `${topic}.pdf`
+          document.body.appendChild(a);
+          a.click();
+
+          window.URL.revokeObjectURL(url);
+          document.body.removeChild(a);
+
+        } else {
+          // Handle error cases
+          console.error('Failed to export to pdf:', response.status);
+        }
+      } catch (error) {
+        console.error('Error exporting to pdf:', error);
+      }
+    }
 }
 
 export default ProjectService;
