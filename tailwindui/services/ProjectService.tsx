@@ -20,7 +20,7 @@ class ProjectService {
       });
 
       if (!response.ok) {
-        throw new Error(`Error fetching project details: ${response.status}`);
+        throw new Error(`Error fetching project ${project_id} details: ${response.status}`);
       }
 
       const project = await response.json() as Project;
@@ -32,7 +32,7 @@ class ProjectService {
 
       return project;
     } catch (error) {
-      console.error('Error fetching project details:', error);
+      console.error(`Error fetching project ${project_id} details:`, error);
       throw error; // Rethrow the error to be handled by the caller
     }
   }
