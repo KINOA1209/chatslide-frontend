@@ -188,7 +188,7 @@ export const ColumbiaTemplateLogo = ({
 			<Image
 				src={ColumbiaLogo}
 				alt='Columbia Logo'
-				className='w-[3.75rem] h-auto'
+				className='w-[10rem]  h-auto'
 			/>
 		</div>
 	);
