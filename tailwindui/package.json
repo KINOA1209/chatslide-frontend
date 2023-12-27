@@ -26,6 +26,7 @@
 		"html-to-image": "^1.11.11",
 		"html2canvas": "^1.4.1",
 		"html2pdf.js": "^0.10.1",
+		"immer": "^10.0.3",
 		"jspdf": "^2.5.1",
 		"katex": "^0.16.8",
 		"modern-screenshot": "^4.4.37",

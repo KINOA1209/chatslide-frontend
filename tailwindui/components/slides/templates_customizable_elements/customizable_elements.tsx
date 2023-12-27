@@ -179,23 +179,15 @@ const configData: Config = {
 		},
 	},
 	MIT: {
-		// color: '#1f2937',
-		// fontWeight: 'bold',
-		// fontSize: '27pt',
-		backgroundColorCover: 'bg-[#F0F0F2]',
+		backgroundColorCover: 'bg-[#750014]',
 		backgroundColor: 'bg-[#F0F0F2]',
-		// titleFont: 'text-3xl font-bold font-creato-medium leading-[100%] ',
-		// titleFontColor: 'text-black',
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[100%] is equivalent to a line height of 1},
-			color: '#000', // text-black color
+			color: '#750014', // text-black color
 		},
-		// subtopicFont:
-		//   'text-xl font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]',
-		// subtopicFontColor: 'text-neutral-900',
 		subtopicFontCSS: {
 			fontSize: '18pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
@@ -219,7 +211,7 @@ const configData: Config = {
 		},
 		userNameFont:
 			'text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
-		userNameFontColor: 'text-[#3D3D3D]',
+		userNameFontColor: 'text-[#F0F0F2]',
 		// headFont:
 		//   'text-neutral-800 text-4xl font-normal font-creato-medium leading-[120%] tracking-tight',
 		// headFontColor: 'text-neutral-800',
@@ -229,7 +221,7 @@ const configData: Config = {
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
-			color: '#374151', // text-neutral-800 color},
+			color: '#F0F0F2', // text-neutral-800 color},
 		},
 
 		contentFontCSS_non_vertical_content: {
@@ -242,23 +234,16 @@ const configData: Config = {
 		},
 	},
 	Princeton: {
-		// color: '#1f2937',
-		// fontWeight: 'bold',
-		// fontSize: '27pt',
-		backgroundColorCover: 'bg-[#F0F0F2]',
+		backgroundColorCover: 'bg-[#FF671F]',
 		backgroundColor: 'bg-[#F0F0F2]',
-		// titleFont: 'text-3xl font-bold font-creato-medium leading-[100%] ',
-		// titleFontColor: 'text-black',
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[100%] is equivalent to a line height of 1},
-			color: '#000', // text-black color
+			color: '#FF671F', // text-black color
 		},
-		// subtopicFont:
-		//   'text-xl font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]',
-		// subtopicFontColor: 'text-neutral-900',
+
 		subtopicFontCSS: {
 			fontSize: '18pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
@@ -268,9 +253,7 @@ const configData: Config = {
 			letterSpacing: '0.15rem', // tracking-[0.15rem]},
 			color: '#111827', // text-neutral-900 color
 		},
-		// contentFont:
-		//   'text-opacity-70 text-base font-normal font-creato-medium leading-[140%] tracking-[0.025rem] ',
-		// contentFontColor: 'text-neutral-900',
+
 		contentFontCSS: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
@@ -282,17 +265,15 @@ const configData: Config = {
 		},
 		userNameFont:
 			'text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
-		userNameFontColor: 'text-[#3D3D3D]',
-		// headFont:
-		//   'text-neutral-800 text-4xl font-normal font-creato-medium leading-[120%] tracking-tight',
-		// headFontColor: 'text-neutral-800',
+		userNameFontColor: 'text-[#000]',
+
 		headFontCSS: {
 			fontSize: '32pt', // text-4xl in points
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
-			color: '#374151', // text-neutral-800 color},
+			color: '#000', // text-neutral-800 color},
 		},
 
 		contentFontCSS_non_vertical_content: {
@@ -305,23 +286,15 @@ const configData: Config = {
 		},
 	},
 	Caltech: {
-		// color: '#1f2937',
-		// fontWeight: 'bold',
-		// fontSize: '27pt',
-		backgroundColorCover: 'bg-[#F0F0F2]',
+		backgroundColorCover: 'bg-[#F25422]',
 		backgroundColor: 'bg-[#F0F0F2]',
-		// titleFont: 'text-3xl font-bold font-creato-medium leading-[100%] ',
-		// titleFontColor: 'text-black',
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[100%] is equivalent to a line height of 1},
-			color: '#000', // text-black color
+			color: '#F25422', // text-black color
 		},
-		// subtopicFont:
-		//   'text-xl font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]',
-		// subtopicFontColor: 'text-neutral-900',
 		subtopicFontCSS: {
 			fontSize: '18pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
@@ -331,9 +304,7 @@ const configData: Config = {
 			letterSpacing: '0.15rem', // tracking-[0.15rem]},
 			color: '#111827', // text-neutral-900 color
 		},
-		// contentFont:
-		//   'text-opacity-70 text-base font-normal font-creato-medium leading-[140%] tracking-[0.025rem] ',
-		// contentFontColor: 'text-neutral-900',
+
 		contentFontCSS: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
@@ -345,17 +316,15 @@ const configData: Config = {
 		},
 		userNameFont:
 			'text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
-		userNameFontColor: 'text-[#3D3D3D]',
-		// headFont:
-		//   'text-neutral-800 text-4xl font-normal font-creato-medium leading-[120%] tracking-tight',
-		// headFontColor: 'text-neutral-800',
+		userNameFontColor: 'text-[#F0F0F2]',
+
 		headFontCSS: {
 			fontSize: '32pt', // text-4xl in points
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
-			color: '#374151', // text-neutral-800 color},
+			color: '#F0F0F2', // text-neutral-800 color},
 		},
 
 		contentFontCSS_non_vertical_content: {
@@ -371,8 +340,8 @@ const configData: Config = {
 		// color: '#1f2937',
 		// fontWeight: 'bold',
 		// fontSize: '27pt',
-		backgroundColorCover: 'bg-[#F0F0F2]',
-		backgroundColor: 'bg-[#F0F0F2]',
+		backgroundColorCover: 'bg-[#B9D9EB]',
+		backgroundColor: 'bg-[#B9D9EB]',
 		// titleFont: 'text-3xl font-bold font-creato-medium leading-[100%] ',
 		// titleFontColor: 'text-black',
 		titleFontCSS: {
@@ -408,7 +377,7 @@ const configData: Config = {
 		},
 		userNameFont:
 			'text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
-		userNameFontColor: 'text-[#3D3D3D]',
+		userNameFontColor: 'text-[#000]',
 		// headFont:
 		//   'text-neutral-800 text-4xl font-normal font-creato-medium leading-[120%] tracking-tight',
 		// headFontColor: 'text-neutral-800',
@@ -418,7 +387,7 @@ const configData: Config = {
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
-			color: '#374151', // text-neutral-800 color},
+			color: '#000', // text-neutral-800 color},
 		},
 
 		contentFontCSS_non_vertical_content: {
@@ -434,7 +403,7 @@ const configData: Config = {
 		// color: '#1f2937',
 		// fontWeight: 'bold',
 		// fontSize: '27pt',
-		backgroundColorCover: 'bg-[#F0F0F2]',
+		backgroundColorCover: 'bg-[#002D72]',
 		backgroundColor: 'bg-[#F0F0F2]',
 		// titleFont: 'text-3xl font-bold font-creato-medium leading-[100%] ',
 		// titleFontColor: 'text-black',
@@ -443,7 +412,7 @@ const configData: Config = {
 			fontWeight: 'bold', // font-bold
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[100%] is equivalent to a line height of 1},
-			color: '#000', // text-black color
+			color: '#002D72', // text-black color
 		},
 		// subtopicFont:
 		//   'text-xl font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]',
@@ -471,7 +440,7 @@ const configData: Config = {
 		},
 		userNameFont:
 			'text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
-		userNameFontColor: 'text-[#3D3D3D]',
+		userNameFontColor: 'text-[#F0F0F2]',
 		// headFont:
 		//   'text-neutral-800 text-4xl font-normal font-creato-medium leading-[120%] tracking-tight',
 		// headFontColor: 'text-neutral-800',
@@ -481,7 +450,7 @@ const configData: Config = {
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
-			color: '#374151', // text-neutral-800 color},
+			color: '#F0F0F2', // text-neutral-800 color},
 		},
 
 		contentFontCSS_non_vertical_content: {
@@ -494,23 +463,16 @@ const configData: Config = {
 		},
 	},
 	UChicago: {
-		// color: '#1f2937',
-		// fontWeight: 'bold',
-		// fontSize: '27pt',
-		backgroundColorCover: 'bg-[#F0F0F2]',
+		backgroundColorCover: 'bg-[#800]',
 		backgroundColor: 'bg-[#F0F0F2]',
-		// titleFont: 'text-3xl font-bold font-creato-medium leading-[100%] ',
-		// titleFontColor: 'text-black',
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[100%] is equivalent to a line height of 1},
-			color: '#000', // text-black color
+			color: '#800', // text-black color
 		},
-		// subtopicFont:
-		//   'text-xl font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]',
-		// subtopicFontColor: 'text-neutral-900',
+
 		subtopicFontCSS: {
 			fontSize: '18pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
@@ -520,9 +482,7 @@ const configData: Config = {
 			letterSpacing: '0.15rem', // tracking-[0.15rem]},
 			color: '#111827', // text-neutral-900 color
 		},
-		// contentFont:
-		//   'text-opacity-70 text-base font-normal font-creato-medium leading-[140%] tracking-[0.025rem] ',
-		// contentFontColor: 'text-neutral-900',
+
 		contentFontCSS: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
@@ -534,7 +494,7 @@ const configData: Config = {
 		},
 		userNameFont:
 			'text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
-		userNameFontColor: 'text-[#3D3D3D]',
+		userNameFontColor: 'text-[#F0F0F2]',
 		// headFont:
 		//   'text-neutral-800 text-4xl font-normal font-creato-medium leading-[120%] tracking-tight',
 		// headFontColor: 'text-neutral-800',
@@ -544,7 +504,7 @@ const configData: Config = {
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
-			color: '#374151', // text-neutral-800 color},
+			color: '#F0F0F2', // text-neutral-800 color},
 		},
 
 		contentFontCSS_non_vertical_content: {
@@ -557,23 +517,17 @@ const configData: Config = {
 		},
 	},
 	Yale: {
-		// color: '#1f2937',
-		// fontWeight: 'bold',
-		// fontSize: '27pt',
-		backgroundColorCover: 'bg-[#F0F0F2]',
+		backgroundColorCover: 'bg-[#03346A]',
 		backgroundColor: 'bg-[#F0F0F2]',
-		// titleFont: 'text-3xl font-bold font-creato-medium leading-[100%] ',
-		// titleFontColor: 'text-black',
+
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[100%] is equivalent to a line height of 1},
-			color: '#000', // text-black color
+			color: '#03346A', // text-black color
 		},
-		// subtopicFont:
-		//   'text-xl font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]',
-		// subtopicFontColor: 'text-neutral-900',
+
 		subtopicFontCSS: {
 			fontSize: '18pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
@@ -583,9 +537,7 @@ const configData: Config = {
 			letterSpacing: '0.15rem', // tracking-[0.15rem]},
 			color: '#111827', // text-neutral-900 color
 		},
-		// contentFont:
-		//   'text-opacity-70 text-base font-normal font-creato-medium leading-[140%] tracking-[0.025rem] ',
-		// contentFontColor: 'text-neutral-900',
+
 		contentFontCSS: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
@@ -597,17 +549,15 @@ const configData: Config = {
 		},
 		userNameFont:
 			'text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
-		userNameFontColor: 'text-[#3D3D3D]',
-		// headFont:
-		//   'text-neutral-800 text-4xl font-normal font-creato-medium leading-[120%] tracking-tight',
-		// headFontColor: 'text-neutral-800',
+		userNameFontColor: 'text-[#F0F0F2]',
+
 		headFontCSS: {
 			fontSize: '32pt', // text-4xl in points
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
-			color: '#374151', // text-neutral-800 color},
+			color: '#F0F0F2', // text-neutral-800 color},
 		},
 
 		contentFontCSS_non_vertical_content: {
@@ -620,23 +570,15 @@ const configData: Config = {
 		},
 	},
 	UPenn: {
-		// color: '#1f2937',
-		// fontWeight: 'bold',
-		// fontSize: '27pt',
-		backgroundColorCover: 'bg-[#F0F0F2]',
+		backgroundColorCover: 'bg-[#011F5B]',
 		backgroundColor: 'bg-[#F0F0F2]',
-		// titleFont: 'text-3xl font-bold font-creato-medium leading-[100%] ',
-		// titleFontColor: 'text-black',
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[100%] is equivalent to a line height of 1},
-			color: '#000', // text-black color
+			color: '#011F5B', // text-black color
 		},
-		// subtopicFont:
-		//   'text-xl font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]',
-		// subtopicFontColor: 'text-neutral-900',
 		subtopicFontCSS: {
 			fontSize: '18pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
@@ -646,9 +588,6 @@ const configData: Config = {
 			letterSpacing: '0.15rem', // tracking-[0.15rem]},
 			color: '#111827', // text-neutral-900 color
 		},
-		// contentFont:
-		//   'text-opacity-70 text-base font-normal font-creato-medium leading-[140%] tracking-[0.025rem] ',
-		// contentFontColor: 'text-neutral-900',
 		contentFontCSS: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
@@ -660,17 +599,15 @@ const configData: Config = {
 		},
 		userNameFont:
 			'text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
-		userNameFontColor: 'text-[#3D3D3D]',
-		// headFont:
-		//   'text-neutral-800 text-4xl font-normal font-creato-medium leading-[120%] tracking-tight',
-		// headFontColor: 'text-neutral-800',
+		userNameFontColor: 'text-[#F0F0F2]',
+
 		headFontCSS: {
 			fontSize: '32pt', // text-4xl in points
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
-			color: '#374151', // text-neutral-800 color},
+			color: '#F0F0F2', // text-neutral-800 color},
 		},
 
 		contentFontCSS_non_vertical_content: {
