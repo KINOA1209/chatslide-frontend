@@ -236,7 +236,9 @@ const OpenAIKey = () => {
 			await AuthService.getCurrentUserTokenAndId();
 		UserService.getOpenaiApiKey(token).then((data) => {
 			if (data) setKey(data);
-		});
+		}).catch((error) => {
+      console.error(error);
+    });
 	};
 
 	const updateKey = async () => {
