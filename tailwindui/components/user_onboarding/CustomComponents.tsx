@@ -40,7 +40,7 @@ export const ExitConfirmationWindow: FC<ExitConfirmationWindowProps> = ({
 				className='confirmation-overlay fixed inset-0 bg-black bg-opacity-50 z-50'
 				onClick={() => onConfirmation(false)} // Close the confirmation on overlay click
 			></div>
-			<div className='confirmation-tooltip bg-white p-8 rounded-lg shadow-lg fixed top-1/2 left-1/2 w-[31rem] h-auto transform -translate-x-1/2 -translate-y-1/2 z-50 flex flex-col'>
+			<div className='confirmation-tooltip bg-white p-8 rounded-lg shadow-lg fixed top-1/2 left-1/2 max-w-lg h-auto transform -translate-x-1/2 -translate-y-1/2 z-50 flex flex-col'>
 				<img src={ExitUserGuideWarningImg.src} alt='Exit warning' />
 
 				<TutorialStepContent
