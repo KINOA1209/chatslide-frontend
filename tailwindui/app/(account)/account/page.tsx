@@ -37,7 +37,7 @@ const Profile = () => {
 	const fetchUser = async () => {
 		const user = await AuthService.getCurrentUser();
 		setEmail(user.attributes.email);
-		setUsername(user.attributes.name);
+    setUsername(user.attributes.name ? user.attributes.name : user.attributes.email);
 	};
 
 	useEffect(() => {
