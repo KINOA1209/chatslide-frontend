@@ -212,8 +212,8 @@ class UserService {
 			});
 
 			if (response.ok) {
-				const data = await response.json(); // Change here
-				return data.openai_key; // Assuming the key is in the "openai_key" field
+				const data = await response.json(); 
+				return data.openai_key; // this could be an empty string
 			} else {
 				throw new Error(`Error ${response.status}: ${await response.text()}`);
 			}
