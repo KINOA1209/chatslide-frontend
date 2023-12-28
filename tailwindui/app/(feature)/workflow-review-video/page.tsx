@@ -5,6 +5,9 @@ import { useRouter } from 'next/navigation';
 import Video from '@/components/Video';
 import ProjectProgress from '@/components/steps';
 import FeedbackButton from '@/components/ui/feedback';
+import WorkflowStepsBanner from "@/components/WorkflowStepsBanner";
+import {ToastContainer} from "react-toastify";
+import SlideVisualizer from "@/components/slides/SlideVisualizer";
 
 const VideoVisualizer = ({
 	videoFile,
@@ -42,21 +45,10 @@ const VideoVisualizer = ({
 	};
 
 	return (
-		<div className='max-w-4xl mx-auto px-4 sm:px-6'>
+		//<div className='max-w-4xl mx-auto px-4 sm:px-6'>
+		<div className='flex flex-col justify-center items-center gap-4 my-4'>
 			<div className='w-fit block m-auto'>
 				<Video filename={videoFile} foldername={foldername} />
-			</div>
-			<div className='max-w-sm mx-auto'>
-				<div className='flex flex-wrap -mx-3 mt-6'>
-					<div className='w-full px-3'>
-						<button
-							className='btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full'
-							onClick={handleDownload}
-						>
-							Download Video
-						</button>
-					</div>
-				</div>
 			</div>
 		</div>
 	);
@@ -72,20 +64,35 @@ export default function WorkflowStep6() {
 			? sessionStorage.getItem('foldername') || ''
 			: '';
 	const contentRef = useRef<HTMLDivElement>(null);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	return (
-		<div>
-			<div className='pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20'>
-				<h1 className='h1'>Review Video</h1>
-			</div>
+		<div className='min-h-[90vh] w-full bg-white'>
+			{/* flex col container for steps, title, etc */}
 
-			<div className='max-w-4xl mx-auto' ref={contentRef}>
+			<WorkflowStepsBanner
+				currentIndex={4}
+				isSubmitting={isSubmitting}
+				setIsSubmitting={setIsSubmitting}
+				isPaidUser={true}
+				contentRef={contentRef}
+				nextIsPaidFeature={true}
+				nextText={!isSubmitting ? 'Download Video' : 'Downloading Video'}
+				showGPTToggle={false}
+			/>
+
+			<ToastContainer enableMultiContainer containerId={'video'} />
+
+			<div
+				className={`max-w-4xl px-6 flex flex-col relative mx-auto`}
+				ref={contentRef}
+			>
 				<VideoVisualizer videoFile={videoFile} foldername={foldername} />
 			</div>
 
-			<ProjectProgress currentInd={5} contentRef={contentRef} />
-
-			<FeedbackButton />
+			<FeedbackButton timeout={30000} />
 		</div>
+		// <div className='pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20'>
+		//<div className='max-w-4xl mx-auto' ref={contentRef}>
 	);
 }
