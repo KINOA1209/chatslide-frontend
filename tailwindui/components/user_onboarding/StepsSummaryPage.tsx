@@ -62,7 +62,7 @@ const StepsSummaryPage: () => CustomStep[] = () => {
 			placement: 'bottom',
 			styles: {
 				tooltip: {
-					width: '31rem', // Set the width of the tooltip
+					maxWidth: '32rem', // Set the max width of the tooltip
 					// Add any other styles as needed
 				},
 				// Add styles for other elements as needed
@@ -87,7 +87,7 @@ const StepsSummaryPage: () => CustomStep[] = () => {
 			placement: 'bottom',
 			styles: {
 				tooltip: {
-					width: '31rem', // Set the width of the tooltip
+					maxWidth: '32rem', // Set the max width of the tooltip
 					// Add any other styles as needed
 				},
 				// Add styles for other elements as needed
@@ -112,7 +112,7 @@ const StepsSummaryPage: () => CustomStep[] = () => {
 			placement: 'bottom',
 			styles: {
 				tooltip: {
-					width: '31rem', // Set the width of the tooltip
+					maxWidth: '32rem', // Set the max width of the tooltip
 					// Add any other styles as needed
 				},
 				// Add styles for other elements as needed
@@ -137,7 +137,7 @@ const StepsSummaryPage: () => CustomStep[] = () => {
 			placement: 'bottom',
 			styles: {
 				tooltip: {
-					width: '31rem', // Set the width of the tooltip
+					maxWidth: '32rem', // Set the max width of the tooltip
 					// Add any other styles as needed
 				},
 				// Add styles for other elements as needed
@@ -162,7 +162,7 @@ const StepsSummaryPage: () => CustomStep[] = () => {
 			placement: 'bottom',
 			styles: {
 				tooltip: {
-					width: '31rem', // Set the width of the tooltip
+					maxWidth: '32rem', // Set the max width of the tooltip
 					// Add any other styles as needed
 				},
 				// Add styles for other elements as needed
