@@ -4,7 +4,7 @@ export default class VideoService {
 		foldername: string | null,
 		language: string | null,
 		userToken: string,
-	): Promise<boolean> {
+	): Promise<string> {
 		try {
 			const response = await fetch('/api/generate_video', {
 				method: 'POST',
@@ -18,7 +18,7 @@ export default class VideoService {
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`);
 			}
-			return true;
+			return 'output.mp4';
 		} catch (error) {
 			throw error;
 		}
