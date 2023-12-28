@@ -1,6 +1,8 @@
 export default class VideoService {
 	static async generateVideo(
 		project_id: string,
+		foldername: string | null,
+		language: string | null,
 		userToken: string,
 	): Promise<boolean> {
 		try {
@@ -10,7 +12,7 @@ export default class VideoService {
 					'Content-Type': 'application/json',
 					Authorization: `Bearer ${userToken}`, // Replace this with your actual auth header
 				},
-				body: JSON.stringify({ project_id: project_id }),
+				body: JSON.stringify({ project_id: project_id, foldername: foldername, language: language }),
 			});
 
 			if (!response.ok) {

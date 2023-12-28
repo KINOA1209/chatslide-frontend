@@ -508,6 +508,10 @@ export default function WorkflowStep4() {
 		typeof sessionStorage !== 'undefined'
 			? sessionStorage.getItem('foldername')
 			: '';
+	const language =
+		typeof sessionStorage !== 'undefined'
+			? sessionStorage.getItem('language')
+			: 'English';
 	useEffect(() => {
 		// Store 'transcriptWithTitle' in session storage
 		sessionStorage.setItem(
@@ -534,7 +538,7 @@ export default function WorkflowStep4() {
 				const { userId, idToken: token } =
 					await AuthService.getCurrentUserTokenAndId();
 				const project_id = sessionStorage.getItem('project_id') || '';
-				await VideoService.generateVideo(project_id, token);
+				await VideoService.generateVideo(project_id, foldername, language, token);
 			} catch (error) {
 				console.error('Error in fetchData:', error);
 			}
