@@ -28,6 +28,10 @@
 	cursor: pointer !important;
 }
 
+.ql-editor ul li {
+    padding-bottom: 10px;
+}
+
 $i: 8;
 @while $i <= 80 {
 	.ql-bubble .ql-picker.ql-size .ql-picker-label[data-value='#{$i}pt']::before,
