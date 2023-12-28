@@ -51,7 +51,7 @@ const configData: Config = {
 			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'nimbus-sans-regular', sans-serif", // font-nimbus-sans-regular
-			lineHeight: 1.2, // leading-9 is equivalent to a line height of 1.5
+			lineHeight: 2.0, // leading-9 is equivalent to a line height of 1.5
 			color: '#4B5563', // text-zinc-800 color
 			display: 'list-item',
 		},
@@ -99,7 +99,7 @@ const configData: Config = {
 		contentFontCSS: {
 			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal
-			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
+			lineHeight: 2.0, // leading-[120%] is equivalent to a line height of 1.2
 			fontFamily: 'sans-serif', // font-sans (assuming sans-serif as a default)
 			color: '#1B1B1B', // text-[#1B1B1B] color
 			display: 'list-item',
@@ -154,7 +154,7 @@ const configData: Config = {
 			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal
 			fontFamily: 'Arial, sans-serif', // font-['Arial']
-			lineHeight: 'normal', // leading-loose, assuming 'normal' or '1.5' depending on your design
+			lineHeight: 2.0, // leading-loose, assuming 'normal' or '1.5' depending on your design
 			color: '#4A5568', // text-neutral-700 color
 			display: 'list-item',
 		},
@@ -204,7 +204,7 @@ const configData: Config = {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
-			lineHeight: 1.2, // leading-[140%]
+			lineHeight: 2.0, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
 			display: 'list-item',
@@ -258,7 +258,7 @@ const configData: Config = {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
-			lineHeight: 1.2, // leading-[140%]
+			lineHeight: 2.0, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
 			display: 'list-item',
@@ -309,7 +309,7 @@ const configData: Config = {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
-			lineHeight: 1.2, // leading-[140%]
+			lineHeight: 2.0, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
 			display: 'list-item',
@@ -370,7 +370,7 @@ const configData: Config = {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
-			lineHeight: 1.2, // leading-[140%]
+			lineHeight: 2.0, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
 			display: 'list-item',
@@ -433,7 +433,7 @@ const configData: Config = {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
-			lineHeight: 1.2, // leading-[140%]
+			lineHeight: 2.0, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
 			display: 'list-item',
@@ -487,7 +487,7 @@ const configData: Config = {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
-			lineHeight: 1.2, // leading-[140%]
+			lineHeight: 2.0, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
 			display: 'list-item',
@@ -542,7 +542,7 @@ const configData: Config = {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
-			lineHeight: 1.2, // leading-[140%]
+			lineHeight: 2.0, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
 			display: 'list-item',
@@ -592,7 +592,7 @@ const configData: Config = {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
-			lineHeight: 1.2, // leading-[140%]
+			lineHeight: 2.0, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
 			display: 'list-item',
