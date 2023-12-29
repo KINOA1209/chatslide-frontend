@@ -1,7 +1,7 @@
 import { ImgModule } from '@/components/socialPost/socialPostIllustrationModule';
 import { ImgModule as ImgModuleSlide } from '@/components/socialPost/socialPostImgModule';
 import { useEffect, useMemo, useState } from 'react';
-import cover_png from '@/public/images/template/cover.png';
+import cover_png from '@/public/images/template/layout/cover.png';
 import withimg_png from '@/public/images/template/socialpost_t1_img.png';
 import noimg_png from '@/public/images/template/socialpost_t1_no_img.png';
 import '@/components/socialPost/templates.css';
