@@ -101,6 +101,9 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 				console.log(resp.data.res);
 				sessionStorage.setItem('transcripts', JSON.stringify(resp.data.res));
 				setTranscriptList(resp.data.res);
+
+        // refresh page 
+        window.location.reload();
 			} else {
 				alert('Request failed: ' + response.status);
 				console.log(response);

@@ -1,6 +1,6 @@
 'use client';
 import AuthService from '@/services/AuthService';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect, useRef, RefObject } from 'react';
 import Pricing from '@/components/landing/pricing';
 import { ToastContainer, toast } from 'react-toastify';
@@ -23,6 +23,7 @@ import {
 	FaUser,
 	FaVoicemail,
 } from 'react-icons/fa';
+import { useLocation } from 'react-router-dom';
 
 const Profile = () => {
 	const [username, setUsername] = useState<string>('');
@@ -235,7 +236,9 @@ const OpenAIKey = () => {
 			await AuthService.getCurrentUserTokenAndId();
 		UserService.getOpenaiApiKey(token).then((data) => {
 			if (data) setKey(data);
-		});
+		}).catch((error) => {
+      console.error(error);
+    });
 	};
 
 	const updateKey = async () => {
@@ -285,6 +288,73 @@ const OpenAIKey = () => {
 		</div>
 	);
 };
+
+const ApplyPromo = () => {
+  const searchParams = useSearchParams();
+  const [promo, setPromo] = useState(searchParams?.get('promo') || '');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const applyPromo = async () => {
+    setIsSubmitting(true);
+    console.log(isSubmitting);
+    const { userId, idToken: token } =
+      await AuthService.getCurrentUserTokenAndId();
+    const {status, message} = await UserService.applyPromoCode(promo, token, true);
+    if(status==200){
+      toast.success(message, {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+    } else{
+      toast.error(message, {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+    }
+    setIsSubmitting(false);
+    console.log(isSubmitting);
+  };
+
+  return (
+    <div className='w-full px-4 sm:px-6'>
+      <div className='mb-8 w-full'>
+        <div className='w-fit text-[#363E4A] text-[17px] font-bold'>
+          Apply Promo Code
+        </div>
+        <div className='w-full justify-center flex flex-row'>
+          <div className='flex w-[20rem] flex-row gap-4 justify-center mt-2'>
+            <InputBox onClick={(e) => (e.target as HTMLInputElement)?.select()}>
+              <input
+                id='promo'
+                type='text'
+                className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+                onChange={(e) => setPromo(e.target.value)}
+                onClick={(e) => (e.target as HTMLInputElement)?.select()}
+                value={promo}
+              />
+            </InputBox>
+
+            <BigBlueButton onClick={applyPromo} isSubmitting={isSubmitting}>
+              Apply
+            </BigBlueButton>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 const Subscription = () => {
 	const [portalURL, setPortalURL] = useState('');
@@ -382,153 +452,6 @@ export default function Account() {
 	// Add section ref for scrollIntoView in function toSection
 	// Add IntersectionObserver in function observeElements
 
-	const [currentDisplay, setCurrentDisplay] = useState(0);
-	const [selectDisplay, setSelectDisplay] = useState(0);
-	const [hoverTo, setHoverTo] = useState(-1);
-	const tabUnderlineRef = useRef<HTMLDivElement>(null);
-
-	// refs for sub-header animation
-	const tab1Ref = useRef<HTMLDivElement>(null);
-	const tab2Ref = useRef<HTMLDivElement>(null);
-	const tab3Ref = useRef<HTMLDivElement>(null);
-	const tab4Ref = useRef<HTMLDivElement>(null);
-
-	//ref for sections
-	const ref1 = useRef<HTMLDivElement>(null);
-	const ref2 = useRef<HTMLDivElement>(null);
-	const ref3 = useRef<HTMLDivElement>(null);
-	const ref4 = useRef<HTMLDivElement>(null);
-
-	const toSection = (index: number) => {
-		setSelectDisplay(index);
-		if (ref1.current && ref2.current && ref3.current && ref4.current) {
-			if (index === 0) {
-				ref1.current.scrollIntoView({
-					behavior: 'smooth',
-					block: 'center',
-					inline: 'nearest',
-				});
-			} else if (index === 1) {
-				ref2.current.scrollIntoView({
-					behavior: 'smooth',
-					block: 'center',
-					inline: 'nearest',
-				});
-			} else if (index === 2) {
-				ref3.current.scrollIntoView({
-					behavior: 'smooth',
-					block: 'start',
-					inline: 'nearest',
-				});
-			} else if (index === 3) {
-				ref4.current.scrollIntoView({
-					behavior: 'smooth',
-					block: 'center',
-					inline: 'nearest',
-				});
-			}
-		}
-	};
-
-	const handleMouseOver = (index: number) => {
-		setHoverTo(index);
-	};
-
-	const handleMouseOut = () => {
-		setHoverTo(-1);
-	};
-
-	useEffect(() => {
-		if (hoverTo !== -1) {
-			setCurrentDisplay(hoverTo);
-		} else {
-			setCurrentDisplay(selectDisplay);
-		}
-	}, [hoverTo, selectDisplay]);
-
-	useEffect(() => {
-		const handleIntersect1 = (entry: IntersectionObserverEntry[]) => {
-			if (entry[0].isIntersecting) {
-				setSelectDisplay(0);
-			}
-		};
-		const handleIntersect2 = (entry: IntersectionObserverEntry[]) => {
-			if (entry[0].isIntersecting) {
-				setSelectDisplay(1);
-			}
-		};
-		const handleIntersect3 = (entry: IntersectionObserverEntry[]) => {
-			if (entry[0].isIntersecting) {
-				setSelectDisplay(2);
-			}
-		};
-		const handleIntersect4 = (entry: IntersectionObserverEntry[]) => {
-			if (entry[0].isIntersecting) {
-				setSelectDisplay(3);
-			}
-		};
-
-		const observeElements = () => {
-			if (ref1.current && ref2.current && ref3.current && ref4.current) {
-				let options = {
-					root: null,
-					rootMargin: '0px',
-					threshold: [0.3],
-				};
-
-				let observer1 = new IntersectionObserver(handleIntersect1, options);
-				observer1.observe(ref1.current);
-				let observer2 = new IntersectionObserver(handleIntersect2, options);
-				observer2.observe(ref2.current);
-				let observer3 = new IntersectionObserver(handleIntersect3, options);
-				observer3.observe(ref3.current);
-				let observer4 = new IntersectionObserver(handleIntersect4, options);
-				observer4.observe(ref4.current);
-			}
-		};
-
-		observeElements();
-	}, [ref1, ref2, ref3, ref4]);
-
-	useEffect(() => {
-		if (
-			tabUnderlineRef.current &&
-			tab1Ref.current &&
-			tab2Ref.current &&
-			tab3Ref.current &&
-			tab4Ref.current
-		) {
-			const margin = tab1Ref.current.offsetLeft;
-			if (currentDisplay === 0) {
-				tabUnderlineRef.current.style.width =
-					tab1Ref.current.offsetWidth + 'px';
-				tabUnderlineRef.current.style.marginLeft = margin + 'px';
-			} else if (currentDisplay === 1) {
-				tabUnderlineRef.current.style.width =
-					tab2Ref.current.offsetWidth + 'px';
-				tabUnderlineRef.current.style.marginLeft =
-					tab1Ref.current.offsetWidth + margin * 3 + 'px';
-			} else if (currentDisplay === 2) {
-				tabUnderlineRef.current.style.width =
-					tab3Ref.current.offsetWidth + 'px';
-				tabUnderlineRef.current.style.marginLeft =
-					tab1Ref.current.offsetWidth +
-					tab2Ref.current.offsetWidth +
-					margin * 5 +
-					'px';
-			} else if (currentDisplay === 3) {
-				tabUnderlineRef.current.style.width =
-					tab4Ref.current.offsetWidth + 'px';
-				tabUnderlineRef.current.style.marginLeft =
-					tab1Ref.current.offsetWidth +
-					tab2Ref.current.offsetWidth +
-					tab3Ref.current.offsetWidth +
-					margin * 7 +
-					'px';
-			}
-		}
-	}, [currentDisplay]);
-
 	const bar = <div className='w-full h-0 border-b-2 border-[#CAD0D3]'></div>;
 	useEffect(() => {
 		AOS.init({
@@ -552,27 +475,29 @@ export default function Account() {
                     <div className='border-b-2 w-fit border-black h-0 overflow-hidden text-[16px] mx-1 md:mx-5 transition-all duration-300' ref={tabUnderlineRef}></div>
                 </div> */}
 			{/* </div> */}
-			<div
+			<section id='profile'
 				className='w-full mt-[20px] md:mt-0 max-w-[100%] lg:max-w-[80%]'
-				ref={ref1}
 			>
 				<Profile />
-			</div>
+			</section>
 			{/* <div className='w-full max-w-none 2xl:max-w-[80%]'><PasswordModule /></div> */}
 			{bar}
-			<div className='w-full max-w-[100%] lg:max-w-[80%]' ref={ref4}>
+			<section id='credit' className='w-full max-w-[100%] lg:max-w-[80%]'>
 				<CreditHistory />
-			</div>
-			<div className='w-full max-w-[100%] lg:max-w-[80%]' ref={ref2}>
+			</section>
+			<section id='referral' className='w-full max-w-[100%] lg:max-w-[80%]'>
 				<Referral />
-			</div>
-			<div className='w-full max-w-[100%] lg:max-w-[80%]'>
+			</section>
+			<section id='openai' className='w-full max-w-[100%] lg:max-w-[80%]'>
 				<OpenAIKey />
-			</div>
+			</section>
+      <section id='promo' className='w-full max-w-[100%] lg:max-w-[80%]'>
+        <ApplyPromo />
+      </section>
 			{bar}
-			<div className='w-full' ref={ref3}>
+			<section id='subscription' className='w-full'>
 				<Subscription />
-			</div>
+      </section>
 		</div>
 	);
 }
