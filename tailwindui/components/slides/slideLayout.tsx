@@ -139,24 +139,17 @@ export const Col_1_img_0_layout = ({
 	templateLogo,
 }: MainSlideProps) => {
 	return (
-		<>
+		<div className='h-full w-full flex flex-col'>
 			<div className={``}>{topic}</div>
 			<div className={``}>{subtopic}</div>
-			<div className='h-full w-full flex flex-row overflow-hidden gap-[2rem] mt-[1rem] overflow-y-scroll'>
-				<div className='flex flex-col gap-[0.5rem]'>
-					<div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
-					<div className='w-full h-full'>
-						<div className='py-[0.2rem]'>
-							{/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
-							<div className={`flex flex-row w-full h-full grow pl-2 `}>
-								{content}
-							</div>
-						</div>
-					</div>
+			<div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
+			<div className={`flex w-full max-h-[75%] pl-1 py-[1.2rem]`}>
+				<div className='w-full'>
+						{content}
 				</div>
 			</div>
 			{templateLogo}
-		</>
+		</div>
 	);
 };
 export const Col_2_img_0_layout = ({
@@ -179,7 +172,7 @@ export const Col_2_img_0_layout = ({
 		<>
 			<div className={``}>{topic}</div>
 			<div className={``}>{subtopic}</div>
-			<div className='h-full w-full grid grid-cols-2 gap-[2rem] overflow-y-scroll'>
+			<div className='h-full w-full grid grid-cols-2 gap-[2rem]'>
 				{Array.isArray(content) &&
 					content.map((item, index) => (
 						<div className='flex flex-col gap-[0.5rem]' key={index}>
@@ -189,7 +182,7 @@ export const Col_2_img_0_layout = ({
 							<div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
 							<ul
 								key={index}
-								className={`flex flex-row w-full h-full grow pl-2  `}
+								className={`flex flex-row w-full h-full grow `}
 							>
 								<li>{item}</li>
 							</ul>
@@ -333,17 +326,9 @@ export const Col_2_img_1_layout = ({
 				<div className={`z-50`}>{topic}</div>
 				<div className={``}>{subtopic}</div>
 				{/* contents */}
-				<div className='h-full w-full flex flex-row gap-[2rem]'>
-					<div className='flex flex-col gap-[0.2rem]'>
-						<div className='opacity-50'></div>
-						<div className='w-full h-full'>
-							<div className='py-[0.2rem]'>
-								{/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
-								<div className={`flex flex-row w-full h-full grow`}>
-									{content}
-								</div>
-							</div>
-						</div>
+				<div className='h-[55%] w-full flex'>
+					<div className={`w-full`}>
+						{content}
 					</div>
 				</div>
 			</div>
