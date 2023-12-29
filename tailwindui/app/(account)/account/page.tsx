@@ -1,6 +1,6 @@
 'use client';
 import AuthService from '@/services/AuthService';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect, useRef, RefObject } from 'react';
 import Pricing from '@/components/landing/pricing';
 import { ToastContainer, toast } from 'react-toastify';
@@ -290,8 +290,8 @@ const OpenAIKey = () => {
 };
 
 const ApplyPromo = () => {
-  const searchParams = new URLSearchParams(document.location.search);
-  const [promo, setPromo] = useState(searchParams.get('promo') || '');
+  const searchParams = useSearchParams();
+  const [promo, setPromo] = useState(searchParams?.get('promo') || '');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const applyPromo = async () => {
