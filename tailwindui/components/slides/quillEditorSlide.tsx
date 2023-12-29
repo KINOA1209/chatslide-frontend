@@ -117,6 +117,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			quillInstanceRef.current = new Quill(editorRef.current, {
 				modules: { toolbar: toolbarOptions },
 				theme: 'bubble',
+				//bounds: editorRef.current
 			});
 
 			// const toolbar = quillInstanceRef.current.getModule('toolbar');
@@ -196,22 +197,34 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				}
 			});
 
-			editorRef.current.addEventListener('focusin', () => {
-				const toolbar = editorRef.current?.querySelector('.ql-tooltip');
-				if (toolbar && toolbar instanceof HTMLElement) {
+			const editor = editorRef.current;
+			const updateTooltipPosition = () => {
+				const toolbar = editor?.querySelector('.ql-tooltip');
+				const arrow = editor?.querySelector('.ql-tooltip-arrow');
+				const qlEditor = editor?.querySelector('.ql-editor');
+				if (toolbar instanceof HTMLElement && arrow instanceof HTMLElement && qlEditor) {
+					const topPosition = editor.offsetHeight + qlEditor.scrollTop;
+					toolbar.style.position = 'absolute';
+					toolbar.style.top = `${topPosition}px`;
 					toolbar.style.display = 'block';
+					arrow.style.position = 'absolute';
 				}
-			});
+			};
 
+			quillInstanceRef.current.on('text-change', () => updateTooltipPosition());
+
+			const qlEditor = editor.querySelector('.ql-editor');
+			if (qlEditor) {
+				qlEditor.addEventListener('scroll', () => updateTooltipPosition());
+			}
+
+			editorRef.current.addEventListener('focusin', () => updateTooltipPosition());
+			
 			editorRef.current.addEventListener('focusout', (event) => {
 				const toolbar = editorRef.current?.querySelector('.ql-tooltip');
 				const relatedTarget = event.relatedTarget as Node;
-
-				if (
-					toolbar &&
-					toolbar instanceof HTMLElement &&
-					!toolbar.contains(relatedTarget)
-				) {
+			
+				if (toolbar && toolbar instanceof HTMLElement && !toolbar.contains(relatedTarget)) {
 					toolbar.style.display = 'none';
 				}
 			});
