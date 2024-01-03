@@ -109,7 +109,10 @@ export const Cover_img_1_layout = ({
 				></div>
 				<div className={`pl-[2rem] z-20`}>{title}</div>
 			</div>
-			<div className={`w-1/2 h-full rounded-md overflow-hidden`}>
+			<div
+				className={`w-1/2 h-full rounded-md overflow-hidden`}
+				// id='SlidesStep-4'
+			>
 				<ImgModule
 					imgsrc={localImgs[0]}
 					updateSingleCallback={updateImgAtIndex(0)}
@@ -144,9 +147,7 @@ export const Col_1_img_0_layout = ({
 			<div className={``}>{subtopic}</div>
 			<div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
 			<div className={`flex w-full max-h-[75%] pl-1 py-[1.2rem]`}>
-				<div className='w-full'>
-						{content}
-				</div>
+				<div className='w-full'>{content}</div>
 			</div>
 			{templateLogo}
 		</div>
@@ -180,10 +181,7 @@ export const Col_2_img_0_layout = ({
 								{index + 1}
 							</div>
 							<div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
-							<ul
-								key={index}
-								className={`flex flex-row w-full h-full grow `}
-							>
+							<ul key={index} className={`flex flex-row w-full h-full grow `}>
 								<li>{item}</li>
 							</ul>
 						</div>
@@ -327,9 +325,7 @@ export const Col_2_img_1_layout = ({
 				<div className={``}>{subtopic}</div>
 				{/* contents */}
 				<div className='h-[55%] w-full flex'>
-					<div className={`w-full`}>
-						{content}
-					</div>
+					<div className={`w-full`}>{content}</div>
 				</div>
 			</div>
 			<div className={`w-1/2 h-[90%] rounded-md overflow-hidden items-center`}>

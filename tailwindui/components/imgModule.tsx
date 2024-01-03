@@ -543,8 +543,9 @@ export const ImgModule = ({
 						/>
 					)}
 					<div className='grow md:grow-0'></div>
+					{/* image choosing modal */}
 					<Transition
-						className='bg-gray-100 w-full h-3/4 md:h-[65vh]
+						className='SlidesStep-5 bg-gray-100 w-full h-3/4 md:h-[65vh]
                     md:max-w-2xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
                     overflow-hidden flex flex-col p-4'
 						show={showModal}
@@ -743,8 +744,8 @@ export const ImgModule = ({
 					selectedImg === ''
 						? 'bg-[#E7E9EB]'
 						: canEdit
-							? 'hover:bg-[#CAD0D3]'
-							: ''
+						? 'hover:bg-[#CAD0D3]'
+						: ''
 				} flex flex-col items-center justify-center cursor-pointer`}
 			>
 				{selectedImg === '' ? (

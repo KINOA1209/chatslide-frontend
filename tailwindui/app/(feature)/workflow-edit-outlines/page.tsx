@@ -9,7 +9,8 @@ import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
 import { useRouter } from 'next/navigation';
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
 import { ToastContainer } from 'react-toastify';
-
+import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
+import StepsOutlinePage from '@/components/user_onboarding/StepsOutlinePage';
 interface OutlineSection {
 	title: string;
 	content: string[];
@@ -61,6 +62,7 @@ export default function WorkflowStep2() {
 
 	return (
 		<div className=''>
+			<MyCustomJoyride steps={StepsOutlinePage()} />
 			{/* flex col container for steps, title, generate slides button etc */}
 			<ToastContainer />
 
@@ -88,7 +90,7 @@ export default function WorkflowStep2() {
 			<div className='mb-[3rem]'>
 				{/* overview nav section */}
 				<div className='w-1/4 fixed top-[12.5rem] overflow-y-auto flex justify-center'>
-					<div className='w-2/3 bg-neutral-50 rounded-md border border-gray-200 hidden sm:block'>
+					<div className='OutlineStep-4 w-2/3 bg-neutral-50 rounded-md border border-gray-200 hidden sm:block'>
 						<div className='h-5 text-neutral-900 text-xs font-bold font-creato-medium leading-tight tracking-wide px-4 py-3'>
 							OVERVIEW
 						</div>
