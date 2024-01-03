@@ -1,6 +1,12 @@
 // MyCustomJoyride.tsx
 import React, { useState, useEffect } from 'react';
-import Joyride, { CallBackProps, Step } from 'react-joyride';
+import styled, { keyframes } from 'styled-components';
+import Joyride, {
+	CallBackProps,
+	Step,
+	BeaconRenderProps,
+	TooltipRenderProps,
+} from 'react-joyride';
 import { UserOnboardingButton } from '../button/DrlambdaButton';
 import ExitUserGuideWarningImg from '@/public/images/user_onboarding/ExitTourWarning.png';
 import { ExitTourButton } from './UserOnboardingButtons';
@@ -81,6 +87,7 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 				disableOverlayClose
 				disableCloseOnEsc
 				spotlightClicks
+				// beaconComponent={CustomBeacon}
 				locale={{
 					back: 'Back',
 					close: 'Close',

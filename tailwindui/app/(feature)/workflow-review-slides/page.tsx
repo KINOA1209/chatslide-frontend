@@ -7,7 +7,8 @@ import SlideVisualizer from '@/components/slides/SlideVisualizer';
 import { ToastContainer } from 'react-toastify';
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
 import { useUser } from '@/hooks/use-user';
-
+import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
+import StepsSlidesPage from '@/components/user_onboarding/StepsSlidesPage';
 export default function WorkflowStep3() {
 	const contentRef = useRef<HTMLDivElement>(null);
 	const { isPaidUser } = useUser();
@@ -22,7 +23,7 @@ export default function WorkflowStep3() {
 	return (
 		<div className='min-h-[90vh] w-full bg-white'>
 			{/* flex col container for steps, title, etc */}
-
+			<MyCustomJoyride steps={StepsSlidesPage()} />
 			<WorkflowStepsBanner
 				currentIndex={2}
 				isSubmitting={isSubmitting}
