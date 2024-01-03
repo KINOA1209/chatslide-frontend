@@ -1,7 +1,7 @@
 // stepsSummaryPage.tsx
 import { FC } from 'react';
 import { CustomStep } from './MyCustomJoyride';
-import SummaryPageStep1Welcome from '@/public/images/user_onboarding/SummaryPageStep1Welcom.png';
+import OutlinePageStep1Welcome from '@/public/images/user_onboarding/OutlinePageStep1Welcom.png';
 import { TutorialStepContent } from './CustomComponents';
 import {
 	PrimaryColorButton,
@@ -17,7 +17,7 @@ const StepsOutlinePage: () => CustomStep[] = () => {
 			target: 'body',
 			content: (
 				<div className='h-auto z-50 flex flex-col'>
-					{/* <img src={SummaryPageStep1Welcome.src} alt='Step 1' /> */}
+					<img src={OutlinePageStep1Welcome.src} alt='Step 1' />
 					<TutorialStepContent
 						action={'Well Done! 🎉'}
 						explanation={
@@ -146,9 +146,9 @@ const StepsOutlinePage: () => CustomStep[] = () => {
 			target: '.user-onboarding-generate',
 			content: (
 				<TutorialStepContent
-					action={'Click Choose Theme button'}
+					action={'Click Create Slide button'}
 					explanation={
-						'Whenever you finish modifying the outlines, click Choose Theme button to move forward.'
+						'Whenever you finish modifying the outlines, click Create Slide button to move forward to generate slides.'
 					}
 				></TutorialStepContent>
 			),
