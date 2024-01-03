@@ -739,6 +739,7 @@ export const ImgModule = ({
 				document.body,
 			)}
 
+
 			{/* image itsefl */}
 			<div
 				onClick={openModal}
@@ -749,15 +750,15 @@ export const ImgModule = ({
 							? 'hover:bg-[#CAD0D3] hover:brightness-90'
 							: ''
 				} flex flex-col items-center justify-center cursor-pointer`}
-				style={{
-					backgroundImage:
-						selectedImg !== '' && isTemp1Cover
-							? `linear-gradient(180deg, ${cover_start}, ${cover_end} 40%), url(${selectedImg})`
-							: '',
-					backgroundSize: selectedImg !== '' && isTemp1Cover ? 'cover' : '',
-					backgroundPosition:
-						selectedImg !== '' && isTemp1Cover ? 'center center' : '',
-				}}
+				// style={{
+				// 	backgroundImage:
+				// 		selectedImg !== '' && isTemp1Cover
+				// 			? `linear-gradient(180deg, ${cover_start}, ${cover_end} 40%), url(${selectedImg})`
+				// 			: '',
+				// 	backgroundSize: selectedImg !== '' && isTemp1Cover ? 'cover' : '',
+				// 	backgroundPosition:
+				// 		selectedImg !== '' && isTemp1Cover ? 'center center' : '',
+				// }}
 			>
 				{selectedImg === '' ? (
 					<div className='flex flex-col items-center justify-center'>
@@ -775,8 +776,8 @@ export const ImgModule = ({
 							{canEdit && 'Click to add image'}
 						</div>
 					</div>
-				) : (
-					!isTemp1Cover && (
+				) : 
+					!isTemp1Cover ? (
 						// <img
 						// style={{ objectFit: 'contain'}}
 						// className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`}
@@ -790,8 +791,28 @@ export const ImgModule = ({
 								canEdit ? 'hover:brightness-90' : 'cursor-default'
 							}`}
 						/>
+					) : (
+						<div className="relative w-full h-full">
+							<Image
+								src={imgsrc}
+								alt="Image"
+								layout="fill"
+								objectFit="cover"
+								objectPosition="center center"
+								className={`transition ease-in-out duration-150 ${
+									canEdit ? 'hover:brightness-90' : ''
+								}`}
+							/>
+							<div
+								className="absolute inset-0"
+								style={{
+									backgroundImage: `linear-gradient(180deg, ${cover_start}, ${cover_end} 40%)`,
+									zIndex: 2,
+								}}
+							/>
+						</div>
 					)
-				)}
+				}
 			</div>
 		</>
 	);

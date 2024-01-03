@@ -398,7 +398,7 @@ export const Col_2_img_2_layout = ({
 								{/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
 								<ul
 									key={index}
-									className={`flex flex-row w-full h-full grow pl-2 `}
+									className={`flex flex-row w-full h-full grow `}
 								>
 									<li>{item}</li>
 								</ul>
@@ -471,7 +471,7 @@ export const Col_3_img_3_layout = ({
 								{/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
 								<ul
 									key={index}
-									className={`flex flex-row w-full h-full grow pl-2  `}
+									className={`flex flex-row w-full h-full grow `}
 								>
 									<li>{item}</li>
 								</ul>
