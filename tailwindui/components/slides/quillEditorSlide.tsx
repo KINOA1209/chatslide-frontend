@@ -23,7 +23,6 @@ const fontSizes = generateFontSizes();
 const toolbarOptions = [
 	[{ size: fontSizes }, { font: [] }],
 	['bold', 'italic', 'underline', 'strike', 'code-block'],
-	[{ header: 1 }, { header: 2 }],
 	[{ list: 'bullet' }],
 	[{ script: 'sub' }, { script: 'super' }],
 	[
@@ -82,6 +81,25 @@ const isHTML = (input: string): boolean => {
 	return Array.from(doc.body.childNodes).some((node) => node.nodeType === 1);
 };
 
+const BubbleTheme = Quill.import('themes/bubble');
+
+class ExtendBubbleTheme extends BubbleTheme {
+  constructor(quill: Quill, options: any) {
+    super(quill, options);
+
+    quill.on('selection-change', range => {
+      if (range) {
+        const bounds = quill.getBounds(range.index);
+        const quillAny = quill as any;
+        quillAny.theme.tooltip.show();
+        quillAny.theme.tooltip.position(bounds);
+      }
+    });
+  }
+}
+
+Quill.register('themes/bubble', ExtendBubbleTheme);
+
 const QuillEditable: React.FC<QuillEditableProps> = ({
 	content,
 	handleBlur,
@@ -117,7 +135,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			quillInstanceRef.current = new Quill(editorRef.current, {
 				modules: { toolbar: toolbarOptions },
 				theme: 'bubble',
-				//bounds: editorRef.current
+				bounds: editorRef.current
 			});
 
 			// const toolbar = quillInstanceRef.current.getModule('toolbar');
@@ -128,7 +146,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				bold: style?.fontWeight !== 'normal',
 				italic: style?.fontStyle === 'italic',
 				color: style?.color,
-				list: style?.display === 'list-item' ? 'bullet' : undefined,
+				list: isVerticalContent ? 'bullet' : undefined,
 			};
 			const Delta = Quill.import('delta');
 			let initialDelta = new Delta();
@@ -197,37 +215,40 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				}
 			});
 
-			const editor = editorRef.current;
-			const updateTooltipPosition = () => {
-				const toolbar = editor?.querySelector('.ql-tooltip');
-				const arrow = editor?.querySelector('.ql-tooltip-arrow');
-				const qlEditor = editor?.querySelector('.ql-editor');
-				if (toolbar instanceof HTMLElement && arrow instanceof HTMLElement && qlEditor) {
-					const topPosition = editor.offsetHeight + qlEditor.scrollTop;
-					toolbar.style.position = 'absolute';
-					toolbar.style.top = `${topPosition}px`;
-					toolbar.style.display = 'block';
-					arrow.style.position = 'absolute';
-				}
-			};
+			// const editor = editorRef.current;
+			// const updateTooltipPosition = () => {
+			// 	const toolbar = editor?.querySelector('.ql-tooltip');
+			// 	const arrow = editor?.querySelector('.ql-tooltip-arrow');
+			// 	const qlEditor = editor?.querySelector('.ql-editor');
+			// 	if (toolbar instanceof HTMLElement && arrow instanceof HTMLElement && qlEditor) {
+			// 		const topPosition = editor.offsetHeight + qlEditor.scrollTop;
+			// 		toolbar.style.position = 'absolute';
+			// 		toolbar.style.top = `${topPosition}px`;
+			// 		toolbar.style.display = 'block';
+			// 		arrow.style.position = 'absolute';
+			// 	}
+			// };
 
-			quillInstanceRef.current.on('text-change', () => updateTooltipPosition());
+			// quillInstanceRef.current.on('text-change', () => updateTooltipPosition());
 
-			const qlEditor = editor.querySelector('.ql-editor');
-			if (qlEditor) {
-				qlEditor.addEventListener('scroll', () => updateTooltipPosition());
-			}
+			// const qlEditor = editor.querySelector('.ql-editor');
+			// if (qlEditor) {
+			// 	qlEditor.addEventListener('scroll', () => updateTooltipPosition());
+			// }
 
-			editorRef.current.addEventListener('focusin', () => updateTooltipPosition());
+			// editorRef.current.addEventListener('focusin', () => {
+			// 	if (!isToolbarInteraction) {
+			// 		updateTooltipPosition()
+			// 	}});
 			
-			editorRef.current.addEventListener('focusout', (event) => {
-				const toolbar = editorRef.current?.querySelector('.ql-tooltip');
-				const relatedTarget = event.relatedTarget as Node;
+			// editorRef.current.addEventListener('focusout', (event) => {
+			// 	const toolbar = editorRef.current?.querySelector('.ql-tooltip');
+			// 	const relatedTarget = event.relatedTarget as Node;
 			
-				if (toolbar && toolbar instanceof HTMLElement && !toolbar.contains(relatedTarget)) {
-					toolbar.style.display = 'none';
-				}
-			});
+			// 	if (toolbar && toolbar instanceof HTMLElement && !toolbar.contains(relatedTarget)) {
+			// 		toolbar.style.display = 'none';
+			// 	}
+			// });
 		}
 	}, [handleBlur, content, style]);
 

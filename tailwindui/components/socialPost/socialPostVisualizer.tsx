@@ -4,6 +4,7 @@ import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
 import dynamic from 'next/dynamic';
 import ExportToPngButton from '@/components/socialPost/socialPostPngButton';
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
+import SocialPostRepostButton from '@/components/socialPost/socialPostRepostButton'
 
 const SocialPostHTML = dynamic(
 	() => import('@/components/socialPost/socialPostHTML'),
@@ -41,14 +42,22 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
 	return (
 		<div>
 			<div className='px-4 sm:px-6 flex flex-col justify-center items-center gap-4'>
-				{/* slides contents */}
-				<div className='flex flex-row justify-end items-center'>
-					{/* want some more script Form submission */}
-					<ExportToPngButton
-						socialPostSlide={socialPostSlides}
-						currentSlideIndex={finalSlideIndex}
-					/>
+				<div className='flex flex-row'>
+					{/* slides contents */}
+					<div className='flex flex-row justify-end items-center'>
+						{/* want some more script Form submission */}
+						<ExportToPngButton
+							socialPostSlide={socialPostSlides}
+							currentSlideIndex={finalSlideIndex}
+						/>
+					</div>
+					{/* <div>
+						<SocialPostRepostButton
+							socialPostSlides = {socialPostSlides}
+						/>
+					</div> */}
 				</div>
+
 				<SocialPostHTML
 					socialPostSlides={socialPostSlides}
 					setSocialPostSlides={setSocialPostSlides}

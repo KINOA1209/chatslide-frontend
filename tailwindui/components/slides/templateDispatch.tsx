@@ -148,7 +148,7 @@ export const templateDispatch = (
 								{generateContentElement(
 									content,
 									'content',
-									customizableElements.contentFontCSS_non_vertical_content,
+									customizableElements.contentFontCSS,
 									false,
 									contentIndex,
 								)}
