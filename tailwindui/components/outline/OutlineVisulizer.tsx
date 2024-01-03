@@ -259,7 +259,7 @@ const OutlineVisualizer = ({
 				outlineData.map((section: OutlineSection, sectionIndex: number) => (
 					<div key={sectionIndex}>
 						<div
-							className={`my-[1.5rem] ${
+							className={`OutlineStep-2 my-[1.5rem] ${
 								outlineData.length >= maxOutlineSectionCount
 									? 'opacity-50 cursor-not-allowed'
 									: ''
@@ -282,7 +282,7 @@ const OutlineVisualizer = ({
 							<div
 								id={String(sectionIndex)}
 								key={sectionIndex + 1}
-								className='relative w-full sm:w-3/4 bg-neutral-50 rounded-md shadow border border-gray-200 px-1 sm:px-4 py-2'
+								className='OutlineStep-3 relative w-full sm:w-3/4 bg-neutral-50 rounded-md shadow border border-gray-200 px-1 sm:px-4 py-2'
 								onMouseEnter={() => setHoveredSectionIndex(sectionIndex)}
 								onMouseLeave={() => setHoveredSectionIndex(-1)}
 							>
