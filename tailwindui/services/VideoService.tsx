@@ -1,4 +1,4 @@
-import {VideoJobCreation, VideoJobStatus} from "@/models/VideoJobStatus";
+import VideoJobStatus from "@/models/VideoJobStatus";
 
 export default class VideoService {
 	// Returns a promise of the video generation job as a string, which could be used later to query the job status.
