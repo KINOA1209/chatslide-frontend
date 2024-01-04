@@ -1,23 +1,20 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { useRouter } from 'next/navigation';
 import Video from '@/components/Video';
-import ProjectProgress from '@/components/steps';
 import FeedbackButton from '@/components/ui/feedback';
 import WorkflowStepsBanner from "@/components/WorkflowStepsBanner";
 import {ToastContainer} from "react-toastify";
-import SlideVisualizer from "@/components/slides/SlideVisualizer";
+import VideoService from "@/services/VideoService";
+import AuthService from "@/services/AuthService";
 
 const VideoVisualizer = ({
-	videoFile,
-	foldername,
+	videoUrl,
 }: {
-	videoFile: string;
-	foldername: string;
+	videoUrl: string;
 }) => {
-	const router = useRouter();
-	const videoSource = `/api/video?foldername=${foldername}&filename=${videoFile}`;
+	const videoSource = videoUrl;
 	const topic =
 		typeof sessionStorage !== 'undefined'
 			? sessionStorage.getItem('topic')
@@ -48,23 +45,66 @@ const VideoVisualizer = ({
 		//<div className='max-w-4xl mx-auto px-4 sm:px-6'>
 		<div className='flex flex-col justify-center items-center gap-4 my-4'>
 			<div className='w-fit block m-auto'>
-				<Video filename={videoFile} foldername={foldername} />
+				{videoUrl !== '' ?
+					<Video videoUrl={videoSource} /> :
+					<div>Your video is being generated, please check back later.</div>
+				}
 			</div>
 		</div>
 	);
 };
 
 export default function WorkflowStep6() {
-	const videoFile =
+	const videoJobId =
 		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('video_file') || ''
+			? sessionStorage.getItem('video_job_id') || ''
 			: '';
-	const foldername =
-		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('foldername') || ''
-			: '';
+	const router = useRouter();
 	const contentRef = useRef<HTMLDivElement>(null);
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [videoUrl, setVideoUrl] = useState<string>();
+	const [isLoading, setIsLoading] = useState(false);
+
+	useEffect(() => {
+		if (typeof sessionStorage !== 'undefined') {
+			const url = sessionStorage.getItem('video_url');
+			if (url) {
+				setVideoUrl(url);
+			} else {
+				setIsLoading(true);
+			}
+		} else {
+			if (videoJobId === '') {
+				router.push('/dashboard');
+			}
+			setIsLoading(true);
+		}
+	})
+
+	const checkVideoJobStatus = async () => {
+		try {
+			const { userId, idToken: token } =
+				await AuthService.getCurrentUserTokenAndId();
+			const jobStatus = await VideoService.getVideoJobStatus(videoJobId, token);
+			if (jobStatus.job_status === 'completed' && jobStatus.video_url) {
+				setVideoUrl(jobStatus.video_url);
+				setIsLoading(false); // Stop polling once the video is ready
+			}
+		} catch (error) {
+			console.error("Error fetching video status:", error);
+			// Handle errors as needed
+		}
+	};
+
+	useEffect(() => {
+		// Only set up polling if the video is not ready yet
+		if (isLoading) {
+			const intervalId = setInterval(checkVideoJobStatus, 15000); // Poll every 15 seconds
+
+			// Clean up the interval on component unmount
+			return () => clearInterval(intervalId);
+		}
+	}, [isLoading]);
 
 	return (
 		<div className='min-h-[90vh] w-full bg-white'>
@@ -87,7 +127,7 @@ export default function WorkflowStep6() {
 				className={`max-w-4xl px-6 flex flex-col relative mx-auto`}
 				ref={contentRef}
 			>
-				<VideoVisualizer videoFile={videoFile} foldername={foldername} />
+				<VideoVisualizer videoUrl={videoUrl || ''} />
 			</div>
 
 			<FeedbackButton timeout={30000} />
