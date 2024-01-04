@@ -1,12 +1,4 @@
-import Image, { StaticImageData } from 'next/image';
-import { ImgModule } from '@/components/imgModule';
 import { useEffect, useMemo, useState } from 'react';
-import cover_png from '@/public/images/template/cover.png'; // Cover
-import col1img0_png from '@/public/images/template/col1img0.png';
-import col2img1_png from '@/public/images/template/col2img1.png';
-import col3img2_png from '@/public/images/template/col3img2.png';
-import drlambdaLogo from '@/public/images/template/drlambdaLogo.png';
-import drlambdaLogoSingle from '@/public/images/template/drlambdaLogoSingle.png';
 // import { TemplatesLogos } from './templates_customizable_elements/Templates_logos';
 import { Berkeley_school_template } from './school_templates/Berkeley_school_template';
 import { Harvard_school_template } from './school_templates/Harvard_school_template';
