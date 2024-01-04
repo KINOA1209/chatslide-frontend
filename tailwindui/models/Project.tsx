@@ -5,7 +5,7 @@ export default interface Project {
 	id: string;
 	task: 'video' | 'scripts' | 'slides' | 'presentation' | 'social post';
 	name: string;
-  description: string;
+	description: string;
 	resources: Resource[];
 	created_datetime: string;
 	project_name: string;
