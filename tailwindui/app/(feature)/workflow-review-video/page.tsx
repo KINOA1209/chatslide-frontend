@@ -71,11 +71,14 @@ export default function WorkflowStep6() {
 			if (url) {
 				setVideoUrl(url);
 			} else {
+				if (videoJobId === '') {
+					router.push('/workflow-edit-script');
+				}
 				setIsLoading(true);
 			}
 		} else {
 			if (videoJobId === '') {
-				router.push('/dashboard');
+				router.push('/workflow-edit-script');
 			}
 			setIsLoading(true);
 		}
