@@ -267,14 +267,14 @@ const OpenAIKey = () => {
 				</div>
 				<div className='w-full justify-center flex flex-row'>
 					<div className='flex grow max-w-[60rem] flex-row gap-4 justify-center mt-2'>
-						<InputBox onClick={(e) => (e.target as HTMLInputElement).select()}>
+						<InputBox onClick={(e) => (e.target as HTMLInputElement)?.select()}>
 							<FaKey className='text-gray-600' />
 							<input
 								id='key'
 								type='text'
 								className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
 								onChange={(e) => setKey(e.target.value)}
-								onClick={(e) => (e.target as HTMLInputElement).select()}
+								onClick={(e) => (e.target as HTMLInputElement)?.select()}
 								value={key}
 							/>
 						</InputBox>
