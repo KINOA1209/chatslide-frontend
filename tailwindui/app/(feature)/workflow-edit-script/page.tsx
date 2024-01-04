@@ -539,8 +539,8 @@ export default function WorkflowStep4() {
 				const { userId, idToken: token } =
 					await AuthService.getCurrentUserTokenAndId();
 				const project_id = sessionStorage.getItem('project_id') || '';
-				const video_file = await VideoService.generateVideo(project_id, foldername, language, token);
-				sessionStorage.setItem('video_file', video_file);
+				const job_id = await VideoService.generateVideo(project_id, foldername, language, token);
+				sessionStorage.setItem('video_job_id', job_id);
 				router.push('workflow-review-video');
 			} catch (error) {
 				console.error('Error in fetchData:', error);
