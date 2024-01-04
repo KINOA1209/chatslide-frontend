@@ -89,6 +89,7 @@ export default function WorkflowStep6() {
 			const { userId, idToken: token } =
 				await AuthService.getCurrentUserTokenAndId();
 			const jobStatus = await VideoService.getVideoJobStatus(videoJobId, token);
+			console.log(`jobStatus = ${jobStatus}, job_status = ${jobStatus.job_status}, video_url = ${jobStatus.video_url}`);
 			if (jobStatus.job_status === 'completed' && jobStatus.video_url) {
 				setVideoUrl(jobStatus.video_url);
 				setIsLoading(false); // Stop polling once the video is ready
