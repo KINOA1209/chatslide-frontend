@@ -44,6 +44,10 @@ export default class VideoService {
 			throw new Error(`Error fetching video job ${job_id} status: ${response.status}`);
 		}
 
-		return await response.json() as VideoJobStatus;
+		const json = await response.json();
+		return {
+			job_status: json.data.job_status,
+			video_url: json.data.video_url
+		};
 	}
 }
