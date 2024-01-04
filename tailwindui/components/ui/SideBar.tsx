@@ -174,7 +174,7 @@ const SideBar = ({ }: SideBarProps) => {
             className='block flex flex-row items-center gap-1 py-1 text-white px-2 rounded-lg hover:bg-gray-400'
             role='menuitem'
           >
-            <GoDiscussionOutdated /> {isSidebarOpen ? "Contact Us" : "\u200B"}
+            <GoDiscussionOutdated /> {isSidebarOpen ? "Join Discord" : "\u200B"}
           </a>
           <a
             href='/account'
@@ -211,7 +211,7 @@ const SideBar = ({ }: SideBarProps) => {
             <>
               <hr className="border-t-1 border-grey-400 mx-2 my-2" />
               <div className='text-white px-2'>
-                Join our user study to earn free credits
+                Join our user study and cummunity to earn free credits
               </div>
               <a
                 href='https://calendar.app.google/2uGV3B6h9UdYBHPB8'
@@ -229,7 +229,16 @@ const SideBar = ({ }: SideBarProps) => {
               >
                 Get 100 ⭐️credits
               </a>
+              <a
+                href='https://discord.gg/mJeAqMdb2m'
+                target='_blank'
+                className='block flew flex-row items-center gap-1 py-1 text-sm text-white px-2 rounded-lg hover:bg-gray-400'
+                role='menuitem'
+              >
+                Get 50 ⭐️credits
+              </a>
             </>
+            
           }
         </div>
       </div>
