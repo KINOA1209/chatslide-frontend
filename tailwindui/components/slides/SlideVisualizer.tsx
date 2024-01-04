@@ -101,6 +101,9 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 				console.log(resp.data.res);
 				sessionStorage.setItem('transcripts', JSON.stringify(resp.data.res));
 				setTranscriptList(resp.data.res);
+
+				// refresh page
+				window.location.reload();
 			} else {
 				alert('Request failed: ' + response.status);
 				console.log(response);
@@ -121,7 +124,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 	return (
 		<div className='flex flex-col justify-center items-center gap-4 my-4'>
 			{/* buttons: export and scripts and share slides */}
-			<div className='flex flex-row justify-end items-center'>
+			<div className='SlidesStep-6 flex flex-row justify-end items-center'>
 				<ExportToPdfButton slides={slides} exportSlidesRef={exportSlidesRef} />
 				<ShareToggleButton setShare={setShare} share={share} />
 			</div>

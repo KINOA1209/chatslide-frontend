@@ -30,6 +30,9 @@ const SharePage: React.FC = () => {
         console.log(`slides: ${project.presentation_slides}}`);
         setSlides(project.parsed_slides);
         setLoading(false);
+      }).catch((error) => {
+        console.error(error);
+        setLoading(false);
       });
 		}
 	}, [project_id]);

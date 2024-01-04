@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "modern-screenshot": "^4.4.37",
-    "react-joyride": "^2.7.2"
+    "styled-components": "^6.1.6"
   }
 }

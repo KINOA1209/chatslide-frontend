@@ -58,6 +58,7 @@ class UserService {
 	static async applyPromoCode(
 		promo: string,
 		token: string,
+    promoOnly: boolean = false,
 	): Promise<{ status: number; message: string }> {
 		try {
 			const response = await fetch(`/api/user/apply_code`, {
@@ -66,7 +67,7 @@ class UserService {
 					'Content-Type': 'application/json',
 					Authorization: `Bearer ${token}`,
 				},
-				body: JSON.stringify({ code: promo }),
+        body: JSON.stringify({ code: promo, promoOnly: promoOnly }),
 			})
 				.then((response) => {
 					return response.json();
@@ -211,8 +212,8 @@ class UserService {
 			});
 
 			if (response.ok) {
-				const data = await response.json(); // Change here
-				return data.openai_key; // Assuming the key is in the "openai_key" field
+				const data = await response.json(); 
+				return data.openai_key; // this could be an empty string
 			} else {
 				throw new Error(`Error ${response.status}: ${await response.text()}`);
 			}
