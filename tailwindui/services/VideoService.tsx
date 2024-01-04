@@ -1,4 +1,4 @@
-import VideoJobStatus from "@/models/VideoJobStatus";
+import {VideoJobCreation, VideoJobStatus} from "@/models/VideoJobStatus";
 
 export default class VideoService {
 	// Returns a promise of the video generation job as a string, which could be used later to query the job status.
@@ -21,7 +21,8 @@ export default class VideoService {
 			throw new Error(`HTTP error! status: ${response.status}`);
 		}
 
-		return await response.json().then(result => result['job_id']);
+		const job_creation = await response.json() as VideoJobCreation;
+		return job_creation.job_id;
 	}
 
 	// Returns the VideoJobStatus object which has both status and video url if the job is completed.
