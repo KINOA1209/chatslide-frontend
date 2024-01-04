@@ -23,11 +23,11 @@ export default class VideoService {
 
 		console.log(`generate video response: ${response}`);
 
-		const job_creation = await response.json() as VideoJobCreation;
+		const job_creation = await response.json();
 
-		console.log(`generate video response as VideoJobCreation: ${job_creation}, job_id: ${job_creation.job_id}`);
+		console.log(`generate video response as VideoJobCreation: ${job_creation.data}, job_id: ${job_creation.data.job_id}`);
 
-		return job_creation.job_id;
+		return job_creation.data.job_id;
 	}
 
 	// Returns the VideoJobStatus object which has both status and video url if the job is completed.
