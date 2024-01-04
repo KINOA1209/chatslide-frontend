@@ -21,7 +21,12 @@ export default class VideoService {
 			throw new Error(`HTTP error! status: ${response.status}`);
 		}
 
+		console.log(`generate video response: ${response}`);
+
 		const job_creation = await response.json() as VideoJobCreation;
+
+		console.log(`generate video response as VideoJobCreation: ${job_creation}, job_id: ${job_creation.job_id}`);
+
 		return job_creation.job_id;
 	}
 
