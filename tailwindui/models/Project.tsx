@@ -27,11 +27,12 @@ export default interface Project {
 	audio_files: string;
 	pdf_file: string; 
 	video_file: string;
+	video_url: string;
 	html: string;
 	pdf_images: string;
 	is_shared: boolean;
 	presentation_slides: string;
-  parsed_slides: Slide[];
+	parsed_slides: Slide[];
 	scenario_type: string;
 	// fields for Social Post start here
 	post_type: string;
