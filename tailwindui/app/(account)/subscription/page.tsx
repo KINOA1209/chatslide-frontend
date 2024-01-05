@@ -473,40 +473,10 @@ export default function Account() {
 	return (
 		<div className='flex flex-col items-center gap-[70px] mx-auto w-full'>
 			<ToastContainer />
-			{/* <div className='fixed w-full top-0 h-[130px] md:h-[160px] bg-[#E7E9EB] flex flex-col z-20 max-w-none 2xl:max-w-[80%]'> */}
-			{/* <div className='grow flex flex-row mb-2 items-end'>
-                    <div className='text-[#363E4A] text-[16px] mx-1 md:mx-5 cursor-pointer' onClick={e => { toSection(0) }} onMouseMove={e => { handleMouseOver(0) }} onMouseOut={handleMouseOut} ref={tab1Ref}>Account Settings</div>
-                    <div className='text-[#363E4A] text-[16px] mx-1 md:mx-5 cursor-pointer' onClick={e => { toSection(1) }} onMouseMove={e => { handleMouseOver(1) }} onMouseOut={handleMouseOut} ref={tab4Ref}>Credits</div>
-                    <div className='text-[#363E4A] text-[16px] mx-1 md:mx-5 cursor-pointer' onClick={e => { toSection(2) }} onMouseMove={e => { handleMouseOver(2) }} onMouseOut={handleMouseOut} ref={tab3Ref}>Subscription</div>
-                </div> */}
-			{/* <div className='w-full flex flex-row'>
-                    <div className='border-b-2 w-fit border-black h-0 overflow-hidden text-[16px] mx-1 md:mx-5 transition-all duration-300' ref={tabUnderlineRef}></div>
-                </div> */}
-			{/* </div> */}
-			<section
-				id='profile'
-				className='w-full mt-[20px] md:mt-0 max-w-[100%] lg:max-w-[80%]'
-			>
-				<Profile />
-			</section>
-			{/* <div className='w-full max-w-none 2xl:max-w-[80%]'><PasswordModule /></div> */}
-			{bar}
-			<section id='credit' className='w-full max-w-[100%] lg:max-w-[80%]'>
-				<CreditHistory />
-			</section>
-			<section id='referral' className='w-full max-w-[100%] lg:max-w-[80%]'>
-				<Referral />
-			</section>
-			<section id='openai' className='w-full max-w-[100%] lg:max-w-[80%]'>
-				<OpenAIKey />
-			</section>
-			<section id='promo' className='w-full max-w-[100%] lg:max-w-[80%]'>
-				<ApplyPromo />
-			</section>
-			{bar}
-			{/* <section id='subscription' className='w-full'>
+
+			<section id='subscription' className='w-full'>
 				<Subscription />
-      </section> */}
+			</section>
 		</div>
 	);
 }
