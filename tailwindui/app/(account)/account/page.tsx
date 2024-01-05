@@ -38,9 +38,7 @@ const Profile = () => {
 	const fetchUser = async () => {
 		const user = await AuthService.getCurrentUser();
 		setEmail(user.attributes.email);
-		setUsername(
-			user.attributes.name ? user.attributes.name : user.attributes.email,
-		);
+    setUsername(user.attributes.name ? user.attributes.name : user.attributes.email);
 	};
 
 	useEffect(() => {
@@ -236,13 +234,11 @@ const OpenAIKey = () => {
 	const fetchKey = async () => {
 		const { userId, idToken: token } =
 			await AuthService.getCurrentUserTokenAndId();
-		UserService.getOpenaiApiKey(token)
-			.then((data) => {
-				if (data) setKey(data);
-			})
-			.catch((error) => {
-				console.error(error);
-			});
+		UserService.getOpenaiApiKey(token).then((data) => {
+			if (data) setKey(data);
+		}).catch((error) => {
+      console.error(error);
+    });
 	};
 
 	const updateKey = async () => {
@@ -294,75 +290,71 @@ const OpenAIKey = () => {
 };
 
 const ApplyPromo = () => {
-	const searchParams = useSearchParams();
-	const [promo, setPromo] = useState(searchParams?.get('promo') || '');
-	const [isSubmitting, setIsSubmitting] = useState(false);
+  const searchParams = useSearchParams();
+  const [promo, setPromo] = useState(searchParams?.get('promo') || '');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-	const applyPromo = async () => {
-		setIsSubmitting(true);
-		console.log(isSubmitting);
-		const { userId, idToken: token } =
-			await AuthService.getCurrentUserTokenAndId();
-		const { status, message } = await UserService.applyPromoCode(
-			promo,
-			token,
-			true,
-		);
-		if (status == 200) {
-			toast.success(message, {
-				position: 'top-center',
-				autoClose: 2000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: 'light',
-			});
-		} else {
-			toast.error(message, {
-				position: 'top-center',
-				autoClose: 2000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: 'light',
-			});
-		}
-		setIsSubmitting(false);
-		console.log(isSubmitting);
-	};
+  const applyPromo = async () => {
+    setIsSubmitting(true);
+    console.log(isSubmitting);
+    const { userId, idToken: token } =
+      await AuthService.getCurrentUserTokenAndId();
+    const {status, message} = await UserService.applyPromoCode(promo, token, true);
+    if(status==200){
+      toast.success(message, {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+    } else{
+      toast.error(message, {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+    }
+    setIsSubmitting(false);
+    console.log(isSubmitting);
+  };
 
-	return (
-		<div className='w-full px-4 sm:px-6'>
-			<div className='mb-8 w-full'>
-				<div className='w-fit text-[#363E4A] text-[17px] font-bold'>
-					Apply Promo Code
-				</div>
-				<div className='w-full justify-center flex flex-row'>
-					<div className='flex w-[20rem] flex-row gap-4 justify-center mt-2'>
-						<InputBox onClick={(e) => (e.target as HTMLInputElement)?.select()}>
-							<input
-								id='promo'
-								type='text'
-								className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
-								onChange={(e) => setPromo(e.target.value)}
-								onClick={(e) => (e.target as HTMLInputElement)?.select()}
-								value={promo}
-							/>
-						</InputBox>
+  return (
+    <div className='w-full px-4 sm:px-6'>
+      <div className='mb-8 w-full'>
+        <div className='w-fit text-[#363E4A] text-[17px] font-bold'>
+          Apply Promo Code
+        </div>
+        <div className='w-full justify-center flex flex-row'>
+          <div className='flex w-[20rem] flex-row gap-4 justify-center mt-2'>
+            <InputBox onClick={(e) => (e.target as HTMLInputElement)?.select()}>
+              <input
+                id='promo'
+                type='text'
+                className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+                onChange={(e) => setPromo(e.target.value)}
+                onClick={(e) => (e.target as HTMLInputElement)?.select()}
+                value={promo}
+              />
+            </InputBox>
 
-						<BigBlueButton onClick={applyPromo} isSubmitting={isSubmitting}>
-							Apply
-						</BigBlueButton>
-					</div>
-				</div>
-			</div>
-		</div>
-	);
-};
+            <BigBlueButton onClick={applyPromo} isSubmitting={isSubmitting}>
+              Apply
+            </BigBlueButton>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 const Subscription = () => {
 	const [portalURL, setPortalURL] = useState('');
@@ -483,8 +475,7 @@ export default function Account() {
                     <div className='border-b-2 w-fit border-black h-0 overflow-hidden text-[16px] mx-1 md:mx-5 transition-all duration-300' ref={tabUnderlineRef}></div>
                 </div> */}
 			{/* </div> */}
-			<section
-				id='profile'
+			<section id='profile'
 				className='w-full mt-[20px] md:mt-0 max-w-[100%] lg:max-w-[80%]'
 			>
 				<Profile />
@@ -500,13 +491,13 @@ export default function Account() {
 			<section id='openai' className='w-full max-w-[100%] lg:max-w-[80%]'>
 				<OpenAIKey />
 			</section>
-			<section id='promo' className='w-full max-w-[100%] lg:max-w-[80%]'>
-				<ApplyPromo />
-			</section>
+      <section id='promo' className='w-full max-w-[100%] lg:max-w-[80%]'>
+        <ApplyPromo />
+      </section>
 			{bar}
-			{/* <section id='subscription' className='w-full'>
+			<section id='subscription' className='w-full'>
 				<Subscription />
-      </section> */}
+      </section>
 		</div>
 	);
 }
