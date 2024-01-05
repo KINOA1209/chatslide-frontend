@@ -44,8 +44,8 @@ export const SideBarData = [
 			},
 		],
 	},
-	{
-		title: 'Sign Out',
-		icon: <IoExitOutline />,
-	},
+	// {
+	// 	title: 'Sign Out',
+	// 	icon: <IoExitOutline />,
+	// },
 ];
