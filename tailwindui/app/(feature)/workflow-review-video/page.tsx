@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Video from '@/components/Video';
 import FeedbackButton from '@/components/ui/feedback';
 import WorkflowStepsBanner from "@/components/WorkflowStepsBanner";
-import {ToastContainer} from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 import VideoService from "@/services/VideoService";
 import AuthService from "@/services/AuthService";
 
@@ -65,6 +65,21 @@ export default function WorkflowStep6() {
 	const [videoUrl, setVideoUrl] = useState<string>();
 	const [isLoading, setIsLoading] = useState(false);
 
+	const showErrorAndRedirect = () => {
+		toast.error(`The current project has no video ready or being generated`, {
+			position: 'top-center',
+			autoClose: 5000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: 'light',
+			containerId: 'reviewVideo',
+		});
+		router.push('/workflow-edit-script');
+	}
+
 	useEffect(() => {
 		if (typeof sessionStorage !== 'undefined') {
 			const url = sessionStorage.getItem('video_url');
@@ -74,7 +89,7 @@ export default function WorkflowStep6() {
 		}
 		if (typeof videoUrl === 'undefined' || videoUrl === '') {
 			if (videoJobId === '') {
-				router.push('/workflow-edit-script');
+				showErrorAndRedirect();
 			}
 			setIsLoading(true);
 		}
@@ -98,7 +113,10 @@ export default function WorkflowStep6() {
 			}
 		} catch (error) {
 			console.error("Error fetching video status:", error);
-			// Handle errors as needed
+
+			if ((error as Error).message.includes('404')) {
+				showErrorAndRedirect();
+			}
 		}
 	};
 
