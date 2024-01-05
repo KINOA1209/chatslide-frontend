@@ -22,7 +22,7 @@ interface MyCustomJoyrideProps {
 }
 
 const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
-	const [isTourActive, setIsTourActive] = useState(false);
+	const [isTourActive, setIsTourActive] = useState(true);
 	const [showConfirmation, setShowConfirmation] = useState(false);
 	const [showFeedbackWindow, setShowFeedbackWindow] = useState(false);
 	// const [currentStep, setCurrentStep] = useState<number>(0);
