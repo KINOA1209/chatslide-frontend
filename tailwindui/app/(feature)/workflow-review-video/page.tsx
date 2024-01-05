@@ -70,21 +70,23 @@ export default function WorkflowStep6() {
 			const url = sessionStorage.getItem('video_url');
 			if (url) {
 				setVideoUrl(url);
-			} else {
-				if (videoJobId === '') {
-					router.push('/workflow-edit-script');
-				}
-				setIsLoading(true);
 			}
-		} else {
+		}
+		if (typeof videoUrl === 'undefined' || videoUrl === '') {
 			if (videoJobId === '') {
 				router.push('/workflow-edit-script');
 			}
 			setIsLoading(true);
 		}
+		if (isLoading) {
+			checkVideoJobStatus();
+		}
 	})
 
 	const checkVideoJobStatus = async () => {
+		if (!isLoading) {
+			return;
+		}
 		try {
 			const { userId, idToken: token } =
 				await AuthService.getCurrentUserTokenAndId();
