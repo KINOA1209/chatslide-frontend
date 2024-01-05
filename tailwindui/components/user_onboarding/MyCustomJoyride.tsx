@@ -22,9 +22,17 @@ interface MyCustomJoyrideProps {
 }
 
 const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
-	const [isTourActive, setIsTourActive] = useState(true);
+	const [isTourActive, setIsTourActive] = useState(false);
 	const [showConfirmation, setShowConfirmation] = useState(false);
 	const [showFeedbackWindow, setShowFeedbackWindow] = useState(false);
+
+	useEffect(() => {
+		const hasSeenOnboarding = localStorage.getItem('hasSeenOnboarding');
+		if (!hasSeenOnboarding) {
+			// If the user has not seen the onboarding, start the tour
+			setIsTourActive(true);
+		}
+	}, []);
 	// const [currentStep, setCurrentStep] = useState<number>(0);
 	const handleJoyrideCallback = (data: CallBackProps) => {
 		console.log(data);
@@ -52,12 +60,16 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 	const handleConfirmation = (confirmed: boolean) => {
 		// Handle the user's choice (confirmed or not)
 		if (confirmed) {
+			localStorage.setItem('hasSeenOnboarding', 'true');
 			// User confirmed, reset the tour or perform other actions
 			setIsTourActive(false);
 			setShowConfirmation(false);
 			setShowFeedbackWindow(false);
 		} else {
 			// User chose not to skip the tour, hide the confirmation tooltip
+			// If the user chose not to skip, you can set the flag to true or omit this part
+			// depending on whether you want to show the onboarding every time or only the first time
+			localStorage.setItem('hasSeenOnboarding', 'true');
 			setIsTourActive(true);
 			setShowConfirmation(false);
 			setShowFeedbackWindow(false);
