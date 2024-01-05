@@ -159,9 +159,12 @@ const SideBar = ({}: SideBarProps) => {
 			</button>
 			{/* navigation to different sections */}
 			<div className='py-4 flex flex-col items-top justify-between'>
+				{/* drlambda home */}
+
 				<a
 					href='/'
-					className='block flex flex-row items-center gap-1 py-1 text-white px-2 rounded-lg hover:bg-gray-400'
+					target='_blank'
+					className='block flex flex-row items-center gap-2 py-2 text-white px-2 rounded-lg hover:bg-gray-400 cursor-pointer'
 					role='menuitem'
 				>
 					<img
@@ -171,7 +174,9 @@ const SideBar = ({}: SideBarProps) => {
 					/>
 					{isSidebarOpen ? 'DrLambda' : '\u200B'}
 				</a>
+
 				<hr className='border-t-1 border-grey-400 mx-2 my-2' />
+				{/* menu items */}
 				{SideBarData.map((item, index) => (
 					<SideBarItem
 						key={index}
@@ -180,45 +185,15 @@ const SideBar = ({}: SideBarProps) => {
 						isSidebarOpen={isSidebarOpen}
 					/>
 				))}
+				{/* sign out */}
 
-				{/* <div className='py-1' role='none'>
-					<a
-						href='/dashboard'
-						className='block flex flex-row items-center gap-1 py-1 text-white px-2 rounded-lg hover:bg-gray-400'
-						role='menuitem'
-					>
-						<GoHome /> {isSidebarOpen ? 'Dashboard' : '\u200B'}
-					</a>
-					<a
-						href='/my-resources'
-						className='block flex flex-row items-center gap-1 py-1 text-white px-2 rounded-lg hover:bg-gray-400'
-						role='menuitem'
-					>
-						<GoFile /> {isSidebarOpen ? 'My Resources' : '\u200B'}
-					</a>
-					<a
-						href='https://discord.gg/mJeAqMdb2m'
-						target='_blank'
-						className='block flex flex-row items-center gap-1 py-1 text-white px-2 rounded-lg hover:bg-gray-400'
-						role='menuitem'
-					>
-						<GoDiscussionOutdated /> {isSidebarOpen ? 'Contact Us' : '\u200B'}
-					</a>
-					<a
-						href='/account'
-						className='block flex flex-row items-center gap-1 py-1 text-white px-2 rounded-lg hover:bg-gray-400'
-						role='menuitem'
-					>
-						<GoGear /> {isSidebarOpen ? 'Account' : '\u200B'}
-					</a>
-					<a
-						onClick={signOut}
-						className='block flex flex-row items-center gap-1 py-1 text-white px-2 rounded-lg hover:bg-gray-400 cursor-pointer'
-						role='menuitem'
-					>
-						<IoExitOutline /> {isSidebarOpen ? 'Sign Out' : '\u200B'}
-					</a>
-				</div> */}
+				<a
+					onClick={signOut}
+					className='block flex flex-row items-center gap-2 py-2 text-white px-2 rounded-lg hover:bg-gray-400 cursor-pointer'
+					role='menuitem'
+				>
+					<IoExitOutline /> {isSidebarOpen ? 'Sign Out' : '\u200B'}
+				</a>
 			</div>
 			{/* credits and user studies */}
 			<div className='flex flex-col items-left justify-between'>
