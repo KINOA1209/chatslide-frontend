@@ -11,7 +11,7 @@ interface SidebarItemProps {
 	isSidebarOpen: boolean;
 }
 
-const SidebarItem: React.FC<SidebarItemProps> = ({
+const SideBarItem: React.FC<SidebarItemProps> = ({
 	title,
 	icon,
 	path,
@@ -68,4 +68,4 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 	);
 };
 
-export default SidebarItem;
+export default SideBarItem;
