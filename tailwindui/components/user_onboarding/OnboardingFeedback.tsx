@@ -219,7 +219,7 @@ export const OnboardingFeedbackForm: React.FC<FeedbackFormProps> = ({
 		<Modal
 			showModal={true}
 			setShowModal={onClose}
-			position='fixed max-w-lg h-auto'
+			position='fixed max-w-2xl h-auto'
 		>
 			<div className='bg-white'>
 				{submitSuccessful ? (
