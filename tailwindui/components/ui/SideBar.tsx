@@ -159,9 +159,10 @@ const SideBar = ({}: SideBarProps) => {
 			</button>
 			{/* navigation to different sections */}
 			<div className='py-4 flex flex-col items-top justify-between'>
+				{/* drlambda home */}
 				<a
 					href='/'
-					className='block flex flex-row items-center gap-1 py-1 text-white px-2 rounded-lg hover:bg-gray-400'
+					className='block flex flex-row items-center gap-2 py-4 text-white px-2 rounded-lg hover:bg-gray-400'
 					role='menuitem'
 				>
 					<img
@@ -172,6 +173,7 @@ const SideBar = ({}: SideBarProps) => {
 					{isSidebarOpen ? 'DrLambda' : '\u200B'}
 				</a>
 				<hr className='border-t-1 border-grey-400 mx-2 my-2' />
+				{/* menu items */}
 				{SideBarData.map((item, index) => (
 					<SideBarItem
 						key={index}
@@ -180,6 +182,14 @@ const SideBar = ({}: SideBarProps) => {
 						isSidebarOpen={isSidebarOpen}
 					/>
 				))}
+				{/* sign out */}
+				<a
+					onClick={signOut}
+					className='block flex flex-row items-center gap-2 py-4 text-white px-2 rounded-lg hover:bg-gray-400 cursor-pointer'
+					role='menuitem'
+				>
+					<IoExitOutline /> {isSidebarOpen ? 'Sign Out' : '\u200B'}
+				</a>
 
 				{/* <div className='py-1' role='none'>
 					<a
