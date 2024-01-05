@@ -3,9 +3,9 @@
 	"description": "We'll create contents tailored to your needs.",
 	"options": [
 		{
-			"id": "academic",
-			"title": "Academic",
-			"imageSrc": "/images/slides/academic.png"
+			"id": "life_style",
+			"title": "Life Style",
+			"imageSrc": "/images/slides/life_style.png"
 		},
 		{
 			"id": "business",
@@ -13,9 +13,9 @@
 			"imageSrc": "/images/slides/business.png"
 		},
 		{
-			"id": "life_style",
-			"title": "Life Style",
-			"imageSrc": "/images/slides/life_style.png"
+			"id": "academic",
+			"title": "Academic",
+			"imageSrc": "/images/slides/academic.png"
 		}
 	]
 }
