@@ -1,12 +1,11 @@
 import React from 'react';
 
 interface Props {
-	filename: string;
-	foldername: string;
+	videoUrl: string;
 }
 
-const VideoPlayer: React.FC<Props> = ({ filename, foldername }) => {
-	const videoSource = `/api/video?foldername=${foldername}&filename=${filename}`;
+const VideoPlayer: React.FC<Props> = ({ videoUrl }) => {
+	const videoSource = videoUrl;
 
 	return (
 		<video height='720' controls>

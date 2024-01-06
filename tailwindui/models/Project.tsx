@@ -5,7 +5,7 @@ export default interface Project {
 	id: string;
 	task: 'video' | 'scripts' | 'slides' | 'presentation' | 'social post';
 	name: string;
-  description: string;
+	description: string;
 	resources: Resource[];
 	created_datetime: string;
 	project_name: string;
@@ -27,11 +27,12 @@ export default interface Project {
 	audio_files: string;
 	pdf_file: string; 
 	video_file: string;
+	video_url: string;
 	html: string;
 	pdf_images: string;
 	is_shared: boolean;
 	presentation_slides: string;
-  parsed_slides: Slide[];
+	parsed_slides: Slide[];
 	scenario_type: string;
 	// fields for Social Post start here
 	post_type: string;
