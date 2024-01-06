@@ -57,7 +57,7 @@ const Modal: React.FC<ModalProps> = ({
 
 					<div
 						ref={modalContentRef}
-						className={`z-50 ${position} bg-white rounded-lg shadow max-h-[90vh] overflow-y-auto p-2 sm:p-4`}
+						className={`z-50 ${position} bg-white rounded-lg shadow max-h-[100vh] overflow-y-auto p-2 sm:p-4`}
 						onClick={(e) => e.stopPropagation()}
 					>
 						{/* Close button */}

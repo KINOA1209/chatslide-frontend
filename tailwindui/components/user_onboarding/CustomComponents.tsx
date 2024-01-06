@@ -1,9 +1,11 @@
 import React, { FC } from 'react';
 import ExitUserGuideWarningImg from '@/public/images/user_onboarding/ExitTourWarning.png';
+import SlidesPageEndTour from '@/public/images/user_onboarding/SlidesPageEndTour.png';
 import {
 	PrimaryColorButton,
 	SecondaryColorButton,
 } from './UserOnboardingButtons';
+import Modal from '../ui/Modal';
 interface TutorialStepContentProps {
 	action: string;
 	explanation: string;
@@ -24,6 +26,43 @@ export const TutorialStepContent: FC<TutorialStepContentProps> = ({
 				</p>
 			</div>
 		</div>
+	);
+};
+
+interface TutorialEndStepPromptWindowProps {
+	onConfirmingForward: (confirmed: boolean) => void;
+	onClose: () => void;
+}
+
+export const TutorialEndStepPromptWindow: FC<
+	TutorialEndStepPromptWindowProps
+> = ({ onConfirmingForward, onClose }) => {
+	return (
+		<Modal
+			showModal={true}
+			setShowModal={onClose}
+			position='fixed max-w-lg h-auto'
+		>
+			<img src={SlidesPageEndTour.src} alt='Step end' />
+
+			<TutorialStepContent
+				action={'Congratulation! 🎉'}
+				explanation={
+					'You’ve completed our Guided Tutorial! Now Enhance your experience with an account upgrade. Curious about the exclusive perks our premium features offer? Discover a variety of plans crafted to suit your unique needs.'
+				}
+			></TutorialStepContent>
+			<div className='pt-[3rem] flex flex-row items-center justify-end gap-[0.75rem]'>
+				<SecondaryColorButton
+					label={'Not Now'}
+					onClick={() => onConfirmingForward(false)}
+				></SecondaryColorButton>
+
+				<PrimaryColorButton
+					label={'Sure'}
+					onClick={() => onConfirmingForward(true)}
+				></PrimaryColorButton>
+			</div>
+		</Modal>
 	);
 };
 

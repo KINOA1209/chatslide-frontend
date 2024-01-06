@@ -374,6 +374,11 @@ export default function Topic() {
 		}
 	}, [audience]);
 
+	// set current page to local storage
+	useEffect(() => {
+		localStorage.setItem('currentWorkflowPage', 'SummaryPage');
+	}, []);
+
 	const handleLinkChange = (link: string) => {
 		// url format: https://gist.github.com/rodrigoborgesdeoliveira/987683cfbfcc8d800192da1e73adc486
 		// search params will be ignored

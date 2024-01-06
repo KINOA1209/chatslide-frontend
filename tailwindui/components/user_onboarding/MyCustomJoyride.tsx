@@ -1,5 +1,6 @@
 // MyCustomJoyride.tsx
 import React, { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import styled, { keyframes } from 'styled-components';
 import Joyride, {
 	CallBackProps,
@@ -11,7 +12,10 @@ import { UserOnboardingButton } from '../button/DrlambdaButton';
 import ExitUserGuideWarningImg from '@/public/images/user_onboarding/ExitTourWarning.png';
 import { ExitTourButton } from './UserOnboardingButtons';
 import ExitTourButtonImg from '@/public/images/user_onboarding/ExitTourButton.png';
-import { ExitConfirmationWindow } from './CustomComponents';
+import {
+	ExitConfirmationWindow,
+	TutorialEndStepPromptWindow,
+} from './CustomComponents';
 import { OnboardingFeedbackForm } from './OnboardingFeedback';
 export interface CustomStep extends Step {
 	// Add custom properties if needed
@@ -25,6 +29,12 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 	const [isTourActive, setIsTourActive] = useState(false);
 	const [showConfirmation, setShowConfirmation] = useState(false);
 	const [showFeedbackWindow, setShowFeedbackWindow] = useState(false);
+	const [showTourEndPromptWindow, setShowTourEndPromptWindow] = useState(false);
+	const router = useRouter();
+	const [currentPage, setCurrentPage] = useState(() => {
+		const storedPage = localStorage.getItem('currentWorkflowPage');
+		return storedPage || ''; // Use the stored value or an empty string if not present
+	});
 
 	useEffect(() => {
 		const hasSeenOnboarding = localStorage.getItem('hasSeenOnboarding');
@@ -33,9 +43,22 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 			setIsTourActive(true);
 		}
 	}, []);
+
+	useEffect(() => {
+		console.log('current page: ', currentPage);
+	}, [currentPage]);
+
+	useEffect(() => {
+		const currentWorkflowPage = localStorage.getItem('currentWorkflowPage');
+		if (currentWorkflowPage) {
+			// If the user has not seen the onboarding, start the tour
+			setCurrentPage(currentWorkflowPage);
+		}
+	}, []);
+
 	// const [currentStep, setCurrentStep] = useState<number>(0);
 	const handleJoyrideCallback = (data: CallBackProps) => {
-		console.log(data);
+		// console.log(data);
 		// setCurrentStep(data.index);
 		if (data.action === 'skip') {
 			// Show the confirmation tooltip when skipping the tour
@@ -49,6 +72,12 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 		} else if (data.action === 'reset') {
 			setIsTourActive(false);
 			setShowFeedbackWindow(true);
+		}
+
+		// Check if the current step is the last step and the page is "SlidesPage"
+		const isLastStep = data.index === steps.length - 1;
+		if (isLastStep && currentPage === 'SlidesPage') {
+			setShowTourEndPromptWindow(true);
 		}
 	};
 	// const shouldShowOverlay = steps[currentStep]?.target !== 'body';
@@ -65,6 +94,7 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 			setIsTourActive(false);
 			setShowConfirmation(false);
 			setShowFeedbackWindow(false);
+			setShowTourEndPromptWindow(false);
 		} else {
 			// User chose not to skip the tour, hide the confirmation tooltip
 			// If the user chose not to skip, you can set the flag to true or omit this part
@@ -73,12 +103,21 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 			setIsTourActive(true);
 			setShowConfirmation(false);
 			setShowFeedbackWindow(false);
+			setShowTourEndPromptWindow(false);
 		}
 	};
 
 	const handleExitTour = () => {
 		setIsTourActive(false);
 		setShowConfirmation(true);
+	};
+
+	const handleConfirmingForward = (confirmed: boolean) => {
+		if (confirmed) {
+			router.push('/subscription');
+		} else {
+			setShowTourEndPromptWindow(false);
+		}
 	};
 
 	return (
@@ -106,6 +145,7 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 					last: 'End Tour',
 					next: 'Next',
 					skip: 'Skip Tour',
+					open: 'Open Tooltip',
 				}}
 				styles={{
 					options: {
@@ -146,6 +186,12 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 				<ExitConfirmationWindow
 					onConfirmation={handleConfirmation}
 				></ExitConfirmationWindow>
+			)}
+			{currentPage === 'SlidesPage' && showTourEndPromptWindow && (
+				<TutorialEndStepPromptWindow
+					onClose={() => setShowTourEndPromptWindow(false)}
+					onConfirmingForward={handleConfirmingForward}
+				></TutorialEndStepPromptWindow>
 			)}
 		</>
 	);
