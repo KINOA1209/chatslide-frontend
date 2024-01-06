@@ -508,6 +508,11 @@ export default function WorkflowStep4() {
 		typeof sessionStorage !== 'undefined'
 			? sessionStorage.getItem('foldername')
 			: '';
+	const language =
+		typeof sessionStorage !== 'undefined'
+			? sessionStorage.getItem('language')
+			: 'English';
+	const router = useRouter();
 	useEffect(() => {
 		// Store 'transcriptWithTitle' in session storage
 		sessionStorage.setItem(
@@ -534,10 +539,14 @@ export default function WorkflowStep4() {
 				const { userId, idToken: token } =
 					await AuthService.getCurrentUserTokenAndId();
 				const project_id = sessionStorage.getItem('project_id') || '';
-				await VideoService.generateVideo(project_id, token);
+				const job_id = await VideoService.generateVideo(project_id, foldername, language, token);
+				sessionStorage.setItem('video_job_id', job_id);
+				router.push('workflow-review-video');
 			} catch (error) {
 				console.error('Error in fetchData:', error);
+				// TODO: add toast prompts for user
 			}
+			setIsSubmitting(false);
 		};
 
 		if (isSubmitting) {
@@ -569,6 +578,7 @@ export default function WorkflowStep4() {
 				isSubmitting={isSubmitting}
 				setIsSubmitting={setIsSubmitting}
 				contentRef={contentRef}
+				nextText={!isSubmitting ? 'Create Video' : 'Creating Video'}
 			/>
 
 			{/* overview nav section */}
@@ -599,14 +609,14 @@ export default function WorkflowStep4() {
 				</div>
 			</div>
 
-			{isSubmitting && (
+			{/*{isSubmitting && (
 				<Modal showModal={isSubmitting} setShowModal={setIsSubmitting}>
 					<div className='min-h-[4rem] mx-4 my-4'>
 						Your video is being generated ⏳. <br />
 						We will send the finished video to your email address.
 					</div>
 				</Modal>
-			)}
+			)}*/}
 
 			<FeedbackButton />
 		</div>
