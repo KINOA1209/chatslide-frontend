@@ -44,6 +44,10 @@ export default function WorkflowStep2() {
 			setOutlineContent(newOutlineContent);
 		}
 	}, []);
+	// set current page to local storage
+	useEffect(() => {
+		localStorage.setItem('currentWorkflowPage', 'OutlinePage');
+	}, []);
 
 	// Function to scroll to a specific section
 	const scrollToSection = (sectionId: number) => {

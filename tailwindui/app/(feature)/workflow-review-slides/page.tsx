@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import FeedbackButton from '@/components/ui/feedback';
 import SlideVisualizer from '@/components/slides/SlideVisualizer';
@@ -20,6 +20,10 @@ export default function WorkflowStep3() {
 
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
+	// set current page to local storage
+	useEffect(() => {
+		localStorage.setItem('currentWorkflowPage', 'SlidesPage');
+	}, []);
 	return (
 		<div className='min-h-[90vh] w-full bg-white'>
 			{/* flex col container for steps, title, etc */}
