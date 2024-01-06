@@ -2,6 +2,7 @@
 import { FC } from 'react';
 import { CustomStep } from './MyCustomJoyride';
 import SlidesPageStep1Welcome from '@/public/images/user_onboarding/SlidesPageStep1Welcom.png';
+import SlidesPageEndTour from '@/public/images/user_onboarding/SlidesPageEndTour.png';
 import { TutorialStepContent } from './CustomComponents';
 import {
 	PrimaryColorButton,
@@ -187,7 +188,7 @@ const StepsSlidesPage: () => CustomStep[] = () => {
 			placement: 'bottom',
 			styles: {
 				tooltip: {
-					width: '31rem', // Set the width of the tooltip
+					maxWidth: '32rem', // Set the width of the tooltip
 					// Add any other styles as needed
 				},
 				// Add styles for other elements as needed
@@ -204,20 +205,51 @@ const StepsSlidesPage: () => CustomStep[] = () => {
 				></TutorialStepContent>
 			),
 			showSkipButton: false,
+			disableOverlay: true,
 			locale: {
 				back: <SecondaryColorButton label={'Back'} />,
 				// next: <PrimaryColorButton label={'Next'} />,
+				close: null,
 				last: <PrimaryColorButton label={'End Tour'} />,
 			},
 			placement: 'bottom',
 			styles: {
 				tooltip: {
-					width: '31rem', // Set the width of the tooltip
+					maxWidth: '32rem', // Set the width of the tooltip
 					// Add any other styles as needed
 				},
 				// Add styles for other elements as needed
 			},
 		},
+		// {
+		// 	target: 'body',
+		// 	content: (
+		// 		<div className='h-auto z-50 flex flex-col'>
+		// 			<img src={SlidesPageEndTour.src} alt='Step end' />
+		// 			<TutorialStepContent
+		// 				action={'Congratulation! 🎉'}
+		// 				explanation={
+		// 					'You’ve completed our Guided Tutorial! Now Enhance your experience with an account upgrade. Curious about the exclusive perks our premium features offer? Discover a variety of plans crafted to suit your unique needs.'
+		// 				}
+		// 			></TutorialStepContent>
+		// 		</div>
+		// 	),
+		// 	showSkipButton: true,
+		// 	disableOverlay: true,
+		// 	locale: {
+		// 		skip: <SecondaryColorButton label={'Not now'} />,
+		// 		back: null,
+		// 		last: <PrimaryColorButton label={'Sure'} />,
+		// 	},
+		// 	placement: 'center',
+		// 	styles: {
+		// 		tooltip: {
+		// 			maxWidth: '32rem', // Set the width of the tooltip
+		// 			// Add any other styles as needed
+		// 		},
+		// 		// Add styles for other elements as needed
+		// 	},
+		// },
 	];
 
 	return steps;
