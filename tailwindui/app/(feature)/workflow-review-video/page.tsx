@@ -17,8 +17,8 @@ const VideoVisualizer = ({
 	const videoSource = videoUrl;
 	const topic =
 		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('topic')
-			: '';
+			? sessionStorage.getItem('topic') || 'drlambda_video'
+			: 'drlambda_video';
 
 	const handleDownload = async () => {
 		const response = await fetch(videoSource, {
