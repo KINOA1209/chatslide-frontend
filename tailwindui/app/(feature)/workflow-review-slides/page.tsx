@@ -22,7 +22,9 @@ export default function WorkflowStep3() {
 
 	// set current page to local storage
 	useEffect(() => {
-		localStorage.setItem('currentWorkflowPage', 'SlidesPage');
+		if (typeof window !== 'undefined' && localStorage) {
+			localStorage.setItem('currentWorkflowPage', 'SlidesPage');
+		}
 	}, []);
 	return (
 		<div className='min-h-[90vh] w-full bg-white'>

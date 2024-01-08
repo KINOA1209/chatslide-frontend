@@ -376,7 +376,9 @@ export default function Topic() {
 
 	// set current page to local storage
 	useEffect(() => {
-		localStorage.setItem('currentWorkflowPage', 'SummaryPage');
+		if (typeof window !== 'undefined' && localStorage) {
+			localStorage.setItem('currentWorkflowPage', 'SummaryPage');
+		}
 	}, []);
 
 	const handleLinkChange = (link: string) => {
