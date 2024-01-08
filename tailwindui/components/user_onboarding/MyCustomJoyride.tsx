@@ -26,21 +26,27 @@ interface MyCustomJoyrideProps {
 }
 
 const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
-	const [isTourActive, setIsTourActive] = useState(false);
+	const [isTourActive, setIsTourActive] = useState(true);
 	const [showConfirmation, setShowConfirmation] = useState(false);
 	const [showFeedbackWindow, setShowFeedbackWindow] = useState(false);
 	const [showTourEndPromptWindow, setShowTourEndPromptWindow] = useState(false);
 	const router = useRouter();
 	const [currentPage, setCurrentPage] = useState(() => {
-		const storedPage = localStorage.getItem('currentWorkflowPage');
-		return storedPage || ''; // Use the stored value or an empty string if not present
+		if (typeof window !== 'undefined') {
+			const storedPage = localStorage.getItem('currentWorkflowPage');
+			return storedPage || ''; // Use the stored value or an empty string if not present
+		} else {
+			return ''; // Default value if not running in a browser environment
+		}
 	});
 
 	useEffect(() => {
-		const hasSeenOnboarding = localStorage.getItem('hasSeenOnboarding');
-		if (!hasSeenOnboarding) {
-			// If the user has not seen the onboarding, start the tour
-			setIsTourActive(true);
+		if (typeof window !== 'undefined') {
+			const hasSeenOnboarding = localStorage.getItem('hasSeenOnboarding');
+			if (hasSeenOnboarding) {
+				// If the user has not seen the onboarding, start the tour
+				setIsTourActive(false);
+			}
 		}
 	}, []);
 
@@ -49,10 +55,12 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 	}, [currentPage]);
 
 	useEffect(() => {
-		const currentWorkflowPage = localStorage.getItem('currentWorkflowPage');
-		if (currentWorkflowPage) {
-			// If the user has not seen the onboarding, start the tour
-			setCurrentPage(currentWorkflowPage);
+		if (typeof window !== 'undefined') {
+			const currentWorkflowPage = localStorage.getItem('currentWorkflowPage');
+			if (currentWorkflowPage) {
+				// If the user has not seen the onboarding, start the tour
+				setCurrentPage(currentWorkflowPage);
+			}
 		}
 	}, []);
 
