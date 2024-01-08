@@ -26,7 +26,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 	nextIsPaidFeature = false,
 	showGPTToggle = false,
 	nextText = 'Next',
-	setIsGpt35,
+	setIsGpt35 = () => {},
 }) => {
 	function getPrevHref() {
 		const redirect = [
