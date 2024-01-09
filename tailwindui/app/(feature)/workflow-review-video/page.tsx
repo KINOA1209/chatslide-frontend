@@ -85,13 +85,12 @@ export default function WorkflowStep6() {
 			const url = sessionStorage.getItem('video_url');
 			if (url) {
 				setVideoUrl(url);
+			} else {
+				if (videoJobId === '') {
+					showErrorAndRedirect();
+				}
+				setIsLoading(true);
 			}
-		}
-		if (typeof videoUrl === 'undefined' || videoUrl === '') {
-			if (videoJobId === '') {
-				showErrorAndRedirect();
-			}
-			setIsLoading(true);
 		}
 		if (isLoading) {
 			checkVideoJobStatus();
