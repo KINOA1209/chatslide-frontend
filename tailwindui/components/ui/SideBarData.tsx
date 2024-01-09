@@ -26,7 +26,7 @@ export const SideBarData = [
 		path: '/my-resources',
 	},
 	{
-		title: 'Contact Us',
+		title: 'Join Discord',
 		icon: <GoDiscussionOutdated />,
 		path: 'https://discord.gg/mJeAqMdb2m',
 	},
