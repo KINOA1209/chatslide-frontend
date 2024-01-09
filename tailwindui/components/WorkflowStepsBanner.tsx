@@ -46,7 +46,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 
 	return (
 		<>
-			<div className='relative sticky top-0 w-full h-[120px] flex items-end w-full bg-Sky z-10 pt-[4rem] pb-[1rem] border-b-2 px-[5rem]'>
+			<div className='relative sticky top-0 w-full h-[80px] flex items-end w-full bg-Sky z-10 pt-[4rem] pb-[1rem] border-b-2 px-[5rem]'>
 				{/* flex row container for backlink, title*/}
 				<div className='absolute left-5'>
 					<DrLambdaBackButton href={getPrevHref()} />
@@ -57,9 +57,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 				</div>
 
 				<div className='absolute right-5 flex flex-col items-end space-x-4'>
-					{showGPTToggle && typeof setIsGpt35 !== 'undefined' && (
-						<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
-					)}
+
 					{!lastStep && <div className='user-onboarding-generate'>
 						<DrlambdaButton
 							isSubmitting={isSubmitting}
