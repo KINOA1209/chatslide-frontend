@@ -121,15 +121,7 @@ const SideBar = ({}: SideBarProps) => {
 		};
 	}, []);
 
-	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-	const handleMouseEnter = () => {
-		setIsSidebarOpen(true);
-		};
-	
-		const handleMouseLeave = () => {
-		setIsSidebarOpen(false);
-		};
+	const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
 	const toggleSidebar = () => {
 		setIsSidebarOpen(!isSidebarOpen);
@@ -150,21 +142,18 @@ const SideBar = ({}: SideBarProps) => {
 
 	return (
 		<header
-			style={{transition: 'width 0.4s ease-in-out'}}
 			className={`hidden sm:flex sticky left-0 top-0 ${
 				isSidebarOpen ? 'w-[10rem]' : 'w-[3rem]'
 			} h-[100vh] flex flex-col items-center justify-between z-30 bg-gradient-to-b from-Dark to-[#121212] bg-opacity-90 transition duration-300 ease-in-out ${
 				!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
 			}`}
-			onMouseEnter={handleMouseEnter}
-			onMouseLeave={handleMouseLeave}
 		>
 			{/* toggle sidebar button */}
 			<button
 				className={`rounded-full p-1.5 bg-Dark text-white fixed top-5 ${
 					isSidebarOpen ? 'left-[9rem]' : 'left-[2rem]'
 				} focus:outline-none`}
-				//onClick={toggleSidebar}
+				onClick={toggleSidebar}
 			>
 				{isSidebarOpen ? <FaChevronLeft /> : <FaChevronRight />}
 			</button>
