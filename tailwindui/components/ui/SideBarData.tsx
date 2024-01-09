@@ -1,7 +1,9 @@
 // sidebarData.tsx
 import React from 'react';
+import { FaDiscord } from 'react-icons/fa';
 import { GoHome, GoFile, GoDiscussionOutdated, GoGear } from 'react-icons/go';
 import { IoExitOutline } from 'react-icons/io5';
+import { RiDiscordLine } from 'react-icons/ri';
 
 export const SideBarData = [
 	// {
@@ -27,7 +29,7 @@ export const SideBarData = [
 	},
 	{
 		title: 'Join Discord',
-		icon: <GoDiscussionOutdated />,
+		icon: <RiDiscordLine />,
 		path: 'https://discord.gg/mJeAqMdb2m',
 	},
 	{
