@@ -40,11 +40,12 @@ const nextConfig = {
 
 	images: {
 		domains: [
-			'img.freepik.com',
-			'unsplash.com',
-			'dev.drlambda.ai',
-			'drlambda.ai',
-      'localhost',
+			// 'img.freepik.com',
+			// 'unsplash.com',
+			// 'dev.drlambda.ai',
+			// 'drlambda.ai',
+      // 'localhost',
+      '*',
 		],
 	},
 };
