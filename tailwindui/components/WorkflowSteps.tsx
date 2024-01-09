@@ -328,6 +328,7 @@ const ProjectProgress = () => {
 		'/workflow-edit-outlines',
 		'/workflow-review-slides',
 		'/workflow-edit-script',
+    '/workflow-review-video',
 	];
 	const projectFinishedSteps: () => number[] = () => {
 		const finishedStepsArray: number[] = [];
