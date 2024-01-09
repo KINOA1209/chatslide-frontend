@@ -41,7 +41,7 @@ const SideBarItem: React.FC<SidebarItemProps> = ({
 					role='menuitem'
 				>
 					{icon}
-					{isSidebarOpen && title}
+					{isSidebarOpen ? title : '\u200B'}
 					{subMenus &&
 						isSidebarOpen &&
 						(isSubMenuOpen ? <FaChevronUp /> : <FaChevronDown />)}
