@@ -28,7 +28,6 @@ const GenerateSlidesSubmit = ({
 	setIsSubmitting: (submitting: boolean) => void;
 }) => {
 	const router = useRouter();
-	const [outlineData, setOutlineData] = useState(outline);
 	//   const [isGpt35, setIsGpt35] = useState(true)
 	const [slidePages, setSlidePages] = useState(20);
 	const [wordPerSubpoint, setWordPerSubpoint] = useState(10);
@@ -56,9 +55,6 @@ const GenerateSlidesSubmit = ({
 		}
 	};
 
-	const [isSubmittingSlide, setIsSubmittingSlide] = useState(false);
-	const [timer, setTimer] = useState(0);
-
 	async function generateSlidesPreview(formData: any, token: string) {
 		const response = await fetch('/api/generate_slides', {
 			method: 'POST',
@@ -71,7 +67,6 @@ const GenerateSlidesSubmit = ({
 
 		if (response.ok) {
 			const resp = await response.json();
-			setIsSubmittingSlide(false);
 			sessionStorage.setItem(
 				'presentation_slides',
 				JSON.stringify(resp.data.res),
@@ -83,16 +78,16 @@ const GenerateSlidesSubmit = ({
 					sessionStorage.getItem('project_id'),
 			);
 			console.log(response);
-			setIsSubmittingSlide(false);
 		}
 	}
 
 	const handleSubmit = async () => {
-		setTimer(0);
 		let formData: any = {};
 
+    console.log('outlineData', outline);
+
 		// remove empty entries
-		const outlineCopy = [...outlineData];
+    const outlineCopy = [...outline];
 		for (let i = 0; i < outlineCopy.length; i++) {
 			outlineCopy[i].content = outlineCopy[i].content.filter((s) => {
 				return s.length > 0;
@@ -104,7 +99,6 @@ const GenerateSlidesSubmit = ({
 			sessionStorage.removeItem('outline_item_counts');
 		}
 
-		setOutlineData(outlineCopy);
 		updateOutlineSessionStorage(outlineCopy);
 
 		const audience =
@@ -145,8 +139,8 @@ const GenerateSlidesSubmit = ({
 				: null;
 
 		formData = {
-			res: JSON.stringify({ ...outlineData }),
-			outlines: JSON.stringify({ ...outlineData }),
+      res: JSON.stringify({ ...outlineCopy }),
+      outlines: JSON.stringify({ ...outlineCopy }),
 			audience: audience,
 			foldername: foldername,
 			topic: topic,
@@ -171,7 +165,7 @@ const GenerateSlidesSubmit = ({
 				const extraKnowledge = await ResourceService.queryResource(
 					project_id || '',
 					selectedResources.map((r: Resource) => r.id),
-					outlineData,
+          outlineCopy,
 					token,
 				);
 				sessionStorage.setItem(
@@ -199,7 +193,6 @@ const GenerateSlidesSubmit = ({
 			await generateSlidesPreview(formData, token);
 		} catch (error) {
 			console.error('Error:', error);
-			setIsSubmittingSlide(false);
 		}
 	};
 
