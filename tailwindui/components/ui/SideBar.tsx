@@ -163,7 +163,6 @@ const SideBar = ({}: SideBarProps) => {
 
 				<a
 					href='/'
-					target='_blank'
 					className='block flex flex-row items-center gap-2 py-2 text-white px-2 rounded-lg hover:bg-gray-400 cursor-pointer'
 					role='menuitem'
 				>
