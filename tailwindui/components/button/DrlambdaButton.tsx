@@ -71,6 +71,7 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
 				onClick={checkPaidUser}
 				className={`min-w-[10rem] lg:min-w-[12rem] px-2 h-[36px] sm:h-[36px] ${getButtonBg()} disabled:animate-pulse rounded-xl sm:rounded-3xl flex justify-center items-center gap-2 cursor-pointer }`}
 			>
+        {isSubmitting && <SpinIcon />}
 				<span className='text-white font-semibold tracking-tight whitespace-nowrap'>
 					{isPaidFeature && !isPaidUser && '🔒 '}
 					{isPaidFeature && isPaidUser && '🚀 '}
