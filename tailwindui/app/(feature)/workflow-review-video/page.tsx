@@ -45,7 +45,7 @@ export default function WorkflowStep6() {
 	const [isLoading, setIsLoading] = useState(false);
 
 	const showErrorAndRedirect = () => {
-		toast.error(`The current project has no video ready or being generated`, {
+		toast.error(`Your video is being generated, please wait a bit...`, {
 			position: 'top-center',
 			autoClose: 5000,
 			hideProgressBar: false,
