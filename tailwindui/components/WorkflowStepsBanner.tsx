@@ -49,7 +49,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 			<div className='relative sticky top-0 w-full h-[80px] flex items-end w-full bg-Sky z-10 pt-[4rem] pb-[1rem] border-b-2 px-[5rem]'>
 				{/* flex row container for backlink, title*/}
 				<div className='absolute left-5'>
-					<DrLambdaBackButton href={getPrevHref()} />
+					<DrLambdaBackButton href='/dashboard' />
 				</div>
 
 				<div className='flex-grow justify-center hidden sm:flex py-2'>

@@ -6,6 +6,7 @@ import CSS from 'csstype';
 import AuthService from '@/services/AuthService';
 import { RightArrowIcon } from '@/app/(feature)/icons';
 import { NewStepIcon, CurrentStepIcon, FinishedStepIcon } from './icons';
+import { FaArrowLeft, FaArrowRight, FaChevronCircleLeft, FaChevronCircleRight } from 'react-icons/fa';
 
 interface StepProps {
 	id: number;
@@ -16,15 +17,6 @@ interface StepProps {
 	unavailable?: boolean;
 	isLastStep: boolean; // Pass this prop to indicate if it's the last step
 }
-
-const StepStyle: CSS.Properties = {
-	width: '28px',
-	height: '28px',
-	borderRadius: '50%',
-	borderStyle: 'solid',
-	borderWidth: '3px',
-	fontSize: '15px',
-};
 
 const OneStep: React.FC<StepProps> = ({
 	id,
@@ -156,16 +148,7 @@ const ProgressBox = (
 	});
 	const CurrentProgress: React.FC<Current> = ({ currentInd, contentRef }) => {
 		const progressRefDesktop = useRef<HTMLDivElement>(null);
-		const progressRefMobile = useRef<HTMLDivElement>(null);
-		const [mobileDisplay, setMobileDisplay] =
-			useState<CSS.Property.Display>('none');
-		const [desktopVisibility, setDesktopVisibility] =
-			useState<CSS.Property.Visibility>('hidden');
-		const [mobileOpended, setMobileOpened] = useState<boolean>(false);
-		const [mobileButtonDisplay, setMobileButtonDisplay] =
-			useState<CSS.Property.Display>('none');
 		const router = useRouter();
-		const [user, setUser] = useState(null);
 
 		const [finishedSteps, setFinishedSteps] = useState<number[]>([]);
 		const [unavailableSteps, setUnavailableSteps] = useState<number[]>([]);
@@ -175,117 +158,20 @@ const ProgressBox = (
 			setUnavailableSteps(unavailableStepsFunc());
 		}, []);
 
-		// fire on every window resize
-		const handSidebarPosition = () => {
-			if (window && document) {
-				// Constants -> working for workflow now
-				const minTitleHeight = 100;
-				const headerHeight = 80;
-				const gap = 20;
+    const stepAvailable = (step: number) => {
+      if (step < 0 || step > stepRedirectPair.length - 1) {
+        return false;
+      }
+      console.log(finishedSteps);
+      return finishedSteps.includes(step);
+    }
 
-				const viewWidth = window.innerWidth;
-				const viewHeight = window.innerHeight;
-				const pageHeight = document.body.scrollHeight;
-				const scrollPos = window.scrollY;
+    const goToStep = (step: number) => { 
+      if (stepAvailable(step)) {
+        router.push(stepRedirectPair[step][1]);
+      }
+    }
 
-				var contentWidth = viewWidth;
-				if (contentRef.current) {
-					contentWidth = contentRef.current.offsetWidth;
-				}
-				var progressWidth = 0;
-				var progressHeight = 0;
-				if (
-					progressRefDesktop.current &&
-					progressRefDesktop.current.offsetWidth > 0
-				) {
-					progressWidth = progressRefDesktop.current.offsetWidth;
-					progressHeight = progressRefDesktop.current.offsetHeight;
-				}
-				const marginAvailable = (viewWidth - contentWidth) / 2;
-				if (
-					progressRefDesktop.current &&
-					marginAvailable >= gap + progressWidth
-				) {
-					setDesktopVisibility('visible');
-					setMobileButtonDisplay('none');
-					setMobileOpened(false);
-					progressRefDesktop.current.style.left = `${
-						marginAvailable - gap - progressWidth
-					}px`;
-					progressRefDesktop.current.style.top = `${Math.max(
-						(viewHeight - headerHeight - progressHeight) / 2,
-						minTitleHeight,
-					)}px`;
-					progressRefDesktop.current.style.bottom = '';
-					if (viewHeight < 650 && pageHeight - scrollPos - viewHeight < 100) {
-						const footerHeight = 100 - (pageHeight - scrollPos - viewHeight);
-						progressRefDesktop.current.style.top = '';
-						progressRefDesktop.current.style.bottom = `${footerHeight}px`;
-					}
-				} else {
-					setDesktopVisibility('hidden');
-					setMobileButtonDisplay('flex');
-				}
-			}
-		};
-
-		// useEffect(() => {
-		//   handSidebarPosition()
-		//   window.addEventListener('resize', handSidebarPosition)
-		//   window.addEventListener('scroll', handSidebarPosition)
-		// }, [])
-
-		// Mobile sidebar panel is only determined by mobileOpened
-		// useEffect(() => {
-		//   if (mobileOpended) {
-		//     setMobileDisplay('flex')
-		//   } else {
-		//     setMobileDisplay('none')
-		//   }
-		// }, [mobileOpended])
-
-		useEffect(() => {
-			// Create a scoped async function within the hook.
-			const fetchUser = async () => {
-				try {
-					const currentUser = await AuthService.getCurrentUser();
-					setUser(currentUser);
-				} catch (error: any) {}
-			};
-			// Execute the created function directly
-			fetchUser();
-		}, []);
-
-		const handleMobileClose = (e: React.MouseEvent<HTMLDivElement>) => {
-			e.stopPropagation();
-			setMobileOpened(false);
-		};
-
-		const handleMobileOpen = (e: React.MouseEvent<HTMLDivElement>) => {
-			e.stopPropagation();
-			setMobileOpened(true);
-		};
-
-		const handleDashboard = (e: MouseEvent<HTMLDivElement>) => {
-			e.preventDefault();
-			router.push('/dashboard');
-		};
-
-		const dashboardButton = user ? (
-			<div
-				className='w-full h-14 flex items-center cursor-pointer'
-				onClick={handleDashboard}
-			>
-				<div
-					className='w-full bg-gradient-to-r from-blue-600  to-purple-500 text-white text-center rounded-2xl flex justify-center items-center'
-					style={{ height: '30px' }}
-				>
-					<span className='w-fit h-fit'>Projects</span>
-				</div>
-			</div>
-		) : (
-			<></>
-		);
 
 		return (
 			<>
@@ -295,10 +181,14 @@ const ProgressBox = (
 					ref={progressRefDesktop}
 				>
 					{/* <div className='-top-4 p-5 mb-6 flex justify-center border-2 border-r-blue-200 sticky'> */}
-					<div className='flex justify-center'>
+					<div className='flex justify-center gap-x-4'>
+
+            <FaChevronCircleLeft 
+              className={`h-[40px] ${stepAvailable(currentInd - 1) ? `text-gray-600 cursor-pointer` : `text-gray-400 cursor-not-allowed`}`}
+              onClick={() => goToStep(currentInd - 1)}
+            />
+
 						<div className='w-fit flex flex-row flex-nowrap content-start'>
-							{/* <div className='w-fit flex flex-col flex-nowrap content-start'> */}
-							{/* {dashboardButton} */}
 							{stepRedirectPair.map((pair, index) => (
 								<OneStep
 									key={`step` + index.toString()} // Add a unique key prop here
@@ -312,6 +202,13 @@ const ProgressBox = (
 								/>
 							))}
 						</div>
+
+            <FaChevronCircleRight 
+              className={`h-[40px] ${stepAvailable(currentInd + 1) ? `text-gray-600 cursor-pointer` : `text-gray-400 cursor-not-allowed`}`}
+              onClick={() => goToStep(currentInd + 1)}
+              
+            />
+
 					</div>
 				</div>
 			</>

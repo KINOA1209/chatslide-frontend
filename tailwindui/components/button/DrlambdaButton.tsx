@@ -142,7 +142,7 @@ export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({
 		>
 			<LeftTurnArrowIcon></LeftTurnArrowIcon>
 			<div className='text-center self-center text-gray-700 font-medium font-creato-medium leading-normal tracking-[0.035rem] whitespace-nowrap hidden sm:block'>
-				Back
+				Dashboard
 			</div>
 		</div>
 	);
