@@ -15,7 +15,7 @@ const WorkflowGPTToggle: React.FC<ToggleProps> = ({
 	leftText,
 	rightText,
 	leftColor = 'bg-Blue',
-	rightColor = 'bg-Purple',
+	rightColor = 'bg-Blue',
 }) => {
 	const activeBox =
 		'shadow-[0px_2.688084602355957px_6.720211505889893px_rgba(10.01,19.13,8.53,0.12)] rounded-3xl';
