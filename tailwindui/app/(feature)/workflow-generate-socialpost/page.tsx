@@ -19,6 +19,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import FileUploadModal from '@/components/forms/FileUploadModal';
 import SelectedResourcesList from '@/components/SelectedResources';
 import { useUser } from '@/hooks/use-user';
+import { GPTToggleWithExplanation } from '@/components/button/WorkflowGPTToggle';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 6;
@@ -486,7 +487,10 @@ export default function Topic_SocialPost() {
 					setIsGpt35={setIsGpt35}
 				/>
 				{/* main content */}
-				<div className='py-10 w-full flex flex-col items-center'>
+				<div className='py-10 gap-y-4 w-full flex flex-col items-center'>
+
+          <GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
+
 					{/* Project Summary section */}
 					<div className='w-full lg:w-2/3  px-3 my-3 lg:my-1'>
 						{/* title */}

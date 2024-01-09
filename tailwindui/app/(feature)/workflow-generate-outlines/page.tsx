@@ -29,6 +29,7 @@ import { useUser } from '@/hooks/use-user';
 import Joyride, { STATUS, Step } from 'react-joyride';
 import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
 import StepsSummaryPage from '@/components/user_onboarding/StepsSummaryPage';
+import { GPTToggleWithExplanation } from '@/components/button/WorkflowGPTToggle';
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 6;
 
@@ -503,7 +504,10 @@ export default function Topic() {
 			/>
 
 			{/* main content */}
-			<div className='py-10 w-full flex flex-col items-center'>
+			<div className='py-10 gap-y-4 w-full flex flex-col items-center'>
+
+        <GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
+
 				{/* Project Summary section */}
 				<div className='w-full lg:w-2/3 px-3 my-3 lg:my-1' id='SummaryStep-2'>
 					{/* text area section */}
