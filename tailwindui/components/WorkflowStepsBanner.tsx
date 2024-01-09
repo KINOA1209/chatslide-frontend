@@ -13,6 +13,7 @@ interface YourComponentProps {
 	contentRef: React.RefObject<HTMLDivElement>;
 	nextIsPaidFeature?: boolean;
 	showGPTToggle?: boolean;
+  lastStep?: boolean;
 	nextText?: string;
 	setIsGpt35?: (isGpt35: boolean) => void;
 }
@@ -25,6 +26,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 	contentRef,
 	nextIsPaidFeature = false,
 	showGPTToggle = false,
+  lastStep = false,
 	nextText = 'Next',
 	setIsGpt35 = () => {},
 }) => {
@@ -58,7 +60,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 					{showGPTToggle && typeof setIsGpt35 !== 'undefined' && (
 						<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
 					)}
-					<div className='user-onboarding-generate'>
+					{!lastStep && <div className='user-onboarding-generate'>
 						<DrlambdaButton
 							isSubmitting={isSubmitting}
 							isPaidUser={isPaidUser}
@@ -67,7 +69,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 						>
 							{nextText}
 						</DrlambdaButton>
-					</div>
+					</div>}
 				</div>
 			</div>
 
