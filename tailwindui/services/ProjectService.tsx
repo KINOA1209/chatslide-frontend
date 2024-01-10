@@ -8,7 +8,7 @@ class ProjectService {
   static async getSharedProjectDetails(
     project_id: string,
   ): Promise<Project> {
-    console.log(`Fetching shared project details.`);
+    //console.log(`Fetching shared project details.`);
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
@@ -24,7 +24,7 @@ class ProjectService {
       }
 
       const project = await response.json() as Project;
-      console.log('Project data:', project);
+      //console.log('Project data:', project);
 
       if (project?.presentation_slides) {
         project.parsed_slides = this.parseSlides(project.presentation_slides);
@@ -42,7 +42,7 @@ class ProjectService {
     token: string,
     project_id: string,
   ): Promise<Project> {
-    console.log(`Fetching project details.`);
+    //console.log(`Fetching project details.`);
     const headers = new Headers();
     if (token) {
       headers.append('Authorization', `Bearer ${token}`);
@@ -62,7 +62,7 @@ class ProjectService {
       }
 
       const project = await response.json() as Project;
-      console.log('Project data:', project);
+      //console.log('Project data:', project);
 
       if(project?.presentation_slides) {
         project.parsed_slides = this.parseSlides(project.presentation_slides);
@@ -135,7 +135,7 @@ class ProjectService {
     const slidesArray: Slide[] = Object.keys(jsonSlides).map(
       (key, index) => {
         const slideData = typeof jsonSlides[key] === 'string' ? JSON.parse(jsonSlides[key]) : jsonSlides[key];
-        console.log('slideData:', slideData);
+        //console.log('slideData:', slideData);
         const slide = new Slide();
         slide.head = slideData.head || 'New Slide';
         slide.title = slideData.title || 'New Slide';
@@ -184,7 +184,7 @@ class ProjectService {
         return slide;
       })
 
-      console.log('slidesArray:', slidesArray);
+      //console.log('slidesArray:', slidesArray);
       return slidesArray;
     }
 
@@ -224,6 +224,66 @@ class ProjectService {
         }
       } catch (error) {
         console.error('Error exporting to pdf:', error);
+      }
+    }
+
+    static async repostSlideShareLink(token:string, project_id:string, setShare: (share:boolean) => void): Promise<void> {
+      const newShareStatus = true
+      setShare(newShareStatus)
+      const headers = new Headers();
+      if (token) {
+        headers.append('Authorization', `Bearer ${token}`);
+      }
+      headers.append('Content-Type', 'application/json');
+      try {
+        const response = await fetch('/api/share_project', {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify({
+            project_id: project_id,
+            is_shared: newShareStatus,
+          }),
+        });
+        const responseData = await response.json();
+        if (response.ok) {
+          sessionStorage.setItem('is_shared', newShareStatus.toString());
+        } else {
+          console.error(responseData.error);
+        }
+      } catch (error) {
+        console.error('Failed to toggle share status:', error);
+      }
+    }
+
+    static async serverSideGetSharedProject(project_id: string): Promise<Project> {
+      const headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      const tier = process.env.TIER
+      const baseUrl = tier === 'production' ? 'https://drlambda.ai' : 
+                      tier === 'development' ? 'https://dev.drlambda.ai' : 
+                      'http://localhost';
+      const apiUrl = `${baseUrl}/api/get_shared_project?project_id=${project_id}`;
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: 'GET',
+          headers: headers,
+        });
+  
+        if (!response.ok) {
+          throw new Error(`Error fetching project ${project_id} details: ${response.status}`);
+        }
+
+        const project = await response.json() as Project;
+
+        if (project?.presentation_slides) {
+          project.parsed_slides = this.parseSlides(project.presentation_slides);
+        }
+  
+        return project;
+      } catch (error) {
+        console.error(`Error fetching project ${project_id} details:`, error);
+        throw error;
       }
     }
 }
