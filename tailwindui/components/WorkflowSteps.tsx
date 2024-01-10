@@ -162,8 +162,7 @@ const ProgressBox = (
       if (step < 0 || step > stepRedirectPair.length - 1) {
         return false;
       }
-      console.log(finishedSteps);
-      return finishedSteps.includes(step);
+      return !finishedSteps.includes(step);
     }
 
     const goToStep = (step: number) => { 
