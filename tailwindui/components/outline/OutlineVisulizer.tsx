@@ -259,7 +259,7 @@ const OutlineVisualizer = ({
 				outlineData.map((section: OutlineSection, sectionIndex: number) => (
 					<div key={sectionIndex}>
 						<div
-							className={`OutlineStep-2 my-[1.5rem] ${
+							className={`OutlineStep-2 my-[1rem] ${
 								outlineData.length >= maxOutlineSectionCount
 									? 'opacity-50 cursor-not-allowed'
 									: ''
