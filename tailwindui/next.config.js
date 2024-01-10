@@ -38,13 +38,17 @@ const nextConfig = {
 		return config;
 	},
 
+	// Configuration for next/image to handle external images
 	images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "**",
-      },
-    ],
+		// Allowed image domains
+		domains: ['localhost', 'img.freepik.com'],
+		// Optionally allow all hostnames
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: '**',
+			},
+		],
 	},
 };
 
