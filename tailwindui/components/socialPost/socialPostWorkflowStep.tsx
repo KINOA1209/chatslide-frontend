@@ -43,14 +43,14 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 	}
 
 	return (
-		<>
-			<div className='relative sticky top-0 h-[80px] flex flex-col items-center w-full bg-Sky z-10'>
+    <div className='sticky top-0 z-10'>
+			<div className='relative h-[80px] flex flex-col items-center w-full bg-Sky'>
 				<div className='flex-grow items-center justify-center flex py-2'>
 					<ProjectProgress currentInd={currentIndex} contentRef={contentRef} />
 				</div>
 			</div>
 
-      <div className='relative sticky top-0 h-[80px] flex items-center w-full bg-white z-10'>
+      <div className='relative h-[80px] flex items-center w-full bg-white'>
         <div className='absolute left-5'>
           <DrLambdaBackButton href={getPrevHref()} />
         </div>
@@ -71,7 +71,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 			<div className='py-2 flex-auto text-center self-center bg-yellow-100 font-small leading-snug tracking-tight whitespace-nowrap sm:hidden'>
 				Use our desktop version to see all the functionalities!
 			</div>
-		</>
+		</div>
 	);
 };
 
