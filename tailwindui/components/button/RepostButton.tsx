@@ -13,6 +13,7 @@ import Slide, { SlideKeys } from '@/models/Slide';
 import SlideContainer from '../slides/SlideContainer';
 import AuthService from '@/services/AuthService';
 import ProjectService from '@/services/ProjectService';
+import { FaTwitter } from "react-icons/fa";
 
 type RepostButtonProps = {
     slides: SocialPostSlide[] | Slide[];
@@ -112,17 +113,20 @@ const RepostButton: React.FC<RepostButtonProps> = ({
     // }
 
     return (
-        <div>
+        <div className='col-span-1 ml-3'>
             <BigGrayButton onClick={handleRepostToTwitter} isSubmitting={isProcessing}>
-                Repost to Twitter
+                <div className='flex flex-row items-center gap-x-2'>
+                    Post to Twitter
+                    <FaTwitter />
+                </div>
             </BigGrayButton>
 
             {/* hidden div for export to pdf */}
-            <div className='absolute left-[-9999px] top-[-9999px] -z-1'>
+            {/* <div className='absolute left-[-9999px] top-[-9999px] -z-1'>
                 <div key={`exportToPdfContainer` + slideIndex.toString()}>
-                    {/* {selectPostType()} */}
+                     {selectPostType()}
                 </div>
-            </div>
+            </div> */}
             
         </div>
     );
