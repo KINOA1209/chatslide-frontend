@@ -13,6 +13,7 @@ interface YourComponentProps {
 	contentRef: React.RefObject<HTMLDivElement>;
 	nextIsPaidFeature?: boolean;
 	showGPTToggle?: boolean;
+  lastStep?: boolean;
 	nextText?: string;
 	setIsGpt35?: (isGpt35: boolean) => void;
 }
@@ -25,6 +26,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 	contentRef,
 	nextIsPaidFeature = false,
 	showGPTToggle = false,
+  lastStep = false,
 	nextText = 'Next',
 	setIsGpt35 = () => {},
 }) => {
@@ -44,10 +46,10 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 
 	return (
 		<>
-			<div className='relative sticky top-0 w-full h-[120px] flex items-end w-full bg-Sky z-10 pt-[4rem] pb-[1rem] border-b-2 px-[5rem]'>
+			<div className='relative sticky top-0 w-full h-[80px] flex items-end w-full bg-Sky z-10 pt-[4rem] pb-[1rem] border-b-2 px-[5rem]'>
 				{/* flex row container for backlink, title*/}
 				<div className='absolute left-5'>
-					<DrLambdaBackButton href={getPrevHref()} />
+					<DrLambdaBackButton href='/dashboard' />
 				</div>
 
 				<div className='flex-grow justify-center hidden sm:flex py-2'>
@@ -55,10 +57,8 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 				</div>
 
 				<div className='absolute right-5 flex flex-col items-end space-x-4'>
-					{showGPTToggle && typeof setIsGpt35 !== 'undefined' && (
-						<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
-					)}
-					<div className='user-onboarding-generate'>
+
+					{!lastStep && <div className='user-onboarding-generate'>
 						<DrlambdaButton
 							isSubmitting={isSubmitting}
 							isPaidUser={isPaidUser}
@@ -67,7 +67,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 						>
 							{nextText}
 						</DrlambdaButton>
-					</div>
+					</div>}
 				</div>
 			</div>
 

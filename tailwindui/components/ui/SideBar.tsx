@@ -121,15 +121,7 @@ const SideBar = ({}: SideBarProps) => {
 		};
 	}, []);
 
-	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-	const handleMouseEnter = () => {
-		setIsSidebarOpen(true);
-		};
-	
-		const handleMouseLeave = () => {
-		setIsSidebarOpen(false);
-		};
+	const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
 	const toggleSidebar = () => {
 		setIsSidebarOpen(!isSidebarOpen);
@@ -150,21 +142,18 @@ const SideBar = ({}: SideBarProps) => {
 
 	return (
 		<header
-			style={{transition: 'width 0.4s ease-in-out'}}
 			className={`hidden sm:flex sticky left-0 top-0 ${
 				isSidebarOpen ? 'w-[10rem]' : 'w-[3rem]'
 			} h-[100vh] flex flex-col items-center justify-between z-30 bg-gradient-to-b from-Dark to-[#121212] bg-opacity-90 transition duration-300 ease-in-out ${
 				!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
 			}`}
-			onMouseEnter={handleMouseEnter}
-			onMouseLeave={handleMouseLeave}
 		>
 			{/* toggle sidebar button */}
 			<button
-				className={`rounded-full p-1.5 bg-Dark text-white fixed top-6 ${
+				className={`rounded-full p-1.5 bg-Dark text-white fixed top-5 ${
 					isSidebarOpen ? 'left-[9rem]' : 'left-[2rem]'
 				} focus:outline-none`}
-				//onClick={toggleSidebar}
+				onClick={toggleSidebar}
 			>
 				{isSidebarOpen ? <FaChevronLeft /> : <FaChevronRight />}
 			</button>
@@ -174,7 +163,6 @@ const SideBar = ({}: SideBarProps) => {
 
 				<a
 					href='/'
-					target='_blank'
 					className='block flex flex-row items-center gap-2 py-2 text-white px-2 rounded-lg hover:bg-gray-400 cursor-pointer'
 					role='menuitem'
 				>
@@ -228,7 +216,7 @@ const SideBar = ({}: SideBarProps) => {
 						<>
 							<hr className='border-t-1 border-grey-400 mx-2 my-2' />
 							<div className='text-white px-2'>
-								Join our user study to earn free credits
+								Join our user study and discord to earn free credits
 							</div>
 							<a
 								href='https://calendar.app.google/2uGV3B6h9UdYBHPB8'
@@ -246,6 +234,14 @@ const SideBar = ({}: SideBarProps) => {
 							>
 								Get 100 ⭐️credits
 							</a>
+              <a
+                href='https://discord.gg/mJeAqMdb2m'
+                target='_blank'
+                className='block flew flex-row items-center gap-1 py-1 text-sm text-white px-2 rounded-lg hover:bg-gray-400'
+                role='menuitem'
+              >
+                Get 50 ⭐️credits
+              </a>
 						</>
 					)}
 				</div>

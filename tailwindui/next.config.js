@@ -39,12 +39,11 @@ const nextConfig = {
 	},
 
 	images: {
-		domains: [
-			'img.freepik.com',
-			'unsplash.com',
-			'dev.drlambda.ai',
-			'drlambda.ai',
-      'localhost',
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "**",
+			},
 		],
 	},
 };

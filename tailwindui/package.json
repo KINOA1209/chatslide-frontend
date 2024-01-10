@@ -53,6 +53,7 @@
 		"remark-gfm": "^4.0.0",
 		"sanitize-html": "^2.9.0",
 		"sass": "^1.69.5",
+		"styled-components": "^6.1.6",
 		"ytdl-core": "^4.11.5",
 		"zustand": "^4.4.7"
 	},

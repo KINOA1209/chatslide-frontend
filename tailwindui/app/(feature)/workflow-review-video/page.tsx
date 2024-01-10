@@ -1,54 +1,30 @@
 'use client';
 
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Video from '@/components/Video';
 import FeedbackButton from '@/components/ui/feedback';
-import WorkflowStepsBanner from "@/components/WorkflowStepsBanner";
-import {toast, ToastContainer} from "react-toastify";
-import VideoService from "@/services/VideoService";
-import AuthService from "@/services/AuthService";
+import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
+import { toast, ToastContainer } from 'react-toastify';
+import VideoService from '@/services/VideoService';
+import AuthService from '@/services/AuthService';
 
-const VideoVisualizer = ({
-	videoUrl,
-}: {
-	videoUrl: string;
-}) => {
+const VideoVisualizer = ({ videoUrl }: { videoUrl: string }) => {
 	const videoSource = videoUrl;
 	const topic =
 		typeof sessionStorage !== 'undefined'
 			? sessionStorage.getItem('topic') || 'drlambda_video'
 			: 'drlambda_video';
 
-	const handleDownload = async () => {
-		const response = await fetch(videoSource, {
-			method: 'GET',
-		});
-
-		if (response.ok) {
-			const blob = await response.blob();
-			const url = window.URL.createObjectURL(blob);
-			const a = document.createElement('a');
-			a.href = url;
-			a.download = `${topic}.mp4`;
-			document.body.appendChild(a);
-			a.click();
-			document.body.removeChild(a);
-			window.URL.revokeObjectURL(url);
-			console.log('Video saved successfully.');
-		} else {
-			console.error('Failed to save Video.');
-		}
-	};
-
 	return (
 		//<div className='max-w-4xl mx-auto px-4 sm:px-6'>
 		<div className='flex flex-col justify-center items-center gap-4 my-4'>
 			<div className='w-fit block m-auto'>
-				{videoUrl !== '' ?
-					<Video videoUrl={videoSource} /> :
+				{videoUrl !== '' ? (
+					<Video videoUrl={videoSource} />
+				) : (
 					<div>Your video is being generated, please check back later.</div>
-				}
+				)}
 			</div>
 		</div>
 	);
@@ -66,7 +42,7 @@ export default function WorkflowStep6() {
 	const [isLoading, setIsLoading] = useState(false);
 
 	const showErrorAndRedirect = () => {
-		toast.error(`The current project has no video ready or being generated`, {
+		toast.error(`Your video is being generated, please wait a bit...`, {
 			position: 'top-center',
 			autoClose: 5000,
 			hideProgressBar: false,
@@ -78,25 +54,24 @@ export default function WorkflowStep6() {
 			containerId: 'reviewVideo',
 		});
 		router.push('/workflow-edit-script');
-	}
+	};
 
 	useEffect(() => {
 		if (typeof sessionStorage !== 'undefined') {
 			const url = sessionStorage.getItem('video_url');
 			if (url) {
 				setVideoUrl(url);
+			} else {
+				if (videoJobId === '') {
+					showErrorAndRedirect();
+				}
+				setIsLoading(true);
 			}
-		}
-		if (typeof videoUrl === 'undefined' || videoUrl === '') {
-			if (videoJobId === '') {
-				showErrorAndRedirect();
-			}
-			setIsLoading(true);
 		}
 		if (isLoading) {
 			checkVideoJobStatus();
 		}
-	})
+	});
 
 	const checkVideoJobStatus = async () => {
 		if (!isLoading) {
@@ -106,13 +81,15 @@ export default function WorkflowStep6() {
 			const { userId, idToken: token } =
 				await AuthService.getCurrentUserTokenAndId();
 			const jobStatus = await VideoService.getVideoJobStatus(videoJobId, token);
-			console.log(`jobStatus = ${jobStatus}, job_status = ${jobStatus.job_status}, video_url = ${jobStatus.video_url}`);
+			console.log(
+				`jobStatus = ${jobStatus}, job_status = ${jobStatus.job_status}, video_url = ${jobStatus.video_url}`,
+			);
 			if (jobStatus.job_status === 'completed' && jobStatus.video_url) {
 				setVideoUrl(jobStatus.video_url);
 				setIsLoading(false); // Stop polling once the video is ready
 			}
 		} catch (error) {
-			console.error("Error fetching video status:", error);
+			console.error('Error fetching video status:', error);
 
 			if ((error as Error).message.includes('404')) {
 				showErrorAndRedirect();
@@ -141,7 +118,7 @@ export default function WorkflowStep6() {
 				isPaidUser={true}
 				contentRef={contentRef}
 				nextIsPaidFeature={true}
-				nextText={!isSubmitting ? 'Download Video' : 'Downloading Video'}
+				lastStep={true}
 				showGPTToggle={false}
 			/>
 
@@ -154,7 +131,7 @@ export default function WorkflowStep6() {
 				<VideoVisualizer videoUrl={videoUrl || ''} />
 			</div>
 
-			<FeedbackButton timeout={30000} />
+			<FeedbackButton />
 		</div>
 		// <div className='pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20'>
 		//<div className='max-w-4xl mx-auto' ref={contentRef}>
