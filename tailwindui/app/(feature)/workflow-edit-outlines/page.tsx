@@ -95,7 +95,7 @@ export default function WorkflowStep2() {
 
 			<div className='mb-[3rem]'>
 				{/* overview nav section */}
-				<div className='w-1/4 fixed top-[220px] overflow-y-auto flex justify-center'>
+				<div className='w-1/4 fixed top-[150px] overflow-y-auto flex justify-center'>
 					<div className='OutlineStep-4 w-2/3 bg-neutral-50 rounded-md border border-gray-200 hidden sm:block'>
 						<div className='h-5 text-neutral-900 text-xs font-bold font-creato-medium leading-tight tracking-wide px-4 py-3'>
 							OVERVIEW
