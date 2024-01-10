@@ -162,7 +162,7 @@ const ProgressBox = (
       if (step < 0 || step > stepRedirectPair.length - 1) {
         return false;
       }
-      return !finishedSteps.includes(step);
+      return finishedSteps.includes(step);
     }
 
     const goToStep = (step: number) => { 
@@ -183,7 +183,7 @@ const ProgressBox = (
 					<div className='flex justify-center gap-x-4'>
 
             <FaChevronCircleLeft 
-              className={`h-[40px] ${stepAvailable(currentInd - 1) ? `text-gray-600 cursor-pointer` : `text-gray-400 cursor-not-allowed`}`}
+              className={`h-[40px] ${stepAvailable(currentInd - 1) ? `text-green-600 cursor-pointer` : `text-gray-400 cursor-not-allowed`}`}
               onClick={() => goToStep(currentInd - 1)}
             />
 
@@ -203,7 +203,7 @@ const ProgressBox = (
 						</div>
 
             <FaChevronCircleRight 
-              className={`h-[40px] ${stepAvailable(currentInd + 1) ? `text-gray-600 cursor-pointer` : `text-gray-400 cursor-not-allowed`}`}
+              className={`h-[40px] ${stepAvailable(currentInd + 1) ? `text-green-600 cursor-pointer` : `text-gray-400 cursor-not-allowed`}`}
               onClick={() => goToStep(currentInd + 1)}
               
             />
