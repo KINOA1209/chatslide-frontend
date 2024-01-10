@@ -258,8 +258,11 @@ class ProjectService {
     static async serverSideGetSharedProject(project_id: string): Promise<Project> {
       const headers = new Headers();
       headers.append('Content-Type', 'application/json');
-      const isProd = process.env.NODE_ENV === 'production';
-      const baseUrl = isProd ? 'https://dev.drlambda.ai' : 'http://localhost';
+      const tier = process.env.TIER
+      const baseUrl = tier === 'production' ? 'https://drlambda.ai' : 
+                      tier === 'development' ? 'https://dev.drlambda.ai' : 
+                      'http://localhost';
+                      
       const apiUrl = `${baseUrl}/api/get_shared_project?project_id=${project_id}`;
 
       try {
