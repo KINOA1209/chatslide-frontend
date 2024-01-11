@@ -227,7 +227,7 @@ class ProjectService {
       }
     }
 
-    static async repostSlideShareLink(token:string, project_id:string, setShare: (share:boolean) => void): Promise<void> {
+    static async SlideShareLink(token:string, project_id:string, setShare: (share:boolean) => void): Promise<void> {
       const newShareStatus = true
       setShare(newShareStatus)
       const headers = new Headers();
@@ -258,11 +258,13 @@ class ProjectService {
     static async serverSideGetSharedProject(project_id: string): Promise<Project> {
       const headers = new Headers();
       headers.append('Content-Type', 'application/json');
-      const tier = process.env.TIER
-      const baseUrl = tier === 'production' ? 'https://drlambda.ai' : 
-                      tier === 'development' ? 'https://dev.drlambda.ai' : 
-                      'http://localhost';
-      const apiUrl = `${baseUrl}/api/get_shared_project?project_id=${project_id}`;
+      let baseUrl = process.env.HOST ? process.env.HOST : 'localhost';
+      if (baseUrl == 'localhost') {
+        baseUrl = "dev.drlambda.ai"
+      }
+      const apiUrl = `https://${baseUrl}/api/get_shared_project?project_id=${project_id}`;
+
+      console.log(`Fetching shared project details from ${apiUrl}.`);
 
       try {
         const response = await fetch(apiUrl, {

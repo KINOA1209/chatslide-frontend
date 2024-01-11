@@ -4,7 +4,7 @@ import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
 import dynamic from 'next/dynamic';
 import ExportToPngButton from '@/components/socialPost/socialPostPngButton';
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
-import SocialPostRepostButton from '@/components/socialPost/socialPostRepostButton'
+import SocialPostPostButton from '@/components/socialPost/socialPostPostButton'
 
 const SocialPostHTML = dynamic(
 	() => import('@/components/socialPost/socialPostHTML'),
@@ -52,7 +52,7 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
 						/>
 					</div>
 					{/* <div>
-						<SocialPostRepostButton
+						<SocialPostPostButton
 							socialPostSlides = {socialPostSlides}
 						/>
 					</div> */}

@@ -18,8 +18,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	// default image URL
 	let publicImageUrl = 'https://drlambda.ai/new_landing/imgs/ogimage.png';
 	try {
-		const project = await ProjectService.serverSideGetSharedProject(project_id)
-		publicImageUrl = project.cover_img_url || publicImageUrl
+    const project = await ProjectService.serverSideGetSharedProject(project_id)
+    // console.log(project)
+    publicImageUrl = project.thumbnail_url || publicImageUrl
+    topic = project.topic || "DrLambda"
+    description = project.description || "Created using DrLambda"
 	} catch (error){
 		console.error(`Error fetching project ${project_id} details:`, error);
 	}

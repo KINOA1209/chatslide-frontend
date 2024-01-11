@@ -44,7 +44,7 @@ const socialMediaBlock = (
 				aria-label='Twitter'
 			>
 				<div className='w-8 h-8 fill-current flex items-center justify-center'>
-					<FaTwitter />
+          𝕏
 				</div>
 			</a>
 		</li>

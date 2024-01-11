@@ -53,12 +53,12 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 				</div>
 			</div>
 
-      <div className='relative w-full h-[80px] flex items-center w-full bg-white'>
-        <div className='absolute left-5'>
+      <div className='relative w-full h-[0px] flex items-center w-full bg-transparent'>
+        <div className='absolute left-5 top-5'>
           <DrLambdaBackButton href='/dashboard' />
         </div>
 
-        <div className='absolute right-5 flex flex-col items-end space-x-4'>
+        <div className='absolute right-5 top-5 flex flex-col items-end space-x-4'>
 
           {!lastStep && <div className='user-onboarding-generate'>
             <DrlambdaButton
