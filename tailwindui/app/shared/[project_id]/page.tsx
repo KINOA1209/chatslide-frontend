@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     // console.log(project)
     publicImageUrl = project.thumbnail_url || publicImageUrl
     topic = project.topic || "DrLambda"
-    description = project.description || "DrLambda"
+    description = project.description || "Created using DrLambda"
 	} catch (error){
 		console.error(`Error fetching project ${project_id} details:`, error);
 	}
