@@ -489,6 +489,9 @@ export default function Topic_SocialPost() {
 				{/* main content */}
 				<div className='py-10 gap-y-4 w-full flex flex-col items-center'>
 					<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
+				<div className='gap-y-4 w-full flex flex-col items-center'>
+
+          <GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
 
 					{/* Project Summary section */}
 					<div className='w-full lg:w-2/3  px-3 my-3 lg:my-1'>

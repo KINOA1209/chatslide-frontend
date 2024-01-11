@@ -504,7 +504,7 @@ export default function Topic() {
 			/>
 
 			{/* main content */}
-			<div className='py-10 gap-y-4 w-full flex flex-col items-center'>
+			<div className='my-4 gap-y-4 w-full flex flex-col items-center'>
 				<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
 
 				{/* Project Summary section */}

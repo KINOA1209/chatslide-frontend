@@ -9,11 +9,11 @@ import { templateDispatch as defaultTemplateDispatch } from '@/components/social
 import { templateDispatch as defaultTemplateDispatch2 } from '@/components/socialPost//socialPostTemplate2Dispatch';
 import { templateDispatch as defaultTemplateDispatch3 } from '@/components/socialPost/socialPostTemplate3Dispatch';
 
-type SocialPostRepostButtonProps = {
+type SocialPostPostButtonProps = {
     socialPostSlides: SocialPostSlide[];
 };
 
-const SocialPostRepostButton: React.FC<SocialPostRepostButtonProps> = ({
+const SocialPostPostButton: React.FC<SocialPostPostButtonProps> = ({
     socialPostSlides,
 }) => {
     const res_scenario =
@@ -48,7 +48,7 @@ const SocialPostRepostButton: React.FC<SocialPostRepostButtonProps> = ({
             return null;
         }
     };
-    const handleRepostToTwitter = async () => {
+    const handlePostToTwitter = async () => {
         setIsProcessing(true);
         const urlArray:string[] = [];
 
@@ -94,8 +94,8 @@ const SocialPostRepostButton: React.FC<SocialPostRepostButtonProps> = ({
 
     return (
         <div>
-            <BigGrayButton onClick={handleRepostToTwitter} isSubmitting={isProcessing}>
-                Repost to Twitter
+            <BigGrayButton onClick={handlePostToTwitter} isSubmitting={isProcessing}>
+                Share on X
             </BigGrayButton>
 
             {/* hidden div for export to pdf */}
@@ -117,4 +117,4 @@ const SocialPostRepostButton: React.FC<SocialPostRepostButtonProps> = ({
 
 };
 
-export default SocialPostRepostButton
+export default SocialPostPostButton

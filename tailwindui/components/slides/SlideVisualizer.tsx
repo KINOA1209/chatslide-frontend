@@ -8,6 +8,7 @@ import AuthService from '../../services/AuthService';
 import ScriptEditor from './ScriptEditor';
 import { TextLabel } from '../ui/GrayLabel';
 import Slide from '@/models/Slide';
+import PostButton from '../button/PostButton';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -127,6 +128,11 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 			<div className='SlidesStep-6 flex flex-row justify-end items-center'>
 				<ExportToPdfButton slides={slides} exportSlidesRef={exportSlidesRef} />
 				<ShareToggleButton setShare={setShare} share={share} />
+        <PostButton 
+					slides={slides}
+					post_type='slide'
+					setShare={setShare}
+				/>
 			</div>
 			{/* shareable link */}
 			{share && (

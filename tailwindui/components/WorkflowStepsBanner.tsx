@@ -45,36 +45,37 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 	}
 
 	return (
-		<>
-			<div className='relative sticky top-0 w-full h-[80px] flex items-end w-full bg-Sky z-10 pt-[4rem] pb-[1rem] border-b-2 px-[5rem]'>
-				{/* flex row container for backlink, title*/}
-				<div className='absolute left-5'>
-					<DrLambdaBackButton href='/dashboard' />
-				</div>
-
-				<div className='flex-grow justify-center hidden sm:flex py-2'>
+    <div className='sticky top-0 z-10'>
+			<div className='relative w-full h-[80px] flex flex-col items-center w-full bg-Sky'>
+				<div className='flex-grow items-center justify-center flex py-2'>
 					<ProjectProgress currentInd={currentIndex} contentRef={contentRef} />
 				</div>
-
-				<div className='absolute right-5 flex flex-col items-end space-x-4'>
-
-					{!lastStep && <div className='user-onboarding-generate'>
-						<DrlambdaButton
-							isSubmitting={isSubmitting}
-							isPaidUser={isPaidUser}
-							isPaidFeature={nextIsPaidFeature}
-							onClick={(e) => setIsSubmitting(true)}
-						>
-							{nextText}
-						</DrlambdaButton>
-					</div>}
-				</div>
 			</div>
+
+      <div className='relative w-full h-[0px] flex items-center w-full bg-transparent'>
+        <div className='absolute left-5 top-5'>
+          <DrLambdaBackButton href='/dashboard' />
+        </div>
+
+        <div className='absolute right-5 top-5 flex flex-col items-end space-x-4'>
+
+          {!lastStep && <div className='user-onboarding-generate'>
+            <DrlambdaButton
+              isSubmitting={isSubmitting}
+              isPaidUser={isPaidUser}
+              isPaidFeature={nextIsPaidFeature}
+              onClick={(e) => setIsSubmitting(true)}
+            >
+              {nextText}
+            </DrlambdaButton>
+          </div>}
+        </div>
+      </div>
 
 			<div className='py-2 w-full flex-auto text-center self-center bg-yellow-100 font-small leading-snug tracking-tight whitespace-nowrap sm:hidden'>
 				Use our desktop version to see all the functionalities!
 			</div>
-		</>
+		</div>
 	);
 };
 
