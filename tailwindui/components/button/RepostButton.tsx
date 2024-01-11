@@ -55,7 +55,7 @@ const RepostButton: React.FC<RepostButtonProps> = ({
             //console.log(publicImageUrl)
             await ProjectService.repostSlideShareLink(token, project_id, setShare)
             const shareLink = `${host}/shared/${project_id}`
-            const twitterText = `${title}, learn more at Dr. Lambda!\n`
+            const twitterText = `${title}. Learn more at drlambda.ai!\n`
             const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(twitterText)}${encodeURIComponent(shareLink)}`;
             window.open(twitterUrl, '_blank');
             setIsProcessing(false);
