@@ -95,7 +95,7 @@ const SocialPostRepostButton: React.FC<SocialPostRepostButtonProps> = ({
     return (
         <div>
             <BigGrayButton onClick={handleRepostToTwitter} isSubmitting={isProcessing}>
-                Repost to Twitter
+                Share on X
             </BigGrayButton>
 
             {/* hidden div for export to pdf */}
