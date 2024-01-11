@@ -24,6 +24,11 @@ import {
 	FaVoicemail,
 } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
+import {
+	PrimaryButton,
+	SecondaryButton,
+	UserResearchWindow,
+} from './subscriptionCTAs';
 
 const Profile = () => {
 	const [username, setUsername] = useState<string>('');
@@ -405,10 +410,12 @@ const Subscription = () => {
 			)}
 
 			<div className='mb-8 w-full max-w-none 2xl:max-w-[80%] mx-auto px-4 sm:px-6'>
-				<div className='w-fit text-[#363E4A] text-[17px] font-bold'>
+				{/* <div className='w-fit text-[#363E4A] text-[17px] font-bold'>
 					Subscription
+				</div> */}
+				<div className='w-fit text-[#212121] text-[80px]'>
+					Pricing & Features
 				</div>
-				<div className='w-fit text-[#212121] text-[80px]'>Plans</div>
 			</div>
 
 			<Pricing />
@@ -454,11 +461,18 @@ const CreditHistory = () => {
 	);
 };
 
-export default function Account() {
+export default function SubscriptionAndUserResearch() {
 	// To add a new section
 	// Add tabRef for header animation
 	// Add section ref for scrollIntoView in function toSection
 	// Add IntersectionObserver in function observeElements
+
+	const [showUserResearchModal, setShowUserResearchModal] = useState(false);
+
+	const handleUserResearchModal = () => {
+		// console.log('user Research Modal toggled');
+		setShowUserResearchModal(!showUserResearchModal);
+	};
 
 	const bar = <div className='w-full h-0 border-b-2 border-[#CAD0D3]'></div>;
 	useEffect(() => {
@@ -473,9 +487,28 @@ export default function Account() {
 	return (
 		<div className='flex flex-col items-center gap-[70px] mx-auto w-full'>
 			<ToastContainer />
-
+			{/* user research modal */}
+			{showUserResearchModal && (
+				<UserResearchWindow
+					onClick={handleUserResearchModal}
+				></UserResearchWindow>
+			)}
 			<section id='subscription' className='w-full'>
 				<Subscription />
+			</section>
+			{/* explaining text for filling out form */}
+			<section className='w-full px-4 py-2 flex flex-col items-start gap-[0.5rem]'>
+				<div className='text-center text-neutral-800 text-xl font-bold leading-normal font-creato-medium'>
+					Earn free credits⭐ by joining our user study
+				</div>
+				<div className='text-gray-600 text-sm font-normal font-creato-medium leading-normal tracking-[0.0175rem]'>
+					We want to learn more about what you think of DrLambda, and how you
+					use DrLambda.
+				</div>
+				<PrimaryButton
+					onClick={handleUserResearchModal}
+					label={'Join today!'}
+				></PrimaryButton>
 			</section>
 		</div>
 	);
