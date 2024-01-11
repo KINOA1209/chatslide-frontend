@@ -7,7 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import AuthService from '@/services/AuthService';
 import UserService from '@/services/UserService';
 import FeedbackButton from '@/components/ui/feedback';
-
 import { QuestionExplainIcon } from '@/app/(feature)/icons';
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
 import PaywallModal from '@/components/forms/paywallModal';
@@ -17,12 +16,6 @@ import { SmallBlueButton } from '@/components/button/DrlambdaButton';
 import WebService from '@/services/WebpageService';
 import Resource from '@/models/Resource';
 import { toast, ToastContainer } from 'react-toastify';
-
-import Image from 'next/image';
-
-import ContentWithImageImg from '@/public/images/summary/content_with_image.png';
-import ContentOnlyImg from '@/public/images/summary/content_only.png';
-import ContentInBrandingColorImg from '@/public/images/summary/content_in_branding_color.png';
 import FileUploadModal from '@/components/forms/FileUploadModal';
 import SelectedResourcesList from '@/components/SelectedResources';
 import { useUser } from '@/hooks/use-user';
@@ -71,9 +64,6 @@ export default function Topic() {
 	const { isPaidUser } = useUser();
 	const [isAddingLink, setIsAddingLink] = useState(false);
 
-	const [useSchoolTemplate, setUseSchoolTemplate] = useState(false);
-	const [schoolTemplate, setSchoolTemplate] = useState('' as string);
-	const [theme, setTheme] = useState('content_with_image');
 	const [numOfPages, setNumOfPages] = useState('moderate');
 
 	// bind form data between input and sessionStorage
@@ -291,7 +281,7 @@ export default function Topic() {
 			project_id: project_id,
 			resources: selectedResources.map((resource: Resource) => resource.id),
 			model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
-			schoolTemplate: schoolTemplate,
+			//schoolTemplate: schoolTemplate,
 			scenario_type: scenarioType,
 		};
 
@@ -303,7 +293,7 @@ export default function Topic() {
 			'selectedResources',
 			JSON.stringify(selectedResources),
 		);
-		sessionStorage.setItem('schoolTemplate', schoolTemplate);
+		//sessionStorage.setItem('schoolTemplate', schoolTemplate);
 
 		try {
 			const { userId, idToken: token } =
@@ -861,106 +851,6 @@ export default function Topic() {
 								selectedResources={selectedResources}
 								removeResourceAtIndex={removeResourceAtIndex}
 							/>
-						</div>
-					</div>
-				</div>
-
-				{/* design */}
-				<div
-					className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1 font-creato-regular'
-					id='SummaryStep-4'
-				>
-					<div className='additional_container my-2 lg:my-5 border border-2 border-gray-200 flex flex-col gap-y-4'>
-						<div className='title2'>
-							<p className='text-3xl'>Theme</p>
-							<p id='after2'> (Optional)</p>
-						</div>
-						<span className='text-sm text-gray-500'>
-							Select a theme for your slide
-						</span>
-						{/* theme */}
-						<span>What theme do you want to choose?</span>
-						<div className='grid grid-cols-3 gap-x-4'>
-							{[
-								{
-									img: ContentWithImageImg,
-									value: 'content_with_image',
-									alt: 'Content with image',
-								},
-								{
-									img: ContentOnlyImg,
-									value: 'content_only',
-									alt: 'Content only',
-								},
-								{
-									img: ContentInBrandingColorImg,
-									value: 'content_in_branding_color',
-									alt: 'Content in branding color',
-								},
-							].map(({ img, value, alt }) => (
-								<div
-									key={value}
-									className={`border border-2 rounded-lg border-gray-400 px-2 py-2 ${
-										theme === value ? 'border-gray-400' : 'border-white'
-									}`}
-								>
-									<label>
-										<input
-											type='radio'
-											name='theme'
-											value={value}
-											checked={theme === value}
-											onChange={() => setTheme(value)}
-											style={{ display: 'none' }} // Hides the radio button
-										/>
-										<div onClick={() => setTheme(value)}>
-											<Image src={img} alt={alt} />
-										</div>
-										{alt}
-									</label>
-								</div>
-							))}
-						</div>
-
-						{/* school */}
-						<div className='grid grid-cols-2 gap-x-4'>
-							<div className='gap-1 flex flex-col justify-start'>
-								<span>Do you want to use a school deck template?</span>
-								<form className='flex flex-row gap-x-4 mt-2'>
-									<label>
-										<input
-											type='radio'
-											value='yes'
-											checked={useSchoolTemplate}
-											onChange={(e) => setUseSchoolTemplate(true)}
-										/>
-										Yes
-									</label>
-									<label>
-										<input
-											type='radio'
-											value='no'
-											checked={!useSchoolTemplate}
-											onChange={(e) => setUseSchoolTemplate(false)}
-										/>
-										No
-									</label>
-								</form>
-							</div>
-
-							{useSchoolTemplate && (
-								<div className='gap-1 flex flex-col justify-start'>
-									<span>Select your school:</span>
-									<select
-										className='border border-2 border-gray-400 rounded-lg bg-gray-100'
-										onChange={(e) => setSchoolTemplate(e.target.value)}
-									>
-										<option value='Harvard'>Harvard University</option>
-										<option value='Stanford'>Stanford University</option>
-										<option value='Berkeley'>UC Berkeley</option>
-									</select>
-								</div>
-							)}
 						</div>
 					</div>
 				</div>

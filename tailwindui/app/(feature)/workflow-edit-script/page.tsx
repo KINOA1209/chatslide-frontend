@@ -574,7 +574,7 @@ export default function WorkflowStep4() {
 			<ToastContainer />
 
 			<WorkflowStepsBanner
-				currentIndex={3}
+				currentIndex={4}
 				isSubmitting={isSubmitting}
 				setIsSubmitting={setIsSubmitting}
 				contentRef={contentRef}
