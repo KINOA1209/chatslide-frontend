@@ -21,6 +21,10 @@ fi
 # Get the latest commit before and after git pull
 commit_before_pull=$(git rev-parse HEAD)
 git pull
+if [ $? -ne 0 ]; then
+    echo "git pull failed"
+    exit 1
+fi
 commit_after_pull=$(git rev-parse HEAD)
 
 # Compare commits and run 'npm run build' if they are different
