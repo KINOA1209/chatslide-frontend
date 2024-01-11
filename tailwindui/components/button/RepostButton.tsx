@@ -68,7 +68,7 @@ const RepostButton: React.FC<RepostButtonProps> = ({
         <div className='col-span-1 ml-3'>
             <BigGrayButton onClick={handleRepostToTwitter} isSubmitting={isProcessing}>
                 <div className='flex flex-row items-center gap-x-2'>
-                    Post on X (Twitter)
+                    Post on 𝕏 / <FaTwitter />
                 </div>
             </BigGrayButton>
         </div>
