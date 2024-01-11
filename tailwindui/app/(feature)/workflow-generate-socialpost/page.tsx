@@ -487,8 +487,6 @@ export default function Topic_SocialPost() {
 					setIsGpt35={setIsGpt35}
 				/>
 				{/* main content */}
-				<div className='py-10 gap-y-4 w-full flex flex-col items-center'>
-					<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
 				<div className='gap-y-4 w-full flex flex-col items-center'>
 
           <GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
