@@ -8,13 +8,13 @@ import AuthService from '@/services/AuthService';
 import ProjectService from '@/services/ProjectService';
 import { FaTwitter } from "react-icons/fa";
 
-type RepostButtonProps = {
+type PostButtonProps = {
     slides: Slide[];
     post_type: string; //socialpost or slide
     setShare: (share:boolean) => void;
 };
 
-const RepostButton: React.FC<RepostButtonProps> = ({
+const PostButton: React.FC<PostButtonProps> = ({
     slides,
     post_type,
     setShare,
@@ -47,26 +47,26 @@ const RepostButton: React.FC<RepostButtonProps> = ({
         }
     }, []);
 
-    const handleRepostToTwitter = async () => {
+    const handlePostToTwitter = async () => {
         try{
             setIsProcessing(true);
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
             //const publicImageUrl = await ProjectService.getSlideTwitterImg(project_id);
             //console.log(publicImageUrl)
-            await ProjectService.repostSlideShareLink(token, project_id, setShare)
+            await ProjectService.SlideShareLink(token, project_id, setShare)
             const shareLink = `${host}/shared/${project_id}`
             const twitterText = `${title}. Learn more at drlambda.ai!\n`
             const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(twitterText)}${encodeURIComponent(shareLink)}`;
             window.open(twitterUrl, '_blank');
             setIsProcessing(false);
         } catch (error) {
-            console.error('Failed to process Twitter repost:', error);
+            console.error('Failed to process Twitter post:', error);
         }
     };
     
     return (
         <div className='col-span-1 ml-3'>
-            <BigGrayButton onClick={handleRepostToTwitter} isSubmitting={isProcessing}>
+            <BigGrayButton onClick={handlePostToTwitter} isSubmitting={isProcessing}>
                 <div className='flex flex-row items-center gap-x-2'>
                     Post on 𝕏 / <FaTwitter />
                 </div>
@@ -76,4 +76,4 @@ const RepostButton: React.FC<RepostButtonProps> = ({
 
 };
 
-export default RepostButton
+export default PostButton

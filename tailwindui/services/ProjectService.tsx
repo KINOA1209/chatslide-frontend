@@ -227,7 +227,7 @@ class ProjectService {
       }
     }
 
-    static async repostSlideShareLink(token:string, project_id:string, setShare: (share:boolean) => void): Promise<void> {
+    static async SlideShareLink(token:string, project_id:string, setShare: (share:boolean) => void): Promise<void> {
       const newShareStatus = true
       setShare(newShareStatus)
       const headers = new Headers();
