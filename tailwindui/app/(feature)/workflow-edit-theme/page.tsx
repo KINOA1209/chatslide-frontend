@@ -34,7 +34,7 @@ export default function ThemePage(){
                 setIsGpt35={setIsGpt35}
                 nextText={!isSubmitting ? 'Create Slides' : 'Creating Slides'}
             />
-            <div className='gap-y-4 w-full flex flex-col items-center my-4'>
+            <div className='gap-y-4 w-full flex flex-col items-center my-[6rem]'>
                 {/* design */}
                 <div
                     className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1 font-creato-regular'
@@ -89,7 +89,7 @@ export default function ThemePage(){
                             )}
                         </div>
                         {/* theme */}
-                        {!useSchoolTemplate ? (
+                        {/* {!useSchoolTemplate ? ( */}
                             <div>
                                 <span className='text-md font-bold'>What theme do you want to choose?</span>
                                 <div className='grid grid-cols-3 gap-x-4 mt-3'>
@@ -135,8 +135,8 @@ export default function ThemePage(){
                                 </div>
 
                                 {/*logo section*/}
-                                <div className='grid grid-cols-2 gap-x-4'>
-                                    <div className='gap-1 flex flex-col justify-start mt-4'>
+                                <div className='grid grid-cols-2 gap-x-4 mt-4'>
+                                    <div className='gap-1 flex flex-col justify-start'>
                                         <span className='text-md font-bold'>Do you want to use your logo?</span>
                                         <form className='flex flex-row gap-x-4 mt-2'>
                                             <label>
@@ -175,11 +175,11 @@ export default function ThemePage(){
                                     )}
                                 </div>
                             </div>
-                        ) : (
+                        {/* ) : (
                             <div>
                                 <span className='text-md font-bold'>School template preview</span>
                             </div>
-                        )}
+                        )} */}
                     </div>
                 </div>
             </div>
