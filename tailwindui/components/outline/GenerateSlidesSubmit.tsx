@@ -84,10 +84,10 @@ const GenerateSlidesSubmit = ({
 	const handleSubmit = async () => {
 		let formData: any = {};
 
-    console.log('outlineData', outline);
+		console.log('outlineData', outline);
 
 		// remove empty entries
-    const outlineCopy = [...outline];
+		const outlineCopy = [...outline];
 		for (let i = 0; i < outlineCopy.length; i++) {
 			outlineCopy[i].content = outlineCopy[i].content.filter((s) => {
 				return s.length > 0;
@@ -139,8 +139,8 @@ const GenerateSlidesSubmit = ({
 				: null;
 
 		formData = {
-      res: JSON.stringify({ ...outlineCopy }),
-      outlines: JSON.stringify({ ...outlineCopy }),
+			res: JSON.stringify({ ...outlineCopy }),
+			outlines: JSON.stringify({ ...outlineCopy }),
 			audience: audience,
 			foldername: foldername,
 			topic: topic,
@@ -165,7 +165,7 @@ const GenerateSlidesSubmit = ({
 				const extraKnowledge = await ResourceService.queryResource(
 					project_id || '',
 					selectedResources.map((r: Resource) => r.id),
-          outlineCopy,
+					outlineCopy,
 					token,
 				);
 				sessionStorage.setItem(

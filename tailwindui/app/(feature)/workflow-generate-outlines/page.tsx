@@ -495,8 +495,7 @@ export default function Topic() {
 
 			{/* main content */}
 			<div className='my-4 gap-y-4 w-full flex flex-col items-center'>
-
-        <GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
+				<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
 
 				{/* Project Summary section */}
 				<div className='w-full lg:w-2/3 px-3 my-3 lg:my-1' id='SummaryStep-2'>

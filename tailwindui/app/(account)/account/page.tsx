@@ -1,7 +1,7 @@
 'use client';
 import AuthService from '@/services/AuthService';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, useEffect, useRef, RefObject } from 'react';
+import { useState, useEffect, useRef, RefObject, use } from 'react';
 import Pricing from '@/components/landing/pricing';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -9,9 +9,7 @@ import UserService from '@/services/UserService';
 import Link from 'next/link';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import ClickableLink from '@/components/ui/ClickableLink';
 import ReferralLink from '@/components/ReferralLink';
-import Modal from '@/components/ui/Modal';
 import { FeedbackForm } from '@/components/ui/feedback';
 import { BigBlueButton } from '@/components/button/DrlambdaButton';
 import { InputBox } from '@/components/ui/InputBox';
@@ -193,26 +191,6 @@ const Profile = () => {
 	);
 };
 
-// no longer used
-const PasswordModule = () => {
-	const router = useRouter();
-
-	return (
-		<div className='w-full px-4 sm:px-6'>
-			<div className='w-fit mx-auto'>
-				<div className='w-full flex flex-row justify-center mb-5'>
-					<button
-						className='btn text-white font-bold bg-gradient-to-r from-blue-600 to-teal-500 whitespace-nowrap rounded-xl'
-						onClick={(e) => router.push('/reset-password')}
-					>
-						Change Password
-					</button>
-				</div>
-			</div>
-		</div>
-	);
-};
-
 const Referral = () => {
 	return (
 		<div className='w-full px-4 sm:px-6'>
@@ -297,6 +275,13 @@ const ApplyPromo = () => {
 	const searchParams = useSearchParams();
 	const [promo, setPromo] = useState(searchParams?.get('promo') || '');
 	const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    // if promo in search params, call applyPromo
+    if (promo) {
+      applyPromo();
+    }
+  }, []);
 
 	const applyPromo = async () => {
 		setIsSubmitting(true);

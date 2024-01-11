@@ -1,3 +1,6 @@
 # ignore all jetbrains cache
 **/.idea
 node_modules
+
+# use tailwind/package.json
+package.json 
