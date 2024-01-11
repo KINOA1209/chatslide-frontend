@@ -5,7 +5,8 @@ interface ButtonProps {
 	label: string;
 	primary?: boolean;
 }
-
+import FillOutFormImg from '@/public/images/user_onboarding/FillOutForms.png';
+import BookASessionImg from '@/public/images/user_onboarding/BookASession.png';
 // join user research button/ claim special offer button
 const PrimaryButton: FC<ButtonProps> = ({ onClick, label }) => {
 	return (
@@ -60,29 +61,61 @@ const UserResearchWindow: FC<UserResearchWindowProps> = ({ onClick }) => {
 				</div>
 				<div className='flex flex-row gap-[1.5rem]'>
 					{/* book a session */}
-					<div className='w-80 h-80 relative bg-white rounded-md shadow border border-indigo-300 flex flex-col'>
-						<div className='text-center'>
-							<span className='text-black text-base font-bold font-creato-medium leading-snug tracking-tight'>
-								Book a session +1000⭐
-								<br />
-							</span>
-							<span className='text-black text-sm font-normal font-creato-medium leading-snug tracking-tight'>
-								(~30 mins){' '}
-							</span>
+					<a
+						href='https://calendar.app.google/2uGV3B6h9UdYBHPB8'
+						target='_blank'
+						className='py-2 px-2 rounded-md hover:bg-gray-300 transition duration-300 ease-in-out'
+						role='menuitem'
+					>
+						<div className='w-80 relative bg-white rounded-md shadow-md border border-indigo-300 flex flex-col justify-between items-center transition duration-300 ease-in-out hover:shadow-lg'>
+							<div className='h-[15rem] w-[15rem]'>
+								<img
+									src={BookASessionImg.src}
+									alt='Book a session'
+									className='object-contain'
+								/>
+							</div>
+
+							<div className='text-center'>
+								<span className='text-black text-base font-bold font-creato-medium leading-snug tracking-tight'>
+									Book a session +1000⭐
+									<br />
+								</span>
+								<span className='text-black text-sm font-normal font-creato-medium leading-snug tracking-tight'>
+									(~30 mins){' '}
+								</span>
+							</div>
 						</div>
-					</div>
+					</a>
+
 					{/* fill out a form */}
-					<div className='w-80 h-80 relative bg-white rounded-md shadow border border-indigo-300 flex flex-col'>
-						<div className='text-center'>
-							<span className='text-black text-base font-bold font-creato-medium leading-snug tracking-tight'>
-								Fill out form +100⭐
-								<br />
-							</span>
-							<span className='text-black text-sm font-normal font-creato-medium leading-snug tracking-tight'>
-								(5-10 mins){' '}
-							</span>
+					<a
+						href='https://forms.gle/kncWqBjU4n5xps1w8'
+						target='_blank'
+						className='py-2 px-2 rounded-md hover:bg-gray-300 transition duration-300 ease-in-out'
+						role='menuitem'
+					>
+						{' '}
+						<div className='w-80 relative bg-white rounded-md shadow border border-indigo-300 flex flex-col justify-between items-center transition duration-300 ease-in-out hover:shadow-lg'>
+							<div className='w-[15rem] h-[15rem]'>
+								<img
+									src={FillOutFormImg.src}
+									alt='Fill out form'
+									className='object-contain w-[15rem] h-[15rem]'
+								/>
+							</div>
+
+							<div className='text-center'>
+								<span className='text-black text-base font-bold font-creato-medium leading-snug tracking-tight'>
+									Fill out form +100⭐
+									<br />
+								</span>
+								<span className='text-black text-sm font-normal font-creato-medium leading-snug tracking-tight'>
+									(5-10 mins){' '}
+								</span>
+							</div>
 						</div>
-					</div>
+					</a>
 				</div>
 			</section>
 		</Modal>
