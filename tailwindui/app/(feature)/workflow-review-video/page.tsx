@@ -23,9 +23,9 @@ const VideoVisualizer = ({ videoUrl, status }: { videoUrl: string, status: strin
 				{videoUrl !== '' ? (
 					<Video videoUrl={videoSource} />
 				) : status === 'failed' ? (
-					<div>We're sorry your video generation failed :(, please retry generation in the script page again.</div>
+					<div>We're sorry your video generation failed :( please retry generation in the script page again.</div>
 				) : (
-					<div>Your video is being generated, please check back later.</div>
+					<div>Your video is being generated. It usually takes 10 - 20 minutes to finish. You could safely leave the page and check back later.</div>
 				)}
 			</div>
 		</div>
