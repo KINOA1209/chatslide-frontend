@@ -26,6 +26,7 @@ export default function SignUp() {
 			handlePromoChange(promo);
 			setReferralValue(promo);
 			setShowPromo(true);
+      setHref(`/signup-with-email?referral=${promo}`);
 		}
 	}, []);
 
