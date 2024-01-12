@@ -1,5 +1,6 @@
 import { LayoutKeys } from "@/components/slides/slideLayout";
 import { TemplateKeys } from "@/components/slides/slideTemplates";
+import Chart from "./Chart";
 
 export interface SlideElement {
   type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
@@ -27,6 +28,7 @@ export type SlideKeys =
   | 'layout'
   | 'logo';
 
+
 export default class Slide {
   head: string;
   title: string;
@@ -34,7 +36,7 @@ export default class Slide {
   userName: string;
   template: TemplateKeys;
   content: string[];
-  is_chart: boolean[];
+  is_chart: boolean[];  // if is_chart[i] is false, then use image[i] for visualization, else use chart[i]
   images: string[];  // urls of images
   charts: Chart[];  // data of charts
   layout: LayoutKeys;
