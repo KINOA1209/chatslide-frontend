@@ -34,10 +34,12 @@ export default class Slide {
   userName: string;
   template: TemplateKeys;
   content: string[];
-  images: string[];
+  is_chart: boolean[];
+  images: string[];  // urls of images
+  charts: Chart[];  // data of charts
   layout: LayoutKeys;
-  logo: string;
-  logo_url?: string;
+  logo: string;  // enum for school tempaltes, if user has custom logo, then use logo_url
+  logo_url?: string;  // overwrites logo if present
 
   constructor() {
     this.head = 'New Slide';
@@ -50,7 +52,9 @@ export default class Slide {
       'Some more content here',
       'Even more content here',
     ];
+    this.is_chart = [false, false, false];
     this.images = [];
+    this.charts = [];
     this.layout = 'Col_2_img_1_layout';
     this.logo = 'Default';
   }
