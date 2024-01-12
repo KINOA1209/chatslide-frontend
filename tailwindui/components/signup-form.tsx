@@ -51,6 +51,13 @@ const SignupForm: React.FC = () => {
       setReferralValue(promo);
       setShowPromo(true);
     }
+
+    const appSumoRedepmtionCode = searchParams?.get('sumocode');
+    if (appSumoRedepmtionCode) {
+      handlePromoChange(appSumoRedepmtionCode);
+      setReferralValue(appSumoRedepmtionCode);
+      setShowPromo(true);
+    }
   }, []);
 
 	function handleEmailChange(event: any) {

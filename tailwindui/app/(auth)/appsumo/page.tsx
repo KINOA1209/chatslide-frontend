@@ -30,12 +30,12 @@ export default function SignUp() {
       console.log('href', href);
 		}
     
-    const appSumoRedepmtionCode = searchParams?.get('code');
+    const appSumoRedepmtionCode = searchParams?.get('sumocode');
     if (appSumoRedepmtionCode) {
       handlePromoChange(appSumoRedepmtionCode);
       setReferralValue(appSumoRedepmtionCode);
       setShowPromo(true);
-      setHref(`/signup-with-email?code=${appSumoRedepmtionCode}`);
+      setHref(`/signup-with-email?referral=${appSumoRedepmtionCode}`);
     }
 
 	}, []);
