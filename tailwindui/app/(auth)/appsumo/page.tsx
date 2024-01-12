@@ -35,7 +35,7 @@ export default function SignUp() {
       handlePromoChange(appSumoRedepmtionCode);
       setReferralValue(appSumoRedepmtionCode);
       setShowPromo(true);
-      setHref(`/signup-with-email?referral=${appSumoRedepmtionCode}`);
+      setHref(`/signup-with-email?sumocode=${appSumoRedepmtionCode}`);
     }
 
 	}, []);
