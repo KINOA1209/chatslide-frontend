@@ -9,7 +9,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import VideoService from '@/services/VideoService';
 import AuthService from '@/services/AuthService';
 
-const VideoVisualizer = ({ videoUrl }: { videoUrl: string }) => {
+const VideoVisualizer = ({ videoUrl, status }: { videoUrl: string, status: string }) => {
 	const videoSource = videoUrl;
 	const topic =
 		typeof sessionStorage !== 'undefined'
@@ -22,8 +22,10 @@ const VideoVisualizer = ({ videoUrl }: { videoUrl: string }) => {
 			<div className='w-fit block m-auto'>
 				{videoUrl !== '' ? (
 					<Video videoUrl={videoSource} />
+				) : status === 'failed' ? (
+					<div>We're sorry your video generation failed :( please retry generation in the script page again.</div>
 				) : (
-					<div>Your video is being generated, please check back later.</div>
+					<div>Your video is being generated. It usually takes 10 - 20 minutes to finish. You could safely leave the page and check back later.</div>
 				)}
 			</div>
 		</div>
@@ -39,6 +41,7 @@ export default function WorkflowStep6() {
 	const contentRef = useRef<HTMLDivElement>(null);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [videoUrl, setVideoUrl] = useState<string>();
+	const [jobStatus, setJobStatus] = useState<string>();
 	const [isLoading, setIsLoading] = useState(false);
 
 	const showErrorAndRedirect = () => {
@@ -71,7 +74,7 @@ export default function WorkflowStep6() {
 		if (isLoading) {
 			checkVideoJobStatus();
 		}
-	});
+	}, []);
 
 	const checkVideoJobStatus = async () => {
 		if (!isLoading) {
@@ -84,9 +87,12 @@ export default function WorkflowStep6() {
 			console.log(
 				`jobStatus = ${jobStatus}, job_status = ${jobStatus.job_status}, video_url = ${jobStatus.video_url}`,
 			);
-			if (jobStatus.job_status === 'completed' && jobStatus.video_url) {
-				setVideoUrl(jobStatus.video_url);
-				setIsLoading(false); // Stop polling once the video is ready
+			setJobStatus(jobStatus.job_status);
+			if ((jobStatus.job_status === 'completed') || (jobStatus.job_status === 'failed')) {
+				if (jobStatus.video_url) {
+					setVideoUrl(jobStatus.video_url);
+				}
+				setIsLoading(false); // Stop polling once the video is ready or failed
 			}
 		} catch (error) {
 			console.error('Error fetching video status:', error);
@@ -128,7 +134,7 @@ export default function WorkflowStep6() {
 				className={`max-w-4xl px-6 flex flex-col relative mx-auto`}
 				ref={contentRef}
 			>
-				<VideoVisualizer videoUrl={videoUrl || ''} />
+				<VideoVisualizer videoUrl={videoUrl || ''} status={jobStatus || ''} />
 			</div>
 
 			<FeedbackButton />

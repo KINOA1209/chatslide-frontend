@@ -5,6 +5,7 @@ interface PromoComponentProps {
 	setShowPromo: React.Dispatch<React.SetStateAction<boolean>>;
 	referralValue: string;
 	setReferralValue: React.Dispatch<React.SetStateAction<string>>;
+  text?: string;
 }
 
 const PromoComponent: React.FC<PromoComponentProps> = ({
@@ -12,6 +13,7 @@ const PromoComponent: React.FC<PromoComponentProps> = ({
 	setShowPromo,
 	referralValue,
 	setReferralValue,
+  text = 'You are going to get more credits with promo code!',
 }) => {
 	return (
 		<>
@@ -23,7 +25,7 @@ const PromoComponent: React.FC<PromoComponentProps> = ({
 								className='block text-green-600 font-medium mb-1'
 								htmlFor='promo'
 							>
-								Get more credits with a promo or referral code
+								{text}
 							</label>
 							<div className='max-w-sm mx-auto'>
 								<input

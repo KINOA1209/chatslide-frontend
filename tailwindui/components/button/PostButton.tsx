@@ -24,7 +24,9 @@ const PostButton: React.FC<PostButtonProps> = ({
 
     console.log(slides)
 
-    const title = slides[0]?.head;
+    let title = slides[0]?.head;
+    // remove all quill tags
+    title = title?.replace(/<[^>]*>?/gm, '');
 
     const project_id =
     typeof window !== 'undefined' && sessionStorage.project_id != undefined

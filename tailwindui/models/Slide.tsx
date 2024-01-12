@@ -1,5 +1,6 @@
 import { LayoutKeys } from "@/components/slides/slideLayout";
 import { TemplateKeys } from "@/components/slides/slideTemplates";
+import Chart from "./Chart";
 
 export interface SlideElement {
   type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
@@ -27,6 +28,7 @@ export type SlideKeys =
   | 'layout'
   | 'logo';
 
+
 export default class Slide {
   head: string;
   title: string;
@@ -34,9 +36,12 @@ export default class Slide {
   userName: string;
   template: TemplateKeys;
   content: string[];
-  images: string[];
+  is_chart: boolean[];  // if is_chart[i] is false, then use image[i] for visualization, else use chart[i]
+  images: string[];  // urls of images
+  charts: Chart[];  // data of charts
   layout: LayoutKeys;
-  logo: string;
+  logo: string;  // enum for school tempaltes, if user has custom logo, then use logo_url
+  logo_url?: string;  // overwrites logo if present
 
   constructor() {
     this.head = 'New Slide';
@@ -49,7 +54,9 @@ export default class Slide {
       'Some more content here',
       'Even more content here',
     ];
+    this.is_chart = [false, false, false];
     this.images = [];
+    this.charts = [];
     this.layout = 'Col_2_img_1_layout';
     this.logo = 'Default';
   }

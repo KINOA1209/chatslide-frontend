@@ -38,6 +38,28 @@ const SignupForm: React.FC = () => {
 
 	const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
+  useEffect(() => {
+    const handlePromoChange = (promo: string) => {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('promo', promo);
+      }
+    };
+
+    const promo = searchParams?.get('referral');
+    if (promo) {
+      handlePromoChange(promo);
+      setReferralValue(promo);
+      setShowPromo(true);
+    }
+
+    const appSumoRedepmtionCode = searchParams?.get('sumocode');
+    if (appSumoRedepmtionCode) {
+      handlePromoChange(appSumoRedepmtionCode);
+      setReferralValue(appSumoRedepmtionCode);
+      setShowPromo(true);
+    }
+  }, []);
+
 	function handleEmailChange(event: any) {
 		const value = event.target.value;
 		setEmail(value);
@@ -158,27 +180,6 @@ const SignupForm: React.FC = () => {
 	return (
 		<form onSubmit={handleSubmit}>
 			<ToastContainer />
-			<div
-				className={`flex flex-wrap -mx-3 mb-4 ${
-					!Boolean(searchParams?.get('referral')) && 'hidden'
-				}`}
-			>
-				<div className='w-full px-3'>
-					<label
-						className='block text-green-600 text-sm font-medium mb-1'
-						htmlFor='promo'
-					>
-						Referral code applied
-					</label>
-					<input
-						id='promo'
-						type='text'
-						value={searchParams?.get('referral') || ''}
-						className='form-input w-full text-gray-800 bg-gray-200 cursor-not-allowed'
-						disabled={true}
-					/>
-				</div>
-			</div>
 
 			<Promo
 				showPromo={showPromo}

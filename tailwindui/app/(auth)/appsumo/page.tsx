@@ -27,7 +27,17 @@ export default function SignUp() {
 			setReferralValue(promo);
 			setShowPromo(true);
       setHref(`/signup-with-email?referral=${promo}`);
+      console.log('href', href);
 		}
+    
+    const appSumoRedepmtionCode = searchParams?.get('sumocode');
+    if (appSumoRedepmtionCode) {
+      handlePromoChange(appSumoRedepmtionCode);
+      setReferralValue(appSumoRedepmtionCode);
+      setShowPromo(true);
+      setHref(`/signup-with-email?referral=${appSumoRedepmtionCode}`);
+    }
+
 	}, []);
 
 	return (
@@ -36,7 +46,7 @@ export default function SignUp() {
 				<div className='pt-32 pb-12 md:pt-40 md:pb-20'>
 					{/* Page header */}
 					<div className='max-w-3xl mx-auto text-center pb-12 md:pb-20'>
-						<h1 className='h1'>💙 Welcome!</h1>
+						<h2 className='h2'>💙 Welcome, Sumolings!</h2>
 					</div>
 
 					{/* Form */}
@@ -46,6 +56,7 @@ export default function SignUp() {
 							setShowPromo={setShowPromo}
 							referralValue={referralValue}
 							setReferralValue={setReferralValue}
+              text='Enter your AppSumo redemption code here'
 						/>
 
 						<div className='flex items-center my-6'>
