@@ -76,7 +76,7 @@ let Size = Quill.import('attributors/style/size');
 Size.whitelist = fontSizes;
 Quill.register(Size, true);
 
-const isHTML = (input: string): boolean => {
+export const isHTML = (input: string): boolean => {
 	const doc: Document = new DOMParser().parseFromString(input, 'text/html');
 	return Array.from(doc.body.childNodes).some((node) => node.nodeType === 1);
 };
@@ -162,8 +162,9 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				}
 			};
 
+			//iterate throught the content array, if it's <li> tag, wrap into <ul> tag
 			if (Array.isArray(content)) {
-				content.forEach((item) => {
+				content.forEach((item, index) => {
 					if (
 						isHTML(item) &&
 						item.trim().startsWith('<li>') &&
@@ -173,6 +174,9 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 						insertContent(listHTML);
 					} else {
 						insertContent(item);
+						if (!item.endsWith('\n') || !item.includes('<br>')) {
+							initialDelta.insert('\n');
+						}
 					}
 				});
 			} else {
