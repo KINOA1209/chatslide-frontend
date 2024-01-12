@@ -37,6 +37,7 @@ export default class Slide {
   images: string[];
   layout: LayoutKeys;
   logo: string;
+  logo_url?: string;
 
   constructor() {
     this.head = 'New Slide';
