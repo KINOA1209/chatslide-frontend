@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import React, { CSSProperties, useEffect, useRef } from 'react';
 import { loadCustomizableElements } from './SlidesHTML';
 import { TemplatesLogos } from './templates_customizable_elements/Templates_logos';
+import { isHTML } from '@/components/slides/quillEditorSlide';
 
 const QuillEditable = dynamic(
 	() => import('@/components/slides/quillEditorSlide'),
@@ -54,6 +55,19 @@ export const templateDispatch = (
 	// const ChosenTemplateLogo =
 	// 	TemplatesLogos[templateLogo as keyof typeof TemplatesLogos];
 	const customizableElements = loadCustomizableElements(slide.template);
+	const processContent = (item:string) => {
+		if (isHTML(item)){
+			if (item.trim().startsWith('<li>') && item.trim().endsWith('</li>')){
+				return `<ul>${item}</ul>`
+			}
+			else{
+				return item
+			}
+		}
+		else{
+			return `<ul><li>${item}</li></ul>\n`
+		}
+	}
 	const generateContentElement = (
 		content: string | string[],
 		contentTag: SlideKeys,
@@ -66,8 +80,16 @@ export const templateDispatch = (
 				<div
 					className='ql-editor non-editable-ql-editor'
 					style={{ ...style, outline: 'none' }}
-					dangerouslySetInnerHTML={{ __html: content }}
-				/>
+				>
+					{Array.isArray(content) ? 
+						content.map((item, index) => (
+							
+						<div key={index} dangerouslySetInnerHTML={{ __html:  processContent(item) }} />
+						))
+					: 
+						<div dangerouslySetInnerHTML={{ __html: content }} />
+					}
+				</div>
 			);
 		} else {
 			if (contentIndex !== undefined) {
