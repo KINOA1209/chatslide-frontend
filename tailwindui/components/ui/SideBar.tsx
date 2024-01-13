@@ -31,14 +31,13 @@ import SideBarItem from './SideBarItem';
 import { SideBarData } from './SideBarData';
 import { BlueLabel, GrayLabel } from './GrayLabel';
 import { IoExitOutline } from 'react-icons/io5';
+import { useUser } from '@/hooks/use-user';
 
 interface SideBarProps {}
 const SideBar = ({}: SideBarProps) => {
 	const [top, setTop] = useState<boolean>(true);
 	const [loading, setLoading] = useState(true);
-	const [credits, setCredits] = useState(0);
-	const [tier, setTier] = useState<string>('');
-
+  const { credits, tier } = useUser();
 	const router = useRouter();
 	const [isMobile, setIsMobile] = useState<boolean>(false);
 
@@ -69,57 +68,6 @@ const SideBar = ({}: SideBarProps) => {
 			console.error(error);
 		}
 	};
-
-	useEffect(() => {
-		const checkUser = async () => {
-			try {
-				const { userId, idToken } =
-					await AuthService.getCurrentUserTokenAndId();
-				await getCredits(idToken);
-				setLoading(false);
-			} catch {
-				console.log('No authenticated user.');
-				router.push('/signin');
-			}
-		};
-
-		const getCredits = async (idToken: string) => {
-			try {
-				const { credits, tier } = await UserService.getUserCreditsAndTier(
-					idToken,
-				);
-				setCredits(credits);
-				setTier(tier);
-			} catch (error: any) {
-				console.error(error);
-			}
-		};
-
-		// check the current user when component loads
-		checkUser();
-
-		const listener = (data: any) => {
-			switch (data.payload.event) {
-				case 'signIn':
-					console.log('user signed in');
-					checkUser();
-					break;
-				case 'signOut':
-					console.log('user signed out');
-					break;
-				default:
-					break;
-			}
-		};
-
-		// add auth event listener
-		Hub.listen('auth', listener);
-
-		// remove auth event listener on cleanup
-		return () => {
-			Hub.remove('auth', listener);
-		};
-	}, []);
 
 	const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 

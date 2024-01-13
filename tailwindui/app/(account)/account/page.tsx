@@ -22,34 +22,19 @@ import {
 	FaVoicemail,
 } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
+import { useUser } from '@/hooks/use-user';
 
 const Profile = () => {
-	const [username, setUsername] = useState<string>('');
+  const { username, email, token, setUsername } = useUser();
 	const [editUsername, setEditUsername] = useState('');
-	const [email, setEmail] = useState('');
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	function userFirstName(): string {
-		return username.split(' ')[0];
+		return username?.split(' ')[0];
 	}
 
-	const fetchUser = async () => {
-		const user = await AuthService.getCurrentUser();
-		setEmail(user.attributes.email);
-		setUsername(
-			user.attributes.name ? user.attributes.name : user.attributes.email,
-		);
-	};
-
 	useEffect(() => {
-		fetchUser();
-	}, []);
-
-	// useEffect(() => {
-	//     UserService.forceUpdateUserInfo();
-	// }, []);
-
-	useEffect(() => {
+    console.log("Username updated: ", username);
 		setEditUsername(username);
 	}, [username]);
 
@@ -78,8 +63,6 @@ const Profile = () => {
 		}
 
 		await AuthService.updateName(editUsername);
-		const { userId, idToken: token } =
-			await AuthService.getCurrentUserTokenAndId();
 
 		await fetch(`/api/user/update_username`, {
 			method: 'POST',
@@ -126,7 +109,7 @@ const Profile = () => {
 			});
 
 		setIsSubmitting(false);
-		fetchUser();
+    setUsername(editUsername);
 	};
 
 	return (
@@ -210,10 +193,9 @@ const Referral = () => {
 const OpenAIKey = () => {
 	const [key, setKey] = useState('sk-......');
 	const [isSubmitting, setIsSubmitting] = useState(false);
+  const { token } = useUser();
 
 	const fetchKey = async () => {
-		const { userId, idToken: token } =
-			await AuthService.getCurrentUserTokenAndId();
 		UserService.getOpenaiApiKey(token)
 			.then((data) => {
 				if (data) setKey(data);
@@ -226,8 +208,6 @@ const OpenAIKey = () => {
 	const updateKey = async () => {
 		setIsSubmitting(true);
 		console.log(isSubmitting);
-		const { userId, idToken: token } =
-			await AuthService.getCurrentUserTokenAndId();
 		await UserService.updateOpenaiApiKey(token, key);
 		setIsSubmitting(false);
 		console.log(isSubmitting);
@@ -275,6 +255,7 @@ const ApplyPromo = () => {
 	const searchParams = useSearchParams();
 	const [promo, setPromo] = useState(searchParams?.get('promo') || '');
 	const [isSubmitting, setIsSubmitting] = useState(false);
+  const { token, updateCreditsAndTier } = useUser();
 
   useEffect(() => {
     // if promo in search params, call applyPromo
@@ -286,8 +267,6 @@ const ApplyPromo = () => {
 	const applyPromo = async () => {
 		setIsSubmitting(true);
 		console.log(isSubmitting);
-		const { userId, idToken: token } =
-			await AuthService.getCurrentUserTokenAndId();
 		const { status, message } = await UserService.applyPromoCode(
 			promo,
 			token,
@@ -317,6 +296,7 @@ const ApplyPromo = () => {
 			});
 		}
 		setIsSubmitting(false);
+    updateCreditsAndTier();
 	};
 
 	return (
@@ -349,20 +329,7 @@ const ApplyPromo = () => {
 };
 
 const CreditHistory = () => {
-	const [credits, setCredits] = useState(0);
-
-	useEffect(() => {
-		const fetchCredit = async () => {
-			const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-			UserService.getUserCreditsAndTier(idToken)
-				.then((fetched) => {
-					setCredits(fetched.credits);
-					// setTier(fetched.tier)
-				})
-				.catch(() => setCredits(0));
-		};
-		fetchCredit();
-	}, []);
+  const { credits } = useUser();
 
 	return (
 		<div className='w-full px-4 sm:px-6'>
