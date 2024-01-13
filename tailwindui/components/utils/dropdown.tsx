@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { toast } from 'react-toastify';
 import AuthService from '../../services/AuthService';
-import UserService from '../../services/UserService';
+import { useUser } from '@/hooks/use-user';
 
 interface DropdownButtonProps {}
 
@@ -12,41 +12,17 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const router = useRouter();
-	const [username, setUsername] = useState('');
-	const [credits, setCredits] = useState(0);
-	const [tier, setTier] = useState<string>('');
+  const { username, uid, token, credits, tier } = useUser();
+
+  useEffect(() => {
+    if (!uid) {
+      router.push('/signup');
+    }
+  });
 
 	function userFirstName() {
 		return username.split(' ')[0];
 	}
-
-	useEffect(() => {
-		// Create a scoped async function within the hook.
-		const fetchUser = async () => {
-			const username = await AuthService.getCurrentUserDisplayName(); // from amplify
-			const { userId, idToken } = await AuthService.getCurrentUserTokenAndId(); // from amplify
-			if (username) {
-				setUsername(username);
-				UserService.getUserCreditsAndTier(idToken) // from db
-					.then((fetched) => {
-						setCredits(fetched.credits);
-						setTier(fetched.tier);
-					})
-					.catch(() => {
-						// if amplify has the record, but db does not have the record, initialize the user
-						console.error(
-							`Failed to fetch user credits: ${userId}, initialize the user`,
-						);
-						UserService.initializeUser(idToken);
-					});
-			} else {
-				// if amplify does not have the record, ask user to sign up
-				router.push('/signup');
-			}
-		};
-		// Execute the created function directly
-		fetchUser();
-	}, []);
 
 	useEffect(() => {
 		const handleOutsideClick = (event: MouseEvent) => {

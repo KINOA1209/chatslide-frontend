@@ -1,10 +1,8 @@
 'use client';
-import AuthService from '@/services/AuthService';
 import { useState, useEffect, useRef, RefObject } from 'react';
 import Pricing from '@/components/landing/pricing';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import UserService from '@/services/UserService';
 import Link from 'next/link';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -17,23 +15,6 @@ import {
 const Subscription = () => {
 	const [portalURL, setPortalURL] = useState('');
 	const [showModal, setShowModal] = useState(false);
-
-	useEffect(() => {
-		const fetchTier = async () => {
-			const { userId, idToken: token } =
-				await AuthService.getCurrentUserTokenAndId();
-			UserService.getUserCreditsAndTier(token)
-				.then((data) => {
-					if (data.tier !== 'FREE') {
-						UserService.createStripePortalSession(token).then((data) => {
-							setPortalURL(data);
-						});
-					}
-				})
-				.catch((error) => console.error);
-		};
-		fetchTier();
-	}, []);
 
 	const cancelButton = (
 		<div>
