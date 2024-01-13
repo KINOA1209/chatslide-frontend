@@ -317,17 +317,16 @@ const ApplyPromo = () => {
 			});
 		}
 		setIsSubmitting(false);
-		console.log(isSubmitting);
 	};
 
 	return (
 		<div className='w-full px-4 sm:px-6'>
 			<div className='mb-8 w-full'>
 				<div className='w-fit text-[#363E4A] text-[17px] font-bold'>
-					Apply Promo Code
+					Apply Promo Code or License Key
 				</div>
 				<div className='w-full justify-center flex flex-row'>
-					<div className='flex w-[20rem] flex-row gap-4 justify-center mt-2'>
+					<div className='flex w-[30rem] flex-row gap-4 justify-center mt-2'>
 						<InputBox onClick={(e) => (e.target as HTMLInputElement)?.select()}>
 							<input
 								id='promo'
@@ -345,68 +344,6 @@ const ApplyPromo = () => {
 					</div>
 				</div>
 			</div>
-		</div>
-	);
-};
-
-const Subscription = () => {
-	const [portalURL, setPortalURL] = useState('');
-	const [showModal, setShowModal] = useState(false);
-
-	useEffect(() => {
-		const fetchTier = async () => {
-			const { userId, idToken: token } =
-				await AuthService.getCurrentUserTokenAndId();
-			UserService.getUserCreditsAndTier(token)
-				.then((data) => {
-					if (data.tier !== 'FREE') {
-						UserService.createStripePortalSession(token).then((data) => {
-							setPortalURL(data);
-						});
-					}
-				})
-				.catch((error) => console.error);
-		};
-		fetchTier();
-	}, []);
-
-	const cancelButton = (
-		<div>
-			<Link href={portalURL} target='_blank'>
-				Cancel Subscription
-			</Link>
-		</div>
-	);
-
-	return (
-		<div className='w-full pb-4'>
-			{showModal && (
-				<FeedbackForm
-					onClose={() => setShowModal(false)}
-					message='😭 We are sorry to see you go!'
-					successDiv={cancelButton}
-					textRequired={true}
-				/>
-			)}
-
-			<div className='mb-8 w-full max-w-none 2xl:max-w-[80%] mx-auto px-4 sm:px-6'>
-				<div className='w-fit text-[#363E4A] text-[17px] font-bold'>
-					Subscription
-				</div>
-				<div className='w-fit text-[#212121] text-[80px]'>Plans</div>
-			</div>
-
-			<Pricing />
-			{portalURL && (
-				<button
-					onClick={() => {
-						setShowModal(true);
-					}}
-					className='w-full py-4 sm:px-6 flex flex-col justify-center items-center max-w-none 2xl:max-w-[80%] mx-auto'
-				>
-					Manage Subscription
-				</button>
-			)}
 		</div>
 	);
 };
