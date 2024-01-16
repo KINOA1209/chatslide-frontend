@@ -7,8 +7,16 @@ import DrlambdaButton, { DrLambdaBackButton } from './button/DrlambdaButton';
 // ALLOWED_DOC_EXTENSIONS = {"txt", "pdf"}
 // ALLOWED_MEDIA_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
 
-const supportedFormats = ['pdf', 'txt', 'docx', 'png', 'jpg', 'jpeg']; // For prompt display
-const supportedExtensions = ['pdf', 'txt', 'docx', 'png', 'jpg', 'jpeg']; // For checking logic
+const supportedFormats = ['pdf', 'txt', 'docx', 'png', 'jpg', 'jpeg', 'pptx']; // For prompt display
+const supportedExtensions = [
+	'pdf',
+	'txt',
+	'docx',
+	'png',
+	'jpg',
+	'jpeg',
+	'pptx',
+]; // For checking logic
 
 const sizeLimit = 16 * 1024 * 1024; // 16mb
 
