@@ -240,7 +240,7 @@ export const ImgModule = ({
 	}, []);
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const extensions = ['png', 'jpg', 'jpeg', 'gif']; // For checking logic
+		const extensions = ['png', 'jpg', 'jpeg', 'gif', 'webp']; // For checking logic
 		const sizeLimit = 16 * 1024 * 1024; // 16mb
 		const file = e.target.files ? e.target.files[0] : null;
 		if (file?.size && file?.size > sizeLimit) {
@@ -739,7 +739,6 @@ export const ImgModule = ({
 				document.body,
 			)}
 
-
 			{/* image itsefl */}
 			<div
 				onClick={openModal}
@@ -747,8 +746,8 @@ export const ImgModule = ({
 					selectedImg === ''
 						? 'bg-[#E7E9EB]'
 						: canEdit
-							? 'hover:bg-[#CAD0D3] hover:brightness-90'
-							: ''
+						? 'hover:bg-[#CAD0D3] hover:brightness-90'
+						: ''
 				} flex flex-col items-center justify-center cursor-pointer`}
 				// style={{
 				// 	backgroundImage:
@@ -776,43 +775,41 @@ export const ImgModule = ({
 							{canEdit && 'Click to add image'}
 						</div>
 					</div>
-				) : 
-					!isTemp1Cover ? (
-						// <img
-						// style={{ objectFit: 'contain'}}
-						// className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`}
-						// src={imgsrc}
+				) : !isTemp1Cover ? (
+					// <img
+					// style={{ objectFit: 'contain'}}
+					// className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`}
+					// src={imgsrc}
+					<Image
+						src={imgsrc}
+						alt='Image'
+						width={500}
+						height={500}
+						className={`transition ease-in-out duration-150 ${
+							canEdit ? 'hover:brightness-90' : 'cursor-default'
+						}`}
+					/>
+				) : (
+					<div className='relative w-full h-full'>
 						<Image
 							src={imgsrc}
 							alt='Image'
-							width={500}
-							height={500}
+							layout='fill'
+							objectFit='cover'
+							objectPosition='center center'
 							className={`transition ease-in-out duration-150 ${
-								canEdit ? 'hover:brightness-90' : 'cursor-default'
+								canEdit ? 'hover:brightness-90' : ''
 							}`}
 						/>
-					) : (
-						<div className="relative w-full h-full">
-							<Image
-								src={imgsrc}
-								alt="Image"
-								layout="fill"
-								objectFit="cover"
-								objectPosition="center center"
-								className={`transition ease-in-out duration-150 ${
-									canEdit ? 'hover:brightness-90' : ''
-								}`}
-							/>
-							<div
-								className="absolute inset-0"
-								style={{
-									backgroundImage: `linear-gradient(180deg, ${cover_start}, ${cover_end} 40%)`,
-									zIndex: 2,
-								}}
-							/>
-						</div>
-					)
-				}
+						<div
+							className='absolute inset-0'
+							style={{
+								backgroundImage: `linear-gradient(180deg, ${cover_start}, ${cover_end} 40%)`,
+								zIndex: 2,
+							}}
+						/>
+					</div>
+				)}
 			</div>
 		</>
 	);

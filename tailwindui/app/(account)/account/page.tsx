@@ -22,34 +22,19 @@ import {
 	FaVoicemail,
 } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
+import { useUser } from '@/hooks/use-user';
 
 const Profile = () => {
-	const [username, setUsername] = useState<string>('');
+  const { username, email, token, setUsername } = useUser();
 	const [editUsername, setEditUsername] = useState('');
-	const [email, setEmail] = useState('');
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	function userFirstName(): string {
-		return username.split(' ')[0];
+		return username?.split(' ')[0];
 	}
 
-	const fetchUser = async () => {
-		const user = await AuthService.getCurrentUser();
-		setEmail(user.attributes.email);
-		setUsername(
-			user.attributes.name ? user.attributes.name : user.attributes.email,
-		);
-	};
-
 	useEffect(() => {
-		fetchUser();
-	}, []);
-
-	// useEffect(() => {
-	//     UserService.forceUpdateUserInfo();
-	// }, []);
-
-	useEffect(() => {
+    console.log("Username updated: ", username);
 		setEditUsername(username);
 	}, [username]);
 
@@ -78,8 +63,6 @@ const Profile = () => {
 		}
 
 		await AuthService.updateName(editUsername);
-		const { userId, idToken: token } =
-			await AuthService.getCurrentUserTokenAndId();
 
 		await fetch(`/api/user/update_username`, {
 			method: 'POST',
@@ -126,7 +109,7 @@ const Profile = () => {
 			});
 
 		setIsSubmitting(false);
-		fetchUser();
+    setUsername(editUsername);
 	};
 
 	return (
@@ -210,10 +193,9 @@ const Referral = () => {
 const OpenAIKey = () => {
 	const [key, setKey] = useState('sk-......');
 	const [isSubmitting, setIsSubmitting] = useState(false);
+  const { token } = useUser();
 
 	const fetchKey = async () => {
-		const { userId, idToken: token } =
-			await AuthService.getCurrentUserTokenAndId();
 		UserService.getOpenaiApiKey(token)
 			.then((data) => {
 				if (data) setKey(data);
@@ -226,8 +208,6 @@ const OpenAIKey = () => {
 	const updateKey = async () => {
 		setIsSubmitting(true);
 		console.log(isSubmitting);
-		const { userId, idToken: token } =
-			await AuthService.getCurrentUserTokenAndId();
 		await UserService.updateOpenaiApiKey(token, key);
 		setIsSubmitting(false);
 		console.log(isSubmitting);
@@ -275,6 +255,7 @@ const ApplyPromo = () => {
 	const searchParams = useSearchParams();
 	const [promo, setPromo] = useState(searchParams?.get('promo') || '');
 	const [isSubmitting, setIsSubmitting] = useState(false);
+  const { token, updateCreditsAndTier } = useUser();
 
   useEffect(() => {
     // if promo in search params, call applyPromo
@@ -286,8 +267,6 @@ const ApplyPromo = () => {
 	const applyPromo = async () => {
 		setIsSubmitting(true);
 		console.log(isSubmitting);
-		const { userId, idToken: token } =
-			await AuthService.getCurrentUserTokenAndId();
 		const { status, message } = await UserService.applyPromoCode(
 			promo,
 			token,
@@ -317,17 +296,17 @@ const ApplyPromo = () => {
 			});
 		}
 		setIsSubmitting(false);
-		console.log(isSubmitting);
+    updateCreditsAndTier();
 	};
 
 	return (
 		<div className='w-full px-4 sm:px-6'>
 			<div className='mb-8 w-full'>
 				<div className='w-fit text-[#363E4A] text-[17px] font-bold'>
-					Apply Promo Code
+					Apply Promo Code or License Key
 				</div>
 				<div className='w-full justify-center flex flex-row'>
-					<div className='flex w-[20rem] flex-row gap-4 justify-center mt-2'>
+					<div className='flex w-[30rem] flex-row gap-4 justify-center mt-2'>
 						<InputBox onClick={(e) => (e.target as HTMLInputElement)?.select()}>
 							<input
 								id='promo'
@@ -349,83 +328,8 @@ const ApplyPromo = () => {
 	);
 };
 
-const Subscription = () => {
-	const [portalURL, setPortalURL] = useState('');
-	const [showModal, setShowModal] = useState(false);
-
-	useEffect(() => {
-		const fetchTier = async () => {
-			const { userId, idToken: token } =
-				await AuthService.getCurrentUserTokenAndId();
-			UserService.getUserCreditsAndTier(token)
-				.then((data) => {
-					if (data.tier !== 'FREE') {
-						UserService.createStripePortalSession(token).then((data) => {
-							setPortalURL(data);
-						});
-					}
-				})
-				.catch((error) => console.error);
-		};
-		fetchTier();
-	}, []);
-
-	const cancelButton = (
-		<div>
-			<Link href={portalURL} target='_blank'>
-				Cancel Subscription
-			</Link>
-		</div>
-	);
-
-	return (
-		<div className='w-full pb-4'>
-			{showModal && (
-				<FeedbackForm
-					onClose={() => setShowModal(false)}
-					message='😭 We are sorry to see you go!'
-					successDiv={cancelButton}
-					textRequired={true}
-				/>
-			)}
-
-			<div className='mb-8 w-full max-w-none 2xl:max-w-[80%] mx-auto px-4 sm:px-6'>
-				<div className='w-fit text-[#363E4A] text-[17px] font-bold'>
-					Subscription
-				</div>
-				<div className='w-fit text-[#212121] text-[80px]'>Plans</div>
-			</div>
-
-			<Pricing />
-			{portalURL && (
-				<button
-					onClick={() => {
-						setShowModal(true);
-					}}
-					className='w-full py-4 sm:px-6 flex flex-col justify-center items-center max-w-none 2xl:max-w-[80%] mx-auto'
-				>
-					Manage Subscription
-				</button>
-			)}
-		</div>
-	);
-};
-
 const CreditHistory = () => {
-	const [credits, setCredits] = useState(0);
-
-	useEffect(() => {
-		const fetchCredit = async () => {
-			const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-			UserService.getUserCreditsAndTier(idToken)
-				.then((fetched) => {
-					setCredits(fetched.credits);
-					// setTier(fetched.tier)
-				})
-				.catch(() => setCredits(0));
-		};
-		fetchCredit();
-	}, []);
+  const { credits } = useUser();
 
 	return (
 		<div className='w-full px-4 sm:px-6'>

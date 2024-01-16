@@ -117,8 +117,10 @@ class AuthService {
 		const user = await this.getCurrentUser();
 		if (user) {
 			try {
-				// console.log(user.attributes['name']);
-				const name = user.attributes['name'];
+        console.log("Current amplify user: ", user)
+        // console.log("Current amplify user attributes: ", user.attributes)
+        // console.log("Current amplify user attributes name: ", user.attributes.name)
+				const name = await user.attributes.name;
 				return name;
 			} catch (error) {
 				console.error('Error getting current user display name: ', error);
