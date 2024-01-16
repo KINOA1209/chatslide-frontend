@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
 import { ToastContainer } from 'react-toastify';
 import '@/app/css/workflow-edit-topic-css/topic_style.css';
+import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
 
 
 export default function ThemePage(){
@@ -19,6 +20,11 @@ export default function ThemePage(){
     const [isSubmitting, setIsSubmitting] = useState(false);
     const contentRef = useRef<HTMLDivElement>(null);
     const [isGpt35, setIsGpt35] = useState(true);
+    const storedOutline = 
+        typeof window !== 'undefined'
+            ? sessionStorage.getItem('outline_content')
+            : null
+    const outlineContent = storedOutline ? JSON.parse(storedOutline) : null
     return(
         <div>
             <ToastContainer />
@@ -34,6 +40,15 @@ export default function ThemePage(){
                 setIsGpt35={setIsGpt35}
                 nextText={!isSubmitting ? 'Create Slides' : 'Creating Slides'}
             />
+
+            {outlineContent && (
+				<GenerateSlidesSubmit
+					outline={outlineContent}
+					isGPT35={isGpt35}
+					isSubmitting={isSubmitting}
+					setIsSubmitting={setIsSubmitting}
+				/>
+			)}
             <div className='gap-y-4 w-full flex flex-col items-center my-[6rem]'>
                 {/* design */}
                 <div

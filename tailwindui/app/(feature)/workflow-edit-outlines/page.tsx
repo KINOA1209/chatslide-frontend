@@ -31,6 +31,10 @@ export default function WorkflowStep2() {
 	);
 	const [isGpt35, setIsGpt35] = useState(true);
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const router = useRouter();
+	console.log('outline', outline)
+	console.log('outlineres', outlineRes)
+	console.log('outlineContent', outlineContent)
 	useEffect(() => {
 		if (outlineRes) {
 			const newOutlineContent = Object.keys(outlineRes).map((key) => {
@@ -51,6 +55,12 @@ export default function WorkflowStep2() {
 		}
 	}, []);
 
+	useEffect(() => {
+		if (isSubmitting) {
+			handleSubmit();
+		}
+	}, [isSubmitting]);
+
 	// Function to scroll to a specific section
 	const scrollToSection = (sectionId: number) => {
 		const sectionElement = document.getElementById(String(sectionId));
@@ -65,6 +75,13 @@ export default function WorkflowStep2() {
 			});
 		}
 	};
+
+	const handleSubmit = async () => {
+		if(outlineContent){
+			sessionStorage.setItem('outline_content', JSON.stringify(outlineContent));
+			router.push('workflow-edit-theme')
+		}
+	}
 
 	return (
 		<div className=''>
@@ -84,14 +101,14 @@ export default function WorkflowStep2() {
 				nextText={!isSubmitting ? 'Create Slides' : 'Creating Slides'}
 			/>
 
-			{outlineContent && (
+			{/* {outlineContent && (
 				<GenerateSlidesSubmit
 					outline={outlineContent}
 					isGPT35={isGpt35}
 					isSubmitting={isSubmitting}
 					setIsSubmitting={setIsSubmitting}
 				/>
-			)}
+			)} */}
 
 			<div className='mb-[3rem]'>
 				{/* overview nav section */}
