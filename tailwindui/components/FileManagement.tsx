@@ -152,12 +152,14 @@ interface filesInterface {
 	selectable: boolean;
 	selectedResources?: Array<Resource>;
 	setSelectedResources?: Function;
+	pageInvoked?: string;
 }
 
 const MyFiles: React.FC<filesInterface> = ({
 	selectable = false,
 	selectedResources,
 	setSelectedResources,
+	pageInvoked,
 }) => {
 	const [resources, setResources] = useState<Resource[]>([]);
 	const promptRef = useRef<HTMLDivElement>(null);
@@ -443,7 +445,7 @@ const MyFiles: React.FC<filesInterface> = ({
     };
 
 	return (
-		<section className='bg-white grow flex flex-col h-full'>
+		<section className='bg-white grow flex flex-col h-full min-w-[50vh]'>
 			<ToastContainer enableMultiContainer containerId={'fileManagement'} />
 			<div
 				className={`max-w-7xl w-full mx-auto px-4 flex flex-wrap justify-around`}
@@ -464,12 +466,13 @@ const MyFiles: React.FC<filesInterface> = ({
 						<FileUploadButton
 							onFileSelected={onFileSelected}
 							isSubmitting={isSubmitting}
+							pageInvoked = {pageInvoked}
 						/>
 					</div>
 				</div>
 
 				{/* carbon connect cloud storage */}
-				<div className='max-w-sm w-fit text-center pt-4 mx-4'>
+				{pageInvoked !== 'theme' && <div className='max-w-sm w-fit text-center pt-4 mx-4'>
 					<div className='w-full mx-auto'>
 						<CarbonConnect
 							orgName='DrLambda'
@@ -528,7 +531,7 @@ const MyFiles: React.FC<filesInterface> = ({
 							</DrlambdaButton>
 						</CarbonConnect>
 					</div>
-				</div>
+				</div>}
 			</div>
 			<div
 				className={`max-w-6xl w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto border border-gray-200 ${isDragging ? 'bg-blue-100 border-blue-500' : ''}`}

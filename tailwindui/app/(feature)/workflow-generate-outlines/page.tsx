@@ -476,6 +476,7 @@ export default function Topic() {
 				setSelectedResources={setSelectedResources}
 				showModal={showFileModal}
 				setShowModal={setShowFileModal}
+				pageInvoked= {'summary'}
 			/>
 
 			{/* project progress section */}

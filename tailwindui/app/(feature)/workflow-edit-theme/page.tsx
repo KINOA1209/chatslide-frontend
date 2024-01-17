@@ -10,24 +10,58 @@ import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
 import { ToastContainer } from 'react-toastify';
 import '@/app/css/workflow-edit-topic-css/topic_style.css';
 import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
+import FileUploadModal from '@/components/forms/FileUploadModal';
+import { SmallBlueButton } from '@/components/button/DrlambdaButton';
+import Resource from '@/models/Resource';
+import SelectedResourcesList from '@/components/SelectedResources';
 
 
 export default function ThemePage(){
     const [theme, setTheme] = useState('content_with_image');
     const [useSchoolTemplate, setUseSchoolTemplate] = useState(false);
     const [useLogo, setUseLogo] = useState(false);
-	const [schoolTemplate, setSchoolTemplate] = useState('' as string);
+	const [schoolTemplate, setSchoolTemplate] = useState('default' as string);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const contentRef = useRef<HTMLDivElement>(null);
+    const [showFileModal, setShowFileModal] = useState(false);
     const [isGpt35, setIsGpt35] = useState(true);
     const storedOutline = 
         typeof window !== 'undefined'
             ? sessionStorage.getItem('outline_content')
             : null
+
+    const [selectedResources, setSelectedResources] = useState<Resource[]>(
+        typeof window !== 'undefined' &&
+            sessionStorage.selectedResources != undefined
+            ? JSON.parse(sessionStorage.selectedResources)
+            : [],
+    );
     const outlineContent = storedOutline ? JSON.parse(storedOutline) : null
+
+    const removeResourceAtIndex = (indexToRemove: number) => {
+		setSelectedResources((currentResources) =>
+			currentResources.filter((_, index) => index !== indexToRemove),
+		);
+	};
+
+    useEffect(() => {
+        sessionStorage.setItem('schoolTemplate', schoolTemplate);
+        sessionStorage.setItem('theme', theme);
+      }, [schoolTemplate, theme]);
+      
+    console.log(schoolTemplate)
+    console.log(theme)
     return(
         <div>
             <ToastContainer />
+
+            <FileUploadModal
+				selectedResources={selectedResources}
+				setSelectedResources={setSelectedResources}
+				showModal={showFileModal}
+				setShowModal={setShowFileModal}
+                pageInvoked = {'theme'}
+			/>
 
             <WorkflowStepsBanner
                 currentIndex={2}
@@ -73,7 +107,10 @@ export default function ThemePage(){
                                             type='radio'
                                             value='yes'
                                             checked={useSchoolTemplate}
-                                            onChange={(e) => setUseSchoolTemplate(true)}
+                                            onChange={(e) => {
+                                                setUseSchoolTemplate(true)
+                                                setSchoolTemplate('Harvard')
+                                            }}
                                         />
                                         Yes
                                     </label>
@@ -82,7 +119,10 @@ export default function ThemePage(){
                                             type='radio'
                                             value='no'
                                             checked={!useSchoolTemplate}
-                                            onChange={(e) => setUseSchoolTemplate(false)}
+                                            onChange={(e) => {
+                                                setUseSchoolTemplate(false)
+                                                setSchoolTemplate('default')
+                                            }}
                                         />
                                         No
                                     </label>
@@ -177,15 +217,17 @@ export default function ThemePage(){
                                                         
                                     {useLogo && (
                                         <div className='gap-1 flex flex-col justify-start'>
-                                            <span className='text-md font-bold'>Upload Logo:</span>
-                                            <select
-                                                className='border border-2 border-gray-400 rounded-lg bg-gray-100'
-                                                onChange={(e) => setSchoolTemplate(e.target.value)}
-                                            >
-                                                <option value='Harvard'>Harvard University</option>
-                                                <option value='Stanford'>Stanford University</option>
-                                                <option value='Berkeley'>UC Berkeley</option>
-                                            </select>
+                                            <span className='ml-2 text-md font-bold'>Upload Logo:</span>
+                                            <div className=''>
+                                                <SmallBlueButton
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        setShowFileModal(true);
+                                                    }}
+                                                >
+                                                    Browse File
+                                                </SmallBlueButton>
+                                            </div>
                                         </div>
                                     )}
                                 </div>
@@ -195,6 +237,13 @@ export default function ThemePage(){
                                 <span className='text-md font-bold'>School template preview</span>
                             </div>
                         )} */}
+                        {selectedResources.length > 0 && <hr id='add_hr' />}
+						<div className='mt-[10px]'>
+							<SelectedResourcesList
+								selectedResources={selectedResources}
+								removeResourceAtIndex={removeResourceAtIndex}
+							/>
+						</div>
                     </div>
                 </div>
             </div>

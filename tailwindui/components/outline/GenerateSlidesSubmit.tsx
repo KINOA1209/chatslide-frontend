@@ -137,6 +137,15 @@ const GenerateSlidesSubmit = ({
 			typeof window !== 'undefined'
 				? sessionStorage.getItem('scenarioType')
 				: null;
+		// const schoolTemplate =
+		// typeof window !== 'undefined'
+		// 	? sessionStorage.getItem('schoolTemplate')
+		// 	: null;
+		// const theme =
+		// typeof window !== 'undefined'
+		// 	? sessionStorage.getItem('theme')
+		// 	: null;
+					
 
 		formData = {
 			res: JSON.stringify({ ...outlineCopy }),
@@ -154,8 +163,9 @@ const GenerateSlidesSubmit = ({
 			wordPerSubpoint: wordPerSubpoint,
 			scenario_type: scenarioType,
 			// endIndex: 2,  // generate first 2 sections only
+			// template: schoolTemplate,
+			// theme: theme,
 		};
-
 		if (selectedResources && selectedResources.length > 0 && !extraKnowledge) {
 			try {
 				console.log('resources', selectedResources);
