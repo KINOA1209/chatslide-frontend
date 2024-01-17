@@ -108,7 +108,7 @@ export default function Dashboard() {
 					/>
 				) : (
 					<div className='flex items-center mt-[1rem] md:mt-[6rem] justify-center text-gray-600 text-[14px] md:text-[20px] font-normal font-creato-medium leading-normal tracking-wide'>
-						You haven't created any project yet.
+						There are no community projects yet.
 					</div>
 				)}
 			</div>
