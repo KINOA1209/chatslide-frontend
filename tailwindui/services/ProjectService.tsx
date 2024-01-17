@@ -75,7 +75,7 @@ class ProjectService {
     }
   }
 
-  static async getProjects(token: string): Promise<Project[]> {
+  static async getProjects(token: string, shared: boolean=false): Promise<Project[]> {
     const headers = new Headers();
     if (token) {
       headers.append('Authorization', `Bearer ${token}`);

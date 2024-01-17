@@ -3,7 +3,6 @@
 import React, { useState, useEffect, Fragment, useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AuthService from '@/services/AuthService';
 import { useRouter } from 'next/navigation';
 import ProjectTable from '../ProjectTable';
 import DrlambdaButton, {
@@ -12,7 +11,6 @@ import DrlambdaButton, {
 } from '@/components/button/DrlambdaButton';
 import Project from '@/models/Project';
 import ProjectService from '@/services/ProjectService';
-import Modal from '@/components/ui/Modal';
 import { useUser } from '@/hooks/use-user';
 
 export default function Dashboard() {
@@ -39,7 +37,7 @@ export default function Dashboard() {
 		// Create a scoped async function within the hook.
 		const fetchUserAndProject = async () => {
 			try {
-        const { token } = useUser();
+				const { token } = useUser();
 				handleRequest(token);
 			} catch (error: any) {
 				console.error(error);
@@ -63,45 +61,7 @@ export default function Dashboard() {
 
 	const handleProjectClick = (projectId: string) => {
 		// Open the project detail page in a new tab
-		window.open(`/project/${projectId}`, '_blank');
-	};
-
-	const handleDelete = (
-		e: React.MouseEvent<HTMLDivElement>,
-		projectId: string,
-	) => {
-		e.stopPropagation();
-		// Modal for warning
-		setDeleteInd(projectId);
-		setIsOpen(true);
-	};
-
-	const confirmDelete = async () => {
-		setIsDeleting(true);
-		if (deleteInd === '') {
-			throw 'Error';
-		}
-		try {
-			const { userId, idToken: token } =
-				await AuthService.getCurrentUserTokenAndId();
-			const response = await ProjectService.deleteProject(token, deleteInd);
-
-			setProjects(projects.filter((proj) => proj.id !== deleteInd));
-		} catch (error: any) {
-			toast.error(error.message, {
-				position: 'top-center',
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: 'light',
-			});
-		}
-		setIsDeleting(false);
-		setIsOpen(false);
-		setDeleteInd('');
+		window.open(`/shared/${projectId}`, '_blank');
 	};
 
 	useEffect(() => {
@@ -152,7 +112,6 @@ export default function Dashboard() {
 					<ProjectTable
 						currentProjects={currentProjects}
 						onProjectClick={handleProjectClick}
-						onDelete={handleDelete}
 					/>
 				) : (
 					<div className='flex items-center mt-[1rem] md:mt-[6rem] justify-center text-gray-600 text-[14px] md:text-[20px] font-normal font-creato-medium leading-normal tracking-wide'>
@@ -161,24 +120,6 @@ export default function Dashboard() {
 				)}
 			</div>
 
-			{/* Delete modal */}
-			<Modal showModal={isOpen} setShowModal={setIsOpen}>
-				<div className='flex flex-col gap-y-2'>
-					<h4 className='h4 text-center'>Delete Project</h4>
-					<div className=''>Are you sure you want to delete this project?</div>
-
-					<div className='flex gap-x-2 justify-end'>
-						<BigBlueButton onClick={confirmDelete} isSubmitting={isDeleting}>
-							Confirm
-						</BigBlueButton>
-						<InversedBigBlueButton onClick={closeModal}>
-							Cancel
-						</InversedBigBlueButton>
-					</div>
-				</div>
-			</Modal>
-
-			{/* <UserStudy /> */}
 		</section>
 	);
 }
