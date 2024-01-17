@@ -1,6 +1,6 @@
 export default interface Chart {
   type: string;
-  data: any;
+  data: Record<string, number>;
   options: any;
   title: string;
 }
