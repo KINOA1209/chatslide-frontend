@@ -13,7 +13,7 @@ const PromoComponent: React.FC<PromoComponentProps> = ({
 	setShowPromo,
 	referralValue,
 	setReferralValue,
-  text = 'You are going to get more credits with promo code!',
+  text = 'You are going to get more credits with this code!',
 }) => {
 	return (
 		<>
