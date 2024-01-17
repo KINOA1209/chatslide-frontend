@@ -86,6 +86,7 @@ class ProjectService {
       const response = await fetch('/api/get_projects', {
         method: 'POST',
         headers: headers,
+        body: JSON.stringify({ shared: shared }),
       });
       if (response.ok) {
         const data = await response.json();

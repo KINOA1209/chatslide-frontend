@@ -15,18 +15,12 @@ import { useUser } from '@/hooks/use-user';
 
 export default function Dashboard() {
 	const [projects, setProjects] = useState<Project[]>([]);
-	const [deleteInd, setDeleteInd] = useState('');
+  const { token } = useUser();
 	const router = useRouter();
 	const promptRef = useRef<HTMLDivElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
 	const [rendered, setRendered] = useState<boolean>(false);
 
-	const [isOpen, setIsOpen] = useState(false);
-	const [isDeleting, setIsDeleting] = useState(false);
-
-	function closeModal() {
-		setIsOpen(false);
-	}
 
 	const currentProjects = projects;
 
@@ -37,7 +31,6 @@ export default function Dashboard() {
 		// Create a scoped async function within the hook.
 		const fetchUserAndProject = async () => {
 			try {
-				const { token } = useUser();
 				handleRequest(token);
 			} catch (error: any) {
 				console.error(error);
@@ -88,7 +81,7 @@ export default function Dashboard() {
 				<div className='w-full max-w-7xl flex flex-wrap items-end justify-center'>
 					{/* my project title text */}
           <div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-neutral-900 text-base font-bold font-creato-medium leading-10 tracking-wide border-black border-b-2'>
-						My Projects
+            Discover Community Projects
 					</div>
 
 					{/* create new project button */}

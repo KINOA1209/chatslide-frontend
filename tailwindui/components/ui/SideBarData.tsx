@@ -27,6 +27,11 @@ export const SideBarData = [
 		icon: <GoFile />,
 		path: '/my-resources',
 	},
+  {
+    title: 'Discover',
+    icon: <GoDiscussionOutdated />,
+    path: '/discover',
+  },
 	{
 		title: 'Join Discord',
 		icon: <RiDiscordLine />,

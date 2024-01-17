@@ -22,6 +22,7 @@ export default function Dashboard() {
 	const promptRef = useRef<HTMLDivElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
 	const [rendered, setRendered] = useState<boolean>(false);
+  const { token } = useUser();
 
 	const [isOpen, setIsOpen] = useState(false);
 	const [isDeleting, setIsDeleting] = useState(false);
@@ -39,7 +40,6 @@ export default function Dashboard() {
 		// Create a scoped async function within the hook.
 		const fetchUserAndProject = async () => {
 			try {
-        const { token } = useUser();
 				handleRequest(token);
 			} catch (error: any) {
 				console.error(error);
@@ -52,6 +52,7 @@ export default function Dashboard() {
 	// get projects from backend
 	const handleRequest = async (token: string) => {
 		ProjectService.getProjects(token).then((projects) => {
+      console.log('projects', projects);
 			setProjects(projects);
 			setRendered(true);
 			if (projects.length == 0) {
