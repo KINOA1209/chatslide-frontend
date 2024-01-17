@@ -177,11 +177,15 @@ export const availableTemplates = {
 	Yale: Yale_school_template,
 	UPenn: UPenn_school_template,
 	Default: Default,
-	Default_template: Default,
 };
 
 // Define a type for template keys
-export type TemplateKeys = keyof typeof availableTemplates;
+type AvailableTemplateKeys = keyof typeof availableTemplates;
+// Define a type for additional template keys
+type AdditionalTemplateKeys = 'Default_template';
+
+// Combine both types using a union
+export type TemplateKeys = AvailableTemplateKeys | AdditionalTemplateKeys;
 
 // Define templateKeys with the type TemplateKeys
 // export const TemplateKeys: TemplateKeys[] = Object.keys(

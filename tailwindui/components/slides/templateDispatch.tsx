@@ -48,8 +48,8 @@ export const templateDispatch = (
 	} else if (!canEdit) {
 		keyPrefix = 'preview';
 	}
-	console.log('slide.template is :', slide.template);
-	console.log('availableTemplates are:', availableTemplates);
+	// console.log('slide.template is :', slide.template);
+	// console.log('availableTemplates are:', availableTemplates);
 
 	// prevent old projects still have 'Default_template' as template rather than new 'Default'
 	const templateKey =
