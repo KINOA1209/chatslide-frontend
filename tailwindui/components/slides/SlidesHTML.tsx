@@ -451,7 +451,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			slide.layout,
 			slide.layout,
 			index === currentSlideIndex,
-			slide.logo,
 		);
 
 	return (
