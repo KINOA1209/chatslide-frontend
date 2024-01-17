@@ -48,26 +48,30 @@ export const templateDispatch = (
 	} else if (!canEdit) {
 		keyPrefix = 'preview';
 	}
+	console.log('slide.template is :', slide.template);
+	console.log('availableTemplates are:', availableTemplates);
+
+	// prevent old projects still have 'Default_template' as template rather than new 'Default'
+	const templateKey =
+		slide.template === 'Default_template' ? 'Default' : slide.template;
 	const Template =
-		availableTemplates[slide.template as keyof typeof availableTemplates];
+		availableTemplates[templateKey as keyof typeof availableTemplates];
 	const ChosenTemplateLogo =
-		TemplatesLogos[slide.template as keyof typeof TemplatesLogos];
+		TemplatesLogos[templateKey as keyof typeof TemplatesLogos];
 	// const ChosenTemplateLogo =
 	// 	TemplatesLogos[templateLogo as keyof typeof TemplatesLogos];
-	const customizableElements = loadCustomizableElements(slide.template);
-	const processContent = (item:string) => {
-		if (isHTML(item)){
-			if (item.trim().startsWith('<li>') && item.trim().endsWith('</li>')){
-				return `<ul>${item}</ul>`
+	const customizableElements = loadCustomizableElements(templateKey);
+	const processContent = (item: string) => {
+		if (isHTML(item)) {
+			if (item.trim().startsWith('<li>') && item.trim().endsWith('</li>')) {
+				return `<ul>${item}</ul>`;
+			} else {
+				return item;
 			}
-			else{
-				return item
-			}
+		} else {
+			return `<ul><li>${item}</li></ul>\n`;
 		}
-		else{
-			return `<ul><li>${item}</li></ul>\n`
-		}
-	}
+	};
 	const generateContentElement = (
 		content: string | string[],
 		contentTag: SlideKeys,
@@ -81,14 +85,16 @@ export const templateDispatch = (
 					className='ql-editor non-editable-ql-editor'
 					style={{ ...style, outline: 'none' }}
 				>
-					{Array.isArray(content) ? 
+					{Array.isArray(content) ? (
 						content.map((item, index) => (
-							
-						<div key={index} dangerouslySetInnerHTML={{ __html:  processContent(item) }} />
+							<div
+								key={index}
+								dangerouslySetInnerHTML={{ __html: processContent(item) }}
+							/>
 						))
-					: 
+					) : (
 						<div dangerouslySetInnerHTML={{ __html: content }} />
-					}
+					)}
 				</div>
 			);
 		} else {
@@ -159,7 +165,7 @@ export const templateDispatch = (
 							'content',
 							customizableElements.contentFontCSS,
 							true,
-						)
+					  )
 					: slide.content.map((content, contentIndex) => (
 							<div
 								key={
@@ -175,7 +181,7 @@ export const templateDispatch = (
 									contentIndex,
 								)}
 							</div>
-						))
+					  ))
 			}
 			imgs={slide.images as string[]}
 			update_callback={updateImgUrlArray(index)}

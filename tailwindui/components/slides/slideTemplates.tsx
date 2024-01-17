@@ -177,6 +177,7 @@ export const availableTemplates = {
 	Yale: Yale_school_template,
 	UPenn: UPenn_school_template,
 	Default: Default,
+	Default_template: Default,
 };
 
 // Define a type for template keys
