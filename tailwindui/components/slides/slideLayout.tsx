@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { ImgModule } from '@/components/imgModule';
 import { MainSlideProps as BaseMainSlideProps } from './slideTemplates';
 import coverimg0_png from '@/public/images/template/layout/coverimg0.png';
@@ -141,13 +141,50 @@ export const Col_1_img_0_layout = ({
 	customizableElements,
 	templateLogo,
 }: MainSlideProps) => {
+    const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const topicRef = useRef<HTMLDivElement>(null);
+    const subtopicRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const calculateMaxHeight = () => {
+            const containerElement = containerRef.current;
+            const topicElement = topicRef.current;
+            const subtopicElement = subtopicRef.current;
+
+            if (containerElement && topicElement && subtopicElement) {
+                const containerHeight = containerElement.clientHeight;
+                const topicHeight = topicElement.clientHeight;
+                const subtopicHeight = subtopicElement.clientHeight;
+                const logoHeight = containerHeight * 0.1
+
+                const availableHeight = containerHeight - (topicHeight + subtopicHeight + logoHeight);
+
+                console.log(`Available height: ${availableHeight}`);
+                setMaxContentHeight(availableHeight > 0 ? availableHeight : 200); 
+            }
+        };
+
+        calculateMaxHeight();
+        window.addEventListener('resize', calculateMaxHeight);
+
+        return () => {
+            window.removeEventListener('resize', calculateMaxHeight);
+        };
+    }, []);
+
 	return (
-		<div className='h-full w-full flex flex-col'>
-			<div className={``}>{topic}</div>
-			<div className={``}>{subtopic}</div>
+		<div ref={containerRef} className='h-full w-full flex flex-col'>
+			<div ref={topicRef} className={``}>{topic}</div>
+			<div className={``} ref={subtopicRef}>{subtopic}</div>
 			<div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
-			<div className={`flex w-full max-h-[75%] pl-1 py-[1.2rem]`}>
-				<div className='w-full'>{content}</div>
+			<div className={`flex w-full pl-1 py-[1.2rem]`}>
+				<div 
+					className='w-full' 
+					style={{ maxHeight: maxContentHeight !== null ? `${maxContentHeight}px` : 'none' }}
+				>
+					{content}
+				</div>
 			</div>
 			{templateLogo}
 		</div>
@@ -318,14 +355,51 @@ export const Col_2_img_1_layout = ({
 		1,
 		update_callback,
 	);
+	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const topicRef = useRef<HTMLDivElement>(null);
+    const subtopicRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+        const calculateMaxHeight = () => {
+            const containerElement = containerRef.current;
+            const topicElement = topicRef.current;
+            const subtopicElement = subtopicRef.current;
+
+            if (containerElement && topicElement && subtopicElement) {
+                const containerHeight = containerElement.clientHeight;
+                const topicHeight = topicElement.clientHeight;
+                const subtopicHeight = subtopicElement.clientHeight;
+                const logoHeight = containerHeight * 0.1
+
+                const availableHeight = containerHeight - (topicHeight + subtopicHeight + logoHeight);
+
+                console.log(`Available height: ${availableHeight}`);
+                setMaxContentHeight(availableHeight > 0 ? availableHeight : 200); 
+            }
+        };
+
+        calculateMaxHeight();
+        window.addEventListener('resize', calculateMaxHeight);
+
+        return () => {
+            window.removeEventListener('resize', calculateMaxHeight);
+        };
+    }, []);
+
 	return (
-		<div className='w-full h-full flex flex-row gap-[2rem] justify-start items-start'>
+		<div className='w-full h-full flex flex-row gap-[2rem] justify-start items-start' ref={containerRef}>
 			<div className={`w-1/2 flex flex-col items-start h-full gap-[0.1rem]`}>
-				<div className={`z-50`}>{topic}</div>
-				<div className={``}>{subtopic}</div>
+				<div className={`z-50`} ref={topicRef}>{topic}</div>
+				<div className={``} ref={subtopicRef}>{subtopic}</div>
 				{/* contents */}
-				<div className='h-[55%] w-full flex'>
-					<div className={`w-full`}>{content}</div>
+				<div className='w-full flex'>
+					<div 
+						className={`w-full`}
+						style={{ maxHeight: maxContentHeight !== null ? `${maxContentHeight}px` : 'none' }}
+					>{
+						content}
+					</div>
 				</div>
 			</div>
 			<div className={`w-1/2 h-[90%] rounded-md overflow-hidden items-center`}>
