@@ -200,7 +200,11 @@ const MyFiles: React.FC<filesInterface> = ({
 	}, [resources, rendered]);
 
 	const fetchFiles = async (token: string) => {
-		const resource_type = selectable ? ['doc', 'url'] : [];
+		//const resource_type = selectable ? ['doc', 'url'] : [];
+		const resource_type = 
+			pageInvoked === 'summary' ? ['doc', 'url'] :
+			pageInvoked === 'theme' ? ['logo'] :
+			[];
 
 		ResourceService.fetchResources(resource_type, token).then((resources) => {
 			setResources(resources);
@@ -219,7 +223,7 @@ const MyFiles: React.FC<filesInterface> = ({
 		const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
 
 		try {
-			ResourceService.uploadResource(file, idToken).then((newResource) => {
+			ResourceService.uploadResource(file, idToken, pageInvoked).then((newResource) => {
 				setResources([newResource, ...resources]);
 				setIsSubmitting(false);
 				if (setSelectedResources && selectedResources)
@@ -255,7 +259,7 @@ const MyFiles: React.FC<filesInterface> = ({
 			selectedResources?.map((resource) => resource.id) || [];
 		const ind = selectedResourceId.indexOf(id);
 		let newSelectedResourceId: Array<string> = [];
-		if (isPaidUser) {
+		if (isPaidUser && pageInvoked !== 'theme') {
 			newSelectedResourceId = [...selectedResourceId];
 			if (ind !== -1) {
 				newSelectedResourceId.splice(ind, 1);
@@ -269,17 +273,32 @@ const MyFiles: React.FC<filesInterface> = ({
 				newSelectedResourceId = [id];
 			}
 			if (newSelectedResourceId.length > 0 && selectedResourceId.length > 0) {
-				toast.info('Only subscribed user can select multiple files!', {
-					position: 'top-center',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'light',
-					containerId: 'fileManagement',
-				});
+				if (pageInvoked !== 'theme'){
+					toast.info('Only subscribed user can select multiple files!', {
+						position: 'top-center',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: 'light',
+						containerId: 'fileManagement',
+					});
+				}
+				else {
+					toast.info('Each project can only select one logo!', {
+						position: 'top-center',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: 'light',
+						containerId: 'fileManagement',
+					});
+				}
 			}
 		}
 		console.log('newSelectedResourceId', newSelectedResourceId);

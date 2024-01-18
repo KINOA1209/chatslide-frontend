@@ -30,32 +30,41 @@ export default function ThemePage(){
             ? sessionStorage.getItem('outline_content')
             : null
 
-    const [selectedResources, setSelectedResources] = useState<Resource[]>(
+    const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
         typeof window !== 'undefined' &&
-            sessionStorage.selectedResources != undefined
-            ? JSON.parse(sessionStorage.selectedResources)
+            sessionStorage.selectedLogo != undefined
+            ? JSON.parse(sessionStorage.selectedLogo)
             : [],
     );
     const outlineContent = storedOutline ? JSON.parse(storedOutline) : null
 
-    const removeResourceAtIndex = (indexToRemove: number) => {
-		setSelectedResources((currentResources) =>
-			currentResources.filter((_, index) => index !== indexToRemove),
+    const removeLogoAtIndex = (indexToRemove: number) => {
+		setSelectedLogo((currentLogo) =>
+			currentLogo.filter((_, index) => index !== indexToRemove),
 		);
 	};
 
     useEffect(() => {
         sessionStorage.setItem('schoolTemplate', schoolTemplate);
         sessionStorage.setItem('theme', theme);
-      }, [schoolTemplate, theme]);
-      
+        if (selectedLogo && selectedLogo.length > 0) {
+            sessionStorage.setItem('selectedLogo_id', selectedLogo[0].id)
+        }
+        else{
+            sessionStorage.removeItem('selectedLogo_id');
+        }
+        console.log(sessionStorage.getItem('selectedLogo_id'))
+        console.log(typeof sessionStorage.getItem('selectedLogo_id'))
+      }, [schoolTemplate, theme, selectedLogo]);
+
+
     return(
         <div>
             <ToastContainer />
 
             <FileUploadModal
-				selectedResources={selectedResources}
-				setSelectedResources={setSelectedResources}
+				selectedResources={selectedLogo}
+				setSelectedResources={setSelectedLogo}
 				showModal={showFileModal}
 				setShowModal={setShowFileModal}
                 pageInvoked = {'theme'}
@@ -235,13 +244,17 @@ export default function ThemePage(){
                                 <span className='text-md font-bold'>School template preview</span>
                             </div>
                         )} */}
-                        {selectedResources.length > 0 && <hr id='add_hr' />}
-						<div className='mt-[10px]'>
-							<SelectedResourcesList
-								selectedResources={selectedResources}
-								removeResourceAtIndex={removeResourceAtIndex}
-							/>
-						</div>
+                        {useLogo && (
+                        <>
+                            {selectedLogo.length > 0 && <hr id='add_hr' />}
+                            <div className='mt-[10px]'>
+                                <SelectedResourcesList
+                                    selectedResources={selectedLogo}
+                                    removeResourceAtIndex={removeLogoAtIndex}
+                                />
+                            </div>
+                        </>
+                        )}
                     </div>
                 </div>
             </div>
