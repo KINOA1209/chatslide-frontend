@@ -141,9 +141,16 @@ export default function ThemePage(){
                                         className='border border-2 border-gray-400 rounded-lg bg-gray-100'
                                         onChange={(e) => setSchoolTemplate(e.target.value)}
                                     >
-                                        <option value='Harvard'>Harvard University</option>
                                         <option value='Stanford'>Stanford University</option>
                                         <option value='Berkeley'>UC Berkeley</option>
+                                        <option value='Harvard'>Harvard University</option>
+                                        <option value='MIT'>Massachusetts Institute of Technology</option>
+                                        <option value='Princeton'>Princeton University</option>
+                                        <option value='Caltech'>California Institute of Technology</option>
+                                        <option value='Columbia'>Columbia University</option>
+                                        <option value='JHU'>Johns Hopkins University</option>
+                                        <option value='Yale'>Yale University</option>
+                                        <option value='UPenn'>University of Pennsylvania</option>
                                     </select>
                                 </div>
                             )}
