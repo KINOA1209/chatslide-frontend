@@ -56,7 +56,6 @@ const GenerateSlidesSubmit = ({
 	};
 
 	async function generateSlidesPreview(formData: any, token: string) {
-		console.log(formData)
 		const response = await fetch('/api/generate_slides', {
 			method: 'POST',
 			headers: {
@@ -78,7 +77,7 @@ const GenerateSlidesSubmit = ({
 				`Server is busy now. Please try again later. Reference code: ` +
 					sessionStorage.getItem('project_id'),
 			);
-			console.log(response);
+			//console.log(response);
 		}
 	}
 
@@ -150,7 +149,6 @@ const GenerateSlidesSubmit = ({
 		typeof window !== 'undefined'
 			? sessionStorage.getItem('selectedLogo_id')
 			: null;
-		console.log(logo)
 		formData = {
 			res: JSON.stringify({ ...outlineCopy }),
 			outlines: JSON.stringify({ ...outlineCopy }),

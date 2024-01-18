@@ -53,8 +53,6 @@ export default function ThemePage(){
         else{
             sessionStorage.removeItem('selectedLogo_id');
         }
-        console.log(sessionStorage.getItem('selectedLogo_id'))
-        console.log(typeof sessionStorage.getItem('selectedLogo_id'))
       }, [schoolTemplate, theme, selectedLogo]);
 
 
@@ -197,6 +195,7 @@ export default function ThemePage(){
                                 </div>
 
                                 {/*logo section*/}
+                                {!useSchoolTemplate && (
                                 <div className='grid grid-cols-2 gap-x-4 mt-4'>
                                     <div className='gap-1 flex flex-col justify-start'>
                                         <span className='text-md font-bold'>Do you want to use your logo?</span>
@@ -237,7 +236,7 @@ export default function ThemePage(){
                                             </div>
                                         </div>
                                     )}
-                                </div>
+                                </div>)}
                             </div>
                         {/* ) : (
                             <div>
