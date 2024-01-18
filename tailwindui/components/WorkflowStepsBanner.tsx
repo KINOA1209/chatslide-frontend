@@ -34,6 +34,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 		const redirect = [
 			'/workflow-generate-outlines',
 			'/workflow-edit-outlines',
+			'/workflow-edit-theme',
 			'/workflow-review-slides',
 			'/workflow-edit-script',
 		];

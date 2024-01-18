@@ -77,7 +77,7 @@ const GenerateSlidesSubmit = ({
 				`Server is busy now. Please try again later. Reference code: ` +
 					sessionStorage.getItem('project_id'),
 			);
-			console.log(response);
+			//console.log(response);
 		}
 	}
 
@@ -137,7 +137,18 @@ const GenerateSlidesSubmit = ({
 			typeof window !== 'undefined'
 				? sessionStorage.getItem('scenarioType')
 				: null;
-
+		const schoolTemplate =
+		typeof window !== 'undefined'
+			? sessionStorage.getItem('schoolTemplate')
+			: null;
+		const theme =
+		typeof window !== 'undefined'
+			? sessionStorage.getItem('theme')
+			: null;
+		const logo =
+		typeof window !== 'undefined'
+			? sessionStorage.getItem('selectedLogo_id')
+			: null;
 		formData = {
 			res: JSON.stringify({ ...outlineCopy }),
 			outlines: JSON.stringify({ ...outlineCopy }),
@@ -154,8 +165,10 @@ const GenerateSlidesSubmit = ({
 			wordPerSubpoint: wordPerSubpoint,
 			scenario_type: scenarioType,
 			// endIndex: 2,  // generate first 2 sections only
+			template: schoolTemplate,
+			theme: theme,
+			logo: logo ? [logo] : [],
 		};
-
 		if (selectedResources && selectedResources.length > 0 && !extraKnowledge) {
 			try {
 				console.log('resources', selectedResources);

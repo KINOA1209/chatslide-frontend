@@ -19,40 +19,79 @@ import ColumbiaLogo from '@/public/images/template/Columbia/ColumbiaLogo.png';
 // Inside DefaultTemplateLogo component
 export const DefaultTemplateLogo = ({
 	isCoverPage,
+	custom_logo,
 }: {
 	isCoverPage: boolean;
+	custom_logo: string[] | string;
 }) => {
 	if (isCoverPage) {
-		return (
-			<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
-				<Image
-					src={drlambdaLogo}
-					alt='drlambdaLogo'
-					className='w-[8rem] h-auto'
-				/>
-				{/* logo cover */}
-			</div>
-		);
+		if (custom_logo === 'Default' || (Array.isArray(custom_logo) && custom_logo.length === 0)){
+			return (
+				<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
+					<Image
+						src={drlambdaLogo}
+						alt='drlambdaLogo'
+						className='w-[8rem] h-auto'
+					/>
+					{/* logo cover */}
+				</div>
+			);
+		}
+		else {
+			return (
+				<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
+					<Image
+						src={custom_logo[0]}
+						alt='CustomLogo'
+						width={70}
+						height={70}
+						className='h-auto'
+					/>
+				</div>
+			);
+		}
+
 	} else {
-		return (
-			<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
-				<Image
-					src={drlambdaLogoSingle}
-					alt='drlambda logo'
-					className='w-[1.5rem] mr-4'
-				/>
-				<div
-					className={`grow basis-0 opacity-50 border border-black border-opacity-40`}
-				></div>
-				{/* logo non cover */}
-			</div>
-		);
+		if (custom_logo === 'Default' || (Array.isArray(custom_logo) && custom_logo.length === 0)){
+			return (
+				<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
+					<Image
+						src={drlambdaLogoSingle}
+						alt='drlambda logo'
+						className='w-[1.5rem] mr-4'
+					/>
+					<div
+						className={`grow basis-0 opacity-50 border border-black border-opacity-40`}
+					></div>
+					{/* logo non cover */}
+				</div>
+			);
+		}
+		else{
+			return (
+				<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
+					<Image
+						src={custom_logo[0]}
+						alt='custom logo'
+						width={44}
+						height={41}
+						className='mr-4'
+					/>
+					<div
+						className={`grow basis-0 opacity-50 border border-black border-opacity-40`}
+					></div>
+					{/* logo non cover */}
+				</div>
+			);
+		}
 	}
 };
 export const BerkeleyTemplateLogo = ({
 	isCoverPage,
+	custom_logo,
 }: {
 	isCoverPage: boolean;
+	custom_logo: string[] | string;
 }) => {
 	return (
 		<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
@@ -66,8 +105,10 @@ export const BerkeleyTemplateLogo = ({
 };
 export const StanfordTemplateLogo = ({
 	isCoverPage,
+	custom_logo,
 }: {
 	isCoverPage: boolean;
+	custom_logo: string[] | string;
 }) => {
 	return (
 		<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]'>
@@ -86,8 +127,10 @@ export const StanfordTemplateLogo = ({
 };
 export const HarvardTemplateLogo = ({
 	isCoverPage,
+	custom_logo,
 }: {
 	isCoverPage: boolean;
+	custom_logo: string[] | string;
 }) => {
 	return (
 		<div
@@ -101,7 +144,13 @@ export const HarvardTemplateLogo = ({
 		</div>
 	);
 };
-export const MITTemplateLogo = ({ isCoverPage }: { isCoverPage: boolean }) => {
+export const MITTemplateLogo = ({
+	isCoverPage,
+	custom_logo,
+}: {
+	isCoverPage: boolean;
+	custom_logo: string[] | string;
+}) => {
 	return (
 		<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[1rem] pb-[1rem]'>
 			<Image src={MITLogo} alt='MIT Logo' className='w-[3.75rem] h-auto' />
@@ -110,8 +159,10 @@ export const MITTemplateLogo = ({ isCoverPage }: { isCoverPage: boolean }) => {
 };
 export const PrincetonTemplateLogo = ({
 	isCoverPage,
+	custom_logo,
 }: {
 	isCoverPage: boolean;
+	custom_logo: string[] | string;
 }) => {
 	return (
 		<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[1rem] pb-[1rem] '>
@@ -125,8 +176,10 @@ export const PrincetonTemplateLogo = ({
 };
 export const CaltechTemplateLogo = ({
 	isCoverPage,
+	custom_logo,
 }: {
 	isCoverPage: boolean;
+	custom_logo: string[] | string;
 }) => {
 	return (
 		<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[1rem] pb-[1rem]'>
@@ -140,8 +193,10 @@ export const CaltechTemplateLogo = ({
 };
 export const UPennTemplateLogo = ({
 	isCoverPage,
+	custom_logo,
 }: {
 	isCoverPage: boolean;
+	custom_logo: string[] | string;
 }) => {
 	return (
 		<div className='fixed inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[1rem] pb-[1rem] '>
@@ -151,8 +206,10 @@ export const UPennTemplateLogo = ({
 };
 export const UChicagoTemplateLogo = ({
 	isCoverPage,
+	custom_logo,
 }: {
 	isCoverPage: boolean;
+	custom_logo: string[] | string;
 }) => {
 	return (
 		<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[1rem] pb-[1rem] '>
@@ -197,7 +254,7 @@ export const ColumbiaTemplateLogo = ({
 // Define the type for template logo information
 type TemplateLogoInfo = {
 	templateName: TemplateKeys;
-	templateLogo: React.ComponentType<{ isCoverPage: boolean }>;
+	templateLogo: React.ComponentType<{ isCoverPage: boolean, custom_logo:string | string[]}>;
 };
 
 // Define the available templates and their logos
@@ -257,7 +314,7 @@ export const TemplatesLogos = Object.fromEntries(
 		templateName,
 		templateLogo,
 	]),
-) as Record<TemplateKeys, React.ComponentType<{ isCoverPage: boolean }>>;
+) as Record<TemplateKeys, React.ComponentType<{ isCoverPage: boolean, custom_logo:string | string[]}>>;
 
 /*
 const TemplatesLogos = {

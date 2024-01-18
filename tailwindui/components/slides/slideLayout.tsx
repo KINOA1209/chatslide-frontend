@@ -90,9 +90,9 @@ export const Cover_img_1_layout = ({
 		1,
 		update_callback,
 	);
-	useEffect(() => {
-		console.log('chosenLayoutCover', templateLogo);
-	}, []);
+	// useEffect(() => {
+	// 	console.log('chosenLayoutCover', templateLogo);
+	// }, []);
 	return (
 		<>
 			<div
@@ -160,7 +160,7 @@ export const Col_1_img_0_layout = ({
 
                 const availableHeight = containerHeight - (topicHeight + subtopicHeight + logoHeight);
 
-                console.log(`Available height: ${availableHeight}`);
+                //console.log(`Available height: ${availableHeight}`);
                 setMaxContentHeight(availableHeight > 0 ? availableHeight : 200); 
             }
         };
@@ -374,7 +374,7 @@ export const Col_2_img_1_layout = ({
 
                 const availableHeight = containerHeight - (topicHeight + subtopicHeight + logoHeight);
 
-                console.log(`Available height: ${availableHeight}`);
+                //console.log(`Available height: ${availableHeight}`);
                 setMaxContentHeight(availableHeight > 0 ? availableHeight : 200); 
             }
         };

@@ -9,6 +9,7 @@ type FileUploadModalProps = {
 	setSelectedResources: (resources: Resource[]) => void;
 	showModal: boolean;
 	setShowModal: (value: boolean) => void;
+	pageInvoked: string;
 };
 
 const FileUploadModal: React.FC<FileUploadModalProps> = ({
@@ -16,6 +17,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
 	setSelectedResources,
 	showModal,
 	setShowModal,
+	pageInvoked,
 }) => {
 	return (
 		<Modal showModal={showModal} setShowModal={setShowModal}>
@@ -27,6 +29,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
 					selectable={true}
 					selectedResources={selectedResources}
 					setSelectedResources={setSelectedResources}
+					pageInvoked = {pageInvoked}
 				/>
 			</div>
 			<div className='w-full flex flex-row items-center justify-center'>

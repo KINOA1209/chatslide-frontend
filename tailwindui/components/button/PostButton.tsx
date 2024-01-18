@@ -22,7 +22,7 @@ const PostButton: React.FC<PostButtonProps> = ({
     const [host, setHost] = useState('https://drlambda.ai');
     const [isProcessing, setIsProcessing] = useState(false);
 
-    console.log(slides)
+    //console.log(slides)
 
     let title = slides[0]?.head;
     // remove all quill tags

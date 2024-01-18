@@ -31,7 +31,7 @@ export default function WorkflowStep3() {
 			{/* flex col container for steps, title, etc */}
 			<MyCustomJoyride steps={StepsSlidesPage()} />
 			<WorkflowStepsBanner
-				currentIndex={2}
+				currentIndex={3}
 				isSubmitting={isSubmitting}
 				setIsSubmitting={setIsSubmitting}
 				isPaidUser={isPaidUser}

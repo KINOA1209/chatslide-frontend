@@ -22,16 +22,18 @@ const sizeLimit = 16 * 1024 * 1024; // 16mb
 
 interface FileUploadButtonProps {
 	onFileSelected: (file: File | null) => void;
-	formats?: string[];
-	extensions?: string[];
+	//formats?: string[];
+	//extensions?: string[];
 	isSubmitting?: boolean;
+	pageInvoked?: string;
 }
 
 export const FileUploadButton: FC<FileUploadButtonProps> = ({
 	onFileSelected,
-	formats = supportedFormats,
-	extensions = supportedExtensions,
+	//formats = supportedFormats,
+	//extensions = supportedExtensions,
 	isSubmitting = false,
+	pageInvoked,
 }) => {
 	const [fileName, setFileName] = useState<string | null>(null);
 	const inputFileRef = useRef<HTMLInputElement>(null);
@@ -39,6 +41,23 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 	useEffect(() => {
 		console.log('isSubmitting', isSubmitting);
 	}, [isSubmitting]);
+
+	const determineSupportedFormats = () => {
+        if (pageInvoked === 'theme') {
+            return ['png', 'jpg', 'jpeg'];
+        }
+        return supportedFormats;
+    };
+
+	const determineSupportedExtensions = () => {
+        if (pageInvoked === 'theme') {
+            return ['png', 'jpg', 'jpeg'];
+        }
+        return supportedExtensions;
+    };
+
+	const formats = determineSupportedFormats()
+	const extensions = determineSupportedExtensions()
 
 	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files ? e.target.files[0] : null;
