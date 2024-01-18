@@ -42,7 +42,7 @@ export default function Dashboard() {
 
 	// get projects from backend
 	const handleRequest = async (token: string) => {
-		ProjectService.getProjects(token).then((projects) => {
+		ProjectService.getProjects(token, true).then((projects) => {
 			setProjects(projects);
 			setRendered(true);
 			if (projects.length == 0) {
