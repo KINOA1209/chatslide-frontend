@@ -32,9 +32,6 @@ export default function WorkflowStep2() {
 	const [isGpt35, setIsGpt35] = useState(true);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const router = useRouter();
-	console.log('outline', outline)
-	console.log('outlineres', outlineRes)
-	console.log('outlineContent', outlineContent)
 	useEffect(() => {
 		if (outlineRes) {
 			const newOutlineContent = Object.keys(outlineRes).map((key) => {
