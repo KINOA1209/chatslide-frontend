@@ -75,7 +75,7 @@ class ProjectService {
     }
   }
 
-  static async getProjects(token: string): Promise<Project[]> {
+  static async getProjects(token: string, shared: boolean=false): Promise<Project[]> {
     const headers = new Headers();
     if (token) {
       headers.append('Authorization', `Bearer ${token}`);
@@ -86,6 +86,7 @@ class ProjectService {
       const response = await fetch('/api/get_projects', {
         method: 'POST',
         headers: headers,
+        body: JSON.stringify({ shared: shared }),
       });
       if (response.ok) {
         const data = await response.json();

@@ -3,7 +3,6 @@
 import React, { useState, useEffect, Fragment, useRef } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AuthService from '@/services/AuthService';
 import { useRouter } from 'next/navigation';
 import ProjectTable from '../ProjectTable';
 import DrlambdaButton, {
@@ -12,24 +11,16 @@ import DrlambdaButton, {
 } from '@/components/button/DrlambdaButton';
 import Project from '@/models/Project';
 import ProjectService from '@/services/ProjectService';
-import Modal from '@/components/ui/Modal';
 import { useUser } from '@/hooks/use-user';
 
 export default function Dashboard() {
 	const [projects, setProjects] = useState<Project[]>([]);
-	const [deleteInd, setDeleteInd] = useState('');
+  const { token } = useUser();
 	const router = useRouter();
 	const promptRef = useRef<HTMLDivElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
 	const [rendered, setRendered] = useState<boolean>(false);
-  const { token } = useUser();
 
-	const [isOpen, setIsOpen] = useState(false);
-	const [isDeleting, setIsDeleting] = useState(false);
-
-	function closeModal() {
-		setIsOpen(false);
-	}
 
 	const currentProjects = projects;
 
@@ -52,7 +43,6 @@ export default function Dashboard() {
 	// get projects from backend
 	const handleRequest = async (token: string) => {
 		ProjectService.getProjects(token).then((projects) => {
-      console.log('projects', projects);
 			setProjects(projects);
 			setRendered(true);
 			if (projects.length == 0) {
@@ -64,45 +54,7 @@ export default function Dashboard() {
 
 	const handleProjectClick = (projectId: string) => {
 		// Open the project detail page in a new tab
-		window.open(`/project/${projectId}`, '_blank');
-	};
-
-	const handleDelete = (
-		e: React.MouseEvent<HTMLDivElement>,
-		projectId: string,
-	) => {
-		e.stopPropagation();
-		// Modal for warning
-		setDeleteInd(projectId);
-		setIsOpen(true);
-	};
-
-	const confirmDelete = async () => {
-		setIsDeleting(true);
-		if (deleteInd === '') {
-			throw 'Error';
-		}
-		try {
-			const { userId, idToken: token } =
-				await AuthService.getCurrentUserTokenAndId();
-			const response = await ProjectService.deleteProject(token, deleteInd);
-
-			setProjects(projects.filter((proj) => proj.id !== deleteInd));
-		} catch (error: any) {
-			toast.error(error.message, {
-				position: 'top-center',
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: 'light',
-			});
-		}
-		setIsDeleting(false);
-		setIsOpen(false);
-		setDeleteInd('');
+		window.open(`/shared/${projectId}`, '_blank');
 	};
 
 	useEffect(() => {
@@ -129,7 +81,7 @@ export default function Dashboard() {
 				<div className='w-full max-w-7xl flex flex-wrap items-end justify-center'>
 					{/* my project title text */}
           <div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-neutral-900 text-base font-bold font-creato-medium leading-10 tracking-wide border-black border-b-2'>
-						My Projects
+            Discover Community Projects
 					</div>
 
 					{/* create new project button */}
@@ -153,33 +105,14 @@ export default function Dashboard() {
 					<ProjectTable
 						currentProjects={currentProjects}
 						onProjectClick={handleProjectClick}
-						onDelete={handleDelete}
 					/>
 				) : (
 					<div className='flex items-center mt-[1rem] md:mt-[6rem] justify-center text-gray-600 text-[14px] md:text-[20px] font-normal font-creato-medium leading-normal tracking-wide'>
-						You haven't created any project yet.
+						There are no community projects yet.
 					</div>
 				)}
 			</div>
 
-			{/* Delete modal */}
-			<Modal showModal={isOpen} setShowModal={setIsOpen}>
-				<div className='flex flex-col gap-y-2'>
-					<h4 className='h4 text-center'>Delete Project</h4>
-					<div className=''>Are you sure you want to delete this project?</div>
-
-					<div className='flex gap-x-2 justify-end'>
-						<BigBlueButton onClick={confirmDelete} isSubmitting={isDeleting}>
-							Confirm
-						</BigBlueButton>
-						<InversedBigBlueButton onClick={closeModal}>
-							Cancel
-						</InversedBigBlueButton>
-					</div>
-				</div>
-			</Modal>
-
-			{/* <UserStudy /> */}
 		</section>
 	);
 }
