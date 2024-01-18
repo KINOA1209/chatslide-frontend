@@ -20,7 +20,7 @@ export default function ThemePage(){
     const [theme, setTheme] = useState('content_with_image');
     const [useSchoolTemplate, setUseSchoolTemplate] = useState(false);
     const [useLogo, setUseLogo] = useState(false);
-	const [schoolTemplate, setSchoolTemplate] = useState('default' as string);
+	const [schoolTemplate, setSchoolTemplate] = useState('Default' as string);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const contentRef = useRef<HTMLDivElement>(null);
     const [showFileModal, setShowFileModal] = useState(false);
@@ -49,8 +49,6 @@ export default function ThemePage(){
         sessionStorage.setItem('theme', theme);
       }, [schoolTemplate, theme]);
       
-    console.log(schoolTemplate)
-    console.log(theme)
     return(
         <div>
             <ToastContainer />
