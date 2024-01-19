@@ -32,12 +32,11 @@
     padding-bottom: 10px;
 }
 
-$i: 8;
-@while $i <= 80 {
-	.ql-bubble .ql-picker.ql-size .ql-picker-label[data-value='#{$i}pt']::before,
-	.ql-bubble .ql-picker.ql-size .ql-picker-item[data-value='#{$i}pt']::before {
-		content: '#{$i}pt';
-		font-size: 12pt;
-	}
-	$i: $i + 1;
+$font-sizes: ('12pt', '16pt', '20pt', '24pt', '32pt');
+@each $size in $font-sizes {
+    .ql-bubble .ql-picker.ql-size .ql-picker-label[data-value='#{$size}']::before,
+    .ql-bubble .ql-picker.ql-size .ql-picker-item[data-value='#{$size}']::before {
+        content: '#{$size}';
+        font-size: unquote($size);
+    }
 }
