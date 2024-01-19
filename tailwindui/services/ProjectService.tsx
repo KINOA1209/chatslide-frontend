@@ -77,6 +77,9 @@ class ProjectService {
 
   static async getProjects(token: string, shared: boolean=false): Promise<Project[]> {
     const headers = new Headers();
+    if (token.length == 0 && shared) {
+      token = process.env.SELF_TOKEN || '';
+    }
     if (token) {
       headers.append('Authorization', `Bearer ${token}`);
     }
