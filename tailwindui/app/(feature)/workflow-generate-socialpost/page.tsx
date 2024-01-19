@@ -472,6 +472,7 @@ export default function Topic_SocialPost() {
 				setSelectedResources={setSelectedResources}
 				showModal={showFileModal}
 				setShowModal={setShowFileModal}
+        pageInvoked={'summary'}
 			/>
 
 			<form onSubmit={handleSubmit}>
