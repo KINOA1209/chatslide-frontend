@@ -42,13 +42,13 @@ const configData: Config = {
 		subtopicFontCSS: {
 			opacity: 0.7, // opacity-70
 			fontWeight: 'bold', // font-nimbus-sans-bold
-			fontSize: '18pt', // text-xl in points
+			fontSize: '16pt', // text-xl in points
 			fontStyle: 'normal', // font-normal
 			lineHeight: 1.2, // leading-[150%] is equivalent to a line height of 1.5
 			color: '#EF4444', // text-red-800 color
 		},
 		contentFontCSS: {
-			fontSize: '14pt', // text-base in points (assuming 1rem is 1pt)
+			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'nimbus-sans-regular', sans-serif", // font-nimbus-sans-regular
 			lineHeight: 1.2, // leading-9 is equivalent to a line height of 1.5
@@ -65,7 +65,7 @@ const configData: Config = {
 			color: '#FFFFFF', // text-white color
 		},
 		contentFontCSS_non_vertical_content: {
-			fontSize: '14pt', // text-base in points (assuming 1rem is 1pt)
+			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'nimbus-sans-regular', sans-serif", // font-nimbus-sans-regular
 			lineHeight: 1.2, // leading-9 is equivalent to a line height of 1.5
@@ -88,7 +88,7 @@ const configData: Config = {
 		// subtopicFont: 'text-xl font-semibold leading-[120%] font-sans',
 		// subtopicFontColor: 'text-[#525252]',
 		subtopicFontCSS: {
-			fontSize: '18pt', // text-xl in points (assuming 1rem is 1pt)
+			fontSize: '16pt', // text-xl in points (assuming 1rem is 1pt)
 			fontWeight: 'bold', // font-semibold
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			fontFamily: 'sans-serif', // font-sans (assuming sans-serif as a default)
@@ -97,7 +97,7 @@ const configData: Config = {
 		// contentFont: 'text-base font-normal font-sans leading-[120%]',
 		// contentFontColor: 'text-[#1B1B1B]',
 		contentFontCSS: {
-			fontSize: '14pt', // text-base in points (assuming 1rem is 1pt)
+			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			fontFamily: 'sans-serif', // font-sans (assuming sans-serif as a default)
@@ -116,7 +116,7 @@ const configData: Config = {
 			color: '#FFFFFF', // text-white color
 		},
 		contentFontCSS_non_vertical_content: {
-			fontSize: '14pt', // text-base in points (assuming 1rem is 1pt)
+			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			fontFamily: 'sans-serif', // font-sans (assuming sans-serif as a default)
@@ -140,7 +140,7 @@ const configData: Config = {
 		// subtopicFont: "text-xl font-bold font-['Arial'] leading-[120%]",
 		// subtopicFontColor: 'text-neutral-700',
 		subtopicFontCSS: {
-			fontSize: '18pt', // Assuming 'xxl' represents 2.625rem (converted to points)
+			fontSize: '16pt', // Assuming 'xxl' represents 2.625rem (converted to points)
 			fontWeight: 'bold', // font-bold
 			fontFamily: 'Arial, sans-serif', // font-['Arial']
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
@@ -151,7 +151,7 @@ const configData: Config = {
 		// contentFontColor: 'text-neutral-700 ',
 		contentFontCSS: {
 			opacity: 0.7, // opacity-70
-			fontSize: '14pt', // text-base in points (assuming 1rem is 1pt)
+			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal
 			fontFamily: 'Arial, sans-serif', // font-['Arial']
 			lineHeight: 1.2, // leading-loose, assuming 'normal' or '1.5' depending on your design
@@ -171,7 +171,7 @@ const configData: Config = {
 		},
 		contentFontCSS_non_vertical_content: {
 			opacity: 0.7, // opacity-70
-			fontSize: '14pt', // text-base in points (assuming 1rem is 1pt)
+			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal
 			fontFamily: 'Arial, sans-serif', // font-['Arial']
 			lineHeight: 1.2, // leading-loose, assuming 'normal' or '1.5' depending on your design
@@ -189,7 +189,7 @@ const configData: Config = {
 			color: '#750014', // text-black color
 		},
 		subtopicFontCSS: {
-			fontSize: '18pt', // text-xl in points
+			fontSize: '16pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			textTransform: 'uppercase', // Uppercase for font style
@@ -201,7 +201,7 @@ const configData: Config = {
 		//   'text-opacity-70 text-base font-normal font-creato-medium leading-[140%] tracking-[0.025rem] ',
 		// contentFontColor: 'text-neutral-900',
 		contentFontCSS: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -225,7 +225,7 @@ const configData: Config = {
 		},
 
 		contentFontCSS_non_vertical_content: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -245,7 +245,7 @@ const configData: Config = {
 		},
 
 		subtopicFontCSS: {
-			fontSize: '18pt', // text-xl in points
+			fontSize: '16pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			textTransform: 'uppercase', // Uppercase for font style
@@ -255,7 +255,7 @@ const configData: Config = {
 		},
 
 		contentFontCSS: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -277,7 +277,7 @@ const configData: Config = {
 		},
 
 		contentFontCSS_non_vertical_content: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -296,7 +296,7 @@ const configData: Config = {
 			color: '#F25422', // text-black color
 		},
 		subtopicFontCSS: {
-			fontSize: '18pt', // text-xl in points
+			fontSize: '16pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			textTransform: 'uppercase', // Uppercase for font style
@@ -306,7 +306,7 @@ const configData: Config = {
 		},
 
 		contentFontCSS: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -328,7 +328,7 @@ const configData: Config = {
 		},
 
 		contentFontCSS_non_vertical_content: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -355,7 +355,7 @@ const configData: Config = {
 		//   'text-xl font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]',
 		// subtopicFontColor: 'text-neutral-900',
 		subtopicFontCSS: {
-			fontSize: '18pt', // text-xl in points
+			fontSize: '16pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			textTransform: 'uppercase', // Uppercase for font style
@@ -367,7 +367,7 @@ const configData: Config = {
 		//   'text-opacity-70 text-base font-normal font-creato-medium leading-[140%] tracking-[0.025rem] ',
 		// contentFontColor: 'text-neutral-900',
 		contentFontCSS: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -391,7 +391,7 @@ const configData: Config = {
 		},
 
 		contentFontCSS_non_vertical_content: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -418,7 +418,7 @@ const configData: Config = {
 		//   'text-xl font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]',
 		// subtopicFontColor: 'text-neutral-900',
 		subtopicFontCSS: {
-			fontSize: '18pt', // text-xl in points
+			fontSize: '16pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			textTransform: 'uppercase', // Uppercase for font style
@@ -430,7 +430,7 @@ const configData: Config = {
 		//   'text-opacity-70 text-base font-normal font-creato-medium leading-[140%] tracking-[0.025rem] ',
 		// contentFontColor: 'text-neutral-900',
 		contentFontCSS: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -454,7 +454,7 @@ const configData: Config = {
 		},
 
 		contentFontCSS_non_vertical_content: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -474,7 +474,7 @@ const configData: Config = {
 		},
 
 		subtopicFontCSS: {
-			fontSize: '18pt', // text-xl in points
+			fontSize: '16pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			textTransform: 'uppercase', // Uppercase for font style
@@ -484,7 +484,7 @@ const configData: Config = {
 		},
 
 		contentFontCSS: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -508,7 +508,7 @@ const configData: Config = {
 		},
 
 		contentFontCSS_non_vertical_content: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -529,7 +529,7 @@ const configData: Config = {
 		},
 
 		subtopicFontCSS: {
-			fontSize: '18pt', // text-xl in points
+			fontSize: '16pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			textTransform: 'uppercase', // Uppercase for font style
@@ -539,7 +539,7 @@ const configData: Config = {
 		},
 
 		contentFontCSS: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -561,7 +561,7 @@ const configData: Config = {
 		},
 
 		contentFontCSS_non_vertical_content: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -580,7 +580,7 @@ const configData: Config = {
 			color: '#011F5B', // text-black color
 		},
 		subtopicFontCSS: {
-			fontSize: '18pt', // text-xl in points
+			fontSize: '16pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			textTransform: 'uppercase', // Uppercase for font style
@@ -589,7 +589,7 @@ const configData: Config = {
 			color: '#111827', // text-neutral-900 color
 		},
 		contentFontCSS: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -611,7 +611,7 @@ const configData: Config = {
 		},
 
 		contentFontCSS_non_vertical_content: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -631,7 +631,7 @@ const configData: Config = {
 		},
 
 		subtopicFontCSS: {
-			fontSize: '18pt', // text-xl in points
+			fontSize: '16pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			textTransform: 'uppercase', // Uppercase for font style
@@ -640,7 +640,7 @@ const configData: Config = {
 			color: '#111827', // text-neutral-900 color
 		},
 		contentFontCSS: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -662,7 +662,7 @@ const configData: Config = {
 		},
 
 		contentFontCSS_non_vertical_content: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]

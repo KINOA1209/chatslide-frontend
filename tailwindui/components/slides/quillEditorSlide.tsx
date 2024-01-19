@@ -10,18 +10,18 @@ type QuillEditableProps = {
 	style?: React.CSSProperties;
 };
 
-const generateFontSizes = (): string[] => {
-	const sizes = [];
-	for (let i = 8; i <= 80; i += 1) {
-		sizes.push(`${i}pt`);
-	}
-	return sizes;
-};
+// const generateFontSizes = (): string[] => {
+// 	const sizes = [];
+// 	for (let i = 8; i <= 80; i += 1) {
+// 		sizes.push(`${i}pt`);
+// 	}
+// 	return sizes;
+// };
 
-const fontSizes = generateFontSizes();
+// const fontSizes = generateFontSizes();
 
 const toolbarOptions = [
-	[{ size: fontSizes }, { font: [] }],
+	[{ size: ['12pt', '16pt', '20pt', '24pt', '32pt'] }, { font: [] }],
 	['bold', 'italic', 'underline', 'strike', 'code-block'],
 	[{ list: 'bullet' }],
 	[{ script: 'sub' }, { script: 'super' }],
@@ -63,7 +63,7 @@ const toolbarOptions = [
 				'#003700',
 				'#002966',
 				'#3d1466',
-				'color-picker',
+				//'color-picker',
 			],
 		},
 		{ background: [] },
@@ -73,7 +73,7 @@ const toolbarOptions = [
 ];
 
 let Size = Quill.import('attributors/style/size');
-Size.whitelist = fontSizes;
+Size.whitelist = ['12pt', '16pt', '20pt', '24pt', '32pt']
 Quill.register(Size, true);
 
 export const isHTML = (input: string): boolean => {
