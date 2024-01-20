@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect, useRef, useState } from 'react';
 import { Theme, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -109,9 +110,10 @@ type SlidesHTMLProps = {
 	socialPostSlides: SocialPostSlide[];
 	setSocialPostSlides: Function;
 	isViewing?: boolean; // viewing another's shared project
-	finalSlideIndex: number;
-	setFinalSlideIndex: Function;
+	finalSlideIndex?: number;
+	setFinalSlideIndex?: Function;
 	borderColorOptions: ThemeObject[];
+	res_scenario:string;
 };
 
 const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
@@ -121,6 +123,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 	finalSlideIndex,
 	setFinalSlideIndex,
 	borderColorOptions,
+	res_scenario,
 }) => {
 	const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
 	const foldername =
@@ -143,10 +146,10 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 			? sessionStorage.getItem('topic')
 			: '';
 
-	const res_scenario =
-		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('scenarioType')
-			: '';
+	// const res_scenario =
+	// 	typeof sessionStorage !== 'undefined'
+	// 		? sessionStorage.getItem('scenarioType')
+	// 		: '';
 
 	const [showLayout, setShowLayout] = useState(false);
 	const [present, setPresent] = useState(false);
@@ -166,13 +169,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 	);
 	const nonPresentScale = Math.min(1, presentScale * 0.6);
 	const [showTheme, setShowTheme] = useState(false);
-	const [editingSlideIndex, setEditingSlideIndex] = useState<number | null>(
-		null,
-	);
-	const [editingProperty, setEditingProperty] = useState<SlideKeys | null>(
-		null,
-	);
-	const [editorContent, setEditorContent] = useState<string>('');
 
 	useEffect(() => {
 		if (unsavedChanges) {
@@ -424,7 +420,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		console.log('Goinng to slide', index);
 		isFirstRender.current = true;
 		setCurrentSlideIndex(index);
-		setFinalSlideIndex(index);
+		//setFinalSlideIndex(index);
 	}
 
 	function toggleEditMode() {
@@ -452,7 +448,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 
 			if (currentSlideIndex >= newSlides.length) {
 				setCurrentSlideIndex(newSlides.length - 1);
-				setFinalSlideIndex(newSlides.length - 1);
+				//setFinalSlideIndex(newSlides.length - 1);
 			}
 		}
 		setSocialPostSlides(newSlides);
@@ -520,6 +516,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 			);
 		}
 	};
+	//console.log(socialPostSlides)
 	return (
 		<div>
 			<div className='flex flex-col items-center justify-center gap-4'>
@@ -557,7 +554,8 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 							explanation='Present'
 						/>
 
-						{res_scenario !== 'serious_subject' && (
+						{res_scenario !== 'serious_subject' && 
+							!isViewing && (
 							<ButtonWithExplanation
 								button={
 									<ThemeChanger
@@ -650,7 +648,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 									className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
 									onClick={() => {
 										setCurrentSlideIndex(index); // Added onClick handler
-										setFinalSlideIndex(index);
+										//setFinalSlideIndex(index);
 									}}
 								>
 									{/* {index + 1} */}

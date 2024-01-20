@@ -1,7 +1,9 @@
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import { TemplateKeys } from '@/components/slides/slideTemplates';
+import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
 import Project from '@/models/Project';
 import Slide from '@/models/Slide';
+
 
 class ProjectService {
 
@@ -28,6 +30,9 @@ class ProjectService {
 
       if (project?.presentation_slides) {
         project.parsed_slides = this.parseSlides(project.presentation_slides);
+      }
+      if(project?.social_posts){
+        project.parsed_socialPosts = this.parseSocialPosts(project.social_posts, project.post_type, project.project_name)
       }
 
       return project;
@@ -190,6 +195,59 @@ class ProjectService {
 
       //console.log('slidesArray:', slidesArray);
       return slidesArray;
+    }
+
+    static parseSocialPosts(social_posts: string, post_type: string, project_name:string): SocialPostSlide[] {
+      const parse_slide = JSON.parse(social_posts);
+			const slidesArray: SocialPostSlide[] = Object.keys(parse_slide).map(
+				(key, index) => {
+					const slideData = parse_slide[key];
+					const slide = new SocialPostSlide();
+					if (index === 0) {
+						if (post_type === 'casual_topic') {
+							slide.template = slideData.template || 'First_page_img_1';
+						} else if (post_type === 'serious_subject') {
+							slide.English_title = slideData.English_title;
+							slide.template =
+								slideData.template || 'First_page_img_1_template2';
+						} else if (post_type === 'reading_notes') {
+							slide.template =
+								slideData.template || 'First_page_img_1_template3';
+						}
+					} else {
+						if (post_type === 'casual_topic') {
+							slide.template = slideData.template || 'Col_1_img_0';
+						} else if (post_type === 'serious_subject') {
+							slide.template = slideData.template || 'img_0_template2';
+						} else if (post_type === 'reading_notes') {
+							slide.template = slideData.template || 'img_1_template3';
+						}
+					}
+					slide.keywords = slideData.keywords || '';
+					slide.topic = slideData.topic || 'Your topic here';
+					slide.subtopic = slideData.subtopic;
+					slide.images = slideData.images;
+					slide.theme = slideData.theme;
+					slide.content = slideData.content || ['Your content here'];
+					slide.section_title = slideData.section_title || [
+						'Your section title here',
+					];
+					slide.brief = slideData.brief || ['Your brief here'];
+					slide.original_title = slideData.original_title;
+					slide.title = slideData.title || '';
+					slide.illustration =
+						slideData.illustration !== null
+							? slideData.illustration
+							: [
+									'https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png',
+								];
+					slide.quote = slideData.quote || 'Your quote here';
+					slide.source = slideData.source || '';
+
+					return slide;
+				},
+			);
+      return slidesArray
     }
 
 

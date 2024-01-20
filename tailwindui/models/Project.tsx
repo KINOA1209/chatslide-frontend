@@ -1,5 +1,6 @@
 import Resource from './Resource';
 import Slide from './Slide';
+import SocialPostSlide from './SocialPost'
 
 export default interface Project {
 	id: string;
@@ -34,9 +35,10 @@ export default interface Project {
 	presentation_slides: string;
 	parsed_slides: Slide[];
 	scenario_type: string;
-  thumbnail_url: string;
+  	thumbnail_url: string;
 	// fields for Social Post start here
 	post_type: string;
 	social_platform: string;
 	social_posts: string;
+	parsed_socialPosts: SocialPostSlide[];
 }

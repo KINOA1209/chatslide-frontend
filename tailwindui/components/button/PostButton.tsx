@@ -9,7 +9,7 @@ import ProjectService from '@/services/ProjectService';
 import { FaTwitter } from "react-icons/fa";
 
 type PostButtonProps = {
-    slides: Slide[];
+    slides: Slide[] | SocialPostSlide[];
     post_type: string; //socialpost or slide
     setShare: (share:boolean) => void;
 };
@@ -23,10 +23,12 @@ const PostButton: React.FC<PostButtonProps> = ({
     const [isProcessing, setIsProcessing] = useState(false);
 
     //console.log(slides)
-
-    let title = slides[0]?.head;
-    // remove all quill tags
-    title = title?.replace(/<[^>]*>?/gm, '');
+    const title = "Check out our latest content"
+    if(slides.length > 0 && 'head' in slides[0]){
+        let title = slides[0].head;
+        // remove all quill tags
+        title = title?.replace(/<[^>]*>?/gm, '');
+    }
 
     const project_id =
     typeof window !== 'undefined' && sessionStorage.project_id != undefined
