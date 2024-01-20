@@ -131,6 +131,7 @@ export default function SocialMediaTemplate() {
 						socialPostSlides={socialPostSlides}
 						setSocialPostSlides={setSocialPostSlides}
 						borderColorOptions={borderColorOptions}
+						res_scenario = {res_scenario || 'casual_topic'}
 					/>
 				</div>
 				<FeedbackButton timeout={30000} />
