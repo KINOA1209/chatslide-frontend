@@ -80,9 +80,9 @@ class ProjectService {
     }
   }
 
-  static async getProjects(token: string, shared: boolean=false): Promise<Project[]> {
+  static async getProjects(token: string, is_public: boolean=false): Promise<Project[]> {
     const headers = new Headers();
-    if (token.length == 0 && shared) {
+    if (token.length == 0 && is_public) {
       token = process.env.SELF_TOKEN || '';
     }
     if (token) {
@@ -94,7 +94,7 @@ class ProjectService {
       const response = await fetch('/api/get_projects', {
         method: 'POST',
         headers: headers,
-        body: JSON.stringify({ shared: shared }),
+        body: JSON.stringify({ public: is_public }),
       });
       if (response.ok) {
         const data = await response.json();
