@@ -100,7 +100,7 @@ export default function ThemePage(){
                             <p id='after2'> (Optional)</p>
                         </div>
                         <span className='text-md text-gray-500'>
-                            Customize the design for your slide
+                            Customize the design for your slide, you can also skip this step and use the default
                         </span>
                          {/* school */}
                          <div className='grid grid-cols-2 gap-x-4'>
