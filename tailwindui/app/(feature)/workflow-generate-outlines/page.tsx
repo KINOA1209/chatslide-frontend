@@ -238,7 +238,7 @@ export default function Topic() {
 			setSelectedResources((prevList) => [...prevList, pageDetails]);
 		} catch (error: any) {
 			console.error('Error reading webpage details: ', error);
-			setLinkError('Error reading webpage details');
+			setLinkError('This webpage does not allow being read.');
 		}
 		setIsAddingLink(false);
 	}
