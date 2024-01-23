@@ -34,7 +34,10 @@
 
 $font-sizes: ('12pt', '16pt', '20pt', '24pt', '32pt');
 @each $size in $font-sizes {
-    .ql-bubble .ql-picker.ql-size .ql-picker-label[data-value='#{$size}']::before,
+    .ql-bubble .ql-picker.ql-size .ql-picker-label[data-value='#{$size}']::before {
+		content: '#{$size}';
+		font-size: 12pt;
+	}
     .ql-bubble .ql-picker.ql-size .ql-picker-item[data-value='#{$size}']::before {
         content: '#{$size}';
         font-size: unquote($size);

@@ -14,6 +14,12 @@ import FileUploadModal from '@/components/forms/FileUploadModal';
 import { SmallBlueButton } from '@/components/button/DrlambdaButton';
 import Resource from '@/models/Resource';
 import SelectedResourcesList from '@/components/SelectedResources';
+interface OutlineSection {
+	title: string;
+	content: string[];
+	detailLevel: string;
+	section_style: string;
+}
 
 
 export default function ThemePage(){
@@ -26,9 +32,9 @@ export default function ThemePage(){
     const [showFileModal, setShowFileModal] = useState(false);
     const [isGpt35, setIsGpt35] = useState(true);
     const storedOutline = 
-        typeof window !== 'undefined'
-            ? sessionStorage.getItem('outline_content')
-            : null
+        typeof sessionStorage !== 'undefined'
+        ? sessionStorage.getItem('outline')
+        : null;
 
     const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
         typeof window !== 'undefined' &&
@@ -36,8 +42,24 @@ export default function ThemePage(){
             ? JSON.parse(sessionStorage.selectedLogo)
             : [],
     );
-    const outlineContent = storedOutline ? JSON.parse(storedOutline) : null
-
+	const outline = storedOutline ? JSON.parse(storedOutline) : null;
+	const outlineRes = outline ? JSON.parse(outline.res) : null;
+    const [outlineContent, setOutlineContent] = useState<OutlineSection[] | null>(
+		null,
+	);
+    useEffect(() => {
+		if (outlineRes) {
+			const newOutlineContent = Object.keys(outlineRes).map((key) => {
+				return {
+					title: outlineRes[key]['title'],
+					content: outlineRes[key]['content'],
+					detailLevel: outlineRes[key]['detailLevel'],
+					section_style: outlineRes[key]['section_style'],
+				};
+			});
+			setOutlineContent(newOutlineContent);
+		}
+	}, []);
     const removeLogoAtIndex = (indexToRemove: number) => {
 		setSelectedLogo((currentLogo) =>
 			currentLogo.filter((_, index) => index !== indexToRemove),
