@@ -14,12 +14,6 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
 	const router = useRouter();
   const { username, uid, token, credits, tier } = useUser();
 
-  useEffect(() => {
-    if (!uid) {
-      router.push('/signup');
-    }
-  });
-
 	function userFirstName() {
 		return username.split(' ')[0];
 	}
