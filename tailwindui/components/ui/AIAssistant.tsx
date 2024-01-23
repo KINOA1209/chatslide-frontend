@@ -10,13 +10,15 @@ export const DrLambdaAIAssistantIcon: React.FC<{
 }> = ({ onClick }) => {
 	return (
 		<div
-			className='w-14 h-14 bg-neutral-50 rounded-[50%] shadow border border-black border-opacity-20 z-50 flex items-center justify-center'
+			className='w-14 h-14 bg-neutral-50 rounded-[50%] shadow border border-black border-opacity-20 z-50 flex items-center justify-center relative'
 			onClick={onClick}
+			// style={{ animation: 'pulse 0.5s infinite' }}
 		>
+			<div className='absolute inset-0 bg-gradient-to-b from-[#0B84FF] via-[#0B84FF] to-transparent rounded-[50%] opacity-0 animate-pulse'></div>
 			<Image
 				src={DrlambdaCartoonImage}
 				alt={'DrLambdaAIAssistantImage'}
-				className='w-[1.75rem] h-[2.15rem]'
+				className='w-[1.75rem] h-[2.15rem] z-10'
 			></Image>
 		</div>
 	);
@@ -35,7 +37,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	// fixed right-0 top-[5rem]
 	return (
 		<section
-			className={`max-[640px]:fixed right-0 top-[5rem] h-[50vh] sm:flex sm:flex-col sm:items-center sm:justify-between z-50 shadow-md bg-white`}
+			className={`max-[1920px]:fixed right-0 top-[10rem] h-[40rem] sm:flex sm:flex-col sm:items-center sm:justify-between z-50 shadow-md bg-white`}
 			style={{
 				boxShadow:
 					'-4px 0 8px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1)',
@@ -75,7 +77,40 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			</div>
 
 			{/* chat history text */}
-			<div className='h-full w-full border-t-2 border-gray-300'></div>
+			<div className='h-full w-full border-t-2 border-gray-300 overflow-y-scroll px-2 py-1 font-creato-medium'>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+				asdasdasdasdasdasdasdsa<br></br>
+			</div>
 			{/* input area */}
 			<div className='h-[5rem] w-full'>
 				<div className='flex flex-row justify-between py-3 px-2 items-center'>
