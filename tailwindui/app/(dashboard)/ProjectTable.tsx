@@ -5,6 +5,7 @@ import { ResourceItem } from '@/components/ui/ResourceItem';
 import Project from '@/models/Project';
 import { FaPhotoVideo } from 'react-icons/fa';
 import { RiSlideshowLine } from 'react-icons/ri';
+import Image from 'next/image';
 
 interface Props {
   currentProjects: Project[];
@@ -19,36 +20,46 @@ const ProjectTable: React.FC<Props> = ({
 }) => {
   return (
     <div className='w-full lg:w-2/3 mx-auto'>
-      <div className='grid bg-[#ECF1FE] border border-gray-200 grid-cols-3 md:grid-cols-5'>
-        {/* <div className='hidden md:flex w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+      <div className='grid bg-[#ECF1FE] border border-gray-200 grid-cols-3 md:grid-cols-6'>
+        <div className='hidden md:flex col-span-1 w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
           Type
-        </div> */}
+        </div>
         <div className='col-span-2 flex w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
           Topic
         </div>
         <div className='hidden md:flex col-span-2 w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
           Resources
         </div>
-        <div className='hidden md:flex w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+        <div className='col-span-1 w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
           Date
         </div>
       </div>
-      <div className='grid border bg-[white] border-gray-200 grid-cols-3 md:grid-cols-5'>
+      <div className='grid border bg-[white] border-gray-200 grid-cols-3 md:grid-cols-6'>
         {' '}
         {currentProjects.map((project, index) => (
+
           <React.Fragment key={project.id}>
-            {/* topic */}
+            {/* type */}
             <div
-              className='col-span-2 p-2 flex items-center border-b-2  font-creato-medium leading-normal gap-x-2'
+              className='hidden md:flex col-span-1 p-2 items-center justify-center border-b-2  font-creato-medium leading-normal'
               onClick={() => onProjectClick(project.id)}
             >
-              <div className='w-[20px]'>
+              <div className=''>
                 {project.task === 'presentation' ? (
-                  <RiSlideshowLine className='text-gray-600 w-[20px] h-[20px]' />
+                  project.thumbnail_url
+                    ? <Image src={project.thumbnail_url} alt='project thumbnail' layout='responsive' width={16} height={9} />
+                    : <RiSlideshowLine className='text-gray-600 w-[40px] h-[40px]' />
                 ) : (
-                  <FaPhotoVideo className='text-gray-600 w-[20px] h-[20px]' />
+                  <FaPhotoVideo className='text-gray-600 w-[40px] h-[40px]' />
                 )}
               </div>
+            </div>
+
+            {/* topic */}
+            <div
+              className='col-span-2 p-2 flex items-center border-b-2  font-creato-medium leading-normal'
+              onClick={() => onProjectClick(project.id)}
+            >
               <div className='flex-wrap cursor-pointer'>{project.name}</div>
             </div>
 
@@ -64,7 +75,7 @@ const ProjectTable: React.FC<Props> = ({
             </div>
 
             {/* create date */}
-            <div className='p-2 border-b-2 flex'>
+            <div className='col-span-1 p-2 border-b-2 flex'>
               <div className='h-full flex justify-between items-center w-full py-4 px-2 text-gray-600 text-[13px] font-normal font-creato-medium leading-normal tracking-[0.12rem]'>
                 <span className='hidden md:flex'>
                   {moment(project.created_datetime).format('L')}
