@@ -1,7 +1,6 @@
 import SideBar from '@/components/ui/SideBar';
 import { WorkflowFooter } from '@/components/ui/footer';
 import Header from '@/components/ui/header';
-
 export const metadata = {
 	title: 'Workflow - DrLambda',
 	description: 'Convert your documents to slides',
@@ -18,6 +17,7 @@ export default function WorkflowLayout({
 				{/* only show SideBar on mid-large screen */}
 				<SideBar />
 			</div>
+
 			<div className='flex flex-col w-full'>
 				<div className='block sm:hidden'>
 					{/* only show Header on small screen */}

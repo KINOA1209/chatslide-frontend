@@ -99,9 +99,12 @@ MainSlideProps) => {
 			<div
 				className={`${
 					isCoverPage
-						? 'rounded-md w-full h-full bg-cover flex flex-row gap-[2rem] justify-start items-start box-border border-none relative '
+						? 'rounded-md w-full h-full bg-cover flex flex-row gap-[2rem] justify-start items-start box-border border-none relative'
 						: 'hidden'
-				} ${customizableElements.backgroundColorCover} `}
+				} ${customizableElements.backgroundColorCover}`}
+				// style={{
+				// 	backgroundImage: `url('${customizableElements.backgroundUrl}')`, // Corrected syntax
+				// }}
 			>
 				<ChosenLayoutCover
 					content={content}
@@ -136,7 +139,7 @@ MainSlideProps) => {
 			<div
 				className={`${
 					!isCoverPage
-						? 'rounded-md w-full h-full bg-cover box-border border-none relative p-[28px]'
+						? 'rounded-md w-full h-full bg-cover box-border border-none relative p-[28px] '
 						: 'hidden'
 				} ${customizableElements.backgroundColor}`}
 			>

@@ -27,6 +27,10 @@ import customizable_elements from './templates_customizable_elements/customizabl
 import ScriptEditor from './ScriptEditor';
 import Slide, { SlideKeys } from '@/models/Slide';
 import ProjectService from '@/services/ProjectService';
+import {
+	DrLambdaAIAssistantIcon,
+	AIAssistantChatWindow,
+} from '../ui/AIAssistant';
 
 type SlidesHTMLProps = {
 	slides: Slide[];
@@ -97,6 +101,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const [nonPresentScale, setNonPresentScale] = useState(
 		Math.min(1, presentScale * 0.9),
 	);
+
+	const [isChatWindowOpen, setIsChatWindowOpen] = useState(true);
+
+	const toggleChatWindow = () => {
+		setIsChatWindowOpen(!isChatWindowOpen);
+	};
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -454,7 +464,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		);
 
 	return (
-		<div className='flex flex-col items-center justify-center gap-4'>
+		<div className='flex flex-col items-center justify-center gap-4 relative'>
 			{/* hidden div for export to pdf */}
 			<div className='absolute left-[-9999px] top-[-9999px] -z-1'>
 				<div ref={exportSlidesRef}>
@@ -474,6 +484,20 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					))}
 				</div>
 			</div>
+
+			{/* absolute positionde ai assistant icon */}
+			{!isChatWindowOpen && (
+				<div className='absolute top-[40rem] left-[66rem] cursor-pointer'>
+					<ButtonWithExplanation
+						button={
+							<DrLambdaAIAssistantIcon
+								onClick={toggleChatWindow}
+							></DrLambdaAIAssistantIcon>
+						}
+						explanation='DrLambda AI Assistant'
+					/>
+				</div>
+			)}
 
 			{!isViewing && (
 				<div className='py-2 hidden sm:block'>
@@ -643,6 +667,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						/>
 					)}
 				</div>
+
+				{isChatWindowOpen && (
+					<AIAssistantChatWindow onToggle={toggleChatWindow} />
+				)}
 
 				{/* White modal for presentation mode */}
 				{present && (
