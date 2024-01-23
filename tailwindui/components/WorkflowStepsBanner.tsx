@@ -12,10 +12,8 @@ interface YourComponentProps {
 	isPaidUser?: boolean;
 	contentRef: React.RefObject<HTMLDivElement>;
 	nextIsPaidFeature?: boolean;
-	showGPTToggle?: boolean;
   lastStep?: boolean;
 	nextText?: string;
-	setIsGpt35?: (isGpt35: boolean) => void;
 }
 
 const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
@@ -25,25 +23,9 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 	isPaidUser = false,
 	contentRef,
 	nextIsPaidFeature = false,
-	showGPTToggle = false,
   lastStep = false,
 	nextText = 'Next',
-	setIsGpt35 = () => {},
 }) => {
-	function getPrevHref() {
-		const redirect = [
-			'/workflow-generate-outlines',
-			'/workflow-edit-outlines',
-			'/workflow-edit-design',
-			'/workflow-review-slides',
-			'/workflow-edit-script',
-		];
-		if (currentIndex > 0) {
-			return redirect[currentIndex - 1];
-		} else {
-			return '/dashboard';
-		}
-	}
 
 	return (
     <div className='sticky top-0 z-10'>
@@ -72,6 +54,8 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
           </div>}
         </div>
       </div>
+
+      <div className='flex md:hidden w-full h-[76px] bg-transparent'></div>
 
 			<div className='py-2 w-full flex-auto text-center self-center bg-yellow-100 font-small leading-snug tracking-tight whitespace-nowrap sm:hidden'>
 				Use our desktop version to see all the functionalities!
