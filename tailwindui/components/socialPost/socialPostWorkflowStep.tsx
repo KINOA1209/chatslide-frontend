@@ -55,7 +55,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
         </div>
       </div>
 
-      <div className='flex md:hidden w-full h-[76px] bg-transparent'></div>
+      <div className='flex md:hidden w-full h-[76px] bg-white'></div>
 
 			<div className='py-2 flex-auto text-center self-center bg-yellow-100 font-small leading-snug tracking-tight whitespace-nowrap sm:hidden'>
 				Use our desktop version to see all the functionalities!
