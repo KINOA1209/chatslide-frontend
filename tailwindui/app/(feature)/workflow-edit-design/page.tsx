@@ -96,11 +96,11 @@ export default function ThemePage(){
                 >
                     <div className='additional_container my-2 lg:my-5 border border-2 border-gray-200 flex flex-col gap-y-4'>
                         <div className='title2'>
-                            <p className='text-3xl'>Theme</p>
+                            <p className='text-3xl'>Design</p>
                             <p id='after2'> (Optional)</p>
                         </div>
                         <span className='text-md text-gray-500'>
-                            Select a theme for your slide
+                            Customize the design for your slide
                         </span>
                          {/* school */}
                          <div className='grid grid-cols-2 gap-x-4'>

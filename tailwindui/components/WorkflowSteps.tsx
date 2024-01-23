@@ -222,7 +222,7 @@ const ProjectProgress = () => {
 	const redirect = [
 		'/workflow-generate-outlines',
 		'/workflow-edit-outlines',
-		'/workflow-edit-theme',
+		'/workflow-edit-design',
 		'/workflow-review-slides',
 		'/workflow-edit-script',
     '/workflow-review-video',

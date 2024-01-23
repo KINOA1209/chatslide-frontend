@@ -76,7 +76,7 @@ export default function WorkflowStep2() {
 	const handleSubmit = async () => {
 		if(outlineContent){
 			sessionStorage.setItem('outline_content', JSON.stringify(outlineContent));
-			router.push('workflow-edit-theme')
+			router.push('workflow-edit-design')
 		}
 	}
 
@@ -95,7 +95,7 @@ export default function WorkflowStep2() {
 				nextIsPaidFeature={false}
 				showGPTToggle={true}
 				setIsGpt35={setIsGpt35}
-				nextText={!isSubmitting ? 'Create Slides' : 'Creating Slides'}
+				nextText={!isSubmitting ? 'Select Design' : 'Select Design'}
 			/>
 
 			{/* {outlineContent && (
