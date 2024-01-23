@@ -202,7 +202,7 @@ const MyFiles: React.FC<filesInterface> = ({
 	const fetchFiles = async (token: string) => {
 		//const resource_type = selectable ? ['doc', 'url'] : [];
 		const resource_type = 
-			pageInvoked === 'summary' ? ['doc', 'url'] :
+			pageInvoked === 'summary' ? ['doc', 'url', 'webpage', 'youtube'] :
 			pageInvoked === 'theme' ? ['logo'] :
 			[];
 
