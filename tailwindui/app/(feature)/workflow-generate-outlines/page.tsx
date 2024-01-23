@@ -196,6 +196,9 @@ export default function Topic() {
 	};
 
 	function formatName(name: string) {
+    // remove file extension
+    name = name.replace(/\.[^/.]+$/, "");
+
 		if (name.length > MAX_TOPIC_LENGTH) {
 			return name.slice(0, MAX_TOPIC_LENGTH - 3) + '...';
 		}
