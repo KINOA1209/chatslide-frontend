@@ -79,7 +79,7 @@ export default function WorkflowStep2() {
 			const entireOutline = JSON.parse(sessionStorage.outline);
 			entireOutline.res = JSON.stringify({...outlineCopy})
 			sessionStorage.setItem('outline', JSON.stringify(entireOutline));
-			router.push('workflow-edit-theme')
+			router.push('workflow-edit-design')
 		}
 	}
 	//console.log(outline)
