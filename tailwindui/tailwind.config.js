@@ -82,7 +82,7 @@ module.exports = {
 				'1/1': '100%',
 			},
 			fontFamily: {
-				inter: ['Inter', 'sans-serif'],
+				'inter': ['Inter', 'sans-serif'],
 				'creato-regular': ['Creato Display Regular', 'sans'],
 				'creato-medium': ['Creato Display Medium', 'sans'],
 				'creato-bold': ['Creato Display Bold', 'sans'],

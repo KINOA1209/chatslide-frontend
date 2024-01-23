@@ -35,7 +35,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	// fixed right-0 top-[5rem]
 	return (
 		<section
-			className={`max-[640px]:fixed right-0 top-[5rem] h-[100vh] sm:flex sm:flex-col sm:items-center sm:justify-between z-50 shadow-md bg-white`}
+			className={`max-[640px]:fixed right-0 top-[5rem] h-[50vh] sm:flex sm:flex-col sm:items-center sm:justify-between z-50 shadow-md bg-white`}
 			style={{
 				boxShadow:
 					'-4px 0 8px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1)',
@@ -50,7 +50,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						alt={'DrLambdaAIAssistantImage'}
 						className='w-[1.75rem] h-[2.15rem]'
 					></Image>
-					<div className="text-neutral-900 text-sm font-semibold font-['Inter']">
+					<div className='text-neutral-900 text-sm font-semibold font-inter'>
 						DrLambda.AI
 					</div>
 					{/* Round dot */}
