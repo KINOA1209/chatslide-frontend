@@ -25,22 +25,9 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 	isPaidUser,
 	contentRef,
 	nextIsPaidFeature = false,
-	showGPTToggle = false,
 	nextText = 'Next',
-	setIsGpt35,
 	showNextButton = true,
 }) => {
-	function getPrevHref() {
-		const redirect = [
-			'/workflow-generate-socialpost',
-			'/workflow-review-socialpost',
-		];
-		if (currentIndex > 0) {
-			return redirect[currentIndex - 1];
-		} else {
-			return '/dashboard';
-		}
-	}
 
 	return (
     <div className='sticky top-0 z-10'>
@@ -50,11 +37,11 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 				</div>
 			</div>
 
-      <div className='relative h-[80px] flex items-center w-full bg-white'>
-        <div className='absolute left-5'>
-          <DrLambdaBackButton href={getPrevHref()} />
+      <div className='relative h-[0px] flex items-center w-full bg-transparent'>
+        <div className='absolute left-5 top-5'>
+          <DrLambdaBackButton href='/dashboard' />
         </div>
-        <div className='absolute right-5 flex flex-col xl:flex-row items-end xl:items-center space-x-4'>
+        <div className='absolute right-5 top-5 flex flex-col xl:flex-row items-end xl:items-center space-x-4'>
           {showNextButton && (
             <DrlambdaButton
               isSubmitting={isSubmitting}
@@ -67,6 +54,8 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
           )}
         </div>
       </div>
+
+      <div className='flex md:hidden w-full h-[76px] bg-transparent'></div>
 
 			<div className='py-2 flex-auto text-center self-center bg-yellow-100 font-small leading-snug tracking-tight whitespace-nowrap sm:hidden'>
 				Use our desktop version to see all the functionalities!
