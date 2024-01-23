@@ -77,39 +77,45 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			</div>
 
 			{/* chat history text */}
-			<div className='h-full w-full border-t-2 border-gray-300 overflow-y-scroll px-2 py-1 font-creato-medium'>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
-				asdasdasdasdasdasdasdsa<br></br>
+			<div className='h-full w-full border-t-2 border-gray-300 overflow-y-scroll px-2 py-1 font-creato-medium flex flex-col justify-end '>
+				{/* welcoming text and options */}
+				<div className='flex flex-col items-start gap-3'>
+					<div className='px-3.5 py-2.5 bg-indigo-50 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-white justify-center items-center gap-2.5 inline-flex'>
+						<div className='w-[18rem] text-neutral-800 text-base font-normal font-creato-medium tracking-tight'>
+							Welcome to Dr. Lambda! I'm your AI assistant, ready to help with
+							slide design, content ideas, data organization, proofreading, and
+							updating. Just type your request, and let's create amazing slides
+							together! 🚀📊🎨
+						</div>
+					</div>
+					<div className='flex-col justify-center items-start gap-2 flex'>
+						<div className='text-neutral-800 text-sm font-normal font-creato-medium'>
+							Here are some ways I can help:
+						</div>
+						<div className='self-stretch h-40 flex-col justify-start items-start gap-2 inline-flex'>
+							<div className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex'>
+								<div className='w-56 text-blue-700 text-sm font-normal font-creato-medium'>
+									Add another slide
+								</div>
+							</div>
+							<div className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex'>
+								<div className='w-56 text-blue-700 text-sm font-normal font-creato-medium'>
+									Format this as a table
+								</div>
+							</div>
+							<div className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex'>
+								<div className='w-56 text-blue-700 text-sm font-normal font-creato-medium'>
+									Make this sound more professional
+								</div>
+							</div>
+							<div className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex'>
+								<div className='w-56 text-blue-700 text-sm font-normal font-creato-medium'>
+									Underline all the nouns
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			{/* input area */}
 			<div className='h-[5rem] w-full'>
@@ -120,13 +126,13 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						className='px-2 py-1 w-64 bg-zinc-100 rounded-3xl'
 					/>
 
-					<div className='w-7 h-7'>
+					<button className='w-7 h-7'>
 						<Image
 							src={sendTextButtonImage}
 							alt={'sendText'}
 							className='h-full'
 						></Image>
-					</div>
+					</button>
 				</div>
 			</div>
 		</section>
