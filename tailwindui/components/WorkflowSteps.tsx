@@ -95,7 +95,7 @@ const OneStep: React.FC<StepProps> = ({
 					</div>
 					{renderLine}
 				</div>
-				<span className={`text-white text-sm font-normal font-creato-medium leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-8px]'}`}>{desc}</span>
+				<span className={`text-white text-sm font-normal font-creato-medium leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-18px]'}`}>{desc}</span>
 			</div>
 		);
 	} else if (unavailable) {
