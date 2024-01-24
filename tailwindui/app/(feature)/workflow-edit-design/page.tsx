@@ -14,7 +14,12 @@ import FileUploadModal from '@/components/forms/FileUploadModal';
 import { SmallBlueButton } from '@/components/button/DrlambdaButton';
 import Resource from '@/models/Resource';
 import SelectedResourcesList from '@/components/SelectedResources';
-import SlideDesignPreview from '@/components/slides/SlideDesignPreview';
+import dynamic from 'next/dynamic';
+
+const SlideDesignPreview = dynamic(() => import('@/components/slides/SlideDesignPreview'), {
+    ssr:false,
+});
+
 interface OutlineSection {
 	title: string;
 	content: string[];

@@ -183,7 +183,10 @@ const ProgressBox = (
 
 						<div className='w-fit flex flex-row flex-nowrap content-start'>
 							{stepRedirectPair.map((pair, index) => (
-								<div className='w-fit flex flex-row items-center' >
+								<div 
+									className='w-fit flex flex-row items-center' 
+									key={'workflowstepcontainer' + index.toString()}
+								>
 								<OneStep
 									key={`step` + index.toString()} // Add a unique key prop here
 									id={index + 1}
