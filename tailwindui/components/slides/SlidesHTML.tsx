@@ -669,7 +669,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				</div>
 
 				{isChatWindowOpen && (
-					<AIAssistantChatWindow onToggle={toggleChatWindow} />
+					<AIAssistantChatWindow
+						onToggle={toggleChatWindow}
+						slides={slides}
+						currentSlideIndex={currentSlideIndex}
+					/>
 				)}
 
 				{/* White modal for presentation mode */}

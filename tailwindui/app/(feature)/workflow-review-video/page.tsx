@@ -125,7 +125,6 @@ export default function WorkflowStep6() {
 				contentRef={contentRef}
 				nextIsPaidFeature={true}
 				lastStep={true}
-				showGPTToggle={false}
 			/>
 
 			<ToastContainer enableMultiContainer containerId={'video'} />

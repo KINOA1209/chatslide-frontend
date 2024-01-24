@@ -1,4 +1,5 @@
 'use client';
+import Slide from '@/models/Slide';
 import DrlambdaCartoonImage from '@/public/images/AIAssistant/DrLambdaCartoon.png';
 import sendTextButtonImage from '@/public/images/AIAssistant/sendTextIcon.png';
 import Image from 'next/image';
@@ -24,17 +25,73 @@ export const DrLambdaAIAssistantIcon: React.FC<{
 	);
 };
 
+const chatHistoryArr = [
+	{ role: 'system', content: 'You are a helpful assistant.' },
+	{
+		role: 'user',
+		content:
+			'Explain asynchronous programming in the style of the pirate Blackbeard.',
+	},
+];
+
 interface AIAssistantChatWindowProps {
 	onToggle: () => void;
+	slides: Slide[];
+	currentSlideIndex: number;
 }
 export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	onToggle,
+	slides,
+	currentSlideIndex,
 }) => {
 	// const [isChatWindowOpen, setIsChatWindowOpen] = useState(true);
 	// const toggleChatWindow = () => {
 	// 	setIsChatWindowOpen(!isChatWindowOpen);
 	// };
 	// fixed right-0 top-[5rem]
+	const [userInput, setUserInput] = useState('');
+	const [chatHistoryArr, setChatHistoryArr] = useState([
+		{ role: 'system', content: 'You are a helpful assistant.' },
+		{ role: 'user', content: 'You are a helpful assistant.' },
+		{ role: 'assistant', content: 'You are a helpful assistant.' },
+	]);
+
+	const handleSend = async () => {
+		if (userInput.trim() === '') return;
+
+		// Update chat history with user's message
+		const newUserMessage = { role: 'user', content: userInput };
+		setChatHistoryArr([...chatHistoryArr, newUserMessage]);
+
+		// Make API call to get response
+		try {
+			const response = await fetch('/api/ai_gen_slide', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					slide: slides[currentSlideIndex],
+					prompt: userInput,
+				}),
+			});
+
+			if (response.ok) {
+				const responseData = await response.json();
+				// Update chat history with AI's response
+				const newAIMessage = { role: 'assistant', content: responseData.data };
+				setChatHistoryArr([...chatHistoryArr, newAIMessage]);
+				console.log('chat history:', chatHistoryArr);
+			} else {
+				console.error('Failed to get AI response');
+			}
+		} catch (error) {
+			console.error('Error making API call:', error);
+		}
+
+		// Clear user input after sending
+		setUserInput('');
+	};
 	return (
 		<section
 			className={`max-[1920px]:fixed right-0 top-[10rem] h-[40rem] sm:flex sm:flex-col sm:items-center sm:justify-between z-50 shadow-md bg-white`}
@@ -76,10 +133,10 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				</button>
 			</div>
 
-			{/* chat history text */}
-			<div className='h-full w-full border-t-2 border-gray-300 overflow-y-scroll px-2 py-1 font-creato-medium flex flex-col justify-end '>
-				{/* welcoming text and options */}
-				<div className='flex flex-col items-start gap-3'>
+			{/* chat history text area */}
+			<div className='w-full border-t-2 border-gray-300 overflow-y-scroll px-2 py-1 font-creato-medium flex flex-col justify-end '>
+				<div className='flex flex-col items-start gap-3 overflow-y-auto'>
+					{/* welcoming text */}
 					<div className='px-3.5 py-2.5 bg-indigo-50 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-white justify-center items-center gap-2.5 inline-flex'>
 						<div className='w-[18rem] text-neutral-800 text-base font-normal font-creato-medium tracking-tight'>
 							Welcome to Dr. Lambda! I'm your AI assistant, ready to help with
@@ -88,33 +145,61 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 							together! 🚀📊🎨
 						</div>
 					</div>
+					{/* welcoming options */}
 					<div className='flex-col justify-center items-start gap-2 flex'>
 						<div className='text-neutral-800 text-sm font-normal font-creato-medium'>
 							Here are some ways I can help:
 						</div>
 						<div className='self-stretch h-40 flex-col justify-start items-start gap-2 inline-flex'>
 							<div className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex'>
+								{/* option: add slide */}
 								<div className='w-56 text-blue-700 text-sm font-normal font-creato-medium'>
 									Add another slide
 								</div>
 							</div>
 							<div className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex'>
+								{/* option: format as table */}
 								<div className='w-56 text-blue-700 text-sm font-normal font-creato-medium'>
 									Format this as a table
 								</div>
 							</div>
 							<div className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex'>
+								{/* option: make more professional */}
 								<div className='w-56 text-blue-700 text-sm font-normal font-creato-medium'>
 									Make this sound more professional
 								</div>
 							</div>
 							<div className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex'>
+								{/* option: underline all nouns */}
 								<div className='w-56 text-blue-700 text-sm font-normal font-creato-medium'>
 									Underline all the nouns
 								</div>
 							</div>
 						</div>
 					</div>
+					{/* chat history render */}
+					{chatHistoryArr
+						.filter((chatObject) => chatObject.role !== 'system')
+						.map((message, index) => (
+							<div
+								key={index}
+								className={
+									message.role === 'user'
+										? 'w-36 h-9 px-3.5 py-2.5 bg-indigo-500 rounded-tl-xl rounded-tr-xl rounded-bl-xl border border-white justify-center items-center gap-2.5 inline-flex'
+										: 'w-72 h-9 px-3.5 py-2.5 bg-indigo-50 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-white justify-center items-center gap-2.5 inline-flex'
+								}
+							>
+								<div
+									className={
+										message.role === 'user'
+											? 'grow shrink basis-0 text-gray-100 text-base font-normal font-["Creato Display"]'
+											: 'w-72 text-neutral-800 text-base font-normal font-["Creato Display"]'
+									}
+								>
+									{message.content}
+								</div>
+							</div>
+						))}
 				</div>
 			</div>
 			{/* input area */}
@@ -123,10 +208,13 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					{/* input area */}
 					<input
 						type='input'
+						value={userInput}
+						onChange={(e) => setUserInput(e.target.value)}
 						className='px-2 py-1 w-64 bg-zinc-100 rounded-3xl'
 					/>
 
-					<button className='w-7 h-7'>
+					{/* send text, call api to get response */}
+					<button className='w-7 h-7' onClick={handleSend}>
 						<Image
 							src={sendTextButtonImage}
 							alt={'sendText'}

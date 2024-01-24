@@ -38,8 +38,6 @@ export default function WorkflowStep3() {
 				contentRef={contentRef}
 				nextIsPaidFeature={true}
 				nextText={!isSubmitting ? 'Write Scripts' : 'Writing Scripts'}
-				showGPTToggle={true}
-				setIsGpt35={setIsGpt35}
 			/>
 
 			<ToastContainer enableMultiContainer containerId={'slides'} />

@@ -75,8 +75,6 @@ export default function ThemePage(){
                 isPaidUser={true}
                 contentRef={contentRef}
                 nextIsPaidFeature={false}
-                showGPTToggle={true}
-                setIsGpt35={setIsGpt35}
                 nextText={!isSubmitting ? 'Create Slides' : 'Creating Slides'}
             />
 
@@ -88,7 +86,7 @@ export default function ThemePage(){
 					setIsSubmitting={setIsSubmitting}
 				/>
 			)}
-            <div className='gap-y-4 w-full flex flex-col items-center my-[6rem]'>
+            <div className='gap-y-4 w-full flex flex-col items-center md:my-[6rem]'>
                 {/* design */}
                 <div
                     className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1 font-creato-regular'
@@ -96,11 +94,11 @@ export default function ThemePage(){
                 >
                     <div className='additional_container my-2 lg:my-5 border border-2 border-gray-200 flex flex-col gap-y-4'>
                         <div className='title2'>
-                            <p className='text-3xl'>Theme</p>
+                            <p className='text-3xl'>Design</p>
                             <p id='after2'> (Optional)</p>
                         </div>
                         <span className='text-md text-gray-500'>
-                            Select a theme for your slide
+                            Customize the design for your slide, you can also skip this step and use the default
                         </span>
                          {/* school */}
                          <div className='grid grid-cols-2 gap-x-4'>

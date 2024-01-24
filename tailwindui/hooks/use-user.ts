@@ -24,7 +24,7 @@ const useIsPaidUserBear = createBearStore<boolean>()('isPaidUser', false, true);
 const useCreditsBear = createBearStore<number>()('credits', 0, true);
 const useTierBear = createBearStore<string>()('tier', '', true);
 
-enum UserStatus {
+export enum UserStatus {
 	NotInited,
 	Initing,
 	Inited,
@@ -105,7 +105,18 @@ export const useUser = () => {
 		void initUser();
 	}, []);
 
+  const signOut = async () => {
+    await AmplifyAuth.signOut();
+    setToken('');
+    setUid('');
+    setCredits(0);
+    setTier('');
+    setIsPaidUser(false);
+    setUsername('');
+    setEmail('');
+  }
+
 	// console.log('-- useUser: ', {user, session, isPaidUser})
 
-  return { username, token, uid, email, credits, tier, isPaidUser, updateCreditsAndTier, setUsername };
+  return { username, token, uid, email, credits, tier, isPaidUser, updateCreditsAndTier, setUsername, userStatus, signOut };
 };

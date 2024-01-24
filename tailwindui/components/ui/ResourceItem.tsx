@@ -39,6 +39,9 @@ export const ResourceItem: React.FC<Resource> = ({
 	type,
 	thumbnail_url,
 }) => {
+  // remove text like `.txt` from the end of the file name
+  name = name.replace(/\.[^/.]+$/, '');
+
 	return (
 		<div
 			key={id}

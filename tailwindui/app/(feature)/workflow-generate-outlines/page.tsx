@@ -196,6 +196,9 @@ export default function Topic() {
 	};
 
 	function formatName(name: string) {
+    // remove file extension
+    name = name.replace(/\.[^/.]+$/, "");
+
 		if (name.length > MAX_TOPIC_LENGTH) {
 			return name.slice(0, MAX_TOPIC_LENGTH - 3) + '...';
 		}
@@ -235,7 +238,7 @@ export default function Topic() {
 			setSelectedResources((prevList) => [...prevList, pageDetails]);
 		} catch (error: any) {
 			console.error('Error reading webpage details: ', error);
-			setLinkError('Error reading webpage details');
+			setLinkError('This webpage does not allow being read.');
 		}
 		setIsAddingLink(false);
 	}
@@ -487,12 +490,11 @@ export default function Topic() {
 				isPaidUser={isPaidUser}
 				contentRef={contentRef}
 				nextIsPaidFeature={false}
-				showGPTToggle={true}
 				nextText={
 					!isSubmitting ? 'Write Outline (20⭐️)' : 'Writing Outline...'
 				}
-				setIsGpt35={setIsGpt35}
 			/>
+      
 
 			{/* main content */}
 			<div className='my-4 gap-y-4 w-full flex flex-col items-center'>
