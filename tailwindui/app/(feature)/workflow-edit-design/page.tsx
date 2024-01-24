@@ -14,6 +14,18 @@ import FileUploadModal from '@/components/forms/FileUploadModal';
 import { SmallBlueButton } from '@/components/button/DrlambdaButton';
 import Resource from '@/models/Resource';
 import SelectedResourcesList from '@/components/SelectedResources';
+import dynamic from 'next/dynamic';
+
+const SlideDesignPreview = dynamic(() => import('@/components/slides/SlideDesignPreview'), {
+    ssr:false,
+});
+
+interface OutlineSection {
+	title: string;
+	content: string[];
+	detailLevel: string;
+	section_style: string;
+}
 
 
 export default function ThemePage(){
@@ -26,9 +38,9 @@ export default function ThemePage(){
     const [showFileModal, setShowFileModal] = useState(false);
     const [isGpt35, setIsGpt35] = useState(true);
     const storedOutline = 
-        typeof window !== 'undefined'
-            ? sessionStorage.getItem('outline_content')
-            : null
+        typeof sessionStorage !== 'undefined'
+        ? sessionStorage.getItem('outline')
+        : null;
 
     const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
         typeof window !== 'undefined' &&
@@ -36,8 +48,24 @@ export default function ThemePage(){
             ? JSON.parse(sessionStorage.selectedLogo)
             : [],
     );
-    const outlineContent = storedOutline ? JSON.parse(storedOutline) : null
-
+	const outline = storedOutline ? JSON.parse(storedOutline) : null;
+	const outlineRes = outline ? JSON.parse(outline.res) : null;
+    const [outlineContent, setOutlineContent] = useState<OutlineSection[] | null>(
+		null,
+	);
+    useEffect(() => {
+		if (outlineRes) {
+			const newOutlineContent = Object.keys(outlineRes).map((key) => {
+				return {
+					title: outlineRes[key]['title'],
+					content: outlineRes[key]['content'],
+					detailLevel: outlineRes[key]['detailLevel'],
+					section_style: outlineRes[key]['section_style'],
+				};
+			});
+			setOutlineContent(newOutlineContent);
+		}
+	}, []);
     const removeLogoAtIndex = (indexToRemove: number) => {
 		setSelectedLogo((currentLogo) =>
 			currentLogo.filter((_, index) => index !== indexToRemove),
@@ -57,7 +85,7 @@ export default function ThemePage(){
 
 
     return(
-        <div>
+        <div className=''>
             <ToastContainer />
 
             <FileUploadModal
@@ -104,57 +132,60 @@ export default function ThemePage(){
                          <div className='grid grid-cols-2 gap-x-4'>
                             <div className='gap-1 flex flex-col justify-start'>
                                 <span className='text-md font-bold'>Do you want to use a school deck template?</span>
-                                <form className='flex flex-row gap-x-4 mt-2'>
+                                <form className='flex flex-row gap-x-4 mt-2 items-center'>
                                     <label>
+                                        <div className='flex flex-row items-center gap-x-1'>
                                         <input
                                             type='radio'
                                             value='yes'
                                             checked={useSchoolTemplate}
                                             onChange={(e) => {
                                                 setUseSchoolTemplate(true)
-                                                setSchoolTemplate('Harvard')
+                                                setSchoolTemplate('Stanford')
                                             }}
                                         />
-                                        Yes
+                                        <span>Yes</span>
+                                        </div>
                                     </label>
                                     <label>
-                                        <input
-                                            type='radio'
-                                            value='no'
-                                            checked={!useSchoolTemplate}
-                                            onChange={(e) => {
-                                                setUseSchoolTemplate(false)
-                                                setSchoolTemplate('default')
-                                            }}
-                                        />
-                                        No
+                                        <div className='flex flex-row items-center gap-x-1'>
+                                            <input
+                                                type='radio'
+                                                value='no'
+                                                checked={!useSchoolTemplate}
+                                                onChange={(e) => {
+                                                    setUseSchoolTemplate(false)
+                                                    setSchoolTemplate('default')
+                                                }}
+                                            />
+                                            <span>No</span>
+                                        </div>
                                     </label>
                                 </form>
                             </div>
 
-                            {useSchoolTemplate && (
-                                <div className='gap-1 flex flex-col justify-start'>
-                                    <span className='text-md font-bold'>Select your school:</span>
-                                    <select
-                                        className='border border-2 border-gray-400 rounded-lg bg-gray-100'
-                                        onChange={(e) => setSchoolTemplate(e.target.value)}
-                                    >
-                                        <option value='Stanford'>Stanford University</option>
-                                        <option value='Berkeley'>UC Berkeley</option>
-                                        <option value='Harvard'>Harvard University</option>
-                                        <option value='MIT'>Massachusetts Institute of Technology</option>
-                                        <option value='Princeton'>Princeton University</option>
-                                        <option value='Caltech'>California Institute of Technology</option>
-                                        <option value='Columbia'>Columbia University</option>
-                                        <option value='JHU'>Johns Hopkins University</option>
-                                        <option value='Yale'>Yale University</option>
-                                        <option value='UPenn'>University of Pennsylvania</option>
-                                    </select>
-                                </div>
-                            )}
+                          
+                            <div className={`transition-opacity duration-300 ease-in-out ${useSchoolTemplate ? 'opacity-100' : 'opacity-0'} gap-1 flex flex-col justify-start`}>
+                                <span className='text-md font-bold'>Select your school:</span>
+                                <select
+                                    className='pl-3 border border-2 border-gray-400 rounded-md bg-gray-100'
+                                    onChange={(e) => setSchoolTemplate(e.target.value)}
+                                >
+                                    <option value='Stanford'>Stanford University</option>
+                                    <option value='Berkeley'>UC Berkeley</option>
+                                    <option value='Harvard'>Harvard University</option>
+                                    <option value='MIT'>Massachusetts Institute of Technology</option>
+                                    <option value='Princeton'>Princeton University</option>
+                                    <option value='Caltech'>California Institute of Technology</option>
+                                    <option value='Columbia'>Columbia University</option>
+                                    <option value='JHU'>Johns Hopkins University</option>
+                                    <option value='Yale'>Yale University</option>
+                                    <option value='UPenn'>University of Pennsylvania</option>
+                                </select>
+                            </div>
+                            
                         </div>
                         {/* theme */}
-                        {/* {!useSchoolTemplate ? ( */}
                             <div>
                                 <span className='text-md font-bold'>What theme do you want to choose?</span>
                                 <div className='grid grid-cols-3 gap-x-4 mt-3'>
@@ -162,92 +193,95 @@ export default function ThemePage(){
                                         {
                                             img: ContentWithImageImg,
                                             value: 'content_with_image',
-                                            alt: 'Content with image',
+                                            alt: 'More images<br>(70% decks contain images)',
                                         },
                                         {
                                             img: ContentOnlyImg,
                                             value: 'content_only',
-                                            alt: 'Content only',
+                                            alt: 'Less images<br>(30% decks contain images)',
                                         },
-                                        {
-                                            img: ContentInBrandingColorImg,
-                                            value: 'content_in_branding_color',
-                                            alt: 'Content in branding color',
-                                        },
+                                        // {
+                                        //     img: ContentInBrandingColorImg,
+                                        //     value: 'content_in_branding_color',
+                                        //     alt: 'Content in branding color',
+                                        // },
                                     ].map(({ img, value, alt }) => (
                                         <div
                                             key={value}
-                                            className={`border border-2 rounded-lg border-gray-400 px-2 py-2 ${
-                                                theme === value ? 'border-gray-400' : 'border-white'
-                                            }`}
+                                            className={`rounded-lg py-2 }`}
                                         >
                                             <label>
-                                                <input
-                                                    type='radio'
-                                                    name='theme'
-                                                    value={value}
-                                                    checked={theme === value}
-                                                    onChange={() => setTheme(value)}
-                                                    style={{ display: 'none' }} // Hides the radio button
-                                                />
                                                 <div onClick={() => setTheme(value)}>
                                                     <Image src={img} alt={alt} />
                                                 </div>
-                                                {alt}
+                                                <div className='flex flex-row items-center gap-x-2'>
+                                                    <input
+                                                        type='radio'
+                                                        name='theme'
+                                                        value={value}
+                                                        checked={theme === value}
+                                                        onChange={() => setTheme(value)}
+                                                    />
+                                                    <span dangerouslySetInnerHTML={{ __html: alt }}></span>
+                                                </div>
                                             </label>
                                         </div>
                                     ))}
                                 </div>
+                                {useSchoolTemplate && (
+                                <div className='w-full mt-4 flex flex-col'>
+                                    <span className='text-md font-bold'>School template preview</span>
+                                    <SlideDesignPreview selectedTemplate={schoolTemplate}/>
+                                </div>
+                                )}
 
                                 {/*logo section*/}
                                 {!useSchoolTemplate && (
                                 <div className='grid grid-cols-2 gap-x-4 mt-4'>
                                     <div className='gap-1 flex flex-col justify-start'>
                                         <span className='text-md font-bold'>Do you want to use your logo?</span>
-                                        <form className='flex flex-row gap-x-4 mt-2'>
+                                        <form className='flex flex-row gap-x-4 mt-2 items-center'>
                                             <label>
-                                                <input
-                                                    type='radio'
-                                                    value='yes'
-                                                    checked={useLogo}
-                                                    onChange={(e) => setUseLogo(true)}
-                                                />
-                                                Yes
+                                                <div className='flex flex-row items-center gap-x-1'>
+                                                    <input
+                                                        type='radio'
+                                                        value='yes'
+                                                        checked={useLogo}
+                                                        onChange={(e) => setUseLogo(true)}
+                                                    />
+                                                    <span>Yes</span>
+                                                </div>
                                             </label>
                                             <label>
-                                                <input
-                                                    type='radio'
-                                                    value='no'
-                                                    checked={!useLogo}
-                                                    onChange={(e) => setUseLogo(false)}
-                                                />
-                                                No
+                                                <div className='flex flex-row items-center gap-x-1'>
+                                                    <input
+                                                        type='radio'
+                                                        value='no'
+                                                        checked={!useLogo}
+                                                        onChange={(e) => setUseLogo(false)}
+                                                    />
+                                                    <span>No</span>
+                                                </div>
                                             </label>
                                         </form>
                                     </div>
                                                         
-                                    {useLogo && (
-                                        <div className='gap-1 flex flex-col justify-start'>
-                                            <span className='ml-2 text-md font-bold'>Upload Logo:</span>
-                                            <div className=''>
-                                                <SmallBlueButton
-                                                    onClick={(e) => {
-                                                        e.preventDefault();
-                                                        setShowFileModal(true);
-                                                    }}
-                                                >
-                                                    Browse File
-                                                </SmallBlueButton>
-                                            </div>
+                                    <div className={`transition-opacity duration-300 ease-in-out ${useLogo ? 'opacity-100' : 'opacity-0'} gap-1 flex flex-col justify-start`}>
+                                        <span className='ml-2 text-md font-bold'>Upload Logo:</span>
+                                        <div className=''>
+                                            <SmallBlueButton
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    setShowFileModal(true);
+                                                }}
+                                            >
+                                                Browse File
+                                            </SmallBlueButton>
                                         </div>
-                                    )}
+                                    </div>
+                                    
                                 </div>)}
                             </div>
-                        {/* ) : (
-                            <div>
-                                <span className='text-md font-bold'>School template preview</span>
-                            </div>
-                        )} */}
                         {useLogo && (
                         <>
                             {selectedLogo.length > 0 && <hr id='add_hr' />}

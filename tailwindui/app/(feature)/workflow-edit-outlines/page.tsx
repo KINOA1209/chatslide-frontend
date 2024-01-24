@@ -75,11 +75,15 @@ export default function WorkflowStep2() {
 
 	const handleSubmit = async () => {
 		if(outlineContent){
-			sessionStorage.setItem('outline_content', JSON.stringify(outlineContent));
+			const outlineCopy = [...outlineContent];
+			const entireOutline = JSON.parse(sessionStorage.outline);
+			entireOutline.res = JSON.stringify({...outlineCopy})
+			sessionStorage.setItem('outline', JSON.stringify(entireOutline));
 			router.push('workflow-edit-design')
 		}
 	}
-
+	//console.log(outline)
+	//console.log(typeof outline.res)
 	return (
 		<div className=''>
 			<MyCustomJoyride steps={StepsOutlinePage()} />
