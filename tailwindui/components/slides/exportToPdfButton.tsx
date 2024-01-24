@@ -81,9 +81,14 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({
 
 	const handleSavePDF = async () => {
 		setDownloadingPDF(true);
-    const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-    const project_id = sessionStorage.getItem('project_id') || '';
-    await ProjectService.exportToPdfBackend(idToken, project_id);  
+    let frontend = true;  // toggle this to switch between frontend and backend pdf generation
+    if (frontend) {
+      await exportToPdfFrontend();
+    } else{
+      const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+      const project_id = sessionStorage.getItem('project_id') || '';
+      await ProjectService.exportToPdfBackend(idToken, project_id);
+    }
 		setDownloadingPDF(false);
 	};
 
