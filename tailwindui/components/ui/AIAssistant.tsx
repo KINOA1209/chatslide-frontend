@@ -51,9 +51,13 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	// fixed right-0 top-[5rem]
 	const [userInput, setUserInput] = useState('');
 	const [chatHistoryArr, setChatHistoryArr] = useState([
-		{ role: 'system', content: 'You are a helpful assistant.' },
-		{ role: 'user', content: 'You are a helpful assistant.' },
-		{ role: 'assistant', content: 'You are a helpful assistant.' },
+		// { role: 'system', content: 'You are a helpful assistant.' },
+		{ role: 'user', content: 'Hello there' },
+		{
+			role: 'assistant',
+			content:
+				'It sounds like you might be looking for a different kind of assistance',
+		},
 	]);
 
 	const handleSend = async () => {
@@ -146,7 +150,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						</div>
 					</div>
 					{/* welcoming options */}
-					<div className='flex-col justify-center items-start gap-2 flex'>
+					<div className='flex-col justify-center items-start gap-2 flex pb-[2rem]'>
 						<div className='text-neutral-800 text-sm font-normal font-creato-medium'>
 							Here are some ways I can help:
 						</div>
@@ -185,15 +189,15 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 								key={index}
 								className={
 									message.role === 'user'
-										? 'w-36 h-9 px-3.5 py-2.5 bg-indigo-500 rounded-tl-xl rounded-tr-xl rounded-bl-xl border border-white justify-center items-center gap-2.5 inline-flex'
-										: 'w-72 h-9 px-3.5 py-2.5 bg-indigo-50 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-white justify-center items-center gap-2.5 inline-flex'
+										? 'px-3.5 py-2.5 bg-indigo-500 rounded-tl-xl rounded-tr-xl rounded-bl-xl border border-white  gap-2.5 self-end flex flex-wrap max-w-[15rem]'
+										: 'px-3.5 py-2.5 bg-indigo-50 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-white  gap-2.5 max-w-[15rem] flex flex-wrap'
 								}
 							>
 								<div
 									className={
 										message.role === 'user'
-											? 'grow shrink basis-0 text-gray-100 text-base font-normal font-["Creato Display"]'
-											: 'w-72 text-neutral-800 text-base font-normal font-["Creato Display"]'
+											? 'grow shrink basis-0 text-gray-100 text-base font-normal font-creato-medium text-wrap'
+											: 'text-neutral-800 text-base font-normal font-creato-medium text-wrap'
 									}
 								>
 									{message.content}
