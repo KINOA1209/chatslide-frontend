@@ -97,8 +97,6 @@ export default function WorkflowStep2() {
 				isPaidUser={true}
 				contentRef={contentRef}
 				nextIsPaidFeature={false}
-				showGPTToggle={true}
-				setIsGpt35={setIsGpt35}
 				nextText={!isSubmitting ? 'Select Design' : 'Select Design'}
 			/>
 

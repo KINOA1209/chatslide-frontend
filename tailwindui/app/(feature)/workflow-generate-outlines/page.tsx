@@ -490,12 +490,11 @@ export default function Topic() {
 				isPaidUser={isPaidUser}
 				contentRef={contentRef}
 				nextIsPaidFeature={false}
-				showGPTToggle={true}
 				nextText={
 					!isSubmitting ? 'Write Outline (20⭐️)' : 'Writing Outline...'
 				}
-				setIsGpt35={setIsGpt35}
 			/>
+      
 
 			{/* main content */}
 			<div className='my-4 gap-y-4 w-full flex flex-col items-center'>

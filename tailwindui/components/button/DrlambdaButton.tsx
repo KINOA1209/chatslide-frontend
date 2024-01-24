@@ -236,7 +236,7 @@ export const UserOnboardingButton: React.FC<UserOnboardingButtonProps> = ({
   return (
 
 
-    <div className='fixed bottom-[6rem] right-4 z-50'>
+    <div className='hidden sm:fixed bottom-[6rem] right-4 z-50'>
       <DrlambdaButton
         onClick={onClick}
         showArrow={false}
