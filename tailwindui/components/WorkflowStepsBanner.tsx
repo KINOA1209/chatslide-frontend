@@ -29,7 +29,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 
 	return (
     <div className='sticky top-0 z-10'>
-			<div className='relative w-full h-[80px] flex flex-col items-center w-full bg-Sky'>
+			<div className='relative w-full h-[100px] flex flex-col items-center w-full bg-[#2044F2]'>
 				<div className='flex-grow items-center justify-center flex py-2'>
 					<ProjectProgress currentInd={currentIndex} contentRef={contentRef} />
 				</div>

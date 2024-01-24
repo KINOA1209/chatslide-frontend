@@ -5,8 +5,9 @@ import { useRouter } from 'next/navigation';
 import CSS from 'csstype';
 import AuthService from '@/services/AuthService';
 import { RightArrowIcon } from '@/app/(feature)/icons';
-import { NewStepIcon, CurrentStepIcon, FinishedStepIcon } from './icons';
-import { FaArrowLeft, FaArrowRight, FaChevronCircleLeft, FaChevronCircleRight } from 'react-icons/fa';
+import { NewStepIcon, CurrentStepIcon, FinishedStepIcon, CurrentStepCircle, FinishedStepCircle, ConnectedLine } from './icons';
+import { FaArrowLeft, FaArrowRight, FaChevronCircleLeft, FaChevronCircleRight, FaRegCircle } from 'react-icons/fa';
+import { IoMdLock } from "react-icons/io";
 
 interface StepProps {
 	id: number;
@@ -60,72 +61,65 @@ const OneStep: React.FC<StepProps> = ({
 		</div>
 	);
 
+	const renderLine = !isLastStep && (
+		<div className='hidden lg:flex flex-grow'>
+			{!isLastStep ? <ConnectedLine /> : null}
+		</div>
+	)
+
 	if (current) {
 		return (
-			<div className='w-full flex items-center'>
-				{/* <div
-          className='bg-white border-blue-500 text-blue-500 text-center'
-          style={StepStyle}
-        >
-          {id}
-        </div> */}
-				<span className='text-neutral-800 text-sm font-medium font-creato-bold leading-normal tracking-tight mx-2 overflow-x-auto inline-flex items-center gap-1'>
-					<CurrentStepIcon />
-					{desc}
-				</span>
-				{renderRightArrow}
+			<div className='w-full flex flex-col'>
+				<div className='flex flex-row justify-center items-center'>
+					<div className='h-[30px] flex items-center justify-center'>
+						<CurrentStepCircle />
+					</div>
+					{renderLine}
+				</div>
+				<span className={`text-neutral-800 text-white text-sm font-creato-bold leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-8px]'}`}>{desc}</span>
 			</div>
 		);
 	} else if (finished) {
 		return (
 			<div
-				className='w-full flex items-center cursor-pointer hidden md:flex'
+				className='w-full flex flex-col cursor-pointer hidden md:flex'
 				onClick={handleClick}
 				onMouseEnter={handleHoverEnter}
 				onMouseLeave={handleHoverLeave}
 			>
-				{/* <div className={circleClass} style={StepStyle}>
-          {id}
-        </div> */}
-				<span
-					className={`text-gray-600 text-sm font-normal font-creato-medium leading-normal tracking-tight mx-2 ${textClass} overflow-x-auto inline-flex items-center gap-1`}
+				<div
+					className={`flex flex-row justify-center items-center`}
 				>
-					<FinishedStepIcon />
-					{desc}
-				</span>
-				{renderRightArrow}
+					<div className='h-[30px] flex items-center justify-center'>
+						<FinishedStepCircle />
+					</div>
+					{renderLine}
+				</div>
+				<span className={`text-white text-sm font-normal font-creato-medium leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-18px]'}`}>{desc}</span>
 			</div>
 		);
 	} else if (unavailable) {
 		return (
-			<div className='w-full flex items-center hidden md:flex'>
-				{/* <div
-          className='bg-gray-400 border-gray-400 text-white text-center'
-          style={StepStyle}
-        >
-          {id}
-        </div> */}
-				<span className='text-gray-600 text-sm font-normal font-creato-medium leading-normal tracking-tight mx-2 overflow-x-auto inline-flex items-center gap-1'>
-					<NewStepIcon />
-					{desc}
-				</span>
-				{renderRightArrow}
+			<div className='w-full flex flex-col hidden md:flex'>
+				<div className={`flex flex-row justify-center items-center'`}>
+					<div className='h-[30px] flex items-center justify-center'>
+						<IoMdLock size={20} color='white'/>
+					</div>
+					{renderLine}
+				</div>
+				<span className={`text-white text-sm font-normal font-creato-medium leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-8px]'}`}>{desc}</span>
 			</div>
 		);
 	} else {
 		return (
-			<div className='w-full flex items-center hidden md:flex'>
-				{/* <div
-          className='bg-gray-400 border-gray-400 text-white text-center'
-          style={StepStyle}
-        >
-          {id}
-        </div> */}
-				<span className='text-gray-600 text-sm font-normal font-creato-medium leading-normal tracking-tight mx-2 overflow-x-auto inline-flex items-center gap-1'>
-					<NewStepIcon />
-					{desc}
-				</span>
-				{renderRightArrow}
+			<div className={`${isLastStep ? 'w-auto': 'w-full'} flex flex-col hidden md:flex`}>
+				<div className='flex flex-row justify-center items-center'>
+					<div className='h-[30px] flex items-center justify-center'>
+						<IoMdLock size={20} color='white'/>
+					</div>
+					{renderLine}
+				</div>
+				<span className={`text-white text-sm font-normal font-creato-medium leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-8px]'}`}>{desc}</span>
 			</div>
 		);
 	}
@@ -180,15 +174,19 @@ const ProgressBox = (
 					ref={progressRefDesktop}
 				>
 					{/* <div className='-top-4 p-5 mb-6 flex justify-center border-2 border-r-blue-200 sticky'> */}
-					<div className='flex justify-center gap-x-4'>
+					<div className='flex justify-center gap-x-7'>
 
             <FaChevronCircleLeft 
-              className={`h-[40px] ${stepAvailable(currentInd - 1) ? `text-green-600 cursor-pointer` : `text-gray-400 cursor-not-allowed`}`}
+              className={`h-[40px] ${stepAvailable(currentInd - 1) ? `text-white cursor-pointer` : `text-gray-400 cursor-not-allowed`}`}
               onClick={() => goToStep(currentInd - 1)}
             />
 
 						<div className='w-fit flex flex-row flex-nowrap content-start'>
 							{stepRedirectPair.map((pair, index) => (
+								<div 
+									className='w-fit flex flex-row items-center' 
+									key={'workflowstepcontainer' + index.toString()}
+								>
 								<OneStep
 									key={`step` + index.toString()} // Add a unique key prop here
 									id={index + 1}
@@ -199,11 +197,17 @@ const ProgressBox = (
 									unavailable={unavailableSteps.includes(index)}
 									isLastStep={index === stepRedirectPair.length - 1} // Check if it's the last step
 								/>
+								{/* {index !== stepRedirectPair.length - 1 && (
+									<div className='hidden lg:flex flex-grow'>
+										<ConnectedLine />
+									</div>
+								)} */}
+								</div>
 							))}
 						</div>
 
             <FaChevronCircleRight 
-              className={`h-[40px] ${stepAvailable(currentInd + 1) ? `text-green-600 cursor-pointer` : `text-gray-400 cursor-not-allowed`}`}
+              className={`h-[40px] ${stepAvailable(currentInd + 1) ? `text-white cursor-pointer` : `text-gray-400 cursor-not-allowed`}`}
               onClick={() => goToStep(currentInd + 1)}
               
             />
@@ -225,7 +229,7 @@ const ProjectProgress = () => {
 		'/workflow-edit-design',
 		'/workflow-review-slides',
 		'/workflow-edit-script',
-    '/workflow-review-video',
+    	'/workflow-review-video',
 	];
 	const projectFinishedSteps: () => number[] = () => {
 		const finishedStepsArray: number[] = [];

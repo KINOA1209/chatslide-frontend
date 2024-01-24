@@ -126,7 +126,21 @@ export const ImgModule = ({
 					return response.json();
 				} else if (response.status === 402) {
 					setShowPaymentModal(true);
-				} else {
+        } else if (response.status === 401) { // violates content policy
+          const error = response.status;
+          toast.error('This query violates our content policy, please use another one', {
+            position: 'top-center',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+            containerId: 'slides',
+          });
+          console.error(error, response);
+        } else {
 					const error = response.status;
 					console.error(error, response);
 				}
