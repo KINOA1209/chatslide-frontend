@@ -9,7 +9,8 @@ import { useRouter } from 'next/navigation';
 import GoogleAnalytics from '@/components/integrations/GoogleAnalytics';
 import Hotjar from '@/components/integrations/Hotjar';
 // import AuthService from "../utils/AuthService";
-import { UserStatus, useUser } from '@/hooks/use-user';
+import { Auth, Hub } from 'aws-amplify';
+import AuthService from '../../services/AuthService';
 
 interface HeaderProps {
 	loginRequired: boolean;
@@ -22,7 +23,7 @@ const Header = ({
 	isAuth = false,
 }: HeaderProps) => {
 	const [top, setTop] = useState<boolean>(true);
-  const { uid, userStatus } = useUser();
+	const [userId, setUserId] = useState(null);
 	// const [username, setUsername] = useState(null);
 	const [loading, setLoading] = useState(true);
 
@@ -45,13 +46,56 @@ const Header = ({
 		return () => window.removeEventListener('scroll', scrollHandler);
 	}, [top]);
 
-  useEffect(() => {
-    if (userStatus === UserStatus.Inited) {
-      if(!uid && loginRequired) {
-        router.push('/signin');
-      }
-    }
-  }, [userStatus]);
+	useEffect(() => {
+		// mixpanel.init('22044147cd36f20bf805d416e1235329', {
+		//   debug: true,
+		//   track_pageview: true,
+		//   persistence: 'localStorage',
+		//   ignore_dnt: true,
+		// })
+
+		const checkUser = async () => {
+			try {
+				const { userId, idToken } =
+					await AuthService.getCurrentUserTokenAndId();
+				setUserId(userId);
+				// mixpanel.identify(userId)
+				setLoading(false);
+			} catch {
+				console.log('No authenticated user.');
+				if (loginRequired) {
+					router.push('/signup');
+				}
+				setLoading(false);
+			}
+		};
+
+		// check the current user when component loads
+		checkUser();
+
+		const listener = (data: any) => {
+			switch (data.payload.event) {
+				case 'signIn':
+					console.log('user signed in');
+					checkUser();
+					break;
+				case 'signOut':
+					console.log('user signed out');
+					setUserId(null);
+					break;
+				default:
+					break;
+			}
+		};
+
+		// add auth event listener
+		Hub.listen('auth', listener);
+
+		// remove auth event listener on cleanup
+		return () => {
+			Hub.remove('auth', listener);
+		};
+	}, []);
 
 	return (
 		<header
@@ -108,7 +152,7 @@ const Header = ({
 					{/* Desktop navigation */}
 					<nav className='flex w-[272px]'>
 						{/* Desktop sign in links */}
-						{!loading && uid ? (
+						{!loading && userId ? (
 							!isAuth && (
 								<ul className='flex grow justify-end flex-wrap items-center'>
 									<DropdownButton />

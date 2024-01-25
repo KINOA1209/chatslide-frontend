@@ -243,19 +243,20 @@ const ProjectProgress = () => {
 			typeof window !== 'undefined' &&
 			sessionStorage.getItem('presentation_slides')
 		) {
-			finishedStepsArray.push(2);
+			finishedStepsArray.push(2)
+			finishedStepsArray.push(3);
 		}
 		if (
 			typeof window !== 'undefined' &&
 			sessionStorage.getItem('transcripts')
 		) {
-			finishedStepsArray.push(3);
+			finishedStepsArray.push(4);
 		}
 		if (
 			typeof window !== 'undefined' &&
 			sessionStorage.getItem('audio_files')
 		) {
-			finishedStepsArray.push(4);
+			finishedStepsArray.push(5);
 		}
 		if (typeof window !== 'undefined' && sessionStorage.getItem('video_file')) {
 			finishedStepsArray.push(5);

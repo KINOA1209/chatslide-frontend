@@ -44,7 +44,7 @@ echo "{\"version\": \"$latest_commit\"}" > .next/metadata.json
 
 echo "Compressing .next directory"
 timestamp=$(date "+%Y%m%d%H%M%S")
-tar -czvf frontend-build.tar.gz.$timestamp .next
+tar -czvf frontend-build.tar.gz.$timestamp .next public
 if [ $? -ne 0 ]; then
     echo "tar .next directory failed"
     exit 1

@@ -60,7 +60,7 @@ export default function SignUp() {
 							></div>
 						</div>
 
-						<GoogleSignIn promo={referralValue} />
+						<GoogleSignIn signup={true} />
 
 						<div className='flex items-center my-6'>
 							<div
