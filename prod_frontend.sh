@@ -26,15 +26,20 @@ fi
 echo "Stopping pm2"
 pm2 stop tailwindui
 
-echo "Backing up .next dir"
+echo "Backing up .next and public dir"
 cd $SERVE_PATH
 if [ -d ".next" ]; then
     # If it exists, rename directory 'a' to 'b'
     mv ".next" ".next.backup.$timestamp"
 fi
+if [ -d "public" ]; then
+    # If it exists, rename directory 'a' to 'b'
+    mv "public" "public.backup.$timestamp"
+fi
 
 echo "Moving new .next dir"
 mv "$BUILD_PATH/.next" $SERVE_PATH
+mv "$BUILD_PATH/public" $SERVE_PATH
 
 # restart frontend
 echo "Restarting pm2"
