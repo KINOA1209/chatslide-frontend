@@ -3,7 +3,7 @@ import Slide from '@/models/Slide';
 import DrlambdaCartoonImage from '@/public/images/AIAssistant/DrLambdaCartoon.png';
 import sendTextButtonImage from '@/public/images/AIAssistant/sendTextIcon.png';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 
 export const DrLambdaAIAssistantIcon: React.FC<{
@@ -56,6 +56,8 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		{ role: 'system', content: 'You are a helpful assistant.' },
 		// { role: 'user', content: 'Hello there' },
 	]);
+	//use the useEffect hook along with a ref to the chat rendering area
+	const chatContainerRef = useRef<HTMLDivElement>(null);
 
 	// Fetch initial chat history from local storage
 	useEffect(() => {
@@ -70,12 +72,31 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		localStorage.setItem('chatHistoryArr', JSON.stringify(chatHistoryArr));
 	}, [chatHistoryArr]);
 
+	useEffect(() => {
+		// Use optional chaining to safely access properties
+		if (chatContainerRef.current?.scrollHeight !== undefined) {
+			// Scroll to the bottom after the chat history updates
+			chatContainerRef.current.scrollTop =
+				chatContainerRef.current.scrollHeight;
+		}
+	}, [chatHistoryArr]);
+
+	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+		if (event.key === 'Enter') {
+			event.preventDefault(); // Prevents the newline character in the input field
+			handleSend();
+		}
+	};
+
 	const handleSend = async () => {
 		if (userInput.trim() === '') return;
 
 		// Update chat history with user's message
 		const newUserMessage = { role: 'user', content: userInput };
 		setChatHistoryArr((prevHistory) => [...prevHistory, newUserMessage]);
+
+		// Clear user input after sending
+		setUserInput('');
 
 		// Make API call to get response
 		try {
@@ -133,9 +154,6 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		} catch (error) {
 			console.error('Error making API call:', error);
 		}
-
-		// Clear user input after sending
-		setUserInput('');
 	};
 
 	useEffect(() => {
@@ -184,7 +202,10 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			</div>
 
 			{/* chat history text area */}
-			<div className='w-full border-t-2 border-gray-300 overflow-y-scroll px-2 py-1 font-creato-medium flex flex-col justify-end '>
+			<div
+				className='w-full border-t-2 border-gray-300 overflow-y-scroll px-2 py-1 font-creato-medium flex flex-col justify-end '
+				ref={chatContainerRef}
+			>
 				<div className='flex flex-col items-start gap-3 overflow-y-auto'>
 					{/* welcoming text */}
 					<div className='px-3.5 py-2.5 bg-indigo-50 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-white justify-center items-center gap-2.5 inline-flex'>
@@ -257,6 +278,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						value={userInput}
 						onChange={(e) => setUserInput(e.target.value)}
 						className='px-2 py-1 w-64 bg-zinc-100 rounded-3xl'
+						onKeyDown={handleKeyDown} // Add the event listener for Enter key
 					/>
 
 					{/* send text, call api to get response */}
