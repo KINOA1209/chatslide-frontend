@@ -76,21 +76,21 @@ export default function Dashboard() {
 		<section className='grow flex flex-col'>
 			<ToastContainer />
 			{/* top background container of my projects title text and button */}
-			<div className='flex items-end w-full z-10 pt-[4rem] bg-Sky border-b-2 px-[5rem]'>
+			<div className='flex items-end w-full z-10 pt-[4rem] bg-Blue border-b-2 px-[5rem]'>
 				{/* flex container controlling max width */}
 				<div className='w-full max-w-7xl flex flex-wrap items-end justify-center'>
 					{/* my project title text */}
-          <div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-neutral-900 text-base font-bold font-creato-medium leading-10 tracking-wide border-black border-b-2'>
+          <div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-white text-base font-bold font-creato-medium leading-10 tracking-wide border-white border-b-2'>
             Discover Community Projects
 					</div>
 
 					{/* create new project button */}
-					<div className='absolute right-10 pb-[1rem] '>
+					<div className='absolute right-5 pb-1'>
 						<DrlambdaButton
 							isPaidFeature={false}
 							onClick={handleStartNewProject}
 						>
-							Start
+							Start your own project
 						</DrlambdaButton>
 					</div>
 				</div>
