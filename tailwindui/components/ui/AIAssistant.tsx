@@ -3,7 +3,7 @@ import Slide from '@/models/Slide';
 import DrlambdaCartoonImage from '@/public/images/AIAssistant/DrLambdaCartoon.png';
 import sendTextButtonImage from '@/public/images/AIAssistant/sendTextIcon.png';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 
 export const DrLambdaAIAssistantIcon: React.FC<{
@@ -38,11 +38,13 @@ interface AIAssistantChatWindowProps {
 	onToggle: () => void;
 	slides: Slide[];
 	currentSlideIndex: number;
+	setSlides: Function;
 }
 export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	onToggle,
 	slides,
 	currentSlideIndex,
+	setSlides,
 }) => {
 	// const [isChatWindowOpen, setIsChatWindowOpen] = useState(true);
 	// const toggleChatWindow = () => {
@@ -51,21 +53,29 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	// fixed right-0 top-[5rem]
 	const [userInput, setUserInput] = useState('');
 	const [chatHistoryArr, setChatHistoryArr] = useState([
-		// { role: 'system', content: 'You are a helpful assistant.' },
-		{ role: 'user', content: 'Hello there' },
-		{
-			role: 'assistant',
-			content:
-				'It sounds like you might be looking for a different kind of assistance',
-		},
+		{ role: 'system', content: 'You are a helpful assistant.' },
+		// { role: 'user', content: 'Hello there' },
 	]);
+
+	// Fetch initial chat history from local storage
+	useEffect(() => {
+		const storedChatHistory = localStorage.getItem('chatHistoryArr');
+		if (storedChatHistory) {
+			setChatHistoryArr(JSON.parse(storedChatHistory));
+		}
+	}, []);
+
+	// Store updated chat history in local storage
+	useEffect(() => {
+		localStorage.setItem('chatHistoryArr', JSON.stringify(chatHistoryArr));
+	}, [chatHistoryArr]);
 
 	const handleSend = async () => {
 		if (userInput.trim() === '') return;
 
 		// Update chat history with user's message
 		const newUserMessage = { role: 'user', content: userInput };
-		setChatHistoryArr([...chatHistoryArr, newUserMessage]);
+		setChatHistoryArr((prevHistory) => [...prevHistory, newUserMessage]);
 
 		// Make API call to get response
 		try {
@@ -82,10 +92,41 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 
 			if (response.ok) {
 				const responseData = await response.json();
+
+				// If the slide is updated, add a success message
+				if (responseData.data.slide) {
+					// Clone the existing slides array
+					const newSlides = [...slides];
+					// Update the slide at the current index with new data
+					console.log(
+						'updateSlide content after api call:',
+						responseData.data.slide,
+					);
+					newSlides[currentSlideIndex] = responseData.data.slide;
+
+					// Update state with the new slides
+					setSlides(newSlides);
+
+					// Update sessionStorage
+					sessionStorage.setItem(
+						'presentation_slides',
+						JSON.stringify(newSlides),
+					);
+
+					// Add success message to chat history
+					const successMessage = {
+						role: 'assistant',
+						content: 'Slide data updated successfully.',
+					};
+					setChatHistoryArr((prevHistory) => [...prevHistory, successMessage]);
+				}
+
 				// Update chat history with AI's response
-				const newAIMessage = { role: 'assistant', content: responseData.data };
-				setChatHistoryArr([...chatHistoryArr, newAIMessage]);
-				console.log('chat history:', chatHistoryArr);
+				const newAIMessage = {
+					role: 'assistant',
+					content: JSON.stringify(responseData.data.chat),
+				};
+				setChatHistoryArr((prevHistory) => [...prevHistory, newAIMessage]);
 			} else {
 				console.error('Failed to get AI response');
 			}
@@ -96,6 +137,11 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		// Clear user input after sending
 		setUserInput('');
 	};
+
+	useEffect(() => {
+		console.log('chat history are', JSON.stringify(chatHistoryArr));
+	}, [chatHistoryArr]);
+
 	return (
 		<section
 			className={`max-[1920px]:fixed right-0 top-[10rem] h-[40rem] sm:flex sm:flex-col sm:items-center sm:justify-between z-50 shadow-md bg-white`}
@@ -156,34 +202,30 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						</div>
 						<div className='self-stretch h-40 flex-col justify-start items-start gap-2 inline-flex'>
 							<div className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex'>
-								{/* option: add slide */}
 								<div className='w-56 text-blue-700 text-sm font-normal font-creato-medium'>
-									Add another slide
+									Add example
 								</div>
 							</div>
 							<div className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex'>
-								{/* option: format as table */}
 								<div className='w-56 text-blue-700 text-sm font-normal font-creato-medium'>
-									Format this as a table
+									Shorten bulletpoint
 								</div>
 							</div>
 							<div className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex'>
-								{/* option: make more professional */}
 								<div className='w-56 text-blue-700 text-sm font-normal font-creato-medium'>
-									Make this sound more professional
+									Summarize bullet points
 								</div>
 							</div>
 							<div className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex'>
-								{/* option: underline all nouns */}
 								<div className='w-56 text-blue-700 text-sm font-normal font-creato-medium'>
-									Underline all the nouns
+									Break into bullet points
 								</div>
 							</div>
 						</div>
 					</div>
 					{/* chat history render */}
 					{chatHistoryArr
-						.filter((chatObject) => chatObject.role !== 'system')
+						.filter((chatObject, index) => index !== 0)
 						.map((message, index) => (
 							<div
 								key={index}

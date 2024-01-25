@@ -673,6 +673,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						onToggle={toggleChatWindow}
 						slides={slides}
 						currentSlideIndex={currentSlideIndex}
+						setSlides={setSlides}
 					/>
 				)}
 
