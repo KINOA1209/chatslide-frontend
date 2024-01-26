@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '@/components/slides/onboardingSurvey/onboardingSurvey.css';
 import { SurveyBackIcons } from '../../icons';
+import SurveySection from './SurveySection';
 
 type OnboardingSurveyProps = {
     handleBack: () => void;
@@ -9,22 +10,22 @@ type OnboardingSurveyProps = {
 const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
     handleBack,
 }) => {
-  const industryArr = [
+  const industryArr:string[] = [
     'Advertising and marketing', 'Aerospace', 'Agriculture', 'Information and technology',
     'Construction', 'Education', 'Energy', 'Entertainment', 'Fashion', 'Finance and economic',
     'Food and beverage', 'Health care', 'Hospitality', 'Manufacturing', 'Media and news',
     'Mining', 'Pharmaceutical', 'Telecommunication', 'Transportation', 'Other'
   ]
 
-  const referralSourceArr = [
+  const referralSourceArr:string[] = [
     'Search Engine', 'Google Ads', 'Facebook Ads', 'Youtube Ads', 'Facebook post/group',
     'Twitter post', 'Instagram post/story', 'Referral', 'Other'
   ]
 
-  const purposeArr = [
-    'Educational lecture', 'Conference talk', 'Portfolio', 'Technical / data-driven', 
+  const purposeArr:string[] = [
+    'Educational lecture', 'Conference talk', 'Portfolio', 'Technical/data-driven', 
     'Business presentation', 'Information webinar', 'Project proposal', 'Personal',
-    'Workshop / training', 'Research presentation', 'Narrative', 'Other'
+    'Workshop/training', 'Research presentation', 'Narrative', 'Other'
   ]
 
   const [selectedIndustries, setSelectedIndustries] = useState<string[]>([])
@@ -32,8 +33,81 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
   const [selectedPurposes, setSelectedPurposes] = useState<string[]>([])
   const [showReferralSection, setShowReferralSection] = useState(false);
   const [showPurposeSection, setShowPurposeSection] = useState(false);
+
+  // ease-in-out effect
   const [referralSectionEffect, setReferralSectionEffect] = useState(false);
   const [purposeSectionEffect, setPurposeSectionEffect] = useState(false);
+
+  const handleCustomInput = (value: string, section: 'industry' | 'referral' | 'purpose') => {
+    let updateFunction;
+    switch (section) {
+        case 'industry':
+            updateFunction = setSelectedIndustries;
+            break;
+        case 'referral':
+            updateFunction = setSelectedReferralSources;
+            break;
+        case 'purpose':
+            updateFunction = setSelectedPurposes;
+            break;
+        default:
+            return;
+    }
+    updateFunction(prev => prev.includes('Other') ? [...prev,value] : prev);
+};
+
+const toggleSelection = (item: string, section: 'industry' | 'referral' | 'purpose') => {
+    // Toggle the selection and handle the special case for 'Other'
+    let selectedArray: string[];
+    let updateFunction: React.Dispatch<React.SetStateAction<string[]>>;
+    let predefinedArray: string[];
+    switch (section) {
+        case 'industry':
+            selectedArray = selectedIndustries;
+            updateFunction = setSelectedIndustries;
+            predefinedArray = industryArr;
+            break;
+        case 'referral':
+            selectedArray = selectedReferralSources;
+            updateFunction = setSelectedReferralSources;
+            predefinedArray = referralSourceArr;
+            break;
+        case 'purpose':
+            selectedArray = selectedPurposes;
+            updateFunction = setSelectedPurposes;
+            predefinedArray = purposeArr
+            break;
+        default:
+            return;
+    }
+    if (item == 'Other'){
+      if (selectedArray.includes(item)) {
+        const newArray = selectedArray.filter(i => i !== item);
+        updateFunction(newArray.filter(i => predefinedArray.includes(i)));
+      }
+      else {
+        updateFunction([...selectedArray, item]);
+      }
+    }
+    else{
+      if (selectedArray.includes(item)) {
+        updateFunction(selectedArray.filter(i => i !== item));
+      } 
+      else {
+        updateFunction([...selectedArray, item]);
+      }
+    }
+};
+
+  //progress bar 
+  const totalSections = 3
+  const getCurrentState = () => {
+      let currentState = 1;
+      if (showReferralSection) currentState++;
+      if (showPurposeSection) currentState++;
+      return currentState;
+  };
+  const progress = (getCurrentState() / totalSections) * 100;
 
   useEffect(() => {
     if (showReferralSection) {
@@ -47,19 +121,6 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
     }
   }, [showPurposeSection]);
 
-  const toggleSelection = (item: string, selectedArr: string[], setSelectedArr: React.Dispatch<React.SetStateAction<string[]>>) => {
-    if (selectedArr.includes(item)) {
-      if (selectedArr.length === 1) {
-          // Show an alert or popup
-          alert("You need to select at least 1 choice for each section.");
-          return; // Prevent unselecting the last item
-      }
-      setSelectedArr(selectedArr.filter(i => i !== item));
-  } else {
-      setSelectedArr([...selectedArr, item]);
-  }
-  };
-
   const handleNextToReferral = () => {
     setShowReferralSection(true);
   };
@@ -67,17 +128,6 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
   const handleNextToPurpose = () => {
     setShowPurposeSection(true);
   };
-
-  const totalSections = 3
-
-  const getCurrentState = () => {
-      let currentState = 1;
-      if (showReferralSection) currentState++;
-      if (showPurposeSection) currentState++;
-      return currentState;
-  };
-
-  const progress = (getCurrentState() / totalSections) * 100;
 
   console.log(selectedIndustries)
   console.log(selectedReferralSources)
@@ -98,10 +148,11 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
         title="What industry do you work for?"
         items={industryArr}
         selectedItems={selectedIndustries}
-        toggleSelection={(item) => toggleSelection(item, selectedIndustries, setSelectedIndustries)}
+        toggleSelection={(item) => toggleSelection(item, 'industry')}
         isButtonEnabled={selectedIndustries.length > 0}
         showNextSection={showReferralSection}
         handleButtonClick={handleNextToReferral}
+        handleCustomInput={(value) => handleCustomInput(value, 'industry')}
       />
 
       {showReferralSection && (
@@ -110,10 +161,11 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
             title="Where did you find us?"
             items={referralSourceArr}
             selectedItems={selectedReferralSources}
-            toggleSelection={(item) => toggleSelection(item, selectedReferralSources, setSelectedReferralSources)}
+            toggleSelection={(item) => toggleSelection(item, 'referral')}
             isButtonEnabled={selectedReferralSources.length > 0}
             showNextSection={showPurposeSection}
             handleButtonClick={handleNextToPurpose}
+            handleCustomInput={(value) => handleCustomInput(value, 'referral')}
           />
         </div>
       )}
@@ -124,9 +176,10 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
             title="What's the purpose of your output?"
             items={purposeArr}
             selectedItems={selectedPurposes}
-            toggleSelection={(item) => toggleSelection(item, selectedPurposes, setSelectedPurposes)}
+            toggleSelection={(item) => toggleSelection(item, 'purpose')}
             isButtonEnabled={selectedPurposes.length > 0}
             isLastSection={true}
+            handleCustomInput={(value) => handleCustomInput(value, 'purpose')}
           />
         </div>
       )}
@@ -135,107 +188,6 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
 };
 
 export default OnboardingSurvey;
-
-type SurveySectionProps = {
-  title: string;
-  items: string[];
-  selectedItems: string[];
-  toggleSelection: (item: string, selectedItems: string[]) => void;
-  isButtonEnabled: boolean;
-  showNextSection?: boolean;
-  handleButtonClick?: () => void;
-  isLastSection?: boolean;
-};
-
-const SurveySection: React.FC<SurveySectionProps> = ({
-  title,
-  items,
-  selectedItems,
-  toggleSelection,
-  isButtonEnabled,
-  showNextSection,
-  handleButtonClick,
-  isLastSection = false,
-}) => (
-  <div className='flex flex-col text-center font-creato-medium'>
-    <span className='text-2xl font-semibold leading-normal tracking-wide'>{title}</span>
-    <div className='mt-6 max-w-[100%] md:max-w-[55%] mx-auto'>
-      <div className='flex flex-wrap items-center gap-3'>
-        {items.map((item) => (
-          <OnboardingSurveyButton
-            key={item}
-            textValue={item}
-            selectedArr={selectedItems}
-            toggleSelection={(selectedItem) => toggleSelection(selectedItem, selectedItems)}
-          />
-        ))}
-      </div>
-      {!showNextSection && (
-        <div className='mt-6 flex justify-end'>
-          <button 
-            className={`${isButtonEnabled ? 'bg-blue-700': 'bg-gray-400 cursor-not-allowed'} text-white py-2 px-[4rem] rounded-lg`}
-            onClick={isButtonEnabled ? handleButtonClick : undefined}
-            disabled={!isButtonEnabled}
-          >
-            {isLastSection ? 'Submit' : 'Next'}
-          </button>
-        </div>
-      )}
-    </div>
-  </div>
-);
-
-//buttons for survey
-type OnboardingSurveyButtonProps = {
-  textValue: string;
-  selectedArr: string[]
-  toggleSelection: (textValue: string) => void;
-}
-const OnboardingSurveyButton: React.FC<OnboardingSurveyButtonProps> = ({ 
-  textValue, 
-  selectedArr, 
-  toggleSelection, 
-}) => {
-  const isLastItem = selectedArr.length === 1 && selectedArr.includes(textValue);
-  const tooltipMessage = "You must select at least one option in this section.";
-  const [showTooltip, setShowTooltip] = useState(false);
-
-  const handleClick = () => {
-    if (isLastItem) {
-        setShowTooltip(true);
-        setTimeout(() => setShowTooltip(false), 2000); // Hide tooltip after 3 seconds
-    } else {
-        toggleSelection(textValue);
-    }
-  };
-
-  return (
-    <div className="relative flex flex-col items-center">
-      <button
-        onClick={handleClick}
-        className={`rounded-full border-2 px-4 py-2 transition-all font-creato-regular text-md font-normal leading-normal tracking-wide
-          ${selectedArr.includes(textValue) ? 'bg-[#E5E6FF] text-[#6366F1] border-[#6366F1]' : 'bg-white text-black border-gray-300'
-        }`}
-      >
-        <div className='flex flex-row gap-2 items-center justify-center'>
-          <input 
-            type="checkbox" 
-            checked={selectedArr.includes(textValue)}
-            readOnly
-            className="text-[#6366F1] focus:ring-0 rounded"></input>
-          {textValue}
-        </div>
-      </button>
-      {showTooltip && (
-        <span className={`absolute bottom-full mb-2 w-auto p-2 text-white bg-black text-xs rounded-lg 
-                        shadow-lg translate-y-1 font-creato-regular font-normal tracking-wide`}
-        >
-            {tooltipMessage}
-        </span>
-      )}
-    </div>
-  );
-};
 
 type OnboardingSurveyProgressBarProps = {
   progress: number;
