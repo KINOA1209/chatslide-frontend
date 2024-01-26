@@ -27,6 +27,11 @@ import customizable_elements from './templates_customizable_elements/customizabl
 import ScriptEditor from './ScriptEditor';
 import Slide, { SlideKeys } from '@/models/Slide';
 import ProjectService from '@/services/ProjectService';
+import {
+	DrLambdaAIAssistantIcon,
+	AIAssistantChatWindow,
+} from '../ui/AIAssistant';
+import ActionsToolBar from '../ui/ActionsToolBar';
 
 type SlidesHTMLProps = {
 	slides: Slide[];
@@ -98,6 +103,27 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		Math.min(1, presentScale * 0.9),
 	);
 
+	const [isChatWindowOpen, setIsChatWindowOpen] = useState(false);
+
+	const [slidesHistory, setSlidesHistory] = useState<Slide[][]>([slides]);
+	const [currentHistoryIndex, setCurrentHistoryIndex] = useState<number>(0);
+	const canUndo = currentHistoryIndex > 0;
+	const canRedo = currentHistoryIndex < slidesHistory.length - 1;
+
+	const toggleChatWindow = () => {
+		setIsChatWindowOpen(!isChatWindowOpen);
+	};
+
+	useEffect(() => {
+		// Update slides history when slides change
+		setSlidesHistory((prevHistory) => [...prevHistory, slides]);
+		setCurrentHistoryIndex((prevIndex) => prevIndex + 1);
+	}, [slides, setSlides]);
+
+	useEffect(() => {
+		console.log('Slides history', slidesHistory);
+	}, [slides]);
+
 	useEffect(() => {
 		const handleResize = () => {
 			setDimensions({
@@ -133,6 +159,33 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		saveSlides();
 	}, [chosenLayout]);
 
+	// Undo function
+	const undo = () => {
+		if (currentHistoryIndex > 0) {
+			setCurrentHistoryIndex((prevIndex) => prevIndex - 1);
+			setSlides(slidesHistory[currentHistoryIndex - 1]);
+		}
+		console.log('Performing undo...');
+		document.execCommand('undo', false, undefined); // Change null to undefined
+	};
+
+	// Redo function
+	const redo = () => {
+		if (currentHistoryIndex < slidesHistory.length - 1) {
+			setCurrentHistoryIndex((prevIndex) => prevIndex + 1);
+			setSlides(slidesHistory[currentHistoryIndex + 1]);
+		}
+		// Add your redo logic here
+		console.log('Performing redo...');
+		document.execCommand('redo', false, undefined); // Change null to undefined
+	};
+
+	// const handleSlideUpdate = (newSlides: Slide[]) => {
+	// 	setSlides(newSlides, () => {
+	// 		// Call other functions or update state after slides are updated
+	// 		saveSlides();
+	// 	});
+	// };
 	// Function to change the template of slides starting from the second one
 	const changeTemplate = (newTemplate: string) => {
 		console.log('Changing template to:', newTemplate);
@@ -146,6 +199,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		});
 		// console.log('Slides after changing template:', newSlides)
 		sessionStorage.setItem('schoolTemplate', newTemplate);
+		sessionStorage.setItem('presentation_slides', JSON.stringify(newSlides));
 		setSlides(newSlides);
 
 		console.log('Slides after changing template:', newSlides);
@@ -391,6 +445,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		if (currentSlideIndex != 0) {
 			newSlides.splice(currentSlideIndex, 0, newSlide);
 		}
+		sessionStorage.setItem('presentation_slides', JSON.stringify(newSlides));
 		setSlides(newSlides);
 	}
 
@@ -409,6 +464,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				setCurrentSlideIndex(newSlides.length - 1);
 			}
 		}
+		sessionStorage.setItem('presentation_slides', JSON.stringify(newSlides));
 		setSlides(newSlides);
 	}
 
@@ -454,7 +510,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		);
 
 	return (
-		<div className='flex flex-col items-center justify-center gap-4'>
+		<div className='flex flex-col items-center justify-center gap-4 relative'>
 			{/* hidden div for export to pdf */}
 			<div className='absolute left-[-9999px] top-[-9999px] -z-1'>
 				<div ref={exportSlidesRef}>
@@ -474,6 +530,20 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					))}
 				</div>
 			</div>
+
+			{/* absolute positionde ai assistant icon */}
+			{!isChatWindowOpen && (
+				<div className='absolute top-[40rem] left-[66rem] cursor-pointer'>
+					<ButtonWithExplanation
+						button={
+							<DrLambdaAIAssistantIcon
+								onClick={toggleChatWindow}
+							></DrLambdaAIAssistantIcon>
+						}
+						explanation='DrLambda AI Assistant'
+					/>
+				</div>
+			)}
 
 			{!isViewing && (
 				<div className='py-2 hidden sm:block'>
@@ -643,6 +713,23 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						/>
 					)}
 				</div>
+
+				{isChatWindowOpen && (
+					<AIAssistantChatWindow
+						onToggle={toggleChatWindow}
+						slides={slides}
+						currentSlideIndex={currentSlideIndex}
+						setSlides={setSlides}
+						saveSlides={saveSlides}
+					/>
+				)}
+
+				<ActionsToolBar
+					undo={undo}
+					redo={redo}
+					canRedo={canRedo}
+					canUndo={canUndo}
+				/>
 
 				{/* White modal for presentation mode */}
 				{present && (
