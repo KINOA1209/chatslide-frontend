@@ -39,12 +39,14 @@ interface AIAssistantChatWindowProps {
 	slides: Slide[];
 	currentSlideIndex: number;
 	setSlides: Function;
+	saveSlides: Function;
 }
 export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	onToggle,
 	slides,
 	currentSlideIndex,
 	setSlides,
+	saveSlides,
 }) => {
 	// const [isChatWindowOpen, setIsChatWindowOpen] = useState(true);
 	// const toggleChatWindow = () => {
@@ -56,8 +58,9 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		{ role: 'system', content: 'You are a helpful assistant.' },
 		// { role: 'user', content: 'Hello there' },
 	]);
-	//use the useEffect hook along with a ref to the chat rendering area
-	const chatContainerRef = useRef<HTMLDivElement>(null);
+
+	// Create a ref for the last message
+	const lastMessageRef = useRef<HTMLDivElement>(null);
 
 	// Fetch initial chat history from local storage
 	useEffect(() => {
@@ -73,11 +76,8 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	}, [chatHistoryArr]);
 
 	useEffect(() => {
-		// Use optional chaining to safely access properties
-		if (chatContainerRef.current?.scrollHeight !== undefined) {
-			// Scroll to the bottom after the chat history updates
-			chatContainerRef.current.scrollTop =
-				chatContainerRef.current.scrollHeight;
+		if (lastMessageRef.current) {
+			lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
 		}
 	}, [chatHistoryArr]);
 
@@ -127,6 +127,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 
 					// Update state with the new slides
 					setSlides(newSlides);
+					saveSlides();
 
 					// Update sessionStorage
 					sessionStorage.setItem(
@@ -137,7 +138,8 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					// Add success message to chat history
 					const successMessage = {
 						role: 'assistant',
-						content: 'Slide data updated successfully.',
+						content:
+							'Current slide data is updated successfully. Please refresh page to check the updated slide',
 					};
 					setChatHistoryArr((prevHistory) => [...prevHistory, successMessage]);
 				}
@@ -202,10 +204,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			</div>
 
 			{/* chat history text area */}
-			<div
-				className='w-full border-t-2 border-gray-300 overflow-y-scroll px-2 py-1 font-creato-medium flex flex-col justify-end '
-				ref={chatContainerRef}
-			>
+			<div className='w-full border-t-2 border-gray-300 overflow-y-scroll px-2 py-1 font-creato-medium flex flex-col justify-end '>
 				<div className='flex flex-col items-start gap-3 overflow-y-auto'>
 					{/* welcoming text */}
 					<div className='px-3.5 py-2.5 bg-indigo-50 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-white justify-center items-center gap-2.5 inline-flex'>
@@ -250,6 +249,9 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						.map((message, index) => (
 							<div
 								key={index}
+								ref={
+									index === chatHistoryArr.length - 2 ? lastMessageRef : null
+								} // Attach ref to the last message
 								className={
 									message.role === 'user'
 										? 'px-3.5 py-2.5 bg-indigo-500 rounded-tl-xl rounded-tr-xl rounded-bl-xl border border-white  gap-2.5 self-end flex flex-wrap max-w-[15rem]'
