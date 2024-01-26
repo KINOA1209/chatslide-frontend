@@ -63,8 +63,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	isPresenting = false,
 	initSlideIndex = 0,
 }) => {
-	const [currentSlideIndex, setCurrentSlideIndex] =
-		useState<number>(initSlideIndex);
+	// Retrieve the last saved currentSlideIndex from sessionStorage
+	const savedCurrentSlideIndex = parseInt(
+		sessionStorage.getItem('currentSlideIndex') || '0',
+		10, // Specify the base for parseInt
+	);
+	const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(
+		savedCurrentSlideIndex,
+	);
 	const foldername =
 		typeof sessionStorage !== 'undefined'
 			? sessionStorage.getItem('foldername')
@@ -103,7 +109,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		Math.min(1, presentScale * 0.9),
 	);
 
-	const [isChatWindowOpen, setIsChatWindowOpen] = useState(false);
+	const [isChatWindowOpen, setIsChatWindowOpen] = useState(true);
 
 	const [slidesHistory, setSlidesHistory] = useState<Slide[][]>([slides]);
 	const [currentHistoryIndex, setCurrentHistoryIndex] = useState<number>(0);
@@ -180,12 +186,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		document.execCommand('redo', false, undefined); // Change null to undefined
 	};
 
-	// const handleSlideUpdate = (newSlides: Slide[]) => {
-	// 	setSlides(newSlides, () => {
-	// 		// Call other functions or update state after slides are updated
-	// 		saveSlides();
-	// 	});
-	// };
 	// Function to change the template of slides starting from the second one
 	const changeTemplate = (newTemplate: string) => {
 		console.log('Changing template to:', newTemplate);
@@ -341,51 +341,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		}
 	}
 
-	// function handleSlideEdit(
-	// 	content: string | string[],
-	// 	slideIndex: number,
-	// 	tag: SlideKeys,
-	// ) {
-	// 	setIsEditMode(false);
-	// 	const newSlides = [...slides];
-
-	// 	const currentSlide = newSlides[slideIndex];
-	// 	const className = tag;
-
-	// 	if (className === 'head') {
-	// 		currentSlide.head = content as string;
-	// 	} else if (className === 'title') {
-	// 		currentSlide.title = content as string;
-	// 	} else if (className === 'subtopic') {
-	// 		currentSlide.subtopic = content as string;
-	// 	} else if (className === 'userName') {
-	// 		currentSlide.userName = content as string;
-	// 	} else if (className === 'template') {
-	// 		currentSlide.template = content as string;
-	// 	} else if (className === 'layout') {
-	// 		currentSlide.layout = content as LayoutKeys;
-	// 	} else if (className === 'images') {
-	// 		currentSlide.images = content as string[];
-	// 	} else if (className === 'content') {
-	// 		let newContent: string[] = [];
-	// 		content = content as string[];
-	// 		content.forEach((str) => {
-	// 			newContent.push(...str.split('\n'));
-	// 		});
-	// 		newContent = newContent.filter((item) => item !== '');
-
-	// 		if (newContent.length === 0) {
-	// 			// leave one empty line for editing
-	// 			newContent.push('');
-	// 		}
-
-	// 		currentSlide.content = newContent;
-	// 	} else {
-	// 		console.error(`Unknown tag: ${tag}`);
-	// 	}
-	// 	sessionStorage.setItem('presentation_slides', JSON.stringify(newSlides));
-	// 	setSlides(newSlides);
-	// }
 	function handleSlideEdit(
 		content: string | string[],
 		slideIndex: number,
@@ -437,6 +392,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		console.log('Goinng to slide', index);
 		isFirstRender.current = true;
 		setCurrentSlideIndex(index);
+
+		// Save the currentSlideIndex to sessionStorage
+		sessionStorage.setItem('currentSlideIndex', index.toString());
 	}
 
 	function handleAddPage() {
@@ -617,7 +575,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 								<div
 									key={`previewContainer` + index.toString()}
 									className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
-									onClick={() => setCurrentSlideIndex(index)} // Added onClick handler
+									onClick={() => goToSlide(index)} // Added onClick handler
 								>
 									{/* {index + 1} */}
 									<SlideContainer
@@ -787,7 +745,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							<div
 								key={`previewContainer` + index.toString()}
 								className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
-								onClick={() => setCurrentSlideIndex(index)} // Added onClick handler
+								onClick={() => goToSlide(index)} // Added onClick handler
 							>
 								{/* {index + 1} */}
 								<SlideContainer

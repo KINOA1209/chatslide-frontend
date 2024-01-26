@@ -88,11 +88,14 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		}
 	};
 
-	const handleSend = async () => {
-		if (userInput.trim() === '') return;
+	const handleSend = async (extraInput?: String) => {
+		const inputToSend =
+			extraInput !== undefined ? String(extraInput) : userInput;
+
+		if (inputToSend.trim() === '') return;
 
 		// Update chat history with user's message
-		const newUserMessage = { role: 'user', content: userInput };
+		const newUserMessage = { role: 'user', content: inputToSend };
 		setChatHistoryArr((prevHistory) => [...prevHistory, newUserMessage]);
 
 		// Clear user input after sending
@@ -150,6 +153,9 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					content: JSON.stringify(responseData.data.chat),
 				};
 				setChatHistoryArr((prevHistory) => [...prevHistory, newAIMessage]);
+
+				// Refresh the page
+				window.location.reload();
 			} else {
 				console.error('Failed to get AI response');
 			}
@@ -186,6 +192,25 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					<div className='w-2 h-2 bg-[#0B84FF] rounded-full'></div>
 				</div>
 
+				{/* Clear Chat button */}
+				<button
+					style={{
+						backgroundColor: '#2943E9',
+						color: 'white',
+						padding: '0.5rem 1rem',
+						borderRadius: '0.5rem',
+						cursor: 'pointer',
+						fontWeight: 'bold',
+						fontSize: '0.8rem',
+						display: 'flex',
+						alignItems: 'center',
+						justifyContent: 'center',
+					}}
+					onClick={() => setChatHistoryArr([])}
+				>
+					Clear Chat
+				</button>
+
 				{/* exit button */}
 				<button
 					style={{
@@ -221,22 +246,34 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 							Here are some ways I can help:
 						</div>
 						<div className='self-stretch h-40 flex-col justify-start items-start gap-2 inline-flex'>
-							<div className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex'>
+							<div
+								className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
+								onClick={() => handleSend('Add example')}
+							>
 								<div className='w-56 text-blue-700 text-sm font-normal font-creato-medium'>
 									Add example
 								</div>
 							</div>
-							<div className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex'>
+							<div
+								className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
+								onClick={() => handleSend('Shorten bullet point')}
+							>
 								<div className='w-56 text-blue-700 text-sm font-normal font-creato-medium'>
-									Shorten bulletpoint
+									Shorten bullet point
 								</div>
 							</div>
-							<div className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex'>
+							<div
+								className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
+								onClick={() => handleSend('Summarize bullet points')}
+							>
 								<div className='w-56 text-blue-700 text-sm font-normal font-creato-medium'>
 									Summarize bullet points
 								</div>
 							</div>
-							<div className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex'>
+							<div
+								className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
+								onClick={() => handleSend('Break into bullet points')}
+							>
 								<div className='w-56 text-blue-700 text-sm font-normal font-creato-medium'>
 									Break into bullet points
 								</div>
@@ -284,7 +321,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					/>
 
 					{/* send text, call api to get response */}
-					<button className='w-7 h-7' onClick={handleSend}>
+					<button className='w-7 h-7' onClick={() => handleSend()}>
 						<Image
 							src={sendTextButtonImage}
 							alt={'sendText'}
