@@ -170,7 +170,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 
 	return (
 		<section
-			className={`max-[1920px]:fixed right-0 bottom-5 h-[40rem] hidden sm:flex sm:flex-col rounded-l sm:items-center sm:justify-between z-50 shadow-md bg-white`}
+			className={`max-[1920px]:fixed right-0 bottom-5 h-[40rem] hidden sm:flex sm:flex-col rounded-l sm:items-center z-50 shadow-md bg-white`}
 			style={{
 				boxShadow:
 					'-4px 0 8px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1)',
@@ -229,15 +229,14 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			</div>
 
 			{/* chat history text area */}
-			<div className='w-full border-t-2 border-gray-300 overflow-y-scroll px-2 py-1 font-creato-medium flex flex-col justify-end '>
+			<div className='w-full border-t-2 border-gray-300 overflow-y-scroll px-2 py-1 font-creato-medium flex flex-col flex-grow justify-end '>
 				<div className='flex flex-col items-start gap-3 overflow-y-auto'>
 					{/* welcoming text */}
 					<div className='px-3.5 py-2.5 bg-indigo-50 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-white justify-center items-center gap-2.5 inline-flex'>
-						<div className='w-[18rem] text-neutral-800 text-base font-normal font-creato-medium tracking-tight'>
-							Welcome to Dr. Lambda! I'm your AI assistant, ready to help with
-							slide design, content ideas, data organization, proofreading, and
-							updating. Just type your request, and let's create amazing slides
-							together! 🚀📊🎨
+						<div className='w-[18rem] text-neutral-800 text-base font-normal  -creato-medium tracking-tight'>
+							Welcome to DrLambda! I'm your AI assistant, ready to help with
+							slide design 🎨, content ideas ✍️, data organization 📊, proofreading, and
+							updating. Just type your request here!
 						</div>
 					</div>
 					{/* welcoming options */}
@@ -309,7 +308,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				</div>
 			</div>
 			{/* input area */}
-			<div className='h-[5rem] w-full'>
+			<div className='w-full'>
 				<div className='flex flex-row justify-between py-3 px-2 items-center'>
 					{/* input area */}
 					<input
