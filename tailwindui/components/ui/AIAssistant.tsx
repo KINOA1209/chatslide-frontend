@@ -177,7 +177,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			}}
 		>
 			{/* title and exit button */}
-			<div className='flex flex-row justify-between items-center px-[0.5rem] w-[20rem] h-[5rem] pb-2'>
+			<div className='flex flex-row justify-between items-center px-[0.5rem] w-[20rem] h-[5rem] py-2'>
 				{/* drlambda.ai title */}
 				<div className='flex flex-row items-center gap-4'>
 					<Image
