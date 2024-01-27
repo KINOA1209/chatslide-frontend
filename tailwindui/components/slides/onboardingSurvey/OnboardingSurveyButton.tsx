@@ -2,27 +2,26 @@ import React, { useState, useEffect, useRef } from 'react';
 
 type OnboardingSurveyButtonProps = {
     textValue: string;
-    selectedArr: string[]
+    selectedItems: string[]
     toggleSelection: (textValue: string) => void;
     handleCustomInput?: (value: string) => void;
 }
 
 const OnboardingSurveyButton: React.FC<OnboardingSurveyButtonProps> = ({ 
 textValue, 
-selectedArr, 
+selectedItems, 
 toggleSelection,
 handleCustomInput,
 }) => {
-const isLastItem = selectedArr.length === 1 && selectedArr.includes(textValue);
+const isLastItem = selectedItems.length === 1 && selectedItems.includes(textValue);
 const tooltipMessage = "You must select at least one option in this section.";
 const [showTooltip, setShowTooltip] = useState(false);
-const isOtherSelected = textValue === 'Other' && selectedArr.includes('Other');
-const [temporaryInput, setTemporaryInput] = useState('');
+const isOtherSelected = textValue === 'Other' && selectedItems.includes('Other');
 
 const handleClick = () => {
     if (isLastItem) {
         setShowTooltip(true);
-        setTimeout(() => setShowTooltip(false), 2000); // Hide tooltip after 3 seconds
+        setTimeout(() => setShowTooltip(false), 2000);
     } else {
         toggleSelection(textValue);
     }
@@ -33,7 +32,7 @@ return (
         <button
             onClick={handleClick}
             className={`rounded-full border-2 px-4 py-2 transition-all font-creato-regular text-md font-normal leading-normal tracking-wide
-            ${selectedArr.includes(textValue) ? 'bg-[#E5E6FF] text-[#6366F1] border-[#6366F1]' : 'bg-white text-black border-gray-300'
+            ${selectedItems.includes(textValue) ? 'bg-[#E5E6FF] text-[#6366F1] border-[#6366F1]' : 'bg-white text-black border-gray-300'
             }`}
         >
             {textValue}

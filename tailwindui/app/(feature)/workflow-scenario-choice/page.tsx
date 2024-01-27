@@ -8,16 +8,46 @@ import socialpost_scenarios from './socialpost_scenarios.json';
 import slides_scenarios from './slides_scenarios.json';
 import SessionStorage from '@/components/utils/SessionStorage';
 import OnboardingSurvey from '@/components/slides/onboardingSurvey/OnboardingSurvey';
+import AuthService from '@/services/AuthService';
 
 const ScenarioChoicePage = () => {
 	const router = useRouter();
 	const workflowType = SessionStorage.getItem('workflowType', 'slides');
 	const scenarios =
 		workflowType == 'slides' ? slides_scenarios : socialpost_scenarios;
-	const [isNewUser, setIsNewUser] = useState(true)
-	const [showSurvey, setShowSurvey] = useState(true)
+	const [isNewUser, setIsNewUser] = useState(false)
+	const [showSurvey, setShowSurvey] = useState(false)
 	const activeSlideRef = useRef<HTMLDivElement>(null);
     const parentContainerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const checkUserSurveyStatus = async () => {
+            try {
+                const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+                const response = await fetch('/api/user/check_survey_status', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${idToken}`,
+                    },
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.survey_status === 'incomplete'){
+						setIsNewUser(true)
+					}
+                } 
+				else {
+                    console.error('HTTP Error:', response.statusText);
+                }
+            } 
+			catch (error) {
+                console.error('Error:', error);
+            }
+        };
+        checkUserSurveyStatus();
+    }, []);
 
 	useEffect(() => {
 		const updateHeight = () => {
@@ -52,7 +82,7 @@ const ScenarioChoicePage = () => {
 	// Function to navigate to the "workflow-scenario-choice" page
 	const navigateToSummary = (scenarioType: string) => {
 		sessionStorage.setItem('scenarioType', scenarioType);
-		if (isNewUser && workflowType == 'slides') setShowSurvey(true);
+		if (isNewUser) setShowSurvey(true);
 		else if (workflowType == 'slides') router.push('/workflow-generate-outlines');
 		else router.push('/workflow-generate-socialpost');
 	};
@@ -98,7 +128,7 @@ const ScenarioChoicePage = () => {
 			</div>
 			{showSurvey && (
                 <div className={`slide-page ${showSurvey ? 'visible-slide' : 'hidden-slide'}`} ref={showSurvey ? activeSlideRef : null}>
-                    <OnboardingSurvey handleBack={handleBackToChoices} />
+                    <OnboardingSurvey handleBack={handleBackToChoices}/>
                 </div>
             )}
 		</div>
