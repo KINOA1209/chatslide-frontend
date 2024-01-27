@@ -2,9 +2,6 @@
 
 import React, { useState, MouseEvent, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import CSS from 'csstype';
-import AuthService from '@/services/AuthService';
-import { RightArrowIcon } from '@/app/(feature)/icons';
 import { NewStepIcon, CurrentStepIcon, FinishedStepIcon, CurrentStepCircle, FinishedStepCircle, ConnectedLine } from './icons';
 import { FaArrowLeft, FaArrowRight, FaChevronCircleLeft, FaChevronCircleRight, FaRegCircle } from 'react-icons/fa';
 import { IoMdLock } from "react-icons/io";
@@ -30,39 +27,21 @@ const OneStep: React.FC<StepProps> = ({
 }) => {
 	const router = useRouter();
 
-	let exitClass = 'bg-blue-500 border-blue-500 text-white text-center';
-	let enterClass = 'bg-blue-700 border-blue-700 text-white text-center';
-	let textEnterClass = 'text-blue-700 ml-3';
-
-	const [circleClass, setCircleClass] = useState(exitClass);
-	const [textClass, setTextClass] = useState('ml-3');
-
-	const handleClick = (e: MouseEvent<HTMLDivElement>) => {
+  const handleClick = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault();
 		router.push(redirect);
 	};
 
 	const handleHoverEnter = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault();
-		setCircleClass(enterClass);
-		setTextClass(textEnterClass);
 	};
 
 	const handleHoverLeave = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault();
-		setCircleClass(exitClass);
-		setTextClass('ml-3');
 	};
 
-	// Conditionally render the RightArrowIcon based on whether it's the last step
-	const renderRightArrow = (
-		<div className='hidden lg:flex'>
-			{!isLastStep ? <RightArrowIcon /> : null}
-		</div>
-	);
-
 	const renderLine = !isLastStep && (
-		<div className='hidden lg:flex flex-grow'>
+		<div className='hidden md:flex flex-grow'>
 			{!isLastStep ? <ConnectedLine /> : null}
 		</div>
 	)
@@ -174,10 +153,10 @@ const ProgressBox = (
 					ref={progressRefDesktop}
 				>
 					{/* <div className='-top-4 p-5 mb-6 flex justify-center border-2 border-r-blue-200 sticky'> */}
-					<div className='flex justify-center gap-x-7'>
+					<div className='flex flex-row items-start justify-center gap-x-7'>
 
             <FaChevronCircleLeft 
-              className={`h-[40px] ${stepAvailable(currentInd - 1) ? `text-white cursor-pointer` : `text-gray-400 cursor-not-allowed`}`}
+              className={`h-[30px] ${stepAvailable(currentInd - 1) ? `text-white cursor-pointer` : `text-gray-400 cursor-not-allowed`}`}
               onClick={() => goToStep(currentInd - 1)}
             />
 
@@ -207,7 +186,7 @@ const ProgressBox = (
 						</div>
 
             <FaChevronCircleRight 
-              className={`h-[40px] ${stepAvailable(currentInd + 1) ? `text-white cursor-pointer` : `text-gray-400 cursor-not-allowed`}`}
+              className={`h-[30px] ${stepAvailable(currentInd + 1) ? `text-white cursor-pointer` : `text-gray-400 cursor-not-allowed`}`}
               onClick={() => goToStep(currentInd + 1)}
               
             />
