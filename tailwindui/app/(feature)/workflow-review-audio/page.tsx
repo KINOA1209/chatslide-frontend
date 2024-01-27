@@ -2,7 +2,6 @@
 
 import React, { useState, useRef, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Timer from '@/components/ui/Timer';
 import Audio from '@/components/audio/Audio';
 import { AudioContextProvider } from '@/components/audio/AudioContext';
 import GoBackButton from '@/components/button/GoBackButton';
@@ -198,7 +197,6 @@ const TranscriptAudioVisualizer = ({
 				</form>
 			</div>
 
-			<Timer expectedSeconds={60} isSubmitting={isSubmitting} />
 		</div>
 	);
 };

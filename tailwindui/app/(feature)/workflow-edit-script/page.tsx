@@ -7,7 +7,7 @@ import AuthService from '@/services/AuthService';
 import FeedbackButton from '@/components/ui/feedback';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { LoadingIcon } from '@/components/ui/progress';
+import { LoadingIcon } from '@/components/ui/LoadingIcon';
 import { LeftTurnArrowIcon, QuestionExplainIcon } from '../icons';
 import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
 import {
