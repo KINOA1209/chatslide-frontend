@@ -109,7 +109,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		Math.min(1, presentScale * 0.9),
 	);
 
-	const [isChatWindowOpen, setIsChatWindowOpen] = useState(true);
+	const [isChatWindowOpen, setIsChatWindowOpen] = useState(false);
 
 	const [slidesHistory, setSlidesHistory] = useState<Slide[][]>([slides]);
 	const [currentHistoryIndex, setCurrentHistoryIndex] = useState<number>(0);
