@@ -3,6 +3,7 @@
 export type TemplateElements = {
 	backgroundColorCover: string;
 	backgroundColor: string;
+	backgroundUrl?: string;
 	titleFontCSS: React.CSSProperties;
 	subtopicFontCSS: React.CSSProperties;
 	contentFontCSS: React.CSSProperties;
@@ -622,6 +623,7 @@ const configData: Config = {
 	Default: {
 		backgroundColorCover: 'bg-[#F0F0F2]',
 		backgroundColor: 'bg-[#F0F0F2]',
+		backgroundUrl: 'https://via.placeholder.com/1200x800',
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold

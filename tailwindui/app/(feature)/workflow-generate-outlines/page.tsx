@@ -196,8 +196,8 @@ export default function Topic() {
 	};
 
 	function formatName(name: string) {
-    // remove file extension
-    name = name.replace(/\.[^/.]+$/, "");
+		// remove file extension
+		name = name.replace(/\.[^/.]+$/, '');
 
 		if (name.length > MAX_TOPIC_LENGTH) {
 			return name.slice(0, MAX_TOPIC_LENGTH - 3) + '...';
@@ -320,6 +320,7 @@ export default function Topic() {
 				// cookies().set("topic", outlinesJson.data.audience);
 
 				// Store the data in session storage
+				sessionStorage.setItem('topic', outlinesJson.data.topic);
 				sessionStorage.setItem('outline', JSON.stringify(outlinesJson.data));
 				sessionStorage.setItem('foldername', outlinesJson.data.foldername);
 				sessionStorage.setItem('project_id', outlinesJson.data.project_id);
@@ -479,7 +480,7 @@ export default function Topic() {
 				setSelectedResources={setSelectedResources}
 				showModal={showFileModal}
 				setShowModal={setShowFileModal}
-				pageInvoked= {'summary'}
+				pageInvoked={'summary'}
 			/>
 
 			{/* project progress section */}
@@ -494,7 +495,6 @@ export default function Topic() {
 					!isSubmitting ? 'Write Outline (20⭐️)' : 'Writing Outline...'
 				}
 			/>
-      
 
 			{/* main content */}
 			<div className='my-4 gap-y-4 w-full flex flex-col items-center'>

@@ -7,10 +7,14 @@ module.exports = {
 	],
 	theme: {
 		extend: {
+			backgroundImage: {
+				'template-default-cover': "url('https://via.placeholder.com/1200x800')",
+				'template-default-non-cover': "url('https://via.placeholder.com/1200x800')",
+			},
 			backgroundColor: {
-        'Sky': 'var(--Sky, #F4F6FE)',
-        'Blue': 'var(--Blue, #2943E9)',
-        'Purple': 'var(--Purple, #6A7EF9)',
+				'Sky': 'var(--Sky, #F4F6FE)',
+				'Blue': 'var(--Blue, #2943E9)',
+				'Purple': 'var(--Purple, #6A7EF9)',
 				'Grey-50': 'var(--Grey-50, #F4F4F4)',
 				'Grey-100': 'var(--Grey-100, #E7E9EB)',
 				'Workflow-bg-color': 'var(--Workflow-bg-color, #6A7EF9)',
@@ -21,9 +25,9 @@ module.exports = {
 			colors: {
 				'neutral-100': 'var(--neutral-100, #1E202C)',
 				'regal-blue': '#243c5a',
-        'Sky': 'var(--Sky, #F4F6FE)',
-        'Blue': 'var(--Blue, #2943E9)',
-        'Dark': 'var(--Dark, #2B2C2D)',
+				'Sky': 'var(--Sky, #F4F6FE)',
+				'Blue': 'var(--Blue, #2943E9)',
+				'Dark': 'var(--Dark, #2B2C2D)',
 				'Grey-600': 'var(--Grey-600, #525C6A)',
 				gray: {
 					100: '#FBFBFB',
@@ -78,7 +82,7 @@ module.exports = {
 				'1/1': '100%',
 			},
 			fontFamily: {
-				inter: ['Inter', 'sans-serif'],
+				'inter': ['Inter', 'sans-serif'],
 				'creato-regular': ['Creato Display Regular', 'sans'],
 				'creato-medium': ['Creato Display Medium', 'sans'],
 				'creato-bold': ['Creato Display Bold', 'sans'],

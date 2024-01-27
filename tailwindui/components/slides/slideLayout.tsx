@@ -141,47 +141,55 @@ export const Col_1_img_0_layout = ({
 	customizableElements,
 	templateLogo,
 }: MainSlideProps) => {
-    const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
-    const containerRef = useRef<HTMLDivElement>(null);
-    const topicRef = useRef<HTMLDivElement>(null);
-    const subtopicRef = useRef<HTMLDivElement>(null);
+	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
+	const containerRef = useRef<HTMLDivElement>(null);
+	const topicRef = useRef<HTMLDivElement>(null);
+	const subtopicRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const calculateMaxHeight = () => {
-            const containerElement = containerRef.current;
-            const topicElement = topicRef.current;
-            const subtopicElement = subtopicRef.current;
+	useEffect(() => {
+		const calculateMaxHeight = () => {
+			const containerElement = containerRef.current;
+			const topicElement = topicRef.current;
+			const subtopicElement = subtopicRef.current;
 
-            if (containerElement && topicElement && subtopicElement) {
-                const containerHeight = containerElement.clientHeight;
-                const topicHeight = topicElement.clientHeight;
-                const subtopicHeight = subtopicElement.clientHeight;
-                const logoHeight = containerHeight * 0.1
+			if (containerElement && topicElement && subtopicElement) {
+				const containerHeight = containerElement.clientHeight;
+				const topicHeight = topicElement.clientHeight;
+				const subtopicHeight = subtopicElement.clientHeight;
+				const logoHeight = containerHeight * 0.1;
 
-                const availableHeight = containerHeight - (topicHeight + subtopicHeight + logoHeight);
+				const availableHeight =
+					containerHeight - (topicHeight + subtopicHeight + logoHeight);
 
-                //console.log(`Available height: ${availableHeight}`);
-                setMaxContentHeight(availableHeight > 0 ? availableHeight : 200); 
-            }
-        };
+				//console.log(`Available height: ${availableHeight}`);
+				setMaxContentHeight(availableHeight > 0 ? availableHeight : 200);
+			}
+		};
 
-        calculateMaxHeight();
-        window.addEventListener('resize', calculateMaxHeight);
+		calculateMaxHeight();
+		window.addEventListener('resize', calculateMaxHeight);
 
-        return () => {
-            window.removeEventListener('resize', calculateMaxHeight);
-        };
-    }, []);
+		return () => {
+			window.removeEventListener('resize', calculateMaxHeight);
+		};
+	}, []);
 
 	return (
 		<div ref={containerRef} className='h-full w-full flex flex-col'>
-			<div ref={topicRef} className={``}>{topic}</div>
-			<div className={``} ref={subtopicRef}>{subtopic}</div>
+			<div ref={topicRef} className={``}>
+				{topic}
+			</div>
+			<div className={``} ref={subtopicRef}>
+				{subtopic}
+			</div>
 			<div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
 			<div className={`flex w-full pl-1 py-[1.2rem]`}>
-				<div 
-					className='w-full' 
-					style={{ maxHeight: maxContentHeight !== null ? `${maxContentHeight}px` : 'none' }}
+				<div
+					className='w-full'
+					style={{
+						maxHeight:
+							maxContentHeight !== null ? `${maxContentHeight}px` : 'none',
+					}}
 				>
 					{content}
 				</div>
@@ -356,49 +364,60 @@ export const Col_2_img_1_layout = ({
 		update_callback,
 	);
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
-    const containerRef = useRef<HTMLDivElement>(null);
-    const topicRef = useRef<HTMLDivElement>(null);
-    const subtopicRef = useRef<HTMLDivElement>(null);
+	const containerRef = useRef<HTMLDivElement>(null);
+	const topicRef = useRef<HTMLDivElement>(null);
+	const subtopicRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-        const calculateMaxHeight = () => {
-            const containerElement = containerRef.current;
-            const topicElement = topicRef.current;
-            const subtopicElement = subtopicRef.current;
+		const calculateMaxHeight = () => {
+			const containerElement = containerRef.current;
+			const topicElement = topicRef.current;
+			const subtopicElement = subtopicRef.current;
 
-            if (containerElement && topicElement && subtopicElement) {
-                const containerHeight = containerElement.clientHeight;
-                const topicHeight = topicElement.clientHeight;
-                const subtopicHeight = subtopicElement.clientHeight;
-                const logoHeight = containerHeight * 0.1
+			if (containerElement && topicElement && subtopicElement) {
+				const containerHeight = containerElement.clientHeight;
+				const topicHeight = topicElement.clientHeight;
+				const subtopicHeight = subtopicElement.clientHeight;
+				const logoHeight = containerHeight * 0.1;
 
-                const availableHeight = containerHeight - (topicHeight + subtopicHeight + logoHeight);
+				const availableHeight =
+					containerHeight - (topicHeight + subtopicHeight + logoHeight);
 
-                //console.log(`Available height: ${availableHeight}`);
-                setMaxContentHeight(availableHeight > 0 ? availableHeight : 200); 
-            }
-        };
+				//console.log(`Available height: ${availableHeight}`);
+				setMaxContentHeight(availableHeight > 0 ? availableHeight : 200);
+			}
+		};
 
-        calculateMaxHeight();
-        window.addEventListener('resize', calculateMaxHeight);
+		calculateMaxHeight();
+		window.addEventListener('resize', calculateMaxHeight);
 
-        return () => {
-            window.removeEventListener('resize', calculateMaxHeight);
-        };
-    }, []);
+		return () => {
+			window.removeEventListener('resize', calculateMaxHeight);
+		};
+	}, []);
 
 	return (
-		<div className='w-full h-full flex flex-row gap-[2rem] justify-start items-start' ref={containerRef}>
+		<div
+			className='w-full h-full flex flex-row gap-[2rem] justify-start items-start'
+			ref={containerRef}
+		>
 			<div className={`w-1/2 flex flex-col items-start h-full gap-[0.1rem]`}>
-				<div className={`z-50`} ref={topicRef}>{topic}</div>
-				<div className={``} ref={subtopicRef}>{subtopic}</div>
+				<div className={`z-50`} ref={topicRef}>
+					{topic}
+				</div>
+				<div className={``} ref={subtopicRef}>
+					{subtopic}
+				</div>
 				{/* contents */}
 				<div className='w-full flex'>
-					<div 
+					<div
 						className={`w-full`}
-						style={{ maxHeight: maxContentHeight !== null ? `${maxContentHeight}px` : 'none' }}
-					>{
-						content}
+						style={{
+							maxHeight:
+								maxContentHeight !== null ? `${maxContentHeight}px` : 'none',
+						}}
+					>
+						{content}
 					</div>
 				</div>
 			</div>
@@ -442,8 +461,17 @@ export const Col_2_img_2_layout = ({
 				<div className={``}>{topic}</div>
 				<div className={``}>{subtopic}</div>
 				{/* two columns of images */}
-				<div className='w-full grid grid-cols-2 gap-[2rem] '>
-					<div className='h-[11rem] grow rounded-md overflow-hidden'>
+				<div className='w-full grid grid-cols-2 gap-[2rem]'>
+					<div className='h-[11rem] grow rounded-md overflow-hidden relative'>
+						{/* Gradient Background */}
+						{/* <div
+							className='absolute inset-0 z-50'
+							style={{
+								background:
+									'linear-gradient(107deg, rgba(27, 108, 201, 0.70) 0%, rgba(176, 32, 199, 0.70) 103.12%)',
+								pointerEvents: 'none', // Allow click events to pass through
+							}}
+						></div> */}
 						<ImgModule
 							imgsrc={localImgs[0]}
 							updateSingleCallback={updateImgAtIndex(0)}
@@ -451,7 +479,16 @@ export const Col_2_img_2_layout = ({
 							autoSave={autoSave}
 						/>
 					</div>
-					<div className='h-[11rem] grow rounded-md overflow-hidden'>
+					<div className='h-[11rem] grow rounded-md overflow-hidden  relative'>
+						{/* Gradient Background */}
+						{/* <div
+							className='absolute inset-0 z-50'
+							style={{
+								background:
+									'linear-gradient(107deg, rgba(27, 108, 201, 0.70) 0%, rgba(176, 32, 199, 0.70) 103.12%)',
+								pointerEvents: 'none', // Allow click events to pass through
+							}}
+						></div> */}
 						<ImgModule
 							imgsrc={localImgs[1]}
 							updateSingleCallback={updateImgAtIndex(1)}
@@ -466,10 +503,7 @@ export const Col_2_img_2_layout = ({
 						content.map((item, index) => (
 							<div className='flex flex-col gap-[0.5rem]' key={index}>
 								{/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
-								<ul
-									key={index}
-									className={`flex flex-row w-full h-full grow `}
-								>
+								<ul key={index} className={`flex flex-row w-full h-full grow `}>
 									<li>{item}</li>
 								</ul>
 							</div>
@@ -539,10 +573,7 @@ export const Col_3_img_3_layout = ({
 						content.map((item, index) => (
 							<div className='flex flex-col gap-[0.5rem]' key={index}>
 								{/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
-								<ul
-									key={index}
-									className={`flex flex-row w-full h-full grow `}
-								>
+								<ul key={index} className={`flex flex-row w-full h-full grow `}>
 									<li>{item}</li>
 								</ul>
 							</div>
