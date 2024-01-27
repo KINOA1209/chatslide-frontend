@@ -150,12 +150,13 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				// Update chat history with AI's response
 				const newAIMessage = {
 					role: 'assistant',
-					content: JSON.stringify(responseData.data.chat),
+					content: `${responseData.data.chat}`,
 				};
 				setChatHistoryArr((prevHistory) => [...prevHistory, newAIMessage]);
 
 				// Refresh the page
-				window.location.reload();
+        if (responseData.data.slide)
+          window.location.reload();
 			} else {
 				console.error('Failed to get AI response');
 			}
