@@ -91,7 +91,7 @@ MainSlideProps) => {
 	const ChosenLayoutCover =
 		layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
 
-	const customizableElements = loadCustomizableElements('Default');
+	const themeElements = loadCustomizableElements('Default');
 
 	return (
 		<>
@@ -101,9 +101,9 @@ MainSlideProps) => {
 					isCoverPage
 						? 'rounded-md w-full h-full bg-cover flex flex-row gap-[2rem] justify-start items-start box-border border-none relative'
 						: 'hidden'
-				} ${customizableElements.backgroundColorCover}`}
+				} ${themeElements.backgroundColorCover}`}
 				// style={{
-				// 	backgroundImage: `url('${customizableElements.backgroundUrl}')`, // Corrected syntax
+				// 	backgroundImage: `url('${themeElements.backgroundUrl}')`, // Corrected syntax
 				// }}
 			>
 				<ChosenLayoutCover
@@ -120,7 +120,7 @@ MainSlideProps) => {
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
 					brandingColor={brandingColor}
-					customizableElements={customizableElements}
+					themeElements={themeElements}
 					templateLogo={templateLogo}
 				></ChosenLayoutCover>
 
@@ -141,7 +141,7 @@ MainSlideProps) => {
 					!isCoverPage
 						? 'rounded-md w-full h-full bg-cover box-border border-none relative p-[28px] '
 						: 'hidden'
-				} ${customizableElements.backgroundColor}`}
+				} ${themeElements.backgroundColor}`}
 			>
 				{/* <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr> */}
 
@@ -159,7 +159,8 @@ MainSlideProps) => {
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
 					brandingColor={brandingColor}
-					customizableElements={customizableElements}
+					themeElements={themeElements}
+          layoutElements={layoutElements}
 					templateLogo={templateLogo}
 				></ChosenLayoutNonCover>
 			</div>

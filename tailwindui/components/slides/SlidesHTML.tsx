@@ -23,7 +23,7 @@ import { templateDispatch } from './templateDispatch';
 import { availableLayouts } from './slideLayout';
 import TestSlidesData from './TestSlidesData.json';
 import AuthService from '@/services/AuthService';
-import customizable_elements from './templates_customizable_elements/customizable_elements';
+import customizable_elements from './templates_customizable_elements/theme_elements';
 import ScriptEditor from './ScriptEditor';
 import Slide, { SlideKeys } from '@/models/Slide';
 import ProjectService from '@/services/ProjectService';
@@ -46,10 +46,10 @@ type SlidesHTMLProps = {
 
 // Load customizable elements from session storage or use default values
 export const loadCustomizableElements = (templateName: string) => {
-	const customizableElements = JSON.parse(
-		sessionStorage.getItem('customizableElements') || '{}',
+	const themeElements = JSON.parse(
+		sessionStorage.getItem('themeElements') || '{}',
 	);
-	return customizableElements[templateName] || {};
+	return themeElements[templateName] || {};
 };
 
 // it will render the slides fetched from `foldername` in sessionStorage
@@ -151,10 +151,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		}
 	});
 
-	// set customizableElements for templates
+	// set themeElements for templates
 	useEffect(() => {
 		sessionStorage.setItem(
-			'customizableElements',
+			'themeElements',
 			JSON.stringify(customizable_elements),
 		);
 	}, []);
