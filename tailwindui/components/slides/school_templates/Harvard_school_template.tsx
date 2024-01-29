@@ -27,7 +27,7 @@ export const Harvard_school_template = ({
 		layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
 	//   console.log('choosing layout option', ChosenLayout)
 	// Load customizable elements for the current template
-	const customizableElements = loadCustomizableElements(
+	const themeElements = loadCustomizableElements(
 		'Harvard' as TemplateKeys,
 	);
 	return (
@@ -38,7 +38,7 @@ export const Harvard_school_template = ({
 					!isCoverPage
 						? 'rounded-md overflow-hidden w-full h-full bg-cover box-border border-none relative p-[28px]'
 						: 'hidden '
-				} ${customizableElements.backgroundColor}`}
+				} ${themeElements.backgroundColor}`}
 			>
 				{/* <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr> */}
 
@@ -55,7 +55,7 @@ export const Harvard_school_template = ({
 					isCoverPage={isCoverPage}
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
-					customizableElements={customizableElements}
+					themeElements={themeElements}
 					templateLogo={templateLogo}
 				></ChosenLayoutNonCover>
 			</div>
@@ -66,7 +66,7 @@ export const Harvard_school_template = ({
 					isCoverPage
 						? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-row gap-[2rem] justify-start items-start box-border border-none relative '
 						: 'hidden'
-				} ${customizableElements.backgroundColorCover} `}
+				} ${themeElements.backgroundColorCover} `}
 			>
 				<ChosenLayoutCover
 					content={content}
@@ -81,7 +81,7 @@ export const Harvard_school_template = ({
 					isCoverPage={isCoverPage}
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
-					customizableElements={customizableElements}
+					themeElements={themeElements}
 					templateLogo={templateLogo}
 				></ChosenLayoutCover>
 

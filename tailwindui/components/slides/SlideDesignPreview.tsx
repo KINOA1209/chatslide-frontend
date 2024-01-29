@@ -5,7 +5,7 @@ import { TemplateKeys, availableTemplates } from "@/components/slides/slideTempl
 import { layoutOptions } from './slideLayout';
 import SlideContainer from './SlideContainer';
 import '@/components/slides/overflowScrollbar.css'
-import configData from './templates_customizable_elements/customizable_elements';
+import configData from './templates_customizable_elements/theme_elements';
 
 type SlideDesignPreviewProps = {
     selectedTemplate: string
@@ -28,7 +28,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
     //     return newSlide;
     // });
     useEffect(() =>{
-        sessionStorage.setItem('customizableElements', JSON.stringify(configData))
+        sessionStorage.setItem('themeElements', JSON.stringify(configData))
     }, [])
 
     useEffect(() => {
