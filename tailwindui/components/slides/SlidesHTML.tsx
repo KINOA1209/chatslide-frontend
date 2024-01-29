@@ -601,7 +601,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					/>
 				</div>
 
-				<div className='SlidesStep-3 SlidesStep-4'>
+				<div className='flex flex-col items-end SlidesStep-3 SlidesStep-4'>
+          <ActionsToolBar
+            undo={undo}
+            redo={redo}
+            canRedo={canRedo}
+            canUndo={canUndo}
+          />
+          
 					<SlideContainer
 						isPresenting={present}
 						slides={slides}
@@ -681,13 +688,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						saveSlides={saveSlides}
 					/>
 				)}
-
-				<ActionsToolBar
-					undo={undo}
-					redo={redo}
-					canRedo={canRedo}
-					canUndo={canUndo}
-				/>
 
 				{/* White modal for presentation mode */}
 				{present && (

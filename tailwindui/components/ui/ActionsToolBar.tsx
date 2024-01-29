@@ -17,7 +17,7 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 }) => {
 	return (
 		<section
-			className={`fixed right-[30rem] top-[10rem] shadow-md bg-white rounded-md px-2 py-1`}
+			className={`shadow-md bg-white rounded-md px-2 py-1`}
 		>
 			<div className='flex flex-row gap-4'>
 				<button
