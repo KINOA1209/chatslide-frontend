@@ -32,6 +32,7 @@ import {
 	AIAssistantChatWindow,
 } from '../ui/AIAssistant';
 import ActionsToolBar from '../ui/ActionsToolBar';
+import layoutData from './templates_customizable_elements/layout_elements';
 
 type SlidesHTMLProps = {
 	slides: Slide[];
