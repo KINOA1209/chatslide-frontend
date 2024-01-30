@@ -28,8 +28,7 @@ export const useChatHistory = () => {
 
   const addChatHistory = (chat: ChatHistory) => {
     console.log('-- add chat history: ', { chat })
-    const newChatHistory = [...chatHistory, chat];
-    setChatHistory(newChatHistory);
+    setChatHistory(prevChatHistory => [...prevChatHistory, chat]);
   }
 
   const clearChatHistory = () => {
