@@ -1,4 +1,5 @@
 'use client';
+import ChatHistory from '@/models/ChatHistory';
 import Slide from '@/models/Slide';
 import DrlambdaCartoonImage from '@/public/images/AIAssistant/DrLambdaCartoon.png';
 import sendTextButtonImage from '@/public/images/AIAssistant/sendTextIcon.png';
@@ -25,15 +26,6 @@ export const DrLambdaAIAssistantIcon: React.FC<{
   );
 };
 
-const chatHistoryArr = [
-  { role: 'system', content: 'You are a helpful assistant.' },
-  {
-    role: 'user',
-    content:
-      'Explain asynchronous programming in the style of the pirate Blackbeard.',
-  },
-];
-
 interface AIAssistantChatWindowProps {
   onToggle: () => void;
   slides: Slide[];
@@ -54,7 +46,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
   // };
   // fixed right-0 top-[5rem]
   const [userInput, setUserInput] = useState('');
-  const [chatHistoryArr, setChatHistoryArr] = useState([
+  const [chatHistoryArr, setChatHistoryArr] = useState<ChatHistory[]>([
     { role: 'system', content: 'You are a helpful assistant.' },
     // { role: 'user', content: 'Hello there' },
   ]);
