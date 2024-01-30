@@ -113,7 +113,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
           const successMessage = {
             role: 'assistant',
             content:
-              'Current slide data is updated successfully. Please refresh page to check the updated slide',
+              'Current slide data is updated successfully.',
           };
           addChatHistory(successMessage);
         }
@@ -124,10 +124,6 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
           content: `${responseData.data.chat}`,
         };
         addChatHistory(newAIMessage);
-
-        // Refresh the page
-        if (responseData.data.slide)
-          window.location.reload();
       } else {
         console.error('Failed to get AI response');
         addChatHistory({
@@ -267,7 +263,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
               <div
                 key={index}
                 ref={
-                  index === chatHistory.length - 2 ? lastMessageRef : null
+                  index === chatHistory.length - 1 ? lastMessageRef : null
                 } // Attach ref to the last message
                 className={
                   message.role === 'user'
