@@ -38,28 +38,33 @@ export const useSlides = () => {
 
   const addEmptyPage = (index: number) => {
     console.log('-- add empty page: ', { index })
-    const newSlides = [...slides];
-    newSlides.splice(index, 0, new Slide());
-    setSlides(newSlides);
+    setSlides(prevSlides => {
+      const newSlides = [...prevSlides];
+      newSlides.splice(index, 0, new Slide());
+      return newSlides;
+    });
 
     updateSlideHistory();
   }
 
   const deleteSlidePage = (index: number) => {
     console.log('-- delete slide page: ', { index })
-    const newSlides = [...slides];
-    newSlides.splice(index, 1);
-    setSlides(newSlides);
+    setSlides(prevSlides => {
+      const newSlides = [...prevSlides];
+      newSlides.splice(index, 1);
+      return newSlides;
+    });
 
     updateSlideHistory();
   }
 
   const updateSlidePage = (index: number, slide: Slide) => {
     console.log('-- update slide page: ', { index, slide })
-    const newSlide = { ...slide }; // make sure the slide object is new, so it could trigger re-render
-    const newSlides = [...slides];
-    newSlides[index] = newSlide;
-    setSlides(newSlides);
+    setSlides(prevSlides => {
+      const newSlides = [...prevSlides];
+      newSlides[index] = slide;
+      return newSlides;
+    });
 
     updateSlideHistory();
   }
