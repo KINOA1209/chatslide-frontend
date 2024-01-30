@@ -142,9 +142,19 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
           window.location.reload();
       } else {
         console.error('Failed to get AI response');
+        addChatHistory({
+          role: 'assistant',
+          content: 'Sorry, I do not understand your request, can you try something else?',
+        });
+        setLoading(false);
       }
     } catch (error) {
       console.error('Error making API call:', error);
+      addChatHistory({
+        role: 'assistant',
+        content: 'Sorry, I do not understand your request, can you try something else?',
+      });
+      setLoading(false);
     }
   };
 
