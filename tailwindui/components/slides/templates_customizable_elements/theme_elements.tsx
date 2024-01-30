@@ -1,31 +1,36 @@
 // YourConfig.tsx
 
-export type TemplateElements = {
+export type ThemeElements = {
 	backgroundColorCover: string;
 	backgroundColor: string;
 	backgroundUrl?: string;
+
 	titleFontCSS: React.CSSProperties;
+
 	subtopicFontCSS: React.CSSProperties;
+
 	contentFontCSS: React.CSSProperties;
+
 	userNameFont: string;
 	userNameFontColor: string;
+
 	headFontCSS: React.CSSProperties;
 	contentFontCSS_non_vertical_content: React.CSSProperties;
 };
 
 type Config = {
-	Stanford: TemplateElements;
-	Berkeley: TemplateElements;
-	Harvard: TemplateElements;
-	MIT: TemplateElements;
-	Princeton: TemplateElements;
-	Caltech: TemplateElements;
-	Columbia: TemplateElements;
-	JHU: TemplateElements;
-	UChicago: TemplateElements;
-	Yale: TemplateElements;
-	UPenn: TemplateElements;
-	Default: TemplateElements;
+  Stanford: ThemeElements;
+  Berkeley: ThemeElements;
+  Harvard: ThemeElements;
+  MIT: ThemeElements;
+  Princeton: ThemeElements;
+  Caltech: ThemeElements;
+  Columbia: ThemeElements;
+  JHU: ThemeElements;
+  UChicago: ThemeElements;
+  Yale: ThemeElements;
+  UPenn: ThemeElements;
+  Default: ThemeElements;
 };
 
 const configData: Config = {

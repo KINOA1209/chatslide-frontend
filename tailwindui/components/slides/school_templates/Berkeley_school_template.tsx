@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MainSlideProps } from '../slideTemplates';
 import Image, { StaticImageData } from 'next/image';
 import BerkeleyLogo from '@/public/images/template/Berkeley/Berkeley_logo.png';
@@ -6,7 +6,10 @@ import MaskedBackground from '@/public/images/template/Berkeley/Mask Background.
 import BerkeleyLogoWhite from '@/public/images/template/Berkeley/Berkeley_logo_white.png';
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import { layoutOptions } from '@/components/slides/slideLayout';
-import { loadCustomizableElements } from '@/components/slides/SlidesHTML';
+import {
+	loadCustomizableElements,
+	loadLayoutConfigElements,
+} from '@/components/slides/SlidesHTML';
 import { TemplateKeys } from '../slideTemplates';
 export const Berkeley_school_template = ({
 	user_name,
@@ -29,9 +32,21 @@ export const Berkeley_school_template = ({
 		layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
 	//   console.log('choosing layout option', ChosenLayout)
 	// Load customizable elements for the current template
-	const customizableElements = loadCustomizableElements(
+	const themeElements = loadCustomizableElements('Berkeley' as TemplateKeys);
+	const layoutConfigElements = loadLayoutConfigElements(
 		'Berkeley' as TemplateKeys,
+		layoutOptionCover as keyof typeof layoutOptions,
 	);
+
+	useEffect(() => {
+		console.log('berkeley themeElements:', themeElements);
+	}, []);
+	useEffect(() => {
+		console.log(
+			'berkeley layoutConfigElements for current slide page:',
+			layoutConfigElements,
+		);
+	}, []);
 	return (
 		<>
 			{/* for not-cover page slides */}
@@ -40,7 +55,7 @@ export const Berkeley_school_template = ({
 					!isCoverPage
 						? 'rounded-md overflow-hidden w-full h-full bg-cover box-border border-none relative p-[28px]'
 						: 'hidden '
-				} ${customizableElements.backgroundColor}`}
+				} ${themeElements.backgroundColor}`}
 			>
 				{/* <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr> */}
 
@@ -57,7 +72,8 @@ export const Berkeley_school_template = ({
 					isCoverPage={isCoverPage}
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
-					customizableElements={customizableElements}
+					themeElements={themeElements}
+					layoutElements={layoutConfigElements}
 					templateLogo={templateLogo}
 				></ChosenLayoutNonCover>
 			</div>
@@ -67,7 +83,7 @@ export const Berkeley_school_template = ({
 					isCoverPage
 						? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-row gap-[2rem] justify-start items-start box-border border-none relative '
 						: 'hidden'
-				} ${customizableElements.backgroundColorCover} `}
+				} ${themeElements.backgroundColorCover} `}
 			>
 				<ChosenLayoutCover
 					content={content}
@@ -82,7 +98,8 @@ export const Berkeley_school_template = ({
 					isCoverPage={isCoverPage}
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
-					customizableElements={customizableElements}
+					themeElements={themeElements}
+					layoutElements={layoutConfigElements}
 					templateLogo={templateLogo}
 				></ChosenLayoutCover>
 

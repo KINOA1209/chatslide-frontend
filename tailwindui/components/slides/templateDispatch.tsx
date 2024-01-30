@@ -40,7 +40,7 @@ export const templateDispatch = (
 ): JSX.Element => {
 	// useEffect(() => {
 	// 	console.log('chosen template string:', slide.template);
-	// 	console.log('template config:', customizableElements);
+	// 	console.log('template config:', themeElements);
 	// }, []);
 	let keyPrefix = '';
 	if (exportToPdfMode) {
@@ -60,7 +60,7 @@ export const templateDispatch = (
 		TemplatesLogos[templateKey as keyof typeof TemplatesLogos];
 	// const ChosenTemplateLogo =
 	// 	TemplatesLogos[templateLogo as keyof typeof TemplatesLogos];
-	const customizableElements = loadCustomizableElements(templateKey);
+	const themeElements = loadCustomizableElements(templateKey);
 	const processContent = (item: string) => {
 		if (isHTML(item)) {
 			if (item.trim().startsWith('<li>') && item.trim().endsWith('</li>')) {
@@ -142,19 +142,19 @@ export const templateDispatch = (
 			title={generateContentElement(
 				slide.head,
 				'head',
-				customizableElements.headFontCSS,
+				themeElements.headFontCSS,
 				false,
 			)}
 			topic={generateContentElement(
 				slide.title,
 				'title',
-				customizableElements.titleFontCSS,
+				themeElements.titleFontCSS,
 				false,
 			)}
 			subtopic={generateContentElement(
 				slide.subtopic,
 				'subtopic',
-				customizableElements.subtopicFontCSS,
+				themeElements.subtopicFontCSS,
 				false,
 			)}
 			content={
@@ -163,7 +163,7 @@ export const templateDispatch = (
 					? generateContentElement(
 							slide.content,
 							'content',
-							customizableElements.contentFontCSS,
+							themeElements.contentFontCSS,
 							true,
 					  )
 					: slide.content.map((content, contentIndex) => (
@@ -176,7 +176,7 @@ export const templateDispatch = (
 								{generateContentElement(
 									content,
 									'content',
-									customizableElements.contentFontCSS,
+									themeElements.contentFontCSS,
 									false,
 									contentIndex,
 								)}
@@ -189,7 +189,12 @@ export const templateDispatch = (
 			layoutOptionNonCover={layoutOptionNonCover}
 			layoutOptionCover={layoutOptionCover}
 			brandingColor={brandingColor}
-			templateLogo={<ChosenTemplateLogo isCoverPage={isCoverPage} custom_logo={slide.logo}/>}
+			templateLogo={
+				<ChosenTemplateLogo
+					isCoverPage={isCoverPage}
+					custom_logo={slide.logo}
+				/>
+			}
 		/>
 	);
 	// }
