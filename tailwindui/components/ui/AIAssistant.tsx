@@ -1,10 +1,12 @@
 'use client';
+import { ChatHistoryStatus, useChatHistory } from '@/hooks/use-chat-history';
+import { useSession } from '@/hooks/use-session';
 import ChatHistory from '@/models/ChatHistory';
 import Slide from '@/models/Slide';
 import DrlambdaCartoonImage from '@/public/images/AIAssistant/DrLambdaCartoon.png';
 import sendTextButtonImage from '@/public/images/AIAssistant/sendTextIcon.png';
 import Image from 'next/image';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, use } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 
 export const DrLambdaAIAssistantIcon: React.FC<{
@@ -46,33 +48,17 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
   // };
   // fixed right-0 top-[5rem]
   const [userInput, setUserInput] = useState('');
-  const [chatHistoryArr, setChatHistoryArr] = useState<ChatHistory[]>([
-    { role: 'system', content: 'You are a helpful assistant.' },
-    // { role: 'user', content: 'Hello there' },
-  ]);
+  const { chatHistory, addChatHistory, clearChatHistory, chatHistoryStatus } = useChatHistory();
   const [loading, setLoading] = useState(false);
 
   // Create a ref for the last message
   const lastMessageRef = useRef<HTMLDivElement>(null);
 
-  // Fetch initial chat history from local storage
-  useEffect(() => {
-    const storedChatHistory = localStorage.getItem('chatHistoryArr');
-    if (storedChatHistory) {
-      setChatHistoryArr(JSON.parse(storedChatHistory));
-    }
-  }, []);
-
-  // Store updated chat history in local storage
-  useEffect(() => {
-    localStorage.setItem('chatHistoryArr', JSON.stringify(chatHistoryArr));
-  }, [chatHistoryArr]);
-
   useEffect(() => {
     if (lastMessageRef.current) {
       lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [chatHistoryArr]);
+  }, [chatHistory]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
@@ -88,8 +74,8 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
     if (inputToSend.trim() === '') return;
 
     // Update chat history with user's message
-    const newUserMessage = { role: 'user', content: inputToSend };
-    setChatHistoryArr((prevHistory) => [...prevHistory, newUserMessage]);
+    const newUserMessage: ChatHistory = { role: 'user', content: inputToSend };
+    addChatHistory(newUserMessage);
 
     // Clear user input after sending
     setUserInput('');
@@ -141,7 +127,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
             content:
               'Current slide data is updated successfully. Please refresh page to check the updated slide',
           };
-          setChatHistoryArr((prevHistory) => [...prevHistory, successMessage]);
+          addChatHistory(successMessage);
         }
 
         // Update chat history with AI's response
@@ -149,7 +135,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
           role: 'assistant',
           content: `${responseData.data.chat}`,
         };
-        setChatHistoryArr((prevHistory) => [...prevHistory, newAIMessage]);
+        addChatHistory(newAIMessage);
 
         // Refresh the page
         if (responseData.data.slide)
@@ -163,8 +149,8 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
   };
 
   useEffect(() => {
-    console.log('chat history are', JSON.stringify(chatHistoryArr));
-  }, [chatHistoryArr]);
+    console.log('chatHistory:', chatHistory);
+  }, []);
 
   return (
     <section
@@ -204,7 +190,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
             alignItems: 'center',
             justifyContent: 'center',
           }}
-          onClick={() => setChatHistoryArr([])}
+          onClick={() => clearChatHistory()}
         >
           Clear Chat
         </button>
@@ -278,13 +264,12 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
             </div>
           </div>
           {/* chat history render */}
-          {chatHistoryArr
-            .filter((chatObject, index) => index !== 0)
+          {chatHistoryStatus == ChatHistoryStatus.Inited && chatHistory
             .map((message, index) => (
               <div
                 key={index}
                 ref={
-                  index === chatHistoryArr.length - 2 ? lastMessageRef : null
+                  index === chatHistory.length - 2 ? lastMessageRef : null
                 } // Attach ref to the last message
                 className={
                   message.role === 'user'
