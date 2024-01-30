@@ -66,7 +66,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
             </div> */}
 			{/* change layout icon */}
 			<div
-				className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300  hover:bg-Lavender flex justify-center items-center cursor-pointer'
+				className='w-6 h-6 shadow rounded flex justify-center items-center cursor-pointer'
 				onClick={openModal}
 			>
 				<ChangeLayoutIcon />
