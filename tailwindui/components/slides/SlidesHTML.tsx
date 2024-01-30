@@ -179,56 +179,56 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     saveSlides();
   };
 
-	// Function to send a request to auto-save slides
-	const saveSlides = async () => {
-		if (isViewing) {
-			console.log("Viewing another's shared project, skip saving");
-			return;
-		}
+  // Function to send a request to auto-save slides
+  const saveSlides = async () => {
+    // if (isViewing) {
+    //   console.log("Viewing another's shared project, skip saving");
+    //   return;
+    // }
 
-		if (slides.length === 0) {
-			console.log('slides not yet loaded, skip saving');
-			return;
-		}
+    // if (slides.length === 0) {
+    //   console.log('slides not yet loaded, skip saving');
+    //   return;
+    // }
 
-		if (!foldername) {
-			console.log('Foldername not found, skip saving');
-			return;
-		}
+    // if (!foldername) {
+    //   console.log('Foldername not found, skip saving');
+    //   return;
+    // }
 
-		setSaveStatus('Saving...');
+    // setSaveStatus('Saving...');
 
-		const { userId, idToken: token } =
-			await AuthService.getCurrentUserTokenAndId();
-		const formData = {
-			foldername: foldername,
-			final_slides: slides,
-			project_id: project_id,
-		};
-		// Send a POST request to the backend to save finalSlides
-		fetch('/api/save_slides', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json; charset=utf-8',
-				Authorization: `Bearer ${token}`,
-			},
-			body: JSON.stringify(formData),
-		})
-			.then((response) => {
-				if (response.ok) {
-					setUnsavedChanges(false);
-					console.log('Auto-save successful.');
-					setSaveStatus('Up to date');
-				} else {
-					// Handle save error
-					console.error('Auto-save failed.');
-				}
-			})
-			.catch((error) => {
-				// Handle network error
-				console.error('Auto-save failed:', error);
-			});
-	};
+    // const { userId, idToken: token } =
+    //   await AuthService.getCurrentUserTokenAndId();
+    // const formData = {
+    //   foldername: foldername,
+    //   final_slides: slides,
+    //   project_id: project_id,
+    // };
+    // // Send a POST request to the backend to save finalSlides
+    // fetch('/api/save_slides', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json; charset=utf-8',
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    //   body: JSON.stringify(formData),
+    // })
+    //   .then((response) => {
+    //     if (response.ok) {
+    //       setUnsavedChanges(false);
+    //       console.log('Auto-save successful.');
+    //       setSaveStatus('Up to date');
+    //     } else {
+    //       // Handle save error
+    //       console.error('Auto-save failed.');
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     // Handle network error
+    //     console.error('Auto-save failed:', error);
+    //   });
+  };
 
 	const openModal = () => {
 		setShowLayout(true);
@@ -261,6 +261,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	}, []); // Empty dependency array to ensure this effect runs only once (similar to componentDidMount)
 
   // fetch slides data from session storage if slides is not passed in
+
+  // commented because slides should already be in bear storage 
   useEffect(() => {
     if (slides && slides.length > 0) {
       console.log(
@@ -283,16 +285,16 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		};
 	});
 
-	useEffect(() => {
-		if (isFirstRender.current) {
-			isFirstRender.current = false;
-			console.log('First render, skip saving');
-		} else {
-			console.log('slides changed');
-			setUnsavedChanges(true);
-			saveSlides();
-		}
-	}, [slides]);
+  // useEffect(() => {
+  //   if (isFirstRender.current) {
+  //     isFirstRender.current = false;
+  //     console.log('First render, skip saving');
+  //   } else {
+  //     console.log('slides changed');
+  //     setUnsavedChanges(true);
+  //     saveSlides();
+  //   }
+  // }, [slides]);
 
 	const scrollContainerRef = useRef<HTMLDivElement | null>(null); // Specify the type as HTMLDivElement
 
@@ -338,7 +340,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     } else if (className === 'logo') {
       currentSlide.logo = content as string;
     } else if (className === 'images') {
-      currentSlide.images = content as string[];
+      currentSlide.images = [...(content as string[])]; // deep copy
     } else if (className === 'content') {
       if (Array.isArray(content)) {
         currentSlide.content = content as string[];
@@ -354,6 +356,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     }
 
     console.log('updating slide page', slideIndex)
+    console.log(currentSlide)
     updateSlidePage(slideIndex, currentSlide);
   }
 
@@ -371,6 +374,17 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
   const updateImgUrlArray = (slideIndex: number) => {
     const updateImgUrl = (urls: string[]) => {
+      if (urls.length === 1 && urls[0] === '') {
+        return;
+      }
+
+      const prevUrls = slides[slideIndex].images;
+      if(JSON.stringify(prevUrls) === JSON.stringify(urls)) {
+        return;
+      }
+      console.log('updateImgUrlArray called');
+      console.log('urls', urls);
+      console.log('prevUrls', prevUrls);
       handleSlideEdit(urls, slideIndex, 'images');
     };
     return updateImgUrl;
@@ -399,6 +413,28 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       index === slideIndex,
     );
 
+  const uneditableTemplateDispatch = (
+    slide: Slide,
+    index: number,
+    exportToPdfMode: boolean = false,
+  ) =>
+    templateDispatch(
+      slide,
+      index,
+      false,
+      exportToPdfMode,
+      isEditMode,
+      saveSlides,
+      setIsEditMode,
+      ()=>{},
+      updateImgUrlArray,
+      toggleEditMode,
+      index === 0,
+      slide.layout,
+      slide.layout,
+      index === slideIndex,
+    );
+
   return (
     <div className='flex flex-col items-center justify-center gap-4 relative'>
       {/* hidden div for export to pdf */}
@@ -411,8 +447,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
               style={{ pageBreakAfter: 'always' }}
             >
               <SlideContainer
+                slide={slide}
                 index={index}
-                templateDispatch={editableTemplateDispatch}
+                templateDispatch={uneditableTemplateDispatch}
                 exportToPdfMode={true}
               />
             </div>
@@ -450,20 +487,19 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         {/* vertical bar */}
         <div className='h-[540px] w-[144px] hidden xl:block mx-auto justify-center items-center'>
           <div className='h-full flex flex-col flex-nowrap py-2 overflow-y-auto  overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
-            {Array(slides.length)
-              .fill(0)
-              .map((_, index) => (
+            {slides.map((slide, index) => (
                 <div
-                  key={`previewContainer` + index.toString()}
+                  key={`previewContainer` + index.toString() + slides.length.toString()}  // force update when slide length changes
                   className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
                   onClick={() => gotoPage(index)} // Added onClick handler
                 >
                   {/* {index + 1} */}
                   <SlideContainer
+                    slide={slide}
                     index={index}
                     scale={0.12}
                     isViewing={true}
-                    templateDispatch={editableTemplateDispatch}
+                    templateDispatch={uneditableTemplateDispatch}
                     slideRef={slideRef}
                     containerRef={containerRef}
                     highlightBorder={slideIndex === index}
@@ -539,6 +575,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
           </div>
 
           <SlideContainer
+            slide={slides[slideIndex]}
             index={slideIndex}
             isPresenting={present}
             isViewing={isViewing}
@@ -546,6 +583,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
             templateDispatch={editableTemplateDispatch}
             slideRef={slideRef}
             containerRef={containerRef}
+            length={slides.length}
           />
         </div>
 
@@ -668,20 +706,19 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       {/* horizontal  */}
       <div className='block xl:hidden max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
         <div className='w-full py-6 flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
-          {Array(slides.length)
-            .fill(0)
-            .map((_, index) => (
+          {slides.map((slide, index) => (
               <div
-                key={`previewContainer` + index.toString()}
+                key={`previewContainer` + index.toString() + slides.length.toString()}  // force update when slide length changes
                 className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
                 onClick={() => gotoPage(index)} // Added onClick handler
               >
                 {/* {index + 1} */}
                 <SlideContainer
+                  slide={slide}
                   index={index}
                   scale={0.12}
                   isViewing={true}
-                  templateDispatch={editableTemplateDispatch}
+                  templateDispatch={uneditableTemplateDispatch}
                   highlightBorder={slideIndex === index}
                 />
               </div>

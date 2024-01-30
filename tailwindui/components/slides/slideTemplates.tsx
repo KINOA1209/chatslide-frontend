@@ -35,6 +35,7 @@ export interface MainSlideProps {
 	templateLogo?: JSX.Element;
 }
 
+// deprecated
 export const useLocalImgs = (
 	imgs: string[],
 	imgCount: number,

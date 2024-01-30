@@ -1,9 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Slide from '@/models/Slide';
 import { templateDispatch as defaultTemplateDispatch } from './templateDispatch';
 import { useSlides } from '@/hooks/use-slides';
 
 type SlideContainerProps = {
+  slide: Slide;
   index: number;
 	isViewing?: boolean;
 	isSnippet?: boolean;
@@ -20,9 +21,11 @@ type SlideContainerProps = {
 	exportToPdfMode?: boolean;
 	highlightBorder?: boolean;
 	setIsPresenting?: React.Dispatch<React.SetStateAction<boolean>>;
+  length?: number;  // force rerender when length changes and index does not change
 };
 
 const SlideContainer: React.FC<SlideContainerProps> = ({
+  slide,
   index,
 	isViewing = false,
 	isPresenting = false,
@@ -33,8 +36,14 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 	exportToPdfMode = false,
 	highlightBorder = false,
 	setIsPresenting,
+  length,
 }) => {
   const { slides } = useSlides();
+
+  useEffect(() => {
+    if(length)
+      console.log('rerender in SlideContainer', index, length);
+  }, [index, length]);
 
 	return (
 		<div
@@ -86,9 +95,9 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 						position: 'relative',
 					}}
 				>
-					{slides[index] &&
+					{slide &&
 						templateDispatch(
-							slides[index],
+              slide,
 							index,
 							!isViewing && !isPresenting,
 							exportToPdfMode,
