@@ -11,7 +11,9 @@ import col1img1_png from '@/public/images/template/layout/col1img1.png';
 import col3img3_png from '@/public/images/template/layout/col3img3.png';
 import col2img2_png from '@/public/images/template/layout/col2img2.png';
 import { useLocalImgs } from './slideTemplates';
-import { TemplateElements } from './templates_customizable_elements/customizable_elements';
+import { ThemeElements } from './templates_customizable_elements/theme_elements';
+// import { LayoutElements } from './templates_customizable_elements/layout_elements';
+import { LayoutElements } from '@/components/slides/templates_customizable_elements/layout_elements';
 export type LayoutKeys =
 	| ''
 	| 'Cover_img_0_layout'
@@ -27,7 +29,8 @@ export type LayoutKeys =
 // Extend the interface with new fields
 interface MainSlideProps extends BaseMainSlideProps {
 	brandingColor?: string;
-	customizableElements: TemplateElements;
+	themeElements: ThemeElements;
+	layoutElements: LayoutElements;
 	showContentBulletPoint?: boolean;
 }
 
@@ -45,27 +48,49 @@ export const Cover_img_0_layout = ({
 	layoutOptionNonCover,
 	layoutOptionCover,
 	brandingColor,
-	customizableElements,
+	themeElements,
+	layoutElements,
 	templateLogo,
 }: MainSlideProps) => {
+	// useEffect(() => {
+	// 	console.log('LayoutElements canvaCSS:', layoutElements.canvaCSS);
+	// }, []);
+
 	return (
 		<>
-			<div
-				className={`pt-[1rem] px-[2rem] w-full flex flex-col justify-start h-full gap-[2rem]`}
-			>
+			<div style={layoutElements.canvaCSS}>
 				<div
-					className={`${customizableElements.userNameFont} ${customizableElements.userNameFontColor}`}
+					className={`${themeElements.userNameFont} ${themeElements.userNameFontColor}`}
+					style={layoutElements.userNameCSS}
 				>
 					{user_name}
 				</div>
 				<div
 					className={`pl-[2rem] basis-0 opacity-50 border
-                border-black border-opacity-40 mt-4`}
+		        border-black border-opacity-40 mt-4`}
 				></div>
-				<div className={` pl-[2rem]`}>{title}</div>
+				<div style={layoutElements.titleCSS}>{title}</div>
 			</div>
-			{templateLogo}
+			<div style={layoutElements.logoCSS}>{templateLogo}</div>
 		</>
+
+		// <>
+		// 	<div
+		// 		className={`pt-[1rem] px-[2rem] w-full flex flex-col justify-start h-full gap-[2rem]`}
+		// 	>
+		// 		<div
+		// 			className={`${themeElements.userNameFont} ${themeElements.userNameFontColor}`}
+		// 		>
+		// 			{user_name}
+		// 		</div>
+		// 		<div
+		// 			className={`pl-[2rem] basis-0 opacity-50 border
+		// 	border-black border-opacity-40 mt-4`}
+		// 		></div>
+		// 		<div className={`pl-[2rem] z-50`}>{title}</div>
+		// 	</div>
+		// 	{templateLogo}
+		// </>
 	);
 };
 export const Cover_img_1_layout = ({
@@ -82,7 +107,8 @@ export const Cover_img_1_layout = ({
 	layoutOptionNonCover,
 	layoutOptionCover,
 	brandingColor,
-	customizableElements,
+	themeElements,
+	layoutElements,
 	templateLogo,
 }: MainSlideProps) => {
 	const { localImgs, updateImgAtIndex } = useLocalImgs(
@@ -95,24 +121,19 @@ export const Cover_img_1_layout = ({
 	// }, []);
 	return (
 		<>
-			<div
-				className={`pt-[1rem] px-[2rem] w-1/2 flex flex-col justify-start h-full gap-[2rem]`}
-			>
+			<div style={layoutElements.columnCSS}>
 				<div
-					className={`${customizableElements.userNameFont} ${customizableElements.userNameFontColor}`}
+					className={`${themeElements.userNameFont} ${themeElements.userNameFontColor}`}
 				>
 					{user_name}
 				</div>
 				<div
 					className={`pl-[2rem] basis-0 opacity-50 border
-                border-black border-opacity-40 mt-4`}
+		        border-black border-opacity-40 mt-4`}
 				></div>
-				<div className={`pl-[2rem] z-20`}>{title}</div>
+				<div style={layoutElements.titleCSS}>{title}</div>
 			</div>
-			<div
-				className={`w-1/2 h-full rounded-md overflow-hidden`}
-				// id='SlidesStep-4'
-			>
+			<div style={layoutElements.imageContainerCSS}>
 				<ImgModule
 					imgsrc={localImgs[0]}
 					updateSingleCallback={updateImgAtIndex(0)}
@@ -120,7 +141,7 @@ export const Cover_img_1_layout = ({
 					autoSave={autoSave}
 				/>
 			</div>
-			{templateLogo}
+			<div style={layoutElements.logoCSS}>{templateLogo}</div>
 		</>
 	);
 };
@@ -138,7 +159,8 @@ export const Col_1_img_0_layout = ({
 	layoutOptionNonCover,
 	layoutOptionCover,
 	brandingColor,
-	customizableElements,
+	themeElements,
+	layoutElements,
 	templateLogo,
 }: MainSlideProps) => {
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
@@ -175,18 +197,18 @@ export const Col_1_img_0_layout = ({
 	}, []);
 
 	return (
-		<div ref={containerRef} className='h-full w-full flex flex-col'>
-			<div ref={topicRef} className={``}>
+		<div ref={containerRef} style={layoutElements.canvaCSS}>
+			<div ref={topicRef} className={``} style={layoutElements.topicCSS}>
 				{topic}
 			</div>
-			<div className={``} ref={subtopicRef}>
+			<div className={``} ref={subtopicRef} style={layoutElements.subtopicCSS}>
 				{subtopic}
 			</div>
 			<div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
-			<div className={`flex w-full pl-1 py-[1.2rem]`}>
+			<div style={layoutElements.columnCSS}>
 				<div
-					className='w-full'
 					style={{
+						...layoutElements.contentCSS, // Spread the existing styles first
 						maxHeight:
 							maxContentHeight !== null ? `${maxContentHeight}px` : 'none',
 					}}
@@ -194,7 +216,7 @@ export const Col_1_img_0_layout = ({
 					{content}
 				</div>
 			</div>
-			{templateLogo}
+			<div style={layoutElements.logoCSS}>{templateLogo}</div>
 		</div>
 	);
 };
@@ -211,7 +233,8 @@ export const Col_2_img_0_layout = ({
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
-	customizableElements,
+	themeElements,
+	layoutElements,
 	templateLogo,
 }: MainSlideProps) => {
 	return (
@@ -232,7 +255,7 @@ export const Col_2_img_0_layout = ({
 						</div>
 					))}
 			</div>
-			{templateLogo}
+			<div style={layoutElements.logoCSS}>{templateLogo}</div>
 		</>
 	);
 };
@@ -249,7 +272,8 @@ export const Col_3_img_0_layout = ({
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
-	customizableElements,
+	themeElements,
+	layoutElements,
 	templateLogo,
 }: MainSlideProps) => {
 	return (
@@ -273,7 +297,7 @@ export const Col_3_img_0_layout = ({
 						</div>
 					))}
 			</div>
-			{templateLogo}
+			<div style={layoutElements.logoCSS}>{templateLogo}</div>
 		</>
 	);
 };
@@ -290,7 +314,8 @@ export const Col_1_img_1_layout = ({
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
-	customizableElements,
+	themeElements,
+	layoutElements,
 	templateLogo,
 }: MainSlideProps) => {
 	const { localImgs, updateImgAtIndex } = useLocalImgs(
@@ -338,7 +363,7 @@ export const Col_1_img_1_layout = ({
 					autoSave={autoSave}
 				/>
 			</div>
-			{templateLogo}
+			<div style={layoutElements.logoCSS}>{templateLogo}</div>
 		</>
 	);
 };
@@ -355,7 +380,8 @@ export const Col_2_img_1_layout = ({
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
-	customizableElements,
+	themeElements,
+	layoutElements,
 	templateLogo,
 }: MainSlideProps) => {
 	const { localImgs, updateImgAtIndex } = useLocalImgs(
@@ -429,7 +455,7 @@ export const Col_2_img_1_layout = ({
 					autoSave={autoSave}
 				/>
 			</div>
-			{templateLogo}
+			<div style={layoutElements.logoCSS}>{templateLogo}</div>
 		</div>
 		// two columns layout (left is text and right is one image)
 	);
@@ -447,7 +473,8 @@ export const Col_2_img_2_layout = ({
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
-	customizableElements,
+	themeElements,
+	layoutElements,
 	templateLogo,
 }: MainSlideProps) => {
 	const { localImgs, updateImgAtIndex } = useLocalImgs(
@@ -510,7 +537,7 @@ export const Col_2_img_2_layout = ({
 						))}
 				</div>
 			</div>
-			{templateLogo}
+			<div style={layoutElements.logoCSS}>{templateLogo}</div>
 		</>
 	);
 };
@@ -527,7 +554,8 @@ export const Col_3_img_3_layout = ({
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
-	customizableElements,
+	themeElements,
+	layoutElements,
 	templateLogo,
 }: MainSlideProps) => {
 	const { localImgs, updateImgAtIndex } = useLocalImgs(
@@ -580,7 +608,7 @@ export const Col_3_img_3_layout = ({
 						))}
 				</div>
 			</div>
-			{templateLogo}
+			<div style={layoutElements.logoCSS}>{templateLogo}</div>
 		</>
 	);
 };
