@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { createBearStore } from '@/utils/create-bear-store';
-import ChatHistory from '@/models/ChatHistory';
 import Slide from '@/models/Slide';
 import { TemplateKeys } from '@/components/slides/slideTemplates';
 
-const useSlidesBear = createBearStore<Slide[]>()('slides', [], true); 
+const useSlidesBear = createBearStore<Slide[]>()('slides', [], true);
 const useSlideIndex = createBearStore<number>()('slideIndex', 0, true);
 const useSlidesHistoryBear = createBearStore<Slide[][]>()('slidesHistory', [], true);
 const useSlidesHistoryIndex = createBearStore<number>()('slidesHistoryIndex', 0, true);
@@ -32,7 +31,7 @@ export const useSlides = () => {
     setSlidesHistory([]);
     setSlidesHistoryIndex(0);
 
-    console.log('-- init chat history: ', { slidesStatus, slides })
+    console.log('-- init slides: ', { slidesStatus, slides })
 
     slidesStatus = SlidesStatus.Inited;
   }
@@ -42,6 +41,8 @@ export const useSlides = () => {
     const newSlides = [...slides];
     newSlides.splice(index, 0, new Slide());
     setSlides(newSlides);
+
+    updateSlideHistory();
   }
 
   const deleteSlidePage = (index: number) => {
@@ -49,13 +50,18 @@ export const useSlides = () => {
     const newSlides = [...slides];
     newSlides.splice(index, 1);
     setSlides(newSlides);
+
+    updateSlideHistory();
   }
 
   const updateSlidePage = (index: number, slide: Slide) => {
     console.log('-- update slide page: ', { index, slide })
+    const newSlide = { ...slide }; // make sure the slide object is new, so it could trigger re-render
     const newSlides = [...slides];
-    newSlides[index] = slide;
+    newSlides[index] = newSlide;
     setSlides(newSlides);
+
+    updateSlideHistory();
   }
 
   const gotoPage = (index: number) => {
@@ -68,18 +74,14 @@ export const useSlides = () => {
     void init();
   }, []);
 
-  useEffect(() => {
-    // Update slides history when slides change
-    const lastVersion = slidesHistory[slidesHistory.length - 1] || [];
-    if (JSON.stringify(lastVersion) === JSON.stringify(slides)) 
-      return;
-    console.log('-- slides changed: ', { slides })
+  const updateSlideHistory = () => {
+    console.log('-- slides changed, adding to history: ', { slides })
     if (slidesHistory.length >= 10) {  // Only keep 10 versions
       setSlidesHistory(prevHistory => prevHistory.slice(prevHistory.length - 9));
     }
     setSlidesHistory((prevHistory) => [...prevHistory, slides]);
     setSlidesHistoryIndex((prevIndex) => prevIndex + 1);
-  }, [slides]);
+  }
 
   const undoChange = () => {
     if (slidesHistoryIndex > 0) {
@@ -106,6 +108,8 @@ export const useSlides = () => {
       return { ...slide, template: newTemplate };
     });
     setSlides(newSlides);
+    
+    updateSlideHistory();
   }
 
   const initSlides = (slides: Slide[]) => {
@@ -115,5 +119,6 @@ export const useSlides = () => {
   return {
     slides, addEmptyPage, deleteSlidePage, updateSlidePage, changeTemplate, initSlides,
     slidesHistory, slidesHistoryIndex, undoChange, redoChange,
-    slideIndex, gotoPage, slidesStatus };
+    slideIndex, gotoPage, slidesStatus
+  };
 };
