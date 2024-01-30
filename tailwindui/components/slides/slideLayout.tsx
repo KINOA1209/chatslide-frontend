@@ -111,14 +111,16 @@ export const Cover_img_1_layout = ({
 	layoutElements,
 	templateLogo,
 }: MainSlideProps) => {
-	const { localImgs, updateImgAtIndex } = useLocalImgs(
-		imgs,
-		1,
-		update_callback,
-	);
-	// useEffect(() => {
-	// 	console.log('chosenLayoutCover', templateLogo);
-	// }, []);
+
+  const updateImgAtIndex = (index: number) => (imgSrc: string) => {
+    const newImgs = [...imgs];
+    if(index >= newImgs.length) 
+      newImgs.push(imgSrc);
+    else 
+      newImgs[index] = imgSrc;
+    update_callback(newImgs);
+  }
+
 	return (
 		<>
 			<div style={layoutElements.columnCSS}>
@@ -135,7 +137,7 @@ export const Cover_img_1_layout = ({
 			</div>
 			<div style={layoutElements.imageContainerCSS}>
 				<ImgModule
-					imgsrc={localImgs[0]}
+					imgsrc={imgs[0]}
 					updateSingleCallback={updateImgAtIndex(0)}
 					canEdit={canEdit}
 					autoSave={autoSave}
@@ -318,11 +320,16 @@ export const Col_1_img_1_layout = ({
 	layoutElements,
 	templateLogo,
 }: MainSlideProps) => {
-	const { localImgs, updateImgAtIndex } = useLocalImgs(
-		imgs,
-		1,
-		update_callback,
-	);
+
+  const updateImgAtIndex = (index: number) => (imgSrc: string) => {
+    const newImgs = [...imgs];
+    if (index >= newImgs.length)
+      newImgs.push(imgSrc);
+    else
+      newImgs[index] = imgSrc;
+    update_callback(newImgs);
+  }
+
 	return (
 		<>
 			{/* area for topic, subtopic and contents */}
@@ -357,7 +364,7 @@ export const Col_1_img_1_layout = ({
 			{/* image section */}
 			<div className='mt-[3rem] h-[15rem] grow rounded-md overflow-hidden'>
 				<ImgModule
-					imgsrc={localImgs[0]}
+					imgsrc={imgs[0]}
 					updateSingleCallback={updateImgAtIndex(0)}
 					canEdit={canEdit}
 					autoSave={autoSave}
@@ -384,11 +391,16 @@ export const Col_2_img_1_layout = ({
 	layoutElements,
 	templateLogo,
 }: MainSlideProps) => {
-	const { localImgs, updateImgAtIndex } = useLocalImgs(
-		imgs,
-		1,
-		update_callback,
-	);
+
+  const updateImgAtIndex = (index: number) => (imgSrc: string) => {
+    const newImgs = [...imgs];
+    if (index >= newImgs.length)
+      newImgs.push(imgSrc);
+    else
+      newImgs[index] = imgSrc;
+    update_callback(newImgs);
+  }
+
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const topicRef = useRef<HTMLDivElement>(null);
@@ -449,7 +461,7 @@ export const Col_2_img_1_layout = ({
 			</div>
 			<div className={`w-1/2 h-[90%] rounded-md overflow-hidden items-center`}>
 				<ImgModule
-					imgsrc={localImgs[0]}
+					imgsrc={imgs[0]}
 					updateSingleCallback={updateImgAtIndex(0)}
 					canEdit={canEdit}
 					autoSave={autoSave}
@@ -477,11 +489,16 @@ export const Col_2_img_2_layout = ({
 	layoutElements,
 	templateLogo,
 }: MainSlideProps) => {
-	const { localImgs, updateImgAtIndex } = useLocalImgs(
-		imgs,
-		2,
-		update_callback,
-	);
+
+  const updateImgAtIndex = (index: number) => (imgSrc: string) => {
+    const newImgs = [...imgs];
+    if (index >= newImgs.length)
+      newImgs.push(imgSrc);
+    else
+      newImgs[index] = imgSrc;
+    update_callback(newImgs);
+  }
+
 	return (
 		<>
 			<div className='flex flex-col justify-center items-center gap-[0.5rem]'>
@@ -500,7 +517,7 @@ export const Col_2_img_2_layout = ({
 							}}
 						></div> */}
 						<ImgModule
-							imgsrc={localImgs[0]}
+							imgsrc={imgs[0]}
 							updateSingleCallback={updateImgAtIndex(0)}
 							canEdit={canEdit}
 							autoSave={autoSave}
@@ -517,7 +534,7 @@ export const Col_2_img_2_layout = ({
 							}}
 						></div> */}
 						<ImgModule
-							imgsrc={localImgs[1]}
+							imgsrc={imgs[1]}
 							updateSingleCallback={updateImgAtIndex(1)}
 							canEdit={canEdit}
 							autoSave={autoSave}
@@ -558,11 +575,16 @@ export const Col_3_img_3_layout = ({
 	layoutElements,
 	templateLogo,
 }: MainSlideProps) => {
-	const { localImgs, updateImgAtIndex } = useLocalImgs(
-		imgs,
-		3,
-		update_callback,
-	);
+
+  const updateImgAtIndex = (index: number) => (imgSrc: string) => {
+    const newImgs = [...imgs];
+    if (index >= newImgs.length)
+      newImgs.push(imgSrc);
+    else
+      newImgs[index] = imgSrc;
+    update_callback(newImgs);
+  }
+
 	return (
 		<>
 			<div className='flex flex-col justify-center items-center gap-[0.5rem]'>
@@ -572,7 +594,7 @@ export const Col_3_img_3_layout = ({
 				<div className='w-full grid grid-cols-3 gap-[2rem] '>
 					<div className='h-[11rem] grow rounded-md overflow-hidden'>
 						<ImgModule
-							imgsrc={localImgs[0]}
+							imgsrc={imgs[0]}
 							updateSingleCallback={updateImgAtIndex(0)}
 							canEdit={canEdit}
 							autoSave={autoSave}
@@ -580,7 +602,7 @@ export const Col_3_img_3_layout = ({
 					</div>
 					<div className='h-[11rem] grow rounded-md overflow-hidden'>
 						<ImgModule
-							imgsrc={localImgs[1]}
+							imgsrc={imgs[1]}
 							updateSingleCallback={updateImgAtIndex(1)}
 							canEdit={canEdit}
 							autoSave={autoSave}
@@ -588,7 +610,7 @@ export const Col_3_img_3_layout = ({
 					</div>
 					<div className='h-[11rem] grow rounded-md overflow-hidden'>
 						<ImgModule
-							imgsrc={localImgs[2]}
+							imgsrc={imgs[2]}
 							updateSingleCallback={updateImgAtIndex(2)}
 							canEdit={canEdit}
 							autoSave={autoSave}
