@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { use, useEffect, useRef, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import sanitizeHtml from 'sanitize-html';
@@ -33,16 +33,15 @@ import {
 	AIAssistantChatWindow,
 } from '../ui/AIAssistant';
 import ActionsToolBar from '../ui/ActionsToolBar';
+import { useSlides } from '@/hooks/use-slides';
 
 type SlidesHTMLProps = {
-	slides: Slide[];
-	setSlides: Function;
-	isViewing?: boolean; // viewing another's shared project
-	transcriptList?: string[];
-	setTranscriptList?: (transcriptList: string[]) => void;
-	exportSlidesRef?: React.RefObject<HTMLDivElement>;
-	isPresenting?: boolean;
-	initSlideIndex?: number;
+  isViewing?: boolean; // viewing another's shared project
+  transcriptList?: string[];
+  setTranscriptList?: (transcriptList: string[]) => void;
+  exportSlidesRef?: React.RefObject<HTMLDivElement>;
+  isPresenting?: boolean;
+  initSlideIndex?: number;
 };
 
 // Load customizable elements from session storage or use default values
@@ -75,31 +74,25 @@ export const loadLayoutConfigElements = (
 
 // it will render the slides fetched from `foldername` in sessionStorage
 const SlidesHTML: React.FC<SlidesHTMLProps> = ({
-	slides,
-	setSlides,
-	isViewing = false,
-	transcriptList = [],
-	setTranscriptList = () => {},
-	exportSlidesRef = useRef<HTMLDivElement>(null),
-	isPresenting = false,
-	initSlideIndex = 0,
+  isViewing = false,
+  transcriptList = [],
+  setTranscriptList = () => { },
+  exportSlidesRef = useRef<HTMLDivElement>(null),
+  isPresenting = false,
+  initSlideIndex = 0,
 }) => {
-	// Retrieve the last saved currentSlideIndex from sessionStorage
-	const savedCurrentSlideIndex = parseInt(
-		sessionStorage.getItem('currentSlideIndex') || '0',
-		10, // Specify the base for parseInt
-	);
-	const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(
-		savedCurrentSlideIndex,
-	);
-	const foldername =
-		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('foldername')
-			: '';
-	const project_id =
-		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('project_id')
-			: '';
+
+  const { slides, slideIndex, slidesHistory, addEmptyPage, deleteSlidePage, 
+    changeTemplate, undoChange, redoChange, slidesHistoryIndex, slidesStatus, initSlides, updateSlidePage
+  , gotoPage } = useSlides();
+  const foldername =
+    typeof sessionStorage !== 'undefined'
+      ? sessionStorage.getItem('foldername')
+      : '';
+  const project_id =
+    typeof sessionStorage !== 'undefined'
+      ? sessionStorage.getItem('project_id')
+      : '';
 
 	// default to use test data for slides, res will not be used if slide is passed in
 	const res_slide =
@@ -132,24 +125,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	const [isChatWindowOpen, setIsChatWindowOpen] = useState(false);
 
-	const [slidesHistory, setSlidesHistory] = useState<Slide[][]>([slides]);
-	const [currentHistoryIndex, setCurrentHistoryIndex] = useState<number>(0);
-	const canUndo = currentHistoryIndex > 0;
-	const canRedo = currentHistoryIndex < slidesHistory.length - 1;
+  const canUndo = slidesHistoryIndex > 0;
+  const canRedo = slidesHistoryIndex < slidesHistory.length - 1;
 
-	const toggleChatWindow = () => {
-		setIsChatWindowOpen(!isChatWindowOpen);
-	};
-
-	useEffect(() => {
-		// Update slides history when slides change
-		setSlidesHistory((prevHistory) => [...prevHistory, slides]);
-		setCurrentHistoryIndex((prevIndex) => prevIndex + 1);
-	}, [slides, setSlides]);
-
-	useEffect(() => {
-		console.log('Slides history', slidesHistory);
-	}, [slides]);
+  const toggleChatWindow = () => {
+    setIsChatWindowOpen(!isChatWindowOpen);
+  };
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -184,54 +165,19 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		);
 	}, []);
 
-	useEffect(() => {
-		console.log('layout Changed to: ', chosenLayout);
-		setUnsavedChanges(true);
-		saveSlides();
-	}, [chosenLayout]);
+  useEffect(() => {
+    console.log('layout Changed to: ', chosenLayout);
+    setUnsavedChanges(true);
+    saveSlides();
+  }, [chosenLayout]);
 
-	// Undo function
-	const undo = () => {
-		if (currentHistoryIndex > 0) {
-			setCurrentHistoryIndex((prevIndex) => prevIndex - 1);
-			setSlides(slidesHistory[currentHistoryIndex - 1]);
-		}
-		console.log('Performing undo...');
-		document.execCommand('undo', false, undefined); // Change null to undefined
-	};
-
-	// Redo function
-	const redo = () => {
-		if (currentHistoryIndex < slidesHistory.length - 1) {
-			setCurrentHistoryIndex((prevIndex) => prevIndex + 1);
-			setSlides(slidesHistory[currentHistoryIndex + 1]);
-		}
-		// Add your redo logic here
-		console.log('Performing redo...');
-		document.execCommand('redo', false, undefined); // Change null to undefined
-	};
-
-	// Function to change the template of slides starting from the second one
-	const changeTemplate = (newTemplate: string) => {
-		console.log('Changing template to:', newTemplate);
-		const newSlides = slides.map((slide, index) => {
-			// Keep the template of the first slide unchanged
-			//   if (index === 0) {
-			//     return slide
-			//   }
-			// Update the template for slides starting from the second one
-			return { ...slide, template: newTemplate };
-		});
-		// console.log('Slides after changing template:', newSlides)
-		sessionStorage.setItem('schoolTemplate', newTemplate);
-		sessionStorage.setItem('presentation_slides', JSON.stringify(newSlides));
-		setSlides(newSlides);
-
-		console.log('Slides after changing template:', newSlides);
-
-		setUnsavedChanges(true);
-		saveSlides();
-	};
+  // Function to change the template of slides starting from the second one
+  const selectTemplate = (newTemplate: string) => {
+    console.log('Changing template to:', newTemplate);
+    changeTemplate(newTemplate as TemplateKeys);
+    setUnsavedChanges(true);
+    saveSlides();
+  };
 
 	// Function to send a request to auto-save slides
 	const saveSlides = async () => {
@@ -314,21 +260,21 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		};
 	}, []); // Empty dependency array to ensure this effect runs only once (similar to componentDidMount)
 
-	// fetch slides data from session storage if slides is not passed in
-	useEffect(() => {
-		if (slides && slides.length > 0) {
-			console.log(
-				`slides is passed in, skip fetching slides data from session storage`,
-			);
-		} else if (res_slide) {
-			console.log(
-				`slides is not passed in, fetch slides data from session storage`,
-			);
-			const slidesArray = ProjectService.parseSlides(res_slide);
-			//console.log('the parsed slides array:', slidesArray);
-			setSlides(slidesArray);
-		}
-	}, []);
+  // fetch slides data from session storage if slides is not passed in
+  useEffect(() => {
+    if (slides && slides.length > 0) {
+      console.log(
+        `slides is passed in, skip fetching slides data from session storage`,
+      );
+    } else if (res_slide) {
+      console.log(
+        `slides is not passed in, fetch slides data from session storage`,
+      );
+      const slidesArray = ProjectService.parseSlides(res_slide);
+      //console.log('the parsed slides array:', slidesArray);
+      initSlides(slidesArray);
+    }
+  }, []);
 
 	useEffect(() => {
 		document.addEventListener('keydown', handleKeyDown);
@@ -356,163 +302,123 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		}
 	}, []);
 
-	function handleKeyDown(event: KeyboardEvent) {
-		if (!isEditMode) {
-			if (event.key === 'ArrowRight' && currentSlideIndex < slides.length - 1) {
-				goToSlide(currentSlideIndex + 1);
-			} else if (event.key === 'ArrowLeft' && currentSlideIndex > 0) {
-				goToSlide(currentSlideIndex - 1);
-			}
-		}
-	}
+  function handleKeyDown(event: KeyboardEvent) {
+    if (!isEditMode) {
+      if (event.key === 'ArrowRight' && slideIndex < slides.length - 1) {
+        gotoPage(slideIndex + 1);
+      } else if (event.key === 'ArrowLeft' && slideIndex > 0) {
+        gotoPage(slideIndex - 1);
+      }
+    }
+  }
 
-	function handleSlideEdit(
-		content: string | string[],
-		slideIndex: number,
-		tag: SlideKeys,
-		contentIndex?: number,
-	) {
-		setIsEditMode(false);
-		const newSlides = [...slides];
-		// const newFinalSlides = [...finalSlides];
+  function handleSlideEdit(
+    content: string | string[],
+    slideIndex: number,
+    tag: SlideKeys,
+    contentIndex?: number,
+  ) {
+    setIsEditMode(false);
+    
+    const currentSlide = { ...slides[slideIndex] };
+    const className = tag;
 
-		const currentSlide = newSlides[slideIndex];
-		const className = tag;
+    if (className === 'head') {
+      currentSlide.head = content as string;
+    } else if (className === 'title') {
+      currentSlide.title = content as string;
+    } else if (className === 'subtopic') {
+      currentSlide.subtopic = content as string;
+    } else if (className === 'userName') {
+      currentSlide.userName = content as string;
+    } else if (className === 'template') {
+      currentSlide.template = content as TemplateKeys;
+    } else if (className === 'layout') {
+      currentSlide.layout = content as LayoutKeys;
+    } else if (className === 'logo') {
+      currentSlide.logo = content as string;
+    } else if (className === 'images') {
+      currentSlide.images = content as string[];
+    } else if (className === 'content') {
+      if (Array.isArray(content)) {
+        currentSlide.content = content as string[];
+      } else {
+        if (typeof contentIndex === 'number' && contentIndex >= 0) {
+          currentSlide.content[contentIndex] = content as string;
+        } else {
+          console.error(`Invalid contentIndex: ${contentIndex}`);
+        }
+      }
+    } else {
+      console.error(`Unknown tag: ${tag}`);
+    }
 
-		if (className === 'head') {
-			currentSlide.head = content as string;
-		} else if (className === 'title') {
-			currentSlide.title = content as string;
-		} else if (className === 'subtopic') {
-			currentSlide.subtopic = content as string;
-		} else if (className === 'userName') {
-			currentSlide.userName = content as string;
-		} else if (className === 'template') {
-			currentSlide.template = content as TemplateKeys;
-		} else if (className === 'layout') {
-			currentSlide.layout = content as LayoutKeys;
-		} else if (className === 'logo') {
-			currentSlide.logo = content as string;
-		} else if (className === 'images') {
-			currentSlide.images = content as string[];
-		} else if (className === 'content') {
-			if (Array.isArray(content)) {
-				currentSlide.content = content as string[];
-			} else {
-				if (typeof contentIndex === 'number' && contentIndex >= 0) {
-					currentSlide.content[contentIndex] = content as string;
-				} else {
-					console.error(`Invalid contentIndex: ${contentIndex}`);
-				}
-			}
-		} else {
-			console.error(`Unknown tag: ${tag}`);
-		}
-		sessionStorage.setItem('presentation_slides', JSON.stringify(newSlides));
-		setSlides(newSlides);
-		//console.log(newSlides)
-	}
+    console.log('updating slide page', slideIndex)
+    updateSlidePage(slideIndex, currentSlide);
+  }
 
-	function goToSlide(index: number) {
-		console.log('Goinng to slide', index);
-		isFirstRender.current = true;
-		setCurrentSlideIndex(index);
+  function handleAddPage() {
+    addEmptyPage(slideIndex);
+  }
 
-		// Save the currentSlideIndex to sessionStorage
-		sessionStorage.setItem('currentSlideIndex', index.toString());
-	}
-
-	function handleAddPage() {
-		const newSlides = [...slides];
-		const newSlide = new Slide();
-		if (currentSlideIndex != 0) {
-			newSlides.splice(currentSlideIndex, 0, newSlide);
-		}
-		sessionStorage.setItem('presentation_slides', JSON.stringify(newSlides));
-		setSlides(newSlides);
-	}
-
-	function handleDeletePage() {
-		const newSlides = [...slides];
-		if (currentSlideIndex != 0) {
-			newSlides.splice(currentSlideIndex, 1);
-
-			if (transcriptList.length > 0) {
-				const newTranscriptList = [...transcriptList];
-				newTranscriptList.splice(currentSlideIndex, 1);
-				setTranscriptList(newTranscriptList);
-			}
-
-			if (currentSlideIndex >= newSlides.length) {
-				setCurrentSlideIndex(newSlides.length - 1);
-			}
-		}
-		sessionStorage.setItem('presentation_slides', JSON.stringify(newSlides));
-		setSlides(newSlides);
-	}
+  function handleDeletePage() {
+    deleteSlidePage(slideIndex);
+  }
 
 	function toggleEditMode() {
 		setIsEditMode(!isEditMode);
 	}
 
-	const updateImgUrlArray = (slideIndex: number) => {
-		const updateImgUrl = (urls: string[]) => {
-			handleSlideEdit(urls, slideIndex, 'images');
-		};
-		return updateImgUrl;
-	};
+  const updateImgUrlArray = (slideIndex: number) => {
+    const updateImgUrl = (urls: string[]) => {
+      handleSlideEdit(urls, slideIndex, 'images');
+    };
+    return updateImgUrl;
+  };
 
-	function wrapWithLiTags(content: string): string {
-		if (!content.includes('<li>') || !content.includes('</li>')) {
-			return `<li style="font-size: 18pt;">${content}</li>`;
-		}
-		return content;
-	}
+  const editableTemplateDispatch = (
+    slide: Slide,
+    index: number,
+    canEdit: boolean,
+    exportToPdfMode: boolean = false,
+  ) =>
+    templateDispatch(
+      slide,
+      index,
+      canEdit,
+      exportToPdfMode,
+      isEditMode,
+      saveSlides,
+      setIsEditMode,
+      handleSlideEdit,
+      updateImgUrlArray,
+      toggleEditMode,
+      index === 0,
+      slide.layout,
+      slide.layout,
+      index === slideIndex,
+    );
 
-	const editableTemplateDispatch = (
-		slide: Slide,
-		index: number,
-		canEdit: boolean,
-		exportToPdfMode: boolean = false,
-	) =>
-		templateDispatch(
-			slide,
-			index,
-			canEdit,
-			exportToPdfMode,
-			isEditMode,
-			saveSlides,
-			setIsEditMode,
-			handleSlideEdit,
-			updateImgUrlArray,
-			toggleEditMode,
-			index === 0,
-			slide.layout,
-			slide.layout,
-			index === currentSlideIndex,
-		);
-
-	return (
-		<div className='flex flex-col items-center justify-center gap-4 relative'>
-			{/* hidden div for export to pdf */}
-			<div className='absolute left-[-9999px] top-[-9999px] -z-1'>
-				<div ref={exportSlidesRef}>
-					{/* Render all of your slides here. This can be a map of your slides array */}
-					{slides.map((slide, index) => (
-						<div
-							key={`exportToPdfContainer` + index.toString()}
-							style={{ pageBreakAfter: 'always' }}
-						>
-							<SlideContainer
-								slides={slides}
-								currentSlideIndex={index}
-								templateDispatch={editableTemplateDispatch}
-								exportToPdfMode={true}
-							/>
-						</div>
-					))}
-				</div>
-			</div>
+  return (
+    <div className='flex flex-col items-center justify-center gap-4 relative'>
+      {/* hidden div for export to pdf */}
+      <div className='absolute left-[-9999px] top-[-9999px] -z-1'>
+        <div ref={exportSlidesRef}>
+          {/* Render all of your slides here. This can be a map of your slides array */}
+          {slides.map((slide, index) => (
+            <div
+              key={`exportToPdfContainer` + index.toString()}
+              style={{ pageBreakAfter: 'always' }}
+            >
+              <SlideContainer
+                index={index}
+                templateDispatch={editableTemplateDispatch}
+                exportToPdfMode={true}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
 
 			{/* absolute positionde ai assistant icon */}
 			{!isChatWindowOpen && (
@@ -528,53 +434,52 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				</div>
 			)}
 
-			{!isViewing && (
-				<div className='py-2 hidden sm:block'>
-					<ChangeTemplateOptions
-						templateOptions={Object.keys(availableTemplates)}
-						onChangeTemplate={changeTemplate}
-					/>
-				</div>
-			)}
+      {!isViewing && (
+        <div className='py-2 hidden sm:block'>
+          <ChangeTemplateOptions
+            templateOptions={Object.keys(availableTemplates)}
+            onChangeTemplate={selectTemplate}
+          />
+        </div>
+      )}
 
 			{/* buttons and contents */}
 			<div className='max-w-4xl relative flex flex-row items-center justify-center gap-4'>
 				<ToastContainer />
 
-				{/* vertical bar */}
-				<div className='h-[540px] w-[144px] hidden xl:block mx-auto justify-center items-center'>
-					<div className='h-full flex flex-col flex-nowrap py-2 overflow-y-auto  overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
-						{Array(slides.length)
-							.fill(0)
-							.map((_, index) => (
-								<div
-									key={`previewContainer` + index.toString()}
-									className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
-									onClick={() => goToSlide(index)} // Added onClick handler
-								>
-									{/* {index + 1} */}
-									<SlideContainer
-										slides={slides}
-										currentSlideIndex={index}
-										scale={0.12}
-										isViewing={true}
-										templateDispatch={editableTemplateDispatch}
-										slideRef={slideRef}
-										containerRef={containerRef}
-										highlightBorder={currentSlideIndex === index}
-									/>
-								</div>
-							))}
-					</div>
-				</div>
+        {/* vertical bar */}
+        <div className='h-[540px] w-[144px] hidden xl:block mx-auto justify-center items-center'>
+          <div className='h-full flex flex-col flex-nowrap py-2 overflow-y-auto  overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
+            {Array(slides.length)
+              .fill(0)
+              .map((_, index) => (
+                <div
+                  key={`previewContainer` + index.toString()}
+                  className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
+                  onClick={() => gotoPage(index)} // Added onClick handler
+                >
+                  {/* {index + 1} */}
+                  <SlideContainer
+                    index={index}
+                    scale={0.12}
+                    isViewing={true}
+                    templateDispatch={editableTemplateDispatch}
+                    slideRef={slideRef}
+                    containerRef={containerRef}
+                    highlightBorder={slideIndex === index}
+                  />
+                </div>
+              ))}
+          </div>
+        </div>
 
-				<div className='hidden lg:block'>
-					<SlideLeftNavigator
-						currentSlideIndex={currentSlideIndex}
-						slides={slides}
-						goToSlide={goToSlide}
-					/>
-				</div>
+        <div className='hidden lg:block'>
+          <SlideLeftNavigator
+            currentSlideIndex={slideIndex}
+            slides={slides}
+            goToSlide={gotoPage}
+          />
+        </div>
 
 				<div className='flex flex-col items-end SlidesStep-3 SlidesStep-4 gap-2'>
 					<div className='flex flex-row items-center justify-center gap-4'>
@@ -584,74 +489,73 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							explanation='Present'
 						/>
 
-						{!isViewing && (
-							<ButtonWithExplanation
-								button={
-									<LayoutChanger
-										openModal={openModal}
-										showLayout={showLayout}
-										closeModal={closeModal}
-										currentSlideIndex={currentSlideIndex}
-										// templateSamples={templateSamples}
-										slides={slides}
-										handleSlideEdit={handleSlideEdit}
-										availableLayouts={availableLayouts}
-									/>
-								}
-								explanation='Change Layout'
-							/>
-						)}
+            {!isViewing && (
+              <ButtonWithExplanation
+                button={
+                  <LayoutChanger
+                    openModal={openModal}
+                    showLayout={showLayout}
+                    closeModal={closeModal}
+                    currentSlideIndex={slideIndex}
+                    // templateSamples={templateSamples}
+                    slides={slides}
+                    handleSlideEdit={handleSlideEdit}
+                    availableLayouts={availableLayouts}
+                  />
+                }
+                explanation='Change Layout'
+              />
+            )}
 
-						{!isViewing && currentSlideIndex != 0 && (
-							<ButtonWithExplanation
-								button={
-									<AddSlideButton
-										addPage={handleAddPage}
-										currentSlideIndex={currentSlideIndex}
-									/>
-								}
-								explanation='Add Page'
-							/>
-						)}
+            {!isViewing && slideIndex != 0 && (
+              <ButtonWithExplanation
+                button={
+                  <AddSlideButton
+                    addPage={handleAddPage}
+                    currentSlideIndex={slideIndex}
+                  />
+                }
+                explanation='Add Page'
+              />
+            )}
 
-						{!isViewing && currentSlideIndex != 0 && (
-							<ButtonWithExplanation
-								button={
-									<DeleteSlideButton
-										deletePage={handleDeletePage}
-										currentSlideIndex={currentSlideIndex}
-									/>
-								}
-								explanation='Delete Page'
-							/>
-						)}
-						<ActionsToolBar
-							undo={undo}
-							redo={redo}
-							canRedo={canRedo}
-							canUndo={canUndo}
-						/>
-					</div>
+            {!isViewing && slideIndex != 0 && (
+              <ButtonWithExplanation
+                button={
+                  <DeleteSlideButton
+                    deletePage={handleDeletePage}
+                    currentSlideIndex={slideIndex}
+                  />
+                }
+                explanation='Delete Page'
+              />
+            )}
+            <ActionsToolBar
+              undo={undoChange}
+              redo={redoChange}
+              canRedo={canRedo}
+              canUndo={canUndo}
+            />
+          </div>
 
-					<SlideContainer
-						isPresenting={present}
-						slides={slides}
-						currentSlideIndex={currentSlideIndex}
-						isViewing={isViewing}
-						scale={present ? presentScale : nonPresentScale}
-						templateDispatch={editableTemplateDispatch}
-						slideRef={slideRef}
-						containerRef={containerRef}
-					/>
-				</div>
+          <SlideContainer
+            index={slideIndex}
+            isPresenting={present}
+            isViewing={isViewing}
+            scale={present ? presentScale : nonPresentScale}
+            templateDispatch={editableTemplateDispatch}
+            slideRef={slideRef}
+            containerRef={containerRef}
+          />
+        </div>
 
-				<div className='hidden lg:block'>
-					<SlideRightNavigator
-						currentSlideIndex={currentSlideIndex}
-						slides={slides}
-						goToSlide={goToSlide}
-					/>
-				</div>
+        <div className='hidden lg:block'>
+          <SlideRightNavigator
+            currentSlideIndex={slideIndex}
+            slides={slides}
+            goToSlide={gotoPage}
+          />
+        </div>
 
 				{/* filler for alignment, leave space for ai agent */}
 				<div className='h-[540px] w-[144px] min-h-[540px] min-w-[144px] hidden xl:block mx-auto justify-center items-center'></div>
@@ -706,15 +610,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					)}
 				</div> */}
 
-				{isChatWindowOpen && (
-					<AIAssistantChatWindow
-						onToggle={toggleChatWindow}
-						slides={slides}
-						currentSlideIndex={currentSlideIndex}
-						setSlides={setSlides}
-						saveSlides={saveSlides}
-					/>
-				)}
+        {isChatWindowOpen && (
+          <AIAssistantChatWindow
+            onToggle={toggleChatWindow}
+            slides={slides}
+            currentSlideIndex={slideIndex}
+            updateSlidePage={updateSlidePage}
+          />
+        )}
 
 				{/* White modal for presentation mode */}
 				{present && (
@@ -732,62 +635,60 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				)}
 			</div>
 
-			<div className='py-[1rem] flex flex-row items-center'>
-				<div className='block lg:hidden'>
-					<SlideLeftNavigator
-						currentSlideIndex={currentSlideIndex}
-						slides={slides}
-						goToSlide={goToSlide}
-					/>
-				</div>
-				<SlidePagesIndicator
-					currentSlideIndex={currentSlideIndex}
-					slides={slides}
-					goToSlide={goToSlide}
-				/>
-				<div className='block lg:hidden'>
-					<SlideRightNavigator
-						currentSlideIndex={currentSlideIndex}
-						slides={slides}
-						goToSlide={goToSlide}
-					/>
-				</div>
-			</div>
+      <div className='py-[1rem] flex flex-row items-center'>
+        <div className='block lg:hidden'>
+          <SlideLeftNavigator
+            currentSlideIndex={slideIndex}
+            slides={slides}
+            goToSlide={gotoPage}
+          />
+        </div>
+        <SlidePagesIndicator
+          currentSlideIndex={slideIndex}
+          slides={slides}
+        />
+        <div className='block lg:hidden'>
+          <SlideRightNavigator
+            currentSlideIndex={slideIndex}
+            slides={slides}
+            goToSlide={gotoPage}
+          />
+        </div>
+      </div>
 
-			{/* transcripotList */}
-			{transcriptList.length > 0 && (
-				<ScriptEditor
-					transcriptList={transcriptList}
-					setTranscriptList={setTranscriptList}
-					currentSlideIndex={currentSlideIndex}
-				/>
-			)}
+      {/* transcripotList */}
+      {transcriptList.length > 0 && (
+        <ScriptEditor
+          transcriptList={transcriptList}
+          setTranscriptList={setTranscriptList}
+          currentSlideIndex={slideIndex}
+        />
+      )}
 
-			{/* horizontal  */}
-			<div className='block xl:hidden max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
-				<div className='w-full py-6 flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
-					{Array(slides.length)
-						.fill(0)
-						.map((_, index) => (
-							<div
-								key={`previewContainer` + index.toString()}
-								className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
-								onClick={() => goToSlide(index)} // Added onClick handler
-							>
-								{/* {index + 1} */}
-								<SlideContainer
-									slides={slides}
-									currentSlideIndex={index}
-									scale={0.12}
-									isViewing={true}
-									templateDispatch={editableTemplateDispatch}
-									highlightBorder={currentSlideIndex === index}
-								/>
-							</div>
-						))}
-				</div>
-			</div>
-		</div>
-	);
+      {/* horizontal  */}
+      <div className='block xl:hidden max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
+        <div className='w-full py-6 flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
+          {Array(slides.length)
+            .fill(0)
+            .map((_, index) => (
+              <div
+                key={`previewContainer` + index.toString()}
+                className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
+                onClick={() => gotoPage(index)} // Added onClick handler
+              >
+                {/* {index + 1} */}
+                <SlideContainer
+                  index={index}
+                  scale={0.12}
+                  isViewing={true}
+                  templateDispatch={editableTemplateDispatch}
+                  highlightBorder={slideIndex === index}
+                />
+              </div>
+            ))}
+        </div>
+      </div>
+    </div>
+  );
 };
 export default SlidesHTML;

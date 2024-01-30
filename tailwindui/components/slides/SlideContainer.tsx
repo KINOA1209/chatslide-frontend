@@ -1,10 +1,10 @@
 import React, { useRef } from 'react';
 import Slide from '@/models/Slide';
 import { templateDispatch as defaultTemplateDispatch } from './templateDispatch';
+import { useSlides } from '@/hooks/use-slides';
 
 type SlideContainerProps = {
-	slides: Slide[]; // You can replace 'any' with the actual type of the slides if known
-	currentSlideIndex: number;
+  index: number;
 	isViewing?: boolean;
 	isSnippet?: boolean;
 	isPresenting?: boolean;
@@ -23,8 +23,7 @@ type SlideContainerProps = {
 };
 
 const SlideContainer: React.FC<SlideContainerProps> = ({
-	slides,
-	currentSlideIndex,
+  index,
 	isViewing = false,
 	isPresenting = false,
 	scale = 1,
@@ -35,6 +34,8 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 	highlightBorder = false,
 	setIsPresenting,
 }) => {
+  const { slides } = useSlides();
+
 	return (
 		<div
 			id='slideContainer'
@@ -85,10 +86,10 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 						position: 'relative',
 					}}
 				>
-					{slides[currentSlideIndex] &&
+					{slides[index] &&
 						templateDispatch(
-							slides[currentSlideIndex],
-							currentSlideIndex,
+							slides[index],
+							index,
 							!isViewing && !isPresenting,
 							exportToPdfMode,
 						)}

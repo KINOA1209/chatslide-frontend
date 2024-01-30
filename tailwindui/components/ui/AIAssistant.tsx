@@ -32,15 +32,13 @@ interface AIAssistantChatWindowProps {
   onToggle: () => void;
   slides: Slide[];
   currentSlideIndex: number;
-  setSlides: Function;
-  saveSlides: Function;
+  updateSlidePage: Function;
 }
 export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
   onToggle,
   slides,
   currentSlideIndex,
-  setSlides,
-  saveSlides,
+  updateSlidePage,
 }) => {
   // const [isChatWindowOpen, setIsChatWindowOpen] = useState(true);
   // const toggleChatWindow = () => {
@@ -102,24 +100,14 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 
         // If the slide is updated, add a success message
         if (responseData.data.slide) {
-          // Clone the existing slides array
-          const newSlides = [...slides];
           // Update the slide at the current index with new data
           console.log(
             'updateSlide content after api call:',
             responseData.data.slide,
           );
-          newSlides[currentSlideIndex] = responseData.data.slide;
 
           // Update state with the new slides
-          setSlides(newSlides);
-          saveSlides();
-
-          // Update sessionStorage
-          sessionStorage.setItem(
-            'presentation_slides',
-            JSON.stringify(newSlides),
-          );
+          updateSlidePage(currentSlideIndex, responseData.data.slide);
 
           // Add success message to chat history
           const successMessage = {
