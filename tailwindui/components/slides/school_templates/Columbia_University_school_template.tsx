@@ -4,7 +4,11 @@ import ColumbiaLogo from '@/public/images/template/Columbia/ColumbiaLogo.png';
 
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import { layoutOptions } from '@/components/slides/slideLayout';
-import { loadCustomizableElements } from '@/components/slides/SlidesHTML';
+import { useEffect, useState } from 'react';
+import {
+	loadCustomizableElements,
+	loadLayoutConfigElements,
+} from '@/components/slides/SlidesHTML';
 export const Columbia_school_template = ({
 	user_name,
 	title,
@@ -26,8 +30,10 @@ export const Columbia_school_template = ({
 		layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
 	//   console.log('choosing layout option', ChosenLayout)
 	// Load customizable elements for the current template
-	const themeElements = loadCustomizableElements(
+	const themeElements = loadCustomizableElements('Columbia' as TemplateKeys);
+	const layoutConfigElements = loadLayoutConfigElements(
 		'Columbia' as TemplateKeys,
+		layoutOptionCover as keyof typeof layoutOptions,
 	);
 	return (
 		<>
@@ -56,6 +62,7 @@ export const Columbia_school_template = ({
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
 					themeElements={themeElements}
+					layoutElements={layoutConfigElements}
 					templateLogo={templateLogo}
 				></ChosenLayoutNonCover>
 			</div>
@@ -82,6 +89,7 @@ export const Columbia_school_template = ({
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
 					themeElements={themeElements}
+					layoutElements={layoutConfigElements}
 					templateLogo={templateLogo}
 				></ChosenLayoutCover>
 			</div>

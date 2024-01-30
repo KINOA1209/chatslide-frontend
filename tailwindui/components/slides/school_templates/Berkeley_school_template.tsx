@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MainSlideProps } from '../slideTemplates';
 import Image, { StaticImageData } from 'next/image';
 import BerkeleyLogo from '@/public/images/template/Berkeley/Berkeley_logo.png';
@@ -6,7 +6,10 @@ import MaskedBackground from '@/public/images/template/Berkeley/Mask Background.
 import BerkeleyLogoWhite from '@/public/images/template/Berkeley/Berkeley_logo_white.png';
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import { layoutOptions } from '@/components/slides/slideLayout';
-import { loadCustomizableElements } from '@/components/slides/SlidesHTML';
+import {
+	loadCustomizableElements,
+	loadLayoutConfigElements,
+} from '@/components/slides/SlidesHTML';
 import { TemplateKeys } from '../slideTemplates';
 export const Berkeley_school_template = ({
 	user_name,
@@ -29,9 +32,21 @@ export const Berkeley_school_template = ({
 		layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
 	//   console.log('choosing layout option', ChosenLayout)
 	// Load customizable elements for the current template
-	const themeElements = loadCustomizableElements(
+	const themeElements = loadCustomizableElements('Berkeley' as TemplateKeys);
+	const layoutConfigElements = loadLayoutConfigElements(
 		'Berkeley' as TemplateKeys,
+		layoutOptionCover as keyof typeof layoutOptions,
 	);
+
+	useEffect(() => {
+		console.log('berkeley themeElements:', themeElements);
+	}, []);
+	useEffect(() => {
+		console.log(
+			'berkeley layoutConfigElements for current slide page:',
+			layoutConfigElements,
+		);
+	}, []);
 	return (
 		<>
 			{/* for not-cover page slides */}
@@ -58,6 +73,7 @@ export const Berkeley_school_template = ({
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
 					themeElements={themeElements}
+					layoutElements={layoutConfigElements}
 					templateLogo={templateLogo}
 				></ChosenLayoutNonCover>
 			</div>
@@ -83,6 +99,7 @@ export const Berkeley_school_template = ({
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
 					themeElements={themeElements}
+					layoutElements={layoutConfigElements}
 					templateLogo={templateLogo}
 				></ChosenLayoutCover>
 

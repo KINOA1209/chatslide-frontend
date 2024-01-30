@@ -3,7 +3,11 @@ import { MainSlideProps, TemplateKeys } from '../slideTemplates';
 import CaltechLogo from '@/public/images/template/Caltech/CaltechLogo.png';
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import { layoutOptions } from '@/components/slides/slideLayout';
-import { loadCustomizableElements } from '@/components/slides/SlidesHTML';
+import { useEffect, useState } from 'react';
+import {
+	loadCustomizableElements,
+	loadLayoutConfigElements,
+} from '@/components/slides/SlidesHTML';
 export const Caltech_school_template = ({
 	user_name,
 	title,
@@ -25,9 +29,12 @@ export const Caltech_school_template = ({
 		layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
 	//   console.log('choosing layout option', ChosenLayout)
 	// Load customizable elements for the current template
-	const themeElements = loadCustomizableElements(
+	const themeElements = loadCustomizableElements('Caltech' as TemplateKeys);
+	const layoutConfigElements = loadLayoutConfigElements(
 		'Caltech' as TemplateKeys,
+		layoutOptionCover as keyof typeof layoutOptions,
 	);
+
 	return (
 		<>
 			{/* for not-cover page slides */}
@@ -55,6 +62,7 @@ export const Caltech_school_template = ({
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
 					themeElements={themeElements}
+					layoutElements={layoutConfigElements}
 					templateLogo={templateLogo}
 				></ChosenLayoutNonCover>
 			</div>
@@ -81,6 +89,7 @@ export const Caltech_school_template = ({
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
 					themeElements={themeElements}
+					layoutElements={layoutConfigElements}
 					templateLogo={templateLogo}
 				></ChosenLayoutCover>
 			</div>

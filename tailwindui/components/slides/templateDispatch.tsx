@@ -189,7 +189,12 @@ export const templateDispatch = (
 			layoutOptionNonCover={layoutOptionNonCover}
 			layoutOptionCover={layoutOptionCover}
 			brandingColor={brandingColor}
-			templateLogo={<ChosenTemplateLogo isCoverPage={isCoverPage} custom_logo={slide.logo}/>}
+			templateLogo={
+				<ChosenTemplateLogo
+					isCoverPage={isCoverPage}
+					custom_logo={slide.logo}
+				/>
+			}
 		/>
 	);
 	// }

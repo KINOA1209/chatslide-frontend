@@ -2,7 +2,11 @@ import Image, { StaticImageData } from 'next/image';
 import { MainSlideProps, TemplateKeys } from '../slideTemplates';
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import { layoutOptions } from '@/components/slides/slideLayout';
-import { loadCustomizableElements } from '@/components/slides/SlidesHTML';
+import { useEffect, useState } from 'react';
+import {
+	loadCustomizableElements,
+	loadLayoutConfigElements,
+} from '@/components/slides/SlidesHTML';
 export const Yale_school_template = ({
 	user_name,
 	title,
@@ -25,6 +29,10 @@ export const Yale_school_template = ({
 	//   console.log('choosing layout option', ChosenLayout)
 	// Load customizable elements for the current template
 	const themeElements = loadCustomizableElements('Yale' as TemplateKeys);
+	const layoutConfigElements = loadLayoutConfigElements(
+		'Yale' as TemplateKeys,
+		layoutOptionCover as keyof typeof layoutOptions,
+	);
 	return (
 		<>
 			{/* for not-cover page slides */}
@@ -52,6 +60,7 @@ export const Yale_school_template = ({
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
 					themeElements={themeElements}
+					layoutElements={layoutConfigElements}
 					templateLogo={templateLogo}
 				></ChosenLayoutNonCover>
 			</div>
@@ -78,6 +87,7 @@ export const Yale_school_template = ({
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
 					themeElements={themeElements}
+					layoutElements={layoutConfigElements}
 					templateLogo={templateLogo}
 				></ChosenLayoutCover>
 			</div>

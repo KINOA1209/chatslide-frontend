@@ -23,7 +23,8 @@ import { templateDispatch } from './templateDispatch';
 import { availableLayouts } from './slideLayout';
 import TestSlidesData from './TestSlidesData.json';
 import AuthService from '@/services/AuthService';
-import customizable_elements from './templates_customizable_elements/theme_elements';
+import themeConfigData from './templates_customizable_elements/theme_elements';
+import layoutConfigData from './templates_customizable_elements/layout_elements';
 import ScriptEditor from './ScriptEditor';
 import Slide, { SlideKeys } from '@/models/Slide';
 import ProjectService from '@/services/ProjectService';
@@ -32,7 +33,6 @@ import {
 	AIAssistantChatWindow,
 } from '../ui/AIAssistant';
 import ActionsToolBar from '../ui/ActionsToolBar';
-import layoutData from './templates_customizable_elements/layout_elements';
 
 type SlidesHTMLProps = {
 	slides: Slide[];
@@ -51,6 +51,26 @@ export const loadCustomizableElements = (templateName: string) => {
 		sessionStorage.getItem('themeElements') || '{}',
 	);
 	return themeElements[templateName] || {};
+};
+
+// export const loadLayoutConfigElements = (templateName: string) => {
+// 	const layoutConfigElements = JSON.parse(
+// 		sessionStorage.getItem('layoutConfigElements') || '{}',
+// 	);
+// 	return layoutConfigElements[templateName] || {};
+// };
+export const loadLayoutConfigElements = (
+	templateName: string,
+	layoutOption: string,
+) => {
+	const layoutConfigElements = JSON.parse(
+		sessionStorage.getItem('layoutConfigElements') || '{}',
+	);
+
+	const templateElements = layoutConfigElements[templateName] || {};
+	const selectedLayoutOptionElements = templateElements[layoutOption] || {};
+
+	return selectedLayoutOptionElements;
 };
 
 // it will render the slides fetched from `foldername` in sessionStorage
@@ -154,9 +174,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	// set themeElements for templates
 	useEffect(() => {
+		sessionStorage.setItem('themeElements', JSON.stringify(themeConfigData));
+	}, []);
+
+	useEffect(() => {
 		sessionStorage.setItem(
-			'themeElements',
-			JSON.stringify(customizable_elements),
+			'layoutConfigElements',
+			JSON.stringify(layoutConfigData),
 		);
 	}, []);
 
@@ -603,13 +627,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				</div>
 
 				<div className='flex flex-col items-end SlidesStep-3 SlidesStep-4'>
-          <ActionsToolBar
-            undo={undo}
-            redo={redo}
-            canRedo={canRedo}
-            canUndo={canUndo}
-          />
-          
+					<ActionsToolBar
+						undo={undo}
+						redo={redo}
+						canRedo={canRedo}
+						canUndo={canUndo}
+					/>
+
 					<SlideContainer
 						isPresenting={present}
 						slides={slides}
