@@ -36,6 +36,7 @@ export const SideBarData = [
 		title: 'Join Discord',
 		icon: <RiDiscordLine />,
     path: 'https://discord.gg/x2E7ZMmj3b',
+    target: '_blank',
 	},
 	{
 		title: 'Account',
