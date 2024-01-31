@@ -12,6 +12,7 @@ import Slide from '@/models/Slide';
 import Project from '@/models/Project';
 import { FaTimes } from 'react-icons/fa';
 import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
+import { useSlides } from '@/hooks/use-slides';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
   ssr: false,
@@ -27,7 +28,7 @@ const SharePage: React.FC = () => {
   const project_id = pathname?.split('/').pop();
   const [loading, setLoading] = useState(true);
   const [description, setDescription] = useState<string>('');
-  const [slides, setSlides] = useState<Slide[]>([]);
+  const { slides, initSlides } = useSlides();
   const [showDescription, setShowDescription] = useState<boolean>(true);
   const [projectType, setProjectType] = useState<'presentation' | 'socialpost'>('presentation');
   const [socialPosts, setSocialPosts] = useState<SocialPostSlide[]>([]);
@@ -103,7 +104,7 @@ const SharePage: React.FC = () => {
       ProjectService.getSharedProjectDetails(project_id).then((project: Project) => {
         if (project.content_type === 'presentation') {
           setProjectType('presentation')
-          setSlides(project.parsed_slides);
+          initSlides(project.parsed_slides);
           setDescription(project.description);
         }
         else if (project.content_type === 'social_posts'){
@@ -143,8 +144,6 @@ const SharePage: React.FC = () => {
           {projectType === 'presentation' &&
             <div>
               <SlidesHTML
-                slides={slides}
-                setSlides={setSlides}
                 isViewing={true}
               />
             </div>
