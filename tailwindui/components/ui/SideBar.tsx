@@ -36,10 +36,10 @@ import { useUser } from '@/hooks/use-user';
 interface SideBarProps {}
 const SideBar = ({}: SideBarProps) => {
 	const [top, setTop] = useState<boolean>(true);
-	const [loading, setLoading] = useState(true);
   const { credits, tier } = useUser();
 	const router = useRouter();
 	const [isMobile, setIsMobile] = useState<boolean>(false);
+  const { signOut: userSignOut } = useUser();
 
 	// detect whether user has scrolled the page down by 10px
 	const scrollHandler = () => {
@@ -62,6 +62,7 @@ const SideBar = ({}: SideBarProps) => {
 			await AuthService.signOut();
 			sessionStorage.clear();
 			localStorage.clear();
+      userSignOut();
 			console.log('You have signed out!');
 			router.push('/');
 		} catch (error: any) {
