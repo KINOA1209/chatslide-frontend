@@ -45,6 +45,7 @@ export const useSlides = () => {
       newSlides.splice(index, 0, new Slide());
       return newSlides;
     });
+    updateVersion();
 
     updateSlideHistory();
   }
@@ -56,6 +57,7 @@ export const useSlides = () => {
       newSlides.splice(index, 1);
       return newSlides;
     });
+    updateVersion();
 
     updateSlideHistory();
   }
