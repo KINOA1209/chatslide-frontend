@@ -3,34 +3,30 @@
 export type ThemeElements = {
 	backgroundColorCover: string;
 	backgroundColor: string;
-	backgroundUrl?: string;
-
+	backgroundUrlCover?: string;
 	titleFontCSS: React.CSSProperties;
-
 	subtopicFontCSS: React.CSSProperties;
-
 	contentFontCSS: React.CSSProperties;
-
 	userNameFont: string;
 	userNameFontColor: string;
-
 	headFontCSS: React.CSSProperties;
 	contentFontCSS_non_vertical_content: React.CSSProperties;
 };
 
 type Config = {
-  Stanford: ThemeElements;
-  Berkeley: ThemeElements;
-  Harvard: ThemeElements;
-  MIT: ThemeElements;
-  Princeton: ThemeElements;
-  Caltech: ThemeElements;
-  Columbia: ThemeElements;
-  JHU: ThemeElements;
-  UChicago: ThemeElements;
-  Yale: ThemeElements;
-  UPenn: ThemeElements;
-  Default: ThemeElements;
+	Stanford: ThemeElements;
+	Berkeley: ThemeElements;
+	Harvard: ThemeElements;
+	MIT: ThemeElements;
+	Princeton: ThemeElements;
+	Caltech: ThemeElements;
+	Columbia: ThemeElements;
+	JHU: ThemeElements;
+	UChicago: ThemeElements;
+	Yale: ThemeElements;
+	UPenn: ThemeElements;
+	Default: ThemeElements;
+	Fun_Education_004: ThemeElements;
 };
 
 const configData: Config = {
@@ -628,7 +624,7 @@ const configData: Config = {
 	Default: {
 		backgroundColorCover: 'bg-[#F0F0F2]',
 		backgroundColor: 'bg-[#F0F0F2]',
-		backgroundUrl: 'https://via.placeholder.com/1200x800',
+		// backgroundUrlCover: 'https://via.placeholder.com/1200x800',
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold
@@ -675,6 +671,54 @@ const configData: Config = {
 			lineHeight: 1.2, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
+		},
+	},
+	Fun_Education_004: {
+		backgroundUrlCover:
+			'/images/template/Fun_Education_004/BackgroundElements.png',
+		backgroundColorCover: 'bg-[#FFFFFF]', //Lin: with a background image and shapes of color #01B99F, #4747F3, #FFC8FF, #FF846C, #FECEB7
+		backgroundColor: 'bg-[#FFFFFF]', //Lin: Text box color #E4F9F6, shapes of color #01B99F, #4747F3, #FFC8FF, #FF846C, #FECEB7
+		titleFontCSS: {
+			fontSize: '24pt', // text-3xl in points
+			fontWeight: 'bold', // font-bold,(Lin: 700)
+			fontFamily: 'Caveat', // font-nimbus-sans-bold
+			lineHeight: 1.2, // leading-[110%] is equivalent to a line height of 1.1
+			whiteSpace: 'nowrap', // whitespace-nowrap},
+			color: '#4B4B4B', // text-[#8C1515] color
+		},
+		subtopicFontCSS: {
+			opacity: 1, // opacity-70
+			fontWeight: 'normal', // font-nimbus-sans-bold (Lin: 500)
+			fontFamily: 'Helvetica Neue', // font-nimbus-sans-bold
+			fontSize: '20pt', // text-xl in points
+			fontStyle: 'normal', // font-normal
+			lineHeight: 1, // leading-[150%] is equivalent to a line height of 1.5
+			color: '#BCBCBC', // text-red-800 color
+		},
+		contentFontCSS: {
+			fontSize: '20pt', // text-base in points (assuming 1rem is 1pt)
+			fontWeight: 'normal', // font-normal (Lin: 400)
+			fontFamily: 'Helvetica Neue', // font-nimbus-sans-regular
+			lineHeight: 1.3, // leading-9 is equivalent to a line height of 1.5
+			color: '#4B4B4B', // text-zinc-800 color
+			display: 'list-item',
+		},
+		userNameFont:
+			'text-sm font-Creato Display-regular font-normal leading-[100%]',
+		userNameFontColor: 'text-[#868686]', //(Lin: color #868686)
+		headFontCSS: {
+			fontSize: '64pt', // text-4xl in points (assuming 1rem is 1pt)
+			fontWeight: 'normal', // font-bold, (Lin: 700)
+			fontFamily: 'Caveat', // font-nimbus-sans-bold
+			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
+			color: '#2E2E2E', // text-white color
+		},
+		contentFontCSS_non_vertical_content: {
+			fontSize: '20pt', // text-base in points (assuming 1rem is 1pt)
+			fontWeight: 'normal', // font-normal
+			fontFamily: 'Helvetica Neue', // font-nimbus-sans-regular
+			lineHeight: 1.3, // leading-9 is equivalent to a line height of 1.5
+			color: '#4B4B4B', // text-zinc-800 color
 		},
 	},
 };
