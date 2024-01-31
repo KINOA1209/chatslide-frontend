@@ -262,26 +262,26 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
           </div>
           {/* chat history render */}
           {chatHistoryStatus == ChatHistoryStatus.Inited && chatHistory
-            .map((message, index) => (
+            .map((chat, index) => (
               <div
                 key={index}
                 ref={
                   index === chatHistory.length - 1 ? lastMessageRef : null
                 } // Attach ref to the last message
                 className={
-                  message.role === 'user'
+                  chat.role === 'user'
                     ? 'px-3.5 py-2.5 bg-indigo-500 rounded-tl-xl rounded-tr-xl rounded-bl-xl border border-white  gap-2.5 self-end flex flex-wrap max-w-[15rem]'
                     : 'px-3.5 py-2.5 bg-indigo-50 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-white  gap-2.5 max-w-[15rem] flex flex-wrap'
                 }
               >
                 <div
                   className={
-                    message.role === 'user'
+                    chat.role === 'user'
                       ? 'grow shrink basis-0 text-gray-100 text-base font-normal font-creato-medium text-wrap'
                       : 'text-neutral-800 text-base font-normal font-creato-medium text-wrap'
                   }
                 >
-                  {message.content}
+                  {chat.content}
                 </div>
               </div>
             ))}
