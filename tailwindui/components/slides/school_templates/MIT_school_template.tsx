@@ -17,7 +17,6 @@ export const MIT_school_template = ({
 	imgs,
 	update_callback,
 	canEdit,
-	autoSave,
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
@@ -56,7 +55,6 @@ export const MIT_school_template = ({
 					imgs={imgs}
 					update_callback={update_callback}
 					canEdit={canEdit}
-					autoSave={autoSave}
 					isCoverPage={isCoverPage}
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
@@ -83,7 +81,6 @@ export const MIT_school_template = ({
 					imgs={imgs}
 					update_callback={update_callback}
 					canEdit={canEdit}
-					autoSave={autoSave}
 					isCoverPage={isCoverPage}
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}

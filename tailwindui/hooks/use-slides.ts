@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { createBearStore } from '@/utils/create-bear-store';
 import Slide from '@/models/Slide';
 import { TemplateKeys } from '@/components/slides/slideTemplates';
+import { useUser } from './use-user';
 
 const useSlidesBear = createBearStore<Slide[]>()('slides', [], true);
 const useSlideIndex = createBearStore<number>()('slideIndex', 0, true);
@@ -15,7 +16,13 @@ export enum SlidesStatus {
   Inited,
 }
 
+export enum SaveStatus {
+  UpToDate,
+  Saving,
+}
+
 let slidesStatus: SlidesStatus = SlidesStatus.NotInited;
+let saveStatus: SaveStatus = SaveStatus.UpToDate;
 
 export const useSlides = () => {
   const { slides, setSlides } = useSlidesBear();
@@ -38,6 +45,10 @@ export const useSlides = () => {
     slidesStatus = SlidesStatus.Inited;
   }
 
+  useEffect(() => {
+    void init();
+  }, []);
+
   const addEmptyPage = (index: number) => {
     console.log('-- add empty page: ', { index })
     setSlides(prevSlides => {
@@ -45,9 +56,10 @@ export const useSlides = () => {
       newSlides.splice(index, 0, new Slide());
       return newSlides;
     });
-    updateVersion();
 
+    updateVersion();
     updateSlideHistory();
+    saveSlides();
   }
 
   const deleteSlidePage = (index: number) => {
@@ -57,9 +69,10 @@ export const useSlides = () => {
       newSlides.splice(index, 1);
       return newSlides;
     });
-    updateVersion();
 
+    updateVersion();
     updateSlideHistory();
+    saveSlides();
   }
 
   const updateSlidePage = (index: number, slide: Slide) => {
@@ -71,6 +84,7 @@ export const useSlides = () => {
     });
 
     updateSlideHistory();
+    saveSlides();
   }
 
   const gotoPage = (index: number) => {
@@ -78,10 +92,6 @@ export const useSlides = () => {
     if (index < 0 || index >= slides.length) return;
     setSlideIndex(index);
   }
-
-  useEffect(() => {
-    void init();
-  }, []);
 
   const updateSlideHistory = () => {
     console.log('-- slides changed, adding to history: ', { slides })
@@ -119,6 +129,7 @@ export const useSlides = () => {
     setSlides(newSlides);
     
     updateSlideHistory();
+    saveSlides();
   }
 
   const initSlides = (slides: Slide[]) => {
@@ -129,10 +140,45 @@ export const useSlides = () => {
     setVersion((prevVersion) => prevVersion + 1);
   }
 
+  const saveSlides = async () => {
+    saveStatus = SaveStatus.Saving;
+
+    const { token } = useUser();
+    const foldername = sessionStorage.getItem('foldername');
+    const project_id = sessionStorage.getItem('project_id');
+    const formData = {
+      foldername: foldername,
+      final_slides: slides,
+      project_id: project_id,
+    };
+    // Send a POST request to the backend to save finalSlides
+    fetch('/api/save_slides', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => {
+        if (response.ok) {
+          saveStatus = SaveStatus.UpToDate;
+          console.log('Auto-save successful.');
+        } else {
+          // Handle save error
+          console.error('Auto-save failed.');
+        }
+      })
+      .catch((error) => {
+        // Handle network error
+        console.error('Auto-save failed:', error);
+      });
+  };
+
   return {
     slides, addEmptyPage, deleteSlidePage, updateSlidePage, changeTemplate, initSlides,
     slidesHistory, slidesHistoryIndex, undoChange, redoChange,
     slideIndex, gotoPage, slidesStatus, 
-    version, updateVersion
+    version, updateVersion, saveStatus
   };
 };

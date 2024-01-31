@@ -43,7 +43,6 @@ export const Cover_img_0_layout = ({
 	imgs,
 	update_callback,
 	canEdit,
-	autoSave,
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
@@ -102,7 +101,6 @@ export const Cover_img_1_layout = ({
 	imgs,
 	update_callback,
 	canEdit,
-	autoSave,
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
@@ -140,7 +138,6 @@ export const Cover_img_1_layout = ({
 					imgsrc={imgs[0]}
 					updateSingleCallback={updateImgAtIndex(0)}
 					canEdit={canEdit}
-					autoSave={autoSave}
 				/>
 			</div>
 			<div style={layoutElements.logoCSS}>{templateLogo}</div>
@@ -156,7 +153,6 @@ export const Col_1_img_0_layout = ({
 	imgs,
 	update_callback,
 	canEdit,
-	autoSave,
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
@@ -231,7 +227,6 @@ export const Col_2_img_0_layout = ({
 	imgs,
 	update_callback,
 	canEdit,
-	autoSave,
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
@@ -270,7 +265,6 @@ export const Col_3_img_0_layout = ({
 	imgs,
 	update_callback,
 	canEdit,
-	autoSave,
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
@@ -312,7 +306,6 @@ export const Col_1_img_1_layout = ({
 	imgs,
 	update_callback,
 	canEdit,
-	autoSave,
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
@@ -367,7 +360,6 @@ export const Col_1_img_1_layout = ({
 					imgsrc={imgs[0]}
 					updateSingleCallback={updateImgAtIndex(0)}
 					canEdit={canEdit}
-					autoSave={autoSave}
 				/>
 			</div>
 			<div style={layoutElements.logoCSS}>{templateLogo}</div>
@@ -383,7 +375,6 @@ export const Col_2_img_1_layout = ({
 	imgs,
 	update_callback,
 	canEdit,
-	autoSave,
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
@@ -464,7 +455,6 @@ export const Col_2_img_1_layout = ({
 					imgsrc={imgs[0]}
 					updateSingleCallback={updateImgAtIndex(0)}
 					canEdit={canEdit}
-					autoSave={autoSave}
 				/>
 			</div>
 			<div style={layoutElements.logoCSS}>{templateLogo}</div>
@@ -481,7 +471,6 @@ export const Col_2_img_2_layout = ({
 	imgs,
 	update_callback,
 	canEdit,
-	autoSave,
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
@@ -520,7 +509,6 @@ export const Col_2_img_2_layout = ({
 							imgsrc={imgs[0]}
 							updateSingleCallback={updateImgAtIndex(0)}
 							canEdit={canEdit}
-							autoSave={autoSave}
 						/>
 					</div>
 					<div className='h-[11rem] grow rounded-md overflow-hidden  relative'>
@@ -537,7 +525,6 @@ export const Col_2_img_2_layout = ({
 							imgsrc={imgs[1]}
 							updateSingleCallback={updateImgAtIndex(1)}
 							canEdit={canEdit}
-							autoSave={autoSave}
 						/>
 					</div>
 				</div>
@@ -567,7 +554,6 @@ export const Col_3_img_3_layout = ({
 	imgs,
 	update_callback,
 	canEdit,
-	autoSave,
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
@@ -597,7 +583,6 @@ export const Col_3_img_3_layout = ({
 							imgsrc={imgs[0]}
 							updateSingleCallback={updateImgAtIndex(0)}
 							canEdit={canEdit}
-							autoSave={autoSave}
 						/>
 					</div>
 					<div className='h-[11rem] grow rounded-md overflow-hidden'>
@@ -605,7 +590,6 @@ export const Col_3_img_3_layout = ({
 							imgsrc={imgs[1]}
 							updateSingleCallback={updateImgAtIndex(1)}
 							canEdit={canEdit}
-							autoSave={autoSave}
 						/>
 					</div>
 					<div className='h-[11rem] grow rounded-md overflow-hidden'>
@@ -613,7 +597,6 @@ export const Col_3_img_3_layout = ({
 							imgsrc={imgs[2]}
 							updateSingleCallback={updateImgAtIndex(2)}
 							canEdit={canEdit}
-							autoSave={autoSave}
 						/>
 					</div>
 				</div>

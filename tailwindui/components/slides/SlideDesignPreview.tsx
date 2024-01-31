@@ -97,7 +97,6 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			false,
 			() => {},
 			() => {},
-			() => {},
 			() => () => {},
 			() => {},
 			index === 0 || index === 1,

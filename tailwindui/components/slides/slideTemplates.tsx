@@ -27,7 +27,6 @@ export interface MainSlideProps {
 	//   imgs: JSX.Element
 	update_callback: (imgs: string[]) => void;
 	canEdit: boolean;
-	autoSave: Function;
 	isCoverPage: boolean;
 	layoutOptionNonCover: LayoutKeys;
 	layoutOptionCover: LayoutKeys;
@@ -82,7 +81,6 @@ export const Default = ({
 	imgs,
 	update_callback,
 	canEdit,
-	autoSave,
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
@@ -134,7 +132,6 @@ MainSlideProps) => {
 					imgs={imgs}
 					update_callback={update_callback}
 					canEdit={canEdit}
-					autoSave={autoSave}
 					isCoverPage={isCoverPage}
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
@@ -174,7 +171,6 @@ MainSlideProps) => {
 					imgs={imgs}
 					update_callback={update_callback}
 					canEdit={canEdit}
-					autoSave={autoSave}
 					isCoverPage={isCoverPage}
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}

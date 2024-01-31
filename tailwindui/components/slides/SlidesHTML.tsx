@@ -84,7 +84,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
   const { slides, slideIndex, slidesHistory, addEmptyPage, deleteSlidePage, 
     changeTemplate, undoChange, redoChange, slidesHistoryIndex, slidesStatus, initSlides, updateSlidePage
-  , gotoPage, version } = useSlides();
+  , gotoPage, version, saveStatus } = useSlides();
   const foldername =
     typeof sessionStorage !== 'undefined'
       ? sessionStorage.getItem('foldername')
@@ -107,13 +107,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const [present, setPresent] = useState(isPresenting);
 	const slideRef = useRef<HTMLDivElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
-	const [saveStatus, setSaveStatus] = useState('Up to date');
 	const [dimensions, setDimensions] = useState({
 		width: typeof window !== 'undefined' ? window.innerWidth : 960,
 		height: typeof window !== 'undefined' ? window.innerHeight : 540,
 	});
-	const [unsavedChanges, setUnsavedChanges] = useState(false);
-	const isFirstRender = useRef(true);
 	const [isEditMode, setIsEditMode] = useState(false);
 
 	const [presentScale, setPresentScale] = useState(
@@ -147,12 +144,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		return () => window.removeEventListener('resize', handleResize);
 	}, []);
 
-	useEffect(() => {
-		if (unsavedChanges) {
-			setSaveStatus('Unsaved changes');
-		}
-	});
-
 	// set themeElements for templates
 	useEffect(() => {
 		sessionStorage.setItem('themeElements', JSON.stringify(themeConfigData));
@@ -165,69 +156,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		);
 	}, []);
 
-  useEffect(() => {
-    console.log('layout Changed to: ', chosenLayout);
-    setUnsavedChanges(true);
-    saveSlides();
-  }, [chosenLayout]);
-
   // Function to change the template of slides starting from the second one
   const selectTemplate = (newTemplate: string) => {
     console.log('Changing template to:', newTemplate);
     changeTemplate(newTemplate as TemplateKeys);
-    setUnsavedChanges(true);
-    saveSlides();
-  };
-
-  // Function to send a request to auto-save slides
-  const saveSlides = async () => {
-    // if (isViewing) {
-    //   console.log("Viewing another's shared project, skip saving");
-    //   return;
-    // }
-
-    // if (slides.length === 0) {
-    //   console.log('slides not yet loaded, skip saving');
-    //   return;
-    // }
-
-    // if (!foldername) {
-    //   console.log('Foldername not found, skip saving');
-    //   return;
-    // }
-
-    // setSaveStatus('Saving...');
-
-    // const { userId, idToken: token } =
-    //   await AuthService.getCurrentUserTokenAndId();
-    // const formData = {
-    //   foldername: foldername,
-    //   final_slides: slides,
-    //   project_id: project_id,
-    // };
-    // // Send a POST request to the backend to save finalSlides
-    // fetch('/api/save_slides', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json; charset=utf-8',
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    //   body: JSON.stringify(formData),
-    // })
-    //   .then((response) => {
-    //     if (response.ok) {
-    //       setUnsavedChanges(false);
-    //       console.log('Auto-save successful.');
-    //       setSaveStatus('Up to date');
-    //     } else {
-    //       // Handle save error
-    //       console.error('Auto-save failed.');
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     // Handle network error
-    //     console.error('Auto-save failed:', error);
-    //   });
   };
 
 	const openModal = () => {
@@ -284,17 +216,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			document.removeEventListener('keydown', handleKeyDown);
 		};
 	});
-
-  // useEffect(() => {
-  //   if (isFirstRender.current) {
-  //     isFirstRender.current = false;
-  //     console.log('First render, skip saving');
-  //   } else {
-  //     console.log('slides changed');
-  //     setUnsavedChanges(true);
-  //     saveSlides();
-  //   }
-  // }, [slides]);
 
 	const scrollContainerRef = useRef<HTMLDivElement | null>(null); // Specify the type as HTMLDivElement
 
@@ -402,7 +323,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       canEdit,
       exportToPdfMode,
       isEditMode,
-      saveSlides,
       setIsEditMode,
       handleSlideEdit,
       updateImgUrlArray,
@@ -424,7 +344,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       false,
       exportToPdfMode,
       isEditMode,
-      saveSlides,
       setIsEditMode,
       ()=>{},
       updateImgUrlArray,
