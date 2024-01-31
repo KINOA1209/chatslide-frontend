@@ -1,6 +1,7 @@
 'use client';
 import { ChatHistoryStatus, useChatHistory } from '@/hooks/use-chat-history';
 import { useSession } from '@/hooks/use-session';
+import { useSlides } from '@/hooks/use-slides';
 import ChatHistory from '@/models/ChatHistory';
 import Slide from '@/models/Slide';
 import DrlambdaCartoonImage from '@/public/images/AIAssistant/DrLambdaCartoon.png';
@@ -32,15 +33,13 @@ interface AIAssistantChatWindowProps {
   onToggle: () => void;
   slides: Slide[];
   currentSlideIndex: number;
-  setSlides: Function;
-  saveSlides: Function;
+  updateSlidePage: Function;
 }
 export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
   onToggle,
   slides,
   currentSlideIndex,
-  setSlides,
-  saveSlides,
+  updateSlidePage,
 }) => {
   // const [isChatWindowOpen, setIsChatWindowOpen] = useState(true);
   // const toggleChatWindow = () => {
@@ -49,6 +48,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
   // fixed right-0 top-[5rem]
   const [userInput, setUserInput] = useState('');
   const { chatHistory, addChatHistory, clearChatHistory, chatHistoryStatus } = useChatHistory();
+  const { updateVersion } = useSlides();
   const [loading, setLoading] = useState(false);
 
   // Create a ref for the last message
@@ -102,30 +102,21 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 
         // If the slide is updated, add a success message
         if (responseData.data.slide) {
-          // Clone the existing slides array
-          const newSlides = [...slides];
           // Update the slide at the current index with new data
           console.log(
             'updateSlide content after api call:',
             responseData.data.slide,
           );
-          newSlides[currentSlideIndex] = responseData.data.slide;
 
           // Update state with the new slides
-          setSlides(newSlides);
-          saveSlides();
-
-          // Update sessionStorage
-          sessionStorage.setItem(
-            'presentation_slides',
-            JSON.stringify(newSlides),
-          );
+          updateSlidePage(currentSlideIndex, responseData.data.slide);
+          updateVersion();  // force rerender when version changes and index does not change
 
           // Add success message to chat history
           const successMessage = {
             role: 'assistant',
             content:
-              'Current slide data is updated successfully. Please refresh page to check the updated slide',
+              '✅ I updated the current slide for you.',
           };
           addChatHistory(successMessage);
         }
@@ -136,15 +127,11 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
           content: `${responseData.data.chat}`,
         };
         addChatHistory(newAIMessage);
-
-        // Refresh the page
-        if (responseData.data.slide)
-          window.location.reload();
       } else {
         console.error('Failed to get AI response');
         addChatHistory({
           role: 'assistant',
-          content: 'Sorry, I do not understand your request, can you try something else?',
+          content: '😞 Sorry, I do not understand your request, can you try something else?',
         });
         setLoading(false);
       }
@@ -152,7 +139,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
       console.error('Error making API call:', error);
       addChatHistory({
         role: 'assistant',
-        content: 'Sorry, I do not understand your request, can you try something else?',
+        content: '😞 Sorry, I do not understand your request, can you try something else?',
       });
       setLoading(false);
     }
@@ -275,26 +262,26 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
           </div>
           {/* chat history render */}
           {chatHistoryStatus == ChatHistoryStatus.Inited && chatHistory
-            .map((message, index) => (
+            .map((chat, index) => (
               <div
                 key={index}
                 ref={
-                  index === chatHistory.length - 2 ? lastMessageRef : null
+                  index === chatHistory.length - 1 ? lastMessageRef : null
                 } // Attach ref to the last message
                 className={
-                  message.role === 'user'
+                  chat.role === 'user'
                     ? 'px-3.5 py-2.5 bg-indigo-500 rounded-tl-xl rounded-tr-xl rounded-bl-xl border border-white  gap-2.5 self-end flex flex-wrap max-w-[15rem]'
                     : 'px-3.5 py-2.5 bg-indigo-50 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-white  gap-2.5 max-w-[15rem] flex flex-wrap'
                 }
               >
                 <div
                   className={
-                    message.role === 'user'
+                    chat.role === 'user'
                       ? 'grow shrink basis-0 text-gray-100 text-base font-normal font-creato-medium text-wrap'
                       : 'text-neutral-800 text-base font-normal font-creato-medium text-wrap'
                   }
                 >
-                  {message.content}
+                  {chat.content}
                 </div>
               </div>
             ))}
@@ -302,7 +289,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
           {loading && (
             <div className='px-3.5 py-2.5 bg-indigo-50 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-white  gap-2.5 max-w-[15rem] flex flex-wrap'>
               <div className='animate-pulse text-neutral-800 text-base font-normal font-creato-medium text-wrap'>
-                Thinking...
+                🤔 I am thinking...
               </div>
             </div>
             )}

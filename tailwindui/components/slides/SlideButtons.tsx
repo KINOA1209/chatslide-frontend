@@ -151,8 +151,7 @@ export const SlideNavigator: React.FC<{
 export const SlidePagesIndicator: React.FC<{
 	currentSlideIndex: number;
 	slides: any[]; // Replace 'any' with the appropriate type if known
-	goToSlide: (index: number) => void;
-}> = ({ currentSlideIndex, slides, goToSlide }) => {
+}> = ({ currentSlideIndex, slides }) => {
 	return (
 		<div className='col-span-1'>
 			{/* <div className='w-fit h-fit flex flex-row items-center justify-center mx-auto rounded-full bg-slate-600/40'>

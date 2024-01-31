@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Slide from '@/models/Slide';
 import { templateDispatch as defaultTemplateDispatch } from './templateDispatch';
+import { useSlides } from '@/hooks/use-slides';
 
 type SlideContainerProps = {
-	slides: Slide[]; // You can replace 'any' with the actual type of the slides if known
-	currentSlideIndex: number;
+  slide: Slide;
+  index: number;
 	isViewing?: boolean;
 	isSnippet?: boolean;
 	isPresenting?: boolean;
@@ -20,11 +21,13 @@ type SlideContainerProps = {
 	exportToPdfMode?: boolean;
 	highlightBorder?: boolean;
 	setIsPresenting?: React.Dispatch<React.SetStateAction<boolean>>;
+  length?: number;  // force rerender when length changes and index does not change
+  version?: number; // force rerender when version changes
 };
 
 const SlideContainer: React.FC<SlideContainerProps> = ({
-	slides,
-	currentSlideIndex,
+  slide,
+  index,
 	isViewing = false,
 	isPresenting = false,
 	scale = 1,
@@ -34,7 +37,16 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 	exportToPdfMode = false,
 	highlightBorder = false,
 	setIsPresenting,
+  length,
+  version,
 }) => {
+  const { slides } = useSlides();
+
+  useEffect(() => {
+    if(length)
+      console.log('rerender in SlideContainer', index, length, version);
+  }, [index, length, version]);
+
 	return (
 		<div
 			id='slideContainer'
@@ -85,10 +97,10 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 						position: 'relative',
 					}}
 				>
-					{slides[currentSlideIndex] &&
+					{slide &&
 						templateDispatch(
-							slides[currentSlideIndex],
-							currentSlideIndex,
+              slide,
+							index,
 							!isViewing && !isPresenting,
 							exportToPdfMode,
 						)}

@@ -97,7 +97,6 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			false,
 			() => {},
 			() => {},
-			() => {},
 			() => () => {},
 			() => {},
 			index === 0 || index === 1,
@@ -107,9 +106,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 		);
 	return (
 		<div className='py-6 max-w-7xl flex overflow-x-auto overflow-x-scroll overflow-y-hidden'>
-			{Array(slides.length)
-				.fill(0)
-				.map((_, index) => (
+			{slides.map((slide, index) => (
 					<div
 						className='flex flex-col items-center'
 						key={`DesignpreviewContainer` + index.toString()}
@@ -117,8 +114,8 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 						<div className={`px-1`}>
 							{/* {index + 1} */}
 							<SlideContainer
-								slides={slides}
-								currentSlideIndex={index}
+                slide={slide}
+								index={index}
 								scale={0.25}
 								isViewing={true}
 								templateDispatch={editableTemplateDispatch}

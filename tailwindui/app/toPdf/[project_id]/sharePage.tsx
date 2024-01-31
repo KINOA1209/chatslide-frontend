@@ -7,6 +7,7 @@ import dynamic from 'next/dynamic';
 import ProjectService from '@/services/ProjectService';
 import Slide from '@/models/Slide';
 import Project from '@/models/Project';
+import { useSlides } from '@/hooks/use-slides';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -18,7 +19,7 @@ const SharePage: React.FC = () => {
 	const [loading, setLoading] = useState(true);
   const page = useSearchParams()?.get('page') || 0;
   const token = useSearchParams()?.get('token') || '';
-  const [slides, setSlides] = useState<Slide[]>([]);
+  const { slides, initSlides } = useSlides();
 
 	useEffect(() => {
 		if (project_id) {
@@ -28,7 +29,7 @@ const SharePage: React.FC = () => {
       console.log(`page: ${page}`);
       ProjectService.getProjectDetails(token, project_id).then((project: Project) => {
         console.log(`slides: ${project.presentation_slides}}`);
-        setSlides(project.parsed_slides);
+        initSlides(project.parsed_slides);
         setLoading(false);
       }).catch((error) => {
         console.error(error);
@@ -43,8 +44,6 @@ const SharePage: React.FC = () => {
         <div className='flex items-center justify-center min-h-screen'>Loading...</div>
 			) : (
       <SlidesHTML
-        slides={slides}
-        setSlides={setSlides}
         isViewing={true}
         isPresenting={true}
         initSlideIndex={page as number}

@@ -13,7 +13,6 @@ interface ImgModuleProp {
 	imgsrc: string;
 	updateSingleCallback: Function;
 	canEdit: boolean;
-	autoSave: Function;
 }
 
 enum ImgQueryMode {
@@ -26,7 +25,6 @@ export const ImgModule = ({
 	imgsrc,
 	updateSingleCallback,
 	canEdit,
-	autoSave,
 }: ImgModuleProp) => {
 	const [showModal, setShowModal] = useState(false);
 	const [keyword, setKeyword] = useState('');
@@ -735,7 +733,6 @@ export const ImgModule = ({
 										onClick={(e) => {
 											e.preventDefault();
 											closeModal();
-											autoSave();
 										}}
 									>
 										{uploading ? 'Uploading' : searching ? 'Searching' : 'Done'}
