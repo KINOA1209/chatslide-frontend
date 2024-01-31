@@ -22,6 +22,7 @@ type SlideContainerProps = {
 	highlightBorder?: boolean;
 	setIsPresenting?: React.Dispatch<React.SetStateAction<boolean>>;
   length?: number;  // force rerender when length changes and index does not change
+  version?: number; // force rerender when version changes
 };
 
 const SlideContainer: React.FC<SlideContainerProps> = ({
@@ -37,13 +38,14 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 	highlightBorder = false,
 	setIsPresenting,
   length,
+  version,
 }) => {
   const { slides } = useSlides();
 
   useEffect(() => {
     if(length)
-      console.log('rerender in SlideContainer', index, length);
-  }, [index, length]);
+      console.log('rerender in SlideContainer', index, length, version);
+  }, [index, length, version]);
 
 	return (
 		<div

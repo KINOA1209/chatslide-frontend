@@ -101,16 +101,16 @@ MainSlideProps) => {
 		layoutOptionCover as keyof typeof layoutOptions,
 	);
 
-	useEffect(() => {
-		console.log('Default themeElements:', themeElements);
-	}, []);
+	// useEffect(() => {
+	// 	console.log('Default themeElements:', themeElements);
+	// }, []);
 
-	useEffect(() => {
-		console.log(
-			'Default layoutConfigElements for current page',
-			layoutConfigElements,
-		);
-	}, []);
+	// useEffect(() => {
+	// 	console.log(
+	// 		'Default layoutConfigElements for current page',
+	// 		layoutConfigElements,
+	// 	);
+	// }, []);
 
 	return (
 		<>

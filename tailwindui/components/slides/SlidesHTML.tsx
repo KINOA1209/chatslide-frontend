@@ -84,7 +84,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
   const { slides, slideIndex, slidesHistory, addEmptyPage, deleteSlidePage, 
     changeTemplate, undoChange, redoChange, slidesHistoryIndex, slidesStatus, initSlides, updateSlidePage
-  , gotoPage } = useSlides();
+  , gotoPage, version } = useSlides();
   const foldername =
     typeof sessionStorage !== 'undefined'
       ? sessionStorage.getItem('foldername')
@@ -574,6 +574,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
             />
           </div>
 
+          {/* main container for viewing and editing */}
           <SlideContainer
             slide={slides[slideIndex]}
             index={slideIndex}
@@ -584,6 +585,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
             slideRef={slideRef}
             containerRef={containerRef}
             length={slides.length}
+            key={version}
           />
         </div>
 

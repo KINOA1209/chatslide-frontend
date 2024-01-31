@@ -7,6 +7,7 @@ const useSlidesBear = createBearStore<Slide[]>()('slides', [], true);
 const useSlideIndex = createBearStore<number>()('slideIndex', 0, true);
 const useSlidesHistoryBear = createBearStore<Slide[][]>()('slidesHistory', [], true);
 const useSlidesHistoryIndex = createBearStore<number>()('slidesHistoryIndex', 0, true);
+const useVersion = createBearStore<number>()('version', 0, true);
 
 export enum SlidesStatus {
   NotInited,
@@ -21,6 +22,7 @@ export const useSlides = () => {
   const { slideIndex, setSlideIndex } = useSlideIndex();
   const { slidesHistory, setSlidesHistory } = useSlidesHistoryBear();
   const { slidesHistoryIndex, setSlidesHistoryIndex } = useSlidesHistoryIndex();
+  const { version, setVersion } = useVersion();
 
   const init = async () => {
     if (slidesStatus !== SlidesStatus.NotInited) return;
@@ -121,9 +123,14 @@ export const useSlides = () => {
     setSlides(slides);
   }
 
+  const updateVersion = () => {  // helps force update slide container
+    setVersion((prevVersion) => prevVersion + 1);
+  }
+
   return {
     slides, addEmptyPage, deleteSlidePage, updateSlidePage, changeTemplate, initSlides,
     slidesHistory, slidesHistoryIndex, undoChange, redoChange,
-    slideIndex, gotoPage, slidesStatus
+    slideIndex, gotoPage, slidesStatus, 
+    version, updateVersion
   };
 };

@@ -1,6 +1,7 @@
 'use client';
 import { ChatHistoryStatus, useChatHistory } from '@/hooks/use-chat-history';
 import { useSession } from '@/hooks/use-session';
+import { useSlides } from '@/hooks/use-slides';
 import ChatHistory from '@/models/ChatHistory';
 import Slide from '@/models/Slide';
 import DrlambdaCartoonImage from '@/public/images/AIAssistant/DrLambdaCartoon.png';
@@ -47,6 +48,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
   // fixed right-0 top-[5rem]
   const [userInput, setUserInput] = useState('');
   const { chatHistory, addChatHistory, clearChatHistory, chatHistoryStatus } = useChatHistory();
+  const { updateVersion } = useSlides();
   const [loading, setLoading] = useState(false);
 
   // Create a ref for the last message
@@ -108,12 +110,13 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 
           // Update state with the new slides
           updateSlidePage(currentSlideIndex, responseData.data.slide);
+          updateVersion();  // force rerender when version changes and index does not change
 
           // Add success message to chat history
           const successMessage = {
             role: 'assistant',
             content:
-              'Current slide data is updated successfully.',
+              '✅ I updated the current slide for you.',
           };
           addChatHistory(successMessage);
         }
@@ -128,7 +131,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
         console.error('Failed to get AI response');
         addChatHistory({
           role: 'assistant',
-          content: 'Sorry, I do not understand your request, can you try something else?',
+          content: '😞 Sorry, I do not understand your request, can you try something else?',
         });
         setLoading(false);
       }
@@ -136,7 +139,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
       console.error('Error making API call:', error);
       addChatHistory({
         role: 'assistant',
-        content: 'Sorry, I do not understand your request, can you try something else?',
+        content: '😞 Sorry, I do not understand your request, can you try something else?',
       });
       setLoading(false);
     }
@@ -286,7 +289,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
           {loading && (
             <div className='px-3.5 py-2.5 bg-indigo-50 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-white  gap-2.5 max-w-[15rem] flex flex-wrap'>
               <div className='animate-pulse text-neutral-800 text-base font-normal font-creato-medium text-wrap'>
-                Thinking...
+                🤔 I am thinking...
               </div>
             </div>
             )}
