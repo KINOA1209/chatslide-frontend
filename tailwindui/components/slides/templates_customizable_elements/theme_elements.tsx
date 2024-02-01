@@ -13,7 +13,7 @@ export type ThemeElements = {
 	contentFontCSS_non_vertical_content: React.CSSProperties;
 };
 
-type Config = {
+export type ThemeConfig = {
 	Stanford: ThemeElements;
 	Berkeley: ThemeElements;
 	Harvard: ThemeElements;
@@ -29,7 +29,7 @@ type Config = {
 	Fun_Education_004: ThemeElements;
 };
 
-const configData: Config = {
+const themeConfigData: ThemeConfig = {
 	Stanford: {
 		backgroundColorCover: 'bg-[#8C1515]',
 		backgroundColor: 'bg-[#F0E9E9]',
@@ -723,4 +723,4 @@ const configData: Config = {
 	},
 };
 
-export default configData;
+export default themeConfigData;

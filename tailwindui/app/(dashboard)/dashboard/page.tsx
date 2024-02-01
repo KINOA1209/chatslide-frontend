@@ -13,7 +13,7 @@ import DrlambdaButton, {
 import Project from '@/models/Project';
 import ProjectService from '@/services/ProjectService';
 import Modal from '@/components/ui/Modal';
-import { useUser } from '@/hooks/use-user';
+import { UserStatus, useUser } from '@/hooks/use-user';
 
 export default function Dashboard() {
 	const [projects, setProjects] = useState<Project[]>([]);
@@ -22,7 +22,7 @@ export default function Dashboard() {
 	const promptRef = useRef<HTMLDivElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
 	const [rendered, setRendered] = useState<boolean>(false);
-  const { token } = useUser();
+  const { token, userStatus } = useUser();
 
 	const [isOpen, setIsOpen] = useState(false);
 	const [isDeleting, setIsDeleting] = useState(false);
@@ -34,6 +34,8 @@ export default function Dashboard() {
 	const currentProjects = projects;
 
 	useEffect(() => {
+    if (userStatus != UserStatus.Inited) return; 
+
 		if (contentRef.current) {
 			contentRef.current.style.height = contentRef.current.offsetHeight + 'px';
 		}
@@ -47,7 +49,7 @@ export default function Dashboard() {
 		};
 		// Execute the created function directly
 		fetchUserAndProject();
-	}, []);
+  }, [userStatus]);
 
 	// get projects from backend
 	const handleRequest = async (token: string) => {
@@ -116,8 +118,6 @@ export default function Dashboard() {
 		sessionStorage.clear();
 		//route to workflow-generate-outlines
 		router.push('/workflow-type-choice');
-		//route to type choosing page (new workflow)
-		// router.push('/workflow-type-choice')
 	};
 
 	return (

@@ -56,7 +56,7 @@ export default class Slide {
       'Even more content here',
     ];
     this.is_chart = [false, false, false];
-    this.images = [];
+    this.images = ['', '', ''];
     this.charts = [];
     this.layout = 'Col_2_img_1_layout';
     this.logo = 'Default';

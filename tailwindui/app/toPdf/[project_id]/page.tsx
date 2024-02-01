@@ -1,47 +1,18 @@
-import { Metadata } from 'next';
+import ProjectService from '@/services/ProjectService';
 import SharePage from './sharePage';
 
 type Props = {
-	params: { project_id: string };
+  params: { project_id: string };
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-	const project_id = params.project_id;
-  const project = { topic: "drlambda", description: "drlambda" };
-  const topic = project.topic;
-  const description = project.description;
+export default async function Page({ params }: Props) {
+  const project_id = params.project_id;
 
-	const metadata: Metadata = {
-		title: topic,
-		description: description,
-		openGraph: {
-			images: ['https://drlambda.ai/new_landing/imgs/ogimage.png'],
-			title: topic,
-			description: description,
-			url: `https://drlambda.ai/shared/${project_id}`,
-			siteName: 'Drlambda',
-			locale: 'en_US',
-			type: 'website',
-		},
-		twitter: {
-			site: '@drlambda_ai',
-			card: 'summary_large_image',
-			creator: '@drlambda_ai',
-			title: 'DrLambda',
-			description: description,
-			images: ['https://drlambda.ai/new_landing/imgs/ogimage.png'], // todo: use one from slides
-		},
-	};
+  const project = await ProjectService.serverSideGetSharedProject(project_id);
 
-	return metadata;
-}
-
-const Page: React.FC = () => {
-	return (
-		<div>
-			<SharePage /> {/* Include your client-side component */}
-		</div>
-	);
+  return (
+    <div>
+      <SharePage project={project} /> {/* The project is now passed as a prop */}
+    </div>
+  );
 };
-
-export default Page;

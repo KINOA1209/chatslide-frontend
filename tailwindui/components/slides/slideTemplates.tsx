@@ -28,7 +28,6 @@ export interface MainSlideProps {
 	//   imgs: JSX.Element
 	update_callback: (imgs: string[]) => void;
 	canEdit: boolean;
-	autoSave: Function;
 	isCoverPage: boolean;
 	layoutOptionNonCover: LayoutKeys;
 	layoutOptionCover: LayoutKeys;
@@ -36,6 +35,7 @@ export interface MainSlideProps {
 	templateLogo?: JSX.Element;
 }
 
+// deprecated
 export const useLocalImgs = (
 	imgs: string[],
 	imgCount: number,
@@ -82,7 +82,6 @@ export const Default = ({
 	imgs,
 	update_callback,
 	canEdit,
-	autoSave,
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
@@ -101,16 +100,16 @@ MainSlideProps) => {
 		layoutOptionCover as keyof typeof layoutOptions,
 	);
 
-	useEffect(() => {
-		console.log('Default themeElements:', themeElements);
-	}, []);
+	// useEffect(() => {
+	// 	console.log('Default themeElements:', themeElements);
+	// }, []);
 
-	useEffect(() => {
-		console.log(
-			'Default layoutConfigElements for current page',
-			layoutConfigElements,
-		);
-	}, []);
+	// useEffect(() => {
+	// 	console.log(
+	// 		'Default layoutConfigElements for current page',
+	// 		layoutConfigElements,
+	// 	);
+	// }, []);
 
 	return (
 		<>
@@ -134,7 +133,6 @@ MainSlideProps) => {
 					imgs={imgs}
 					update_callback={update_callback}
 					canEdit={canEdit}
-					autoSave={autoSave}
 					isCoverPage={isCoverPage}
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
@@ -174,7 +172,6 @@ MainSlideProps) => {
 					imgs={imgs}
 					update_callback={update_callback}
 					canEdit={canEdit}
-					autoSave={autoSave}
 					isCoverPage={isCoverPage}
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}

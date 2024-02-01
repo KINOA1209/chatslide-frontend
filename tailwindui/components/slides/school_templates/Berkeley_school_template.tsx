@@ -20,7 +20,6 @@ export const Berkeley_school_template = ({
 	imgs,
 	update_callback,
 	canEdit,
-	autoSave,
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
@@ -38,15 +37,15 @@ export const Berkeley_school_template = ({
 		layoutOptionCover as keyof typeof layoutOptions,
 	);
 
-	useEffect(() => {
-		console.log('berkeley themeElements:', themeElements);
-	}, []);
-	useEffect(() => {
-		console.log(
-			'berkeley layoutConfigElements for current slide page:',
-			layoutConfigElements,
-		);
-	}, []);
+	// useEffect(() => {
+	// 	console.log('berkeley themeElements:', themeElements);
+	// }, []);
+	// useEffect(() => {
+	// 	console.log(
+	// 		'berkeley layoutConfigElements for current slide page:',
+	// 		layoutConfigElements,
+	// 	);
+	// }, []);
 	return (
 		<>
 			{/* for not-cover page slides */}
@@ -68,7 +67,6 @@ export const Berkeley_school_template = ({
 					imgs={imgs}
 					update_callback={update_callback}
 					canEdit={canEdit}
-					autoSave={autoSave}
 					isCoverPage={isCoverPage}
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
@@ -94,7 +92,6 @@ export const Berkeley_school_template = ({
 					imgs={imgs}
 					update_callback={update_callback}
 					canEdit={canEdit}
-					autoSave={autoSave}
 					isCoverPage={isCoverPage}
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}

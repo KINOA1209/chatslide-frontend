@@ -10,6 +10,7 @@ import { TextLabel } from '../ui/GrayLabel';
 import Slide from '@/models/Slide';
 import PostButton from '../button/PostButton';
 import { FaTimes } from 'react-icons/fa';
+import { useSlides } from '@/hooks/use-slides';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
   ssr: false,
@@ -28,7 +29,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 }) => {
   const [host, setHost] = useState('https://drlambda.ai');
 
-  const [slides, setSlides] = useState<Slide[]>([]);
+  const { slides } = useSlides();
   const [share, setShare] = useState(false);
   const [showShareLink, setShowShareLink] = useState(true);
 
@@ -164,8 +165,6 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 
       {/* slides and scripts contents */}
       <SlidesHTML
-        slides={slides}
-        setSlides={setSlides}
         transcriptList={transcriptList}
         setTranscriptList={setTranscriptList}
         exportSlidesRef={exportSlidesRef}

@@ -184,7 +184,10 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			}
 
 			quillInstanceRef.current.setContents(initialDelta);
-			quillInstanceRef.current.on('selection-change', () => {
+			quillInstanceRef.current.on('selection-change', (range) => {
+        if(range)  // when range is null, it means the cursor is outside the editor, and we will process the blur event
+          return;
+
 				const currentContent = quillInstanceRef.current?.root.innerHTML;
 				if (currentContent !== undefined) {
 					if (isVerticalContent) {

@@ -19,7 +19,6 @@ export const templateDispatch = (
 	canEdit: boolean = true,
 	exportToPdfMode: boolean = false,
 	editMathMode: boolean = false,
-	saveSlides: (slides: Slide[]) => void = () => {}, // Replace with your default function if you have one
 	setIsEditMode: (isEditMode: boolean) => void = () => {}, // Replace with your default function if you have one
 	handleSlideEdit: (
 		content: string | string[],
@@ -126,7 +125,6 @@ export const templateDispatch = (
 
 	return (
 		<Template
-			autoSave={saveSlides}
 			canEdit={canEdit}
 			key={keyPrefix + index.toString()}
 			user_name={
