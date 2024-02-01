@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { NewStepIcon, CurrentStepIcon, FinishedStepIcon, CurrentStepCircle, FinishedStepCircle, ConnectedLine } from './icons';
 import { FaArrowLeft, FaArrowRight, FaChevronCircleLeft, FaChevronCircleRight, FaRegCircle } from 'react-icons/fa';
 import { IoMdLock } from "react-icons/io";
+import SessionStorage from '@/components/utils/SessionStorage';
 
 interface StepProps {
 	id: number;
@@ -201,8 +202,10 @@ const ProgressBox = (
 
 // Set up actual progress indicators with texts and redirections
 const ProjectProgress = () => {
-	const steps = ['Summary', 'Outlines', 'Design', 'Slides',  'Script', 'Video'];
-	const redirect = [
+	const contentType = SessionStorage.getItem('content_type', 'slides');
+	const workflowType = SessionStorage.getItem('workflowType', 'slides');
+	let steps = ['Summary', 'Outlines', 'Design', 'Slides',  'Script', 'Video'];
+	let redirect = [
 		'/workflow-generate-outlines',
 		'/workflow-edit-outlines',
 		'/workflow-edit-design',
@@ -210,12 +213,23 @@ const ProjectProgress = () => {
 		'/workflow-edit-script',
     	'/workflow-review-video',
 	];
+	// 2 cases: create new social post, access to existing social post
+	if (workflowType === 'socialpost' || contentType === 'social_posts'){
+		steps = ['Summary', 'Post']
+		redirect = [
+			'/workflow-generate-socialpost',
+			'/workflow-review-socialpost',
+		];
+	} 
 	const projectFinishedSteps: () => number[] = () => {
 		const finishedStepsArray: number[] = [];
 		if (typeof window !== 'undefined' && sessionStorage.getItem('topic')) {
 			finishedStepsArray.push(0);
 		}
 		if (typeof window !== 'undefined' && sessionStorage.getItem('outline')) {
+			finishedStepsArray.push(1);
+		}
+		if (typeof window !== 'undefined' && workflowType === 'social_posts' && sessionStorage.getItem('socialPost')) {
 			finishedStepsArray.push(1);
 		}
 		if (

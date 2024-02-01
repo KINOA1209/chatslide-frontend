@@ -134,12 +134,7 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
       else {
         const result = await response.json()
         console.log('Survey submitted successfully:', result);
-        if (workflowType === 'slides'){
-          router.push('/workflow-generate-outlines')
-        }
-        else{
-          router.push('/workflow-generate-socialpost')
-        }
+        handleBack()
       }
     } catch (error) {
       console.error('Failed to submit survey:', error);
@@ -150,9 +145,9 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
     <div className='flex flex-col justify-center items-center gap-4 sm:gap-12'>
       <div className='sticky top-0 w-full z-50 p-4 sm:p-10 bg-zinc-100'>
         <div className='w-full flex flex-row items-center justify-center gap-3 mx-auto'>
-          <button onClick={handleBack}>
+          {/* <button onClick={handleBack}>
               <SurveyBackIcons />
-          </button>
+          </button> */}
           <OnboardingSurveyProgressBar progress={progress}/>
         </div>
       </div>

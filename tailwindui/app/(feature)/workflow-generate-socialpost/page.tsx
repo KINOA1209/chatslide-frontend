@@ -8,7 +8,7 @@ import AuthService from '@/services/AuthService';
 import UserService from '@/services/UserService';
 import PaywallModal from '@/components/forms/paywallModal';
 import FeedbackButton from '@/components/ui/feedback';
-import WorkflowStepsBanner from '@/components/socialPost/socialPostWorkflowStep';
+import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
 import { QuestionExplainIcon } from '@/app/(feature)/icons';
 import { FaFilePdf, FaYoutube } from 'react-icons/fa';
 import YoutubeService from '@/services/YoutubeService';
@@ -478,7 +478,7 @@ export default function Topic_SocialPost() {
         pageInvoked={'summary'}
 			/>
 
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit}>		
 				<WorkflowStepsBanner
 					currentIndex={0}
 					isSubmitting={isSubmitting}
@@ -486,9 +486,9 @@ export default function Topic_SocialPost() {
 					isPaidUser={isPaidUser}
 					contentRef={contentRef}
 					nextIsPaidFeature={false}
-					showGPTToggle={true}
-					nextText={!isSubmitting ? 'Create Post' : 'Creating Post'}
-					setIsGpt35={setIsGpt35}
+					nextText={
+						!isSubmitting ? 'Create Post' : 'Creating Post...'
+					}
 				/>
 				{/* main content */}
 				<div className='gap-y-4 w-full flex flex-col items-center'>
