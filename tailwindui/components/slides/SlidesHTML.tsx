@@ -87,6 +87,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			  JSON.stringify(TestSlidesData)
 			: '';
 
+	const [chosenLayout, setChosenLayout] = useState<LayoutKeys>('');
+
 	const [showLayout, setShowLayout] = useState(false);
 	const [present, setPresent] = useState(isPresenting);
 	const slideRef = useRef<HTMLDivElement>(null);
@@ -305,6 +307,27 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       index === slideIndex,
     );
 
+  const uneditableTemplateDispatch = (
+    slide: Slide,
+    index: number,
+    exportToPdfMode: boolean = false,
+  ) =>
+    templateDispatch(
+      slide,
+      index,
+      false,
+      exportToPdfMode,
+      isEditMode,
+      setIsEditMode,
+      ()=>{},
+      updateImgUrlArray,
+      toggleEditMode,
+      index === 0,
+      slide.layout,
+      slide.layout,
+      index === slideIndex,
+    );
+
   return (
     <div className='flex flex-col items-center justify-center gap-4 relative'>
       {/* hidden div for export to pdf */}
@@ -319,7 +342,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
               <SlideContainer
                 slide={slide}
                 index={index}
-                templateDispatch={editableTemplateDispatch}
+                templateDispatch={uneditableTemplateDispatch}
                 exportToPdfMode={true}
               />
             </div>
@@ -369,7 +392,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                     index={index}
                     scale={0.12}
                     isViewing={true}
-                    templateDispatch={editableTemplateDispatch}
+                    templateDispatch={uneditableTemplateDispatch}
                     slideRef={slideRef}
                     containerRef={containerRef}
                     highlightBorder={slideIndex === index}
@@ -590,7 +613,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                   index={index}
                   scale={0.12}
                   isViewing={true}
-                templateDispatch={editableTemplateDispatch}
+                  templateDispatch={uneditableTemplateDispatch}
                   highlightBorder={slideIndex === index}
                 />
               </div>
