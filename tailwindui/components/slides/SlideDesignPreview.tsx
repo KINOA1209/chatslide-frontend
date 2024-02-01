@@ -29,16 +29,6 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 	//     newSlide.images = ["https://img.freepik.com/free-photo/beatiful-blue-sky-with-clouds-sunny-day_839833-5069.jpg","https://upload.wikimedia.org/wikipedia/commons/0/07/Beatiful_kunar_Afghanistan.jpg","https://img.freepik.com/free-photo/roof-building-covered-snow-against-cloudy-sky_181624-37509.jpg"]
 	//     return newSlide;
 	// });
-	useEffect(() => {
-		sessionStorage.setItem('themeElements', JSON.stringify(themeConfigData));
-	}, []);
-
-	useEffect(() => {
-		sessionStorage.setItem(
-			'layoutConfigElements',
-			JSON.stringify(layoutConfigData),
-		);
-	}, []);
 
 	useEffect(() => {
 		const isValidTemplateKey = (key: string): key is TemplateKeys => {
