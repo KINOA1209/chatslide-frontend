@@ -22,13 +22,15 @@ const SocialPostHTML = dynamic(() => import('@/components/socialPost/socialPostH
   ssr: false,
 });
 
-const SharePage: React.FC = () => {
+interface SharePageProps {
+  project: Project
+}
+
+
+const SharePage: React.FC<SharePageProps> = ({ project }) => {
   const pathname = usePathname();
-  const project_id = pathname?.split('/').pop();
   const [loading, setLoading] = useState(true);
-  const [description, setDescription] = useState<string>('');
-  const { slides, initSlides } = useSlides();
-  const [topic, setTopic] = useState<string>('');
+  const { initSlides } = useSlides();
   const [showDescription, setShowDescription] = useState<boolean>(true);
   const [projectType, setProjectType] = useState<'presentation' | 'socialpost'>('presentation');
   const [socialPosts, setSocialPosts] = useState<SocialPostSlide[]>([]);
@@ -96,31 +98,20 @@ const SharePage: React.FC = () => {
 		},
 	];
 
-  //social_posts
   useEffect(() => {
-    if (project_id) {
-      sessionStorage.removeItem('foldername');
-      setLoading(true);
-      ProjectService.getSharedProjectDetails(project_id).then((project: Project) => {
-        if (project.content_type === 'presentation') {
-          setProjectType('presentation')
-          initSlides(project.parsed_slides);
-          setDescription(project.description);
-          setTopic(project.topic);
-        }
-        else if (project.content_type === 'social_posts'){
-          //console.log(project.parsed_socialPosts)
-          setProjectType('socialpost')
-          setPostType(project.post_type)
-          setSocialPosts(project.parsed_socialPosts)
-        }
-
-        setLoading(false);
-      });
+    console.log('project', project)
+    if (project.content_type === 'presentation') {
+      const slides = ProjectService.parseSlides(project.presentation_slides);
+      setProjectType('presentation')
+      initSlides(slides);
+      setLoading(false);
+    } else if (project.content_type === 'social_posts') {
+      setProjectType('socialpost')
+      setPostType(project.post_type)
+      setSocialPosts(project.parsed_socialPosts)
     }
-  }, [project_id]);
-  //console.log(slides)
-  //console.log(socialPosts)
+  }, []);
+  
   return (
     <main className='grow'>
       <Header loginRequired={false} isLanding={false} />
@@ -129,12 +120,12 @@ const SharePage: React.FC = () => {
         <div className='flex items-center justify-center min-h-screen'>Loading...</div>
       ) : (
         <div className='flex flex-col items-center justify-center min-h-screen gap-8'>
-          {showDescription && description &&
+          {showDescription && project.description &&
             <div className="flex sm:w-2/3 h-[10rem]text-gray-700 text-left m-2 gap-4">
                 <div className="border border-gray-200 rounded-xl overflow-y-scroll p-2">
-                  <h1 className="text-2xl font-bold">{topic}</h1>
+                  <h1 className="text-2xl font-bold">{project.topic}</h1>
                   <h2 className="text-lg font-semibold">Created using DrLambda</h2>
-                {description}
+                  {project.description}
               </div>
               <button
                 className="text-gray-500 hover:text-gray-700"

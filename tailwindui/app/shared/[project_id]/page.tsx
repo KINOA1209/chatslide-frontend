@@ -1,7 +1,8 @@
-import { Metadata } from 'next';
+import { GetServerSideProps, Metadata } from 'next';
 import SharePage from './sharePage';
 import ProjectService from '@/services/ProjectService';
 import AuthService from '@/services/AuthService';
+import Project from '@/models/Project';
 type Props = {
 	params: { project_id: string };
 };
@@ -58,11 +59,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	};
 	return metadata;
 }
-const Page: React.FC = () => {
-	return (
-		<div>
-			<SharePage /> {/* Include your client-side component */}
-		</div>
-	);
+
+export default async function Page({ params }: Props) {
+  const project_id = params.project_id;
+
+  const project = await ProjectService.serverSideGetSharedProject(project_id);
+
+  return (
+    <div>
+      <SharePage project={project} /> {/* The project is now passed as a prop */}
+    </div>
+  );
 };
-export default Page;
