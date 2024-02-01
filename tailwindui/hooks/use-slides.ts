@@ -50,10 +50,6 @@ export const useSlides = () => {
     void init();
   }, []);
 
-  useEffect(() => {
-    saveSlides();
-  }, [slides]);
-
   const addEmptyPage = (index: number) => {
     console.log('-- add empty page: ', { index })
     setSlides(prevSlides => {
@@ -64,6 +60,7 @@ export const useSlides = () => {
 
     updateVersion();
     updateSlideHistory();
+    saveSlides();
   }
 
   const deleteSlidePage = (index: number) => {
@@ -76,6 +73,7 @@ export const useSlides = () => {
 
     updateVersion();
     updateSlideHistory();
+    saveSlides();
   }
 
   const updateSlidePage = (index: number, slide: Slide) => {
@@ -86,7 +84,9 @@ export const useSlides = () => {
       return newSlides;
     });
 
+    updateVersion();
     updateSlideHistory();
+    saveSlides();
   }
 
   const gotoPage = (index: number) => {
@@ -153,7 +153,7 @@ export const useSlides = () => {
       console.error('No foldername, project_id or token found. Cannot save slides.');
       return;
     }
-    
+
     const formData = {
       foldername: foldername,
       final_slides: slides,
