@@ -477,12 +477,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                 explanation='Delete Page'
               />
             )}
-            <ActionsToolBar
+            {!isViewing && <ActionsToolBar
               undo={undoChange}
               redo={redoChange}
               canRedo={canRedo}
               canUndo={canUndo}
-            />
+            />}
           </div>
 
           {/* main container for viewing and editing */}
