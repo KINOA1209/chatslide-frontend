@@ -148,6 +148,12 @@ export const useSlides = () => {
 
     const foldername = sessionStorage.getItem('foldername');
     const project_id = sessionStorage.getItem('project_id');
+
+    if (!foldername || !project_id || !token) {
+      console.error('No foldername, project_id or token found. Cannot save slides.');
+      return;
+    }
+    
     const formData = {
       foldername: foldername,
       final_slides: slides,

@@ -378,7 +378,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 								onClick={toggleChatWindow}
 							></DrLambdaAIAssistantIcon>
 						}
-						explanation='DrLambda AI Assistant'
+						explanation='AI Assistant'
 					/>
 				</div>
 			)}
