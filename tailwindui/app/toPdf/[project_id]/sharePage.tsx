@@ -47,6 +47,7 @@ const SharePage: React.FC = () => {
         isViewing={true}
         isPresenting={true}
         initSlideIndex={page as number}
+        toPdf={true}
       />
 			)}
 

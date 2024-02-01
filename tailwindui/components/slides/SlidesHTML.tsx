@@ -42,6 +42,7 @@ type SlidesHTMLProps = {
   exportSlidesRef?: React.RefObject<HTMLDivElement>;
   isPresenting?: boolean;
   initSlideIndex?: number;
+  toPdf? : boolean;  // toPdf mode for backend
 };
 
 // Load customizable elements from session storage or use default values
@@ -66,6 +67,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
   exportSlidesRef = useRef<HTMLDivElement>(null),
   isPresenting = false,
   initSlideIndex = 0,
+  toPdf = false,
 }) => {
 
   const { slides, slideIndex, slidesHistory, addEmptyPage, deleteSlidePage, 
@@ -326,6 +328,22 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       slide.layout,
       slide.layout,
       index === slideIndex,
+    );
+
+  if (toPdf)  // a simple page for backend to capture the slides
+    return (
+      <SlideContainer
+        slide={slides[slideIndex]}
+        index={slideIndex}
+        isPresenting={present}
+        isViewing={isViewing}
+        scale={present ? presentScale : nonPresentScale}
+        templateDispatch={editableTemplateDispatch}
+        slideRef={slideRef}
+        containerRef={containerRef}
+        length={slides.length}
+        key={version}
+      />
     );
 
   return (
