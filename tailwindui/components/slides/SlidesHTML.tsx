@@ -33,7 +33,7 @@ import {
 	AIAssistantChatWindow,
 } from '../ui/AIAssistant';
 import ActionsToolBar from '../ui/ActionsToolBar';
-import { useSlides } from '@/hooks/use-slides';
+import { SlidesStatus, useSlides } from '@/hooks/use-slides';
 
 type SlidesHTMLProps = {
   isViewing?: boolean; // viewing another's shared project
@@ -172,6 +172,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
   // commented because slides should already be in bear storage 
   useEffect(() => {
+    if (slidesStatus != SlidesStatus.Inited) return 
     if (slides && slides.length > 0) {
       console.log(
         `slides is passed in, skip fetching slides data from session storage`,
@@ -184,7 +185,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       //console.log('the parsed slides array:', slidesArray);
       initSlides(slidesArray);
     }
-  }, []);
+  }, [slidesStatus]);
 
 	useEffect(() => {
 		document.addEventListener('keydown', handleKeyDown);

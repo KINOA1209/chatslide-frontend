@@ -50,6 +50,10 @@ export const useSlides = () => {
     void init();
   }, []);
 
+  useEffect(() => {
+    saveSlides();
+  }, [slides]);
+
   const addEmptyPage = (index: number) => {
     console.log('-- add empty page: ', { index })
     setSlides(prevSlides => {
@@ -60,7 +64,6 @@ export const useSlides = () => {
 
     updateVersion();
     updateSlideHistory();
-    saveSlides();
   }
 
   const deleteSlidePage = (index: number) => {
@@ -73,7 +76,6 @@ export const useSlides = () => {
 
     updateVersion();
     updateSlideHistory();
-    saveSlides();
   }
 
   const updateSlidePage = (index: number, slide: Slide) => {
@@ -85,7 +87,6 @@ export const useSlides = () => {
     });
 
     updateSlideHistory();
-    saveSlides();
   }
 
   const gotoPage = (index: number) => {
@@ -135,6 +136,7 @@ export const useSlides = () => {
 
   const initSlides = (slides: Slide[]) => {
     setSlides(slides);
+    slidesStatus = SlidesStatus.Inited;
   }
 
   const updateVersion = () => {  // helps force update slide container
