@@ -1,11 +1,9 @@
 'use client';
 
-import { usePathname, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import dynamic from 'next/dynamic';
 import ProjectService from '@/services/ProjectService';
-import Slide from '@/models/Slide';
 import Project from '@/models/Project';
 import { useSlides } from '@/hooks/use-slides';
 
@@ -13,30 +11,21 @@ const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
 });
 
-const SharePage: React.FC = () => {
-	const pathname = usePathname();
-	const project_id = pathname?.split('/').pop();
-	const [loading, setLoading] = useState(true);
-  const page = useSearchParams()?.get('page') || 0;
-  const token = useSearchParams()?.get('token') || '';
-  const { slides, initSlides } = useSlides();
+interface SharePageProps {
+  project: Project,
+  page?: number
+}
 
-	useEffect(() => {
-		if (project_id) {
-      setLoading(true);
-      console.log(`token: ${token}`);
-      console.log(`project_id: ${project_id}`);
-      console.log(`page: ${page}`);
-      ProjectService.getProjectDetails(token, project_id).then((project: Project) => {
-        console.log(`slides: ${project.presentation_slides}}`);
-        initSlides(project.parsed_slides);
-        setLoading(false);
-      }).catch((error) => {
-        console.error(error);
-        setLoading(false);
-      });
-		}
-	}, [project_id]);
+const SharePage: React.FC<SharePageProps> = ({ project, page=1 }) => {
+  const [loading, setLoading] = useState(true);
+  const { initSlides } = useSlides();
+
+  useEffect(() => {
+    console.log('project', project)
+    const slides = ProjectService.parseSlides(project.presentation_slides);
+    initSlides(slides);
+    setLoading(false);
+  }, []);
 
 	return (
 		<main className='grow'>

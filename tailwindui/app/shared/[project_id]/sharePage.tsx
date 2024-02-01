@@ -28,7 +28,6 @@ interface SharePageProps {
 
 
 const SharePage: React.FC<SharePageProps> = ({ project }) => {
-  const pathname = usePathname();
   const [loading, setLoading] = useState(true);
   const { initSlides } = useSlides();
   const [showDescription, setShowDescription] = useState<boolean>(true);
@@ -111,7 +110,7 @@ const SharePage: React.FC<SharePageProps> = ({ project }) => {
       setSocialPosts(project.parsed_socialPosts)
     }
   }, []);
-  
+
   return (
     <main className='grow'>
       <Header loginRequired={false} isLanding={false} />

@@ -1,11 +1,11 @@
 import { GetServerSideProps, Metadata } from 'next';
 import SharePage from './sharePage';
 import ProjectService from '@/services/ProjectService';
-import AuthService from '@/services/AuthService';
-import Project from '@/models/Project';
+
 type Props = {
 	params: { project_id: string };
 };
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const project_id = params.project_id;
 	//const project = {topic: "drlambda", description: "drlambda"};
