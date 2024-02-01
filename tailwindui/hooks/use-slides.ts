@@ -86,7 +86,7 @@ export const useSlides = () => {
 
     updateVersion();
     updateSlideHistory();
-    saveSlides();
+    saveSlides(index===0);
   }
 
   const gotoPage = (index: number) => {
@@ -143,7 +143,7 @@ export const useSlides = () => {
     setVersion((prevVersion) => prevVersion + 1);
   }
 
-  const saveSlides = async () => {
+  const saveSlides = async (is_cover_page: boolean = false) => {
     saveStatus = SaveStatus.Saving;
 
     const foldername = sessionStorage.getItem('foldername');
@@ -158,6 +158,7 @@ export const useSlides = () => {
       foldername: foldername,
       final_slides: slides,
       project_id: project_id,
+      is_cover_page: is_cover_page,
     };
 
     console.log('Saving slides:', formData);
