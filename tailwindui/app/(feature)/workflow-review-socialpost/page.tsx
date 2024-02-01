@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { useRouter } from 'next/navigation';
-import WorkflowStepsBanner from '@/components/socialPost/socialPostWorkflowStep';
+import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
 import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
 
@@ -118,10 +118,8 @@ export default function SocialMediaTemplate() {
 					isPaidUser={true}
 					contentRef={contentRef}
 					nextIsPaidFeature={false}
-					showGPTToggle={false}
-					setIsGpt35={() => {}}
+					lastStep = {true}
 					nextText={'Next'}
-					showNextButton={false}
 				/>
 
 				<ToastContainer enableMultiContainer containerId={'slides'} />

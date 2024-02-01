@@ -46,6 +46,9 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
         if (pageInvoked === 'theme') {
             return ['png', 'jpg', 'jpeg'];
         }
+		else if (pageInvoked === 'summary'){
+			return ['pdf', 'txt', 'docx', 'pptx']
+		}
         return supportedFormats;
     };
 
@@ -53,6 +56,9 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
         if (pageInvoked === 'theme') {
             return ['png', 'jpg', 'jpeg'];
         }
+		else if (pageInvoked === 'summary'){
+			return ['pdf', 'txt', 'docx', 'pptx']
+		}
         return supportedExtensions;
     };
 
