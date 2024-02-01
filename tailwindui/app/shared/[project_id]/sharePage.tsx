@@ -23,12 +23,12 @@ const SocialPostHTML = dynamic(() => import('@/components/socialPost/socialPostH
 });
 
 const SharePage: React.FC = () => {
-  const router = useRouter();
   const pathname = usePathname();
   const project_id = pathname?.split('/').pop();
   const [loading, setLoading] = useState(true);
   const [description, setDescription] = useState<string>('');
   const { slides, initSlides } = useSlides();
+  const [topic, setTopic] = useState<string>('');
   const [showDescription, setShowDescription] = useState<boolean>(true);
   const [projectType, setProjectType] = useState<'presentation' | 'socialpost'>('presentation');
   const [socialPosts, setSocialPosts] = useState<SocialPostSlide[]>([]);
@@ -106,6 +106,7 @@ const SharePage: React.FC = () => {
           setProjectType('presentation')
           initSlides(project.parsed_slides);
           setDescription(project.description);
+          setTopic(project.topic);
         }
         else if (project.content_type === 'social_posts'){
           //console.log(project.parsed_socialPosts)
@@ -131,6 +132,8 @@ const SharePage: React.FC = () => {
           {showDescription && description &&
             <div className="flex sm:w-2/3 h-[10rem]text-gray-700 text-left m-2 gap-4">
                 <div className="border border-gray-200 rounded-xl overflow-y-scroll p-2">
+                  <h1 className="text-2xl font-bold">{topic}</h1>
+                  <h2 className="text-lg font-semibold">Created using DrLambda</h2>
                 {description}
               </div>
               <button

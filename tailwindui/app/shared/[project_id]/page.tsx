@@ -10,6 +10,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	//const project = {topic: "drlambda", description: "drlambda"};
 	let topic = "drlambda"
 	let description = "drlambda"
+  let author = "drlambda"
 	//const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
 	//let publicImageUrl = await ProjectService.getSlideTwitterImg(project_id);
 	//let publicImageUrl = ProjectService.getSharedProjectDetails(project_id)
@@ -23,12 +24,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     publicImageUrl = project.thumbnail_url || publicImageUrl
     topic = project.topic || "DrLambda"
     description = project.description || "Created using DrLambda"
+    author = project.author || "123"
 	} catch (error){
 		console.error(`Error fetching project ${project_id} details:`, error);
 	}
 	const metadata: Metadata = {
 		title: topic,
 		description: description,
+    publisher: 'DrLambda',
+    authors: [{ name: author }],
+    keywords: ['DrLambda', 'presentation', 'slides', 'ai agent'],
 		openGraph: {
 			title: topic,
 			description: description,

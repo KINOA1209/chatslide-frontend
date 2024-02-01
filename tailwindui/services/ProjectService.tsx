@@ -322,7 +322,7 @@ class ProjectService {
       headers.append('Content-Type', 'application/json');
       let baseUrl = process.env.HOST ? process.env.HOST : 'localhost';
       if (baseUrl == 'localhost') {
-        baseUrl = "dev.drlambda.ai"
+        baseUrl = "dev.drlambda.ai"  // localhost has bugs 
       }
       const apiUrl = `https://${baseUrl}/api/get_shared_project?project_id=${project_id}`;
 
@@ -339,6 +339,8 @@ class ProjectService {
         }
 
         const project = await response.json() as Project;
+
+        console.log(project)  
 
         if (project?.presentation_slides) {
           project.parsed_slides = this.parseSlides(project.presentation_slides);
