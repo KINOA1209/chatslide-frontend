@@ -120,9 +120,6 @@ MainSlideProps) => {
 						? 'rounded-md w-full h-full bg-cover flex flex-row gap-[2rem] justify-start items-start box-border border-none relative '
 						: 'hidden'
 				} ${themeElements.backgroundColorCover}`}
-				style={{
-					backgroundImage: `url('${themeElements.backgroundUrl}')`, // Corrected syntax
-				}}
 			>
 				<ChosenLayoutCover
 					content={content}

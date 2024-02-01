@@ -17,7 +17,7 @@ export const Fun_Education_004_template = ({
 	imgs,
 	update_callback,
 	canEdit,
-	autoSave,
+	// autoSave,
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
@@ -49,7 +49,7 @@ export const Fun_Education_004_template = ({
 	useEffect(() => {
 		console.log(
 			'Fun_Education_004_template themeElements background Url is:',
-			themeElements.backgroundUrl,
+			themeElements.backgroundUrlCover,
 		);
 	}, []);
 	return (
@@ -73,7 +73,7 @@ export const Fun_Education_004_template = ({
 					imgs={imgs}
 					update_callback={update_callback}
 					canEdit={canEdit}
-					autoSave={autoSave}
+					// autoSave={autoSave}
 					isCoverPage={isCoverPage}
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
@@ -104,7 +104,7 @@ export const Fun_Education_004_template = ({
 					imgs={imgs}
 					update_callback={update_callback}
 					canEdit={canEdit}
-					autoSave={autoSave}
+					// autoSave={autoSave}
 					isCoverPage={isCoverPage}
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
