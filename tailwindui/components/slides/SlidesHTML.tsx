@@ -23,8 +23,8 @@ import { templateDispatch } from './templateDispatch';
 import { availableLayouts } from './slideLayout';
 import TestSlidesData from './TestSlidesData.json';
 import AuthService from '@/services/AuthService';
-import themeConfigData from './templates_customizable_elements/theme_elements';
-import layoutConfigData from './templates_customizable_elements/layout_elements';
+import themeConfigData, { ThemeConfig } from './templates_customizable_elements/theme_elements';
+import layoutConfigData, { TemplateLayoutConfig } from './templates_customizable_elements/layout_elements';
 import ScriptEditor from './ScriptEditor';
 import Slide, { SlideKeys } from '@/models/Slide';
 import ProjectService from '@/services/ProjectService';
@@ -46,29 +46,15 @@ type SlidesHTMLProps = {
 
 // Load customizable elements from session storage or use default values
 export const loadCustomizableElements = (templateName: string) => {
-	const themeElements = JSON.parse(
-		sessionStorage.getItem('themeElements') || '{}',
-	);
-	return themeElements[templateName] || {};
+  return themeConfigData[templateName as keyof ThemeConfig] || {};
 };
 
-// export const loadLayoutConfigElements = (templateName: string) => {
-// 	const layoutConfigElements = JSON.parse(
-// 		sessionStorage.getItem('layoutConfigElements') || '{}',
-// 	);
-// 	return layoutConfigElements[templateName] || {};
-// };
 export const loadLayoutConfigElements = (
 	templateName: string,
 	layoutOption: string,
 ) => {
-	const layoutConfigElements = JSON.parse(
-		sessionStorage.getItem('layoutConfigElements') || '{}',
-	);
-
-	const templateElements = layoutConfigElements[templateName] || {};
-	const selectedLayoutOptionElements = templateElements[layoutOption] || {};
-
+  const templateElements = layoutConfigData[templateName as keyof TemplateLayoutConfig] || {};
+  const selectedLayoutOptionElements = templateElements[layoutOption as LayoutKeys] || {};
 	return selectedLayoutOptionElements;
 };
 
@@ -140,18 +126,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		window.addEventListener('resize', handleResize);
 
 		return () => window.removeEventListener('resize', handleResize);
-	}, []);
-
-	// set themeElements for templates
-	useEffect(() => {
-		sessionStorage.setItem('themeElements', JSON.stringify(themeConfigData));
-	}, []);
-
-	useEffect(() => {
-		sessionStorage.setItem(
-			'layoutConfigElements',
-			JSON.stringify(layoutConfigData),
-		);
 	}, []);
 
   // Function to change the template of slides starting from the second one
