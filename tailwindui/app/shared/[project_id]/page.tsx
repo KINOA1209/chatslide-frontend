@@ -24,12 +24,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     publicImageUrl = project.thumbnail_url || publicImageUrl
     topic = project.topic || "DrLambda"
     description = project.description || "Created using DrLambda"
-    author = project.author || "123"
+    author = project.author || "DrLambda"
 	} catch (error){
 		console.error(`Error fetching project ${project_id} details:`, error);
 	}
 	const metadata: Metadata = {
-		title: topic,
+		title: topic + ' | DrLambda',
 		description: description,
     publisher: 'DrLambda',
     authors: [{ name: author }],

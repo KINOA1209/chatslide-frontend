@@ -340,11 +340,11 @@ class ProjectService {
 
         const project = await response.json() as Project;
 
-        console.log(project)  
+        // console.log(project)  
 
-        if (project?.presentation_slides) {
-          project.parsed_slides = this.parseSlides(project.presentation_slides);
-        }
+        // if (project?.presentation_slides) {
+        //   project.parsed_slides = this.parseSlides(project.presentation_slides);
+        // }
   
         return project;
       } catch (error) {
