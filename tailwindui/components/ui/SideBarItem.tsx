@@ -1,26 +1,32 @@
+'use client';
 // SidebarItem.tsx
 import React, { useState } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa'; // Import chevron icons
+import { useRouter } from 'next/navigation';
+import { SubMenu } from './SideBarData';
 
 interface SidebarItemProps {
 	title: string;
 	icon: React.ReactNode;
 	path?: string;
-  target?: string;
-	subMenus?: { title: string; path: string; target?: string }[];
+	target?: string;
+	subMenus?: SubMenu[];
 	onClick?: () => void;
 	isSidebarOpen: boolean;
+	onSignOut?: () => void;
 }
 
 const SideBarItem: React.FC<SidebarItemProps> = ({
 	title,
 	icon,
 	path,
-  target,
+	target,
 	subMenus,
 	onClick,
 	isSidebarOpen,
+	onSignOut,
 }) => {
+	const router = useRouter();
 	const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
 
 	const handleSubMenuToggle = () => {
@@ -34,12 +40,25 @@ const SideBarItem: React.FC<SidebarItemProps> = ({
 		setIsSubMenuOpen(false); // Close the submenu when clicking on the item
 	};
 
+	const handleSubMenuClick = (subMenu: SubMenu) => {
+		if (subMenu.title === 'Sign Out' && onSignOut) {
+			onSignOut();
+		} else if (subMenu.path) {
+			// Use Next.js router to navigate to the specified path
+			router.push(subMenu.path);
+			console.log(`Navigating to submenu: ${subMenu.path}`);
+		} else {
+			console.log(`invalid path: ${subMenu.path}`);
+			// You can add more logic here for other submenus without paths
+		}
+	};
+
 	return (
 		<div>
 			<div onClick={handleSubMenuToggle} role='menuitem'>
 				<a
 					href={path}
-          target={target}
+					target={target}
 					className='block flex flex-row items-center gap-2 py-2 text-white px-2 rounded-lg hover:bg-gray-400 cursor-pointer'
 					role='menuitem'
 				>
@@ -55,18 +74,14 @@ const SideBarItem: React.FC<SidebarItemProps> = ({
 			{subMenus && isSidebarOpen && isSubMenuOpen && (
 				<div>
 					{subMenus.map((subMenu, index) => (
-						<a
+						<div
 							key={index}
-							href={subMenu.path}
-              target={subMenu.target}
-							onClick={() =>
-								console.log(`Navigating to submenu: ${subMenu.path}`)
-							}
+							onClick={() => handleSubMenuClick(subMenu)}
 							className='block flex flex-row items-center gap-2 py-2 text-white px-4 rounded-lg hover:bg-gray-400 cursor-pointer'
 							role='menuitem'
 						>
 							{subMenu.title}
-						</a>
+						</div>
 					))}
 				</div>
 			)}

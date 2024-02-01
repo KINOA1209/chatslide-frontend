@@ -36,10 +36,10 @@ import { useUser } from '@/hooks/use-user';
 interface SideBarProps {}
 const SideBar = ({}: SideBarProps) => {
 	const [top, setTop] = useState<boolean>(true);
-  const { credits, tier } = useUser();
+	const { credits, tier } = useUser();
 	const router = useRouter();
 	const [isMobile, setIsMobile] = useState<boolean>(false);
-  const { signOut: userSignOut } = useUser();
+	const { signOut: userSignOut } = useUser();
 
 	// detect whether user has scrolled the page down by 10px
 	const scrollHandler = () => {
@@ -62,7 +62,7 @@ const SideBar = ({}: SideBarProps) => {
 			await AuthService.signOut();
 			sessionStorage.clear();
 			localStorage.clear();
-      userSignOut();
+			userSignOut();
 			console.log('You have signed out!');
 			router.push('/');
 		} catch (error: any) {
@@ -129,19 +129,19 @@ const SideBar = ({}: SideBarProps) => {
 					<SideBarItem
 						key={index}
 						{...item}
-						onClick={item.title === 'Sign Out' ? signOut : undefined}
+						onSignOut={signOut}
 						isSidebarOpen={isSidebarOpen}
 					/>
 				))}
 				{/* sign out */}
 
-				<a
+				{/* <a
 					onClick={signOut}
 					className='block flex flex-row items-center gap-2 py-2 text-white px-2 rounded-lg hover:bg-gray-400 cursor-pointer'
 					role='menuitem'
 				>
 					<IoExitOutline /> {isSidebarOpen ? 'Sign Out' : '\u200B'}
-				</a>
+				</a> */}
 			</div>
 			{/* credits and user studies */}
 			<div className='flex flex-col items-left justify-between'>
@@ -183,14 +183,14 @@ const SideBar = ({}: SideBarProps) => {
 							>
 								Get 100 ⭐️credits
 							</a>
-              <a
-                href='https://discord.gg/x2E7ZMmj3b'
-                target='_blank'
-                className='block flew flex-row items-center gap-1 py-1 text-sm text-white px-2 rounded-lg hover:bg-gray-400'
-                role='menuitem'
-              >
-                Get 50 ⭐️credits
-              </a>
+							<a
+								href='https://discord.gg/x2E7ZMmj3b'
+								target='_blank'
+								className='block flew flex-row items-center gap-1 py-1 text-sm text-white px-2 rounded-lg hover:bg-gray-400'
+								role='menuitem'
+							>
+								Get 50 ⭐️credits
+							</a>
 						</>
 					)}
 				</div>
