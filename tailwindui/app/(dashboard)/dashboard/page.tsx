@@ -130,9 +130,9 @@ export default function Dashboard() {
       console.log('projects', projects);
 			setProjects(projects);
 			setRendered(true);
-			if (projects.length == 0 && !showSurvey) {
+			if (projects.length == 0) {
 				sessionStorage.clear();
-				router.push('/workflow-type-choice');
+				//router.push('/workflow-type-choice');
 			}
 		});
 	};
