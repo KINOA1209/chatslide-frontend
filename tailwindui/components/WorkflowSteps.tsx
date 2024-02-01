@@ -202,7 +202,8 @@ const ProgressBox = (
 
 // Set up actual progress indicators with texts and redirections
 const ProjectProgress = () => {
-	const workflowType = SessionStorage.getItem('content_type', 'slides');
+	const contentType = SessionStorage.getItem('content_type', 'slides');
+	const workflowType = SessionStorage.getItem('workflowType', 'slides');
 	let steps = ['Summary', 'Outlines', 'Design', 'Slides',  'Script', 'Video'];
 	let redirect = [
 		'/workflow-generate-outlines',
@@ -212,7 +213,8 @@ const ProjectProgress = () => {
 		'/workflow-edit-script',
     	'/workflow-review-video',
 	];
-	if (workflowType === 'social_posts'){
+	// 2 cases: create new social post, access to existing social post
+	if (workflowType === 'socialpost' || contentType === 'social_posts'){
 		steps = ['Summary', 'Post']
 		redirect = [
 			'/workflow-generate-socialpost',
