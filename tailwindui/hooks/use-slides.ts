@@ -30,6 +30,7 @@ export const useSlides = () => {
   const { slidesHistory, setSlidesHistory } = useSlidesHistoryBear();
   const { slidesHistoryIndex, setSlidesHistoryIndex } = useSlidesHistoryIndex();
   const { version, setVersion } = useVersion();
+  const { token } = useUser();
 
   const init = async () => {
     if (slidesStatus !== SlidesStatus.NotInited) return;
@@ -143,7 +144,6 @@ export const useSlides = () => {
   const saveSlides = async () => {
     saveStatus = SaveStatus.Saving;
 
-    const { token } = useUser();
     const foldername = sessionStorage.getItem('foldername');
     const project_id = sessionStorage.getItem('project_id');
     const formData = {
@@ -151,6 +151,9 @@ export const useSlides = () => {
       final_slides: slides,
       project_id: project_id,
     };
+
+    console.log('Saving slides:', formData);
+
     // Send a POST request to the backend to save finalSlides
     fetch('/api/save_slides', {
       method: 'POST',
