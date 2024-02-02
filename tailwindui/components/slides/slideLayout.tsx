@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
+import Image from 'next/image';
 import { ImgModule } from '@/components/imgModule';
 import { MainSlideProps as BaseMainSlideProps } from './slideTemplates';
 import coverimg0_png from '@/public/images/template/layout/coverimg0.png';
@@ -109,28 +110,26 @@ export const Cover_img_1_layout = ({
 	layoutElements,
 	templateLogo,
 }: MainSlideProps) => {
-
-  const updateImgAtIndex = (index: number) => (imgSrc: string) => {
-    const newImgs = [...imgs];
-    if(index >= newImgs.length) 
-      newImgs.push(imgSrc);
-    else 
-      newImgs[index] = imgSrc;
-    update_callback(newImgs);
-  }
+	const updateImgAtIndex = (index: number) => (imgSrc: string) => {
+		const newImgs = [...imgs];
+		if (index >= newImgs.length) newImgs.push(imgSrc);
+		else newImgs[index] = imgSrc;
+		update_callback(newImgs);
+	};
 
 	return (
 		<>
 			<div style={layoutElements.columnCSS}>
 				<div
 					className={`${themeElements.userNameFont} ${themeElements.userNameFontColor}`}
+					style={layoutElements.userNameCSS}
 				>
 					{user_name}
 				</div>
-				<div
-					className={`pl-[2rem] basis-0 opacity-50 border
+				{/* <div
+					className={`pl-[2rem] basis-0 opacity-50 borser
 		        border-black border-opacity-40 mt-4`}
-				></div>
+				></div> */}
 				<div style={layoutElements.titleCSS}>{title}</div>
 			</div>
 			<div style={layoutElements.imageContainerCSS}>
@@ -139,6 +138,16 @@ export const Cover_img_1_layout = ({
 					updateSingleCallback={updateImgAtIndex(0)}
 					canEdit={canEdit}
 				/>
+			</div>
+			<div style={layoutElements.visualElementsCSS}>
+				{themeElements.backgroundUrlCover && (
+					<Image
+						width={960}
+						height={540}
+						src={themeElements.backgroundUrlCover}
+						alt='Background Image for cover'
+					/>
+				)}
 			</div>
 			<div style={layoutElements.logoCSS}>{templateLogo}</div>
 		</>
@@ -313,15 +322,12 @@ export const Col_1_img_1_layout = ({
 	layoutElements,
 	templateLogo,
 }: MainSlideProps) => {
-
-  const updateImgAtIndex = (index: number) => (imgSrc: string) => {
-    const newImgs = [...imgs];
-    if (index >= newImgs.length)
-      newImgs.push(imgSrc);
-    else
-      newImgs[index] = imgSrc;
-    update_callback(newImgs);
-  }
+	const updateImgAtIndex = (index: number) => (imgSrc: string) => {
+		const newImgs = [...imgs];
+		if (index >= newImgs.length) newImgs.push(imgSrc);
+		else newImgs[index] = imgSrc;
+		update_callback(newImgs);
+	};
 
 	return (
 		<>
@@ -382,15 +388,12 @@ export const Col_2_img_1_layout = ({
 	layoutElements,
 	templateLogo,
 }: MainSlideProps) => {
-
-  const updateImgAtIndex = (index: number) => (imgSrc: string) => {
-    const newImgs = [...imgs];
-    if (index >= newImgs.length)
-      newImgs.push(imgSrc);
-    else
-      newImgs[index] = imgSrc;
-    update_callback(newImgs);
-  }
+	const updateImgAtIndex = (index: number) => (imgSrc: string) => {
+		const newImgs = [...imgs];
+		if (index >= newImgs.length) newImgs.push(imgSrc);
+		else newImgs[index] = imgSrc;
+		update_callback(newImgs);
+	};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -478,15 +481,12 @@ export const Col_2_img_2_layout = ({
 	layoutElements,
 	templateLogo,
 }: MainSlideProps) => {
-
-  const updateImgAtIndex = (index: number) => (imgSrc: string) => {
-    const newImgs = [...imgs];
-    if (index >= newImgs.length)
-      newImgs.push(imgSrc);
-    else
-      newImgs[index] = imgSrc;
-    update_callback(newImgs);
-  }
+	const updateImgAtIndex = (index: number) => (imgSrc: string) => {
+		const newImgs = [...imgs];
+		if (index >= newImgs.length) newImgs.push(imgSrc);
+		else newImgs[index] = imgSrc;
+		update_callback(newImgs);
+	};
 
 	return (
 		<>
@@ -561,15 +561,12 @@ export const Col_3_img_3_layout = ({
 	layoutElements,
 	templateLogo,
 }: MainSlideProps) => {
-
-  const updateImgAtIndex = (index: number) => (imgSrc: string) => {
-    const newImgs = [...imgs];
-    if (index >= newImgs.length)
-      newImgs.push(imgSrc);
-    else
-      newImgs[index] = imgSrc;
-    update_callback(newImgs);
-  }
+	const updateImgAtIndex = (index: number) => (imgSrc: string) => {
+		const newImgs = [...imgs];
+		if (index >= newImgs.length) newImgs.push(imgSrc);
+		else newImgs[index] = imgSrc;
+		update_callback(newImgs);
+	};
 
 	return (
 		<>

@@ -8,8 +8,9 @@ module.exports = {
 	theme: {
 		extend: {
 			backgroundImage: {
-				'template-default-cover': "url('https://via.placeholder.com/1200x800')",
-				'template-default-non-cover': "url('https://via.placeholder.com/1200x800')",
+				// 'template-default-cover': "url('https://via.placeholder.com/1200x800')",
+				// 'template-default-non-cover': "url('https://via.placeholder.com/1200x800')",
+				'template-fun-education-004-cover': "url('/images/template/Fun_Education_004/BackgroundElements.png')"
 			},
 			backgroundColor: {
 				'Sky': 'var(--Sky, #F4F6FE)',
@@ -84,10 +85,14 @@ module.exports = {
 			fontFamily: {
 				'inter': ['Inter', 'sans-serif'],
 				'creato-regular': ['Creato Display Regular', 'sans'],
+				'creato-thin': ['Creato Display Thin', 'sans'],
 				'creato-medium': ['Creato Display Medium', 'sans'],
 				'creato-bold': ['Creato Display Bold', 'sans'],
 				'nimbus-sans-regular': ['Nimbus Sans Regular', 'sans'],
 				'nimbus-sans-bold': ['Nimbus Sans Bold', 'sans'],
+				'caveat-bold': ['Caveat Bold', 'cursive'],
+				'caveat-medium': ['Caveat Medium', 'cursive'],
+				'caveat-regular': ['Caveat Regular', 'cursive'],
 			},
 			fontSize: {
 				xs: '0.75rem',

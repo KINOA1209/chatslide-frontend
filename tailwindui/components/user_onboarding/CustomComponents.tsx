@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import ExitUserGuideWarningImg from '@/public/images/user_onboarding/ExitTourWarning.png';
 import SlidesPageEndTour from '@/public/images/user_onboarding/SlidesPageEndTour.png';
+import StartATourImg from '@/public/images/user_onboarding/SummaryPageStep1Welcom.png';
 import {
 	PrimaryColorButton,
 	SecondaryColorButton,
@@ -60,6 +61,44 @@ export const TutorialEndStepPromptWindow: FC<
 				<PrimaryColorButton
 					label={'Sure'}
 					onClick={() => onConfirmingForward(true)}
+				></PrimaryColorButton>
+			</div>
+		</Modal>
+	);
+};
+
+interface StartATourGuidePromptWindowProps {
+	onConfirm: () => void;
+	onClose: () => void;
+}
+
+export const StartATourGuidePromptWindow: React.FC<
+	StartATourGuidePromptWindowProps
+> = ({ onConfirm, onClose }) => {
+	return (
+		<Modal
+			showModal={true}
+			setShowModal={onClose}
+			position='fixed max-w-lg h-auto'
+		>
+			<img src={StartATourImg.src} alt='Start Tour Guide' />
+
+			<TutorialStepContent
+				action={'Welcome to the Guided Tutorial! 🌟'}
+				explanation={
+					'Would you like to start a guided tutorial to help you navigate through the features of this page?'
+				}
+			></TutorialStepContent>
+
+			<div className='pt-[3rem] flex flex-row items-center justify-end gap-[0.75rem]'>
+				<SecondaryColorButton
+					label={'Not Now'}
+					onClick={onClose}
+				></SecondaryColorButton>
+
+				<PrimaryColorButton
+					label={'Sure'}
+					onClick={onConfirm}
 				></PrimaryColorButton>
 			</div>
 		</Modal>

@@ -127,19 +127,23 @@ export const ImgModule = ({
 					return response.json();
 				} else if (response.status === 402) {
 					setShowPaymentModal(true);
-        } else if (response.status === 401) { // violates content policy
+				} else if (response.status === 401) {
+					// violates content policy
 					const error = response.status;
-          toast.error('This query violates our content policy, please use another one', {
-            position: 'top-center',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'light',
-            containerId: 'slides',
-          });
+					toast.error(
+						'This query violates our content policy, please use another one',
+						{
+							position: 'top-center',
+							autoClose: 5000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+							theme: 'light',
+							containerId: 'slides',
+						},
+					);
 					console.error(error, response);
 				}
 			})
@@ -787,8 +791,8 @@ export const ImgModule = ({
 					<Image
 						src={imgsrc}
 						alt='Image'
-						width={720}
-						height={480}
+						width={960}
+						height={540}
 						objectFit='contain'
 						className={`transition ease-in-out duration-150 ${
 							canEdit ? 'hover:brightness-90' : 'cursor-default'

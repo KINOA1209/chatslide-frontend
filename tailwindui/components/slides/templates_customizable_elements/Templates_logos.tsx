@@ -25,7 +25,10 @@ export const DefaultTemplateLogo = ({
 	custom_logo: string[] | string;
 }) => {
 	if (isCoverPage) {
-		if (custom_logo === 'Default' || (Array.isArray(custom_logo) && custom_logo.length === 0)){
+		if (
+			custom_logo === 'Default' ||
+			(Array.isArray(custom_logo) && custom_logo.length === 0)
+		) {
 			return (
 				<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
 					<Image
@@ -36,8 +39,7 @@ export const DefaultTemplateLogo = ({
 					{/* logo cover */}
 				</div>
 			);
-		}
-		else {
+		} else {
 			return (
 				<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
 					<Image
@@ -50,9 +52,11 @@ export const DefaultTemplateLogo = ({
 				</div>
 			);
 		}
-
 	} else {
-		if (custom_logo === 'Default' || (Array.isArray(custom_logo) && custom_logo.length === 0)){
+		if (
+			custom_logo === 'Default' ||
+			(Array.isArray(custom_logo) && custom_logo.length === 0)
+		) {
 			return (
 				<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
 					<Image
@@ -66,8 +70,7 @@ export const DefaultTemplateLogo = ({
 					{/* logo non cover */}
 				</div>
 			);
-		}
-		else{
+		} else {
 			return (
 				<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
 					<Image
@@ -251,10 +254,86 @@ export const ColumbiaTemplateLogo = ({
 	);
 };
 
+export const Fun_Education_004_TemplateLogo = ({
+	isCoverPage,
+	custom_logo,
+}: {
+	isCoverPage: boolean;
+	custom_logo: string[] | string;
+}) => {
+	if (isCoverPage) {
+		if (
+			custom_logo === 'Default' ||
+			(Array.isArray(custom_logo) && custom_logo.length === 0)
+		) {
+			return (
+				<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
+					<Image
+						src={drlambdaLogo}
+						alt='drlambdaLogo'
+						className='w-[8rem] h-auto'
+					/>
+					{/* logo cover */}
+				</div>
+			);
+		} else {
+			return (
+				<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
+					<Image
+						src={custom_logo[0]}
+						alt='CustomLogo'
+						width={70}
+						height={70}
+						className='h-auto'
+					/>
+				</div>
+			);
+		}
+	} else {
+		if (
+			custom_logo === 'Default' ||
+			(Array.isArray(custom_logo) && custom_logo.length === 0)
+		) {
+			return (
+				<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
+					<Image
+						src={drlambdaLogoSingle}
+						alt='drlambda logo'
+						className='w-[1.5rem] mr-4'
+					/>
+					<div
+						className={`grow basis-0 opacity-50 border border-black border-opacity-40`}
+					></div>
+					{/* logo non cover */}
+				</div>
+			);
+		} else {
+			return (
+				<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
+					<Image
+						src={custom_logo[0]}
+						alt='custom logo'
+						width={44}
+						height={41}
+						className='mr-4'
+					/>
+					<div
+						className={`grow basis-0 opacity-50 border border-black border-opacity-40`}
+					></div>
+					{/* logo non cover */}
+				</div>
+			);
+		}
+	}
+};
+
 // Define the type for template logo information
 type TemplateLogoInfo = {
 	templateName: TemplateKeys;
-	templateLogo: React.ComponentType<{ isCoverPage: boolean, custom_logo:string | string[]}>;
+	templateLogo: React.ComponentType<{
+		isCoverPage: boolean;
+		custom_logo: string | string[];
+	}>;
 };
 
 // Define the available templates and their logos
@@ -262,6 +341,10 @@ const templatesInfo: TemplateLogoInfo[] = [
 	{
 		templateName: 'Default' as TemplateKeys,
 		templateLogo: DefaultTemplateLogo,
+	},
+	{
+		templateName: 'Fun_Education_004' as TemplateKeys,
+		templateLogo: Fun_Education_004_TemplateLogo,
 	},
 	{
 		templateName: 'Berkeley' as TemplateKeys,
@@ -314,7 +397,10 @@ export const TemplatesLogos = Object.fromEntries(
 		templateName,
 		templateLogo,
 	]),
-) as Record<TemplateKeys, React.ComponentType<{ isCoverPage: boolean, custom_logo:string | string[]}>>;
+) as Record<
+	TemplateKeys,
+	React.ComponentType<{ isCoverPage: boolean; custom_logo: string | string[] }>
+>;
 
 /*
 const TemplatesLogos = {
