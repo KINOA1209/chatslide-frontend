@@ -40,7 +40,7 @@ export const Princeton_school_template = ({
 			<div
 				className={`${
 					!isCoverPage
-						? 'rounded-md overflow-hidden w-full h-full bg-cover box-border border-none relative p-[28px]'
+						? 'rounded-md w-full h-full bg-cover box-border border-none relative p-[28px]'
 						: 'hidden '
 				} ${themeElements.backgroundColor}`}
 			>
@@ -68,7 +68,7 @@ export const Princeton_school_template = ({
 			<div
 				className={`${
 					isCoverPage
-						? 'rounded-md overflow-hidden w-full h-full bg-cover flex flex-row gap-[2rem] justify-start items-start box-border border-none relative '
+						? 'rounded-md w-full h-full bg-cover flex flex-row gap-[2rem] justify-start items-start box-border border-none relative '
 						: 'hidden'
 				} ${themeElements.backgroundColorCover} `}
 			>
