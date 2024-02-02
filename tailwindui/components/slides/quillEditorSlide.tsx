@@ -73,7 +73,7 @@ const toolbarOptions = [
 ];
 
 let Size = Quill.import('attributors/style/size');
-Size.whitelist = ['12pt', '16pt', '20pt', '24pt', '32pt']
+Size.whitelist = ['12pt', '16pt', '20pt', '24pt', '32pt'];
 Quill.register(Size, true);
 
 export const isHTML = (input: string): boolean => {
@@ -84,18 +84,18 @@ export const isHTML = (input: string): boolean => {
 const BubbleTheme = Quill.import('themes/bubble');
 
 class ExtendBubbleTheme extends BubbleTheme {
-  constructor(quill: Quill, options: any) {
-    super(quill, options);
+	constructor(quill: Quill, options: any) {
+		super(quill, options);
 
-    quill.on('selection-change', range => {
-      if (range) {
-        const bounds = quill.getBounds(range.index);
-        const quillAny = quill as any;
-        quillAny.theme.tooltip.show();
-        quillAny.theme.tooltip.position(bounds);
-      }
-    });
-  }
+		quill.on('selection-change', (range) => {
+			if (range) {
+				const bounds = quill.getBounds(range.index);
+				const quillAny = quill as any;
+				quillAny.theme.tooltip.show();
+				quillAny.theme.tooltip.position(bounds);
+			}
+		});
+	}
 }
 
 Quill.register('themes/bubble', ExtendBubbleTheme);
@@ -135,7 +135,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			quillInstanceRef.current = new Quill(editorRef.current, {
 				modules: { toolbar: toolbarOptions },
 				theme: 'bubble',
-				bounds: editorRef.current
+				bounds: editorRef.current,
 			});
 
 			// const toolbar = quillInstanceRef.current.getModule('toolbar');
@@ -185,8 +185,9 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 
 			quillInstanceRef.current.setContents(initialDelta);
 			quillInstanceRef.current.on('selection-change', (range) => {
-        if(range)  // when range is null, it means the cursor is outside the editor, and we will process the blur event
-          return;
+				if (range)
+					// when range is null, it means the cursor is outside the editor, and we will process the blur event
+					return;
 
 				const currentContent = quillInstanceRef.current?.root.innerHTML;
 				if (currentContent !== undefined) {
@@ -247,11 +248,11 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			// 	if (!isToolbarInteraction) {
 			// 		updateTooltipPosition()
 			// 	}});
-			
+
 			// editorRef.current.addEventListener('focusout', (event) => {
 			// 	const toolbar = editorRef.current?.querySelector('.ql-tooltip');
 			// 	const relatedTarget = event.relatedTarget as Node;
-			
+
 			// 	if (toolbar && toolbar instanceof HTMLElement && !toolbar.contains(relatedTarget)) {
 			// 		toolbar.style.display = 'none';
 			// 	}

@@ -43,15 +43,15 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 		}
 	});
 
-	// useEffect(() => {
-	// 	if (typeof window !== 'undefined') {
-	// 		const hasSeenOnboarding = localStorage.getItem('hasSeenOnboarding');
-	// 		if (hasSeenOnboarding) {
-	// 			// If the user has not seen the onboarding, start the tour
-	// 			setIsTourActive(false);
-	// 		}
-	// 	}
-	// }, []);
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			const hasSeenOnboarding = localStorage.getItem('hasSeenOnboarding');
+			if (hasSeenOnboarding) {
+				// If the user has not seen the onboarding, start the tour
+				setIsTourActive(false);
+			}
+		}
+	}, []);
 
 	useEffect(() => {
 		console.log('current page: ', currentPage);
@@ -100,7 +100,7 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 	const handleConfirmation = (confirmed: boolean) => {
 		// Handle the user's choice (confirmed or not)
 		if (confirmed) {
-			// localStorage.setItem('hasSeenOnboarding', 'true');
+			localStorage.setItem('hasSeenOnboarding', 'true');
 			// User confirmed, reset the tour or perform other actions
 			setIsTourActive(false);
 			setShowConfirmation(false);
@@ -110,7 +110,7 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 			// User chose not to skip the tour, hide the confirmation tooltip
 			// If the user chose not to skip, you can set the flag to true or omit this part
 			// depending on whether you want to show the onboarding every time or only the first time
-			// localStorage.setItem('hasSeenOnboarding', 'true');
+			localStorage.setItem('hasSeenOnboarding', 'true');
 			setIsTourActive(true);
 			setShowConfirmation(false);
 			setShowFeedbackWindow(false);
