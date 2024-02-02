@@ -13,8 +13,8 @@ const awsmobile = {
             "profile",
             "aws.cognito.signin.user.admin"
         ],
-        "redirectSignIn": "https://6k2c0wuvy4.execute-api.us-east-2.amazonaws.com/sso",
-        "redirectSignOut": "https://6k2c0wuvy4.execute-api.us-east-2.amazonaws.com/",
+        "redirectSignIn": "https://dev.drlambda.ai/sso",
+        "redirectSignOut": "https://dev.drlambda.ai/",
         "responseType": "code"
     },
     "federationTarget": "COGNITO_USER_POOLS",
