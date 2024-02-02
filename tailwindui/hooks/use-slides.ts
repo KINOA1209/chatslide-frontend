@@ -50,10 +50,6 @@ export const useSlides = () => {
     void init();
   }, []);
 
-  useEffect(() => {
-    saveSlides();
-  }, [slides]);
-
   const addEmptyPage = (index: number) => {
     console.log('-- add empty page: ', { index })
     setSlides(prevSlides => {
@@ -64,6 +60,7 @@ export const useSlides = () => {
 
     updateVersion();
     updateSlideHistory();
+    saveSlides();
   }
 
   const deleteSlidePage = (index: number) => {
@@ -76,6 +73,7 @@ export const useSlides = () => {
 
     updateVersion();
     updateSlideHistory();
+    saveSlides();
   }
 
   const updateSlidePage = (index: number, slide: Slide) => {
@@ -86,7 +84,9 @@ export const useSlides = () => {
       return newSlides;
     });
 
+    updateVersion();
     updateSlideHistory();
+    saveSlides(index===0);
   }
 
   const gotoPage = (index: number) => {
@@ -143,7 +143,7 @@ export const useSlides = () => {
     setVersion((prevVersion) => prevVersion + 1);
   }
 
-  const saveSlides = async () => {
+  const saveSlides = async (is_cover_page: boolean = false) => {
     saveStatus = SaveStatus.Saving;
 
     const foldername = sessionStorage.getItem('foldername');
@@ -153,11 +153,12 @@ export const useSlides = () => {
       console.error('No foldername, project_id or token found. Cannot save slides.');
       return;
     }
-    
+
     const formData = {
       foldername: foldername,
       final_slides: slides,
       project_id: project_id,
+      is_cover_page: is_cover_page,
     };
 
     console.log('Saving slides:', formData);
