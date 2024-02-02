@@ -108,6 +108,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 }) => {
 	const editorRef = useRef<HTMLDivElement>(null);
 	const quillInstanceRef = useRef<Quill | null>(null);
+	const isTextChangeRef = useRef(false)
 
 	// const showColorPicker = (value: string) => {
 	//     if (value === 'color-picker') {
@@ -184,13 +185,18 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			}
 
 			quillInstanceRef.current.setContents(initialDelta);
-			quillInstanceRef.current.on('selection-change', (range) => {
-				if (range)
-					// when range is null, it means the cursor is outside the editor, and we will process the blur event
+			quillInstanceRef.current.on('text-change', () => {
+				//console.log('triggered')
+				isTextChangeRef.current = true
+			})
+			quillInstanceRef.current.on('selection-change', () => {
+				console.log(isTextChangeRef.current)
+				// if textchangeref is false, it will not trigger autosave
+				if (!isTextChangeRef.current)
 					return;
-
 				const currentContent = quillInstanceRef.current?.root.innerHTML;
 				if (currentContent !== undefined) {
+					isTextChangeRef.current = false
 					if (isVerticalContent) {
 						const doc = new DOMParser().parseFromString(
 							currentContent,
