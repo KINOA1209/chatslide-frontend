@@ -68,33 +68,67 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		}
 	};
 
-	const handleSend = async (extraInput?: String) => {
-		const inputToSend =
-			extraInput !== undefined ? String(extraInput) : userInput;
+	const updateUserMessage = (content: string): ChatHistory => ({
+		role: 'user',
+		content,
+	});
 
-		if (inputToSend.trim() === '') return;
+	const addSuccessMessage = (content: string): ChatHistory => ({
+		role: 'assistant',
+		content,
+	});
 
-		// Update chat history with user's message
-		const newUserMessage: ChatHistory = { role: 'user', content: inputToSend };
-		addChatHistory(newUserMessage);
+	const addErrorMessage = (content: string): ChatHistory => ({
+		role: 'assistant',
+		content,
+	});
 
-		// Clear user input after sending
-		setUserInput('');
-
-		// Make API call to get response
+	const makeApiCall = async (prompt: string): Promise<Response> => {
 		try {
-			setLoading(true);
-
-			const response = await fetch('/api/ai_gen_slide', {
+			return await fetch('/api/ai_gen_slide', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
 					slide: slides[currentSlideIndex],
-					prompt: userInput,
+					prompt,
 				}),
 			});
+		} catch (error) {
+			console.error('Error making API call:', error);
+			const errorMessage = addErrorMessage(
+				'😞 Sorry, I do not understand your request, can you try again?',
+			);
+			addChatHistory(errorMessage);
+			setLoading(false);
+			throw error; // Re-throw the error for the calling function to handle
+		}
+	};
+
+	const handleSend = async (extraInput?: string) => {
+		console.log(
+			'Sending request with userInput:',
+			userInput,
+			'extraInput:',
+			extraInput,
+		);
+		const inputToSend =
+			extraInput !== undefined ? String(extraInput) : userInput;
+
+		if (inputToSend.trim() === '') return;
+
+		// Update chat history with user's message
+		const newUserMessage = updateUserMessage(inputToSend);
+		addChatHistory(newUserMessage);
+
+		// Clear user input after sending
+		setUserInput('');
+
+		try {
+			setLoading(true);
+
+			const response = await makeApiCall(inputToSend);
 
 			setLoading(false);
 
@@ -114,38 +148,112 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					updateVersion(); // force rerender when version changes and index does not change
 
 					// Add success message to chat history
-					const successMessage = {
-						role: 'assistant',
-						content: '✅ I updated the current slide for you.',
-					};
+					const successMessage = addSuccessMessage(
+						'✅ I updated the current slide for you.',
+					);
 					addChatHistory(successMessage);
 				}
 
 				// Update chat history with AI's response
-				const newAIMessage = {
-					role: 'assistant',
-					content: `${responseData.data.chat}`,
-				};
+				const newAIMessage = addSuccessMessage(`${responseData.data.chat}`);
 				addChatHistory(newAIMessage);
 			} else {
 				console.error('Failed to get AI response');
-				addChatHistory({
-					role: 'assistant',
-					content:
-						'😞 Sorry, I do not understand your request, can you try something else?',
-				});
-				setLoading(false);
+				const errorMessage = addErrorMessage(
+					'😞 Sorry, I do not understand your request, can you try something else?',
+				);
+				addChatHistory(errorMessage);
 			}
 		} catch (error) {
-			console.error('Error making API call:', error);
-			addChatHistory({
-				role: 'assistant',
-				content:
-					'😞 Sorry, I do not understand your request, can you try something else?',
-			});
-			setLoading(false);
+			// Error handling is now done in the makeApiCall function
+			// No need to duplicate it here
 		}
 	};
+
+	// const handleSend = async (extraInput?: String) => {
+	// 	console.log(
+	// 		'Sending request with userInput:',
+	// 		userInput,
+	// 		'extraInput:',
+	// 		extraInput,
+	// 	);
+	// 	const inputToSend =
+	// 		extraInput !== undefined ? String(extraInput) : userInput;
+
+	// 	if (inputToSend.trim() === '') return;
+
+	// 	// Update chat history with user's message
+	// 	const newUserMessage: ChatHistory = { role: 'user', content: inputToSend };
+	// 	addChatHistory(newUserMessage);
+
+	// 	// Clear user input after sending
+	// 	setUserInput('');
+
+	// 	// Make API call to get response
+	// 	try {
+	// 		setLoading(true);
+
+	// 		const response = await fetch('/api/ai_gen_slide', {
+	// 			method: 'POST',
+	// 			headers: {
+	// 				'Content-Type': 'application/json',
+	// 			},
+	// 			body: JSON.stringify({
+	// 				slide: slides[currentSlideIndex],
+	// 				prompt: inputToSend,
+	// 			}),
+	// 		});
+
+	// 		setLoading(false);
+
+	// 		if (response.ok) {
+	// 			const responseData = await response.json();
+
+	// 			// If the slide is updated, add a success message
+	// 			if (responseData.data.slide) {
+	// 				// Update the slide at the current index with new data
+	// 				console.log(
+	// 					'updateSlide content after api call:',
+	// 					responseData.data.slide,
+	// 				);
+
+	// 				// Update state with the new slides
+	// 				updateSlidePage(currentSlideIndex, responseData.data.slide);
+	// 				updateVersion(); // force rerender when version changes and index does not change
+
+	// 				// Add success message to chat history
+	// 				const successMessage = {
+	// 					role: 'assistant',
+	// 					content: '✅ I updated the current slide for you.',
+	// 				};
+	// 				addChatHistory(successMessage);
+	// 			}
+
+	// 			// Update chat history with AI's response
+	// 			const newAIMessage = {
+	// 				role: 'assistant',
+	// 				content: `${responseData.data.chat}`,
+	// 			};
+	// 			addChatHistory(newAIMessage);
+	// 		} else {
+	// 			console.error('Failed to get AI response');
+	// 			addChatHistory({
+	// 				role: 'assistant',
+	// 				content:
+	// 					'😞 Sorry, I do not understand your request, can you try something else?',
+	// 			});
+	// 			setLoading(false);
+	// 		}
+	// 	} catch (error) {
+	// 		console.error('Error making API call:', error);
+	// 		addChatHistory({
+	// 			role: 'assistant',
+	// 			content:
+	// 				'😞 Sorry, I do not understand your request, can you try again?',
+	// 		});
+	// 		setLoading(false);
+	// 	}
+	// };
 
 	useEffect(() => {
 		console.log('chatHistory:', chatHistory);
