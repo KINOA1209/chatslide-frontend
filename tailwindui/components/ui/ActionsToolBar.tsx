@@ -1,5 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RiArrowGoBackFill, RiArrowGoForwardFill } from 'react-icons/ri';
+import { GoQuestion } from 'react-icons/go';
+import { StartATourGuidePromptWindow } from '@/components/user_onboarding/CustomComponents';
 
 type ActionsToolBarProps = {
 	undo: () => void;
@@ -7,6 +9,7 @@ type ActionsToolBarProps = {
 	canUndo: boolean;
 	canRedo: boolean;
 	// Other props...
+	startTour: () => void;
 };
 
 const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
@@ -14,12 +17,29 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 	redo,
 	canUndo,
 	canRedo,
+	startTour,
 }) => {
+	const [showTutorialPrompt, setShowTutorialPrompt] = useState(false);
+	const handleStartTour = () => {
+		setShowTutorialPrompt(true);
+	};
+
+	const handleCloseTutorialPrompt = () => {
+		setShowTutorialPrompt(false);
+	};
+
+	const handleConfirmStartTour = () => {
+		startTour();
+		setShowTutorialPrompt(false);
+	};
 	return (
-		<section
-			className={`shadow-md bg-white rounded-md px-2 py-1`}
-		>
+		<section className={`shadow-md bg-white rounded-md px-2 py-1`}>
 			<div className='flex flex-row gap-4'>
+				{/* user tutorial control */}
+				<button onClick={handleStartTour} style={{ color: '#2943E9' }}>
+					<GoQuestion />
+				</button>
+				<div style={{ backgroundColor: '#ccc', width: '2px' }}></div>
 				<button
 					onClick={undo}
 					style={{ color: canUndo ? '#2943E9' : '#ccc' }}
@@ -35,6 +55,12 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 				>
 					<RiArrowGoForwardFill />
 				</button>
+				{showTutorialPrompt && (
+					<StartATourGuidePromptWindow
+						onClose={handleCloseTutorialPrompt}
+						onConfirm={handleConfirmStartTour}
+					/>
+				)}
 			</div>
 		</section>
 	);
