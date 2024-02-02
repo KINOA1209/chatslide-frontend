@@ -38,6 +38,7 @@ import {
 } from '../ui/AIAssistant';
 import ActionsToolBar from '../ui/ActionsToolBar';
 import { SlidesStatus, useSlides } from '@/hooks/use-slides';
+import useTourStore from '@/components/user_onboarding/TourStore';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -75,6 +76,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	initSlideIndex = 0,
 	toPdf = false,
 }) => {
+	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 	const {
 		slides,
 		slideIndex,
@@ -503,12 +505,18 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							/>
 						)}
 						{!isViewing && (
-							<ActionsToolBar
-								undo={undoChange}
-								redo={redoChange}
-								canRedo={canRedo}
-								canUndo={canUndo}
-							/>
+							<ButtonWithExplanation
+								button={
+									<ActionsToolBar
+										undo={undoChange}
+										redo={redoChange}
+										canRedo={canRedo}
+										canUndo={canUndo}
+										startTour={startTour}
+									/>
+								}
+								explanation={'Wanna start a guided user tutorial?'}
+							></ButtonWithExplanation>
 						)}
 					</div>
 
