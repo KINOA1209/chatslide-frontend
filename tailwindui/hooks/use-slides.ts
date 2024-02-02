@@ -52,41 +52,35 @@ export const useSlides = () => {
 
   const addEmptyPage = (index: number) => {
     console.log('-- add empty page: ', { index })
-    setSlides(prevSlides => {
-      const newSlides = [...prevSlides];
-      newSlides.splice(index, 0, new Slide());
-      return newSlides;
-    });
+    const newSlides = [...slides];
+    newSlides.splice(index, 0, new Slide());
+    setSlides(newSlides);
 
     updateVersion();
     updateSlideHistory();
-    saveSlides();
+    syncSlides(newSlides);
   }
 
   const deleteSlidePage = (index: number) => {
     console.log('-- delete slide page: ', { index })
-    setSlides(prevSlides => {
-      const newSlides = [...prevSlides];
-      newSlides.splice(index, 1);
-      return newSlides;
-    });
+    const newSlides = [...slides];
+    newSlides.splice(index, 1);
+    setSlides(newSlides);
 
     updateVersion();
     updateSlideHistory();
-    saveSlides();
+    syncSlides(newSlides);
   }
 
   const updateSlidePage = (index: number, slide: Slide) => {
     console.log('-- update slide page: ', { index, slide })
-    setSlides(prevSlides => {
-      const newSlides = [...prevSlides];
-      newSlides[index] = slide;
-      return newSlides;
-    });
+    const newSlides = [...slides];
+    newSlides[index] = slide;
+    setSlides(newSlides);
 
     updateVersion();
     updateSlideHistory();
-    saveSlides(index===0);
+    syncSlides(newSlides, index===0);
   }
 
   const gotoPage = (index: number) => {
@@ -131,7 +125,7 @@ export const useSlides = () => {
     setSlides(newSlides);
     
     updateSlideHistory();
-    saveSlides();
+    syncSlides(newSlides);
   }
 
   const initSlides = (slides: Slide[]) => {
@@ -143,7 +137,7 @@ export const useSlides = () => {
     setVersion((prevVersion) => prevVersion + 1);
   }
 
-  const saveSlides = async (is_cover_page: boolean = false) => {
+  const syncSlides = async (slides: Slide[], is_cover_page: boolean = false) => {
     saveStatus = SaveStatus.Saving;
 
     const foldername = sessionStorage.getItem('foldername');
