@@ -393,7 +393,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 			{/* absolute positionde ai assistant icon */}
 			{!isChatWindowOpen && (
-				<div className='sm:fixed bottom-10 right-10 cursor-pointer'>
+				<div className='hidden sm:block fixed bottom-10 right-10 cursor-pointer'>
 					<ButtonWithExplanation
 						button={
 							<DrLambdaAIAssistantIcon
