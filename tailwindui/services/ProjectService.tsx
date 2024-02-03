@@ -317,15 +317,14 @@ class ProjectService {
       }
     }
 
-    static async serverSideGetSharedProject(project_id: string, token?: string): Promise<Project> {
+    static async serverSideGetSharedProject(project_id: string): Promise<Project> {
       const headers = new Headers();
       headers.append('Content-Type', 'application/json');
       let baseUrl = process.env.HOST ? process.env.HOST : 'localhost';
       if (baseUrl == 'localhost') {
         baseUrl = "dev.drlambda.ai"  // localhost has bugs 
       }
-      const endPoint = token ? 'api/get_project_details' : 'api/get_shared_project' 
-      const apiUrl = `https://${baseUrl}/${endPoint}?project_id=${project_id}`;
+      const apiUrl = `https://${baseUrl}/api/get_shared_project?project_id=${project_id}`;
 
       console.log(`Fetching shared project details from ${apiUrl}.`);
 
