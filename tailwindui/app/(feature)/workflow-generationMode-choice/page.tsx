@@ -11,10 +11,12 @@ import AuthService from '@/services/AuthService';
 const GenerationModePage = () => {
 	const router = useRouter(); // Initialize the router
 	const [username, setUsername] = useState(''); // Initialize the username state
+    const workflowType = SessionStorage.getItem('workflowType', 'slides');
 
 	const navigate = (type: string) => {
 		sessionStorage.setItem('generation_mode', type);
-		router.push('/workflow-generate-outlines');
+		if (workflowType == 'slides') router.push('/workflow-generate-outlines');
+		else router.push('/workflow-generate-socialpost');
 	};
 
 	useEffect(() => {

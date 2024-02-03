@@ -25,7 +25,7 @@ const surveyObject: Record<string, SurveySectionConfig> = {
   referral: {
     question: "Where did you find us?",
     itemsArr: [
-      'Google', 'Friend', 'Newsletter', 'Yandex', 'Facebook', 'Tiktok',
+      'Google', 'Newsletter', 'Yandex', 'Facebook', 'Tiktok',
       'Twitter', 'Instagram', 'Friend', 'Other'
     ]
   },

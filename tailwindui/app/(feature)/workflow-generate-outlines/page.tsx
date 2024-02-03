@@ -23,6 +23,8 @@ import Joyride, { STATUS, Step } from 'react-joyride';
 import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
 import StepsSummaryPage from '@/components/user_onboarding/StepsSummaryPage';
 import { GPTToggleWithExplanation } from '@/components/button/WorkflowGPTToggle';
+import SessionStorage from '@/components/utils/SessionStorage';
+import FromDocsUploadFile from '@/components/FromDocsUploadFile';
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 6;
 
@@ -93,6 +95,7 @@ export default function Topic() {
 			? JSON.parse(sessionStorage.selectedResources)
 			: [],
 	);
+	const generationMode = SessionStorage.getItem('generation_mode', 'from_topic');
 
 	const tourSteps: Step[] = [
 		{
@@ -251,7 +254,7 @@ export default function Topic() {
 
 	const handleSubmit = async () => {
 		console.log('submitting');
-		if (topic.length < MIN_TOPIC_LENGTH) {
+		if (generationMode === 'from_topic' && topic.length < MIN_TOPIC_LENGTH) {
 			setTopicError(`Please enter at least ${MIN_TOPIC_LENGTH} characters.`);
 			toast.error(
 				`Please enter at least ${MIN_TOPIC_LENGTH} characters for topic.`,
@@ -286,6 +289,7 @@ export default function Topic() {
 			model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
 			//schoolTemplate: schoolTemplate,
 			scenario_type: scenarioType,
+			generation_mode: generationMode,
 		};
 
 		sessionStorage.setItem('topic', formData.topic);
@@ -502,18 +506,36 @@ export default function Topic() {
 
 				{/* Project Summary section */}
 				<div className='w-full lg:w-2/3 px-3 my-3 lg:my-1' id='SummaryStep-2'>
+
+					{generationMode === 'from_files' && 
+						<FromDocsUploadFile 
+							openSupportivePopup={openSupportivePopup}
+							closeSupportivePopup={closeSupportivePopup}
+							showSupportivePopup={showSupportivePopup}
+							linkUrl={linkUrl}
+							handleLinkChange={handleLinkChange}
+							addLink={addLink}
+							isAddingLink={isAddingLink}
+							linkError={linkError}
+							setShowFileModal={setShowFileModal}
+							selectedResources={selectedResources}
+							setSelectedResources={setSelectedResources}
+							removeResourceAtIndex={removeResourceAtIndex}
+						/>
+					}
 					{/* text area section */}
 					<div className='project_container w-full my-2 lg:my-5 border border-2 border-gray-200'>
 						{/* title */}
 						<div className='title1'>
 							<p className='text-3xl'>Summary</p>
-							<p id='after1'> (Required)</p>
+							<p id='after1'> {generationMode === 'from_topic' ? '(required)' : '(optional)'}</p>
 						</div>
 						<div className='my-4'>
 							<span className='text-sm text-gray-500'>
 								To get started, give us some high-level intro about your project
 							</span>
 						</div>
+						{generationMode === 'from_topic' && (
 						<div className='flex items-center gap-1'>
 							<p className='text-sm'>Project Topic</p>
 							<div className='relative inline-block'>
@@ -536,7 +558,8 @@ export default function Topic() {
 									)}
 								</div>
 							</div>
-						</div>
+						</div>)}
+						{generationMode === 'from_topic' && (
 						<div className='textfield'>
 							<textarea
 								onChange={(e) => updateTopic(e.target.value)}
@@ -555,7 +578,7 @@ export default function Topic() {
 							{topicError && (
 								<div className='text-red-500 text-sm mt-1'>{topicError}</div>
 							)}
-						</div>
+						</div>)}
 
 						{/* DropDown menu section */}
 						<div className='dropdown_container w-full gap-2 lg:flex'>
@@ -759,6 +782,7 @@ export default function Topic() {
 				</div>
 
 				{/* supporting docs  section */}
+				{generationMode === 'from_topic' && (
 				<div
 					className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1'
 					id='SummaryStep-3'
@@ -855,7 +879,7 @@ export default function Topic() {
 							/>
 						</div>
 					</div>
-				</div>
+				</div>)}
 			</div>
 			<FeedbackButton />
 		</section>
