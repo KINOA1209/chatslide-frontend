@@ -162,7 +162,6 @@ class ProjectService {
         slide.userName = slideData.userName || '';
         slide.template =
           slideData.template ||
-          sessionStorage.getItem('schoolTemplate') ||
           ('Default' as TemplateKeys);
         slide.content = slideData.content || [
           'Some content here',
