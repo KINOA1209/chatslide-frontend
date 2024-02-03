@@ -27,6 +27,7 @@ export type ThemeConfig = {
 	UPenn: ThemeElements;
 	Default: ThemeElements;
 	Fun_Education_004: ThemeElements;
+	Business_002: ThemeElements;
 };
 
 const themeConfigData: ThemeConfig = {
@@ -719,6 +720,53 @@ const themeConfigData: ThemeConfig = {
 			fontFamily: 'Helvetica Neue', // font-nimbus-sans-regular
 			lineHeight: 1.3, // leading-9 is equivalent to a line height of 1.5
 			color: '#4B4B4B', // text-zinc-800 color
+		},
+	},
+	Business_002: {
+		backgroundUrlCover: '',
+		backgroundColorCover: 'bg-[#FFFFFF]',
+		backgroundColor: 'bg-[#D2D2D2]',
+		titleFontCSS: {
+			fontSize: '24pt', // text-3xl in points
+			fontWeight: 'bold', // font-bold,(Lin: 700)
+			fontFamily: 'Big Shoulders Text', // font-nimbus-sans-bold
+			lineHeight: 1.2, // leading-[110%] is equivalent to a line height of 1.1
+			whiteSpace: 'nowrap', // whitespace-nowrap},
+			color: '#4B4B4B', // text-[#8C1515] color
+		},
+		subtopicFontCSS: {
+			opacity: 1, // opacity-70
+			fontWeight: 'bold', // font-nimbus-sans-bold (Lin: 500)
+			fontFamily: 'Arimo', // font-nimbus-sans-bold
+			fontSize: '20pt', // text-xl in points
+			fontStyle: 'normal', // font-normal
+			lineHeight: 1, // leading-[150%] is equivalent to a line height of 1.5
+			color: '#BCBCBC', // text-red-800 color
+		},
+		contentFontCSS: {
+			fontSize: '20pt', // text-base in points (assuming 1rem is 1pt)
+			fontWeight: 'normal', // font-normal (Lin: 400)
+			fontFamily: 'Arimo', // font-nimbus-sans-regular
+			lineHeight: 1.3, // leading-9 is equivalent to a line height of 1.5
+			color: '#2E2E2E', // text-zinc-800 color
+			display: 'list-item',
+		},
+		userNameFont:
+			'text-sm font-Creato Display-regular font-normal leading-[100%]',
+		userNameFontColor: 'text-[#F0F0F2]', //(Lin: color #868686)
+		headFontCSS: {
+			fontSize: '64pt', // text-4xl in points (assuming 1rem is 1pt)
+			fontWeight: 'normal', // font-bold, (Lin: 700)
+			fontFamily: 'Big Shoulders Text', // font-nimbus-sans-bold
+			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
+			color: '#2E2E2E', // text-white color
+		},
+		contentFontCSS_non_vertical_content: {
+			fontSize: '20pt', // text-base in points (assuming 1rem is 1pt)
+			fontWeight: 'normal', // font-normal
+			fontFamily: 'Arimo', // font-nimbus-sans-regular
+			lineHeight: 1.3, // leading-9 is equivalent to a line height of 1.5
+			color: '#2E2E2E', // text-zinc-800 color
 		},
 	},
 };
