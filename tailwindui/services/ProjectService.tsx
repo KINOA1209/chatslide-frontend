@@ -9,14 +9,19 @@ class ProjectService {
 
   static async getSharedProjectDetails(
     project_id: string,
+    server_side: boolean = false  // if true, fetch use abs url
   ): Promise<Project> {
     //console.log(`Fetching shared project details.`);
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
+    const baseUrl = process.env.HOST ? process.env.HOST : 'localhost';
+    const protocol = baseUrl == 'localhost' ? 'http' : 'https';
+    const url = server_side ? `${protocol}://${baseUrl}/api/get_shared_project` : '/api/get_shared_project';
+
     try {
       // fetch project details
-      const response = await fetch(`/api/get_shared_project?project_id=${project_id}`, {
+      const response = await fetch(`${url}?project_id=${project_id}`, {
         method: 'GET',
         headers: headers,
       });
@@ -319,42 +324,6 @@ class ProjectService {
         }
       } catch (error) {
         console.error('Failed to toggle share status:', error);
-      }
-    }
-
-    static async serverSideGetSharedProject(project_id: string): Promise<Project> {
-      const headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      let baseUrl = process.env.HOST ? process.env.HOST : 'localhost';
-      if (baseUrl == 'localhost') {
-        baseUrl = "dev.drlambda.ai"  // localhost has bugs 
-      }
-      const apiUrl = `https://${baseUrl}/api/get_shared_project?project_id=${project_id}`;
-
-      console.log(`Fetching shared project details from ${apiUrl}.`);
-
-      try {
-        const response = await fetch(apiUrl, {
-          method: 'GET',
-          headers: headers,
-        });
-  
-        if (!response.ok) {
-          throw new Error(`Error fetching project ${project_id} details: ${response.status}`);
-        }
-
-        const project = await response.json() as Project;
-
-        // console.log(project)  
-
-        // if (project?.presentation_slides) {
-        //   project.parsed_slides = this.parseSlides(project.presentation_slides);
-        // }
-  
-        return project;
-      } catch (error) {
-        console.error(`Error fetching project ${project_id} details:`, error);
-        throw error;
       }
     }
 }

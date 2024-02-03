@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	// default image URL
 	let publicImageUrl = 'https://drlambda.ai/new_landing/imgs/ogimage.png';
 	try {
-    const project = await ProjectService.serverSideGetSharedProject(project_id)
+    const project = await ProjectService.getSharedProjectDetails(project_id, true)
     // console.log(project)
     publicImageUrl = project.thumbnail_url || publicImageUrl
     topic = project.topic || "DrLambda"
@@ -63,7 +63,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Page({ params }: Props) {
   const project_id = params.project_id;
 
-  const project = await ProjectService.serverSideGetSharedProject(project_id);
+  const project = await ProjectService.getSharedProjectDetails(project_id, true);
 
   return (
     <div>
