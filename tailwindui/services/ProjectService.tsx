@@ -46,6 +46,7 @@ class ProjectService {
   static async getProjectDetails(
     token: string,
     project_id: string,
+    server_side: boolean = false  // if true, fetch use abs url 
   ): Promise<Project> {
     //console.log(`Fetching project details.`);
     const headers = new Headers();
@@ -54,9 +55,13 @@ class ProjectService {
     }
     headers.append('Content-Type', 'application/json');
 
+    const baseUrl = process.env.HOST ? process.env.HOST : 'localhost';
+    const protocol = baseUrl == 'localhost' ? 'http' : 'https';
+    const url = server_side ? `${protocol}://${baseUrl}/api/get_project_details` : '/api/get_project_details';
+
     try {
       // fetch project details
-      const response = await fetch('/api/get_project_details', {
+      const response = await fetch(url, {
         method: 'POST',
         headers: headers,
         body: JSON.stringify({ project_id: project_id }),
