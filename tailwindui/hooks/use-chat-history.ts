@@ -19,8 +19,6 @@ export const useChatHistory = () => {
     if (chatHistoryStatus !== ChatHistoryStatus.NotInited) return;
     chatHistoryStatus = ChatHistoryStatus.Initing;
 
-    setChatHistory([]);
-
     console.log('-- init chat history: ', { chatHistoryStatus, chatHistory })
 
     chatHistoryStatus = ChatHistoryStatus.Inited;
