@@ -304,7 +304,7 @@ export const ChangeTemplateOptions: React.FC<{
 }> = ({ templateOptions, onChangeTemplate }) => {
 	const [selectedTemplate, setSelectedTemplate] = useState(() => {
 		// Try to get the selected template from sessionStorage
-		const storedTemplate = sessionStorage.getItem('selectedTemplate');
+		const storedTemplate = sessionStorage.getItem('schoolTemplate');
 		return storedTemplate || '';
 	});
 

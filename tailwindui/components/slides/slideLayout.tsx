@@ -205,12 +205,19 @@ export const Col_1_img_0_layout = ({
 
 	return (
 		<div ref={containerRef} style={layoutElements.canvaCSS}>
-			<div ref={topicRef} className={``} style={layoutElements.topicCSS}>
-				{topic}
+			<div style={layoutElements.titleAndSubtopicBoxCSS}>
+				<div ref={topicRef} className={``} style={layoutElements.topicCSS}>
+					{topic}
+				</div>
+				<div
+					className={``}
+					ref={subtopicRef}
+					style={layoutElements.subtopicCSS}
+				>
+					{subtopic}
+				</div>
 			</div>
-			<div className={``} ref={subtopicRef} style={layoutElements.subtopicCSS}>
-				{subtopic}
-			</div>
+
 			<div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
 			<div style={layoutElements.columnCSS}>
 				<div
@@ -245,8 +252,11 @@ export const Col_2_img_0_layout = ({
 }: MainSlideProps) => {
 	return (
 		<>
-			<div className={``}>{topic}</div>
-			<div className={``}>{subtopic}</div>
+			<div style={layoutElements.titleAndSubtopicBoxCSS}>
+				<div className={``}>{topic}</div>
+				<div className={``}>{subtopic}</div>
+			</div>
+
 			<div className='h-full w-full grid grid-cols-2 gap-[2rem]'>
 				{Array.isArray(content) &&
 					content.map((item, index) => (
@@ -283,8 +293,11 @@ export const Col_3_img_0_layout = ({
 }: MainSlideProps) => {
 	return (
 		<>
-			<div className={``}>{topic}</div>
-			<div className={``}>{subtopic}</div>
+			<div style={layoutElements.titleAndSubtopicBoxCSS}>
+				<div className={``}>{topic}</div>
+				<div className={``}>{subtopic}</div>
+			</div>
+
 			<div className='h-full w-full grid grid-cols-3 gap-[2rem] overflow-y-scroll'>
 				{Array.isArray(content) &&
 					content.map((item, index) => (
@@ -332,13 +345,27 @@ export const Col_1_img_1_layout = ({
 	return (
 		<>
 			{/* area for topic, subtopic and contents */}
-			<div className='h-1/3 w-full grid grid-cols-2 gap-[2rem]'>
-				{/* col1 for topic and subtopic */}
-				<div className='flex flex-col gap-[0.1rem]'>
+			<div className='w-full grid grid-cols-1'>
+				{/* row1 for topic and subtopic */}
+
+				<div
+					className='flex flex-col'
+					style={layoutElements.titleAndSubtopicBoxCSS}
+				>
 					<div className={`z-50`}>{topic}</div>
 					<div className={`z-50`}>{subtopic}</div>
 				</div>
-				{/* col 2 for contents */}
+
+				{/* row2 for image */}
+				{/* image section */}
+				<div className='mt-[3rem] h-[15rem] grow rounded-md overflow-hidden'>
+					<ImgModule
+						imgsrc={imgs[0]}
+						updateSingleCallback={updateImgAtIndex(0)}
+						canEdit={canEdit}
+					/>
+				</div>
+				{/* row3 for contents */}
 				<div className='h-full w-full flex flex-row gap-[2rem]'>
 					<div className='flex flex-col gap-[0.2rem]'>
 						<div className='opacity-50'></div>
@@ -358,16 +385,9 @@ export const Col_1_img_1_layout = ({
 						</div>
 					</div>
 				</div>
+				{/* col 2 for contents */}
 			</div>
 
-			{/* image section */}
-			<div className='mt-[3rem] h-[15rem] grow rounded-md overflow-hidden'>
-				<ImgModule
-					imgsrc={imgs[0]}
-					updateSingleCallback={updateImgAtIndex(0)}
-					canEdit={canEdit}
-				/>
-			</div>
 			<div style={layoutElements.logoCSS}>{templateLogo}</div>
 		</>
 	);
@@ -434,12 +454,18 @@ export const Col_2_img_1_layout = ({
 			ref={containerRef}
 		>
 			<div className={`w-1/2 flex flex-col items-start h-full gap-[0.1rem]`}>
-				<div className={`z-50`} ref={topicRef}>
-					{topic}
+				<div
+					className='flex flex-col'
+					style={layoutElements.titleAndSubtopicBoxCSS}
+				>
+					<div className={`z-50`} ref={topicRef}>
+						{topic}
+					</div>
+					<div className={``} ref={subtopicRef}>
+						{subtopic}
+					</div>
 				</div>
-				<div className={``} ref={subtopicRef}>
-					{subtopic}
-				</div>
+
 				{/* contents */}
 				<div className='w-full flex'>
 					<div
@@ -490,9 +516,15 @@ export const Col_2_img_2_layout = ({
 
 	return (
 		<>
-			<div className='flex flex-col justify-center items-center gap-[0.5rem]'>
-				<div className={``}>{topic}</div>
-				<div className={``}>{subtopic}</div>
+			<div className='flex flex-col gap-[0.5rem]'>
+				<div
+					className='flex flex-col justify-center items-center'
+					style={layoutElements.titleAndSubtopicBoxCSS}
+				>
+					<div className={``}>{topic}</div>
+					<div className={``}>{subtopic}</div>
+				</div>
+
 				{/* two columns of images */}
 				<div className='w-full grid grid-cols-2 gap-[2rem]'>
 					<div className='h-[11rem] grow rounded-md overflow-hidden relative'>
@@ -569,10 +601,15 @@ export const Col_3_img_3_layout = ({
 	};
 
 	return (
-		<>
-			<div className='flex flex-col justify-center items-center gap-[0.5rem]'>
-				<div className={``}>{topic}</div>
-				<div className={``}>{subtopic}</div>
+		<div style={layoutElements.canvaCSS}>
+			<div className='flex flex-col gap-[0.5rem]'>
+				<div
+					className='flex flex-col justify-center items-center'
+					style={layoutElements.titleAndSubtopicBoxCSS}
+				>
+					<div className={``}>{topic}</div>
+					<div className={``}>{subtopic}</div>
+				</div>
 				{/* three columns of images */}
 				<div className='w-full grid grid-cols-3 gap-[2rem] '>
 					<div className='h-[11rem] grow rounded-md overflow-hidden'>
@@ -611,7 +648,7 @@ export const Col_3_img_3_layout = ({
 				</div>
 			</div>
 			<div style={layoutElements.logoCSS}>{templateLogo}</div>
-		</>
+		</div>
 	);
 };
 

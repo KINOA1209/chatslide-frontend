@@ -11,7 +11,9 @@ import { JHU_school_template } from './school_templates/Johns_Hopkins_University
 import { University_of_Chicago_school_template } from './school_templates/University_of_Chicago_school_template';
 import { Yale_school_template } from './school_templates/Yale_school_template';
 import { UPenn_school_template } from './school_templates/University_of_Pennsylvania_school_template';
+
 import { Fun_Education_004_template } from './new_templates/Fun_Education_004_template';
+import { Business_002_template } from './new_templates/Business_002_template';
 import { LayoutKeys } from './slideLayout';
 import { layoutOptions } from './slideLayout';
 import {
@@ -196,6 +198,7 @@ export const availableTemplates = {
 	UPenn: UPenn_school_template,
 	Default: Default,
 	Fun_Education_004: Fun_Education_004_template,
+	Business_002: Business_002_template,
 };
 
 // Define a type for template keys

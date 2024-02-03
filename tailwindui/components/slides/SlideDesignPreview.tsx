@@ -38,6 +38,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 		const template = isValidTemplateKey(selectedTemplate)
 			? selectedTemplate
 			: 'Default';
+
 		const newSlides = Object.keys(layoutOptions).map((layoutKey) => {
 			const newSlide = new Slide();
 			newSlide.template = template;
@@ -97,25 +98,25 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 	return (
 		<div className='py-6 max-w-7xl flex overflow-x-auto overflow-x-scroll overflow-y-hidden'>
 			{slides.map((slide, index) => (
-					<div
-						className='flex flex-col items-center'
-						key={`DesignpreviewContainer` + index.toString()}
-					>
-						<div className={`px-1`}>
-							{/* {index + 1} */}
-							<SlideContainer
-                slide={slide}
-								index={index}
-								scale={0.25}
-								isViewing={true}
-								templateDispatch={editableTemplateDispatch}
-							/>
-						</div>
-						<span className='text-sm font-normal font-creato-medium leading-normal tracking-tight mt-3'>
-							{layoutNameArray[index]}
-						</span>
+				<div
+					className='flex flex-col items-center'
+					key={`DesignpreviewContainer` + index.toString()}
+				>
+					<div className={`px-1`}>
+						{/* {index + 1} */}
+						<SlideContainer
+							slide={slide}
+							index={index}
+							scale={0.25}
+							isViewing={true}
+							templateDispatch={editableTemplateDispatch}
+						/>
 					</div>
-				))}
+					<span className='text-sm font-normal font-creato-medium leading-normal tracking-tight mt-3'>
+						{layoutNameArray[index]}
+					</span>
+				</div>
+			))}
 		</div>
 	);
 };
