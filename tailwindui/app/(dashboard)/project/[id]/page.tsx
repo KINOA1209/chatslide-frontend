@@ -7,11 +7,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ProjectService from '@/services/ProjectService';
 import Project from '@/models/Project';
+import { useSlides } from '@/hooks/use-slides';
 
 const ProjectLoading = () => {
 	const [project, setProject] = useState<Project | null>(null);
 	const pathname = usePathname();
 	const router = useRouter();
+  const { initSlides } = useSlides();
 
 	useEffect(() => {
 		sessionStorage.clear();
@@ -157,6 +159,9 @@ const ProjectLoading = () => {
 
 				ProjectService.getProjectDetails(token, project_id).then((project) => {
 					setProject(project);
+          if (project?.parsed_slides){
+            initSlides(project.parsed_slides)
+          }
 				});
 			}
 		} catch (error) {

@@ -50,7 +50,6 @@ type SlidesHTMLProps = {
 	toPdf?: boolean; // toPdf mode for backend
 };
 
-// Load customizable elements from session storage or use default values
 export const loadCustomizableElements = (templateName: string) => {
 	return themeConfigData[templateName as keyof ThemeConfig] || {};
 };
@@ -66,7 +65,6 @@ export const loadLayoutConfigElements = (
 	return selectedLayoutOptionElements;
 };
 
-// it will render the slides fetched from `foldername` in sessionStorage
 const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	isViewing = false,
 	transcriptList = [],
@@ -94,23 +92,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		version,
 		saveStatus,
 	} = useSlides();
-	const foldername =
-		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('foldername')
-			: '';
-	const project_id =
-		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('project_id')
-			: '';
-
-	// default to use test data for slides, res will not be used if slide is passed in
-	const res_slide =
-		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('presentation_slides') ||
-			  JSON.stringify(TestSlidesData)
-			: '';
-
-	const [chosenLayout, setChosenLayout] = useState<LayoutKeys>('');
 
 	const [showLayout, setShowLayout] = useState(false);
 	const [present, setPresent] = useState(isPresenting);
@@ -188,25 +169,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			window.removeEventListener('keydown', handleKeyDown);
 		};
 	}, []); // Empty dependency array to ensure this effect runs only once (similar to componentDidMount)
-
-	// fetch slides data from session storage if slides is not passed in
-
-	// commented because slides should already be in bear storage
-	useEffect(() => {
-		if (slidesStatus != SlidesStatus.Inited) return;
-		if (slides && slides.length > 0) {
-			console.log(
-				`slides is passed in, skip fetching slides data from session storage`,
-			);
-		} else if (res_slide) {
-			console.log(
-				`slides is not passed in, fetch slides data from session storage`,
-			);
-			const slidesArray = ProjectService.parseSlides(res_slide);
-			//console.log('the parsed slides array:', slidesArray);
-			initSlides(slidesArray);
-		}
-	}, [slidesStatus]);
 
 	useEffect(() => {
 		document.addEventListener('keydown', handleKeyDown);

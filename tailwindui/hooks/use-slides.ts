@@ -44,10 +44,7 @@ export const useSlides = () => {
 		if (slidesStatus !== SlidesStatus.NotInited) return;
 		slidesStatus = SlidesStatus.Initing;
 
-		setSlides([]);
 		setSlideIndex(0);
-		setSlidesHistory([]);
-		setSlidesHistoryIndex(0);
 
 		console.log('-- init slides: ', { slidesStatus, slides });
 
