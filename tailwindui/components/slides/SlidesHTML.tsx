@@ -515,7 +515,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 										startTour={startTour}
 									/>
 								}
-								explanation={'Wanna start a guided user tutorial?'}
+								explanation={'Guided user tutorial'}
 							></ButtonWithExplanation>
 						)}
 					</div>
