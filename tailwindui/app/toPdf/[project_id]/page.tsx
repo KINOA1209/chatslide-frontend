@@ -8,7 +8,9 @@ type Props = {
 export default async function Page({ params }: Props) {
   const project_id = params.project_id;
 
-  const project = await ProjectService.serverSideGetSharedProject(project_id);
+  const token = process.env.SELF_TOKEN as string;
+
+  const project = await ProjectService.serverSideGetSharedProject(project_id, token);
 
   return (
     <div>
