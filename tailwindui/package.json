@@ -31,9 +31,12 @@
     "modern-screenshot": "4.4.37",
     "moment": "2.29.4",
     "next": "13.5.6",
+    "next-fonts": "^1.5.1",
+    "next-google-fonts": "^2.2.0",
     "node-sass": "9.0.0",
     "postcss": "8.4.32",
     "quill-delta-to-html": "0.12.1",
+    "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-drag-drop-files": "2.3.10",
     "react-helmet": "6.1.0",
@@ -49,7 +52,6 @@
     "react-to-pdf": "1.0.1",
     "react-toastify": "9.1.3",
     "react-twitter-embed": "4.0.4",
-    "react": "18.2.0",
     "remark-gfm": "4.0.0",
     "sanitize-html": "2.11.0",
     "sass": "1.69.5",
@@ -67,9 +69,9 @@
     "@types/mathjax": "0.0.37",
     "@types/node": "20.2.1",
     "@types/quill": "2.0.14",
+    "@types/react": "18.2.6",
     "@types/react-dom": "18.0.11",
     "@types/react-helmet": "6.1.11",
-    "@types/react": "18.2.6",
     "@types/sanitize-html": "2.9.5"
   }
 }
