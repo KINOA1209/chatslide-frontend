@@ -611,17 +611,20 @@ export default function Topic_SocialPost() {
 											<option key='Ukrainian' value='Ukrainian'>
 												🇺🇦 Українська
 											</option>
+                      <option key='French' value='French'>
+                        🇫🇷 Français
+                      </option>
+                      <option key='German' value='German'>
+                        🇩🇪 Deutsch
+                      </option>
+                      <option key='Brazilian Portuguese' value='Brazilian Portuguese'>
+                        🇧🇷 Português (Brasil)
+                      </option>
+                      <option key='Portuguese' value='Portuguese'>
+                        🇵🇹 Português
+                      </option>
 											<option key='Hindi' value='Hindi'>
 												🇮🇳 हिन्दी
-											</option>
-											<option key='French' value='French'>
-												🇫🇷 Français
-											</option>
-											<option key='German' value='German'>
-												🇩🇪 Deutsch
-											</option>
-											<option key='Portuguese' value='Portuguese'>
-												🇵🇹 Português
 											</option>
 											<option key='Japanese' value='Japanese'>
 												🇯🇵 日本語

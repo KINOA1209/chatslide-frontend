@@ -699,24 +699,27 @@ export default function Topic() {
 										>
 											🇹🇼 中文 (繁體)
 										</option>
+                    <option key='French' value='French'>
+                      🇫🇷 Français
+                    </option>
 										<option key='Russian' value='Russian'>
 											🇷🇺 Русский
 										</option>
 										<option key='Ukrainian' value='Ukrainian'>
 											🇺🇦 Українська
 										</option>
-										<option key='Hindi' value='Hindi'>
-											🇮🇳 हिन्दी
-										</option>
-										<option key='French' value='French'>
-											🇫🇷 Français
-										</option>
 										<option key='German' value='German'>
 											🇩🇪 Deutsch
 										</option>
+                    <option key='Brazilian Portuguese' value='Brazilian Portuguese'>
+                      🇧🇷 Português (Brasil)
+                    </option>
 										<option key='Portuguese' value='Portuguese'>
 											🇵🇹 Português
 										</option>
+                    <option key='Hindi' value='Hindi'>
+                      🇮🇳 हिन्दी
+                    </option>
 										<option key='Japanese' value='Japanese'>
 											🇯🇵 日本語
 										</option>
