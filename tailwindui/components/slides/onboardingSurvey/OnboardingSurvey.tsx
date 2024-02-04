@@ -129,7 +129,7 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
         body:JSON.stringify({ OnboardingSurvey: formData})
       });
       if (!response.ok){
-        throw new Error(`HTTP error status: ${response.status}`);
+        console.error('Failed to submit survey:', response);
       }
       else {
         const result = await response.json()
