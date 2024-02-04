@@ -125,7 +125,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
       {loading ? (
         <div className='flex items-center justify-center min-h-screen'>Loading...</div>
       ) : (
-        <div className='flex flex-col items-center justify-center min-h-screen gap-8'>
+        <div className='hidden sm:flex flex-col items-center justify-center min-h-screen gap-8'>
           {showDescription && project && project.description &&
             <div className="flex sm:w-2/3 h-[10rem]text-gray-700 text-left m-2 gap-4">
               <div className="border border-gray-200 rounded-xl overflow-y-scroll p-2">
