@@ -130,6 +130,7 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
       });
       if (!response.ok){
         console.error('Failed to submit survey:', response);
+        handleBack()
       }
       else {
         const result = await response.json()
@@ -138,6 +139,7 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
       }
     } catch (error) {
       console.error('Failed to submit survey:', error);
+      handleBack()
     }
   }
 
