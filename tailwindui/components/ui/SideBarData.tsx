@@ -48,7 +48,7 @@ export const SideBarData: SideBarItem[] = [
 	{
 		title: 'Join Discord',
 		icon: <RiDiscordLine />,
-		path: 'https://discord.gg/x2E7ZMmj3b',
+    path: 'https://discord.gg/kRBnjHxS',
 		target: '_blank',
 	},
 	{

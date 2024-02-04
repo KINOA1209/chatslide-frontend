@@ -184,7 +184,7 @@ const SideBar = ({}: SideBarProps) => {
 								Get 100 ⭐️credits
 							</a>
 							<a
-								href='https://discord.gg/x2E7ZMmj3b'
+                href='https://discord.gg/kRBnjHxS'
 								target='_blank'
 								className='block flew flex-row items-center gap-1 py-1 text-sm text-white px-2 rounded-lg hover:bg-gray-400'
 								role='menuitem'
