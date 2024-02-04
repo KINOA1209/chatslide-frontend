@@ -12,12 +12,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	let topic = "drlambda"
 	let description = "drlambda"
   let author = "drlambda"
-	//const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
-	//let publicImageUrl = await ProjectService.getSlideTwitterImg(project_id);
-	//let publicImageUrl = ProjectService.getSharedProjectDetails(project_id)
-	//console.log(publicImageUrl)
-	// publicImageUrl = publicImageUrl || 'https://drlambda.ai/new_landing/imgs/ogimage.png';
-	// default image URL
 	let publicImageUrl = 'https://drlambda.ai/new_landing/imgs/ogimage.png';
 	try {
     const project = await ProjectService.getSharedProjectDetails(project_id, true)
@@ -63,11 +57,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Page({ params }: Props) {
   const project_id = params.project_id;
 
-  const project = await ProjectService.getSharedProjectDetails(project_id, true);
+  // const project = await ProjectService.getSharedProjectDetails(project_id, true);
 
   return (
     <div>
-      <SharePage project={project} /> {/* The project is now passed as a prop */}
+      <SharePage project_id={project_id} /> {/* The project is now passed as a prop */}
     </div>
   );
 };
