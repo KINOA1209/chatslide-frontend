@@ -148,6 +148,9 @@ class ProjectService {
   }
 
   static parseSlides(presentation_slides: string): Slide[] {
+    if (!presentation_slides) {
+      return [];
+    }
 
     let jsonSlides = JSON.parse(presentation_slides);
     if(typeof jsonSlides === 'string') {

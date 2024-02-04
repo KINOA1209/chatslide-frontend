@@ -5,6 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import UserService from '../../services/UserService';
 import Resource from '@/models/Resource';
 import ResourceService from '@/services/ResourceService';
+import { useSlides } from '@/hooks/use-slides';
+import ProjectService from '@/services/ProjectService';
 
 interface OutlineSection {
 	title: string;
@@ -28,9 +30,8 @@ const GenerateSlidesSubmit = ({
 	setIsSubmitting: (submitting: boolean) => void;
 }) => {
 	const router = useRouter();
-	//   const [isGpt35, setIsGpt35] = useState(true)
-	const [slidePages, setSlidePages] = useState(20);
-	const [wordPerSubpoint, setWordPerSubpoint] = useState(10);
+
+  const { initSlides } = useSlides();
 
 	useEffect(() => {
 		if (isSubmitting) {
@@ -67,10 +68,12 @@ const GenerateSlidesSubmit = ({
 
 		if (response.ok) {
 			const resp = await response.json();
+      const presentation_slides = JSON.stringify(resp.data.res)
 			sessionStorage.setItem(
 				'presentation_slides',
 				JSON.stringify(resp.data.res),
 			);
+      initSlides(ProjectService.parseSlides(presentation_slides));
 			router.push('workflow-review-slides');
 		} else {
 			alert(
@@ -161,8 +164,6 @@ const GenerateSlidesSubmit = ({
 			extraKnowledge: extraKnowledge,
 			outline_item_counts: outline_item_counts,
 			model_name: isGPT35 ? 'gpt-3.5-turbo' : 'gpt-4',
-			slidePages: slidePages,
-			wordPerSubpoint: wordPerSubpoint,
 			scenario_type: scenarioType,
 			// endIndex: 2,  // generate first 2 sections only
 			template: schoolTemplate,
