@@ -27,7 +27,9 @@ class ProjectService {
       });
 
       if (!response.ok) {
-        throw new Error(`Error fetching project ${project_id} details: ${response.status}`);
+        throw new Error(`getSharedProjectDetails failed, project_id: ${project_id},
+        url: ${url},
+        details: ${response.status}`);
       }
 
       const project = await response.json() as Project;
@@ -42,7 +44,9 @@ class ProjectService {
 
       return project;
     } catch (error) {
-      console.error(`Error fetching project ${project_id} details:`, error);
+      console.error(`getSharedProjectDetails failed, project_id: ${project_id},
+      url: ${url},
+      details:`, error);
       throw error; // Rethrow the error to be handled by the caller
     }
   }
@@ -73,7 +77,8 @@ class ProjectService {
       });
 
       if (!response.ok) {
-        throw new Error(`Error fetching project details: ${response.status}`);
+        throw new Error(`getProjectDetails Error fetching project details: ${response.status}
+        url: ${url}`);
       }
 
       const project = await response.json() as Project;
@@ -85,7 +90,8 @@ class ProjectService {
 
       return project;
     } catch (error) {
-      console.error('Error fetching project details:', error);
+      console.error(`getProjectDetails Error fetching project details: ${error}
+      url: ${url}`);
       throw error; // Rethrow the error to be handled by the caller
     }
   }
@@ -116,10 +122,10 @@ class ProjectService {
         return data.projects;
       } else {
         // Handle error cases
-        console.error('Failed to fetch projects:', response.status);
+        console.error(`getProjects failed: ${response.status}`);
       }
     } catch (error) {
-      console.error('Error fetching projects:', error);
+      console.error(`getProjects failed: error: ${error}`);
     }
     return [];
   }
