@@ -93,7 +93,7 @@ export default function Career() {
             </div>
             <div className='flex flex-col md:flex-row items-center pb-8'>
               <div>
-                <h3 className='h3 text-xl mb-2'>Frontend Developer</h3>
+                {/* <h3 className='h3 text-xl mb-2'>Frontend Developer</h3>
                 <p className='text-base text-gray-600'>
                   Are you a dynamic Frontend Developer, eager to craft web
                   applications that stand out? We invite you to join our vibrant
@@ -142,9 +142,9 @@ export default function Career() {
                   <br />
                   - Hands-on experience with Git, project management tool like Jira.
                   <br />
-                </p>
-                <br />
-                <h3 className='h3 text-xl mb-2'>Backend Developer Intern</h3>
+                </p> */}
+                {/* <br /> */}
+                <h3 className='h3 text-xl mb-2' id='backend'>Backend Developer Intern</h3>
                 <p className='text-base text-gray-600'>
                   Are you an aspiring Backend Developer, passionate about building robust backend systems? We are on the lookout for a dedicated and talented intern to join our dynamic team. Dive into the world of backend development and help us enhance our server-side logic and database architectures.
                   <br /><br />
@@ -172,7 +172,61 @@ export default function Career() {
                   - Strong problem-solving skills and willingness to take on challenging tasks.<br />
                   - Excellent communication and teamwork skills.<br /><br />
                 </p>
+                <h3 className='h3 text-xl mb-2' id='infra'>Infrastructure Engineer</h3>
+                <p className='text-base text-gray-600'>
+                  Are you an adept Infrastructure Engineer with a passion for developing and maintaining scalable, high-availability systems? We're seeking a proactive individual to join our forward-thinking team, driving the evolution of our infrastructure to support our growing needs.
+                  <br />
+                  <br />
+                  <strong>Role Insight:</strong>
+                  <br />
+                  Engage in the design and implementation of robust infrastructure solutions, focusing on cloud services, microservices architecture, and distributed systems. This role is suited for engineers skilled in AWS, Lambda, Amplify, Vercel, and who are excited about optimizing infrastructure for performance and reliability.
+                  <br />
+                  <br />
+                  <strong>Key Tasks:</strong>
+                  <br />
+                  - Architect and deploy cloud solutions using AWS, including services like Lambda and Amplify.
+                  <br />
+                  - Lead the transition to a microservice architecture, ensuring seamless integration and deployment.
+                  <br />
+                  - Implement and manage CDN solutions to improve content delivery speed and efficiency.
+                  <br />
+                  - Design and maintain distributed systems, encompassing databases, S3 storage, and more, for optimal scalability and availability.
+                  <br />
+                  - Ensure infrastructure security and compliance with best practices.
+                  <br />
+                  - Automate infrastructure provisioning and deployment processes.
+                  <br />
+                  <br />
+                  <strong>What You Bring:</strong>
+                  <br />
+                  - Profound knowledge in AWS cloud services and infrastructure as code tools.
+                  <br />
+                  - Experience in setting up and managing microservice architectures.
+                  <br />
+                  - Understanding of distributed systems, including database management, file storage (S3), and networking.
+                  <br />
+                  - Ability to design, implement, and manage CDN strategies for global content distribution.
+                  <br />
+                  - Familiarity with containerization and orchestration tools (e.g., Docker, Kubernetes).
+                  <br />
+                  <br />
+                  <strong>Preferred Expertise:</strong>
+                  <br />
+                  - A degree in Computer Science, Engineering, or a relevant field.
+                  <br />
+                  - Certifications in AWS or other cloud technologies.
+                  <br />
+                  - Experience with infrastructure monitoring and logging tools.
+                  <br />
+                  - Proficiency in automation and scripting languages.
+                  <br />
+                </p>
               </div>
+            </div>
+          </div>
+          {/* <div className='max-w-3xl mx-auto pb-4'>
+            <div>
+
             </div>
             <div className='pb-8'>
               <h2 className='h3 text-2xl'>📊 Data Science</h2>
@@ -187,7 +241,7 @@ export default function Career() {
                   As our Data Scientist, you will play a critical role in analyzing large datasets, creating dynamic dashboards, and providing actionable insights to guide our strategic decisions. Your expertise in SQL, Google Analytics, Retool, and dashboard creation will be pivotal in enhancing our data-driven approach.
                   <br /><br />
                   <strong>Key Tasks:</strong><br />
-                  - Develop and maintain databases, ensuring data integrity and efficiency using SQL.<br />
+                  - Develop and maintain databases, ensuring data integrity and efficiency using SQL and Python.<br />
                   - Analyze web traffic and user engagement metrics using Google Analytics.<br />
                   - Design, build and deploy interactive dashboards and reports using Retool and other visualization tools.<br />
                   - Perform advanced data analysis to uncover trends, patterns, and insights.<br />
@@ -209,7 +263,7 @@ export default function Career() {
                 </p>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <Footer />
