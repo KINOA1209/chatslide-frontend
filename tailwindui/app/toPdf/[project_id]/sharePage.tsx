@@ -12,34 +12,35 @@ const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 });
 
 interface SharePageProps {
-  project: Project,
+  project_id: string
   page?: number
 }
 
-const SharePage: React.FC<SharePageProps> = ({ project, page=1 }) => {
+const SharePage: React.FC<SharePageProps> = ({ project_id, page=1 }) => {
   const [loading, setLoading] = useState(true);
   const { initSlides } = useSlides();
 
+  // get token from query params
+  const token = new URLSearchParams(window.location.search).get('token') as string;
+
   useEffect(() => {
-    console.log('project', project)
-    const slides = ProjectService.parseSlides(project.presentation_slides);
-    initSlides(slides);
-    setLoading(false);
+    const init = async () => {
+      const project = await ProjectService.getProjectDetails(token, project_id);
+      const slides = ProjectService.parseSlides(project.presentation_slides);
+      initSlides(slides);
+      setLoading(false);
+    };
+    init();
   }, []);
 
 	return (
 		<main className='grow'>
-			{loading ? (
-        <div className='flex items-center justify-center min-h-screen'>Loading...</div>
-			) : (
       <SlidesHTML
         isViewing={true}
         isPresenting={true}
         initSlideIndex={page as number}
         toPdf={true}
       />
-			)}
-
 		</main>
 	);
 };
