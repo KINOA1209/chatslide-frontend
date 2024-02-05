@@ -420,7 +420,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		console.log('Goinng to slide', index);
 		isFirstRender.current = true;
 		setCurrentSlideIndex(index);
-		//setFinalSlideIndex(index);
+		setFinalSlideIndex?.(index);
 	}
 
 	function toggleEditMode() {
@@ -448,7 +448,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 
 			if (currentSlideIndex >= newSlides.length) {
 				setCurrentSlideIndex(newSlides.length - 1);
-				//setFinalSlideIndex(newSlides.length - 1);
+				setFinalSlideIndex?.(newSlides.length - 1);
 			}
 		}
 		setSocialPostSlides(newSlides);
@@ -648,7 +648,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 									className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
 									onClick={() => {
 										setCurrentSlideIndex(index); // Added onClick handler
-										//setFinalSlideIndex(index);
+										setFinalSlideIndex?.(index);
 									}}
 								>
 									{/* {index + 1} */}

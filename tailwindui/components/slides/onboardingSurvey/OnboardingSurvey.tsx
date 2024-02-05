@@ -49,20 +49,33 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
   // handle other value when user click other button
   const handleCustomInput = (value: string, section: string) => {
     let updateFunction;
+    let predefinedArray: string[];
     switch (section) {
         case 'industry':
             updateFunction = setSelectedIndustries;
+            predefinedArray = surveyStaticDataObject.industry.itemsArr;
             break;
         case 'referral':
             updateFunction = setSelectedReferralSources;
+            predefinedArray = surveyStaticDataObject.referral.itemsArr;
             break;
         case 'purpose':
             updateFunction = setSelectedPurposes;
+            predefinedArray = surveyStaticDataObject.purpose.itemsArr
             break;
         default:
             return;
     }
-    updateFunction(prev => prev.includes('Other') ? [...prev,value] : prev);
+    updateFunction(prev => {
+      // Filter out any value that is not in the predefined array
+      let newArray = prev.filter(item => predefinedArray.includes(item));
+  
+      // Add the new custom value if it's not empty and not already included
+      if (value.trim() && !newArray.includes(value)) {
+        newArray.push(value);
+      }
+      return newArray;
+    });
   };
 
   const toggleSelection = (item: string, section: string) => {
@@ -91,6 +104,7 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
     }
     let newArray;
 
+    //if Item is detected, then we delete it from the arr, otherwise, we add it to the arr
     if (selectedArray.includes(item)) {
         newArray = selectedArray.filter(i => i !== item);
         if (item === 'Other') {
@@ -113,11 +127,22 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
   const progress = (getCurrentState() / totalSections) * 100;
 
   const handleLastButtonSubmit = async() => {
+    const filterOtherUnlessOnly = (arr: string[], predefinedArr: string[]) => {
+      //if user type custom value, hasNonPredefinedItem will return true
+      const hasNonPredefinedItem = arr.some(item => !predefinedArr.includes(item));
+
+      if (arr.includes('Other') && hasNonPredefinedItem) {
+        return arr.filter(item => item !== 'Other');
+      }
+
+      return arr;
+    }
     const formData = {
-      industries: selectedIndustries.filter(item => item !== 'Other'),
-      referral_sources: selectedReferralSources.filter(item => item !== 'Other'),
-      purposes: selectedPurposes.filter(item => item !== 'Other'),
+      industries: filterOtherUnlessOnly(selectedIndustries, surveyStaticDataObject.industry.itemsArr),
+      referral_sources: filterOtherUnlessOnly(selectedReferralSources, surveyStaticDataObject.referral.itemsArr),
+      purposes: filterOtherUnlessOnly(selectedPurposes, surveyStaticDataObject.purpose.itemsArr),
     };
+    //console.log(formData)
     try{
       const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
       const response = await fetch('/api/user/save_survey', {
