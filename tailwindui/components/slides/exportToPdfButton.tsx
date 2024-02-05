@@ -81,7 +81,7 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({
 
 	const handleSavePDF = async () => {
 		setDownloadingPDF(true);
-    let frontend = true;  // toggle this to switch between frontend and backend pdf generation
+    let frontend = false;  // toggle this to switch between frontend and backend pdf generation
     if (frontend) {
       await exportToPdfFrontend();
     } else{
