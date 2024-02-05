@@ -3,7 +3,7 @@ import Header from '@/components/ui/header';
 
 export const metadata = {
   title: 'Career - DrLambda',
-  description: 'Join to work with us at DrLambda.',
+  description: 'Join to work with us at DrLambda. Explore our remote-first open positions in engineering, design, product, and growth. Apply now!',
 };
 
 export default function Career() {
@@ -28,7 +28,7 @@ export default function Career() {
             <br />
             <br />
 
-            <div className='pb-8'>
+            <div className='pb-8' id='design'>
               <h2 className='h3 text-2xl'>🧑🏻‍🎨 Design</h2>
             </div>
 
