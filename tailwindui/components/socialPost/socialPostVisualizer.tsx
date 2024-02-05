@@ -4,7 +4,6 @@ import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
 import dynamic from 'next/dynamic';
 import ExportToPngButton from '@/components/socialPost/socialPostPngButton';
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
-import SocialPostPostButton from '@/components/socialPost/socialPostPostButton'
 import PostButton from '../button/PostButton';
 import { ShareToggleButton } from '@/components/slides/SlideButtons';
 import { TextLabel } from '../ui/GrayLabel';
