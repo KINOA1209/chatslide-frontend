@@ -146,6 +146,19 @@ export const useSlides = () => {
 		setVersion((prevVersion) => prevVersion + 1);
 	};
 
+  const hasTranscript = () => {
+    return slides.some((slide) => slide.transcript);
+  }
+  
+  const setTranscripts = (transcripts: string[]) => {
+    for (let i = 0; i < transcripts.length; i++) {
+      if (i < slides.length)
+        slides[i].transcript = transcripts[i];
+    }
+    setSlides(slides);
+    syncSlides(slides);
+  }
+
 	const syncSlides = async (
 		slides: Slide[],
 		is_cover_page: boolean = false,
@@ -212,5 +225,7 @@ export const useSlides = () => {
 		version,
 		updateVersion,
 		saveStatus,
+    hasTranscript,
+    setTranscripts,
 	};
 };

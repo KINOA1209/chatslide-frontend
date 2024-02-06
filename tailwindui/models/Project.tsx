@@ -24,7 +24,7 @@ export default interface Project {
 	outline: string;
 	extra_knowledge: string;
 	outline_item_counts: string;
-	transcripts: string;
+	transcripts: string;  // deprecated, use slides[].transcript
 	image_files: string;
 	audio_files: string;
 	pdf_file: string; 

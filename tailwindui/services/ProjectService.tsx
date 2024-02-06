@@ -182,6 +182,7 @@ class ProjectService {
         //     'slideData.content.length',
         //     slideData.content.length        // );
         slide.logo = slideData.logo || 'Default';
+        slide.transcript = slideData.transcript || '';
         if (index === 0) {
           slide.layout =
             slideData.layout || ('Cover_img_1_layout' as LayoutKeys);
