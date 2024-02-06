@@ -56,7 +56,7 @@ export default function WorkflowStep6() {
 			theme: 'light',
 			containerId: 'reviewVideo',
 		});
-		router.push('/workflow-edit-script');
+    router.push('/workflow-review-slides');
 	};
 
 	useEffect(() => {

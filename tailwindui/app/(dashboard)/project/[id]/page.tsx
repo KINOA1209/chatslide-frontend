@@ -88,12 +88,6 @@ const ProjectLoading = () => {
 						JSON.stringify(project.presentation_slides),
 					);
 				}
-				if (project.transcripts) {
-					sessionStorage.setItem(
-						'transcripts',
-						JSON.stringify(project.transcripts),
-					);
-				}
 				if (project.pdf_file) {
 					sessionStorage.setItem('pdf_file', project.pdf_file);
 				}
@@ -182,7 +176,6 @@ const ProjectLoading = () => {
 		'/workflow-generate-outlines',
 		'/workflow-edit-outlines',
 		'/workflow-review-slides',
-		'/workflow-edit-script',
 		'/workflow-review-video',
 	];
 	const presentationFinishedSteps: () => number[] = () => {

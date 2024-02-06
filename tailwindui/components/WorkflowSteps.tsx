@@ -115,7 +115,6 @@ const ProgressBox = (
 	steps: string[],
 	redirect: string[],
 	finishedStepsFunc: () => number[],
-	unavailableStepsFunc: () => number[],
 ) => {
 	const stepRedirectPair = steps.map((desc, index) => {
 		return [desc, redirect[index]];
@@ -129,7 +128,7 @@ const ProgressBox = (
 
 		useEffect(() => {
 			setFinishedSteps(finishedStepsFunc());
-			setUnavailableSteps(unavailableStepsFunc());
+			setUnavailableSteps([]);
 		}, []);
 
     const stepAvailable = (step: number) => {
@@ -204,14 +203,13 @@ const ProgressBox = (
 const ProjectProgress = () => {
 	const contentType = SessionStorage.getItem('content_type', 'slides');
 	const workflowType = SessionStorage.getItem('workflowType', 'slides');
-	let steps = ['Summary', 'Outlines', 'Design', 'Slides',  'Script', 'Video'];
+	let steps = ['Summary', 'Outlines', 'Design', 'Slides',  'Video'];
 	let redirect = [
 		'/workflow-generate-outlines',
 		'/workflow-edit-outlines',
 		'/workflow-edit-design',
 		'/workflow-review-slides',
-		'/workflow-edit-script',
-    	'/workflow-review-video',
+    '/workflow-review-video',
 	];
 	// 2 cases: create new social post, access to existing social post
 	if (workflowType === 'socialpost' || contentType === 'social_posts'){
@@ -239,56 +237,15 @@ const ProjectProgress = () => {
 			finishedStepsArray.push(2)
 			finishedStepsArray.push(3);
 		}
-		if (
-			typeof window !== 'undefined' &&
-			sessionStorage.getItem('transcripts')
-		) {
+		if (typeof window !== 'undefined' && sessionStorage.getItem('video_file')) {
 			finishedStepsArray.push(4);
 		}
-		if (
-			typeof window !== 'undefined' &&
-			sessionStorage.getItem('audio_files')
-		) {
-			finishedStepsArray.push(5);
-		}
-		if (typeof window !== 'undefined' && sessionStorage.getItem('video_file')) {
-			finishedStepsArray.push(5);
-		}
 		return finishedStepsArray;
-	};
-	const projectUnavailableSteps: () => number[] = () => {
-		const unavailableStepsArray: number[] = [];
-		if (
-			typeof window !== 'undefined' &&
-			sessionStorage.getItem('has_slides') == 'false'
-		) {
-			unavailableStepsArray.push(2);
-		}
-		if (
-			typeof window !== 'undefined' &&
-			sessionStorage.getItem('has_script') == 'false'
-		) {
-			unavailableStepsArray.push(3);
-		}
-		if (
-			typeof window !== 'undefined' &&
-			sessionStorage.getItem('has_audio') == 'false'
-		) {
-			unavailableStepsArray.push(4);
-		}
-		if (
-			typeof window !== 'undefined' &&
-			sessionStorage.getItem('has_video') == 'false'
-		) {
-			unavailableStepsArray.push(5);
-		}
-		return unavailableStepsArray;
 	};
 	return ProgressBox(
 		steps,
 		redirect,
 		projectFinishedSteps,
-		projectUnavailableSteps,
 	);
 };
 
