@@ -21,7 +21,7 @@ const useUidBear = createBearStore<string>()('uid', '', true);
 const useUsernameBear = createBearStore<string>()('username', '', true);
 const useEmailBear = createBearStore<string>()('email', '', true);
 const useIsPaidUserBear = createBearStore<boolean>()('isPaidUser', false, true);
-const useCreditsBear = createBearStore<number>()('credits', 0, true);
+const useCreditsBear = createBearStore<string>()('credits', '', true);
 const useTierBear = createBearStore<string>()('tier', '', true);
 
 export enum UserStatus {
@@ -109,7 +109,7 @@ export const useUser = () => {
     await AmplifyAuth.signOut();
     setToken('');
     setUid('');
-    setCredits(0);
+    setCredits('0');
     setTier('');
     setIsPaidUser(false);
     setUsername('');

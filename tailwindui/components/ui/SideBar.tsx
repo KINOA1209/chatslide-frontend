@@ -146,7 +146,7 @@ const SideBar = ({}: SideBarProps) => {
 			{/* credits and user studies */}
 			<div className='flex flex-col items-left justify-between'>
 				<div className='block py-1 text-sm text-white'>
-					<a
+					{ credits !== 'Infinite' && <a
 						href='/account'
 						className={`block  py-1 text-sm text-white ${
 							isSidebarOpen ? 'px-2' : 'px-0'
@@ -154,7 +154,7 @@ const SideBar = ({}: SideBarProps) => {
 						role='menuitem'
 					>
 						{credits} ⭐️ {isSidebarOpen && 'Credits'}
-					</a>
+					</a>}
 					<div className={`w-fit ${isSidebarOpen ? 'px-2' : 'px-0'} py-1`}>
 						<BlueLabel>
 							{tier.split('_')[0]} {isSidebarOpen && 'Tier'}
