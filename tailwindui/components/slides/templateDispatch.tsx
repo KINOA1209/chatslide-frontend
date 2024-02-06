@@ -114,6 +114,7 @@ export const templateDispatch = (
 						}
 						style={style}
 						isVerticalContent={isVerticalContent}
+						templateKey={templateKey}
 					/>
 				);
 			} else {
@@ -125,6 +126,7 @@ export const templateDispatch = (
 						}
 						style={style}
 						isVerticalContent={isVerticalContent}
+						templateKey={templateKey}
 					/>
 				);
 			}
