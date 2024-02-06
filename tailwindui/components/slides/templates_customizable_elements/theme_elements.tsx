@@ -629,7 +629,7 @@ const themeConfigData: ThemeConfig = {
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Bold', // font-creato-medium
 			lineHeight: 1.2, // leading-[100%] is equivalent to a line height of 1},
 			color: '#000', // text-black color
 		},
@@ -637,7 +637,7 @@ const themeConfigData: ThemeConfig = {
 		subtopicFontCSS: {
 			fontSize: '16pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			textTransform: 'uppercase', // Uppercase for font style
 			lineHeight: 1.2, // leading-[150%] is equivalent to a line height of 1.5
 			letterSpacing: '0.15rem', // tracking-[0.15rem]},
@@ -657,7 +657,7 @@ const themeConfigData: ThemeConfig = {
 		userNameFontColor: 'text-[#3D3D3D]',
 
 		headFontCSS: {
-			fontSize: '32pt', // text-4xl in points
+			fontSize: '24pt', // text-4xl in points
 			fontWeight: 'normal', // font-normal
 			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
@@ -697,7 +697,7 @@ const themeConfigData: ThemeConfig = {
 			color: '#BCBCBC', // text-red-800 color
 		},
 		contentFontCSS: {
-			fontSize: '20pt', // text-base in points (assuming 1rem is 1pt)
+			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal (Lin: 400)
 			fontFamily: 'Helvetica Neue', // font-nimbus-sans-regular
 			lineHeight: 1.3, // leading-9 is equivalent to a line height of 1.5
@@ -708,14 +708,14 @@ const themeConfigData: ThemeConfig = {
 			'text-sm font-Creato Display-regular font-normal leading-[100%]',
 		userNameFontColor: 'text-[#868686]', //(Lin: color #868686)
 		headFontCSS: {
-			fontSize: '64pt', // text-4xl in points (assuming 1rem is 1pt)
+			fontSize: '24pt', // text-4xl in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-bold, (Lin: 700)
 			fontFamily: 'Caveat', // font-nimbus-sans-bold
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			color: '#2E2E2E', // text-white color
 		},
 		contentFontCSS_non_vertical_content: {
-			fontSize: '20pt', // text-base in points (assuming 1rem is 1pt)
+			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal
 			fontFamily: 'Helvetica Neue', // font-nimbus-sans-regular
 			lineHeight: 1.3, // leading-9 is equivalent to a line height of 1.5
@@ -727,46 +727,46 @@ const themeConfigData: ThemeConfig = {
 		backgroundColorCover: 'bg-[#FFFFFF]',
 		backgroundColor: 'bg-[#D2D2D2]',
 		titleFontCSS: {
-			fontSize: '24pt', // text-3xl in points
-			fontWeight: 'bold', // font-bold,(Lin: 700)
-			fontFamily: 'Big Shoulders Text', // font-nimbus-sans-bold
-			lineHeight: 1.2, // leading-[110%] is equivalent to a line height of 1.1
-			whiteSpace: 'nowrap', // whitespace-nowrap},
-			color: '#4B4B4B', // text-[#8C1515] color
+			fontSize: '24pt',
+			fontWeight: 'bold',
+			fontFamily: 'Big Shoulders Text',
+			lineHeight: 1.2,
+			whiteSpace: 'nowrap',
+			color: '#2E2E2E',
 		},
 		subtopicFontCSS: {
-			opacity: 1, // opacity-70
-			fontWeight: 'bold', // font-nimbus-sans-bold (Lin: 500)
-			fontFamily: 'Arimo', // font-nimbus-sans-bold
-			fontSize: '20pt', // text-xl in points
-			fontStyle: 'normal', // font-normal
-			lineHeight: 1, // leading-[150%] is equivalent to a line height of 1.5
-			color: '#BCBCBC', // text-red-800 color
+			opacity: 1,
+			fontWeight: 'bold',
+			fontFamily: 'Arimo',
+			fontSize: '20pt',
+			fontStyle: 'normal',
+			lineHeight: 1,
+			color: '#6B7A2D',
 		},
 		contentFontCSS: {
-			fontSize: '20pt', // text-base in points (assuming 1rem is 1pt)
-			fontWeight: 'normal', // font-normal (Lin: 400)
-			fontFamily: 'Arimo', // font-nimbus-sans-regular
-			lineHeight: 1.3, // leading-9 is equivalent to a line height of 1.5
-			color: '#2E2E2E', // text-zinc-800 color
+			fontSize: '12pt',
+			fontWeight: 'normal',
+			fontFamily: 'Arimo',
+			lineHeight: 1.3,
+			color: '#2E2E2E',
 			display: 'list-item',
 		},
 		userNameFont:
-			'text-sm font-Creato Display-regular font-normal leading-[100%]',
-		userNameFontColor: 'text-[#F0F0F2]', //(Lin: color #868686)
+			'text-[16pt] font-Creato-Display-Medium font-normal leading-[100%]',
+		userNameFontColor: 'text-[#6B7A2D]',
 		headFontCSS: {
-			fontSize: '64pt', // text-4xl in points (assuming 1rem is 1pt)
-			fontWeight: 'normal', // font-bold, (Lin: 700)
-			fontFamily: 'Big Shoulders Text', // font-nimbus-sans-bold
-			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
-			color: '#2E2E2E', // text-white color
+			fontSize: '24pt',
+			fontWeight: 'bold',
+			fontFamily: 'Big Shoulders Text',
+			lineHeight: 1.2,
+			color: '#2E2E2E',
 		},
 		contentFontCSS_non_vertical_content: {
-			fontSize: '20pt', // text-base in points (assuming 1rem is 1pt)
-			fontWeight: 'normal', // font-normal
-			fontFamily: 'Arimo', // font-nimbus-sans-regular
-			lineHeight: 1.3, // leading-9 is equivalent to a line height of 1.5
-			color: '#2E2E2E', // text-zinc-800 color
+			fontSize: '12pt',
+			fontWeight: 'normal',
+			fontFamily: 'Arimo',
+			lineHeight: 1.3,
+			color: '#2E2E2E',
 		},
 	},
 };
