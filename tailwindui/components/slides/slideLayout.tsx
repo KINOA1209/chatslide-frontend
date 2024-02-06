@@ -257,15 +257,29 @@ export const Col_2_img_0_layout = ({
 				<div className={``}>{subtopic}</div>
 			</div>
 
-			<div className='h-full w-full grid grid-cols-2 gap-[2rem]'>
+			<div style={layoutElements.contentContainerCSS}>
 				{Array.isArray(content) &&
-					content.map((item, index) => (
-						<div className='flex flex-col gap-[0.5rem]' key={index}>
-							<div className='mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-creato-medium uppercase leading-10 tracking-widest pt-[2rem]'>
+					content.slice(0, 2).map((item, index) => (
+						<div
+							// className='flex flex-col gap-[0.5rem]'
+							key={index}
+							style={layoutElements.contentCSS}
+						>
+							<div
+								// className='mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-creato-medium uppercase leading-10 tracking-widest pt-[2rem]'
+								style={layoutElements.contentIndexCSS}
+							>
 								{index + 1}
 							</div>
-							<div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
-							<ul key={index} className={`flex flex-row w-full h-full grow `}>
+							<div
+								// className='opacity-50 border border-neutral-900 border-opacity-40'
+								style={layoutElements.contentIndexTextDividerCSS}
+							></div>
+							<ul
+								key={index}
+								// className={`flex flex-row w-full h-full grow `}
+								style={layoutElements.contentTextCSS}
+							>
 								<li>{item}</li>
 							</ul>
 						</div>
@@ -298,17 +312,28 @@ export const Col_3_img_0_layout = ({
 				<div className={``}>{subtopic}</div>
 			</div>
 
-			<div className='h-full w-full grid grid-cols-3 gap-[2rem] overflow-y-scroll'>
+			<div style={layoutElements.contentContainerCSS}>
 				{Array.isArray(content) &&
-					content.map((item, index) => (
-						<div className='flex flex-col gap-[0.5rem]' key={index}>
-							<div className='mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-creato-medium uppercase leading-10 tracking-widest pt-[2rem]'>
+					content.slice(0, 3).map((item, index) => (
+						<div
+							// className='flex flex-col gap-[0.5rem]'
+							key={index}
+							style={layoutElements.contentCSS}
+						>
+							<div
+								// className='mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-creato-medium uppercase leading-10 tracking-widest pt-[2rem]'
+								style={layoutElements.contentIndexCSS}
+							>
 								{index + 1}
 							</div>
-							<div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
+							<div
+								// className='opacity-50 border border-neutral-900 border-opacity-40'
+								style={layoutElements.contentIndexTextDividerCSS}
+							></div>
 							<ul
 								key={index}
-								className={`flex flex-row w-full h-full grow pl-2 `}
+								// className={`flex flex-row w-full h-full grow `}
+								style={layoutElements.contentTextCSS}
 							>
 								<li>{item}</li>
 							</ul>

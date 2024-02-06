@@ -16,6 +16,10 @@ export type LayoutElements = {
 	columnCSS?: React.CSSProperties;
 	visualElementsCSS?: React.CSSProperties; // if a certain layout of one page needs some visual elements on top.
 	titleAndSubtopicBoxCSS?: React.CSSProperties;
+	contentContainerCSS?: React.CSSProperties;
+	contentIndexCSS?: React.CSSProperties;
+	contentIndexTextDividerCSS?: React.CSSProperties;
+	contentTextCSS?: React.CSSProperties;
 };
 
 export type TemplateLayoutConfig = {
@@ -92,8 +96,72 @@ const layoutConfigData: TemplateLayoutConfig = {
 				display: 'flex',
 			},
 		},
-		Col_2_img_0_layout: {}, // TODO @guangyao
-		Col_3_img_0_layout: {},
+		Col_2_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(2, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
+		Col_3_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(3, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
 		Col_2_img_1_layout: {},
 		Col_1_img_1_layout: {},
 		Col_2_img_2_layout: {},
@@ -158,8 +226,72 @@ const layoutConfigData: TemplateLayoutConfig = {
 				display: 'flex',
 			},
 		},
-		Col_2_img_0_layout: {}, // TODO @guangyao
-		Col_3_img_0_layout: {},
+		Col_2_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(2, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
+		Col_3_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(3, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
 		Col_2_img_1_layout: {},
 		Col_1_img_1_layout: {},
 		Col_2_img_2_layout: {},
@@ -224,8 +356,72 @@ const layoutConfigData: TemplateLayoutConfig = {
 				display: 'flex',
 			},
 		},
-		Col_2_img_0_layout: {}, // TODO @guangyao
-		Col_3_img_0_layout: {},
+		Col_2_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(2, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
+		Col_3_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(3, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
 		Col_2_img_1_layout: {},
 		Col_1_img_1_layout: {},
 		Col_2_img_2_layout: {},
@@ -356,8 +552,72 @@ const layoutConfigData: TemplateLayoutConfig = {
 				display: 'flex',
 			},
 		},
-		Col_2_img_0_layout: {}, // TODO @guangyao
-		Col_3_img_0_layout: {},
+		Col_2_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(2, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
+		Col_3_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(3, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
 		Col_2_img_1_layout: {},
 		Col_1_img_1_layout: {},
 		Col_2_img_2_layout: {},
@@ -422,8 +682,72 @@ const layoutConfigData: TemplateLayoutConfig = {
 				display: 'flex',
 			},
 		},
-		Col_2_img_0_layout: {}, // TODO @guangyao
-		Col_3_img_0_layout: {},
+		Col_2_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(2, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
+		Col_3_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(3, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
 		Col_2_img_1_layout: {},
 		Col_1_img_1_layout: {},
 		Col_2_img_2_layout: {},
@@ -488,8 +812,72 @@ const layoutConfigData: TemplateLayoutConfig = {
 				display: 'flex',
 			},
 		},
-		Col_2_img_0_layout: {}, // TODO @guangyao
-		Col_3_img_0_layout: {},
+		Col_2_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(2, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
+		Col_3_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(3, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
 		Col_2_img_1_layout: {},
 		Col_1_img_1_layout: {},
 		Col_2_img_2_layout: {},
@@ -554,8 +942,72 @@ const layoutConfigData: TemplateLayoutConfig = {
 				display: 'flex',
 			},
 		},
-		Col_2_img_0_layout: {}, // TODO @guangyao
-		Col_3_img_0_layout: {},
+		Col_2_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(2, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
+		Col_3_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(3, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
 		Col_2_img_1_layout: {},
 		Col_1_img_1_layout: {},
 		Col_2_img_2_layout: {},
@@ -620,8 +1072,72 @@ const layoutConfigData: TemplateLayoutConfig = {
 				display: 'flex',
 			},
 		},
-		Col_2_img_0_layout: {}, // TODO @guangyao
-		Col_3_img_0_layout: {},
+		Col_2_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(2, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
+		Col_3_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(3, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
 		Col_2_img_1_layout: {},
 		Col_1_img_1_layout: {},
 		Col_2_img_2_layout: {},
@@ -686,8 +1202,72 @@ const layoutConfigData: TemplateLayoutConfig = {
 				display: 'flex',
 			},
 		},
-		Col_2_img_0_layout: {}, // TODO @guangyao
-		Col_3_img_0_layout: {},
+		Col_2_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(2, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
+		Col_3_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(3, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
 		Col_2_img_1_layout: {},
 		Col_1_img_1_layout: {},
 		Col_2_img_2_layout: {},
@@ -752,8 +1332,72 @@ const layoutConfigData: TemplateLayoutConfig = {
 				display: 'flex',
 			},
 		},
-		Col_2_img_0_layout: {}, // TODO @guangyao
-		Col_3_img_0_layout: {},
+		Col_2_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(2, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
+		Col_3_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(3, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
 		Col_2_img_1_layout: {},
 		Col_1_img_1_layout: {},
 		Col_2_img_2_layout: {},
@@ -818,8 +1462,72 @@ const layoutConfigData: TemplateLayoutConfig = {
 				display: 'flex',
 			},
 		},
-		Col_2_img_0_layout: {}, // TODO @guangyao
-		Col_3_img_0_layout: {},
+		Col_2_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(2, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
+		Col_3_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(3, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
 		Col_2_img_1_layout: {},
 		Col_1_img_1_layout: {},
 		Col_2_img_2_layout: {},
@@ -910,8 +1618,72 @@ const layoutConfigData: TemplateLayoutConfig = {
 				display: 'flex',
 			},
 		},
-		Col_2_img_0_layout: {}, // TODO @guangyao
-		Col_3_img_0_layout: {},
+		Col_2_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(2, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
+		Col_3_img_0_layout: {
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(3, 1fr)',
+				gap: '2rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
+			},
+		},
 		Col_2_img_1_layout: {},
 		Col_1_img_1_layout: {},
 		Col_2_img_2_layout: {},
@@ -954,7 +1726,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 				zIndex: 30,
 				position: 'absolute',
 				top: '65%',
-				left: '22%',
+				left: '30%',
 				transform: 'translate(-50%, -50%)', // Centering trick
 			},
 			columnCSS: {
@@ -993,6 +1765,8 @@ const layoutConfigData: TemplateLayoutConfig = {
 			},
 			contentCSS: {
 				width: '100%', // Equivalent to w-full
+				paddingLeft: '4rem',
+				paddingRight: '4rem',
 			},
 			columnCSS: {
 				width: '100%', // Equivalent to w-full
@@ -1003,16 +1777,98 @@ const layoutConfigData: TemplateLayoutConfig = {
 			},
 			titleAndSubtopicBoxCSS: {
 				backgroundColor: '#DEFF56',
+				paddingTop: '4rem',
+				paddingBottom: '1rem',
+				paddingLeft: '4rem',
+				paddingRight: '4rem',
 			},
 		},
 		Col_2_img_0_layout: {
 			titleAndSubtopicBoxCSS: {
 				backgroundColor: '#DEFF56',
+				paddingTop: '4rem',
+				paddingBottom: '1rem',
+				paddingLeft: '4rem',
+				paddingRight: '4rem',
+			},
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(2, 1fr)',
+				gap: '4rem',
+				paddingTop: '2rem',
+				paddingBottom: '4rem',
+				paddingLeft: '4rem',
+				paddingRight: '4rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'black', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
 			},
 		}, // TODO @guangyao
 		Col_3_img_0_layout: {
 			titleAndSubtopicBoxCSS: {
 				backgroundColor: '#DEFF56',
+				paddingTop: '4rem',
+				paddingBottom: '1rem',
+				paddingLeft: '4rem',
+				paddingRight: '4rem',
+			},
+			contentContainerCSS: {
+				height: '100%',
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: 'repeat(3, 1fr)',
+				gap: '4rem',
+				paddingTop: '2rem',
+				paddingBottom: '4rem',
+				paddingLeft: '4rem',
+				paddingRight: '4rem',
+			},
+			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentIndexCSS: {
+				mixBlendMode: 'hard-light',
+				color: 'black', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2rem',
+				fontWeight: 'bold',
+				fontFamily: 'Creato Display Medium',
+				textTransform: 'uppercase',
+				lineHeight: '2.5rem',
+				letterSpacing: '0.5rem',
+				paddingTop: '2rem',
+			},
+			contentIndexTextDividerCSS: {
+				display: 'flex',
+				opacity: 0.5,
+				border: '1px solid rgba(55, 65, 81, 0.4)',
+			},
+			contentTextCSS: {
+				display: 'flex',
+				flexDirection: 'row',
+				width: '100%',
+				height: '100%',
+				flexGrow: 1,
 			},
 		},
 		Col_2_img_1_layout: {
@@ -1030,6 +1886,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 				backgroundColor: '#DEFF56',
 			},
 		},
+
 		Col_3_img_3_layout: {
 			titleAndSubtopicBoxCSS: {
 				backgroundColor: '#DEFF56',

@@ -7,6 +7,7 @@ import React, { CSSProperties, useEffect, useRef } from 'react';
 import { loadCustomizableElements } from './SlidesHTML';
 import { TemplatesLogos } from './templates_customizable_elements/Templates_logos';
 import { isHTML } from '@/components/slides/quillEditorSlide';
+import { TemplateKeys } from '@/components/slides/slideTemplates';
 
 const QuillEditable = dynamic(
 	() => import('@/components/slides/quillEditorSlide'),
@@ -51,8 +52,15 @@ export const templateDispatch = (
 	// console.log('availableTemplates are:', availableTemplates);
 
 	// prevent old projects still have 'Default_template' as template rather than new 'Default'
-	const templateKey =
-		slide.template === 'Default_template' ? 'Default' : slide.template;
+	// const templateKey =
+	// 	slide.template === 'Default_template' ? 'Default' : slide.template;
+	const templateKey = availableTemplates.hasOwnProperty(slide.template)
+		? slide.template
+		: 'Default';
+	// console.log(
+	// 	`availableTemplates has template key ${slide.template}`,
+	// 	availableTemplates.hasOwnProperty(slide.template),
+	// );
 	const Template =
 		availableTemplates[templateKey as keyof typeof availableTemplates];
 	const ChosenTemplateLogo =
