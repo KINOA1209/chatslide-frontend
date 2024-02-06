@@ -2,11 +2,14 @@ import React, { useEffect, useRef, useState, useMemo } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.bubble.css';
 import '@/components/socialPost/quillEditor.scss';
+import themeColorConfigData from './templates_customizable_elements/theme_color_options';
+import '@/app/css/style.css'
 
 type QuillEditableProps = {
 	content: string | string[];
 	handleBlur: (newContent: string | string[]) => void;
 	isVerticalContent: boolean;
+	templateKey: string;
 	style?: React.CSSProperties;
 };
 
@@ -20,8 +23,34 @@ type QuillEditableProps = {
 
 // const fontSizes = generateFontSizes();
 
+function isKeyOfThemeColorConfig(key: string): key is keyof typeof themeColorConfigData {
+    return key in themeColorConfigData;
+}
+
+const Font = Quill.import('attributors/style/font');
+Font.whitelist = [
+	'Arimo',
+	'Big Shoulders Text',
+	'Caveat',
+	'Caveat Bold',
+	'Caveat Medium',
+	'Caveat Regular',
+	'Creato Display Bold',
+	'Creato Display Medium',
+	'Creato Display Regular',
+	'Creato Display Thin',
+	'Nimbus Sans Bold',
+	'Nimbus Sans Regular',
+	'Rubik',
+]
+Quill.register(Font, true);
+
+let Size = Quill.import('attributors/style/size');
+Size.whitelist = ['12pt', '16pt', '20pt', '24pt', '30pt', '32pt', '40pt', '48pt', '64pt'];
+Quill.register(Size, true);
+
 const toolbarOptions = [
-	[{ size: ['12pt', '16pt', '20pt', '24pt', '32pt'] }, { font: [] }],
+	[{ size: Size.whitelist}, { font: Font.whitelist }],
 	['bold', 'italic', 'underline', 'strike', 'code-block'],
 	[{ list: 'bullet' }],
 	[{ script: 'sub' }, { script: 'super' }],
@@ -72,10 +101,6 @@ const toolbarOptions = [
 	['clean'],
 ];
 
-let Size = Quill.import('attributors/style/size');
-Size.whitelist = ['12pt', '16pt', '20pt', '24pt', '32pt'];
-Quill.register(Size, true);
-
 export const isHTML = (input: string): boolean => {
 	const doc: Document = new DOMParser().parseFromString(input, 'text/html');
 	return Array.from(doc.body.childNodes).some((node) => node.nodeType === 1);
@@ -105,6 +130,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 	handleBlur,
 	style,
 	isVerticalContent,
+	templateKey,
 }) => {
 	const editorRef = useRef<HTMLDivElement>(null);
 	const quillInstanceRef = useRef<Quill | null>(null);
@@ -133,8 +159,26 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 
 	useEffect(() => {
 		if (editorRef.current && !quillInstanceRef.current) {
+			//create deep copy of toolbaroptions
+			let customizedToolbarOptions = JSON.parse(JSON.stringify(toolbarOptions));
+
+            if (isKeyOfThemeColorConfig(templateKey)) {
+                const themeColors = themeColorConfigData[templateKey].color; 
+				//console.log(customizedToolbarOptions)
+				customizedToolbarOptions.forEach((option:any) => {
+					if (Array.isArray(option)) { // Ensuring the option is an array of toolbar items
+						option.forEach((item) => {
+							if (item.color) { // Check if item has a color property
+								// Extend the default color options with the theme-specific colors
+								item.color = [...item.color, ...themeColors];
+							}
+						});
+					}
+				});
+            }
+
 			quillInstanceRef.current = new Quill(editorRef.current, {
-				modules: { toolbar: toolbarOptions },
+				modules: { toolbar: customizedToolbarOptions },
 				theme: 'bubble',
 				bounds: editorRef.current,
 			});
@@ -148,7 +192,9 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				italic: style?.fontStyle === 'italic',
 				color: style?.color,
 				list: isVerticalContent ? 'bullet' : undefined,
+				font: style?.fontFamily,
 			};
+			console.log(quillFormats)
 			const Delta = Quill.import('delta');
 			let initialDelta = new Delta();
 
@@ -190,7 +236,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				isTextChangeRef.current = true
 			})
 			quillInstanceRef.current.on('selection-change', () => {
-				console.log(isTextChangeRef.current)
+				//console.log(isTextChangeRef.current)
 				// if textchangeref is false, it will not trigger autosave
 				if (!isTextChangeRef.current)
 					return;
@@ -273,6 +319,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				'fontWeight',
 				'fontStyle',
 				'display',
+				'fontFamily',
 			];
 			const applyStyle: React.CSSProperties = {};
 
