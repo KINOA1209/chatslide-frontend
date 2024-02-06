@@ -192,20 +192,8 @@ const ProjectLoading = () => {
 		) {
 			finishedStepsArray.push(2);
 		}
-		if (
-			typeof window !== 'undefined' &&
-			sessionStorage.getItem('transcripts')
-		) {
-			finishedStepsArray.push(3);
-		}
-		if (
-			typeof window !== 'undefined' &&
-			sessionStorage.getItem('audio_files')
-		) {
-			finishedStepsArray.push(4);
-		}
 		if (typeof window !== 'undefined' && sessionStorage.getItem('video_file')) {
-			finishedStepsArray.push(5);
+			finishedStepsArray.push(3);
 		}
 		return finishedStepsArray;
 	};
