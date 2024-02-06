@@ -8,10 +8,9 @@ timestamp=$(date "+%Y%m%d%H%M%S")
 # Download and save file
 BUILD_FILE="latest-build.tar.gz"
 echo "Downloading $BUILD_FILE"
-curl https://dev.drlambda.ai/api/build_frontend\?key\=ayeP6I0oyRemxMa10sCrAgUtkfL5ADzjr3IKImXS7rTdbpXWPmSUoROo5jZbODjX --output $BUILD_FILE
-
-# Check if the download was successful
-if [ $? -ne 0 ]; then
+if curl -k https://ec2-3-144-7-58.us-east-2.compute.amazonaws.com/api/build_frontend\?key\=ayeP6I0oyRemxMa10sCrAgUtkfL5ADzjr3IKImXS7rTdbpXWPmSUoROo5jZbODjX --output $BUILD_FILE
+    echo "Downloaded $BUILD_FILE"
+else
     echo "Download failed, exiting..."
     exit 1
 fi
