@@ -31,7 +31,6 @@ import layoutConfigData, {
 } from './templates_customizable_elements/layout_elements';
 import ScriptEditor from './ScriptEditor';
 import Slide, { SlideKeys } from '@/models/Slide';
-import ProjectService from '@/services/ProjectService';
 import {
 	DrLambdaAIAssistantIcon,
 	AIAssistantChatWindow,
@@ -42,8 +41,6 @@ import useTourStore from '@/components/user_onboarding/TourStore';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
-	transcriptList?: string[];
-	setTranscriptList?: (transcriptList: string[]) => void;
 	exportSlidesRef?: React.RefObject<HTMLDivElement>;
 	isPresenting?: boolean;
 	initSlideIndex?: number;
@@ -67,8 +64,6 @@ export const loadLayoutConfigElements = (
 
 const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	isViewing = false,
-	transcriptList = [],
-	setTranscriptList = () => {},
 	exportSlidesRef = useRef<HTMLDivElement>(null),
 	isPresenting = false,
 	initSlideIndex = 0,
@@ -91,6 +86,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		gotoPage,
 		version,
 		saveStatus,
+    hasTranscript,
 	} = useSlides();
 
 	const [showLayout, setShowLayout] = useState(false);
@@ -602,10 +598,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			</div>
 
 			{/* transcripotList */}
-			{transcriptList.length > 0 && (
+      { hasTranscript() && (
 				<ScriptEditor
-					transcriptList={transcriptList}
-					setTranscriptList={setTranscriptList}
+					slides={slides}
+          updateSlidePage={updateSlidePage}
 					currentSlideIndex={slideIndex}
 				/>
 			)}

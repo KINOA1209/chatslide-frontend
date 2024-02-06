@@ -1,21 +1,21 @@
+import Slide from '@/models/Slide';
 import React, { useState } from 'react';
 
 interface TranscriptEditorProps {
-	transcriptList: string[];
-	setTranscriptList: (transcriptList: string[]) => void;
+	slides: Slide[];
+  updateSlidePage: (index: number, slide: Slide) => void;
 	currentSlideIndex: number;
 }
 
 const ScriptEditor: React.FC<TranscriptEditorProps> = ({
-	transcriptList,
-	setTranscriptList,
+  slides,
+  updateSlidePage,
 	currentSlideIndex,
 }) => {
-	const updateTranscriptList = (newValue: string, index: number) => {
-		console.log(newValue);
-		let newTranscriptList = [...transcriptList];
-		newTranscriptList[index] = newValue;
-		setTranscriptList(newTranscriptList);
+	const updateTranscriptList = (newValue: string) => {
+    const newSlide = slides[currentSlideIndex];
+    newSlide.transcript = newValue;
+    updateSlidePage(currentSlideIndex, newSlide);
 	};
 
 	return (
@@ -34,12 +34,12 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 			</div>
 			<textarea
 				className='grow px-4 py-2 w-full h-full border-none text-gray-700 bg-zinc-100 text-xs font-normal font-creato-medium leading-[1.125rem] tracking-[0.015rem]'
-				value={transcriptList[currentSlideIndex]}
+				value={slides[currentSlideIndex].transcript}
 				onChange={(e) =>
-					updateTranscriptList(e.target.value, currentSlideIndex)
+					updateTranscriptList(e.target.value)
 				}
 			>
-				{transcriptList[currentSlideIndex]}
+				{slides[currentSlideIndex].transcript}
 			</textarea>
 		</div>
 	);

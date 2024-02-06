@@ -5,9 +5,7 @@ import ExportToPdfButton from './exportToPdfButton';
 import dynamic from 'next/dynamic';
 import { ShareToggleButton } from '@/components/slides/SlideButtons';
 import AuthService from '../../services/AuthService';
-import ScriptEditor from './ScriptEditor';
 import { TextLabel } from '../ui/GrayLabel';
-import Slide from '@/models/Slide';
 import PostButton from '../button/PostButton';
 import { FaTimes } from 'react-icons/fa';
 import { useSlides } from '@/hooks/use-slides';
@@ -29,17 +27,10 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 }) => {
   const [host, setHost] = useState('https://drlambda.ai');
 
-  const { slides } = useSlides();
+  const { slides, setTranscripts } = useSlides();
   const [share, setShare] = useState(false);
   const [showShareLink, setShowShareLink] = useState(true);
 
-  // script data
-  const transcriptData =
-    typeof sessionStorage !== 'undefined'
-      ? sessionStorage.getItem('transcripts')
-      : null;
-  const transcripts = transcriptData ? JSON.parse(transcriptData) : [];
-  const [transcriptList, setTranscriptList] = useState<string[]>(transcripts);
   const exportSlidesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -109,11 +100,8 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
         const resp = await response.json();
         setIsSubmitting(false);
         console.log(resp.data.res);
-        sessionStorage.setItem('transcripts', JSON.stringify(resp.data.res));
-        setTranscriptList(resp.data.res);
-
-        // refresh page
-        window.location.reload();
+        const transcripts = resp.data.res;
+        setTranscripts(transcripts);  // and auto-save
       } else {
         alert('Request failed: ' + response.status);
         console.log(response);
@@ -165,8 +153,6 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 
       {/* slides and scripts contents */}
       <SlidesHTML
-        transcriptList={transcriptList}
-        setTranscriptList={setTranscriptList}
         exportSlidesRef={exportSlidesRef}
       />
     </div>
