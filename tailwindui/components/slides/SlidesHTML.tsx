@@ -29,7 +29,7 @@ import themeConfigData, {
 import layoutConfigData, {
 	TemplateLayoutConfig,
 } from './templates_customizable_elements/layout_elements';
-import ScriptEditor from './ScriptEditor';
+import ScriptEditor from './script/ScriptEditor';
 import Slide, { SlideKeys } from '@/models/Slide';
 import {
 	DrLambdaAIAssistantIcon,

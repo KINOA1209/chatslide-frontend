@@ -1,5 +1,6 @@
 import Slide from '@/models/Slide';
 import React, { useState } from 'react';
+import SaveScriptsButton from './saveTranscripts';
 
 interface TranscriptEditorProps {
 	slides: Slide[];
@@ -28,9 +29,9 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 				borderRadius: '5px',
 			}}
 		>
-			<div className='px-4 py-2 h-8 bg-zinc-100 flex flex-row justify-between items-center sticky top-0 border-b-2 border-gray-300'>
+			<div className='px-4 py-2 h-12 bg-zinc-100 flex flex-row justify-between items-center sticky top-0 border-b-2 border-gray-300'>
 				<div className='text-neutral-900 text-s font-creato-medium'>Script</div>
-				<div className='cursor-pointer'></div>
+				<SaveScriptsButton slides={slides}/>
 			</div>
 			<textarea
 				className='grow px-4 py-2 w-full h-full border-none text-gray-700 bg-zinc-100 text-xs font-normal font-creato-medium leading-[1.125rem] tracking-[0.015rem]'
