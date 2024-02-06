@@ -90,7 +90,7 @@ export const Harvard_school_template = ({
 					templateLogo={templateLogo}
 				></ChosenLayoutCover>
 
-				<div className='absolute top-[50%] right-[0%] gap-7 inline-flex pl-[3rem]'>
+				<div className='absolute top-[40%] right-[0%] gap-7 inline-flex pl-[3rem] pointer-events-none'>
 					<Image
 						src={HarvardCoverVector}
 						alt='MaskedBackground'
