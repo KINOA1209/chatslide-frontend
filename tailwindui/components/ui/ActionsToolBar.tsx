@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { RiArrowGoBackFill, RiArrowGoForwardFill } from 'react-icons/ri';
 import { GoQuestion } from 'react-icons/go';
 import { StartATourGuidePromptWindow } from '@/components/user_onboarding/CustomComponents';
+import ButtonWithExplanation from '../button/ButtonWithExplanation';
 
 type ActionsToolBarProps = {
 	undo: () => void;
@@ -36,25 +37,43 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 		<section className={`shadow-md bg-white rounded-md px-2 py-1`}>
 			<div className='flex flex-row gap-4'>
 				{/* user tutorial control */}
-				<button onClick={handleStartTour} style={{ color: '#2943E9' }}>
-					<GoQuestion />
-				</button>
+				<ButtonWithExplanation
+					button={
+						<button onClick={handleStartTour} style={{ color: '#2943E9' }}>
+							<GoQuestion />
+						</button>
+					}
+					explanation={'Guided user tutorial'}
+				></ButtonWithExplanation>
+
 				<div style={{ backgroundColor: '#ccc', width: '2px' }}></div>
-				<button
-					onClick={undo}
-					style={{ color: canUndo ? '#2943E9' : '#ccc' }}
-					disabled={!canUndo}
-				>
-					<RiArrowGoBackFill />
-				</button>
+				<ButtonWithExplanation
+					button={
+						<button
+							onClick={undo}
+							style={{ color: canUndo ? '#2943E9' : '#ccc' }}
+							disabled={!canUndo}
+						>
+							<RiArrowGoBackFill />
+						</button>
+					}
+					explanation={'Undo'}
+				></ButtonWithExplanation>
+
 				<div style={{ backgroundColor: '#ccc', width: '2px' }}></div>
-				<button
-					onClick={redo}
-					style={{ color: canRedo ? '#2943E9' : '#ccc' }}
-					disabled={!canRedo}
-				>
-					<RiArrowGoForwardFill />
-				</button>
+				<ButtonWithExplanation
+					button={
+						<button
+							onClick={redo}
+							style={{ color: canRedo ? '#2943E9' : '#ccc' }}
+							disabled={!canRedo}
+						>
+							<RiArrowGoForwardFill />
+						</button>
+					}
+					explanation={'Redo'}
+				></ButtonWithExplanation>
+
 				{showTutorialPrompt && (
 					<StartATourGuidePromptWindow
 						onClose={handleCloseTutorialPrompt}

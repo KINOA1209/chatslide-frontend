@@ -86,7 +86,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		gotoPage,
 		version,
 		saveStatus,
-    hasTranscript,
+		hasTranscript,
 	} = useSlides();
 
 	const [showLayout, setShowLayout] = useState(false);
@@ -463,18 +463,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							/>
 						)}
 						{!isViewing && (
-							<ButtonWithExplanation
-								button={
-									<ActionsToolBar
-										undo={undoChange}
-										redo={redoChange}
-										canRedo={canRedo}
-										canUndo={canUndo}
-										startTour={startTour}
-									/>
-								}
-								explanation={'Guided user tutorial'}
-							></ButtonWithExplanation>
+							<ActionsToolBar
+								undo={undoChange}
+								redo={redoChange}
+								canRedo={canRedo}
+								canUndo={canUndo}
+								startTour={startTour}
+							/>
 						)}
 					</div>
 
@@ -598,10 +593,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			</div>
 
 			{/* transcripotList */}
-      { hasTranscript() && (
+			{hasTranscript() && (
 				<ScriptEditor
 					slides={slides}
-          updateSlidePage={updateSlidePage}
+					updateSlidePage={updateSlidePage}
 					currentSlideIndex={slideIndex}
 				/>
 			)}
