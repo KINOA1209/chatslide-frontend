@@ -44,6 +44,8 @@ export const useSlides = () => {
 		if (slidesStatus !== SlidesStatus.NotInited) return;
 		slidesStatus = SlidesStatus.Initing;
 
+    setSlidesHistory([slides]);
+    setSlidesHistoryIndex(0);
 		console.log('-- init slides: ', { slidesStatus, slides });
 
 		slidesStatus = SlidesStatus.Inited;
@@ -60,8 +62,8 @@ export const useSlides = () => {
 		setSlides(newSlides);
 
 		updateVersion();
-		updateSlideHistory();
-		syncSlides(newSlides);
+    updateSlideHistory(newSlides);
+		syncSlides(newSlides, false, newSlides.length);
 	};
 
 	const deleteSlidePage = (index: number) => {
@@ -71,8 +73,8 @@ export const useSlides = () => {
 		setSlides(newSlides);
 
 		updateVersion();
-		updateSlideHistory();
-		syncSlides(newSlides);
+    updateSlideHistory(newSlides);
+		syncSlides(newSlides, false, newSlides.length);
 	};
 
 	const updateSlidePage = (index: number, slide: Slide) => {
@@ -82,7 +84,7 @@ export const useSlides = () => {
 		setSlides(newSlides);
 
 		updateVersion();
-		updateSlideHistory();
+    updateSlideHistory(newSlides);
 		syncSlides(newSlides, index === 0);
 	};
 
@@ -92,35 +94,56 @@ export const useSlides = () => {
 		setSlideIndex(index);
 	};
 
-	const updateSlideHistory = () => {
-		console.log('-- slides changed, adding to history: ', { slides });
-		if (slidesHistory.length >= 10) {
-			// Only keep 10 versions
-			setSlidesHistory((prevHistory) =>
-				prevHistory.slice(prevHistory.length - 9),
-			);
-		}
-		setSlidesHistory((prevHistory) => [...prevHistory, slides]);
-		setSlidesHistoryIndex((prevIndex) => prevIndex + 1);
-	};
+  const updateSlideHistory = (slides: Slide[]) => {
+    console.log('-- slides changed, adding to history: ', { slides });
+
+    setSlidesHistory((prevHistory) => {
+      // Truncate history up to the current index, then append the new slides
+      const updatedHistory = [...prevHistory.slice(0, slidesHistoryIndex + 1), slides];
+
+      // Check if the updated history exceeds 10 entries
+      if (updatedHistory.length > 10) {
+        // Calculate how many entries to remove from the start to keep the length at 10
+        const entriesToRemove = updatedHistory.length - 10;
+        return updatedHistory.slice(entriesToRemove);
+      }
+
+      return updatedHistory;
+    });
+
+    setSlidesHistoryIndex((prevIndex) => {
+      // Calculate the new index based on the updated history. It should be the position of the newly added slides.
+      // This assumes the new slides always become the last entry in the history.
+      const updatedIndex = Math.min(prevIndex + 1, 9);
+      return updatedIndex;
+    });
+  };
+
+
 
 	const undoChange = () => {
 		if (slidesHistoryIndex > 0) {
-			setSlidesHistoryIndex((prevIndex) => prevIndex - 1);
 			setSlides(slidesHistory[slidesHistoryIndex - 1]);
+      setSlidesHistoryIndex(slidesHistoryIndex - 1);
 		}
 		console.log('Performing undo...');
-		document.execCommand('undo', false, undefined); // Change null to undefined
+		// document.execCommand('undo', false, undefined); // Change null to undefined
+
+    // TODO: check if the cover page is changed
+    syncSlides(slidesHistory[slidesHistoryIndex - 1], false, slidesHistory[slidesHistoryIndex - 1].length);
 	};
 
 	const redoChange = () => {
 		if (slidesHistoryIndex < slidesHistory.length - 1) {
-			setSlidesHistoryIndex((prevIndex) => prevIndex + 1);
-			setSlides(slidesHistory[slidesHistoryIndex + 1]);
+      setSlides(slidesHistory[slidesHistoryIndex + 1]);
+      setSlidesHistoryIndex(slidesHistoryIndex + 1);
 		}
 		// Add your redo logic here
 		console.log('Performing redo...');
-		document.execCommand('redo', false, undefined); // Change null to undefined
+		// document.execCommand('redo', false, undefined); // Change null to undefined
+
+    // TODO: check if the cover page is changed
+    syncSlides(slidesHistory[slidesHistoryIndex + 1], false, slidesHistory[slidesHistoryIndex + 1].length);
 	};
 
 	const changeTemplate = (newTemplate: TemplateKeys) => {
@@ -132,8 +155,8 @@ export const useSlides = () => {
 		sessionStorage.setItem('schoolTemplate', newTemplate);
 		setSlides(newSlides);
 
-		updateSlideHistory();
-		syncSlides(newSlides);
+    updateSlideHistory(newSlides);
+		syncSlides(newSlides, true);
 	};
 
 	const initSlides = (slides: Slide[]) => {
@@ -162,6 +185,7 @@ export const useSlides = () => {
 	const syncSlides = async (
 		slides: Slide[],
 		is_cover_page: boolean = false,
+    new_page_count: number = 0,
 	) => {
 		saveStatus = SaveStatus.Saving;
 
@@ -180,6 +204,7 @@ export const useSlides = () => {
 			final_slides: slides,
 			project_id: project_id,
 			is_cover_page: is_cover_page,
+      new_page_count: new_page_count,
 		};
 
 		console.log('Saving slides:', formData);
