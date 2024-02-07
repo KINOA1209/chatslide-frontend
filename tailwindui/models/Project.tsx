@@ -28,7 +28,6 @@ export default interface Project {
 	image_files: string;
 	audio_files: string;
 	pdf_file: string; 
-	video_file: string;
 	video_url: string;
 	html: string;
 	pdf_images: string;

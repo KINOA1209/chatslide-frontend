@@ -237,7 +237,7 @@ const ProjectProgress = () => {
 			finishedStepsArray.push(2)
 			finishedStepsArray.push(3);
 		}
-		if (typeof window !== 'undefined' && sessionStorage.getItem('video_file')) {
+		if (typeof window !== 'undefined' && sessionStorage.getItem('video_url')) {
 			finishedStepsArray.push(4);
 		}
 		return finishedStepsArray;
