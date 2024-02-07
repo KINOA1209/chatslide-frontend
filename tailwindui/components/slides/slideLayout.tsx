@@ -250,6 +250,8 @@ export const Col_2_img_0_layout = ({
 	layoutElements,
 	templateLogo,
 }: MainSlideProps) => {
+	console.log('content: ' + Array(content));
+
 	return (
 		<>
 			<div style={layoutElements.titleAndSubtopicBoxCSS}>
@@ -259,11 +261,14 @@ export const Col_2_img_0_layout = ({
 
 			<div style={layoutElements.contentContainerCSS}>
 				{Array.isArray(content) &&
-					content.slice(0, 2).map((item, index) => (
+					content.map((item, index) => (
 						<div
 							// className='flex flex-col gap-[0.5rem]'
 							key={index}
-							style={layoutElements.contentCSS}
+							style={{
+								...layoutElements.contentCSS,
+								display: item === null || index > 1 ? 'none' : 'block', // or 'flex' based on your layout
+							}}
 						>
 							<div
 								// className='mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-creato-medium uppercase leading-10 tracking-widest pt-[2rem]'
@@ -514,7 +519,7 @@ export const Col_2_img_1_layout = ({
 				const containerHeight = containerElement.clientHeight;
 				const topicHeight = topicElement.clientHeight;
 				const subtopicHeight = subtopicElement.clientHeight;
-				const logoHeight = containerHeight * 0.3;
+				const logoHeight = containerHeight * 0.2;
 
 				const availableHeight =
 					containerHeight - (topicHeight + subtopicHeight + logoHeight);
@@ -672,16 +677,23 @@ export const Col_2_img_2_layout = ({
 					// className='w-full grid grid-cols-2 gap-[2rem]'
 					style={layoutElements.contentCSS}
 				>
-					{/* {Array.isArray(content) &&
+					{Array.isArray(content) &&
 						content.map((item, index) => (
-							<div className='flex flex-col gap-[0.5rem]' key={index}>
-								
-								<ul key={index} className={`flex flex-row w-full h-full grow `}>
+							<div
+								// className='flex flex-col gap-[0.5rem]'
+								key={index}
+								style={{
+									display: item === null || index > 1 ? 'none' : 'block', // or 'flex' based on your layout
+								}}
+							>
+								<ul
+									key={index}
+									// className={`flex flex-row w-full h-full grow `}
+								>
 									<li>{item}</li>
 								</ul>
 							</div>
-						))} */}
-					{content}
+						))}
 				</div>
 			</div>
 			<div style={layoutElements.logoCSS}>{templateLogo}</div>
@@ -765,16 +777,20 @@ export const Col_3_img_3_layout = ({
 					// className='w-full grid grid-cols-3 gap-[2rem]'
 					style={layoutElements.contentCSS}
 				>
-					{/* {Array.isArray(content) &&
+					{Array.isArray(content) &&
 						content.map((item, index) => (
-							<div className='flex flex-col gap-[0.5rem]' key={index}>
-								
-								<ul key={index} className={`flex flex-row w-full h-full grow `}>
+							<div
+								// className='flex flex-col gap-[0.5rem]'
+								key={index}
+								style={{
+									display: item === null || index > 2 ? 'none' : 'block', // or 'flex' based on your layout
+								}}
+							>
+								<ul key={index} className={`flex flex-row w-full h-full grow`}>
 									<li>{item}</li>
 								</ul>
 							</div>
-						))} */}
-					{content}
+						))}
 				</div>
 			</div>
 			<div style={layoutElements.logoCSS}>{templateLogo}</div>

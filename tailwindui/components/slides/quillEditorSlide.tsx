@@ -3,7 +3,7 @@ import Quill from 'quill';
 import 'quill/dist/quill.bubble.css';
 import '@/components/socialPost/quillEditor.scss';
 import themeColorConfigData from './templates_customizable_elements/theme_color_options';
-import '@/app/css/style.css'
+import '@/app/css/style.css';
 
 type QuillEditableProps = {
 	content: string | string[];
@@ -23,34 +23,46 @@ type QuillEditableProps = {
 
 // const fontSizes = generateFontSizes();
 
-function isKeyOfThemeColorConfig(key: string): key is keyof typeof themeColorConfigData {
-    return key in themeColorConfigData;
+function isKeyOfThemeColorConfig(
+	key: string,
+): key is keyof typeof themeColorConfigData {
+	return key in themeColorConfigData;
 }
 
 const Font = Quill.import('attributors/style/font');
 Font.whitelist = [
 	'Arimo',
+	'Arial',
+	'Georgia',
 	'Big Shoulders Text',
 	'Caveat',
-	'Caveat Bold',
 	'Caveat Medium',
 	'Caveat Regular',
-	'Creato Display Bold',
 	'Creato Display Medium',
 	'Creato Display Regular',
 	'Creato Display Thin',
-	'Nimbus Sans Bold',
+	'Helvetica Neue',
 	'Nimbus Sans Regular',
 	'Rubik',
-]
+];
 Quill.register(Font, true);
 
 let Size = Quill.import('attributors/style/size');
-Size.whitelist = ['12pt', '16pt', '20pt', '24pt', '30pt', '32pt', '40pt', '48pt', '64pt'];
+Size.whitelist = [
+	'12pt',
+	'16pt',
+	'20pt',
+	'24pt',
+	'30pt',
+	'32pt',
+	'40pt',
+	'48pt',
+	'64pt',
+];
 Quill.register(Size, true);
 
 const toolbarOptions = [
-	[{ size: Size.whitelist}, { font: Font.whitelist }],
+	[{ size: Size.whitelist }, { font: Font.whitelist }],
 	['bold', 'italic', 'underline', 'strike', 'code-block'],
 	[{ list: 'bullet' }],
 	[{ script: 'sub' }, { script: 'super' }],
@@ -134,7 +146,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 }) => {
 	const editorRef = useRef<HTMLDivElement>(null);
 	const quillInstanceRef = useRef<Quill | null>(null);
-	const isTextChangeRef = useRef(false)
+	const isTextChangeRef = useRef(false);
 
 	// const showColorPicker = (value: string) => {
 	//     if (value === 'color-picker') {
@@ -162,20 +174,22 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			//create deep copy of toolbaroptions
 			let customizedToolbarOptions = JSON.parse(JSON.stringify(toolbarOptions));
 
-            if (isKeyOfThemeColorConfig(templateKey)) {
-                const themeColors = themeColorConfigData[templateKey].color; 
+			if (isKeyOfThemeColorConfig(templateKey)) {
+				const themeColors = themeColorConfigData[templateKey].color;
 				//console.log(customizedToolbarOptions)
-				customizedToolbarOptions.forEach((option:any) => {
-					if (Array.isArray(option)) { // Ensuring the option is an array of toolbar items
+				customizedToolbarOptions.forEach((option: any) => {
+					if (Array.isArray(option)) {
+						// Ensuring the option is an array of toolbar items
 						option.forEach((item) => {
-							if (item.color) { // Check if item has a color property
+							if (item.color) {
+								// Check if item has a color property
 								// Extend the default color options with the theme-specific colors
 								item.color = [...item.color, ...themeColors];
 							}
 						});
 					}
 				});
-            }
+			}
 
 			quillInstanceRef.current = new Quill(editorRef.current, {
 				modules: { toolbar: customizedToolbarOptions },
@@ -194,7 +208,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				list: isVerticalContent ? 'bullet' : undefined,
 				font: style?.fontFamily,
 			};
-			console.log(quillFormats)
+			console.log(quillFormats);
 			const Delta = Quill.import('delta');
 			let initialDelta = new Delta();
 
@@ -233,16 +247,15 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			quillInstanceRef.current.setContents(initialDelta);
 			quillInstanceRef.current.on('text-change', () => {
 				//console.log('triggered')
-				isTextChangeRef.current = true
-			})
+				isTextChangeRef.current = true;
+			});
 			quillInstanceRef.current.on('selection-change', () => {
 				//console.log(isTextChangeRef.current)
 				// if textchangeref is false, it will not trigger autosave
-				if (!isTextChangeRef.current)
-					return;
+				if (!isTextChangeRef.current) return;
 				const currentContent = quillInstanceRef.current?.root.innerHTML;
 				if (currentContent !== undefined) {
-					isTextChangeRef.current = false
+					isTextChangeRef.current = false;
 					if (isVerticalContent) {
 						const doc = new DOMParser().parseFromString(
 							currentContent,
