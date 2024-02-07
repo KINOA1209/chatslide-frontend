@@ -32,7 +32,7 @@ export default function WorkflowStep3() {
     <div className='min-h-[90vh] w-full bg-white'>
       {/* flex col container for steps, title, etc */}
       <MyCustomJoyride steps={StepsSlidesPage()} />
-      {!hasTranscript ?
+      {!hasTranscript() ?
         <WorkflowStepsBanner
           currentIndex={3}
           isSubmitting={isSubmitting}
