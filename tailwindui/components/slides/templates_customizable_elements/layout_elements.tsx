@@ -54,6 +54,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+				maxHeight: '80%',
 			},
 			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
@@ -221,6 +222,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+				maxHeight: '80%',
 			},
 			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
@@ -378,6 +380,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+				maxHeight: '80%',
 			},
 			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
@@ -535,6 +538,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+				maxHeight: '80%',
 			},
 			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
@@ -692,6 +696,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+				maxHeight: '80%',
 			},
 			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
@@ -849,6 +854,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+				maxHeight: '80%',
 			},
 			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
@@ -1006,6 +1012,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+				maxHeight: '80%',
 			},
 			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
@@ -1163,6 +1170,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+				maxHeight: '80%',
 			},
 			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
@@ -1320,6 +1328,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+				maxHeight: '80%',
 			},
 			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
@@ -1477,6 +1486,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+				maxHeight: '80%',
 			},
 			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
@@ -1634,6 +1644,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+				maxHeight: '80%',
 			},
 			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
@@ -1791,6 +1802,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+				maxHeight: '80%',
 			},
 			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
@@ -1958,6 +1970,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 				top: '50%',
 				left: '50%',
 				transform: 'translate(-50%, -50%)', // Centering trick
+				maxHeight: '80%',
 			},
 			userNameCSS: {
 				zIndex: 30,

@@ -754,7 +754,7 @@ const themeConfigData: ThemeConfig = {
 			'text-[16pt] font-Creato-Display-Medium font-normal leading-[100%]',
 		userNameFontColor: 'text-[#6B7A2D]',
 		headFontCSS: {
-			fontSize: '64pt',
+			fontSize: '48pt',
 			fontWeight: 'bold',
 			fontFamily: 'Big Shoulders Text',
 			lineHeight: 1.2,

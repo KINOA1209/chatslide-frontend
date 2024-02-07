@@ -593,7 +593,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			</div>
 
 			{/* transcripotList */}
-			{hasTranscript() && (
+			{hasTranscript && (
 				<ScriptEditor
 					slides={slides}
 					updateSlidePage={updateSlidePage}
