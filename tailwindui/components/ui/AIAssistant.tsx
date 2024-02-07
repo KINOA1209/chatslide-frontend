@@ -274,7 +274,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 
 			{/* chat history text area */}
 			<div className='w-full border-t-2 border-gray-300 overflow-y-scroll px-2 py-1 font-creato-medium flex flex-col flex-grow justify-end '>
-				<div className='flex flex-col items-start gap-3 overflow-y-auto'>
+				<div className='flex flex-col items-start gap-3'>
 					{/* welcoming text */}
 					<div className='px-3.5 py-2.5 bg-indigo-50 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-white justify-center items-center gap-2.5 inline-flex'>
 						<div className='w-[18rem] text-neutral-800 text-base font-normal  -creato-medium tracking-tight'>
