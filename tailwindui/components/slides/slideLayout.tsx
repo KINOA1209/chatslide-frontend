@@ -384,7 +384,7 @@ export const Col_1_img_1_layout = ({
 				const containerHeight = containerElement.clientHeight;
 				const topicAndSubtopicHeight = topicAndSubtopicElement.clientHeight;
 				const imgContainerHeight = imgContainerElement.clientHeight;
-				const logoHeight = containerHeight * 0.1;
+				const logoHeight = containerHeight * 0.08;
 
 				const availableHeight =
 					containerHeight -

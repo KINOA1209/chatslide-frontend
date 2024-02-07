@@ -167,8 +167,8 @@ const layoutConfigData: TemplateLayoutConfig = {
 			columnCSS: {
 				width: '100%',
 				display: 'grid',
-				gridTemplateColumns: '1fr',
 				height: '100%',
+				gridTemplateColumns: '1fr',
 			},
 			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
 			imageContainerCSS: {
