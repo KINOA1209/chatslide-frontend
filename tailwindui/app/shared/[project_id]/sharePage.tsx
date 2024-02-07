@@ -30,6 +30,7 @@ interface SharePageProps {
 const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
   const [project, setProject] = useState<Project>();
   const [loading, setLoading] = useState(true);
+  const [loadingFailed, setLoadingFailed] = useState(false);
   const { initSlides } = useSlides();
   const [showDescription, setShowDescription] = useState<boolean>(true);
   const [projectType, setProjectType] = useState<'presentation' | 'socialpost'>('presentation');
@@ -101,7 +102,15 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 
   useEffect(() => {
     const init = async () => {
-      const project = await ProjectService.getSharedProjectDetails(project_id);
+      let project;
+      try {
+        project = await ProjectService.getSharedProjectDetails(project_id);
+      } catch (error) {
+        console.error(`Error fetching project ${project_id} details:`, error);
+        setLoading(false);
+        setLoadingFailed(true);
+        return;
+      }
       setProject(project);
       console.log('project', project)
       if (project.content_type === 'presentation') {
@@ -113,6 +122,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
         setProjectType('socialpost')
         setPostType(project.post_type)
         setSocialPosts(project.parsed_socialPosts)
+        setLoading(false);
       }
     }
     init();
@@ -123,7 +133,12 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
       <Header loginRequired={false} isLanding={false} />
       <ToastContainer />
       {loading ? (
-        <div className='flex items-center justify-center min-h-screen'>Loading...</div>
+        <div className='flex items-center justify-center min-h-screen'>⏳ Loading...</div>
+      ) : loadingFailed ? (
+          <div className='flex items-center justify-center min-h-screen'>
+            ❌ Oops! It looks like we couldn't find the project. <br/>
+            🔍 Could you double-check the project ID and make sure it's shared?
+          </div>
       ) : (
         <div className='flex flex-col items-center justify-center min-h-screen gap-8'>
           {showDescription && project && project.description &&
