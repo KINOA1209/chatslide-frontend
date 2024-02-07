@@ -29,51 +29,66 @@
 }
 
 .ql-editor ul li {
-    padding-bottom: 10px;
+	padding-bottom: 10px;
 }
 
-
-$font-sizes: ('12pt', '16pt', '20pt', '24pt', '30pt', '32pt', '40pt', '48pt', '64pt');
+$font-sizes: (
+	'12pt',
+	'16pt',
+	'20pt',
+	'24pt',
+	'30pt',
+	'32pt',
+	'40pt',
+	'48pt',
+	'64pt'
+);
 @each $size in $font-sizes {
-    .ql-bubble .ql-picker.ql-size .ql-picker-label[data-value='#{$size}']::before {
+	.ql-bubble
+		.ql-picker.ql-size
+		.ql-picker-label[data-value='#{$size}']::before {
 		content: '#{$size}';
 		font-size: 12pt;
 	}
-    .ql-bubble .ql-picker.ql-size .ql-picker-item[data-value='#{$size}']::before {
-        content: '#{$size}';
-        font-size: 12pt; //unquote($size);
-    }
+	.ql-bubble .ql-picker.ql-size .ql-picker-item[data-value='#{$size}']::before {
+		content: '#{$size}';
+		font-size: 12pt; //unquote($size);
+	}
 }
 
 .ql-bubble .ql-picker.ql-size {
-    width: 90px;
+	width: 90px;
 }
 
 .ql-bubble .ql-picker.ql-font {
-    width: 190px;
+	width: 190px;
 }
 
 $font-families: (
-  'Arimo',
-  'Big Shoulders Text',
-  'Caveat',
-  'Caveat Bold',
-  'Caveat Medium',
-  'Caveat Regular',
-  'Creato Display Bold',
-  'Creato Display Medium',
-  'Creato Display Regular',
-  'Creato Display Thin',
-  'Nimbus Sans Bold',
-  'Nimbus Sans Regular',
-  'Rubik'
+	'Arimo',
+	'Arial',
+	'Georgia',
+	'Big Shoulders Text',
+	'Caveat',
+	'Caveat Medium',
+	'Caveat Regular',
+	'Creato Display Medium',
+	'Creato Display Regular',
+	'Creato Display Thin',
+	'Helvetica Neue',
+	'Nimbus Sans Regular',
+	'Rubik'
 );
 
 @each $font-family in $font-families {
-	.ql-bubble .ql-picker.ql-font .ql-picker-label[data-value='#{$font-family}']::before,
-	.ql-bubble .ql-picker.ql-font .ql-picker-item[data-value='#{$font-family}']::before {
-	  content: '#{$font-family}';
-	  font-family: $font-family, sans-serif;
-	  font-size: 12pt;
+	.ql-bubble
+		.ql-picker.ql-font
+		.ql-picker-label[data-value='#{$font-family}']::before,
+	.ql-bubble
+		.ql-picker.ql-font
+		.ql-picker-item[data-value='#{$font-family}']::before {
+		content: '#{$font-family}';
+		font-family: $font-family, sans-serif;
+		font-size: 12pt;
 	}
 }

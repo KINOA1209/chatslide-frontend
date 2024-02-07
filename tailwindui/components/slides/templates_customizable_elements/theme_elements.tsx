@@ -37,7 +37,7 @@ const themeConfigData: ThemeConfig = {
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold
-			fontFamily: "'nimbus-sans-bold', sans-serif", // font-nimbus-sans-bold
+			fontFamily: 'Nimbus Sans Bold', // font-nimbus-sans-bold
 			lineHeight: 1.2, // leading-[110%] is equivalent to a line height of 1.1
 			whiteSpace: 'nowrap', // whitespace-nowrap},
 			color: '#8C1515', // text-[#8C1515] color
@@ -53,7 +53,7 @@ const themeConfigData: ThemeConfig = {
 		contentFontCSS: {
 			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'nimbus-sans-regular', sans-serif", // font-nimbus-sans-regular
+			fontFamily: 'Nimbus Sans Regular', // font-nimbus-sans-regular
 			lineHeight: 1.2, // leading-9 is equivalent to a line height of 1.5
 			color: '#4B5563', // text-zinc-800 color
 			display: 'list-item',
@@ -63,14 +63,14 @@ const themeConfigData: ThemeConfig = {
 		headFontCSS: {
 			fontSize: '32pt', // text-4xl in points (assuming 1rem is 1pt)
 			fontWeight: 'bold', // font-bold
-			fontFamily: "'nimbus-sans-bold', sans-serif", // font-nimbus-sans-bold
+			fontFamily: 'Nimbus Sans Bold', // font-nimbus-sans-bold
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			color: '#FFFFFF', // text-white color
 		},
 		contentFontCSS_non_vertical_content: {
 			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'nimbus-sans-regular', sans-serif", // font-nimbus-sans-regular
+			fontFamily: 'Nimbus Sans Regular', // font-nimbus-sans-regular
 			lineHeight: 1.2, // leading-9 is equivalent to a line height of 1.5
 			color: '#4B5563', // text-zinc-800 color
 		},
@@ -135,7 +135,7 @@ const themeConfigData: ThemeConfig = {
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal
-			fontFamily: 'Georgia, sans-serif', // font-['Georgia']
+			fontFamily: 'Georgia', // font-['Georgia']
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			whiteSpace: 'nowrap', // whitespace-nowrap
 			color: '#374151', // text-neutral-800 color
@@ -145,7 +145,7 @@ const themeConfigData: ThemeConfig = {
 		subtopicFontCSS: {
 			fontSize: '16pt', // Assuming 'xxl' represents 2.625rem (converted to points)
 			fontWeight: 'bold', // font-bold
-			fontFamily: 'Arial, sans-serif', // font-['Arial']
+			fontFamily: 'Arial', // font-['Arial']
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			color: '#4A5568', // text-neutral-700 color
 		},
@@ -156,7 +156,7 @@ const themeConfigData: ThemeConfig = {
 			opacity: 0.7, // opacity-70
 			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal
-			fontFamily: 'Arial, sans-serif', // font-['Arial']
+			fontFamily: 'Arial', // font-['Arial']
 			lineHeight: 1.2, // leading-loose, assuming 'normal' or '1.5' depending on your design
 			color: '#4A5568', // text-neutral-700 color
 			display: 'list-item',
@@ -168,7 +168,7 @@ const themeConfigData: ThemeConfig = {
 		headFontCSS: {
 			fontSize: '32pt', // text-4xl in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal
-			fontFamily: 'Georgia, sans-serif', // font-['Gorgia']
+			fontFamily: 'Georgia', // font-['Gorgia']
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			color: '#374151', // text-neutral-800 color
 		},
@@ -176,7 +176,7 @@ const themeConfigData: ThemeConfig = {
 			opacity: 0.7, // opacity-70
 			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal
-			fontFamily: 'Arial, sans-serif', // font-['Arial']
+			fontFamily: 'Arial', // font-['Arial']
 			lineHeight: 1.2, // leading-loose, assuming 'normal' or '1.5' depending on your design
 			color: '#4A5568', // text-neutral-700 color
 		},
@@ -187,14 +187,14 @@ const themeConfigData: ThemeConfig = {
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			lineHeight: 1.2, // leading-[100%] is equivalent to a line height of 1},
 			color: '#750014', // text-black color
 		},
 		subtopicFontCSS: {
 			fontSize: '16pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			textTransform: 'uppercase', // Uppercase for font style
 			lineHeight: 1.2, // leading-[150%] is equivalent to a line height of 1.5
 			letterSpacing: '0.15rem', // tracking-[0.15rem]},
@@ -206,7 +206,7 @@ const themeConfigData: ThemeConfig = {
 		contentFontCSS: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
@@ -220,8 +220,8 @@ const themeConfigData: ThemeConfig = {
 		// headFontColor: 'text-neutral-800',
 		headFontCSS: {
 			fontSize: '32pt', // text-4xl in points
-			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontWeight: 'bold', // font-normal
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
 			color: '#F0F0F2', // text-neutral-800 color},
@@ -230,7 +230,7 @@ const themeConfigData: ThemeConfig = {
 		contentFontCSS_non_vertical_content: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
@@ -242,7 +242,7 @@ const themeConfigData: ThemeConfig = {
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			lineHeight: 1.2, // leading-[100%] is equivalent to a line height of 1},
 			color: '#FF671F', // text-black color
 		},
@@ -250,7 +250,7 @@ const themeConfigData: ThemeConfig = {
 		subtopicFontCSS: {
 			fontSize: '16pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			textTransform: 'uppercase', // Uppercase for font style
 			lineHeight: 1.2, // leading-[150%] is equivalent to a line height of 1.5
 			letterSpacing: '0.15rem', // tracking-[0.15rem]},
@@ -260,7 +260,7 @@ const themeConfigData: ThemeConfig = {
 		contentFontCSS: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
@@ -273,7 +273,7 @@ const themeConfigData: ThemeConfig = {
 		headFontCSS: {
 			fontSize: '32pt', // text-4xl in points
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
 			color: '#000', // text-neutral-800 color},
@@ -282,7 +282,7 @@ const themeConfigData: ThemeConfig = {
 		contentFontCSS_non_vertical_content: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
@@ -294,14 +294,14 @@ const themeConfigData: ThemeConfig = {
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			lineHeight: 1.2, // leading-[100%] is equivalent to a line height of 1},
 			color: '#F25422', // text-black color
 		},
 		subtopicFontCSS: {
 			fontSize: '16pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			textTransform: 'uppercase', // Uppercase for font style
 			lineHeight: 1.2, // leading-[150%] is equivalent to a line height of 1.5
 			letterSpacing: '0.15rem', // tracking-[0.15rem]},
@@ -311,7 +311,7 @@ const themeConfigData: ThemeConfig = {
 		contentFontCSS: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
@@ -324,7 +324,7 @@ const themeConfigData: ThemeConfig = {
 		headFontCSS: {
 			fontSize: '32pt', // text-4xl in points
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
 			color: '#F0F0F2', // text-neutral-800 color},
@@ -333,7 +333,7 @@ const themeConfigData: ThemeConfig = {
 		contentFontCSS_non_vertical_content: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
@@ -350,7 +350,7 @@ const themeConfigData: ThemeConfig = {
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			lineHeight: 1.2, // leading-[100%] is equivalent to a line height of 1},
 			color: '#000', // text-black color
 		},
@@ -360,7 +360,7 @@ const themeConfigData: ThemeConfig = {
 		subtopicFontCSS: {
 			fontSize: '16pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			textTransform: 'uppercase', // Uppercase for font style
 			lineHeight: 1.2, // leading-[150%] is equivalent to a line height of 1.5
 			letterSpacing: '0.15rem', // tracking-[0.15rem]},
@@ -372,7 +372,7 @@ const themeConfigData: ThemeConfig = {
 		contentFontCSS: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
@@ -387,7 +387,7 @@ const themeConfigData: ThemeConfig = {
 		headFontCSS: {
 			fontSize: '32pt', // text-4xl in points
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
 			color: '#000', // text-neutral-800 color},
@@ -396,7 +396,7 @@ const themeConfigData: ThemeConfig = {
 		contentFontCSS_non_vertical_content: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
@@ -413,7 +413,7 @@ const themeConfigData: ThemeConfig = {
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			lineHeight: 1.2, // leading-[100%] is equivalent to a line height of 1},
 			color: '#002D72', // text-black color
 		},
@@ -423,7 +423,7 @@ const themeConfigData: ThemeConfig = {
 		subtopicFontCSS: {
 			fontSize: '16pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			textTransform: 'uppercase', // Uppercase for font style
 			lineHeight: 1.2, // leading-[150%] is equivalent to a line height of 1.5
 			letterSpacing: '0.15rem', // tracking-[0.15rem]},
@@ -435,7 +435,7 @@ const themeConfigData: ThemeConfig = {
 		contentFontCSS: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
@@ -449,8 +449,8 @@ const themeConfigData: ThemeConfig = {
 		// headFontColor: 'text-neutral-800',
 		headFontCSS: {
 			fontSize: '32pt', // text-4xl in points
-			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontWeight: 'bold', // font-normal
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
 			color: '#F0F0F2', // text-neutral-800 color},
@@ -459,7 +459,7 @@ const themeConfigData: ThemeConfig = {
 		contentFontCSS_non_vertical_content: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
@@ -471,7 +471,7 @@ const themeConfigData: ThemeConfig = {
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			lineHeight: 1.2, // leading-[100%] is equivalent to a line height of 1},
 			color: '#800', // text-black color
 		},
@@ -479,7 +479,7 @@ const themeConfigData: ThemeConfig = {
 		subtopicFontCSS: {
 			fontSize: '16pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			textTransform: 'uppercase', // Uppercase for font style
 			lineHeight: 1.2, // leading-[150%] is equivalent to a line height of 1.5
 			letterSpacing: '0.15rem', // tracking-[0.15rem]},
@@ -489,7 +489,7 @@ const themeConfigData: ThemeConfig = {
 		contentFontCSS: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
@@ -503,8 +503,8 @@ const themeConfigData: ThemeConfig = {
 		// headFontColor: 'text-neutral-800',
 		headFontCSS: {
 			fontSize: '32pt', // text-4xl in points
-			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontWeight: 'bold', // font-normal
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
 			color: '#F0F0F2', // text-neutral-800 color},
@@ -513,7 +513,7 @@ const themeConfigData: ThemeConfig = {
 		contentFontCSS_non_vertical_content: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
@@ -526,7 +526,7 @@ const themeConfigData: ThemeConfig = {
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			lineHeight: 1.2, // leading-[100%] is equivalent to a line height of 1},
 			color: '#03346A', // text-black color
 		},
@@ -534,7 +534,7 @@ const themeConfigData: ThemeConfig = {
 		subtopicFontCSS: {
 			fontSize: '16pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			textTransform: 'uppercase', // Uppercase for font style
 			lineHeight: 1.2, // leading-[150%] is equivalent to a line height of 1.5
 			letterSpacing: '0.15rem', // tracking-[0.15rem]},
@@ -544,7 +544,7 @@ const themeConfigData: ThemeConfig = {
 		contentFontCSS: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
@@ -556,8 +556,8 @@ const themeConfigData: ThemeConfig = {
 
 		headFontCSS: {
 			fontSize: '32pt', // text-4xl in points
-			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontWeight: 'bold', // font-normal
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
 			color: '#F0F0F2', // text-neutral-800 color},
@@ -566,7 +566,7 @@ const themeConfigData: ThemeConfig = {
 		contentFontCSS_non_vertical_content: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
@@ -578,14 +578,14 @@ const themeConfigData: ThemeConfig = {
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			lineHeight: 1.2, // leading-[100%] is equivalent to a line height of 1},
 			color: '#011F5B', // text-black color
 		},
 		subtopicFontCSS: {
 			fontSize: '16pt', // text-xl in points
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			textTransform: 'uppercase', // Uppercase for font style
 			lineHeight: 1.2, // leading-[150%] is equivalent to a line height of 1.5
 			letterSpacing: '0.15rem', // tracking-[0.15rem]},
@@ -594,7 +594,7 @@ const themeConfigData: ThemeConfig = {
 		contentFontCSS: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
@@ -606,8 +606,8 @@ const themeConfigData: ThemeConfig = {
 
 		headFontCSS: {
 			fontSize: '32pt', // text-4xl in points
-			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontWeight: 'bold', // font-normal
+			fontFamily: 'Creato Display Medium', // font-creato-medium
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
 			color: '#F0F0F2', // text-neutral-800 color},
@@ -616,7 +616,7 @@ const themeConfigData: ThemeConfig = {
 		contentFontCSS_non_vertical_content: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
@@ -646,7 +646,7 @@ const themeConfigData: ThemeConfig = {
 		contentFontCSS: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
@@ -657,9 +657,9 @@ const themeConfigData: ThemeConfig = {
 		userNameFontColor: 'text-[#3D3D3D]',
 
 		headFontCSS: {
-			fontSize: '24pt', // text-4xl in points
-			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontSize: '40pt', // text-4xl in points
+			fontWeight: 'bold', // font-normal
+			fontFamily: 'Creato Display Bold', // font-creato-medium
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			letterSpacing: '-0.0125rem', // tracking-tight
 			color: '#374151', // text-neutral-800 color},
@@ -668,7 +668,7 @@ const themeConfigData: ThemeConfig = {
 		contentFontCSS_non_vertical_content: {
 			fontSize: '12pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
-			fontFamily: "'creato-medium', sans-serif", // font-creato-medium
+			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
 			letterSpacing: '0.025rem', // tracking-[0.025rem]
 			color: '#111827', // text-neutral-900 color
@@ -704,8 +704,7 @@ const themeConfigData: ThemeConfig = {
 			color: '#4B4B4B', // text-zinc-800 color
 			display: 'list-item',
 		},
-		userNameFont:
-			'text-sm font-Creato Display-regular font-normal leading-[100%]',
+		userNameFont: 'text-sm font-creato-regular  font-normal leading-[100%]',
 		userNameFontColor: 'text-[#868686]', //(Lin: color #868686)
 		headFontCSS: {
 			fontSize: '24pt', // text-4xl in points (assuming 1rem is 1pt)
@@ -755,7 +754,7 @@ const themeConfigData: ThemeConfig = {
 			'text-[16pt] font-Creato-Display-Medium font-normal leading-[100%]',
 		userNameFontColor: 'text-[#6B7A2D]',
 		headFontCSS: {
-			fontSize: '24pt',
+			fontSize: '48pt',
 			fontWeight: 'bold',
 			fontFamily: 'Big Shoulders Text',
 			lineHeight: 1.2,
