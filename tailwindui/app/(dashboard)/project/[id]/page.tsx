@@ -103,9 +103,6 @@ const ProjectLoading = () => {
 						JSON.stringify(project.audio_files),
 					);
 				}
-				if (project.video_file) {
-					sessionStorage.setItem('video_file', project.video_file);
-				}
 				if (project.video_url) {
 					sessionStorage.setItem('video_url', project.video_url);
 				}
@@ -192,7 +189,7 @@ const ProjectLoading = () => {
 		) {
 			finishedStepsArray.push(2);
 		}
-		if (typeof window !== 'undefined' && sessionStorage.getItem('video_file')) {
+    if (typeof window !== 'undefined' && sessionStorage.getItem('video_url')) {
 			finishedStepsArray.push(3);
 		}
 		return finishedStepsArray;
