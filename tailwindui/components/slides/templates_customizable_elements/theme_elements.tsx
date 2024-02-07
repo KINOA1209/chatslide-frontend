@@ -657,7 +657,7 @@ const themeConfigData: ThemeConfig = {
 		userNameFontColor: 'text-[#3D3D3D]',
 
 		headFontCSS: {
-			fontSize: '24pt', // text-4xl in points
+			fontSize: '40pt', // text-4xl in points
 			fontWeight: 'normal', // font-normal
 			fontFamily: 'Creato Display Bold', // font-creato-medium
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2

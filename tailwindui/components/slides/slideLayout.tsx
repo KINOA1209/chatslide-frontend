@@ -92,7 +92,7 @@ export const Cover_img_0_layout = ({
 		// 	{templateLogo}
 		// </>
 	);
-}; //@TODO
+};
 export const Cover_img_1_layout = ({
 	user_name,
 	title,
@@ -514,7 +514,7 @@ export const Col_2_img_1_layout = ({
 				const containerHeight = containerElement.clientHeight;
 				const topicHeight = topicElement.clientHeight;
 				const subtopicHeight = subtopicElement.clientHeight;
-				const logoHeight = containerHeight * 0.1;
+				const logoHeight = containerHeight * 0.3;
 
 				const availableHeight =
 					containerHeight - (topicHeight + subtopicHeight + logoHeight);
@@ -535,12 +535,17 @@ export const Col_2_img_1_layout = ({
 
 	return (
 		<div
-			className='w-full h-full flex flex-row gap-[2rem] justify-start items-start'
+			// className='w-full h-full flex flex-row gap-[2rem] justify-start items-start'
 			ref={containerRef}
+			style={layoutElements.canvaCSS}
 		>
-			<div className={`w-1/2 flex flex-col items-start h-full gap-[0.1rem]`}>
+			{/* column 1 for text content */}
+			<div
+				// className={`w-1/2 flex flex-col items-start h-full gap-[0.1rem]`}
+				style={layoutElements.columnCSS}
+			>
 				<div
-					className='flex flex-col'
+					// className='flex flex-col'
 					style={layoutElements.titleAndSubtopicBoxCSS}
 				>
 					<div className={`z-50`} ref={topicRef}>
@@ -564,13 +569,18 @@ export const Col_2_img_1_layout = ({
 					</div>
 				</div>
 			</div>
-			<div className={`w-1/2 h-[90%] rounded-md overflow-hidden items-center`}>
+			{/* column 2 for img container */}
+			<div
+				// className={`w-1/2 h-[90%] rounded-md overflow-hidden items-center`}
+				style={layoutElements.imageContainerCSS}
+			>
 				<ImgModule
 					imgsrc={imgs[0]}
 					updateSingleCallback={updateImgAtIndex(0)}
 					canEdit={canEdit}
 				/>
 			</div>
+			{/* logo section */}
 			<div style={layoutElements.logoCSS}>{templateLogo}</div>
 		</div>
 		// two columns layout (left is text and right is one image)

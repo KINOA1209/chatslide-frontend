@@ -163,7 +163,34 @@ const layoutConfigData: TemplateLayoutConfig = {
 				flexGrow: 1,
 			},
 		},
-		Col_2_img_1_layout: {},
+		Col_2_img_1_layout: {
+			columnCSS: {
+				width: '50%', // equivalent to w-1/2
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'flex-start',
+				height: '100%',
+				gap: '0.1rem',
+			},
+			canvaCSS: {
+				width: '100%',
+				height: '100%',
+				display: 'flex',
+				flexDirection: 'row',
+				gap: '2rem',
+				justifyContent: 'flex-start',
+				alignItems: 'flex-start',
+			},
+			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
+			imageContainerCSS: {
+				width: '50%', // equivalent to w-1/2
+				height: '90%', // equivalent to h-[90%]
+				borderRadius: '0.375rem', // equivalent to rounded-md
+				overflow: 'hidden',
+				display: 'flex',
+				alignItems: 'center', // equivalent to items-center
+			},
+		},
 		Col_1_img_1_layout: {
 			columnCSS: {
 				width: '100%',
@@ -326,7 +353,34 @@ const layoutConfigData: TemplateLayoutConfig = {
 				flexGrow: 1,
 			},
 		},
-		Col_2_img_1_layout: {},
+		Col_2_img_1_layout: {
+			columnCSS: {
+				width: '50%', // equivalent to w-1/2
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'flex-start',
+				height: '100%',
+				gap: '0.1rem',
+			},
+			canvaCSS: {
+				width: '100%',
+				height: '100%',
+				display: 'flex',
+				flexDirection: 'row',
+				gap: '2rem',
+				justifyContent: 'flex-start',
+				alignItems: 'flex-start',
+			},
+			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
+			imageContainerCSS: {
+				width: '50%', // equivalent to w-1/2
+				height: '90%', // equivalent to h-[90%]
+				borderRadius: '0.375rem', // equivalent to rounded-md
+				overflow: 'hidden',
+				display: 'flex',
+				alignItems: 'center', // equivalent to items-center
+			},
+		},
 		Col_1_img_1_layout: {
 			columnCSS: { width: '100%', display: 'grid', gridTemplateColumns: '1fr' },
 			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
@@ -484,7 +538,34 @@ const layoutConfigData: TemplateLayoutConfig = {
 				flexGrow: 1,
 			},
 		},
-		Col_2_img_1_layout: {},
+		Col_2_img_1_layout: {
+			columnCSS: {
+				width: '50%', // equivalent to w-1/2
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'flex-start',
+				height: '100%',
+				gap: '0.1rem',
+			},
+			canvaCSS: {
+				width: '100%',
+				height: '100%',
+				display: 'flex',
+				flexDirection: 'row',
+				gap: '2rem',
+				justifyContent: 'flex-start',
+				alignItems: 'flex-start',
+			},
+			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
+			imageContainerCSS: {
+				width: '50%', // equivalent to w-1/2
+				height: '90%', // equivalent to h-[90%]
+				borderRadius: '0.375rem', // equivalent to rounded-md
+				overflow: 'hidden',
+				display: 'flex',
+				alignItems: 'center', // equivalent to items-center
+			},
+		},
 		Col_1_img_1_layout: {
 			columnCSS: { width: '100%', display: 'grid', gridTemplateColumns: '1fr' },
 			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
@@ -642,7 +723,34 @@ const layoutConfigData: TemplateLayoutConfig = {
 				flexGrow: 1,
 			},
 		},
-		Col_2_img_1_layout: {},
+		Col_2_img_1_layout: {
+			columnCSS: {
+				width: '50%', // equivalent to w-1/2
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'flex-start',
+				height: '100%',
+				gap: '0.1rem',
+			},
+			canvaCSS: {
+				width: '100%',
+				height: '100%',
+				display: 'flex',
+				flexDirection: 'row',
+				gap: '2rem',
+				justifyContent: 'flex-start',
+				alignItems: 'flex-start',
+			},
+			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
+			imageContainerCSS: {
+				width: '50%', // equivalent to w-1/2
+				height: '90%', // equivalent to h-[90%]
+				borderRadius: '0.375rem', // equivalent to rounded-md
+				overflow: 'hidden',
+				display: 'flex',
+				alignItems: 'center', // equivalent to items-center
+			},
+		},
 		Col_1_img_1_layout: {
 			columnCSS: { width: '100%', display: 'grid', gridTemplateColumns: '1fr' },
 			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
@@ -800,7 +908,34 @@ const layoutConfigData: TemplateLayoutConfig = {
 				flexGrow: 1,
 			},
 		},
-		Col_2_img_1_layout: {},
+		Col_2_img_1_layout: {
+			columnCSS: {
+				width: '50%', // equivalent to w-1/2
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'flex-start',
+				height: '100%',
+				gap: '0.1rem',
+			},
+			canvaCSS: {
+				width: '100%',
+				height: '100%',
+				display: 'flex',
+				flexDirection: 'row',
+				gap: '2rem',
+				justifyContent: 'flex-start',
+				alignItems: 'flex-start',
+			},
+			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
+			imageContainerCSS: {
+				width: '50%', // equivalent to w-1/2
+				height: '90%', // equivalent to h-[90%]
+				borderRadius: '0.375rem', // equivalent to rounded-md
+				overflow: 'hidden',
+				display: 'flex',
+				alignItems: 'center', // equivalent to items-center
+			},
+		},
 		Col_1_img_1_layout: {
 			columnCSS: { width: '100%', display: 'grid', gridTemplateColumns: '1fr' },
 			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
@@ -958,7 +1093,34 @@ const layoutConfigData: TemplateLayoutConfig = {
 				flexGrow: 1,
 			},
 		},
-		Col_2_img_1_layout: {},
+		Col_2_img_1_layout: {
+			columnCSS: {
+				width: '50%', // equivalent to w-1/2
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'flex-start',
+				height: '100%',
+				gap: '0.1rem',
+			},
+			canvaCSS: {
+				width: '100%',
+				height: '100%',
+				display: 'flex',
+				flexDirection: 'row',
+				gap: '2rem',
+				justifyContent: 'flex-start',
+				alignItems: 'flex-start',
+			},
+			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
+			imageContainerCSS: {
+				width: '50%', // equivalent to w-1/2
+				height: '90%', // equivalent to h-[90%]
+				borderRadius: '0.375rem', // equivalent to rounded-md
+				overflow: 'hidden',
+				display: 'flex',
+				alignItems: 'center', // equivalent to items-center
+			},
+		},
 		Col_1_img_1_layout: {
 			columnCSS: { width: '100%', display: 'grid', gridTemplateColumns: '1fr' },
 			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
@@ -1116,7 +1278,34 @@ const layoutConfigData: TemplateLayoutConfig = {
 				flexGrow: 1,
 			},
 		},
-		Col_2_img_1_layout: {},
+		Col_2_img_1_layout: {
+			columnCSS: {
+				width: '50%', // equivalent to w-1/2
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'flex-start',
+				height: '100%',
+				gap: '0.1rem',
+			},
+			canvaCSS: {
+				width: '100%',
+				height: '100%',
+				display: 'flex',
+				flexDirection: 'row',
+				gap: '2rem',
+				justifyContent: 'flex-start',
+				alignItems: 'flex-start',
+			},
+			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
+			imageContainerCSS: {
+				width: '50%', // equivalent to w-1/2
+				height: '90%', // equivalent to h-[90%]
+				borderRadius: '0.375rem', // equivalent to rounded-md
+				overflow: 'hidden',
+				display: 'flex',
+				alignItems: 'center', // equivalent to items-center
+			},
+		},
 		Col_1_img_1_layout: {
 			columnCSS: { width: '100%', display: 'grid', gridTemplateColumns: '1fr' },
 			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
@@ -1274,7 +1463,34 @@ const layoutConfigData: TemplateLayoutConfig = {
 				flexGrow: 1,
 			},
 		},
-		Col_2_img_1_layout: {},
+		Col_2_img_1_layout: {
+			columnCSS: {
+				width: '50%', // equivalent to w-1/2
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'flex-start',
+				height: '100%',
+				gap: '0.1rem',
+			},
+			canvaCSS: {
+				width: '100%',
+				height: '100%',
+				display: 'flex',
+				flexDirection: 'row',
+				gap: '2rem',
+				justifyContent: 'flex-start',
+				alignItems: 'flex-start',
+			},
+			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
+			imageContainerCSS: {
+				width: '50%', // equivalent to w-1/2
+				height: '90%', // equivalent to h-[90%]
+				borderRadius: '0.375rem', // equivalent to rounded-md
+				overflow: 'hidden',
+				display: 'flex',
+				alignItems: 'center', // equivalent to items-center
+			},
+		},
 		Col_1_img_1_layout: {
 			columnCSS: { width: '100%', display: 'grid', gridTemplateColumns: '1fr' },
 			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
@@ -1432,7 +1648,34 @@ const layoutConfigData: TemplateLayoutConfig = {
 				flexGrow: 1,
 			},
 		},
-		Col_2_img_1_layout: {},
+		Col_2_img_1_layout: {
+			columnCSS: {
+				width: '50%', // equivalent to w-1/2
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'flex-start',
+				height: '100%',
+				gap: '0.1rem',
+			},
+			canvaCSS: {
+				width: '100%',
+				height: '100%',
+				display: 'flex',
+				flexDirection: 'row',
+				gap: '2rem',
+				justifyContent: 'flex-start',
+				alignItems: 'flex-start',
+			},
+			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
+			imageContainerCSS: {
+				width: '50%', // equivalent to w-1/2
+				height: '90%', // equivalent to h-[90%]
+				borderRadius: '0.375rem', // equivalent to rounded-md
+				overflow: 'hidden',
+				display: 'flex',
+				alignItems: 'center', // equivalent to items-center
+			},
+		},
 		Col_1_img_1_layout: {
 			columnCSS: { width: '100%', display: 'grid', gridTemplateColumns: '1fr' },
 			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
@@ -1590,7 +1833,34 @@ const layoutConfigData: TemplateLayoutConfig = {
 				flexGrow: 1,
 			},
 		},
-		Col_2_img_1_layout: {},
+		Col_2_img_1_layout: {
+			columnCSS: {
+				width: '50%', // equivalent to w-1/2
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'flex-start',
+				height: '100%',
+				gap: '0.1rem',
+			},
+			canvaCSS: {
+				width: '100%',
+				height: '100%',
+				display: 'flex',
+				flexDirection: 'row',
+				gap: '2rem',
+				justifyContent: 'flex-start',
+				alignItems: 'flex-start',
+			},
+			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
+			imageContainerCSS: {
+				width: '50%', // equivalent to w-1/2
+				height: '90%', // equivalent to h-[90%]
+				borderRadius: '0.375rem', // equivalent to rounded-md
+				overflow: 'hidden',
+				display: 'flex',
+				alignItems: 'center', // equivalent to items-center
+			},
+		},
 		Col_1_img_1_layout: {
 			columnCSS: { width: '100%', display: 'grid', gridTemplateColumns: '1fr' },
 			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
@@ -1748,7 +2018,34 @@ const layoutConfigData: TemplateLayoutConfig = {
 				flexGrow: 1,
 			},
 		},
-		Col_2_img_1_layout: {},
+		Col_2_img_1_layout: {
+			columnCSS: {
+				width: '50%', // equivalent to w-1/2
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'flex-start',
+				height: '100%',
+				gap: '0.1rem',
+			},
+			canvaCSS: {
+				width: '100%',
+				height: '100%',
+				display: 'flex',
+				flexDirection: 'row',
+				gap: '2rem',
+				justifyContent: 'flex-start',
+				alignItems: 'flex-start',
+			},
+			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
+			imageContainerCSS: {
+				width: '50%', // equivalent to w-1/2
+				height: '90%', // equivalent to h-[90%]
+				borderRadius: '0.375rem', // equivalent to rounded-md
+				overflow: 'hidden',
+				display: 'flex',
+				alignItems: 'center', // equivalent to items-center
+			},
+		},
 		Col_1_img_1_layout: {
 			columnCSS: { width: '100%', display: 'grid', gridTemplateColumns: '1fr' },
 			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
@@ -1906,7 +2203,34 @@ const layoutConfigData: TemplateLayoutConfig = {
 				flexGrow: 1,
 			},
 		},
-		Col_2_img_1_layout: {},
+		Col_2_img_1_layout: {
+			columnCSS: {
+				width: '50%', // equivalent to w-1/2
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'flex-start',
+				height: '100%',
+				gap: '0.1rem',
+			},
+			canvaCSS: {
+				width: '100%',
+				height: '100%',
+				display: 'flex',
+				flexDirection: 'row',
+				gap: '2rem',
+				justifyContent: 'flex-start',
+				alignItems: 'flex-start',
+			},
+			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
+			imageContainerCSS: {
+				width: '50%', // equivalent to w-1/2
+				height: '90%', // equivalent to h-[90%]
+				borderRadius: '0.375rem', // equivalent to rounded-md
+				overflow: 'hidden',
+				display: 'flex',
+				alignItems: 'center', // equivalent to items-center
+			},
+		},
 		Col_1_img_1_layout: {
 			columnCSS: { width: '100%', display: 'grid', gridTemplateColumns: '1fr' },
 			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
@@ -2090,7 +2414,34 @@ const layoutConfigData: TemplateLayoutConfig = {
 				flexGrow: 1,
 			},
 		},
-		Col_2_img_1_layout: {},
+		Col_2_img_1_layout: {
+			columnCSS: {
+				width: '50%', // equivalent to w-1/2
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'flex-start',
+				height: '100%',
+				gap: '0.1rem',
+			},
+			canvaCSS: {
+				width: '100%',
+				height: '100%',
+				display: 'flex',
+				flexDirection: 'row',
+				gap: '2rem',
+				justifyContent: 'flex-start',
+				alignItems: 'flex-start',
+			},
+			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
+			imageContainerCSS: {
+				width: '50%', // equivalent to w-1/2
+				height: '90%', // equivalent to h-[90%]
+				borderRadius: '0.375rem', // equivalent to rounded-md
+				overflow: 'hidden',
+				display: 'flex',
+				alignItems: 'center', // equivalent to items-center
+			},
+		},
 		Col_1_img_1_layout: {
 			columnCSS: { width: '100%', display: 'grid', gridTemplateColumns: '1fr' },
 			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
@@ -2306,8 +2657,35 @@ const layoutConfigData: TemplateLayoutConfig = {
 			},
 		},
 		Col_2_img_1_layout: {
+			columnCSS: {
+				width: '50%', // equivalent to w-1/2
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'flex-start',
+				height: '100%',
+				gap: '0.1rem',
+			},
+			canvaCSS: {
+				width: '100%',
+				height: '100%',
+				display: 'flex',
+				flexDirection: 'row',
+				gap: '2rem',
+				justifyContent: 'flex-start',
+				alignItems: 'flex-start',
+			},
 			titleAndSubtopicBoxCSS: {
+				display: 'flex',
+				flexDirection: 'column',
 				backgroundColor: '#DEFF56',
+			},
+			imageContainerCSS: {
+				width: '50%', // equivalent to w-1/2
+				height: '90%', // equivalent to h-[90%]
+				borderRadius: '0.375rem', // equivalent to rounded-md
+				overflow: 'hidden',
+				display: 'flex',
+				alignItems: 'center', // equivalent to items-center
 			},
 		},
 		Col_1_img_1_layout: {
