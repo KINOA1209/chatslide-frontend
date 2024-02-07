@@ -611,9 +611,12 @@ export const Col_2_img_2_layout = ({
 
 	return (
 		<>
-			<div className='flex flex-col gap-[0.5rem]'>
+			<div
+				// className='flex flex-col gap-[0.5rem]'
+				style={layoutElements.columnCSS}
+			>
 				<div
-					className='flex flex-col justify-center items-center'
+					// className='flex flex-col justify-center items-center'
 					style={layoutElements.titleAndSubtopicBoxCSS}
 				>
 					<div className={``}>{topic}</div>
@@ -621,8 +624,14 @@ export const Col_2_img_2_layout = ({
 				</div>
 
 				{/* two columns of images */}
-				<div className='w-full grid grid-cols-2 gap-[2rem]'>
-					<div className='h-[11rem] grow rounded-md overflow-hidden relative'>
+				<div
+					// className='w-full grid grid-cols-2 gap-[2rem]'
+					style={layoutElements.imageContainerCSS}
+				>
+					<div
+						// className='h-[11rem] grow rounded-md overflow-hidden relative'
+						style={layoutElements.imageCSS}
+					>
 						{/* Gradient Background */}
 						{/* <div
 							className='absolute inset-0 z-50'
@@ -638,7 +647,10 @@ export const Col_2_img_2_layout = ({
 							canEdit={canEdit}
 						/>
 					</div>
-					<div className='h-[11rem] grow rounded-md overflow-hidden  relative'>
+					<div
+						// className='h-[11rem] grow rounded-md overflow-hidden  relative'
+						style={layoutElements.imageCSS}
+					>
 						{/* Gradient Background */}
 						{/* <div
 							className='absolute inset-0 z-50'
@@ -656,16 +668,20 @@ export const Col_2_img_2_layout = ({
 					</div>
 				</div>
 				{/* two columns of text */}
-				<div className='w-full grid grid-cols-2 gap-[2rem]'>
-					{Array.isArray(content) &&
+				<div
+					// className='w-full grid grid-cols-2 gap-[2rem]'
+					style={layoutElements.contentCSS}
+				>
+					{/* {Array.isArray(content) &&
 						content.map((item, index) => (
 							<div className='flex flex-col gap-[0.5rem]' key={index}>
-								{/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
+								
 								<ul key={index} className={`flex flex-row w-full h-full grow `}>
 									<li>{item}</li>
 								</ul>
 							</div>
-						))}
+						))} */}
+					{content}
 				</div>
 			</div>
 			<div style={layoutElements.logoCSS}>{templateLogo}</div>
@@ -697,31 +713,46 @@ export const Col_3_img_3_layout = ({
 
 	return (
 		<div style={layoutElements.canvaCSS}>
-			<div className='flex flex-col gap-[0.5rem]'>
+			<div
+				// className='flex flex-col gap-[0.5rem]'
+				style={layoutElements.columnCSS}
+			>
 				<div
-					className='flex flex-col justify-center items-center'
+					// className='flex flex-col justify-center items-center'
 					style={layoutElements.titleAndSubtopicBoxCSS}
 				>
 					<div className={``}>{topic}</div>
 					<div className={``}>{subtopic}</div>
 				</div>
 				{/* three columns of images */}
-				<div className='w-full grid grid-cols-3 gap-[2rem] '>
-					<div className='h-[11rem] grow rounded-md overflow-hidden'>
+				<div
+					// className='w-full grid grid-cols-3 gap-[2rem] '
+					style={layoutElements.imageContainerCSS}
+				>
+					<div
+						// className='h-[11rem] grow rounded-md overflow-hidden'
+						style={layoutElements.imageCSS}
+					>
 						<ImgModule
 							imgsrc={imgs[0]}
 							updateSingleCallback={updateImgAtIndex(0)}
 							canEdit={canEdit}
 						/>
 					</div>
-					<div className='h-[11rem] grow rounded-md overflow-hidden'>
+					<div
+						// className='h-[11rem] grow rounded-md overflow-hidden'
+						style={layoutElements.imageCSS}
+					>
 						<ImgModule
 							imgsrc={imgs[1]}
 							updateSingleCallback={updateImgAtIndex(1)}
 							canEdit={canEdit}
 						/>
 					</div>
-					<div className='h-[11rem] grow rounded-md overflow-hidden'>
+					<div
+						// className='h-[11rem] grow rounded-md overflow-hidden'
+						style={layoutElements.imageCSS}
+					>
 						<ImgModule
 							imgsrc={imgs[2]}
 							updateSingleCallback={updateImgAtIndex(2)}
@@ -730,16 +761,20 @@ export const Col_3_img_3_layout = ({
 					</div>
 				</div>
 				{/* three columns of text */}
-				<div className='w-full grid grid-cols-3 gap-[2rem]'>
-					{Array.isArray(content) &&
+				<div
+					// className='w-full grid grid-cols-3 gap-[2rem]'
+					style={layoutElements.contentCSS}
+				>
+					{/* {Array.isArray(content) &&
 						content.map((item, index) => (
 							<div className='flex flex-col gap-[0.5rem]' key={index}>
-								{/* <div className='opacity-50 border border-neutral-900 border-opacity-40'></div> */}
+								
 								<ul key={index} className={`flex flex-row w-full h-full grow `}>
 									<li>{item}</li>
 								</ul>
 							</div>
-						))}
+						))} */}
+					{content}
 				</div>
 			</div>
 			<div style={layoutElements.logoCSS}>{templateLogo}</div>
