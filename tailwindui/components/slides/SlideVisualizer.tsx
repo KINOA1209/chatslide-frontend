@@ -4,13 +4,12 @@ import ClickableLink from '@/components/ui/ClickableLink';
 import ExportToPdfButton from './exportToPdfButton';
 import dynamic from 'next/dynamic';
 import { ShareToggleButton } from '@/components/slides/SlideButtons';
-import AuthService from '../../services/AuthService';
+import { useRouter } from 'next/navigation';
 import { TextLabel } from '../ui/GrayLabel';
 import PostButton from '../button/PostButton';
 import { FaTimes } from 'react-icons/fa';
 import { useSlides } from '@/hooks/use-slides';
 import VideoService from '@/services/VideoService';
-import router from 'next/router';
 import { useUser } from '@/hooks/use-user';
 import { toast } from 'react-toastify';
 
@@ -35,6 +34,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
   const { token } = useUser();
   const [share, setShare] = useState(false);
   const [showShareLink, setShowShareLink] = useState(true);
+  const router = useRouter();
 
   const exportSlidesRef = useRef<HTMLDivElement>(null);
 
