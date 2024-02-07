@@ -9,6 +9,10 @@ import { TextLabel } from '../ui/GrayLabel';
 import PostButton from '../button/PostButton';
 import { FaTimes } from 'react-icons/fa';
 import { useSlides } from '@/hooks/use-slides';
+import VideoService from '@/services/VideoService';
+import router from 'next/router';
+import { useUser } from '@/hooks/use-user';
+import { toast } from 'react-toastify';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
   ssr: false,
@@ -27,7 +31,8 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 }) => {
   const [host, setHost] = useState('https://drlambda.ai');
 
-  const { slides, setTranscripts } = useSlides();
+  const { slides, setTranscripts, hasTranscript } = useSlides();
+  const { token } = useUser();
   const [share, setShare] = useState(false);
   const [showShareLink, setShowShareLink] = useState(true);
 
@@ -54,6 +59,31 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
       setHost(window.location.hostname);
     }
   }, []);
+
+  async function handleSubmitVideo() {
+    console.log('submitting');
+
+    const language = sessionStorage.getItem('language') || 'English';
+    const foldername = sessionStorage.getItem('foldername') || '';
+
+    const fetchData = async () => {
+      try {
+        const project_id = sessionStorage.getItem('project_id') || '';
+        const job_id = await VideoService.generateVideo(project_id, foldername, language, token);
+        sessionStorage.setItem('video_job_id', job_id);
+        router.push('workflow-review-video');
+      } catch (error) {
+        console.error('Error in fetchData:', error);
+        toast.error('We have some problem creating your video, please try again later.')
+        // TODO: add toast prompts for user
+      }
+      setIsSubmitting(false);
+    };
+
+    if (isSubmitting) {
+      fetchData();
+    }
+  }
 
   async function handleSubmitTranscript() {
     console.log('submitting');
@@ -85,12 +115,10 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
     };
 
     try {
-      const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-
       const response = await fetch('/api/transcript_json', {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${idToken}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
@@ -115,7 +143,10 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 
   useEffect(() => {
     if (isSubmitting) {
-      handleSubmitTranscript();
+      if (!hasTranscript()) 
+        handleSubmitTranscript();
+      else
+        handleSubmitVideo();
     }
   }, [isSubmitting]);
 

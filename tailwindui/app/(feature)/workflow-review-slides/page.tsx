@@ -9,52 +9,64 @@ import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
 import { useUser } from '@/hooks/use-user';
 import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
 import StepsSlidesPage from '@/components/user_onboarding/StepsSlidesPage';
+import { useSlides } from '@/hooks/use-slides';
 export default function WorkflowStep3() {
-	const contentRef = useRef<HTMLDivElement>(null);
-	const { isPaidUser } = useUser();
-	const [isGpt35, setIsGpt35] = useState(
-		typeof sessionStorage !== 'undefined'
-			? JSON.parse(sessionStorage.getItem('isGpt35') || 'true')
-			: true,
-	);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const { isPaidUser } = useUser();
+  const { hasTranscript } = useSlides();
+  const [isGpt35, setIsGpt35] = useState(
+    typeof sessionStorage !== 'undefined'
+      ? JSON.parse(sessionStorage.getItem('isGpt35') || 'true')
+      : true,
+  );
 
-	const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-	// set current page to local storage
-	useEffect(() => {
-		if (typeof window !== 'undefined' && localStorage) {
-			localStorage.setItem('currentWorkflowPage', 'SlidesPage');
-		}
-	}, []);
-	return (
-		<div className='min-h-[90vh] w-full bg-white'>
-			{/* flex col container for steps, title, etc */}
-			<MyCustomJoyride steps={StepsSlidesPage()} />
-			<WorkflowStepsBanner
-				currentIndex={3}
-				isSubmitting={isSubmitting}
-				setIsSubmitting={setIsSubmitting}
-				isPaidUser={isPaidUser}
-				contentRef={contentRef}
-				nextIsPaidFeature={true}
-				nextText={!isSubmitting ? 'Write Scripts' : 'Writing Scripts'}
-			/>
+  // set current page to local storage
+  useEffect(() => {
+    if (typeof window !== 'undefined' && localStorage) {
+      localStorage.setItem('currentWorkflowPage', 'SlidesPage');
+    }
+  }, []);
+  return (
+    <div className='min-h-[90vh] w-full bg-white'>
+      {/* flex col container for steps, title, etc */}
+      <MyCustomJoyride steps={StepsSlidesPage()} />
+      {!hasTranscript() ?
+        <WorkflowStepsBanner
+          currentIndex={3}
+          isSubmitting={isSubmitting}
+          setIsSubmitting={setIsSubmitting}
+          isPaidUser={isPaidUser}
+          contentRef={contentRef}
+          nextIsPaidFeature={true}
+          nextText={!isSubmitting ? 'Write Scripts' : 'Writing Scripts'}
+        /> :
+        <WorkflowStepsBanner
+          currentIndex={3}
+          isSubmitting={isSubmitting}
+          setIsSubmitting={setIsSubmitting}
+          isPaidUser={isPaidUser}
+          contentRef={contentRef}
+          nextIsPaidFeature={true}
+          nextText={!isSubmitting ? 'Create Video' : 'Creating Video'}
+        />}
 
-			<ToastContainer enableMultiContainer containerId={'slides'} />
+      <ToastContainer enableMultiContainer containerId={'slides'} />
 
-			<div
-				className={`max-w-4xl px-6 flex flex-col relative mx-auto`}
-				ref={contentRef}
-			>
-				{/* slides */}
-				<SlideVisualizer
-					isGpt35={isGpt35}
-					isSubmitting={isSubmitting}
-					setIsSubmitting={setIsSubmitting}
-				/>
-			</div>
+      <div
+        className={`max-w-4xl px-6 flex flex-col relative mx-auto`}
+        ref={contentRef}
+      >
+        {/* slides */}
+        <SlideVisualizer
+          isGpt35={isGpt35}
+          isSubmitting={isSubmitting}
+          setIsSubmitting={setIsSubmitting}
+        />
+      </div>
 
-			<FeedbackButton timeout={30000} />
-		</div>
-	);
+      <FeedbackButton timeout={30000} />
+    </div>
+  );
 }

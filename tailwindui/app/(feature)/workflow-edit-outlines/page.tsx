@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useRef, useEffect, Fragment } from 'react';
-import ProjectProgress from '@/components/WorkflowSteps';
 import FeedbackButton from '@/components/ui/feedback';
 import 'react-toastify/dist/ReactToastify.css';
 import OutlineVisualizer from '@/components/outline/OutlineVisulizer';
