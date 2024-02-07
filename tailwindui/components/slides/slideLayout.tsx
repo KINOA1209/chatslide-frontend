@@ -92,7 +92,7 @@ export const Cover_img_0_layout = ({
 		// 	{templateLogo}
 		// </>
 	);
-};
+}; //@TODO
 export const Cover_img_1_layout = ({
 	user_name,
 	title,

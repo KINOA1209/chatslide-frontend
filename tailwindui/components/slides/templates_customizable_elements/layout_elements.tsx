@@ -2141,11 +2141,12 @@ const layoutConfigData: TemplateLayoutConfig = {
 				top: '50%',
 				left: '50%',
 				transform: 'translate(-50%, -50%)', // Centering trick
+				maxHeight: '80%',
 			},
 			userNameCSS: {
 				zIndex: 30,
 				position: 'absolute',
-				top: '65%',
+				top: '80%',
 				left: '30%',
 				transform: 'translate(-50%, -50%)', // Centering trick
 			},
