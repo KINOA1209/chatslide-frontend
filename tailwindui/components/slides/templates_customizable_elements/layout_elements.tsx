@@ -20,6 +20,7 @@ export type LayoutElements = {
 	contentIndexCSS?: React.CSSProperties;
 	contentIndexTextDividerCSS?: React.CSSProperties;
 	contentTextCSS?: React.CSSProperties;
+	userNameTextDividerCSS?: React.CSSProperties;
 };
 
 export type TemplateLayoutConfig = {
@@ -31,7 +32,7 @@ export type TemplateLayoutConfig = {
 const layoutConfigData: TemplateLayoutConfig = {
 	Default: {
 		Cover_img_0_layout: {
-			canvaCSS: {
+			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
 				paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 				paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
@@ -225,7 +226,11 @@ const layoutConfigData: TemplateLayoutConfig = {
 			},
 		},
 		Col_2_img_2_layout: {
-			columnCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			columnCSS: {
+				display: 'flex',
+				flexDirection: 'column',
+				gap: '0.5rem',
+			},
 			titleAndSubtopicBoxCSS: {
 				display: 'flex',
 				flexDirection: 'column',
@@ -282,7 +287,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 	},
 	Berkeley: {
 		Cover_img_0_layout: {
-			canvaCSS: {
+			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
 				paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 				paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
@@ -296,6 +301,9 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+			},
+			userNameCSS: {
+				// fontFamily: 'caveat-medium',
 			},
 		},
 		Cover_img_1_layout: {
@@ -520,7 +528,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 	},
 	Stanford: {
 		Cover_img_0_layout: {
-			canvaCSS: {
+			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
 				paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 				paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
@@ -534,6 +542,9 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+			},
+			userNameCSS: {
+				// fontFamily: 'caveat-medium',
 			},
 		},
 		Cover_img_1_layout: {
@@ -758,7 +769,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 	},
 	Harvard: {
 		Cover_img_0_layout: {
-			canvaCSS: {
+			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
 				paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 				paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
@@ -772,6 +783,9 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+			},
+			userNameCSS: {
+				// fontFamily: 'caveat-medium',
 			},
 		},
 		Cover_img_1_layout: {
@@ -996,7 +1010,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 	},
 	MIT: {
 		Cover_img_0_layout: {
-			canvaCSS: {
+			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
 				paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 				paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
@@ -1010,6 +1024,9 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+			},
+			userNameCSS: {
+				// fontFamily: 'caveat-medium',
 			},
 		},
 		Cover_img_1_layout: {
@@ -1234,7 +1251,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 	},
 	Princeton: {
 		Cover_img_0_layout: {
-			canvaCSS: {
+			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
 				paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 				paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
@@ -1248,6 +1265,9 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+			},
+			userNameCSS: {
+				// fontFamily: 'caveat-medium',
 			},
 		},
 		Cover_img_1_layout: {
@@ -1472,7 +1492,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 	},
 	Caltech: {
 		Cover_img_0_layout: {
-			canvaCSS: {
+			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
 				paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 				paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
@@ -1486,6 +1506,9 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+			},
+			userNameCSS: {
+				// fontFamily: 'caveat-medium',
 			},
 		},
 		Cover_img_1_layout: {
@@ -1710,7 +1733,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 	},
 	Columbia: {
 		Cover_img_0_layout: {
-			canvaCSS: {
+			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
 				paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 				paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
@@ -1724,6 +1747,9 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+			},
+			userNameCSS: {
+				// fontFamily: 'caveat-medium',
 			},
 		},
 		Cover_img_1_layout: {
@@ -1948,7 +1974,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 	},
 	JHU: {
 		Cover_img_0_layout: {
-			canvaCSS: {
+			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
 				paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 				paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
@@ -1962,6 +1988,9 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+			},
+			userNameCSS: {
+				// fontFamily: 'caveat-medium',
 			},
 		},
 		Cover_img_1_layout: {
@@ -2186,7 +2215,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 	},
 	UChicago: {
 		Cover_img_0_layout: {
-			canvaCSS: {
+			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
 				paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 				paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
@@ -2200,6 +2229,9 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+			},
+			userNameCSS: {
+				// fontFamily: 'caveat-medium',
 			},
 		},
 		Cover_img_1_layout: {
@@ -2424,7 +2456,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 	},
 	Yale: {
 		Cover_img_0_layout: {
-			canvaCSS: {
+			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
 				paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 				paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
@@ -2438,6 +2470,9 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+			},
+			userNameCSS: {
+				// fontFamily: 'caveat-medium',
 			},
 		},
 		Cover_img_1_layout: {
@@ -2662,7 +2697,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 	},
 	UPenn: {
 		Cover_img_0_layout: {
-			canvaCSS: {
+			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
 				paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 				paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
@@ -2676,6 +2711,9 @@ const layoutConfigData: TemplateLayoutConfig = {
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
+			},
+			userNameCSS: {
+				// fontFamily: 'caveat-medium',
 			},
 		},
 		Cover_img_1_layout: {
@@ -2900,7 +2938,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 	},
 	Fun_Education_004: {
 		Cover_img_0_layout: {
-			canvaCSS: {
+			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
 				paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 				paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
@@ -3165,19 +3203,60 @@ const layoutConfigData: TemplateLayoutConfig = {
 	Business_002: {
 		Cover_img_0_layout: {
 			canvaCSS: {
+				// backgroundImage:
+				// 	"url('images/template/Business_002/cover_img_0_layout/BackgroundImg.png')",
+			},
+			titleCSS: {
+				backgroundColor: '#DEFF56',
+				paddingBottom: '20rem',
+				paddingTop: '4rem',
+				paddingLeft: '2rem',
+				paddingRight: '2rem',
+				// height: '80%',
+				width: '80%',
+				zIndex: 20,
+				position: 'absolute',
+				top: '50%',
+				left: '50%',
+				transform: 'translate(-50%, -50%)', // Centering trick
+				maxHeight: '80%',
+			},
+			userNameTextDividerCSS: {
+				display: 'none',
+			},
+			userNameCSS: {
+				zIndex: 30,
+				position: 'absolute',
+				top: '80%',
+				left: '30%',
+				transform: 'translate(-50%, -50%)', // Centering trick
+			},
+			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
 				paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 				paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
-				width: '100%', // Equivalent to w-full
+				width: '50%', // Equivalent to w-1/2
 				display: 'flex', // Equivalent to flex
 				flexDirection: 'column', // Equivalent to flex-col
 				justifyContent: 'flex-start', // Equivalent to justify-start
 				height: '100%', // Equivalent to h-full
-				gap: '2rem', // Equivalent to gap-[2rem]
+				gap: '2rem',
 			},
-			titleCSS: {
-				paddingLeft: '2rem',
-				zIndex: 20,
+
+			imageContainerCSS: {
+				width: '100%', // Equivalent to w-full
+				height: '100%', // Equivalent to h-full
+				overflow: 'hidden',
+				borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
+				position: 'absolute',
+			},
+			visualElementsCSS: {
+				height: '100%', // must-have
+				zIndex: 0,
+				position: 'absolute',
+				// display: 'none',
+				pointerEvents:
+					'none' /* Make the layer transparent to pointer events */,
 			},
 		},
 		Cover_img_1_layout: {
@@ -3300,7 +3379,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 				height: '100%',
 				flexGrow: 1,
 			},
-		}, // TODO @guangyao
+		},
 		Col_3_img_0_layout: {
 			titleAndSubtopicBoxCSS: {
 				backgroundColor: '#DEFF56',

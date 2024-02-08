@@ -722,7 +722,8 @@ const themeConfigData: ThemeConfig = {
 		},
 	},
 	Business_002: {
-		backgroundUrlCover: '',
+		backgroundUrlCover:
+			'/images/template/Business_002/cover_img_0_layout/BackgroundImg.png',
 		backgroundColorCover: 'bg-[#FFFFFF]',
 		backgroundColor: 'bg-[#D2D2D2]',
 		titleFontCSS: {
