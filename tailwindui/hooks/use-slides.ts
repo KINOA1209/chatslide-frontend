@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { createBearStore } from '@/utils/create-bear-store';
 import Slide from '@/models/Slide';
 import { TemplateKeys } from '@/components/slides/slideTemplates';
@@ -39,6 +39,7 @@ export const useSlides = () => {
 	const { slidesHistoryIndex, setSlidesHistoryIndex } = useSlidesHistoryIndex();
 	const { version, setVersion } = useVersion();
 	const { token } = useUser();
+  const [ hasTranscript, setHasTranscript ] = useState(false);
 
 	const init = async () => {
 		if (slidesStatus !== SlidesStatus.NotInited) return;
@@ -161,6 +162,7 @@ export const useSlides = () => {
 
 	const initSlides = (slides: Slide[]) => {
 		setSlides(slides);
+    setHasTranscript(slides.some(slide => slide.transcript));
 		slidesStatus = SlidesStatus.Inited;
 	};
 
@@ -169,10 +171,6 @@ export const useSlides = () => {
 		setVersion((prevVersion) => prevVersion + 1);
 	};
 
-  const hasTranscript = () => {
-    return slides.some((slide) => slide.transcript);
-  }
-  
   const setTranscripts = (transcripts: string[]) => {
     for (let i = 0; i < transcripts.length; i++) {
       if (i < slides.length)
@@ -180,6 +178,7 @@ export const useSlides = () => {
     }
     setSlides(slides);
     syncSlides(slides);
+    setHasTranscript(true);
   }
 
 	const syncSlides = async (
