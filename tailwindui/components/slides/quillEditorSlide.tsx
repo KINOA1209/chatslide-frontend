@@ -213,6 +213,43 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				list: isVerticalContent ? 'bullet' : undefined,
 				font: style?.fontFamily,
 			};
+
+			const toolbar = quillInstanceRef.current.getModule('toolbar');
+
+			// clean logic redesign
+			// remove all the formatting except bullet point related style first
+			// then apply the corresponding default css style to it.
+			toolbar.addHandler('clean', function() {
+				const quill = quillInstanceRef.current;
+				if (quill) {
+					const range = quill.getSelection();
+					if (range && range.length > 0) {
+						const defaultFormats = {
+							size: style?.fontSize || '12pt',
+							font: style?.fontFamily || 'Arimo',
+							bold: style?.fontWeight !== 'normal',
+							italic: style?.fontStyle === 'italic',
+							color: style?.color
+						};
+						const formats = quill.getFormat(range.index, range.length);
+						const originalListFormat = formats['list'];
+
+						Object.keys(formats).forEach((format: string) => {
+							quill.format(format, false, Quill.sources.USER);
+						});
+						if (originalListFormat) {
+							quill.format('list', originalListFormat, Quill.sources.USER);
+						}
+						(Object.keys(defaultFormats) as Array<keyof typeof defaultFormats>).forEach(formatKey => {
+							const formatValue = defaultFormats[formatKey];
+							if (formatValue !== undefined) {
+								quill.formatText(range.index, range.length, formatKey, formatValue, Quill.sources.USER);
+							}
+						});
+					}
+				}
+			});
+
 			// console.log(quillFormats);
 			const Delta = Quill.import('delta');
 			let initialDelta = new Delta();
