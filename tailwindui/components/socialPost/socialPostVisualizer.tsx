@@ -57,11 +57,12 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
 						/>
 					</div>
 					<ShareToggleButton setShare={setShare} share={share} />
-					<PostButton 
-					slides={socialPostSlides}
-					post_type='socialpost'
-					setShare={setShare}
-					/>
+				</div>
+				<div className='SlidesStep-6 flex flex-row justify-end items-center'>
+					<PostButton slides={socialPostSlides} post_type='socialpost' platform='twitter' setShare={setShare} />
+					<PostButton slides={socialPostSlides} post_type='socialpost' platform='facebook' setShare={setShare} />
+					<PostButton slides={socialPostSlides} post_type='socialpost' platform='reddit' setShare={setShare} />
+					<PostButton slides={socialPostSlides} post_type='socialpost' platform='linkedin' setShare={setShare} />
 				</div>
 				{share && (
 				<div className='w-[100] md:w-[40rem] flex-grow'>

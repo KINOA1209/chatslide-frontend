@@ -23,8 +23,6 @@ const ScenarioChoicePage = () => {
       router.push('/workflow-generate-socialpost');
 	};
 
-
-
 	return (
 		<div className='parent-container bg-zinc-100 min-h-screen'>
 			<div className='flex flex-col justify-center items-center gap-4 sm:gap-12 p-4 sm:p-8'>
