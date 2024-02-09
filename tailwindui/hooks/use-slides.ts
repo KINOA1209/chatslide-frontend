@@ -3,6 +3,7 @@ import { createBearStore } from '@/utils/create-bear-store';
 import Slide from '@/models/Slide';
 import { TemplateKeys } from '@/components/slides/slideTemplates';
 import { useUser } from './use-user';
+import { useChatHistory } from './use-chat-history';
 
 const useSlidesBear = createBearStore<Slide[]>()('slides', [], true);
 const useSlideIndex = createBearStore<number>()('slideIndex', 0, true);
@@ -39,6 +40,8 @@ export const useSlides = () => {
 	const { slidesHistoryIndex, setSlidesHistoryIndex } = useSlidesHistoryIndex();
 	const { version, setVersion } = useVersion();
 	const { token } = useUser();
+
+  const { clearChatHistory } = useChatHistory();
 
 	const init = async () => {
 		if (slidesStatus !== SlidesStatus.NotInited) return;
@@ -162,6 +165,10 @@ export const useSlides = () => {
 	const initSlides = (slides: Slide[]) => {
     console.log('-- init slides: ', { slides });
 		setSlides(slides);
+    setSlideIndex(0);
+    setSlidesHistory([slides]);
+    setSlidesHistoryIndex(0);
+    clearChatHistory();
 		slidesStatus = SlidesStatus.Inited;
 	};
 
