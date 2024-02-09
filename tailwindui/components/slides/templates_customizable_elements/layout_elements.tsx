@@ -3472,7 +3472,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 				paddingRight: '4rem',
 			},
 			imageContainerCSS: {
-				height: '15rem',
+				height: '8rem',
 				flexGrow: 1,
 				borderRadius: '0.375rem', // Assuming a typical rounded-md value
 				overflow: 'hidden',
@@ -3480,6 +3480,8 @@ const layoutConfigData: TemplateLayoutConfig = {
 			contentContainerCSS: {
 				paddingTop: '0.5rem',
 				paddingBottom: '0.5rem',
+				paddingLeft: '4rem',
+				paddingRight: '4rem',
 				height: '100%',
 				width: '100%',
 				display: 'flex',
