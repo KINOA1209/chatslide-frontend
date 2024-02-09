@@ -28,17 +28,11 @@ const Header = ({
 	const [loading, setLoading] = useState(true);
 
 	const router = useRouter();
-	const [isMobile, setIsMobile] = useState<boolean>(false);
 
 	// detect whether user has scrolled the page down by 10px
 	const scrollHandler = () => {
 		window.scrollY > 10 ? setTop(false) : setTop(true);
 	};
-
-	useEffect(() => {
-		setIsMobile(window.innerWidth < 768);
-		console.log('isMobile', isMobile);
-	}, []);
 
 	useEffect(() => {
 		scrollHandler();
@@ -185,7 +179,7 @@ const Header = ({
 			<GoogleAnalytics />
 
 			{/* only render hotjar on desktop for performance */}
-			{!isMobile && <Hotjar />}
+			<div className='hidden sm:flex'> <Hotjar /></div>
 		</header>
 	);
 };
