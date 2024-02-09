@@ -57,7 +57,7 @@ export const Cover_img_0_layout = ({
 	// }, []);
 
 	return (
-		<>
+		<div style={layoutElements.canvaCSS}>
 			<div style={layoutElements.columnCSS}>
 				<div
 					className={`${themeElements.userNameFont} ${themeElements.userNameFontColor}`}
@@ -73,18 +73,18 @@ export const Cover_img_0_layout = ({
 				<div style={layoutElements.titleCSS}>{title}</div>
 			</div>
 			<div style={layoutElements.visualElementsCSS}>
-				{themeElements.backgroundUrlCover && (
+				{themeElements.backgroundUrlCoverImg0 && (
 					<Image
 						style={{ objectFit: 'cover', height: '100%' }}
 						width={960}
 						height={540}
-						src={themeElements.backgroundUrlCover}
+						src={themeElements.backgroundUrlCoverImg0}
 						alt='Background Image for cover'
 					/>
 				)}
 			</div>
 			<div style={layoutElements.logoCSS}>{templateLogo}</div>
-		</>
+		</div>
 	);
 };
 export const Cover_img_1_layout = ({
@@ -134,11 +134,11 @@ export const Cover_img_1_layout = ({
 				/>
 			</div>
 			<div style={layoutElements.visualElementsCSS}>
-				{themeElements.backgroundUrlCover && (
+				{themeElements.backgroundUrlCoverImg1 && (
 					<Image
 						width={960}
 						height={540}
-						src={themeElements.backgroundUrlCover}
+						src={themeElements.backgroundUrlCoverImg1}
 						alt='Background Image for cover'
 					/>
 				)}
@@ -556,7 +556,7 @@ export const Col_2_img_1_layout = ({
 				</div>
 
 				{/* contents */}
-				<div className='w-full flex'>
+				<div className='w-full flex' style={layoutElements.contentContainerCSS}>
 					<div
 						className={`w-full`}
 						style={{

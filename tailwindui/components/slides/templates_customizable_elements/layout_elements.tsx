@@ -3203,8 +3203,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 	Business_002: {
 		Cover_img_0_layout: {
 			canvaCSS: {
-				// backgroundImage:
-				// 	"url('images/template/Business_002/cover_img_0_layout/BackgroundImg.png')",
+				backgroundColor: '#2E2E2E',
 			},
 			titleCSS: {
 				backgroundColor: '#DEFF56',
@@ -3232,10 +3231,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 				transform: 'translate(-50%, -50%)', // Centering trick
 			},
 			columnCSS: {
-				paddingTop: '1rem', // Equivalent to pt-[1rem]
-				paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
-				paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
-				width: '50%', // Equivalent to w-1/2
+				width: '100%', // Equivalent to w-1/2
 				display: 'flex', // Equivalent to flex
 				flexDirection: 'column', // Equivalent to flex-col
 				justifyContent: 'flex-start', // Equivalent to justify-start
@@ -3302,7 +3298,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 				position: 'absolute',
 			},
 			visualElementsCSS: {
-				zIndex: 30,
+				zIndex: 0,
 				position: 'absolute',
 				// display: 'none',
 				pointerEvents:
@@ -3438,7 +3434,6 @@ const layoutConfigData: TemplateLayoutConfig = {
 				height: '100%',
 				display: 'flex',
 				flexDirection: 'row',
-				gap: '2rem',
 				justifyContent: 'flex-start',
 				alignItems: 'flex-start',
 			},
@@ -3446,14 +3441,23 @@ const layoutConfigData: TemplateLayoutConfig = {
 				display: 'flex',
 				flexDirection: 'column',
 				backgroundColor: '#DEFF56',
+				paddingTop: '4rem',
+				paddingBottom: '1rem',
+				paddingLeft: '4rem',
+				paddingRight: '4rem',
 			},
 			imageContainerCSS: {
 				width: '50%', // equivalent to w-1/2
-				height: '90%', // equivalent to h-[90%]
+				height: '100%', // equivalent to h-[90%]
 				borderRadius: '0.375rem', // equivalent to rounded-md
 				overflow: 'hidden',
 				display: 'flex',
 				alignItems: 'center', // equivalent to items-center
+			},
+			contentContainerCSS: {
+				paddingTop: '4rem',
+				paddingLeft: '4rem',
+				paddingRight: '4rem',
 			},
 		},
 		Col_1_img_1_layout: {
@@ -3462,6 +3466,10 @@ const layoutConfigData: TemplateLayoutConfig = {
 				display: 'flex',
 				flexDirection: 'column',
 				backgroundColor: '#DEFF56',
+				paddingTop: '4rem',
+				paddingBottom: '1rem',
+				paddingLeft: '4rem',
+				paddingRight: '4rem',
 			},
 			imageContainerCSS: {
 				height: '15rem',
@@ -3496,6 +3504,10 @@ const layoutConfigData: TemplateLayoutConfig = {
 				justifyContent: 'center',
 				alignItems: 'center',
 				backgroundColor: '#DEFF56',
+				paddingTop: '4rem',
+				paddingBottom: '1rem',
+				paddingLeft: '4rem',
+				paddingRight: '4rem',
 			},
 			imageContainerCSS: {
 				width: '100%', // equivalent to w-full
@@ -3525,6 +3537,10 @@ const layoutConfigData: TemplateLayoutConfig = {
 				justifyContent: 'center',
 				alignItems: 'center',
 				backgroundColor: '#DEFF56',
+				paddingTop: '4rem',
+				paddingBottom: '1rem',
+				paddingLeft: '4rem',
+				paddingRight: '4rem',
 			},
 			imageContainerCSS: {
 				width: '100%', // equivalent to w-full

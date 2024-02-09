@@ -48,8 +48,8 @@ export const Business_002_template = ({
 	}, []);
 	useEffect(() => {
 		console.log(
-			'Business_002_template themeElements background Url is:',
-			themeElements.backgroundUrlCover,
+			'Business_002_template layoutConfigElements for cover img 0 bg color',
+			layoutConfigElements.canvaCSS?.backgroundColor,
 		);
 	}, []);
 	return (
@@ -86,9 +86,12 @@ export const Business_002_template = ({
 			<div
 				className={`${
 					isCoverPage
-						? 'rounded-md w-full h-full bg-cover flex flex-row gap-[2rem] justify-start items-start box-border border-none relative'
+						? 'rounded-md w-full h-full bg-cover flex flex-row justify-start items-start box-border border-none relative'
 						: 'hidden'
-				} ${themeElements.backgroundColorCover} `}
+				} `}
+				style={{
+					backgroundColor: layoutConfigElements.canvaCSS?.backgroundColor,
+				}}
 			>
 				{/* <div
 					style={{ fontSize: '40pt', fontFamily: 'Caveat', fontWeight: 700 }}
