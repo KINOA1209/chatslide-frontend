@@ -16,8 +16,7 @@ import YaleLogo from '@/public/images/template/Yale/Yale_logo.png';
 import JHULogo from '@/public/images/template/JHU/Johns_Hopkins_University-Logo.png';
 import ColumbiaLogo from '@/public/images/template/Columbia/ColumbiaLogo.png';
 
-// Inside DefaultTemplateLogo component
-export const DefaultTemplateLogo = ({
+const DrLambdaLogo = ({
 	isCoverPage,
 	custom_logo,
 }: {
@@ -89,6 +88,9 @@ export const DefaultTemplateLogo = ({
 		}
 	}
 };
+
+// Inside DefaultTemplateLogo component
+export const DefaultTemplateLogo = DrLambdaLogo;
 export const BerkeleyTemplateLogo = ({
 	isCoverPage,
 	custom_logo,
@@ -254,78 +256,7 @@ export const ColumbiaTemplateLogo = ({
 	);
 };
 
-export const Fun_Education_004_TemplateLogo = ({
-	isCoverPage,
-	custom_logo,
-}: {
-	isCoverPage: boolean;
-	custom_logo: string[] | string;
-}) => {
-	if (isCoverPage) {
-		if (
-			custom_logo === 'Default' ||
-			(Array.isArray(custom_logo) && custom_logo.length === 0)
-		) {
-			return (
-				<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
-					<Image
-						src={drlambdaLogo}
-						alt='drlambdaLogo'
-						className='w-[8rem] h-auto'
-					/>
-					{/* logo cover */}
-				</div>
-			);
-		} else {
-			return (
-				<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
-					<Image
-						src={custom_logo[0]}
-						alt='CustomLogo'
-						width={70}
-						height={70}
-						className='h-auto'
-					/>
-				</div>
-			);
-		}
-	} else {
-		if (
-			custom_logo === 'Default' ||
-			(Array.isArray(custom_logo) && custom_logo.length === 0)
-		) {
-			return (
-				<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
-					<Image
-						src={drlambdaLogoSingle}
-						alt='drlambda logo'
-						className='w-[1.5rem] mr-4'
-					/>
-					<div
-						className={`grow basis-0 opacity-50 border border-black border-opacity-40`}
-					></div>
-					{/* logo non cover */}
-				</div>
-			);
-		} else {
-			return (
-				<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
-					<Image
-						src={custom_logo[0]}
-						alt='custom logo'
-						width={44}
-						height={41}
-						className='mr-4'
-					/>
-					<div
-						className={`grow basis-0 opacity-50 border border-black border-opacity-40`}
-					></div>
-					{/* logo non cover */}
-				</div>
-			);
-		}
-	}
-};
+export const Fun_Education_004_TemplateLogo = DrLambdaLogo;
 
 export const Business_002_TemplateLogo = ({
 	isCoverPage,
@@ -334,69 +265,32 @@ export const Business_002_TemplateLogo = ({
 	isCoverPage: boolean;
 	custom_logo: string[] | string;
 }) => {
-	if (isCoverPage) {
-		if (
-			custom_logo === 'Default' ||
-			(Array.isArray(custom_logo) && custom_logo.length === 0)
-		) {
-			return (
-				<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
-					<Image
-						src={drlambdaLogo}
-						alt='drlambdaLogo'
-						className='w-[8rem] h-auto'
-					/>
-					{/* logo cover */}
-				</div>
-			);
-		} else {
-			return (
-				<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
-					<Image
-						src={custom_logo[0]}
-						alt='CustomLogo'
-						width={70}
-						height={70}
-						className='h-auto'
-					/>
-				</div>
-			);
-		}
+	if (
+		custom_logo === 'Default' ||
+		(Array.isArray(custom_logo) && custom_logo.length === 0)
+	) {
+		return (
+			<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[1rem] pb-[1rem] z-50'>
+				<Image
+					src={drlambdaLogo}
+					alt='drlambdaLogo'
+					className='w-[8rem] h-auto'
+				/>
+				{/* logo cover */}
+			</div>
+		);
 	} else {
-		if (
-			custom_logo === 'Default' ||
-			(Array.isArray(custom_logo) && custom_logo.length === 0)
-		) {
-			return (
-				<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
-					<Image
-						src={drlambdaLogoSingle}
-						alt='drlambda logo'
-						className='w-[1.5rem] mr-4'
-					/>
-					<div
-						className={`grow basis-0 opacity-50 border border-black border-opacity-40`}
-					></div>
-					{/* logo non cover */}
-				</div>
-			);
-		} else {
-			return (
-				<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
-					<Image
-						src={custom_logo[0]}
-						alt='custom logo'
-						width={44}
-						height={41}
-						className='mr-4'
-					/>
-					<div
-						className={`grow basis-0 opacity-50 border border-black border-opacity-40`}
-					></div>
-					{/* logo non cover */}
-				</div>
-			);
-		}
+		return (
+			<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[1rem] pb-[1rem] z-50'>
+				<Image
+					src={custom_logo[0]}
+					alt='CustomLogo'
+					width={70}
+					height={70}
+					className='h-auto'
+				/>
+			</div>
+		);
 	}
 };
 
@@ -421,7 +315,7 @@ const templatesInfo: TemplateLogoInfo[] = [
 	},
 	{
 		templateName: 'Business_002' as TemplateKeys,
-		templateLogo: Fun_Education_004_TemplateLogo,
+		templateLogo: Business_002_TemplateLogo,
 	},
 	{
 		templateName: 'Berkeley' as TemplateKeys,

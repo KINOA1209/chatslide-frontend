@@ -31,6 +31,14 @@ export const metadata = {
 		'DrLambda, AI-powered, tool, create, professional, slides, documents, sources, pdf, docx, notion, presentation, knowledge',
 	image: 'https://drlambda.ai/new_landing/imgs/ogimage.png',
 	name: 'DrLambda',
+  metadataBase: {
+    title: 'DrLambda',
+    description: 'Your AI agent to create professional slides.',
+    keywords:
+      'DrLambda, AI-powered, tool, create, professional, slides, documents, sources, pdf, docx, notion, presentation, knowledge',
+    image: 'https://drlambda.ai/new_landing/imgs/ogimage.png',
+    name: 'DrLambda',
+  },
 	openGraph: {
 		title: 'DrLambda',
 		description: 'Your AI agent to create professional slides.',

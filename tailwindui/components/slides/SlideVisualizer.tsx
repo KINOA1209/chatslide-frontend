@@ -21,16 +21,18 @@ type SlideVisualizerProps = {
 	isGpt35: boolean;
 	isSubmitting: boolean;
 	setIsSubmitting: (isSubmitting: boolean) => void;
+  showScript: boolean;
 };
 
 const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 	isGpt35,
 	isSubmitting,
 	setIsSubmitting,
+  showScript = false,
 }) => {
 	const [host, setHost] = useState('https://drlambda.ai');
 
-	const { slides, setTranscripts, hasTranscript } = useSlides();
+	const { slides, setTranscripts } = useSlides();
 	const { token } = useUser();
 	const [share, setShare] = useState(false);
 	const [showShareLink, setShowShareLink] = useState(true);
@@ -134,7 +136,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 			if (response.ok) {
 				const resp = await response.json();
 				setIsSubmitting(false);
-				console.log(resp.data.res);
+				// console.log(resp.data.res);
 				const transcripts = resp.data.res;
 				setTranscripts(transcripts); // and auto-save
 			} else {
@@ -150,7 +152,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 
 	useEffect(() => {
 		if (isSubmitting) {
-			if (!hasTranscript) handleSubmitTranscript();
+      if (!showScript) handleSubmitTranscript();
 			else handleSubmitVideo();
 		}
 	}, [isSubmitting]);
@@ -189,7 +191,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 			)}
 
 			{/* slides and scripts contents */}
-			<SlidesHTML exportSlidesRef={exportSlidesRef} />
+			<SlidesHTML exportSlidesRef={exportSlidesRef} showScript={showScript}/>
 		</div>
 	);
 };

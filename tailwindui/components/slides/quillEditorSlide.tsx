@@ -208,7 +208,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				list: isVerticalContent ? 'bullet' : undefined,
 				font: style?.fontFamily,
 			};
-			console.log(quillFormats);
+			// console.log(quillFormats);
 			const Delta = Quill.import('delta');
 			let initialDelta = new Delta();
 

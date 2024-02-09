@@ -45,6 +45,7 @@ type SlidesHTMLProps = {
 	isPresenting?: boolean;
 	initSlideIndex?: number;
 	toPdf?: boolean; // toPdf mode for backend
+  showScript?: boolean;
 };
 
 export const loadCustomizableElements = (templateName: string) => {
@@ -68,6 +69,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	isPresenting = false,
 	initSlideIndex = 0,
 	toPdf = false,
+  showScript = false,
 }) => {
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 	const {
@@ -86,7 +88,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		gotoPage,
 		version,
 		saveStatus,
-		hasTranscript,
 	} = useSlides();
 
 	const [showLayout, setShowLayout] = useState(false);
@@ -593,7 +594,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			</div>
 
 			{/* transcripotList */}
-			{hasTranscript && (
+			{showScript && (
 				<ScriptEditor
 					slides={slides}
 					updateSlidePage={updateSlidePage}

@@ -32,9 +32,8 @@ interface OutlineSection {
 
 export default function ThemePage() {
 	const [theme, setTheme] = useState('content_with_image');
-	const [useSchoolTemplate, setUseSchoolTemplate] = useState(false);
 	const [useLogo, setUseLogo] = useState(false);
-	const [schoolTemplate, setSchoolTemplate] = useState('Default' as string);
+  const [schoolTemplate, setSchoolTemplate] = useState('Business_002' as string);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const contentRef = useRef<HTMLDivElement>(null);
 	const [showFileModal, setShowFileModal] = useState(false);
@@ -130,52 +129,18 @@ export default function ThemePage() {
 						</span>
 						{/* school */}
 						<div className='grid grid-cols-2 gap-x-4'>
-							<div className='gap-1 flex flex-col justify-start'>
-								<span className='text-md font-bold'>
-									Do you want to use a school deck template?
-								</span>
-								<form className='flex flex-row gap-x-4 mt-2 items-center'>
-									<label>
-										<div className='flex flex-row items-center gap-x-1'>
-											<input
-												type='radio'
-												value='yes'
-												checked={useSchoolTemplate}
-												onChange={(e) => {
-													setUseSchoolTemplate(true);
-													setSchoolTemplate('Stanford');
-												}}
-											/>
-											<span>Yes</span>
-										</div>
-									</label>
-									<label>
-										<div className='flex flex-row items-center gap-x-1'>
-											<input
-												type='radio'
-												value='no'
-												checked={!useSchoolTemplate}
-												onChange={(e) => {
-													setUseSchoolTemplate(false);
-													setSchoolTemplate('Default');
-												}}
-											/>
-											<span>No</span>
-										</div>
-									</label>
-								</form>
-							</div>
-
 							<div
-								className={`transition-opacity duration-300 ease-in-out ${
-									useSchoolTemplate ? 'opacity-100' : 'opacity-0'
-								} gap-1 flex flex-col justify-start`}
+								className={`transition-opacity duration-300 ease-in-out gap-1 flex flex-col justify-start`}
 							>
-								<span className='text-md font-bold'>Select your school:</span>
+								<span className='text-md font-bold'>Select your template:</span>
 								<select
 									className='pl-3 border border-2 border-gray-400 rounded-md bg-gray-100'
 									onChange={(e) => setSchoolTemplate(e.target.value)}
+                  defaultValue={schoolTemplate}
 								>
+                  <option value='Default'>Default</option>
+                  <option value='Fun_Education_004'>Fun</option>
+                  <option value='Business_002'>Business</option>
 									<option value='Stanford'>Stanford University</option>
 									<option value='Berkeley'>UC Berkeley</option>
 									<option value='Harvard'>Harvard University</option>
@@ -193,6 +158,12 @@ export default function ThemePage() {
 								</select>
 							</div>
 						</div>
+            <div className='w-full mt-4 flex flex-col'>
+              <span className='text-md font-bold'>
+                School template preview
+              </span>
+              <SlideDesignPreview selectedTemplate={schoolTemplate} />
+            </div>
 						{/* theme */}
 						<div>
 							<span className='text-md font-bold'>
@@ -235,67 +206,57 @@ export default function ThemePage() {
 									</div>
 								))}
 							</div>
-							{useSchoolTemplate && (
-								<div className='w-full mt-4 flex flex-col'>
-									<span className='text-md font-bold'>
-										School template preview
-									</span>
-									<SlideDesignPreview selectedTemplate={schoolTemplate} />
-								</div>
-							)}
 
 							{/*logo section*/}
-							{!useSchoolTemplate && (
-								<div className='grid grid-cols-2 gap-x-4 mt-4'>
-									<div className='gap-1 flex flex-col justify-start'>
-										<span className='text-md font-bold'>
-											Do you want to use your logo?
-										</span>
-										<form className='flex flex-row gap-x-4 mt-2 items-center'>
-											<label>
-												<div className='flex flex-row items-center gap-x-1'>
-													<input
-														type='radio'
-														value='yes'
-														checked={useLogo}
-														onChange={(e) => setUseLogo(true)}
-													/>
-													<span>Yes</span>
-												</div>
-											</label>
-											<label>
-												<div className='flex flex-row items-center gap-x-1'>
-													<input
-														type='radio'
-														value='no'
-														checked={!useLogo}
-														onChange={(e) => setUseLogo(false)}
-													/>
-													<span>No</span>
-												</div>
-											</label>
-										</form>
-									</div>
+              <div className='grid grid-cols-2 gap-x-4 mt-4'>
+                <div className='gap-1 flex flex-col justify-start'>
+                  <span className='text-md font-bold'>
+                    Do you want to use your logo?
+                  </span>
+                  <form className='flex flex-row gap-x-4 mt-2 items-center'>
+                    <label>
+                      <div className='flex flex-row items-center gap-x-1'>
+                        <input
+                          type='radio'
+                          value='yes'
+                          checked={useLogo}
+                          onChange={(e) => setUseLogo(true)}
+                        />
+                        <span>Yes</span>
+                      </div>
+                    </label>
+                    <label>
+                      <div className='flex flex-row items-center gap-x-1'>
+                        <input
+                          type='radio'
+                          value='no'
+                          checked={!useLogo}
+                          onChange={(e) => setUseLogo(false)}
+                        />
+                        <span>No</span>
+                      </div>
+                    </label>
+                  </form>
+                </div>
 
-									<div
-										className={`transition-opacity duration-300 ease-in-out ${
-											useLogo ? 'opacity-100' : 'opacity-0'
-										} gap-1 flex flex-col justify-start`}
-									>
-										<span className='ml-2 text-md font-bold'>Upload Logo:</span>
-										<div className=''>
-											<SmallBlueButton
-												onClick={(e) => {
-													e.preventDefault();
-													setShowFileModal(true);
-												}}
-											>
-												Browse File
-											</SmallBlueButton>
-										</div>
-									</div>
-								</div>
-							)}
+                <div
+                  className={`transition-opacity duration-300 ease-in-out ${
+                    useLogo ? 'opacity-100' : 'opacity-0'
+                  } gap-1 flex flex-col justify-start`}
+                >
+                  <span className='ml-2 text-md font-bold'>Upload Logo:</span>
+                  <div className=''>
+                    <SmallBlueButton
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setShowFileModal(true);
+                      }}
+                    >
+                      Browse File
+                    </SmallBlueButton>
+                  </div>
+                </div>
+              </div>
 						</div>
 						{useLogo && (
 							<>
