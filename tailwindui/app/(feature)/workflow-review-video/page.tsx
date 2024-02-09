@@ -24,6 +24,7 @@ const VideoVisualizer = ({ videoUrl, status }: { videoUrl: string, status: strin
           <div>
             <p>Your video is being generated ⏳. It usually takes 5 minutes to finish. </p>
             <p>You can stay on this page and wait, or safely leave the page and check back later.</p>
+            <p>Once the video is ready, we will send you an notifying email 📧.</p>
           </div>
         )}
       </div>
