@@ -2,20 +2,10 @@ import React, { useState, useRef, useEffect, Fragment } from 'react';
 import { useRouter } from 'next/navigation';
 import AuthService from '@/services/AuthService';
 import 'react-toastify/dist/ReactToastify.css';
-import UserService from '../../services/UserService';
 import Resource from '@/models/Resource';
 import ResourceService from '@/services/ResourceService';
 import { useSlides } from '@/hooks/use-slides';
 import ProjectService from '@/services/ProjectService';
-
-interface OutlineSection {
-	title: string;
-	content: Array<string>;
-	detailLevel: string;
-	section_style: string;
-}
-
-interface OutlineDataType extends Array<OutlineSection> {}
 
 // this class has no UI, it is used to submit the outline to the backend when isSubmitting is true
 const GenerateSlidesSubmit = ({

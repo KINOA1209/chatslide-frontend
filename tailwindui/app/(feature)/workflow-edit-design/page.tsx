@@ -23,13 +23,6 @@ const SlideDesignPreview = dynamic(
 	},
 );
 
-interface OutlineSection {
-	title: string;
-	content: string[];
-	detailLevel: string;
-	section_style: string;
-}
-
 export default function ThemePage() {
 	const [theme, setTheme] = useState('content_with_image');
 	const [useLogo, setUseLogo] = useState(false);
