@@ -16,15 +16,6 @@ const minOutlineSectionCount = 1;
 const maxOutlineSectionCount = 10;
 const maxLength = 60;
 
-interface OutlineSection {
-	title: string;
-	content: Array<string>;
-	detailLevel: string;
-	section_style: string;
-}
-
-interface OutlineDataType extends Array<OutlineSection> {}
-
 const OutlineVisualizer = ({
 	outlineData,
 	setOutlineData,
