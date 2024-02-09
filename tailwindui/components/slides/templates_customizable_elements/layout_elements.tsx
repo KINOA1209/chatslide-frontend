@@ -3499,12 +3499,12 @@ const layoutConfigData: TemplateLayoutConfig = {
 			},
 		},
 		Col_2_img_2_layout: {
-			columnCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			columnCSS: { display: 'flex', flexDirection: 'column' },
 			titleAndSubtopicBoxCSS: {
 				display: 'flex',
 				flexDirection: 'column',
-				justifyContent: 'center',
-				alignItems: 'center',
+				// justifyContent: 'center',
+				// alignItems: 'center',
 				backgroundColor: '#DEFF56',
 				paddingTop: '4rem',
 				paddingBottom: '1rem',
@@ -3515,10 +3515,10 @@ const layoutConfigData: TemplateLayoutConfig = {
 				width: '100%', // equivalent to w-full
 				display: 'grid',
 				gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
-				gap: '2rem', // equivalent to gap-[2rem]
+				// gap: '2rem', // equivalent to gap-[2rem]
 			},
 			imageCSS: {
-				height: '11rem', // equivalent to h-[11rem]
+				height: '8rem', // equivalent to h-[11rem]
 				flexGrow: 1, // equivalent to grow
 				borderRadius: '0.375rem', // equivalent to rounded-md
 				overflow: 'hidden', // equivalent to overflow-hidden
@@ -3529,15 +3529,18 @@ const layoutConfigData: TemplateLayoutConfig = {
 				display: 'grid',
 				gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
 				gap: '2rem', // equivalent to gap-[2rem]
+				paddingTop: '1rem',
+				paddingLeft: '4rem',
+				paddingRight: '4rem',
 			},
 		},
 		Col_3_img_3_layout: {
-			columnCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			columnCSS: { display: 'flex', flexDirection: 'column' },
 			titleAndSubtopicBoxCSS: {
 				display: 'flex',
 				flexDirection: 'column',
-				justifyContent: 'center',
-				alignItems: 'center',
+				// justifyContent: 'center',
+				// alignItems: 'center',
 				backgroundColor: '#DEFF56',
 				paddingTop: '4rem',
 				paddingBottom: '1rem',
@@ -3548,10 +3551,10 @@ const layoutConfigData: TemplateLayoutConfig = {
 				width: '100%', // equivalent to w-full
 				display: 'grid',
 				gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
-				gap: '2rem', // equivalent to gap-[2rem]
+				// gap: '2rem', // equivalent to gap-[2rem]
 			},
 			imageCSS: {
-				height: '11rem', // equivalent to h-[11rem]
+				height: '8rem', // equivalent to h-[11rem]
 				flexGrow: 1, // equivalent to grow
 				borderRadius: '0.375rem', // equivalent to rounded-md
 				overflow: 'hidden', // equivalent to overflow-hidden
@@ -3561,6 +3564,9 @@ const layoutConfigData: TemplateLayoutConfig = {
 				display: 'grid',
 				gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
 				gap: '2rem', // equivalent to gap-[2rem]
+				paddingTop: '1rem',
+				paddingLeft: '4rem',
+				paddingRight: '4rem',
 			},
 		},
 	},
