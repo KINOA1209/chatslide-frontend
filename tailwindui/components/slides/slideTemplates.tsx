@@ -119,7 +119,7 @@ MainSlideProps) => {
 			<div
 				className={`${
 					isCoverPage
-						? 'rounded-md w-full h-full bg-cover flex flex-row gap-[2rem] justify-start items-start box-border border-none relative '
+						? 'rounded-md w-full h-full bg-cover flex flex-row justify-start items-start box-border border-none relative '
 						: 'hidden'
 				} ${themeElements.backgroundColorCover}`}
 			>

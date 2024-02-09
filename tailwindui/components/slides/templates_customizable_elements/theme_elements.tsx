@@ -3,7 +3,8 @@
 export type ThemeElements = {
 	backgroundColorCover: string;
 	backgroundColor: string;
-	backgroundUrlCover?: string;
+	backgroundUrlCoverImg1?: string;
+	backgroundUrlCoverImg0?: string;
 	titleFontCSS: React.CSSProperties;
 	subtopicFontCSS: React.CSSProperties;
 	contentFontCSS: React.CSSProperties;
@@ -675,7 +676,9 @@ const themeConfigData: ThemeConfig = {
 		},
 	},
 	Fun_Education_004: {
-		backgroundUrlCover:
+		backgroundUrlCoverImg1:
+			'/images/template/Fun_Education_004/BackgroundElements.png',
+		backgroundUrlCoverImg0:
 			'/images/template/Fun_Education_004/BackgroundElements.png',
 		backgroundColorCover: 'bg-[#FFFFFF]', //Lin: with a background image and shapes of color #01B99F, #4747F3, #FFC8FF, #FF846C, #FECEB7
 		backgroundColor: 'bg-[#FFFFFF]', //Lin: Text box color #E4F9F6, shapes of color #01B99F, #4747F3, #FFC8FF, #FF846C, #FECEB7
@@ -722,8 +725,9 @@ const themeConfigData: ThemeConfig = {
 		},
 	},
 	Business_002: {
-		backgroundUrlCover: '',
-		backgroundColorCover: 'bg-[#FFFFFF]',
+		backgroundUrlCoverImg0:
+			'/images/template/Business_002/cover_img_0_layout/BackgroundImg.png',
+		backgroundColorCover: '',
 		backgroundColor: 'bg-[#D2D2D2]',
 		titleFontCSS: {
 			fontSize: '24pt',

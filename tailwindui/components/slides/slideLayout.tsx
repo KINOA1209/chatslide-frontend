@@ -57,8 +57,8 @@ export const Cover_img_0_layout = ({
 	// }, []);
 
 	return (
-		<>
-			<div style={layoutElements.canvaCSS}>
+		<div style={layoutElements.canvaCSS}>
+			<div style={layoutElements.columnCSS}>
 				<div
 					className={`${themeElements.userNameFont} ${themeElements.userNameFontColor}`}
 					style={layoutElements.userNameCSS}
@@ -68,29 +68,23 @@ export const Cover_img_0_layout = ({
 				<div
 					className={`pl-[2rem] basis-0 opacity-50 border
 		        border-black border-opacity-40 mt-4`}
+					style={layoutElements.userNameTextDividerCSS}
 				></div>
 				<div style={layoutElements.titleCSS}>{title}</div>
 			</div>
+			<div style={layoutElements.visualElementsCSS}>
+				{themeElements.backgroundUrlCoverImg0 && (
+					<Image
+						style={{ objectFit: 'cover', height: '100%' }}
+						width={960}
+						height={540}
+						src={themeElements.backgroundUrlCoverImg0}
+						alt='Background Image for cover'
+					/>
+				)}
+			</div>
 			<div style={layoutElements.logoCSS}>{templateLogo}</div>
-		</>
-
-		// <>
-		// 	<div
-		// 		className={`pt-[1rem] px-[2rem] w-full flex flex-col justify-start h-full gap-[2rem]`}
-		// 	>
-		// 		<div
-		// 			className={`${themeElements.userNameFont} ${themeElements.userNameFontColor}`}
-		// 		>
-		// 			{user_name}
-		// 		</div>
-		// 		<div
-		// 			className={`pl-[2rem] basis-0 opacity-50 border
-		// 	border-black border-opacity-40 mt-4`}
-		// 		></div>
-		// 		<div className={`pl-[2rem] z-50`}>{title}</div>
-		// 	</div>
-		// 	{templateLogo}
-		// </>
+		</div>
 	);
 };
 export const Cover_img_1_layout = ({
@@ -140,11 +134,11 @@ export const Cover_img_1_layout = ({
 				/>
 			</div>
 			<div style={layoutElements.visualElementsCSS}>
-				{themeElements.backgroundUrlCover && (
+				{themeElements.backgroundUrlCoverImg1 && (
 					<Image
 						width={960}
 						height={540}
-						src={themeElements.backgroundUrlCover}
+						src={themeElements.backgroundUrlCoverImg1}
 						alt='Background Image for cover'
 					/>
 				)}
@@ -562,7 +556,7 @@ export const Col_2_img_1_layout = ({
 				</div>
 
 				{/* contents */}
-				<div className='w-full flex'>
+				<div className='w-full flex' style={layoutElements.contentContainerCSS}>
 					<div
 						className={`w-full`}
 						style={{
@@ -614,15 +608,53 @@ export const Col_2_img_2_layout = ({
 		update_callback(newImgs);
 	};
 
+	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
+	const containerRef = useRef<HTMLDivElement>(null);
+	const topicAndSubtopicRef = useRef<HTMLDivElement>(null);
+	const imgContainerRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		const calculateMaxHeight = () => {
+			const containerElement = containerRef.current;
+			const topicAndSubtopicElement = topicAndSubtopicRef.current;
+			const imgContainerElement = imgContainerRef.current;
+			// const subtopicElement = subtopicRef.current;
+
+			if (containerElement && topicAndSubtopicElement && imgContainerElement) {
+				const containerHeight = containerElement.clientHeight;
+				const topicAndSubtopicHeight = topicAndSubtopicElement.clientHeight;
+				const imgContainerHeight = imgContainerElement.clientHeight;
+				const logoHeight = containerHeight * 0.2;
+
+				const availableHeight =
+					containerHeight -
+					(topicAndSubtopicHeight + imgContainerHeight + logoHeight);
+
+				//console.log(`Available height: ${availableHeight}`);
+				setMaxContentHeight(availableHeight > 0 ? availableHeight : 100);
+			}
+		};
+
+		calculateMaxHeight();
+		window.addEventListener('resize', calculateMaxHeight);
+		console.log(`Calculating max height`, maxContentHeight);
+
+		return () => {
+			window.removeEventListener('resize', calculateMaxHeight);
+		};
+	}, []);
+
 	return (
 		<>
 			<div
 				// className='flex flex-col gap-[0.5rem]'
 				style={layoutElements.columnCSS}
+				ref={containerRef}
 			>
 				<div
 					// className='flex flex-col justify-center items-center'
 					style={layoutElements.titleAndSubtopicBoxCSS}
+					ref={topicAndSubtopicRef}
 				>
 					<div className={``}>{topic}</div>
 					<div className={``}>{subtopic}</div>
@@ -632,6 +664,7 @@ export const Col_2_img_2_layout = ({
 				<div
 					// className='w-full grid grid-cols-2 gap-[2rem]'
 					style={layoutElements.imageContainerCSS}
+					ref={imgContainerRef}
 				>
 					<div
 						// className='h-[11rem] grow rounded-md overflow-hidden relative'
@@ -675,7 +708,12 @@ export const Col_2_img_2_layout = ({
 				{/* two columns of text */}
 				<div
 					// className='w-full grid grid-cols-2 gap-[2rem]'
-					style={layoutElements.contentCSS}
+					// style={layoutElements.contentCSS}
+					style={{
+						...layoutElements.contentCSS,
+						maxHeight:
+							maxContentHeight !== null ? `${maxContentHeight}px` : 'none',
+					}}
 				>
 					{Array.isArray(content) &&
 						content.map((item, index) => (
