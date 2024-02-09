@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '@/components/slides/onboardingSurvey/onboardingSurvey.css';
-import { useRouter } from 'next/navigation';
-import { SurveyBackIcons } from '../../icons';
 import SurveySection from './SurveySection';
 import surveyStaticDataObject from './SurveyObject';
-import SessionStorage from '@/components/utils/SessionStorage';
 import AuthService from '@/services/AuthService';
 
 type OnboardingSurveyProps = {
@@ -14,8 +11,6 @@ type OnboardingSurveyProps = {
 const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
     handleBack,
 }) => {
-  const router = useRouter();
-  const workflowType = SessionStorage.getItem('workflowType', 'slides');
   const [selectedIndustries, setSelectedIndustries] = useState<string[]>([])
   const [selectedReferralSources, setSelectedReferralSources] = useState<string[]>([])
   const [selectedPurposes, setSelectedPurposes] = useState<string[]>([])
@@ -169,7 +164,7 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
   }
 
   return (
-    <div className='flex flex-col justify-center items-center gap-4 sm:gap-12'>
+    <div className='flex flex-col justify-center items-center gap-4 sm:gap-12 pb-8'>
       <div className='sticky top-0 w-full z-50 p-4 sm:p-10 bg-zinc-100'>
         <div className='w-full flex flex-row items-center justify-center gap-3 mx-auto'>
           {/* <button onClick={handleBack}>
@@ -178,7 +173,6 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
           <OnboardingSurveyProgressBar progress={progress}/>
         </div>
       </div>
-
 
       <SurveySection 
         section={'industry'}
