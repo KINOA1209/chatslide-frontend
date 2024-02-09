@@ -396,7 +396,7 @@ export const Col_1_img_1_layout = ({
 
 		calculateMaxHeight();
 		window.addEventListener('resize', calculateMaxHeight);
-		console.log(`Calculating max height`, maxContentHeight);
+		// console.log(`Calculating max height`, maxContentHeight);
 
 		return () => {
 			window.removeEventListener('resize', calculateMaxHeight);
@@ -525,7 +525,7 @@ export const Col_2_img_1_layout = ({
 
 		calculateMaxHeight();
 		window.addEventListener('resize', calculateMaxHeight);
-		console.log(`Calculating max height`, maxContentHeight);
+		// console.log(`Calculating max height`, maxContentHeight);
 
 		return () => {
 			window.removeEventListener('resize', calculateMaxHeight);
@@ -637,7 +637,7 @@ export const Col_2_img_2_layout = ({
 
 		calculateMaxHeight();
 		window.addEventListener('resize', calculateMaxHeight);
-		console.log(`Calculating max height`, maxContentHeight);
+		// console.log(`Calculating max height`, maxContentHeight);
 
 		return () => {
 			window.removeEventListener('resize', calculateMaxHeight);

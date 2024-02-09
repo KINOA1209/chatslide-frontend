@@ -17,6 +17,7 @@ const useSlidesHistoryIndex = createBearStore<number>()(
 	true,
 );
 const useVersion = createBearStore<number>()('version', 0, true);
+const useHasTranscript = createBearStore<boolean>()('hasTranscript', false, true);
 
 export enum SlidesStatus {
 	NotInited,
@@ -39,7 +40,7 @@ export const useSlides = () => {
 	const { slidesHistoryIndex, setSlidesHistoryIndex } = useSlidesHistoryIndex();
 	const { version, setVersion } = useVersion();
 	const { token } = useUser();
-  const [ hasTranscript, setHasTranscript ] = useState(false);
+  const { hasTranscript, setHasTranscript } = useHasTranscript();
 
 	const init = async () => {
 		if (slidesStatus !== SlidesStatus.NotInited) return;
@@ -161,6 +162,7 @@ export const useSlides = () => {
 	};
 
 	const initSlides = (slides: Slide[]) => {
+    console.log('-- init slides: ', { slides });
 		setSlides(slides);
     setHasTranscript(slides.some(slide => slide.transcript));
 		slidesStatus = SlidesStatus.Inited;
@@ -172,13 +174,13 @@ export const useSlides = () => {
 	};
 
   const setTranscripts = (transcripts: string[]) => {
+    console.log('-- set transcripts: ', { transcripts })
     for (let i = 0; i < transcripts.length; i++) {
       if (i < slides.length)
         slides[i].transcript = transcripts[i];
     }
     setSlides(slides);
     syncSlides(slides);
-    setHasTranscript(true);
   }
 
 	const syncSlides = async (
