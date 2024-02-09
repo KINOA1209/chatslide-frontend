@@ -49,15 +49,20 @@ Quill.register(Font, true);
 
 let Size = Quill.import('attributors/style/size');
 Size.whitelist = [
-	'12pt',
-	'16pt',
-	'20pt',
-	'24pt',
-	'30pt',
-	'32pt',
-	'40pt',
-	'48pt',
-	'64pt',
+  '12pt',
+  '13pt',
+  '14pt',
+  '16pt',
+  '18pt',
+  '20pt',
+  '24pt',
+  '26pt',
+  '28pt',
+  '30pt',
+  '32pt',
+  '40pt',
+  '48pt',
+  '64pt'
 ];
 Quill.register(Size, true);
 

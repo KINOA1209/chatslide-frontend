@@ -34,19 +34,19 @@
 
 $font-sizes: (
 	'12pt',
-  '13pt'
+  '13pt',
   '14pt',
 	'16pt',
   '18pt',
 	'20pt',
 	'24pt',
   '26pt',
-  '28pt'
+  '28pt',
 	'30pt',
 	'32pt',
 	'40pt',
 	'48pt',
-	'64pt'
+	'64pt',
 );
 @each $size in $font-sizes {
 	.ql-bubble
