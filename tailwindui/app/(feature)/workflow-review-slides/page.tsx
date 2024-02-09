@@ -10,6 +10,7 @@ import { useUser } from '@/hooks/use-user';
 import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
 import StepsSlidesPage from '@/components/user_onboarding/StepsSlidesPage';
 import { useSlides } from '@/hooks/use-slides';
+import useHydrated from '@/hooks/use-hydrated';
 export default function WorkflowStep3() {
   const contentRef = useRef<HTMLDivElement>(null);
   const { isPaidUser } = useUser();
@@ -28,6 +29,10 @@ export default function WorkflowStep3() {
       localStorage.setItem('currentWorkflowPage', 'SlidesPage');
     }
   }, []);
+
+  // avoid hydration error during development caused by persistence
+  if (!useHydrated()) return <></>;
+  
   return (
     <div className='min-h-[90vh] w-full bg-white'>
       {/* flex col container for steps, title, etc */}
