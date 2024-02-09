@@ -299,14 +299,11 @@ export const DeleteSlideButton: React.FC<{
 //   )
 // }
 export const ChangeTemplateOptions: React.FC<{
+  currentTemplate: string;
 	templateOptions: string[];
 	onChangeTemplate: (newTemplate: string) => void;
-}> = ({ templateOptions, onChangeTemplate }) => {
-	const [selectedTemplate, setSelectedTemplate] = useState(() => {
-		// Try to get the selected template from sessionStorage
-		const storedTemplate = sessionStorage.getItem('schoolTemplate');
-		return storedTemplate || '';
-	});
+}> = ({ currentTemplate, templateOptions, onChangeTemplate }) => {
+  const [selectedTemplate, setSelectedTemplate] = useState<string>(currentTemplate);
 
 	// useEffect(
 	// 	() => console.log('templateOptions are:', templateOptions),
@@ -324,11 +321,8 @@ export const ChangeTemplateOptions: React.FC<{
 				}}
 				value={selectedTemplate}
 			>
-				<option value='' disabled>
-					Select Template
-				</option>
 				{templateOptions.map((template, index) => (
-					<option key={`${template}-${index}`} value={template}>
+					<option key={`${template}-${index}`} value={template} selected={template === selectedTemplate}>
 						{template}
 					</option>
 				))}
