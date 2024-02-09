@@ -32,7 +32,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 }) => {
 	const [host, setHost] = useState('https://drlambda.ai');
 
-	const { slides, setTranscripts, hasTranscript } = useSlides();
+	const { slides, setTranscripts } = useSlides();
 	const { token } = useUser();
 	const [share, setShare] = useState(false);
 	const [showShareLink, setShowShareLink] = useState(true);
@@ -152,7 +152,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 
 	useEffect(() => {
 		if (isSubmitting) {
-			if (!hasTranscript) handleSubmitTranscript();
+      if (!showScript) handleSubmitTranscript();
 			else handleSubmitVideo();
 		}
 	}, [isSubmitting]);
