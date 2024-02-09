@@ -13,6 +13,8 @@ type PostButtonProps = {
   post_type: string; //socialpost or slide
   platform: string;
   setShare: (share: boolean) => void;
+  description?: string;
+  keywords?: string[];
 };
 
 const PostButton: React.FC<PostButtonProps> = ({
@@ -20,13 +22,14 @@ const PostButton: React.FC<PostButtonProps> = ({
   post_type,
   platform,
   setShare,
+  description = "Check out our latest content",
+  keywords = ['DrLambda', 'presentation', 'slides', 'ai_agent']
 }) => {
   const [host, setHost] = useState('https://drlambda.ai');
   const [isProcessing, setIsProcessing] = useState(false);
   const platformConfig = PostPlatformConfigs[platform as keyof typeof PostPlatformConfigs];
 
   //console.log(slides)
-  const title = "Check out our latest content"
   if (slides.length > 0 && 'head' in slides[0]) {
     let title = slides[0].head;
     // remove all quill tags
@@ -56,7 +59,8 @@ const PostButton: React.FC<PostButtonProps> = ({
       const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
       await ProjectService.SlideShareLink(token, project_id, setShare)
       const shareLink = `${host}/shared/${project_id}`
-      const postText = `${title}. Learn more at drlambda.ai!\n`
+      const hashTags = keywords.map((keyword) => `#${keyword}`).join(' ');
+      const postText = `${description}. Learn more at drlambda.ai!\n${hashTags}\n`
       const text = platformConfig.textTemplate(postText, shareLink);
       const url = `${platformConfig.shareUrl}${text}`
       window.open(url, '_blank');
