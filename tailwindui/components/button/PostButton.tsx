@@ -7,20 +7,25 @@ import Slide, { SlideKeys } from '@/models/Slide';
 import AuthService from '@/services/AuthService';
 import ProjectService from '@/services/ProjectService';
 import { FaTwitter } from "react-icons/fa";
+import { FaFacebookF } from 'react-icons/fa';
+import PostPlatformConfigs from '@/components/button/PostPlatformConfig'
 
 type PostButtonProps = {
     slides: Slide[] | SocialPostSlide[];
     post_type: string; //socialpost or slide
+    platform: string;
     setShare: (share:boolean) => void;
 };
 
 const PostButton: React.FC<PostButtonProps> = ({
     slides,
     post_type,
+    platform,
     setShare,
 }) => {
     const [host, setHost] = useState('https://drlambda.ai');
     const [isProcessing, setIsProcessing] = useState(false);
+    const platformConfig = PostPlatformConfigs[platform as keyof typeof PostPlatformConfigs];
 
     //console.log(slides)
     const title = "Check out our latest content"
@@ -35,11 +40,6 @@ const PostButton: React.FC<PostButtonProps> = ({
         ? sessionStorage.project_id
         : '';
 
-    const res_scenario =
-    typeof sessionStorage !== 'undefined'
-        ? sessionStorage.getItem('scenarioType')
-        : '';
-
     useEffect(() => {
         if (
             window.location.hostname !== 'localhost' &&
@@ -48,20 +48,20 @@ const PostButton: React.FC<PostButtonProps> = ({
             setHost('https://' + window.location.hostname);
         } else {
             setHost(window.location.hostname);
+            //setHost('https://dev.drlambda.ai');
         }
     }, []);
 
-    const handlePostToTwitter = async () => {
+    const handlePost = async () => {
         try{
             setIsProcessing(true);
             const { userId, idToken: token } = await AuthService.getCurrentUserTokenAndId();
-            //const publicImageUrl = await ProjectService.getSlideTwitterImg(project_id);
-            //console.log(publicImageUrl)
             await ProjectService.SlideShareLink(token, project_id, setShare)
             const shareLink = `${host}/shared/${project_id}`
-            const twitterText = `${title}. Learn more at drlambda.ai!\n`
-            const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(twitterText)}${encodeURIComponent(shareLink)}`;
-            window.open(twitterUrl, '_blank');
+            const postText = `${title}. Learn more at drlambda.ai!\n`
+            const text = platformConfig.textTemplate(postText, shareLink);
+            const url = `${platformConfig.shareUrl}${text}`
+            window.open(url, '_blank');
             setIsProcessing(false);
         } catch (error) {
             console.error('Failed to process Twitter post:', error);
@@ -70,9 +70,9 @@ const PostButton: React.FC<PostButtonProps> = ({
     
     return (
         <div className='col-span-1 ml-3'>
-            <BigGrayButton onClick={handlePostToTwitter} isSubmitting={isProcessing}>
+            <BigGrayButton onClick={handlePost} isSubmitting={isProcessing}>
                 <div className='flex flex-row items-center gap-x-2'>
-                    Post on 𝕏 / <FaTwitter />
+                Post on {platform === 'twitter' ? '𝕏' : platform.charAt(0).toUpperCase() + platform.slice(1)} / {platformConfig.icon}
                 </div>
             </BigGrayButton>
         </div>
