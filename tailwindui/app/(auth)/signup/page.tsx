@@ -7,11 +7,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Promo from '@/components/signup/Promo';
 
 export default function SignUp() {
-	const router = useRouter();
 	const searchParams = useSearchParams();
 	const [href, setHref] = useState('/signup-with-email');
 	const [showPromo, setShowPromo] = useState(false);
-
 	const [referralValue, setReferralValue] = useState('');
 
 	useEffect(() => {
@@ -87,7 +85,7 @@ export default function SignUp() {
 						</div>
 
 						<div className='text-sm text-gray-500 text-center mt-3'>
-							<input type='checkbox' id='agree' name='agree' checked /> By
+              <input type='checkbox' id='agree' name='agree' checked readOnly /> By
 							creating an account, you agree to the{' '}
 							<a className='underline' href='/terms'>
 								terms & conditions
