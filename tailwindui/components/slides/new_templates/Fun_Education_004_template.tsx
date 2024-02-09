@@ -46,12 +46,7 @@ export const Fun_Education_004_template = ({
 			layoutConfigElements,
 		);
 	}, []);
-	useEffect(() => {
-		console.log(
-			'Fun_Education_004_template themeElements background Url is:',
-			themeElements.backgroundUrlCover,
-		);
-	}, []);
+
 	return (
 		<>
 			{/* for not-cover page slides */}
