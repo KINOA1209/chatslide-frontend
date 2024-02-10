@@ -11,7 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import '@/app/css/workflow-edit-topic-css/topic_style.css';
 import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
 import FileUploadModal from '@/components/forms/FileUploadModal';
-import { SmallBlueButton } from '@/components/button/DrlambdaButton';
+import { DropDown, SmallBlueButton } from '@/components/button/DrlambdaButton';
 import Resource from '@/models/Resource';
 import SelectedResourcesList from '@/components/SelectedResources';
 import dynamic from 'next/dynamic';
@@ -126,29 +126,30 @@ export default function ThemePage() {
 								className={`transition-opacity duration-300 ease-in-out gap-1 flex flex-col justify-start`}
 							>
 								<span className='text-md font-bold'>Select your template:</span>
-								<select
-									className='pl-3 border border-2 border-gray-400 rounded-md bg-gray-100'
-									onChange={(e) => setSchoolTemplate(e.target.value)}
+                <DropDown
+                  width='20rem'
+                  onChange={(e) => setSchoolTemplate(e.target.value)}
                   defaultValue={schoolTemplate}
-								>
+                  style='input'
+                >
                   <option value='Default'>Default</option>
                   <option value='Fun_Education_004'>Fun</option>
                   <option value='Business_002'>Business</option>
-									<option value='Stanford'>Stanford University</option>
-									<option value='Berkeley'>UC Berkeley</option>
-									<option value='Harvard'>Harvard University</option>
-									<option value='MIT'>
-										Massachusetts Institute of Technology
-									</option>
-									<option value='Princeton'>Princeton University</option>
-									<option value='Caltech'>
-										California Institute of Technology
-									</option>
-									<option value='Columbia'>Columbia University</option>
-									<option value='JHU'>Johns Hopkins University</option>
-									<option value='Yale'>Yale University</option>
-									<option value='UPenn'>University of Pennsylvania</option>
-								</select>
+                  <option value='Stanford'>Stanford University</option>
+                  <option value='Berkeley'>UC Berkeley</option>
+                  <option value='Harvard'>Harvard University</option>
+                  <option value='MIT'>
+                    Massachusetts Institute of Technology
+                  </option>
+                  <option value='Princeton'>Princeton University</option>
+                  <option value='Caltech'>
+                    California Institute of Technology
+                  </option>
+                  <option value='Columbia'>Columbia University</option>
+                  <option value='JHU'>Johns Hopkins University</option>
+                  <option value='Yale'>Yale University</option>
+                  <option value='UPenn'>University of Pennsylvania</option>
+                </DropDown>
 							</div>
 						</div>
             <div className='w-full mt-4 flex flex-col'>

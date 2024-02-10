@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { ShareToggleButton } from '@/components/slides/SlideButtons';
 import { useRouter } from 'next/navigation';
 import { TextLabel } from '../ui/GrayLabel';
-import PostButton from '../button/PostButton';
+import PostDropDown from '../button/PostDropDown';
 import { FaTimes } from 'react-icons/fa';
 import { useSlides } from '@/hooks/use-slides';
 import VideoService from '@/services/VideoService';
@@ -160,16 +160,12 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 	return (
 		<div className='flex flex-col justify-center items-center gap-4 my-4'>
 			{/* buttons: export and scripts and share slides */}
-			<div className='SlidesStep-6 flex flex-row justify-end items-center'>
+			<div className='SlidesStep-6 flex flex-col sm:flex-row justify-end items-center gap-1 sm:gap-4'>
 				<ExportToPdfButton slides={slides} exportSlidesRef={exportSlidesRef} />
 				<ShareToggleButton setShare={setShare} share={share} />
+        <PostDropDown slides={slides} post_type='slide' setShare={setShare} />
 			</div>
-			<div className='SlidesStep-6 flex flex-row justify-end items-center'>
-				<PostButton slides={slides} post_type='slide' platform='twitter' setShare={setShare} />
-				<PostButton slides={slides} post_type='slide' platform='facebook' setShare={setShare} />
-				<PostButton slides={slides} post_type='slide' platform='reddit' setShare={setShare} />
-				<PostButton slides={slides} post_type='slide' platform='linkedin' setShare={setShare} />
-			</div>
+			
 			{/* shareable link */}
 			{share && showShareLink && (
 				<div>

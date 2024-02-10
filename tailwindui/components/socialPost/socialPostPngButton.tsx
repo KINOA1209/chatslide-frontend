@@ -54,7 +54,7 @@ const ExportToPngButton: React.FC<ExportToPdfProps> = ({
 
 	return (
 		<div className='flex flex-wrap flex-grow-0'>
-			<div className='px-3'>
+			<div className=''>
 				{showPaymentModal && (
 					<PaywallModal
 						setShowModal={setShowPaymentModal}

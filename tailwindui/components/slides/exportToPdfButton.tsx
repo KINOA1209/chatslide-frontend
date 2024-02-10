@@ -22,44 +22,8 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({
 		typeof sessionStorage !== 'undefined'
 			? sessionStorage.getItem('topic')
 			: '';
-	const [user, setUser] = useState(null);
 	const [downloadingPDF, setDownloadingPDF] = useState(false);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
-
-	// const exportOptions: Options = {
-	// 	filename: (topic ? topic : 'drlambda') + '.pdf',
-	// 	method: 'save',
-	// 	resolution: Resolution.MEDIUM,
-	// 	page: {
-	// 		margin: Margin.NONE,
-	// 		format: [254, 143], // 960x540 px in mm
-	// 		orientation: 'landscape',
-	// 	},
-	// 	canvas: {
-	// 		mimeType: 'image/jpeg',
-	// 		qualityRatio: 1,
-	// 	},
-	// 	overrides: {
-	// 		pdf: {
-	// 			compress: true,
-	// 		},
-	// 		canvas: {
-	// 			useCORS: true,
-	// 		},
-	// 	},
-	// };
-
-	useEffect(() => {
-		// Create a scoped async function within the hook.
-		const fetchUser = async () => {
-			const user = await AuthService.getCurrentUser();
-			if (user) {
-				setUser(user);
-			}
-		};
-		// Execute the created function directly
-		fetchUser();
-	}, []);
 
 	async function exportToPdfFrontend() {
 		const file = await generatePdf(topic || '', exportSlidesRef, slides.length);
@@ -94,7 +58,7 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({
 
 	return (
 		<div className='flex flex-wrap flex-grow-0'>
-			<div className='px-3'>
+			<div className=''>
 				{showPaymentModal && (
 					<PaywallModal
 						setShowModal={setShowPaymentModal}

@@ -17,7 +17,7 @@ import { GrayLabel } from '../ui/GrayLabel';
 
 type DrlambdaButtonProps = {
   children: ReactNode;
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   isSubmitting?: boolean;
   isPaidUser?: boolean;
   isPaidFeature?: boolean;
@@ -54,7 +54,8 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
       event.preventDefault();
       setShowPaywallModal(true);
     } else {
-      onClick(event);
+      if (onClick)
+        onClick(event);
     }
   }
 
@@ -182,6 +183,43 @@ export const BigGrayButton: React.FC<DrlambdaButtonProps> = ({
     >
       {children}
     </button>
+  );
+};
+
+type DrlambdaDropDownProps = {
+  children: ReactNode;
+  onChange?: React.ChangeEventHandler<HTMLSelectElement>;
+  displayText?: string;
+  width?: string;
+  style?: 'button' | 'input';
+  defaultValue?: string;
+};
+
+export const DropDown: React.FC<DrlambdaDropDownProps> = ({
+  children,
+  onChange,
+  displayText,
+  width = '12rem',
+  style = 'button',
+  defaultValue = 'default',
+}) => {
+  const styleClassName = style === 'button' ?
+    'bg-gray-300 border-none rounded-xl' :
+    'border border-2 border-gray-200 bg-gray-100 rounded-lg' ;
+  return (
+    <select
+      className={`shadow-lg h-[36px] flex ${styleClassName} text-sm py-0 overflow-visible`}
+      onChange={onChange}
+      defaultValue={defaultValue}
+      style={{ width: width }}
+    >
+      {displayText && (
+        <option value='default' disabled>
+          {displayText}
+        </option>
+      )}
+      {children}
+    </select>
   );
 };
 
