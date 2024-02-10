@@ -192,6 +192,7 @@ type DrlambdaDropDownProps = {
   displayText?: string;
   width?: string;
   style?: 'button' | 'input';
+  defaultValue?: string;
 };
 
 export const DropDown: React.FC<DrlambdaDropDownProps> = ({
@@ -200,15 +201,16 @@ export const DropDown: React.FC<DrlambdaDropDownProps> = ({
   displayText,
   width = '12rem',
   style = 'button',
+  defaultValue = 'default',
 }) => {
   const styleClassName = style === 'button' ?
     'bg-gray-300 border-none rounded-xl' :
-    'border border-2 border-gray-200 bg-gray-100' ;
+    'border border-2 border-gray-200 bg-gray-100 rounded-lg' ;
   return (
     <select
       className={`shadow-lg h-[36px] flex ${styleClassName} text-sm py-0 overflow-visible`}
       onChange={onChange}
-      defaultValue={'default'}
+      defaultValue={defaultValue}
       style={{ width: width }}
     >
       {displayText && (
