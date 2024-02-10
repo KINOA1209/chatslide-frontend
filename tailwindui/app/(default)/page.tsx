@@ -10,6 +10,7 @@ import LandingButton from '@/components/new_landing/LandingButton';
 import BlackFridayBanner from '@/components/new_landing/HolidayBanner';
 import HeroText from '@/components/landing/HeroText';
 import Testimonails from '@/components/landing/testimonials';
+import Link from 'next/link';
 
 const fileTypes = [
 	'pdf-file-icon',
@@ -95,6 +96,25 @@ function App() {
 						/>
 					</a>
 
+          {/* discord icon */}
+          <Link href='https://discord.gg/kRBnjHxS'>
+            <div className='fixed bottom-20 right-5 z-40 bg-white rounded-xl border border-indigo-500 flex items-center w-[250px] h-[54px]'>
+              <img
+                className='w-8 h-6 ml-4'
+                src='new_landing/imgs/discord-icon.png'
+              />
+
+              <div className='ml-4 flex flex-col h-[54px] py-[5px]'>
+                <div className='w-auto text-indigo-500 h-5 text-xs font-extrabold font-creato-medium tracking-tight'>
+                  DISCORD
+                </div>
+                <div className='w-auto text-indigo-500 h-6 text-sm font-bold font-creato-medium tracking-tight'>
+                  Join our community
+                </div>
+              </div>
+            </div>
+          </Link>
+
 					<div className='mt-6 w-50% text-center text-neutral-900 text-l md:text-2xl leading-10 tracking-wide font-creato-medium'>
 						Get a 🤖 robo-assistant for pro slides and posts.
 						<br />
@@ -117,6 +137,16 @@ function App() {
 					</div>
 					{/* <GenerationPreview /> */}
 				</div>
+
+        <div
+          id='testimonials'
+          className='pt-[3rem] relative flex flex-col justify-center items-center'
+        >
+          <div className='w-[90%] h-full text-center text-neutral-900 text-3xl lg:text-5xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
+            Wall of love 💙
+            <Testimonails />
+          </div>
+        </div>
 
 				<div
 					id='scenarios'
@@ -230,38 +260,9 @@ function App() {
 					</div>
 				</div>
 
-				<div
-					id='testimonials'
-					className='pt-[8rem] relative flex flex-col justify-center items-center'
-				>
-					<div className='w-[90%] h-full text-center text-neutral-900 text-3xl lg:text-5xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
-						Wall of love 💙
-						<Testimonails />
-					</div>
-				</div>
-
-				<div id='pricing' className='pt-[1rem]'>
+				<div id='pricing' className='pt-[4rem]'>
 					<PricingSection />
 				</div>
-
-				{/* discord icon */}
-				{/* <Link href='https://discord.gg/CKVdZDAuu3'>
-            <div className='mt-[3rem] mb-[5rem] w-[13rem] lg:w-[20rem] bg-white rounded-2xl border border-indigo-500 flex items-center'>
-              <img
-                className='w-8 h-6 ml-4'
-                src='new_landing/imgs/discord-icon.png'
-              />
-
-              <div className='ml-4 flex flex-col'>
-                <div className='w-auto lg:w-[7rem] h-5 pt-1 text-indigo-500 text-xs font-extrabold font-creato-medium leading-loose tracking-tight lg:tracking-[0.01388rem]'>
-                  DISCORD
-                </div>
-                <div className='w-auto lg:w-[13rem] h-8 pb-10 text-indigo-500 text-sm lg:text-xl font-bold font-creato-medium leading-10 tracking-tight lg:tracking-[0.02425rem]'>
-                  Join our community
-                </div>
-              </div>
-            </div>
-          </Link> */}
 
 				<Footer />
 			</div>

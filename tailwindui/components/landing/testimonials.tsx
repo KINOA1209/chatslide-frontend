@@ -130,60 +130,10 @@ export default function Testimonails() {
 
 	return (
 		<div className='w-full' data-aos='fade-right'>
-			<div className='px-4 sm:px-6 w-full max-w-[1152px] mx-auto hidden sm:grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 gap-4'>
-				<div className='w-full h-fit flex flex-col'>
-					{list1.map((iframeEl, index) => {
-						return (
-							<div
-								key={'1-' + index}
-								className='w-full mb-4'
-								data-aos='fade-up'
-								data-aos-delay='300'
-							>
-								<div className='flex flex-row w-full h-full drop-shadow-md overflow-hidden rounded-2xl border border-gray-300'>
-									{iframeEl}
-								</div>
-							</div>
-						);
-					})}
-				</div>
-				<div className='h-fit flex flex-col'>
-					{list2.map((iframeEl, index) => {
-						return (
-							<div
-								key={'2-' + index}
-								className='w-full mb-4'
-								data-aos='fade-up'
-								data-aos-delay='300'
-							>
-								<div className='flex flex-row w-full h-full drop-shadow-md overflow-hidden rounded-2xl border border-gray-300'>
-									{iframeEl}
-								</div>
-							</div>
-						);
-					})}
-				</div>
-				<div className='h-fit flex flex-col'>
-					{list3.map((iframeEl, index) => {
-						return (
-							<div
-								key={'3-' + index}
-								className='w-full mb-4'
-								data-aos='fade-up'
-								data-aos-delay='300'
-							>
-								<div className='flex flex-row w-full h-full drop-shadow-md overflow-hidden rounded-2xl border border-gray-300'>
-									{iframeEl}
-								</div>
-							</div>
-						);
-					})}
-				</div>
-			</div>
-			<div className='w-full mx-auto grid grid-cols-1 sm:hidden'>
+			<div className='w-full mx-auto grid grid-cols-1'>
 				<div className='w-full flex flex-col items-center justify-center'>
 					<div
-						className='w-full flex flex-row overflow-x-auto pl-[10vw] pr-[7vw] items-center'
+						className='w-full flex flex-row overflow-x-auto items-center pb-[20px]'
 						ref={testimonialMobileRef}
 						onClick={(e) => {
 							clearInterval(intervalID);
@@ -193,7 +143,7 @@ export default function Testimonails() {
 							return (
 								<div
 									key={'mobile-' + index}
-									className='shrink-0 w-[80vw] mr-[3vw] drop-shadow-md overflow-hidden rounded-2xl border border-gray-300'
+									className='shrink-0 w-[300px] h-[500px] mr-[20px] drop-shadow-md overflow-hidden rounded-2xl border border-gray-300'
 								>
 									{iframe}
 								</div>
