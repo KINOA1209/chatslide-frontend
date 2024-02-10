@@ -160,7 +160,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 	return (
 		<div className='flex flex-col justify-center items-center gap-4 my-4'>
 			{/* buttons: export and scripts and share slides */}
-			<div className='SlidesStep-6 flex flex-row justify-end items-center'>
+			<div className='SlidesStep-6 flex flex-col sm:flex-row justify-end items-center gap-1 sm:gap-4'>
 				<ExportToPdfButton slides={slides} exportSlidesRef={exportSlidesRef} />
 				<ShareToggleButton setShare={setShare} share={share} />
         <PostDropDown slides={slides} post_type='slide' setShare={setShare} />

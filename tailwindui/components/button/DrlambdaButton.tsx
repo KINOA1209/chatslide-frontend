@@ -190,18 +190,26 @@ type DrlambdaDropDownProps = {
   children: ReactNode;
   onChange?: React.ChangeEventHandler<HTMLSelectElement>;
   displayText?: string;
+  width?: string;
+  style?: 'button' | 'input';
 };
 
-export const BigGrayDropDown: React.FC<DrlambdaDropDownProps> = ({
+export const DropDown: React.FC<DrlambdaDropDownProps> = ({
   children,
   onChange,
   displayText,
+  width = '12rem',
+  style = 'button',
 }) => {
+  const styleClassName = style === 'button' ?
+    'bg-gray-300 border-none rounded-xl' :
+    'border border-2 border-gray-200 bg-gray-100' ;
   return (
     <select
-      className='h-[36px] flex border border-2 border-gray-200 bg-gray-100 rounded-lg text-sm py-0 overflow-visible w-[20rem]'
+      className={`shadow-lg h-[36px] flex ${styleClassName} text-sm py-0 overflow-visible`}
       onChange={onChange}
       defaultValue={'default'}
+      style={{ width: width }}
     >
       {displayText && (
         <option value='default' disabled>

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { BigGrayButton, BigGrayDropDown } from './DrlambdaButton';
+import { DropDown } from './DrlambdaButton';
 import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
 import Slide, { SlideKeys } from '@/models/Slide';
 import AuthService from '@/services/AuthService';
@@ -80,7 +80,7 @@ const PostDropDown: React.FC<PostButtonProps> = ({
   }));
 
   return (
-    <BigGrayDropDown
+    <DropDown
       onChange={(event) => handlePost(event.target.value)}
       displayText='Post to Social Media'
     >
@@ -89,7 +89,7 @@ const PostDropDown: React.FC<PostButtonProps> = ({
           Post to {PostPlatformConfigs[platform as keyof typeof PostPlatformConfigs].displayName}
         </option>
       ))}
-    </BigGrayDropDown>
+    </DropDown>
   );
 
 };

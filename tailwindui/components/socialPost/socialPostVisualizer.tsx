@@ -47,7 +47,7 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
   return (
     <div>
       <div className='px-4 sm:px-6 flex flex-col justify-center items-center gap-4'>
-        <div className='flex flex-row'>
+        <div className='flex flex-col sm:flex-row justify-end items-center gap-1 sm:gap-4'>
           {/* slides contents */}
           <ExportToPngButton
             socialPostSlide={socialPostSlides}
