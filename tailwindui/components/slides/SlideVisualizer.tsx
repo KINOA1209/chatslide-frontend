@@ -12,6 +12,7 @@ import { useSlides } from '@/hooks/use-slides';
 import VideoService from '@/services/VideoService';
 import { useUser } from '@/hooks/use-user';
 import { toast } from 'react-toastify';
+import PostDropDown from '../button/PostButton';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -163,13 +164,9 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 			<div className='SlidesStep-6 flex flex-row justify-end items-center'>
 				<ExportToPdfButton slides={slides} exportSlidesRef={exportSlidesRef} />
 				<ShareToggleButton setShare={setShare} share={share} />
+        <PostDropDown slides={slides} post_type='slide' setShare={setShare} />
 			</div>
-			<div className='SlidesStep-6 flex flex-row justify-end items-center'>
-				<PostButton slides={slides} post_type='slide' platform='twitter' setShare={setShare} />
-				<PostButton slides={slides} post_type='slide' platform='facebook' setShare={setShare} />
-				<PostButton slides={slides} post_type='slide' platform='reddit' setShare={setShare} />
-				<PostButton slides={slides} post_type='slide' platform='linkedin' setShare={setShare} />
-			</div>
+			
 			{/* shareable link */}
 			{share && showShareLink && (
 				<div>
