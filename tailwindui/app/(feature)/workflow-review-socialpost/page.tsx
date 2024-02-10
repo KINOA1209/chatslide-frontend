@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
 import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
+import useHydrated from '@/hooks/use-hydrated';
 
 export default function SocialMediaTemplate() {
 	const router = useRouter();
@@ -97,6 +98,9 @@ export default function SocialMediaTemplate() {
 				return borderColorOptions[6];
 		}
 	}
+
+  // avoid hydration error during development caused by persistence
+  if (!useHydrated()) return <></>
 
 	return (
 		<section>
