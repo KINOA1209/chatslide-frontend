@@ -6,13 +6,12 @@ import dynamic from 'next/dynamic';
 import { ShareToggleButton } from '@/components/slides/SlideButtons';
 import { useRouter } from 'next/navigation';
 import { TextLabel } from '../ui/GrayLabel';
-import PostButton from '../button/PostButton';
+import PostDropDown from '../button/PostDropDown';
 import { FaTimes } from 'react-icons/fa';
 import { useSlides } from '@/hooks/use-slides';
 import VideoService from '@/services/VideoService';
 import { useUser } from '@/hooks/use-user';
 import { toast } from 'react-toastify';
-import PostDropDown from '../button/PostButton';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
