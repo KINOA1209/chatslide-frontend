@@ -1,7 +1,5 @@
 import Image from 'next/image';
 import MyProjectsImg from '@/public/new_landing/imgs/my-projects-mask.png';
-import GenerationPreviewImg from '@/public/new_landing/imgs/GenerationPreview.png';
-
 import Footer from '../../components/ui/footer';
 import FeatureCards from '../../components/new_landing/FeatureCards';
 import Header from '@/components/ui/header';
@@ -10,7 +8,6 @@ import LandingButton from '@/components/new_landing/LandingButton';
 import BlackFridayBanner from '@/components/new_landing/HolidayBanner';
 import HeroText from '@/components/landing/HeroText';
 import Testimonails from '@/components/landing/testimonials';
-import Link from 'next/link';
 import { DiscordButton, ProductHuntButton } from '@/components/new_landing/Buttons';
 
 const fileTypes = [
@@ -205,7 +202,7 @@ function App() {
           {/* <MyProjectExample />
             <div className='absolute inset-0 rounded-3xl bg-gradient-to-b from-transparent to-neutral-50'></div> */}
 
-          <div className='mt-[2rem] sm:mt-[4rem] lg:mt-[6.25rem] w-[90%] lg:w-[70rem] lg:h-[25rem] max-w-7xl  bg-white rounded-3xl flex flex-col justify-center items-center px-6 py-4 lg:px-12 lg:py-10 gap-6'>
+          <div className='mt-[2rem] sm:mt-[4rem] w-[90%] lg:w-[70rem] lg:h-[25rem] max-w-7xl  bg-white rounded-3xl flex flex-col justify-center items-center px-6 py-4 lg:px-12 lg:py-10 gap-6'>
             <Image
               src={MyProjectsImg}
               alt='my project'
