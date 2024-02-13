@@ -47,18 +47,7 @@ const nextConfig = {
 				hostname: "**",
 			},
 		],
-		// Allowed image domains
-		domains: ['localhost', 'img.freepik.com'],
-		// Optionally allow all hostnames
-		remotePatterns: [
-			{
-				protocol: 'https',
-				hostname: '**',
-			},
-		],
 	},
-
-
 };
 
 module.exports = nextConfig;
