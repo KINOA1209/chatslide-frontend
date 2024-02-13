@@ -1,11 +1,3 @@
-// import ContentCreationImg from '../assets/svgs/content-creation.svg?react'
-import ContentCreationImg from '@/public/new_landing/imgs/content-creation.png';
-// import LectureDesignImg from '../assets/svgs/lecture-design.svg?react'
-import LectureDesignImg from '@/public/new_landing/imgs/lecture-design.png';
-// import ResearchSynthesizingImg from '../assets/svgs/research-synthesizing.svg?react'
-import ResearchSynthesizingImg from '@/public/new_landing/imgs/research-synthesizing.png';
-// import SelfLearningImg from '../assets/svgs/self-learning.svg?react'
-import SelfLearningImg from '@/public/new_landing/imgs/self-learning.png';
 const FeatureCards = () => {
 	return (
 		<>

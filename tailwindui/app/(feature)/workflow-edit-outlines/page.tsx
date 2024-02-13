@@ -4,18 +4,11 @@ import React, { useState, useRef, useEffect, Fragment } from 'react';
 import FeedbackButton from '@/components/ui/feedback';
 import 'react-toastify/dist/ReactToastify.css';
 import OutlineVisualizer from '@/components/outline/OutlineVisulizer';
-import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
 import { useRouter } from 'next/navigation';
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
 import { ToastContainer } from 'react-toastify';
 import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
 import StepsOutlinePage from '@/components/user_onboarding/StepsOutlinePage';
-interface OutlineSection {
-	title: string;
-	content: string[];
-	detailLevel: string;
-	section_style: string;
-}
 
 export default function WorkflowStep2() {
 	const storedOutline =

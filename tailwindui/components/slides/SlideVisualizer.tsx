@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { ShareToggleButton } from '@/components/slides/SlideButtons';
 import { useRouter } from 'next/navigation';
 import { TextLabel } from '../ui/GrayLabel';
-import PostButton from '../button/PostButton';
+import PostDropDown from '../button/PostDropDown';
 import { FaTimes } from 'react-icons/fa';
 import { useSlides } from '@/hooks/use-slides';
 import VideoService from '@/services/VideoService';
@@ -21,16 +21,18 @@ type SlideVisualizerProps = {
 	isGpt35: boolean;
 	isSubmitting: boolean;
 	setIsSubmitting: (isSubmitting: boolean) => void;
+  showScript: boolean;
 };
 
 const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 	isGpt35,
 	isSubmitting,
 	setIsSubmitting,
+  showScript = false,
 }) => {
 	const [host, setHost] = useState('https://drlambda.ai');
 
-	const { slides, setTranscripts, hasTranscript } = useSlides();
+	const { slides, setTranscripts } = useSlides();
 	const { token } = useUser();
 	const [share, setShare] = useState(false);
 	const [showShareLink, setShowShareLink] = useState(true);
@@ -134,7 +136,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 			if (response.ok) {
 				const resp = await response.json();
 				setIsSubmitting(false);
-				console.log(resp.data.res);
+				// console.log(resp.data.res);
 				const transcripts = resp.data.res;
 				setTranscripts(transcripts); // and auto-save
 			} else {
@@ -150,7 +152,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 
 	useEffect(() => {
 		if (isSubmitting) {
-			if (!hasTranscript) handleSubmitTranscript();
+      if (!showScript) handleSubmitTranscript();
 			else handleSubmitVideo();
 		}
 	}, [isSubmitting]);
@@ -158,11 +160,12 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 	return (
 		<div className='flex flex-col justify-center items-center gap-4 my-4'>
 			{/* buttons: export and scripts and share slides */}
-			<div className='SlidesStep-6 flex flex-row justify-end items-center'>
+			<div className='SlidesStep-6 flex flex-col sm:flex-row justify-end items-center gap-1 sm:gap-4'>
 				<ExportToPdfButton slides={slides} exportSlidesRef={exportSlidesRef} />
 				<ShareToggleButton setShare={setShare} share={share} />
-				<PostButton slides={slides} post_type='slide' setShare={setShare} />
+        <PostDropDown slides={slides} post_type='slide' setShare={setShare} />
 			</div>
+			
 			{/* shareable link */}
 			{share && showShareLink && (
 				<div>
@@ -184,7 +187,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 			)}
 
 			{/* slides and scripts contents */}
-			<SlidesHTML exportSlidesRef={exportSlidesRef} />
+			<SlidesHTML exportSlidesRef={exportSlidesRef} showScript={showScript}/>
 		</div>
 	);
 };

@@ -185,20 +185,20 @@ MainSlideProps) => {
 };
 
 export const availableTemplates = {
-	Stanford: Stanford_school_template,
-	Berkeley: Berkeley_school_template,
-	Harvard: Harvard_school_template,
-	MIT: MIT_school_template,
-	Princeton: Princeton_school_template,
-	Caltech: Caltech_school_template,
-	Columbia: Columbia_school_template,
-	JHU: JHU_school_template,
-	UChicago: University_of_Chicago_school_template,
-	Yale: Yale_school_template,
-	UPenn: UPenn_school_template,
-	Default: Default,
-	Fun_Education_004: Fun_Education_004_template,
-	Business_002: Business_002_template,
+  Stanford: Stanford_school_template,
+  Berkeley: Berkeley_school_template,
+  Harvard: Harvard_school_template,
+  MIT: MIT_school_template,
+  Princeton: Princeton_school_template,
+  Caltech: Caltech_school_template,
+  Columbia: Columbia_school_template,
+  JHU: JHU_school_template,
+  UChicago: University_of_Chicago_school_template,
+  Yale: Yale_school_template,
+  UPenn: UPenn_school_template,
+  Default: Default,
+  Fun_Education_004: Fun_Education_004_template,
+  Business_002: Business_002_template,
 };
 
 // Define a type for template keys

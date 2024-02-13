@@ -66,12 +66,12 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 		'Cover Page without image',
 		'Cover Page with image',
 		'1 column without image',
-		'2 column without image',
-		'3 column without image',
+		'2 columns without image',
+		'3 columns without image',
 		'1 column with image',
 		'1 column with image',
-		'2 column with image',
-		'3 column with image',
+		'2 columns with image',
+		'3 columns with image',
 	];
 
 	const editableTemplateDispatch = (

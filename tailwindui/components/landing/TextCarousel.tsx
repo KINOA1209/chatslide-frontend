@@ -13,7 +13,6 @@ const TextCarousel: React.FC<Props> = ({
 	slides,
 	interval = 3000,
 	color = 'text-blue-500',
-	alignment = 'left',
 }) => {
 	const [currentIndex, setCurrentIndex] = useState<number>(0);
 
@@ -33,7 +32,7 @@ const TextCarousel: React.FC<Props> = ({
 	}, [currentIndex]);
 
 	return (
-		<div className='carousel-container relative overflow-hidden h-[4rem] max-w-xl mx-auto'>
+		<div className='carousel-container overflow-hidden h-[4rem] max-w-xl mx-auto'>
 			<ul
 				className='carousel-list flex flex-col transition-transform duration-500'
 				style={{ transform: `translateY(-${currentIndex * 4}rem)` }}
@@ -44,7 +43,7 @@ const TextCarousel: React.FC<Props> = ({
 						className='carousel-item h-[4rem] text-center py-1 flex-none'
 					>
 						<h1
-							className={`text-5xl font-extrabold leading-tighter tracking-tighter text-${alignment} ${color} font-creato-medium `}
+							className={`text-4xl sm:text-5xl font-extrabold leading-tighter tracking-tighter text-center sm:text-left ${color} font-creato-medium `}
 						>
 							{slide}
 						</h1>

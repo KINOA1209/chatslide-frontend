@@ -20,6 +20,8 @@ import FileUploadModal from '@/components/forms/FileUploadModal';
 import SelectedResourcesList from '@/components/SelectedResources';
 import { useUser } from '@/hooks/use-user';
 import { GPTToggleWithExplanation } from '@/components/button/WorkflowGPTToggle';
+import { IoIosLink } from 'react-icons/io';
+import { FiYoutube } from 'react-icons/fi';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 6;
@@ -684,17 +686,21 @@ export default function Topic_SocialPost() {
 									id='link_text_container'
 									className='flex items-center w-full'
 								>
-									<FaYoutube />
-									<div className='w-full'>
-										<label htmlFor='link_text'></label>
-										<input
-											id='link'
-											type='text'
-											className='text-sm md:text-l form-input w-full border-none bg-gray-100'
-											value={linkUrl}
-											onChange={(e) => handleLinkChange(e.target.value)}
-											placeholder='Paste YouTube or webpage link'
-										/>
+                  <div className='flex items-center gap-1'>
+                    <IoIosLink />
+                    <FiYoutube />
+                    𝕏
+                  </div>
+                  <div className='w-full'>
+                    <label htmlFor='link_text'></label>
+                    <input
+                      id='link'
+                      type='text'
+                      className='text-sm md:text-l form-input w-full border-none bg-gray-100'
+                      value={linkUrl}
+                      onChange={(e) => handleLinkChange(e.target.value)}
+                      placeholder='Paste webpage, Youtube, or 𝕏 link'
+                    />
 									</div>
 									<SmallBlueButton
 										onClick={(e) => {

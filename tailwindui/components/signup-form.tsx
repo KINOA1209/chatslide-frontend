@@ -263,7 +263,7 @@ const SignupForm: React.FC = () => {
 				</div>
 			</div>
 			<div className='text-sm text-gray-500 text-center mt-3'>
-				<input type='checkbox' id='agree' name='agree' checked /> By creating an
+        <input type='checkbox' id='agree' name='agree' checked readOnly /> By creating an
 				account, you agree to the{' '}
 				<a className='underline' href='/terms'>
 					terms & conditions

@@ -10,7 +10,7 @@ import FeedbackButton from '@/components/ui/feedback';
 import { QuestionExplainIcon } from '@/app/(feature)/icons';
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
 import PaywallModal from '@/components/forms/paywallModal';
-import { FaFilePdf, FaYoutube } from 'react-icons/fa';
+import { FaFilePdf, FaLink, FaYoutube } from 'react-icons/fa';
 import YoutubeService from '@/services/YoutubeService';
 import { SmallBlueButton } from '@/components/button/DrlambdaButton';
 import WebService from '@/services/WebpageService';
@@ -25,6 +25,8 @@ import StepsSummaryPage from '@/components/user_onboarding/StepsSummaryPage';
 import { GPTToggleWithExplanation } from '@/components/button/WorkflowGPTToggle';
 import SessionStorage from '@/components/utils/SessionStorage';
 import FromDocsUploadFile from '@/components/FromDocsUploadFile';
+import { IoIosLink } from 'react-icons/io';
+import { FiYoutube } from 'react-icons/fi';
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 6;
 
@@ -831,7 +833,11 @@ export default function Topic() {
 								id='link_text_container'
 								className='flex justify-center items-center w-full'
 							>
-								<FaYoutube />
+                <div className='flex items-center gap-1'>
+                  <IoIosLink /> 
+                  <FiYoutube /> 
+                  𝕏
+                </div>
 								<div className='w-full'>
 									<label htmlFor='link_text'></label>
 									<input
@@ -840,7 +846,7 @@ export default function Topic() {
 										className='text-sm md:text-l form-input w-full border-none bg-gray-100'
 										value={linkUrl}
 										onChange={(e) => handleLinkChange(e.target.value)}
-										placeholder='Paste YouTube or webpage link'
+                    placeholder='Paste webpage, Youtube, or 𝕏 link'
 									/>
 								</div>
 								<SmallBlueButton
