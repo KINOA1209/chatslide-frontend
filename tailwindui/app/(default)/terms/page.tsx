@@ -163,11 +163,27 @@ export default function Terms() {
 
           <div className='max-w-3xl mx-auto pb-4'>
             <div className='pb-8'>
-              <h2 className='h3 text-2xl'>7. Modifications to Terms</h2>
+              <h2 className='h3 text-2xl'>7. Refund and Cancellation Policy</h2>
             </div>
             <div className='pb-4'>
               <p className='text-base text-gray-600'>
-                7.1 Updates: We reserve the right to update or modify these
+                7.1 Refund Policy: If you have purchased the product on our platform, please note that all transactions are non-refundable. For purchases made through other platforms, the refund policy is subject to the terms and conditions of that specific platform.
+              </p>
+            </div>
+            <div className='pb-4'>
+              <p className='text-base text-gray-600'>
+                7.2 Cancellation Policy: If you have paid for the product on our platform, you have the right to cancel your subscription at any time. You will continue to have access to premium features until the end of the billing period (month or year), after which your subscription will be terminated.
+              </p>
+            </div>
+          </div>
+
+          <div className='max-w-3xl mx-auto pb-4'>
+            <div className='pb-8'>
+              <h2 className='h3 text-2xl'>8. Modifications to Terms</h2>
+            </div>
+            <div className='pb-4'>
+              <p className='text-base text-gray-600'>
+                8.1 Updates: We reserve the right to update or modify these
                 Terms at any time, without prior notice. Any changes will be
                 effective immediately upon posting on the Service. Your
                 continued use of the Service after the posting of changes
@@ -178,11 +194,11 @@ export default function Terms() {
 
           <div className='max-w-3xl mx-auto pb-4'>
             <div className='pb-8'>
-              <h2 className='h3 text-2xl'>8. Governing Law</h2>
+              <h2 className='h3 text-2xl'>9. Governing Law</h2>
             </div>
             <div className='pb-4'>
               <p className='text-base text-gray-600'>
-                8.1 Jurisdiction: These Terms shall be governed by and construed
+                9.1 Jurisdiction: These Terms shall be governed by and construed
                 in accordance with the laws of United States or your
                 jurisdiction. Any disputes arising out of or relating to these
                 Terms or the Service shall be exclusively resolved by the state
