@@ -133,6 +133,14 @@ export default function Footer() {
 									Terms and Services
 								</a>
 							</li>
+              <li className='mb-2'>
+                <a
+                  href='https://blog.drlambda.ai'
+                  className='text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out'
+                >
+                  Blog
+                </a>
+              </li>
 						</ul>
 					</div>
 
