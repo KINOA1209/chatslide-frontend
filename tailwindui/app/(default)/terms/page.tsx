@@ -41,7 +41,7 @@ export default function Terms() {
                 necessary.
               </p>
             </div>
-            <div className='pb-0'>
+            <div className='pb-4'>
               <p className='text-base text-gray-600'>
                 1.2 Prohibited Activities: You agree not to engage in any
                 activity that may interfere with or disrupt the Service or
@@ -53,23 +53,25 @@ export default function Terms() {
             </div>
           </div>
 
-          <div className='pb-8'>
-            <h2 className='h3 text-2xl'>2. Fair Usage Policy</h2>
-          </div>
-          <div className='pb-4'>
-            <p className='text-base text-gray-600'>
-              2.1 Automation Restrictions: The use of robots, spiders, or any other automated means to access the Service is strictly prohibited unless specifically authorized by us. This includes any automation used for scraping, data mining, or any other activity that imposes an unreasonable or disproportionately large load on our infrastructure.
-            </p>
-          </div>
-          <div className='pb-0'>
-            <p className='text-base text-gray-600'>
-              2.2 System Integrity: You must not undertake any action that could harm the integrity or performance of the Service. Activities such as exploiting vulnerabilities, distributing malware, or engaging in any form of system interference or disruption are strictly prohibited. We reserve the right to investigate and take appropriate legal action against anyone who, in our sole discretion, violates this policy, including without limitation, removing the offending communication from the Service and terminating the violator's access to the site.
-            </p>
-          </div>
-          <div className='pb-4'>
-            <p className='text-base text-gray-600'>
-              2.3 Account Non-transferability: Users are prohibited from giving, selling, or renting their account to anyone else. Your account is personal to you and granting access to your account to others, or transferring ownership of your account, compromises the security of the Service and is strictly forbidden. Violation of this policy may result in immediate suspension or termination of your account.
-            </p>
+          <div className='max-w-3xl mx-auto pb-4'>
+            <div className='pb-8'>
+              <h2 className='h3 text-2xl'>2. Fair Usage Policy</h2>
+            </div>
+            <div className='pb-4'>
+              <p className='text-base text-gray-600'>
+                2.1 Automation Restrictions: The use of robots, spiders, or any other automated means to access the Service is strictly prohibited unless specifically authorized by us. This includes any automation used for scraping, data mining, or any other activity that imposes an unreasonable or disproportionately large load on our infrastructure.
+              </p>
+            </div>
+            <div className='pb-0'>
+              <p className='text-base text-gray-600'>
+                2.2 System Integrity: You must not undertake any action that could harm the integrity or performance of the Service. Activities such as exploiting vulnerabilities, distributing malware, or engaging in any form of system interference or disruption are strictly prohibited. We reserve the right to investigate and take appropriate legal action against anyone who, in our sole discretion, violates this policy, including without limitation, removing the offending communication from the Service and terminating the violator's access to the site.
+              </p>
+            </div>
+            <div className='pb-4'>
+              <p className='text-base text-gray-600'>
+                2.3 Account Non-transferability: Users are prohibited from giving, selling, or renting their account to anyone else. Your account is personal to you and granting access to your account to others, or transferring ownership of your account, compromises the security of the Service and is strictly forbidden. Violation of this policy may result in immediate suspension or termination of your account.
+              </p>
+            </div>
           </div>
 
           <div className='max-w-3xl mx-auto pb-4'>
