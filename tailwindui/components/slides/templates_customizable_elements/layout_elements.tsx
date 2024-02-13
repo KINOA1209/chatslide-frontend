@@ -3455,7 +3455,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 				alignItems: 'center', // equivalent to items-center
 			},
 			contentContainerCSS: {
-				paddingTop: '4rem',
+				paddingTop: '1rem',
 				paddingLeft: '4rem',
 				paddingRight: '4rem',
 			},

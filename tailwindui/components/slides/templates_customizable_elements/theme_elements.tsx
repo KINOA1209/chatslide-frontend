@@ -741,7 +741,7 @@ const themeConfigData: ThemeConfig = {
 			opacity: 1,
 			fontWeight: 'bold',
 			fontFamily: 'Arimo',
-			fontSize: '20pt',
+			fontSize: '16pt',
 			fontStyle: 'normal',
 			lineHeight: 1,
 			color: '#6B7A2D',
