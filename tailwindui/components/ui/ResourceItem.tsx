@@ -40,7 +40,7 @@ export const ResourceItem: React.FC<Resource> = ({
 	thumbnail_url,
 }) => {
   // remove text like `.txt` from the end of the file name
-  name = name.replace(/\.[^/.]+$/, '');
+  name = name.replace('.txt', '');
 
 	return (
 		<div
