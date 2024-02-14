@@ -16,10 +16,16 @@ if [ -z "$USER_POOLS_WEB_CLIENT_ID" ]; then
   exit 1
 fi
 
+if [ -z "$HOST" ]; then
+  echo "HOST is not set"
+  exit 1
+fi
+
 rm -f aws-exports.js
 
 sed \
 -e "s|COGNITO_IDENTITY_POOL_ID|${COGNITO_IDENTITY_POOL_ID}|g" \
 -e "s|USER_POOLS_ID|${USER_POOLS_ID}|g" \
 -e "s|USER_POOLS_WEB_CLIENT_ID|${USER_POOLS_WEB_CLIENT_ID}|g" \
+-e "s|HOST|${HOST}|g" \
  aws-exports.js.template >> aws-exports.js
