@@ -2,7 +2,6 @@ import { Auth as AmplifyAuth, Hub } from 'aws-amplify';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 
 import awsConfig from '../aws-exports';
-
 AmplifyAuth.configure(awsConfig);
 
 class AuthService {
