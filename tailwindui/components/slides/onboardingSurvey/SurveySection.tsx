@@ -10,6 +10,7 @@ type SurveySectionProps = {
   handleButtonClick?: () => void;
   isLastSection?: boolean;
   handleCustomInput?: (value: string) => void;
+  handleSkip?: () => void;
 };
 
 const SurveySection: React.FC<SurveySectionProps> = ({
@@ -20,6 +21,7 @@ const SurveySection: React.FC<SurveySectionProps> = ({
   handleButtonClick,
   isLastSection = false,
   handleCustomInput,
+  handleSkip,
 }) => {
   const isButtonEnabled = selectedItems.length > 0
   const sectionObject = surveyStaticDataObject[section]
@@ -40,7 +42,14 @@ const SurveySection: React.FC<SurveySectionProps> = ({
           ))}
         </div>
         {!showNextSection && (
-          <div className='mt-6 flex justify-end'>
+          <div className='mt-6 flex justify-end gap-x-4'>
+            {handleSkip && <button
+              className={`text-blue-700 py-2 px-[4rem]`}
+              onClick={handleSkip}
+            >
+              Skip
+            </button>}
+
             <button
               className={`${isButtonEnabled ? 'bg-blue-700' : 'bg-gray-400 cursor-not-allowed'} text-white py-2 px-[4rem] rounded-lg`}
               onClick={isButtonEnabled ? handleButtonClick : undefined}

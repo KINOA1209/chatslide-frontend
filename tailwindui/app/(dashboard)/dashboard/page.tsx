@@ -29,7 +29,7 @@ export default function Dashboard() {
 	const [isDeleting, setIsDeleting] = useState(false);
 
 	const [isNewUser, setIsNewUser] = useState(false)
-	const [showSurvey, setShowSurvey] = useState(false)
+	const [showSurvey, setShowSurvey] = useState(true)
 
 	function closeModal() {
 		setIsOpen(false);
@@ -90,39 +90,8 @@ export default function Dashboard() {
 		checkUserSurveyStatus();
 	}, []);
 
-	// useEffect(() => {
-	// 	const updateHeight = () => {
-	// 		if (activeSlideRef.current && parentContainerRef.current) {
-	// 			const height = activeSlideRef.current.offsetHeight;
-	// 			parentContainerRef.current.style.height = `${height}px`;
-	// 		}
-	// 	};
-
-	// 	// MutataionObserver to dynamically adjust the container's height
-	// 	if (activeSlideRef.current && parentContainerRef.current) {
-	// 		const observer = new MutationObserver(updateHeight);
-	// 		// looking for anychange in onboardingsurvey, once a section shows, it will call updateHeight
-	// 		observer.observe(activeSlideRef.current, {
-	// 			childList: true,
-	// 			subtree: true,  
-	// 			characterData: true
-	// 		});
-
-	// 		//also trigger updateHeight when the user resizes the window
-	// 		window.addEventListener('resize', updateHeight);
-
-	// 		updateHeight();
-
-	// 		return () => {
-	// 			observer.disconnect();
-	// 			window.removeEventListener('resize', updateHeight);
-	// 		};
-	// 	}
-	// }, [showSurvey, activeSlideRef, parentContainerRef]);
-
 	const handleBackToChoices = () => {
 		setShowSurvey(false)
-    router.push('/workflow-type-choice');
 	}
 
 	// get projects from backend
