@@ -82,7 +82,7 @@ const PostDropDown: React.FC<PostButtonProps> = ({
   return (
     <DropDown
       onChange={(event) => handlePost(event.target.value)}
-      displayText='Post to Social Media'
+      displayText='Post on Social 📱'
     >
       {platforms.map((platform) => (
         <option key={platform} value={platform}>
