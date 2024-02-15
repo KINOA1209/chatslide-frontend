@@ -15,6 +15,7 @@ import ProjectService from '@/services/ProjectService';
 import Modal from '@/components/ui/Modal';
 import { UserStatus, useUser } from '@/hooks/use-user';
 import OnboardingSurvey from '@/components/slides/onboardingSurvey/OnboardingSurvey';
+import { render } from '@headlessui/react/dist/utils/render';
 
 export default function Dashboard() {
 	const [projects, setProjects] = useState<Project[]>([]);
@@ -27,7 +28,7 @@ export default function Dashboard() {
 
 	const [isOpen, setIsOpen] = useState(false);
 	const [isDeleting, setIsDeleting] = useState(false);
-	const [showSurvey, setShowSurvey] = useState(true)
+	const [showSurvey, setShowSurvey] = useState(false);
 
 	function closeModal() {
 		setIsOpen(false);
@@ -48,6 +49,9 @@ export default function Dashboard() {
           console.log('projects', projects);
           setProjects(projects);
           setRendered(true);
+          if (!showSurvey && projects.length === 0) {
+            router.push('/workflow-type-choice');
+          }
         });
 			} catch (error: any) {
 				console.error(error);
@@ -93,6 +97,11 @@ export default function Dashboard() {
 
 	const handleBackToChoices = () => {
 		setShowSurvey(false)
+    console.log('back to choices')
+    // console.log('rendered', rendered)
+    if (rendered && projects.length === 0) {
+      router.push('/workflow-type-choice');
+    }
 	}
 
 	const handleProjectClick = (projectId: string) => {
