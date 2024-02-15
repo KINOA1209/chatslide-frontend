@@ -1,0 +1,22 @@
+version: 1
+applications:
+  - frontend:
+      phases:
+        preBuild:
+          commands:
+            - env | grep -e HOST -e TIER -e SELF_TOKEN -e COGNITO_IDENTITY_POOL_ID -e USER_POOLS_ID -e USER_POOLS_WEB_CLIENT_ID >> .env
+            - echo ".env is " 
+            - cat .env
+            - sh gen_aws_exports.sh
+            - npm install
+        build:
+          commands:
+            - npm run build
+      artifacts:
+        baseDirectory: .next
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*
+    appRoot: tailwindui

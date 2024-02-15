@@ -35,7 +35,7 @@ const SelectedResourcesList: React.FC<SelectedResourcesListProps> = ({
 							) : (
 								<FaFilePdf className='w-[40px]' />
 							)}
-							<div className='flex-wrap'>{resource.name}</div>
+							<div className='flex-wrap'>{resource.name.replace('.txt', '')}</div>
 						</div>
 						<button onClick={() => removeResourceAtIndex(index)}>
 							<DeleteIcon />
