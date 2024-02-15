@@ -78,6 +78,7 @@ class ProjectService {
 
       if (!response.ok) {
         throw new Error(`getProjectDetails Error fetching project details: ${response.status}
+        project_id: ${project_id},
         url: ${url}`);
       }
 
