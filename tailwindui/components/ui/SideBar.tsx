@@ -114,6 +114,7 @@ const SideBar = ({ }: SideBarProps) => {
             {...item}
             onSignOut={signOut}
             isSidebarOpen={isSidebarOpen}
+            setIsSidebarOpen={setIsSidebarOpen}
           />
         ))}
         {/* sign out */}
