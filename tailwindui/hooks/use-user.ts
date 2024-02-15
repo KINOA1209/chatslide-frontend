@@ -23,6 +23,7 @@ const useEmailBear = createBearStore<string>()('email', '', true);
 const useIsPaidUserBear = createBearStore<boolean>()('isPaidUser', false, true);
 const useCreditsBear = createBearStore<string>()('credits', '', true);
 const useTierBear = createBearStore<string>()('tier', '', true);
+const useExpirationDateBear = createBearStore<string>()('expirationDate', '', true);
 
 export enum UserStatus {
 	NotInited,
@@ -42,6 +43,8 @@ export const useUser = () => {
 	const { isPaidUser, setIsPaidUser } = useIsPaidUserBear();
   const { username, setUsername } = useUsernameBear();
   const { email, setEmail } = useEmailBear();
+  const { expirationDate, setExpirationDate } = useExpirationDateBear();
+  
 
 	const initUser = async () => {
 		// console.log('-- initing user: ', {userStatus, user})
@@ -89,7 +92,7 @@ export const useUser = () => {
 	};
 
   const updateCreditsAndTier = async () => {
-    const { credits, tier } = await UserService.getUserCreditsAndTier(token);
+    const { credits, tier, expirationDate } = await UserService.getUserCreditsAndTier(token);
     const isPaidUser = [
       'PRO_MONTHLY',
       'PLUS_MONTHLY',
@@ -99,6 +102,7 @@ export const useUser = () => {
     setCredits(credits);
     setTier(tier);
     setIsPaidUser(isPaidUser);
+    setExpirationDate(expirationDate);
   }
   
 	useEffect(() => {
@@ -118,5 +122,5 @@ export const useUser = () => {
 
 	// console.log('-- useUser: ', {user, session, isPaidUser})
 
-  return { username, token, uid, email, credits, tier, isPaidUser, updateCreditsAndTier, setUsername, userStatus, signOut };
+  return { username, token, uid, email, credits, tier, expirationDate, isPaidUser, updateCreditsAndTier, setUsername, userStatus, signOut };
 };
