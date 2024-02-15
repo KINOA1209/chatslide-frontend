@@ -4,3 +4,4 @@ node_modules
 
 # use tailwind/package.json
 package.json 
+next.config.js
