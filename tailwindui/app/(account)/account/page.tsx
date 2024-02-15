@@ -23,6 +23,7 @@ import {
 } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
 import { useUser } from '@/hooks/use-user';
+import useHydrated from '@/hooks/use-hydrated';
 
 const Profile = () => {
   const { username, email, token, setUsername } = useUser();
@@ -360,6 +361,9 @@ export default function Account() {
       easing: 'ease-out-cubic',
     });
   });
+
+  // avoid hydration error during development caused by persistence
+  if (!useHydrated()) return <></>;
 
   return (
     <div className='flex flex-col items-center gap-[70px] mx-auto w-full'>
