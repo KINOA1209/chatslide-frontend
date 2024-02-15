@@ -77,6 +77,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
         <div className='h-[36px] flex flex-col items-center gap-2' onClick={() => setShowDropdown(!showDropdown)}>
           <BigGrayButton
             bgColor='bg-Gray'
+            isSubmitting={downloading}
           >
             <FaDownload />
             Export to PDF / PPTX
