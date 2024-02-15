@@ -2938,20 +2938,63 @@ const layoutConfigData: TemplateLayoutConfig = {
 	},
 	Fun_Education_004: {
 		Cover_img_0_layout: {
+			// canvaCSS: {
+			// 	margin: 0,
+			// 	padding: 0,
+			// 	boxSizing: 'border-box',
+			// 	width: '100%',
+			// 	minHeight: '100vh', // Set minimum height to cover the entire viewport
+			// },
+			titleCSS: {
+				backgroundColor: 'white',
+				paddingBottom: '20rem',
+				paddingTop: '4rem',
+				paddingLeft: '2rem',
+				paddingRight: '2rem',
+				// height: '80%',
+				width: '80%',
+				zIndex: 20,
+				position: 'absolute',
+				top: '50%',
+				left: '50%',
+				transform: 'translate(-50%, -50%)', // Centering trick
+				maxHeight: '80%',
+			},
+			userNameTextDividerCSS: {
+				display: 'none',
+			},
+			userNameCSS: {
+				zIndex: 30,
+				position: 'absolute',
+				top: '65%',
+				left: '22%',
+				transform: 'translate(-50%, -50%)', // Centering trick
+			},
 			columnCSS: {
 				paddingTop: '1rem', // Equivalent to pt-[1rem]
 				paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 				paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
-				width: '100%', // Equivalent to w-full
+				width: '50%', // Equivalent to w-1/2
 				display: 'flex', // Equivalent to flex
 				flexDirection: 'column', // Equivalent to flex-col
 				justifyContent: 'flex-start', // Equivalent to justify-start
 				height: '100%', // Equivalent to h-full
-				gap: '2rem', // Equivalent to gap-[2rem]
+				gap: '2rem',
 			},
-			titleCSS: {
-				paddingLeft: '2rem',
-				zIndex: 20,
+
+			imageContainerCSS: {
+				width: '100%', // Equivalent to w-full
+				height: '100%', // Equivalent to h-full
+				overflow: 'hidden',
+				borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
+				position: 'absolute',
+			},
+			visualElementsCSS: {
+				zIndex: 30,
+				position: 'absolute',
+				// display: 'none',
+				pointerEvents:
+					'none' /* Make the layer transparent to pointer events */,
 			},
 		},
 		Cover_img_1_layout: {
@@ -3202,9 +3245,11 @@ const layoutConfigData: TemplateLayoutConfig = {
 	},
 	Business_002: {
 		Cover_img_0_layout: {
-			canvaCSS: {
-				backgroundColor: '#2E2E2E',
-			},
+			// canvaCSS: {
+			// 	backgroundColor: '#2E2E2E',
+			// 	margin: 0,
+			// 	padding: 0,
+			// },
 			titleCSS: {
 				backgroundColor: '#DEFF56',
 				paddingBottom: '20rem',
@@ -3314,8 +3359,8 @@ const layoutConfigData: TemplateLayoutConfig = {
 			},
 			contentCSS: {
 				width: '100%', // Equivalent to w-full
-				paddingLeft: '4rem',
-				paddingRight: '4rem',
+				paddingLeft: '2rem',
+				paddingRight: '2rem',
 			},
 			columnCSS: {
 				width: '100%', // Equivalent to w-full
@@ -3326,19 +3371,19 @@ const layoutConfigData: TemplateLayoutConfig = {
 			},
 			titleAndSubtopicBoxCSS: {
 				backgroundColor: '#DEFF56',
-				paddingTop: '4rem',
+				paddingTop: '1rem',
 				paddingBottom: '1rem',
-				paddingLeft: '4rem',
-				paddingRight: '4rem',
+				paddingLeft: '2rem',
+				paddingRight: '2rem',
 			},
 		},
 		Col_2_img_0_layout: {
 			titleAndSubtopicBoxCSS: {
 				backgroundColor: '#DEFF56',
-				paddingTop: '4rem',
+				paddingTop: '1rem',
 				paddingBottom: '1rem',
-				paddingLeft: '4rem',
-				paddingRight: '4rem',
+				paddingLeft: '2rem',
+				paddingRight: '2rem',
 			},
 			contentContainerCSS: {
 				height: '100%',
@@ -3348,8 +3393,8 @@ const layoutConfigData: TemplateLayoutConfig = {
 				gap: '4rem',
 				paddingTop: '2rem',
 				paddingBottom: '4rem',
-				paddingLeft: '4rem',
-				paddingRight: '4rem',
+				paddingLeft: '2rem',
+				paddingRight: '2rem',
 			},
 			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
 			contentIndexCSS: {
@@ -3379,10 +3424,10 @@ const layoutConfigData: TemplateLayoutConfig = {
 		Col_3_img_0_layout: {
 			titleAndSubtopicBoxCSS: {
 				backgroundColor: '#DEFF56',
-				paddingTop: '4rem',
+				paddingTop: '1rem',
 				paddingBottom: '1rem',
-				paddingLeft: '4rem',
-				paddingRight: '4rem',
+				paddingLeft: '2rem',
+				paddingRight: '2rem',
 			},
 			contentContainerCSS: {
 				height: '100%',
@@ -3392,8 +3437,8 @@ const layoutConfigData: TemplateLayoutConfig = {
 				gap: '4rem',
 				paddingTop: '2rem',
 				paddingBottom: '4rem',
-				paddingLeft: '4rem',
-				paddingRight: '4rem',
+				paddingLeft: '2rem',
+				paddingRight: '2rem',
 			},
 			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
 			contentIndexCSS: {
@@ -3438,13 +3483,14 @@ const layoutConfigData: TemplateLayoutConfig = {
 				alignItems: 'flex-start',
 			},
 			titleAndSubtopicBoxCSS: {
+				width: '100%',
 				display: 'flex',
 				flexDirection: 'column',
 				backgroundColor: '#DEFF56',
-				paddingTop: '4rem',
+				paddingTop: '1rem',
 				paddingBottom: '1rem',
-				paddingLeft: '4rem',
-				paddingRight: '4rem',
+				paddingLeft: '2rem',
+				paddingRight: '2rem',
 			},
 			imageContainerCSS: {
 				width: '50%', // equivalent to w-1/2
@@ -3456,8 +3502,8 @@ const layoutConfigData: TemplateLayoutConfig = {
 			},
 			contentContainerCSS: {
 				paddingTop: '1rem',
-				paddingLeft: '4rem',
-				paddingRight: '4rem',
+				paddingLeft: '2rem',
+				paddingRight: '2rem',
 			},
 		},
 		Col_1_img_1_layout: {
@@ -3466,10 +3512,10 @@ const layoutConfigData: TemplateLayoutConfig = {
 				display: 'flex',
 				flexDirection: 'column',
 				backgroundColor: '#DEFF56',
-				paddingTop: '4rem',
+				paddingTop: '1rem',
 				paddingBottom: '1rem',
-				paddingLeft: '4rem',
-				paddingRight: '4rem',
+				paddingLeft: '2rem',
+				paddingRight: '2rem',
 			},
 			imageContainerCSS: {
 				height: '8rem',
@@ -3480,8 +3526,8 @@ const layoutConfigData: TemplateLayoutConfig = {
 			contentContainerCSS: {
 				paddingTop: '0.5rem',
 				paddingBottom: '0.5rem',
-				paddingLeft: '4rem',
-				paddingRight: '4rem',
+				paddingLeft: '2rem',
+				paddingRight: '2rem',
 				height: '100%',
 				width: '100%',
 				display: 'flex',
@@ -3506,10 +3552,10 @@ const layoutConfigData: TemplateLayoutConfig = {
 				// justifyContent: 'center',
 				// alignItems: 'center',
 				backgroundColor: '#DEFF56',
-				paddingTop: '4rem',
+				paddingTop: '1rem',
 				paddingBottom: '1rem',
-				paddingLeft: '4rem',
-				paddingRight: '4rem',
+				paddingLeft: '2rem',
+				paddingRight: '2rem',
 			},
 			imageContainerCSS: {
 				width: '100%', // equivalent to w-full
@@ -3530,8 +3576,8 @@ const layoutConfigData: TemplateLayoutConfig = {
 				gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
 				gap: '2rem', // equivalent to gap-[2rem]
 				paddingTop: '1rem',
-				paddingLeft: '4rem',
-				paddingRight: '4rem',
+				paddingLeft: '2rem',
+				paddingRight: '2rem',
 			},
 		},
 		Col_3_img_3_layout: {
@@ -3542,10 +3588,10 @@ const layoutConfigData: TemplateLayoutConfig = {
 				// justifyContent: 'center',
 				// alignItems: 'center',
 				backgroundColor: '#DEFF56',
-				paddingTop: '4rem',
+				paddingTop: '1rem',
 				paddingBottom: '1rem',
-				paddingLeft: '4rem',
-				paddingRight: '4rem',
+				paddingLeft: '2rem',
+				paddingRight: '2rem',
 			},
 			imageContainerCSS: {
 				width: '100%', // equivalent to w-full
@@ -3565,8 +3611,8 @@ const layoutConfigData: TemplateLayoutConfig = {
 				gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
 				gap: '2rem', // equivalent to gap-[2rem]
 				paddingTop: '1rem',
-				paddingLeft: '4rem',
-				paddingRight: '4rem',
+				paddingLeft: '2rem',
+				paddingRight: '2rem',
 			},
 		},
 	},
