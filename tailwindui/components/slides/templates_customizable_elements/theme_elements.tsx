@@ -3,6 +3,7 @@
 export type ThemeElements = {
 	backgroundColorCover: string;
 	backgroundColor: string;
+	backgroundColorCoverImg0?: string;
 	backgroundUrlCoverImg1?: string;
 	backgroundUrlCoverImg0?: string;
 	titleFontCSS: React.CSSProperties;
@@ -682,6 +683,7 @@ const themeConfigData: ThemeConfig = {
 			'/images/template/Fun_Education_004/BackgroundElements.png',
 		backgroundColorCover: 'bg-[#FFFFFF]', //Lin: with a background image and shapes of color #01B99F, #4747F3, #FFC8FF, #FF846C, #FECEB7
 		backgroundColor: 'bg-[#FFFFFF]', //Lin: Text box color #E4F9F6, shapes of color #01B99F, #4747F3, #FFC8FF, #FF846C, #FECEB7
+		backgroundColorCoverImg0: '#ACEAE1',
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold,(Lin: 700)
@@ -710,7 +712,7 @@ const themeConfigData: ThemeConfig = {
 		userNameFont: 'text-sm font-creato-regular  font-normal leading-[100%]',
 		userNameFontColor: 'text-[#868686]', //(Lin: color #868686)
 		headFontCSS: {
-			fontSize: '24pt', // text-4xl in points (assuming 1rem is 1pt)
+			fontSize: '48pt', // text-4xl in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-bold, (Lin: 700)
 			fontFamily: 'Caveat', // font-nimbus-sans-bold
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
@@ -729,6 +731,7 @@ const themeConfigData: ThemeConfig = {
 			'/images/template/Business_002/cover_img_0_layout/BackgroundImg.png',
 		backgroundColorCover: '',
 		backgroundColor: 'bg-[#D2D2D2]',
+		backgroundColorCoverImg0: '#2E2E2E',
 		titleFontCSS: {
 			fontSize: '24pt',
 			fontWeight: 'bold',
@@ -741,7 +744,7 @@ const themeConfigData: ThemeConfig = {
 			opacity: 1,
 			fontWeight: 'bold',
 			fontFamily: 'Arimo',
-			fontSize: '20pt',
+			fontSize: '16pt',
 			fontStyle: 'normal',
 			lineHeight: 1,
 			color: '#6B7A2D',
