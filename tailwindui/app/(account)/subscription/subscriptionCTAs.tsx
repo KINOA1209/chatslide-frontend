@@ -59,7 +59,7 @@ const UserResearchWindow: FC<UserResearchWindowProps> = ({ onClick }) => {
 					We want to learn more about what you think of DrLambda, and how you
 					use DrLambda.
 				</div>
-				<div className='flex flex-row gap-[1.5rem]'>
+				<div className='flex flex-col sm:flex-row gap-[1.5rem]'>
 					{/* book a session */}
 					<a
 						href='https://calendar.app.google/2uGV3B6h9UdYBHPB8'
