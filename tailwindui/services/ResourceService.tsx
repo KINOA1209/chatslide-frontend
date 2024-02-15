@@ -65,7 +65,7 @@ class ResourceService {
 			const data = await response.json();
 			return data.data;
 		} else {
-			throw new Error(`Failed to upload resource: ${response.status}`);
+			throw new Error(`Failed to upload resource: ${response.status}; filename: ${file.name}`);
 		}
 	}
 
