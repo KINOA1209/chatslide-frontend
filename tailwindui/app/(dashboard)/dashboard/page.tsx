@@ -122,6 +122,7 @@ export default function Dashboard() {
 
 	const handleBackToChoices = () => {
 		setShowSurvey(false)
+    router.push('/workflow-type-choice');
 	}
 
 	// get projects from backend
