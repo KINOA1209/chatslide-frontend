@@ -4,7 +4,7 @@ import { DeleteIcon, SpinIcon } from '@/app/(feature)/icons';
 import { ResourceItem } from '@/components/ui/ResourceItem';
 import Project from '@/models/Project';
 import { FaPhotoVideo } from 'react-icons/fa';
-import { RiSlideshowLine } from 'react-icons/ri';
+import { RiSlideshow2Fill } from 'react-icons/ri';
 import Image from 'next/image';
 
 interface Props {
@@ -48,7 +48,7 @@ const ProjectTable: React.FC<Props> = ({
                 {project.task === 'presentation' ? (
                   project.thumbnail_url
                     ? <Image src={project.thumbnail_url} alt='project thumbnail' layout='responsive' width={16} height={9} />
-                    : <RiSlideshowLine className='text-gray-600 w-[40px] h-[40px]' />
+                    : <RiSlideshow2Fill className='text-gray-600 w-[40px] h-[40px]' />
                 ) : (
                   <FaPhotoVideo className='text-gray-600 w-[40px] h-[40px]' />
                 )}
