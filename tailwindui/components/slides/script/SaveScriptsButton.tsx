@@ -25,6 +25,7 @@ const SaveScriptsButton: React.FC<Props> = ({
     const a = document.createElement('a');
     a.href = url;
     a.download = 'scripts.txt';
+    document.body.appendChild(a); 
     a.click();
     URL.revokeObjectURL(url);
     document.body.removeChild(a);
