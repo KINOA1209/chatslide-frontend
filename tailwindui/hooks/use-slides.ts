@@ -75,6 +75,10 @@ export const useSlides = () => {
 		newSlides.splice(index, 1);
 		setSlides(newSlides);
 
+    if (slideIndex >= newSlides.length) {
+      setSlideIndex(newSlides.length - 1);
+    }
+
 		updateVersion();
     updateSlideHistory(newSlides);
 		syncSlides(newSlides, false, newSlides.length);
@@ -121,8 +125,6 @@ export const useSlides = () => {
       return updatedIndex;
     });
   };
-
-
 
 	const undoChange = () => {
 		if (slidesHistoryIndex > 0) {
