@@ -4,17 +4,18 @@ import React, { useState, useEffect, useRef } from 'react';
 import AuthService from '../../services/AuthService';
 import Slide from '../../models/Slide';
 import PaywallModal from '../forms/paywallModal';
-import { BigGrayButton } from '../button/DrlambdaButton';
+import { BigGrayButton, DropDown } from '../button/DrlambdaButton';
 import { FaDownload, FaRing, FaTruckLoading } from 'react-icons/fa';
 import { generatePdf } from '../utils/DownloadImage';
 import ProjectService from '@/services/ProjectService';
+import { useUser } from '@/hooks/use-user';
 
 interface ExportToPdfProps {
 	slides: Slide[];
 	exportSlidesRef: React.RefObject<HTMLDivElement>;
 }
 
-const ExportToPdfButton: React.FC<ExportToPdfProps> = ({
+const ExportToFile: React.FC<ExportToPdfProps> = ({
 	slides,
 	exportSlidesRef,
 }) => {
@@ -22,8 +23,9 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({
 		typeof sessionStorage !== 'undefined'
 			? sessionStorage.getItem('topic')
 			: '';
-	const [downloadingPDF, setDownloadingPDF] = useState(false);
+	const [downloading, setDownloading] = useState(false);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const { isPaidUser, token } = useUser(); 
 
 	async function exportToPdfFrontend() {
 		const file = await generatePdf(topic || '', exportSlidesRef, slides.length);
@@ -43,22 +45,26 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({
 		// await generatePDF(exportSlidesRef, exportOptions);
 	}
 
-	const handleSavePDF = async () => {
-		setDownloadingPDF(true);
+	const handleExport = async (type: string) => {
+    if (!isPaidUser && type === 'pptx') {
+      setShowPaymentModal(true);
+      return;
+    }
+
+    setDownloading(true);
     let frontend = false;  // toggle this to switch between frontend and backend pdf generation
     if (frontend) {
       await exportToPdfFrontend();
     } else{
-      const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
       const project_id = sessionStorage.getItem('project_id') || '';
-      await ProjectService.exportToPdfBackend(idToken, project_id);
+      await ProjectService.exportToFileBackend(token, project_id, type);
     }
-		setDownloadingPDF(false);
+    setDownloading(false);
 	};
 
 	return (
 		<div className='flex flex-wrap flex-grow-0'>
-			<div className=''>
+			<div className='flex flex-row gap-2'>
 				{showPaymentModal && (
 					<PaywallModal
 						setShowModal={setShowPaymentModal}
@@ -67,15 +73,43 @@ const ExportToPdfButton: React.FC<ExportToPdfProps> = ({
 					/>
 				)}
 
-				<BigGrayButton onClick={handleSavePDF} isSubmitting={downloadingPDF}>
-					<div className='flex flex-row items-center gap-x-2'>
-						Export to PDF
-						<FaDownload className='text-gray-800' />
-					</div>
-				</BigGrayButton>
+        {/* <DropDown
+          onChange={(event) => handleExport(event.target.value)}
+          displayText='Export to File 📁'
+          disabled={downloading}
+        >
+            <option value={'pdf'}>
+              Export to PDF {downloading && '⏳'}
+            </option>
+            <option value={'pptx'}>
+             Export to PPTX {!isPaidUser && '🔒'} {downloading && '⏳'}
+            </option>
+        </DropDown> */}
+        <div className='h-[36px] flex flex-row items-center gap-2'>
+          <FaDownload />
+          Export to
+        </div>
+
+        <BigGrayButton
+          onClick={() => handleExport('pdf')}
+          isSubmitting={downloading}
+          isPaidUser={isPaidUser}
+          bgColor='bg-Gray'
+        >
+          <span>PDF</span>
+        </BigGrayButton>
+
+        <BigGrayButton
+          onClick={() => handleExport('pptx')}
+          isSubmitting={downloading}
+          isPaidUser={isPaidUser}
+          bgColor='bg-Gray'
+        >
+          <span>PPTX {!isPaidUser && '🔒'}</span>
+        </BigGrayButton>
 			</div>
 		</div>
 	);
 };
 
-export default ExportToPdfButton;
+export default ExportToFile;
