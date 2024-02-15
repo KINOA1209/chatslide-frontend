@@ -212,7 +212,10 @@ export const Col_1_img_0_layout = ({
 				</div>
 			</div>
 
-			<div className='opacity-50 border border-neutral-900 border-opacity-40'></div>
+			<div
+				className='opacity-50 border border-neutral-900 border-opacity-40'
+				style={layoutElements.titlesAndContentDividerCSS}
+			></div>
 			<div style={layoutElements.columnCSS}>
 				<div
 					style={{
@@ -225,6 +228,17 @@ export const Col_1_img_0_layout = ({
 				</div>
 			</div>
 			<div style={layoutElements.logoCSS}>{templateLogo}</div>
+			<div style={layoutElements.visualElementsCSS}>
+				{themeElements.backgroundUrlCol_1_img_0 && (
+					<Image
+						style={{ objectFit: 'cover', height: '100%' }}
+						width={960}
+						height={540}
+						src={themeElements.backgroundUrlCol_1_img_0}
+						alt='Background Image for cover'
+					/>
+				)}
+			</div>
 		</div>
 	);
 };
@@ -261,15 +275,10 @@ export const Col_2_img_0_layout = ({
 							key={index}
 							style={{
 								...layoutElements.contentCSS,
-								display: item === null || index > 1 ? 'none' : 'block', // or 'flex' based on your layout
+								display: item === null || index > 1 ? 'none' : 'flex', // or 'flex' based on your layout
 							}}
 						>
-							<div
-								// className='mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-creato-medium uppercase leading-10 tracking-widest pt-[2rem]'
-								style={layoutElements.contentIndexCSS}
-							>
-								{index + 1}
-							</div>
+							<div style={layoutElements.contentIndexCSS}>{index + 1}</div>
 							<div
 								// className='opacity-50 border border-neutral-900 border-opacity-40'
 								style={layoutElements.contentIndexTextDividerCSS}
@@ -285,6 +294,17 @@ export const Col_2_img_0_layout = ({
 					))}
 			</div>
 			<div style={layoutElements.logoCSS}>{templateLogo}</div>
+			<div style={layoutElements.visualElementsCSS}>
+				{themeElements.backgroundUrlCol_2_img_0 && (
+					<Image
+						style={{ objectFit: 'cover', height: '100%' }}
+						width={960}
+						height={540}
+						src={themeElements.backgroundUrlCol_2_img_0}
+						alt='Background Image for cover'
+					/>
+				)}
+			</div>
 		</>
 	);
 };
@@ -305,7 +325,7 @@ export const Col_3_img_0_layout = ({
 	templateLogo,
 }: MainSlideProps) => {
 	return (
-		<>
+		<div style={layoutElements.canvaCSS}>
 			<div style={layoutElements.titleAndSubtopicBoxCSS}>
 				<div className={``}>{topic}</div>
 				<div className={``}>{subtopic}</div>
@@ -313,18 +333,16 @@ export const Col_3_img_0_layout = ({
 
 			<div style={layoutElements.contentContainerCSS}>
 				{Array.isArray(content) &&
-					content.slice(0, 3).map((item, index) => (
+					content.map((item, index) => (
 						<div
 							// className='flex flex-col gap-[0.5rem]'
 							key={index}
-							style={layoutElements.contentCSS}
+							style={{
+								...layoutElements.contentCSS,
+								display: item === null || index > 2 ? 'none' : 'flex', // or 'flex' based on your layout
+							}}
 						>
-							<div
-								// className='mix-blend-hard-light text-neutral-900 text-opacity-25 text-4xl font-bold font-creato-medium uppercase leading-10 tracking-widest pt-[2rem]'
-								style={layoutElements.contentIndexCSS}
-							>
-								{index + 1}
-							</div>
+							<div style={layoutElements.contentIndexCSS}>{index + 1}</div>
 							<div
 								// className='opacity-50 border border-neutral-900 border-opacity-40'
 								style={layoutElements.contentIndexTextDividerCSS}
@@ -340,7 +358,18 @@ export const Col_3_img_0_layout = ({
 					))}
 			</div>
 			<div style={layoutElements.logoCSS}>{templateLogo}</div>
-		</>
+			<div style={layoutElements.visualElementsCSS}>
+				{themeElements.backgroundUrlCol_3_img_0 && (
+					<Image
+						style={{ objectFit: 'cover', height: '100%' }}
+						width={960}
+						height={540}
+						src={themeElements.backgroundUrlCol_3_img_0}
+						alt='Background Image for cover'
+					/>
+				)}
+			</div>
+		</div>
 	);
 };
 export const Col_1_img_1_layout = ({

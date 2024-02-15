@@ -21,6 +21,7 @@ export type LayoutElements = {
 	contentIndexTextDividerCSS?: React.CSSProperties;
 	contentTextCSS?: React.CSSProperties;
 	userNameTextDividerCSS?: React.CSSProperties;
+	titlesAndContentDividerCSS?: React.CSSProperties;
 };
 
 export type TemplateLayoutConfig = {
@@ -3053,42 +3054,105 @@ const layoutConfigData: TemplateLayoutConfig = {
 				height: '100%', // Equivalent to h-full
 				display: 'flex', // Equivalent to flex
 				flexDirection: 'column', // Equivalent to flex-col
+				position: 'relative', // Equivalent to
+				// overflow: 'hidden',
+			},
+			visualElementsCSS: {
+				zIndex: 20,
+				width: '100%',
+				position: 'absolute',
+				// display: 'none',
+				pointerEvents:
+					'none' /* Make the layer transparent to pointer events */,
+				top: '21%',
+			},
+			titleAndSubtopicBoxCSS: {
+				marginTop: '4rem',
+				marginLeft: '4rem',
+				marginRight: '4rem',
+			},
+			topicCSS: {
+				zIndex: 30,
+			},
+			subtopicCSS: {
+				zIndex: 30,
 			},
 			contentCSS: {
 				width: '100%', // Equivalent to w-full
+				zIndex: 30,
 			},
 			columnCSS: {
-				width: '100%', // Equivalent to w-full
+				width: 'auto',
 				paddingLeft: '1rem',
 				paddingTop: '1.2rem',
 				paddingBottom: '1.2rem',
+				marginLeft: '4rem',
+				marginRight: '4rem',
+				marginTop: '1rem',
+				marginBottom: '1rem',
 				display: 'flex',
+				// zIndex: 10,
+				backgroundColor: '#E4F9F6',
+				borderRadius: '1.25rem',
+			},
+			titlesAndContentDividerCSS: {
+				display: 'none',
 			},
 		},
 		Col_2_img_0_layout: {
-			contentContainerCSS: {
-				height: '100%',
+			visualElementsCSS: {
+				zIndex: 20,
 				width: '100%',
+				position: 'absolute',
+				// display: 'none',
+				pointerEvents:
+					'none' /* Make the layer transparent to pointer events */,
+				top: '21%',
+			},
+			titleAndSubtopicBoxCSS: {
+				marginTop: '4rem',
+				marginLeft: '4rem',
+				marginRight: '4rem',
+			},
+			topicCSS: {
+				zIndex: 30,
+			},
+			subtopicCSS: {
+				zIndex: 30,
+			},
+
+			contentContainerCSS: {
+				height: 'auto',
+				width: 'auto',
 				display: 'grid',
 				gridTemplateColumns: 'repeat(2, 1fr)',
 				gap: '2rem',
+				margin: 'auto', // Center the container horizontally
+				padding: '1rem 4rem', // Add left and right padding
 			},
-			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentCSS: {
+				display: 'flex',
+				flexDirection: 'column',
+				gap: '0.5rem',
+				width: '100%', // Equivalent to w-full
+				flexGrow: 0,
+				backgroundColor: '#E4F9F6',
+				// zIndex: 30,
+			},
 			contentIndexCSS: {
-				mixBlendMode: 'hard-light',
-				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
-				fontSize: '2rem',
+				fontFamily: 'Caveat', // font-nimbus-sans-bold
+				color: '#2E2E2E', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2.5rem',
 				fontWeight: 'bold',
-				fontFamily: 'Creato Display Medium',
+				// fontFamily: 'Creato Display Medium',
 				textTransform: 'uppercase',
 				lineHeight: '2.5rem',
 				letterSpacing: '0.5rem',
 				paddingTop: '2rem',
+				zIndex: 30,
 			},
 			contentIndexTextDividerCSS: {
-				display: 'flex',
-				opacity: 0.5,
-				border: '1px solid rgba(55, 65, 81, 0.4)',
+				display: 'none',
 			},
 			contentTextCSS: {
 				display: 'flex',
@@ -3096,39 +3160,82 @@ const layoutConfigData: TemplateLayoutConfig = {
 				width: '100%',
 				height: '100%',
 				flexGrow: 1,
+				zIndex: 30,
 			},
 		},
 		Col_3_img_0_layout: {
+			canvaCSS: {
+				width: '100%',
+				// boxSizing: 'border-box',
+			},
+			visualElementsCSS: {
+				zIndex: 20,
+				width: '100%',
+				position: 'absolute',
+				// display: 'none',
+				pointerEvents:
+					'none' /* Make the layer transparent to pointer events */,
+				top: '21%',
+			},
+			titleAndSubtopicBoxCSS: {
+				marginTop: '4rem',
+				marginLeft: '4rem',
+				marginRight: '4rem',
+			},
+			topicCSS: {
+				zIndex: 30,
+			},
+			subtopicCSS: {
+				zIndex: 30,
+			},
+
 			contentContainerCSS: {
-				height: '100%',
+				height: 'auto',
 				width: '100%',
 				display: 'grid',
-				gridTemplateColumns: 'repeat(3, 1fr)',
+				gridTemplateColumns: 'repeat(3,1fr)',
 				gap: '2rem',
+				margin: 'auto', // Center the container horizontally
+				padding: '1rem 4rem', // Add left and right padding
 			},
-			contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+			contentCSS: {
+				display: 'flex',
+				flexDirection: 'column',
+				gap: '0.5rem',
+				width: '100%', // Equivalent to w-full
+				// maxWidth: '200px', // Set your desired maximum width here
+				flexGrow: 1,
+				// flexWrap: 'wrap',
+				backgroundColor: '#E4F9F6',
+				paddingLeft: '1rem',
+				paddingRight: '1rem',
+				paddingBottom: '1rem',
+				// zIndex: 30,
+			},
 			contentIndexCSS: {
-				mixBlendMode: 'hard-light',
-				color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
-				fontSize: '2rem',
+				fontFamily: 'Caveat', // font-nimbus-sans-bold
+				color: '#2E2E2E', // Assuming text-neutral-900 corresponds to #374155
+				fontSize: '2.5rem',
 				fontWeight: 'bold',
-				fontFamily: 'Creato Display Medium',
+				// fontFamily: 'Creato Display Medium',
 				textTransform: 'uppercase',
 				lineHeight: '2.5rem',
 				letterSpacing: '0.5rem',
 				paddingTop: '2rem',
+				zIndex: 30,
 			},
 			contentIndexTextDividerCSS: {
-				display: 'flex',
-				opacity: 0.5,
-				border: '1px solid rgba(55, 65, 81, 0.4)',
+				display: 'none',
 			},
 			contentTextCSS: {
 				display: 'flex',
 				flexDirection: 'row',
+				flexWrap: 'wrap', // Add this line to enable wrapping
 				width: '100%',
+				// maxWidth: '300px',
 				height: '100%',
 				flexGrow: 1,
+				zIndex: 30,
 			},
 		},
 		Col_2_img_1_layout: {
@@ -3149,7 +3256,11 @@ const layoutConfigData: TemplateLayoutConfig = {
 				justifyContent: 'flex-start',
 				alignItems: 'flex-start',
 			},
-			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
+			titleAndSubtopicBoxCSS: {
+				display: 'flex',
+				flexDirection: 'column',
+				width: '100%',
+			},
 			imageContainerCSS: {
 				width: '50%', // equivalent to w-1/2
 				height: '90%', // equivalent to h-[90%]

@@ -6,6 +6,13 @@ export type ThemeElements = {
 	backgroundColorCoverImg0?: string;
 	backgroundUrlCoverImg1?: string;
 	backgroundUrlCoverImg0?: string;
+	backgroundUrlCol_1_img_0?: string;
+	backgroundUrlCol_2_img_0?: string;
+	backgroundUrlCol_3_img_0?: string;
+	backgroundUrlCol_1_img_1?: string;
+	backgroundUrlCol_2_img_1?: string;
+	backgroundUrlCol_2_img_2?: string;
+	backgroundUrlCol_3_img_3?: string;
 	titleFontCSS: React.CSSProperties;
 	subtopicFontCSS: React.CSSProperties;
 	contentFontCSS: React.CSSProperties;
@@ -681,6 +688,13 @@ const themeConfigData: ThemeConfig = {
 			'/images/template/Fun_Education_004/BackgroundElements.png',
 		backgroundUrlCoverImg0:
 			'/images/template/Fun_Education_004/BackgroundElements.png',
+		backgroundUrlCol_1_img_0:
+			'/images/template/Fun_Education_004/BackgroundElementsCol1_2_3_img_0.png',
+		backgroundUrlCol_2_img_0:
+			'/images/template/Fun_Education_004/BackgroundElementsCol1_2_3_img_0.png',
+		backgroundUrlCol_3_img_0:
+			'/images/template/Fun_Education_004/BackgroundElementsCol1_2_3_img_0.png',
+
 		backgroundColorCover: 'bg-[#FFFFFF]', //Lin: with a background image and shapes of color #01B99F, #4747F3, #FFC8FF, #FF846C, #FECEB7
 		backgroundColor: 'bg-[#FFFFFF]', //Lin: Text box color #E4F9F6, shapes of color #01B99F, #4747F3, #FFC8FF, #FF846C, #FECEB7
 		backgroundColorCoverImg0: '#ACEAE1',
@@ -696,7 +710,7 @@ const themeConfigData: ThemeConfig = {
 			opacity: 1, // opacity-70
 			fontWeight: 'normal', // font-nimbus-sans-bold (Lin: 500)
 			fontFamily: 'Helvetica Neue', // font-nimbus-sans-bold
-			fontSize: '20pt', // text-xl in points
+			fontSize: '16pt', // text-xl in points
 			fontStyle: 'normal', // font-normal
 			lineHeight: 1, // leading-[150%] is equivalent to a line height of 1.5
 			color: '#BCBCBC', // text-red-800 color
