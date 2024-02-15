@@ -197,6 +197,7 @@ const GenerateSlidesSubmit = ({
 			await generateSlidesPreview(formData, token);
 		} catch (error) {
 			console.error('Error:', error);
+      setIsSubmitting(false);
 		}
 	};
 
