@@ -3246,13 +3246,29 @@ const layoutConfigData: TemplateLayoutConfig = {
 				alignItems: 'flex-start',
 				height: '100%',
 				gap: '0.1rem',
+				paddingTop: '4rem',
+				paddingLeft: '4rem',
+			},
+			visualElementsCSS: {
+				zIndex: 20,
+				width: '100%',
+				height: '100%',
+				position: 'absolute',
+				// display: 'none',
+				pointerEvents:
+					'none' /* Make the layer transparent to pointer events */,
+				top: '0%',
+			},
+			contentContainerCSS: {
+				paddingTop: '2rem',
+				zIndex: 30,
 			},
 			canvaCSS: {
 				width: '100%',
 				height: '100%',
 				display: 'flex',
 				flexDirection: 'row',
-				gap: '2rem',
+				// gap: '2rem',
 				justifyContent: 'flex-start',
 				alignItems: 'flex-start',
 			},
@@ -3260,14 +3276,19 @@ const layoutConfigData: TemplateLayoutConfig = {
 				display: 'flex',
 				flexDirection: 'column',
 				width: '100%',
+				zIndex: 30,
 			},
 			imageContainerCSS: {
-				width: '50%', // equivalent to w-1/2
-				height: '90%', // equivalent to h-[90%]
-				borderRadius: '0.375rem', // equivalent to rounded-md
+				width: '100%',
+				height: '100%',
+				// borderRadius: '1.25rem',
 				overflow: 'hidden',
 				display: 'flex',
-				alignItems: 'center', // equivalent to items-center
+				alignItems: 'center',
+				padding: '2rem 2rem 2rem 4rem', // top right bottom left
+			},
+			imageCSS: {
+				borderRadius: '1.25rem', // border radius 1.25rem for image
 			},
 		},
 		Col_1_img_1_layout: {
