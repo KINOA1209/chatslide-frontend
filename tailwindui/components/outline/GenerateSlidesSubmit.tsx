@@ -66,6 +66,7 @@ const GenerateSlidesSubmit = ({
       initSlides(ProjectService.parseSlides(presentation_slides));
 			router.push('workflow-review-slides');
 		} else {
+      setIsSubmitting(false);
 			alert(
 				`Server is busy now. Please try again later. Reference code: ` +
 					sessionStorage.getItem('project_id'),
@@ -197,7 +198,6 @@ const GenerateSlidesSubmit = ({
 			await generateSlidesPreview(formData, token);
 		} catch (error) {
 			console.error('Error:', error);
-      setIsSubmitting(false);
 		}
 	};
 
