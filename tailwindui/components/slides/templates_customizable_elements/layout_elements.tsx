@@ -48,11 +48,24 @@ const layoutConfigData: TemplateLayoutConfig = {
 				paddingLeft: '2rem',
 				zIndex: 20,
 			},
+			canvaCSS: {
+				display: 'flex',
+				width: '100%',
+				height: '100%',
+			},
 			userNameCSS: {
-				// fontFamily: 'caveat-medium',
+				zIndex: 30,
 			},
 		},
 		Cover_img_1_layout: {
+			canvaCSS: {
+				display: 'flex',
+				width: '100%',
+				height: '100%',
+			},
+			userNameCSS: {
+				zIndex: 30,
+			},
 			titleCSS: {
 				paddingLeft: '2rem',
 				zIndex: 20,
@@ -75,6 +88,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 				borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
 				overflow: 'hidden',
 			},
+
 			// visualElementsCSS: {
 			// 	zIndex: 20,
 			// 	position: 'absolute',
@@ -87,6 +101,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 				height: '100%', // Equivalent to h-full
 				display: 'flex', // Equivalent to flex
 				flexDirection: 'column', // Equivalent to flex-col
+				padding: '28px',
 			},
 			contentCSS: {
 				width: '100%', // Equivalent to w-full
@@ -100,6 +115,9 @@ const layoutConfigData: TemplateLayoutConfig = {
 			},
 		},
 		Col_2_img_0_layout: {
+			canvaCSS: {
+				padding: '28px',
+			},
 			contentContainerCSS: {
 				height: '100%',
 				width: '100%',
@@ -133,6 +151,9 @@ const layoutConfigData: TemplateLayoutConfig = {
 			},
 		},
 		Col_3_img_0_layout: {
+			canvaCSS: {
+				padding: '28px',
+			},
 			contentContainerCSS: {
 				height: '100%',
 				width: '100%',
@@ -182,6 +203,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 				gap: '2rem',
 				justifyContent: 'flex-start',
 				alignItems: 'flex-start',
+				padding: '28px',
 			},
 			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
 			imageContainerCSS: {
@@ -194,6 +216,9 @@ const layoutConfigData: TemplateLayoutConfig = {
 			},
 		},
 		Col_1_img_1_layout: {
+			canvaCSS: {
+				padding: '28px',
+			},
 			columnCSS: {
 				width: '100%',
 				display: 'grid',
@@ -227,6 +252,9 @@ const layoutConfigData: TemplateLayoutConfig = {
 			},
 		},
 		Col_2_img_2_layout: {
+			canvaCSS: {
+				padding: '28px',
+			},
 			columnCSS: {
 				display: 'flex',
 				flexDirection: 'column',
@@ -259,6 +287,9 @@ const layoutConfigData: TemplateLayoutConfig = {
 			},
 		},
 		Col_3_img_3_layout: {
+			canvaCSS: {
+				padding: '28px',
+			},
 			columnCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
 			titleAndSubtopicBoxCSS: {
 				display: 'flex',

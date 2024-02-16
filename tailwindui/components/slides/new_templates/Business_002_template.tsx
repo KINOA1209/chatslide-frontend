@@ -8,6 +8,7 @@ import {
 	loadLayoutConfigElements,
 } from '@/components/slides/SlidesHTML';
 import { TemplateKeys } from '../slideTemplates';
+import StanfordLogo from '@/public/images/template/Stanford/StanfordLogo.png';
 export const Business_002_template = ({
 	user_name,
 	title,
