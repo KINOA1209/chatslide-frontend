@@ -377,7 +377,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			)}
 
 			{/* buttons and contents */}
-			<div className='max-w-4xl relative flex flex-row items-center justify-center gap-4'>
+			<div className='max-w-4xl relative flex flex-row items-center justify-center'>
 				<ToastContainer />
 
 				{/* vertical bar */}
