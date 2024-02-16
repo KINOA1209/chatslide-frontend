@@ -15,6 +15,10 @@ import { DropDown, SmallBlueButton } from '@/components/button/DrlambdaButton';
 import Resource from '@/models/Resource';
 import SelectedResourcesList from '@/components/SelectedResources';
 import dynamic from 'next/dynamic';
+import ImageSelector from './ImageSelector';
+import RadioButtonWithImage, { ImageOption } from '@/components/ui/RadioButtonWithImage';
+import useHydrated from '@/hooks/use-hydrated';
+
 
 const SlideDesignPreview = dynamic(
 	() => import('@/components/slides/SlideDesignPreview'),
@@ -25,11 +29,9 @@ const SlideDesignPreview = dynamic(
 
 export default function ThemePage() {
 	const [theme, setTheme] = useState('content_with_image');
-	const [useLogo, setUseLogo] = useState(false);
   const [schoolTemplate, setSchoolTemplate] = useState('Business_002' as string);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const contentRef = useRef<HTMLDivElement>(null);
-	const [showFileModal, setShowFileModal] = useState(false);
 	const [isGpt35, setIsGpt35] = useState(true);
 	const storedOutline =
 		typeof sessionStorage !== 'undefined'
@@ -41,11 +43,26 @@ export default function ThemePage() {
 			? JSON.parse(sessionStorage.selectedLogo)
 			: [],
 	);
+  const [selectedBackground, setSelectedBackground] = useState<Resource[]>([]);
 	const outline = storedOutline ? JSON.parse(storedOutline) : null;
 	const outlineRes = outline ? JSON.parse(outline.res) : null;
 	const [outlineContent, setOutlineContent] = useState<OutlineSection[] | null>(
 		null,
 	);
+
+  const imageChoices: ImageOption[] = [
+    {
+      img: ContentWithImageImg,
+      value: 'content_with_image',
+      alt: 'More images<br>(70% decks contain images)',
+    },
+    {
+      img: ContentOnlyImg,
+      value: 'content_only',
+      alt: 'Less images<br>(30% decks contain images)',
+    },
+  ];
+
 	useEffect(() => {
 		if (outlineRes) {
 			const newOutlineContent = Object.keys(outlineRes).map((key) => {
@@ -59,11 +76,6 @@ export default function ThemePage() {
 			setOutlineContent(newOutlineContent);
 		}
 	}, []);
-	const removeLogoAtIndex = (indexToRemove: number) => {
-		setSelectedLogo((currentLogo) =>
-			currentLogo.filter((_, index) => index !== indexToRemove),
-		);
-	};
 
 	useEffect(() => {
 		sessionStorage.setItem('schoolTemplate', schoolTemplate);
@@ -73,19 +85,19 @@ export default function ThemePage() {
 		} else {
 			sessionStorage.removeItem('selectedLogo_id');
 		}
-	}, [schoolTemplate, theme, selectedLogo]);
+    if (selectedBackground && selectedBackground.length > 0) {
+      sessionStorage.setItem('selectedBackground_id', selectedBackground[0].id);
+    } else {
+      sessionStorage.removeItem('selectedBackground_id');
+    }
+	}, [schoolTemplate, theme, selectedLogo, selectedBackground]);
+
+  // avoid hydration error during development caused by persistence
+  if (!useHydrated()) return <></>;
 
 	return (
 		<div className=''>
 			<ToastContainer />
-
-			<FileUploadModal
-				selectedResources={selectedLogo}
-				setSelectedResources={setSelectedLogo}
-				showModal={showFileModal}
-				setShowModal={setShowFileModal}
-				pageInvoked={'theme'}
-			/>
 
 			<WorkflowStepsBanner
 				currentIndex={2}
@@ -161,108 +173,14 @@ export default function ThemePage() {
 						{/* theme */}
 						<div>
 							<span className='text-md font-bold'>
-								What theme do you want to choose?
+								How many images do you want to generate?
 							</span>
-							<div className='grid grid-cols-3 gap-x-4 mt-3'>
-								{[
-									{
-										img: ContentWithImageImg,
-										value: 'content_with_image',
-										alt: 'More images<br>(70% decks contain images)',
-									},
-									{
-										img: ContentOnlyImg,
-										value: 'content_only',
-										alt: 'Less images<br>(30% decks contain images)',
-									},
-									// {
-									//     img: ContentInBrandingColorImg,
-									//     value: 'content_in_branding_color',
-									//     alt: 'Content in branding color',
-									// },
-								].map(({ img, value, alt }) => (
-									<div key={value} className={`rounded-lg py-2 }`}>
-										<label>
-											<div onClick={() => setTheme(value)}>
-												<Image src={img} alt={alt} />
-											</div>
-											<div className='flex flex-row items-center gap-x-2'>
-												<input
-													type='radio'
-													name='theme'
-													value={value}
-													checked={theme === value}
-													onChange={() => setTheme(value)}
-												/>
-												<span dangerouslySetInnerHTML={{ __html: alt }}></span>
-											</div>
-										</label>
-									</div>
-								))}
-							</div>
-
-							{/*logo section*/}
-              <div className='grid grid-cols-2 gap-x-4 mt-4'>
-                <div className='gap-1 flex flex-col justify-start'>
-                  <span className='text-md font-bold'>
-                    Do you want to use your logo?
-                  </span>
-                  <form className='flex flex-row gap-x-4 mt-2 items-center'>
-                    <label>
-                      <div className='flex flex-row items-center gap-x-1'>
-                        <input
-                          type='radio'
-                          value='yes'
-                          checked={useLogo}
-                          onChange={(e) => setUseLogo(true)}
-                        />
-                        <span>Yes</span>
-                      </div>
-                    </label>
-                    <label>
-                      <div className='flex flex-row items-center gap-x-1'>
-                        <input
-                          type='radio'
-                          value='no'
-                          checked={!useLogo}
-                          onChange={(e) => setUseLogo(false)}
-                        />
-                        <span>No</span>
-                      </div>
-                    </label>
-                  </form>
-                </div>
-
-                <div
-                  className={`transition-opacity duration-300 ease-in-out ${
-                    useLogo ? 'opacity-100' : 'opacity-0'
-                  } gap-1 flex flex-col justify-start`}
-                >
-                  <span className='ml-2 text-md font-bold'>Upload Logo:</span>
-                  <div className=''>
-                    <SmallBlueButton
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setShowFileModal(true);
-                      }}
-                    >
-                      Browse File
-                    </SmallBlueButton>
-                  </div>
-                </div>
-              </div>
+              <RadioButtonWithImage options={imageChoices} selectedValue={theme} setSelectedValue={setTheme} />
 						</div>
-						{useLogo && (
-							<>
-								{selectedLogo.length > 0 && <hr id='add_hr' />}
-								<div className='mt-[10px]'>
-									<SelectedResourcesList
-										selectedResources={selectedLogo}
-										removeResourceAtIndex={removeLogoAtIndex}
-									/>
-								</div>
-							</>
-						)}
+            {/* logo */}
+            <ImageSelector type='logo' selectedImage={selectedLogo} setSelectedImage={setSelectedLogo} />
+            {/* background */}
+            <ImageSelector type='background' selectedImage={selectedBackground} setSelectedImage={setSelectedBackground} />
 					</div>
 				</div>
 			</div>

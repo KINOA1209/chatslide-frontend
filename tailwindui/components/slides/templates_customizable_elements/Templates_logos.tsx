@@ -73,6 +73,7 @@ const DrLambdaLogo = ({
 			return (
 				<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[1rem] pb-[1rem] z-50'>
 					<Image
+            unoptimized={true}
 						src={custom_logo[0]}
 						alt='custom logo'
 						width={44}

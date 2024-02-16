@@ -27,6 +27,7 @@ import SessionStorage from '@/components/utils/SessionStorage';
 import FromDocsUploadFile from '@/components/FromDocsUploadFile';
 import { IoIosLink } from 'react-icons/io';
 import { FiYoutube } from 'react-icons/fi';
+import useHydrated from '@/hooks/use-hydrated';
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 6;
 
@@ -468,6 +469,10 @@ export default function Topic() {
 			currentResources.filter((_, index) => index !== indexToRemove),
 		);
 	};
+
+  // avoid hydration error during development caused by persistence
+  if (!useHydrated()) return <></>;
+
 	return (
 		<section>
 			<MyCustomJoyride steps={StepsSummaryPage()} />

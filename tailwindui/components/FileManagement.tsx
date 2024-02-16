@@ -153,6 +153,7 @@ interface filesInterface {
 	selectedResources?: Array<Resource>;
 	setSelectedResources?: Function;
 	pageInvoked?: string;
+  fileType?: string;
 }
 
 const MyFiles: React.FC<filesInterface> = ({
@@ -160,6 +161,7 @@ const MyFiles: React.FC<filesInterface> = ({
 	selectedResources,
 	setSelectedResources,
 	pageInvoked,
+  fileType = 'logo'
 }) => {
 	const [resources, setResources] = useState<Resource[]>([]);
 	const promptRef = useRef<HTMLDivElement>(null);
@@ -200,10 +202,12 @@ const MyFiles: React.FC<filesInterface> = ({
 	}, [resources, rendered]);
 
 	const fetchFiles = async (token: string) => {
+    console.log('pageInvoked', pageInvoked);
+
 		//const resource_type = selectable ? ['doc', 'url'] : [];
 		const resource_type = 
 			pageInvoked === 'summary' ? ['doc', 'url', 'webpage', 'youtube'] :
-			pageInvoked === 'theme' ? ['logo'] :
+			pageInvoked === 'theme' ? [fileType] :
 			[];
 
 		ResourceService.fetchResources(resource_type, token).then((resources) => {
@@ -313,7 +317,7 @@ const MyFiles: React.FC<filesInterface> = ({
 		}
 	};
 
-	const tokenFetcher = async () => {
+	const carbonTokenFetcher = async () => {
 		try {
 			// Assuming AuthService.getCurrentUserTokenAndId() returns an object with userId and idToken properties
 			const { userId, idToken: token } =
@@ -496,7 +500,7 @@ const MyFiles: React.FC<filesInterface> = ({
 						<CarbonConnect
 							orgName='DrLambda'
 							brandIcon='https://drlambda.ai/images/Logo_Color.png'
-							tokenFetcher={tokenFetcher}
+              tokenFetcher={carbonTokenFetcher}
 							tags={{
 								tag1: 'tag1_value',
 								tag2: 'tag2_value',

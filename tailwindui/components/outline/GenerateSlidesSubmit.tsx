@@ -66,6 +66,7 @@ const GenerateSlidesSubmit = ({
       initSlides(ProjectService.parseSlides(presentation_slides));
 			router.push('workflow-review-slides');
 		} else {
+      setIsSubmitting(false);
 			alert(
 				`Server is busy now. Please try again later. Reference code: ` +
 					sessionStorage.getItem('project_id'),
@@ -138,10 +139,11 @@ const GenerateSlidesSubmit = ({
 		typeof window !== 'undefined'
 			? sessionStorage.getItem('theme')
 			: null;
-		const logo =
+		const logo_ids =
 		typeof window !== 'undefined'
 			? sessionStorage.getItem('selectedLogo_id')
 			: null;
+    const background_ids = typeof window !== 'undefined' ? sessionStorage.getItem('selectedBackground_id') : null;
 		formData = {
 			res: JSON.stringify({ ...outlineCopy }),
 			outlines: JSON.stringify({ ...outlineCopy }),
@@ -158,7 +160,8 @@ const GenerateSlidesSubmit = ({
 			// endIndex: 2,  // generate first 2 sections only
 			template: schoolTemplate,
 			theme: theme,
-			logo: logo ? [logo] : [],
+      logo_ids: logo_ids ? [logo_ids] : [],
+      background_ids: background_ids ? [background_ids] : [],
 		};
 		if (selectedResources && selectedResources.length > 0 && !extraKnowledge) {
 			try {
@@ -197,7 +200,6 @@ const GenerateSlidesSubmit = ({
 			await generateSlidesPreview(formData, token);
 		} catch (error) {
 			console.error('Error:', error);
-      setIsSubmitting(false);
 		}
 	};
 
