@@ -15,6 +15,7 @@ import { DropDown, SmallBlueButton } from '@/components/button/DrlambdaButton';
 import Resource from '@/models/Resource';
 import SelectedResourcesList from '@/components/SelectedResources';
 import dynamic from 'next/dynamic';
+import ImageSelector from './ImageSelector';
 
 const SlideDesignPreview = dynamic(
 	() => import('@/components/slides/SlideDesignPreview'),
@@ -25,11 +26,9 @@ const SlideDesignPreview = dynamic(
 
 export default function ThemePage() {
 	const [theme, setTheme] = useState('content_with_image');
-	const [useLogo, setUseLogo] = useState(false);
   const [schoolTemplate, setSchoolTemplate] = useState('Business_002' as string);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const contentRef = useRef<HTMLDivElement>(null);
-	const [showFileModal, setShowFileModal] = useState(false);
 	const [isGpt35, setIsGpt35] = useState(true);
 	const storedOutline =
 		typeof sessionStorage !== 'undefined'
@@ -41,6 +40,7 @@ export default function ThemePage() {
 			? JSON.parse(sessionStorage.selectedLogo)
 			: [],
 	);
+  const [selectedBackground, setSelectedBackground] = useState<Resource[]>([]);
 	const outline = storedOutline ? JSON.parse(storedOutline) : null;
 	const outlineRes = outline ? JSON.parse(outline.res) : null;
 	const [outlineContent, setOutlineContent] = useState<OutlineSection[] | null>(
@@ -59,11 +59,6 @@ export default function ThemePage() {
 			setOutlineContent(newOutlineContent);
 		}
 	}, []);
-	const removeLogoAtIndex = (indexToRemove: number) => {
-		setSelectedLogo((currentLogo) =>
-			currentLogo.filter((_, index) => index !== indexToRemove),
-		);
-	};
 
 	useEffect(() => {
 		sessionStorage.setItem('schoolTemplate', schoolTemplate);
@@ -73,19 +68,16 @@ export default function ThemePage() {
 		} else {
 			sessionStorage.removeItem('selectedLogo_id');
 		}
-	}, [schoolTemplate, theme, selectedLogo]);
+    if (selectedBackground && selectedBackground.length > 0) {
+      sessionStorage.setItem('selectedBackground_id', selectedBackground[0].id);
+    } else {
+      sessionStorage.removeItem('selectedBackground_id');
+    }
+	}, [schoolTemplate, theme, selectedLogo, selectedBackground]);
 
 	return (
 		<div className=''>
 			<ToastContainer />
-
-			<FileUploadModal
-				selectedResources={selectedLogo}
-				setSelectedResources={setSelectedLogo}
-				showModal={showFileModal}
-				setShowModal={setShowFileModal}
-				pageInvoked={'theme'}
-			/>
 
 			<WorkflowStepsBanner
 				currentIndex={2}
@@ -201,68 +193,12 @@ export default function ThemePage() {
 								))}
 							</div>
 
-							{/*logo section*/}
-              <div className='grid grid-cols-2 gap-x-4 mt-4'>
-                <div className='gap-1 flex flex-col justify-start'>
-                  <span className='text-md font-bold'>
-                    Do you want to use your logo?
-                  </span>
-                  <form className='flex flex-row gap-x-4 mt-2 items-center'>
-                    <label>
-                      <div className='flex flex-row items-center gap-x-1'>
-                        <input
-                          type='radio'
-                          value='yes'
-                          checked={useLogo}
-                          onChange={(e) => setUseLogo(true)}
-                        />
-                        <span>Yes</span>
-                      </div>
-                    </label>
-                    <label>
-                      <div className='flex flex-row items-center gap-x-1'>
-                        <input
-                          type='radio'
-                          value='no'
-                          checked={!useLogo}
-                          onChange={(e) => setUseLogo(false)}
-                        />
-                        <span>No</span>
-                      </div>
-                    </label>
-                  </form>
-                </div>
 
-                <div
-                  className={`transition-opacity duration-300 ease-in-out ${
-                    useLogo ? 'opacity-100' : 'opacity-0'
-                  } gap-1 flex flex-col justify-start`}
-                >
-                  <span className='ml-2 text-md font-bold'>Upload Logo:</span>
-                  <div className=''>
-                    <SmallBlueButton
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setShowFileModal(true);
-                      }}
-                    >
-                      Browse File
-                    </SmallBlueButton>
-                  </div>
-                </div>
-              </div>
 						</div>
-						{useLogo && (
-							<>
-								{selectedLogo.length > 0 && <hr id='add_hr' />}
-								<div className='mt-[10px]'>
-									<SelectedResourcesList
-										selectedResources={selectedLogo}
-										removeResourceAtIndex={removeLogoAtIndex}
-									/>
-								</div>
-							</>
-						)}
+            {/* logo */}
+            <ImageSelector type='logo' selectedImage={selectedLogo} setSelectedImage={setSelectedLogo} />
+            {/* background */}
+            <ImageSelector type='background' selectedImage={selectedBackground} setSelectedImage={setSelectedBackground} />
 					</div>
 				</div>
 			</div>

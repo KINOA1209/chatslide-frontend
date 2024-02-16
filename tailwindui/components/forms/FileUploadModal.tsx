@@ -10,6 +10,7 @@ type FileUploadModalProps = {
 	showModal: boolean;
 	setShowModal: (value: boolean) => void;
 	pageInvoked: string;
+  type?: string;
 };
 
 const FileUploadModal: React.FC<FileUploadModalProps> = ({
@@ -18,11 +19,12 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
 	showModal,
 	setShowModal,
 	pageInvoked,
+  type = 'file'
 }) => {
 	return (
 		<Modal showModal={showModal} setShowModal={setShowModal}>
 			<h4 className='h4 text-blue-600 text-center'>
-				Select Supporting Material
+				Select {type}
 			</h4>
 			<div className='h-[60vh] max-w-[80vw] overflow-y-auto '>
 				<MyFiles
@@ -30,6 +32,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
 					selectedResources={selectedResources}
 					setSelectedResources={setSelectedResources}
 					pageInvoked = {pageInvoked}
+          fileType={type}
 				/>
 			</div>
 			<div className='w-full flex flex-row items-center justify-center'>

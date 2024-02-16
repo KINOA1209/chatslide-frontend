@@ -22,6 +22,8 @@ const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
 		case 'jpeg':
 		case 'png':
 		case 'gif':
+    case 'logo':
+    case 'background':
 			return <FaFileImage size='32px' fill='#505050' />;
 		default:
 			return <FaFilePdf size='32px' fill='#505050' />;
