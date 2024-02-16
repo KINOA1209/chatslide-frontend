@@ -3414,7 +3414,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 		Cover_img_1_layout: {
 			titleCSS: {
 				backgroundColor: '#DEFF56',
-				paddingBottom: '20rem',
+				paddingBottom: '10rem', // 20rem -> 10rem to solve print problem
 				paddingTop: '4rem',
 				paddingLeft: '2rem',
 				paddingRight: '2rem',
