@@ -4,47 +4,33 @@ import React, { MouseEvent, useEffect, useRef, useState } from 'react';
 import '@/app/css/workflow-edit-topic-css/topic_style.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { QuestionExplainIcon } from '@/app/(feature)/icons';
-import { FaFilePdf, FaYoutube } from 'react-icons/fa';
-import { SmallBlueButton } from '@/components/button/DrlambdaButton';
 import SelectedResourcesList from '@/components/SelectedResources';
 import { FiFilePlus, FiYoutube } from "react-icons/fi";
 import ResourceService from '@/services/ResourceService';
 import { toast, ToastContainer } from 'react-toastify';
 import AuthService from '@/services/AuthService';
 import Resource from '@/models/Resource';
-import { IoIosLink } from 'react-icons/io';
+import LinkInput from './summary/LinkInput';
 
 
 interface FromDocsUploadFileProps {
   openSupportivePopup: () => void;
   closeSupportivePopup: () => void;
   showSupportivePopup: boolean;
-  linkUrl: string;
-  handleLinkChange: (link: string) => void;
-  addLink: (link: string) => void;
-  isAddingLink: boolean;
-  linkError: string;
   setShowFileModal: (show: boolean) => void;
   selectedResources: any[];
-  setSelectedResources: (resources: Resource[]) => void;
+  setSelectedResources: React.Dispatch<React.SetStateAction<any[]>>;
   removeResourceAtIndex: (index: number) => void;
-
 }
 
 const FromDocsUploadFile: React.FC<FromDocsUploadFileProps> = ({
   openSupportivePopup,
   closeSupportivePopup,
   showSupportivePopup,
-  linkUrl,
-  handleLinkChange,
-  addLink,
-  isAddingLink,
-  linkError,
   setShowFileModal,
   selectedResources,
   setSelectedResources,
   removeResourceAtIndex,
-
 }) => {
   const [resources, setResources] = useState<Resource[]>([]);
 
@@ -159,6 +145,11 @@ const FromDocsUploadFile: React.FC<FromDocsUploadFileProps> = ({
           <span className='font-creato-medium leading-snug tracking-wide text-gray-400 text-sm'>(Supports PDF, TXT, DOCX, PPTX)</span>
         </div>
       </div>
+
+      <LinkInput
+        selectedResources={selectedResources}
+        setSelectedResources={setSelectedResources}
+      />
       {selectedResources.length > 0 && <hr id='add_hr' />}
       <div className='mt-[10px]'>
         <SelectedResourcesList
@@ -166,45 +157,6 @@ const FromDocsUploadFile: React.FC<FromDocsUploadFileProps> = ({
           removeResourceAtIndex={removeResourceAtIndex}
         />
       </div>
-
-      <div className='link_container bg-gray-100 border border-2 border-gray-200'>
-        <div
-          id='link_text_container'
-          className='flex justify-center items-center w-full'
-        >
-          <div className='flex items-center gap-1'>
-            <IoIosLink />
-            <FiYoutube />
-            𝕏
-          </div>
-          <div className='w-full'>
-            <label htmlFor='link_text'></label>
-            <input
-              id='link'
-              type='text'
-              className='text-sm md:text-l form-input w-full border-none bg-gray-100'
-              value={linkUrl}
-              onChange={(e) => handleLinkChange(e.target.value)}
-              placeholder='Paste webpage, Youtube, or 𝕏 link'
-            />
-          </div>
-          <SmallBlueButton
-            onClick={(e) => {
-              addLink(linkUrl);
-            }}
-            isSubmitting={isAddingLink}
-          >
-            {isAddingLink ? 'Adding...' : 'Add'}
-          </SmallBlueButton>
-        </div>
-
-        {linkError && (
-          <div id='link_error' className='text-sm text-red-500'>
-            {linkError}
-          </div>
-        )}
-      </div>
-
     </div>
   );
 };
