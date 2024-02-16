@@ -35,6 +35,12 @@ const LinkInput = ({
       setLinkError('This does not seem like a valid link.');
       return;
     }
+    // check if it is like file:///path/to/file
+    if (link.startsWith('file:///')) {
+      setLinkError('This is a file link, please use the window above to upload.');
+      return;
+    }
+
     if (!isPaidUser && selectedResources.length >= 1) {
       setLinkError('Please subscribe to add more resources.');
       return;
