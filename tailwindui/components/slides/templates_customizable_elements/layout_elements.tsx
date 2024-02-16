@@ -3067,9 +3067,9 @@ const layoutConfigData: TemplateLayoutConfig = {
 				top: '21%',
 			},
 			titleAndSubtopicBoxCSS: {
-				marginTop: '4rem',
-				marginLeft: '4rem',
-				marginRight: '4rem',
+				marginTop: '2rem',
+				marginLeft: '2rem',
+				marginRight: '2rem',
 			},
 			topicCSS: {
 				zIndex: 30,
@@ -3086,8 +3086,8 @@ const layoutConfigData: TemplateLayoutConfig = {
 				paddingLeft: '1rem',
 				paddingTop: '1.2rem',
 				paddingBottom: '1.2rem',
-				marginLeft: '4rem',
-				marginRight: '4rem',
+				marginLeft: '2rem',
+				marginRight: '2rem',
 				marginTop: '1rem',
 				marginBottom: '1rem',
 				display: 'flex',
@@ -3110,9 +3110,9 @@ const layoutConfigData: TemplateLayoutConfig = {
 				top: '21%',
 			},
 			titleAndSubtopicBoxCSS: {
-				marginTop: '4rem',
-				marginLeft: '4rem',
-				marginRight: '4rem',
+				marginTop: '2rem',
+				marginLeft: '2rem',
+				marginRight: '2rem',
 			},
 			topicCSS: {
 				zIndex: 30,
@@ -3128,7 +3128,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 				gridTemplateColumns: 'repeat(2, 1fr)',
 				gap: '2rem',
 				margin: 'auto', // Center the container horizontally
-				padding: '1rem 4rem', // Add left and right padding
+				padding: '2rem 2rem', // Add left and right padding
 			},
 			contentCSS: {
 				display: 'flex',
@@ -3137,6 +3137,8 @@ const layoutConfigData: TemplateLayoutConfig = {
 				width: '100%', // Equivalent to w-full
 				flexGrow: 0,
 				backgroundColor: '#E4F9F6',
+				borderRadius: '1.25rem',
+				padding: '2rem 2rem 4rem 2rem',
 				// zIndex: 30,
 			},
 			contentIndexCSS: {
@@ -3178,9 +3180,9 @@ const layoutConfigData: TemplateLayoutConfig = {
 				top: '21%',
 			},
 			titleAndSubtopicBoxCSS: {
-				marginTop: '4rem',
-				marginLeft: '4rem',
-				marginRight: '4rem',
+				marginTop: '2rem',
+				marginLeft: '2rem',
+				marginRight: '2rem',
 			},
 			topicCSS: {
 				zIndex: 30,
@@ -3196,7 +3198,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 				gridTemplateColumns: 'repeat(3,1fr)',
 				gap: '2rem',
 				margin: 'auto', // Center the container horizontally
-				padding: '1rem 4rem', // Add left and right padding
+				padding: '2rem 2rem', // Add left and right padding
 			},
 			contentCSS: {
 				display: 'flex',
@@ -3207,9 +3209,8 @@ const layoutConfigData: TemplateLayoutConfig = {
 				flexGrow: 1,
 				// flexWrap: 'wrap',
 				backgroundColor: '#E4F9F6',
-				paddingLeft: '1rem',
-				paddingRight: '1rem',
-				paddingBottom: '1rem',
+				borderRadius: '1.25rem',
+				padding: '2rem 2rem 2rem 2rem',
 				// zIndex: 30,
 			},
 			contentIndexCSS: {
@@ -3246,8 +3247,8 @@ const layoutConfigData: TemplateLayoutConfig = {
 				alignItems: 'flex-start',
 				height: '100%',
 				gap: '0.1rem',
-				paddingTop: '4rem',
-				paddingLeft: '4rem',
+				paddingTop: '2rem',
+				paddingLeft: '2rem',
 			},
 			visualElementsCSS: {
 				zIndex: 20,
@@ -3292,15 +3293,32 @@ const layoutConfigData: TemplateLayoutConfig = {
 			},
 		},
 		Col_1_img_1_layout: {
-			columnCSS: { width: '100%', display: 'grid', gridTemplateColumns: '1fr' },
-			titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
+			canvaCSS: {},
+			columnCSS: {
+				width: '100%',
+				display: 'grid',
+				gridTemplateColumns: '1fr',
+				paddingTop: '2rem',
+				paddingLeft: '2rem',
+				paddingRight: '2rem',
+				paddingBottom: '2rem',
+			},
+			titleAndSubtopicBoxCSS: {
+				display: 'flex',
+				flexDirection: 'column',
+				zIndex: 30,
+			},
 			imageContainerCSS: {
 				height: '15rem',
 				flexGrow: 1,
 				borderRadius: '0.375rem', // Assuming a typical rounded-md value
 				overflow: 'hidden',
 			},
+			imageCSS: {
+				borderRadius: '1.25rem',
+			},
 			contentContainerCSS: {
+				zIndex: 30,
 				paddingTop: '0.5rem',
 				paddingBottom: '0.5rem',
 				height: '100%',
@@ -3309,7 +3327,16 @@ const layoutConfigData: TemplateLayoutConfig = {
 				flexDirection: 'column',
 				gap: '0.5rem',
 			},
-			contentCSS: {},
+			visualElementsCSS: {
+				zIndex: 20,
+				width: '100%',
+				height: '100%',
+				position: 'absolute',
+				// display: 'none',
+				pointerEvents:
+					'none' /* Make the layer transparent to pointer events */,
+				top: '0%',
+			},
 			contentTextCSS: {
 				display: 'flex',
 				flexDirection: 'row',

@@ -587,20 +587,24 @@ export const Col_1_img_1_layout = ({
 						imgsrc={imgs[0]}
 						updateSingleCallback={updateImgAtIndex(0)}
 						canEdit={canEdit}
+						customImageStyle={layoutElements.imageCSS}
 					/>
 				</div>
 				{/* row3 for contents */}
-				<div
+				{/* <div
 					style={{
+						zIndex: 30,
+					}}
+				> */}
+				<div
+					// className='py-[0.5rem] h-full w-full flex flex-col gap-[0.5rem]'
+					style={{
+						...layoutElements.contentContainerCSS,
 						maxHeight:
 							maxContentHeight !== null ? `${maxContentHeight}px` : 'none',
 					}}
 				>
-					<div
-						// className='py-[0.5rem] h-full w-full flex flex-col gap-[0.5rem]'
-						style={layoutElements.contentContainerCSS}
-					>
-						{/* {Array.isArray(content) &&
+					{/* {Array.isArray(content) &&
 							content.map((item, index) => (
 								<div key={index} style={layoutElements.contentCSS}>
 									<ul
@@ -612,9 +616,9 @@ export const Col_1_img_1_layout = ({
 									</ul>
 								</div>
 							))} */}
-						{content}
-					</div>
-					{/* <div
+					{content}
+				</div>
+				{/* <div
 					className='w-full flex'
 					style={{
 						maxHeight:
@@ -623,7 +627,7 @@ export const Col_1_img_1_layout = ({
 				>
 					<div className={`w-full`}>{content}</div>
 				</div> */}
-				</div>
+				{/* </div> */}
 			</div>
 
 			<div style={layoutElements.logoCSS}>{templateLogo}</div>

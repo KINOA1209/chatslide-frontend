@@ -697,11 +697,11 @@ const themeConfigData: ThemeConfig = {
 		backgroundUrlCol_2_img_1:
 			'/images/template/Fun_Education_004/BackgroundElementsCol_2_img_1.png',
 		backgroundUrlCol_1_img_1:
-			'/images/template/Fun_Education_004/BackgroundElementsCol1_2_3_img_0.png',
+			'/images/template/Fun_Education_004/BackgroundElementsCol_1_img_1.png',
 		backgroundUrlCol_2_img_2:
-			'/images/template/Fun_Education_004/BackgroundElementsCol1_2_3_img_0.png',
+			'/images/template/Fun_Education_004/BackgroundElementsCol_2_img_2.png',
 		backgroundUrlCol_3_img_3:
-			'/images/template/Fun_Education_004/BackgroundElementsCol1_2_3_img_0.png',
+			'/images/template/Fun_Education_004/BackgroundElementsCol_3_img_3.png',
 
 		backgroundColorCover: 'bg-[#FFFFFF]', //Lin: with a background image and shapes of color #01B99F, #4747F3, #FFC8FF, #FF846C, #FECEB7
 		backgroundColor: 'bg-[#FFFFFF]', //Lin: Text box color #E4F9F6, shapes of color #01B99F, #4747F3, #FFC8FF, #FF846C, #FECEB7
