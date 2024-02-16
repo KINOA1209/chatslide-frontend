@@ -706,7 +706,7 @@ export const Col_2_img_2_layout = ({
 	}, []);
 
 	return (
-		<>
+		<div style={layoutElements.canvaCSS}>
 			<div
 				// className='flex flex-col gap-[0.5rem]'
 				style={layoutElements.columnCSS}
@@ -796,7 +796,18 @@ export const Col_2_img_2_layout = ({
 				</div>
 			</div>
 			<div style={layoutElements.logoCSS}>{templateLogo}</div>
-		</>
+			<div style={layoutElements.visualElementsCSS}>
+				{themeElements.backgroundUrlCol_2_img_2 && (
+					<Image
+						style={{ objectFit: 'cover', height: '100%' }}
+						width={960}
+						height={540}
+						src={themeElements.backgroundUrlCol_2_img_2}
+						alt='Background Image for cover'
+					/>
+				)}
+			</div>
+		</div>
 	);
 };
 export const Col_3_img_3_layout = ({
@@ -893,6 +904,17 @@ export const Col_3_img_3_layout = ({
 				</div>
 			</div>
 			<div style={layoutElements.logoCSS}>{templateLogo}</div>
+			<div style={layoutElements.visualElementsCSS}>
+				{themeElements.backgroundUrlCol_3_img_3 && (
+					<Image
+						style={{ objectFit: 'cover', height: '100%' }}
+						width={960}
+						height={540}
+						src={themeElements.backgroundUrlCol_3_img_3}
+						alt='Background Image for cover'
+					/>
+				)}
+			</div>
 		</div>
 	);
 };

@@ -3313,6 +3313,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 				flexGrow: 1,
 				borderRadius: '0.375rem', // Assuming a typical rounded-md value
 				overflow: 'hidden',
+				gridRow: 3,
 			},
 			imageCSS: {
 				borderRadius: '1.25rem',
@@ -3326,6 +3327,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 				display: 'flex',
 				flexDirection: 'column',
 				gap: '0.5rem',
+				gridRow: 2,
 			},
 			visualElementsCSS: {
 				zIndex: 20,
@@ -3347,12 +3349,18 @@ const layoutConfigData: TemplateLayoutConfig = {
 			},
 		},
 		Col_2_img_2_layout: {
-			columnCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
-			titleAndSubtopicBoxCSS: {
+			columnCSS: {
 				display: 'flex',
 				flexDirection: 'column',
-				justifyContent: 'center',
-				alignItems: 'center',
+				gap: '0.5rem',
+				padding: '2rem 2rem 2rem 2rem',
+			},
+			titleAndSubtopicBoxCSS: {
+				zIndex: 30,
+				display: 'flex',
+				flexDirection: 'column',
+				// justifyContent: 'center',
+				// alignItems: 'center',
 			},
 			imageContainerCSS: {
 				width: '100%', // equivalent to w-full
@@ -3363,24 +3371,42 @@ const layoutConfigData: TemplateLayoutConfig = {
 			imageCSS: {
 				height: '11rem', // equivalent to h-[11rem]
 				flexGrow: 1, // equivalent to grow
-				borderRadius: '0.375rem', // equivalent to rounded-md
+				borderRadius: '1.25rem', // equivalent to rounded-md
 				overflow: 'hidden', // equivalent to overflow-hidden
 				position: 'relative', // equivalent to relative
 			},
 			contentCSS: {
+				zIndex: 30,
 				width: '100%', // equivalent to w-full
 				display: 'grid',
 				gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
 				gap: '2rem', // equivalent to gap-[2rem]
+				paddingTop: '1rem',
+			},
+			visualElementsCSS: {
+				zIndex: 20,
+				width: '100%',
+				height: '80%',
+				position: 'absolute',
+				// display: 'none',
+				pointerEvents:
+					'none' /* Make the layer transparent to pointer events */,
+				top: '20%',
 			},
 		},
 		Col_3_img_3_layout: {
-			columnCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
-			titleAndSubtopicBoxCSS: {
+			columnCSS: {
 				display: 'flex',
 				flexDirection: 'column',
-				justifyContent: 'center',
-				alignItems: 'center',
+				gap: '0.5rem',
+				padding: '2rem 2rem 2rem 2rem',
+			},
+			titleAndSubtopicBoxCSS: {
+				zIndex: 30,
+				display: 'flex',
+				flexDirection: 'column',
+				// justifyContent: 'center',
+				// alignItems: 'center',
 			},
 			imageContainerCSS: {
 				width: '100%', // equivalent to w-full
@@ -3395,10 +3421,22 @@ const layoutConfigData: TemplateLayoutConfig = {
 				overflow: 'hidden', // equivalent to overflow-hidden
 			},
 			contentCSS: {
+				zIndex: 30,
+				paddingTop: '1rem',
 				width: '100%', // equivalent to w-full
 				display: 'grid',
 				gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
 				gap: '2rem', // equivalent to gap-[2rem]
+			},
+			visualElementsCSS: {
+				zIndex: 20,
+				width: '100%',
+				height: '80%',
+				position: 'absolute',
+				// display: 'none',
+				pointerEvents:
+					'none' /* Make the layer transparent to pointer events */,
+				top: '20%',
 			},
 		},
 	},
