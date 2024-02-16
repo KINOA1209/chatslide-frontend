@@ -46,6 +46,7 @@ const FileManagement: React.FC<UserFileList> = ({
   selectedResources,
 }) => {
   const [deletingIds, setDeletingIds] = useState<Array<string>>([]);
+  const { token } = useUser();
 
   const handleDeleteFile = async (
     e: React.MouseEvent<HTMLDivElement>,
@@ -55,8 +56,6 @@ const FileManagement: React.FC<UserFileList> = ({
     console.log('deletingIds', deletingIds);
     e.stopPropagation();
     try {
-      const { userId, idToken: token } =
-        await AuthService.getCurrentUserTokenAndId();
       const deleted = await ResourceService.deleteResource(id, token);
       if (deleted) {
         deleteCallback(id);
