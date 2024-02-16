@@ -9,12 +9,14 @@ import Image from 'next/image';
 
 interface Props {
   currentProjects: Project[];
+  setCurrentProjects?: React.Dispatch<React.SetStateAction<Project[]>>;
   onProjectClick: (projectId: string) => void;
   onDelete?: (e: React.MouseEvent<HTMLDivElement>, projectId: string) => void;
 }
 
 const ProjectTable: React.FC<Props> = ({
   currentProjects,
+  setCurrentProjects,
   onProjectClick,
   onDelete,
 }) => {

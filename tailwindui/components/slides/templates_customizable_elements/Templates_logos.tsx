@@ -257,7 +257,41 @@ export const ColumbiaTemplateLogo = ({
 	);
 };
 
-export const Fun_Education_004_TemplateLogo = DrLambdaLogo;
+export const Fun_Education_004_TemplateLogo = ({
+	isCoverPage,
+	custom_logo,
+}: {
+	isCoverPage: boolean;
+	custom_logo: string[] | string;
+}) => {
+	if (
+		custom_logo === 'Default' ||
+		(Array.isArray(custom_logo) && custom_logo.length === 0)
+	) {
+		return (
+			<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[1rem] pb-[1rem] z-50'>
+				<Image
+					src={drlambdaLogo}
+					alt='drlambdaLogo'
+					className='w-[8rem] h-auto'
+				/>
+				{/* logo cover */}
+			</div>
+		);
+	} else {
+		return (
+			<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[1rem] pb-[1rem] z-50'>
+				<Image
+					src={custom_logo[0]}
+					alt='CustomLogo'
+					width={70}
+					height={70}
+					className='h-auto'
+				/>
+			</div>
+		);
+	}
+};
 
 export const Business_002_TemplateLogo = ({
 	isCoverPage,
