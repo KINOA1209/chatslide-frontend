@@ -13,7 +13,7 @@ import Resource from '@/models/Resource';
 import LinkInput from './summary/LinkInput';
 
 
-interface FromDocsUploadFileProps {
+interface AddResourcesProps {
   openSupportivePopup: () => void;
   closeSupportivePopup: () => void;
   showSupportivePopup: boolean;
@@ -23,7 +23,7 @@ interface FromDocsUploadFileProps {
   removeResourceAtIndex: (index: number) => void;
 }
 
-const FromDocsUploadFile: React.FC<FromDocsUploadFileProps> = ({
+const AddResourcesSection: React.FC<AddResourcesProps> = ({
   openSupportivePopup,
   closeSupportivePopup,
   showSupportivePopup,
@@ -161,4 +161,4 @@ const FromDocsUploadFile: React.FC<FromDocsUploadFileProps> = ({
   );
 };
 
-export default FromDocsUploadFile;
+export default AddResourcesSection;

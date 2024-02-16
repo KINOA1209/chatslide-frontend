@@ -20,7 +20,7 @@ import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
 import StepsSummaryPage from '@/components/user_onboarding/StepsSummaryPage';
 import { GPTToggleWithExplanation } from '@/components/button/WorkflowGPTToggle';
 import SessionStorage from '@/components/utils/SessionStorage';
-import FromDocsUploadFile from '@/components/FromDocsUploadFile';
+import FromDocsUploadFile from '@/components/AddResourcesSection';
 import useHydrated from '@/hooks/use-hydrated';
 import LinkInput from '@/components/summary/LinkInput';
 
