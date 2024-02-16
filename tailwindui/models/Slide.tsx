@@ -42,7 +42,7 @@ export default class Slide {
   layout: LayoutKeys;
   logo: string;  // enum for school tempaltes, if user has custom logo, then use logo_url
   logo_url?: string;  // overwrites logo if present
-  backgrouund_url?: string;
+  background_url?: string;
   transcript?: string;
 
   constructor() {

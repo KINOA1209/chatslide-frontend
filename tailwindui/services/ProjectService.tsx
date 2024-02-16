@@ -38,7 +38,7 @@ class ProjectService {
       if (project?.presentation_slides) {
         project.parsed_slides = this.parseSlides(project.presentation_slides);
       }
-      if(project?.social_posts){
+      if (project?.social_posts) {
         project.parsed_socialPosts = this.parseSocialPosts(project.social_posts, project.post_type, project.project_name)
       }
 
@@ -85,7 +85,7 @@ class ProjectService {
       const project = await response.json() as Project;
       //console.log('Project data:', project);
 
-      if(project?.presentation_slides) {
+      if (project?.presentation_slides) {
         project.parsed_slides = this.parseSlides(project.presentation_slides);
       }
 
@@ -97,7 +97,7 @@ class ProjectService {
     }
   }
 
-  static async getProjects(token: string, is_public: boolean=false): Promise<Project[]> {
+  static async getProjects(token: string, is_public: boolean = false): Promise<Project[]> {
     const headers = new Headers();
     if (token.length == 0 && is_public) {
       token = process.env.SELF_TOKEN || '';
@@ -154,7 +154,7 @@ class ProjectService {
     }
 
     let jsonSlides = JSON.parse(presentation_slides);
-    if(typeof jsonSlides === 'string') {
+    if (typeof jsonSlides === 'string') {
       jsonSlides = JSON.parse(jsonSlides);
     }
     // console.log('jsonSlides:', jsonSlides);
@@ -184,6 +184,8 @@ class ProjectService {
         //     slideData.content.length        // );
         slide.logo = slideData.logo || 'Default';
         slide.transcript = slideData.transcript || '';
+        slide.logo_url = slideData.logo_url || '';
+        slide.background_url = slideData.background_url || '';
         if (index === 0) {
           slide.layout =
             slideData.layout || ('Cover_img_1_layout' as LayoutKeys);
@@ -213,129 +215,129 @@ class ProjectService {
         return slide;
       })
 
-      //console.log('slidesArray:', slidesArray);
-      return slidesArray;
-    }
+    //console.log('slidesArray:', slidesArray);
+    return slidesArray;
+  }
 
-    static parseSocialPosts(social_posts: string, post_type: string, project_name:string): SocialPostSlide[] {
-      const parse_slide = JSON.parse(social_posts);
-			const slidesArray: SocialPostSlide[] = Object.keys(parse_slide).map(
-				(key, index) => {
-					const slideData = parse_slide[key];
-					const slide = new SocialPostSlide();
-					if (index === 0) {
-						if (post_type === 'casual_topic') {
-							slide.template = slideData.template || 'First_page_img_1';
-						} else if (post_type === 'serious_subject') {
-							slide.English_title = slideData.English_title;
-							slide.template =
-								slideData.template || 'First_page_img_1_template2';
-						} else if (post_type === 'reading_notes') {
-							slide.template =
-								slideData.template || 'First_page_img_1_template3';
-						}
-					} else {
-						if (post_type === 'casual_topic') {
-							slide.template = slideData.template || 'Col_1_img_0';
-						} else if (post_type === 'serious_subject') {
-							slide.template = slideData.template || 'img_0_template2';
-						} else if (post_type === 'reading_notes') {
-							slide.template = slideData.template || 'img_1_template3';
-						}
-					}
-					slide.keywords = slideData.keywords || '';
-					slide.topic = slideData.topic || 'Your topic here';
-					slide.subtopic = slideData.subtopic;
-					slide.images = slideData.images;
-					slide.theme = slideData.theme;
-					slide.content = slideData.content || ['Your content here'];
-					slide.section_title = slideData.section_title || [
-						'Your section title here',
-					];
-					slide.brief = slideData.brief || ['Your brief here'];
-					slide.original_title = slideData.original_title;
-					slide.title = slideData.title || '';
-					slide.illustration =
-						slideData.illustration !== null
-							? slideData.illustration
-							: [
-									'https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png',
-								];
-					slide.quote = slideData.quote || 'Your quote here';
-					slide.source = slideData.source || '';
-
-					return slide;
-				},
-			);
-      return slidesArray
-    }
-
-
-    static async exportToFileBackend( token: string, project_id: string, type: string = 'pdf' ): Promise<void> {
-      const headers = new Headers();
-      if (token) {
-        headers.append('Authorization', `Bearer ${token}`);
-      }
-      headers.append('Content-Type', 'application/json');
-
-      try {
-        const response = await fetch(`/api/export_to_${type}`, {
-          method: 'POST',
-          headers: headers,
-          body: JSON.stringify({ project_id: project_id }),
-        });
-        if (response.ok) {
-          const data = await response.json();
-          const url = data.url;
-
-          const topic = sessionStorage.getItem('topic') || 'export';
-
-          //download file
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `${topic}.pdf`
-          document.body.appendChild(a);
-          a.click();
-
-          window.URL.revokeObjectURL(url);
-          document.body.removeChild(a);
-
+  static parseSocialPosts(social_posts: string, post_type: string, project_name: string): SocialPostSlide[] {
+    const parse_slide = JSON.parse(social_posts);
+    const slidesArray: SocialPostSlide[] = Object.keys(parse_slide).map(
+      (key, index) => {
+        const slideData = parse_slide[key];
+        const slide = new SocialPostSlide();
+        if (index === 0) {
+          if (post_type === 'casual_topic') {
+            slide.template = slideData.template || 'First_page_img_1';
+          } else if (post_type === 'serious_subject') {
+            slide.English_title = slideData.English_title;
+            slide.template =
+              slideData.template || 'First_page_img_1_template2';
+          } else if (post_type === 'reading_notes') {
+            slide.template =
+              slideData.template || 'First_page_img_1_template3';
+          }
         } else {
-          // Handle error cases
-          console.error('Failed to export to pdf:', response.status);
+          if (post_type === 'casual_topic') {
+            slide.template = slideData.template || 'Col_1_img_0';
+          } else if (post_type === 'serious_subject') {
+            slide.template = slideData.template || 'img_0_template2';
+          } else if (post_type === 'reading_notes') {
+            slide.template = slideData.template || 'img_1_template3';
+          }
         }
-      } catch (error) {
-        console.error('Error exporting to pdf:', error);
-      }
-    }
+        slide.keywords = slideData.keywords || '';
+        slide.topic = slideData.topic || 'Your topic here';
+        slide.subtopic = slideData.subtopic;
+        slide.images = slideData.images;
+        slide.theme = slideData.theme;
+        slide.content = slideData.content || ['Your content here'];
+        slide.section_title = slideData.section_title || [
+          'Your section title here',
+        ];
+        slide.brief = slideData.brief || ['Your brief here'];
+        slide.original_title = slideData.original_title;
+        slide.title = slideData.title || '';
+        slide.illustration =
+          slideData.illustration !== null
+            ? slideData.illustration
+            : [
+              'https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png',
+            ];
+        slide.quote = slideData.quote || 'Your quote here';
+        slide.source = slideData.source || '';
 
-    static async SlideShareLink(token:string, project_id:string, setShare: (share:boolean) => void): Promise<void> {
-      const newShareStatus = true
-      setShare(newShareStatus)
-      const headers = new Headers();
-      if (token) {
-        headers.append('Authorization', `Bearer ${token}`);
-      }
-      headers.append('Content-Type', 'application/json');
-      try {
-        const response = await fetch('/api/share_project', {
-          method: 'POST',
-          headers: headers,
-          body: JSON.stringify({
-            project_id: project_id,
-            is_shared: newShareStatus,
-          }),
-        });
-        const responseData = await response.json();
-        if (response.ok) {
-          sessionStorage.setItem('is_shared', newShareStatus.toString());
-        } else {
-          console.error(responseData.error);
-        }
-      } catch (error) {
-        console.error('Failed to toggle share status:', error);
-      }
+        return slide;
+      },
+    );
+    return slidesArray
+  }
+
+
+  static async exportToFileBackend(token: string, project_id: string, type: string = 'pdf'): Promise<void> {
+    const headers = new Headers();
+    if (token) {
+      headers.append('Authorization', `Bearer ${token}`);
     }
+    headers.append('Content-Type', 'application/json');
+
+    try {
+      const response = await fetch(`/api/export_to_${type}`, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({ project_id: project_id }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        const url = data.url;
+
+        const topic = sessionStorage.getItem('topic') || 'export';
+
+        //download file
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${topic}.pdf`
+        document.body.appendChild(a);
+        a.click();
+
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+
+      } else {
+        // Handle error cases
+        console.error('Failed to export to pdf:', response.status);
+      }
+    } catch (error) {
+      console.error('Error exporting to pdf:', error);
+    }
+  }
+
+  static async SlideShareLink(token: string, project_id: string, setShare: (share: boolean) => void): Promise<void> {
+    const newShareStatus = true
+    setShare(newShareStatus)
+    const headers = new Headers();
+    if (token) {
+      headers.append('Authorization', `Bearer ${token}`);
+    }
+    headers.append('Content-Type', 'application/json');
+    try {
+      const response = await fetch('/api/share_project', {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({
+          project_id: project_id,
+          is_shared: newShareStatus,
+        }),
+      });
+      const responseData = await response.json();
+      if (response.ok) {
+        sessionStorage.setItem('is_shared', newShareStatus.toString());
+      } else {
+        console.error(responseData.error);
+      }
+    } catch (error) {
+      console.error('Failed to toggle share status:', error);
+    }
+  }
 }
 
 export default ProjectService;
