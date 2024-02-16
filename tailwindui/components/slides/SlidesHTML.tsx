@@ -38,6 +38,7 @@ import {
 import ActionsToolBar from '../ui/ActionsToolBar';
 import { SlidesStatus, useSlides } from '@/hooks/use-slides';
 import useTourStore from '@/components/user_onboarding/TourStore';
+import { current } from 'immer';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -112,6 +113,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const canUndo = slidesHistoryIndex > 0;
 	const canRedo = slidesHistoryIndex < slidesHistory.length - 1;
 
+  const currentSlideRef = useRef<HTMLDivElement>(null);
+  const thumbnailRef = useRef<HTMLDivElement>(null);
+
 	const toggleChatWindow = () => {
 		setIsChatWindowOpen(!isChatWindowOpen);
 	};
@@ -174,14 +178,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		};
 	});
 
-	const scrollContainerRef = useRef<HTMLDivElement | null>(null); // Specify the type as HTMLDivElement
-
-	useEffect(() => {
-		if (scrollContainerRef.current) {
-			scrollContainerRef.current.scrollLeft = -20; // Set the scroll position to the left
-		}
-	}, []);
-
 	function handleKeyDown(event: KeyboardEvent) {
 		if (!isEditMode) {
 			if (event.key === 'ArrowRight' && slideIndex < slides.length - 1) {
@@ -191,6 +187,28 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			}
 		}
 	}
+
+  // auto scroll thumbnail to current slide
+  useEffect(() => {
+    if (thumbnailRef.current && currentSlideRef.current) {
+      console.log('scrolling to current slide');
+
+      const container = thumbnailRef.current;
+      const currentSlide = currentSlideRef.current;
+
+      const containerRect = container.getBoundingClientRect();
+      const currentSlideRect = currentSlide.getBoundingClientRect();
+
+      // scroll to horizontal center
+      const scrollAmount = (currentSlideRect.left + currentSlideRect.width / 2) - (containerRect.left + containerRect.width / 2);
+      console.log('scrollAmount', scrollAmount);
+
+      container.scrollTo({
+        left: container.scrollLeft + scrollAmount,
+        behavior: 'smooth',
+      });
+    }
+  }, [slideIndex]);
 
 	function handleSlideEdit(
 		content: string | string[],
@@ -503,56 +521,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				{/* filler for alignment, leave space for ai agent */}
 				<div className='h-[540px] w-[144px] min-h-[540px] min-w-[144px] hidden xl:block mx-auto justify-center items-center'></div>
 
-				{/* 4 buttons for change layout, present, add and add / delete slide */}
-				{/* <div className='SlidesStep-2 hidden min-w-[128px] xl:flex flex-col justify-between items-start gap-[1.25rem]'>
-					<ButtonWithExplanation
-						button={<PresentButton openPresent={openPresent} />}
-						explanation='Present'
-					/>
-
-					{!isViewing && (
-						<ButtonWithExplanation
-							button={
-								<LayoutChanger
-									openModal={openModal}
-									showLayout={showLayout}
-									closeModal={closeModal}
-									currentSlideIndex={currentSlideIndex}
-									// templateSamples={templateSamples}
-									slides={slides}
-									handleSlideEdit={handleSlideEdit}
-									availableLayouts={availableLayouts}
-								/>
-							}
-							explanation='Change Layout'
-						/>
-					)}
-
-					{!isViewing && currentSlideIndex != 0 && (
-						<ButtonWithExplanation
-							button={
-								<AddSlideButton
-									addPage={handleAddPage}
-									currentSlideIndex={currentSlideIndex}
-								/>
-							}
-							explanation='Add Page'
-						/>
-					)}
-
-					{!isViewing && currentSlideIndex != 0 && (
-						<ButtonWithExplanation
-							button={
-								<DeleteSlideButton
-									deletePage={handleDeletePage}
-									currentSlideIndex={currentSlideIndex}
-								/>
-							}
-							explanation='Delete Page'
-						/>
-					)}
-				</div> */}
-
 				{isChatWindowOpen && (
 					<AIAssistantChatWindow
 						onToggle={toggleChatWindow}
@@ -607,14 +575,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 			{/* horizontal  */}
 			<div className='block xl:hidden max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
-				<div className='w-full py-6 flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
+				<div className='w-full py-6 flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500' ref={thumbnailRef}>
 					{slides.map((slide, index) => (
 						<div
 							key={
 								`previewContainer` + index.toString() + slides.length.toString()
 							} // force update when slide length changes
 							className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
-							onClick={() => gotoPage(index)} // Added onClick handler
+							onClick={() => gotoPage(index)}
+              ref={index === slideIndex ? currentSlideRef : null}
 						>
 							{/* {index + 1} */}
 							<SlideContainer
