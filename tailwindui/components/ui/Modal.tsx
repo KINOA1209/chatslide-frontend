@@ -1,11 +1,15 @@
 import React from 'react';
 import { FaTimes } from 'react-icons/fa';
+import { BigBlueButton, InversedBigBlueButton } from '../button/DrlambdaButton';
 
 interface ModalProps {
-	children: React.ReactNode;
+	children?: React.ReactNode;
 	showModal: boolean;
 	setShowModal: (value: boolean) => void;
 	position?: string;
+  onConfirm?: () => void;
+  title?: string;
+  description?: string;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -13,6 +17,9 @@ const Modal: React.FC<ModalProps> = ({
 	showModal,
 	setShowModal,
 	position,
+  onConfirm,
+  title,
+  description,
 }) => {
 	const modalRef = React.useRef<HTMLDivElement>(null);
 	const modalContentRef = React.useRef<HTMLDivElement>(null);
@@ -61,7 +68,7 @@ const Modal: React.FC<ModalProps> = ({
 						onClick={(e) => e.stopPropagation()}
 					>
 						{/* Close button */}
-						<div className='relative'>
+						<div className='relative flex flex-col gap-y-4'>
 							<button
 								className='absolute top-0 right-0 text-2xl focus:outline-none'
 								onClick={handleCloseModal}
@@ -69,8 +76,34 @@ const Modal: React.FC<ModalProps> = ({
 								<FaTimes className='text-gray-600 hover:text-gray-800' />
 							</button>
 
+              {title && (
+                <h3
+                  className='text-lg leading-6 font-bold text-gray-900'
+                  id='modal-headline'
+                >{title}</h3>
+              )}
+
+              {description && (
+                <p className='text-sm text-gray-500'>{description}</p>
+              )}
+
 							{/* Modal body */}
 							{children}
+
+              {onConfirm && (
+                <div className='flex gap-x-2 justify-end'>
+                  <InversedBigBlueButton
+                    onClick={handleCloseModal}
+                  >
+                    Cancel
+                  </InversedBigBlueButton>
+                  <BigBlueButton
+                    onClick={onConfirm}
+                  >
+                    Confirm
+                  </BigBlueButton>
+                  </div>
+              )}
 						</div>
 					</div>
 				</div>
