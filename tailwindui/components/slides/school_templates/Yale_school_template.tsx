@@ -39,7 +39,7 @@ export const Yale_school_template = ({
 			<div
 				className={`${
 					!isCoverPage
-						? 'rounded-md w-full h-full bg-cover box-border border-none relative p-[28px]'
+						? 'rounded-md w-full h-full bg-cover box-border border-none relative'
 						: 'hidden '
 				} ${themeElements.backgroundColor}`}
 			>
