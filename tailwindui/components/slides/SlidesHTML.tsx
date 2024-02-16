@@ -224,7 +224,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				currentSlide.content = content as string[];
 			} else {
 				if (typeof contentIndex === 'number' && contentIndex >= 0) {
-					currentSlide.content[contentIndex] = content as string;
+          let newContent = [...currentSlide.content];
+          newContent[contentIndex] = content as string;
+					currentSlide.content = newContent;
 				} else {
 					console.error(`Invalid contentIndex: ${contentIndex}`);
 				}

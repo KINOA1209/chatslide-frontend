@@ -15,6 +15,7 @@ import ProjectService from '@/services/ProjectService';
 import Modal from '@/components/ui/Modal';
 import { UserStatus, useUser } from '@/hooks/use-user';
 import OnboardingSurvey from '@/components/slides/onboardingSurvey/OnboardingSurvey';
+import { render } from '@headlessui/react/dist/utils/render';
 
 export default function Dashboard() {
 	const [projects, setProjects] = useState<Project[]>([]);
@@ -27,9 +28,7 @@ export default function Dashboard() {
 
 	const [isOpen, setIsOpen] = useState(false);
 	const [isDeleting, setIsDeleting] = useState(false);
-
-	const [isNewUser, setIsNewUser] = useState(false)
-	const [showSurvey, setShowSurvey] = useState(false)
+	const [showSurvey, setShowSurvey] = useState(false);
 
 	function closeModal() {
 		setIsOpen(false);
@@ -46,7 +45,14 @@ export default function Dashboard() {
 		// Create a scoped async function within the hook.
 		const fetchUserAndProject = async () => {
 			try {
-				handleRequest(token);
+        ProjectService.getProjects(token).then((projects) => {
+          console.log('projects', projects);
+          setProjects(projects);
+          setRendered(true);
+          if (!showSurvey && projects.length === 0) {
+            router.push('/workflow-type-choice');
+          }
+        });
 			} catch (error: any) {
 				console.error(error);
 			}
@@ -71,7 +77,6 @@ export default function Dashboard() {
 				if (response.ok) {
 					const data = await response.json();
 					if (data.survey_status === 'incomplete'){
-						setIsNewUser(true)
 						setShowSurvey(true)
 						console.log('The user had not completed the survey before')
 					}
@@ -90,52 +95,14 @@ export default function Dashboard() {
 		checkUserSurveyStatus();
 	}, []);
 
-	// useEffect(() => {
-	// 	const updateHeight = () => {
-	// 		if (activeSlideRef.current && parentContainerRef.current) {
-	// 			const height = activeSlideRef.current.offsetHeight;
-	// 			parentContainerRef.current.style.height = `${height}px`;
-	// 		}
-	// 	};
-
-	// 	// MutataionObserver to dynamically adjust the container's height
-	// 	if (activeSlideRef.current && parentContainerRef.current) {
-	// 		const observer = new MutationObserver(updateHeight);
-	// 		// looking for anychange in onboardingsurvey, once a section shows, it will call updateHeight
-	// 		observer.observe(activeSlideRef.current, {
-	// 			childList: true,
-	// 			subtree: true,  
-	// 			characterData: true
-	// 		});
-
-	// 		//also trigger updateHeight when the user resizes the window
-	// 		window.addEventListener('resize', updateHeight);
-
-	// 		updateHeight();
-
-	// 		return () => {
-	// 			observer.disconnect();
-	// 			window.removeEventListener('resize', updateHeight);
-	// 		};
-	// 	}
-	// }, [showSurvey, activeSlideRef, parentContainerRef]);
-
 	const handleBackToChoices = () => {
 		setShowSurvey(false)
+    console.log('back to choices')
+    // console.log('rendered', rendered)
+    if (rendered && projects.length === 0) {
+      router.push('/workflow-type-choice');
+    }
 	}
-
-	// get projects from backend
-	const handleRequest = async (token: string) => {
-		ProjectService.getProjects(token).then((projects) => {
-      console.log('projects', projects);
-			setProjects(projects);
-			setRendered(true);
-			if (projects.length == 0) {
-				sessionStorage.clear();
-				//router.push('/workflow-type-choice');
-			}
-		});
-	};
 
 	const handleProjectClick = (projectId: string) => {
 		// Open the project detail page in a new tab
@@ -189,11 +156,10 @@ export default function Dashboard() {
 	// function to handle click start new project, clear sessionstorage
 	const handleStartNewProject = () => {
 		sessionStorage.clear();
-		//route to workflow-generate-outlines
 		router.push('/workflow-type-choice');
 	};
 
-	return (
+  return (
 		<section className='grow flex flex-col'>
 			<ToastContainer />
 			{/* top background container of my projects title text and button */}
@@ -224,7 +190,7 @@ export default function Dashboard() {
 					className='pb-[1rem] w-full px-8 pt-8 flex flex-col grow overflow-auto '
 					ref={contentRef}
 				>
-					{projects && projects.length > 0 ? (
+					{rendered ? projects && projects.length > 0 ? (
 						<ProjectTable
 							currentProjects={currentProjects}
 							onProjectClick={handleProjectClick}
@@ -234,7 +200,11 @@ export default function Dashboard() {
 						<div className='flex items-center mt-[1rem] md:mt-[6rem] justify-center text-gray-600 text-[14px] md:text-[20px] font-normal font-creato-medium leading-normal tracking-wide'>
 							You haven't created any project yet.
 						</div>
-					)}
+					) : (
+            <div className='flex items-center mt-[1rem] md:mt-[6rem] justify-center text-gray-600 text-[14px] md:text-[20px] font-normal font-creato-medium leading-normal tracking-wide'>
+              Loading... ⏳
+            </div>
+          )}
 				</div>
 
 				{/* Delete modal */}

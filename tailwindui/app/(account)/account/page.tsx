@@ -23,6 +23,7 @@ import {
 } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
 import { useUser } from '@/hooks/use-user';
+import useHydrated from '@/hooks/use-hydrated';
 
 const Profile = () => {
   const { username, email, token, setUsername } = useUser();
@@ -231,7 +232,7 @@ const OpenAIKey = () => {
         </div>
         <div className='w-full justify-center flex flex-row'>
           <div className='flex grow max-w-[60rem] flex-row gap-4 justify-center mt-2'>
-            <InputBox onClick={(e) => (e.target as HTMLInputElement)?.select()}>
+            <InputBox>
               <FaKey className='text-gray-600' />
               <input
                 id='key'
@@ -309,7 +310,7 @@ const ApplyPromo = () => {
         </div>
         <div className='w-full justify-center flex flex-row'>
           <div className='flex w-[30rem] flex-row gap-4 justify-center mt-2'>
-            <InputBox onClick={(e) => (e.target as HTMLInputElement)?.select()}>
+            <InputBox>
               <input
                 id='promo'
                 type='text'
@@ -360,6 +361,9 @@ export default function Account() {
       easing: 'ease-out-cubic',
     });
   });
+
+  // avoid hydration error during development caused by persistence
+  if (!useHydrated()) return <></>;
 
   return (
     <div className='flex flex-col items-center gap-[70px] mx-auto w-full'>

@@ -789,6 +789,7 @@ export const ImgModule = ({
 					//     }}
 					//     />
 					<Image
+            unoptimized={true}
 						style={{ objectFit: 'cover', height: '100%', width: '100%' }}
 						src={imgsrc}
 						alt='Image'

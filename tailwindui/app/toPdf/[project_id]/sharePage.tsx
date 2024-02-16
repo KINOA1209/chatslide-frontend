@@ -20,10 +20,8 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, page=1 }) => {
   const [loading, setLoading] = useState(true);
   const { initSlides } = useSlides();
 
-  // get token from query params
-  const token = new URLSearchParams(window.location.search).get('token') as string;
-
   useEffect(() => {
+    const token = new URLSearchParams(window.location.search).get('token') as string;
     const init = async () => {
       const project = await ProjectService.getProjectDetails(token, project_id);
       const slides = ProjectService.parseSlides(project.presentation_slides);

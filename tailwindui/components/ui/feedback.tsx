@@ -137,7 +137,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 		event.preventDefault();
 
 		// Check if rating is not 0 (meaning the user has selected a rating).
-		if (rating === 0) {
+		if (rating === 0 && feedbackText === '') {
 			setRatingError('Please select a rating.');
 		} else if (feedbackText === '' && textRequired) {
 			setRatingError('Please leave your feedback.');

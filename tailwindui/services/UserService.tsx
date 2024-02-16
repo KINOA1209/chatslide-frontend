@@ -93,7 +93,7 @@ class UserService {
 
 	static async getUserCreditsAndTier(
 		idToken: string,
-	): Promise<{ credits: string; tier: string }> {
+  ): Promise<{ credits: string; tier: string, expirationDate: string }> {
 		if (!idToken) throw new Error('No idToken provided');
 
 		try {
@@ -122,10 +122,11 @@ class UserService {
         credits = 'Infinite';
       }
 			const tier: string = data['tier'] || 'FREE';
+      const expirationDate: string = data['expiration_date'] || '';
 
 			console.log(`User credits: ${credits}`);
 
-      return { credits, tier };
+      return { credits, tier, expirationDate };
 		} catch (error) {
 			const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
 			console.error(`Failed to fetch user credits: ${userId}`, error);
