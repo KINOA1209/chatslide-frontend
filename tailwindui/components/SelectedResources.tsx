@@ -39,7 +39,7 @@ const ResourceEntry: React.FC<ResourceEntryProps> = ({
     console.log('OCR');
     const ok = await ResourceService.ocr(resource.id, token);
     setRunningOCR(false);
-    if(ok)
+    if (ok)
       setDoneOCR(true);
   }
 
@@ -66,21 +66,20 @@ const ResourceEntry: React.FC<ResourceEntryProps> = ({
         )}
         <div className='flex-wrap'>{resource.name.replace('.txt', '')}</div>
       </div>
-      {resource.type === 'doc' &&
-        <div className='flex items-center gap-4'>
+      <div className='flex items-center gap-4'>
+        {resource.type === 'doc' &&
           <button onClick={handleOCR}>
             <span className='flex flex-row items-center gap-1'>
               {doneOCR && <FaCheckCircle className='text-green-500' />}
               <FiSearch className={`w-[20px] h-[20px] ${runningOCR && 'animate-bounce'}`} />
-              OCR 
+              OCR
               {!isPaidUser && '🔒'}
             </span>
-          </button>
-          <button onClick={() => removeResourceAtIndex(index)}>
-            <DeleteIcon />
-          </button>
-        </div>
-      }
+          </button>}
+        <button onClick={() => removeResourceAtIndex(index)}>
+          <DeleteIcon />
+        </button>
+      </div>
     </div>
   )
 }
