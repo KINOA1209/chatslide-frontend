@@ -68,7 +68,7 @@ const LinkInput = ({
     } catch (error: any) {
       console.error('Error fetching YouTube video details: ', error);
       setLinkError('Error fetching YouTube video details');
-    }
+    } 
     setIsAddingLink(false);
   }
 
@@ -173,7 +173,7 @@ const LinkInput = ({
       </div>
 
       {linkError && (
-        <div id='link_error' className='text-sm text-red-500'>
+        <div className='text-sm text-red-500 mb-3 ml-3'>
           {linkError}
         </div>
       )}
