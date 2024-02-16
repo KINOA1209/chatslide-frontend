@@ -16,6 +16,9 @@ import Resource from '@/models/Resource';
 import SelectedResourcesList from '@/components/SelectedResources';
 import dynamic from 'next/dynamic';
 import ImageSelector from './ImageSelector';
+import RadioButtonWithImage, { ImageOption } from '@/components/ui/RadioButtonWithImage';
+import useHydrated from '@/hooks/use-hydrated';
+
 
 const SlideDesignPreview = dynamic(
 	() => import('@/components/slides/SlideDesignPreview'),
@@ -46,6 +49,20 @@ export default function ThemePage() {
 	const [outlineContent, setOutlineContent] = useState<OutlineSection[] | null>(
 		null,
 	);
+
+  const imageChoices: ImageOption[] = [
+    {
+      img: ContentWithImageImg,
+      value: 'content_with_image',
+      alt: 'More images<br>(70% decks contain images)',
+    },
+    {
+      img: ContentOnlyImg,
+      value: 'content_only',
+      alt: 'Less images<br>(30% decks contain images)',
+    },
+  ];
+
 	useEffect(() => {
 		if (outlineRes) {
 			const newOutlineContent = Object.keys(outlineRes).map((key) => {
@@ -74,6 +91,9 @@ export default function ThemePage() {
       sessionStorage.removeItem('selectedBackground_id');
     }
 	}, [schoolTemplate, theme, selectedLogo, selectedBackground]);
+
+  // avoid hydration error during development caused by persistence
+  if (!useHydrated()) return <></>;
 
 	return (
 		<div className=''>
@@ -153,47 +173,9 @@ export default function ThemePage() {
 						{/* theme */}
 						<div>
 							<span className='text-md font-bold'>
-								What theme do you want to choose?
+								How many images do you want to generate?
 							</span>
-							<div className='grid grid-cols-3 gap-x-4 mt-3'>
-								{[
-									{
-										img: ContentWithImageImg,
-										value: 'content_with_image',
-										alt: 'More images<br>(70% decks contain images)',
-									},
-									{
-										img: ContentOnlyImg,
-										value: 'content_only',
-										alt: 'Less images<br>(30% decks contain images)',
-									},
-									// {
-									//     img: ContentInBrandingColorImg,
-									//     value: 'content_in_branding_color',
-									//     alt: 'Content in branding color',
-									// },
-								].map(({ img, value, alt }) => (
-									<div key={value} className={`rounded-lg py-2 }`}>
-										<label>
-											<div onClick={() => setTheme(value)}>
-												<Image src={img} alt={alt} />
-											</div>
-											<div className='flex flex-row items-center gap-x-2'>
-												<input
-													type='radio'
-													name='theme'
-													value={value}
-													checked={theme === value}
-													onChange={() => setTheme(value)}
-												/>
-												<span dangerouslySetInnerHTML={{ __html: alt }}></span>
-											</div>
-										</label>
-									</div>
-								))}
-							</div>
-
-
+              <RadioButtonWithImage options={imageChoices} selectedValue={theme} setSelectedValue={setTheme} />
 						</div>
             {/* logo */}
             <ImageSelector type='logo' selectedImage={selectedLogo} setSelectedImage={setSelectedLogo} />
