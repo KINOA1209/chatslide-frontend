@@ -11,6 +11,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import AuthService from '@/services/AuthService';
 import Resource from '@/models/Resource';
 import LinkInput from './summary/LinkInput';
+import { useUser } from '@/hooks/use-user';
 
 
 interface AddResourcesProps {
@@ -33,12 +34,12 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
   removeResourceAtIndex,
 }) => {
   const [resources, setResources] = useState<Resource[]>([]);
+  const { token } = useUser();
 
   const onFileSelected = async (file: File | null) => {
     if (file == null) return;
-    const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
     try {
-      ResourceService.uploadResource(file, idToken, 'summary').then((newResource) => {
+      ResourceService.uploadResource(file, token, 'summary').then((newResource) => {
         setResources([newResource, ...resources]);
         if (setSelectedResources && selectedResources)
           setSelectedResources([newResource, ...selectedResources]);
