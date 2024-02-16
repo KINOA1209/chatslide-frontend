@@ -95,6 +95,35 @@ class ResourceService {
 			throw new Error(`Failed to query resources: ${response.status}`);
 		}
 	}
+
+  static async ocr(
+    resource_id: string,
+    token: string,
+  ): Promise<boolean> {
+    const headers = new Headers();
+    if (token) {
+      headers.append('Authorization', `Bearer ${token}`);
+    }
+    try {
+      const response = await fetch('/api/ocr', {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({
+          resource_id: resource_id,
+        }),
+      });
+
+      if (response.ok) {
+        return true;
+      } else {
+        console.error(`Failed to OCR resource ${resource_id}: ${response.status}`);
+        return false;
+      }
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
 }
 
 export default ResourceService;
