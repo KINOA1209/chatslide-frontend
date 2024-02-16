@@ -163,6 +163,10 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
     }
   }
 
+  const handleSkip = () => {
+    handleBack()
+  }
+
   return (
     <div className='flex flex-col justify-center items-center gap-4 sm:gap-12 pb-8'>
       <div className='sticky top-0 w-full z-50 p-4 sm:p-10 bg-zinc-100'>
@@ -181,6 +185,7 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
         showNextSection={showReferralSection}
         handleButtonClick={handleNextToReferral}
         handleCustomInput={(value) => handleCustomInput(value, 'industry')}
+        handleSkip={handleSkip}
       />
 
       {showReferralSection && (
@@ -192,6 +197,7 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
             showNextSection={showPurposeSection}
             handleButtonClick={handleNextToPurpose}
             handleCustomInput={(value) => handleCustomInput(value, 'referral')}
+            handleSkip={handleSkip}
           />
         </div>
       )}
@@ -205,6 +211,7 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
             isLastSection={true}
             handleCustomInput={(value) => handleCustomInput(value, 'purpose')}
             handleButtonClick={handleLastButtonSubmit}
+            handleSkip={handleSkip}
           />
         </div>
       )}

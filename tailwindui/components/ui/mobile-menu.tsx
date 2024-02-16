@@ -185,7 +185,7 @@ const MobileMenu = ({ refList = [] }: HeaderProps) => {
 										className='flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center'
 										onClick={() => setMobileNavOpen(false)}
 									>
-										My Projects
+										Dashboard
 									</Link>
 								</li>
 								<li>
@@ -197,13 +197,22 @@ const MobileMenu = ({ refList = [] }: HeaderProps) => {
 										My Resources
 									</Link>
 								</li>
+                <li>
+                  <Link
+                    href='/discover'
+                    className='flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center'
+                    onClick={() => setMobileNavOpen(false)}
+                  >
+                    Discover
+                  </Link>
+                </li>
 								<li>
 									<Link
 										href='/account'
 										className='flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center'
 										onClick={() => setMobileNavOpen(false)}
 									>
-										Account Settings
+										Account
 									</Link>
 								</li>
 								<hr className='border-gray-400' />

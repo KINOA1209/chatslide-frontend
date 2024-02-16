@@ -83,7 +83,10 @@ export const Fun_Education_004_template = ({
 					isCoverPage
 						? 'rounded-md w-full h-full bg-cover flex flex-row gap-[2rem] justify-start items-start box-border border-none relative'
 						: 'hidden'
-				} ${themeElements.backgroundColorCover} `}
+				}  `}
+				style={{
+					backgroundColor: themeElements?.backgroundColorCoverImg0,
+				}}
 			>
 				{/* <div
 					style={{ fontSize: '40pt', fontFamily: 'Caveat', fontWeight: 700 }}

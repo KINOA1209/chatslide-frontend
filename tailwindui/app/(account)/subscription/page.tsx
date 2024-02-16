@@ -39,7 +39,7 @@ const Subscription = () => {
 				{/* <div className='w-fit text-[#363E4A] text-[17px] font-bold'>
 					Subscription
 				</div> */}
-				<div className='w-fit text-[#212121] text-[80px]'>
+				<div className='w-fit text-[#212121] text-xl md:text-[80px]'>
 					Pricing & Features
 				</div>
 			</div>
@@ -83,7 +83,7 @@ export default function SubscriptionAndUserResearch() {
 	});
 
 	return (
-		<div className='flex flex-col items-center gap-[70px] mx-auto w-full'>
+		<div className='flex flex-col items-center gap-[30px] md:gap-[70px] mx-auto w-full'>
 			<ToastContainer />
 			{/* user research modal */}
 			{showUserResearchModal && (

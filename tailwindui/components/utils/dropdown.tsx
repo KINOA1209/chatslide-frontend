@@ -96,7 +96,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
 							className='block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200'
 							role='menuitem'
 						>
-							My Projects
+							Dashboard
 						</a>
 						<a
 							href='/my-resources'
@@ -105,12 +105,19 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
 						>
 							My Resources
 						</a>
+            <a
+              href='/discover'
+              className='block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200'
+              role='menuitem'
+            >
+              Discover
+            </a>
 						<a
 							href='/account'
 							className='block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200'
 							role='menuitem'
 						>
-							Account Settings
+							Account
 						</a>
 					</div>
 					<div className='block py-1 text-sm text-blue-600'>
@@ -122,7 +129,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
 							Credits: {credits}⭐️
 						</a>
 						<a
-							href='/account'
+							href='/subscription'
 							className='block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200'
 							role='menuitem'
 						>

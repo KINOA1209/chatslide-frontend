@@ -121,38 +121,6 @@ export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
 	);
 };
 
-export const SlideNavigator: React.FC<{
-	currentSlideIndex: number;
-	slides: any[]; // Replace 'any' with the appropriate type if known
-	goToSlide: (index: number) => void;
-}> = ({ currentSlideIndex, slides, goToSlide }) => {
-	return (
-		<div className='col-span-1'>
-			<div className='w-fit h-fit flex flex-row items-center justify-center mx-auto rounded-full bg-slate-600/40'>
-				<button
-					disabled={currentSlideIndex === 0}
-					className='text-white text-2xl mx-4 my-1 disabled:text-gray-400'
-					onClick={() => goToSlide(currentSlideIndex - 1)}
-				>
-					&#9664;
-				</button>
-				<div className='text-white'>
-					{currentSlideIndex + 1}
-					<span className='font-light'>{' of '}</span>
-					{slides.length}
-				</div>
-				<button
-					disabled={currentSlideIndex === slides.length - 1}
-					className='text-white text-2xl mx-4 my-1 disabled:text-gray-400'
-					onClick={() => goToSlide(currentSlideIndex + 1)}
-				>
-					&#9654;
-				</button>
-			</div>
-		</div>
-	);
-};
-
 export const SlidePagesIndicator: React.FC<{
 	currentSlideIndex: number;
 	slides: any[]; // Replace 'any' with the appropriate type if known
@@ -160,15 +128,8 @@ export const SlidePagesIndicator: React.FC<{
 }> = ({ currentSlideIndex, slides, goToSlide }) => {
 	return (
 		<div className='col-span-1'>
-			{/* <div className='w-fit h-fit flex flex-row items-center justify-center mx-auto rounded-full bg-slate-600/40'>
-        <div className='text-white'>
-          {currentSlideIndex + 1}
-          <span className='font-light'>{' of '}</span>
-          {slides.length}
-        </div>
-      </div> */}
 			<div className='w-20 h-7 px-4 py-1 bg-indigo-400 rounded-3xl justify-center items-center gap-2 inline-flex'>
-				<div className='text-center'>
+				<div className='flex flex-row text-center'>
 					<span className='text-zinc-100 text-xs font-bold font-creato-medium leading-tight tracking-wide'>
 						{currentSlideIndex + 1}
 					</span>

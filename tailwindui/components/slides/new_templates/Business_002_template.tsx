@@ -90,7 +90,7 @@ export const Business_002_template = ({
 						: 'hidden'
 				} `}
 				style={{
-					backgroundColor: layoutConfigElements.canvaCSS?.backgroundColor,
+					backgroundColor: themeElements?.backgroundColorCoverImg0,
 				}}
 			>
 				{/* <div

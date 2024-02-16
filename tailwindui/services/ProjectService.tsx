@@ -78,6 +78,7 @@ class ProjectService {
 
       if (!response.ok) {
         throw new Error(`getProjectDetails Error fetching project details: ${response.status}
+        project_id: ${project_id},
         url: ${url}`);
       }
 
@@ -270,7 +271,7 @@ class ProjectService {
     }
 
 
-    static async exportToPdfBackend( token: string, project_id: string ): Promise<void> {
+    static async exportToFileBackend( token: string, project_id: string, type: string = 'pdf' ): Promise<void> {
       const headers = new Headers();
       if (token) {
         headers.append('Authorization', `Bearer ${token}`);
@@ -278,7 +279,7 @@ class ProjectService {
       headers.append('Content-Type', 'application/json');
 
       try {
-        const response = await fetch('/api/export_to_pdf', {
+        const response = await fetch(`/api/export_to_${type}`, {
           method: 'POST',
           headers: headers,
           body: JSON.stringify({ project_id: project_id }),

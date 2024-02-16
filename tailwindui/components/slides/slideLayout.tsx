@@ -57,7 +57,7 @@ export const Cover_img_0_layout = ({
 	// }, []);
 
 	return (
-		<div style={layoutElements.canvaCSS}>
+		<>
 			<div style={layoutElements.columnCSS}>
 				<div
 					className={`${themeElements.userNameFont} ${themeElements.userNameFontColor}`}
@@ -84,7 +84,7 @@ export const Cover_img_0_layout = ({
 				)}
 			</div>
 			<div style={layoutElements.logoCSS}>{templateLogo}</div>
-		</div>
+		</>
 	);
 };
 export const Cover_img_1_layout = ({

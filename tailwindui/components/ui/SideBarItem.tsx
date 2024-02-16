@@ -13,6 +13,7 @@ interface SidebarItemProps {
 	subMenus?: SubMenu[];
 	onClick?: () => void;
 	isSidebarOpen: boolean;
+  setIsSidebarOpen: (isSidebarOpen: boolean) => void;
 	onSignOut?: () => void;
 }
 
@@ -24,12 +25,16 @@ const SideBarItem: React.FC<SidebarItemProps> = ({
 	subMenus,
 	onClick,
 	isSidebarOpen,
+  setIsSidebarOpen,
 	onSignOut,
 }) => {
 	const router = useRouter();
 	const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
 
 	const handleSubMenuToggle = () => {
+    if (!isSubMenuOpen) {
+      setIsSidebarOpen(true);
+    }
 		setIsSubMenuOpen(!isSubMenuOpen);
 	};
 

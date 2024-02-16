@@ -3,10 +3,10 @@
 import { useEffect, useRef, useState } from 'react';
 import AuthService from '@/services/AuthService';
 import { useRouter } from 'next/navigation';
-import moment from 'moment';
 import Toggle from '../button/Toggle';
 import { GrayLabel } from '../ui/GrayLabel';
 import DrlambdaButton from '../button/DrlambdaButton';
+import { useUser } from '@/hooks/use-user';
 
 interface PricingProps {
 	fewerCards?: boolean;
@@ -24,9 +24,7 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 	const [showEnt, setShowEnt] = useState(false);
 	const [clickedSubscribe, setClickedSubscribe] = useState(false);
 
-	const [tier, setTier] = useState('');
-	const [expiration, setExpiration] = useState('');
-	const [canceled, setCanceled] = useState(false);
+  const { tier, expirationDate } = useUser();
 
 	const showPricingPanel = (index: number) => {
 		setShowFree(false);
@@ -178,35 +176,6 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 
 		setClickedSubscribe(true);
 	};
-
-	useEffect(() => {
-		const fetchTier = async () => {
-			const { userId, idToken: token } =
-				await AuthService.getCurrentUserTokenAndId();
-			fetch(`/api/get-user-subscription`, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${token}`,
-				},
-			})
-				.then((response) => {
-					if (response.ok) {
-						return response.json();
-					} else {
-						throw (response.status, response);
-					}
-				})
-				.then((data) => {
-					setTier(data.tier);
-					setExpiration(data.expiry_date);
-					setCanceled(data.cancelled);
-					console.log(canceled);
-				})
-				.catch((error) => console.error);
-		};
-		fetchTier();
-	}, []);
 
 	return (
 		<div
@@ -512,9 +481,9 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 						</div>
 					</div>
 				</div>
-				{canceled && (
+        {expirationDate && (
 					<div className='w-full text-center text-red-700 my-2'>
-						Your subscription will expire on {expiration}.
+            Your subscription will expire on {expirationDate}.
 					</div>
 				)}
 				{clickedSubscribe && (

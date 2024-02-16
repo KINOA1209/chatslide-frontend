@@ -1,6 +1,16 @@
 export default interface Chart {
-  type: string;
-  data: Record<string, number>;
-  options: any;
-  title: string;
+  chartData: {
+    type: string;
+    title: string;
+    groups: {
+      values: number[];
+      color: string;
+      keys: number[];
+      legend: string;
+    }[];
+    axis: {
+      x: string;
+      y: string;
+    };
+  };
 }
