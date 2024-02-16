@@ -13,6 +13,7 @@ interface ImgModuleProp {
 	imgsrc: string;
 	updateSingleCallback: Function;
 	canEdit: boolean;
+	customImageStyle?: React.CSSProperties;
 }
 
 enum ImgQueryMode {
@@ -25,6 +26,7 @@ export const ImgModule = ({
 	imgsrc,
 	updateSingleCallback,
 	canEdit,
+	customImageStyle,
 }: ImgModuleProp) => {
 	const [showModal, setShowModal] = useState(false);
 	const [keyword, setKeyword] = useState('');
@@ -789,8 +791,13 @@ export const ImgModule = ({
 					//     }}
 					//     />
 					<Image
-            unoptimized={true}
-						style={{ objectFit: 'cover', height: '100%', width: '100%' }}
+						unoptimized={true}
+						style={{
+							objectFit: 'cover',
+							height: '100%',
+							width: '100%',
+							borderRadius: customImageStyle?.borderRadius,
+						}}
 						src={imgsrc}
 						alt='Image'
 						width={960}
