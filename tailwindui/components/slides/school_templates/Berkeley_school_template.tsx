@@ -24,6 +24,8 @@ export const Berkeley_school_template = ({
 	layoutOptionNonCover,
 	layoutOptionCover,
 	templateLogo,
+	uploadedLogoUrl,
+	uploadedBackgroundImageUrl,
 }: MainSlideProps) => {
 	const ChosenLayoutNonCover =
 		layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
@@ -52,12 +54,35 @@ export const Berkeley_school_template = ({
 			<div
 				className={`${
 					!isCoverPage
-						? 'rounded-md w-full h-full bg-cover box-border border-none relative p-[28px]'
+						? 'rounded-md w-full h-full bg-cover box-border border-none relative '
 						: 'hidden '
 				} ${themeElements.backgroundColor}`}
 			>
 				{/* <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr> */}
-
+				{/* background picture when user uploaded this  */}
+				{uploadedBackgroundImageUrl && (
+					<div
+						style={{
+							zIndex: 0,
+							width: '100%',
+							height: '100%',
+							position: 'absolute',
+							// display: 'none',
+							pointerEvents:
+								'none' /* Make the layer transparent to pointer events */,
+							top: '0%',
+							// display: 'none',
+						}}
+					>
+						<Image
+							style={{ objectFit: 'cover', height: '100%' }}
+							width={960}
+							height={540}
+							src={`${uploadedBackgroundImageUrl}`}
+							alt='Background Image for cover'
+						/>
+					</div>
+				)}
 				<ChosenLayoutNonCover
 					content={content}
 					user_name={user_name}
@@ -83,6 +108,30 @@ export const Berkeley_school_template = ({
 						: 'hidden'
 				} ${themeElements.backgroundColorCover} `}
 			>
+				{/* background picture when user uploaded this  */}
+				{uploadedBackgroundImageUrl && (
+					<div
+						style={{
+							zIndex: 0,
+							width: '100%',
+							height: '100%',
+							position: 'absolute',
+							// display: 'none',
+							pointerEvents:
+								'none' /* Make the layer transparent to pointer events */,
+							top: '0%',
+							// display: 'none',
+						}}
+					>
+						<Image
+							style={{ objectFit: 'cover', height: '100%' }}
+							width={960}
+							height={540}
+							src={`${uploadedBackgroundImageUrl}`}
+							alt='Background Image for cover'
+						/>
+					</div>
+				)}
 				<ChosenLayoutCover
 					content={content}
 					user_name={user_name}

@@ -16,9 +16,13 @@ import Resource from '@/models/Resource';
 import SelectedResourcesList from '@/components/SelectedResources';
 import dynamic from 'next/dynamic';
 import ImageSelector from './ImageSelector';
-import RadioButtonWithImage, { ImageOption } from '@/components/ui/RadioButtonWithImage';
+import RadioButtonWithImage, {
+	ImageOption,
+} from '@/components/ui/RadioButtonWithImage';
 import useHydrated from '@/hooks/use-hydrated';
-
+import { SlidesStatus, useSlides } from '@/hooks/use-slides';
+import { TemplateKeys } from '@/components/slides/slideTemplates';
+// const { changeTemplate } = useSlides();
 
 const SlideDesignPreview = dynamic(
 	() => import('@/components/slides/SlideDesignPreview'),
@@ -29,7 +33,9 @@ const SlideDesignPreview = dynamic(
 
 export default function ThemePage() {
 	const [theme, setTheme] = useState('content_with_image');
-  const [schoolTemplate, setSchoolTemplate] = useState('Business_002' as string);
+	const [schoolTemplate, setSchoolTemplate] = useState(
+		'Business_002' as string,
+	);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const contentRef = useRef<HTMLDivElement>(null);
 	const [isGpt35, setIsGpt35] = useState(true);
@@ -43,25 +49,25 @@ export default function ThemePage() {
 			? JSON.parse(sessionStorage.selectedLogo)
 			: [],
 	);
-  const [selectedBackground, setSelectedBackground] = useState<Resource[]>([]);
+	const [selectedBackground, setSelectedBackground] = useState<Resource[]>([]);
 	const outline = storedOutline ? JSON.parse(storedOutline) : null;
 	const outlineRes = outline ? JSON.parse(outline.res) : null;
 	const [outlineContent, setOutlineContent] = useState<OutlineSection[] | null>(
 		null,
 	);
 
-  const imageChoices: ImageOption[] = [
-    {
-      img: ContentWithImageImg,
-      value: 'content_with_image',
-      alt: 'More images<br>(70% decks contain images)',
-    },
-    {
-      img: ContentOnlyImg,
-      value: 'content_only',
-      alt: 'Less images<br>(30% decks contain images)',
-    },
-  ];
+	const imageChoices: ImageOption[] = [
+		{
+			img: ContentWithImageImg,
+			value: 'content_with_image',
+			alt: 'More images<br>(70% decks contain images)',
+		},
+		{
+			img: ContentOnlyImg,
+			value: 'content_only',
+			alt: 'Less images<br>(30% decks contain images)',
+		},
+	];
 
 	useEffect(() => {
 		if (outlineRes) {
@@ -85,15 +91,15 @@ export default function ThemePage() {
 		} else {
 			sessionStorage.removeItem('selectedLogo_id');
 		}
-    if (selectedBackground && selectedBackground.length > 0) {
-      sessionStorage.setItem('selectedBackground_id', selectedBackground[0].id);
-    } else {
-      sessionStorage.removeItem('selectedBackground_id');
-    }
+		if (selectedBackground && selectedBackground.length > 0) {
+			sessionStorage.setItem('selectedBackground_id', selectedBackground[0].id);
+		} else {
+			sessionStorage.removeItem('selectedBackground_id');
+		}
 	}, [schoolTemplate, theme, selectedLogo, selectedBackground]);
 
-  // avoid hydration error during development caused by persistence
-  if (!useHydrated()) return <></>;
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
 
 	return (
 		<div className=''>
@@ -138,49 +144,62 @@ export default function ThemePage() {
 								className={`transition-opacity duration-300 ease-in-out gap-1 flex flex-col justify-start`}
 							>
 								<span className='text-md font-bold'>Select your template:</span>
-                <DropDown
-                  width='20rem'
-                  onChange={(e) => setSchoolTemplate(e.target.value)}
-                  defaultValue={schoolTemplate}
-                  style='input'
-                >
-                  <option value='Default'>Default</option>
-                  <option value='Fun_Education_004'>Fun</option>
-                  <option value='Business_002'>Business</option>
-                  <option value='Stanford'>Stanford University</option>
-                  <option value='Berkeley'>UC Berkeley</option>
-                  <option value='Harvard'>Harvard University</option>
-                  <option value='MIT'>
-                    Massachusetts Institute of Technology
-                  </option>
-                  <option value='Princeton'>Princeton University</option>
-                  <option value='Caltech'>
-                    California Institute of Technology
-                  </option>
-                  <option value='Columbia'>Columbia University</option>
-                  <option value='JHU'>Johns Hopkins University</option>
-                  <option value='Yale'>Yale University</option>
-                  <option value='UPenn'>University of Pennsylvania</option>
-                </DropDown>
+								<DropDown
+									width='20rem'
+									onChange={(e) => setSchoolTemplate(e.target.value)}
+									// onChange={(e) =>
+									// 	changeTemplate(e.target.value as TemplateKeys)
+									// }
+									defaultValue={schoolTemplate}
+									style='input'
+								>
+									<option value='Default'>Default</option>
+									<option value='Fun_Education_004'>Fun</option>
+									<option value='Business_002'>Business</option>
+									<option value='Stanford'>Stanford University</option>
+									<option value='Berkeley'>UC Berkeley</option>
+									<option value='Harvard'>Harvard University</option>
+									<option value='MIT'>
+										Massachusetts Institute of Technology
+									</option>
+									<option value='Princeton'>Princeton University</option>
+									<option value='Caltech'>
+										California Institute of Technology
+									</option>
+									<option value='Columbia'>Columbia University</option>
+									<option value='JHU'>Johns Hopkins University</option>
+									<option value='Yale'>Yale University</option>
+									<option value='UPenn'>University of Pennsylvania</option>
+								</DropDown>
 							</div>
 						</div>
-            <div className='w-full mt-4 flex flex-col'>
-              <span className='text-md font-bold'>
-                School template preview
-              </span>
-              <SlideDesignPreview selectedTemplate={schoolTemplate} />
-            </div>
+						<div className='w-full mt-4 flex flex-col'>
+							<span className='text-md font-bold'>School template preview</span>
+							<SlideDesignPreview selectedTemplate={schoolTemplate} />
+						</div>
 						{/* theme */}
 						<div>
 							<span className='text-md font-bold'>
 								How many images do you want to generate?
 							</span>
-              <RadioButtonWithImage options={imageChoices} selectedValue={theme} setSelectedValue={setTheme} />
+							<RadioButtonWithImage
+								options={imageChoices}
+								selectedValue={theme}
+								setSelectedValue={setTheme}
+							/>
 						</div>
-            {/* logo */}
-            <ImageSelector type='logo' selectedImage={selectedLogo} setSelectedImage={setSelectedLogo} />
-            {/* background */}
-            <ImageSelector type='background' selectedImage={selectedBackground} setSelectedImage={setSelectedBackground} />
+						{/* logo */}
+						<ImageSelector
+							type='logo'
+							selectedImage={selectedLogo}
+							setSelectedImage={setSelectedLogo}
+						/>
+						{/* background */}
+						<ImageSelector
+							type='background'
+							selectedImage={selectedBackground}
+							setSelectedImage={setSelectedBackground}
+						/>
 					</div>
 				</div>
 			</div>

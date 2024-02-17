@@ -57,7 +57,7 @@ export const Cover_img_0_layout = ({
 	// }, []);
 
 	return (
-		<>
+		<div style={layoutElements.canvaCSS}>
 			<div style={layoutElements.columnCSS}>
 				<div
 					className={`${themeElements.userNameFont} ${themeElements.userNameFontColor}`}
@@ -84,7 +84,7 @@ export const Cover_img_0_layout = ({
 				)}
 			</div>
 			<div style={layoutElements.logoCSS}>{templateLogo}</div>
-		</>
+		</div>
 	);
 };
 export const Cover_img_1_layout = ({
@@ -112,7 +112,7 @@ export const Cover_img_1_layout = ({
 	};
 
 	return (
-		<>
+		<div style={layoutElements.canvaCSS}>
 			<div style={layoutElements.columnCSS}>
 				<div
 					className={`${themeElements.userNameFont} ${themeElements.userNameFontColor}`}
@@ -144,7 +144,7 @@ export const Cover_img_1_layout = ({
 				)}
 			</div>
 			<div style={layoutElements.logoCSS}>{templateLogo}</div>
-		</>
+		</div>
 	);
 };
 export const Col_1_img_0_layout = ({
@@ -261,7 +261,7 @@ export const Col_2_img_0_layout = ({
 	console.log('content: ' + Array(content));
 
 	return (
-		<>
+		<div style={layoutElements.canvaCSS}>
 			<div style={layoutElements.titleAndSubtopicBoxCSS}>
 				<div className={``}>{topic}</div>
 				<div className={``}>{subtopic}</div>
@@ -305,7 +305,7 @@ export const Col_2_img_0_layout = ({
 					/>
 				)}
 			</div>
-		</>
+		</div>
 	);
 };
 export const Col_3_img_0_layout = ({
