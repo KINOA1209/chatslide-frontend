@@ -338,6 +338,33 @@ class ProjectService {
       console.error('Failed to toggle share status:', error);
     }
   }
+
+  static async clone(
+    project_id: string,
+    target_language: string,
+    token: string,
+  ): Promise<Project> {
+    const headers = new Headers();
+    if (token) {
+      headers.append('Authorization', `Bearer ${token}`);
+    }
+
+    const response = await fetch('/api/clone_project', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        project_id: project_id,
+        target_language: target_language,
+      }),
+    });
+
+    if (response.ok) {
+      const resp = await response.json();
+      return resp.project as Project;
+    } else {
+      throw new Error(`Failed to clone project ${project_id}, ${response.status}`);
+    }
+  }
 }
 
 export default ProjectService;
