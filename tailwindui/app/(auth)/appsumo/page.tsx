@@ -5,6 +5,7 @@ import GoogleSignIn from '@/components/button/GoogleSignIn';
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Promo from '@/components/signup/Promo';
+import SessionStorage from '@/components/utils/SessionStorage';
 
 export default function SignUp() {
 	const router = useRouter();
@@ -16,9 +17,7 @@ export default function SignUp() {
 
 	useEffect(() => {
 		const handlePromoChange = (promo: string) => {
-			if (typeof localStorage !== 'undefined') {
-				localStorage.setItem('promo', promo);
-			}
+			SessionStorage.setItem('promo', promo);
 		};
 
 		const promo = searchParams?.get('referral');
@@ -52,10 +51,6 @@ export default function SignUp() {
 					{/* Form */}
 					<div className='max-w-sm mx-auto'>
 						<Promo
-							showPromo={showPromo}
-							setShowPromo={setShowPromo}
-							referralValue={referralValue}
-							setReferralValue={setReferralValue}
               text='Enter your AppSumo redemption code here'
 						/>
 

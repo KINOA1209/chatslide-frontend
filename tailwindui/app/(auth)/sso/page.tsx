@@ -1,12 +1,11 @@
 'use client';
 
+import SessionStorage from '@/components/utils/SessionStorage';
 import AuthService from '@/services/AuthService';
 import UserService from '@/services/UserService';
-import { init } from 'aos';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import { useLocation } from 'react-router-dom';
 
 export default function SSORedirect() {
 	const router = useRouter();
@@ -30,7 +29,7 @@ export default function SSORedirect() {
 
 			if (idToken) {
 				await UserService.initializeUser(idToken);
-				const promo = localStorage.getItem('promo');
+				const promo = SessionStorage.getItem('promo');
 				if (promo) {
 					const { status, message } = await UserService.applyPromoCode(
 						promo,
@@ -48,6 +47,7 @@ export default function SSORedirect() {
 							progress: undefined,
 							theme: 'light',
 						});
+            SessionStorage.removeItem('promo');
 					}
 				}
 

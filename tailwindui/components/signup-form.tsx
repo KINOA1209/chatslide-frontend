@@ -14,11 +14,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import AuthService from '@/services/AuthService';
 import UserService from '@/services/UserService';
 import Promo from './signup/Promo';
+import SessionStorage from './utils/SessionStorage';
 
 const SignupForm: React.FC = () => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
-	const nextUri = searchParams?.get('next');
 
 	const [email, setEmail] = useState('');
 	// const [username, setUsername] = useState("");
@@ -31,7 +31,6 @@ const SignupForm: React.FC = () => {
 
 	const passwordRef = useRef<HTMLInputElement>(null);
 	const rule1 = useRef<HTMLParagraphElement>(null);
-	const [showPromo, setShowPromo] = useState(false);
 	const [referralValue, setReferralValue] = useState('');
 
 	const [submitting, setSubmitting] = useState(false);
@@ -40,30 +39,25 @@ const SignupForm: React.FC = () => {
 
   useEffect(() => {
     const handlePromoChange = (promo: string) => {
-      if (typeof localStorage !== 'undefined') {
-        localStorage.setItem('promo', promo);
-      }
+      SessionStorage.setItem('promo', promo);
     };
 
     const promo = searchParams?.get('referral');
     if (promo) {
       handlePromoChange(promo);
       setReferralValue(promo);
-      setShowPromo(true);
     }
 
     const appSumoRedepmtionCode = searchParams?.get('sumocode');
     if (appSumoRedepmtionCode) {
       handlePromoChange(appSumoRedepmtionCode);
       setReferralValue(appSumoRedepmtionCode);
-      setShowPromo(true);
     }
 
     const dealMirrorRedepmtionCode = searchParams?.get('dealcode');
     if (dealMirrorRedepmtionCode) {
       handlePromoChange(dealMirrorRedepmtionCode);
       setReferralValue(dealMirrorRedepmtionCode);
-      setShowPromo(true);
     }
   }, []);
 
@@ -188,12 +182,7 @@ const SignupForm: React.FC = () => {
 		<form onSubmit={handleSubmit}>
 			<ToastContainer />
 
-			<Promo
-				showPromo={showPromo}
-				setShowPromo={setShowPromo}
-				referralValue={referralValue}
-				setReferralValue={setReferralValue}
-			/>
+			<Promo />
 			<div className='flex flex-wrap -mx-3 mb-4'>
 				<div className='w-full px-3'>
 					<label

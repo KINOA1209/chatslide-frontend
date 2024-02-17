@@ -1,33 +1,13 @@
-'use client';
-
 import Link from 'next/link';
 import GoogleSignIn from '@/components/button/GoogleSignIn';
-import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
 import Promo from '@/components/signup/Promo';
+import { generateMetadata } from '@/app/layout';
+
+const title = 'Sign Up | DrLambda';
+const description = 'DrLambda is your AI assistant to create professional slides and posts. Join us to experience the power of AI in creating professional slides and posts.';
+export const metadata = generateMetadata({ title, description });
 
 export default function SignUp() {
-	const searchParams = useSearchParams();
-	const [href, setHref] = useState('/signup-with-email');
-	const [showPromo, setShowPromo] = useState(false);
-	const [referralValue, setReferralValue] = useState('');
-
-	useEffect(() => {
-		const handlePromoChange = (promo: string) => {
-			if (typeof localStorage !== 'undefined') {
-				localStorage.setItem('promo', promo);
-			}
-		};
-
-		const promo = searchParams?.get('referral');
-		if (promo) {
-			handlePromoChange(promo);
-			setReferralValue(promo);
-			setShowPromo(true);
-      setHref(`/signup-with-email?referral=${promo}`);
-		}
-	}, []);
-
 	return (
 		<section className='bg-gradient-to-b from-gray-100 to-white'>
 			<div className='max-w-6xl mx-auto px-4 sm:px-6'>
@@ -39,12 +19,7 @@ export default function SignUp() {
 
 					{/* Form */}
 					<div className='max-w-sm mx-auto'>
-						<Promo
-							showPromo={showPromo}
-							setShowPromo={setShowPromo}
-							referralValue={referralValue}
-							setReferralValue={setReferralValue}
-						/>
+						<Promo />
 
 						<div className='flex items-center my-6'>
 							<div
@@ -75,7 +50,7 @@ export default function SignUp() {
 						<div className='flex flex-wrap -mx-3 mt-6'>
 							<div className='w-full px-3'>
 								<a
-									href={href}
+                  href={'/signup-with-email'}
 									className='btn text-white font-bold bg-Blue w-full'
 								>
 									Sign up with email
