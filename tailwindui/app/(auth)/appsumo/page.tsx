@@ -1,44 +1,9 @@
-'use client';
-
 import Link from 'next/link';
 import GoogleSignIn from '@/components/button/GoogleSignIn';
-import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
 import Promo from '@/components/signup/Promo';
-import SessionStorage from '@/components/utils/SessionStorage';
+
 
 export default function SignUp() {
-	const router = useRouter();
-	const searchParams = useSearchParams();
-	const [href, setHref] = useState('/signup-with-email');
-	const [showPromo, setShowPromo] = useState(false);
-
-	const [referralValue, setReferralValue] = useState('');
-
-	useEffect(() => {
-		const handlePromoChange = (promo: string) => {
-			SessionStorage.setItem('promo', promo);
-		};
-
-		const promo = searchParams?.get('referral');
-		if (promo) {
-			handlePromoChange(promo);
-			setReferralValue(promo);
-			setShowPromo(true);
-      setHref(`/signup-with-email?referral=${promo}`);
-      console.log('href', href);
-		}
-    
-    const appSumoRedepmtionCode = searchParams?.get('sumocode');
-    if (appSumoRedepmtionCode) {
-      handlePromoChange(appSumoRedepmtionCode);
-      setReferralValue(appSumoRedepmtionCode);
-      setShowPromo(true);
-      setHref(`/signup-with-email?sumocode=${appSumoRedepmtionCode}`);
-    }
-
-	}, []);
-
 	return (
 		<section className='bg-gradient-to-b from-gray-100 to-white'>
 			<div className='max-w-6xl mx-auto px-4 sm:px-6'>
@@ -83,7 +48,7 @@ export default function SignUp() {
 						<div className='flex flex-wrap -mx-3 mt-6'>
 							<div className='w-full px-3'>
 								<a
-									href={href}
+									href={'signup-with-email'}
 									className='btn text-white font-bold bg-Blue w-full'
 								>
 									Sign up with email
