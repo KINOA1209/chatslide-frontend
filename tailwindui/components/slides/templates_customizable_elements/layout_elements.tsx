@@ -3273,7 +3273,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 				transform: 'translate(-50%, -50%)', // Centering trick
 			},
 			columnCSS: {
-				paddingTop: '1rem', // Equivalent to pt-[1rem]
+				// paddingTop: '1rem', // Equivalent to pt-[1rem]
 				paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 				paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
 				width: '50%', // Equivalent to w-1/2
@@ -3772,7 +3772,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 				transform: 'translate(-50%, -50%)', // Centering trick
 			},
 			columnCSS: {
-				paddingTop: '1rem', // Equivalent to pt-[1rem]
+				// paddingTop: '1rem', // Equivalent to pt-[1rem]
 				paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 				paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
 				width: '50%', // Equivalent to w-1/2
