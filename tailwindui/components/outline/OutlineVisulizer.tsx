@@ -82,44 +82,6 @@ const OutlineVisualizer = ({
 		console.log('outlineData', outlineData);
 	}, [detailLevels]);
 
-	//   const handleDetailLevelOptionChange = (increment: number) => {
-	//     const currentIndex = detailOptions.indexOf(selectedDetail)
-	//     const totalOptions = detailOptions.length
-	//     //If the selectedDetail is found in the array (meaning currentIndex is not -1),
-	//     if (currentIndex !== -1) {
-	//       const newIndex = (currentIndex + increment + totalOptions) % totalOptions
-	//       setSelectedDetail(detailOptions[newIndex])
-	//     }
-	//   }
-	const handleDetailLevelOptionChange = (
-		sectionIndex: number,
-		increment: number,
-	) => {
-		setDetailLevels((prevDetailLevels) => {
-			const newDetailLevels = [...prevDetailLevels];
-
-			// Calculate the new detail level in a circular manner
-			const currentLevel = newDetailLevels[sectionIndex];
-			const numberOfOptions = detailOptions.length;
-			const newIndex = (currentLevel + increment) % numberOfOptions;
-
-			// Handle negative results by adding the number of options
-			newDetailLevels[sectionIndex] = (
-				newIndex >= 0 ? newIndex : newIndex + numberOfOptions
-			) as 0 | 1 | 2;
-
-			return newDetailLevels;
-		});
-	};
-
-	//   const handleSlidPagesChange = (n: number) => {
-	//     setSlidePages(20 + n * 10)
-	//   }
-
-	//   const handleDetailLevelChange = (n: number) => {
-	//     setWordPerSubpoint(15 + n * 10)
-	//   }
-
 	const updateOutlineSessionStorage = (updatedOutline: any) => {
 		const entireOutline = JSON.parse(sessionStorage.outline);
 		entireOutline.res = JSON.stringify({ ...updatedOutline });
@@ -309,10 +271,10 @@ const OutlineVisualizer = ({
 									{section.content.map((content: any, detailIndex: number) => (
 										<ul
 											key={detailIndex}
-											className='flex mb-2 sm:list-disc px-2 sm:px-8'
+											className='flex mb-1 sm:list-disc px-2 sm:px-8'
 										>
 											<li
-												className='w-full relative '
+												className='w-full relative overflow-visiable'
 												onMouseEnter={() => setHoveredDetailIndex(detailIndex)}
 												onMouseLeave={() => setHoveredDetailIndex(-1)}
 											>
@@ -340,6 +302,7 @@ const OutlineVisualizer = ({
 												/>
 												{hoveredDetailIndex === detailIndex &&
 													sectionIndex === hoveredSectionIndex && (
+                            <>
 														<div className='absolute flex flex-row gap-4 bottom-[70%] right-0 mt-1 mr-1'>
 															{outlineData[sectionIndex].content.length >
 																minOutlineDetailCount && (
@@ -371,6 +334,24 @@ const OutlineVisualizer = ({
 																</div>
 															)}
 														</div>
+                            <div className='absolute flex flex-row gap-4 top-[70%] right-0 mb-1 mr-1 z-10'>
+                              {outlineData[sectionIndex].content.length <
+                                maxOutlineDetailCount && (
+                                  <div
+                                    onClick={(e) =>
+                                      handleAddDetail(
+                                        e,
+                                        sectionIndex,
+                                        detailIndex+1,
+                                      )
+                                    }
+                                  >
+                                    <AddTopicIcon />
+                                  </div>
+                                )}
+                            </div>
+
+                          </>
 													)}
 											</li>
 										</ul>
