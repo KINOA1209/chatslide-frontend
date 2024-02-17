@@ -135,11 +135,6 @@ export const templateDispatch = (
 		}
 	};
 
-	useEffect(() => {
-		console.log('user upload logo:', userUploadedLogo);
-		console.log('user upload background:', userUploadedBackgroundImage);
-	}, []);
-
 	return (
 		<Template
 			canEdit={canEdit}
