@@ -78,19 +78,19 @@ function App() {
           id='testimonials'
           className='pt-[3rem] relative flex flex-col justify-center items-center'
         >
-          <div className='w-[90%] h-full text-center text-neutral-900 text-3xl lg:text-5xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
+          <h2 className='w-[90%] h-full text-center text-neutral-900 text-3xl lg:text-5xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
             Wall of love 💙
             <Testimonails />
-          </div>
+          </h2>
         </div>
 
         <div
           id='scenarios'
           className='pt-[3rem] flex flex-col justify-center items-center'
         >
-          <div className='w-[90%] text-center text-neutral-900 text-3xl lg:text-5xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
+          <h2 className='w-[90%] text-center text-neutral-900 text-3xl lg:text-5xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
             Professional slides for all scenarios
-          </div>
+          </h2>
           <div className='w-[90%] text-center text-md lg:text-xl'>
             <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
               From{' '}
@@ -125,9 +125,9 @@ function App() {
           id='use-cases'
           className='pt-[3rem] relative flex flex-col justify-center items-center'
         >
-          <div className='w-[90%] h-full text-center text-neutral-900 text-3xl lg:text-5xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
+          <h2 className='w-[90%] h-full text-center text-neutral-900 text-3xl lg:text-5xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
             Extract information from any source
-          </div>
+          </h2>
           <div className='w-[90%] text-center text-md lg:text-xl  '>
             <span className='text-neutral-800 font-bold font-creato-bold leading-loose tracking-wide'>
               Curate

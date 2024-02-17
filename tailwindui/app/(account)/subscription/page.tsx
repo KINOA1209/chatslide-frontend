@@ -39,9 +39,9 @@ const Subscription = () => {
 				{/* <div className='w-fit text-[#363E4A] text-[17px] font-bold'>
 					Subscription
 				</div> */}
-				<div className='w-fit text-[#212121] text-xl md:text-[80px]'>
-					Pricing & Features
-				</div>
+				<h2 className='w-fit text-[#212121] text-xl md:text-[80px]'>
+					Find tailored plans for you
+				</h2>
 			</div>
 
 			<Pricing />
