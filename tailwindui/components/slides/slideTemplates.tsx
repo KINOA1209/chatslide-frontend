@@ -36,6 +36,8 @@ export interface MainSlideProps {
 	layoutOptionCover: LayoutKeys;
 	brandingColor?: string;
 	templateLogo?: JSX.Element;
+	uploadedLogoUrl?: string;
+	uploadedBackgroundImageUrl?: string;
 }
 
 // deprecated
@@ -90,6 +92,8 @@ export const Default = ({
 	layoutOptionCover,
 	brandingColor = 'bg-[#F0F0F2]',
 	templateLogo,
+	uploadedLogoUrl,
+	uploadedBackgroundImageUrl,
 }: // templateLogo = TemplatesLogos.DefaultTemplateLogo,
 MainSlideProps) => {
 	const ChosenLayoutNonCover =
@@ -131,28 +135,29 @@ MainSlideProps) => {
 				// }}
 			>
 				{/* background picture when user uploaded this  */}
-				<div
-					style={{
-						zIndex: 0,
-						width: '100%',
-						height: '100%',
-						position: 'absolute',
-						// display: 'none',
-						pointerEvents:
-							'none' /* Make the layer transparent to pointer events */,
-						top: '0%',
-						display: 'none',
-					}}
-				>
-					<Image
-						style={{ objectFit: 'cover', height: '100%' }}
-						width={960}
-						height={540}
-						src={'https://picsum.photos/480/270'}
-						alt='Background Image for cover'
-					/>
-					<div></div>
-				</div>
+				{uploadedBackgroundImageUrl && (
+					<div
+						style={{
+							zIndex: 0,
+							width: '100%',
+							height: '100%',
+							position: 'absolute',
+							// display: 'none',
+							pointerEvents:
+								'none' /* Make the layer transparent to pointer events */,
+							top: '0%',
+							// display: 'none',
+						}}
+					>
+						<Image
+							style={{ objectFit: 'cover', height: '100%' }}
+							width={960}
+							height={540}
+							src={`${uploadedBackgroundImageUrl}`}
+							alt='Background Image for cover'
+						/>
+					</div>
+				)}
 				<ChosenLayoutCover
 					content={content}
 					user_name={user_name}
@@ -197,28 +202,29 @@ MainSlideProps) => {
 				// }}
 			>
 				{/* background picture when user uploaded this  */}
-				<div
-					style={{
-						zIndex: 0,
-						width: '100%',
-						height: '100%',
-						position: 'absolute',
-						// display: 'none',
-						pointerEvents:
-							'none' /* Make the layer transparent to pointer events */,
-						top: '0%',
-						display: 'none',
-					}}
-				>
-					<Image
-						style={{ objectFit: 'cover', height: '100%' }}
-						width={960}
-						height={540}
-						src={'https://picsum.photos/480/270'}
-						alt='Background Image for cover'
-					/>
-					<div></div>
-				</div>
+				{uploadedBackgroundImageUrl && (
+					<div
+						style={{
+							zIndex: 0,
+							width: '100%',
+							height: '100%',
+							position: 'absolute',
+							// display: 'none',
+							pointerEvents:
+								'none' /* Make the layer transparent to pointer events */,
+							top: '0%',
+							// display: 'none',
+						}}
+					>
+						<Image
+							style={{ objectFit: 'cover', height: '100%' }}
+							width={960}
+							height={540}
+							src={`${uploadedBackgroundImageUrl}`}
+							alt='Background Image for cover'
+						/>
+					</div>
+				)}
 
 				<ChosenLayoutNonCover
 					content={content}

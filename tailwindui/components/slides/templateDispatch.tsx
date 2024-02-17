@@ -67,6 +67,8 @@ export const templateDispatch = (
 		TemplatesLogos[templateKey as keyof typeof TemplatesLogos];
 	// const ChosenTemplateLogo =
 	// 	TemplatesLogos[templateLogo as keyof typeof TemplatesLogos];
+	const userUploadedLogo = slide?.logo_url;
+	const userUploadedBackgroundImage = slide?.background_url;
 	const themeElements = loadCustomizableElements(templateKey);
 	const processContent = (item: string) => {
 		if (isHTML(item)) {
@@ -132,6 +134,11 @@ export const templateDispatch = (
 			}
 		}
 	};
+
+	useEffect(() => {
+		console.log('user upload logo:', userUploadedLogo);
+		console.log('user upload background:', userUploadedBackgroundImage);
+	}, []);
 
 	return (
 		<Template
@@ -204,6 +211,8 @@ export const templateDispatch = (
 					custom_logo={slide.logo}
 				/>
 			}
+			uploadedLogoUrl={slide.logo_url}
+			uploadedBackgroundImageUrl={slide.background_url}
 		/>
 	);
 	// }
