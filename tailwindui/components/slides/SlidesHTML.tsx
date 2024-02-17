@@ -46,7 +46,7 @@ type SlidesHTMLProps = {
 	isPresenting?: boolean;
 	initSlideIndex?: number;
 	toPdf?: boolean; // toPdf mode for backend
-  showScript?: boolean;
+	showScript?: boolean;
 };
 
 export const loadCustomizableElements = (templateName: string) => {
@@ -70,7 +70,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	isPresenting = false,
 	initSlideIndex = 0,
 	toPdf = false,
-  showScript = false,
+	showScript = false,
 }) => {
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 	const {
@@ -113,8 +113,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const canUndo = slidesHistoryIndex > 0;
 	const canRedo = slidesHistoryIndex < slidesHistory.length - 1;
 
-  const currentSlideRef = useRef<HTMLDivElement>(null);
-  const thumbnailRef = useRef<HTMLDivElement>(null);
+	const currentSlideRef = useRef<HTMLDivElement>(null);
+	const thumbnailRef = useRef<HTMLDivElement>(null);
 
 	const toggleChatWindow = () => {
 		setIsChatWindowOpen(!isChatWindowOpen);
@@ -188,27 +188,30 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		}
 	}
 
-  // auto scroll thumbnail to current slide
-  useEffect(() => {
-    if (thumbnailRef.current && currentSlideRef.current) {
-      console.log('scrolling to current slide');
+	// auto scroll thumbnail to current slide
+	useEffect(() => {
+		if (thumbnailRef.current && currentSlideRef.current) {
+			console.log('scrolling to current slide');
 
-      const container = thumbnailRef.current;
-      const currentSlide = currentSlideRef.current;
+			const container = thumbnailRef.current;
+			const currentSlide = currentSlideRef.current;
 
-      const containerRect = container.getBoundingClientRect();
-      const currentSlideRect = currentSlide.getBoundingClientRect();
+			const containerRect = container.getBoundingClientRect();
+			const currentSlideRect = currentSlide.getBoundingClientRect();
 
-      // scroll to horizontal center
-      const scrollAmount = (currentSlideRect.left + currentSlideRect.width / 2) - (containerRect.left + containerRect.width / 2);
-      console.log('scrollAmount', scrollAmount);
+			// scroll to horizontal center
+			const scrollAmount =
+				currentSlideRect.left +
+				currentSlideRect.width / 2 -
+				(containerRect.left + containerRect.width / 2);
+			console.log('scrollAmount', scrollAmount);
 
-      container.scrollTo({
-        left: container.scrollLeft + scrollAmount,
-        behavior: 'smooth',
-      });
-    }
-  }, [slideIndex]);
+			container.scrollTo({
+				left: container.scrollLeft + scrollAmount,
+				behavior: 'smooth',
+			});
+		}
+	}, [slideIndex]);
 
 	function handleSlideEdit(
 		content: string | string[],
@@ -242,8 +245,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				currentSlide.content = content as string[];
 			} else {
 				if (typeof contentIndex === 'number' && contentIndex >= 0) {
-          let newContent = [...currentSlide.content];
-          newContent[contentIndex] = content as string;
+					let newContent = [...currentSlide.content];
+					newContent[contentIndex] = content as string;
 					currentSlide.content = newContent;
 				} else {
 					console.error(`Invalid contentIndex: ${contentIndex}`);
@@ -387,7 +390,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			{!isViewing && (
 				<div className='py-2 hidden sm:block'>
 					<ChangeTemplateOptions
-            currentTemplate={slides[slideIndex].template}
+						currentTemplate={slides[slideIndex].template}
 						templateOptions={Object.keys(availableTemplates)}
 						onChangeTemplate={selectTemplate}
 					/>
@@ -575,7 +578,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 			{/* horizontal  */}
 			<div className='block xl:hidden max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
-				<div className='w-full py-6 flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500' ref={thumbnailRef}>
+				<div
+					className='w-full py-6 flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'
+					ref={thumbnailRef}
+				>
 					{slides.map((slide, index) => (
 						<div
 							key={
@@ -583,7 +589,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							} // force update when slide length changes
 							className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
 							onClick={() => gotoPage(index)}
-              ref={index === slideIndex ? currentSlideRef : null}
+							ref={index === slideIndex ? currentSlideRef : null}
 						>
 							{/* {index + 1} */}
 							<SlideContainer

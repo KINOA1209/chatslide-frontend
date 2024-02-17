@@ -46,11 +46,11 @@ class ResourceService {
 		return response.ok || response.status === 404; // 404 means resource already deleted
 	}
 
-	static async uploadResource(file: File, token: string, pageInvoked: string | undefined): Promise<Resource> {
+	static async uploadResource(file: File, token: string, pageInvoked: string | undefined, type: string = ''): Promise<Resource> {
 		const body = new FormData();
 		body.append('file', file);
 		if (pageInvoked === 'theme'){
-			body.append('resource_type', 'logo')
+			body.append('resource_type', type || 'logo')
 		}
 
 		const response = await fetch('/api/upload_user_file', {

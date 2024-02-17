@@ -20,6 +20,7 @@ import {
 	loadCustomizableElements,
 	loadLayoutConfigElements,
 } from './SlidesHTML';
+import Image from 'next/image';
 export interface MainSlideProps {
 	user_name: JSX.Element;
 	title: JSX.Element;
@@ -35,6 +36,8 @@ export interface MainSlideProps {
 	layoutOptionCover: LayoutKeys;
 	brandingColor?: string;
 	templateLogo?: JSX.Element;
+	uploadedLogoUrl?: string;
+	uploadedBackgroundImageUrl?: string;
 }
 
 // deprecated
@@ -89,6 +92,8 @@ export const Default = ({
 	layoutOptionCover,
 	brandingColor = 'bg-[#F0F0F2]',
 	templateLogo,
+	uploadedLogoUrl,
+	uploadedBackgroundImageUrl,
 }: // templateLogo = TemplatesLogos.DefaultTemplateLogo,
 MainSlideProps) => {
 	const ChosenLayoutNonCover =
@@ -122,7 +127,37 @@ MainSlideProps) => {
 						? 'rounded-md w-full h-full bg-cover flex flex-row justify-start items-start box-border border-none relative '
 						: 'hidden'
 				} ${themeElements.backgroundColorCover}`}
+				// style={{
+				// 	backgroundImage: `url('https://picsum.photos/480/270')`,
+				// 	backgroundSize: 'auto', // Options: 'auto', 'contain', 'cover', etc.
+				// 	backgroundRepeat: 'no-repeat',
+				// 	// backgroundPosition: 'center', // Options: 'left top', '50% 50%', etc.
+				// }}
 			>
+				{/* background picture when user uploaded this  */}
+				{uploadedBackgroundImageUrl && (
+					<div
+						style={{
+							zIndex: 0,
+							width: '100%',
+							height: '100%',
+							position: 'absolute',
+							// display: 'none',
+							pointerEvents:
+								'none' /* Make the layer transparent to pointer events */,
+							top: '0%',
+							// display: 'none',
+						}}
+					>
+						<Image
+							style={{ objectFit: 'cover', height: '100%' }}
+							width={960}
+							height={540}
+							src={`${uploadedBackgroundImageUrl}`}
+							alt='Background Image for cover'
+						/>
+					</div>
+				)}
 				<ChosenLayoutCover
 					content={content}
 					user_name={user_name}
@@ -156,11 +191,40 @@ MainSlideProps) => {
 			<div
 				className={`${
 					!isCoverPage
-						? 'rounded-md w-full h-full bg-cover box-border border-none relative p-[28px]'
+						? 'rounded-md w-full h-full bg-cover box-border border-none relative'
 						: 'hidden'
 				} ${themeElements.backgroundColor}`}
+				// style={{
+				// 	backgroundImage: `url('https://picsum.photos/480/270')`,
+				// 	backgroundSize: 'auto', // Options: 'auto', 'contain', 'cover', etc.
+				// 	backgroundRepeat: 'no-repeat',
+				// 	// backgroundPosition: 'center', // Options: 'left top', '50% 50%', etc.
+				// }}
 			>
-				{/* <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr> */}
+				{/* background picture when user uploaded this  */}
+				{uploadedBackgroundImageUrl && (
+					<div
+						style={{
+							zIndex: 0,
+							width: '100%',
+							height: '100%',
+							position: 'absolute',
+							// display: 'none',
+							pointerEvents:
+								'none' /* Make the layer transparent to pointer events */,
+							top: '0%',
+							// display: 'none',
+						}}
+					>
+						<Image
+							style={{ objectFit: 'cover', height: '100%' }}
+							width={960}
+							height={540}
+							src={`${uploadedBackgroundImageUrl}`}
+							alt='Background Image for cover'
+						/>
+					</div>
+				)}
 
 				<ChosenLayoutNonCover
 					content={content}
@@ -185,20 +249,20 @@ MainSlideProps) => {
 };
 
 export const availableTemplates = {
-  Stanford: Stanford_school_template,
-  Berkeley: Berkeley_school_template,
-  Harvard: Harvard_school_template,
-  MIT: MIT_school_template,
-  Princeton: Princeton_school_template,
-  Caltech: Caltech_school_template,
-  Columbia: Columbia_school_template,
-  JHU: JHU_school_template,
-  UChicago: University_of_Chicago_school_template,
-  Yale: Yale_school_template,
-  UPenn: UPenn_school_template,
-  Default: Default,
-  Fun_Education_004: Fun_Education_004_template,
-  Business_002: Business_002_template,
+	Stanford: Stanford_school_template,
+	Berkeley: Berkeley_school_template,
+	Harvard: Harvard_school_template,
+	MIT: MIT_school_template,
+	Princeton: Princeton_school_template,
+	Caltech: Caltech_school_template,
+	Columbia: Columbia_school_template,
+	JHU: JHU_school_template,
+	UChicago: University_of_Chicago_school_template,
+	Yale: Yale_school_template,
+	UPenn: UPenn_school_template,
+	Default: Default,
+	Fun_Education_004: Fun_Education_004_template,
+	Business_002: Business_002_template,
 };
 
 // Define a type for template keys
