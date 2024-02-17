@@ -208,7 +208,7 @@ export const templateDispatch = (
 			templateLogo={
 				<ChosenTemplateLogo
 					isCoverPage={isCoverPage}
-					custom_logo={slide.logo}
+          custom_logo={slide.logo_url || slide.logo}
 				/>
 			}
 			uploadedLogoUrl={slide.logo_url}
