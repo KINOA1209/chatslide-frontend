@@ -135,6 +135,14 @@ export const templateDispatch = (
 		}
 	};
 
+  let custom_logo = 'Default'
+  if (slide.logo && slide.logo.length > 0) {
+    custom_logo = slide.logo
+  }
+  if (slide.logo_url && slide.logo.length > 0) {
+    custom_logo = slide.logo_url
+  }
+
 	return (
 		<Template
 			canEdit={canEdit}
@@ -203,7 +211,7 @@ export const templateDispatch = (
 			templateLogo={
 				<ChosenTemplateLogo
 					isCoverPage={isCoverPage}
-          custom_logo={slide.logo_url || slide.logo}
+          custom_logo={custom_logo}
 				/>
 			}
 			uploadedLogoUrl={slide.logo_url}
