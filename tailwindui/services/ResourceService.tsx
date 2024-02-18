@@ -101,6 +101,7 @@ class ResourceService {
     token: string,
   ): Promise<boolean> {
     const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
     if (token) {
       headers.append('Authorization', `Bearer ${token}`);
     }

@@ -8,6 +8,7 @@ export default interface Project {
 	name: string;
   author: string;
 	description: string;
+  keywords: string[];
 	resources: Resource[];
 	created_datetime: string;
 	project_name: string;

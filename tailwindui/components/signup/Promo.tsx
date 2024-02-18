@@ -1,20 +1,35 @@
-import React, { useState } from 'react';
+'use client';
+
+import { useSearchParams } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import SessionStorage from '../utils/SessionStorage';
+import { GrayLabel } from '../ui/GrayLabel';
 
 interface PromoComponentProps {
-	showPromo: boolean;
-	setShowPromo: React.Dispatch<React.SetStateAction<boolean>>;
-	referralValue: string;
-	setReferralValue: React.Dispatch<React.SetStateAction<string>>;
   text?: string;
 }
 
 const PromoComponent: React.FC<PromoComponentProps> = ({
-	showPromo,
-	setShowPromo,
-	referralValue,
-	setReferralValue,
   text = 'You are going to get more credits with this code!',
 }) => {
+
+  const [referralValue, setReferralValue] = useState('');
+  const [showPromo, setShowPromo] = useState(false);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const handlePromoChange = (promo: string) => {
+      SessionStorage.setItem('promo', promo);
+    };
+
+    const promo = searchParams?.get('referral') || SessionStorage.getItem('promo');
+    if (promo) {
+      handlePromoChange(promo);
+      setReferralValue(promo);
+      setShowPromo(true);
+    }
+  }, []);
+
 	return (
 		<>
 			<div className='mb-6'>
@@ -27,12 +42,15 @@ const PromoComponent: React.FC<PromoComponentProps> = ({
 							>
 								{text}
 							</label>
-							<div className='max-w-sm mx-auto'>
+							<div className='max-w-sm mx-auto flex flex-row'>
 								<input
 									id='promo'
 									type='text'
 									value={referralValue}
-									onChange={(e) => setReferralValue(e.target.value)}
+									onChange={(e) => {
+                    setReferralValue(e.target.value);
+                    SessionStorage.setItem('promo', e.target.value);
+                  }}
 									className='form-input w-full text-gray-800'
 								/>
 							</div>

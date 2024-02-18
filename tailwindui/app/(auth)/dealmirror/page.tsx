@@ -1,45 +1,8 @@
-'use client';
-
 import Link from 'next/link';
 import GoogleSignIn from '@/components/button/GoogleSignIn';
-import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
 import Promo from '@/components/signup/Promo';
 
 export default function SignUp() {
-	const router = useRouter();
-	const searchParams = useSearchParams();
-	const [href, setHref] = useState('/signup-with-email');
-	const [showPromo, setShowPromo] = useState(false);
-
-	const [referralValue, setReferralValue] = useState('');
-
-	useEffect(() => {
-		const handlePromoChange = (promo: string) => {
-			if (typeof localStorage !== 'undefined') {
-				localStorage.setItem('promo', promo);
-			}
-		};
-
-		const promo = searchParams?.get('referral');
-		if (promo) {
-			handlePromoChange(promo);
-			setReferralValue(promo);
-			setShowPromo(true);
-      setHref(`/signup-with-email?referral=${promo}`);
-      console.log('href', href);
-		}
-    
-    const dealMirrorRedepmtionCode = searchParams?.get('dealcode');
-    if (dealMirrorRedepmtionCode) {
-      handlePromoChange(dealMirrorRedepmtionCode);
-      setReferralValue(dealMirrorRedepmtionCode);
-      setShowPromo(true);
-      setHref(`/signup-with-email?dealcode=${dealMirrorRedepmtionCode}`);
-    }
-
-	}, []);
-
 	return (
 		<section className='bg-gradient-to-b from-gray-100 to-white'>
 			<div className='max-w-6xl mx-auto px-4 sm:px-6'>
@@ -52,10 +15,6 @@ export default function SignUp() {
 					{/* Form */}
 					<div className='max-w-sm mx-auto'>
 						<Promo
-							showPromo={showPromo}
-							setShowPromo={setShowPromo}
-							referralValue={referralValue}
-							setReferralValue={setReferralValue}
               text='Enter your Deal Mirror redemption code here'
 						/>
 
@@ -88,7 +47,7 @@ export default function SignUp() {
 						<div className='flex flex-wrap -mx-3 mt-6'>
 							<div className='w-full px-3'>
 								<a
-									href={href}
+									href={'signup-with-email'}
 									className='btn text-white font-bold bg-Blue w-full'
 								>
 									Sign up with email

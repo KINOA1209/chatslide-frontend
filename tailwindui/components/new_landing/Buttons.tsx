@@ -8,6 +8,7 @@ export const DiscordButton: React.FC = () => {
         <img
           className='w-8 h-6 ml-4'
           src='new_landing/imgs/discord-icon.png'
+          alt='Discord icon'
         />
 
         <div className='ml-4 flex flex-col h-[54px] py-[5px]'>

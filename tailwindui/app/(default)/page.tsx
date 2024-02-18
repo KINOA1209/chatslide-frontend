@@ -5,10 +5,11 @@ import FeatureCards from '../../components/new_landing/FeatureCards';
 import Header from '@/components/ui/header';
 import PricingSection from '@/components/new_landing/PricingPlans';
 import LandingButton from '@/components/new_landing/LandingButton';
-import BlackFridayBanner from '@/components/new_landing/HolidayBanner';
+import HolidayBanner from '@/components/new_landing/HolidayBanner';
 import HeroText from '@/components/landing/HeroText';
 import Testimonails from '@/components/landing/testimonials';
 import { DiscordButton, ProductHuntButton } from '@/components/new_landing/Buttons';
+import { generateMetadata } from '../layout';
 
 const fileTypes = [
   'pdf-file-icon',
@@ -22,53 +23,14 @@ const fileTypes = [
   'txt-icon',
 ];
 
-// fields can be overwritten by child pages, usually title and description
-export const metadata = {
-  title: 'DrLambda',
-  description: 'Your AI agent to create professional slides.',
-  keywords:
-    'DrLambda, AI-powered, tool, create, professional, slides, documents, sources, pdf, docx, notion, presentation, knowledge',
-  image: 'https://drlambda.ai/new_landing/imgs/ogimage.png',
-  name: 'DrLambda',
-  metadataBase: {
-    title: 'DrLambda',
-    description: 'Your AI agent to create professional slides.',
-    keywords:
-      'DrLambda, AI-powered, tool, create, professional, slides, documents, sources, pdf, docx, notion, presentation, knowledge',
-    image: 'https://drlambda.ai/new_landing/imgs/ogimage.png',
-    name: 'DrLambda',
-  },
-  openGraph: {
-    title: 'DrLambda',
-    description: 'Your AI agent to create professional slides.',
-    url: 'https://drlambda.ai',
-    type: 'website',
-    images: [
-      {
-        url: 'https://drlambda.ai/new_landing/imgs/ogimage.png',
-        width: 800,
-        height: 440,
-        alt: 'DrLambda',
-      },
-    ],
-  },
-  twitter: {
-    handle: '@drlambda_ai',
-    site: '@drlambda_ai',
-    card: 'summary_large_image',
-    creator: '@drlambda_ai',
-    title: 'DrLambda',
-    description: 'Your AI agent to create professional slides.',
-    image: 'https://drlambda.ai/new_landing/imgs/ogimage.png',
-  },
-};
+export const metadata = generateMetadata();
 
 function App() {
   return (
     <>
       <Header loginRequired={false} isLanding={true} />
 
-      <BlackFridayBanner />
+      <HolidayBanner />
 
       {/* background container */}
       <div className='background w-full relative bg-zinc-100'>
@@ -116,19 +78,19 @@ function App() {
           id='testimonials'
           className='pt-[3rem] relative flex flex-col justify-center items-center'
         >
-          <div className='w-[90%] h-full text-center text-neutral-900 text-3xl lg:text-5xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
+          <h2 className='w-[90%] h-full text-center text-neutral-900 text-3xl lg:text-5xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
             Wall of love 💙
             <Testimonails />
-          </div>
+          </h2>
         </div>
 
         <div
           id='scenarios'
           className='pt-[3rem] flex flex-col justify-center items-center'
         >
-          <div className='w-[90%] text-center text-neutral-900 text-3xl lg:text-5xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
+          <h2 className='w-[90%] text-center text-neutral-900 text-3xl lg:text-5xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
             Professional slides for all scenarios
-          </div>
+          </h2>
           <div className='w-[90%] text-center text-md lg:text-xl'>
             <span className='text-neutral-800 font-normal font-creato-regular leading-loose tracking-wide'>
               From{' '}
@@ -163,9 +125,9 @@ function App() {
           id='use-cases'
           className='pt-[3rem] relative flex flex-col justify-center items-center'
         >
-          <div className='w-[90%] h-full text-center text-neutral-900 text-3xl lg:text-5xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
+          <h2 className='w-[90%] h-full text-center text-neutral-900 text-3xl lg:text-5xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
             Extract information from any source
-          </div>
+          </h2>
           <div className='w-[90%] text-center text-md lg:text-xl  '>
             <span className='text-neutral-800 font-bold font-creato-bold leading-loose tracking-wide'>
               Curate

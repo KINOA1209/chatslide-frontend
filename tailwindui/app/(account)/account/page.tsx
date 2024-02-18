@@ -24,6 +24,7 @@ import {
 import { useLocation } from 'react-router-dom';
 import { useUser } from '@/hooks/use-user';
 import useHydrated from '@/hooks/use-hydrated';
+import SessionStorage from '@/components/utils/SessionStorage';
 
 const Profile = () => {
   const { username, email, token, setUsername } = useUser();
@@ -256,7 +257,7 @@ const OpenAIKey = () => {
 
 const ApplyPromo = () => {
   const searchParams = useSearchParams();
-  const [promo, setPromo] = useState(searchParams?.get('promo') || '');
+  const [promo, setPromo] = useState(searchParams?.get('promo') || SessionStorage.getItem('promo'));
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { token, updateCreditsAndTier } = useUser();
 

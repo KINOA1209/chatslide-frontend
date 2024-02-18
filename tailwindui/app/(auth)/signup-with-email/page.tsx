@@ -1,6 +1,11 @@
 import Link from 'next/link';
 import SignupForm from '@/components/signup-form';
 import CustomerServiceInfo from '@/components/customerService';
+import { generateMetadata } from '@/app/layout';
+
+const title = 'Sign Up with Email | DrLambda';
+const description = 'DrLambda is your AI assistant to create professional slides and posts. Join us to experience the power of AI in creating professional slides and posts.';
+export const metadata = generateMetadata({ title, description });
 
 export default function SignUp() {
 	return (
@@ -9,7 +14,7 @@ export default function SignUp() {
 				<div className='pt-32 pb-12 md:pt-40 md:pb-20'>
 					{/* Page header */}
 					<div className='max-w-3xl mx-auto text-center pb-12 md:pb-20'>
-						<h1 className='h1'>💙 Welcome!</h1>
+						<h1 className='h1'>💙 Hello!</h1>
 					</div>
 
 					{/* Form */}

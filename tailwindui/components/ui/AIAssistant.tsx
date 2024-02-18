@@ -2,6 +2,7 @@
 import { ChatHistoryStatus, useChatHistory } from '@/hooks/use-chat-history';
 import { useSession } from '@/hooks/use-session';
 import { useSlides } from '@/hooks/use-slides';
+import { useUser } from '@/hooks/use-user';
 import ChatHistory from '@/models/ChatHistory';
 import Slide from '@/models/Slide';
 import DrlambdaCartoonImage from '@/public/images/AIAssistant/DrLambdaCartoon.png';
@@ -87,6 +88,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		useChatHistory();
 	const { updateVersion } = useSlides();
 	const [loading, setLoading] = useState(false);
+  const { token } = useUser();
 
 	// Create a ref for the last message
 	const lastMessageRef = useRef<HTMLDivElement>(null);
@@ -119,12 +121,13 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		content,
 	});
 
-	const makeApiCall = async (prompt: string): Promise<Response> => {
+	const makeApiCall = async (prompt: string, token: string): Promise<Response> => {
 		try {
 			return await fetch('/api/ai_gen_slide', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token,
 				},
 				body: JSON.stringify({
 					slide: slides[currentSlideIndex],
@@ -164,7 +167,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		try {
 			setLoading(true);
 
-			const response = await makeApiCall(inputToSend);
+      const response = await makeApiCall(inputToSend, token);
 
 			setLoading(false);
 

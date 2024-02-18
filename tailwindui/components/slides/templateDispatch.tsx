@@ -135,11 +135,6 @@ export const templateDispatch = (
 		}
 	};
 
-	useEffect(() => {
-		console.log('user upload logo:', userUploadedLogo);
-		console.log('user upload background:', userUploadedBackgroundImage);
-	}, []);
-
 	return (
 		<Template
 			canEdit={canEdit}
@@ -208,7 +203,7 @@ export const templateDispatch = (
 			templateLogo={
 				<ChosenTemplateLogo
 					isCoverPage={isCoverPage}
-					custom_logo={slide.logo}
+          custom_logo={slide.logo_url || slide.logo}
 				/>
 			}
 			uploadedLogoUrl={slide.logo_url}

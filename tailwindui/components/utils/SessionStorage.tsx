@@ -16,4 +16,11 @@ export default class SessionStorage extends React.Component {
 		}
 		sessionStorage.setItem(key, value);
 	}
+
+  static removeItem(key: string): void {
+    if (typeof window === 'undefined') {
+      return;
+    }
+    sessionStorage.removeItem(key);
+  }
 }

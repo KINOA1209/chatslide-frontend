@@ -13,6 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	let description = "drlambda"
   let author = "drlambda"
 	let publicImageUrl = 'https://drlambda.ai/new_landing/imgs/ogimage.png';
+  let keywords = ['DrLambda', 'presentation', 'slides', 'ai_agent'];
 	try {
     const project = await ProjectService.getSharedProjectDetails(project_id, true)
     // console.log(project)
@@ -20,6 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     topic = project.topic || "DrLambda"
     description = project.description || "Created using DrLambda"
     author = project.author || "DrLambda"
+    keywords = project.keywords || keywords
 	} catch (error){
 		console.error(`Error fetching project ${project_id} details:`, error);
 	}
@@ -28,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		description: description,
     publisher: 'DrLambda',
     authors: [{ name: author }],
-    keywords: ['DrLambda', 'presentation', 'slides', 'ai_agent'],
+    keywords: keywords,
 		openGraph: {
 			title: topic,
 			description: description,
