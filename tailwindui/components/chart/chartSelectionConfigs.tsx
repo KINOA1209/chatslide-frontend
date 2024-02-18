@@ -19,12 +19,12 @@ const chartSelectionConfigs: Record<string, ChartConfig> = {
     chartType: 'bar',
     dataStructure: 'ValueDataPoint'
   },
-  scatter: {
-    displayName: 'Scatter Plot',
-    imgSrc: "/images/slides/business.png",
-    chartType: 'scatter',
-    dataStructure: 'ScatterDataPoint'
-  },
+  // scatter: {
+  //   displayName: 'Scatter Plot',
+  //   imgSrc: "/images/slides/business.png",
+  //   chartType: 'scatter',
+  //   dataStructure: 'ScatterDataPoint'
+  // },
 };
 
 export default chartSelectionConfigs;

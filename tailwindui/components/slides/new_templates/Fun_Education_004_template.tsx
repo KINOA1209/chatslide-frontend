@@ -24,6 +24,10 @@ export const Fun_Education_004_template = ({
 	templateLogo,
 	uploadedLogoUrl,
 	uploadedBackgroundImageUrl,
+	charts,
+	ischarts,
+	handleSlideEdit,
+	currentSlideIndex,
 }: MainSlideProps) => {
 	const ChosenLayoutNonCover =
 		layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
@@ -101,6 +105,10 @@ export const Fun_Education_004_template = ({
 					themeElements={themeElements}
 					layoutElements={layoutConfigElements}
 					templateLogo={templateLogo}
+					charts={charts}
+					ischarts={ischarts}
+					handleSlideEdit={handleSlideEdit}
+					currentSlideIndex={currentSlideIndex}
 				></ChosenLayoutNonCover>
 			</div>
 			{/* for cover page */}
@@ -159,6 +167,10 @@ export const Fun_Education_004_template = ({
 					themeElements={themeElements}
 					layoutElements={layoutConfigElements}
 					templateLogo={templateLogo}
+					charts={charts}
+					ischarts={ischarts}
+					handleSlideEdit={handleSlideEdit}
+					currentSlideIndex={currentSlideIndex}
 				></ChosenLayoutCover>
 			</div>
 		</>

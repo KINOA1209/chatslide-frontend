@@ -21,6 +21,9 @@ import {
 	loadLayoutConfigElements,
 } from './SlidesHTML';
 import Image from 'next/image';
+import { SlideKeys } from '@/models/Slide';
+import Chart from '@/models/Chart';
+
 export interface MainSlideProps {
 	user_name: JSX.Element;
 	title: JSX.Element;
@@ -29,7 +32,7 @@ export interface MainSlideProps {
 	content: JSX.Element | JSX.Element[];
 	imgs: string[];
 	//   imgs: JSX.Element
-	update_callback: (imgs: string[]) => void;
+	update_callback: (imgs: string[], ischart: boolean[]) => void;
 	canEdit: boolean;
 	isCoverPage: boolean;
 	layoutOptionNonCover: LayoutKeys;
@@ -38,6 +41,15 @@ export interface MainSlideProps {
 	templateLogo?: JSX.Element;
 	uploadedLogoUrl?: string;
 	uploadedBackgroundImageUrl?: string;
+	charts: Chart[]
+	ischarts: boolean[]
+	handleSlideEdit:(
+		content: string | string[],
+		index: number,
+		tag: SlideKeys,
+		contentIndex?: number,
+	) => void
+	currentSlideIndex: number,
 }
 
 // deprecated
@@ -94,6 +106,10 @@ export const Default = ({
 	templateLogo,
 	uploadedLogoUrl,
 	uploadedBackgroundImageUrl,
+	charts,
+	ischarts,
+	handleSlideEdit,
+	currentSlideIndex,
 }: // templateLogo = TemplatesLogos.DefaultTemplateLogo,
 MainSlideProps) => {
 	const ChosenLayoutNonCover =
@@ -117,7 +133,6 @@ MainSlideProps) => {
 	// 		layoutConfigElements,
 	// 	);
 	// }, []);
-
 	return (
 		<>
 			{/* for cover page slide */}
@@ -174,6 +189,10 @@ MainSlideProps) => {
 					themeElements={themeElements}
 					layoutElements={layoutConfigElements}
 					templateLogo={templateLogo}
+					charts={charts}
+					ischarts={ischarts}
+					handleSlideEdit={handleSlideEdit}
+					currentSlideIndex={currentSlideIndex}
 				></ChosenLayoutCover>
 
 				{/* Logo */}
@@ -242,6 +261,10 @@ MainSlideProps) => {
 					themeElements={themeElements}
 					layoutElements={layoutConfigElements}
 					templateLogo={templateLogo}
+					charts={charts}
+					ischarts={ischarts}
+					handleSlideEdit={handleSlideEdit}
+					currentSlideIndex={currentSlideIndex}
 				></ChosenLayoutNonCover>
 			</div>
 		</>

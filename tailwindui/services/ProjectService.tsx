@@ -3,6 +3,7 @@ import { TemplateKeys } from '@/components/slides/slideTemplates';
 import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
 import Project from '@/models/Project';
 import Slide from '@/models/Slide';
+import Chart, {Group} from '@/models/Chart'
 
 
 class ProjectService {
@@ -159,7 +160,18 @@ class ProjectService {
     }
     // console.log('jsonSlides:', jsonSlides);
     // console.log('typeof jsonSlides:', typeof jsonSlides);
-
+    const emptyGroup: Group = {
+      values: [],
+      color: '',
+      keys: [],
+      legend: ''
+    };
+    const default_chartsArr = Array.from({ length: 3 }, () => ({
+      type: '',
+      title: '',
+      groups: [emptyGroup],
+      axis: { x: '', y: '' }
+    }))
     // mapping data to slides
     const slidesArray: Slide[] = Object.keys(jsonSlides).map(
       (key, index) => {
@@ -179,6 +191,8 @@ class ProjectService {
           'Even more content here',
         ];
         slide.images = slideData.images || [];
+        slide.chart = slideData.chart;
+        slide.is_chart = slideData.is_chart || [false, false, false];
         // console.log(
         //     'slideData.content.length',
         //     slideData.content.length        // );

@@ -23,7 +23,7 @@ const DrLambdaLogo = ({
   isCoverPage: boolean;
   custom_logo: string;
 }) => {
-  console.log('custom_logo:', custom_logo);
+  //console.log('custom_logo:', custom_logo);
   if (isCoverPage) {
     if (
       custom_logo === 'Default'

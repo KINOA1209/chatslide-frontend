@@ -2,6 +2,7 @@ import { ChartTypeRegistry } from "chart.js";
 
 export interface BaseDataPoint {
     label: string;
+    color: string;
 }
   
 //pie chart, bar chart, line chart

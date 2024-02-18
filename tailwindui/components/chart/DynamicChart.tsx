@@ -8,7 +8,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarEleme
 
 interface DynamicChartProps {
   chartType: ChartType; // Use ChartType from Chart.js
-  chartData: ValueDataPoint[] | ScatterDataPoint[]; // The correct type for chart data
+  chartData: ValueDataPoint[] | ScatterDataPoint[];
 }
 
 const DynamicChart: React.FC<DynamicChartProps> = ({ 
@@ -21,8 +21,8 @@ const DynamicChart: React.FC<DynamicChartProps> = ({
         data: chartType === 'scatter' ? 
             chartData as ScatterDataPoint[] : // Directly use data for scatter charts
             (chartData as ValueDataPoint[]).map(dp => dp.value), // Extract values for other chart types
-        backgroundColor: 'rgba(54, 162, 235, 0.5)',
-        borderColor: 'rgba(54, 162, 235, 1)',
+        backgroundColor: chartData.map(dp => 'color' in dp ? dp.color : 'rgba(54, 162, 235, 0.5)'),
+        borderColor: chartData.map(dp => 'color' in dp ? dp.color : 'rgba(54, 162, 235, 0.5)'),
         borderWidth: 1,
         }],
     };
@@ -35,14 +35,10 @@ const DynamicChart: React.FC<DynamicChartProps> = ({
     // Define chart options
     const options = {
         devicePixelRatio: 1.5,
-        scales: {
-        y: chartType !== 'pie' && chartType !== 'scatter' ? { beginAtZero: true } : undefined,
-        },
         plugins: {
         legend: { display: chartType !== 'pie' },
         },
     };
-
     return <Chart type={chartType} data={data} options={options} ref={chartRef}/>;
 };
 

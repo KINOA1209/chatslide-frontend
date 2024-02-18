@@ -39,6 +39,7 @@ import ActionsToolBar from '../ui/ActionsToolBar';
 import { SlidesStatus, useSlides } from '@/hooks/use-slides';
 import useTourStore from '@/components/user_onboarding/TourStore';
 import { current } from 'immer';
+import Chart from '@/models/Chart';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -200,10 +201,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			const currentSlideRect = currentSlide.getBoundingClientRect();
 
 			// scroll to horizontal center
-			const scrollAmount =
-				currentSlideRect.left +
-				currentSlideRect.width / 2 -
-				(containerRect.left + containerRect.width / 2);
+			const scrollAmount = (currentSlideRect.left + currentSlideRect.width / 2) - (containerRect.left + containerRect.width / 2);
 			console.log('scrollAmount', scrollAmount);
 
 			container.scrollTo({
@@ -214,48 +212,76 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	}, [slideIndex]);
 
 	function handleSlideEdit(
-		content: string | string[],
+		content: string | string[] | Array<string | string[] | Chart[] | boolean[]>,
 		slideIndex: number,
-		tag: SlideKeys,
+		tag: SlideKeys | SlideKeys[],
 		contentIndex?: number,
 	) {
 		setIsEditMode(false);
 
 		const currentSlide = { ...slides[slideIndex] };
 		const className = tag;
-
-		if (className === 'head') {
-			currentSlide.head = content as string;
-		} else if (className === 'title') {
-			currentSlide.title = content as string;
-		} else if (className === 'subtopic') {
-			currentSlide.subtopic = content as string;
-		} else if (className === 'userName') {
-			currentSlide.userName = content as string;
-		} else if (className === 'template') {
-			currentSlide.template = content as TemplateKeys;
-		} else if (className === 'layout') {
-			currentSlide.layout = content as LayoutKeys;
-		} else if (className === 'logo') {
-			currentSlide.logo = content as string;
-		} else if (className === 'images') {
-			currentSlide.images = [...(content as string[])]; // deep copy
-		} else if (className === 'content') {
-			if (Array.isArray(content)) {
-				currentSlide.content = content as string[];
-			} else {
-				if (typeof contentIndex === 'number' && contentIndex >= 0) {
-					let newContent = [...currentSlide.content];
-					newContent[contentIndex] = content as string;
-					currentSlide.content = newContent;
+		const applyUpdate = (
+			content:string | string[] | Chart[] | boolean[],
+			className:string) => {
+			if (className === 'head') {
+				currentSlide.head = content as string;
+			} else if (className === 'title') {
+				currentSlide.title = content as string;
+			} else if (className === 'subtopic') {
+				currentSlide.subtopic = content as string;
+			} else if (className === 'userName') {
+				currentSlide.userName = content as string;
+			} else if (className === 'template') {
+				currentSlide.template = content as TemplateKeys;
+			} else if (className === 'layout') {
+				currentSlide.layout = content as LayoutKeys;
+			} else if (className === 'logo') {
+				currentSlide.logo = content as string;
+			} else if (className === 'images') {
+				currentSlide.images = [...(content as string[])]; // deep copy
+			} else if (className === 'content') {
+				if (Array.isArray(content)) {
+					currentSlide.content = content as string[];
 				} else {
-					console.error(`Invalid contentIndex: ${contentIndex}`);
+					if (typeof contentIndex === 'number' && contentIndex >= 0) {
+						let newContent = [...currentSlide.content];
+						newContent[contentIndex] = content as string;
+						currentSlide.content = newContent;
+					} else {
+						console.error(`Invalid contentIndex: ${contentIndex}`);
+					}
 				}
+			} else if (className === 'chart'){
+				currentSlide.chart= content as Chart[]
+			} else if (className === 'is_chart'){
+				currentSlide.is_chart = content as boolean[]
 			}
-		} else {
-			console.error(`Unknown tag: ${tag}`);
-		}
+			else {
+				console.error(`Unknown tag: ${tag}`);
+			}
 
+		}
+		if (Array.isArray(className)) {
+			className.forEach((current_tag:SlideKeys, idx: number) => {
+				let updateContent: string | string[] | Chart[] | boolean[];
+				if (Array.isArray(content)) {
+					if (idx < content.length) {
+						updateContent = content[idx];
+					} else {
+						console.error(`Content index ${idx} out of range for content array`);
+						return;
+					}
+				} else {
+					console.error(`Expected content to be an array when tag is an array`);
+					return;
+				}
+				applyUpdate(updateContent, current_tag);
+			})
+		}
+		else{
+			applyUpdate(content as string | string[] | Chart[] | boolean[], className)
+		}
 		console.log('updating slide page', slideIndex);
 		console.log(currentSlide);
 		updateSlidePage(slideIndex, currentSlide);
@@ -274,7 +300,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	}
 
 	const updateImgUrlArray = (slideIndex: number) => {
-		const updateImgUrl = (urls: string[]) => {
+		const updateImgUrl = (urls: string[], ischart: boolean[]) => {
 			if (urls.length === 1 && urls[0] === '') {
 				return;
 			}
@@ -286,11 +312,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			console.log('updateImgUrlArray called');
 			console.log('urls', urls);
 			console.log('prevUrls', prevUrls);
-			handleSlideEdit(urls, slideIndex, 'images');
+			handleSlideEdit([urls, ischart], slideIndex, ['images','is_chart']);
 		};
 		return updateImgUrl;
 	};
 
+	//console.log(slides)
 	const editableTemplateDispatch = (
 		slide: Slide,
 		index: number,
