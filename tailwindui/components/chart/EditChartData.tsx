@@ -63,7 +63,7 @@ const EditChartData: React.FC<EditChartDataProps> = ({
           const availableHeight =
             imgModuleHeight - (titleHeight + typeHeight + doneButtonHeight + topButtonHeight);
   
-          console.log(`Available height: ${availableHeight}`);
+          //console.log(`Available height: ${availableHeight}`);
           setMaxContentHeight(availableHeight > 0 ? availableHeight : 200);
         }
       };
@@ -134,7 +134,7 @@ const EditChartData: React.FC<EditChartDataProps> = ({
             <>
               <input type="text" value={dataPoint.label} onChange={e => handleDataChange(index, 'label', e.target.value)} />
               <input type="number" value={dataPoint.value} onChange={e => handleDataChange(index, 'value', Number(e.target.value))} />
-              <div className="relative" ref={pickerRef}>
+              {chartType !== 'line' && <div className="relative" ref={pickerRef}>
                 <div 
                   className="w-6 h-6 border border-gray-300 cursor-pointer"
                   style={{ backgroundColor: dataPoint.color }}
@@ -148,7 +148,7 @@ const EditChartData: React.FC<EditChartDataProps> = ({
                     />
                   </div>
                 )}
-              </div>
+              </div>}
             </>
           )}
           <button 

@@ -905,7 +905,7 @@ export const ImgModule = ({
 			>
 				{ischartArr && ischartArr[currentContentIndex] && selectedChartType && chartData.length > 0 ? (
 					<div className='w-full h-full flex items-center justify-center'>
-						<DynamicChart chartType={selectedChartType} chartData={chartData} />
+						<DynamicChart chartType={selectedChartType} chartData={chartData} isPrview={false}/>
 					</div>
 				) : 
 					selectedImg === '' ? (

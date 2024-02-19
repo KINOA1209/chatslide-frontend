@@ -1,4 +1,5 @@
 import { ChartTypeRegistry } from "chart.js";
+import { ReactNode } from 'react';
 
 export interface BaseDataPoint {
     label: string;
@@ -22,7 +23,7 @@ export interface ScatterDataPoint {
 
 export interface ChartConfig {
     displayName: string;
-    imgSrc: string;
+    imgSrc: JSX.Element;
     chartType: keyof ChartTypeRegistry
     dataStructure: 'ValueDataPoint' | 'ScatterDataPoint'
 }
