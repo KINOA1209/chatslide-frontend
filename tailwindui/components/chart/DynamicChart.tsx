@@ -1,10 +1,10 @@
 import React, {useRef} from 'react';
-import { Chart as ChartJS, ChartType, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, ArcElement, ScatterController, ChartEvent } from 'chart.js';
+import { Chart as ChartJS, ChartType, PieController, BarController, LineController, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, ArcElement, ScatterController, ChartEvent } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
 import { ValueDataPoint, ScatterDataPoint } from './chartDataConfig';
 
 // Register Chart.js components
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, ArcElement, ScatterController);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, ArcElement, ScatterController, PieController, BarController, LineController);
 
 interface DynamicChartProps {
   chartType: ChartType; // Use ChartType from Chart.js
