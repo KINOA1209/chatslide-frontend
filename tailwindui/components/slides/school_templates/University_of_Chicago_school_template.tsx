@@ -24,6 +24,10 @@ export const University_of_Chicago_school_template = ({
 	templateLogo,
 	uploadedLogoUrl,
 	uploadedBackgroundImageUrl,
+	charts,
+	ischarts,
+	handleSlideEdit,
+	currentSlideIndex,
 }: MainSlideProps) => {
 	const ChosenLayoutNonCover =
 		layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
@@ -87,6 +91,10 @@ export const University_of_Chicago_school_template = ({
 					themeElements={themeElements}
 					layoutElements={layoutConfigElements}
 					templateLogo={templateLogo}
+					charts={charts}
+					ischarts={ischarts}
+					handleSlideEdit={handleSlideEdit}
+					currentSlideIndex={currentSlideIndex}
 				></ChosenLayoutNonCover>
 			</div>
 			{/* for cover page */}
@@ -137,6 +145,10 @@ export const University_of_Chicago_school_template = ({
 					themeElements={themeElements}
 					layoutElements={layoutConfigElements}
 					templateLogo={templateLogo}
+					charts={charts}
+					ischarts={ischarts}
+					handleSlideEdit={handleSlideEdit}
+					currentSlideIndex={currentSlideIndex}
 				></ChosenLayoutCover>
 			</div>
 		</>

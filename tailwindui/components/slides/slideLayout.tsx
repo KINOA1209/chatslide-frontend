@@ -15,6 +15,7 @@ import { useLocalImgs } from './slideTemplates';
 import { ThemeElements } from './templates_customizable_elements/theme_elements';
 // import { LayoutElements } from './templates_customizable_elements/layout_elements';
 import { LayoutElements } from '@/components/slides/templates_customizable_elements/layout_elements';
+import Chart from '@/models/Chart';
 export type LayoutKeys =
 	| ''
 	| 'Cover_img_0_layout'
@@ -103,14 +104,21 @@ export const Cover_img_1_layout = ({
 	themeElements,
 	layoutElements,
 	templateLogo,
+	charts,
+	ischarts,
+	handleSlideEdit,
+	currentSlideIndex
 }: MainSlideProps) => {
-	const updateImgAtIndex = (index: number) => (imgSrc: string) => {
+	const updateImgAtIndex = (index: number) => (imgSrc: string, ischart: boolean) => {
 		const newImgs = [...imgs];
 		if (index >= newImgs.length) newImgs.push(imgSrc);
 		else newImgs[index] = imgSrc;
-		update_callback(newImgs);
-	};
 
+		const newIsCharts = [...ischarts]
+		if (index >= newIsCharts.length) newIsCharts.push(ischart);
+		else newIsCharts[index] = ischart;
+		update_callback(newImgs, newIsCharts);
+	};
 	return (
 		<div style={layoutElements.canvaCSS}>
 			<div style={layoutElements.columnCSS}>
@@ -130,6 +138,11 @@ export const Cover_img_1_layout = ({
 				<ImgModule
 					imgsrc={imgs[0]}
 					updateSingleCallback={updateImgAtIndex(0)}
+					chartArr={charts}
+					ischartArr={ischarts}
+					handleSlideEdit={handleSlideEdit}
+					currentSlideIndex={currentSlideIndex}
+					currentContentIndex={0}
 					canEdit={canEdit}
 				/>
 			</div>
@@ -387,12 +400,20 @@ export const Col_2_img_1_layout = ({
 	themeElements,
 	layoutElements,
 	templateLogo,
+	charts,
+	ischarts,
+	handleSlideEdit,
+	currentSlideIndex
 }: MainSlideProps) => {
-	const updateImgAtIndex = (index: number) => (imgSrc: string) => {
+	const updateImgAtIndex = (index: number) => (imgSrc: string, ischart: boolean) => {
 		const newImgs = [...imgs];
 		if (index >= newImgs.length) newImgs.push(imgSrc);
 		else newImgs[index] = imgSrc;
-		update_callback(newImgs);
+
+		const newIsCharts = [...ischarts]
+		if (index >= newIsCharts.length) newIsCharts.push(ischart);
+		else newIsCharts[index] = ischart;
+		update_callback(newImgs, newIsCharts);
 	};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
@@ -473,6 +494,11 @@ export const Col_2_img_1_layout = ({
 				<ImgModule
 					imgsrc={imgs[0]}
 					updateSingleCallback={updateImgAtIndex(0)}
+					chartArr={charts}
+					ischartArr={ischarts}
+					handleSlideEdit={handleSlideEdit}
+					currentSlideIndex={currentSlideIndex}
+					currentContentIndex={0}
 					canEdit={canEdit}
 					customImageStyle={layoutElements.imageCSS}
 				/>
@@ -509,12 +535,20 @@ export const Col_1_img_1_layout = ({
 	themeElements,
 	layoutElements,
 	templateLogo,
+	charts,
+	ischarts,
+	handleSlideEdit,
+	currentSlideIndex
 }: MainSlideProps) => {
-	const updateImgAtIndex = (index: number) => (imgSrc: string) => {
+	const updateImgAtIndex = (index: number) => (imgSrc: string, ischart: boolean) => {
 		const newImgs = [...imgs];
 		if (index >= newImgs.length) newImgs.push(imgSrc);
 		else newImgs[index] = imgSrc;
-		update_callback(newImgs);
+
+		const newIsCharts = [...ischarts]
+		if (index >= newIsCharts.length) newIsCharts.push(ischart);
+		else newIsCharts[index] = ischart;
+		update_callback(newImgs, newIsCharts);
 	};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
@@ -586,6 +620,11 @@ export const Col_1_img_1_layout = ({
 					<ImgModule
 						imgsrc={imgs[0]}
 						updateSingleCallback={updateImgAtIndex(0)}
+						chartArr={charts}
+						ischartArr={ischarts}
+						handleSlideEdit={handleSlideEdit}
+						currentSlideIndex={currentSlideIndex}
+						currentContentIndex={0}
 						canEdit={canEdit}
 						customImageStyle={layoutElements.imageCSS}
 					/>
@@ -661,12 +700,22 @@ export const Col_2_img_2_layout = ({
 	themeElements,
 	layoutElements,
 	templateLogo,
+	charts,
+	ischarts,
+	handleSlideEdit,
+	currentSlideIndex
 }: MainSlideProps) => {
-	const updateImgAtIndex = (index: number) => (imgSrc: string) => {
+	//console.log(charts)
+	//console.log(imgs)
+	const updateImgAtIndex = (index: number) => (imgSrc: string, ischart: boolean) => {
 		const newImgs = [...imgs];
 		if (index >= newImgs.length) newImgs.push(imgSrc);
 		else newImgs[index] = imgSrc;
-		update_callback(newImgs);
+
+		const newIsCharts = [...ischarts]
+		if (index >= newIsCharts.length) newIsCharts.push(ischart);
+		else newIsCharts[index] = ischart;
+		update_callback(newImgs, newIsCharts);
 	};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
@@ -743,6 +792,11 @@ export const Col_2_img_2_layout = ({
 						<ImgModule
 							imgsrc={imgs[0]}
 							updateSingleCallback={updateImgAtIndex(0)}
+							chartArr={charts}
+							ischartArr={ischarts}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							currentContentIndex={0}
 							canEdit={canEdit}
 						/>
 					</div>
@@ -762,6 +816,11 @@ export const Col_2_img_2_layout = ({
 						<ImgModule
 							imgsrc={imgs[1]}
 							updateSingleCallback={updateImgAtIndex(1)}
+							chartArr={charts}
+							ischartArr={ischarts}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							currentContentIndex={1}
 							canEdit={canEdit}
 						/>
 					</div>
@@ -825,12 +884,20 @@ export const Col_3_img_3_layout = ({
 	themeElements,
 	layoutElements,
 	templateLogo,
+	charts,
+	ischarts,
+	handleSlideEdit,
+	currentSlideIndex
 }: MainSlideProps) => {
-	const updateImgAtIndex = (index: number) => (imgSrc: string) => {
+	const updateImgAtIndex = (index: number) => (imgSrc: string, ischart: boolean) => {
 		const newImgs = [...imgs];
 		if (index >= newImgs.length) newImgs.push(imgSrc);
 		else newImgs[index] = imgSrc;
-		update_callback(newImgs);
+
+		const newIsCharts = [...ischarts]
+		if (index >= newIsCharts.length) newIsCharts.push(ischart);
+		else newIsCharts[index] = ischart;
+		update_callback(newImgs, newIsCharts);
 	};
 
 	return (
@@ -858,6 +925,11 @@ export const Col_3_img_3_layout = ({
 						<ImgModule
 							imgsrc={imgs[0]}
 							updateSingleCallback={updateImgAtIndex(0)}
+							chartArr={charts}
+							ischartArr={ischarts}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							currentContentIndex={0}
 							canEdit={canEdit}
 						/>
 					</div>
@@ -868,6 +940,11 @@ export const Col_3_img_3_layout = ({
 						<ImgModule
 							imgsrc={imgs[1]}
 							updateSingleCallback={updateImgAtIndex(1)}
+							chartArr={charts}
+							ischartArr={ischarts}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							currentContentIndex={1}
 							canEdit={canEdit}
 						/>
 					</div>
@@ -878,6 +955,11 @@ export const Col_3_img_3_layout = ({
 						<ImgModule
 							imgsrc={imgs[2]}
 							updateSingleCallback={updateImgAtIndex(2)}
+							chartArr={charts}
+							ischartArr={ischarts}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							currentContentIndex={2}
 							canEdit={canEdit}
 						/>
 					</div>

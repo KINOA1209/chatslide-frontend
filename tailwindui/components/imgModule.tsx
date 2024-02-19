@@ -8,10 +8,25 @@ import PaywallModal from './forms/paywallModal';
 import ResourceService from '@/services/ResourceService';
 import Resource from '@/models/Resource';
 import Image from 'next/image';
+import ChartSelection from './chart/chartSelection';
+import EditChartData from './chart/EditChartData';
+import { ChartConfig, ValueDataPoint } from './chart/chartDataConfig';
+import { ScatterDataPoint } from 'chart.js';
+import DynamicChart from './chart/DynamicChart';
+import { ChartTypeRegistry } from "chart.js";
+import ReactDOM from 'react-dom';
+import { convertToChartData, convertFromChartData } from './chart/chartDataConvert';
+import Chart from '@/models/Chart';
+import { IoBarChartOutline } from "react-icons/io5";
 
 interface ImgModuleProp {
 	imgsrc: string;
 	updateSingleCallback: Function;
+	chartArr: Chart[];
+	ischartArr: boolean[]
+	handleSlideEdit: Function;
+	currentSlideIndex: number;
+	currentContentIndex: number;
 	canEdit: boolean;
 	customImageStyle?: React.CSSProperties;
 }
@@ -20,11 +35,17 @@ enum ImgQueryMode {
 	RESOURCE,
 	SEARCH,
 	GENERATION,
+	CHART_SELECTION,
 }
 
 export const ImgModule = ({
 	imgsrc,
 	updateSingleCallback,
+	chartArr,
+	ischartArr,
+	handleSlideEdit,
+	currentSlideIndex,
+	currentContentIndex,
 	canEdit,
 	customImageStyle,
 }: ImgModuleProp) => {
@@ -167,10 +188,10 @@ export const ImgModule = ({
 		}
 	}
 
-	const handleImageClick = (e: React.MouseEvent<HTMLDivElement>) => {
+	const handleImageClick = async(e: React.MouseEvent<HTMLDivElement>) => {
 		e.preventDefault();
 		// update image here to template & source html
-		updateSingleCallback((e.target as HTMLImageElement).getAttribute('src'));
+		updateSingleCallback((e.target as HTMLImageElement).getAttribute('src'), false);
 	};
 
 	const fetchFiles = async (file_id?: string) => {
@@ -534,7 +555,112 @@ export const ImgModule = ({
 			</div>
 		</div>
 	);
+	//console.log(chartArr)
+	//console.log(ischartArr[currentContentIndex])
+	// tab for chart
+	const [chartModalContent, setChartModalContent] = useState('selection');
+	const [selectedChartType, setSelectedChartType] = useState<keyof ChartTypeRegistry | null>(null);
+	const [chartData, setChartData] = useState<ValueDataPoint[] | ScatterDataPoint[]>([]);
+	const [updatedIsChart, setUpdatedIsChart] = useState<Boolean>(false)
+	const imgmoduleRef = useRef<HTMLDivElement | null>(null);
+	const titleRef = useRef<HTMLDivElement | null>(null);
+	const typeRef = useRef<HTMLDivElement | null>(null);
+	const doneButtonRef = useRef<HTMLDivElement | null>(null);
+	const handleChartSelect = (chartType:keyof ChartTypeRegistry) => {
+		setSelectedChartType(chartType);
+		setChartModalContent('edit');
+	};
+	// useEffect(() => {
+	// 	console.log(currentSlideIndex)
+	// 	console.log(chartArr)
+	// 	console.log(ischartArr)
+	// 	console.log(selectedChartType)
+	// 	console.log(chartData)
+	//   }, [selectedChartType, chartData]);
+	useEffect(() => {
+        if (chartArr && chartArr.length > 0) {
+			const chartConfig = chartArr[currentContentIndex];
+			if (!chartConfig) {
+				console.error("Invalid chart configuration");
+				return;
+			}
+            const { chartType, chartData: parsedData } = convertFromChartData(chartArr[currentContentIndex]);
+			if (chartType) {
+				setSelectedChartType(chartType)
+				setChartData(parsedData)
+			}
+        }
+    }, [])
+	// const updateChartDataAsync = async (
+	// 	slideIndex:number, 
+	// 	updatedChartData:ValueDataPoint[] | ScatterDataPoint[], 
+	// 	selectedChartType:keyof ChartTypeRegistry
+	// ) => {
+	// 	try {
+	// 		const updated_chartdata = convertToChartData(selectedChartType, updatedChartData)
+	// 		let updated_chartArr = [...chartArr]
+	// 		updated_chartArr[currentContentIndex] = updated_chartdata
+	// 		await handleSlideEdit(updated_chartArr, slideIndex, 'chart');
+	// 	} 
+	// 	catch (error) {
+	// 		console.error("Error updating chart data:", error);
+	// 	}
+	// }
 
+	// const updateIsChartAsync = async (
+	// 	slideIndex: number, 
+	// 	ischartArr: boolean[],
+	// 	showChart: boolean,
+	// ) => {
+	// 	try {
+	// 		let updated_ischartArr = [...ischartArr]
+	// 		updated_ischartArr[currentContentIndex] = showChart
+	// 		await handleSlideEdit(updated_ischartArr, slideIndex, 'is_chart');
+	// 	} 
+	// 	catch (error) {
+	// 		console.error("Error updating ischart array:", error);
+	// 	}
+	// };
+
+	const handleDoneClickChart = async() => {
+		if (selectedQueryMode === ImgQueryMode.CHART_SELECTION && selectedChartType && chartData.length) {
+			//autosave chart data
+			const updated_chartdata = convertToChartData(selectedChartType, chartData)
+			let updated_chartArr = [...chartArr]
+			updated_chartArr[currentContentIndex] = updated_chartdata
+			//await updateChartDataAsync(currentSlideIndex, chartData, selectedChartType)
+
+			//autosave ischart
+			let updated_ischartArr = [...ischartArr]
+			updated_ischartArr[currentContentIndex] = true
+			//await updateIsChartAsync(currentSlideIndex, ischartArr, true)
+			handleSlideEdit([updated_chartArr, updated_ischartArr], currentSlideIndex, ['chart', 'is_chart'])
+			closeModal();
+		} 
+		else {
+		  closeModal();
+		}
+	};
+	const chartSelectionDiv = (
+		<div>
+			{chartModalContent === 'selection' && (
+				<ChartSelection onSelect={handleChartSelect} />
+			)}
+
+			{chartModalContent === 'edit' && selectedChartType && (
+				<EditChartData 
+					chartType={selectedChartType}
+					chartData = {chartData}
+					setChartData = {setChartData}
+					onBack={() => setChartModalContent('selection')}
+					imgModuleRef={imgmoduleRef}
+					titleRef={titleRef}
+					typeRef={typeRef}
+					doneButtonRef={doneButtonRef}
+				/>
+			)}
+	  	</div>
+	)
 	return (
 		<>
 			{/* select image modal */}
@@ -561,7 +687,7 @@ export const ImgModule = ({
 					{/* image choosing modal */}
 					<Transition
 						className='SlidesStep-5 bg-gray-100 w-full h-3/4 md:h-[65vh]
-                    md:max-w-2xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
+                    md:max-w-3xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
                     overflow-hidden flex flex-col p-4'
 						show={showModal}
 						enter='transition ease duration-500 transform delay-300'
@@ -573,13 +699,14 @@ export const ImgModule = ({
 						onClick={(e) => {
 							e.stopPropagation();
 						}}
+						ref={imgmoduleRef}
 					>
-						<h4 className='font-semibold text-xl text-center mb-3'>Image</h4>
+						<h4 className='font-semibold text-xl text-center mb-3' ref={titleRef}>Image</h4>
 						<div className='grow mt-4 flex flex-col overflow-hidden'>
-							<div className='w-full flex flex-col'>
-								<div className='w-full flex flex-row justify-around gap-3'>
+							<div className='w-full flex flex-col' ref={typeRef}>
+								<div className='w-full grid grid-cols-4'>
 									<button
-										className='cursor-pointer whitespace-nowrap py-2 flex flex-row'
+										className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
 										onClick={(e) => {
 											setSelectedQueryMode(ImgQueryMode.RESOURCE);
 											setSearchResult([]);
@@ -592,7 +719,7 @@ export const ImgModule = ({
 											handleMouseOut(e, ImgQueryMode.RESOURCE);
 										}}
 									>
-										<div className='h-full w-full flex justify-center items-center'>
+										<div className='flex justify-center items-center'>
 											<svg
 												className='w-[20px] h-[20px] mr-2'
 												viewBox='0 0 16 16'
@@ -622,7 +749,7 @@ export const ImgModule = ({
 										My Resources
 									</button>
 									<button
-										className='cursor-pointer whitespace-nowrap py-2 flex flex-row'
+										className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
 										onClick={(e) => {
 											setSelectedQueryMode(ImgQueryMode.SEARCH);
 											setSearchResult([]);
@@ -635,7 +762,7 @@ export const ImgModule = ({
 											handleMouseOut(e, ImgQueryMode.SEARCH);
 										}}
 									>
-										<div className='h-full w-full flex justify-center items-center'>
+										<div className='flex justify-center items-center'>
 											<svg
 												className='w-[20px] h-[20px] mr-2'
 												viewBox='0 0 16 16'
@@ -666,7 +793,7 @@ export const ImgModule = ({
 										Search
 									</button>
 									<button
-										className='cursor-pointer whitespace-nowrap py-2 flex flex-row'
+										className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
 										onClick={(e) => {
 											setSelectedQueryMode(ImgQueryMode.GENERATION);
 											setSearchResult([]);
@@ -679,7 +806,7 @@ export const ImgModule = ({
 											handleMouseOut(e, ImgQueryMode.GENERATION);
 										}}
 									>
-										<div className='h-full w-full flex justify-center items-center'>
+										<div className='flex justify-center items-center'>
 											<svg
 												className='w-[20px] h-[20px] mr-2'
 												viewBox='0 0 24 24'
@@ -702,34 +829,48 @@ export const ImgModule = ({
 												</defs>
 											</svg>
 										</div>
-										Generate (10 ⭐️)
+										Generate (10⭐️)
+									</button>
+									<button
+										className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
+										onClick={(e) => {
+											setSelectedQueryMode(ImgQueryMode.CHART_SELECTION);
+											setSearchResult([]);
+											setKeyword('');
+										}}
+										onMouseOver={(e) => {
+											handleMouseOver(e, ImgQueryMode.CHART_SELECTION);
+										}}
+										onMouseOut={(e) => {
+											handleMouseOut(e, ImgQueryMode.CHART_SELECTION);
+										}}
+									>
+										<div className='flex justify-center items-center'>
+											<div className='mr-2'>
+												<IoBarChartOutline size={20}/>
+											</div>
+										</div>
+										Chart
 									</button>
 								</div>
 								<div className='w-full bg-slate-200'>
 									<div
-										className={`w-1/3 h-[2px] bg-black 
-                                ${
-																	hoverQueryMode == ImgQueryMode.SEARCH &&
-																	'ml-[33.3%]'
-																} 
-                                ${
-																	hoverQueryMode == ImgQueryMode.GENERATION &&
-																	'ml-[66.7%]'
-																} 
-                                transition-all ease-in-out`}
+										className={`w-1/4 h-[2px] bg-black ${hoverQueryMode == ImgQueryMode.SEARCH && 'ml-[25%]'} 
+										${hoverQueryMode == ImgQueryMode.GENERATION &&'ml-[50%]'} 
+										${hoverQueryMode == ImgQueryMode.CHART_SELECTION &&'ml-[75%]'} 
+                                		transition-all ease-in-out`}
 									></div>
 								</div>
 							</div>
 
 							<div className='mt-3 mb-5 grow overflow-hidden'>
-								{selectedQueryMode == ImgQueryMode.RESOURCE &&
-									resourceSelectionDiv}
+								{selectedQueryMode == ImgQueryMode.RESOURCE && resourceSelectionDiv}
 								{selectedQueryMode == ImgQueryMode.SEARCH && imgSearchDiv}
-								{selectedQueryMode == ImgQueryMode.GENERATION &&
-									imgGenerationDiv}
+								{selectedQueryMode == ImgQueryMode.GENERATION && imgGenerationDiv}
+								{selectedQueryMode == ImgQueryMode.CHART_SELECTION && chartSelectionDiv}
 							</div>
 						</div>
-						<div className='w-full mx-auto'>
+						<div className='w-full mx-auto' ref={doneButtonRef}>
 							<div className='w-full flex flex-wrap'>
 								<div className='w-full'>
 									<button
@@ -738,7 +879,7 @@ export const ImgModule = ({
 										disabled={uploading || searching}
 										onClick={(e) => {
 											e.preventDefault();
-											closeModal();
+											handleDoneClickChart()
 										}}
 									>
 										{uploading ? 'Uploading' : searching ? 'Searching' : 'Done'}
@@ -762,7 +903,12 @@ export const ImgModule = ({
 						: ''
 				} flex flex-col items-center justify-center cursor-pointer`}
 			>
-				{selectedImg === '' ? (
+				{ischartArr && ischartArr[currentContentIndex] && selectedChartType && chartData.length > 0 ? (
+					<div className='w-full h-full flex items-center justify-center'>
+						<DynamicChart chartType={selectedChartType} chartData={chartData} isPrview={false}/>
+					</div>
+				) : 
+					selectedImg === '' ? (
 					<div className='flex flex-col items-center justify-center'>
 						<svg
 							className='w-20 h-20 opacity-50'
@@ -779,17 +925,6 @@ export const ImgModule = ({
 						</div>
 					</div>
 				) : (
-					// <img
-					//     src={imgsrc + '?timestamp=' + new Date().getTime()}
-					//     alt='Your image description' // Add an alt attribute for accessibility
-					//     className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'
-					//         }`}
-					//     style={{ // for save to pdf
-					//         width: '100%', // or specific dimensions as needed
-					//         objectFit: 'contain',
-					//         objectPosition: 'center',
-					//     }}
-					//     />
 					<Image
 						unoptimized={true}
 						style={{

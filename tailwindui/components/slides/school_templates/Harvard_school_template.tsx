@@ -25,6 +25,10 @@ export const Harvard_school_template = ({
 	templateLogo,
 	uploadedLogoUrl,
 	uploadedBackgroundImageUrl,
+	charts,
+	ischarts,
+	handleSlideEdit,
+	currentSlideIndex,
 }: MainSlideProps) => {
 	const ChosenLayoutNonCover =
 		layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
@@ -87,6 +91,10 @@ export const Harvard_school_template = ({
 					themeElements={themeElements}
 					layoutElements={layoutConfigElements}
 					templateLogo={templateLogo}
+					charts={charts}
+					ischarts={ischarts}
+					handleSlideEdit={handleSlideEdit}
+					currentSlideIndex={currentSlideIndex}
 				></ChosenLayoutNonCover>
 			</div>
 			{/* for cover page */}
@@ -137,6 +145,10 @@ export const Harvard_school_template = ({
 					themeElements={themeElements}
 					layoutElements={layoutConfigElements}
 					templateLogo={templateLogo}
+					charts={charts}
+					ischarts={ischarts}
+					handleSlideEdit={handleSlideEdit}
+					currentSlideIndex={currentSlideIndex}
 				></ChosenLayoutCover>
 
 				<div className='absolute top-[40%] right-[0%] gap-7 inline-flex pl-[3rem] pointer-events-none'>
