@@ -7,15 +7,12 @@ import AuthService from '@/services/AuthService';
 import { useRouter } from 'next/navigation';
 import ProjectTable from '../ProjectTable';
 import DrlambdaButton, {
-  BigBlueButton,
-  InversedBigBlueButton,
 } from '@/components/button/DrlambdaButton';
 import Project from '@/models/Project';
 import ProjectService from '@/services/ProjectService';
 import Modal from '@/components/ui/Modal';
 import { UserStatus, useUser } from '@/hooks/use-user';
 import OnboardingSurvey from '@/components/slides/onboardingSurvey/OnboardingSurvey';
-import { render } from '@headlessui/react/dist/utils/render';
 
 export default function Dashboard() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -26,13 +23,8 @@ export default function Dashboard() {
   const [rendered, setRendered] = useState<boolean>(false);
   const { token, userStatus } = useUser();
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showSurvey, setShowSurvey] = useState(false);
-
-  function closeModal() {
-    setIsOpen(false);
-  }
 
   const currentProjects = projects;
 
@@ -116,11 +108,10 @@ export default function Dashboard() {
     e.stopPropagation();
     // Modal for warning
     setDeleteInd(projectId);
-    setIsOpen(true);
+    setShowDeleteModal(true);
   };
 
   const confirmDelete = async () => {
-    setIsDeleting(true);
     if (deleteInd === '') {
       throw 'Error';
     }
@@ -142,8 +133,7 @@ export default function Dashboard() {
         theme: 'light',
       });
     }
-    setIsDeleting(false);
-    setIsOpen(false);
+    setShowDeleteModal(false);
     setDeleteInd('');
   };
 
@@ -209,8 +199,8 @@ export default function Dashboard() {
 
         {/* Delete modal */}
         <Modal
-          showModal={isOpen}
-          setShowModal={setIsOpen}
+          showModal={showDeleteModal}
+          setShowModal={setShowDeleteModal}
           title='Delete Project'
           description='Are you sure you want to delete this project?'
           onConfirm={confirmDelete} />

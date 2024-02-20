@@ -23,6 +23,7 @@ type DrlambdaButtonProps = {
   isPaidFeature?: boolean;
   showArrow?: boolean;
   bgColor?: string;
+  disabled?: boolean;
 };
 
 const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
@@ -154,14 +155,15 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
   children,
   onClick,
   isSubmitting = false,
+  disabled = false,
   isPaidUser,
   isPaidFeature = false,
 }) => {
   return (
     <button
-      className='btn w-[100px] sm:w-[120px] h-[36px] sm:h-[36px] sm:gap-x-2 text-white sm:font-semibold bg-Blue disabled:bg-gray-600 disabled:animate-pulse whitespace-nowrap rounded-xl'
+      className={`btn w-[100px] sm:w-[120px] h-[36px] sm:h-[36px] sm:gap-x-2 text-white sm:font-semibold bg-Blue ${isSubmitting && 'animate-pulse'} disabled:bg-gray-600 whitespace-nowrap rounded-xl`}
       onClick={onClick}
-      disabled={isSubmitting}
+      disabled={isSubmitting || disabled}
     >
       {children}
     </button>

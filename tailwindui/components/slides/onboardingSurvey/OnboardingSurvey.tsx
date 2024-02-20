@@ -178,7 +178,7 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
 
   return (
     <div className='flex flex-col justify-center items-center gap-4 sm:gap-6 overflow-y-auto'>
-      <div className='w-full z-50 p-4 sm:p-6'>
+      <div className='w-full p-4 sm:p-y-8 sm:p-x-4'>
         <div className='w-full flex flex-row items-center justify-center gap-3 mx-auto'>
           {/* <button onClick={handleBack}>
               <SurveyBackIcons />
