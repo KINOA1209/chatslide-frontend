@@ -12,6 +12,9 @@ import { University_of_Chicago_school_template } from './school_templates/Univer
 import { Yale_school_template } from './school_templates/Yale_school_template';
 import { UPenn_school_template } from './school_templates/University_of_Pennsylvania_school_template';
 
+import { Default } from './new_templates/Default_template';
+import { Fun_Education_001_template } from './new_templates/Fun_Education_001_templates';
+import { Clean_Lifestyle_003_template } from './new_templates/Clean_Lifestyle_003_template';
 import { Fun_Education_004_template } from './new_templates/Fun_Education_004_template';
 import { Business_002_template } from './new_templates/Business_002_template';
 import { LayoutKeys } from './slideLayout';
@@ -41,15 +44,15 @@ export interface MainSlideProps {
 	templateLogo?: JSX.Element;
 	uploadedLogoUrl?: string;
 	uploadedBackgroundImageUrl?: string;
-	charts: Chart[]
-	ischarts: boolean[]
-	handleSlideEdit:(
+	charts: Chart[];
+	ischarts: boolean[];
+	handleSlideEdit: (
 		content: string | string[],
 		index: number,
 		tag: SlideKeys,
 		contentIndex?: number,
-	) => void
-	currentSlideIndex: number,
+	) => void;
+	currentSlideIndex: number;
 }
 
 // deprecated
@@ -90,187 +93,7 @@ export const useLocalImgs = (
 	return { localImgs, updateImgAtIndex };
 };
 
-export const Default = ({
-	user_name,
-	title,
-	topic,
-	subtopic,
-	content,
-	imgs,
-	update_callback,
-	canEdit,
-	isCoverPage,
-	layoutOptionNonCover,
-	layoutOptionCover,
-	brandingColor = 'bg-[#F0F0F2]',
-	templateLogo,
-	uploadedLogoUrl,
-	uploadedBackgroundImageUrl,
-	charts,
-	ischarts,
-	handleSlideEdit,
-	currentSlideIndex,
-}: // templateLogo = TemplatesLogos.DefaultTemplateLogo,
-MainSlideProps) => {
-	const ChosenLayoutNonCover =
-		layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
-	const ChosenLayoutCover =
-		layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
-
-	const themeElements = loadCustomizableElements('Default' as TemplateKeys);
-	const layoutConfigElements = loadLayoutConfigElements(
-		'Default' as TemplateKeys,
-		layoutOptionCover as keyof typeof layoutOptions,
-	);
-
-	// useEffect(() => {
-	// 	console.log('Default themeElements:', themeElements);
-	// }, []);
-
-	// useEffect(() => {
-	// 	console.log(
-	// 		'Default layoutConfigElements for current page',
-	// 		layoutConfigElements,
-	// 	);
-	// }, []);
-	return (
-		<>
-			{/* for cover page slide */}
-			<div
-				className={`${
-					isCoverPage
-						? 'rounded-md w-full h-full bg-cover flex flex-row justify-start items-start box-border border-none relative '
-						: 'hidden'
-				} ${themeElements.backgroundColorCover}`}
-				// style={{
-				// 	backgroundImage: `url('https://picsum.photos/480/270')`,
-				// 	backgroundSize: 'auto', // Options: 'auto', 'contain', 'cover', etc.
-				// 	backgroundRepeat: 'no-repeat',
-				// 	// backgroundPosition: 'center', // Options: 'left top', '50% 50%', etc.
-				// }}
-			>
-				{/* background picture when user uploaded this  */}
-				{uploadedBackgroundImageUrl && (
-					<div
-						style={{
-							zIndex: 0,
-							width: '100%',
-							height: '100%',
-							position: 'absolute',
-							// display: 'none',
-							pointerEvents:
-								'none' /* Make the layer transparent to pointer events */,
-							top: '0%',
-							// display: 'none',
-						}}
-					>
-						<Image
-							style={{ objectFit: 'cover', height: '100%' }}
-							width={960}
-							height={540}
-							src={`${uploadedBackgroundImageUrl}`}
-							alt='Background Image for cover'
-						/>
-					</div>
-				)}
-				<ChosenLayoutCover
-					content={content}
-					user_name={user_name}
-					title={title}
-					topic={topic}
-					subtopic={subtopic}
-					imgs={imgs}
-					update_callback={update_callback}
-					canEdit={canEdit}
-					isCoverPage={isCoverPage}
-					layoutOptionNonCover={layoutOptionNonCover}
-					layoutOptionCover={layoutOptionCover}
-					brandingColor={brandingColor}
-					themeElements={themeElements}
-					layoutElements={layoutConfigElements}
-					templateLogo={templateLogo}
-					charts={charts}
-					ischarts={ischarts}
-					handleSlideEdit={handleSlideEdit}
-					currentSlideIndex={currentSlideIndex}
-				></ChosenLayoutCover>
-
-				{/* Logo */}
-				{/* <div className='fixed inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem]'>
-					<Image
-						src={drlambdaLogo}
-						alt='drlambdaLogo'
-						className='w-[8rem] h-auto'
-					/>
-		
-				</div> */}
-			</div>
-
-			{/* for non-cover page slides */}
-			<div
-				className={`${
-					!isCoverPage
-						? 'rounded-md w-full h-full bg-cover box-border border-none relative'
-						: 'hidden'
-				} ${themeElements.backgroundColor}`}
-				// style={{
-				// 	backgroundImage: `url('https://picsum.photos/480/270')`,
-				// 	backgroundSize: 'auto', // Options: 'auto', 'contain', 'cover', etc.
-				// 	backgroundRepeat: 'no-repeat',
-				// 	// backgroundPosition: 'center', // Options: 'left top', '50% 50%', etc.
-				// }}
-			>
-				{/* background picture when user uploaded this  */}
-				{uploadedBackgroundImageUrl && (
-					<div
-						style={{
-							zIndex: 0,
-							width: '100%',
-							height: '100%',
-							position: 'absolute',
-							// display: 'none',
-							pointerEvents:
-								'none' /* Make the layer transparent to pointer events */,
-							top: '0%',
-							// display: 'none',
-						}}
-					>
-						<Image
-							style={{ objectFit: 'cover', height: '100%' }}
-							width={960}
-							height={540}
-							src={`${uploadedBackgroundImageUrl}`}
-							alt='Background Image for cover'
-						/>
-					</div>
-				)}
-
-				<ChosenLayoutNonCover
-					content={content}
-					user_name={user_name}
-					title={title}
-					topic={topic}
-					subtopic={subtopic}
-					imgs={imgs}
-					update_callback={update_callback}
-					canEdit={canEdit}
-					isCoverPage={isCoverPage}
-					layoutOptionNonCover={layoutOptionNonCover}
-					layoutOptionCover={layoutOptionCover}
-					brandingColor={brandingColor}
-					themeElements={themeElements}
-					layoutElements={layoutConfigElements}
-					templateLogo={templateLogo}
-					charts={charts}
-					ischarts={ischarts}
-					handleSlideEdit={handleSlideEdit}
-					currentSlideIndex={currentSlideIndex}
-				></ChosenLayoutNonCover>
-			</div>
-		</>
-	);
-};
-
+// add template keys here
 export const availableTemplates = {
 	Stanford: Stanford_school_template,
 	Berkeley: Berkeley_school_template,
@@ -286,6 +109,8 @@ export const availableTemplates = {
 	Default: Default,
 	Fun_Education_004: Fun_Education_004_template,
 	Business_002: Business_002_template,
+	Fun_Education_001: Fun_Education_001_template,
+	Clean_Lifestyle_003: Clean_Lifestyle_003_template,
 };
 
 // Define a type for template keys

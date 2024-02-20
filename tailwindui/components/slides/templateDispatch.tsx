@@ -8,7 +8,7 @@ import { loadCustomizableElements } from './SlidesHTML';
 import { TemplatesLogos } from './templates_customizable_elements/Templates_logos';
 import { isHTML } from '@/components/slides/quillEditorSlide';
 import { TemplateKeys } from '@/components/slides/slideTemplates';
-import Chart, {Group} from '@/models/Chart';
+import Chart, { Group } from '@/models/Chart';
 
 const QuillEditable = dynamic(
 	() => import('@/components/slides/quillEditorSlide'),
@@ -28,8 +28,9 @@ export const templateDispatch = (
 		tag: SlideKeys,
 		contentIndex?: number,
 	) => void = () => {}, // Replace with your default function if you have one
-	updateImgUrlArray: (slideIndex: number) => (urls: string[], ischart: boolean[]) => void = () =>
-		() => {}, // Replace with your default function if you have one
+	updateImgUrlArray: (
+		slideIndex: number,
+	) => (urls: string[], ischart: boolean[]) => void = () => () => {}, // Replace with your default function if you have one
 	toggleEditMathMode: () => void = () => {}, // Replace with your default function if you have one
 
 	isCoverPage: boolean = false,
@@ -136,25 +137,31 @@ export const templateDispatch = (
 		}
 	};
 
-	let custom_logo = 'Default'
-	if (slide.logo && slide.logo.length > 0) {
-	  custom_logo = slide.logo
+	useEffect(() => {
+		console.log('the slide.logo is:', slide.template);
+	}, []);
+	useEffect(() => {
+		console.log('the slide.logo_url is:', slide.logo_url);
+	}, []);
+	let custom_logo = 'Default';
+	if (slide.template && slide.template.length > 0) {
+		custom_logo = slide.template;
 	}
-	if (slide.logo_url && slide.logo.length > 0) {
-	  custom_logo = slide.logo_url
+	if (slide.logo_url && slide.logo_url.length > 0) {
+		custom_logo = slide.logo_url;
 	}
 
 	const emptyGroup: Group = {
 		values: [],
 		color: '',
 		keys: [],
-		legend: ''
+		legend: '',
 	};
 	const defaultChartArr = Array.from({ length: 3 }, () => ({
 		type: '',
 		title: '',
 		groups: [emptyGroup],
-		axis: { x: '', y: '' }
+		axis: { x: '', y: '' },
 	}));
 	return (
 		<Template
@@ -224,7 +231,8 @@ export const templateDispatch = (
 			templateLogo={
 				<ChosenTemplateLogo
 					isCoverPage={isCoverPage}
-          			custom_logo={custom_logo}
+					custom_logo={custom_logo}
+					template_name={slide.template}
 				/>
 			}
 			uploadedLogoUrl={slide.logo_url}

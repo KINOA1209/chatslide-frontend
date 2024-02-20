@@ -62,6 +62,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 				display: 'flex',
 				width: '100%',
 				height: '100%',
+				// position: 'relative',
 			},
 			userNameCSS: {
 				zIndex: 30,
@@ -117,6 +118,7 @@ const layoutConfigData: TemplateLayoutConfig = {
 		Col_2_img_0_layout: {
 			canvaCSS: {
 				padding: '28px',
+				// position: 'relative',
 			},
 			contentContainerCSS: {
 				height: '100%',
