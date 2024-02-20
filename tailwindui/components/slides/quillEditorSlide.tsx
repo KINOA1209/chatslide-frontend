@@ -43,7 +43,7 @@ Font.whitelist = [
 	'Georgia',
 	'Helvetica Neue',
 	'Libre Baskerville Regular',
-	'Libre Baskerville Bold'
+	'Libre Baskerville Bold',
 	'Nimbus Sans Regular',
 	'Rubik',
 	'Sansita Swashed Regular',

@@ -27,7 +27,7 @@ import themeConfigData, {
 	ThemeConfig,
 } from './templates_customizable_elements/theme_elements';
 import layoutConfigData, {
-	TemplateLayoutConfig,
+	TemplateLayoutsConfig,
 } from './templates_customizable_elements/layout_elements';
 import ScriptEditor from './script/ScriptEditor';
 import Slide, { SlideKeys } from '@/models/Slide';
@@ -59,7 +59,7 @@ export const loadLayoutConfigElements = (
 	layoutOption: string,
 ) => {
 	const templateElements =
-		layoutConfigData[templateName as keyof TemplateLayoutConfig] || {};
+		layoutConfigData[templateName as keyof TemplateLayoutsConfig] || {};
 	const selectedLayoutOptionElements =
 		templateElements[layoutOption as LayoutKeys] || {};
 	return selectedLayoutOptionElements;
@@ -201,7 +201,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			const currentSlideRect = currentSlide.getBoundingClientRect();
 
 			// scroll to horizontal center
-			const scrollAmount = (currentSlideRect.left + currentSlideRect.width / 2) - (containerRect.left + containerRect.width / 2);
+			const scrollAmount =
+				currentSlideRect.left +
+				currentSlideRect.width / 2 -
+				(containerRect.left + containerRect.width / 2);
 			console.log('scrollAmount', scrollAmount);
 
 			container.scrollTo({
@@ -222,8 +225,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		const currentSlide = { ...slides[slideIndex] };
 		const className = tag;
 		const applyUpdate = (
-			content:string | string[] | Chart[] | boolean[],
-			className:string) => {
+			content: string | string[] | Chart[] | boolean[],
+			className: string,
+		) => {
 			if (className === 'head') {
 				currentSlide.head = content as string;
 			} else if (className === 'title') {
@@ -252,24 +256,24 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						console.error(`Invalid contentIndex: ${contentIndex}`);
 					}
 				}
-			} else if (className === 'chart'){
-				currentSlide.chart= content as Chart[]
-			} else if (className === 'is_chart'){
-				currentSlide.is_chart = content as boolean[]
-			}
-			else {
+			} else if (className === 'chart') {
+				currentSlide.chart = content as Chart[];
+			} else if (className === 'is_chart') {
+				currentSlide.is_chart = content as boolean[];
+			} else {
 				console.error(`Unknown tag: ${tag}`);
 			}
-
-		}
+		};
 		if (Array.isArray(className)) {
-			className.forEach((current_tag:SlideKeys, idx: number) => {
+			className.forEach((current_tag: SlideKeys, idx: number) => {
 				let updateContent: string | string[] | Chart[] | boolean[];
 				if (Array.isArray(content)) {
 					if (idx < content.length) {
 						updateContent = content[idx];
 					} else {
-						console.error(`Content index ${idx} out of range for content array`);
+						console.error(
+							`Content index ${idx} out of range for content array`,
+						);
 						return;
 					}
 				} else {
@@ -277,10 +281,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					return;
 				}
 				applyUpdate(updateContent, current_tag);
-			})
-		}
-		else{
-			applyUpdate(content as string | string[] | Chart[] | boolean[], className)
+			});
+		} else {
+			applyUpdate(
+				content as string | string[] | Chart[] | boolean[],
+				className,
+			);
 		}
 		console.log('updating slide page', slideIndex);
 		console.log(currentSlide);
@@ -312,7 +318,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			console.log('updateImgUrlArray called');
 			console.log('urls', urls);
 			console.log('prevUrls', prevUrls);
-			handleSlideEdit([urls, ischart], slideIndex, ['images','is_chart']);
+			handleSlideEdit([urls, ischart], slideIndex, ['images', 'is_chart']);
 		};
 		return updateImgUrl;
 	};

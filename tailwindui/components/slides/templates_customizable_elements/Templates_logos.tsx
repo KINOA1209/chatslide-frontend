@@ -255,6 +255,26 @@ export const Business_002_TemplateLogo: React.FC<TemplateLogoType> = (
 		logoWidth: 8, // Adjust the width as needed
 	});
 
+export const Clean_Lifestyle_003_TemplateLogo: React.FC<TemplateLogoType> = (
+	props: TemplateLogoType,
+) =>
+	generateTemplateLogo({
+		...props,
+		coverLogo: drlambdaLogo,
+		nonCoverLogo: drlambdaLogo,
+		logoWidth: 8, // Adjust the width as needed
+	});
+
+export const Fun_Education_001_TemplateLogo: React.FC<TemplateLogoType> = (
+	props: TemplateLogoType,
+) =>
+	generateTemplateLogo({
+		...props,
+		coverLogo: drlambdaLogo,
+		nonCoverLogo: drlambdaLogo,
+		logoWidth: 8, // Adjust the width as needed
+	});
+
 type TemplateLogoType = {
 	isCoverPage: boolean;
 	custom_logo: string;
@@ -283,6 +303,14 @@ const templatesInfo: TemplateLogoInfo[] = [
 	{
 		templateName: 'Business_002' as TemplateKeys,
 		templateLogo: Business_002_TemplateLogo,
+	},
+	{
+		templateName: 'Clean_Lifestyle_003' as TemplateKeys,
+		templateLogo: Clean_Lifestyle_003_TemplateLogo,
+	},
+	{
+		templateName: 'Fun_Education_001' as TemplateKeys,
+		templateLogo: Fun_Education_001_TemplateLogo,
 	},
 	{
 		templateName: 'Berkeley' as TemplateKeys,
