@@ -29,7 +29,7 @@ const ProjectItem: React.FC<{
         <div className=''>
           {project.task === 'presentation' ? (
             project.thumbnail_url
-              ? <Image src={project.thumbnail_url} alt='project thumbnail' width={16} height={9} />
+              ? <Image src={project.thumbnail_url} alt='project thumbnail' layout='responsive' width={16} height={9} />
               : <RiSlideshow2Fill className='text-gray-600 w-[40px] h-[40px]' />
           ) : (
             <FaPhotoVideo className='text-gray-600 w-[40px] h-[40px]' />
