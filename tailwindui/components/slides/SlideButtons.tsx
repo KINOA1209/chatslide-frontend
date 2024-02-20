@@ -128,7 +128,7 @@ export const SlidePagesIndicator: React.FC<{
             {currentSlideIndex + 1}
           </span>
           <span className='text-zinc-100 text-xs font-normal font-creato-medium leading-tight tracking-wide'>
-            {' of '}
+            {' / '}
           </span>
           <span className='text-zinc-100 text-xs font-bold font-creato-medium leading-tight tracking-wide'>
             {slides.length}
