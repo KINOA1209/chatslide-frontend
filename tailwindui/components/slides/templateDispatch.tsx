@@ -71,7 +71,7 @@ export const templateDispatch = (
 	// 	TemplatesLogos[templateLogo as keyof typeof TemplatesLogos];
 	const userUploadedLogo = slide?.logo_url;
 	const userUploadedBackgroundImage = slide?.background_url;
-	const themeElements = loadCustomizableElements(templateKey);
+	const themeElements = loadCustomizableElements(templateKey as TemplateKeys);
 	const processContent = (item: string) => {
 		if (isHTML(item)) {
 			if (item.trim().startsWith('<li>') && item.trim().endsWith('</li>')) {

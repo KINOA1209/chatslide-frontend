@@ -7,6 +7,7 @@ import { availableTemplates } from '@/components/slides/slideTemplates';
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import { TemplateKeys } from '@/components/slides/slideTemplates';
 import LayoutChanger from './LayoutChanger';
+import { Default_TemplateThemeConfig } from './templates_customizable_elements/templatesThemeConfigDetails/Default_TemplateThemeConfigDetails';
 import {
 	PresentButton,
 	SlideLeftNavigator,
@@ -51,7 +52,10 @@ type SlidesHTMLProps = {
 };
 
 export const loadCustomizableElements = (templateName: string) => {
-	return themeConfigData[templateName as keyof ThemeConfig] || {};
+	return (
+		themeConfigData[templateName as keyof ThemeConfig] ||
+		Default_TemplateThemeConfig
+	);
 };
 
 export const loadLayoutConfigElements = (

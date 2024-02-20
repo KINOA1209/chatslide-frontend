@@ -43,9 +43,9 @@ export const Berkeley_school_template = ({
 		layoutOptionCover as keyof typeof layoutOptions,
 	);
 
-	// useEffect(() => {
-	// 	console.log('berkeley themeElements:', themeElements);
-	// }, []);
+	useEffect(() => {
+		console.log('berkeley themeElements:', themeElements);
+	}, []);
 	// useEffect(() => {
 	// 	console.log(
 	// 		'berkeley layoutConfigElements for current slide page:',

@@ -1,9 +1,14 @@
 // YourConfig.tsx
+import { TemplateKeys } from '../slideTemplates';
 import { StanfordTemplateThemeConfig } from './templatesThemeConfigDetails/StanfordTemplateThemeConfig';
 import { Clean_Lifestyle_003_TemplateThemeConfig } from './templatesThemeConfigDetails/Clean_Lifestyle_003_TemplateThemeConfigDetails';
+import { Business_002_TemplateThemeConfig } from './templatesThemeConfigDetails/Business_002_TemplateThemeConfigDetails';
+import { Fun_Education_001_TemplateThemeConfig } from './templatesThemeConfigDetails/Fun_Education_001_TemplateThemeConfigDetails';
+import { Fun_Education_004_TemplateThemeConfig } from './templatesThemeConfigDetails/Fun_Education_004_TemplateThemeConfigDetails';
+import { Default_TemplateThemeConfig } from './templatesThemeConfigDetails/Default_TemplateThemeConfigDetails';
 export type ThemeElements = {
-	backgroundColorCover: string;
-	backgroundColor: string;
+	backgroundColorCover?: string;
+	backgroundColor?: string;
 	backgroundColorCoverImg0?: string;
 	backgroundUrlCoverImg1?: string;
 	backgroundUrlCoverImg0?: string;
@@ -24,21 +29,7 @@ export type ThemeElements = {
 };
 
 export type ThemeConfig = {
-	Stanford: ThemeElements;
-	Berkeley: ThemeElements;
-	Harvard: ThemeElements;
-	MIT: ThemeElements;
-	Princeton: ThemeElements;
-	Caltech: ThemeElements;
-	Columbia: ThemeElements;
-	JHU: ThemeElements;
-	UChicago: ThemeElements;
-	Yale: ThemeElements;
-	UPenn: ThemeElements;
-	Default: ThemeElements;
-	Fun_Education_004: ThemeElements;
-	Business_002: ThemeElements;
-	Clean_Lifestyle_003: ThemeElements;
+	[templateName in TemplateKeys]?: ThemeElements;
 };
 
 const themeConfigData: ThemeConfig = {
@@ -590,173 +581,11 @@ const themeConfigData: ThemeConfig = {
 			color: '#111827', // text-neutral-900 color
 		},
 	},
-	Default: {
-		backgroundColorCover: 'bg-[#F0F0F2]',
-		backgroundColor: 'bg-[#F0F0F2]',
-		// backgroundUrlCover: 'https://via.placeholder.com/1200x800',
-		titleFontCSS: {
-			fontSize: '24pt', // text-3xl in points
-			fontWeight: 'bold', // font-bold
-			fontFamily: 'Creato Display Bold', // font-creato-medium
-			lineHeight: 1.2, // leading-[100%] is equivalent to a line height of 1},
-			color: '#000', // text-black color
-		},
-
-		subtopicFontCSS: {
-			fontSize: '16pt', // text-xl in points
-			fontWeight: 'normal', // font-normal
-			fontFamily: 'Creato Display Medium', // font-creato-medium
-			textTransform: 'uppercase', // Uppercase for font style
-			lineHeight: 1.2, // leading-[150%] is equivalent to a line height of 1.5
-			letterSpacing: '0.15rem', // tracking-[0.15rem]},
-			color: '#111827', // text-neutral-900 color
-		},
-		contentFontCSS: {
-			fontSize: '12pt', // base size sent from backend
-			fontWeight: 'normal', // font-normal
-			fontFamily: 'Creato Display Regular', // font-creato-medium
-			lineHeight: 1.2, // leading-[140%]
-			letterSpacing: '0.025rem', // tracking-[0.025rem]
-			color: '#111827', // text-neutral-900 color
-			display: 'list-item',
-		},
-		userNameFont:
-			'text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
-		userNameFontColor: 'text-[#3D3D3D]',
-
-		headFontCSS: {
-			fontSize: '40pt', // text-4xl in points
-			fontWeight: 'bold', // font-normal
-			fontFamily: 'Creato Display Bold', // font-creato-medium
-			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
-			letterSpacing: '-0.0125rem', // tracking-tight
-			color: '#374151', // text-neutral-800 color},
-		},
-
-		contentFontCSS_non_vertical_content: {
-			fontSize: '12pt', // base size sent from backend
-			fontWeight: 'normal', // font-normal
-			fontFamily: 'Creato Display Regular', // font-creato-medium
-			lineHeight: 1.2, // leading-[140%]
-			letterSpacing: '0.025rem', // tracking-[0.025rem]
-			color: '#111827', // text-neutral-900 color
-		},
-	},
-	Fun_Education_004: {
-		backgroundUrlCoverImg1:
-			'/images/template/Fun_Education_004/BackgroundElements.png',
-		backgroundUrlCoverImg0:
-			'/images/template/Fun_Education_004/BackgroundElements.png',
-		backgroundUrlCol_1_img_0:
-			'/images/template/Fun_Education_004/BackgroundElementsCol1_2_3_img_0.png',
-		backgroundUrlCol_2_img_0:
-			'/images/template/Fun_Education_004/BackgroundElementsCol1_2_3_img_0.png',
-		backgroundUrlCol_3_img_0:
-			'/images/template/Fun_Education_004/BackgroundElementsCol1_2_3_img_0.png',
-		backgroundUrlCol_2_img_1:
-			'/images/template/Fun_Education_004/BackgroundElementsCol_2_img_1.png',
-		backgroundUrlCol_1_img_1:
-			'/images/template/Fun_Education_004/BackgroundElementsCol_1_img_1.png',
-		backgroundUrlCol_2_img_2:
-			'/images/template/Fun_Education_004/BackgroundElementsCol_2_img_2.png',
-		backgroundUrlCol_3_img_3:
-			'/images/template/Fun_Education_004/BackgroundElementsCol_3_img_3.png',
-
-		backgroundColorCover: 'bg-[#FFFFFF]', //Lin: with a background image and shapes of color #01B99F, #4747F3, #FFC8FF, #FF846C, #FECEB7
-		backgroundColor: 'bg-[#FFFFFF]', //Lin: Text box color #E4F9F6, shapes of color #01B99F, #4747F3, #FFC8FF, #FF846C, #FECEB7
-		backgroundColorCoverImg0: '#ACEAE1',
-		titleFontCSS: {
-			fontSize: '24pt', // text-3xl in points
-			fontWeight: 'bold', // font-bold,(Lin: 700)
-			fontFamily: 'Caveat', // font-nimbus-sans-bold
-			lineHeight: 1.2, // leading-[110%] is equivalent to a line height of 1.1
-			whiteSpace: 'nowrap', // whitespace-nowrap},
-			color: '#4B4B4B', // text-[#8C1515] color
-		},
-		subtopicFontCSS: {
-			opacity: 1, // opacity-70
-			fontWeight: 'normal', // font-nimbus-sans-bold (Lin: 500)
-			fontFamily: 'Helvetica Neue', // font-nimbus-sans-bold
-			fontSize: '16pt', // text-xl in points
-			fontStyle: 'normal', // font-normal
-			lineHeight: 1, // leading-[150%] is equivalent to a line height of 1.5
-			color: '#BCBCBC', // text-red-800 color
-		},
-		contentFontCSS: {
-			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
-			fontWeight: 'normal', // font-normal (Lin: 400)
-			fontFamily: 'Helvetica Neue', // font-nimbus-sans-regular
-			lineHeight: 1.3, // leading-9 is equivalent to a line height of 1.5
-			color: '#4B4B4B', // text-zinc-800 color
-			display: 'list-item',
-		},
-		userNameFont: 'text-sm font-creato-regular  font-normal leading-[100%]',
-		userNameFontColor: 'text-[#868686]', //(Lin: color #868686)
-		headFontCSS: {
-			fontSize: '48pt', // text-4xl in points (assuming 1rem is 1pt)
-			fontWeight: 'normal', // font-bold, (Lin: 700)
-			fontFamily: 'Caveat', // font-nimbus-sans-bold
-			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
-			color: '#2E2E2E', // text-white color
-		},
-		contentFontCSS_non_vertical_content: {
-			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
-			fontWeight: 'normal', // font-normal
-			fontFamily: 'Helvetica Neue', // font-nimbus-sans-regular
-			lineHeight: 1.3, // leading-9 is equivalent to a line height of 1.5
-			color: '#4B4B4B', // text-zinc-800 color
-		},
-	},
-	Business_002: {
-		backgroundUrlCoverImg0:
-			'/images/template/Business_002/cover_img_0_layout/BackgroundImg.png',
-		backgroundColorCover: '',
-		backgroundColor: 'bg-[#D2D2D2]',
-		backgroundColorCoverImg0: '#2E2E2E',
-		titleFontCSS: {
-			fontSize: '24pt',
-			fontWeight: 'bold',
-			fontFamily: 'Big Shoulders Text',
-			lineHeight: 1.2,
-			whiteSpace: 'nowrap',
-			color: '#2E2E2E',
-		},
-		subtopicFontCSS: {
-			opacity: 1,
-			fontWeight: 'bold',
-			fontFamily: 'Arimo',
-			fontSize: '16pt',
-			fontStyle: 'normal',
-			lineHeight: 1,
-			color: '#6B7A2D',
-		},
-		contentFontCSS: {
-			fontSize: '12pt',
-			fontWeight: 'normal',
-			fontFamily: 'Arimo',
-			lineHeight: 1.3,
-			color: '#2E2E2E',
-			display: 'list-item',
-		},
-		userNameFont:
-			'text-[16pt] font-Creato-Display-Medium font-normal leading-[100%]',
-		userNameFontColor: 'text-[#6B7A2D]',
-		headFontCSS: {
-			fontSize: '48pt',
-			fontWeight: 'bold',
-			fontFamily: 'Big Shoulders Text',
-			lineHeight: 1.2,
-			color: '#2E2E2E',
-		},
-		contentFontCSS_non_vertical_content: {
-			fontSize: '12pt',
-			fontWeight: 'normal',
-			fontFamily: 'Arimo',
-			lineHeight: 1.3,
-			color: '#2E2E2E',
-		},
-	},
+	Default: Default_TemplateThemeConfig,
+	Fun_Education_004: Fun_Education_001_TemplateThemeConfig,
+	Business_002: Business_002_TemplateThemeConfig,
 	Clean_Lifestyle_003: Clean_Lifestyle_003_TemplateThemeConfig,
+	Fun_Education_001: Fun_Education_004_TemplateThemeConfig,
 };
 
 export default themeConfigData;
