@@ -39,6 +39,20 @@ const Modal: React.FC<ModalProps> = ({
 		handleCloseModal(); // Click outside the modal content, close the modal
 	};
 
+  // press esc to close modal
+  React.useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleCloseModal();
+      }
+    };
+
+    window.addEventListener('keydown', handleEsc);
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, []);
+
 	return (
 		<>
 			{showModal && (
