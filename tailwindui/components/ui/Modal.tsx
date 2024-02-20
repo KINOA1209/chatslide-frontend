@@ -10,6 +10,7 @@ interface ModalProps {
   onConfirm?: () => void;
   title?: string;
   description?: string;
+  clickOutsideToClose?: boolean;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -20,6 +21,7 @@ const Modal: React.FC<ModalProps> = ({
   onConfirm,
   title,
   description,
+  clickOutsideToClose = true,
 }) => {
 	const modalRef = React.useRef<HTMLDivElement>(null);
 	const modalContentRef = React.useRef<HTMLDivElement>(null);
@@ -30,6 +32,7 @@ const Modal: React.FC<ModalProps> = ({
 	};
 
 	const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!clickOutsideToClose) return;
 		if (modalContentRef.current?.contains(e.target as Node)) {
 			return; // Click inside the modal content, do nothing
 		}
