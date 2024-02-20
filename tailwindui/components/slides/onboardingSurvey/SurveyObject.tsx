@@ -6,19 +6,19 @@ type SurveySectionConfig = {
 const surveyObject: Record<string, SurveySectionConfig> = {
   industry: {
     question: "What industry do you work for?",
-    itemsArr : [
-      'Tech & Telecom',
-      'Finance',
-      'Consulting',
-      'Health & Pharma',
-      'Energy & Utilities',
-      'Manufacturing & Construction',
-      'Agriculture & Food',
-      'Education & Research',
-      'Retail & Fashion',
-      'Transport & Aerospace',
-      'Entertainment & Hospitality',
-      'Other'
+    itemsArr: [
+      "Tech",
+      "Education",
+      "Entertainment",
+      "Finance",
+      "Consulting",
+      "Health",
+      "Energy",
+      "Manufacturing",
+      "Agriculture",
+      "Retail",
+      "Transport",
+      "Other"
     ]
   },
 
@@ -32,19 +32,19 @@ const surveyObject: Record<string, SurveySectionConfig> = {
 
   purpose: {
     question: "What's the purpose of your output?",
-    itemsArr : [
-      'Educational Lecture',
-      'Business Presentation',
-      'Research Presentation',
-      'Technical/Data-Driven',
-      'Conference Talk',
-      'Workshop/Training',
-      'Project Proposal',
-      'Information Webinar',
-      'Portfolio Showcase',
-      'Personal Storytelling',
-      'Marketing & Sales',
-      'Other Purposes'
+    itemsArr: [
+      "Education",
+      "Business",
+      "Research",
+      "Technical",
+      "Conference",
+      "Training",
+      "Proposal",
+      "Webinar",
+      "Portfolio",
+      "Storytelling",
+      "Marketing",
+      "Other"
     ]
   }
 

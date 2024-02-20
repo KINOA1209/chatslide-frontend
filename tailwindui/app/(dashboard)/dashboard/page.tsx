@@ -163,62 +163,67 @@ export default function Dashboard() {
     <section className='grow flex flex-col'>
       <ToastContainer />
       {/* top background container of my projects title text and button */}
-      {!showSurvey && (
-        <div className='grow flex flex-col'>
-          <div className='flex items-end w-full z-10 pt-[4rem] bg-Blue border-b-2 px-[5rem]'>
-            {/* flex container controlling max width */}
-            <div className='w-full max-w-7xl flex flex-wrap items-end justify-center'>
-              {/* my project title text */}
-              <div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-white text-base font-bold font-creato-medium leading-10 tracking-wide border-white border-b-2'>
-                My Projects
-              </div>
+      <div className='grow flex flex-col'>
+        <div className='flex items-end w-full z-10 pt-[4rem] bg-Blue border-b-2 px-[5rem]'>
+          {/* flex container controlling max width */}
+          <div className='w-full max-w-7xl flex flex-wrap items-end justify-center'>
+            {/* my project title text */}
+            <div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-white text-base font-bold font-creato-medium leading-10 tracking-wide border-white border-b-2'>
+              My Projects
+            </div>
 
-              {/* create new project button */}
-              <div className='absolute right-5 pb-1'>
-                <DrlambdaButton
-                  isPaidFeature={false}
-                  onClick={handleStartNewProject}
-                >
-                  Start
-                </DrlambdaButton>
-              </div>
+            {/* create new project button */}
+            <div className='absolute right-5 pb-1'>
+              <DrlambdaButton
+                isPaidFeature={false}
+                onClick={handleStartNewProject}
+              >
+                Start
+              </DrlambdaButton>
             </div>
           </div>
-
-          {/* projects details area */}
-          <div
-            className='pb-[1rem] w-full px-8 pt-8 flex flex-col grow overflow-auto '
-            ref={contentRef}
-          >
-            {rendered ? projects && projects.length > 0 ? (
-              <ProjectTable
-                currentProjects={currentProjects}
-                setCurrentProjects={setProjects}
-                onProjectClick={handleProjectClick}
-                onDelete={handleDelete}
-              />
-            ) : (
-              <div className='flex items-center mt-[1rem] md:mt-[6rem] justify-center text-gray-600 text-[14px] md:text-[20px] font-normal font-creato-medium leading-normal tracking-wide'>
-                You haven't created any project yet.
-              </div>
-            ) : (
-              <div className='flex items-center mt-[1rem] md:mt-[6rem] justify-center text-gray-600 text-[14px] md:text-[20px] font-normal font-creato-medium leading-normal tracking-wide'>
-                Loading... ⏳
-              </div>
-            )}
-          </div>
-
-          {/* Delete modal */}
-          <Modal
-            showModal={isOpen}
-            setShowModal={setIsOpen}
-            title='Delete Project'
-            description='Are you sure you want to delete this project?'
-            onConfirm={confirmDelete} />
         </div>
-      )}
+
+        {/* projects details area */}
+        <div
+          className='pb-[1rem] w-full px-8 pt-8 flex flex-col grow overflow-auto '
+          ref={contentRef}
+        >
+          {rendered ? projects && projects.length > 0 ? (
+            <ProjectTable
+              currentProjects={currentProjects}
+              setCurrentProjects={setProjects}
+              onProjectClick={handleProjectClick}
+              onDelete={handleDelete}
+            />
+          ) : (
+            <div className='flex items-center mt-[1rem] md:mt-[6rem] justify-center text-gray-600 text-[14px] md:text-[20px] font-normal font-creato-medium leading-normal tracking-wide'>
+              You haven't created any project yet.
+            </div>
+          ) : (
+            <div className='flex items-center mt-[1rem] md:mt-[6rem] justify-center text-gray-600 text-[14px] md:text-[20px] font-normal font-creato-medium leading-normal tracking-wide'>
+              Loading... ⏳
+            </div>
+          )}
+        </div>
+
+        {/* Delete modal */}
+        <Modal
+          showModal={isOpen}
+          setShowModal={setIsOpen}
+          title='Delete Project'
+          description='Are you sure you want to delete this project?'
+          onConfirm={confirmDelete} />
+      </div>
       {showSurvey && (
-        <OnboardingSurvey handleBack={handleBackToChoices} />
+        <Modal
+          showModal={showSurvey}
+          setShowModal={setShowSurvey}
+          // title='Welcome to DrLambda!'
+          // description='We are excited to have you onboard. Please take a few minutes to complete the onboarding survey.'
+        >
+          <OnboardingSurvey handleBack={handleBackToChoices} />
+        </Modal>
       )}
     </section>
   );
