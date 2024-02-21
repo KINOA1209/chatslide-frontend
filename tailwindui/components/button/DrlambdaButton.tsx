@@ -249,12 +249,13 @@ export const InversedBigBlueButton: React.FC<DrlambdaButtonProps> = ({
 export const SmallBlueButton: React.FC<DrlambdaButtonProps> = ({
   children,
   onClick,
+  disabled = false,
   isSubmitting = false,
   isPaidUser,
   isPaidFeature = false,
 }) => {
   function getButtonStyle() {
-    if (isSubmitting) {
+    if (isSubmitting || disabled) {
       return 'border-gray-600 text-gray-600';
     }
     return 'border-Blue text-Blue';
@@ -263,7 +264,7 @@ export const SmallBlueButton: React.FC<DrlambdaButtonProps> = ({
     <button
       onClick={onClick}
       className={`mx-2 border border-1 ${getButtonStyle()} rounded text-Blue px-3 py-1`}
-      disabled={isSubmitting}
+      disabled={isSubmitting || disabled}
     >
       {children}
     </button>
