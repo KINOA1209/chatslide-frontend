@@ -126,20 +126,22 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
         </div>
       </div>
 
-      <div className={`w-full h-[250px] flex flex-col items-center justify-center border rounded-md border-2 border-gray-200 mt-4 ${isDragging ? 'bg-blue-100 border-blue-500' : ''}`}
+      <div className={`w-full h-[250px] flex flex-col items-center justify-center border rounded-md border-2 border-gray-200 mt-4 cursor-pointer ${isDragging ? 'bg-blue-100 border-blue-500' : ''}`}
         onDragEnter={handleDragEnter}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
+        onClick={(e) => {
+              e.preventDefault();
+              setShowFileModal(true);
+            }}
       >
         <div className='flex flex-col items-center gap-2'>
           <FiFilePlus size={40} color='gray' />
-          <span className='font-creato-medium leading-snug tracking-wide text-lg'>Drag files here or{' '}
-            <span className='text-blue-600 cursor-pointer'
-              onClick={(e) => {
-                e.preventDefault();
-                setShowFileModal(true);
-              }}>
+          <span className='font-creato-medium leading-snug tracking-wide text-lg'
+          >Drag files here or{' '}
+            <span className='text-blue-600'
+              >
               Browse File
             </span>
           </span>
