@@ -56,6 +56,11 @@ export const useUser = () => {
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+        if (!userId || !idToken) {
+          console.warn('User not logged in');
+          userStatus = UserStatus.NotInited;
+          return;
+        }
         let username = await AuthService.getCurrentUserDisplayName();
         username = username?.split('@')[0] || 'User';
         const email = await AuthService.getCurrentUserEmail();
