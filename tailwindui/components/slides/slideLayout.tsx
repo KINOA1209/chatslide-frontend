@@ -107,24 +107,30 @@ export const Cover_img_1_layout = ({
 	charts,
 	ischarts,
 	handleSlideEdit,
-	currentSlideIndex
+	currentSlideIndex,
 }: MainSlideProps) => {
-	const updateImgAtIndex = (index: number) => (imgSrc: string, ischart: boolean) => {
-		const newImgs = [...imgs];
-		if (index >= newImgs.length) newImgs.push(imgSrc);
-		else newImgs[index] = imgSrc;
+	const updateImgAtIndex =
+		(index: number) => (imgSrc: string, ischart: boolean) => {
+			const newImgs = [...imgs];
+			if (index >= newImgs.length) newImgs.push(imgSrc);
+			else newImgs[index] = imgSrc;
 
-		const newIsCharts = [...ischarts]
-		if (index >= newIsCharts.length) newIsCharts.push(ischart);
-		else newIsCharts[index] = ischart;
-		update_callback(newImgs, newIsCharts);
-	};
+			const newIsCharts = [...ischarts];
+			if (index >= newIsCharts.length) newIsCharts.push(ischart);
+			else newIsCharts[index] = ischart;
+			update_callback(newImgs, newIsCharts);
+		};
 	return (
 		<div style={layoutElements.canvaCSS}>
 			<div style={layoutElements.columnCSS}>
 				<div
 					className={`${themeElements.userNameFont} ${themeElements.userNameFontColor}`}
 					style={layoutElements.userNameCSS}
+					// style={
+					// 	// ...layoutElements.userNameCSS,
+					// 	themeElements.userNameFont,
+					// 	// ...themeElements.userNameFontColor,
+					// }
 				>
 					{user_name}
 				</div>
@@ -403,18 +409,19 @@ export const Col_2_img_1_layout = ({
 	charts,
 	ischarts,
 	handleSlideEdit,
-	currentSlideIndex
+	currentSlideIndex,
 }: MainSlideProps) => {
-	const updateImgAtIndex = (index: number) => (imgSrc: string, ischart: boolean) => {
-		const newImgs = [...imgs];
-		if (index >= newImgs.length) newImgs.push(imgSrc);
-		else newImgs[index] = imgSrc;
+	const updateImgAtIndex =
+		(index: number) => (imgSrc: string, ischart: boolean) => {
+			const newImgs = [...imgs];
+			if (index >= newImgs.length) newImgs.push(imgSrc);
+			else newImgs[index] = imgSrc;
 
-		const newIsCharts = [...ischarts]
-		if (index >= newIsCharts.length) newIsCharts.push(ischart);
-		else newIsCharts[index] = ischart;
-		update_callback(newImgs, newIsCharts);
-	};
+			const newIsCharts = [...ischarts];
+			if (index >= newIsCharts.length) newIsCharts.push(ischart);
+			else newIsCharts[index] = ischart;
+			update_callback(newImgs, newIsCharts);
+		};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -538,18 +545,19 @@ export const Col_1_img_1_layout = ({
 	charts,
 	ischarts,
 	handleSlideEdit,
-	currentSlideIndex
+	currentSlideIndex,
 }: MainSlideProps) => {
-	const updateImgAtIndex = (index: number) => (imgSrc: string, ischart: boolean) => {
-		const newImgs = [...imgs];
-		if (index >= newImgs.length) newImgs.push(imgSrc);
-		else newImgs[index] = imgSrc;
+	const updateImgAtIndex =
+		(index: number) => (imgSrc: string, ischart: boolean) => {
+			const newImgs = [...imgs];
+			if (index >= newImgs.length) newImgs.push(imgSrc);
+			else newImgs[index] = imgSrc;
 
-		const newIsCharts = [...ischarts]
-		if (index >= newIsCharts.length) newIsCharts.push(ischart);
-		else newIsCharts[index] = ischart;
-		update_callback(newImgs, newIsCharts);
-	};
+			const newIsCharts = [...ischarts];
+			if (index >= newIsCharts.length) newIsCharts.push(ischart);
+			else newIsCharts[index] = ischart;
+			update_callback(newImgs, newIsCharts);
+		};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -703,20 +711,21 @@ export const Col_2_img_2_layout = ({
 	charts,
 	ischarts,
 	handleSlideEdit,
-	currentSlideIndex
+	currentSlideIndex,
 }: MainSlideProps) => {
 	//console.log(charts)
 	//console.log(imgs)
-	const updateImgAtIndex = (index: number) => (imgSrc: string, ischart: boolean) => {
-		const newImgs = [...imgs];
-		if (index >= newImgs.length) newImgs.push(imgSrc);
-		else newImgs[index] = imgSrc;
+	const updateImgAtIndex =
+		(index: number) => (imgSrc: string, ischart: boolean) => {
+			const newImgs = [...imgs];
+			if (index >= newImgs.length) newImgs.push(imgSrc);
+			else newImgs[index] = imgSrc;
 
-		const newIsCharts = [...ischarts]
-		if (index >= newIsCharts.length) newIsCharts.push(ischart);
-		else newIsCharts[index] = ischart;
-		update_callback(newImgs, newIsCharts);
-	};
+			const newIsCharts = [...ischarts];
+			if (index >= newIsCharts.length) newIsCharts.push(ischart);
+			else newIsCharts[index] = ischart;
+			update_callback(newImgs, newIsCharts);
+		};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -887,18 +896,19 @@ export const Col_3_img_3_layout = ({
 	charts,
 	ischarts,
 	handleSlideEdit,
-	currentSlideIndex
+	currentSlideIndex,
 }: MainSlideProps) => {
-	const updateImgAtIndex = (index: number) => (imgSrc: string, ischart: boolean) => {
-		const newImgs = [...imgs];
-		if (index >= newImgs.length) newImgs.push(imgSrc);
-		else newImgs[index] = imgSrc;
+	const updateImgAtIndex =
+		(index: number) => (imgSrc: string, ischart: boolean) => {
+			const newImgs = [...imgs];
+			if (index >= newImgs.length) newImgs.push(imgSrc);
+			else newImgs[index] = imgSrc;
 
-		const newIsCharts = [...ischarts]
-		if (index >= newIsCharts.length) newIsCharts.push(ischart);
-		else newIsCharts[index] = ischart;
-		update_callback(newImgs, newIsCharts);
-	};
+			const newIsCharts = [...ischarts];
+			if (index >= newIsCharts.length) newIsCharts.push(ischart);
+			else newIsCharts[index] = ischart;
+			update_callback(newImgs, newIsCharts);
+		};
 
 	return (
 		<div style={layoutElements.canvaCSS}>

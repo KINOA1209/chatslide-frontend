@@ -5,6 +5,7 @@ import { StanfordTemplateLayoutsConfig } from './templatesLayoutsConfigDetails/S
 import { Clean_Lifestyle_003_TemplateLayoutsConfig } from './templatesLayoutsConfigDetails/Clean_Lifestyle_003_TemplateLayoutsConfig';
 import { Business_002_TemplateLayoutsConfig } from './templatesLayoutsConfigDetails/Business_002_TemplateLayoutsConfig';
 import { Fun_Education_004_TemplateLayoutsConfig } from './templatesLayoutsConfigDetails/Fun_Education_004_TemplateLayoutsConfig';
+import { Fun_Education_001_TemplateLayoutsConfig } from './templatesLayoutsConfigDetails/Fun_Education_001_TemplateLayoutsConfig';
 import { Default_TemplateLayoutsConfig } from './templatesLayoutsConfigDetails/Default_TemplateLayoutsConfig';
 export type LayoutElements = {
 	canvaCSS?: React.CSSProperties;
@@ -38,6 +39,7 @@ export type TemplateLayoutsConfig = {
 const layoutConfigData: TemplateLayoutsConfig = {
 	Clean_Lifestyle_003: Clean_Lifestyle_003_TemplateLayoutsConfig,
 	Fun_Education_004: Fun_Education_004_TemplateLayoutsConfig,
+	Fun_Education_001: Fun_Education_001_TemplateLayoutsConfig,
 	Business_002: Business_002_TemplateLayoutsConfig,
 	Default: Default_TemplateLayoutsConfig,
 	Berkeley: {

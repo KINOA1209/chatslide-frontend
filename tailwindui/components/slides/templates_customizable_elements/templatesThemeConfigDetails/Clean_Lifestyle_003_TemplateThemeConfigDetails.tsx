@@ -1,8 +1,26 @@
 import { ThemeElements } from '../theme_elements';
 
 export const Clean_Lifestyle_003_TemplateThemeConfig: ThemeElements = {
-	backgroundColorCover: 'bg-[#F0F0F2]',
-	backgroundColor: 'bg-[#F0F0F2]',
+	backgroundUrlCoverImg1:
+		'/images/template/Clean_Lifestyle_003/BackgroundImg.png',
+	backgroundUrlCoverImg0:
+		'/images/template/Clean_Lifestyle_003/BackgroundImg.png',
+	backgroundUrlCol_1_img_0:
+		'/images/template/Clean_Lifestyle_003/BackgroundImg.png',
+	backgroundUrlCol_2_img_0:
+		'/images/template/Clean_Lifestyle_003/BackgroundImg.png',
+	backgroundUrlCol_3_img_0:
+		'/images/template/Clean_Lifestyle_003/BackgroundImg.png',
+	backgroundUrlCol_1_img_1:
+		'/images/template/Clean_Lifestyle_003/BackgroundImg.png',
+	backgroundUrlCol_2_img_1:
+		'/images/template/Clean_Lifestyle_003/BackgroundImg.png',
+	backgroundUrlCol_2_img_2:
+		'/images/template/Clean_Lifestyle_003/BackgroundImg.png',
+	backgroundUrlCol_3_img_3:
+		'/images/template/Clean_Lifestyle_003/BackgroundImg.png',
+	backgroundColorCover: 'bg-[#FFFFFF]',
+	backgroundColor: 'bg-[#FFFFFF',
 	// backgroundUrlCover: 'https://via.placeholder.com/1200x800',
 	titleFontCSS: {
 		fontSize: '24pt', // text-3xl in points

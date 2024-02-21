@@ -30,9 +30,17 @@ export const Default_TemplateThemeConfig: ThemeElements = {
 		color: '#111827', // text-neutral-900 color
 		display: 'list-item',
 	},
-	userNameFont:
-		'text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
-	userNameFontColor: 'text-[#3D3D3D]',
+
+	userNameFont: {
+		fontSize: '0.875rem', // Equivalent to text-sm
+		// fontWeight: '400',
+		fontFamily: 'Cursive',
+		lineHeight: '140%', // Equivalent to leading-[140%]
+		letterSpacing: '0.026rem', // Equivalent to tracking-[0.026rem]
+	},
+	userNameFontColor: {
+		color: '#3D3D3D', // Equivalent to text-[#3D3D3D]
+	},
 
 	headFontCSS: {
 		fontSize: '40pt', // text-4xl in points

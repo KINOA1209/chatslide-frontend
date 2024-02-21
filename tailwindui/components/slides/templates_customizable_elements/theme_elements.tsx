@@ -22,8 +22,8 @@ export type ThemeElements = {
 	titleFontCSS: React.CSSProperties;
 	subtopicFontCSS: React.CSSProperties;
 	contentFontCSS: React.CSSProperties;
-	userNameFont: string;
-	userNameFontColor: string;
+	userNameFont: React.CSSProperties | string;
+	userNameFontColor: React.CSSProperties | string;
 	headFontCSS: React.CSSProperties;
 	contentFontCSS_non_vertical_content: React.CSSProperties;
 };
