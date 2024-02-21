@@ -31,7 +31,7 @@ return (
     <div className="relative flex items-center">
         <button
             onClick={handleClick}
-            className={`rounded-full border-2 px-4 py-2 transition-all font-creato-regular text-md font-normal leading-normal tracking-wide
+            className={`rounded-full border-2 px-2 py-1 sm:px-4 sm:py-2 transition-all font-creato-regular text-md font-normal leading-normal tracking-wide
             ${selectedItems.includes(textValue) ? 'bg-[#E5E6FF] text-[#6366F1] border-[#6366F1]' : 'bg-white text-black border-gray-300'
             }`}
         >
