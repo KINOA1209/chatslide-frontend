@@ -48,16 +48,7 @@ const GenerateSlidesSubmit = ({
 	};
 
 	async function generateSlidesPreview(formData: any, token: string) {
-    let origin = window?.location?.origin || 'https://drlambda.ai';
-    if (origin === 'http://localhost') {
-      origin = 'http://localhost';
-    } else if (origin === 'https://dev.drlambda.ai') {
-      origin = 'http://3.144.7.58'
-    }else {  // production, like drlambda.ai, app.drlambda.ai, pro.drlambda.ai, prod.drlambda.ai, social.drlambda.ai
-      origin = 'http://18.223.212.119'
-    }
-
-    const response = await fetch(`${origin}/api/generate_slides`, {
+		const response = await fetch('/api/generate_slides', {
 			method: 'POST',
 			headers: {
 				Authorization: `Bearer ${token}`,
