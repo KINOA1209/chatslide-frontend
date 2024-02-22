@@ -39,7 +39,7 @@ export const templateDispatch = (
 	isCurrentSlide: boolean = false,
 	// templateLogo: string,
 	// brandingColor?: string,
-	isShowingLogo: boolean,
+	isShowingLogo: boolean = true,
 ): JSX.Element => {
 	// useEffect(() => {
 	// 	console.log('chosen template string:', slide.template);
