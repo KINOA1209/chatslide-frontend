@@ -442,28 +442,29 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			)}
 
 			{!isViewing && (
-				<div className='flex flex-row justify-end items-end gap-1 sm:gap-4'>
-					<div className='hidden sm:block'>
-						<ChangeTemplateOptions
-							currentTemplate={slides[slideIndex].template}
-							templateOptions={Object.keys(availableTemplates)}
-							onChangeTemplate={selectTemplate}
-						/>
-					</div>
-				</div>
+        <div className='flex flex-row justify-end items-end gap-1 sm:gap-4'>
+          <div className='hidden sm:block'>
+            <ChangeTemplateOptions
+              currentTemplate={slides[slideIndex].template}
+              templateOptions={Object.keys(availableTemplates)}
+              onChangeTemplate={selectTemplate}
+            />
+          </div>
+
+          <BigGrayButton
+            onClick={() => setIsShowingLogo(!isShowingLogo)}
+            isPaidUser={isPaidUser}
+            bgColor='bg-Gray'
+          >
+            <span>
+              {isShowingLogo ? 'Remove Logo' : 'Show Logo'}
+              {!isPaidUser && ' 🔒'}
+            </span>
+          </BigGrayButton>
+        </div>
 			)}
 
-			<BigGrayButton
-				// onClick={() => setIsShowingLogo(!isShowingLogo)}
-				onClick={() => handleTogglingLogo()}
-				isPaidUser={isPaidUser}
-				bgColor='bg-Gray'
-			>
-				<span>
-					{isShowingLogo ? 'Remove Logo' : 'Show Logo'}
-					{!isPaidUser && '🔒'}
-				</span>
-			</BigGrayButton>
+
 			{showPaymentModal && (
 				<PaywallModal
 					setShowModal={setShowPaymentModal}
