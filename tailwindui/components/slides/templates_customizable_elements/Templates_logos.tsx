@@ -137,7 +137,7 @@ export const BerkeleyTemplateLogo: React.FC<TemplateLogoType> = (
 		...props,
 		coverLogo: BerkeleyLogoWhite,
 		nonCoverLogo: BerkeleyLogo,
-		logoWidth: 5, // Adjust the width as needed
+		logoWidth: 3, // Adjust the width as needed
 	});
 
 export const StanfordTemplateLogo: React.FC<TemplateLogoType> = (

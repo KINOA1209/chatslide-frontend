@@ -168,6 +168,7 @@ export const Cover_img_1_layout = ({
 						height={540}
 						src={themeElements.backgroundUrlCoverImg1}
 						alt='Background Image for cover'
+						className='w-[960px] h-[540px]'
 					/>
 				)}
 			</div>

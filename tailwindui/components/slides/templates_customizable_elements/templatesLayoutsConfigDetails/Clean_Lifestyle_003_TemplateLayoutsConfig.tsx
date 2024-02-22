@@ -6,13 +6,13 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 	[key in LayoutKeys]?: LayoutElements;
 } = {
 	Cover_img_0_layout: {
-		// canvaCSS: {
-		// 	margin: 0,
-		// 	padding: 0,
-		// 	boxSizing: 'border-box',
-		// 	width: '100%',
-		// 	minHeight: '100vh', // Set minimum height to cover the entire viewport
-		// },
+		canvaCSS: {
+			display: 'flex',
+			width: '100%',
+			height: '100%',
+			// position: 'relative',
+			// overflow: 'hidden',
+		},
 		titleCSS: {
 			// backgroundColor: 'white',
 			// height: '80%',
@@ -52,10 +52,10 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			overflow: 'hidden',
 			borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
 			position: 'absolute',
-			zIndex: 30,
+			zIndex: 20,
 		},
 		visualElementsCSS: {
-			zIndex: 20,
+			zIndex: -10,
 			width: '100%',
 			height: '100%',
 			position: 'absolute',
@@ -65,30 +65,22 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 		},
 	},
 	Cover_img_1_layout: {
-		titleCSS: {
-			backgroundColor: 'white',
-			paddingBottom: '20rem',
-			paddingTop: '4rem',
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
-			// height: '80%',
-			width: '80%',
-			zIndex: 30,
-			position: 'absolute',
-			top: '50%',
-			left: '50%',
-			transform: 'translate(-50%, -50%)', // Centering trick
-			maxHeight: '80%',
+		canvaCSS: {
+			display: 'flex',
+			width: '100%',
+			height: '100%',
+			// position: 'relative',
 		},
 		userNameCSS: {
 			zIndex: 30,
-			position: 'absolute',
-			top: '65%',
-			left: '22%',
-			transform: 'translate(-50%, -50%)', // Centering trick
+		},
+		titleCSS: {
+			paddingLeft: '2rem',
+			zIndex: 30,
+			maxHeight: '80%',
 		},
 		columnCSS: {
-			// paddingTop: '1rem', // Equivalent to pt-[1rem]
+			paddingTop: '1rem', // Equivalent to pt-[1rem]
 			paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 			paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
 			width: '50%', // Equivalent to w-1/2
@@ -98,17 +90,15 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			height: '100%', // Equivalent to h-full
 			gap: '2rem',
 		},
-
 		imageContainerCSS: {
-			width: '100%', // Equivalent to w-full
+			width: '50%', // Equivalent to w-1/2
 			height: '100%', // Equivalent to h-full
-			overflow: 'hidden',
 			borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
-			position: 'absolute',
-			zIndex: 30,
+			overflow: 'hidden',
 		},
+
 		visualElementsCSS: {
-			zIndex: 20,
+			zIndex: -10,
 			width: '100%',
 			height: '100%',
 			position: 'absolute',
