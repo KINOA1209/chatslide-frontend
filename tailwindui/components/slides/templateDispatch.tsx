@@ -60,6 +60,29 @@ export const templateDispatch = (
 	const templateKey = availableTemplates.hasOwnProperty(slide.template)
 		? slide.template
 		: 'Default';
+
+	// check for layout keys validity, make sure layoutKeys are valid
+	const layoutKeysArray: LayoutKeys[] = [
+		'',
+		'Cover_img_0_layout',
+		'Cover_img_1_layout',
+		'Col_1_img_0_layout',
+		'Col_2_img_0_layout',
+		'Col_3_img_0_layout',
+		'Col_2_img_1_layout',
+		'Col_1_img_1_layout',
+		'Col_2_img_2_layout',
+		'Col_3_img_3_layout',
+	];
+
+	const isLayoutOptionValid = layoutKeysArray.includes(layoutOptionCover);
+
+	const finalLayoutKey = isLayoutOptionValid
+		? layoutOptionCover
+		: index === 0
+		? 'Cover_img_1_layout'
+		: 'Col_1_img_0_layout';
+
 	// console.log(
 	// 	`availableTemplates has template key ${slide.template}`,
 	// 	availableTemplates.hasOwnProperty(slide.template),
@@ -226,8 +249,8 @@ export const templateDispatch = (
 			imgs={slide.images as string[]}
 			update_callback={updateImgUrlArray(index)}
 			isCoverPage={isCoverPage}
-			layoutOptionNonCover={layoutOptionNonCover}
-			layoutOptionCover={layoutOptionCover}
+			layoutOptionNonCover={finalLayoutKey}
+			layoutOptionCover={finalLayoutKey}
 			// brandingColor={brandingColor}
 			templateLogo={
 				<ChosenTemplateLogo
