@@ -27,6 +27,7 @@ export const Princeton_school_template = ({
 	ischarts,
 	handleSlideEdit,
 	currentSlideIndex,
+	isShowingLogo,
 }: MainSlideProps) => {
 	const ChosenLayoutNonCover =
 		layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
@@ -94,6 +95,7 @@ export const Princeton_school_template = ({
 					ischarts={ischarts}
 					handleSlideEdit={handleSlideEdit}
 					currentSlideIndex={currentSlideIndex}
+					isShowingLogo={isShowingLogo}
 				></ChosenLayoutNonCover>
 			</div>
 			{/* for cover page */}
@@ -148,6 +150,7 @@ export const Princeton_school_template = ({
 					ischarts={ischarts}
 					handleSlideEdit={handleSlideEdit}
 					currentSlideIndex={currentSlideIndex}
+					isShowingLogo={isShowingLogo}
 				></ChosenLayoutCover>
 			</div>
 		</>

@@ -1,7 +1,7 @@
 .ql-editor {
 	padding: 4px 4px;
-	font-size: 12pt; 
-    font-family: 'Arimo', sans-serif;
+	font-size: 12pt;
+	font-family: 'Arimo', sans-serif;
 }
 
 .ql-editor:hover,
@@ -36,14 +36,14 @@
 
 $font-sizes: (
 	'12pt',
-  '13pt',
-  '14pt',
+	'13pt',
+	'14pt',
 	'16pt',
-  '18pt',
+	'18pt',
 	'20pt',
 	'24pt',
-  '26pt',
-  '28pt',
+	'26pt',
+	'28pt',
 	'30pt',
 	'32pt',
 	'40pt',
@@ -74,7 +74,6 @@ $font-sizes: (
 $font-families: (
 	'Arimo',
 	'Arial',
-	'Georgia',
 	'Big Shoulders Text',
 	'Caveat',
 	'Caveat Medium',
@@ -82,9 +81,14 @@ $font-families: (
 	'Creato Display Medium',
 	'Creato Display Regular',
 	'Creato Display Thin',
+	'Georgia',
 	'Helvetica Neue',
+	'Libre Baskerville Regular',
+	'Libre Baskerville Bold',
 	'Nimbus Sans Regular',
-	'Rubik'
+	'Rubik',
+	'Sansita Swashed Regular',
+	'Sansita Swashed Medium'
 );
 
 @each $font-family in $font-families {

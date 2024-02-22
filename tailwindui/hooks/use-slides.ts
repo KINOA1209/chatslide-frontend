@@ -18,6 +18,11 @@ const useSlidesHistoryIndex = createBearStore<number>()(
 	true,
 );
 const useVersion = createBearStore<number>()('version', 0, true);
+const useIsShowingLogo = createBearStore<boolean>()(
+	'isShowingLogo',
+	true,
+	true,
+);
 
 export enum SlidesStatus {
 	NotInited,
@@ -42,6 +47,9 @@ export const useSlides = () => {
 	const { token } = useUser();
 
 	const { clearChatHistory } = useChatHistory();
+
+	// to control show or not show logo
+	const { isShowingLogo, setIsShowingLogo } = useIsShowingLogo();
 
 	const init = async () => {
 		if (slidesStatus !== SlidesStatus.NotInited) return;
@@ -269,5 +277,7 @@ export const useSlides = () => {
 		updateVersion,
 		saveStatus,
 		setTranscripts,
+		isShowingLogo,
+		setIsShowingLogo,
 	};
 };

@@ -52,6 +52,7 @@ export const Cover_img_0_layout = ({
 	themeElements,
 	layoutElements,
 	templateLogo,
+	isShowingLogo,
 }: MainSlideProps) => {
 	// useEffect(() => {
 	// 	console.log('LayoutElements canvaCSS:', layoutElements.canvaCSS);
@@ -84,7 +85,14 @@ export const Cover_img_0_layout = ({
 					/>
 				)}
 			</div>
-			<div style={layoutElements.logoCSS}>{templateLogo}</div>
+			<div
+				style={{
+					...layoutElements.logoCSS,
+					display: `${isShowingLogo ? 'contents' : 'none'}`,
+				}}
+			>
+				{templateLogo}
+			</div>
 		</div>
 	);
 };
@@ -107,24 +115,31 @@ export const Cover_img_1_layout = ({
 	charts,
 	ischarts,
 	handleSlideEdit,
-	currentSlideIndex
+	currentSlideIndex,
+	isShowingLogo,
 }: MainSlideProps) => {
-	const updateImgAtIndex = (index: number) => (imgSrc: string, ischart: boolean) => {
-		const newImgs = [...imgs];
-		if (index >= newImgs.length) newImgs.push(imgSrc);
-		else newImgs[index] = imgSrc;
+	const updateImgAtIndex =
+		(index: number) => (imgSrc: string, ischart: boolean) => {
+			const newImgs = [...imgs];
+			if (index >= newImgs.length) newImgs.push(imgSrc);
+			else newImgs[index] = imgSrc;
 
-		const newIsCharts = [...ischarts]
-		if (index >= newIsCharts.length) newIsCharts.push(ischart);
-		else newIsCharts[index] = ischart;
-		update_callback(newImgs, newIsCharts);
-	};
+			const newIsCharts = [...ischarts];
+			if (index >= newIsCharts.length) newIsCharts.push(ischart);
+			else newIsCharts[index] = ischart;
+			update_callback(newImgs, newIsCharts);
+		};
 	return (
 		<div style={layoutElements.canvaCSS}>
 			<div style={layoutElements.columnCSS}>
 				<div
 					className={`${themeElements.userNameFont} ${themeElements.userNameFontColor}`}
 					style={layoutElements.userNameCSS}
+					// style={
+					// 	// ...layoutElements.userNameCSS,
+					// 	themeElements.userNameFont,
+					// 	// ...themeElements.userNameFontColor,
+					// }
 				>
 					{user_name}
 				</div>
@@ -156,7 +171,14 @@ export const Cover_img_1_layout = ({
 					/>
 				)}
 			</div>
-			<div style={layoutElements.logoCSS}>{templateLogo}</div>
+			<div
+				style={{
+					...layoutElements.logoCSS,
+					display: `${isShowingLogo ? 'contents' : 'none'}`,
+				}}
+			>
+				{templateLogo}
+			</div>
 		</div>
 	);
 };
@@ -176,6 +198,7 @@ export const Col_1_img_0_layout = ({
 	themeElements,
 	layoutElements,
 	templateLogo,
+	isShowingLogo,
 }: MainSlideProps) => {
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -240,7 +263,14 @@ export const Col_1_img_0_layout = ({
 					{content}
 				</div>
 			</div>
-			<div style={layoutElements.logoCSS}>{templateLogo}</div>
+			<div
+				style={{
+					...layoutElements.logoCSS,
+					display: `${isShowingLogo ? 'contents' : 'none'}`,
+				}}
+			>
+				{templateLogo}
+			</div>
 			<div style={layoutElements.visualElementsCSS}>
 				{themeElements.backgroundUrlCol_1_img_0 && (
 					<Image
@@ -270,6 +300,7 @@ export const Col_2_img_0_layout = ({
 	themeElements,
 	layoutElements,
 	templateLogo,
+	isShowingLogo,
 }: MainSlideProps) => {
 	console.log('content: ' + Array(content));
 
@@ -306,7 +337,14 @@ export const Col_2_img_0_layout = ({
 						</div>
 					))}
 			</div>
-			<div style={layoutElements.logoCSS}>{templateLogo}</div>
+			<div
+				style={{
+					...layoutElements.logoCSS,
+					display: `${isShowingLogo ? 'contents' : 'none'}`,
+				}}
+			>
+				{templateLogo}
+			</div>
 			<div style={layoutElements.visualElementsCSS}>
 				{themeElements.backgroundUrlCol_2_img_0 && (
 					<Image
@@ -336,6 +374,7 @@ export const Col_3_img_0_layout = ({
 	themeElements,
 	layoutElements,
 	templateLogo,
+	isShowingLogo,
 }: MainSlideProps) => {
 	return (
 		<div style={layoutElements.canvaCSS}>
@@ -370,7 +409,14 @@ export const Col_3_img_0_layout = ({
 						</div>
 					))}
 			</div>
-			<div style={layoutElements.logoCSS}>{templateLogo}</div>
+			<div
+				style={{
+					...layoutElements.logoCSS,
+					display: `${isShowingLogo ? 'contents' : 'none'}`,
+				}}
+			>
+				{templateLogo}
+			</div>
 			<div style={layoutElements.visualElementsCSS}>
 				{themeElements.backgroundUrlCol_3_img_0 && (
 					<Image
@@ -403,18 +449,20 @@ export const Col_2_img_1_layout = ({
 	charts,
 	ischarts,
 	handleSlideEdit,
-	currentSlideIndex
+	currentSlideIndex,
+	isShowingLogo,
 }: MainSlideProps) => {
-	const updateImgAtIndex = (index: number) => (imgSrc: string, ischart: boolean) => {
-		const newImgs = [...imgs];
-		if (index >= newImgs.length) newImgs.push(imgSrc);
-		else newImgs[index] = imgSrc;
+	const updateImgAtIndex =
+		(index: number) => (imgSrc: string, ischart: boolean) => {
+			const newImgs = [...imgs];
+			if (index >= newImgs.length) newImgs.push(imgSrc);
+			else newImgs[index] = imgSrc;
 
-		const newIsCharts = [...ischarts]
-		if (index >= newIsCharts.length) newIsCharts.push(ischart);
-		else newIsCharts[index] = ischart;
-		update_callback(newImgs, newIsCharts);
-	};
+			const newIsCharts = [...ischarts];
+			if (index >= newIsCharts.length) newIsCharts.push(ischart);
+			else newIsCharts[index] = ischart;
+			update_callback(newImgs, newIsCharts);
+		};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -504,7 +552,14 @@ export const Col_2_img_1_layout = ({
 				/>
 			</div>
 			{/* logo section */}
-			<div style={layoutElements.logoCSS}>{templateLogo}</div>
+			<div
+				style={{
+					...layoutElements.logoCSS,
+					display: `${isShowingLogo ? 'contents' : 'none'}`,
+				}}
+			>
+				{templateLogo}
+			</div>
 			<div style={layoutElements.visualElementsCSS}>
 				{themeElements.backgroundUrlCol_2_img_1 && (
 					<Image
@@ -538,18 +593,20 @@ export const Col_1_img_1_layout = ({
 	charts,
 	ischarts,
 	handleSlideEdit,
-	currentSlideIndex
+	currentSlideIndex,
+	isShowingLogo,
 }: MainSlideProps) => {
-	const updateImgAtIndex = (index: number) => (imgSrc: string, ischart: boolean) => {
-		const newImgs = [...imgs];
-		if (index >= newImgs.length) newImgs.push(imgSrc);
-		else newImgs[index] = imgSrc;
+	const updateImgAtIndex =
+		(index: number) => (imgSrc: string, ischart: boolean) => {
+			const newImgs = [...imgs];
+			if (index >= newImgs.length) newImgs.push(imgSrc);
+			else newImgs[index] = imgSrc;
 
-		const newIsCharts = [...ischarts]
-		if (index >= newIsCharts.length) newIsCharts.push(ischart);
-		else newIsCharts[index] = ischart;
-		update_callback(newImgs, newIsCharts);
-	};
+			const newIsCharts = [...ischarts];
+			if (index >= newIsCharts.length) newIsCharts.push(ischart);
+			else newIsCharts[index] = ischart;
+			update_callback(newImgs, newIsCharts);
+		};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -669,7 +726,14 @@ export const Col_1_img_1_layout = ({
 				{/* </div> */}
 			</div>
 
-			<div style={layoutElements.logoCSS}>{templateLogo}</div>
+			<div
+				style={{
+					...layoutElements.logoCSS,
+					display: `${isShowingLogo ? 'contents' : 'none'}`,
+				}}
+			>
+				{templateLogo}
+			</div>
 			<div style={layoutElements.visualElementsCSS}>
 				{themeElements.backgroundUrlCol_1_img_1 && (
 					<Image
@@ -703,20 +767,22 @@ export const Col_2_img_2_layout = ({
 	charts,
 	ischarts,
 	handleSlideEdit,
-	currentSlideIndex
+	currentSlideIndex,
+	isShowingLogo,
 }: MainSlideProps) => {
 	//console.log(charts)
 	//console.log(imgs)
-	const updateImgAtIndex = (index: number) => (imgSrc: string, ischart: boolean) => {
-		const newImgs = [...imgs];
-		if (index >= newImgs.length) newImgs.push(imgSrc);
-		else newImgs[index] = imgSrc;
+	const updateImgAtIndex =
+		(index: number) => (imgSrc: string, ischart: boolean) => {
+			const newImgs = [...imgs];
+			if (index >= newImgs.length) newImgs.push(imgSrc);
+			else newImgs[index] = imgSrc;
 
-		const newIsCharts = [...ischarts]
-		if (index >= newIsCharts.length) newIsCharts.push(ischart);
-		else newIsCharts[index] = ischart;
-		update_callback(newImgs, newIsCharts);
-	};
+			const newIsCharts = [...ischarts];
+			if (index >= newIsCharts.length) newIsCharts.push(ischart);
+			else newIsCharts[index] = ischart;
+			update_callback(newImgs, newIsCharts);
+		};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -854,7 +920,14 @@ export const Col_2_img_2_layout = ({
 						))}
 				</div>
 			</div>
-			<div style={layoutElements.logoCSS}>{templateLogo}</div>
+			<div
+				style={{
+					...layoutElements.logoCSS,
+					display: `${isShowingLogo ? 'contents' : 'none'}`,
+				}}
+			>
+				{templateLogo}
+			</div>
 			<div style={layoutElements.visualElementsCSS}>
 				{themeElements.backgroundUrlCol_2_img_2 && (
 					<Image
@@ -887,18 +960,20 @@ export const Col_3_img_3_layout = ({
 	charts,
 	ischarts,
 	handleSlideEdit,
-	currentSlideIndex
+	currentSlideIndex,
+	isShowingLogo,
 }: MainSlideProps) => {
-	const updateImgAtIndex = (index: number) => (imgSrc: string, ischart: boolean) => {
-		const newImgs = [...imgs];
-		if (index >= newImgs.length) newImgs.push(imgSrc);
-		else newImgs[index] = imgSrc;
+	const updateImgAtIndex =
+		(index: number) => (imgSrc: string, ischart: boolean) => {
+			const newImgs = [...imgs];
+			if (index >= newImgs.length) newImgs.push(imgSrc);
+			else newImgs[index] = imgSrc;
 
-		const newIsCharts = [...ischarts]
-		if (index >= newIsCharts.length) newIsCharts.push(ischart);
-		else newIsCharts[index] = ischart;
-		update_callback(newImgs, newIsCharts);
-	};
+			const newIsCharts = [...ischarts];
+			if (index >= newIsCharts.length) newIsCharts.push(ischart);
+			else newIsCharts[index] = ischart;
+			update_callback(newImgs, newIsCharts);
+		};
 
 	return (
 		<div style={layoutElements.canvaCSS}>
@@ -985,7 +1060,14 @@ export const Col_3_img_3_layout = ({
 						))}
 				</div>
 			</div>
-			<div style={layoutElements.logoCSS}>{templateLogo}</div>
+			<div
+				style={{
+					...layoutElements.logoCSS,
+					display: `${isShowingLogo ? 'contents' : 'none'}`,
+				}}
+			>
+				{templateLogo}
+			</div>
 			<div style={layoutElements.visualElementsCSS}>
 				{themeElements.backgroundUrlCol_3_img_3 && (
 					<Image

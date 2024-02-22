@@ -93,6 +93,10 @@ module.exports = {
 				'caveat-bold': ['Caveat Bold', 'cursive'],
 				'caveat-medium': ['Caveat Medium', 'cursive'],
 				'caveat-regular': ['Caveat Regular', 'cursive'],
+				'sansita-swashed-medium':['Sansita Swashed Medium', 'sans'],
+				'sansita-swashed-regular':['Sansita Swashed Regular', 'sans'],
+				'libre-baskerville-bold':['Libre Baskerville Bold', 'sans'],
+				'libre-baskerville-regular':['Libre Baskerville Regular', 'sans'],
 			},
 			fontSize: {
 				xs: '0.75rem',

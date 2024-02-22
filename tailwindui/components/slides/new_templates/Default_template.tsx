@@ -29,6 +29,7 @@ export const Default = ({
 	ischarts,
 	handleSlideEdit,
 	currentSlideIndex,
+	isShowingLogo,
 }: // templateLogo = TemplatesLogos.DefaultTemplateLogo,
 MainSlideProps) => {
 	const ChosenLayoutNonCover =
@@ -42,9 +43,9 @@ MainSlideProps) => {
 		layoutOptionCover as keyof typeof layoutOptions,
 	);
 
-	// useEffect(() => {
-	// 	console.log('Default themeElements:', themeElements);
-	// }, []);
+	useEffect(() => {
+		console.log('will show logo?', isShowingLogo);
+	}, []);
 
 	// useEffect(() => {
 	// 	console.log(
@@ -106,6 +107,7 @@ MainSlideProps) => {
 					ischarts={ischarts}
 					handleSlideEdit={handleSlideEdit}
 					currentSlideIndex={currentSlideIndex}
+					isShowingLogo={isShowingLogo}
 				></ChosenLayoutCover>
 
 				{/* Logo */}
@@ -178,6 +180,7 @@ MainSlideProps) => {
 					ischarts={ischarts}
 					handleSlideEdit={handleSlideEdit}
 					currentSlideIndex={currentSlideIndex}
+					isShowingLogo={isShowingLogo}
 				></ChosenLayoutNonCover>
 			</div>
 		</>

@@ -8,7 +8,6 @@ import {
 	loadLayoutConfigElements,
 } from '@/components/slides/SlidesHTML';
 import { TemplateKeys } from '../slideTemplates';
-import StanfordLogo from '@/public/images/template/Stanford/StanfordLogo.png';
 export const Clean_Lifestyle_003_template = ({
 	user_name,
 	title,
@@ -29,6 +28,7 @@ export const Clean_Lifestyle_003_template = ({
 	ischarts,
 	handleSlideEdit,
 	currentSlideIndex,
+	isShowingLogo,
 }: MainSlideProps) => {
 	const ChosenLayoutNonCover =
 		layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
@@ -44,21 +44,16 @@ export const Clean_Lifestyle_003_template = ({
 		layoutOptionCover as keyof typeof layoutOptions,
 	);
 
-	// useEffect(() => {
-	// 	console.log('Business_002_template themeElements:', themeElements);
-	// }, []);
-	// useEffect(() => {
-	// 	console.log(
-	// 		'Business_002_template layoutConfigElements for current slide page:',
-	// 		layoutConfigElements,
-	// 	);
-	// }, []);
-	// useEffect(() => {
-	// 	console.log(
-	// 		'Business_002_template layoutConfigElements for cover img 0 bg color',
-	// 		layoutConfigElements.canvaCSS?.backgroundColor,
-	// 	);
-	// }, []);
+	useEffect(() => {
+		console.log('Clean_Lifestyle_003_template themeElements:', themeElements);
+	}, []);
+	useEffect(() => {
+		console.log(
+			'Clean_Lifestyle_003_template layoutConfigElements for current slide page:',
+			layoutConfigElements,
+		);
+	}, []);
+
 	return (
 		<>
 			{/* for not-cover page slides */}
@@ -70,6 +65,7 @@ export const Clean_Lifestyle_003_template = ({
 				} ${themeElements.backgroundColor}`}
 			>
 				{/* <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr> */}
+
 				{/* background picture when user uploaded this  */}
 				{uploadedBackgroundImageUrl && (
 					<div
@@ -114,15 +110,16 @@ export const Clean_Lifestyle_003_template = ({
 					ischarts={ischarts}
 					handleSlideEdit={handleSlideEdit}
 					currentSlideIndex={currentSlideIndex}
+					isShowingLogo={isShowingLogo}
 				></ChosenLayoutNonCover>
 			</div>
 			{/* for cover page */}
 			<div
 				className={`${
 					isCoverPage
-						? 'rounded-md w-full h-full bg-cover flex flex-row justify-start items-start box-border border-none relative'
+						? 'rounded-md w-full h-full bg-cover flex flex-row gap-[2rem] justify-start items-start box-border border-none relative'
 						: 'hidden'
-				} `}
+				}  `}
 				style={{
 					backgroundColor: themeElements?.backgroundColorCoverImg0,
 				}}
@@ -176,6 +173,7 @@ export const Clean_Lifestyle_003_template = ({
 					ischarts={ischarts}
 					handleSlideEdit={handleSlideEdit}
 					currentSlideIndex={currentSlideIndex}
+					isShowingLogo={isShowingLogo}
 				></ChosenLayoutCover>
 			</div>
 		</>

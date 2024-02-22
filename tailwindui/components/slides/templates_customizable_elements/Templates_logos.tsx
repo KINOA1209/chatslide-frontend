@@ -100,7 +100,9 @@ const generateTemplateLogo = ({
 	nonCoverLogo,
 }: TemplateLogoType) => {
 	return (
-		<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50'>
+		<div
+			className={`absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50`}
+		>
 			{custom_logo === template_name ? (
 				// use original template logo
 				<Image
@@ -145,7 +147,7 @@ export const StanfordTemplateLogo: React.FC<TemplateLogoType> = (
 		...props,
 		coverLogo: StanfordLogo,
 		nonCoverLogo: StanfordLogo,
-		logoWidth: 3.75, // Adjust the width as needed
+		logoWidth: 3, // Adjust the width as needed
 	});
 
 export const HarvardTemplateLogo: React.FC<TemplateLogoType> = (
@@ -165,7 +167,7 @@ export const MITTemplateLogo: React.FC<TemplateLogoType> = (
 		...props,
 		coverLogo: MITLogo,
 		nonCoverLogo: MITLogo,
-		logoWidth: 3.75, // Adjust the width as needed
+		logoWidth: 3, // Adjust the width as needed
 	});
 
 export const PrincetonTemplateLogo: React.FC<TemplateLogoType> = (
@@ -213,7 +215,7 @@ export const YaleTemplateLogo: React.FC<TemplateLogoType> = (
 		...props,
 		coverLogo: YaleLogo,
 		nonCoverLogo: YaleLogo,
-		logoWidth: 3.75, // Adjust the width as needed
+		logoWidth: 3, // Adjust the width as needed
 	});
 
 export const JHUTemplateLogo: React.FC<TemplateLogoType> = (
@@ -232,7 +234,7 @@ export const ColumbiaTemplateLogo: React.FC<TemplateLogoType> = (
 		...props,
 		coverLogo: ColumbiaLogo,
 		nonCoverLogo: ColumbiaLogo,
-		logoWidth: 4, // Adjust the width as needed
+		logoWidth: 8, // Adjust the width as needed
 	});
 
 export const Fun_Education_004_TemplateLogo: React.FC<TemplateLogoType> = (
@@ -246,6 +248,26 @@ export const Fun_Education_004_TemplateLogo: React.FC<TemplateLogoType> = (
 	});
 
 export const Business_002_TemplateLogo: React.FC<TemplateLogoType> = (
+	props: TemplateLogoType,
+) =>
+	generateTemplateLogo({
+		...props,
+		coverLogo: drlambdaLogo,
+		nonCoverLogo: drlambdaLogo,
+		logoWidth: 8, // Adjust the width as needed
+	});
+
+export const Clean_Lifestyle_003_TemplateLogo: React.FC<TemplateLogoType> = (
+	props: TemplateLogoType,
+) =>
+	generateTemplateLogo({
+		...props,
+		coverLogo: drlambdaLogo,
+		nonCoverLogo: drlambdaLogo,
+		logoWidth: 8, // Adjust the width as needed
+	});
+
+export const Fun_Education_001_TemplateLogo: React.FC<TemplateLogoType> = (
 	props: TemplateLogoType,
 ) =>
 	generateTemplateLogo({
@@ -283,6 +305,14 @@ const templatesInfo: TemplateLogoInfo[] = [
 	{
 		templateName: 'Business_002' as TemplateKeys,
 		templateLogo: Business_002_TemplateLogo,
+	},
+	{
+		templateName: 'Clean_Lifestyle_003' as TemplateKeys,
+		templateLogo: Clean_Lifestyle_003_TemplateLogo,
+	},
+	{
+		templateName: 'Fun_Education_001' as TemplateKeys,
+		templateLogo: Fun_Education_001_TemplateLogo,
 	},
 	{
 		templateName: 'Berkeley' as TemplateKeys,

@@ -33,7 +33,6 @@ const Font = Quill.import('attributors/style/font');
 Font.whitelist = [
 	'Arimo',
 	'Arial',
-	'Georgia',
 	'Big Shoulders Text',
 	'Caveat',
 	'Caveat Medium',
@@ -41,28 +40,33 @@ Font.whitelist = [
 	'Creato Display Medium',
 	'Creato Display Regular',
 	'Creato Display Thin',
+	'Georgia',
 	'Helvetica Neue',
+	'Libre Baskerville Regular',
+	'Libre Baskerville Bold',
 	'Nimbus Sans Regular',
 	'Rubik',
+	'Sansita Swashed Regular',
+	'Sansita Swashed Medium',
 ];
 Quill.register(Font, true);
 
 let Size = Quill.import('attributors/style/size');
 Size.whitelist = [
-  '12pt',
-  '13pt',
-  '14pt',
-  '16pt',
-  '18pt',
-  '20pt',
-  '24pt',
-  '26pt',
-  '28pt',
-  '30pt',
-  '32pt',
-  '40pt',
-  '48pt',
-  '64pt'
+	'12pt',
+	'13pt',
+	'14pt',
+	'16pt',
+	'18pt',
+	'20pt',
+	'24pt',
+	'26pt',
+	'28pt',
+	'30pt',
+	'32pt',
+	'40pt',
+	'48pt',
+	'64pt',
 ];
 Quill.register(Size, true);
 
@@ -219,7 +223,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			// clean logic redesign
 			// remove all the formatting except bullet point related style first
 			// then apply the corresponding default css style to it.
-			toolbar.addHandler('clean', function() {
+			toolbar.addHandler('clean', function () {
 				const quill = quillInstanceRef.current;
 				if (quill) {
 					const range = quill.getSelection();
@@ -229,7 +233,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 							font: style?.fontFamily || 'Arimo',
 							bold: style?.fontWeight !== 'normal',
 							italic: style?.fontStyle === 'italic',
-							color: style?.color
+							color: style?.color,
 						};
 						const formats = quill.getFormat(range.index, range.length);
 						const originalListFormat = formats['list'];
@@ -240,10 +244,18 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 						if (originalListFormat) {
 							quill.format('list', originalListFormat, Quill.sources.USER);
 						}
-						(Object.keys(defaultFormats) as Array<keyof typeof defaultFormats>).forEach(formatKey => {
+						(
+							Object.keys(defaultFormats) as Array<keyof typeof defaultFormats>
+						).forEach((formatKey) => {
 							const formatValue = defaultFormats[formatKey];
 							if (formatValue !== undefined) {
-								quill.formatText(range.index, range.length, formatKey, formatValue, Quill.sources.USER);
+								quill.formatText(
+									range.index,
+									range.length,
+									formatKey,
+									formatValue,
+									Quill.sources.USER,
+								);
 							}
 						});
 					}

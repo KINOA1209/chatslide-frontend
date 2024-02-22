@@ -14,6 +14,8 @@
 /* big shoulders font for business template 002 */
 @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Text:wght@400;500;600&family=Rubik:wght@400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;700&family=Big+Shoulders+Text:wght@400;500;600&family=Rubik:wght@400;500&display=swap');
+/* Libre Baskerville */
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 
 /* Additional Tailwind directives: https://tailwindcss.com/docs/functions-and-directives/#responsive */
 @layer utilities {
@@ -73,5 +75,26 @@
 @font-face {
 	font-family: 'Caveat Medium';
 	src: url('/fonts/Caveat/Caveat-Medium.ttf') format('truetype');
+	/* Add more src declarations for different font weights or styles if needed */
+}
+
+@font-face {
+	font-family: 'Sansita Swashed Regular';
+	src: url('/fonts/SansitaSwashed-Regular.ttf') format('truetype');
+	/* Add more src declarations for different font weights or styles if needed */
+}
+@font-face {
+	font-family: 'Sansita Swashed Medium';
+	src: url('/fonts/SansitaSwashed-Medium.ttf') format('truetype');
+	/* Add more src declarations for different font weights or styles if needed */
+}
+@font-face {
+	font-family: 'Libre Baskerville Bold';
+	src: url('/fonts/LibreBaskerville-Bold.ttf') format('truetype');
+	/* Add more src declarations for different font weights or styles if needed */
+}
+@font-face {
+	font-family: 'Libre Baskerville Regular';
+	src: url('/fonts/LibreBaskerville-Regular.ttf') format('truetype');
 	/* Add more src declarations for different font weights or styles if needed */
 }
