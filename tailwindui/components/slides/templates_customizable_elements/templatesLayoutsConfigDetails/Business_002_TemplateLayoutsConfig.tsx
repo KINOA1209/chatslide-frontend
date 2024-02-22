@@ -22,8 +22,8 @@ export const Business_002_TemplateLayoutsConfig: {
 			zIndex: 20,
 			position: 'absolute',
 			top: '50%',
-			left: '50%',
-			transform: 'translate(-50%, -50%)', // Centering trick
+			left: '40%',
+			transform: 'translate(-45%, -50%)', // Centering trick
 			maxHeight: '80%',
 		},
 		userNameTextDividerCSS: {
@@ -32,9 +32,9 @@ export const Business_002_TemplateLayoutsConfig: {
 		userNameCSS: {
 			zIndex: 30,
 			position: 'absolute',
-			top: '80%',
+			top: '70%',
 			left: '30%',
-			transform: 'translate(-50%, -50%)', // Centering trick
+			transform: 'translate(-85%, 0%)', // Centering trick
 		},
 		columnCSS: {
 			width: '100%', // Equivalent to w-1/2
@@ -62,7 +62,6 @@ export const Business_002_TemplateLayoutsConfig: {
 	},
 	Cover_img_1_layout: {
 		titleCSS: {
-			backgroundColor: '#DEFF56',
 			paddingBottom: '10rem', // 20rem -> 10rem to solve print problem
 			paddingTop: '4rem',
 			paddingLeft: '2rem',
@@ -72,19 +71,22 @@ export const Business_002_TemplateLayoutsConfig: {
 			zIndex: 20,
 			position: 'absolute',
 			top: '50%',
-			left: '50%',
-			transform: 'translate(-50%, -50%)', // Centering trick
+			left: '40%',
+			transform: 'translate(-45%, -50%)', // Centering trick
 			maxHeight: '80%',
+			backgroundColor: '#DEFF56',
+			// margin: '0rem 4rem 2rem 1rem',
 		},
 		userNameCSS: {
 			zIndex: 30,
 			position: 'absolute',
-			top: '80%',
+			top: '70%',
 			left: '30%',
-			transform: 'translate(-50%, -50%)', // Centering trick
+			transform: 'translate(-85%, 0%)', // Centering trick
 		},
 		columnCSS: {
 			// paddingTop: '1rem', // Equivalent to pt-[1rem]
+
 			paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 			paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
 			width: '50%', // Equivalent to w-1/2
