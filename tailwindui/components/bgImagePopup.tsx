@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 interface bgImagePopupProps {
 	onClose: () => void;
@@ -194,7 +195,7 @@ const BgImagePopup: React.FC<bgImagePopupProps> = ({ onClose }) => {
 
 				router.push('workflow-review-slides');
 			} else {
-				alert('Request failed: ' + response.status);
+        toast.error('Request failed: ' + response.status);
 				console.log(response);
 				setIsSubmitting(false);
 			}
