@@ -67,7 +67,7 @@ function App() {
               height='100%'
               src='https://www.youtube.com/embed/Op2nCrGosnA?autoplay=1&mute=1&loop=1&rel=0'
               title='DrLambda - One-click presentation AI tool through multiple sources'
-              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+              allow='autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
               allowFullScreen
             ></iframe>
           </div>

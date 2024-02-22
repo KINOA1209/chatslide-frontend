@@ -21,6 +21,15 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
   const [referralSectionEffect, setReferralSectionEffect] = useState(false);
   const [purposeSectionEffect, setPurposeSectionEffect] = useState(false);
 
+  const ref = useRef<HTMLDivElement>(null);
+
+  //auto scroll to ref 
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [ref]);
+
   useEffect(() => {
     if (showReferralSection) {
       setReferralSectionEffect(true);
@@ -168,8 +177,8 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
   }
 
   return (
-    <div className='flex flex-col justify-center items-center gap-4 sm:gap-12 pb-8'>
-      <div className='sticky top-0 w-full z-50 p-4 sm:p-10 bg-zinc-100'>
+    <div className='flex flex-col justify-center items-center gap-4 sm:gap-6 overflow-y-auto'>
+      <div className='w-full p-4 sm:p-y-8 sm:p-x-4'>
         <div className='w-full flex flex-row items-center justify-center gap-3 mx-auto'>
           {/* <button onClick={handleBack}>
               <SurveyBackIcons />
@@ -185,7 +194,8 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
         showNextSection={showReferralSection}
         handleButtonClick={handleNextToReferral}
         handleCustomInput={(value) => handleCustomInput(value, 'industry')}
-        handleSkip={handleSkip}
+        ref={(!showReferralSection && !showPurposeSection) ? ref : undefined}
+        // handleSkip={handleSkip}
       />
 
       {showReferralSection && (
@@ -197,7 +207,8 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
             showNextSection={showPurposeSection}
             handleButtonClick={handleNextToPurpose}
             handleCustomInput={(value) => handleCustomInput(value, 'referral')}
-            handleSkip={handleSkip}
+            ref={(!showPurposeSection) ? ref : undefined}
+            // handleSkip={handleSkip}
           />
         </div>
       )}
@@ -211,7 +222,8 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
             isLastSection={true}
             handleCustomInput={(value) => handleCustomInput(value, 'purpose')}
             handleButtonClick={handleLastButtonSubmit}
-            handleSkip={handleSkip}
+            ref={ref}
+            // handleSkip={handleSkip}
           />
         </div>
       )}

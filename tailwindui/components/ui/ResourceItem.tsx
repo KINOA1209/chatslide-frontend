@@ -31,7 +31,6 @@ const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
 };
 
 const getThumbnail = (thumbnailUrl: string) => {
-	console.log(thumbnailUrl);
 	return <img src={thumbnailUrl} alt='Thumbnail' className='object-contain' />;
 };
 

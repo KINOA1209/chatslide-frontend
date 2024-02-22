@@ -11,6 +11,7 @@ To do this,
 - `brew install nginx`
 - `sudo cp nginx_mac_frontend_only.conf /usr/local/etc/nginx/nginx.conf` (in some cases the dest file is at `/opt/homebrew/etc/nginx/nginx.conf`, depending on `nginx -t` results)
 - `sudo nginx -t`
+- `sudo nginx -s reload`
 - `brew services restart nginx`
 - test if the backend is connected by going to http://localhost/api/test and see if there is result
 

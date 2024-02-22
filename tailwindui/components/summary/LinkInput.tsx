@@ -166,6 +166,7 @@ const LinkInput = ({
           onClick={(e) => {
             addLink(linkUrl);
           }}
+          disabled={linkUrl === ''}
           isSubmitting={isAddingLink}
         >
           {isAddingLink ? 'Adding...' : 'Add'}

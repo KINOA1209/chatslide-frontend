@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import OnboardingSurveyButton from './OnboardingSurveyButton';
 import surveyStaticDataObject from './SurveyObject';
+import { BigBlueButton } from '@/components/button/DrlambdaButton';
 
 type SurveySectionProps = {
   section: string;
@@ -10,7 +11,7 @@ type SurveySectionProps = {
   handleButtonClick?: () => void;
   isLastSection?: boolean;
   handleCustomInput?: (value: string) => void;
-  handleSkip?: () => void;
+  ref?: React.RefObject<HTMLDivElement>;
 };
 
 const SurveySection: React.FC<SurveySectionProps> = ({
@@ -21,15 +22,16 @@ const SurveySection: React.FC<SurveySectionProps> = ({
   handleButtonClick,
   isLastSection = false,
   handleCustomInput,
-  handleSkip,
+  ref,
 }) => {
   const isButtonEnabled = selectedItems.length > 0
   const sectionObject = surveyStaticDataObject[section]
 
   return (
-    <div className='flex flex-col text-center font-creato-medium'>
+    <div className='flex flex-col text-center font-creato-medium'
+      ref={ref}>
       <span className='text-2xl font-semibold leading-normal tracking-wide'>{sectionObject.question}</span>
-      <div className='mt-6 max-w-[100%] md:max-w-[55%] mx-auto'>
+      <div className='mt-6 max-w-[100%] md:max-w-[80%] mx-auto'>
         <div className='flex flex-wrap items-center justify-center gap-3'>
           {sectionObject.itemsArr.map((item) => (
             <OnboardingSurveyButton
@@ -43,20 +45,12 @@ const SurveySection: React.FC<SurveySectionProps> = ({
         </div>
         {!showNextSection && (
           <div className='mt-6 flex justify-end gap-x-4'>
-            {handleSkip && <button
-              className={`text-blue-700 py-2 px-[4rem]`}
-              onClick={handleSkip}
-            >
-              Skip
-            </button>}
-
-            <button
-              className={`${isButtonEnabled ? 'bg-blue-700' : 'bg-gray-400 cursor-not-allowed'} text-white py-2 px-[4rem] rounded-lg`}
-              onClick={isButtonEnabled ? handleButtonClick : undefined}
+            <BigBlueButton
+              onClick={handleButtonClick}
               disabled={!isButtonEnabled}
             >
               {isLastSection ? 'Submit' : 'Next'}
-            </button>
+            </BigBlueButton>
           </div>
         )}
       </div>

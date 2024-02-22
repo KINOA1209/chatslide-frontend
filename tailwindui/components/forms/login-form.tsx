@@ -46,7 +46,12 @@ const LoginForm: React.FC = () => {
 			}
 		} catch (error: any) {
 			console.error(error);
-			toast.error(error.message, {
+      let message = error.message || 'An error occurred';
+      console.log('message', message);
+      if (message == 'User does not exist.') {
+        message += ' Please sign up first.';
+      }
+			toast.error(message, {
 				position: 'top-center',
 				autoClose: 5000,
 				hideProgressBar: false,

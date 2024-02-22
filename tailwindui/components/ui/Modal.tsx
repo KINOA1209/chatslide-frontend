@@ -10,6 +10,7 @@ interface ModalProps {
   onConfirm?: () => void;
   title?: string;
   description?: string;
+  clickOutsideToClose?: boolean;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -20,6 +21,7 @@ const Modal: React.FC<ModalProps> = ({
   onConfirm,
   title,
   description,
+  clickOutsideToClose = true,
 }) => {
 	const modalRef = React.useRef<HTMLDivElement>(null);
 	const modalContentRef = React.useRef<HTMLDivElement>(null);
@@ -30,11 +32,26 @@ const Modal: React.FC<ModalProps> = ({
 	};
 
 	const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!clickOutsideToClose) return;
 		if (modalContentRef.current?.contains(e.target as Node)) {
 			return; // Click inside the modal content, do nothing
 		}
 		handleCloseModal(); // Click outside the modal content, close the modal
 	};
+
+  // press esc to close modal
+  React.useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleCloseModal();
+      }
+    };
+
+    window.addEventListener('keydown', handleEsc);
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, []);
 
 	return (
 		<>
@@ -64,7 +81,7 @@ const Modal: React.FC<ModalProps> = ({
 
 					<div
 						ref={modalContentRef}
-						className={`z-50 ${position} bg-white rounded-lg shadow max-h-[100vh] overflow-y-auto p-2 sm:p-4`}
+            className={`z-50 ${position} bg-white rounded-lg shadow sm:max-w-[80%] max-h-[80%] overflow-y-auto p-2 sm:p-4`}
 						onClick={(e) => e.stopPropagation()}
 					>
 						{/* Close button */}
