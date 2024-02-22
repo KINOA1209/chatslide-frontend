@@ -53,6 +53,7 @@ export interface MainSlideProps {
 		contentIndex?: number,
 	) => void;
 	currentSlideIndex: number;
+	isShowingLogo?: boolean;
 }
 
 // deprecated

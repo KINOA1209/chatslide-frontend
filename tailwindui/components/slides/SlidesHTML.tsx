@@ -1,4 +1,6 @@
 import React, { use, useEffect, useRef, useState } from 'react';
+import { useUser } from '@/hooks/use-user';
+import PaywallModal from '../forms/paywallModal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import sanitizeHtml from 'sanitize-html';
@@ -41,6 +43,7 @@ import { SlidesStatus, useSlides } from '@/hooks/use-slides';
 import useTourStore from '@/components/user_onboarding/TourStore';
 import { current } from 'immer';
 import Chart from '@/models/Chart';
+import { BigGrayButton } from '../button/DrlambdaButton';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -94,8 +97,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		gotoPage,
 		version,
 		saveStatus,
+		isShowingLogo,
+		setIsShowingLogo,
 	} = useSlides();
 
+	const [showPaymentModal, setShowPaymentModal] = useState(false);
+	const { isPaidUser, token } = useUser();
 	const [showLayout, setShowLayout] = useState(false);
 	const [present, setPresent] = useState(isPresenting);
 	const slideRef = useRef<HTMLDivElement>(null);
@@ -337,17 +344,18 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		templateDispatch(
 			slide,
 			index,
-			canEdit,
-			exportToPdfMode,
-			isEditMode,
-			setIsEditMode,
-			handleSlideEdit,
+			canEdit, // canEdit
+			exportToPdfMode, //exportToPdfMode
+			isEditMode, //editMathMode
+			setIsEditMode, //setIsEditMode
+			handleSlideEdit, // handleSlideEdit
 			updateImgUrlArray,
 			toggleEditMode,
-			index === 0,
-			slide.layout,
-			slide.layout,
-			index === slideIndex,
+			index === 0, // isCoverPage
+			slide.layout, // layoutOptionNonCover
+			slide.layout, // layoutOptionCover
+			index === slideIndex, // isCurrentSlide
+			isShowingLogo, // isShowingLogo
 		);
 
 	const uneditableTemplateDispatch = (
@@ -358,17 +366,18 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		templateDispatch(
 			slide,
 			index,
-			false,
-			exportToPdfMode,
-			isEditMode,
-			setIsEditMode,
-			() => {},
+			false, // canEdit
+			exportToPdfMode, //exportToPdfMode
+			isEditMode, //editMathMode
+			setIsEditMode, //setIsEditMode
+			() => {}, // handleSlideEdit
 			updateImgUrlArray,
 			toggleEditMode,
-			index === 0,
-			slide.layout,
-			slide.layout,
-			index === slideIndex,
+			index === 0, // isCoverPage
+			slide.layout, // layoutOptionNonCover
+			slide.layout, // layoutOptionCover
+			index === slideIndex, // isCurrentSlide
+			isShowingLogo, // isShowingLogo
 		);
 
 	if (toPdf)
@@ -433,6 +442,25 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					/>
 				</div>
 			)}
+
+			{showPaymentModal && (
+				<PaywallModal
+					setShowModal={setShowPaymentModal}
+					message='Upgrade for more ⭐️credits.'
+					showReferralLink={true}
+				/>
+			)}
+
+			<BigGrayButton
+				onClick={() => setIsShowingLogo(!isShowingLogo)}
+				isPaidUser={isPaidUser}
+				bgColor='bg-Gray'
+			>
+				<span>
+					{isShowingLogo ? 'Remove Logo' : 'Show Logo'}
+					{!isPaidUser && '🔒'}
+				</span>
+			</BigGrayButton>
 
 			{/* buttons and contents */}
 			<div className='max-w-4xl relative flex flex-row items-center justify-center'>

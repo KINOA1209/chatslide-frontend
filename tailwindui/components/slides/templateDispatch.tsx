@@ -38,7 +38,8 @@ export const templateDispatch = (
 	layoutOptionCover: LayoutKeys = 'Cover_img_1_layout',
 	isCurrentSlide: boolean = false,
 	// templateLogo: string,
-	brandingColor?: string,
+	// brandingColor?: string,
+	isShowingLogo: boolean,
 ): JSX.Element => {
 	// useEffect(() => {
 	// 	console.log('chosen template string:', slide.template);
@@ -227,7 +228,7 @@ export const templateDispatch = (
 			isCoverPage={isCoverPage}
 			layoutOptionNonCover={layoutOptionNonCover}
 			layoutOptionCover={layoutOptionCover}
-			brandingColor={brandingColor}
+			// brandingColor={brandingColor}
 			templateLogo={
 				<ChosenTemplateLogo
 					isCoverPage={isCoverPage}
@@ -241,6 +242,7 @@ export const templateDispatch = (
 			ischarts={slide.is_chart}
 			handleSlideEdit={handleSlideEdit}
 			currentSlideIndex={index}
+			isShowingLogo={isShowingLogo}
 		/>
 	);
 	// }
