@@ -161,12 +161,6 @@ export const templateDispatch = (
 		}
 	};
 
-	useEffect(() => {
-		console.log('the slide.logo is:', slide.template);
-	}, []);
-	useEffect(() => {
-		console.log('the slide.logo_url is:', slide.logo_url);
-	}, []);
 	let custom_logo = 'Default';
 	if (slide.template && slide.template.length > 0) {
 		custom_logo = slide.template;

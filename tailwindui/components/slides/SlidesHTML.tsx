@@ -442,21 +442,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			)}
 
 			{!isViewing && (
-				<div className='py-2 hidden sm:block'>
-					<ChangeTemplateOptions
-						currentTemplate={slides[slideIndex].template}
-						templateOptions={Object.keys(availableTemplates)}
-						onChangeTemplate={selectTemplate}
-					/>
+				<div className='flex flex-row justify-end items-end gap-1 sm:gap-4'>
+					<div className='hidden sm:block'>
+						<ChangeTemplateOptions
+							currentTemplate={slides[slideIndex].template}
+							templateOptions={Object.keys(availableTemplates)}
+							onChangeTemplate={selectTemplate}
+						/>
+					</div>
 				</div>
-			)}
-
-			{showPaymentModal && (
-				<PaywallModal
-					setShowModal={setShowPaymentModal}
-					message='Upgrade for more ⭐️credits.'
-					showReferralLink={true}
-				/>
 			)}
 
 			<BigGrayButton
@@ -470,6 +464,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					{!isPaidUser && '🔒'}
 				</span>
 			</BigGrayButton>
+			{showPaymentModal && (
+				<PaywallModal
+					setShowModal={setShowPaymentModal}
+					message='Upgrade for more ⭐️credits.'
+					showReferralLink={true}
+				/>
+			)}
 
 			{/* buttons and contents */}
 			<div className='max-w-4xl relative flex flex-row items-center justify-center'>
