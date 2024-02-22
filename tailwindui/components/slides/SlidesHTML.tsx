@@ -190,15 +190,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		};
 	});
 
-	function handleKeyDown(event: KeyboardEvent) {
-		if (!isEditMode) {
-			if (event.key === 'ArrowRight' && slideIndex < slides.length - 1) {
-				gotoPage(slideIndex + 1);
-			} else if (event.key === 'ArrowLeft' && slideIndex > 0) {
-				gotoPage(slideIndex - 1);
-			}
-		}
-	}
+  function handleKeyDown(event: KeyboardEvent) {
+    if (isViewing) {  // todo: update iseditmode 
+      if (event.key === 'ArrowRight' && slideIndex < slides.length - 1) {
+        gotoPage(slideIndex + 1);
+      } else if (event.key === 'ArrowLeft' && slideIndex > 0) {
+        gotoPage(slideIndex - 1);
+      }
+    }
+  }
 
 	// auto scroll thumbnail to current slide
 	useEffect(() => {
