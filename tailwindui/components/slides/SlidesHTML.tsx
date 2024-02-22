@@ -396,6 +396,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				key={version}
 			/>
 		);
+	const handleTogglingLogo = () => {
+		if (!isPaidUser) {
+			setShowPaymentModal(true);
+			return;
+		} else {
+			setIsShowingLogo(!isShowingLogo);
+		}
+	};
 
 	return (
 		<div className='flex flex-col items-center justify-center gap-4 relative'>
@@ -452,7 +460,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			)}
 
 			<BigGrayButton
-				onClick={() => setIsShowingLogo(!isShowingLogo)}
+				// onClick={() => setIsShowingLogo(!isShowingLogo)}
+				onClick={() => handleTogglingLogo()}
 				isPaidUser={isPaidUser}
 				bgColor='bg-Gray'
 			>
