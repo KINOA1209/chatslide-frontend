@@ -57,12 +57,11 @@ export default function Dashboard() {
   useEffect(() => {
     const checkUserSurveyStatus = async () => {
       try {
-        const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
         const response = await fetch('/api/user/check_survey_status', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${idToken}`,
+            'Authorization': `Bearer ${token}`,
           },
         });
 
@@ -84,7 +83,8 @@ export default function Dashboard() {
         console.error('Error:', error);
       }
     };
-    checkUserSurveyStatus();
+    if (token)
+      checkUserSurveyStatus();
   }, []);
 
   const handleBackToChoices = () => {
@@ -209,8 +209,8 @@ export default function Dashboard() {
         <Modal
           showModal={showSurvey}
           setShowModal={setShowSurvey}
-          // title='Welcome to DrLambda!'
-          // description='We are excited to have you onboard. Please take a few minutes to complete the onboarding survey.'
+        // title='Welcome to DrLambda!'
+        // description='We are excited to have you onboard. Please take a few minutes to complete the onboarding survey.'
         >
           <OnboardingSurvey handleBack={handleBackToChoices} />
         </Modal>
