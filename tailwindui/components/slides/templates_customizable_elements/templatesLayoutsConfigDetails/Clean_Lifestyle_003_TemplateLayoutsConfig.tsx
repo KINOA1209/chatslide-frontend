@@ -138,6 +138,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			marginLeft: '2rem',
 			marginRight: '2rem',
 			zIndex: 30,
+			borderBottom: '1px solid #666666',
 		},
 		topicCSS: {
 			zIndex: 30,
@@ -160,7 +161,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			marginBottom: '1rem',
 			display: 'flex',
 			// zIndex: 10,
-			backgroundColor: '#E4F9F6',
+			// backgroundColor: '#E4F9F6',
 			borderRadius: '1.25rem',
 		},
 		titlesAndContentDividerCSS: {
@@ -181,7 +182,8 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			marginTop: '2rem',
 			marginLeft: '2rem',
 			marginRight: '2rem',
-			zIndex: 30,
+			// zIndex: 30,
+			borderBottom: '1px solid #666666',
 		},
 		topicCSS: {
 			zIndex: 30,
@@ -206,14 +208,14 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			gap: '0.5rem',
 			width: '100%', // Equivalent to w-full
 			flexGrow: 0,
-			backgroundColor: '#E4F9F6',
+			// backgroundColor: '#E4F9F6',
 			borderRadius: '1.25rem',
 			padding: '2rem 2rem 4rem 2rem',
 			// zIndex: 30,
 		},
 		contentIndexCSS: {
-			fontFamily: 'Caveat', // font-nimbus-sans-bold
-			color: '#2E2E2E', // Assuming text-neutral-900 corresponds to #374155
+			fontFamily: 'Creato Display Bold',
+			color: '#000000', // Assuming text-neutral-900 corresponds to #374155
 			fontSize: '2.5rem',
 			fontWeight: 'bold',
 			// fontFamily: 'Creato Display Medium',
@@ -224,7 +226,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			zIndex: 30,
 		},
 		contentIndexTextDividerCSS: {
-			display: 'none',
+			display: 'flex',
 		},
 		contentTextCSS: {
 			display: 'flex',
@@ -254,6 +256,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			marginLeft: '2rem',
 			marginRight: '2rem',
 			zIndex: 30,
+			borderBottom: '1px solid #666666',
 		},
 		topicCSS: {
 			zIndex: 30,
@@ -279,14 +282,14 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			// maxWidth: '200px', // Set your desired maximum width here
 			flexGrow: 1,
 			// flexWrap: 'wrap',
-			backgroundColor: '#E4F9F6',
+			// backgroundColor: '#E4F9F6',
 			borderRadius: '1.25rem',
 			padding: '2rem 2rem 2rem 2rem',
 			// zIndex: 30,
 		},
 		contentIndexCSS: {
-			fontFamily: 'Caveat', // font-nimbus-sans-bold
-			color: '#2E2E2E', // Assuming text-neutral-900 corresponds to #374155
+			fontFamily: 'Creato Display Medium', // font-nimbus-sans-bold
+			color: '#000000', // Assuming text-neutral-900 corresponds to #374155
 			fontSize: '2.5rem',
 			fontWeight: 'bold',
 			// fontFamily: 'Creato Display Medium',
@@ -297,7 +300,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			zIndex: 30,
 		},
 		contentIndexTextDividerCSS: {
-			display: 'none',
+			display: 'flex',
 		},
 		contentTextCSS: {
 			display: 'flex',
