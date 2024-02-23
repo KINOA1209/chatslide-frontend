@@ -158,8 +158,6 @@ export default function ThemePage() {
 									<option value='Clean_Lifestyle_003'>Clean Lifestyle</option>
 									<option value='Fun_Education_004'>Fun / Education</option>
 									<option value='Business_002'>Business</option>
-									<option value='Fun_Education_004'>Fun Education 04</option>
-									<option value='Clean_Lifestyle_003'>Clean Lifestyle</option>
 									<option value='Stanford'>Stanford University</option>
 									<option value='Berkeley'>UC Berkeley</option>
 									<option value='Harvard'>Harvard University</option>
