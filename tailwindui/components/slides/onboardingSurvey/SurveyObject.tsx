@@ -25,15 +25,16 @@ const surveyObject: Record<string, SurveySectionConfig> = {
   referral: {
     question: "Where did you find us?",
     itemsArr: [
-      'Google', 'Newsletter', 'Yandex', 'Facebook', 'Tiktok',
-      'Twitter', 'Instagram', 'Friend', 'Other'
+      'Friend', 'Google', 'ProductHunt', 'Newsletter', 'Facebook', 'Tiktok', 
+      'Twitter', 'Instagram', 'Yandex', 'Other'
     ]
   },
 
   purpose: {
     question: "What's the purpose of your output?",
     itemsArr: [
-      "Education",
+      "Teaching",  // prev Education
+      "Learning",  // prev Education
       "Business",
       "Research",
       "Technical",
