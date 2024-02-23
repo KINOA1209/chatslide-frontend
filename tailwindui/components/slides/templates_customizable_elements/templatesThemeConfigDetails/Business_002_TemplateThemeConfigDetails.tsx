@@ -4,7 +4,7 @@ export const Business_002_TemplateThemeConfig: ThemeElements = {
 	backgroundUrlCoverImg0:
 		'/images/template/Business_002/cover_img_0_layout/BackgroundImg.png',
 	backgroundColorCover: '',
-	backgroundColor: 'bg-[#D2D2D2]',
+	backgroundColor: 'bg-[#FFFFFF]',
 	backgroundColorCoverImg0: '#2E2E2E',
 	titleFontCSS: {
 		fontSize: '24pt',

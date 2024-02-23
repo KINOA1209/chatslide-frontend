@@ -1,8 +1,8 @@
 import { ThemeElements } from '../theme_elements';
 
 export const Default_TemplateThemeConfig: ThemeElements = {
-	backgroundColorCover: 'bg-[#F0F0F2]',
-	backgroundColor: 'bg-[#F0F0F2]',
+	backgroundColorCover: 'bg-[#FFFFFF]',
+	backgroundColor: 'bg-[#FFFFFF]',
 	// backgroundUrlCover: 'https://via.placeholder.com/1200x800',
 	titleFontCSS: {
 		fontSize: '24pt', // text-3xl in points

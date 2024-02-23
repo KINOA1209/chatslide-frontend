@@ -247,11 +247,15 @@ export const templateDispatch = (
 			layoutOptionCover={finalLayoutKey}
 			// brandingColor={brandingColor}
 			templateLogo={
-				<ChosenTemplateLogo
-					isCoverPage={isCoverPage}
-					custom_logo={custom_logo}
-					template_name={slide.template}
-				/>
+				isShowingLogo ? (
+					<ChosenTemplateLogo
+						isCoverPage={isCoverPage}
+						custom_logo={custom_logo}
+						template_name={slide.template}
+					/>
+				) : (
+					<></>
+				)
 			}
 			uploadedLogoUrl={slide.logo_url}
 			uploadedBackgroundImageUrl={slide.background_url}

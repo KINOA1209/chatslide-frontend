@@ -99,6 +99,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		saveStatus,
 		isShowingLogo,
 		setIsShowingLogo,
+		ChangeIsShowingLogo,
 	} = useSlides();
 
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -401,7 +402,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			setShowPaymentModal(true);
 			return;
 		} else {
-			setIsShowingLogo(!isShowingLogo);
+			ChangeIsShowingLogo();
 		}
 	};
 
