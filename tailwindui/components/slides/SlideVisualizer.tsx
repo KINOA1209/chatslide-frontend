@@ -140,7 +140,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 				const transcripts = resp.data.res;
 				setTranscripts(transcripts); // and auto-save
 			} else {
-				alert('Request failed: ' + response.status);
+        toast.error('Server is busy now. Please try again later. Reference code: ' + sessionStorage.getItem('project_id'));
 				console.log(response);
 				setIsSubmitting(false);
 			}

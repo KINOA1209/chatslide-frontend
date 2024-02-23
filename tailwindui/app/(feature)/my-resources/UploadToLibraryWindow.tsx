@@ -232,7 +232,7 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
 					(uploadedFile) => uploadedFile.name === file.name,
 				)
 			) {
-				alert('Duplicate file! Please choose a different file.');
+        toast.error('Duplicate file! Please choose a different file.');
 			} else {
 				setUploadedResources([...uploadedResources, file]);
 				setUploadedResourcesClicked([...uploadedResourcesClicked, true]);

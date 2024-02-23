@@ -795,6 +795,7 @@ export const ImgModule = ({
 					// className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'}`}
 					// src={imgsrc}
 					<Image
+            unoptimized={true}
 						src={imgsrc}
 						alt='Image'
 						width={500}

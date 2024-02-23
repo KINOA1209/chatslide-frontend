@@ -19,10 +19,16 @@ import useHydrated from '@/hooks/use-hydrated';
 interface SideBarProps { }
 const SideBar = ({ }: SideBarProps) => {
   const [top, setTop] = useState<boolean>(true);
-  const { credits, tier } = useUser();
+  const { uid, credits, tier } = useUser();
   const router = useRouter();
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const { signOut: userSignOut } = useUser();
+
+  useEffect(() => {
+    if (!uid) {
+      router.push('/signup');
+    }
+  });
 
   // detect whether user has scrolled the page down by 10px
   const scrollHandler = () => {

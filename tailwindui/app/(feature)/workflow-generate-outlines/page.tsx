@@ -200,11 +200,7 @@ export default function Topic() {
         setShowPaymentModal(true);
         setIsSubmitting(false);
       } else {
-        alert(
-          `Server is busy now. Please try again later. Reference code: ` +
-          sessionStorage.getItem('project_id'),
-        );
-        // alert("Request failed: " + response.status);
+        toast.error('Server is busy now. Please try again later. Reference code: ' + sessionStorage.getItem('project_id'));
         setIsSubmitting(false);
       }
     } catch (error) {

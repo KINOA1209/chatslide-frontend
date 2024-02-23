@@ -6,6 +6,7 @@ import Resource from '@/models/Resource';
 import ResourceService from '@/services/ResourceService';
 import { useSlides } from '@/hooks/use-slides';
 import ProjectService from '@/services/ProjectService';
+import { toast } from 'react-toastify';
 
 // this class has no UI, it is used to submit the outline to the backend when isSubmitting is true
 const GenerateSlidesSubmit = ({
@@ -67,11 +68,7 @@ const GenerateSlidesSubmit = ({
 			router.push('workflow-review-slides');
 		} else {
       setIsSubmitting(false);
-			alert(
-				`Server is busy now. Please try again later. Reference code: ` +
-					sessionStorage.getItem('project_id'),
-			);
-			//console.log(response);
+      toast.error('Server is busy now. Please try again later. Reference code: ' + sessionStorage.getItem('project_id'));
 		}
 	}
 

@@ -305,7 +305,7 @@ export const ChangeTemplateOptions: React.FC<{
 				{/* <option value='Fun_Education_001'>Fun Education 01</option> */}
 				<option value='Business_002'>Business</option>
 				<option value='Clean_Lifestyle_003'>Clean Lifestyle</option>
-				<option value='Fun_Education_004'>Fun Education 04</option>
+				<option value='Fun_Education_004'>Fun / Education</option>
 				<option value='Stanford'>Stanford University</option>
 				<option value='Berkeley'>UC Berkeley</option>
 				<option value='Harvard'>Harvard University</option>
