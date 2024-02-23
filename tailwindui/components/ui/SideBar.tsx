@@ -15,6 +15,7 @@ import { SideBarData } from './SideBarData';
 import { BlueLabel, GrayLabel } from './GrayLabel';
 import { useUser } from '@/hooks/use-user';
 import useHydrated from '@/hooks/use-hydrated';
+import Modal from './Modal';
 
 interface SideBarProps { }
 const SideBar = ({ }: SideBarProps) => {
@@ -23,12 +24,6 @@ const SideBar = ({ }: SideBarProps) => {
   const router = useRouter();
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const { signOut: userSignOut } = useUser();
-
-  useEffect(() => {
-    if (!uid) {
-      router.push('/signup');
-    }
-  });
 
   // detect whether user has scrolled the page down by 10px
   const scrollHandler = () => {
@@ -80,6 +75,18 @@ const SideBar = ({ }: SideBarProps) => {
 
   // avoid hydration error during development caused by persistence
   if (!useHydrated()) return <></>;
+
+  if (!uid)
+    return (
+      <Modal
+        showModal={true}
+        canClose={false} // cannot close modal
+        setShowModal={() => { }}  // cannot close modal
+        title="Sign in to continue"
+        description="You need to sign in to continue"
+        onConfirm={() => router.push('/signin')}
+      />
+    )
 
   return (
     <header
