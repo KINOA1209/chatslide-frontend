@@ -30,9 +30,9 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 		userNameCSS: {
 			zIndex: 30,
 			position: 'absolute',
-			top: '75%',
-			left: '22%',
-			transform: 'translate(-50%, -50%)', // Centering trick
+			top: '92%',
+			left: '80%',
+			transform: 'translate(-50%, -40%)', // Centering trick
 		},
 		columnCSS: {
 			// paddingTop: '1rem', // Equivalent to pt-[1rem]
@@ -55,7 +55,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			zIndex: 20,
 		},
 		visualElementsCSS: {
-			zIndex: -10,
+			zIndex: 0,
 			width: '100%',
 			height: '100%',
 			position: 'absolute',
@@ -73,6 +73,10 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 		},
 		userNameCSS: {
 			zIndex: 30,
+			position: 'absolute',
+			top: '92%',
+			left: '80%',
+			transform: 'translate(-50%, -40%)', // Centering trick
 		},
 		titleCSS: {
 			paddingLeft: '2rem',
@@ -80,7 +84,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			maxHeight: '80%',
 		},
 		columnCSS: {
-			paddingTop: '1rem', // Equivalent to pt-[1rem]
+			paddingTop: '4rem', // Equivalent to pt-[1rem]
 			paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 			paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
 			width: '50%', // Equivalent to w-1/2
@@ -95,10 +99,14 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			height: '100%', // Equivalent to h-full
 			borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
 			overflow: 'hidden',
+			display: 'flex',
+			alignItems: 'center',
+			padding: '4rem 2rem 4rem 4rem', // top right bottom left
+			zIndex: 20,
 		},
 
 		visualElementsCSS: {
-			zIndex: -10,
+			zIndex: 0,
 			width: '100%',
 			height: '100%',
 			position: 'absolute',
@@ -117,7 +125,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			// overflow: 'hidden',
 		},
 		visualElementsCSS: {
-			zIndex: -10,
+			zIndex: 0,
 			width: '100%',
 			height: '100%',
 			position: 'absolute',
@@ -161,7 +169,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 	},
 	Col_2_img_0_layout: {
 		visualElementsCSS: {
-			zIndex: -10,
+			zIndex: 0,
 			width: '100%',
 			height: '100%',
 			position: 'absolute',
@@ -233,7 +241,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			// boxSizing: 'border-box',
 		},
 		visualElementsCSS: {
-			zIndex: -10,
+			zIndex: 0,
 			width: '100%',
 			height: '100%',
 			position: 'absolute',
@@ -314,7 +322,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			paddingLeft: '2rem',
 		},
 		visualElementsCSS: {
-			zIndex: -10,
+			zIndex: 0,
 			width: '100%',
 			height: '100%',
 			position: 'absolute',
@@ -340,19 +348,20 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			flexDirection: 'column',
 			width: '100%',
 			zIndex: 30,
+			borderBottom: '1px solid #666666',
 		},
 		imageContainerCSS: {
-			width: '100%',
+			width: '50%',
 			height: '100%',
 			// borderRadius: '1.25rem',
 			overflow: 'hidden',
 			display: 'flex',
 			alignItems: 'center',
-			padding: '2rem 2rem 2rem 4rem', // top right bottom left
+			padding: '2rem 4rem 0rem 4rem', // top right bottom left
 			zIndex: 30,
 		},
 		imageCSS: {
-			borderRadius: '1.25rem', // border radius 1.25rem for image
+			// borderRadius: '1.25rem', // border radius 1.25rem for image
 		},
 	},
 	Col_1_img_1_layout: {
@@ -362,30 +371,34 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			display: 'grid',
 			gridTemplateColumns: '1fr',
 			paddingTop: '2rem',
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
 			paddingBottom: '2rem',
 		},
 		titleAndSubtopicBoxCSS: {
 			display: 'flex',
 			flexDirection: 'column',
 			zIndex: 30,
+			borderBottom: '1px solid #666666',
+			paddingRight: '2rem',
+			paddingLeft: '2rem',
 		},
 		imageContainerCSS: {
-			height: '15rem',
+			height: '10rem',
 			flexGrow: 1,
 			borderRadius: '0.375rem', // Assuming a typical rounded-md value
 			overflow: 'hidden',
 			gridRow: 3,
 			zIndex: 30,
+			paddingRight: '6rem',
 		},
 		imageCSS: {
-			borderRadius: '1.25rem',
+			// borderRadius: '1.25rem',
 		},
 		contentContainerCSS: {
 			zIndex: 30,
-			paddingTop: '0.5rem',
-			paddingBottom: '0.5rem',
+			paddingTop: '2rem',
+			paddingBottom: '2rem',
+			paddingRight: '6rem',
+			paddingLeft: '6rem',
 			height: '100%',
 			width: '100%',
 			display: 'flex',
@@ -394,7 +407,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			gridRow: 2,
 		},
 		visualElementsCSS: {
-			zIndex: -10,
+			zIndex: 0,
 			width: '100%',
 			height: '100%',
 			position: 'absolute',
@@ -430,7 +443,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			display: 'grid',
 			gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
 			gap: '2rem', // equivalent to gap-[2rem]
-			zIndex: 30,
+			zIndex: 20,
 		},
 		imageCSS: {
 			height: '11rem', // equivalent to h-[11rem]
@@ -448,7 +461,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			paddingTop: '1rem',
 		},
 		visualElementsCSS: {
-			zIndex: -10,
+			zIndex: 0,
 			width: '100%',
 			height: '100%',
 			position: 'absolute',
@@ -476,7 +489,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			display: 'grid',
 			gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
 			gap: '2rem', // equivalent to gap-[2rem]
-			zIndex: 30,
+			zIndex: 20,
 		},
 		imageCSS: {
 			height: '11rem', // equivalent to h-[11rem]
@@ -493,7 +506,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			gap: '2rem', // equivalent to gap-[2rem]
 		},
 		visualElementsCSS: {
-			zIndex: -10,
+			zIndex: 0,
 			width: '100%',
 			height: '100%',
 			position: 'absolute',

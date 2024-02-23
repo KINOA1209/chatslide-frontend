@@ -62,6 +62,16 @@ export const useSlides = () => {
 		slidesStatus = SlidesStatus.Inited;
 	};
 
+	const ChangeIsShowingLogo = () => {
+		setIsShowingLogo(!isShowingLogo);
+		const newSlides = slides.map((slide, index) => {
+			return { ...slide };
+		});
+		setSlides(newSlides);
+		updateSlideHistory(newSlides);
+		syncSlides(newSlides, true);
+	};
+
 	useEffect(() => {
 		void init();
 	}, []);
@@ -279,5 +289,6 @@ export const useSlides = () => {
 		setTranscripts,
 		isShowingLogo,
 		setIsShowingLogo,
+		ChangeIsShowingLogo,
 	};
 };
