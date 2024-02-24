@@ -60,7 +60,8 @@ export const Default_TemplateLayoutsConfig: {
 			width: '50%', // Equivalent to w-1/2
 			height: '100%', // Equivalent to h-full
 			borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
-			overflow: 'hidden',
+			//overflow: 'hidden',
+			position: 'relative'
 		},
 
 		// visualElementsCSS: {

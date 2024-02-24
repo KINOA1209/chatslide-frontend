@@ -26,6 +26,7 @@ import {
 import Image from 'next/image';
 import { SlideKeys } from '@/models/Slide';
 import Chart from '@/models/Chart';
+import ImagesPosition from '@/models/ImagesPosition';
 
 export interface MainSlideProps {
 	user_name: JSX.Element;
@@ -46,14 +47,11 @@ export interface MainSlideProps {
 	uploadedBackgroundImageUrl?: string;
 	charts: Chart[];
 	ischarts: boolean[];
-	handleSlideEdit: (
-		content: string | string[],
-		index: number,
-		tag: SlideKeys,
-		contentIndex?: number,
-	) => void;
+	handleSlideEdit: Function;
 	currentSlideIndex: number;
 	isShowingLogo?: boolean;
+	images_position: ImagesPosition[];
+	slideIdx:number
 }
 
 // deprecated

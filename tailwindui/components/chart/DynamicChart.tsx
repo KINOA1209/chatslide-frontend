@@ -77,7 +77,7 @@ const DynamicChart: React.FC<DynamicChartProps> = ({
         borderWidth: 1,
         }],
     };
-    console.log(data)
+    //console.log(data)
     // Optionally add labels for non-scatter charts
     if (chartType !== 'scatter') {
         (data as any).labels = (chartData as ValueDataPoint[]).map(dp => dp.label);

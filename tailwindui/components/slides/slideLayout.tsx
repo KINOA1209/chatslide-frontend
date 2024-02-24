@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useRef } from 'react';
+import React, { useEffect, useState, useMemo, useRef, useLayoutEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { ImgModule } from '@/components/imgModule';
 import { MainSlideProps as BaseMainSlideProps } from './slideTemplates';
@@ -15,7 +15,11 @@ import { useLocalImgs } from './slideTemplates';
 import { ThemeElements } from './templates_customizable_elements/theme_elements';
 // import { LayoutElements } from './templates_customizable_elements/layout_elements';
 import { LayoutElements } from '@/components/slides/templates_customizable_elements/layout_elements';
-import Chart from '@/models/Chart';
+import { Rnd } from 'react-rnd'
+import { DraggableEventHandler } from 'react-draggable';
+import ImagesPosition from '@/models/ImagesPosition';
+import { initializeImageData, onDragStart, onDragStop, onResizeStart, onResizeStop,onMouseLeave } from './dragAndResizeFunction';
+
 export type LayoutKeys =
 	| ''
 	| 'Cover_img_0_layout'
@@ -117,6 +121,8 @@ export const Cover_img_1_layout = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	isShowingLogo,
+	images_position,
+	slideIdx,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) => (imgSrc: string, ischart: boolean) => {
@@ -129,6 +135,27 @@ export const Cover_img_1_layout = ({
 			else newIsCharts[index] = ischart;
 			update_callback(newImgs, newIsCharts);
 		};
+	const imageRefs = images_position.map(() => useRef<HTMLDivElement>(null));
+	const [isDraggingOrResizing, setIsDraggingOrResizing] = useState(false); //distinguish openModal and drag
+	const [hasInteracted, setHasInteracted] = useState(false);
+	const [imagesDimensions, setImagesDimensions] = 
+		useState<(ImagesPosition | { x?: number; y?: number; height?: number; width?: number })[]>([]);
+	const [startPos, setStartPos] = useState<Array<{ x: number; y: number }>>(Array(3).fill({ x: 0, y: 0 }));
+
+	//handler for drag and resize also autosave
+	const handleMouseLeave = onMouseLeave(slideIdx, imagesDimensions, hasInteracted, setHasInteracted, handleSlideEdit)
+	const handleDragStart = onDragStart(setIsDraggingOrResizing, startPos, setStartPos, setHasInteracted)
+	const handleResizeStart = onResizeStart(setIsDraggingOrResizing, setHasInteracted)
+	const handleDragStop = 
+		onDragStop(imagesDimensions, setImagesDimensions, startPos, setIsDraggingOrResizing)
+	const handleResizeStop = 
+		onResizeStop(imagesDimensions, setImagesDimensions, setIsDraggingOrResizing)
+	
+	useEffect(() => {
+		const initializedData = initializeImageData(images_position, imageRefs);
+		setImagesDimensions(initializedData);
+	  }, [images_position]);
+
 	return (
 		<div style={layoutElements.canvaCSS}>
 			<div style={layoutElements.columnCSS}>
@@ -143,24 +170,39 @@ export const Cover_img_1_layout = ({
 				>
 					{user_name}
 				</div>
-				{/* <div
-					className={`pl-[2rem] basis-0 opacity-50 borser
-		        border-black border-opacity-40 mt-4`}
-				></div> */}
 				<div style={layoutElements.titleCSS}>{title}</div>
 			</div>
-			<div style={layoutElements.imageContainerCSS}>
-				<ImgModule
-					imgsrc={imgs[0]}
-					updateSingleCallback={updateImgAtIndex(0)}
-					chartArr={charts}
-					ischartArr={ischarts}
-					handleSlideEdit={handleSlideEdit}
-					currentSlideIndex={currentSlideIndex}
-					currentContentIndex={0}
-					canEdit={canEdit}
-				/>
+
+			<div style={layoutElements.imageContainerCSS} ref={imageRefs[0]} onMouseLeave={handleMouseLeave}>
+				<Rnd
+					style={{zIndex:51}} //should be higher than logo container
+					size={{ 
+						width: imagesDimensions[0]?.width ?? 480, 
+						height: imagesDimensions[0]?.height ?? 540 
+					}}
+					position={{ 
+						x: imagesDimensions[0]?.x ?? 0, 
+						y: imagesDimensions[0]?.y ?? 0 
+					}}
+					onDragStart={handleDragStart(0)}
+					onDragStop={handleDragStop(0)}
+					onResizeStart={handleResizeStart}
+					onResizeStop={handleResizeStop(0)}
+				>
+					<ImgModule
+						imgsrc={imgs[0]}
+						updateSingleCallback={updateImgAtIndex(0)}
+						chartArr={charts}
+						ischartArr={ischarts}
+						handleSlideEdit={handleSlideEdit}
+						currentSlideIndex={currentSlideIndex}
+						currentContentIndex={0}
+						canEdit={canEdit}
+						isDraggingOrResizing={isDraggingOrResizing}
+					/>
+				</Rnd>
 			</div>
+
 			<div style={layoutElements.visualElementsCSS}>
 				{themeElements.backgroundUrlCoverImg1 && (
 					<Image
@@ -303,7 +345,7 @@ export const Col_2_img_0_layout = ({
 	templateLogo,
 	isShowingLogo,
 }: MainSlideProps) => {
-	console.log('content: ' + Array(content));
+	//console.log('content: ' + Array(content));
 
 	return (
 		<div style={layoutElements.canvaCSS}>

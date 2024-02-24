@@ -44,6 +44,7 @@ import useTourStore from '@/components/user_onboarding/TourStore';
 import { current } from 'immer';
 import Chart from '@/models/Chart';
 import { BigGrayButton } from '../button/DrlambdaButton';
+import ImagesPosition from '@/models/ImagesPosition';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -227,7 +228,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	}, [slideIndex]);
 
 	function handleSlideEdit(
-		content: string | string[] | Array<string | string[] | Chart[] | boolean[]>,
+		content: string | string[] | Array<string | string[] | Chart[] | boolean[] | ImagesPosition[]>,
 		slideIndex: number,
 		tag: SlideKeys | SlideKeys[],
 		contentIndex?: number,
@@ -237,7 +238,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		const currentSlide = { ...slides[slideIndex] };
 		const className = tag;
 		const applyUpdate = (
-			content: string | string[] | Chart[] | boolean[],
+			content: string | string[] | Chart[] | boolean[] | ImagesPosition[],
 			className: string,
 		) => {
 			if (className === 'head') {
@@ -272,13 +273,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				currentSlide.chart = content as Chart[];
 			} else if (className === 'is_chart') {
 				currentSlide.is_chart = content as boolean[];
+			} else if (className === 'images_position') {
+				currentSlide.images_position = content as ImagesPosition[]
 			} else {
 				console.error(`Unknown tag: ${tag}`);
 			}
 		};
 		if (Array.isArray(className)) {
 			className.forEach((current_tag: SlideKeys, idx: number) => {
-				let updateContent: string | string[] | Chart[] | boolean[];
+				let updateContent: string | string[] | Chart[] | boolean[] | ImagesPosition[];
 				if (Array.isArray(content)) {
 					if (idx < content.length) {
 						updateContent = content[idx];
@@ -296,7 +299,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			});
 		} else {
 			applyUpdate(
-				content as string | string[] | Chart[] | boolean[],
+				content as string | string[] | Chart[] | boolean[] | ImagesPosition[],
 				className,
 			);
 		}
