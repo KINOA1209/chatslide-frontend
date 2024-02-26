@@ -117,8 +117,8 @@ class ProjectService {
       if (response.ok) {
         const data = await response.json();
         data.projects.forEach((item: Project) => {
-          if (item.task === null) {
-            item.task = 'presentation';
+          if (item.content_type === null) {
+            item.content_type = 'presentation';
           }
         });
         return data.projects;

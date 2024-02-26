@@ -27,7 +27,7 @@ const ProjectItem: React.FC<{
         onClick={() => onProjectClick(project.id)}
       >
         <div className=''>
-          {project.task === 'presentation' ? (
+          {project.content_type === 'presentation' ? (
             project.thumbnail_url
               ? <Image src={project.thumbnail_url} alt='project thumbnail' layout='responsive' width={16} height={9} />
               : <RiSlideshow2Fill className='text-gray-600 w-[40px] h-[40px]' />

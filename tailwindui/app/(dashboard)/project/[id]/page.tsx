@@ -58,29 +58,14 @@ const ProjectLoading = () => {
 			const content_type = project.content_type ?? 'presentation';
 			sessionStorage.setItem('content_type', content_type);
 			if (content_type == 'presentation') {
-				if (project.requirements) {
-					sessionStorage.setItem('requirements', project.requirements);
-				}
 				if (project.scenario_type) {
 					sessionStorage.setItem('scenarioType', project.scenario_type);
 				}
 				if (project.audience) {
 					sessionStorage.setItem('audience', project.audience);
 				}
-				if (project.add_equations) {
-					sessionStorage.setItem(
-						'addEquations',
-						project.add_equations.toString(),
-					);
-				}
-				if (project.page_count) {
-					sessionStorage.setItem('page_count', project.page_count);
-				}
 				if (project.outline) {
 					sessionStorage.setItem('outline', JSON.stringify(project.outline));
-				}
-				if (project.html) {
-					sessionStorage.setItem('html', project.html);
 				}
 				if (project.presentation_slides) {
 					sessionStorage.setItem(
@@ -88,19 +73,10 @@ const ProjectLoading = () => {
 						JSON.stringify(project.presentation_slides),
 					);
 				}
-				if (project.pdf_file) {
-					sessionStorage.setItem('pdf_file', project.pdf_file);
-				}
 				if (project.pdf_images) {
 					sessionStorage.setItem(
 						'pdf_images',
 						JSON.stringify(project.pdf_images),
-					);
-				}
-				if (project.audio_files) {
-					sessionStorage.setItem(
-						'audio_files',
-						JSON.stringify(project.audio_files),
 					);
 				}
 				if (project.video_url) {
