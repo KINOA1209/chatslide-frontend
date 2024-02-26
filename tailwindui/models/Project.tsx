@@ -2,7 +2,7 @@ import Resource from './Resource';
 import Slide from './Slide';
 import SocialPostSlide from './SocialPost'
 
-export default interface Project {
+type Project = {
 	id: string;
 	task: 'video' | 'scripts' | 'slides' | 'presentation' | 'social post';
 	name: string;
@@ -43,3 +43,5 @@ export default interface Project {
 	social_posts: string;
 	parsed_socialPosts: SocialPostSlide[];
 }
+
+export default Project;
