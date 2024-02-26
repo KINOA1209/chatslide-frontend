@@ -409,6 +409,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		}
 	};
 
+  if (!slides || slides.length === 0) {
+    return <></>
+  }
+
 	return (
 		<div className='flex flex-col items-center justify-center gap-4 relative'>
 			{/* hidden div for export to pdf */}
