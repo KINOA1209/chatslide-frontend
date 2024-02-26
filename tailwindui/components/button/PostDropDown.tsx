@@ -56,7 +56,7 @@ const PostDropDown: React.FC<PostButtonProps> = ({
 
   const handlePost = async (platform: string) => {
     try {
-      await ProjectService.SlideShareLink(token, project_id, setShare)
+      setShare(true);
       const shareLink = `${host}/shared/${project_id}`
       const hashTags = keywords.map((keyword) => `#${keyword}`).join(' ');
       const postText = `${description}. Learn more at drlambda.ai!\n${hashTags}\n`

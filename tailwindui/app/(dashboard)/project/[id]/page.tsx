@@ -82,9 +82,6 @@ const ProjectLoading = () => {
 				if (project.video_url) {
 					sessionStorage.setItem('video_url', project.video_url);
 				}
-				if (project.is_shared) {
-					sessionStorage.setItem('is_shared', project.is_shared.toString());
-				}
 				if (project.extra_knowledge) {
 					sessionStorage.setItem('extraKnowledge', project.extra_knowledge);
 				}

@@ -16,6 +16,9 @@ import { BigGrayButton, DropDown } from '../button/DrlambdaButton';
 import { FaShare, FaShareAlt } from 'react-icons/fa';
 import { InputBox } from '../ui/InputBox';
 import { TextLabel } from '../ui/GrayLabel';
+import { useProject } from '@/hooks/use-project';
+import ProjectService from '@/services/ProjectService';
+import { useUser } from '@/hooks/use-user';
 type SaveButtonProps = {
 	saveSlides: () => void;
 };
@@ -65,43 +68,17 @@ export const PresentButton: React.FC<PresentButtonProps> = ({
 type ShareToggleButtonProps = {
 	share: boolean;
 	setShare: (share: boolean) => void;
+  project_id: string;
 };
 
 export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
 	share,
 	setShare,
+  project_id,
 }) => {
+  const { token } = useUser();
 	const toggleShare = async () => {
-		const newShareStatus = !share;
-		// console.log('newShareStatus', newShareStatus);
-		setShare(newShareStatus);
-		const { userId, idToken: token } =
-			await AuthService.getCurrentUserTokenAndId();
-		try {
-			const response = await fetch('/api/share_project', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${token}`,
-				},
-				body: JSON.stringify({
-					project_id: sessionStorage.getItem('project_id'), // Replace with your project's ID
-					is_shared: newShareStatus,
-				}),
-			});
-
-			const responseData = await response.json();
-
-			if (response.ok) {
-				sessionStorage.setItem('is_shared', newShareStatus.toString());
-			} else {
-				// Handle error (e.g., show a notification to the user)
-				console.error(responseData.error);
-			}
-		} catch (error) {
-			console.error('Failed to toggle share status:', error);
-			// Handle error (e.g., show a notification to the user)
-		}
+    setShare(!share);  // updates db as well 
 	};
 
 	return (
@@ -120,23 +97,6 @@ export const SlidePagesIndicator: React.FC<{
 	currentSlideIndex: number;
 	slides: any[]; // Replace 'any' with the appropriate type if known
 }> = ({ currentSlideIndex, slides }) => {
-	return (
-		<div className='col-span-1'>
-			<div className='w-20 h-7 px-4 py-1 bg-indigo-400 rounded-3xl justify-center items-center gap-2 inline-flex'>
-				<div className='flex flex-row text-center'>
-					<span className='text-zinc-100 text-xs font-bold font-creato-medium leading-tight tracking-wide'>
-						{currentSlideIndex + 1}
-					</span>
-					<span className='text-zinc-100 text-xs font-normal font-creato-medium leading-tight tracking-wide'>
-						{' of '}
-					</span>
-					<span className='text-zinc-100 text-xs font-bold font-creato-medium leading-tight tracking-wide'>
-						{slides.length}
-					</span>
-				</div>
-			</div>
-		</div>
-	);
 	return (
 		<div className='col-span-1'>
 			<div className='w-20 h-7 px-4 py-1 bg-indigo-400 rounded-3xl justify-center items-center gap-2 inline-flex'>

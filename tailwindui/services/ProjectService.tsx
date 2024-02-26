@@ -326,12 +326,13 @@ class ProjectService {
     }
   }
 
-  static async SlideShareLink(token: string, project_id: string, setShare: (share: boolean) => void): Promise<void> {
-    const newShareStatus = true
-    setShare(newShareStatus)
+  static async SlideShareLink(token: string, project_id: string, is_shared: boolean): Promise<void> {
     const headers = new Headers();
     if (token) {
       headers.append('Authorization', `Bearer ${token}`);
+    } else {
+      console.error('SlideShareLink: No token provided');
+      return;
     }
     headers.append('Content-Type', 'application/json');
     try {
@@ -340,12 +341,11 @@ class ProjectService {
         headers: headers,
         body: JSON.stringify({
           project_id: project_id,
-          is_shared: newShareStatus,
+          is_shared: is_shared,
         }),
       });
       const responseData = await response.json();
       if (response.ok) {
-        sessionStorage.setItem('is_shared', newShareStatus.toString());
       } else {
         console.error(responseData.error);
       }

@@ -12,6 +12,7 @@ import { useSlides } from '@/hooks/use-slides';
 import VideoService from '@/services/VideoService';
 import { useUser } from '@/hooks/use-user';
 import { toast } from 'react-toastify';
+import { useProject } from '@/hooks/use-project';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -34,22 +35,17 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 
 	const { slides, setTranscripts } = useSlides();
 	const { token } = useUser();
-	const [share, setShare] = useState(false);
+	const { isShared, updateIsShared, project } = useProject();
 	const [showShareLink, setShowShareLink] = useState(true);
 	const router = useRouter();
 
 	const exportSlidesRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		setShare(sessionStorage.getItem('is_shared') === 'true');
-		// console.log('share', sessionStorage.getItem('is_shared'));
-	}, []);
-
-	useEffect(() => {
-		if (share) {
+    if (isShared) {
 			setShowShareLink(true);
 		}
-	}, [share]);
+  }, [isShared]);
 
 	useEffect(() => {
 		if (
@@ -162,12 +158,12 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 			{/* buttons: export and scripts and share slides */}
 			<div className='SlidesStep-6 flex flex-col sm:flex-row justify-end items-center gap-1 sm:gap-4'>
 				<ExportToPdfButton slides={slides} exportSlidesRef={exportSlidesRef} />
-				<ShareToggleButton setShare={setShare} share={share} />
-        <PostDropDown slides={slides} post_type='slide' setShare={setShare} />
+        <ShareToggleButton setShare={updateIsShared} share={isShared} project_id={project?.id || ""} />
+        <PostDropDown slides={slides} post_type='slide' setShare={updateIsShared} />
 			</div>
 			
 			{/* shareable link */}
-			{share && showShareLink && (
+      {isShared && showShareLink && (
 				<div>
 					<div className='w-[100] md:w-[40rem] flex-grow'>
 						<TextLabel>View only link:</TextLabel>

@@ -8,6 +8,7 @@ import PostDropDown from '../button/PostDropDown';
 import { ShareToggleButton } from '@/components/slides/SlideButtons';
 import { TextLabel } from '../ui/GrayLabel';
 import ClickableLink from '@/components/ui/ClickableLink';
+import { useProject } from '@/hooks/use-project';
 
 const SocialPostHTML = dynamic(
   () => import('@/components/socialPost/socialPostHTML'),
@@ -27,12 +28,9 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
   res_scenario,
 }) => {
   const [host, setHost] = useState('https://drlambda.ai');
-  const [share, setShare] = useState(false);
+  const { isShared, updateIsShared } = useProject();
   const [finalSlideIndex, setFinalSlideIndex] = useState<number>(0);
-
-  useEffect(() => {
-    setShare(sessionStorage.getItem('is_shared') === 'true');
-  }, []);
+  const { project } = useProject();
 
   useEffect(() => {
     if (
@@ -53,10 +51,10 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
             socialPostSlide={socialPostSlides}
             currentSlideIndex={finalSlideIndex}
           />
-          <ShareToggleButton setShare={setShare} share={share} />
-          <PostDropDown slides={socialPostSlides} post_type='socialpost' setShare={setShare} />
+          <ShareToggleButton setShare={updateIsShared} share={isShared} project_id={project?.id || ''} />
+          <PostDropDown slides={socialPostSlides} post_type='socialpost' setShare={updateIsShared} />
         </div>
-        {share && (
+        {isShared && (
           <div className='w-[100] md:w-[40rem] flex-grow'>
             <TextLabel>View only link:</TextLabel>
             <ClickableLink

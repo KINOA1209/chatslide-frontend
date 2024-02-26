@@ -12,6 +12,7 @@ import {
 	DeleteSlideIcon,
 	ScriptsIcon,
 } from '@/app/(feature)/icons';
+import { useUser } from '@/hooks/use-user';
 type SaveButtonProps = {
 	saveSlides: () => void;
 };
@@ -52,69 +53,6 @@ export const PresentButton: React.FC<PresentButtonProps> = ({
 					onClick={openPresent}
 				>
 					<PresentationModeIcon />
-				</div>
-			</div>
-		</div>
-	);
-};
-
-type ShareToggleButtonProps = {
-	share: boolean;
-	setShare: (share: boolean) => void;
-};
-
-export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
-	share,
-	setShare,
-}) => {
-	const toggleShare = async () => {
-		const newShareStatus = !share;
-		// console.log('newShareStatus', newShareStatus);
-		setShare(newShareStatus);
-		const { userId, idToken: token } =
-			await AuthService.getCurrentUserTokenAndId();
-		try {
-			const response = await fetch('/api/share_project', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${token}`,
-				},
-				body: JSON.stringify({
-					project_id: sessionStorage.getItem('project_id'), // Replace with your project's ID
-					is_shared: newShareStatus,
-				}),
-			});
-
-			const responseData = await response.json();
-
-			if (response.ok) {
-				sessionStorage.setItem('is_shared', newShareStatus.toString());
-			} else {
-				// Handle error (e.g., show a notification to the user)
-				console.error(responseData.error);
-			}
-		} catch (error) {
-			console.error('Failed to toggle share status:', error);
-			// Handle error (e.g., show a notification to the user)
-		}
-	};
-
-	return (
-		<div className='col-span-1'>
-			<div
-				className='h-8 px-3 py-1 bg-zinc-100 rounded-lg justify-center items-center gap-2.5 inline-flex cursor-pointer'
-				onClick={toggleShare}
-			>
-				<div className='text-center text-gray-700 text-sm font-medium font-creto-medium leading-normal tracking-wide whitespace-nowrap overflow-hidden text-ellipsis'>
-					{!share ? 'Share' : 'Stop Sharing'}
-				</div>
-				<div className='w-5 h-5 p-0.5 bg-zinc-100 justify-center items-center flex'>
-					<div className='w-4 h-4 relative flex-col justify-start items-start flex'>
-						<div className='w-3.5 h-3.5 relative'>
-							<ShareSlidesIcon />
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
