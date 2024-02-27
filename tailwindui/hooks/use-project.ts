@@ -73,6 +73,7 @@ export const useProject = () => {
 
     setOutlines(outlinesCopy);
     updateProject('outlines', outlinesCopy);
+    sessionStorage.setItem('outlines', 'true');  // so progress bar will be updated properly
     // todo: save outlines 
   }
 

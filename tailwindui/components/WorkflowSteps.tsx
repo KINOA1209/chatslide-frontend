@@ -6,7 +6,7 @@ import { NewStepIcon, CurrentStepIcon, FinishedStepIcon, CurrentStepCircle, Fini
 import { FaArrowLeft, FaArrowRight, FaChevronCircleLeft, FaChevronCircleRight, FaRegCircle } from 'react-icons/fa';
 import { IoMdLock } from "react-icons/io";
 import SessionStorage from '@/components/utils/SessionStorage';
-import { useProject } from '@/hooks/use-project';
+import Project from '@/models/Project';
 
 interface StepProps {
 	id: number;
@@ -203,7 +203,6 @@ const ProgressBox = (
 const ProjectProgress = () => {
 	const contentType = SessionStorage.getItem('content_type', 'slides');
 	const workflowType = SessionStorage.getItem('workflowType', 'slides');
-  const { outlines } = useProject();
 	let steps = ['Summary', 'Outlines', 'Design', 'Slides',  'Video'];
 	let redirect = [
 		'/workflow-generate-outlines',
@@ -225,7 +224,7 @@ const ProjectProgress = () => {
 		if (typeof window !== 'undefined' && sessionStorage.getItem('topic')) {
 			finishedStepsArray.push(0);
 		}
-		if (typeof window !== 'undefined' && outlines) {
+		if (typeof window !== 'undefined' && sessionStorage.getItem('outlines')) {
 			finishedStepsArray.push(1);
 		}
 		if (typeof window !== 'undefined' && workflowType === 'social_posts' && sessionStorage.getItem('socialPost')) {
