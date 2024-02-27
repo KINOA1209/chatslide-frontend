@@ -6,6 +6,7 @@ import { NewStepIcon, CurrentStepIcon, FinishedStepIcon, CurrentStepCircle, Fini
 import { FaArrowLeft, FaArrowRight, FaChevronCircleLeft, FaChevronCircleRight, FaRegCircle } from 'react-icons/fa';
 import { IoMdLock } from "react-icons/io";
 import SessionStorage from '@/components/utils/SessionStorage';
+import Project from '@/models/Project';
 
 interface StepProps {
 	id: number;
@@ -107,7 +108,6 @@ const OneStep: React.FC<StepProps> = ({
 
 interface Current {
 	currentInd: number;
-	contentRef: React.RefObject<HTMLDivElement>;
 }
 
 // General progress indicator component
@@ -119,7 +119,7 @@ const ProgressBox = (
 	const stepRedirectPair = steps.map((desc, index) => {
 		return [desc, redirect[index]];
 	});
-	const CurrentProgress: React.FC<Current> = ({ currentInd, contentRef }) => {
+	const CurrentProgress: React.FC<Current> = ({ currentInd }) => {
 		const progressRefDesktop = useRef<HTMLDivElement>(null);
 		const router = useRouter();
 
@@ -224,7 +224,7 @@ const ProjectProgress = () => {
 		if (typeof window !== 'undefined' && sessionStorage.getItem('topic')) {
 			finishedStepsArray.push(0);
 		}
-		if (typeof window !== 'undefined' && sessionStorage.getItem('outline')) {
+		if (typeof window !== 'undefined' && sessionStorage.getItem('outlines')) {
 			finishedStepsArray.push(1);
 		}
 		if (typeof window !== 'undefined' && workflowType === 'social_posts' && sessionStorage.getItem('socialPost')) {

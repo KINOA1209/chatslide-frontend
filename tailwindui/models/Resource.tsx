@@ -1,7 +1,9 @@
-export default interface Resource {
-	id: string;
-	name: string;
-	type: string;
-	thumbnail_url?: string;
-	timestamp?: string;
+type Resource = {
+  id: string;
+  name: string;
+  type: string;
+  thumbnail_url?: string;
+  timestamp?: string;
 }
+
+export default Resource;

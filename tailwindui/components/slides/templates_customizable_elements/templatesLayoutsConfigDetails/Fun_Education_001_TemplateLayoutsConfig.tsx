@@ -91,9 +91,9 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 		imageContainerCSS: {
 			width: '50%', // Equivalent to w-1/2
 			height: '100%', // Equivalent to h-full
-			overflow: 'hidden',
-			display: 'flex',
-			alignItems: 'center',
+			//overflow: 'hidden',
+			borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
+			position: 'absolute',
 			zIndex: 10,
 		},
 
@@ -107,6 +107,12 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			top: '0%',
 			left: '50%',
 		},
+		rndContainerCSS: {
+			width: '100%',
+			height: '100%',
+			position: 'relative',
+		},
+		rndCSS: {},
 	},
 	Col_1_img_0_layout: {
 		canvaCSS: {
@@ -359,13 +365,22 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			width: '50%',
 			height: '100%',
 			// borderRadius: '1.25rem',
-			overflow: 'hidden',
+			//overflow: 'hidden',
 			display: 'flex',
 			alignItems: 'center',
 			padding: '0rem 0rem 0rem 4rem', // top right bottom left
+			zIndex: 10,
 		},
 		imageCSS: {
 			// borderRadius: '1.25rem', // border radius 1.25rem for image
+		},
+		rndContainerCSS: {
+			width: '100%',
+			height: '100%',
+			position: 'relative',
+		},
+		rndCSS: {
+			zIndex: '51',
 		},
 	},
 	Col_1_img_1_layout: {
@@ -391,8 +406,8 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 		imageContainerCSS: {
 			height: '100%',
 			flexGrow: 1,
-			// borderRadius: '0.375rem', // Assuming a typical rounded-md value
-			overflow: 'hidden',
+			borderRadius: '0.375rem', // Assuming a typical rounded-md value
+			//overflow: 'hidden',
 			// gridRow: 3,
 			order: 3,
 			zIndex: 30,
@@ -433,6 +448,14 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			flexGrow: 1,
 			paddingLeft: '1rem',
 		},
+		rndContainerCSS: {
+			width: '100%',
+			height: '100%',
+			position: 'relative',
+		},
+		rndCSS: {
+			zIndex: '51',
+		},
 	},
 	Col_2_img_2_layout: {
 		canvaCSS: {
@@ -468,8 +491,12 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 		imageCSS: {
 			height: '11rem', // equivalent to h-[11rem]
 			flexGrow: 1, // equivalent to grow
-			// borderRadius: '0.375rem', // equivalent to rounded-md
-			overflow: 'hidden', // equivalent to overflow-hidden
+			// borderRadius: '1.25rem', // equivalent to rounded-md
+			//overflow: 'hidden', // equivalent to overflow-hidden
+			position: 'relative', // equivalent to relative
+			// gridRow: 3,
+			order: 3,
+			zIndex: 30,
 		},
 		contentCSS: {
 			zIndex: 30,
@@ -488,6 +515,14 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
 			top: '0%',
+		},
+		rndContainerCSS: {
+			width: '100%',
+			height: '100%',
+			position: 'relative',
+		},
+		rndCSS: {
+			zIndex: '51',
 		},
 	},
 	Col_3_img_3_layout: {
@@ -516,7 +551,7 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			height: '11rem', // equivalent to h-[11rem]
 			flexGrow: 1, // equivalent to grow
 			// borderRadius: '0.375rem', // equivalent to rounded-md
-			overflow: 'hidden', // equivalent to overflow-hidden
+			//overflow: 'hidden', // equivalent to overflow-hidden
 		},
 		contentCSS: {
 			zIndex: 30,
@@ -535,6 +570,14 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
 			top: '90%',
+		},
+		rndContainerCSS: {
+			width: '100%',
+			height: '100%',
+			position: 'relative',
+		},
+		rndCSS: {
+			zIndex: '51',
 		},
 	},
 };

@@ -8,31 +8,32 @@ import 'react-toastify/dist/ReactToastify.css';
 import ProjectService from '@/services/ProjectService';
 import Project from '@/models/Project';
 import { useSlides } from '@/hooks/use-slides';
+import { useProject } from '@/hooks/use-project';
+import { useUser } from '@/hooks/use-user';
 
 const ProjectLoading = () => {
-	const [project, setProject] = useState<Project | null>(null);
 	const pathname = usePathname();
 	const router = useRouter();
   const { initSlides } = useSlides();
+  const { initProject } = useProject();
+  const { token } = useUser();
+
+  const { project, updateProject } = useProject();
 
 	useEffect(() => {
 		sessionStorage.clear();
-		// Create a scoped async function within the hook.
-		const fetchUser = async () => {
-			try {
-				const { userId, idToken: token } =
-					await AuthService.getCurrentUserTokenAndId();
-				fetchProjectDetails(token);
-			} catch (error: any) {
-				console.error(error);
-			}
-		};
-		// Execute the created function directly
-		fetchUser();
+    initSlides([]);
+    try {
+      fetchProjectDetails(token);
+    } catch (error: any) {
+      console.error(error);
+    }
 	}, []);
 
 	useEffect(() => {
 		if (project) {
+      initProject(project);
+
 			// Store values in sessionStorage if they exist
 			if (project.topic) {
 				sessionStorage.setItem('topic', project.topic);
@@ -58,29 +59,11 @@ const ProjectLoading = () => {
 			const content_type = project.content_type ?? 'presentation';
 			sessionStorage.setItem('content_type', content_type);
 			if (content_type == 'presentation') {
-				if (project.requirements) {
-					sessionStorage.setItem('requirements', project.requirements);
-				}
 				if (project.scenario_type) {
 					sessionStorage.setItem('scenarioType', project.scenario_type);
 				}
 				if (project.audience) {
 					sessionStorage.setItem('audience', project.audience);
-				}
-				if (project.add_equations) {
-					sessionStorage.setItem(
-						'addEquations',
-						project.add_equations.toString(),
-					);
-				}
-				if (project.page_count) {
-					sessionStorage.setItem('page_count', project.page_count);
-				}
-				if (project.outline) {
-					sessionStorage.setItem('outline', JSON.stringify(project.outline));
-				}
-				if (project.html) {
-					sessionStorage.setItem('html', project.html);
 				}
 				if (project.presentation_slides) {
 					sessionStorage.setItem(
@@ -88,26 +71,14 @@ const ProjectLoading = () => {
 						JSON.stringify(project.presentation_slides),
 					);
 				}
-				if (project.pdf_file) {
-					sessionStorage.setItem('pdf_file', project.pdf_file);
-				}
 				if (project.pdf_images) {
 					sessionStorage.setItem(
 						'pdf_images',
 						JSON.stringify(project.pdf_images),
 					);
 				}
-				if (project.audio_files) {
-					sessionStorage.setItem(
-						'audio_files',
-						JSON.stringify(project.audio_files),
-					);
-				}
 				if (project.video_url) {
 					sessionStorage.setItem('video_url', project.video_url);
-				}
-				if (project.is_shared) {
-					sessionStorage.setItem('is_shared', project.is_shared.toString());
 				}
 				if (project.extra_knowledge) {
 					sessionStorage.setItem('extraKnowledge', project.extra_knowledge);
@@ -142,18 +113,14 @@ const ProjectLoading = () => {
 		headers.append('Content-Type', 'application/json');
 
 		try {
-			// set project_id in sessionStorage
 			const project_id = pathname?.split('/').pop();
 			if (project_id) {
-				console.log('this is project_id', project_id);
-				sessionStorage.setItem('project_id', project_id);
-
-				ProjectService.getProjectDetails(token, project_id).then((project) => {
-					setProject(project);
-          if (project?.parsed_slides){
-            initSlides(project.parsed_slides)
-          }
-				});
+				console.log('loading project with id', project_id);
+				const project = await ProjectService.getProjectDetails(token, project_id);
+        initProject(project);  // will also init outlines
+        if (project?.parsed_slides){
+          initSlides(project.parsed_slides)
+        }
 			}
 		} catch (error) {
 			toast.error('The project is not found or you do not have access to it.', {
@@ -180,7 +147,7 @@ const ProjectLoading = () => {
 		if (typeof window !== 'undefined' && sessionStorage.getItem('topic')) {
 			finishedStepsArray.push(0);
 		}
-		if (typeof window !== 'undefined' && sessionStorage.getItem('outline')) {
+		if (typeof window !== 'undefined' && project?.outlines) {
 			finishedStepsArray.push(1);
 		}
 		if (

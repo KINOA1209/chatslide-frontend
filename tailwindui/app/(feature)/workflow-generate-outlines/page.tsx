@@ -23,6 +23,7 @@ import SessionStorage from '@/components/utils/SessionStorage';
 import FromDocsUploadFile from '@/components/AddResourcesSection';
 import useHydrated from '@/hooks/use-hydrated';
 import LinkInput from '@/components/summary/LinkInput';
+import { useProject } from '@/hooks/use-project';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 6;
@@ -37,7 +38,6 @@ const audienceList = [
 ];
 
 export default function Topic() {
-  const contentRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showFileModal, setShowFileModal] = useState(false);
@@ -51,6 +51,8 @@ export default function Topic() {
   const [showLanguagePopup, setLanguagePopup] = useState(false);
   const [showSupportivePopup, setSupportivePopup] = useState(false);
   const { isPaidUser } = useUser();
+  const { project, updateOutlines, updateProject, initProject } = useProject();
+  const [searchOnlineScope, setSearchOnlineScope] = useState('none');
 
   // bind form data between input and sessionStorage
   const [topic, setTopic] = useState(
@@ -132,10 +134,7 @@ export default function Topic() {
       return;
     }
 
-    const project_id =
-      typeof window !== 'undefined' && sessionStorage.project_id != undefined
-        ? sessionStorage.project_id
-        : '';
+    const project_id = project?.id || '';
 
     const scenarioType =
       typeof window !== 'undefined' && sessionStorage.scenarioType != undefined
@@ -186,13 +185,13 @@ export default function Topic() {
 
         // Store the data in session storage
         sessionStorage.setItem('topic', outlinesJson.data.topic);
-        sessionStorage.setItem('outline', JSON.stringify(outlinesJson.data));
+        updateOutlines(Object.values(JSON.parse(outlinesJson.data.outlines)));
         sessionStorage.setItem('foldername', outlinesJson.data.foldername);
-        sessionStorage.setItem('project_id', outlinesJson.data.project_id);
         sessionStorage.setItem(
           'pdf_images',
           JSON.stringify(outlinesJson.data.pdf_images),
         );
+        initProject(outlinesJson.data);
 
         // Redirect to a new page with the data
         router.push('workflow-edit-outlines');
@@ -200,7 +199,7 @@ export default function Topic() {
         setShowPaymentModal(true);
         setIsSubmitting(false);
       } else {
-        toast.error('Server is busy now. Please try again later. Reference code: ' + sessionStorage.getItem('project_id'));
+        toast.error('Server is busy now. Please try again later. Reference code: ' + project?.id);
         setIsSubmitting(false);
       }
     } catch (error) {
@@ -296,7 +295,6 @@ export default function Topic() {
         isSubmitting={isSubmitting}
         setIsSubmitting={setIsSubmitting}
         isPaidUser={isPaidUser}
-        contentRef={contentRef}
         nextIsPaidFeature={false}
         nextText={
           !isSubmitting ? 'Write Outline (20⭐️)' : 'Writing Outline...'
@@ -313,6 +311,8 @@ export default function Topic() {
           {generationMode === 'from_files' &&
             <>
               <FromDocsUploadFile
+                searchOnlineScope={searchOnlineScope}
+                setSearchOnlineScope={setSearchOnlineScope}
                 openSupportivePopup={openSupportivePopup}
                 closeSupportivePopup={closeSupportivePopup}
                 showSupportivePopup={showSupportivePopup}

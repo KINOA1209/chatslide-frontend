@@ -19,12 +19,6 @@ const GoogleSignIn: React.FC<GoogleSignInProps> = ({ signup=false }) => {
     if (nextUri) {
       localStorage.setItem('nextUri', nextUri);
     }
-    if (nextUri === 'workflow-review-slides') {
-      const projectID = sessionStorage.getItem('project_id');
-      if (projectID) {
-        localStorage.setItem('projectToLink', projectID);
-      }
-    }
     try {
       const { uid, token } = await AuthService.googleSignIn();
     } catch (error) {

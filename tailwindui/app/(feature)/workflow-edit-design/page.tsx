@@ -3,25 +3,19 @@
 import React, { useState, useRef, useEffect, Fragment } from 'react';
 import ContentWithImageImg from '@/public/images/summary/content_with_image.png';
 import ContentOnlyImg from '@/public/images/summary/content_only.png';
-import ContentInBrandingColorImg from '@/public/images/summary/content_in_branding_color.png';
-import Image from 'next/image';
 import 'react-toastify/dist/ReactToastify.css';
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
 import { ToastContainer } from 'react-toastify';
 import '@/app/css/workflow-edit-topic-css/topic_style.css';
 import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
-import FileUploadModal from '@/components/forms/FileUploadModal';
 import { DropDown, SmallBlueButton } from '@/components/button/DrlambdaButton';
 import Resource from '@/models/Resource';
-import SelectedResourcesList from '@/components/SelectedResources';
 import dynamic from 'next/dynamic';
 import ImageSelector from './ImageSelector';
-import RadioButtonWithImage, {
-	ImageOption,
-} from '@/components/ui/RadioButtonWithImage';
+import RadioButton, { RadioButtonOption } from '@/components/ui/RadioButton';
 import useHydrated from '@/hooks/use-hydrated';
-import { SlidesStatus, useSlides } from '@/hooks/use-slides';
-import { TemplateKeys } from '@/components/slides/slideTemplates';
+import { useProject } from '@/hooks/use-project';
+import { image } from 'd3';
 // const { changeTemplate } = useSlides();
 
 const SlideDesignPreview = dynamic(
@@ -31,18 +25,11 @@ const SlideDesignPreview = dynamic(
 	},
 );
 
-export default function ThemePage() {
-	const [theme, setTheme] = useState('content_with_image');
-	const [schoolTemplate, setSchoolTemplate] = useState(
-		'Business_002' as string,
-	);
+export default function DesignPage() {
+	const [template, setTemplate] = useState('Business_002' as string);
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const contentRef = useRef<HTMLDivElement>(null);
 	const [isGpt35, setIsGpt35] = useState(true);
-	const storedOutline =
-		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('outline')
-			: null;
+	const { outlines } = useProject();
 
 	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
 		typeof window !== 'undefined' && sessionStorage.selectedLogo != undefined
@@ -50,53 +37,36 @@ export default function ThemePage() {
 			: [],
 	);
 	const [selectedBackground, setSelectedBackground] = useState<Resource[]>([]);
-	const outline = storedOutline ? JSON.parse(storedOutline) : null;
-	const outlineRes = outline ? JSON.parse(outline.res) : null;
-	const [outlineContent, setOutlineContent] = useState<OutlineSection[] | null>(
-		null,
-	);
 
-	const imageChoices: ImageOption[] = [
+	const [imageAmount, setImageAmount] = useState('content_with_image');
+	const imageAmountOptions: RadioButtonOption[] = [
 		{
 			img: ContentWithImageImg,
 			value: 'content_with_image',
-			alt: 'More images<br>(70% decks contain images)',
+			text: 'More images(70% decks contain images)',
 		},
 		{
 			img: ContentOnlyImg,
 			value: 'content_only',
-			alt: 'Less images<br>(30% decks contain images)',
+			text: 'Less images(30% decks contain images)',
 		},
 	];
 
-	useEffect(() => {
-		if (outlineRes) {
-			const newOutlineContent = Object.keys(outlineRes).map((key) => {
-				return {
-					title: outlineRes[key]['title'],
-					content: outlineRes[key]['content'],
-					detailLevel: outlineRes[key]['detailLevel'],
-					section_style: outlineRes[key]['section_style'],
-				};
-			});
-			setOutlineContent(newOutlineContent);
-		}
-	}, []);
-
-	useEffect(() => {
-		sessionStorage.setItem('schoolTemplate', schoolTemplate);
-		sessionStorage.setItem('theme', theme);
-		if (selectedLogo && selectedLogo.length > 0) {
-			sessionStorage.setItem('selectedLogo_id', selectedLogo[0].id);
-		} else {
-			sessionStorage.removeItem('selectedLogo_id');
-		}
-		if (selectedBackground && selectedBackground.length > 0) {
-			sessionStorage.setItem('selectedBackground_id', selectedBackground[0].id);
-		} else {
-			sessionStorage.removeItem('selectedBackground_id');
-		}
-	}, [schoolTemplate, theme, selectedLogo, selectedBackground]);
+	const [imageLicense, setImageLicense] = useState('all');
+	const imageLicenseOptions: RadioButtonOption[] = [
+		{
+			value: 'all',
+			text: 'All',
+		},
+		{
+			value: 'commercial',
+			text: 'Commercial',
+		},
+		{
+			value: 'creative',
+			text: 'Creative Commons',
+		},
+	];
 
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
@@ -110,19 +80,22 @@ export default function ThemePage() {
 				isSubmitting={isSubmitting}
 				setIsSubmitting={setIsSubmitting}
 				isPaidUser={true}
-				contentRef={contentRef}
 				nextIsPaidFeature={false}
 				nextText={!isSubmitting ? 'Create Slides' : 'Creating Slides'}
 			/>
 
-			{outlineContent && (
-				<GenerateSlidesSubmit
-					outline={outlineContent}
-					isGPT35={isGpt35}
-					isSubmitting={isSubmitting}
-					setIsSubmitting={setIsSubmitting}
-				/>
-			)}
+			<GenerateSlidesSubmit
+				outlines={outlines}
+				isGPT35={isGpt35}
+				isSubmitting={isSubmitting}
+				setIsSubmitting={setIsSubmitting}
+				template={template}
+				imageAmount={imageAmount}
+				imageLicense={imageLicense}
+				logo_ids={selectedLogo.map((resource) => resource.id)}
+				background_ids={selectedBackground.map((resource) => resource.id)}
+			/>
+
 			<div className='gap-y-4 w-full flex flex-col items-center md:my-[6rem]'>
 				{/* design */}
 				<div
@@ -146,20 +119,19 @@ export default function ThemePage() {
 								<span className='text-md font-bold'>Select your template:</span>
 								<DropDown
 									width='20rem'
-									onChange={(e) => setSchoolTemplate(e.target.value)}
+									onChange={(e) => setTemplate(e.target.value)}
 									// onChange={(e) =>
 									// 	changeTemplate(e.target.value as TemplateKeys)
 									// }
-									defaultValue={schoolTemplate}
+									defaultValue={template}
 									style='input'
 								>
 									<option value='Default'>Default</option>
+									<option value='Fun_Education_001'>Education</option>
 									<option value='Business_002'>Business</option>
 									<option value='Clean_Lifestyle_003'>Clean Lifestyle</option>
-									<option value='Fun_Education_004'>Fun / Education</option>
+									<option value='Fun_Education_004'>Fun</option>
 									<option value='Business_002'>Business</option>
-									<option value='Fun_Education_004'>Fun Education 04</option>
-									<option value='Clean_Lifestyle_003'>Clean Lifestyle</option>
 									<option value='Stanford'>Stanford University</option>
 									<option value='Berkeley'>UC Berkeley</option>
 									<option value='Harvard'>Harvard University</option>
@@ -178,18 +150,30 @@ export default function ThemePage() {
 							</div>
 						</div>
 						<div className='w-full mt-4 flex flex-col'>
-							<span className='text-md font-bold'>School template preview</span>
-							<SlideDesignPreview selectedTemplate={schoolTemplate} />
+							<span className='text-md font-bold'>Template preview</span>
+							<SlideDesignPreview selectedTemplate={template} />
 						</div>
-						{/* theme */}
+						{/* images */}
 						<div>
 							<span className='text-md font-bold'>
 								How many images do you want to generate?
 							</span>
-							<RadioButtonWithImage
-								options={imageChoices}
-								selectedValue={theme}
-								setSelectedValue={setTheme}
+							<RadioButton
+								options={imageAmountOptions}
+								selectedValue={imageAmount}
+								setSelectedValue={setImageAmount}
+								name='imageAmount'
+							/>
+						</div>
+						<div>
+							<span className='text-md font-bold'>
+								What online image lincese do you want to use?
+							</span>
+							<RadioButton
+								options={imageLicenseOptions}
+								selectedValue={imageLicense}
+								setSelectedValue={setImageLicense}
+								name='imageLicense'
 							/>
 						</div>
 						{/* logo */}

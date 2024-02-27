@@ -9,6 +9,7 @@ import ProjectService from '@/services/ProjectService';
 import PostPlatformConfigs from '@/components/button/PostPlatformConfig'
 import { useUser } from '@/hooks/use-user';
 import { FaFacebook } from 'react-icons/fa';
+import { useProject } from '@/hooks/use-project';
 
 type PostButtonProps = {
   slides: Slide[] | SocialPostSlide[];
@@ -19,6 +20,12 @@ type PostButtonProps = {
   keywords?: string[];
 };
 
+function truncateWithFullWords(str: string, maxLength: number) {
+  if (str.length <= maxLength) return str;
+  return str.substring(0, str.lastIndexOf(' ', maxLength)) + '...';
+}
+
+
 const PostDropDown: React.FC<PostButtonProps> = ({
   slides,
   post_type = 'slide',
@@ -28,7 +35,9 @@ const PostDropDown: React.FC<PostButtonProps> = ({
   keywords = ['DrLambda', 'presentation', 'slides', 'ai_agent']
 }) => {
   const [host, setHost] = useState('https://drlambda.ai');
-  const { token } = useUser();
+  const { project } = useProject();
+  const limitedKeywords = keywords.slice(0, 3);
+  const truncatedDescription = truncateWithFullWords(description, 100);
 
   //console.log(slides)
   if (slides.length > 0 && 'head' in slides[0]) {
@@ -37,10 +46,7 @@ const PostDropDown: React.FC<PostButtonProps> = ({
     title = title?.replace(/<[^>]*>?/gm, '');
   }
 
-  const project_id =
-    typeof window !== 'undefined' && sessionStorage.project_id != undefined
-      ? sessionStorage.project_id
-      : '';
+  const project_id = project?.id || '';
 
   useEffect(() => {
     if (
@@ -56,10 +62,10 @@ const PostDropDown: React.FC<PostButtonProps> = ({
 
   const handlePost = async (platform: string) => {
     try {
-      await ProjectService.SlideShareLink(token, project_id, setShare)
+      setShare(true);
       const shareLink = `${host}/shared/${project_id}`
-      const hashTags = keywords.map((keyword) => `#${keyword}`).join(' ');
-      const postText = `${description}. Learn more at drlambda.ai!\n${hashTags}\n`
+      const hashTags = limitedKeywords.map((keyword) => `#${keyword}`).join(' ');
+      const postText = `${truncatedDescription}. Learn more at drlambda.ai!\n${hashTags}\n`
       const platformConfig = PostPlatformConfigs[platform as keyof typeof PostPlatformConfigs];
       const text = platformConfig.textTemplate(postText, shareLink);
       const url = `${platformConfig.shareUrl}${text}`

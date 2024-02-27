@@ -30,6 +30,7 @@ export const Default = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	isShowingLogo,
+	images_position,
 }: // templateLogo = TemplatesLogos.DefaultTemplateLogo,
 MainSlideProps) => {
 	const ChosenLayoutNonCover =
@@ -83,7 +84,8 @@ MainSlideProps) => {
 							width={960}
 							height={540}
 							src={`${uploadedBackgroundImageUrl}`}
-							alt='Background Image for cover'
+							alt='Background Image'
+              unoptimized={true}
 						/>
 					</div>
 				)}
@@ -108,6 +110,7 @@ MainSlideProps) => {
 					handleSlideEdit={handleSlideEdit}
 					currentSlideIndex={currentSlideIndex}
 					isShowingLogo={isShowingLogo}
+					images_position={images_position}
 				></ChosenLayoutCover>
 
 				{/* Logo */}
@@ -155,7 +158,8 @@ MainSlideProps) => {
 							width={960}
 							height={540}
 							src={`${uploadedBackgroundImageUrl}`}
-							alt='Background Image for cover'
+							alt='Background Image'
+              unoptimized= {true}
 						/>
 					</div>
 				)}
@@ -181,6 +185,7 @@ MainSlideProps) => {
 					handleSlideEdit={handleSlideEdit}
 					currentSlideIndex={currentSlideIndex}
 					isShowingLogo={isShowingLogo}
+					images_position={images_position}
 				></ChosenLayoutNonCover>
 			</div>
 		</>

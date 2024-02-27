@@ -10,7 +10,6 @@ interface YourComponentProps {
 	isSubmitting: boolean;
 	setIsSubmitting: (submitting: boolean) => void;
 	isPaidUser?: boolean;
-	contentRef: React.RefObject<HTMLDivElement>;
 	nextIsPaidFeature?: boolean;
   lastStep?: boolean;
 	nextText?: string;
@@ -21,7 +20,6 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 	isSubmitting,
 	setIsSubmitting,
 	isPaidUser = false,
-	contentRef,
 	nextIsPaidFeature = false,
   lastStep = false,
 	nextText = 'Next',
@@ -31,7 +29,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
     <div className='sticky top-0 z-10'>
 			<div className='relative w-full h-[100px] flex flex-col items-center w-full bg-[#2044F2]'>
 				<div className='flex-grow items-center justify-center flex py-2'>
-					<ProjectProgress currentInd={currentIndex} contentRef={contentRef} />
+					<ProjectProgress currentInd={currentIndex}/>
 				</div>
 			</div>
 

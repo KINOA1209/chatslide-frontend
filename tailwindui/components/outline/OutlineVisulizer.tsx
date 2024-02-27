@@ -6,8 +6,6 @@ import {
 	AddSectionIcon,
 	AddTopicIcon,
 	DeleteIcon,
-	LeftChangeIcon,
-	RightChangeIcon,
 } from '@/app/(feature)/icons';
 
 const minOutlineDetailCount = 1;
@@ -21,72 +19,14 @@ const OutlineVisualizer = ({
 	setOutlineData,
 	isGPT35,
 }: {
-	outlineData: OutlineDataType;
-	setOutlineData: (outline: OutlineDataType) => void;
+    outlineData: Outlines;
+    setOutlineData: (outline: Outlines) => void;
 	isGPT35: boolean;
 }) => {
-	const [detailOptions, setDetailOptions] = useState([
-		{ detailLevel: 'Default', description: 'moderate' },
-		{ detailLevel: 'More Slides', description: 'detailed' },
-		{ detailLevel: 'Fewer Slides', description: 'concise' },
-		// { detailLevel: 'Normal Slides', description: 'Medium' },
-	]);
-	//   const [selectedDetail, setSelectedDetail] = useState(detailOptions[0])
-	const router = useRouter();
 
-	const mapDetailLevels = (section: OutlineSection) => {
-		const detailLevel = section.detailLevel;
-		switch (detailLevel) {
-			case 'Default':
-				return 0;
-			case 'More Slides':
-				return 1;
-			case 'Fewer Slides':
-				return 2;
-			default:
-				return 0; // You can set a default value if needed
-		}
-	};
-	const [detailLevels, setDetailLevels] = useState(
-		outlineData.map((section) => mapDetailLevels(section)),
-	);
 	const [titleCache, setTitleCache] = useState('');
 	const [hoveredDetailIndex, setHoveredDetailIndex] = useState(-1);
 	const [hoveredSectionIndex, setHoveredSectionIndex] = useState(-1);
-
-	useEffect(() => {
-		// Function to reverse map numeric detail levels to string values
-		const reverseMapDetailLevels = (detailLevel: number) => {
-			switch (detailLevel) {
-				case 0:
-					return 'Default';
-				case 1:
-					return 'More Slides';
-				case 2:
-					return 'Fewer Slides';
-				default:
-					return 'Default'; // You can set a default value if needed
-			}
-		};
-
-		// Create a new copy of outlineData with updated detailLevels
-		const updatedOutlineData = outlineData.map((section, index) => {
-			section.detailLevel = reverseMapDetailLevels(detailLevels[index]);
-			return section;
-		});
-
-		// Update outlineData
-		setOutlineData(updatedOutlineData);
-		// update session storage too
-		updateOutlineSessionStorage(updatedOutlineData);
-		console.log('outlineData', outlineData);
-	}, [detailLevels]);
-
-	const updateOutlineSessionStorage = (updatedOutline: any) => {
-		const entireOutline = JSON.parse(sessionStorage.outline);
-		entireOutline.res = JSON.stringify({ ...updatedOutline });
-		sessionStorage.setItem('outline', JSON.stringify(entireOutline));
-	};
 
 	const handleDetailChange = (
 		e: React.ChangeEvent<HTMLInputElement>,
@@ -99,7 +39,6 @@ const OutlineVisualizer = ({
 			const updatedOutlineData = [...outlineData]; // Directly use the current state
 			updatedOutlineData[sectionIndex]['content'][detailIndex] = value;
 			setOutlineData(updatedOutlineData); // Pass the updated data directly
-			updateOutlineSessionStorage(updatedOutlineData);
 		}
 	};
 
@@ -112,7 +51,6 @@ const OutlineVisualizer = ({
 		let newOutlineData = [...outlineData];
 		newOutlineData[sectionIndex].content.splice(detailIndex, 0, '');
 		setOutlineData(newOutlineData);
-		updateOutlineSessionStorage(newOutlineData);
 	};
 
 	const handleDeleteDetail = (
@@ -124,7 +62,6 @@ const OutlineVisualizer = ({
 		let newOutlineData = [...outlineData];
 		newOutlineData[sectionIndex].content.splice(detailIndex, 1);
 		setOutlineData(newOutlineData);
-		updateOutlineSessionStorage(newOutlineData);
 	};
 
 	const handleDeleteSection = (
@@ -135,7 +72,6 @@ const OutlineVisualizer = ({
 		let newOutlineData = [...outlineData];
 		newOutlineData.splice(sectionIndex, 1);
 		setOutlineData(newOutlineData);
-		updateOutlineSessionStorage(newOutlineData);
 	};
 
 	const handleAddSection = (sectionIndex: number) => {
@@ -148,14 +84,8 @@ const OutlineVisualizer = ({
 			section_style: 'default',
 		});
 
-		// Create a new detailLevels array with the same length as newOutlineData
-		const newDetailLevels = [...detailLevels];
-		newDetailLevels.splice(sectionIndex + 1, 0, 0);
-
 		console.log('Add section after section index: ' + sectionIndex);
 		setOutlineData(newOutlineData);
-		setDetailLevels(newDetailLevels);
-		updateOutlineSessionStorage(newOutlineData);
 	};
 
 	const handleEnterEditSection = (
@@ -185,7 +115,6 @@ const OutlineVisualizer = ({
 			const updatedOutlineData = [...outlineData]; // Directly use the current state
 			updatedOutlineData[sectionIndex].title = titleCache;
 			setOutlineData(updatedOutlineData); // Pass the updated data directly
-			updateOutlineSessionStorage(updatedOutlineData);
 
 			setTitleCache('');
 		}
@@ -200,7 +129,6 @@ const OutlineVisualizer = ({
 			const updatedOutlineData = [...outlineData]; // Directly use the current state
 			updatedOutlineData[sectionIndex].title = value;
 			setOutlineData(updatedOutlineData); // Pass the updated data directly
-			updateOutlineSessionStorage(updatedOutlineData);
 		}
 	};
 

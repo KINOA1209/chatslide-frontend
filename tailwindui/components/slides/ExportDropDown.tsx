@@ -10,6 +10,7 @@ import { generatePdf } from '../utils/DownloadImage';
 import ProjectService from '@/services/ProjectService';
 import { useUser } from '@/hooks/use-user';
 import { RiSlideshow2Fill } from 'react-icons/ri';
+import { useProject } from '@/hooks/use-project';
 
 interface ExportToPdfProps {
   slides: Slide[];
@@ -27,6 +28,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
   const [downloading, setDownloading] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const { isPaidUser, token } = useUser();
+  const { project } = useProject();
   const [showDropdown, setShowDropdown] = useState(false);
 
   async function exportToPdfFrontend() {
@@ -48,17 +50,15 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
   }
 
   const handleExport = async (type: string, frontend: boolean) => {
-    if (!isPaidUser && frontend === false) {
-      setShowPaymentModal(true);
-      return;
-    }
+    if (!project) return;
+
+    setShowDropdown(false);
 
     setDownloading(true);
     if (frontend) {
       await exportToPdfFrontend();
     } else {
-      const project_id = sessionStorage.getItem('project_id') || '';
-      await ProjectService.exportToFileBackend(token, project_id, type);
+      await ProjectService.exportToFileBackend(token, project.id, type);
     }
     setDownloading(false);
   };
@@ -74,10 +74,11 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
           />
         )}
 
-        <div className='h-[36px] flex flex-col items-center gap-2' onClick={() => setShowDropdown(!showDropdown)}>
+        <div className='h-[36px] flex flex-col items-center gap-2'>
           <BigGrayButton
             bgColor='bg-Gray'
             isSubmitting={downloading}
+            onClick={() => setShowDropdown(!showDropdown)}
           >
             <FaDownload />
             Export to PDF / PPTX
@@ -99,6 +100,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
                 onClick={() => handleExport('pdf', false)}
                 isSubmitting={downloading}
                 isPaidUser={isPaidUser}
+                isPaidFeature={true}
                 bgColor='bg-Gray'
               >
                 <FaFilePdf />
@@ -109,6 +111,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
                 onClick={() => handleExport('pptx', false)}
                 isSubmitting={downloading}
                 isPaidUser={isPaidUser}
+                isPaidFeature={true}
                 bgColor='bg-Gray'
               >
                 <RiSlideshow2Fill />

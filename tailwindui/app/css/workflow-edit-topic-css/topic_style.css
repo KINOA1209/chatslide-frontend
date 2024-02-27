@@ -134,11 +134,6 @@
 
 /*upload files*/
 
-.upload {
-	display: flex;
-	align-items: center;
-}
-
 .upload span {
 	margin: 0;
 	font-family: 'Creato Display', sans-serif;

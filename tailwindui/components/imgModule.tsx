@@ -31,6 +31,7 @@ interface ImgModuleProp {
 	currentSlideIndex: number;
 	currentContentIndex: number;
 	canEdit: boolean;
+	isDraggingOrResizing: boolean;
 	customImageStyle?: React.CSSProperties;
 }
 
@@ -50,6 +51,7 @@ export const ImgModule = ({
 	currentSlideIndex,
 	currentContentIndex,
 	canEdit,
+	isDraggingOrResizing,
 	customImageStyle,
 }: ImgModuleProp) => {
 	const [showModal, setShowModal] = useState(false);
@@ -82,7 +84,7 @@ export const ImgModule = ({
 	}, [imgsrc]);
 
 	const openModal = () => {
-		if (canEdit) {
+		if (canEdit && !isDraggingOrResizing) {
 			setShowModal(true);
 			fetchFiles();
 		}
@@ -191,7 +193,7 @@ export const ImgModule = ({
 		}
 	}
 
-	const handleImageClick = async (e: React.MouseEvent<HTMLDivElement>) => {
+	const handleImageClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.preventDefault();
 		// update image here to template & source html
 		updateSingleCallback(
@@ -690,7 +692,7 @@ export const ImgModule = ({
 				<Transition
 					className='flex h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex-col md:items-center md:justify-center'
 					show={showModal}
-					onClick={closeModal}
+					//onClick={closeModal}
 					enter='transition ease duration-300 transform'
 					enterFrom='opacity-0 translate-y-12'
 					enterTo='opacity-100 translate-y-0'
@@ -933,7 +935,7 @@ export const ImgModule = ({
 						: canEdit
 						? 'hover:bg-[#CAD0D3]'
 						: ''
-				} flex flex-col items-center justify-center cursor-pointer`}
+				} flex flex-col items-center justify-center`}
 			>
 				{ischartArr &&
 				ischartArr[currentContentIndex] &&
@@ -977,7 +979,7 @@ export const ImgModule = ({
 						height={540}
 						objectFit='contain'
 						className={`transition ease-in-out duration-150 ${
-							canEdit ? 'hover:brightness-90' : 'cursor-default'
+							canEdit ? 'hover:brightness-90' : 'cursor-pointer'
 						}`}
 					/>
 				)}
