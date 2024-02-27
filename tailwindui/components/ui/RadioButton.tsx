@@ -4,6 +4,7 @@ import Image from 'next/image';
 export interface RadioButtonOption {
   img?: any;
   value: string;
+  icon?: JSX.Element;
   text: string;
 }
 
@@ -16,8 +17,8 @@ interface RadioButtonProps {
 
 const RadioButton: React.FC<RadioButtonProps> = ({ name, options, selectedValue, setSelectedValue }) => {
   return (
-    <div className='grid grid-cols-3 gap-x-4 mt-3'>
-      {options.map(({ img, value, text }) => (
+    <div className='grid grid-cols-3 gap-x-4'>
+      {options.map(({ img, value, text, icon }) => (
 
         <div key={value} className={`rounded-lg py-2`} onClick={() => setSelectedValue(value)}>
           <label>
@@ -34,7 +35,10 @@ const RadioButton: React.FC<RadioButtonProps> = ({ name, options, selectedValue,
                 checked={selectedValue === value}
                 onChange={() => setSelectedValue(value)}
               />
-              <span dangerouslySetInnerHTML={{ __html: text }}></span>
+              <span className='flex flex-row justify-center items-center gap-1'>
+                {icon}
+                {text}
+              </span>
             </div>
           </label>
         </div>))}
