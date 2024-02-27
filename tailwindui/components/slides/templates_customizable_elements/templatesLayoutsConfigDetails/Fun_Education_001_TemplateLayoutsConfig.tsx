@@ -453,7 +453,6 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			display: 'flex',
 			flexDirection: 'column',
 			gap: '0.5rem',
-			padding: '2rem 2rem 2rem 2rem',
 		},
 		titleAndSubtopicBoxCSS: {
 			zIndex: 30,
@@ -461,35 +460,39 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			flexDirection: 'column',
 			// justifyContent: 'center',
 			// alignItems: 'center',
+			padding: '2rem 2rem 2rem 2rem',
+			order: 0,
+			borderBottom: '1px solid #B7B7B7',
 		},
 		imageContainerCSS: {
 			width: '100%', // equivalent to w-full
 			display: 'grid',
 			gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
-			gap: '2rem', // equivalent to gap-[2rem]
+			order: 2,
 		},
 		imageCSS: {
 			height: '11rem', // equivalent to h-[11rem]
 			flexGrow: 1, // equivalent to grow
-			borderRadius: '0.375rem', // equivalent to rounded-md
+			// borderRadius: '0.375rem', // equivalent to rounded-md
 			overflow: 'hidden', // equivalent to overflow-hidden
 		},
 		contentCSS: {
 			zIndex: 30,
-			paddingTop: '1rem',
+			padding: '1rem 2rem 2rem 2rem',
 			width: '100%', // equivalent to w-full
 			display: 'grid',
 			gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
 			gap: '2rem', // equivalent to gap-[2rem]
+			order: 1,
 		},
 		visualElementsCSS: {
 			zIndex: 20,
 			width: '100%',
-			height: '80%',
+			height: '10%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '20%',
+			top: '90%',
 		},
 	},
 };

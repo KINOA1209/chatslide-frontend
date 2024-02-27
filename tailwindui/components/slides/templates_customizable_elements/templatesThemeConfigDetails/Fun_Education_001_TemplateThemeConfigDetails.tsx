@@ -11,7 +11,8 @@ export const Fun_Education_001_TemplateThemeConfig: ThemeElements = {
 	backgroundUrlCol_2_img_1: '',
 	backgroundUrlCol_1_img_1: '',
 	backgroundUrlCol_2_img_2: '',
-	backgroundUrlCol_3_img_3: '',
+	backgroundUrlCol_3_img_3:
+		'/images/template/Fun_Education_001/BackgroundElementsCol_3_img_3.png',
 
 	backgroundColorCover: 'bg-[#FFFFFF]',
 	backgroundColor: 'bg-[#FFFFFF]',
