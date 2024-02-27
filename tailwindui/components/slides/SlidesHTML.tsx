@@ -462,6 +462,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
           <BigGrayButton
             onClick={() => setIsShowingLogo(!isShowingLogo)}
             isPaidUser={isPaidUser}
+            isPaidFeature={true}
             bgColor='bg-Gray'
           >
             <span>

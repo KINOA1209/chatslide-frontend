@@ -50,12 +50,9 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
   }
 
   const handleExport = async (type: string, frontend: boolean) => {
-    if (!isPaidUser && frontend === false) {
-      setShowPaymentModal(true);
-      return;
-    }
-
     if (!project) return;
+
+    setShowDropdown(false);
 
     setDownloading(true);
     if (frontend) {
@@ -77,10 +74,11 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
           />
         )}
 
-        <div className='h-[36px] flex flex-col items-center gap-2' onClick={() => setShowDropdown(!showDropdown)}>
+        <div className='h-[36px] flex flex-col items-center gap-2'>
           <BigGrayButton
             bgColor='bg-Gray'
             isSubmitting={downloading}
+            onClick={() => setShowDropdown(!showDropdown)}
           >
             <FaDownload />
             Export to PDF / PPTX
@@ -102,6 +100,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
                 onClick={() => handleExport('pdf', false)}
                 isSubmitting={downloading}
                 isPaidUser={isPaidUser}
+                isPaidFeature={true}
                 bgColor='bg-Gray'
               >
                 <FaFilePdf />
@@ -112,6 +111,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
                 onClick={() => handleExport('pptx', false)}
                 isSubmitting={downloading}
                 isPaidUser={isPaidUser}
+                isPaidFeature={true}
                 bgColor='bg-Gray'
               >
                 <RiSlideshow2Fill />
