@@ -14,7 +14,7 @@ import dynamic from 'next/dynamic';
 import ImageSelector from './ImageSelector';
 import RadioButton, {
   RadioButtonOption,
-} from '@/components/ui/RadioButtonWithImage';
+} from '@/components/ui/RadioButton';
 import useHydrated from '@/hooks/use-hydrated';
 import { useProject } from '@/hooks/use-project';
 import { image } from 'd3';

@@ -52,6 +52,7 @@ export default function Topic() {
   const [showSupportivePopup, setSupportivePopup] = useState(false);
   const { isPaidUser } = useUser();
   const { project, updateOutlines, updateProject, initProject } = useProject();
+  const [searchOnlineScope, setSearchOnlineScope] = useState('none');
 
   // bind form data between input and sessionStorage
   const [topic, setTopic] = useState(
@@ -310,6 +311,8 @@ export default function Topic() {
           {generationMode === 'from_files' &&
             <>
               <FromDocsUploadFile
+                searchOnlineScope={searchOnlineScope}
+                setSearchOnlineScope={setSearchOnlineScope}
                 openSupportivePopup={openSupportivePopup}
                 closeSupportivePopup={closeSupportivePopup}
                 showSupportivePopup={showSupportivePopup}

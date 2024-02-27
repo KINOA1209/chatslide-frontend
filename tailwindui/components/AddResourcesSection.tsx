@@ -5,16 +5,23 @@ import '@/app/css/workflow-edit-topic-css/topic_style.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { QuestionExplainIcon } from '@/app/(feature)/icons';
 import SelectedResourcesList from '@/components/SelectedResources';
-import { FiFilePlus, FiYoutube } from "react-icons/fi";
+import { FiFilePlus, FiGlobe, FiYoutube } from "react-icons/fi";
 import ResourceService from '@/services/ResourceService';
 import { toast, ToastContainer } from 'react-toastify';
 import AuthService from '@/services/AuthService';
 import Resource from '@/models/Resource';
 import LinkInput from './summary/LinkInput';
 import { useUser } from '@/hooks/use-user';
+import RadioButton, { RadioButtonOption } from './ui/RadioButton';
+import { FaInternetExplorer, FaWikipediaW } from 'react-icons/fa';
+import { IoIosRemoveCircle, IoIosRemoveCircleOutline } from 'react-icons/io';
+import { Instruction, Explanation } from './ui/Text';
+import Card from './ui/Card';
 
 
 interface AddResourcesProps {
+  searchOnlineScope: string;
+  setSearchOnlineScope: React.Dispatch<React.SetStateAction<string>>;
   openSupportivePopup: () => void;
   closeSupportivePopup: () => void;
   showSupportivePopup: boolean;
@@ -22,9 +29,12 @@ interface AddResourcesProps {
   selectedResources: any[];
   setSelectedResources: React.Dispatch<React.SetStateAction<any[]>>;
   removeResourceAtIndex: (index: number) => void;
+  isRequired?: boolean;
 }
 
 const AddResourcesSection: React.FC<AddResourcesProps> = ({
+  searchOnlineScope,
+  setSearchOnlineScope,
   openSupportivePopup,
   closeSupportivePopup,
   showSupportivePopup,
@@ -32,9 +42,17 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
   selectedResources,
   setSelectedResources,
   removeResourceAtIndex,
+  isRequired = false,
 }) => {
   const [resources, setResources] = useState<Resource[]>([]);
   const { token } = useUser();
+
+  const searchOnlineOptions: RadioButtonOption[] = [
+    { value: 'none', text: 'Disabled', icon: <IoIosRemoveCircleOutline /> },
+    { value: 'internet', text: 'Internet', icon: <FiGlobe /> },
+    { value: 'wikipedia', text: 'Wikipedia', icon: <FaWikipediaW /> },
+    // { value: 'reddit', text: 'Reddit' },
+  ]
 
   const onFileSelected = async (file: File | null) => {
     if (file == null) return;
@@ -89,78 +107,89 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
   };
 
   return (
-    <div
-      className={`additional_container my-2 lg:my-5  border border-2 border-gray-200`}
-    >
-      <div className='title2'>
-        <p className='text-3xl'>Import Files</p>
-        <p id='after2'> (Required)</p>
-      </div>
+    <Card>
+      {isRequired ?
+        <div className='title2'>
+          <p className='text-3xl'>Import Sources</p>
+          <p id='after2'> (Required)</p>
+        </div> :
+
+        <div className='title2'>
+          <p className='text-3xl'>Supporting Sources</p>
+          <p id='after2'> (Optional)</p>
+        </div>
+      }
       <div className='my-4'>
         <span className='text-sm text-gray-500'>
-          To get started, select the files you would like to transform
+          To get started, select the sources you would like to use.
         </span>
       </div>
-      <div className='upload gap-1'>
-        <span>Add Supporting File</span>
-        <div className='relative inline-block'>
-          <div
-            className='cursor-pointer'
-            onMouseEnter={openSupportivePopup}
-            onMouseLeave={closeSupportivePopup}
-            onTouchStart={openSupportivePopup}
-            onTouchEnd={closeSupportivePopup}
-          >
-            <QuestionExplainIcon />
-            {showSupportivePopup && (
-              <div
-                id='supportive_popup'
-                className='absolute z-10 p-2 bg-gray-800 text-white text-sm rounded shadow-md w-[15rem] md:w-80 md:h-[5rem] flex justify-center items-center'
+
+      {/* search online */}
+      <div>
+        <Instruction>
+          Which online sources you want to include?
+        </Instruction>
+        <RadioButton
+          name='search_online'
+          options={searchOnlineOptions}
+          selectedValue={searchOnlineScope}
+          setSelectedValue={setSearchOnlineScope}
+        />
+      </div>
+
+      {/* files */}
+      <div>
+        <Instruction>
+          What additional files do you want to include?
+        </Instruction>
+        <div className={`w-full h-[250px] flex flex-col items-center justify-center border rounded-md border-2 border-gray-200 cursor-pointer ${isDragging ? 'bg-blue-100 border-blue-500' : ''}`}
+          onDragEnter={handleDragEnter}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+          onClick={(e) => {
+            e.preventDefault();
+            setShowFileModal(true);
+          }}
+        >
+          <div className='flex flex-col items-center gap-2'>
+            <FiFilePlus size={40} color='gray' />
+            <span className='font-creato-medium leading-snug tracking-wide text-lg'
+            >Drag files here or{' '}
+              <span className='text-blue-600'
               >
-                Any additional files that can enhance and provide context
-                to your projects. This could be research data, images,
-                charts, or reference materials.
+                Browse File
+              </span>
+            </span>
+            <Explanation>
+              <div className='text-center'>
+                Any additional files that can enhance and provide context to your projects.<br />
+                Supports PDF, TXT, DOCX, PPTX
               </div>
-            )}
+            </Explanation>
           </div>
         </div>
       </div>
 
-      <div className={`w-full h-[250px] flex flex-col items-center justify-center border rounded-md border-2 border-gray-200 mt-4 cursor-pointer ${isDragging ? 'bg-blue-100 border-blue-500' : ''}`}
-        onDragEnter={handleDragEnter}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-        onClick={(e) => {
-              e.preventDefault();
-              setShowFileModal(true);
-            }}
-      >
-        <div className='flex flex-col items-center gap-2'>
-          <FiFilePlus size={40} color='gray' />
-          <span className='font-creato-medium leading-snug tracking-wide text-lg'
-          >Drag files here or{' '}
-            <span className='text-blue-600'
-              >
-              Browse File
-            </span>
-          </span>
-          <span className='font-creato-medium leading-snug tracking-wide text-gray-400 text-sm'>(Supports PDF, TXT, DOCX, PPTX)</span>
+      {/* links */}
+      <div>
+        <Instruction>
+          What additional online links do you want to include?
+        </Instruction>
+        <LinkInput
+          selectedResources={selectedResources}
+          setSelectedResources={setSelectedResources}
+        />
+        {selectedResources.length > 0 && <hr id='add_hr' />}
+        <div className='mt-[10px]'>
+          <SelectedResourcesList
+            selectedResources={selectedResources}
+            removeResourceAtIndex={removeResourceAtIndex}
+          />
         </div>
       </div>
-
-      <LinkInput
-        selectedResources={selectedResources}
-        setSelectedResources={setSelectedResources}
-      />
-      {selectedResources.length > 0 && <hr id='add_hr' />}
-      <div className='mt-[10px]'>
-        <SelectedResourcesList
-          selectedResources={selectedResources}
-          removeResourceAtIndex={removeResourceAtIndex}
-        />
-      </div>
-    </div>
+    </Card>
   );
 };
 

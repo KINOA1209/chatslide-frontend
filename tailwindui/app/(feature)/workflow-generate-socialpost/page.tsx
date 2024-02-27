@@ -603,15 +603,13 @@ export default function Topic_SocialPost() {
 								</div>
 							</div>
 
-							<div className='link_container bg-gray-100 border border-2 border-gray-200'>
+							<div className='bg-gray-100 border border-2 border-gray-200'>
 								<div
 									id='link_text_container'
 									className='flex items-center w-full'
 								>
                   <div className='flex items-center gap-1'>
                     <IoIosLink />
-                    <FiYoutube />
-                    𝕏
                   </div>
                   <div className='w-full'>
                     <label htmlFor='link_text'></label>
