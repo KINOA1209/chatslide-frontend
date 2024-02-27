@@ -306,29 +306,47 @@ export const Col_2_img_0_layout = ({
 	console.log('content: ' + Array(content));
 
 	return (
-		<div style={layoutElements.canvaCSS}>
-			<div style={layoutElements.titleAndSubtopicBoxCSS}>
-				<div className={``}>{topic}</div>
-				<div className={``}>{subtopic}</div>
+		<div className={`SlideLayoutCanvas`} style={layoutElements.canvaCSS}>
+			<div
+				className={`SlideTopicAndSubtopicBox`}
+				style={layoutElements.titleAndSubtopicBoxCSS}
+			>
+				<div className={`SlideTopic`} style={layoutElements.topicCSS}>
+					{topic}
+				</div>
+				<div className={`SlideSubtopic`} style={layoutElements.subtopicCSS}>
+					{subtopic}
+				</div>
 			</div>
 
-			<div style={layoutElements.contentContainerCSS}>
+			<div
+				className={`SlideContentContainer`}
+				style={layoutElements.contentContainerCSS}
+			>
 				{Array.isArray(content) &&
 					content.map((item, index) => (
 						<div
 							// className='flex flex-col gap-[0.5rem]'
 							key={index}
+							className={`SlideContent`}
 							style={{
 								...layoutElements.contentCSS,
 								display: item === null || index > 1 ? 'none' : 'flex', // or 'flex' based on your layout
 							}}
 						>
-							<div style={layoutElements.contentIndexCSS}>{index + 1}</div>
 							<div
+								className={`SlideContentIndex`}
+								style={layoutElements.contentIndexCSS}
+							>
+								{index + 1}
+							</div>
+							<div
+								className={`SlideContentIndexTextDivider`}
 								// className='opacity-50 border border-neutral-900 border-opacity-40'
 								style={layoutElements.contentIndexTextDividerCSS}
 							></div>
 							<ul
+								className={`SlideContentText`}
 								key={index}
 								// className={`flex flex-row w-full h-full grow `}
 								style={layoutElements.contentTextCSS}
@@ -339,6 +357,7 @@ export const Col_2_img_0_layout = ({
 					))}
 			</div>
 			<div
+				className={`SlideLogo`}
 				style={{
 					...layoutElements.logoCSS,
 					display: `${isShowingLogo ? 'contents' : 'none'}`,
@@ -346,7 +365,10 @@ export const Col_2_img_0_layout = ({
 			>
 				{templateLogo}
 			</div>
-			<div style={layoutElements.visualElementsCSS}>
+			<div
+				className={`SlideVisualElements`}
+				style={layoutElements.visualElementsCSS}
+			>
 				{themeElements.backgroundUrlCol_2_img_0 && (
 					<Image
 						style={{ objectFit: 'cover', height: '100%' }}
@@ -380,8 +402,8 @@ export const Col_3_img_0_layout = ({
 	return (
 		<div style={layoutElements.canvaCSS}>
 			<div style={layoutElements.titleAndSubtopicBoxCSS}>
-				<div className={``}>{topic}</div>
-				<div className={``}>{subtopic}</div>
+				<div style={layoutElements.topicCSS}>{topic}</div>
+				<div style={layoutElements.subtopicCSS}>{subtopic}</div>
 			</div>
 
 			<div style={layoutElements.contentContainerCSS}>
@@ -514,10 +536,18 @@ export const Col_2_img_1_layout = ({
 					// className='flex flex-col'
 					style={layoutElements.titleAndSubtopicBoxCSS}
 				>
-					<div className={`z-50`} ref={topicRef}>
+					<div
+						className={`z-50`}
+						ref={topicRef}
+						style={layoutElements.topicCSS}
+					>
 						{topic}
 					</div>
-					<div className={``} ref={subtopicRef}>
+					<div
+						className={``}
+						ref={subtopicRef}
+						style={layoutElements.subtopicCSS}
+					>
 						{subtopic}
 					</div>
 				</div>
@@ -664,8 +694,12 @@ export const Col_1_img_1_layout = ({
 					style={layoutElements.titleAndSubtopicBoxCSS}
 					ref={topicAndSubtopicRef}
 				>
-					<div className={`z-50`}>{topic}</div>
-					<div className={`z-50`}>{subtopic}</div>
+					<div className={`z-50`} style={layoutElements.topicCSS}>
+						{topic}
+					</div>
+					<div className={`z-50`} style={layoutElements.subtopicCSS}>
+						{subtopic}
+					</div>
 				</div>
 
 				{/* row2 for image */}
@@ -833,8 +867,12 @@ export const Col_2_img_2_layout = ({
 					style={layoutElements.titleAndSubtopicBoxCSS}
 					ref={topicAndSubtopicRef}
 				>
-					<div className={``}>{topic}</div>
-					<div className={``}>{subtopic}</div>
+					<div className={``} style={layoutElements.topicCSS}>
+						{topic}
+					</div>
+					<div className={``} style={layoutElements.subtopicCSS}>
+						{subtopic}
+					</div>
 				</div>
 
 				{/* two columns of images */}
@@ -865,6 +903,7 @@ export const Col_2_img_2_layout = ({
 							currentSlideIndex={currentSlideIndex}
 							currentContentIndex={0}
 							canEdit={canEdit}
+							customImageStyle={layoutElements.imageCSS}
 						/>
 					</div>
 					<div
@@ -889,6 +928,7 @@ export const Col_2_img_2_layout = ({
 							currentSlideIndex={currentSlideIndex}
 							currentContentIndex={1}
 							canEdit={canEdit}
+							customImageStyle={layoutElements.imageCSS}
 						/>
 					</div>
 				</div>
@@ -986,8 +1026,12 @@ export const Col_3_img_3_layout = ({
 					// className='flex flex-col justify-center items-center'
 					style={layoutElements.titleAndSubtopicBoxCSS}
 				>
-					<div className={``}>{topic}</div>
-					<div className={``}>{subtopic}</div>
+					<div className={``} style={layoutElements.topicCSS}>
+						{topic}
+					</div>
+					<div className={``} style={layoutElements.subtopicCSS}>
+						{subtopic}
+					</div>
 				</div>
 				{/* three columns of images */}
 				<div
@@ -1007,6 +1051,7 @@ export const Col_3_img_3_layout = ({
 							currentSlideIndex={currentSlideIndex}
 							currentContentIndex={0}
 							canEdit={canEdit}
+							customImageStyle={layoutElements.imageCSS}
 						/>
 					</div>
 					<div
@@ -1022,6 +1067,7 @@ export const Col_3_img_3_layout = ({
 							currentSlideIndex={currentSlideIndex}
 							currentContentIndex={1}
 							canEdit={canEdit}
+							customImageStyle={layoutElements.imageCSS}
 						/>
 					</div>
 					<div
@@ -1037,6 +1083,7 @@ export const Col_3_img_3_layout = ({
 							currentSlideIndex={currentSlideIndex}
 							currentContentIndex={2}
 							canEdit={canEdit}
+							customImageStyle={layoutElements.imageCSS}
 						/>
 					</div>
 				</div>

@@ -169,6 +169,13 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 		},
 	},
 	Col_2_img_0_layout: {
+		canvaCSS: {
+			width: '100%', // Equivalent to w-full
+			height: '100%', // Equivalent to h-full
+			display: 'flex', // Equivalent to flex
+			flexDirection: 'column', // Equivalent to flex-col
+			position: 'relative', // Equivalent to
+		},
 		visualElementsCSS: {
 			zIndex: 0,
 			width: '100%',
@@ -182,7 +189,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			marginTop: '2rem',
 			marginLeft: '2rem',
 			marginRight: '2rem',
-			// zIndex: 30,
+			zIndex: 30,
 			borderBottom: '1px solid #666666',
 		},
 		topicCSS: {
@@ -198,8 +205,8 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			display: 'grid',
 			gridTemplateColumns: 'repeat(2, 1fr)',
 			gap: '2rem',
-			margin: 'auto', // Center the container horizontally
-			padding: '2rem 2rem', // Add left and right padding
+			// margin: 'auto', // Center the container horizontally
+			padding: '0rem 2rem', // Add left and right padding
 			zIndex: 30,
 		},
 		contentCSS: {
@@ -239,9 +246,13 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 	},
 	Col_3_img_0_layout: {
 		canvaCSS: {
-			width: '100%',
-			// boxSizing: 'border-box',
+			width: '100%', // Equivalent to w-full
+			height: '100%', // Equivalent to h-full
+			display: 'flex', // Equivalent to flex
+			flexDirection: 'column', // Equivalent to flex-col
+			position: 'relative', // Equivalent to
 		},
+
 		visualElementsCSS: {
 			zIndex: 0,
 			width: '100%',
@@ -271,8 +282,8 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			display: 'grid',
 			gridTemplateColumns: 'repeat(3,1fr)',
 			gap: '2rem',
-			margin: 'auto', // Center the container horizontally
-			padding: '2rem 2rem', // Add left and right padding
+			// margin: 'auto', // Center the container horizontally
+			padding: '0rem 2rem', // Add left and right padding
 		},
 		contentCSS: {
 			display: 'flex',
@@ -432,12 +443,12 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			display: 'flex',
 			flexDirection: 'column',
 			gap: '0.5rem',
-			padding: '2rem 2rem 2rem 2rem',
 		},
 		titleAndSubtopicBoxCSS: {
 			zIndex: 30,
 			display: 'flex',
 			flexDirection: 'column',
+			padding: '2rem 2rem 2rem 2rem',
 			// justifyContent: 'center',
 			// alignItems: 'center',
 		},
@@ -451,7 +462,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 		imageCSS: {
 			height: '11rem', // equivalent to h-[11rem]
 			flexGrow: 1, // equivalent to grow
-			borderRadius: '1.25rem', // equivalent to rounded-md
+			// borderRadius: '1.25rem', // equivalent to rounded-md
 			overflow: 'hidden', // equivalent to overflow-hidden
 			position: 'relative', // equivalent to relative
 		},
@@ -461,7 +472,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			display: 'grid',
 			gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
 			gap: '2rem', // equivalent to gap-[2rem]
-			paddingTop: '1rem',
+			padding: '2rem 2rem 2rem 2rem',
 		},
 		visualElementsCSS: {
 			zIndex: 0,
