@@ -28,6 +28,8 @@ export type LayoutElements = {
 	contentTextCSS?: React.CSSProperties;
 	userNameTextDividerCSS?: React.CSSProperties;
 	titlesAndContentDividerCSS?: React.CSSProperties;
+	rndContainerCSS?:React.CSSProperties;
+	rndCSS?:React.CSSProperties;
 };
 
 export type TemplateLayoutsConfig = {
@@ -99,6 +101,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
 				overflow: 'hidden',
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_1_img_0_layout: {
 			canvaCSS: {
@@ -215,6 +225,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				display: 'flex',
 				alignItems: 'center', // equivalent to items-center
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_1_img_1_layout: {
 			canvaCSS: { padding: '28px' },
@@ -244,6 +262,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				flexGrow: 1,
 				paddingLeft: '1rem',
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_2_img_2_layout: {
 			canvaCSS: { padding: '28px' },
@@ -273,6 +299,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
 				gap: '2rem', // equivalent to gap-[2rem]
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_3_img_3_layout: {
 			canvaCSS: { padding: '28px' },
@@ -301,6 +335,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
 				gap: '2rem', // equivalent to gap-[2rem]
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 	},
 	Stanford: StanfordTemplateLayoutsConfig,
@@ -361,6 +403,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
 				overflow: 'hidden',
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: 51,
+			}
 		},
 		Col_1_img_0_layout: {
 			canvaCSS: {
@@ -477,6 +527,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				display: 'flex',
 				alignItems: 'center', // equivalent to items-center
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_1_img_1_layout: {
 			canvaCSS: { padding: '28px' },
@@ -506,6 +564,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				flexGrow: 1,
 				paddingLeft: '1rem',
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_2_img_2_layout: {
 			canvaCSS: { padding: '28px' },
@@ -535,6 +601,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
 				gap: '2rem', // equivalent to gap-[2rem]
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_3_img_3_layout: {
 			canvaCSS: { padding: '28px' },
@@ -563,6 +637,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
 				gap: '2rem', // equivalent to gap-[2rem]
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 	},
 	MIT: {
@@ -622,6 +704,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
 				overflow: 'hidden',
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_1_img_0_layout: {
 			canvaCSS: {
@@ -738,6 +828,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				display: 'flex',
 				alignItems: 'center', // equivalent to items-center
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_1_img_1_layout: {
 			canvaCSS: { padding: '28px' },
@@ -767,6 +865,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				flexGrow: 1,
 				paddingLeft: '1rem',
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_2_img_2_layout: {
 			canvaCSS: { padding: '28px' },
@@ -796,6 +902,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
 				gap: '2rem', // equivalent to gap-[2rem]
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_3_img_3_layout: {
 			canvaCSS: { padding: '28px' },
@@ -824,6 +938,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
 				gap: '2rem', // equivalent to gap-[2rem]
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 	},
 	Princeton: {
@@ -883,6 +1005,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
 				overflow: 'hidden',
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_1_img_0_layout: {
 			canvaCSS: {
@@ -999,6 +1129,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				display: 'flex',
 				alignItems: 'center', // equivalent to items-center
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_1_img_1_layout: {
 			canvaCSS: { padding: '28px' },
@@ -1028,6 +1166,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				flexGrow: 1,
 				paddingLeft: '1rem',
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_2_img_2_layout: {
 			canvaCSS: { padding: '28px' },
@@ -1057,6 +1203,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
 				gap: '2rem', // equivalent to gap-[2rem]
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_3_img_3_layout: {
 			canvaCSS: { padding: '28px' },
@@ -1085,6 +1239,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
 				gap: '2rem', // equivalent to gap-[2rem]
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 	},
 	Caltech: {
@@ -1144,6 +1306,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
 				overflow: 'hidden',
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_1_img_0_layout: {
 			canvaCSS: {
@@ -1260,6 +1430,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				display: 'flex',
 				alignItems: 'center', // equivalent to items-center
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_1_img_1_layout: {
 			canvaCSS: { padding: '28px' },
@@ -1289,6 +1467,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				flexGrow: 1,
 				paddingLeft: '1rem',
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_2_img_2_layout: {
 			canvaCSS: { padding: '28px' },
@@ -1318,6 +1504,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
 				gap: '2rem', // equivalent to gap-[2rem]
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_3_img_3_layout: {
 			canvaCSS: { padding: '28px' },
@@ -1346,6 +1540,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
 				gap: '2rem', // equivalent to gap-[2rem]
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 	},
 	Columbia: {
@@ -1405,6 +1607,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
 				overflow: 'hidden',
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_1_img_0_layout: {
 			canvaCSS: {
@@ -1521,6 +1731,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				display: 'flex',
 				alignItems: 'center', // equivalent to items-center
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_1_img_1_layout: {
 			canvaCSS: { padding: '28px' },
@@ -1550,6 +1768,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				flexGrow: 1,
 				paddingLeft: '1rem',
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_2_img_2_layout: {
 			canvaCSS: { padding: '28px' },
@@ -1579,6 +1805,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
 				gap: '2rem', // equivalent to gap-[2rem]
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_3_img_3_layout: {
 			canvaCSS: { padding: '28px' },
@@ -1607,6 +1841,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
 				gap: '2rem', // equivalent to gap-[2rem]
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 	},
 	JHU: {
@@ -1666,6 +1908,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
 				overflow: 'hidden',
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_1_img_0_layout: {
 			canvaCSS: {
@@ -1782,6 +2032,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				display: 'flex',
 				alignItems: 'center', // equivalent to items-center
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_1_img_1_layout: {
 			canvaCSS: { padding: '28px' },
@@ -1811,6 +2069,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				flexGrow: 1,
 				paddingLeft: '1rem',
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_2_img_2_layout: {
 			canvaCSS: { padding: '28px' },
@@ -1840,6 +2106,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
 				gap: '2rem', // equivalent to gap-[2rem]
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_3_img_3_layout: {
 			canvaCSS: { padding: '28px' },
@@ -1868,6 +2142,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
 				gap: '2rem', // equivalent to gap-[2rem]
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 	},
 	UChicago: {
@@ -1927,6 +2209,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
 				overflow: 'hidden',
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_1_img_0_layout: {
 			canvaCSS: {
@@ -2043,6 +2333,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				display: 'flex',
 				alignItems: 'center', // equivalent to items-center
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_1_img_1_layout: {
 			canvaCSS: { padding: '28px' },
@@ -2072,6 +2370,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				flexGrow: 1,
 				paddingLeft: '1rem',
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_2_img_2_layout: {
 			canvaCSS: { padding: '28px' },
@@ -2101,6 +2407,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
 				gap: '2rem', // equivalent to gap-[2rem]
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_3_img_3_layout: {
 			canvaCSS: { padding: '28px' },
@@ -2129,6 +2443,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
 				gap: '2rem', // equivalent to gap-[2rem]
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 	},
 	Yale: {
@@ -2188,6 +2510,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
 				overflow: 'hidden',
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_1_img_0_layout: {
 			canvaCSS: {
@@ -2304,6 +2634,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				display: 'flex',
 				alignItems: 'center', // equivalent to items-center
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_1_img_1_layout: {
 			canvaCSS: { padding: '28px' },
@@ -2333,6 +2671,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				flexGrow: 1,
 				paddingLeft: '1rem',
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_2_img_2_layout: {
 			canvaCSS: { padding: '28px' },
@@ -2362,6 +2708,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
 				gap: '2rem', // equivalent to gap-[2rem]
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_3_img_3_layout: {
 			canvaCSS: { padding: '28px' },
@@ -2390,6 +2744,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
 				gap: '2rem', // equivalent to gap-[2rem]
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 	},
 	UPenn: {
@@ -2449,6 +2811,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
 				overflow: 'hidden',
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_1_img_0_layout: {
 			canvaCSS: {
@@ -2565,6 +2935,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				display: 'flex',
 				alignItems: 'center', // equivalent to items-center
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_1_img_1_layout: {
 			canvaCSS: { padding: '28px' },
@@ -2594,6 +2972,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				flexGrow: 1,
 				paddingLeft: '1rem',
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_2_img_2_layout: {
 			canvaCSS: { padding: '28px' },
@@ -2623,6 +3009,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
 				gap: '2rem', // equivalent to gap-[2rem]
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 		Col_3_img_3_layout: {
 			canvaCSS: { padding: '28px' },
@@ -2651,6 +3045,14 @@ const layoutConfigData: TemplateLayoutsConfig = {
 				gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
 				gap: '2rem', // equivalent to gap-[2rem]
 			},
+			rndContainerCSS: {
+				width: '100%',
+				height: '100%',
+				position: 'relative',
+			},
+			rndCSS: {
+				zIndex: '51',
+			}
 		},
 	},
 };

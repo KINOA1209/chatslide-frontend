@@ -193,6 +193,7 @@ class ProjectService {
         slide.images = slideData.images || [];
         slide.chart = slideData.chart;
         slide.is_chart = slideData.is_chart || [false, false, false];
+        slide.images_position = slideData.images_position || [{}, {}, {}]
         // console.log(
         //     'slideData.content.length',
         //     slideData.content.length        // );

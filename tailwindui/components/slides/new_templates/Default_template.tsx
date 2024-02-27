@@ -30,6 +30,7 @@ export const Default = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	isShowingLogo,
+	images_position,
 }: // templateLogo = TemplatesLogos.DefaultTemplateLogo,
 MainSlideProps) => {
 	const ChosenLayoutNonCover =
@@ -108,6 +109,7 @@ MainSlideProps) => {
 					handleSlideEdit={handleSlideEdit}
 					currentSlideIndex={currentSlideIndex}
 					isShowingLogo={isShowingLogo}
+					images_position={images_position}
 				></ChosenLayoutCover>
 
 				{/* Logo */}
@@ -181,6 +183,7 @@ MainSlideProps) => {
 					handleSlideEdit={handleSlideEdit}
 					currentSlideIndex={currentSlideIndex}
 					isShowingLogo={isShowingLogo}
+					images_position={images_position}
 				></ChosenLayoutNonCover>
 			</div>
 		</>

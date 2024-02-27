@@ -9,6 +9,7 @@ import { TemplatesLogos } from './templates_customizable_elements/Templates_logo
 import { isHTML } from '@/components/slides/quillEditorSlide';
 import { TemplateKeys } from '@/components/slides/slideTemplates';
 import Chart, { Group } from '@/models/Chart';
+import ImagesPosition from '@/models/ImagesPosition';
 
 const QuillEditable = dynamic(
 	() => import('@/components/slides/quillEditorSlide'),
@@ -264,6 +265,7 @@ export const templateDispatch = (
 			handleSlideEdit={handleSlideEdit}
 			currentSlideIndex={index}
 			isShowingLogo={isShowingLogo}
+			images_position={slide.images_position || [{}, {}, {}]}
 		/>
 	);
 	// }

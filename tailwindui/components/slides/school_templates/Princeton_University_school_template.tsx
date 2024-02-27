@@ -28,6 +28,7 @@ export const Princeton_school_template = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	isShowingLogo,
+	images_position,
 }: MainSlideProps) => {
 	const ChosenLayoutNonCover =
 		layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
@@ -96,6 +97,7 @@ export const Princeton_school_template = ({
 					handleSlideEdit={handleSlideEdit}
 					currentSlideIndex={currentSlideIndex}
 					isShowingLogo={isShowingLogo}
+					images_position={images_position}
 				></ChosenLayoutNonCover>
 			</div>
 			{/* for cover page */}
@@ -151,6 +153,7 @@ export const Princeton_school_template = ({
 					handleSlideEdit={handleSlideEdit}
 					currentSlideIndex={currentSlideIndex}
 					isShowingLogo={isShowingLogo}
+					images_position={images_position}
 				></ChosenLayoutCover>
 			</div>
 		</>

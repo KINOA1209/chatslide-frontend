@@ -1,6 +1,7 @@
 import { LayoutKeys } from "@/components/slides/slideLayout";
 import { TemplateKeys } from "@/components/slides/slideTemplates";
-import Chart, {Group} from '@/models/Chart'
+import Chart, {Group} from '@/models/Chart';
+import ImagesPosition from "./ImagesPosition";
 
 export interface SlideElement {
   type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
@@ -42,6 +43,7 @@ export default class Slide {
   content: string[];
   is_chart: boolean[];  // if is_chart[i] is false, then use image[i] for visualization, else use chart[i]
   images: string[];  // urls of images
+  images_position: ImagesPosition[];
   chart: Chart[];  // data of charts
   layout: LayoutKeys;
   logo: string;  // enum for school tempaltes, if user has custom logo, then use logo_url
@@ -75,6 +77,7 @@ export default class Slide {
       groups: [emptyGroup],
       axis: { x: '', y: '' }
     }));
+    this.images_position = [{}, {}, {}]
     this.layout = 'Col_2_img_1_layout';
     this.logo = 'Default';
   }
