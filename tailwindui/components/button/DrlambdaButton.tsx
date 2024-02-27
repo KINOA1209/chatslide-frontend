@@ -175,16 +175,32 @@ export const BigGrayButton: React.FC<DrlambdaButtonProps> = ({
   onClick,
   isSubmitting = false,
   isPaidUser,
-  isPaidFeature = false,
+  isPaidFeature,
 }) => {
+  const [paywallModal, setShowPaywallModal] = useState(false);
+
   return (
-    <button
-      className='btn min-w-[100px] sm:min-w-[120px] h-[36px] sm:h-[36px] sm:gap-x-2 text-gray-800 text-sm bg-gray-300 disabled:bg-gray-600 disabled:animate-pulse whitespace-nowrap rounded-xl'
-      onClick={onClick}
-      disabled={isSubmitting}
-    >
-      {children}
-    </button>
+    <div>
+      {paywallModal && (
+        <PaywallModal
+          setShowModal={setShowPaywallModal}
+          message='Upgrade to unlock more features. 🚀'
+        />
+      )}
+      <button
+        className='btn min-w-[100px] sm:min-w-[120px] h-[36px] sm:h-[36px] sm:gap-x-2 text-gray-800 text-sm bg-gray-300 disabled:bg-gray-600 disabled:animate-pulse whitespace-nowrap rounded-xl'
+        onClick={(e) => {
+          if (isPaidFeature && !isPaidUser) {
+            setShowPaywallModal(true);
+          } else {
+            onClick && onClick(e);
+          }
+        }}
+        disabled={isSubmitting}
+      >
+        {children}
+      </button>
+    </div>
   );
 };
 
@@ -209,7 +225,7 @@ export const DropDown: React.FC<DrlambdaDropDownProps> = ({
 }) => {
   const styleClassName = style === 'button' ?
     'bg-gray-300 border-none rounded-xl' :
-    'border border-2 border-gray-200 bg-gray-100 rounded-lg' ;
+    'border border-2 border-gray-200 bg-gray-100 rounded-lg';
   return (
     <select
       className={`shadow-lg h-[36px] flex ${styleClassName} text-sm py-0 overflow-visible disabled:text-gray-600 disabled:animate-pulse`}

@@ -296,33 +296,40 @@ class ProjectService {
     headers.append('Content-Type', 'application/json');
 
     try {
-      const response = await fetch(`/api/export_to_${type}`, {
+      fetch(`/api/export_to_${type}`, {
         method: 'POST',
         headers: headers,
         body: JSON.stringify({ project_id: project_id }),
       });
+    } catch (error) {
+      console.error('Error exporting to pdf:', error);
+    }
+  }
+
+  static async downloadFile(foldername: string, filename: string, type: string): Promise<boolean> {
+    const headers = new Headers();
+
+    try {
+      const response = await fetch(`/api/${type}?foldername=${foldername}&filename=${filename}`, {
+        method: 'GET',
+        headers: headers,
+      });
       if (response.ok) {
-        const data = await response.json();
-        const url = data.url;
-
-        const topic = sessionStorage.getItem('topic') || 'export';
-
-        //download file
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${topic}.pdf`
-        document.body.appendChild(a);
-        a.click();
-
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-
+        const file = await response.blob();
+        const fileUrl = URL.createObjectURL(file);
+        const link = document.createElement('a');
+        link.href = fileUrl;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        return true;
       } else {
-        // Handle error cases
-        console.error('Failed to export to pdf:', response.status);
+        return false;  // pdf not ready
       }
     } catch (error) {
       console.error('Error exporting to pdf:', error);
+      return false;
     }
   }
 

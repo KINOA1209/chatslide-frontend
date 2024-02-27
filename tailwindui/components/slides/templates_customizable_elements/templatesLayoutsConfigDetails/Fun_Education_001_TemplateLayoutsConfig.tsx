@@ -6,27 +6,21 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 	[key in LayoutKeys]?: LayoutElements;
 } = {
 	Cover_img_0_layout: {
-		// canvaCSS: {
-		// 	margin: 0,
-		// 	padding: 0,
-		// 	boxSizing: 'border-box',
-		// 	width: '100%',
-		// 	minHeight: '100vh', // Set minimum height to cover the entire viewport
-		// },
+		canvaCSS: {
+			display: 'flex',
+			width: '100%',
+			height: '100%',
+			// position: 'relative',
+			// overflow: 'hidden',
+		},
 		titleCSS: {
 			backgroundColor: 'white',
-			paddingBottom: '20rem',
-			paddingTop: '4rem',
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
-			// height: '80%',
-			width: '80%',
+			width: '50%',
 			zIndex: 20,
 			position: 'absolute',
 			top: '50%',
 			left: '50%',
 			transform: 'translate(-50%, -50%)', // Centering trick
-			maxHeight: '80%',
 		},
 		userNameTextDividerCSS: {
 			display: 'none',
@@ -34,9 +28,9 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 		userNameCSS: {
 			zIndex: 30,
 			position: 'absolute',
-			top: '65%',
-			left: '22%',
-			transform: 'translate(-50%, -50%)', // Centering trick
+			top: '92%',
+			left: '80%',
+			transform: 'translate(-50%, -40%)', // Centering trick
 		},
 		columnCSS: {
 			paddingTop: '1rem', // Equivalent to pt-[1rem]
@@ -58,37 +52,33 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			position: 'absolute',
 		},
 		visualElementsCSS: {
-			zIndex: 30,
+			zIndex: 0,
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
 		},
 	},
 	Cover_img_1_layout: {
-		titleCSS: {
-			backgroundColor: 'white',
-			paddingBottom: '20rem',
-			paddingTop: '4rem',
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
-			// height: '80%',
-			width: '80%',
-			zIndex: 20,
-			position: 'absolute',
-			top: '50%',
-			left: '50%',
-			transform: 'translate(-50%, -50%)', // Centering trick
-			maxHeight: '80%',
+		canvaCSS: {
+			display: 'flex',
+			width: '100%',
+			height: '100%',
+			// position: 'relative',
 		},
 		userNameCSS: {
 			zIndex: 30,
 			position: 'absolute',
-			top: '65%',
-			left: '22%',
-			transform: 'translate(-50%, -50%)', // Centering trick
+			top: '92%',
+			left: '80%',
+			transform: 'translate(-50%, -40%)', // Centering trick
+		},
+		titleCSS: {
+			paddingLeft: '2rem',
+			zIndex: 30,
+			maxHeight: '80%',
 		},
 		columnCSS: {
-			// paddingTop: '1rem', // Equivalent to pt-[1rem]
+			paddingTop: '4rem', // Equivalent to pt-[1rem]
 			paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 			paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
 			width: '50%', // Equivalent to w-1/2
@@ -98,27 +88,31 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			height: '100%', // Equivalent to h-full
 			gap: '2rem',
 		},
-
 		imageContainerCSS: {
-			width: '100%', // Equivalent to w-full
+			width: '50%', // Equivalent to w-1/2
 			height: '100%', // Equivalent to h-full
 			//overflow: 'hidden',
 			borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
 			position: 'absolute',
+			zIndex: 10,
 		},
+
 		visualElementsCSS: {
-			zIndex: 30,
+			zIndex: 20,
+			width: '50%',
+			height: '100%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
+			top: '0%',
+			left: '50%',
 		},
 		rndContainerCSS: {
 			width: '100%',
 			height: '100%',
 			position: 'relative',
 		},
-		rndCSS: {
-		}
+		rndCSS: {},
 	},
 	Col_1_img_0_layout: {
 		canvaCSS: {
@@ -130,12 +124,13 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			// overflow: 'hidden',
 		},
 		visualElementsCSS: {
-			zIndex: 20,
+			zIndex: 0,
 			width: '100%',
+			height: '10%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '21%',
+			top: '90%',
 		},
 		titleAndSubtopicBoxCSS: {
 			marginTop: '2rem',
@@ -146,6 +141,8 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			zIndex: 30,
 		},
 		subtopicCSS: {
+			paddingBottom: '1rem',
+			borderBottom: '1px solid #B7B7B7',
 			zIndex: 30,
 		},
 		contentCSS: {
@@ -163,7 +160,7 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			marginBottom: '1rem',
 			display: 'flex',
 			// zIndex: 10,
-			backgroundColor: '#E4F9F6',
+			// backgroundColor: '#E4F9F6',
 			borderRadius: '1.25rem',
 		},
 		titlesAndContentDividerCSS: {
@@ -172,12 +169,13 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 	},
 	Col_2_img_0_layout: {
 		visualElementsCSS: {
-			zIndex: 20,
+			zIndex: 0,
 			width: '100%',
+			height: '10%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '21%',
+			top: '90%',
 		},
 		titleAndSubtopicBoxCSS: {
 			marginTop: '2rem',
@@ -188,17 +186,19 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			zIndex: 30,
 		},
 		subtopicCSS: {
+			paddingBottom: '1rem',
+			borderBottom: '1px solid #B7B7B7',
 			zIndex: 30,
 		},
 
 		contentContainerCSS: {
 			height: 'auto',
 			width: 'auto',
-			display: 'grid',
-			gridTemplateColumns: 'repeat(2, 1fr)',
+			display: 'flex',
+			// gridTemplateColumns: 'repeat(2, 1fr)',
 			gap: '2rem',
 			margin: 'auto', // Center the container horizontally
-			padding: '2rem 2rem', // Add left and right padding
+			padding: '4rem 2rem 0rem 2rem', // Add left and right padding
 		},
 		contentCSS: {
 			display: 'flex',
@@ -206,22 +206,26 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			gap: '0.5rem',
 			width: '100%', // Equivalent to w-full
 			flexGrow: 0,
-			backgroundColor: '#E4F9F6',
+			position: 'relative',
+			// backgroundColor: '#E4F9F6',
 			borderRadius: '1.25rem',
-			padding: '2rem 2rem 4rem 2rem',
+			padding: '4rem 2rem 2rem 2rem',
 			// zIndex: 30,
 		},
 		contentIndexCSS: {
-			fontFamily: 'Caveat', // font-nimbus-sans-bold
-			color: '#2E2E2E', // Assuming text-neutral-900 corresponds to #374155
-			fontSize: '2.5rem',
-			fontWeight: 'bold',
+			fontFamily: 'Lemonada',
+			position: 'absolute',
+			color: '#E1F3F7',
+			fontSize: '15rem',
+			fontWeight: '700',
 			// fontFamily: 'Creato Display Medium',
 			textTransform: 'uppercase',
-			lineHeight: '2.5rem',
-			letterSpacing: '0.5rem',
+			lineHeight: '120%',
+			letterSpacing: '0.15rem',
 			paddingTop: '2rem',
-			zIndex: 30,
+			zIndex: 20,
+			top: '-50%',
+			left: '0%',
 		},
 		contentIndexTextDividerCSS: {
 			display: 'none',
@@ -241,12 +245,13 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			// boxSizing: 'border-box',
 		},
 		visualElementsCSS: {
-			zIndex: 20,
+			zIndex: 0,
 			width: '100%',
+			height: '10%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '21%',
+			top: '90%',
 		},
 		titleAndSubtopicBoxCSS: {
 			marginTop: '2rem',
@@ -257,42 +262,46 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			zIndex: 30,
 		},
 		subtopicCSS: {
+			paddingBottom: '1rem',
+			borderBottom: '1px solid #B7B7B7',
 			zIndex: 30,
 		},
 
 		contentContainerCSS: {
 			height: 'auto',
-			width: '100%',
-			display: 'grid',
-			gridTemplateColumns: 'repeat(3,1fr)',
+			width: 'auto',
+			display: 'flex',
+			// gridTemplateColumns: 'repeat(2, 1fr)',
 			gap: '2rem',
 			margin: 'auto', // Center the container horizontally
-			padding: '2rem 2rem', // Add left and right padding
+			padding: '4rem 2rem 0rem 2rem', // Add left and right padding
 		},
 		contentCSS: {
 			display: 'flex',
 			flexDirection: 'column',
 			gap: '0.5rem',
 			width: '100%', // Equivalent to w-full
-			// maxWidth: '200px', // Set your desired maximum width here
-			flexGrow: 1,
-			// flexWrap: 'wrap',
-			backgroundColor: '#E4F9F6',
+			flexGrow: 0,
+			position: 'relative',
+			// backgroundColor: '#E4F9F6',
 			borderRadius: '1.25rem',
-			padding: '2rem 2rem 2rem 2rem',
+			padding: '4rem 2rem 2rem 2rem',
 			// zIndex: 30,
 		},
 		contentIndexCSS: {
-			fontFamily: 'Caveat', // font-nimbus-sans-bold
-			color: '#2E2E2E', // Assuming text-neutral-900 corresponds to #374155
-			fontSize: '2.5rem',
-			fontWeight: 'bold',
+			fontFamily: 'Lemonada',
+			position: 'absolute',
+			color: '#FAEDF5',
+			fontSize: '15rem',
+			fontWeight: '700',
 			// fontFamily: 'Creato Display Medium',
 			textTransform: 'uppercase',
-			lineHeight: '2.5rem',
-			letterSpacing: '0.5rem',
+			lineHeight: '120%',
+			letterSpacing: '0.15rem',
 			paddingTop: '2rem',
-			zIndex: 30,
+			zIndex: 20,
+			top: '-50%',
+			left: '0%',
 		},
 		contentIndexTextDividerCSS: {
 			display: 'none',
@@ -319,14 +328,19 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			paddingTop: '2rem',
 			paddingLeft: '2rem',
 		},
+		subtopicCSS: {
+			paddingBottom: '1rem',
+			borderBottom: '1px solid #B7B7B7',
+		},
 		visualElementsCSS: {
 			zIndex: 20,
-			width: '100%',
+			width: '10%',
 			height: '100%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
 			top: '0%',
+			left: '90%',
 		},
 		contentContainerCSS: {
 			paddingTop: '2rem',
@@ -348,16 +362,17 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			zIndex: 30,
 		},
 		imageContainerCSS: {
-			width: '100%',
+			width: '50%',
 			height: '100%',
 			// borderRadius: '1.25rem',
 			//overflow: 'hidden',
 			display: 'flex',
 			alignItems: 'center',
-			padding: '2rem 2rem 2rem 4rem', // top right bottom left
+			padding: '0rem 0rem 0rem 4rem', // top right bottom left
+			zIndex: 10,
 		},
 		imageCSS: {
-			borderRadius: '1.25rem', // border radius 1.25rem for image
+			// borderRadius: '1.25rem', // border radius 1.25rem for image
 		},
 		rndContainerCSS: {
 			width: '100%',
@@ -366,47 +381,58 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '51',
-		}
+		},
 	},
 	Col_1_img_1_layout: {
-		canvaCSS: {},
+		canvaCSS: { width: '100%', height: '100%' },
+		subtopicCSS: { paddingBottom: '1rem', borderBottom: '1px solid #B7B7B7' },
 		columnCSS: {
 			width: '100%',
-			display: 'grid',
-			gridTemplateColumns: '1fr',
+			height: '100%',
+			// display: 'grid',
+			display: 'flex',
+			flexDirection: 'column',
+			// gridTemplateColumns: '1fr',
 			paddingTop: '2rem',
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
-			paddingBottom: '2rem',
 		},
 		titleAndSubtopicBoxCSS: {
 			display: 'flex',
 			flexDirection: 'column',
 			zIndex: 30,
+			paddingLeft: '2rem',
+			paddingRight: '2rem',
+			order: 1,
 		},
 		imageContainerCSS: {
-			height: '15rem',
+			height: '100%',
 			flexGrow: 1,
 			borderRadius: '0.375rem', // Assuming a typical rounded-md value
 			//overflow: 'hidden',
-			gridRow: 3,
+			// gridRow: 3,
+			order: 3,
+			zIndex: 30,
 		},
 		imageCSS: {
-			borderRadius: '1.25rem',
+			borderRadius: '0rem 0rem 0.375rem 0.375rem',
+			// borderBottomLeftRadius: '0.375rem',
+			// borderBottomRightRadius: '0.375rem',
 		},
 		contentContainerCSS: {
 			zIndex: 30,
 			paddingTop: '0.5rem',
 			paddingBottom: '0.5rem',
+			paddingLeft: '2rem',
+			paddingRight: '2rem',
 			height: '100%',
 			width: '100%',
 			display: 'flex',
 			flexDirection: 'column',
 			gap: '0.5rem',
-			gridRow: 2,
+			// gridRow: 2,
+			order: 2,
 		},
 		visualElementsCSS: {
-			zIndex: 20,
+			zIndex: 0,
 			width: '100%',
 			height: '100%',
 			position: 'absolute',
@@ -429,14 +455,22 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '51',
-		}
+		},
 	},
 	Col_2_img_2_layout: {
+		canvaCSS: {
+			width: '100%',
+			height: '100%',
+			display: 'flex',
+		},
 		columnCSS: {
 			display: 'flex',
 			flexDirection: 'column',
 			gap: '0.5rem',
-			padding: '2rem 2rem 2rem 2rem',
+		},
+		subtopicCSS: {
+			paddingBottom: '1rem',
+			borderBottom: '1px solid #B7B7B7',
 		},
 		titleAndSubtopicBoxCSS: {
 			zIndex: 30,
@@ -444,36 +478,43 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			flexDirection: 'column',
 			// justifyContent: 'center',
 			// alignItems: 'center',
+			padding: '2rem 2rem 2rem 2rem',
+			order: 1,
 		},
 		imageContainerCSS: {
 			width: '100%', // equivalent to w-full
 			display: 'grid',
-			gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
-			gap: '2rem', // equivalent to gap-[2rem]
+			gridTemplateColumns: 'repeat(2, 1fr)', //
+			order: 0,
+			zIndex: 30,
 		},
 		imageCSS: {
 			height: '11rem', // equivalent to h-[11rem]
 			flexGrow: 1, // equivalent to grow
-			borderRadius: '1.25rem', // equivalent to rounded-md
+			// borderRadius: '1.25rem', // equivalent to rounded-md
 			//overflow: 'hidden', // equivalent to overflow-hidden
 			position: 'relative', // equivalent to relative
+			// gridRow: 3,
+			order: 3,
+			zIndex: 30,
 		},
 		contentCSS: {
 			zIndex: 30,
-			width: '100%', // equivalent to w-full
+			padding: '1rem 2rem 2rem 2rem',
+			width: '100%',
 			display: 'grid',
-			gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
-			gap: '2rem', // equivalent to gap-[2rem]
-			paddingTop: '1rem',
+			gridTemplateColumns: 'repeat(2, 1fr)', //
+			gap: '2rem',
+			order: 2,
 		},
 		visualElementsCSS: {
-			zIndex: 20,
+			zIndex: 0,
 			width: '100%',
-			height: '80%',
+			height: '100%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '20%',
+			top: '0%',
 		},
 		rndContainerCSS: {
 			width: '100%',
@@ -482,14 +523,13 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '51',
-		}
+		},
 	},
 	Col_3_img_3_layout: {
 		columnCSS: {
 			display: 'flex',
 			flexDirection: 'column',
 			gap: '0.5rem',
-			padding: '2rem 2rem 2rem 2rem',
 		},
 		titleAndSubtopicBoxCSS: {
 			zIndex: 30,
@@ -497,35 +537,39 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			flexDirection: 'column',
 			// justifyContent: 'center',
 			// alignItems: 'center',
+			padding: '2rem 2rem 2rem 2rem',
+			order: 0,
+			borderBottom: '1px solid #B7B7B7',
 		},
 		imageContainerCSS: {
 			width: '100%', // equivalent to w-full
 			display: 'grid',
 			gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
-			gap: '2rem', // equivalent to gap-[2rem]
+			order: 2,
 		},
 		imageCSS: {
 			height: '11rem', // equivalent to h-[11rem]
 			flexGrow: 1, // equivalent to grow
-			borderRadius: '0.375rem', // equivalent to rounded-md
+			// borderRadius: '0.375rem', // equivalent to rounded-md
 			//overflow: 'hidden', // equivalent to overflow-hidden
 		},
 		contentCSS: {
 			zIndex: 30,
-			paddingTop: '1rem',
+			padding: '1rem 2rem 2rem 2rem',
 			width: '100%', // equivalent to w-full
 			display: 'grid',
 			gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
 			gap: '2rem', // equivalent to gap-[2rem]
+			order: 1,
 		},
 		visualElementsCSS: {
 			zIndex: 20,
 			width: '100%',
-			height: '80%',
+			height: '10%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '20%',
+			top: '90%',
 		},
 		rndContainerCSS: {
 			width: '100%',
@@ -534,6 +578,6 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '51',
-		}
+		},
 	},
 };
