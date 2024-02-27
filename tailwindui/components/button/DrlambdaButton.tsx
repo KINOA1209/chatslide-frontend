@@ -190,10 +190,6 @@ export const BigGrayButton: React.FC<DrlambdaButtonProps> = ({
       <button
         className='btn min-w-[100px] sm:min-w-[120px] h-[36px] sm:h-[36px] sm:gap-x-2 text-gray-800 text-sm bg-gray-300 disabled:bg-gray-600 disabled:animate-pulse whitespace-nowrap rounded-xl'
         onClick={(e) => {
-
-          console.log('isPaidUser', isPaidUser);
-          console.log('isPaidFeature', isPaidFeature);
-
           if (isPaidFeature && !isPaidUser) {
             setShowPaywallModal(true);
           } else {
