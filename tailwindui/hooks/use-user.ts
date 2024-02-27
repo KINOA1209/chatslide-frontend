@@ -1,29 +1,17 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { CognitoUser, CognitoUserSession } from 'amazon-cognito-identity-js';
 import { Auth as AmplifyAuth } from '@aws-amplify/auth';
 import { createBearStore } from '@/utils/create-bear-store';
 import UserService from '@/services/UserService';
 import AuthService from '@/services/AuthService';
 
-// todo: user, session is not persistable since they(classes) are not serializable
-// const useUserBear = createBearStore<CognitoUser | undefined>()(
-// 	'user',
-// 	undefined,
-// 	false,
-// );
-// const useSessionBear = createBearStore<CognitoUserSession | undefined>()(
-// 	'session',
-// 	undefined,
-// 	false,
-// );
-const useTokenBear = createBearStore<string>()('token', '', true, localStorage);
-const useUidBear = createBearStore<string>()('uid', '', true, localStorage);
-const useUsernameBear = createBearStore<string>()('username', '', true, localStorage);
-const useEmailBear = createBearStore<string>()('email', '', true, localStorage);
-const useIsPaidUserBear = createBearStore<boolean>()('isPaidUser', false, true, localStorage);
-const useCreditsBear = createBearStore<string>()('credits', '', true, localStorage);
-const useTierBear = createBearStore<string>()('tier', '', true, localStorage);
-const useExpirationDateBear = createBearStore<string>()('expirationDate', '', true, localStorage);
+const useTokenBear = createBearStore<string>()('token', '', true, false);
+const useUidBear = createBearStore<string>()('uid', '', true, false);
+const useUsernameBear = createBearStore<string>()('username', '', true, false);
+const useEmailBear = createBearStore<string>()('email', '', true, false);
+const useIsPaidUserBear = createBearStore<boolean>()('isPaidUser', false, true, false);
+const useCreditsBear = createBearStore<string>()('credits', '', true, false);
+const useTierBear = createBearStore<string>()('tier', '', true, false);
+const useExpirationDateBear = createBearStore<string>()('expirationDate', '', true, false);
 
 export enum UserStatus {
 	NotInited,

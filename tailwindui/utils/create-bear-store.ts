@@ -41,11 +41,16 @@ const createBearSlice =
 
 export const createBearStore =
 	<V>() =>
-	<K extends string>(k: K, defaultValue: V, persistEnabled?: boolean, storage: Storage = sessionStorage) => {
+	<K extends string>(k: K, defaultValue: V, persistEnabled?: boolean, useSessionStorage: boolean=false) => {
 		const f = (...a: any[]) => ({
 			// @ts-ignore
 			...createBearSlice<K, V>(k, defaultValue)(...a),
 		});
+
+    const storage = typeof window !== 'undefined' ?
+      (useSessionStorage ? window.sessionStorage : window.localStorage) :
+      undefined;
+
 		return persistEnabled
 			? create<BearSlice<K, V>>()(
 					// persist middleware
@@ -58,7 +63,7 @@ export const createBearStore =
 							}
 							return persistedState;
 						},
-            storage: createJSONStorage(() => storage)
+            storage: storage ? createJSONStorage(() => storage) : undefined,
 					}),
 				)
 			: create<BearSlice<K, V>>()(f);
