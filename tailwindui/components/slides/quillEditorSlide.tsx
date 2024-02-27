@@ -42,6 +42,7 @@ Font.whitelist = [
 	'Creato Display Thin',
 	'Georgia',
 	'Helvetica Neue',
+	'Lemonada',
 	'Libre Baskerville Regular',
 	'Libre Baskerville Bold',
 	'Nimbus Sans Regular',
