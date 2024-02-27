@@ -123,10 +123,10 @@ export const Fun_Education_001_template = ({
 					isCoverPage
 						? 'rounded-md w-full h-full bg-cover flex flex-row justify-start items-start box-border border-none relative'
 						: 'hidden'
-				} `}
-				style={{
-					backgroundColor: themeElements?.backgroundColorCoverImg0,
-				}}
+				} ${themeElements.backgroundColor}`}
+				// style={{
+				// 	backgroundColor: themeElements?.backgroundColorCoverImg0,
+				// }}
 			>
 				{/* <div
 					style={{ fontSize: '40pt', fontFamily: 'Caveat', fontWeight: 700 }}

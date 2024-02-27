@@ -6,27 +6,21 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 	[key in LayoutKeys]?: LayoutElements;
 } = {
 	Cover_img_0_layout: {
-		// canvaCSS: {
-		// 	margin: 0,
-		// 	padding: 0,
-		// 	boxSizing: 'border-box',
-		// 	width: '100%',
-		// 	minHeight: '100vh', // Set minimum height to cover the entire viewport
-		// },
+		canvaCSS: {
+			display: 'flex',
+			width: '100%',
+			height: '100%',
+			// position: 'relative',
+			// overflow: 'hidden',
+		},
 		titleCSS: {
 			backgroundColor: 'white',
-			paddingBottom: '20rem',
-			paddingTop: '4rem',
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
-			// height: '80%',
-			width: '80%',
+			width: '50%',
 			zIndex: 20,
 			position: 'absolute',
 			top: '50%',
 			left: '50%',
 			transform: 'translate(-50%, -50%)', // Centering trick
-			maxHeight: '80%',
 		},
 		userNameTextDividerCSS: {
 			display: 'none',
@@ -34,9 +28,9 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 		userNameCSS: {
 			zIndex: 30,
 			position: 'absolute',
-			top: '65%',
-			left: '22%',
-			transform: 'translate(-50%, -50%)', // Centering trick
+			top: '92%',
+			left: '80%',
+			transform: 'translate(-50%, -40%)', // Centering trick
 		},
 		columnCSS: {
 			paddingTop: '1rem', // Equivalent to pt-[1rem]
@@ -58,37 +52,33 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			position: 'absolute',
 		},
 		visualElementsCSS: {
-			zIndex: 30,
+			zIndex: 0,
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
 		},
 	},
 	Cover_img_1_layout: {
-		titleCSS: {
-			backgroundColor: 'white',
-			paddingBottom: '20rem',
-			paddingTop: '4rem',
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
-			// height: '80%',
-			width: '80%',
-			zIndex: 20,
-			position: 'absolute',
-			top: '50%',
-			left: '50%',
-			transform: 'translate(-50%, -50%)', // Centering trick
-			maxHeight: '80%',
+		canvaCSS: {
+			display: 'flex',
+			width: '100%',
+			height: '100%',
+			// position: 'relative',
 		},
 		userNameCSS: {
 			zIndex: 30,
 			position: 'absolute',
-			top: '65%',
-			left: '22%',
-			transform: 'translate(-50%, -50%)', // Centering trick
+			top: '92%',
+			left: '80%',
+			transform: 'translate(-50%, -40%)', // Centering trick
+		},
+		titleCSS: {
+			paddingLeft: '2rem',
+			zIndex: 30,
+			maxHeight: '80%',
 		},
 		columnCSS: {
-			// paddingTop: '1rem', // Equivalent to pt-[1rem]
+			paddingTop: '4rem', // Equivalent to pt-[1rem]
 			paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 			paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
 			width: '50%', // Equivalent to w-1/2
@@ -98,19 +88,24 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			height: '100%', // Equivalent to h-full
 			gap: '2rem',
 		},
-
 		imageContainerCSS: {
-			width: '100%', // Equivalent to w-full
+			width: '50%', // Equivalent to w-1/2
 			height: '100%', // Equivalent to h-full
 			overflow: 'hidden',
-			borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
-			position: 'absolute',
+			display: 'flex',
+			alignItems: 'center',
+			zIndex: 10,
 		},
+
 		visualElementsCSS: {
-			zIndex: 30,
+			zIndex: 20,
+			width: '50%',
+			height: '100%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
+			top: '0%',
+			left: '50%',
 		},
 	},
 	Col_1_img_0_layout: {

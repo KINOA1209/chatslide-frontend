@@ -2,66 +2,56 @@ import { ThemeElements } from '../theme_elements';
 
 export const Fun_Education_001_TemplateThemeConfig: ThemeElements = {
 	backgroundUrlCoverImg1:
-		'/images/template/Fun_Education_004/BackgroundElements.png',
+		'/images/template/Fun_Education_001/BackgroundElementsCover_img_1.png',
 	backgroundUrlCoverImg0:
-		'/images/template/Fun_Education_004/BackgroundElements.png',
-	backgroundUrlCol_1_img_0:
-		'/images/template/Fun_Education_004/BackgroundElementsCol1_2_3_img_0.png',
-	backgroundUrlCol_2_img_0:
-		'/images/template/Fun_Education_004/BackgroundElementsCol1_2_3_img_0.png',
-	backgroundUrlCol_3_img_0:
-		'/images/template/Fun_Education_004/BackgroundElementsCol1_2_3_img_0.png',
-	backgroundUrlCol_2_img_1:
-		'/images/template/Fun_Education_004/BackgroundElementsCol_2_img_1.png',
-	backgroundUrlCol_1_img_1:
-		'/images/template/Fun_Education_004/BackgroundElementsCol_1_img_1.png',
-	backgroundUrlCol_2_img_2:
-		'/images/template/Fun_Education_004/BackgroundElementsCol_2_img_2.png',
-	backgroundUrlCol_3_img_3:
-		'/images/template/Fun_Education_004/BackgroundElementsCol_3_img_3.png',
+		'/images/template/Fun_Education_001/BackgroundElementsCover_img_0.png',
+	backgroundUrlCol_1_img_0: '',
+	backgroundUrlCol_2_img_0: '',
+	backgroundUrlCol_3_img_0: '',
+	backgroundUrlCol_2_img_1: '',
+	backgroundUrlCol_1_img_1: '',
+	backgroundUrlCol_2_img_2: '',
+	backgroundUrlCol_3_img_3: '',
 
-	backgroundColorCover: 'bg-[#FFFFFF]', //Lin: with a background image and shapes of color #01B99F, #4747F3, #FFC8FF, #FF846C, #FECEB7
-	backgroundColor: 'bg-[#FFFFFF]', //Lin: Text box color #E4F9F6, shapes of color #01B99F, #4747F3, #FFC8FF, #FF846C, #FECEB7
-	backgroundColorCoverImg0: '#ACEAE1',
+	backgroundColorCover: 'bg-[#FFFFFF]',
+	backgroundColor: 'bg-[#FFFFFF]',
 	titleFontCSS: {
-		fontSize: '24pt', // text-3xl in points
-		fontWeight: 'bold', // font-bold,(Lin: 700)
-		fontFamily: 'Caveat', // font-nimbus-sans-bold
-		lineHeight: 1.2, // leading-[110%] is equivalent to a line height of 1.1
-		whiteSpace: 'nowrap', // whitespace-nowrap},
-		color: '#4B4B4B', // text-[#8C1515] color
+		fontSize: '24pt',
+		fontWeight: 'bold',
+		fontFamily: 'Sansita Swashed Medium',
+		lineHeight: 1.2,
+		whiteSpace: 'nowrap',
+		color: '#013E3F',
 	},
 	subtopicFontCSS: {
-		opacity: 1, // opacity-70
-		fontWeight: 'normal', // font-nimbus-sans-bold (Lin: 500)
-		fontFamily: 'Helvetica Neue', // font-nimbus-sans-bold
-		fontSize: '16pt', // text-xl in points
-		fontStyle: 'normal', // font-normal
-		lineHeight: 1, // leading-[150%] is equivalent to a line height of 1.5
-		color: '#BCBCBC', // text-red-800 color
+		fontWeight: 'bold',
+		fontFamily: 'Helvetica Neue',
+		fontSize: '16pt',
+		lineHeight: 1,
+		color: '#B2B2B2',
 	},
 	contentFontCSS: {
-		fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
-		fontWeight: 'normal', // font-normal (Lin: 400)
-		fontFamily: 'Helvetica Neue', // font-nimbus-sans-regular
-		lineHeight: 1.3, // leading-9 is equivalent to a line height of 1.5
-		color: '#4B4B4B', // text-zinc-800 color
+		fontSize: '12pt',
+		fontWeight: 'normal',
+		fontFamily: 'Helvetica Neue',
+		lineHeight: 1.3,
+		color: '#3C3C3C',
 		display: 'list-item',
 	},
-	userNameFont: 'text-sm font-creato-regular  font-normal leading-[100%]',
-	userNameFontColor: 'text-[#868686]', //(Lin: color #868686)
+	userNameFont: 'text-[1rem] font-creato-regular font-normal leading-[100%]',
+	userNameFontColor: 'text-[#A3A3A3]',
 	headFontCSS: {
-		fontSize: '48pt', // text-4xl in points (assuming 1rem is 1pt)
-		fontWeight: 'normal', // font-bold, (Lin: 700)
-		fontFamily: 'Caveat', // font-nimbus-sans-bold
-		lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
-		color: '#2E2E2E', // text-white color
+		fontSize: '30pt',
+		fontWeight: 'bold',
+		fontFamily: 'Sansita Swashed Medium',
+		lineHeight: 1.2,
+		color: '#013E3F',
 	},
 	contentFontCSS_non_vertical_content: {
-		fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
-		fontWeight: 'normal', // font-normal
+		fontSize: '12pt',
+		fontWeight: 'normal',
 		fontFamily: 'Helvetica Neue', // font-nimbus-sans-regular
 		lineHeight: 1.3, // leading-9 is equivalent to a line height of 1.5
-		color: '#4B4B4B', // text-zinc-800 color
+		color: '##3C3C3C', // text-zinc-800 color
 	},
 };
