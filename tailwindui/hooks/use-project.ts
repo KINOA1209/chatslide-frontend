@@ -54,6 +54,8 @@ export const useProject = () => {
   }
 
   const updateProject = <K extends keyof Project>(field: K, value: Project[K]) => {
+    console.log('-- updateProject', field, value);
+
     const newProject = { ...project };
     newProject[field] = value;
     setProject(newProject as Project);

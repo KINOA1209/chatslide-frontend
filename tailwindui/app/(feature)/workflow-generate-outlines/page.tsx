@@ -51,7 +51,7 @@ export default function Topic() {
   const [showLanguagePopup, setLanguagePopup] = useState(false);
   const [showSupportivePopup, setSupportivePopup] = useState(false);
   const { isPaidUser } = useUser();
-  const { updateOutlines } = useProject();
+  const { updateOutlines, updateProject, initProject } = useProject();
 
   // bind form data between input and sessionStorage
   const [topic, setTopic] = useState(
@@ -194,6 +194,7 @@ export default function Topic() {
           'pdf_images',
           JSON.stringify(outlinesJson.data.pdf_images),
         );
+        initProject(outlinesJson.data);
 
         // Redirect to a new page with the data
         router.push('workflow-edit-outlines');
