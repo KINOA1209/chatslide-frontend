@@ -30,6 +30,7 @@ export const Harvard_school_template = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	isShowingLogo,
+	images_position,
 }: MainSlideProps) => {
 	const ChosenLayoutNonCover =
 		layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
@@ -97,6 +98,7 @@ export const Harvard_school_template = ({
 					handleSlideEdit={handleSlideEdit}
 					currentSlideIndex={currentSlideIndex}
 					isShowingLogo={isShowingLogo}
+					images_position={images_position}
 				></ChosenLayoutNonCover>
 			</div>
 			{/* for cover page */}
@@ -152,9 +154,10 @@ export const Harvard_school_template = ({
 					handleSlideEdit={handleSlideEdit}
 					currentSlideIndex={currentSlideIndex}
 					isShowingLogo={isShowingLogo}
+					images_position={images_position}
 				></ChosenLayoutCover>
 
-				<div className='absolute top-[40%] right-[0%] gap-7 inline-flex pl-[3rem] pointer-events-none'>
+				<div className='absolute top-[41%] right-[0%] gap-7 inline-flex pl-[3rem] pointer-events-none z-[52]'>
 					<Image
 						src={HarvardCoverVector}
 						alt='MaskedBackground'

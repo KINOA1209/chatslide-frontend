@@ -51,7 +51,6 @@ export interface MainSlideProps {
 	currentSlideIndex: number;
 	isShowingLogo?: boolean;
 	images_position: ImagesPosition[];
-	slideIdx:number
 }
 
 // deprecated

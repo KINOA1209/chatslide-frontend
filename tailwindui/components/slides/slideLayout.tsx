@@ -19,7 +19,7 @@ import { Rnd } from 'react-rnd'
 import { DraggableEventHandler } from 'react-draggable';
 import ImagesPosition from '@/models/ImagesPosition';
 import { initializeImageData, onDragStart, onDragStop, onResizeStart, onResizeStop,onMouseLeave } from './dragAndResizeFunction';
-
+import { useSlides } from '@/hooks/use-slides';
 export type LayoutKeys =
 	| ''
 	| 'Cover_img_0_layout'
@@ -122,7 +122,6 @@ export const Cover_img_1_layout = ({
 	currentSlideIndex,
 	isShowingLogo,
 	images_position,
-	slideIdx,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) => (imgSrc: string, ischart: boolean) => {
@@ -135,7 +134,8 @@ export const Cover_img_1_layout = ({
 			else newIsCharts[index] = ischart;
 			update_callback(newImgs, newIsCharts);
 		};
-	const imageRefs = images_position.map(() => useRef<HTMLDivElement>(null));
+	const { slideIndex, slides } = useSlides();
+	const imageRefs = Array(3).fill(null).map(() => useRef<HTMLDivElement>(null));
 	const [isDraggingOrResizing, setIsDraggingOrResizing] = useState(false); //distinguish openModal and drag
 	const [hasInteracted, setHasInteracted] = useState(false);
 	const [imagesDimensions, setImagesDimensions] = 
@@ -143,7 +143,7 @@ export const Cover_img_1_layout = ({
 	const [startPos, setStartPos] = useState<Array<{ x: number; y: number }>>(Array(3).fill({ x: 0, y: 0 }));
 
 	//handler for drag and resize also autosave
-	const handleMouseLeave = onMouseLeave(slideIdx, imagesDimensions, hasInteracted, setHasInteracted, handleSlideEdit)
+	const handleMouseLeave = onMouseLeave(slideIndex, imagesDimensions, hasInteracted, setHasInteracted, handleSlideEdit)
 	const handleDragStart = onDragStart(setIsDraggingOrResizing, startPos, setStartPos, setHasInteracted)
 	const handleResizeStart = onResizeStart(setIsDraggingOrResizing, setHasInteracted)
 	const handleDragStop = 
@@ -155,7 +155,6 @@ export const Cover_img_1_layout = ({
 		const initializedData = initializeImageData(images_position, imageRefs);
 		setImagesDimensions(initializedData);
 	  }, [images_position]);
-
 	return (
 		<div style={layoutElements.canvaCSS}>
 			<div style={layoutElements.columnCSS}>
@@ -173,34 +172,37 @@ export const Cover_img_1_layout = ({
 				<div style={layoutElements.titleCSS}>{title}</div>
 			</div>
 
-			<div style={layoutElements.imageContainerCSS} ref={imageRefs[0]} onMouseLeave={handleMouseLeave}>
-				<Rnd
-					style={{zIndex:51}} //should be higher than logo container
-					size={{ 
-						width: imagesDimensions[0]?.width ?? 480, 
-						height: imagesDimensions[0]?.height ?? 540 
-					}}
-					position={{ 
-						x: imagesDimensions[0]?.x ?? 0, 
-						y: imagesDimensions[0]?.y ?? 0 
-					}}
-					onDragStart={handleDragStart(0)}
-					onDragStop={handleDragStop(0)}
-					onResizeStart={handleResizeStart}
-					onResizeStop={handleResizeStop(0)}
-				>
-					<ImgModule
-						imgsrc={imgs[0]}
-						updateSingleCallback={updateImgAtIndex(0)}
-						chartArr={charts}
-						ischartArr={ischarts}
-						handleSlideEdit={handleSlideEdit}
-						currentSlideIndex={currentSlideIndex}
-						currentContentIndex={0}
-						canEdit={canEdit}
-						isDraggingOrResizing={isDraggingOrResizing}
-					/>
-				</Rnd>
+			<div style={layoutElements.imageContainerCSS}>
+				<div style={layoutElements.rndContainerCSS} ref={imageRefs[0]}>
+					<Rnd
+						style={layoutElements.rndCSS}
+						size={{ 
+							width: imagesDimensions[0]?.width ?? imageRefs[0]?.current?.clientWidth ?? '100%',
+							height: imagesDimensions[0]?.height ?? imageRefs[0]?.current?.clientHeight ?? '100%',
+						}}
+						position={{ 
+							x: imagesDimensions[0]?.x ?? 0, 
+							y: imagesDimensions[0]?.y ?? 0 
+						}}
+						onDragStart={handleDragStart(0)}
+						onDragStop={handleDragStop(0)}
+						onResizeStart={handleResizeStart}
+						onResizeStop={handleResizeStop(0)}
+						onMouseLeave={handleMouseLeave}
+					>
+						<ImgModule
+							imgsrc={imgs[0]}
+							updateSingleCallback={updateImgAtIndex(0)}
+							chartArr={charts}
+							ischartArr={ischarts}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							currentContentIndex={0}
+							canEdit={canEdit}
+							isDraggingOrResizing={isDraggingOrResizing}
+						/>
+					</Rnd>
+				</div>
 			</div>
 
 			<div style={layoutElements.visualElementsCSS}>
@@ -494,6 +496,7 @@ export const Col_2_img_1_layout = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	isShowingLogo,
+	images_position,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) => (imgSrc: string, ischart: boolean) => {
@@ -541,6 +544,28 @@ export const Col_2_img_1_layout = ({
 		};
 	}, []);
 
+	const { slideIndex, slides } = useSlides();
+	const imageRefs = Array(3).fill(null).map(() => useRef<HTMLDivElement>(null));
+	const [isDraggingOrResizing, setIsDraggingOrResizing] = useState(false); //distinguish openModal and drag
+	const [hasInteracted, setHasInteracted] = useState(false);
+	const [imagesDimensions, setImagesDimensions] = 
+		useState<(ImagesPosition | { x?: number; y?: number; height?: number; width?: number })[]>([]);
+	const [startPos, setStartPos] = useState<Array<{ x: number; y: number }>>(Array(3).fill({ x: 0, y: 0 }));
+
+	//handler for drag and resize also autosave
+	const handleMouseLeave = onMouseLeave(slideIndex, imagesDimensions, hasInteracted, setHasInteracted, handleSlideEdit)
+	const handleDragStart = onDragStart(setIsDraggingOrResizing, startPos, setStartPos, setHasInteracted)
+	const handleResizeStart = onResizeStart(setIsDraggingOrResizing, setHasInteracted)
+	const handleDragStop = 
+		onDragStop(imagesDimensions, setImagesDimensions, startPos, setIsDraggingOrResizing)
+	const handleResizeStop = 
+		onResizeStop(imagesDimensions, setImagesDimensions, setIsDraggingOrResizing)
+	
+	useEffect(() => {
+		const initializedData = initializeImageData(images_position, imageRefs);
+		setImagesDimensions(initializedData);
+	  }, [images_position]);
+
 	return (
 		<div
 			// className='w-full h-full flex flex-row gap-[2rem] justify-start items-start'
@@ -582,17 +607,37 @@ export const Col_2_img_1_layout = ({
 				// className={`w-1/2 h-[90%] rounded-md overflow-hidden items-center`}
 				style={layoutElements.imageContainerCSS}
 			>
-				<ImgModule
-					imgsrc={imgs[0]}
-					updateSingleCallback={updateImgAtIndex(0)}
-					chartArr={charts}
-					ischartArr={ischarts}
-					handleSlideEdit={handleSlideEdit}
-					currentSlideIndex={currentSlideIndex}
-					currentContentIndex={0}
-					canEdit={canEdit}
-					customImageStyle={layoutElements.imageCSS}
-				/>
+					<div style={layoutElements.rndContainerCSS} ref={imageRefs[0]}>
+					<Rnd
+						style={layoutElements.rndCSS}
+						size={{ 
+							width: imagesDimensions[0]?.width ?? imageRefs[0]?.current?.clientWidth ?? '100%',
+							height: imagesDimensions[0]?.height ?? imageRefs[0]?.current?.clientHeight ?? '100%',
+						}}
+						position={{ 
+							x: imagesDimensions[0]?.x ?? 0, 
+							y: imagesDimensions[0]?.y ?? 0 
+						}}
+						onDragStart={handleDragStart(0)}
+						onDragStop={handleDragStop(0)}
+						onResizeStart={handleResizeStart}
+						onResizeStop={handleResizeStop(0)}
+						onMouseLeave={handleMouseLeave}
+					>
+						<ImgModule
+							imgsrc={imgs[0]}
+							updateSingleCallback={updateImgAtIndex(0)}
+							chartArr={charts}
+							ischartArr={ischarts}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							currentContentIndex={0}
+							canEdit={canEdit}
+							customImageStyle={layoutElements.imageCSS}
+							isDraggingOrResizing={isDraggingOrResizing}
+						/>
+					</Rnd>
+				</div>
 			</div>
 			{/* logo section */}
 			<div
@@ -638,6 +683,7 @@ export const Col_1_img_1_layout = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	isShowingLogo,
+	images_position,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) => (imgSrc: string, ischart: boolean) => {
@@ -655,13 +701,35 @@ export const Col_1_img_1_layout = ({
 	const containerRef = useRef<HTMLDivElement>(null);
 	const topicAndSubtopicRef = useRef<HTMLDivElement>(null);
 	// const subtopicRef = useRef<HTMLDivElement>(null);
-	const imgContainerRef = useRef<HTMLDivElement>(null);
+	//const imgContainerRef = useRef<HTMLDivElement>(null);
+
+	const { slideIndex, slides } = useSlides();
+	const imageRefs = Array(3).fill(null).map(() => useRef<HTMLDivElement>(null));
+	const [isDraggingOrResizing, setIsDraggingOrResizing] = useState(false); //distinguish openModal and drag
+	const [hasInteracted, setHasInteracted] = useState(false);
+	const [imagesDimensions, setImagesDimensions] = 
+		useState<(ImagesPosition | { x?: number; y?: number; height?: number; width?: number })[]>([]);
+	const [startPos, setStartPos] = useState<Array<{ x: number; y: number }>>(Array(3).fill({ x: 0, y: 0 }));
+
+	//handler for drag and resize also autosave
+	const handleMouseLeave = onMouseLeave(slideIndex, imagesDimensions, hasInteracted, setHasInteracted, handleSlideEdit)
+	const handleDragStart = onDragStart(setIsDraggingOrResizing, startPos, setStartPos, setHasInteracted)
+	const handleResizeStart = onResizeStart(setIsDraggingOrResizing, setHasInteracted)
+	const handleDragStop = 
+		onDragStop(imagesDimensions, setImagesDimensions, startPos, setIsDraggingOrResizing)
+	const handleResizeStop = 
+		onResizeStop(imagesDimensions, setImagesDimensions, setIsDraggingOrResizing)
+	
+	useEffect(() => {
+		const initializedData = initializeImageData(images_position, imageRefs);
+		setImagesDimensions(initializedData);
+	  }, [images_position]);
 
 	useEffect(() => {
 		const calculateMaxHeight = () => {
 			const containerElement = containerRef.current;
 			const topicAndSubtopicElement = topicAndSubtopicRef.current;
-			const imgContainerElement = imgContainerRef.current;
+			const imgContainerElement = imageRefs[0].current;
 			// const subtopicElement = subtopicRef.current;
 
 			if (containerElement && topicAndSubtopicElement && imgContainerElement) {
@@ -715,19 +783,38 @@ export const Col_1_img_1_layout = ({
 				<div
 					// className='h-[15rem] grow rounded-md overflow-hidden'
 					style={layoutElements.imageContainerCSS}
-					ref={imgContainerRef}
 				>
-					<ImgModule
-						imgsrc={imgs[0]}
-						updateSingleCallback={updateImgAtIndex(0)}
-						chartArr={charts}
-						ischartArr={ischarts}
-						handleSlideEdit={handleSlideEdit}
-						currentSlideIndex={currentSlideIndex}
-						currentContentIndex={0}
-						canEdit={canEdit}
-						customImageStyle={layoutElements.imageCSS}
-					/>
+					<div style={layoutElements.rndContainerCSS} ref={imageRefs[0]}>
+						<Rnd
+							style={layoutElements.rndCSS}
+							size={{ 
+								width: imagesDimensions[0]?.width ?? imageRefs[0]?.current?.clientWidth ?? '100%',
+								height: imagesDimensions[0]?.height ?? imageRefs[0]?.current?.clientHeight ?? '100%',
+							}}
+							position={{ 
+								x: imagesDimensions[0]?.x ?? 0, 
+								y: imagesDimensions[0]?.y ?? 0 
+							}}
+							onDragStart={handleDragStart(0)}
+							onDragStop={handleDragStop(0)}
+							onResizeStart={handleResizeStart}
+							onResizeStop={handleResizeStop(0)}
+							onMouseLeave={handleMouseLeave}
+						>
+							<ImgModule
+								imgsrc={imgs[0]}
+								updateSingleCallback={updateImgAtIndex(0)}
+								chartArr={charts}
+								ischartArr={ischarts}
+								handleSlideEdit={handleSlideEdit}
+								currentSlideIndex={currentSlideIndex}
+								currentContentIndex={0}
+								canEdit={canEdit}
+								isDraggingOrResizing={isDraggingOrResizing}
+								customImageStyle={layoutElements.imageCSS}
+							/>
+						</Rnd>
+					</div>
 				</div>
 				{/* row3 for contents */}
 				{/* <div
@@ -812,9 +899,8 @@ export const Col_2_img_2_layout = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	isShowingLogo,
+	images_position,
 }: MainSlideProps) => {
-	//console.log(charts)
-	//console.log(imgs)
 	const updateImgAtIndex =
 		(index: number) => (imgSrc: string, ischart: boolean) => {
 			const newImgs = [...imgs];
@@ -836,7 +922,7 @@ export const Col_2_img_2_layout = ({
 		const calculateMaxHeight = () => {
 			const containerElement = containerRef.current;
 			const topicAndSubtopicElement = topicAndSubtopicRef.current;
-			const imgContainerElement = imgContainerRef.current;
+			const imgContainerElement = imageRefs[0].current;
 			// const subtopicElement = subtopicRef.current;
 
 			if (containerElement && topicAndSubtopicElement && imgContainerElement) {
@@ -863,6 +949,29 @@ export const Col_2_img_2_layout = ({
 		};
 	}, []);
 
+	const { slideIndex, slides } = useSlides();
+	const imageRefs = Array(3).fill(null).map(() => useRef<HTMLDivElement>(null));
+	const [isDraggingOrResizing, setIsDraggingOrResizing] = useState(false); //distinguish openModal and drag
+	const [hasInteracted, setHasInteracted] = useState(false);
+	const [imagesDimensions, setImagesDimensions] = 
+		useState<(ImagesPosition | { x?: number; y?: number; height?: number; width?: number })[]>([]);
+	const [startPos, setStartPos] = useState<Array<{ x: number; y: number }>>(Array(3).fill({ x: 0, y: 0 }));
+
+	//handler for drag and resize also autosave
+	const handleMouseLeave = onMouseLeave(slideIndex, imagesDimensions, hasInteracted, setHasInteracted, handleSlideEdit)
+	const handleDragStart = onDragStart(setIsDraggingOrResizing, startPos, setStartPos, setHasInteracted)
+	const handleResizeStart = onResizeStart(setIsDraggingOrResizing, setHasInteracted)
+	const handleDragStop = 
+		onDragStop(imagesDimensions, setImagesDimensions, startPos, setIsDraggingOrResizing)
+	const handleResizeStop = 
+		onResizeStop(imagesDimensions, setImagesDimensions, setIsDraggingOrResizing)
+	
+	useEffect(() => {
+		const initializedData = initializeImageData(images_position, imageRefs);
+		//console.log(initializedData, canEdit, slideIndex)
+		setImagesDimensions(initializedData);
+	  }, [images_position]);
+
 	return (
 		<div style={layoutElements.canvaCSS}>
 			<div
@@ -883,7 +992,6 @@ export const Col_2_img_2_layout = ({
 				<div
 					// className='w-full grid grid-cols-2 gap-[2rem]'
 					style={layoutElements.imageContainerCSS}
-					ref={imgContainerRef}
 				>
 					<div
 						// className='h-[11rem] grow rounded-md overflow-hidden relative'
@@ -898,16 +1006,36 @@ export const Col_2_img_2_layout = ({
 								pointerEvents: 'none', // Allow click events to pass through
 							}}
 						></div> */}
-						<ImgModule
-							imgsrc={imgs[0]}
-							updateSingleCallback={updateImgAtIndex(0)}
-							chartArr={charts}
-							ischartArr={ischarts}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							currentContentIndex={0}
-							canEdit={canEdit}
-						/>
+						<div style={layoutElements.rndContainerCSS} ref={imageRefs[0]}>
+							<Rnd
+								style={layoutElements.rndCSS}
+								size={{ 
+									width: imagesDimensions[0]?.width ?? imageRefs[0]?.current?.clientWidth ?? '100%',
+									height: imagesDimensions[0]?.height ?? imageRefs[0]?.current?.clientHeight ?? '100%',
+								}}
+								position={{ 
+									x: imagesDimensions[0]?.x ?? 0, 
+									y: imagesDimensions[0]?.y ?? 0 
+								}}
+								onDragStart={handleDragStart(0)}
+								onDragStop={handleDragStop(0)}
+								onResizeStart={handleResizeStart}
+								onResizeStop={handleResizeStop(0)}
+								onMouseLeave={handleMouseLeave}
+							>
+								<ImgModule
+									imgsrc={imgs[0]}
+									updateSingleCallback={updateImgAtIndex(0)}
+									chartArr={charts}
+									ischartArr={ischarts}
+									handleSlideEdit={handleSlideEdit}
+									currentSlideIndex={currentSlideIndex}
+									currentContentIndex={0}
+									canEdit={canEdit}
+									isDraggingOrResizing={isDraggingOrResizing}
+								/>
+							</Rnd>
+						</div>
 					</div>
 					<div
 						// className='h-[11rem] grow rounded-md overflow-hidden  relative'
@@ -922,16 +1050,36 @@ export const Col_2_img_2_layout = ({
 								pointerEvents: 'none', // Allow click events to pass through
 							}}
 						></div> */}
-						<ImgModule
-							imgsrc={imgs[1]}
-							updateSingleCallback={updateImgAtIndex(1)}
-							chartArr={charts}
-							ischartArr={ischarts}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							currentContentIndex={1}
-							canEdit={canEdit}
-						/>
+						<div style={layoutElements.rndContainerCSS} ref={imageRefs[1]}>
+							<Rnd
+								style={layoutElements.rndCSS}
+								size={{ 
+									width: imagesDimensions[1]?.width ?? imageRefs[1]?.current?.clientWidth ?? '100%',
+									height: imagesDimensions[1]?.height ?? imageRefs[1]?.current?.clientHeight ?? '100%',
+								}}
+								position={{ 
+									x: imagesDimensions[1]?.x ?? 0, 
+									y: imagesDimensions[1]?.y ?? 0 
+								}}
+								onDragStart={handleDragStart(1)}
+								onDragStop={handleDragStop(1)}
+								onResizeStart={handleResizeStart}
+								onResizeStop={handleResizeStop(1)}
+								onMouseLeave={handleMouseLeave}
+							>
+								<ImgModule
+									imgsrc={imgs[1]}
+									updateSingleCallback={updateImgAtIndex(1)}
+									chartArr={charts}
+									ischartArr={ischarts}
+									handleSlideEdit={handleSlideEdit}
+									currentSlideIndex={currentSlideIndex}
+									currentContentIndex={1}
+									canEdit={canEdit}
+									isDraggingOrResizing={isDraggingOrResizing}
+								/>
+							</Rnd>
+						</div>
 					</div>
 				</div>
 				{/* two columns of text */}
@@ -1005,6 +1153,7 @@ export const Col_3_img_3_layout = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	isShowingLogo,
+	images_position,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) => (imgSrc: string, ischart: boolean) => {
@@ -1017,6 +1166,28 @@ export const Col_3_img_3_layout = ({
 			else newIsCharts[index] = ischart;
 			update_callback(newImgs, newIsCharts);
 		};
+	
+	const { slideIndex, slides } = useSlides();
+	const imageRefs = Array(3).fill(null).map(() => useRef<HTMLDivElement>(null));
+	const [isDraggingOrResizing, setIsDraggingOrResizing] = useState(false); //distinguish openModal and drag
+	const [hasInteracted, setHasInteracted] = useState(false);
+	const [imagesDimensions, setImagesDimensions] = 
+		useState<(ImagesPosition | { x?: number; y?: number; height?: number; width?: number })[]>([]);
+	const [startPos, setStartPos] = useState<Array<{ x: number; y: number }>>(Array(3).fill({ x: 0, y: 0 }));
+
+	//handler for drag and resize also autosave
+	const handleMouseLeave = onMouseLeave(slideIndex, imagesDimensions, hasInteracted, setHasInteracted, handleSlideEdit)
+	const handleDragStart = onDragStart(setIsDraggingOrResizing, startPos, setStartPos, setHasInteracted)
+	const handleResizeStart = onResizeStart(setIsDraggingOrResizing, setHasInteracted)
+	const handleDragStop = 
+		onDragStop(imagesDimensions, setImagesDimensions, startPos, setIsDraggingOrResizing)
+	const handleResizeStop = 
+		onResizeStop(imagesDimensions, setImagesDimensions, setIsDraggingOrResizing)
+	
+	useEffect(() => {
+		const initializedData = initializeImageData(images_position, imageRefs);
+		setImagesDimensions(initializedData);
+	  }, [images_position]);
 
 	return (
 		<div style={layoutElements.canvaCSS}>
@@ -1040,46 +1211,106 @@ export const Col_3_img_3_layout = ({
 						// className='h-[11rem] grow rounded-md overflow-hidden'
 						style={layoutElements.imageCSS}
 					>
-						<ImgModule
-							imgsrc={imgs[0]}
-							updateSingleCallback={updateImgAtIndex(0)}
-							chartArr={charts}
-							ischartArr={ischarts}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							currentContentIndex={0}
-							canEdit={canEdit}
-						/>
+						<div style={layoutElements.rndContainerCSS} ref={imageRefs[0]}>
+							<Rnd
+								style={layoutElements.rndCSS}
+								size={{ 
+									width: imagesDimensions[0]?.width ?? imageRefs[0]?.current?.clientWidth ?? '100%',
+									height: imagesDimensions[0]?.height ?? imageRefs[0]?.current?.clientHeight ?? '100%',
+								}}
+								position={{ 
+									x: imagesDimensions[0]?.x ?? 0, 
+									y: imagesDimensions[0]?.y ?? 0 
+								}}
+								onDragStart={handleDragStart(0)}
+								onDragStop={handleDragStop(0)}
+								onResizeStart={handleResizeStart}
+								onResizeStop={handleResizeStop(0)}
+								onMouseLeave={handleMouseLeave}
+							>
+								<ImgModule
+									imgsrc={imgs[0]}
+									updateSingleCallback={updateImgAtIndex(0)}
+									chartArr={charts}
+									ischartArr={ischarts}
+									handleSlideEdit={handleSlideEdit}
+									currentSlideIndex={currentSlideIndex}
+									currentContentIndex={0}
+									canEdit={canEdit}
+									isDraggingOrResizing={isDraggingOrResizing}
+								/>
+							</Rnd>
+						</div>
 					</div>
 					<div
 						// className='h-[11rem] grow rounded-md overflow-hidden'
 						style={layoutElements.imageCSS}
 					>
-						<ImgModule
-							imgsrc={imgs[1]}
-							updateSingleCallback={updateImgAtIndex(1)}
-							chartArr={charts}
-							ischartArr={ischarts}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							currentContentIndex={1}
-							canEdit={canEdit}
-						/>
+						<div style={layoutElements.rndContainerCSS} ref={imageRefs[1]}>
+							<Rnd
+								style={layoutElements.rndCSS}
+								size={{ 
+									width: imagesDimensions[1]?.width ?? imageRefs[1]?.current?.clientWidth ?? '100%',
+									height: imagesDimensions[1]?.height ?? imageRefs[1]?.current?.clientHeight ?? '100%',
+								}}
+								position={{ 
+									x: imagesDimensions[1]?.x ?? 0, 
+									y: imagesDimensions[1]?.y ?? 0 
+								}}
+								onDragStart={handleDragStart(1)}
+								onDragStop={handleDragStop(1)}
+								onResizeStart={handleResizeStart}
+								onResizeStop={handleResizeStop(1)}
+								onMouseLeave={handleMouseLeave}
+							>
+								<ImgModule
+									imgsrc={imgs[1]}
+									updateSingleCallback={updateImgAtIndex(1)}
+									chartArr={charts}
+									ischartArr={ischarts}
+									handleSlideEdit={handleSlideEdit}
+									currentSlideIndex={currentSlideIndex}
+									currentContentIndex={1}
+									canEdit={canEdit}
+									isDraggingOrResizing={isDraggingOrResizing}
+								/>
+							</Rnd>
+						</div>
 					</div>
 					<div
 						// className='h-[11rem] grow rounded-md overflow-hidden'
 						style={layoutElements.imageCSS}
 					>
-						<ImgModule
-							imgsrc={imgs[2]}
-							updateSingleCallback={updateImgAtIndex(2)}
-							chartArr={charts}
-							ischartArr={ischarts}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							currentContentIndex={2}
-							canEdit={canEdit}
-						/>
+						<div style={layoutElements.rndContainerCSS} ref={imageRefs[2]}>
+							<Rnd
+								style={layoutElements.rndCSS}
+								size={{ 
+									width: imagesDimensions[2]?.width ?? imageRefs[2]?.current?.clientWidth ?? '100%',
+									height: imagesDimensions[2]?.height ?? imageRefs[2]?.current?.clientHeight ?? '100%',
+								}}
+								position={{ 
+									x: imagesDimensions[2]?.x ?? 0, 
+									y: imagesDimensions[2]?.y ?? 0 
+								}}
+								onDragStart={handleDragStart(2)}
+								onDragStop={handleDragStop(2)}
+								onResizeStart={handleResizeStart}
+								onResizeStop={handleResizeStop(2)}
+								onMouseLeave={handleMouseLeave}
+							>
+								<ImgModule
+									imgsrc={imgs[2]}
+									updateSingleCallback={updateImgAtIndex(2)}
+									chartArr={charts}
+									ischartArr={ischarts}
+									handleSlideEdit={handleSlideEdit}
+									currentSlideIndex={currentSlideIndex}
+									currentContentIndex={2}
+									canEdit={canEdit}
+									isDraggingOrResizing={isDraggingOrResizing}
+								/>
+							</Rnd>
+						</div>
 					</div>
 				</div>
 				{/* three columns of text */}

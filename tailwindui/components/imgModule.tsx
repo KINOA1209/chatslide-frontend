@@ -941,7 +941,7 @@ export const ImgModule = ({
 						height={540}
 						objectFit='contain'
 						className={`transition ease-in-out duration-150 ${
-							canEdit ? 'hover:brightness-90' : 'cursor-default'
+							canEdit ? 'hover:brightness-90' : 'cursor-pointer'
 						}`}
 					/>
 				)}

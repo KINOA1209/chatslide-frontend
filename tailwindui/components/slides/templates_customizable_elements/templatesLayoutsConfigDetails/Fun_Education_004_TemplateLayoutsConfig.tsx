@@ -112,6 +112,14 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
 		},
+		rndContainerCSS: {
+			width: '100%',
+			height: '100%',
+			position: 'relative',
+		},
+		rndCSS: {
+			zIndex: '10',
+		}
 	},
 	Col_1_img_0_layout: {
 		canvaCSS: {
@@ -352,6 +360,14 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 		imageCSS: {
 			borderRadius: '1.25rem', // border radius 1.25rem for image
 		},
+		rndContainerCSS: {
+			width: '100%',
+			height: '100%',
+			position: 'relative',
+		},
+		rndCSS: {
+			zIndex: '10',
+		}
 	},
 	Col_1_img_1_layout: {
 		canvaCSS: {},
@@ -407,6 +423,14 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			flexGrow: 1,
 			paddingLeft: '1rem',
 		},
+		rndContainerCSS: {
+			width: '100%',
+			height: '100%',
+			position: 'relative',
+		},
+		rndCSS: {
+			zIndex: '10',
+		}
 	},
 	Col_2_img_2_layout: {
 		columnCSS: {
@@ -452,6 +476,14 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
 			top: '20%',
 		},
+		rndContainerCSS: {
+			width: '100%',
+			height: '100%',
+			position: 'relative',
+		},
+		rndCSS: {
+			zIndex: '10',
+		}
 	},
 	Col_3_img_3_layout: {
 		columnCSS: {
@@ -496,5 +528,13 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
 			top: '20%',
 		},
+		rndContainerCSS: {
+			width: '100%',
+			height: '100%',
+			position: 'relative',
+		},
+		rndCSS: {
+			zIndex: '10',
+		}
 	},
 };

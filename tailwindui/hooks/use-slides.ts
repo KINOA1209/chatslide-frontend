@@ -184,7 +184,7 @@ export const useSlides = () => {
 	const changeTemplate = (newTemplate: TemplateKeys) => {
 		console.log('Changing template to:', newTemplate);
 		const newSlides = slides.map((slide, index) => {
-			return { ...slide, template: newTemplate };
+			return { ...slide, template: newTemplate, images_position: [{}, {}, {}] };
 		});
 		//set into session storage to update
 		sessionStorage.setItem('schoolTemplate', newTemplate);

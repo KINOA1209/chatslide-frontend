@@ -4,24 +4,22 @@ export const initializeImageData = (
     images_position: Array<ImagesPosition | {}>,
     refs: React.RefObject<HTMLElement>[]
   ): ImagesPosition[] => {
-    return images_position.map((pos, index) => {
+    const positions = images_position || [{}, {}, {}];
+    return positions.map((pos, index) => {
         if (Object.keys(pos).length !== 0) {
             // If position data is available, use it directly
             return pos as ImagesPosition;
         }
         else {
-            // If position data is missing or empty, and ref is available, calculate from ref
-            const ref = refs[index]?.current;
-            if (ref) {
-                const rect = ref.getBoundingClientRect();
-                return {
-                    x: rect.left + window.scrollX,
-                    y: rect.top + window.scrollY, 
-                    width: rect.width,
-                    height: rect.height,
-                };
-            }
-            // If no data and no ref, return empty object or some default values
+            // const ref = refs[index]?.current;
+            // if (ref) {
+            //     // Obtain the dimensions from the ref
+            //     const { offsetWidth: width, offsetHeight: height } = ref;
+            //     console.log(width, height)
+            //     if (width !== 0 && height !== 0) {
+            //         return { x: 0, y: 0, width: width, height: height };
+            //     }
+            // }
             return {};
         }
     });
@@ -70,7 +68,7 @@ export const onDragStop = (
     const adjustedY = position.y;
     const curr_startPos = startPos[imgIdx]
     const distance = Math.sqrt(Math.pow(adjustedX - curr_startPos.x, 2) + Math.pow(adjustedY - curr_startPos.y, 2));
-    if(distance > 3){
+    if(distance > 5){
         const updatedDimensions = [...imagesDimensions];
         updatedDimensions[imgIdx] = { ...updatedDimensions[imgIdx], x: adjustedX, y: adjustedY };
         setImagesDimensions(updatedDimensions);

@@ -29,6 +29,7 @@ export const Fun_Education_004_template = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	isShowingLogo,
+	images_position,
 }: MainSlideProps) => {
 	const ChosenLayoutNonCover =
 		layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
@@ -111,6 +112,7 @@ export const Fun_Education_004_template = ({
 					handleSlideEdit={handleSlideEdit}
 					currentSlideIndex={currentSlideIndex}
 					isShowingLogo={isShowingLogo}
+					images_position={images_position}
 				></ChosenLayoutNonCover>
 			</div>
 			{/* for cover page */}
@@ -174,6 +176,7 @@ export const Fun_Education_004_template = ({
 					handleSlideEdit={handleSlideEdit}
 					currentSlideIndex={currentSlideIndex}
 					isShowingLogo={isShowingLogo}
+					images_position={images_position}
 				></ChosenLayoutCover>
 			</div>
 		</>

@@ -29,6 +29,7 @@ export const Clean_Lifestyle_003_template = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	isShowingLogo,
+	images_position,
 }: MainSlideProps) => {
 	const ChosenLayoutNonCover =
 		layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
@@ -44,15 +45,15 @@ export const Clean_Lifestyle_003_template = ({
 		layoutOptionCover as keyof typeof layoutOptions,
 	);
 
-	useEffect(() => {
-		console.log('Clean_Lifestyle_003_template themeElements:', themeElements);
-	}, []);
-	useEffect(() => {
-		console.log(
-			'Clean_Lifestyle_003_template layoutConfigElements for current slide page:',
-			layoutConfigElements,
-		);
-	}, []);
+	// useEffect(() => {
+	// 	console.log('Clean_Lifestyle_003_template themeElements:', themeElements);
+	// }, []);
+	// useEffect(() => {
+	// 	console.log(
+	// 		'Clean_Lifestyle_003_template layoutConfigElements for current slide page:',
+	// 		layoutConfigElements,
+	// 	);
+	// }, []);
 
 	return (
 		<>
@@ -111,6 +112,7 @@ export const Clean_Lifestyle_003_template = ({
 					handleSlideEdit={handleSlideEdit}
 					currentSlideIndex={currentSlideIndex}
 					isShowingLogo={isShowingLogo}
+					images_position={images_position}
 				></ChosenLayoutNonCover>
 			</div>
 			{/* for cover page */}
@@ -174,6 +176,7 @@ export const Clean_Lifestyle_003_template = ({
 					handleSlideEdit={handleSlideEdit}
 					currentSlideIndex={currentSlideIndex}
 					isShowingLogo={isShowingLogo}
+					images_position={images_position}
 				></ChosenLayoutCover>
 			</div>
 		</>

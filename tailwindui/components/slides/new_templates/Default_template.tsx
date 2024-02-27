@@ -31,7 +31,6 @@ export const Default = ({
 	currentSlideIndex,
 	isShowingLogo,
 	images_position,
-	slideIdx,
 }: // templateLogo = TemplatesLogos.DefaultTemplateLogo,
 MainSlideProps) => {
 	const ChosenLayoutNonCover =
@@ -111,7 +110,6 @@ MainSlideProps) => {
 					currentSlideIndex={currentSlideIndex}
 					isShowingLogo={isShowingLogo}
 					images_position={images_position}
-					slideIdx={slideIdx}
 				></ChosenLayoutCover>
 
 				{/* Logo */}
@@ -186,7 +184,6 @@ MainSlideProps) => {
 					currentSlideIndex={currentSlideIndex}
 					isShowingLogo={isShowingLogo}
 					images_position={images_position}
-					slideIdx={slideIdx}
 				></ChosenLayoutNonCover>
 			</div>
 		</>

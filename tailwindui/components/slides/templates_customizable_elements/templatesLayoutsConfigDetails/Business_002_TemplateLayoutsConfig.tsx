@@ -110,6 +110,13 @@ export const Business_002_TemplateLayoutsConfig: {
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
 		},
+		rndContainerCSS: {
+			width: '100%',
+			height: '100%',
+			position: 'relative',
+		},
+		rndCSS: {
+		}
 	},
 	Col_1_img_0_layout: {
 		canvaCSS: {
@@ -266,6 +273,14 @@ export const Business_002_TemplateLayoutsConfig: {
 			paddingLeft: '2rem',
 			paddingRight: '2rem',
 		},
+		rndContainerCSS: {
+			width: '100%',
+			height: '100%',
+			position: 'relative',
+		},
+		rndCSS: {
+			zIndex: '51',
+		}
 	},
 	Col_1_img_1_layout: {
 		columnCSS: { width: '100%', display: 'grid', gridTemplateColumns: '1fr' },
@@ -304,6 +319,14 @@ export const Business_002_TemplateLayoutsConfig: {
 			flexGrow: 1,
 			paddingLeft: '1rem',
 		},
+		rndContainerCSS: {
+			width: '100%',
+			height: '100%',
+			position: 'relative',
+		},
+		rndCSS: {
+			zIndex: '51',
+		}
 	},
 	Col_2_img_2_layout: {
 		columnCSS: { display: 'flex', flexDirection: 'column' },
@@ -340,6 +363,14 @@ export const Business_002_TemplateLayoutsConfig: {
 			paddingLeft: '2rem',
 			paddingRight: '2rem',
 		},
+		rndContainerCSS: {
+			width: '100%',
+			height: '100%',
+			position: 'relative',
+		},
+		rndCSS: {
+			zIndex: '51',
+		}
 	},
 	Col_3_img_3_layout: {
 		columnCSS: { display: 'flex', flexDirection: 'column' },
@@ -375,5 +406,13 @@ export const Business_002_TemplateLayoutsConfig: {
 			paddingLeft: '2rem',
 			paddingRight: '2rem',
 		},
+		rndContainerCSS: {
+			width: '100%',
+			height: '100%',
+			position: 'relative',
+		},
+		rndCSS: {
+			zIndex: '51',
+		}
 	},
 };

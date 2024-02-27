@@ -265,8 +265,7 @@ export const templateDispatch = (
 			handleSlideEdit={handleSlideEdit}
 			currentSlideIndex={index}
 			isShowingLogo={isShowingLogo}
-			images_position={slide.images_position || [{}, {}, {}] as ImagesPosition[]}
-			slideIdx = {index}
+			images_position={slide.images_position || [{}, {}, {}]}
 		/>
 	);
 	// }
