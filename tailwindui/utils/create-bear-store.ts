@@ -5,7 +5,7 @@
  */
 
 import { create, StateCreator } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 import { produce } from 'immer';
 import { Producer } from '@/types/immer';
@@ -41,7 +41,7 @@ const createBearSlice =
 
 export const createBearStore =
 	<V>() =>
-	<K extends string>(k: K, defaultValue: V, persistEnabled?: boolean) => {
+	<K extends string>(k: K, defaultValue: V, persistEnabled?: boolean, storage: Storage = sessionStorage) => {
 		const f = (...a: any[]) => ({
 			// @ts-ignore
 			...createBearSlice<K, V>(k, defaultValue)(...a),
@@ -58,6 +58,7 @@ export const createBearStore =
 							}
 							return persistedState;
 						},
+            storage: createJSONStorage(() => storage)
 					}),
 				)
 			: create<BearSlice<K, V>>()(f);
