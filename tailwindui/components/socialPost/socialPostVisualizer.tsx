@@ -58,7 +58,7 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
           <div className='w-[100] md:w-[40rem] flex-grow'>
             <TextLabel>View only link:</TextLabel>
             <ClickableLink
-              link={`${host}/shared/${sessionStorage.getItem('project_id')}`}
+              link={`${host}/shared/${project?.id}`}
             />
           </div>
         )}

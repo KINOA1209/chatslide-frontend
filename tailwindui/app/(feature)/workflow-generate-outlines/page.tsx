@@ -51,7 +51,7 @@ export default function Topic() {
   const [showLanguagePopup, setLanguagePopup] = useState(false);
   const [showSupportivePopup, setSupportivePopup] = useState(false);
   const { isPaidUser } = useUser();
-  const { updateOutlines, updateProject, initProject } = useProject();
+  const { project, updateOutlines, updateProject, initProject } = useProject();
 
   // bind form data between input and sessionStorage
   const [topic, setTopic] = useState(
@@ -133,10 +133,7 @@ export default function Topic() {
       return;
     }
 
-    const project_id =
-      typeof window !== 'undefined' && sessionStorage.project_id != undefined
-        ? sessionStorage.project_id
-        : '';
+    const project_id = project?.id || '';
 
     const scenarioType =
       typeof window !== 'undefined' && sessionStorage.scenarioType != undefined
@@ -189,7 +186,6 @@ export default function Topic() {
         sessionStorage.setItem('topic', outlinesJson.data.topic);
         updateOutlines(Object.values(JSON.parse(outlinesJson.data.outlines)));
         sessionStorage.setItem('foldername', outlinesJson.data.foldername);
-        sessionStorage.setItem('project_id', outlinesJson.data.project_id);
         sessionStorage.setItem(
           'pdf_images',
           JSON.stringify(outlinesJson.data.pdf_images),
@@ -202,7 +198,7 @@ export default function Topic() {
         setShowPaymentModal(true);
         setIsSubmitting(false);
       } else {
-        toast.error('Server is busy now. Please try again later. Reference code: ' + sessionStorage.getItem('project_id'));
+        toast.error('Server is busy now. Please try again later. Reference code: ' + project?.id);
         setIsSubmitting(false);
       }
     } catch (error) {

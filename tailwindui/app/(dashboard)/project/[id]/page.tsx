@@ -9,29 +9,25 @@ import ProjectService from '@/services/ProjectService';
 import Project from '@/models/Project';
 import { useSlides } from '@/hooks/use-slides';
 import { useProject } from '@/hooks/use-project';
+import { useUser } from '@/hooks/use-user';
 
 const ProjectLoading = () => {
 	const pathname = usePathname();
 	const router = useRouter();
   const { initSlides } = useSlides();
   const { initProject } = useProject();
+  const { token } = useUser();
 
   const { project, updateProject } = useProject();
 
 	useEffect(() => {
 		sessionStorage.clear();
-		// Create a scoped async function within the hook.
-		const fetchUser = async () => {
-			try {
-				const { userId, idToken: token } =
-					await AuthService.getCurrentUserTokenAndId();
-				fetchProjectDetails(token);
-			} catch (error: any) {
-				console.error(error);
-			}
-		};
-		// Execute the created function directly
-		fetchUser();
+    initSlides([]);
+    try {
+      fetchProjectDetails(token);
+    } catch (error: any) {
+      console.error(error);
+    }
 	}, []);
 
 	useEffect(() => {
@@ -117,14 +113,11 @@ const ProjectLoading = () => {
 		headers.append('Content-Type', 'application/json');
 
 		try {
-			// set project_id in sessionStorage
 			const project_id = pathname?.split('/').pop();
 			if (project_id) {
-				console.log('this is project_id', project_id);
-				sessionStorage.setItem('project_id', project_id);
-
+				console.log('loading project with id', project_id);
 				const project = await ProjectService.getProjectDetails(token, project_id);
-        initProject(project);
+        initProject(project);  // will also init outlines
         if (project?.parsed_slides){
           initSlides(project.parsed_slides)
         }

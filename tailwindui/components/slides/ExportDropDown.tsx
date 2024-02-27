@@ -10,6 +10,7 @@ import { generatePdf } from '../utils/DownloadImage';
 import ProjectService from '@/services/ProjectService';
 import { useUser } from '@/hooks/use-user';
 import { RiSlideshow2Fill } from 'react-icons/ri';
+import { useProject } from '@/hooks/use-project';
 
 interface ExportToPdfProps {
   slides: Slide[];
@@ -27,6 +28,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
   const [downloading, setDownloading] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const { isPaidUser, token } = useUser();
+  const { project } = useProject();
   const [showDropdown, setShowDropdown] = useState(false);
 
   async function exportToPdfFrontend() {
@@ -53,12 +55,13 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
       return;
     }
 
+    if (!project) return;
+
     setDownloading(true);
     if (frontend) {
       await exportToPdfFrontend();
     } else {
-      const project_id = sessionStorage.getItem('project_id') || '';
-      await ProjectService.exportToFileBackend(token, project_id, type);
+      await ProjectService.exportToFileBackend(token, project.id, type);
     }
     setDownloading(false);
   };

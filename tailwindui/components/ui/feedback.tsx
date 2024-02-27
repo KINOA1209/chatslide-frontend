@@ -3,6 +3,8 @@ import AuthService from '../../services/AuthService';
 import ReferralLink from '../ReferralLink';
 import Modal from './Modal';
 import { BigBlueButton, InversedBigBlueButton } from '../button/DrlambdaButton';
+import { useProject } from '@/hooks/use-project';
+import { useUser } from '@/hooks/use-user';
 
 interface FeedbackFormProps {
 	onClose: () => void;
@@ -93,6 +95,9 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 	const [feedbackText, setFeedbackText] = useState<string>('');
 	const [submitSuccessful, setSubmitSuccessful] = useState<boolean>(false);
 	const [ratingError, setRatingError] = useState<string | null>(null);
+  const { project } = useProject();
+  const { token } = useUser();
+
 
 	const handleRatingChange = (newRating: number) => {
 		setRating(newRating);
@@ -143,20 +148,16 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 			setRatingError('Please leave your feedback.');
 		} else {
 			try {
-				const { userId, idToken: token } =
-					await AuthService.getCurrentUserTokenAndId();
-
 				const headers = new Headers();
 				if (token) {
 					headers.append('Authorization', `Bearer ${token}`);
 				}
 				headers.append('Content-Type', 'application/json');
 
-				const project_id = sessionStorage.getItem('project_id');
 				const feedbackData = {
 					rating: rating,
 					feedbackText: feedbackText,
-					project_id: project_id,
+					project_id: project?.id,
 				};
 
 				const response = await fetch('/api/feedback', {

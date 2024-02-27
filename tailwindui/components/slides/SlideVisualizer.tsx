@@ -65,8 +65,13 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
     const foldername = sessionStorage.getItem('foldername') || '';
 
     const fetchData = async () => {
+      if (!project) {
+        console.log('SlideVisualizer: No project found');
+        return;
+      }
+
       try {
-        const project_id = sessionStorage.getItem('project_id') || '';
+        const project_id = project.id;
         const job_id = await VideoService.generateVideo(
           project_id,
           foldername,
@@ -91,6 +96,11 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
   }
 
   async function handleSubmitTranscript() {
+    if (!project) {
+      console.log('SlideVisualizer: No project found');
+      return;
+    }
+    
     console.log('submitting');
 
     const html_filename = 'html_init.html';
@@ -107,8 +117,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
         ? sessionStorage.getItem('language')
         : 'English';
 
-    const project_id =
-      typeof window !== 'undefined' ? sessionStorage.getItem('project_id') : '';
+    const project_id = project.id;
     const formData = {
       html_filename: html_filename,
       foldername: foldername,
@@ -136,7 +145,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
         const transcripts = resp.data.res;
         setTranscripts(transcripts); // and auto-save
       } else {
-        toast.error('Server is busy now. Please try again later. Reference code: ' + sessionStorage.getItem('project_id'));
+        toast.error('Server is busy now. Please try again later. Reference code: ' + project_id);
         console.log(response);
         setIsSubmitting(false);
       }
@@ -175,7 +184,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
             <TextLabel>View only link:</TextLabel>
             <div className='flex flex-row items-center gap-4'>
               <ClickableLink
-                link={`${host}/shared/${sessionStorage.getItem('project_id')}`}
+                link={`${host}/shared/${project?.id || ''}`}
               />
               <button
                 className='text-gray-500 hover:text-gray-700'

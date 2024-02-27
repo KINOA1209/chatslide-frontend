@@ -4,6 +4,7 @@ import ReferralLink from '../ReferralLink';
 import Modal from '@/components/ui/Modal';
 import { BigBlueButton, InversedBigBlueButton } from '../button/DrlambdaButton';
 import { PrimaryColorButton } from './UserOnboardingButtons';
+import { useProject } from '@/hooks/use-project';
 
 interface FeedbackFormProps {
 	onClose: () => void;
@@ -94,6 +95,7 @@ export const OnboardingFeedbackForm: React.FC<FeedbackFormProps> = ({
 	const [feedbackText, setFeedbackText] = useState<string>('');
 	const [submitSuccessful, setSubmitSuccessful] = useState<boolean>(false);
 	const [ratingError, setRatingError] = useState<string | null>(null);
+  const { project } = useProject();
 
 	const handleRatingChange = (newRating: number) => {
 		setRating(newRating);
@@ -153,11 +155,10 @@ export const OnboardingFeedbackForm: React.FC<FeedbackFormProps> = ({
 				}
 				headers.append('Content-Type', 'application/json');
 
-				const project_id = sessionStorage.getItem('project_id');
 				const feedbackData = {
 					rating: rating,
 					feedbackText: feedbackText,
-					project_id: project_id,
+					project_id: project?.id || '',
 				};
 
 				const response = await fetch('/api/feedback', {

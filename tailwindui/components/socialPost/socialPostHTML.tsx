@@ -24,6 +24,7 @@ import templates, {
 	templateSamples,
 } from '@/components/socialPost/socialPostTemplates';
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
+import { useProject } from '@/hooks/use-project';
 
 export interface SlideElement {
 	type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
@@ -126,15 +127,13 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 	res_scenario,
 }) => {
 	const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
+  const { project } = useProject();
 	const foldername =
 		typeof sessionStorage !== 'undefined'
 			? sessionStorage.getItem('foldername')
 			: '';
 
-	const project_id =
-		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('project_id')
-			: '';
+	const project_id = project?.id || '';
 
 	const res_slide =
 		typeof sessionStorage !== 'undefined'

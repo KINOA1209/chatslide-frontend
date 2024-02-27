@@ -9,6 +9,7 @@ import ProjectService from '@/services/ProjectService';
 import PostPlatformConfigs from '@/components/button/PostPlatformConfig'
 import { useUser } from '@/hooks/use-user';
 import { FaFacebook } from 'react-icons/fa';
+import { useProject } from '@/hooks/use-project';
 
 type PostButtonProps = {
   slides: Slide[] | SocialPostSlide[];
@@ -34,7 +35,7 @@ const PostDropDown: React.FC<PostButtonProps> = ({
   keywords = ['DrLambda', 'presentation', 'slides', 'ai_agent']
 }) => {
   const [host, setHost] = useState('https://drlambda.ai');
-
+  const { project } = useProject();
   const limitedKeywords = keywords.slice(0, 3);
   const truncatedDescription = truncateWithFullWords(description, 100);
 
@@ -45,10 +46,7 @@ const PostDropDown: React.FC<PostButtonProps> = ({
     title = title?.replace(/<[^>]*>?/gm, '');
   }
 
-  const project_id =
-    typeof window !== 'undefined' && sessionStorage.project_id != undefined
-      ? sessionStorage.project_id
-      : '';
+  const project_id = project?.id || '';
 
   useEffect(() => {
     if (

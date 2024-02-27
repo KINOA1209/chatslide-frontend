@@ -20,6 +20,7 @@ import { useUser } from '@/hooks/use-user';
 import { GPTToggleWithExplanation } from '@/components/button/WorkflowGPTToggle';
 import { IoIosLink } from 'react-icons/io';
 import { FiYoutube } from 'react-icons/fi';
+import { useProject } from '@/hooks/use-project';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 6;
@@ -67,6 +68,7 @@ export default function Topic_SocialPost() {
 	const [isAddingLink, setIsAddingLink] = useState(false);
 
   const { token } = useUser();
+  const { project, initProject } = useProject();
 
 	// bind form data between input and sessionStorage
 	const [topic, setTopic] = useState(
@@ -150,10 +152,7 @@ export default function Topic_SocialPost() {
 			console.log(linkError); // continue without the invalid link
 		}
 
-		const project_id =
-			typeof window !== 'undefined' && sessionStorage.project_id != undefined
-				? sessionStorage.project_id
-				: '';
+		const project_id = project?.id || '';
 
 		setIsSubmitting(true);
 
@@ -181,8 +180,8 @@ export default function Topic_SocialPost() {
 
 			// Store the data in session storage
 			sessionStorage.setItem('foldername', outlinesJson.data.foldername);
-			sessionStorage.setItem('project_id', outlinesJson.data.project_id);
 			sessionStorage.setItem('socialPost', outlinesJson.data.res);
+      initProject(outlinesJson.data);
 			//sessionStorage.setItem('socialPostImages', JSON.stringify(searchImagesResponse.data.images))
 
 			// Retrieve the existing resources from sessionStorage and parse them
@@ -226,7 +225,7 @@ export default function Topic_SocialPost() {
 				setShowPaymentModal(true);
 				setIsSubmitting(false);
 			} else {
-        toast.error(`Server is busy now. Please try again later. Reference code: ` + sessionStorage.getItem('project_id'));
+        toast.error(`Server is busy now. Please try again later. Reference code: ` + project?.id);
 				setIsSubmitting(false);
 			}
 		}

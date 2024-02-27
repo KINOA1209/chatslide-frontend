@@ -7,6 +7,7 @@ import { useSlides } from '@/hooks/use-slides';
 import ProjectService from '@/services/ProjectService';
 import { toast } from 'react-toastify';
 import { useUser } from '@/hooks/use-user';
+import { useProject } from '@/hooks/use-project';
 
 // this class has no UI, it is used to submit the outline to the backend when isSubmitting is true
 const GenerateSlidesSubmit = ({
@@ -23,6 +24,7 @@ const GenerateSlidesSubmit = ({
 	const router = useRouter();
   const { token } = useUser();
   const { initSlides } = useSlides();
+  const { project } = useProject();
 
 	useEffect(() => {
 		if (isSubmitting) {
@@ -51,7 +53,7 @@ const GenerateSlidesSubmit = ({
 			router.push('workflow-review-slides');
 		} else {
       setIsSubmitting(false);
-      toast.error('Server is busy now. Please try again later. Reference code: ' + sessionStorage.getItem('project_id'));
+      toast.error('Server is busy now. Please try again later. Reference code: ' + project?.id);
 		}
 	}
 
@@ -73,10 +75,7 @@ const GenerateSlidesSubmit = ({
 			typeof window !== 'undefined'
 				? sessionStorage.getItem('language')
 				: 'English';
-		const project_id =
-			typeof window !== 'undefined'
-				? sessionStorage.getItem('project_id')
-				: null;
+		const project_id = project?.id || '';
 		const selectedResources =
 			typeof window !== 'undefined'
 				? JSON.parse(sessionStorage.getItem('selectedResources') || '')

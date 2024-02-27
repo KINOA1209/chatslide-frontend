@@ -19,31 +19,8 @@ const LoginForm: React.FC = () => {
 		const password = (event.target as HTMLFormElement).password.value;
 
 		try {
-			const user = await AuthService.signIn(email, password);
-
-			const { userId, idToken: token } =
-				await AuthService.getCurrentUserTokenAndId();
-			console.log('token', token);
-
-			if (nextUri == null) {
-				router.push('/dashboard');
-			} else {
-				const project_id = sessionStorage.getItem('project_id') || '';
-				try {
-					const response = await fetch('/api/link_project', {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json',
-							Authorization: `Bearer ${token}`,
-						},
-						body: JSON.stringify({ project_id: project_id }),
-					});
-					console.log(response);
-					router.push(nextUri); // Redirect to nextUri
-				} catch (error) {
-					console.error(error);
-				}
-			}
+			await AuthService.signIn(email, password);
+      router.push('/dashboard');
 		} catch (error: any) {
 			console.error(error);
       let message = error.message || 'An error occurred';

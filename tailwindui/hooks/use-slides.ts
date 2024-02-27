@@ -4,6 +4,7 @@ import Slide from '@/models/Slide';
 import { TemplateKeys } from '@/components/slides/slideTemplates';
 import { useUser } from './use-user';
 import { useChatHistory } from './use-chat-history';
+import { useProject } from './use-project';
 
 const useSlidesBear = createBearStore<Slide[]>()('slides', [], true);
 const useSlideIndex = createBearStore<number>()('slideIndex', 0, true);
@@ -45,6 +46,7 @@ export const useSlides = () => {
 	const { slidesHistoryIndex, setSlidesHistoryIndex } = useSlidesHistoryIndex();
 	const { version, setVersion } = useVersion();
 	const { token } = useUser();
+  const { project } = useProject();
 
 	const { clearChatHistory } = useChatHistory();
 
@@ -55,10 +57,9 @@ export const useSlides = () => {
 		if (slidesStatus !== SlidesStatus.NotInited) return;
 		slidesStatus = SlidesStatus.Initing;
 
-    setSlides([]);
     setSlideIndex(0);
     setVersion(0);
-		setSlidesHistory([]);
+		setSlidesHistory([slides]);
 		setSlidesHistoryIndex(0);
 		console.log('-- init slides: ', { slidesStatus, slides });
 
@@ -229,7 +230,7 @@ export const useSlides = () => {
 		saveStatus = SaveStatus.Saving;
 
 		const foldername = sessionStorage.getItem('foldername');
-		const project_id = sessionStorage.getItem('project_id');
+		const project_id = project?.id;
 
 		if (!foldername || !project_id || !token) {
 			console.error(
