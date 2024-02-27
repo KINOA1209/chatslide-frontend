@@ -190,7 +190,7 @@ export const ImgModule = ({
 		}
 	}
 
-	const handleImageClick = async(e: React.MouseEvent<HTMLDivElement>) => {
+	const handleImageClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.preventDefault();
 		// update image here to template & source html
 		updateSingleCallback((e.target as HTMLImageElement).getAttribute('src'), false);
