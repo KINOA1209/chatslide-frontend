@@ -29,6 +29,7 @@ export const useProject = () => {
   const { videoJobId, setVideoJobId } = useVideoJobIdBear();
   const { isGpt35, setIsGpt35 } = useIsGpt35Bear();
   const { isShared, setIsShared } = useIsShared();
+  const { token } = useUser();
 
   const init = async () => {
     if (projectStatus !== ProjectStatus.NotInited) return;
@@ -52,7 +53,6 @@ export const useProject = () => {
   };
 
   const updateIsShared = (value: boolean) => {
-    const { token } = useUser();
     setIsShared(value);
     setProject({ ...project, is_shared: value } as Project);
     ProjectService.SlideShareLink(token, project?.id || '', value);

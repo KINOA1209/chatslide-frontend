@@ -16,6 +16,8 @@ type Project = {
   language: string;
   foldername: string;
   thumbnail_url: string;
+  is_shared: boolean;
+  is_public: boolean;
 
   // Presentation-specific fields
   audience: string;
@@ -24,8 +26,6 @@ type Project = {
   outline_item_counts: string;
   video_url: string;
   pdf_images: string;
-  is_shared: boolean;
-  is_public: boolean;
   presentation_slides: string; // JSONified slide object
   parsed_slides: Slide[];
   scenario_type: string;

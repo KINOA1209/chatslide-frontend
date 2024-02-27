@@ -8,12 +8,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import ProjectService from '@/services/ProjectService';
 import Project from '@/models/Project';
 import { useSlides } from '@/hooks/use-slides';
+import { useProject } from '@/hooks/use-project';
 
 const ProjectLoading = () => {
 	const [project, setProject] = useState<Project | null>(null);
 	const pathname = usePathname();
 	const router = useRouter();
   const { initSlides } = useSlides();
+  const { initProject } = useProject();
 
 	useEffect(() => {
 		sessionStorage.clear();
@@ -33,6 +35,8 @@ const ProjectLoading = () => {
 
 	useEffect(() => {
 		if (project) {
+      initProject(project);
+
 			// Store values in sessionStorage if they exist
 			if (project.topic) {
 				sessionStorage.setItem('topic', project.topic);
