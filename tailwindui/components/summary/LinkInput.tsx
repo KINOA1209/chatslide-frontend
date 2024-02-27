@@ -141,15 +141,12 @@ const LinkInput = ({
 
 
   return (
-    <div className='link_container bg-gray-100 border border-2 border-gray-200'>
+    <div className='bg-gray-100 border border-2 rounded-lg border-gray-200'>
       <div
-        id='link_text_container'
-        className='flex justify-center items-center w-full'
+        className='flex justify-center items-center w-full px-4 py-2'
       >
         <div className='flex items-center gap-1'>
           <IoIosLink />
-          <FiYoutube />
-          𝕏
         </div>
         <div className='w-full'>
           <label htmlFor='link_text'></label>
