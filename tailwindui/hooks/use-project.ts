@@ -35,9 +35,8 @@ export const useProject = () => {
   const { outlines, setOutlines } = useOutlinesBear();
 
   const init = async () => {
-    console.log('-- useProject init');
     if (projectStatus !== ProjectStatus.NotInited) return;
-    projectStatus = ProjectStatus.Initing;
+    console.log('-- useProject init');
     projectStatus = ProjectStatus.Inited;
   };
 

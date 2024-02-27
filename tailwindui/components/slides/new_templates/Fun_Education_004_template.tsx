@@ -45,15 +45,15 @@ export const Fun_Education_004_template = ({
 		layoutOptionCover as keyof typeof layoutOptions,
 	);
 
-	useEffect(() => {
-		console.log('Fun_Education_004_template themeElements:', themeElements);
-	}, []);
-	useEffect(() => {
-		console.log(
-			'Fun_Education_004_template layoutConfigElements for current slide page:',
-			layoutConfigElements,
-		);
-	}, []);
+	// useEffect(() => {
+	// 	console.log('Fun_Education_004_template themeElements:', themeElements);
+	// }, []);
+	// useEffect(() => {
+	// 	console.log(
+	// 		'Fun_Education_004_template layoutConfigElements for current slide page:',
+	// 		layoutConfigElements,
+	// 	);
+	// }, []);
 
 	return (
 		<>

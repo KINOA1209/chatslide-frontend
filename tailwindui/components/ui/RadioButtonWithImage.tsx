@@ -1,38 +1,40 @@
 import React from 'react';
 import Image from 'next/image';
 
-export interface ImageOption {
-  img: any;
+export interface RadioButtonOption {
+  img?: any;
   value: string;
-  alt: string;
+  text: string;
 }
 
-interface RadioButtonWithImageProps {
-  options: ImageOption[];
+interface RadioButtonProps {
+  name: string;
+  options: RadioButtonOption[];
   selectedValue: string;
   setSelectedValue: (value: string) => void;
 }
 
-const RadioButtonWithImage: React.FC<RadioButtonWithImageProps> = ({ options, selectedValue, setSelectedValue }) => {
-
+const RadioButton: React.FC<RadioButtonProps> = ({ name, options, selectedValue, setSelectedValue }) => {
   return (
     <div className='grid grid-cols-3 gap-x-4 mt-3'>
-      {options.map(({ img, value, alt }) => (
+      {options.map(({ img, value, text }) => (
 
-        <div key={value} className={`rounded-lg py-2`}>
+        <div key={value} className={`rounded-lg py-2`} onClick={() => setSelectedValue(value)}>
           <label>
-            <div onClick={() => setSelectedValue(value)}>
-              <Image src={img} alt={alt} />
-            </div>
+            {img &&
+              <div>
+                <Image src={img} alt={text} />
+              </div>
+            }
             <div className='flex flex-row items-center gap-x-2'>
               <input
                 type='radio'
-                name='theme'
+                name={name}
                 value={value}
                 checked={selectedValue === value}
                 onChange={() => setSelectedValue(value)}
               />
-              <span dangerouslySetInnerHTML={{ __html: alt }}></span>
+              <span dangerouslySetInnerHTML={{ __html: text }}></span>
             </div>
           </label>
         </div>))}
@@ -40,4 +42,4 @@ const RadioButtonWithImage: React.FC<RadioButtonWithImageProps> = ({ options, se
   );
 }
 
-export default RadioButtonWithImage;
+export default RadioButton;
