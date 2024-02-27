@@ -35,8 +35,17 @@ export const useProject = () => {
   const { outlines, setOutlines } = useOutlinesBear();
 
   const init = async () => {
+    console.log('-- useProject init');
     if (projectStatus !== ProjectStatus.NotInited) return;
     projectStatus = ProjectStatus.Initing;
+    setProject(null);
+    setResources([]);
+    setSelectedResources([]);
+    setVideoJobId('');
+    setIsGpt35(true);
+    setIsShared(false);
+    setOutlines([]);
+    projectStatus = ProjectStatus.Inited;
   };
 
   useEffect(() => {
