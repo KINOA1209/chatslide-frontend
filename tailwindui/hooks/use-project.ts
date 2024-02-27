@@ -5,6 +5,7 @@ import Resource from '@/models/Resource';
 import Slide from '@/models/Slide';
 import ProjectService from '@/services/ProjectService';
 import { useUser } from './use-user';
+import SessionStorage from '@/components/utils/SessionStorage';
 
 
 const useProjectBear = createBearStore<Project | null>()('project', null, true);
@@ -45,7 +46,9 @@ export const useProject = () => {
   const initProject = async (project: Project) => {
     console.log('-- initProject', project);
     setProject(project);
-    setOutlines(project.outlines || []);
+    setOutlines(Object.values(JSON.parse(project.outlines)) || []);
+    if (outlines) 
+      SessionStorage.setItem('outlines', 'true');  // so progress bar will be updated properly
     projectStatus = ProjectStatus.Inited;
     setIsShared(project.is_shared || false);
   }
@@ -72,8 +75,8 @@ export const useProject = () => {
     }
 
     setOutlines(outlinesCopy);
-    updateProject('outlines', outlinesCopy);
-    sessionStorage.setItem('outlines', 'true');  // so progress bar will be updated properly
+    // updateProject('outlines', outlinesCopy);
+    SessionStorage.setItem('outlines', 'true');  // so progress bar will be updated properly
     // todo: save outlines 
   }
 

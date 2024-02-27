@@ -8,7 +8,7 @@ type Project = {
   author: string;
   description: string;
   keywords: string[];
-  resources: Resource[]; // Ensure Resource type is defined elsewhere
+  resources: Resource[]; 
   created_datetime: string;
   project_name: string;
   topic: string;
@@ -21,7 +21,7 @@ type Project = {
 
   // Presentation-specific fields
   audience: string;
-  outlines: Outlines;
+  outlines: string; // will be parsed into Outlines type: todo: use outlines type in backend as well 
   extra_knowledge: string;
   outline_item_counts: string;
   video_url: string;
