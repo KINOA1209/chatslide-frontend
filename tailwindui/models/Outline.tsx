@@ -5,4 +5,4 @@ interface OutlineSection {
   section_style?: string;
 }
 
-interface OutlineDataType extends Array<OutlineSection> { }
+interface Outlines extends Array<OutlineSection> { }

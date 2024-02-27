@@ -23,6 +23,7 @@ import SessionStorage from '@/components/utils/SessionStorage';
 import FromDocsUploadFile from '@/components/AddResourcesSection';
 import useHydrated from '@/hooks/use-hydrated';
 import LinkInput from '@/components/summary/LinkInput';
+import { useProject } from '@/hooks/use-project';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 6;
@@ -37,7 +38,6 @@ const audienceList = [
 ];
 
 export default function Topic() {
-  const contentRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showFileModal, setShowFileModal] = useState(false);
@@ -51,6 +51,7 @@ export default function Topic() {
   const [showLanguagePopup, setLanguagePopup] = useState(false);
   const [showSupportivePopup, setSupportivePopup] = useState(false);
   const { isPaidUser } = useUser();
+  const { updateOutlines } = useProject();
 
   // bind form data between input and sessionStorage
   const [topic, setTopic] = useState(
@@ -186,7 +187,7 @@ export default function Topic() {
 
         // Store the data in session storage
         sessionStorage.setItem('topic', outlinesJson.data.topic);
-        sessionStorage.setItem('outline', JSON.stringify(outlinesJson.data));
+        updateOutlines(Object.values(JSON.parse(outlinesJson.data.outlines)));
         sessionStorage.setItem('foldername', outlinesJson.data.foldername);
         sessionStorage.setItem('project_id', outlinesJson.data.project_id);
         sessionStorage.setItem(
@@ -296,7 +297,6 @@ export default function Topic() {
         isSubmitting={isSubmitting}
         setIsSubmitting={setIsSubmitting}
         isPaidUser={isPaidUser}
-        contentRef={contentRef}
         nextIsPaidFeature={false}
         nextText={
           !isSubmitting ? 'Write Outline (20⭐️)' : 'Writing Outline...'

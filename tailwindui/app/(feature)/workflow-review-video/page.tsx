@@ -121,7 +121,6 @@ export default function WorkflowStep6() {
         isSubmitting={isSubmitting}
         setIsSubmitting={setIsSubmitting}
         isPaidUser={true}
-        contentRef={contentRef}
         nextIsPaidFeature={true}
         lastStep={true}
       />

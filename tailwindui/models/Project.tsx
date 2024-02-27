@@ -21,7 +21,7 @@ type Project = {
 
   // Presentation-specific fields
   audience: string;
-  outline: OutlineDataType;
+  outlines: Outlines;
   extra_knowledge: string;
   outline_item_counts: string;
   video_url: string;

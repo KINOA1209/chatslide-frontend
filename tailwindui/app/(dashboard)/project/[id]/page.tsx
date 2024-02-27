@@ -11,11 +11,12 @@ import { useSlides } from '@/hooks/use-slides';
 import { useProject } from '@/hooks/use-project';
 
 const ProjectLoading = () => {
-	const [project, setProject] = useState<Project | null>(null);
 	const pathname = usePathname();
 	const router = useRouter();
   const { initSlides } = useSlides();
   const { initProject } = useProject();
+
+  const { project, updateProject } = useProject();
 
 	useEffect(() => {
 		sessionStorage.clear();
@@ -67,9 +68,6 @@ const ProjectLoading = () => {
 				}
 				if (project.audience) {
 					sessionStorage.setItem('audience', project.audience);
-				}
-				if (project.outline) {
-					sessionStorage.setItem('outline', JSON.stringify(project.outline));
 				}
 				if (project.presentation_slides) {
 					sessionStorage.setItem(
@@ -125,12 +123,11 @@ const ProjectLoading = () => {
 				console.log('this is project_id', project_id);
 				sessionStorage.setItem('project_id', project_id);
 
-				ProjectService.getProjectDetails(token, project_id).then((project) => {
-					setProject(project);
-          if (project?.parsed_slides){
-            initSlides(project.parsed_slides)
-          }
-				});
+				const project = await ProjectService.getProjectDetails(token, project_id);
+        initProject(project);
+        if (project?.parsed_slides){
+          initSlides(project.parsed_slides)
+        }
 			}
 		} catch (error) {
 			toast.error('The project is not found or you do not have access to it.', {
@@ -157,7 +154,7 @@ const ProjectLoading = () => {
 		if (typeof window !== 'undefined' && sessionStorage.getItem('topic')) {
 			finishedStepsArray.push(0);
 		}
-		if (typeof window !== 'undefined' && sessionStorage.getItem('outline')) {
+		if (typeof window !== 'undefined' && project?.outlines) {
 			finishedStepsArray.push(1);
 		}
 		if (

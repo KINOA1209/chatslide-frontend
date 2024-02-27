@@ -1,27 +1,27 @@
 import React, { useState, useRef, useEffect, Fragment } from 'react';
 import { useRouter } from 'next/navigation';
-import AuthService from '@/services/AuthService';
 import 'react-toastify/dist/ReactToastify.css';
 import Resource from '@/models/Resource';
 import ResourceService from '@/services/ResourceService';
 import { useSlides } from '@/hooks/use-slides';
 import ProjectService from '@/services/ProjectService';
 import { toast } from 'react-toastify';
+import { useUser } from '@/hooks/use-user';
 
 // this class has no UI, it is used to submit the outline to the backend when isSubmitting is true
 const GenerateSlidesSubmit = ({
-	outline,
+	outlines,
 	isGPT35,
 	isSubmitting,
 	setIsSubmitting,
 }: {
-	outline: OutlineDataType;
+	outlines: Outlines;
 	isGPT35: boolean;
 	isSubmitting: boolean;
 	setIsSubmitting: (submitting: boolean) => void;
 }) => {
 	const router = useRouter();
-
+  const { token } = useUser();
   const { initSlides } = useSlides();
 
 	useEffect(() => {
@@ -29,23 +29,6 @@ const GenerateSlidesSubmit = ({
 			handleSubmit();
 		}
 	}, [isSubmitting]);
-
-	const updateOutlineSessionStorage = (updatedOutline: any) => {
-		const entireOutline = JSON.parse(sessionStorage.outline);
-		entireOutline.res = JSON.stringify({ ...updatedOutline });
-		sessionStorage.setItem('outline', JSON.stringify(entireOutline));
-	};
-
-	const checkOutlineChanged = (updatedOutline: any) => {
-		const entireOutline = JSON.parse(sessionStorage.outline);
-		const originalOutline = JSON.parse(entireOutline.res);
-		entireOutline.res = JSON.stringify({ ...updatedOutline });
-		if (JSON.stringify(originalOutline) === entireOutline.res) {
-			return false;
-		} else {
-			return true;
-		}
-	};
 
 	async function generateSlidesPreview(formData: any, token: string) {
 		const response = await fetch('/api/generate_slides', {
@@ -75,22 +58,8 @@ const GenerateSlidesSubmit = ({
 	const handleSubmit = async () => {
 		let formData: any = {};
 
-		console.log('outlineData', outline);
-
-		// remove empty entries
-		const outlineCopy = [...outline];
-		for (let i = 0; i < outlineCopy.length; i++) {
-			outlineCopy[i].content = outlineCopy[i].content.filter((s) => {
-				return s.length > 0;
-			});
-		}
-
-		if (checkOutlineChanged(outlineCopy) === true) {
-			sessionStorage.removeItem('extraKnowledge');
-			sessionStorage.removeItem('outline_item_counts');
-		}
-
-		updateOutlineSessionStorage(outlineCopy);
+    sessionStorage.removeItem('extraKnowledge');
+    sessionStorage.removeItem('outline_item_counts');
 
 		const audience =
 			typeof window !== 'undefined' ? sessionStorage.getItem('audience') : null;
@@ -142,8 +111,7 @@ const GenerateSlidesSubmit = ({
 			: null;
     const background_ids = typeof window !== 'undefined' ? sessionStorage.getItem('selectedBackground_id') : null;
 		formData = {
-			res: JSON.stringify({ ...outlineCopy }),
-			outlines: JSON.stringify({ ...outlineCopy }),
+			outlines: JSON.stringify({ ...outlines }),
 			audience: audience,
 			foldername: foldername,
 			topic: topic,
@@ -164,12 +132,10 @@ const GenerateSlidesSubmit = ({
 			try {
 				console.log('resources', selectedResources);
 				console.log('querying vector database');
-				const { userId, idToken: token } =
-					await AuthService.getCurrentUserTokenAndId();
 				const extraKnowledge = await ResourceService.queryResource(
 					project_id || '',
 					selectedResources.map((r: Resource) => r.id),
-					outlineCopy,
+					outlines,
 					token,
 				);
 				sessionStorage.setItem(
@@ -192,8 +158,6 @@ const GenerateSlidesSubmit = ({
 		}
 
 		try {
-			const { userId, idToken: token } =
-				await AuthService.getCurrentUserTokenAndId();
 			await generateSlidesPreview(formData, token);
 		} catch (error) {
 			console.error('Error:', error);

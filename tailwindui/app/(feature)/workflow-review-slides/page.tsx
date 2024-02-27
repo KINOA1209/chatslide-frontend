@@ -53,7 +53,6 @@ export default function WorkflowStep3() {
 					isSubmitting={isSubmitting}
 					setIsSubmitting={setIsSubmitting}
 					isPaidUser={isPaidUser}
-					contentRef={contentRef}
 					nextIsPaidFeature={true}
 					nextText={!isSubmitting ? 'Write Scripts' : 'Writing Scripts'}
 				/>
@@ -63,7 +62,6 @@ export default function WorkflowStep3() {
 					isSubmitting={isSubmitting}
 					setIsSubmitting={setIsSubmitting}
 					isPaidUser={isPaidUser}
-					contentRef={contentRef}
 					nextIsPaidFeature={true}
 					nextText={!isSubmitting ? 'Create Video' : 'Creating Video'}
 				/>

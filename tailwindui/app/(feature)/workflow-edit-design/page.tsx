@@ -3,25 +3,20 @@
 import React, { useState, useRef, useEffect, Fragment } from 'react';
 import ContentWithImageImg from '@/public/images/summary/content_with_image.png';
 import ContentOnlyImg from '@/public/images/summary/content_only.png';
-import ContentInBrandingColorImg from '@/public/images/summary/content_in_branding_color.png';
-import Image from 'next/image';
 import 'react-toastify/dist/ReactToastify.css';
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
 import { ToastContainer } from 'react-toastify';
 import '@/app/css/workflow-edit-topic-css/topic_style.css';
 import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
-import FileUploadModal from '@/components/forms/FileUploadModal';
 import { DropDown, SmallBlueButton } from '@/components/button/DrlambdaButton';
 import Resource from '@/models/Resource';
-import SelectedResourcesList from '@/components/SelectedResources';
 import dynamic from 'next/dynamic';
 import ImageSelector from './ImageSelector';
 import RadioButtonWithImage, {
 	ImageOption,
 } from '@/components/ui/RadioButtonWithImage';
 import useHydrated from '@/hooks/use-hydrated';
-import { SlidesStatus, useSlides } from '@/hooks/use-slides';
-import { TemplateKeys } from '@/components/slides/slideTemplates';
+import { useProject } from '@/hooks/use-project';
 // const { changeTemplate } = useSlides();
 
 const SlideDesignPreview = dynamic(
@@ -37,12 +32,8 @@ export default function ThemePage() {
 		'Business_002' as string,
 	);
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const contentRef = useRef<HTMLDivElement>(null);
 	const [isGpt35, setIsGpt35] = useState(true);
-	const storedOutline =
-		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('outline')
-			: null;
+	const { outlines } = useProject();
 
 	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
 		typeof window !== 'undefined' && sessionStorage.selectedLogo != undefined
@@ -50,11 +41,6 @@ export default function ThemePage() {
 			: [],
 	);
 	const [selectedBackground, setSelectedBackground] = useState<Resource[]>([]);
-	const outline = storedOutline ? JSON.parse(storedOutline) : null;
-	const outlineRes = outline ? JSON.parse(outline.res) : null;
-	const [outlineContent, setOutlineContent] = useState<OutlineSection[] | null>(
-		null,
-	);
 
 	const imageChoices: ImageOption[] = [
 		{
@@ -68,20 +54,6 @@ export default function ThemePage() {
 			alt: 'Less images<br>(30% decks contain images)',
 		},
 	];
-
-	useEffect(() => {
-		if (outlineRes) {
-			const newOutlineContent = Object.keys(outlineRes).map((key) => {
-				return {
-					title: outlineRes[key]['title'],
-					content: outlineRes[key]['content'],
-					detailLevel: outlineRes[key]['detailLevel'],
-					section_style: outlineRes[key]['section_style'],
-				};
-			});
-			setOutlineContent(newOutlineContent);
-		}
-	}, []);
 
 	useEffect(() => {
 		sessionStorage.setItem('schoolTemplate', schoolTemplate);
@@ -110,19 +82,17 @@ export default function ThemePage() {
 				isSubmitting={isSubmitting}
 				setIsSubmitting={setIsSubmitting}
 				isPaidUser={true}
-				contentRef={contentRef}
 				nextIsPaidFeature={false}
 				nextText={!isSubmitting ? 'Create Slides' : 'Creating Slides'}
 			/>
 
-			{outlineContent && (
-				<GenerateSlidesSubmit
-					outline={outlineContent}
-					isGPT35={isGpt35}
-					isSubmitting={isSubmitting}
-					setIsSubmitting={setIsSubmitting}
-				/>
-			)}
+      <GenerateSlidesSubmit
+        outlines={outlines}
+        isGPT35={isGpt35}
+        isSubmitting={isSubmitting}
+        setIsSubmitting={setIsSubmitting}
+      />
+
 			<div className='gap-y-4 w-full flex flex-col items-center md:my-[6rem]'>
 				{/* design */}
 				<div

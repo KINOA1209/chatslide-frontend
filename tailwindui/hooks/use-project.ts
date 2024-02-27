@@ -13,6 +13,7 @@ const useSelectedResourcesBear = createBearStore<Resource[]>()('selectedResource
 const useVideoJobIdBear = createBearStore<string>()('videoJobId', '', true);
 const useIsGpt35Bear = createBearStore<boolean>()('isGpt35', true, true);
 const useIsShared = createBearStore<boolean>()('isShared', false, true);
+const useOutlinesBear = createBearStore<Outlines>()('outlines', [], true);
 
 export enum ProjectStatus {
   NotInited,
@@ -30,6 +31,7 @@ export const useProject = () => {
   const { isGpt35, setIsGpt35 } = useIsGpt35Bear();
   const { isShared, setIsShared } = useIsShared();
   const { token } = useUser();
+  const { outlines, setOutlines } = useOutlinesBear();
 
   const init = async () => {
     if (projectStatus !== ProjectStatus.NotInited) return;
@@ -41,7 +43,9 @@ export const useProject = () => {
   }, []);
 
   const initProject = async (project: Project) => {
+    console.log('-- initProject', project);
     setProject(project);
+    setOutlines(project.outlines || []);
     projectStatus = ProjectStatus.Inited;
     setIsShared(project.is_shared || false);
   }
@@ -58,10 +62,25 @@ export const useProject = () => {
     ProjectService.SlideShareLink(token, project?.id || '', value);
   }
 
+  const updateOutlines = (outlines: Outlines) => {
+    // remove empty entries
+    const outlinesCopy = [...outlines];
+    for (let i = 0; i < outlinesCopy.length; i++) {
+      outlinesCopy[i].content = outlinesCopy[i].content.filter((s) => {
+        return s.length > 0;
+      });
+    }
+
+    setOutlines(outlinesCopy);
+    updateProject('outlines', outlinesCopy);
+    // todo: save outlines 
+  }
+
   return {
     project, initProject, updateProject, resources, setResources, selectedResources, setSelectedResources,
     videoJobId, setVideoJobId,
     isGpt35, setIsGpt35,
-    isShared, updateIsShared
+    isShared, updateIsShared,
+    outlines, updateOutlines,
   };
 };

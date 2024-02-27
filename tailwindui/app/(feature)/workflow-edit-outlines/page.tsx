@@ -9,34 +9,14 @@ import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
 import { ToastContainer } from 'react-toastify';
 import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
 import StepsOutlinePage from '@/components/user_onboarding/StepsOutlinePage';
+import { useProject } from '@/hooks/use-project';
 
 export default function WorkflowStep2() {
-	const storedOutline =
-		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('outline')
-			: null;
-	const outline = storedOutline ? JSON.parse(storedOutline) : null;
-	const outlineRes = outline ? JSON.parse(outline.res) : null;
-	const contentRef = useRef<HTMLDivElement>(null);
-	const [outlineContent, setOutlineContent] = useState<OutlineSection[] | null>(
-		null,
-	);
 	const [isGpt35, setIsGpt35] = useState(true);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const router = useRouter();
-	useEffect(() => {
-		if (outlineRes) {
-			const newOutlineContent = Object.keys(outlineRes).map((key) => {
-				return {
-					title: outlineRes[key]['title'],
-					content: outlineRes[key]['content'],
-					detailLevel: outlineRes[key]['detailLevel'],
-					section_style: outlineRes[key]['section_style'],
-				};
-			});
-			setOutlineContent(newOutlineContent);
-		}
-	}, []);
+  const { outlines, updateOutlines } = useProject();
+  
 	// set current page to local storage
 	useEffect(() => {
 		if (typeof window !== 'undefined' && localStorage) {
@@ -46,7 +26,9 @@ export default function WorkflowStep2() {
 
 	useEffect(() => {
 		if (isSubmitting) {
-			handleSubmit();
+      if (outlines) {
+        router.push('workflow-edit-design')
+      }
 		}
 	}, [isSubmitting]);
 
@@ -65,17 +47,10 @@ export default function WorkflowStep2() {
 		}
 	};
 
-	const handleSubmit = async () => {
-		if(outlineContent){
-			const outlineCopy = [...outlineContent];
-			const entireOutline = JSON.parse(sessionStorage.outline);
-			entireOutline.res = JSON.stringify({...outlineCopy})
-			sessionStorage.setItem('outline', JSON.stringify(entireOutline));
-			router.push('workflow-edit-design')
-		}
-	}
-	//console.log(outline)
-	//console.log(typeof outline.res)
+  if (!outlines || !outlines.length) {
+    return <></>
+  }
+  
 	return (
 		<div className=''>
 			<MyCustomJoyride steps={StepsOutlinePage()} />
@@ -87,19 +62,9 @@ export default function WorkflowStep2() {
 				isSubmitting={isSubmitting}
 				setIsSubmitting={setIsSubmitting}
 				isPaidUser={true}
-				contentRef={contentRef}
 				nextIsPaidFeature={false}
 				nextText={!isSubmitting ? 'Select Design' : 'Select Design'}
 			/>
-
-			{/* {outlineContent && (
-				<GenerateSlidesSubmit
-					outline={outlineContent}
-					isGPT35={isGpt35}
-					isSubmitting={isSubmitting}
-					setIsSubmitting={setIsSubmitting}
-				/>
-			)} */}
 
 			<div className='mb-[3rem]'>
 				{/* overview nav section */}
@@ -109,7 +74,7 @@ export default function WorkflowStep2() {
 							OVERVIEW
 						</div>
 						<ol className='list-none px-4 py-4'>
-							{outlineContent?.map((section, index) => (
+              {outlines?.map((section, index) => (
 								<li
 									className='pb-2 opacity-60 text-neutral-900 text-s tracking-wider font-medium font-creato-medium leading-normal tracking-tight cursor-pointer hover:text-black  hover:rounded-md hover:bg-gray-200'
 									key={index}
@@ -126,26 +91,16 @@ export default function WorkflowStep2() {
 				<div className='flex justify-end'>
 					<div className='w-full sm:w-2/3 gap-10 auto-rows-min'>
 						<div className='lg:col-span-2 flex flex-col'>
-							{outlineContent && (
 								<OutlineVisualizer
-									outlineData={outlineContent}
-									setOutlineData={setOutlineContent}
+									outlineData={outlines}
+									setOutlineData={updateOutlines}
 									isGPT35={isGpt35}
 								/>
-							)}
 						</div>
 					</div>
 				</div>
 			</div>
-			{/* <ProjectProgress currentInd={1} contentRef={contentRef} /> */}
-			{/* <div className='pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20'>
-        <h1 className='h1'>Edit Outlines</h1>
-      </div> */}
-			{/* <div className='max-w-4xl mx-auto px-6 pt-[10rem]' ref={contentRef}> */}
-			{/* <p>This is the outline generated. You can edit the details below.</p> */}
-			{/* <br /> */}
-
-			{/* </div> */}
+      
 			{/* feedback from fixed on the page */}
 			<FeedbackButton />
 		</div>

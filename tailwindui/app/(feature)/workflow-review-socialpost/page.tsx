@@ -120,7 +120,6 @@ export default function SocialMediaTemplate() {
 					isSubmitting={false}
 					setIsSubmitting={() => {}}
 					isPaidUser={true}
-					contentRef={contentRef}
 					nextIsPaidFeature={false}
 					lastStep = {true}
 					nextText={'Next'}

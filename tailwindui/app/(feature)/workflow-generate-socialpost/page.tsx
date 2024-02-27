@@ -410,7 +410,6 @@ export default function Topic_SocialPost() {
 					isSubmitting={isSubmitting}
 					setIsSubmitting={setIsSubmitting}
 					isPaidUser={isPaidUser}
-					contentRef={contentRef}
 					nextIsPaidFeature={false}
 					nextText={
 						!isSubmitting ? 'Create Post' : 'Creating Post...'
