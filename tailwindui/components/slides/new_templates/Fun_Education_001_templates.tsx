@@ -91,7 +91,8 @@ export const Fun_Education_001_template = ({
 							width={960}
 							height={540}
 							src={`${uploadedBackgroundImageUrl}`}
-							alt='Background Image for cover'
+							alt='Background Image'
+              unoptimized={true}
 						/>
 					</div>
 				)}
@@ -155,7 +156,8 @@ export const Fun_Education_001_template = ({
 							width={960}
 							height={540}
 							src={`${uploadedBackgroundImageUrl}`}
-							alt='Background Image for cover'
+							alt='Background Image'
+              unoptimized={true}
 						/>
 					</div>
 				)}
