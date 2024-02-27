@@ -22,9 +22,6 @@ import Card from './ui/Card';
 interface AddResourcesProps {
   searchOnlineScope: string;
   setSearchOnlineScope: React.Dispatch<React.SetStateAction<string>>;
-  openSupportivePopup: () => void;
-  closeSupportivePopup: () => void;
-  showSupportivePopup: boolean;
   setShowFileModal: (show: boolean) => void;
   selectedResources: any[];
   setSelectedResources: React.Dispatch<React.SetStateAction<any[]>>;
@@ -35,9 +32,6 @@ interface AddResourcesProps {
 const AddResourcesSection: React.FC<AddResourcesProps> = ({
   searchOnlineScope,
   setSearchOnlineScope,
-  openSupportivePopup,
-  closeSupportivePopup,
-  showSupportivePopup,
   setShowFileModal,
   selectedResources,
   setSelectedResources,
@@ -108,21 +102,24 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 
   return (
     <Card>
-      {isRequired ?
-        <div className='title2'>
-          <p className='text-3xl'>Import Sources</p>
-          <p id='after2'> (Required)</p>
-        </div> :
+      <div>
+        {isRequired ?
+          <div className='title2'>
+            <p className='text-3xl'>Import Sources</p>
+            <p id='after2'> (Required)</p>
+          </div> :
 
-        <div className='title2'>
-          <p className='text-3xl'>Supporting Sources</p>
-          <p id='after2'> (Optional)</p>
-        </div>
-      }
-      <div className='my-4'>
-        <span className='text-sm text-gray-500'>
-          To get started, select the sources you would like to use.
-        </span>
+          <div className='title2'>
+            <p className='text-3xl'>Supporting Sources</p>
+            <p id='after2'> (Optional)</p>
+          </div>
+        }
+        <Explanation>
+          {isRequired ?
+            'Add any sources that would support your topic. This could be online sources, files, or links.' :
+            'To get started, use any sources that would support your topic. This could be online sources, files, or links.'
+          }
+        </Explanation>
       </div>
 
       {/* search online */}
@@ -143,7 +140,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
         <Instruction>
           What additional files do you want to include?
         </Instruction>
-        <div className={`w-full h-[250px] flex flex-col items-center justify-center border rounded-md border-2 border-gray-200 cursor-pointer ${isDragging ? 'bg-blue-100 border-blue-500' : ''}`}
+        <div className={`w-full h-[150px] flex flex-col items-center justify-center border rounded-md border-2 border-gray-200 cursor-pointer ${isDragging ? 'bg-blue-100 border-blue-500' : ''}`}
           onDragEnter={handleDragEnter}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
@@ -153,21 +150,21 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
             setShowFileModal(true);
           }}
         >
-          <div className='flex flex-col items-center gap-2'>
+          <div className='flex flex-rol items-center gap-2'>
             <FiFilePlus size={40} color='gray' />
-            <span className='font-creato-medium leading-snug tracking-wide text-lg'
-            >Drag files here or{' '}
-              <span className='text-blue-600'
-              >
-                Browse File
-              </span>
-            </span>
-            <Explanation>
-              <div className='text-center'>
-                Any additional files that can enhance and provide context to your projects.<br />
-                Supports PDF, TXT, DOCX, PPTX
-              </div>
-            </Explanation>
+            <div className='flex flex-col items-center'>
+              <Instruction>
+                Drag files here or{' '}
+                <span className='text-blue-600'>
+                  Browse File
+                </span>
+              </Instruction>
+              <Explanation>
+                <div className='text-center'>
+                  Supports PDF, TXT, DOCX, PPTX
+                </div>
+              </Explanation>
+            </div>
           </div>
         </div>
       </div>
@@ -181,15 +178,18 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
           selectedResources={selectedResources}
           setSelectedResources={setSelectedResources}
         />
-        {selectedResources.length > 0 && <hr id='add_hr' />}
-        <div className='mt-[10px]'>
-          <SelectedResourcesList
-            selectedResources={selectedResources}
-            removeResourceAtIndex={removeResourceAtIndex}
-          />
-        </div>
       </div>
-    </Card>
+
+      <div>
+        <Instruction>
+          Your selected sources:
+        </Instruction>
+        <SelectedResourcesList
+          selectedResources={selectedResources}
+          removeResourceAtIndex={removeResourceAtIndex}
+        />
+      </div>
+    </Card >
   );
 };
 
