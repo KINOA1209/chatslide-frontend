@@ -312,6 +312,7 @@ class ProjectService {
     try {
       const response = await fetch(`/api/${type}?foldername=${foldername}&filename=${filename}`, {
         method: 'GET',
+        mode: 'no-cors', 
         headers: headers,
       });
       if (response.ok) {
