@@ -5,12 +5,18 @@ export const Fun_Education_001_TemplateThemeConfig: ThemeElements = {
 		'/images/template/Fun_Education_001/BackgroundElementsCover_img_1.png',
 	backgroundUrlCoverImg0:
 		'/images/template/Fun_Education_001/BackgroundElementsCover_img_0.png',
-	backgroundUrlCol_1_img_0: '',
-	backgroundUrlCol_2_img_0: '',
-	backgroundUrlCol_3_img_0: '',
-	backgroundUrlCol_2_img_1: '',
-	backgroundUrlCol_1_img_1: '',
-	backgroundUrlCol_2_img_2: '',
+	backgroundUrlCol_1_img_0:
+		'/images/template/Fun_Education_001/BackgroundElementsCol_1_img_0.png',
+	backgroundUrlCol_2_img_0:
+		'/images/template/Fun_Education_001/BackgroundElementsCol_2_img_0.png',
+	backgroundUrlCol_3_img_0:
+		'/images/template/Fun_Education_001/BackgroundElementsCol_3_img_0.png',
+	backgroundUrlCol_2_img_1:
+		'/images/template/Fun_Education_001/BackgroundElementsCol_2_img_1.png',
+	backgroundUrlCol_1_img_1:
+		'/images/template/Fun_Education_001/BackgroundElementsCol_1_img_1.png',
+	backgroundUrlCol_2_img_2:
+		'/images/template/Fun_Education_001/BackgroundElementsCol_2_img_2.png',
 	backgroundUrlCol_3_img_3:
 		'/images/template/Fun_Education_001/BackgroundElementsCol_3_img_3.png',
 

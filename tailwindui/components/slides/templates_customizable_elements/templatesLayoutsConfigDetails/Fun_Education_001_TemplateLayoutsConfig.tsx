@@ -404,11 +404,19 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 		},
 	},
 	Col_2_img_2_layout: {
+		canvaCSS: {
+			width: '100%',
+			height: '100%',
+			display: 'flex',
+		},
 		columnCSS: {
 			display: 'flex',
 			flexDirection: 'column',
 			gap: '0.5rem',
-			padding: '2rem 2rem 2rem 2rem',
+		},
+		subtopicCSS: {
+			paddingBottom: '1rem',
+			borderBottom: '1px solid #B7B7B7',
 		},
 		titleAndSubtopicBoxCSS: {
 			zIndex: 30,
@@ -416,36 +424,39 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			flexDirection: 'column',
 			// justifyContent: 'center',
 			// alignItems: 'center',
+			padding: '2rem 2rem 2rem 2rem',
+			order: 1,
 		},
 		imageContainerCSS: {
 			width: '100%', // equivalent to w-full
 			display: 'grid',
-			gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
-			gap: '2rem', // equivalent to gap-[2rem]
+			gridTemplateColumns: 'repeat(2, 1fr)', //
+			order: 0,
+			zIndex: 30,
 		},
 		imageCSS: {
 			height: '11rem', // equivalent to h-[11rem]
 			flexGrow: 1, // equivalent to grow
-			borderRadius: '1.25rem', // equivalent to rounded-md
+			// borderRadius: '0.375rem', // equivalent to rounded-md
 			overflow: 'hidden', // equivalent to overflow-hidden
-			position: 'relative', // equivalent to relative
 		},
 		contentCSS: {
 			zIndex: 30,
-			width: '100%', // equivalent to w-full
+			padding: '1rem 2rem 2rem 2rem',
+			width: '100%',
 			display: 'grid',
-			gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
-			gap: '2rem', // equivalent to gap-[2rem]
-			paddingTop: '1rem',
+			gridTemplateColumns: 'repeat(2, 1fr)', //
+			gap: '2rem',
+			order: 2,
 		},
 		visualElementsCSS: {
-			zIndex: 20,
+			zIndex: 0,
 			width: '100%',
-			height: '80%',
+			height: '100%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '20%',
+			top: '0%',
 		},
 	},
 	Col_3_img_3_layout: {
