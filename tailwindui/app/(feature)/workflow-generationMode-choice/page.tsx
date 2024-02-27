@@ -14,8 +14,8 @@ const GenerationModePage = () => {
     const workflowType = SessionStorage.getItem('workflowType', 'slides');
 
 	const navigate = (type: string) => {
-		sessionStorage.setItem('generation_mode', type);
     sessionStorage.clear();
+		sessionStorage.setItem('generation_mode', type);
 		if (workflowType == 'slides') router.push('/workflow-generate-outlines');
 		else router.push('/workflow-generate-socialpost');
 	};
