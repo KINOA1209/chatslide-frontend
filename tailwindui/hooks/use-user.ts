@@ -4,14 +4,14 @@ import { createBearStore } from '@/utils/create-bear-store';
 import UserService from '@/services/UserService';
 import AuthService from '@/services/AuthService';
 
-const useTokenBear = createBearStore<string>()('token', '', true, false);
-const useUidBear = createBearStore<string>()('uid', '', true, false);
-const useUsernameBear = createBearStore<string>()('username', '', true, false);
-const useEmailBear = createBearStore<string>()('email', '', true, false);
-const useIsPaidUserBear = createBearStore<boolean>()('isPaidUser', false, true, false);
-const useCreditsBear = createBearStore<string>()('credits', '', true, false);
-const useTierBear = createBearStore<string>()('tier', '', true, false);
-const useExpirationDateBear = createBearStore<string>()('expirationDate', '', true, false);
+const useTokenBear = createBearStore<string>()('token', '', true, true);
+const useUidBear = createBearStore<string>()('uid', '', true, true);
+const useUsernameBear = createBearStore<string>()('username', '', true, true);
+const useEmailBear = createBearStore<string>()('email', '', true, true);
+const useIsPaidUserBear = createBearStore<boolean>()('isPaidUser', false, true, true);
+const useCreditsBear = createBearStore<string>()('credits', '', true, true);
+const useTierBear = createBearStore<string>()('tier', '', true, true);
+const useExpirationDateBear = createBearStore<string>()('expirationDate', '', true, true);
 
 export enum UserStatus {
 	NotInited,
