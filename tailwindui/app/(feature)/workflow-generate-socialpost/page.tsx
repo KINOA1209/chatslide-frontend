@@ -4,8 +4,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import '@/app/css/workflow-edit-topic-css/topic_style.css';
 import 'react-toastify/dist/ReactToastify.css';
-import AuthService from '@/services/AuthService';
-import UserService from '@/services/UserService';
 import PaywallModal from '@/components/forms/paywallModal';
 import FeedbackButton from '@/components/ui/feedback';
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
@@ -62,17 +60,13 @@ export default function Topic_SocialPost() {
 	const [urlIsYoutube, setUrlIsYoutube] = useState(false);
 	const [isGpt35, setIsGpt35] = useState(true);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
-	const [topicSuggestions, setTopicSuggestions] = useState<string[]>([
-		'Ultrasound',
-	]);
-	const [audienceSuggestions, setAudienceSuggestions] = useState<string[]>([]);
-	const [showAudienceInput, setShowAudienceInput] = useState(false);
 	const [showProjectPopup, setProjectPopup] = useState(false);
-	const [showAudiencePopup, setAudiencePopup] = useState(false);
 	const [showLanguagePopup, setLanguagePopup] = useState(false);
 	const [showSupportivePopup, setSupportivePopup] = useState(false);
 	const { isPaidUser } = useUser();
 	const [isAddingLink, setIsAddingLink] = useState(false);
+
+  const { token } = useUser();
 
 	// bind form data between input and sessionStorage
 	const [topic, setTopic] = useState(
@@ -128,35 +122,6 @@ export default function Topic_SocialPost() {
 			handleSubmit();
 		}
 	}, [isSubmitting]);
-
-	useEffect(() => {
-		const fetchHistoricalData = async () => {
-			const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-			if (userId) {
-				const data = await UserService.getUserHistoricalInput(idToken);
-				if (data) {
-					//to avoid duplicates, however do not check for cases
-					const uniqueTopics = new Set(
-						data.map((project: Project) => project.topic),
-					);
-					const uniqueAudiences = new Set(
-						data.map((project: Project) => project.audience),
-					);
-
-					setTopicSuggestions(Array.from(uniqueTopics) as string[]);
-					setAudienceSuggestions(Array.from(uniqueAudiences) as string[]);
-				}
-			}
-		};
-		const fetchUser = async () => {
-			const user = await AuthService.getCurrentUser();
-			if (user) {
-				setUser(user);
-			}
-		};
-		fetchHistoricalData();
-		fetchUser();
-	}, []);
 
 	const updateTopic = (topic: string) => {
 		if (topic.length >= MIN_TOPIC_LENGTH) {
@@ -215,7 +180,6 @@ export default function Topic_SocialPost() {
 			setIsSubmitting(false);
 
 			// Store the data in session storage
-			sessionStorage.setItem('outline', JSON.stringify(outlinesJson.data));
 			sessionStorage.setItem('foldername', outlinesJson.data.foldername);
 			sessionStorage.setItem('project_id', outlinesJson.data.project_id);
 			sessionStorage.setItem('socialPost', outlinesJson.data.res);
@@ -249,8 +213,6 @@ export default function Topic_SocialPost() {
 
 	// api/social_posts helper function
 	async function callSocialPost(formData: FormatData) {
-		const { userId, idToken: token } =
-			await AuthService.getCurrentUserTokenAndId();
 		const response = await fetch('/api/social_posts', {
 			method: 'POST',
 			headers: {
@@ -267,27 +229,6 @@ export default function Topic_SocialPost() {
         toast.error(`Server is busy now. Please try again later. Reference code: ` + sessionStorage.getItem('project_id'));
 				setIsSubmitting(false);
 			}
-		}
-		return await response.json();
-	}
-
-	// api/search_images helper function
-	async function callSearchImages(search_keyword: string) {
-		const { userId, idToken: token } =
-			await AuthService.getCurrentUserTokenAndId();
-		const response = await fetch('/api/search_images', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${token}`,
-			},
-			body: JSON.stringify({ search_keyword: search_keyword }),
-		});
-		if (!response.ok) {
-			const errorData = await response.text();
-			throw new Error(
-				`API call failed with status ${response.status}: ${errorData}`,
-			);
 		}
 		return await response.json();
 	}
@@ -331,8 +272,7 @@ export default function Topic_SocialPost() {
 
 	async function addYoutubeLink(link: string) {
 		try {
-			const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-			const videoDetails = await YoutubeService.getYoutubeInfo(link, idToken);
+			const videoDetails = await YoutubeService.getYoutubeInfo(link, token);
 
 			if (!videoDetails?.id) {
 				setLinkError('The Youtube link is invalid.');
@@ -350,8 +290,7 @@ export default function Topic_SocialPost() {
 
 	async function addWebpageLink(link: string) {
 		try {
-			const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-			const pageDetails = await WebService.getWebpageInfo(link, idToken);
+			const pageDetails = await WebService.getWebpageInfo(link, token);
 
 			if (!pageDetails?.id) {
 				setLinkError('The webpage link is invalid.');
@@ -366,17 +305,6 @@ export default function Topic_SocialPost() {
 		}
 		setIsAddingLink(false);
 	}
-
-	// Show/hide audience input based on `audience` value
-	useEffect(() => {
-		if (audienceList.includes(audience)) {
-			setShowAudienceInput(false);
-		} else if (audience === 'unselected') {
-			setShowAudienceInput(false);
-		} else {
-			setShowAudienceInput(true);
-		}
-	}, [audience]);
 
 	const handleLinkChange = (link: string) => {
 		// url format: https://gist.github.com/rodrigoborgesdeoliveira/987683cfbfcc8d800192da1e73adc486
