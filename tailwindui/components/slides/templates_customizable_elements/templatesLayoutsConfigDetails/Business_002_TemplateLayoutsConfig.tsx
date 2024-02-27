@@ -100,7 +100,7 @@ export const Business_002_TemplateLayoutsConfig: {
 		imageContainerCSS: {
 			width: '100%', // Equivalent to w-full
 			height: '100%', // Equivalent to h-full
-			overflow: 'hidden',
+			//overflow: 'hidden',
 			borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
 			position: 'absolute',
 		},
@@ -264,7 +264,7 @@ export const Business_002_TemplateLayoutsConfig: {
 			width: '50%', // equivalent to w-1/2
 			height: '100%', // equivalent to h-[90%]
 			borderRadius: '0.375rem', // equivalent to rounded-md
-			overflow: 'hidden',
+			//overflow: 'hidden',
 			display: 'flex',
 			alignItems: 'center', // equivalent to items-center
 		},
@@ -297,7 +297,7 @@ export const Business_002_TemplateLayoutsConfig: {
 			height: '8rem',
 			flexGrow: 1,
 			borderRadius: '0.375rem', // Assuming a typical rounded-md value
-			overflow: 'hidden',
+			//overflow: 'hidden',
 		},
 		contentContainerCSS: {
 			paddingTop: '0.5rem',
@@ -351,7 +351,7 @@ export const Business_002_TemplateLayoutsConfig: {
 			height: '8rem', // equivalent to h-[11rem]
 			flexGrow: 1, // equivalent to grow
 			borderRadius: '0.375rem', // equivalent to rounded-md
-			overflow: 'hidden', // equivalent to overflow-hidden
+			//overflow: 'hidden', // equivalent to overflow-hidden
 			position: 'relative', // equivalent to relative
 		},
 		contentCSS: {
@@ -395,7 +395,7 @@ export const Business_002_TemplateLayoutsConfig: {
 			height: '8rem', // equivalent to h-[11rem]
 			flexGrow: 1, // equivalent to grow
 			borderRadius: '0.375rem', // equivalent to rounded-md
-			overflow: 'hidden', // equivalent to overflow-hidden
+			//overflow: 'hidden', // equivalent to overflow-hidden
 		},
 		contentCSS: {
 			width: '100%', // equivalent to w-full

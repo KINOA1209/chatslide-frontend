@@ -365,7 +365,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			width: '50%',
 			height: '100%',
 			// borderRadius: '1.25rem',
-			overflow: 'hidden',
+			//overflow: 'hidden',
 			display: 'flex',
 			alignItems: 'center',
 			padding: '2rem 4rem 0rem 4rem', // top right bottom left
@@ -404,7 +404,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			height: '10rem',
 			flexGrow: 1,
 			borderRadius: '0.375rem', // Assuming a typical rounded-md value
-			overflow: 'hidden',
+			//overflow: 'hidden',
 			gridRow: 3,
 			zIndex: 30,
 			paddingRight: '6rem',
@@ -476,7 +476,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			height: '11rem', // equivalent to h-[11rem]
 			flexGrow: 1, // equivalent to grow
 			borderRadius: '1.25rem', // equivalent to rounded-md
-			overflow: 'hidden', // equivalent to overflow-hidden
+			//overflow: 'hidden', // equivalent to overflow-hidden
 			position: 'relative', // equivalent to relative
 		},
 		contentCSS: {
@@ -530,7 +530,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			height: '11rem', // equivalent to h-[11rem]
 			flexGrow: 1, // equivalent to grow
 			borderRadius: '0.375rem', // equivalent to rounded-md
-			overflow: 'hidden', // equivalent to overflow-hidden
+			//overflow: 'hidden', // equivalent to overflow-hidden
 		},
 		contentCSS: {
 			zIndex: 30,

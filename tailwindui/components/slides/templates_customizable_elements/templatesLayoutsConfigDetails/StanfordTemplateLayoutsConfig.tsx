@@ -59,7 +59,7 @@ export const StanfordTemplateLayoutsConfig: {
 			width: '50%', // Equivalent to w-1/2
 			height: '100%', // Equivalent to h-full
 			borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
-			overflow: 'hidden',
+			//overflow: 'hidden',
 		},
 		rndContainerCSS: {
 			width: '100%',
@@ -181,7 +181,7 @@ export const StanfordTemplateLayoutsConfig: {
 			width: '50%', // equivalent to w-1/2
 			height: '90%', // equivalent to h-[90%]
 			borderRadius: '0.375rem', // equivalent to rounded-md
-			overflow: 'hidden',
+			//overflow: 'hidden',
 			display: 'flex',
 			alignItems: 'center', // equivalent to items-center
 		},
@@ -202,7 +202,7 @@ export const StanfordTemplateLayoutsConfig: {
 			height: '15rem',
 			flexGrow: 1,
 			borderRadius: '0.375rem', // Assuming a typical rounded-md value
-			overflow: 'hidden',
+			//overflow: 'hidden',
 		},
 		contentContainerCSS: {
 			paddingTop: '0.5rem',
@@ -250,7 +250,7 @@ export const StanfordTemplateLayoutsConfig: {
 			height: '11rem', // equivalent to h-[11rem]
 			flexGrow: 1, // equivalent to grow
 			borderRadius: '0.375rem', // equivalent to rounded-md
-			overflow: 'hidden', // equivalent to overflow-hidden
+			//overflow: 'hidden', // equivalent to overflow-hidden
 			position: 'relative', // equivalent to relative
 		},
 		contentCSS: {
@@ -287,7 +287,7 @@ export const StanfordTemplateLayoutsConfig: {
 			height: '11rem', // equivalent to h-[11rem]
 			flexGrow: 1, // equivalent to grow
 			borderRadius: '0.375rem', // equivalent to rounded-md
-			overflow: 'hidden', // equivalent to overflow-hidden
+			//overflow: 'hidden', // equivalent to overflow-hidden
 		},
 		contentCSS: {
 			width: '100%', // equivalent to w-full
