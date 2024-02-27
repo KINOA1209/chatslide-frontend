@@ -144,19 +144,16 @@ const ProjectLoading = () => {
 	];
 	const presentationFinishedSteps: () => number[] = () => {
 		const finishedStepsArray: number[] = [];
-		if (typeof window !== 'undefined' && sessionStorage.getItem('topic')) {
+		if (project?.topic) {
 			finishedStepsArray.push(0);
 		}
-		if (typeof window !== 'undefined' && project?.outlines) {
+		if (project?.outlines) {
 			finishedStepsArray.push(1);
 		}
-		if (
-			typeof window !== 'undefined' &&
-			sessionStorage.getItem('presentation_slides')
-		) {
+		if (project?.parsed_slides) {
 			finishedStepsArray.push(2);
 		}
-    if (typeof window !== 'undefined' && sessionStorage.getItem('video_url')) {
+    if (project?.video_url) {
 			finishedStepsArray.push(3);
 		}
 		return finishedStepsArray;
