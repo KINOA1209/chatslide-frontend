@@ -118,12 +118,13 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			// overflow: 'hidden',
 		},
 		visualElementsCSS: {
-			zIndex: 20,
+			zIndex: 0,
 			width: '100%',
+			height: '10%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '21%',
+			top: '90%',
 		},
 		titleAndSubtopicBoxCSS: {
 			marginTop: '2rem',
@@ -134,6 +135,8 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			zIndex: 30,
 		},
 		subtopicCSS: {
+			paddingBottom: '1rem',
+			borderBottom: '1px solid #B7B7B7',
 			zIndex: 30,
 		},
 		contentCSS: {
@@ -151,7 +154,7 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			marginBottom: '1rem',
 			display: 'flex',
 			// zIndex: 10,
-			backgroundColor: '#E4F9F6',
+			// backgroundColor: '#E4F9F6',
 			borderRadius: '1.25rem',
 		},
 		titlesAndContentDividerCSS: {
@@ -160,12 +163,13 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 	},
 	Col_2_img_0_layout: {
 		visualElementsCSS: {
-			zIndex: 20,
+			zIndex: 0,
 			width: '100%',
+			height: '10%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '21%',
+			top: '90%',
 		},
 		titleAndSubtopicBoxCSS: {
 			marginTop: '2rem',
@@ -176,17 +180,19 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			zIndex: 30,
 		},
 		subtopicCSS: {
+			paddingBottom: '1rem',
+			borderBottom: '1px solid #B7B7B7',
 			zIndex: 30,
 		},
 
 		contentContainerCSS: {
 			height: 'auto',
 			width: 'auto',
-			display: 'grid',
-			gridTemplateColumns: 'repeat(2, 1fr)',
+			display: 'flex',
+			// gridTemplateColumns: 'repeat(2, 1fr)',
 			gap: '2rem',
 			margin: 'auto', // Center the container horizontally
-			padding: '2rem 2rem', // Add left and right padding
+			padding: '4rem 2rem 0rem 2rem', // Add left and right padding
 		},
 		contentCSS: {
 			display: 'flex',
@@ -194,22 +200,26 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			gap: '0.5rem',
 			width: '100%', // Equivalent to w-full
 			flexGrow: 0,
-			backgroundColor: '#E4F9F6',
+			position: 'relative',
+			// backgroundColor: '#E4F9F6',
 			borderRadius: '1.25rem',
-			padding: '2rem 2rem 4rem 2rem',
+			padding: '4rem 2rem 2rem 2rem',
 			// zIndex: 30,
 		},
 		contentIndexCSS: {
-			fontFamily: 'Caveat', // font-nimbus-sans-bold
-			color: '#2E2E2E', // Assuming text-neutral-900 corresponds to #374155
-			fontSize: '2.5rem',
-			fontWeight: 'bold',
+			fontFamily: 'Lemonada',
+			position: 'absolute',
+			color: '#E1F3F7',
+			fontSize: '15rem',
+			fontWeight: '700',
 			// fontFamily: 'Creato Display Medium',
 			textTransform: 'uppercase',
-			lineHeight: '2.5rem',
-			letterSpacing: '0.5rem',
+			lineHeight: '120%',
+			letterSpacing: '0.15rem',
 			paddingTop: '2rem',
-			zIndex: 30,
+			zIndex: 20,
+			top: '-50%',
+			left: '0%',
 		},
 		contentIndexTextDividerCSS: {
 			display: 'none',
@@ -229,12 +239,13 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			// boxSizing: 'border-box',
 		},
 		visualElementsCSS: {
-			zIndex: 20,
+			zIndex: 0,
 			width: '100%',
+			height: '10%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '21%',
+			top: '90%',
 		},
 		titleAndSubtopicBoxCSS: {
 			marginTop: '2rem',
@@ -245,42 +256,46 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			zIndex: 30,
 		},
 		subtopicCSS: {
+			paddingBottom: '1rem',
+			borderBottom: '1px solid #B7B7B7',
 			zIndex: 30,
 		},
 
 		contentContainerCSS: {
 			height: 'auto',
-			width: '100%',
-			display: 'grid',
-			gridTemplateColumns: 'repeat(3,1fr)',
+			width: 'auto',
+			display: 'flex',
+			// gridTemplateColumns: 'repeat(2, 1fr)',
 			gap: '2rem',
 			margin: 'auto', // Center the container horizontally
-			padding: '2rem 2rem', // Add left and right padding
+			padding: '4rem 2rem 0rem 2rem', // Add left and right padding
 		},
 		contentCSS: {
 			display: 'flex',
 			flexDirection: 'column',
 			gap: '0.5rem',
 			width: '100%', // Equivalent to w-full
-			// maxWidth: '200px', // Set your desired maximum width here
-			flexGrow: 1,
-			// flexWrap: 'wrap',
-			backgroundColor: '#E4F9F6',
+			flexGrow: 0,
+			position: 'relative',
+			// backgroundColor: '#E4F9F6',
 			borderRadius: '1.25rem',
-			padding: '2rem 2rem 2rem 2rem',
+			padding: '4rem 2rem 2rem 2rem',
 			// zIndex: 30,
 		},
 		contentIndexCSS: {
-			fontFamily: 'Caveat', // font-nimbus-sans-bold
-			color: '#2E2E2E', // Assuming text-neutral-900 corresponds to #374155
-			fontSize: '2.5rem',
-			fontWeight: 'bold',
+			fontFamily: 'Lemonada',
+			position: 'absolute',
+			color: '#FAEDF5',
+			fontSize: '15rem',
+			fontWeight: '700',
 			// fontFamily: 'Creato Display Medium',
 			textTransform: 'uppercase',
-			lineHeight: '2.5rem',
-			letterSpacing: '0.5rem',
+			lineHeight: '120%',
+			letterSpacing: '0.15rem',
 			paddingTop: '2rem',
-			zIndex: 30,
+			zIndex: 20,
+			top: '-50%',
+			left: '0%',
 		},
 		contentIndexTextDividerCSS: {
 			display: 'none',
