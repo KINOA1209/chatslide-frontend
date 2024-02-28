@@ -312,9 +312,10 @@ class ProjectService {
     try {
       const response = await fetch(`/api/${type}?foldername=${foldername}&filename=${filename}`, {
         method: 'GET',
-        mode: 'no-cors', 
+        mode: 'cors', 
         headers: headers,
       });
+
       if (response.ok) {
         const file = await response.blob();
         const fileUrl = URL.createObjectURL(file);
