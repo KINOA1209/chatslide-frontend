@@ -22,7 +22,7 @@ const ProjectLoading = () => {
   useEffect(() => {
     sessionStorage.clear();
 
-    const initProject = async () => {
+    const loadProject = async () => {
       try {
         await fetchProjectDetails(token); 
       } catch (error) {
@@ -30,7 +30,7 @@ const ProjectLoading = () => {
       }
     };
 
-    initProject();
+    loadProject();
   }, []);
 
   const setSessionStorage = (project: Project) => {

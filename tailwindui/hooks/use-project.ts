@@ -53,6 +53,16 @@ export const useProject = () => {
     setIsShared(project.is_shared || false);
   }
 
+  const clearProject = () => {
+    setProject(null);
+    setResources([]);
+    setSelectedResources([]);
+    setVideoJobId('');
+    setIsGpt35(true);
+    setIsShared(false);
+    setOutlines([]);
+  }
+
   const updateProject = <K extends keyof Project>(field: K, value: Project[K]) => {
     console.log('-- updateProject', field, value);
 
@@ -82,7 +92,8 @@ export const useProject = () => {
   }
 
   return {
-    project, projectStatus, initProject, updateProject, resources, setResources, selectedResources, setSelectedResources,
+    project, projectStatus, initProject, updateProject, clearProject, 
+    resources, setResources, selectedResources, setSelectedResources,
     videoJobId, setVideoJobId,
     isGpt35, setIsGpt35,
     isShared, updateIsShared,
