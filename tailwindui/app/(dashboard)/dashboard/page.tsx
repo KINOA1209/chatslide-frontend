@@ -51,7 +51,7 @@ export default function Dashboard() {
 
   const init = async () => {
     if (!token) return;  // sidebar will show a modal to ask user to login
-    fetchProjects();
+    await fetchProjects();
     const surveyFinished = await UserService.checkSurveyFinished(token)
     if (!surveyFinished) {
       setShowSurvey(true);
