@@ -34,7 +34,7 @@ const GenerateSlidesSubmit = ({
   const router = useRouter();
   const { token } = useUser();
   const { initSlides } = useSlides();
-  const { project } = useProject();
+  const { project, updateProject } = useProject();
 
   useEffect(() => {
     if (isSubmitting) {
@@ -60,6 +60,9 @@ const GenerateSlidesSubmit = ({
         JSON.stringify(resp.data.res),
       );
       initSlides(ProjectService.parseSlides(presentation_slides));
+      updateProject('presentation_slides', presentation_slides);
+      updateProject('description', resp.data.description);
+      updateProject('keywords', resp.data.keywords);
       router.push('workflow-review-slides');
     } else {
       setIsSubmitting(false);
@@ -143,6 +146,8 @@ const GenerateSlidesSubmit = ({
         );
         formData.extraKnowledge = extraKnowledge.data.res;
         formData.outline_item_counts = extraKnowledge.data.outline_item_counts;
+        updateProject('extra_knowledge', JSON.stringify(extraKnowledge.data.res));
+        updateProject('outline_item_counts', JSON.stringify(extraKnowledge.data.outline_item_counts));
         console.log('formData', formData);
       } catch (error) {
         console.error('Error querying vector database', error);

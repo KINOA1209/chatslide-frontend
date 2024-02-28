@@ -47,19 +47,30 @@ export const useProject = () => {
   const initProject = async (project: Project) => {
     console.log('-- initProject', project);
     setProject(project);
-    setOutlines(Object.values(JSON.parse(project.outlines)) || []);
-    if (outlines) 
-      SessionStorage.setItem('outlines', 'true');  // so progress bar will be updated properly
+    if (project.outlines)
+      setOutlines(Object.values(JSON.parse(project.outlines)) || []);
     projectStatus = ProjectStatus.Inited;
     setIsShared(project.is_shared || false);
   }
 
+  const clearProject = () => {
+    setProject(null);
+    setResources([]);
+    setSelectedResources([]);
+    setVideoJobId('');
+    setIsGpt35(true);
+    setIsShared(false);
+    setOutlines([]);
+  }
+
   const updateProject = <K extends keyof Project>(field: K, value: Project[K]) => {
     console.log('-- updateProject', field, value);
-
-    const newProject = { ...project };
-    newProject[field] = value;
-    setProject(newProject as Project);
+    setProject((currentProject) => {
+      // 'currentProject' is the most up-to-date state of 'project'
+      const newProject = { ...currentProject };
+      newProject[field] = value;
+      return newProject as Project;
+    });
   };
 
   const updateIsShared = (value: boolean) => {
@@ -79,12 +90,12 @@ export const useProject = () => {
 
     setOutlines(outlinesCopy);
     // updateProject('outlines', outlinesCopy);
-    SessionStorage.setItem('outlines', 'true');  // so progress bar will be updated properly
     // todo: save outlines 
   }
 
   return {
-    project, initProject, updateProject, resources, setResources, selectedResources, setSelectedResources,
+    project, projectStatus, initProject, updateProject, clearProject, 
+    resources, setResources, selectedResources, setSelectedResources,
     videoJobId, setVideoJobId,
     isGpt35, setIsGpt35,
     isShared, updateIsShared,

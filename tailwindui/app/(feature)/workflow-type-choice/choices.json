@@ -3,12 +3,12 @@
 	"description": "",
 	"options": [
 		{
-			"id": "slides",
+			"id": "presentation",
 			"title": "Slides",
 			"imageSrc": "/images/scenario/slides.png"
 		},
 		{
-			"id": "socialpost",
+			"id": "social_posts",
 			"title": "Social Post",
 			"imageSrc": "/images/scenario/socialpost.png"
 		}

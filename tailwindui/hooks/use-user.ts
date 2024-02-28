@@ -3,6 +3,7 @@ import { Auth as AmplifyAuth } from '@aws-amplify/auth';
 import { createBearStore } from '@/utils/create-bear-store';
 import UserService from '@/services/UserService';
 import AuthService from '@/services/AuthService';
+import { sleep } from '@/components/utils/sleep';
 
 const useTokenBear = createBearStore<string>()('token', '', true, false);
 const useUidBear = createBearStore<string>()('uid', '', true, false);
@@ -78,7 +79,6 @@ export const useUser = () => {
         setIsPaidUser(isPaidUser);
         setUsername(username);
         setEmail(email);
-        userStatus = UserStatus.Inited;
 
         // Break out of the loop if successful
         break;
@@ -91,8 +91,10 @@ export const useUser = () => {
         }
 
         // Otherwise, retry the block after a delay (you can adjust the delay as needed)
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await sleep(5000);
       }
+
+      userStatus = UserStatus.Inited;
     }
 	};
 

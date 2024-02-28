@@ -20,7 +20,7 @@ import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
 import StepsSummaryPage from '@/components/user_onboarding/StepsSummaryPage';
 import { GPTToggleWithExplanation } from '@/components/button/WorkflowGPTToggle';
 import SessionStorage from '@/components/utils/SessionStorage';
-import FromDocsUploadFile from '@/components/AddResourcesSection';
+import AddResourcesSection from '@/components/AddResourcesSection';
 import useHydrated from '@/hooks/use-hydrated';
 import LinkInput from '@/components/summary/LinkInput';
 import { useProject } from '@/hooks/use-project';
@@ -310,12 +310,9 @@ export default function Topic() {
 
           {generationMode === 'from_files' &&
             <>
-              <FromDocsUploadFile
+            <AddResourcesSection
                 searchOnlineScope={searchOnlineScope}
                 setSearchOnlineScope={setSearchOnlineScope}
-                openSupportivePopup={openSupportivePopup}
-                closeSupportivePopup={closeSupportivePopup}
-                showSupportivePopup={showSupportivePopup}
                 setShowFileModal={setShowFileModal}
                 selectedResources={selectedResources}
                 setSelectedResources={setSelectedResources}
@@ -541,72 +538,15 @@ export default function Topic() {
         {/* supporting docs  section */}
         {generationMode === 'from_topic' && (
           <div
-            className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1'
-            id='SummaryStep-3'
+            className='w-full lg:w-2/3 px-3 my-3 lg:my-1'
           >
-            <div className='additional_container my-2 lg:my-5  border border-2 border-gray-200'>
-              <div className='title2'>
-                <p className='text-3xl'>Supporting Documents</p>
-                <p id='after2'> (Optional)</p>
-              </div>
-              <div className='my-4'>
-                <span className='text-sm text-gray-500'>
-                  Offer more brilliant materials, your decks will been engaged
-                  with more depth
-                </span>
-              </div>
-              <div className='upload gap-1'>
-                <span>Add Resources</span>
-                <div className='relative inline-block'>
-                  <div
-                    className='cursor-pointer'
-                    onMouseEnter={openSupportivePopup}
-                    onMouseLeave={closeSupportivePopup}
-                    onTouchStart={openSupportivePopup}
-                    onTouchEnd={closeSupportivePopup}
-                  >
-                    <QuestionExplainIcon />
-                    {showSupportivePopup && (
-                      <div
-                        id='supportive_popup'
-                        className='absolute z-10 p-2 bg-gray-800 text-white text-sm rounded shadow-md w-[15rem] md:w-80 md:h-[5rem] flex justify-center items-center'
-                      >
-                        Any additional files that can enhance and provide context
-                        to your projects. This could be research data, images,
-                        charts, or reference materials.
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <LinkInput
-                selectedResources={selectedResources}
-                setSelectedResources={setSelectedResources}
-              />
-
-              <div className='drop_file bg-gray-100 border border-2 border-gray-200'>
-                <div className='flex items-center w-full'>
-                  <FaFilePdf />
-                  <span className='text-sm md:text-l'>Drop files here or </span>
-                  <SmallBlueButton
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setShowFileModal(true);
-                    }}
-                  >
-                    Browse File
-                  </SmallBlueButton>
-                </div>
-              </div>
-              {selectedResources.length > 0 && <hr id='add_hr' />}
-              <div className='mt-[10px]'>
-                <SelectedResourcesList
-                  selectedResources={selectedResources}
-                  removeResourceAtIndex={removeResourceAtIndex}
-                />
-              </div>
-            </div>
+            <AddResourcesSection
+              searchOnlineScope={searchOnlineScope}
+              setSearchOnlineScope={setSearchOnlineScope}
+              setShowFileModal={setShowFileModal}
+              selectedResources={selectedResources}
+              setSelectedResources={setSelectedResources}
+              removeResourceAtIndex={removeResourceAtIndex}/>
           </div>)}
       </div>
       <FeedbackButton />
