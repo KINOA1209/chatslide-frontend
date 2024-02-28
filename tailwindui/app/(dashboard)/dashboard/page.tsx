@@ -13,6 +13,7 @@ import ProjectService from '@/services/ProjectService';
 import Modal from '@/components/ui/Modal';
 import { UserStatus, useUser } from '@/hooks/use-user';
 import OnboardingSurvey from '@/components/slides/onboardingSurvey/OnboardingSurvey';
+import UserService from '@/services/UserService';
 
 export default function Dashboard() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -30,62 +31,43 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (userStatus != UserStatus.Inited) return;
-
     if (contentRef.current) {
       contentRef.current.style.height = contentRef.current.offsetHeight + 'px';
     }
-    // Create a scoped async function within the hook.
-    const fetchUserAndProject = async () => {
-      try {
-        ProjectService.getProjects(token).then((projects) => {
-          console.log('projects', projects);
-          setProjects(projects);
-          setRendered(true);
-          if (!showSurvey && projects.length === 0) {
-            router.push('/workflow-type-choice');
-          }
-        });
-      } catch (error: any) {
-        console.error(error);
-      }
-    };
-    // Execute the created function directly
-    fetchUserAndProject();
+    init();
   }, [userStatus]);
 
-  //check user survey status
-  useEffect(() => {
-    const checkUserSurveyStatus = async () => {
-      try {
-        const response = await fetch('/api/user/check_survey_status', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-          },
-        });
+  const fetchProjects = async () => {
+    try {
+      ProjectService.getProjects(token).then((projects) => {
+        console.log('projects', projects);
+        setProjects(projects);
+        setRendered(true);
+      });
+    } catch (error: any) {
+      console.error(error);
+    }
+  };
 
-        if (response.ok) {
-          const data = await response.json();
-          if (data.survey_status === 'incomplete') {
-            setShowSurvey(true)
-            console.log('The user had not completed the survey before')
-          }
-          else {
-            console.log('The user had completed the survey before')
-          }
-        }
-        else {
-          console.error('HTTP Error:', response.statusText);
-        }
+  const init = async () => {
+    if (!token) return;  // sidebar will show a modal to ask user to login
+    fetchProjects();
+    const surveyFinished = await UserService.checkSurveyFinished(token)
+    if (!surveyFinished) {
+      setShowSurvey(true);
+    } else {
+      if (projects.length === 0) {
+        router.push('/workflow-type-choice');
       }
-      catch (error) {
-        console.error('Error:', error);
-      }
-    };
-    if (token)
-      checkUserSurveyStatus();
-  }, []);
+    }
+  }
+
+  const closeSurvey = () => { 
+    setShowSurvey(false);
+    if (projects.length === 0) {
+      router.push('/workflow-type-choice');
+    }
+  }
 
   const handleBackToChoices = () => {
     setShowSurvey(false)
@@ -208,7 +190,7 @@ export default function Dashboard() {
       {showSurvey && (
         <Modal
           showModal={showSurvey}
-          setShowModal={setShowSurvey}
+          setShowModal={closeSurvey}
         // title='Welcome to DrLambda!'
         // description='We are excited to have you onboard. Please take a few minutes to complete the onboarding survey.'
         >

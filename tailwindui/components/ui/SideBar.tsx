@@ -13,14 +13,14 @@ import {
 import SideBarItem from './SideBarItem';
 import { SideBarData } from './SideBarData';
 import { BlueLabel, GrayLabel } from './GrayLabel';
-import { useUser } from '@/hooks/use-user';
+import { UserStatus, useUser } from '@/hooks/use-user';
 import useHydrated from '@/hooks/use-hydrated';
 import Modal from './Modal';
 
 interface SideBarProps { }
 const SideBar = ({ }: SideBarProps) => {
   const [top, setTop] = useState<boolean>(true);
-  const { uid, credits, tier } = useUser();
+  const { uid, credits, tier, userStatus } = useUser();
   const router = useRouter();
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const { signOut: userSignOut } = useUser();
@@ -75,6 +75,8 @@ const SideBar = ({ }: SideBarProps) => {
 
   // avoid hydration error during development caused by persistence
   if (!useHydrated()) return <></>;
+
+  if (userStatus != UserStatus.Inited) return <></>;
 
   if (!uid)
     return (
