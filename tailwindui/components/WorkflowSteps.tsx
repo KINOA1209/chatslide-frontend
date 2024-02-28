@@ -144,7 +144,7 @@ const PRESENTATION_STEPS = ['Summary', 'Outlines', 'Design', 'Slides', 'Video'];
 const SOCIAL_POSTS_REDIRECTS = ['/workflow-generate-socialpost', '/workflow-review-socialpost'];
 const PRESENTATION_REDIRECTS = ['/workflow-generate-outlines', '/workflow-edit-outlines', '/workflow-edit-design', '/workflow-review-slides', '/workflow-review-video'];
 
-export const projectFinishedSteps = (project: Project) => {
+export const projectFinishedSteps = (project: Project | null) => {
   const finishedStepsArray: number[] = [];
   if (!project) return finishedStepsArray;
   if (project.content_type === 'social_posts') {
@@ -180,8 +180,6 @@ const ProjectProgress: React.FC<{ currentInd: number }> = ({ currentInd }) => {
 
   const stepNames = project?.content_type === 'social_posts' ? SOCIAL_POSTS_STEPS : PRESENTATION_STEPS;
   const redirects = project?.content_type === 'social_posts' ? SOCIAL_POSTS_REDIRECTS : PRESENTATION_REDIRECTS;
-
-  if (!project) return <></>;
 
   return (
     <ProgressBox
