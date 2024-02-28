@@ -47,9 +47,8 @@ export const useProject = () => {
   const initProject = async (project: Project) => {
     console.log('-- initProject', project);
     setProject(project);
-    setOutlines(Object.values(JSON.parse(project.outlines)) || []);
-    if (outlines) 
-      SessionStorage.setItem('outlines', 'true');  // so progress bar will be updated properly
+    if (project.outlines)
+      setOutlines(Object.values(JSON.parse(project.outlines)) || []);
     projectStatus = ProjectStatus.Inited;
     setIsShared(project.is_shared || false);
   }
@@ -79,7 +78,6 @@ export const useProject = () => {
 
     setOutlines(outlinesCopy);
     // updateProject('outlines', outlinesCopy);
-    SessionStorage.setItem('outlines', 'true');  // so progress bar will be updated properly
     // todo: save outlines 
   }
 

@@ -10,6 +10,7 @@ import Project from '@/models/Project';
 import { useSlides } from '@/hooks/use-slides';
 import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';
+import { getLastStepReidrect } from '@/components/WorkflowSteps';
 
 const ProjectLoading = () => {
 	const pathname = usePathname();
@@ -100,7 +101,7 @@ const ProjectLoading = () => {
 					sessionStorage.setItem('socialPost', project.social_posts);
 				}
 			}
-			handleRedirect(content_type);
+			handleRedirect(project);
 		}
 	}, [project]);
 
@@ -136,73 +137,8 @@ const ProjectLoading = () => {
 		}
 	};
 
-	const presentationRedirect = [
-		'/workflow-generate-outlines',
-		'/workflow-edit-outlines',
-		'/workflow-review-slides',
-		'/workflow-review-video',
-	];
-	const presentationFinishedSteps: () => number[] = () => {
-		const finishedStepsArray: number[] = [];
-		if (project?.topic) {
-			finishedStepsArray.push(0);
-		}
-		if (project?.outlines) {
-			finishedStepsArray.push(1);
-		}
-		if (project?.parsed_slides) {
-			finishedStepsArray.push(2);
-		}
-    if (project?.video_url) {
-			finishedStepsArray.push(3);
-		}
-		return finishedStepsArray;
-	};
-
-	const socialPostRedirect = [
-		'/workflow-scenario-choice',
-		'/workflow-generate-socialpost',
-		'/workflow-review-socialpost',
-	];
-	const socialPostFinishedSteps: () => number[] = () => {
-		const finishedStepsArray: number[] = [];
-		if (
-			typeof window !== 'undefined' &&
-			sessionStorage.getItem('scenarioType')
-		) {
-			finishedStepsArray.push(0);
-		}
-		if (typeof window !== 'undefined' && sessionStorage.getItem('topic')) {
-			finishedStepsArray.push(1);
-		}
-		if (typeof window !== 'undefined' && sessionStorage.getItem('socialPost')) {
-			finishedStepsArray.push(2);
-		}
-		return finishedStepsArray;
-	};
-
-	const handleRedirect = async (contentType: string) => {
-		if (contentType == 'presentation') {
-			const finishedSteps = presentationFinishedSteps();
-
-			if (finishedSteps.length > 0) {
-				const lastFinishedStep = finishedSteps[finishedSteps.length - 1];
-				const redirectURL = presentationRedirect[lastFinishedStep];
-				router.push(redirectURL);
-			} else {
-				router.push('/workflow-generate-outlines');
-			}
-		} else if (contentType == 'social_posts') {
-			const finishedSteps = socialPostFinishedSteps();
-
-			if (finishedSteps.length > 0) {
-				const lastFinishedStep = finishedSteps[finishedSteps.length - 1];
-				const redirectURL = socialPostRedirect[lastFinishedStep];
-				router.push(redirectURL);
-			} else {
-				router.push('/workflow-scenario-choice');
-			}
-		}
+	const handleRedirect = async (project: Project) => {
+    router.push(getLastStepReidrect(project));
 	};
 
 	return (
