@@ -76,9 +76,9 @@ const SideBar = ({ }: SideBarProps) => {
   // avoid hydration error during development caused by persistence
   if (!useHydrated()) return <></>;
 
-  if (userStatus != UserStatus.Inited) return <></>;
+  if (userStatus == UserStatus.Initing || userStatus == UserStatus.NotInited) return <></>;
 
-  if (!uid)
+  if (userStatus == UserStatus.Failed || !uid)
     return (
       <Modal
         showModal={true}

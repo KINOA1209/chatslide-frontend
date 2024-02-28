@@ -17,6 +17,7 @@ export enum UserStatus {
 	NotInited,
 	Initing,
 	Inited,
+  Failed,
 }
 
 let userStatus: UserStatus = UserStatus.NotInited;
@@ -38,7 +39,8 @@ export const useUser = () => {
 		// console.log('-- initing user: ', {userStatus, user})
 
 		// avoid re-init user in cross components
-		if (userStatus !== UserStatus.NotInited) return;
+		if (userStatus == UserStatus.Inited || userStatus == UserStatus.Initing) return;
+    
 		userStatus = UserStatus.Initing;
 
     for (let attempt = 0; attempt < 2; attempt++) {
@@ -46,7 +48,7 @@ export const useUser = () => {
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
         if (!userId || !idToken) {
           console.warn('User not logged in');
-          userStatus = UserStatus.NotInited;
+          userStatus = UserStatus.Failed;
           return;
         }
         let username = await AuthService.getCurrentUserDisplayName();
@@ -87,6 +89,7 @@ export const useUser = () => {
 
         // If it's the second attempt, throw the error
         if (attempt === 1) {
+          userStatus = UserStatus.Failed;
           throw e;
         }
 
