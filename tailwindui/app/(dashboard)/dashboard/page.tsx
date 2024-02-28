@@ -109,12 +109,6 @@ export default function Dashboard() {
     setDeleteInd('');
   };
 
-  useEffect(() => {
-    if (rendered && projects.length === 0) {
-      router.push('/workflow-type-choice');
-    }
-  }, [projects, rendered]);
-
   // function to handle click start new project, clear sessionstorage
   const handleStartNewProject = () => {
     sessionStorage.clear();
