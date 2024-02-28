@@ -51,15 +51,11 @@ export default function Dashboard() {
 
   const init = async () => {
     if (!token) return;  // sidebar will show a modal to ask user to login
-    await fetchProjects();
+    fetchProjects();
     const surveyFinished = await UserService.checkSurveyFinished(token)
     if (!surveyFinished) {
       setShowSurvey(true);
-    } else {
-      if (projects.length === 0) {
-        router.push('/workflow-type-choice');
-      }
-    }
+    } 
   }
 
   const closeSurvey = () => { 
