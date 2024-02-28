@@ -41,7 +41,7 @@ const createBearSlice =
 
 export const createBearStore =
 	<V>() =>
-	<K extends string>(k: K, defaultValue: V, persistEnabled?: boolean, useSessionStorage: boolean=true) => {
+	<K extends string>(k: K, defaultValue: V, persistEnabled?: boolean, useSessionStorage: boolean=false) => {
 		const f = (...a: any[]) => ({
 			// @ts-ignore
 			...createBearSlice<K, V>(k, defaultValue)(...a),

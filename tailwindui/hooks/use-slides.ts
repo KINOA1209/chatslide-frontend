@@ -6,7 +6,7 @@ import { useUser } from './use-user';
 import { useChatHistory } from './use-chat-history';
 import { useProject } from './use-project';
 
-const useSlidesBear = createBearStore<Slide[]>()('slides', [new Slide()], true);
+const useSlidesBear = createBearStore<Slide[]>()('slides', [], true);
 const useSlideIndex = createBearStore<number>()('slideIndex', 0, true);
 const useSlidesHistoryBear = createBearStore<Slide[][]>()(
 	'slidesHistory',

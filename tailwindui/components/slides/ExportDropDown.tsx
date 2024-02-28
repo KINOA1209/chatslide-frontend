@@ -67,6 +67,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
       const maxAttempts = 30; // try 30 times in 60 seconds
       for (let attempts = 0; attempts < maxAttempts; attempts++) {
         try {
+          attempts++;
           console.log(`Attempt ${attempts}: Trying to download the file...`);
 
           const ok = await ProjectService.downloadFile(project.foldername, `slides.${type}`, type);

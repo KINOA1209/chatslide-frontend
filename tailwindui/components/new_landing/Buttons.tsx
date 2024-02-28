@@ -3,7 +3,7 @@ import Link from "next/link"
 
 export const DiscordButton: React.FC = () => {
   return (
-    <Link href='https://discord.gg/B6PRtqsT'>
+    <Link href='https://discord.gg/JPF46UEkUh'>
       <div className='bg-white rounded-xl border border-indigo-500 flex items-center w-[250px] h-[54px]'>
         <img
           className='w-8 h-6 ml-4'

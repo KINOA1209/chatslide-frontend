@@ -13,12 +13,12 @@ import ProjectService from '@/services/ProjectService';
 import Modal from '@/components/ui/Modal';
 import { UserStatus, useUser } from '@/hooks/use-user';
 import OnboardingSurvey from '@/components/slides/onboardingSurvey/OnboardingSurvey';
-import UserService from '@/services/UserService';
 
 export default function Dashboard() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [deleteInd, setDeleteInd] = useState('');
   const router = useRouter();
+  const promptRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [rendered, setRendered] = useState<boolean>(false);
   const { token, userStatus } = useUser();
@@ -30,36 +30,64 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (userStatus != UserStatus.Inited) return;
+
     if (contentRef.current) {
       contentRef.current.style.height = contentRef.current.offsetHeight + 'px';
     }
-    init();
+    // Create a scoped async function within the hook.
+    const fetchUserAndProject = async () => {
+      try {
+        ProjectService.getProjects(token).then((projects) => {
+          console.log('projects', projects);
+          setProjects(projects);
+          setRendered(true);
+          if (!showSurvey && projects.length === 0) {
+            router.push('/workflow-type-choice');
+          }
+        });
+      } catch (error: any) {
+        console.error(error);
+      }
+    };
+    // Execute the created function directly
+    fetchUserAndProject();
   }, [userStatus]);
 
-  const fetchProjects = async () => {
-    try {
-      ProjectService.getProjects(token).then((projects) => {
-        console.log('projects', projects);
-        setProjects(projects);
-        setRendered(true);
-      });
-    } catch (error: any) {
-      console.error(error);
-    }
-  };
+  //check user survey status
+  useEffect(() => {
+    const checkUserSurveyStatus = async () => {
+      try {
+        const response = await fetch('/api/user/check_survey_status', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+        });
 
-  const init = async () => {
-    if (!token) return;  // sidebar will show a modal to ask user to login
-    fetchProjects();
-    const surveyFinished = await UserService.checkSurveyFinished(token)
-    if (!surveyFinished) {
-      setShowSurvey(true);
-    } else if (rendered && projects.length === 0) {
-      router.push('/workflow-type-choice');
-    }
-  }
+        if (response.ok) {
+          const data = await response.json();
+          if (data.survey_status === 'incomplete') {
+            setShowSurvey(true)
+            console.log('The user had not completed the survey before')
+          }
+          else {
+            console.log('The user had completed the survey before')
+          }
+        }
+        else {
+          console.error('HTTP Error:', response.statusText);
+        }
+      }
+      catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    if (token)
+      checkUserSurveyStatus();
+  }, []);
 
-  const handleCloseSurvey = () => {
+  const handleBackToChoices = () => {
     setShowSurvey(false)
     console.log('back to choices')
     // console.log('rendered', rendered)
@@ -108,6 +136,12 @@ export default function Dashboard() {
     setShowDeleteModal(false);
     setDeleteInd('');
   };
+
+  useEffect(() => {
+    if (rendered && projects.length === 0 && promptRef.current) {
+      promptRef.current.innerHTML = 'You have no project created.';
+    }
+  }, [projects, rendered]);
 
   // function to handle click start new project, clear sessionstorage
   const handleStartNewProject = () => {
@@ -174,11 +208,11 @@ export default function Dashboard() {
       {showSurvey && (
         <Modal
           showModal={showSurvey}
-          setShowModal={handleCloseSurvey}
+          setShowModal={setShowSurvey}
         // title='Welcome to DrLambda!'
         // description='We are excited to have you onboard. Please take a few minutes to complete the onboarding survey.'
         >
-          <OnboardingSurvey handleBack={handleCloseSurvey} />
+          <OnboardingSurvey handleBack={handleBackToChoices} />
         </Modal>
       )}
     </section>

@@ -229,7 +229,7 @@ const SignupForm: React.FC = () => {
 						className='form-input w-full text-gray-800 mt-3'
 						placeholder='Enter your password'
 						minLength={8}
-						maxLength={100}
+						maxLength={16}
 						required
 						ref={passwordRef}
 						onFocus={(e) => {

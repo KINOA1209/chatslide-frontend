@@ -7,18 +7,15 @@ import Image from 'next/image';
 import mode_choices from './mode_choices.json';
 import SessionStorage from '@/components/utils/SessionStorage';
 import AuthService from '@/services/AuthService';
-import { useProject } from '@/hooks/use-project';
 
 const GenerationModePage = () => {
 	const router = useRouter(); // Initialize the router
 	const [username, setUsername] = useState(''); // Initialize the username state
-  const workflowType = SessionStorage.getItem('workflowType', 'presentation');
-  const { clearProject } = useProject();
+    const workflowType = SessionStorage.getItem('workflowType', 'slides');
 
 	const navigate = (type: string) => {
 		sessionStorage.setItem('generation_mode', type);
-    clearProject();
-    if (workflowType == 'presentation') router.push('/workflow-generate-outlines');
+		if (workflowType == 'slides') router.push('/workflow-generate-outlines');
 		else router.push('/workflow-generate-socialpost');
 	};
 
