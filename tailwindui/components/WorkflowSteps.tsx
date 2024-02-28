@@ -8,6 +8,7 @@ import { IoMdLock } from "react-icons/io";
 import SessionStorage from '@/components/utils/SessionStorage';
 import Project from '@/models/Project';
 import { useProject } from '@/hooks/use-project';
+import useHydrated from '@/hooks/use-hydrated';
 
 interface StepProps {
   id: number;
@@ -182,6 +183,9 @@ const ProjectProgress: React.FC<{ currentInd: number }> = ({ currentInd }) => {
 
   const stepNames = content_type === 'social_posts' ? SOCIAL_POSTS_STEPS : PRESENTATION_STEPS;
   const redirects = content_type === 'social_posts' ? SOCIAL_POSTS_REDIRECTS : PRESENTATION_REDIRECTS;
+
+  // avoid hydration error during development caused by persistence
+  if (!useHydrated()) return <></>;
 
   return (
     <ProgressBox
