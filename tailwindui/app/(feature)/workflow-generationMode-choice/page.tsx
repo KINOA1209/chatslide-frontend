@@ -12,13 +12,13 @@ import { useProject } from '@/hooks/use-project';
 const GenerationModePage = () => {
 	const router = useRouter(); // Initialize the router
 	const [username, setUsername] = useState(''); // Initialize the username state
-  const workflowType = SessionStorage.getItem('workflowType', 'slides');
+  const workflowType = SessionStorage.getItem('workflowType', 'presentation');
   const { clearProject } = useProject();
 
 	const navigate = (type: string) => {
 		sessionStorage.setItem('generation_mode', type);
     clearProject();
-		if (workflowType == 'slides') router.push('/workflow-generate-outlines');
+    if (workflowType == 'presentation') router.push('/workflow-generate-outlines');
 		else router.push('/workflow-generate-socialpost');
 	};
 

@@ -10,14 +10,14 @@ import SessionStorage from '@/components/utils/SessionStorage';
 
 const ScenarioChoicePage = () => {
 	const router = useRouter();
-	const workflowType = SessionStorage.getItem('workflowType', 'slides');
+  const workflowType = SessionStorage.getItem('workflowType', 'presentation');
 	const scenarios =
-		workflowType == 'slides' ? slides_scenarios : socialpost_scenarios;
+    workflowType == 'presentation' ? slides_scenarios : socialpost_scenarios;
 
 	// Function to navigate to the "workflow-scenario-choice" page
 	const navigateToSummary = (scenarioType: string) => {
 		sessionStorage.setItem('scenarioType', scenarioType);
-    if (workflowType == 'slides') 
+    if (workflowType == 'presentation') 
       router.push('/workflow-generationMode-choice');
     else
       router.push('/workflow-generate-socialpost');

@@ -178,8 +178,10 @@ export const getLastStepReidrect = (project: Project) => {
 const ProjectProgress: React.FC<{ currentInd: number }> = ({ currentInd }) => {
   const { project } = useProject();
 
-  const stepNames = project?.content_type === 'social_posts' ? SOCIAL_POSTS_STEPS : PRESENTATION_STEPS;
-  const redirects = project?.content_type === 'social_posts' ? SOCIAL_POSTS_REDIRECTS : PRESENTATION_REDIRECTS;
+  let content_type = project?.content_type || SessionStorage.getItem('workflowType');
+
+  const stepNames = content_type === 'social_posts' ? SOCIAL_POSTS_STEPS : PRESENTATION_STEPS;
+  const redirects = content_type === 'social_posts' ? SOCIAL_POSTS_REDIRECTS : PRESENTATION_REDIRECTS;
 
   return (
     <ProgressBox
