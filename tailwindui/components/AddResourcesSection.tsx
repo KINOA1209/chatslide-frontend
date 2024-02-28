@@ -180,15 +180,18 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
         />
       </div>
 
-      <div>
-        <Instruction>
-          Your selected sources:
-        </Instruction>
-        <SelectedResourcesList
-          selectedResources={selectedResources}
-          removeResourceAtIndex={removeResourceAtIndex}
-        />
-      </div>
+
+      {selectedResources.length > 0 &&
+        <div>
+          <Instruction>
+            Your selected sources:
+          </Instruction>
+          <SelectedResourcesList
+            selectedResources={selectedResources}
+            removeResourceAtIndex={removeResourceAtIndex}
+          />
+        </div>
+      }
     </Card >
   );
 };
