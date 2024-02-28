@@ -19,7 +19,6 @@ export default function Dashboard() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [deleteInd, setDeleteInd] = useState('');
   const router = useRouter();
-  const promptRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [rendered, setRendered] = useState<boolean>(false);
   const { token, userStatus } = useUser();
@@ -55,17 +54,12 @@ export default function Dashboard() {
     const surveyFinished = await UserService.checkSurveyFinished(token)
     if (!surveyFinished) {
       setShowSurvey(true);
-    } 
-  }
-
-  const closeSurvey = () => { 
-    setShowSurvey(false);
-    if (projects.length === 0) {
+    } else if (rendered && projects.length === 0) {
       router.push('/workflow-type-choice');
     }
   }
 
-  const handleBackToChoices = () => {
+  const handleCloseSurvey = () => {
     setShowSurvey(false)
     console.log('back to choices')
     // console.log('rendered', rendered)
@@ -116,8 +110,8 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    if (rendered && projects.length === 0 && promptRef.current) {
-      promptRef.current.innerHTML = 'You have no project created.';
+    if (rendered && projects.length === 0) {
+      router.push('/workflow-type-choice');
     }
   }, [projects, rendered]);
 
@@ -186,11 +180,11 @@ export default function Dashboard() {
       {showSurvey && (
         <Modal
           showModal={showSurvey}
-          setShowModal={closeSurvey}
+          setShowModal={handleCloseSurvey}
         // title='Welcome to DrLambda!'
         // description='We are excited to have you onboard. Please take a few minutes to complete the onboarding survey.'
         >
-          <OnboardingSurvey handleBack={handleBackToChoices} />
+          <OnboardingSurvey handleBack={handleCloseSurvey} />
         </Modal>
       )}
     </section>
