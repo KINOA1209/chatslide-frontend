@@ -82,7 +82,7 @@ export const useProject = () => {
   }
 
   return {
-    project, initProject, updateProject, resources, setResources, selectedResources, setSelectedResources,
+    project, projectStatus, initProject, updateProject, resources, setResources, selectedResources, setSelectedResources,
     videoJobId, setVideoJobId,
     isGpt35, setIsGpt35,
     isShared, updateIsShared,
