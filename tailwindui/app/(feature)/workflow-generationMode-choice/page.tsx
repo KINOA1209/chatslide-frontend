@@ -16,7 +16,6 @@ const GenerationModePage = () => {
   const { clearProject } = useProject();
 
 	const navigate = (type: string) => {
-    sessionStorage.clear();
 		sessionStorage.setItem('generation_mode', type);
     clearProject();
 		if (workflowType == 'slides') router.push('/workflow-generate-outlines');
