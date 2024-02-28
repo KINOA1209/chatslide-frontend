@@ -10,13 +10,16 @@ import { ToastContainer } from 'react-toastify';
 import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
 import StepsOutlinePage from '@/components/user_onboarding/StepsOutlinePage';
 import { useProject } from '@/hooks/use-project';
+import ActionsToolBar from '@/components/ui/ActionsToolBar';
+import useTourStore from '@/components/user_onboarding/TourStore';
 
 export default function WorkflowStep2() {
+	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 	const [isGpt35, setIsGpt35] = useState(true);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const router = useRouter();
-  const { outlines, updateOutlines } = useProject();
-  
+	const { outlines, updateOutlines } = useProject();
+
 	// set current page to local storage
 	useEffect(() => {
 		if (typeof window !== 'undefined' && localStorage) {
@@ -26,9 +29,9 @@ export default function WorkflowStep2() {
 
 	useEffect(() => {
 		if (isSubmitting) {
-      if (outlines) {
-        router.push('workflow-edit-design')
-      }
+			if (outlines) {
+				router.push('workflow-edit-design');
+			}
 		}
 	}, [isSubmitting]);
 
@@ -47,12 +50,16 @@ export default function WorkflowStep2() {
 		}
 	};
 
-  if (!outlines || !outlines.length) {
-    return <></>
-  }
-  
+	if (!outlines || !outlines.length) {
+		return <></>;
+	}
+
 	return (
-		<div className=''>
+		<div className='relative'>
+			{/* user tutorial */}
+			<div className='absolute right-[3rem] top-[7rem] flex flex-col items-end space-x-4'>
+				<ActionsToolBar startTour={startTour} onlyShowTutorial={true} />
+			</div>
 			<MyCustomJoyride steps={StepsOutlinePage()} />
 			{/* flex col container for steps, title, generate slides button etc */}
 			<ToastContainer />
@@ -74,7 +81,7 @@ export default function WorkflowStep2() {
 							OVERVIEW
 						</div>
 						<ol className='list-none px-4 py-4'>
-              {outlines?.map((section, index) => (
+							{outlines?.map((section, index) => (
 								<li
 									className='pb-2 opacity-60 text-neutral-900 text-s tracking-wider font-medium font-creato-medium leading-normal tracking-tight cursor-pointer hover:text-black  hover:rounded-md hover:bg-gray-200'
 									key={index}
@@ -91,16 +98,16 @@ export default function WorkflowStep2() {
 				<div className='flex justify-end'>
 					<div className='w-full sm:w-2/3 gap-10 auto-rows-min'>
 						<div className='lg:col-span-2 flex flex-col'>
-								<OutlineVisualizer
-									outlineData={outlines}
-									setOutlineData={updateOutlines}
-									isGPT35={isGpt35}
-								/>
+							<OutlineVisualizer
+								outlineData={outlines}
+								setOutlineData={updateOutlines}
+								isGPT35={isGpt35}
+							/>
 						</div>
 					</div>
 				</div>
 			</div>
-      
+
 			{/* feedback from fixed on the page */}
 			<FeedbackButton />
 		</div>

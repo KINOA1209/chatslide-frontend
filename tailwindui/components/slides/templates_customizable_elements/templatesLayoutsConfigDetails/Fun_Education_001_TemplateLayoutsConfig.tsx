@@ -63,7 +63,6 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			display: 'flex',
 			width: '100%',
 			height: '100%',
-			// position: 'relative',
 		},
 		userNameCSS: {
 			zIndex: 30,
@@ -78,9 +77,9 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			maxHeight: '80%',
 		},
 		columnCSS: {
-			paddingTop: '4rem', // Equivalent to pt-[1rem]
-			paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
-			paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
+			paddingTop: '10rem',
+			paddingLeft: '2rem',
+			paddingRight: '2rem',
 			width: '50%', // Equivalent to w-1/2
 			display: 'flex', // Equivalent to flex
 			flexDirection: 'column', // Equivalent to flex-col
@@ -91,10 +90,18 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 		imageContainerCSS: {
 			width: '50%', // Equivalent to w-1/2
 			height: '100%', // Equivalent to h-full
-			//overflow: 'hidden',
 			borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
-			position: 'absolute',
+			//overflow: 'hidden',
+			position: 'relative',
 			zIndex: 10,
+		},
+		rndContainerCSS: {
+			width: '100%',
+			height: '100%',
+			position: 'relative',
+		},
+		rndCSS: {
+			zIndex: '51',
 		},
 
 		visualElementsCSS: {
@@ -107,12 +114,6 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			top: '0%',
 			left: '50%',
 		},
-		rndContainerCSS: {
-			width: '100%',
-			height: '100%',
-			position: 'relative',
-		},
-		rndCSS: {},
 	},
 	Col_1_img_0_layout: {
 		canvaCSS: {
