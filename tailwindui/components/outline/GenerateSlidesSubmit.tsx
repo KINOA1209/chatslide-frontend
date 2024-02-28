@@ -61,6 +61,8 @@ const GenerateSlidesSubmit = ({
       );
       initSlides(ProjectService.parseSlides(presentation_slides));
       updateProject('presentation_slides', presentation_slides);
+      updateProject('description', resp.data.description);
+      updateProject('keywords', resp.data.keywords);
       router.push('workflow-review-slides');
     } else {
       setIsSubmitting(false);

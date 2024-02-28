@@ -65,10 +65,12 @@ export const useProject = () => {
 
   const updateProject = <K extends keyof Project>(field: K, value: Project[K]) => {
     console.log('-- updateProject', field, value);
-
-    const newProject = { ...project };
-    newProject[field] = value;
-    setProject(newProject as Project);
+    setProject((currentProject) => {
+      // 'currentProject' is the most up-to-date state of 'project'
+      const newProject = { ...currentProject };
+      newProject[field] = value;
+      return newProject as Project;
+    });
   };
 
   const updateIsShared = (value: boolean) => {
