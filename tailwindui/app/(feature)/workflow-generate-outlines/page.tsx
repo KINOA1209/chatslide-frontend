@@ -22,7 +22,8 @@ import SessionStorage from '@/components/utils/SessionStorage';
 import AddResourcesSection from '@/components/AddResourcesSection';
 import useHydrated from '@/hooks/use-hydrated';
 import { useProject } from '@/hooks/use-project';
-import Card from '@/components/ui/Card';
+import ActionsToolBar from '@/components/ui/ActionsToolBar';
+import useTourStore from '@/components/user_onboarding/TourStore';import Card from '@/components/ui/Card';
 import { ErrorMessage, Explanation, ExplanationPopup, Instruction } from '@/components/ui/Text';
 import { DropDown } from '@/components/button/DrlambdaButton';
 

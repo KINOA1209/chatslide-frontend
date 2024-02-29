@@ -17,6 +17,8 @@ import useHydrated from '@/hooks/use-hydrated';
 import { useProject } from '@/hooks/use-project';
 import { image } from 'd3';
 import Card from '@/components/ui/Card';
+import ActionsToolBar from '@/components/ui/ActionsToolBar';
+import useTourStore from '@/components/user_onboarding/TourStore';
 // const { changeTemplate } = useSlides();
 
 const SlideDesignPreview = dynamic(
@@ -76,9 +78,9 @@ export default function DesignPage() {
 	return (
 		<div className='relative'>
 			{/* user tutorial */}
-			{/* <div className='absolute right-[3rem] top-[7rem] flex flex-col items-end space-x-4'>
+			<div className='absolute right-[3rem] top-[7rem] flex flex-col items-end space-x-4'>
 				<ActionsToolBar startTour={startTour} onlyShowTutorial={true} />
-			</div> */}
+			</div>
 			<ToastContainer />
 
 			<WorkflowStepsBanner

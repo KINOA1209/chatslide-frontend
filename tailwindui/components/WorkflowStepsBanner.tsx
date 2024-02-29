@@ -3,8 +3,6 @@ import React, { FunctionComponent } from 'react';
 import { DrLambdaBackButton } from '@/components/button/DrlambdaButton';
 import ProjectProgress from '@/components/WorkflowSteps';
 import DrlambdaButton from '@/components/button/DrlambdaButton';
-import { GPTToggleWithExplanation } from './button/WorkflowGPTToggle';
-import { useSlides } from '@/hooks/use-slides';
 
 interface YourComponentProps {
 	currentIndex: number;
@@ -26,8 +24,8 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 	nextText = 'Next',
 }) => {
 	return (
-    <section className='sticky top-0 z-10'>
-			<div className='relative w-full h-[100px] flex flex-col items-center w-full bg-[#2044F2]'>
+		<section className='sticky top-0 z-10'>
+			<div className='relative w-full h-[100px] flex flex-row items-center bg-[#2044F2] pr-12'>
 				<div className='flex-grow items-center justify-center flex py-2'>
 					<ProjectProgress currentInd={currentIndex} />
 				</div>
