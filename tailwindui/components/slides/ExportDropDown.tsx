@@ -8,6 +8,7 @@ import { BigGrayButton, DropDown } from '../button/DrlambdaButton';
 import {
 	FaDownload,
 	FaFilePdf,
+	FaRegFilePdf,
 	FaRing,
 	FaSlideshare,
 	FaTruckLoading,
@@ -125,7 +126,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 								isPaidUser={isPaidUser}
 								bgColor='bg-Gray'
 							>
-								<FaFilePdf />
+                <FaRegFilePdf />
 								<span>PDF (medium)</span>
 							</BigGrayButton>
 
@@ -136,7 +137,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 								isPaidFeature={true}
 								bgColor='bg-Gray'
 							>
-								<FaFilePdf />
+                <FaRegFilePdf />
 								<span>PDF (high) {!isPaidUser && '🔒'}</span>
 							</BigGrayButton>
 

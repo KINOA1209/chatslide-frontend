@@ -8,7 +8,7 @@ import PaywallModal from '@/components/forms/paywallModal';
 import FeedbackButton from '@/components/ui/feedback';
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
 import { QuestionExplainIcon } from '@/app/(feature)/icons';
-import { FaFilePdf, FaYoutube } from 'react-icons/fa';
+import { FaFilePdf, FaRegFilePdf, FaYoutube } from 'react-icons/fa';
 import YoutubeService from '@/services/YoutubeService';
 import { SmallBlueButton } from '@/components/button/DrlambdaButton';
 import WebService from '@/services/WebpageService';
@@ -649,7 +649,7 @@ export default function Topic_SocialPost() {
 
 							<div className='drop_file bg-gray-100 border border-2 border-gray-200'>
 								<div className='flex items-center w-full'>
-									<FaFilePdf />
+									<FaRegFilePdf />
 									<span className='text-sm md:text-l'>Drop files here or </span>
 									<SmallBlueButton
 										onClick={(e) => {
