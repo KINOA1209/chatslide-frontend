@@ -146,17 +146,18 @@ export default function Topic() {
 
 		setIsSubmitting(true);
 
-		const formData = {
-			topic: topic,
-			audience: audience,
-			language: language,
-			project_id: project_id,
-			resources: selectedResources.map((resource: Resource) => resource.id),
-			model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
-			//schoolTemplate: schoolTemplate,
-			scenario_type: scenarioType,
-			generation_mode: generationMode,
-		};
+    const formData = {
+      topic: topic,
+      audience: audience,
+      language: language,
+      project_id: project_id,
+      resources: selectedResources.map((resource: Resource) => resource.id),
+      model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
+      //schoolTemplate: schoolTemplate,
+      scenario_type: scenarioType,
+      generation_mode: generationMode,
+      search_online: searchOnlineScope,
+    };
 
 		sessionStorage.setItem('topic', formData.topic);
 		sessionStorage.setItem('audience', formData.audience);

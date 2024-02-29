@@ -43,7 +43,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 
   const searchOnlineOptions: RadioButtonOption[] = [
     { value: 'none', text: 'Disabled', icon: <IoIosRemoveCircleOutline /> },
-    { value: 'internet', text: 'Internet', icon: <FiGlobe /> },
+    { value: 'google', text: 'Internet', icon: <FiGlobe /> },
     { value: 'wikipedia', text: 'Wikipedia', icon: <FaWikipediaW /> },
     // { value: 'reddit', text: 'Reddit' },
   ]
