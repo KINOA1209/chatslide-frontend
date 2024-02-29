@@ -241,7 +241,7 @@ export default function Topic_SocialPost() {
 			return;
 		}
 		if (!isPaidUser && selectedResources.length >= 1) {
-			setLinkError('Please subscribe to add more resources.');
+      setLinkError('Please subscribe to add more resources, or delete the current resource.');
 			return;
 		}
 		setLinkError('');

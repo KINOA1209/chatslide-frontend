@@ -13,7 +13,6 @@ import { SmallBlueButton } from '@/components/button/DrlambdaButton';
 import Resource from '@/models/Resource';
 import { toast, ToastContainer } from 'react-toastify';
 import FileUploadModal from '@/components/forms/FileUploadModal';
-import SelectedResourcesList from '@/components/SelectedResources';
 import { useUser } from '@/hooks/use-user';
 import { Step } from 'react-joyride';
 import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
@@ -22,8 +21,10 @@ import { GPTToggleWithExplanation } from '@/components/button/WorkflowGPTToggle'
 import SessionStorage from '@/components/utils/SessionStorage';
 import AddResourcesSection from '@/components/AddResourcesSection';
 import useHydrated from '@/hooks/use-hydrated';
-import LinkInput from '@/components/summary/LinkInput';
 import { useProject } from '@/hooks/use-project';
+import Card from '@/components/ui/Card';
+import { ErrorMessage, Explanation, ExplanationPopup, Instruction } from '@/components/ui/Text';
+import { DropDown } from '@/components/button/DrlambdaButton';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 6;
@@ -38,21 +39,17 @@ const audienceList = [
 ];
 
 export default function Topic() {
-	const router = useRouter();
-	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [showFileModal, setShowFileModal] = useState(false);
-	const { token } = useUser();
-	const [topicError, setTopicError] = useState('');
-	const [isGpt35, setIsGpt35] = useState(true);
-	const [showPaymentModal, setShowPaymentModal] = useState(false);
-	const [showAudienceInput, setShowAudienceInput] = useState(false);
-	const [showProjectPopup, setProjectPopup] = useState(false);
-	const [showAudiencePopup, setAudiencePopup] = useState(false);
-	const [showLanguagePopup, setLanguagePopup] = useState(false);
-	const [showSupportivePopup, setSupportivePopup] = useState(false);
-	const { isPaidUser } = useUser();
-	const { project, updateOutlines, updateProject, initProject } = useProject();
-	const [searchOnlineScope, setSearchOnlineScope] = useState('none');
+  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showFileModal, setShowFileModal] = useState(false);
+  const { token } = useUser();
+  const [topicError, setTopicError] = useState('');
+  const [isGpt35, setIsGpt35] = useState(true);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [showAudienceInput, setShowAudienceInput] = useState(false);
+  const { isPaidUser } = useUser();
+  const { project, updateOutlines, updateProject, initProject } = useProject();
+  const [searchOnlineScope, setSearchOnlineScope] = useState('none');
 
 	// bind form data between input and sessionStorage
 	const [topic, setTopic] = useState(
@@ -229,45 +226,12 @@ export default function Topic() {
 		}
 	}, [audience]);
 
-	// set current page to local storage
-	useEffect(() => {
-		if (typeof window !== 'undefined' && localStorage) {
-			localStorage.setItem('currentWorkflowPage', 'SummaryPage');
-		}
-	}, []);
-
-	// The functions that manage the pop-up windows for questionmark
-	const openProjectPopup = () => {
-		setProjectPopup(true);
-	};
-
-	const closeProjectPopup = () => {
-		setProjectPopup(false);
-	};
-
-	const openAudiencePopup = () => {
-		setAudiencePopup(true);
-	};
-
-	const closeAudiencePopup = () => {
-		setAudiencePopup(false);
-	};
-
-	const openLanguagePopup = () => {
-		setLanguagePopup(true);
-	};
-
-	const closeLanguagePopup = () => {
-		setLanguagePopup(false);
-	};
-
-	const openSupportivePopup = () => {
-		setSupportivePopup(true);
-	};
-
-	const closeSupportivePopup = () => {
-		setSupportivePopup(false);
-	};
+  // set current page to local storage
+  useEffect(() => {
+    if (typeof window !== 'undefined' && localStorage) {
+      localStorage.setItem('currentWorkflowPage', 'SummaryPage');
+    }
+  }, []);
 
 	const removeResourceAtIndex = (indexToRemove: number) => {
 		setSelectedResources((currentResources) =>
@@ -315,259 +279,169 @@ export default function Topic() {
 			<div className='my-4 gap-y-4 w-full flex flex-col items-center'>
 				<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
 
-				{/* Project Summary section */}
-				<div className='w-full lg:w-2/3 px-3 my-3 lg:my-1' id='SummaryStep-2'>
-					{generationMode === 'from_files' && (
-						<>
-							<AddResourcesSection
-								searchOnlineScope={searchOnlineScope}
-								setSearchOnlineScope={setSearchOnlineScope}
-								setShowFileModal={setShowFileModal}
-								selectedResources={selectedResources}
-								setSelectedResources={setSelectedResources}
-								removeResourceAtIndex={removeResourceAtIndex}
-							/>
-						</>
-					)}
-					{/* text area section */}
-					<div className='project_container w-full my-2 lg:my-5 border border-2 border-gray-200'>
-						{/* title */}
-						<div className='title1'>
-							<p className='text-3xl'>Summary</p>
-							<p id='after1'>
-								{' '}
-								{generationMode === 'from_topic' ? '(required)' : '(optional)'}
-							</p>
-						</div>
-						<div className='my-4'>
-							<span className='text-sm text-gray-500'>
-								To get started, give us some high-level intro about your project
-							</span>
-						</div>
-						{generationMode === 'from_topic' && (
-							<div className='flex items-center gap-1'>
-								<p className='text-sm'>Project Topic</p>
-								<div className='relative inline-block'>
-									<div
-										className='cursor-pointer'
-										onMouseEnter={openProjectPopup}
-										onMouseLeave={closeProjectPopup}
-										onTouchStart={openProjectPopup}
-										onTouchEnd={closeProjectPopup}
-									>
-										<QuestionExplainIcon />
-										{showProjectPopup && (
-											<div
-												id='project_popup'
-												className='absolute z-10 p-2 bg-gray-800 text-white text-sm rounded shadow-md w-[15rem] h-[5rem] md:w-80 md:h-[4rem] flex justify-center items-center'
-											>
-												The main subject or theme of your project. It will set
-												the direction and focus of the contents.
-											</div>
-										)}
-									</div>
-								</div>
-							</div>
-						)}
-						{generationMode === 'from_topic' && (
-							<div className='textfield'>
-								<textarea
-									onChange={(e) => updateTopic(e.target.value)}
-									className='focus:ring-0 text-l md:text-xl bg-gray-100'
-									id='topic'
-									value={topic}
-									maxLength={MAX_TOPIC_LENGTH}
-									required
-									placeholder='How to use ultrasound to detect breast cancer'
-								></textarea>
-								{
-									<div className='text-gray-500 text-sm mt-1'>
-										{MAX_TOPIC_LENGTH - topic.length} characters left
-									</div>
-								}
-								{topicError && (
-									<div className='text-red-500 text-sm mt-1'>{topicError}</div>
-								)}
-							</div>
-						)}
+        {/* Project Summary section */}
+        <div className='w-full lg:w-2/3 px-3 my-3 lg:my-1' id='SummaryStep-2'>
 
-						{/* DropDown menu section */}
-						<div className='dropdown_container w-full gap-2 lg:flex'>
-							<div className='audience_container'>
-								<div className='your_audience gap-1'>
-									<span>Your Audience</span>
-									<div className='relative inline-block'>
-										<div
-											className='cursor-pointer'
-											onMouseEnter={openAudiencePopup}
-											onMouseLeave={closeAudiencePopup}
-											onTouchStart={openAudiencePopup}
-											onTouchEnd={closeAudiencePopup}
-										>
-											<QuestionExplainIcon />
-											{showAudiencePopup && (
-												<div
-													id='audience_popup'
-													className='absolute z-10 p-2 bg-gray-800 text-white text-sm rounded shadow-md w-[15rem] h-[6rem] md:w-[17rem] md:h-[5rem] flex justify-center items-center'
-												>
-													Specify the intended viewers of your projects,
-													tailoring to your audience ensures the content
-													resonates effectively.
-												</div>
-											)}
-										</div>
-									</div>
-								</div>
-								<div className='audience_drop'>
-									<label htmlFor='audience'></label>
-									<select
-										className='focus:ring-0 bg-gray-100'
-										value={
-											audienceList.includes(audience)
-												? audience
-												: audience === 'unselected'
-												? 'unselected'
-												: 'other'
-										}
-										onChange={(e) => setAudience(e.target.value)}
-										required
-									>
-										<option key='unselected' value='unselected' disabled>
-											Choose your audience
-										</option>
-										{audienceList.map((value) => (
-											<option key={value} value={value}>
-												{value}
-											</option>
-										))}
-									</select>
-									<input
-										id='audience'
-										type='text'
-										className={`form-input w-full text-gray-800 mb-2 ${
-											showAudienceInput ? '' : 'hidden'
-										}`}
-										placeholder='Other (please specify)'
-										value={audience}
-										onChange={(e) => setAudience(e.target.value)}
-										required
-										maxLength={40}
-									/>
-								</div>
-							</div>
-							<div className='language_container mt-[1rem] lg:mt-[0rem]'>
-								<div className='language gap-1'>
-									<span>Language</span>
-									<div className='relative inline-block'>
-										<div
-											className='cursor-pointer'
-											onMouseEnter={openLanguagePopup}
-											onMouseLeave={closeLanguagePopup}
-											onTouchStart={openLanguagePopup}
-											onTouchEnd={closeLanguagePopup}
-										>
-											<QuestionExplainIcon />
-											{showLanguagePopup && (
-												<div
-													id='language_popup'
-													className='absolute z-10 p-2 bg-gray-800 text-white text-sm rounded shadow-md w-[13rem] h-[3rem] md:w-[14rem] md:h-[3rem] flex justify-center items-center'
-												>
-													Specify the intended language of your projects.
-												</div>
-											)}
-										</div>
-									</div>
-								</div>
-								<div className='language_drop'>
-									<select
-										className='focus:ring-0  bg-gray-100 border border-2 border-gray-200'
-										id='language'
-										value={language}
-										onChange={(e) => setLanguage(e.target.value)}
-										required
-									>
-										<option key='English' value='English'>
-											🇺🇸 English (United States)
-										</option>
-										<option key='British English' value='British English'>
-											🇬🇧 English (British)
-										</option>
-										<option key='Spanish' value='Spanish'>
-											🌎 Español (Latinoamérica)
-										</option>
-										<option
-											key='Continental Spanish'
-											value='Continental Spanish'
-										>
-											🇪🇸 Español (España)
-										</option>
-										<option key='Chinese' value='Chinese'>
-											🇨🇳 中文 (简体)
-										</option>
-										<option
-											key='Traditional Chinese'
-											value='Traditional Chinese'
-										>
-											🇹🇼 中文 (繁體)
-										</option>
-										<option key='French' value='French'>
-											🇫🇷 Français
-										</option>
-										<option key='Russian' value='Russian'>
-											🇷🇺 Русский
-										</option>
-										<option key='Ukrainian' value='Ukrainian'>
-											🇺🇦 Українська
-										</option>
-										<option key='German' value='German'>
-											🇩🇪 Deutsch
-										</option>
-										<option
-											key='Brazilian Portuguese'
-											value='Brazilian Portuguese'
-										>
-											🇧🇷 Português (Brasil)
-										</option>
-										<option key='Portuguese' value='Portuguese'>
-											🇵🇹 Português
-										</option>
-										<option key='Hindi' value='Hindi'>
-											🇮🇳 हिन्दी
-										</option>
-										<option key='Japanese' value='Japanese'>
-											🇯🇵 日本語
-										</option>
-										<option key='Korean' value='Korean'>
-											🇰🇷 한국어
-										</option>
-										<option key='Arabic' value='Arabic'>
-											🇸🇦 العربية
-										</option>
-										<option key='Hebrew' value='Hebrew'>
-											🇮🇱 עברית
-										</option>
-									</select>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+          {generationMode === 'from_files' &&
+            <AddResourcesSection
+              searchOnlineScope={searchOnlineScope}
+              setSearchOnlineScope={setSearchOnlineScope}
+              setShowFileModal={setShowFileModal}
+              selectedResources={selectedResources}
+              setSelectedResources={setSelectedResources}
+              removeResourceAtIndex={removeResourceAtIndex}
+            />
+          }
+          {/* text area section */}
+          <Card>
+            {/* title */}
+            <div className='title1'>
+              <p className='text-3xl'>Summary</p>
+              <p id='after1'> {generationMode === 'from_topic' ? '(Required)' : '(Optional)'}</p>
+              <Explanation>
+                To get started, give us some high-level intro about your project.
+              </Explanation>
+            </div>
+            {generationMode === 'from_topic' && (
+              <div>
+                <div className='flex items-center gap-1'>
+                  <Instruction>Project Topic</Instruction>
+                  <ExplanationPopup>
+                    The main subject or theme of your project. It will set the
+                    direction and focus of the contents.
+                  </ExplanationPopup>
+                </div>
+                <div className='border border-2 border-gray-200 rounded-md'>
+                  <textarea
+                    onChange={(e) => updateTopic(e.target.value)}
+                    className='focus:ring-0 text-l md:text-xl'
+                    id='topic'
+                    value={topic}
+                    maxLength={MAX_TOPIC_LENGTH}
+                    required
+                    placeholder='How to use ultrasound to detect breast cancer'
+                  ></textarea>
+                </div>
+                <Explanation>
+                  {MAX_TOPIC_LENGTH - topic.length} characters left
+                </Explanation>
+                <ErrorMessage>{topicError}</ErrorMessage>
 
-				{/* supporting docs  section */}
-				{generationMode === 'from_topic' && (
-					<div className='w-full lg:w-2/3 px-3 my-3 lg:my-1'>
-						<AddResourcesSection
-							searchOnlineScope={searchOnlineScope}
-							setSearchOnlineScope={setSearchOnlineScope}
-							setShowFileModal={setShowFileModal}
-							selectedResources={selectedResources}
-							setSelectedResources={setSelectedResources}
-							removeResourceAtIndex={removeResourceAtIndex}
-						/>
-					</div>
-				)}
-			</div>
-			<FeedbackButton />
-		</section>
-	);
+              </div>)}
+
+            {/* DropDown menu section */}
+            <div className='w-full gap-2 flex flex-col sm:grid sm:grid-cols-2'>
+              <div className='flex flex-col'>
+                <div className='flex flex-row gap-1 items-center'>
+                  <Instruction>Your Audience</Instruction>
+                  <ExplanationPopup>
+                    Specify the intended viewers of your projects, tailoring to
+                    your audience ensures the content resonates effectively.
+                  </ExplanationPopup>
+                </div>
+                <DropDown
+                  onChange={(e) => setAudience(e.target.value)}
+                  style='input'
+                  width='80%'
+                  defaultValue='unselected'
+                >
+                  <option key='unselected' value='unselected' disabled>
+                    Choose your audience
+                  </option>
+                  {audienceList.map((value) => (
+                    <option key={value} value={value}>
+                      {value}
+                    </option>
+                  ))}
+                </DropDown>
+              </div>
+              <div className='flex flex-col'>
+                <div className='flex flex-row gap-1 items-center'>
+                  <Instruction>Language</Instruction>
+                  <ExplanationPopup>
+                    Specify the intended language of your projects.
+                  </ExplanationPopup>
+                </div>
+                <DropDown
+                  onChange={(e) => setLanguage(e.target.value)}
+                  style='input'
+                  width='80%'
+                  defaultValue='English'>
+                  <option key='English' value='English'>
+                    🇺🇸 English (United States)
+                  </option>
+                  <option key='British English' value='British English'>
+                    🇬🇧 English (British)
+                  </option>
+                  <option key='Spanish' value='Spanish'>
+                    🌎 Español (Latinoamérica)
+                  </option>
+                  <option
+                    key='Continental Spanish'
+                    value='Continental Spanish'
+                  >
+                    🇪🇸 Español (España)
+                  </option>
+                  <option key='Chinese' value='Chinese'>
+                    🇨🇳 中文 (简体)
+                  </option>
+                  <option
+                    key='Traditional Chinese'
+                    value='Traditional Chinese'
+                  >
+                    🇹🇼 中文 (繁體)
+                  </option>
+                  <option key='French' value='French'>
+                    🇫🇷 Français
+                  </option>
+                  <option key='Russian' value='Russian'>
+                    🇷🇺 Русский
+                  </option>
+                  <option key='Ukrainian' value='Ukrainian'>
+                    🇺🇦 Українська
+                  </option>
+                  <option key='German' value='German'>
+                    🇩🇪 Deutsch
+                  </option>
+                  <option key='Brazilian Portuguese' value='Brazilian Portuguese'>
+                    🇧🇷 Português (Brasil)
+                  </option>
+                  <option key='Portuguese' value='Portuguese'>
+                    🇵🇹 Português
+                  </option>
+                  <option key='Hindi' value='Hindi'>
+                    🇮🇳 हिन्दी
+                  </option>
+                  <option key='Japanese' value='Japanese'>
+                    🇯🇵 日本語
+                  </option>
+                  <option key='Korean' value='Korean'>
+                    🇰🇷 한국어
+                  </option>
+                  <option key='Arabic' value='Arabic'>
+                    🇸🇦 العربية
+                  </option>
+                  <option key='Hebrew' value='Hebrew'>
+                    🇮🇱 עברית
+                  </option>
+                </DropDown>
+              </div>
+            </div>
+          </Card>
+
+          {/* supporting docs  section */}
+          {generationMode === 'from_topic' &&
+            <AddResourcesSection
+              searchOnlineScope={searchOnlineScope}
+              setSearchOnlineScope={setSearchOnlineScope}
+              setShowFileModal={setShowFileModal}
+              selectedResources={selectedResources}
+              setSelectedResources={setSelectedResources}
+              removeResourceAtIndex={removeResourceAtIndex} />
+          }
+        </div>
+      </div>
+      <FeedbackButton />
+    </section>
+  );
 }
