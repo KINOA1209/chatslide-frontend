@@ -187,15 +187,18 @@ export default function Topic() {
 				// cookies doesn't work because it needs 'use server'
 				// cookies().set("topic", outlinesJson.data.audience);
 
-				// Store the data in session storage
-				sessionStorage.setItem('topic', outlinesJson.data.topic);
-				updateOutlines(Object.values(JSON.parse(outlinesJson.data.outlines)));
-				sessionStorage.setItem('foldername', outlinesJson.data.foldername);
-				sessionStorage.setItem(
-					'pdf_images',
-					JSON.stringify(outlinesJson.data.pdf_images),
-				);
-				initProject(outlinesJson.data);
+        // Store the data in session storage
+        sessionStorage.setItem('topic', outlinesJson.data.topic);
+        updateProject('topic', outlinesJson.data.topic);
+        updateOutlines(Object.values(JSON.parse(outlinesJson.data.outlines)));
+        sessionStorage.setItem('foldername', outlinesJson.data.foldername);
+        updateProject('id', outlinesJson.data.id);
+        updateProject('foldername', outlinesJson.data.foldername);
+        updateProject('pdf_images', outlinesJson.data.pdf_images);
+        sessionStorage.setItem(
+          'pdf_images',
+          JSON.stringify(outlinesJson.data.pdf_images),
+        );
 
 				// Redirect to a new page with the data
 				router.push('workflow-edit-outlines');

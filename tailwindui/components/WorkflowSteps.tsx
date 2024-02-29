@@ -153,9 +153,11 @@ export const projectFinishedSteps = (project: Project | null) => {
     if (project.social_posts) finishedStepsArray.push(1);
   } else {
     if (project.topic) finishedStepsArray.push(0);
-    if (project.outlines) finishedStepsArray.push(1);
-    if (project.presentation_slides) {
+    if (project.outlines) {
+      finishedStepsArray.push(1);
       finishedStepsArray.push(2);
+    }
+    if (project.presentation_slides) {
       finishedStepsArray.push(3);
     }
     if (project.video_url) finishedStepsArray.push(4);
