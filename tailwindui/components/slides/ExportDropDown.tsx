@@ -119,7 +119,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 					</BigGrayButton>
 
 					{showDropdown && (
-						<div className='flex flex-col gap-2 bg-gray-100 rounded-xl shadow-md p-2 z-50'>
+						<div className='flex flex-col gap-2 bg-gray-100 rounded-xl shadow-md p-2 z-30'>
 							<BigGrayButton
 								onClick={() => handleExport('pdf', true)}
 								isSubmitting={downloading}
