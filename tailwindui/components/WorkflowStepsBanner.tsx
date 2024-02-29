@@ -25,7 +25,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 }) => {
 	return (
 		<section className='sticky top-0 z-10'>
-			<div className='relative w-full h-[100px] flex flex-row items-center bg-[#2044F2] gap-x-4 px-4 sm:px-6 lg:px-8'>
+			<div className='relative w-full h-[100px] flex flex-row items-center bg-[#2044F2] gap-x-4 px-4 pb-5 sm:px-6 lg:px-8'>
 
         <DrLambdaBackButton href='/dashboard'/>
 				<div className='flex-grow items-center justify-center flex py-2'>
