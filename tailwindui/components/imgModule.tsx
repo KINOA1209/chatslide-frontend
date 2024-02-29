@@ -981,6 +981,9 @@ export const ImgModule = ({
 						className={`transition ease-in-out duration-150 ${
 							canEdit ? 'hover:brightness-90' : 'cursor-pointer'
 						}`}
+            onError={(e) => {
+              e.currentTarget.src = 'https://drlambda.ai/images/logo_no_text.png';
+            }}
 					/>
 				)}
 			</div>
