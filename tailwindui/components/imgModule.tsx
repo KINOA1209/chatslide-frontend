@@ -933,8 +933,8 @@ export const ImgModule = ({
 					selectedImg === ''
 						? 'bg-[#E7E9EB]'
 						: canEdit
-						? 'hover:bg-[#CAD0D3]'
-						: ''
+							? 'hover:bg-[#CAD0D3]'
+							: ''
 				} flex flex-col items-center justify-center`}
 			>
 				{ischartArr &&

@@ -92,7 +92,7 @@ export const Fun_Education_001_template = ({
 							height={540}
 							src={`${uploadedBackgroundImageUrl}`}
 							alt='Background Image'
-              unoptimized={true}
+							unoptimized={true}
 						/>
 					</div>
 				)}
@@ -157,7 +157,7 @@ export const Fun_Education_001_template = ({
 							height={540}
 							src={`${uploadedBackgroundImageUrl}`}
 							alt='Background Image'
-              unoptimized={true}
+							unoptimized={true}
 						/>
 					</div>
 				)}

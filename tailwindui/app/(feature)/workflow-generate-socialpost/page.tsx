@@ -67,8 +67,8 @@ export default function Topic_SocialPost() {
 	const { isPaidUser } = useUser();
 	const [isAddingLink, setIsAddingLink] = useState(false);
 
-  const { token } = useUser();
-  const { project, initProject, updateProject } = useProject();
+	const { token } = useUser();
+	const { project, initProject, updateProject } = useProject();
 
 	// bind form data between input and sessionStorage
 	const [topic, setTopic] = useState(
@@ -179,12 +179,12 @@ export default function Topic_SocialPost() {
 			setIsSubmitting(false);
 
 			// Store the data in session storage
-      sessionStorage.setItem('foldername', response.data.foldername);
-      sessionStorage.setItem('socialPost', response.data.res);
-      initProject(response.data);
-      updateProject('social_posts', response.data.res);
-      updateProject('content_type', 'social_posts');
-      updateProject('topic', formData.topic);
+			sessionStorage.setItem('foldername', response.data.foldername);
+			sessionStorage.setItem('socialPost', response.data.res);
+			initProject(response.data);
+			updateProject('social_posts', response.data.res);
+			updateProject('content_type', 'social_posts');
+			updateProject('topic', formData.topic);
 			//sessionStorage.setItem('socialPostImages', JSON.stringify(searchImagesResponse.data.images))
 
 			// Retrieve the existing resources from sessionStorage and parse them
@@ -228,7 +228,10 @@ export default function Topic_SocialPost() {
 				setShowPaymentModal(true);
 				setIsSubmitting(false);
 			} else {
-        toast.error(`Server is busy now. Please try again later. Reference code: ` + project?.id);
+				toast.error(
+					`Server is busy now. Please try again later. Reference code: ` +
+						project?.id,
+				);
 				setIsSubmitting(false);
 			}
 		}
@@ -241,7 +244,9 @@ export default function Topic_SocialPost() {
 			return;
 		}
 		if (!isPaidUser && selectedResources.length >= 1) {
-      setLinkError('Please subscribe to add more resources, or delete the current resource.');
+			setLinkError(
+				'Please subscribe to add more resources, or delete the current resource.',
+			);
 			return;
 		}
 		setLinkError('');
@@ -263,8 +268,8 @@ export default function Topic_SocialPost() {
 	};
 
 	function formatName(name: string) {
-    // remove file extension
-    name = name.replace(/\.[^/.]+$/, "");
+		// remove file extension
+		name = name.replace(/\.[^/.]+$/, '');
 
 		if (name.length > MAX_TOPIC_LENGTH) {
 			return name.slice(0, MAX_TOPIC_LENGTH - 3) + '...';
@@ -403,24 +408,21 @@ export default function Topic_SocialPost() {
 				setSelectedResources={setSelectedResources}
 				showModal={showFileModal}
 				setShowModal={setShowFileModal}
-        pageInvoked={'summary'}
+				pageInvoked={'summary'}
 			/>
 
-			<form onSubmit={handleSubmit}>		
+			<form onSubmit={handleSubmit}>
 				<WorkflowStepsBanner
 					currentIndex={0}
 					isSubmitting={isSubmitting}
 					setIsSubmitting={setIsSubmitting}
 					isPaidUser={isPaidUser}
 					nextIsPaidFeature={false}
-					nextText={
-						!isSubmitting ? 'Create Post' : 'Creating Post...'
-					}
+					nextText={!isSubmitting ? 'Create Post' : 'Creating Post...'}
 				/>
 				{/* main content */}
 				<div className='gap-y-4 w-full flex flex-col items-center'>
-
-          <GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
+					<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
 
 					{/* Project Summary section */}
 					<div className='w-full lg:w-2/3  px-3 my-3 lg:my-1'>
@@ -538,18 +540,21 @@ export default function Topic_SocialPost() {
 											<option key='Ukrainian' value='Ukrainian'>
 												🇺🇦 Українська
 											</option>
-                      <option key='French' value='French'>
-                        🇫🇷 Français
-                      </option>
-                      <option key='German' value='German'>
-                        🇩🇪 Deutsch
-                      </option>
-                      <option key='Brazilian Portuguese' value='Brazilian Portuguese'>
-                        🇧🇷 Português (Brasil)
-                      </option>
-                      <option key='Portuguese' value='Portuguese'>
-                        🇵🇹 Português
-                      </option>
+											<option key='French' value='French'>
+												🇫🇷 Français
+											</option>
+											<option key='German' value='German'>
+												🇩🇪 Deutsch
+											</option>
+											<option
+												key='Brazilian Portuguese'
+												value='Brazilian Portuguese'
+											>
+												🇧🇷 Português (Brasil)
+											</option>
+											<option key='Portuguese' value='Portuguese'>
+												🇵🇹 Português
+											</option>
 											<option key='Hindi' value='Hindi'>
 												🇮🇳 हिन्दी
 											</option>
@@ -611,19 +616,19 @@ export default function Topic_SocialPost() {
 									id='link_text_container'
 									className='flex items-center w-full'
 								>
-                  <div className='flex items-center gap-1'>
-                    <IoIosLink />
-                  </div>
-                  <div className='w-full'>
-                    <label htmlFor='link_text'></label>
-                    <input
-                      id='link'
-                      type='text'
-                      className='text-sm md:text-l form-input w-full border-none bg-gray-100'
-                      value={linkUrl}
-                      onChange={(e) => handleLinkChange(e.target.value)}
-                      placeholder='Paste webpage, Youtube, or 𝕏 link'
-                    />
+									<div className='flex items-center gap-1'>
+										<IoIosLink />
+									</div>
+									<div className='w-full'>
+										<label htmlFor='link_text'></label>
+										<input
+											id='link'
+											type='text'
+											className='text-sm md:text-l form-input w-full border-none bg-gray-100'
+											value={linkUrl}
+											onChange={(e) => handleLinkChange(e.target.value)}
+											placeholder='Paste webpage, Youtube, or 𝕏 link'
+										/>
 									</div>
 									<SmallBlueButton
 										onClick={(e) => {

@@ -48,7 +48,7 @@ export default function SSORedirect() {
 							progress: undefined,
 							theme: 'light',
 						});
-            SessionStorage.removeItem('promo');
+						SessionStorage.removeItem('promo');
 					}
 				}
 
@@ -75,14 +75,14 @@ export default function SSORedirect() {
 	return (
 		<div className='flex items-center justify-center min-h-screen'>
 			<ToastContainer />
-      <Blank>
+			<Blank>
 				<div>You should be redirected soon. </div>
 				{showLink && (
 					<a href='/dashboard' className='text-blue-600'>
 						If not, click here.
 					</a>
 				)}
-      </Blank>
+			</Blank>
 		</div>
 	);
 }

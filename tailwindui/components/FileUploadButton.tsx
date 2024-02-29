@@ -43,27 +43,25 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 	}, [isSubmitting]);
 
 	const determineSupportedFormats = () => {
-        if (pageInvoked === 'theme') {
-            return ['png', 'jpg', 'jpeg'];
-        }
-		else if (pageInvoked === 'summary'){
-			return ['pdf', 'txt', 'docx', 'pptx']
+		if (pageInvoked === 'theme') {
+			return ['png', 'jpg', 'jpeg'];
+		} else if (pageInvoked === 'summary') {
+			return ['pdf', 'txt', 'docx', 'pptx'];
 		}
-        return supportedFormats;
-    };
+		return supportedFormats;
+	};
 
 	const determineSupportedExtensions = () => {
-        if (pageInvoked === 'theme') {
-            return ['png', 'jpg', 'jpeg'];
-        }
-		else if (pageInvoked === 'summary'){
-			return ['pdf', 'txt', 'docx', 'pptx']
+		if (pageInvoked === 'theme') {
+			return ['png', 'jpg', 'jpeg'];
+		} else if (pageInvoked === 'summary') {
+			return ['pdf', 'txt', 'docx', 'pptx'];
 		}
-        return supportedExtensions;
-    };
+		return supportedExtensions;
+	};
 
-	const formats = determineSupportedFormats()
-	const extensions = determineSupportedExtensions()
+	const formats = determineSupportedFormats();
+	const extensions = determineSupportedExtensions();
 
 	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files ? e.target.files[0] : null;

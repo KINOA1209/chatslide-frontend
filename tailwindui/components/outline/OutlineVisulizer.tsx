@@ -19,11 +19,10 @@ const OutlineVisualizer = ({
 	setOutlineData,
 	isGPT35,
 }: {
-    outlineData: Outlines;
-    setOutlineData: (outline: Outlines) => void;
+	outlineData: Outlines;
+	setOutlineData: (outline: Outlines) => void;
 	isGPT35: boolean;
 }) => {
-
 	const [titleCache, setTitleCache] = useState('');
 	const [hoveredDetailIndex, setHoveredDetailIndex] = useState(-1);
 	const [hoveredSectionIndex, setHoveredSectionIndex] = useState(-1);
@@ -230,56 +229,55 @@ const OutlineVisualizer = ({
 												/>
 												{hoveredDetailIndex === detailIndex &&
 													sectionIndex === hoveredSectionIndex && (
-                            <>
-														<div className='absolute flex flex-row gap-4 bottom-[70%] right-0 mt-1 mr-1'>
-															{outlineData[sectionIndex].content.length >
-																minOutlineDetailCount && (
-																<div
-																	onClick={(e) =>
-																		handleDeleteDetail(
-																			e,
-																			sectionIndex,
-																			detailIndex,
-																		)
-																	}
-																>
-																	<DeleteIcon shadow={true} />
-																</div>
-															)}
+														<>
+															<div className='absolute flex flex-row gap-4 bottom-[70%] right-0 mt-1 mr-1'>
+																{outlineData[sectionIndex].content.length >
+																	minOutlineDetailCount && (
+																	<div
+																		onClick={(e) =>
+																			handleDeleteDetail(
+																				e,
+																				sectionIndex,
+																				detailIndex,
+																			)
+																		}
+																	>
+																		<DeleteIcon shadow={true} />
+																	</div>
+																)}
 
-															{outlineData[sectionIndex].content.length <
-																maxOutlineDetailCount && (
-																<div
-																	onClick={(e) =>
-																		handleAddDetail(
-																			e,
-																			sectionIndex,
-																			detailIndex,
-																		)
-																	}
-																>
-																	<AddTopicIcon />
-																</div>
-															)}
-														</div>
-                            <div className='absolute flex flex-row gap-4 top-[70%] right-0 mb-1 mr-1 z-10'>
-                              {outlineData[sectionIndex].content.length <
-                                maxOutlineDetailCount && (
-                                  <div
-                                    onClick={(e) =>
-                                      handleAddDetail(
-                                        e,
-                                        sectionIndex,
-                                        detailIndex+1,
-                                      )
-                                    }
-                                  >
-                                    <AddTopicIcon />
-                                  </div>
-                                )}
-                            </div>
-
-                          </>
+																{outlineData[sectionIndex].content.length <
+																	maxOutlineDetailCount && (
+																	<div
+																		onClick={(e) =>
+																			handleAddDetail(
+																				e,
+																				sectionIndex,
+																				detailIndex,
+																			)
+																		}
+																	>
+																		<AddTopicIcon />
+																	</div>
+																)}
+															</div>
+															<div className='absolute flex flex-row gap-4 top-[70%] right-0 mb-1 mr-1 z-10'>
+																{outlineData[sectionIndex].content.length <
+																	maxOutlineDetailCount && (
+																	<div
+																		onClick={(e) =>
+																			handleAddDetail(
+																				e,
+																				sectionIndex,
+																				detailIndex + 1,
+																			)
+																		}
+																	>
+																		<AddTopicIcon />
+																	</div>
+																)}
+															</div>
+														</>
 													)}
 											</li>
 										</ul>

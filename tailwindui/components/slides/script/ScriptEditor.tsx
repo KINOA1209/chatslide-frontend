@@ -14,9 +14,9 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 	currentSlideIndex,
 }) => {
 	const updateTranscriptList = (newValue: string) => {
-    const newSlide = { ...slides[currentSlideIndex] };
-    newSlide.transcript = newValue;
-    updateSlidePage(currentSlideIndex, newSlide);
+		const newSlide = { ...slides[currentSlideIndex] };
+		newSlide.transcript = newValue;
+		updateSlidePage(currentSlideIndex, newSlide);
 	};
 
 	return (

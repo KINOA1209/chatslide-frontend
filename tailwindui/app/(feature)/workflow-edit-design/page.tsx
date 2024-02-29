@@ -110,7 +110,7 @@ export default function DesignPage() {
 					className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1 font-creato-regular'
 					id='SummaryStep-4'
 				>
-          <Card>
+					<Card>
 						<div className='title2'>
 							<p className='text-3xl'>Design</p>
 							<p id='after2'> (Optional)</p>

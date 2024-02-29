@@ -46,7 +46,7 @@ export const useSlides = () => {
 	const { slidesHistoryIndex, setSlidesHistoryIndex } = useSlidesHistoryIndex();
 	const { version, setVersion } = useVersion();
 	const { token } = useUser();
-  const { project } = useProject();
+	const { project } = useProject();
 
 	const { clearChatHistory } = useChatHistory();
 
@@ -57,8 +57,8 @@ export const useSlides = () => {
 		if (slidesStatus !== SlidesStatus.NotInited) return;
 		slidesStatus = SlidesStatus.Initing;
 
-    setSlideIndex(0);
-    setVersion(0);
+		setSlideIndex(0);
+		setVersion(0);
 		setSlidesHistory([slides]);
 		setSlidesHistoryIndex(0);
 		console.log('-- init slides: ', { slidesStatus, slides });

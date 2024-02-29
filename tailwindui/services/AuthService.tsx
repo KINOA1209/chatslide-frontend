@@ -116,9 +116,9 @@ class AuthService {
 		const user = await this.getCurrentUser();
 		if (user) {
 			try {
-        console.log("Current amplify user: ", user)
-        // console.log("Current amplify user attributes: ", user.attributes)
-        // console.log("Current amplify user attributes name: ", user.attributes.name)
+				console.log('Current amplify user: ', user);
+				// console.log("Current amplify user attributes: ", user.attributes)
+				// console.log("Current amplify user attributes name: ", user.attributes.name)
 				const name = await user.attributes.name;
 				return name;
 			} catch (error) {
@@ -155,8 +155,10 @@ class AuthService {
 
 			return { userId, idToken };
 		} catch (error) {
-			console.warn(`Error getting user token and id: ${error}, user probably did not log in.`);
-      return { userId: '', idToken: '' };
+			console.warn(
+				`Error getting user token and id: ${error}, user probably did not log in.`,
+			);
+			return { userId: '', idToken: '' };
 		}
 	}
 

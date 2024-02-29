@@ -68,7 +68,7 @@ export const StanfordTemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '51',
-		}
+		},
 	},
 	Col_1_img_0_layout: {
 		canvaCSS: {
@@ -192,7 +192,7 @@ export const StanfordTemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '51',
-		}
+		},
 	},
 	Col_1_img_1_layout: {
 		canvaCSS: { padding: '28px' },
@@ -229,7 +229,7 @@ export const StanfordTemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '51',
-		}
+		},
 	},
 	Col_2_img_2_layout: {
 		canvaCSS: { padding: '28px' },
@@ -266,7 +266,7 @@ export const StanfordTemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '51',
-		}
+		},
 	},
 	Col_3_img_3_layout: {
 		canvaCSS: { padding: '28px' },
@@ -302,6 +302,6 @@ export const StanfordTemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '51',
-		}
+		},
 	},
 };

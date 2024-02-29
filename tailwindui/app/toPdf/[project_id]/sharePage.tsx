@@ -12,33 +12,35 @@ const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 });
 
 interface SharePageProps {
-  project_id: string
-  page?: number
+	project_id: string;
+	page?: number;
 }
 
-const SharePage: React.FC<SharePageProps> = ({ project_id, page=1 }) => {
-  const [loading, setLoading] = useState(true);
-  const { initSlides } = useSlides();
+const SharePage: React.FC<SharePageProps> = ({ project_id, page = 1 }) => {
+	const [loading, setLoading] = useState(true);
+	const { initSlides } = useSlides();
 
-  useEffect(() => {
-    const token = new URLSearchParams(window.location.search).get('token') as string;
-    const init = async () => {
-      const project = await ProjectService.getProjectDetails(token, project_id);
-      const slides = ProjectService.parseSlides(project.presentation_slides);
-      initSlides(slides);
-      setLoading(false);
-    };
-    init();
-  }, []);
+	useEffect(() => {
+		const token = new URLSearchParams(window.location.search).get(
+			'token',
+		) as string;
+		const init = async () => {
+			const project = await ProjectService.getProjectDetails(token, project_id);
+			const slides = ProjectService.parseSlides(project.presentation_slides);
+			initSlides(slides);
+			setLoading(false);
+		};
+		init();
+	}, []);
 
 	return (
 		<main className='grow'>
-      <SlidesHTML
-        isViewing={true}
-        isPresenting={true}
-        initSlideIndex={page as number}
-        toPdf={true}
-      />
+			<SlidesHTML
+				isViewing={true}
+				isPresenting={true}
+				initSlideIndex={page as number}
+				toPdf={true}
+			/>
 		</main>
 	);
 };

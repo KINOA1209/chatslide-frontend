@@ -9,7 +9,7 @@ import { useUser } from '@/hooks/use-user';
 const ReferralLink: React.FC = () => {
 	const [host, setHost] = useState('https://drlambda.ai');
 	const [referralLink, setReferralLink] = useState('');
-  const { token, email } = useUser();
+	const { token, email } = useUser();
 
 	useEffect(() => {
 		if (
@@ -24,7 +24,7 @@ const ReferralLink: React.FC = () => {
 
 	useEffect(() => {
 		const fetchReferral = async (token: string) => {
-      if (!token) return;
+			if (!token) return;
 
 			fetch(`/api/user/create_referral_code`, {
 				method: 'POST',

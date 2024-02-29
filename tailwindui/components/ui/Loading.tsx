@@ -1,16 +1,16 @@
 const Loading: React.FC<{
-  children?: React.ReactNode
-  text?: string
+	children?: React.ReactNode;
+	text?: string;
 }> = ({ children, text }) => {
-  return (
-    <div className="flex-grow flex flex-row items-center justify-center overflow-auto">
-      <div className="text-center text-lg text-gray-600">
-        {children ? children : text ? text : 'Loading...⏳'}
-      </div>
-    </div>
-  );
-}
+	return (
+		<div className='flex-grow flex flex-row items-center justify-center overflow-auto'>
+			<div className='text-center text-lg text-gray-600'>
+				{children ? children : text ? text : 'Loading...⏳'}
+			</div>
+		</div>
+	);
+};
 
 const Blank = Loading;
 
-export { Blank, Loading }
+export { Blank, Loading };

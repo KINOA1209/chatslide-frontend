@@ -95,9 +95,8 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 	const [feedbackText, setFeedbackText] = useState<string>('');
 	const [submitSuccessful, setSubmitSuccessful] = useState<boolean>(false);
 	const [ratingError, setRatingError] = useState<string | null>(null);
-  const { project } = useProject();
-  const { token } = useUser();
-
+	const { project } = useProject();
+	const { token } = useUser();
 
 	const handleRatingChange = (newRating: number) => {
 		setRating(newRating);

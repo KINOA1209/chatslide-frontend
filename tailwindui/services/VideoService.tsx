@@ -1,4 +1,4 @@
-import VideoJobStatus from "@/models/VideoJobStatus";
+import VideoJobStatus from '@/models/VideoJobStatus';
 
 export default class VideoService {
 	// Returns a promise of the video generation job as a string, which could be used later to query the job status.
@@ -14,7 +14,11 @@ export default class VideoService {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${userToken}`, // Replace this with your actual auth header
 			},
-			body: JSON.stringify({ project_id: project_id, foldername: foldername, language: language }),
+			body: JSON.stringify({
+				project_id: project_id,
+				foldername: foldername,
+				language: language,
+			}),
 		});
 
 		if (!response.ok) {
@@ -25,13 +29,18 @@ export default class VideoService {
 
 		const job_creation = await response.json();
 
-		console.log(`generate video response as VideoJobCreation: ${job_creation.data}, job_id: ${job_creation.data.job_id}`);
+		console.log(
+			`generate video response as VideoJobCreation: ${job_creation.data}, job_id: ${job_creation.data.job_id}`,
+		);
 
 		return job_creation.data.job_id;
 	}
 
 	// Returns the VideoJobStatus object which has both status and video url if the job is completed.
-	static async getVideoJobStatus(job_id: string, userToken: string): Promise<VideoJobStatus> {
+	static async getVideoJobStatus(
+		job_id: string,
+		userToken: string,
+	): Promise<VideoJobStatus> {
 		const response = await fetch(`/api/video_job_status?job_id=${job_id}`, {
 			method: 'GET',
 			headers: {
@@ -41,13 +50,15 @@ export default class VideoService {
 		});
 
 		if (!response.ok) {
-			throw new Error(`Error fetching video job ${job_id} status: ${response.status}`);
+			throw new Error(
+				`Error fetching video job ${job_id} status: ${response.status}`,
+			);
 		}
 
 		const json = await response.json();
 		return {
 			job_status: json.data.job_status,
-			video_url: json.data.video_url
+			video_url: json.data.video_url,
 		};
 	}
 }

@@ -1,5 +1,5 @@
 import {
-  FaFacebook,
+	FaFacebook,
 	FaInstagram,
 	FaLinkedin,
 	FaTiktok,
@@ -45,7 +45,7 @@ const socialMediaBlock = (
 				aria-label='Twitter'
 			>
 				<div className='w-8 h-8 fill-current flex items-center justify-center'>
-          𝕏
+					𝕏
 				</div>
 			</a>
 		</li>
@@ -75,21 +75,20 @@ const socialMediaBlock = (
 				</div>
 			</a>
 		</li>
-    {/* facebook */}
-    <li className='ml-4'>
-      <a
-        href='https://www.facebook.com/profile.php?id=61556624723234'
-        target='_blank'
-        className='flex justify-center items-center text-gray-600 hover:text-gray-900 bg-white hover:bg-white-100 rounded-full shadow transition duration-150 ease-in-out'
-        aria-label='Facebook'
-      >
-        <div className='w-8 h-8 fill-current flex items-center justify-center'>
-          <FaFacebook />
-        </div>
-      </a>
-    </li>
+		{/* facebook */}
+		<li className='ml-4'>
+			<a
+				href='https://www.facebook.com/profile.php?id=61556624723234'
+				target='_blank'
+				className='flex justify-center items-center text-gray-600 hover:text-gray-900 bg-white hover:bg-white-100 rounded-full shadow transition duration-150 ease-in-out'
+				aria-label='Facebook'
+			>
+				<div className='w-8 h-8 fill-current flex items-center justify-center'>
+					<FaFacebook />
+				</div>
+			</a>
+		</li>
 	</ul>
-
 );
 
 export default function Footer() {
@@ -133,14 +132,14 @@ export default function Footer() {
 									Terms and Services
 								</a>
 							</li>
-              <li className='mb-2'>
-                <a
-                  href='https://blog.drlambda.ai'
-                  className='text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out'
-                >
-                  Blog
-                </a>
-              </li>
+							<li className='mb-2'>
+								<a
+									href='https://blog.drlambda.ai'
+									className='text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out'
+								>
+									Blog
+								</a>
+							</li>
 						</ul>
 					</div>
 

@@ -1,22 +1,21 @@
 .overflow-x-auto::-webkit-scrollbar-track,
 .overflow-y-hidden::-webkit-scrollbar-track {
-    background-color: #ECF1FE; 
+	background-color: #ecf1fe;
 }
-
 
 .overflow-x-auto::-webkit-scrollbar-thumb,
 .overflow-y-hidden::-webkit-scrollbar-thumb {
-    background-color: #2943E9; 
-    border-radius: 10px; 
+	background-color: #2943e9;
+	border-radius: 10px;
 }
 
 .overflow-x-auto::-webkit-scrollbar,
 .overflow-y-hidden::-webkit-scrollbar {
-    width: 8px; 
-    height: 10px; 
+	width: 8px;
+	height: 10px;
 }
 
 .overflow-x-auto::-webkit-scrollbar-thumb:hover,
 .overflow-y-hidden::-webkit-scrollbar-thumb:hover {
-    background: #1d2e8c;
+	background: #1d2e8c;
 }

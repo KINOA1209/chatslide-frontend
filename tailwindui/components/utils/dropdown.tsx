@@ -12,7 +12,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const router = useRouter();
-  const { username, uid, token, credits, tier } = useUser();
+	const { username, uid, token, credits, tier } = useUser();
 
 	function userFirstName() {
 		return username.split(' ')[0];
@@ -105,13 +105,13 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
 						>
 							My Resources
 						</a>
-            <a
-              href='/discover'
-              className='block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200'
-              role='menuitem'
-            >
-              Discover
-            </a>
+						<a
+							href='/discover'
+							className='block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200'
+							role='menuitem'
+						>
+							Discover
+						</a>
 						<a
 							href='/account'
 							className='block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200'

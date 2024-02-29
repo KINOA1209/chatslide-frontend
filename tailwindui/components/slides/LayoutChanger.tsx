@@ -54,7 +54,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 		slideIndex: number,
 	) => {
 		e.preventDefault();
-    console.log('updateLayout', layoutName, slideIndex);
+		console.log('updateLayout', layoutName, slideIndex);
 		handleSlideEdit(layoutName, slideIndex, 'layout');
 	};
 

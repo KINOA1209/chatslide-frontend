@@ -115,8 +115,7 @@ export const Business_002_TemplateLayoutsConfig: {
 			height: '100%',
 			position: 'relative',
 		},
-		rndCSS: {
-		}
+		rndCSS: {},
 	},
 	Col_1_img_0_layout: {
 		canvaCSS: {
@@ -280,7 +279,7 @@ export const Business_002_TemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '51',
-		}
+		},
 	},
 	Col_1_img_1_layout: {
 		columnCSS: { width: '100%', display: 'grid', gridTemplateColumns: '1fr' },
@@ -326,7 +325,7 @@ export const Business_002_TemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '51',
-		}
+		},
 	},
 	Col_2_img_2_layout: {
 		columnCSS: { display: 'flex', flexDirection: 'column' },
@@ -370,7 +369,7 @@ export const Business_002_TemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '51',
-		}
+		},
 	},
 	Col_3_img_3_layout: {
 		columnCSS: { display: 'flex', flexDirection: 'column' },
@@ -413,6 +412,6 @@ export const Business_002_TemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '51',
-		}
+		},
 	},
 };

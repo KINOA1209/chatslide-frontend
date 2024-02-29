@@ -95,7 +95,7 @@ export const OnboardingFeedbackForm: React.FC<FeedbackFormProps> = ({
 	const [feedbackText, setFeedbackText] = useState<string>('');
 	const [submitSuccessful, setSubmitSuccessful] = useState<boolean>(false);
 	const [ratingError, setRatingError] = useState<string | null>(null);
-  const { project } = useProject();
+	const { project } = useProject();
 
 	const handleRatingChange = (newRating: number) => {
 		setRating(newRating);

@@ -23,8 +23,8 @@ const HolidayBanner: React.FC = () => {
 			{difference > 0 && (
 				<div className='w-screen bg-black text-white text-center p-4 shadow-md'>
 					<p className='text-xl'>
-						🐲 Year of Dragon Limited Deal! <br/>
-            🧧 Start with
+						🐲 Year of Dragon Limited Deal! <br />
+						🧧 Start with
 						<span className='text-red-500'>100</span> more credits! 💸
 					</p>
 					<a
@@ -34,7 +34,7 @@ const HolidayBanner: React.FC = () => {
 						Get This Deal Now!
 					</a>
 					<p className='text-xs font-semibold mt-2'>
-						⏰ <TimeRemaining initialTimeRemaining={initialTimeRemaining}/> ⏰
+						⏰ <TimeRemaining initialTimeRemaining={initialTimeRemaining} /> ⏰
 					</p>
 				</div>
 			)}
