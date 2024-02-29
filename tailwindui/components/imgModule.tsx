@@ -22,6 +22,12 @@ import {
 import Chart from '@/models/Chart';
 import { IoBarChartOutline } from 'react-icons/io5';
 
+const RANDOM_FILLER_IMAGES = [
+  'https://img.freepik.com/free-vector/linear-flat-abstract-lines-pattern_23-2148939391.jpg',
+  'https://img.freepik.com/free-vector/geometric-shapes-pattern-background_1319-136.jpg',
+  'https://img.freepik.com/free-vector/linear-flat-abstract-lines-pattern_23-2148952437.jpg',
+]
+
 interface ImgModuleProp {
 	imgsrc: string;
 	updateSingleCallback: Function;
@@ -982,7 +988,9 @@ export const ImgModule = ({
 							canEdit ? 'hover:brightness-90' : 'cursor-pointer'
 						}`}
             onError={(e) => {
-              e.currentTarget.src = 'https://drlambda.ai/images/logo_no_text.png';
+              const src = RANDOM_FILLER_IMAGES[Math.floor(Math.random() * RANDOM_FILLER_IMAGES.length)];
+              e.currentTarget.src = src
+              updateSingleCallback(src);
             }}
 					/>
 				)}
