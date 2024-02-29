@@ -44,10 +44,7 @@ const ResourceEntry: React.FC<ResourceEntryProps> = ({
   }
 
   return (
-    <div
-      id='selectedfile_each'
-      className='flex items-center bg-white rounded min-h-[50px] px-[1rem] justify-between'
-    >
+    <div className='flex items-center bg-white rounded min-h-[50px] justify-between'>
       {showPaywall &&
         <PaywallModal
           message='You need to be a paid user to use OCR'
