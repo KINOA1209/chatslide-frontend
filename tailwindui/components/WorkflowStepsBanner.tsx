@@ -26,8 +26,8 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 	nextText = 'Next',
 }) => {
 	return (
-		<div className='sticky top-0 z-10'>
-			<div className='relative w-full h-[100px] flex flex-row items-center bg-[#2044F2] pr-12'>
+    <section className='sticky top-0 z-10'>
+			<div className='relative w-full h-[100px] flex flex-col items-center w-full bg-[#2044F2]'>
 				<div className='flex-grow items-center justify-center flex py-2'>
 					<ProjectProgress currentInd={currentIndex} />
 				</div>
@@ -71,7 +71,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 			<div className='py-2 w-full flex-auto text-center self-center bg-yellow-100 font-small leading-snug tracking-tight whitespace-nowrap sm:hidden'>
 				Use our desktop version to see all the functionalities!
 			</div>
-		</div>
+		</section>
 	);
 };
 

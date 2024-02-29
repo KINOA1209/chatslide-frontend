@@ -46,7 +46,7 @@ export default function WorkflowStep6() {
   const { token } = useUser();
 
   const showErrorAndRedirect = () => {
-    toast.error(`Your video is being generated, please wait a bit...`, {
+    toast.error(`Your video is not yet ready.`, {
       position: 'top-center',
       autoClose: 5000,
       hideProgressBar: false,
@@ -57,7 +57,7 @@ export default function WorkflowStep6() {
       theme: 'light',
       containerId: 'reviewVideo',
     });
-    router.push('/workflow-review-slides');
+    // router.push('/workflow-review-slides');
   };
 
   useEffect(() => {
@@ -113,7 +113,7 @@ export default function WorkflowStep6() {
   }, [isLoading]);
 
   return (
-    <div className='min-h-[90vh] w-full bg-white'>
+    <div className='h-full w-full bg-white flex flex-col'>
       {/* flex col container for steps, title, etc */}
 
       <WorkflowStepsBanner
@@ -127,12 +127,7 @@ export default function WorkflowStep6() {
 
       <ToastContainer enableMultiContainer containerId={'video'} />
 
-      <div
-        className={`max-w-4xl px-6 flex flex-col relative mx-auto`}
-        ref={contentRef}
-      >
-        <VideoVisualizer videoUrl={videoUrl || ''} status={jobStatus || ''} />
-      </div>
+      <VideoVisualizer videoUrl={videoUrl || ''} status={jobStatus || ''} />
 
       <FeedbackButton />
     </div>

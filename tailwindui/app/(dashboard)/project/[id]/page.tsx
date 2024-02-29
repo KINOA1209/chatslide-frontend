@@ -11,6 +11,7 @@ import { useSlides } from '@/hooks/use-slides';
 import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';
 import { getLastStepReidrect } from '@/components/WorkflowSteps';
+import { Loading } from '@/components/ui/Loading';
 
 const ProjectLoading = () => {
   const pathname = usePathname();
@@ -139,15 +140,7 @@ const ProjectLoading = () => {
   };
 
   return (
-    <section className='bg-gradient-to-b from-gray-100 to-white'>
-      <div className='max-w-6xl mx-auto px-4 sm:px-6'>
-        <div className='pt-32 pb-12 md:pt-40 md:pb-20'>
-          <div className='max-w-3xl mx-auto text-center pb-12 md:pb-20'>
-            <p>Loading project...</p>
-          </div>
-        </div>
-      </div>
-    </section>
+    <Loading />
   );
 };
 

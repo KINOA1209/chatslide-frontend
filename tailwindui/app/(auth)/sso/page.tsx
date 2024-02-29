@@ -1,5 +1,6 @@
 'use client';
 
+import { Blank } from '@/components/ui/Loading';
 import SessionStorage from '@/components/utils/SessionStorage';
 import AuthService from '@/services/AuthService';
 import UserService from '@/services/UserService';
@@ -74,14 +75,14 @@ export default function SSORedirect() {
 	return (
 		<div className='flex items-center justify-center min-h-screen'>
 			<ToastContainer />
-			<div className='text-center'>
+      <Blank>
 				<div>You should be redirected soon. </div>
 				{showLink && (
 					<a href='/dashboard' className='text-blue-600'>
 						If not, click here.
 					</a>
 				)}
-			</div>
+      </Blank>
 		</div>
 	);
 }

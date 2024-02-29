@@ -14,7 +14,7 @@ import ResourceService from '@/services/ResourceService';
 import DrlambdaButton from './button/DrlambdaButton';
 import { FaCheckCircle } from 'react-icons/fa';
 import { useUser } from '@/hooks/use-user';
-import { Loading } from './ui/Loading';
+import { Blank, Loading } from './ui/Loading';
 
 interface UserFileList {
   selectable: boolean;
@@ -455,23 +455,13 @@ const MyFiles: React.FC<filesInterface> = ({
       e.dataTransfer.clearData();
     }
   };
-
+  
   return (
     <section className='bg-white grow flex flex-col h-full min-w-[50vh]'>
       <ToastContainer enableMultiContainer containerId={'fileManagement'} />
       <div
         className={`max-w-7xl w-full mx-auto px-4 flex flex-wrap justify-around`}
       >
-        {/* {!selectable ? (
-          <div className='pt-4 grow pr-4'>
-            <h1 className='h2' style={{ color: '#180d09' }}>
-              My Resources
-            </h1>
-          </div>
-        ) : (
-          <></>
-        )} */}
-
         {/* upload local file button */}
         <div className='max-w-sm w-fit text-center pt-4 mx-4'>
           <div className='w-full mx-auto'>
@@ -545,27 +535,27 @@ const MyFiles: React.FC<filesInterface> = ({
           </div>
         </div>}
       </div>
-      <div
-        className={`max-w-6xl w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto border border-gray-200 ${isDragging ? 'bg-blue-100 border-blue-500' : ''}`}
-        onDragEnter={handleDragEnter}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-        ref={contentRef}
-      >
-        {resources.length > 0 && (
-          <FileManagement
-            selectable={selectable}
-            userfiles={resources}
-            deleteCallback={handleFileDeleted}
-            clickCallback={handleClick}
-            selectedResources={selectedResources || []}
-          />
-        )}
-        {resources.length === 0 && (
-          <Loading/>
-        )}
-      </div>
+      {
+        rendered ? resources.length === 0 ?
+        <Blank text='You have no uploaded file' /> :
+        <div
+          className={`max-w-6xl w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto border border-gray-200 ${isDragging ? 'bg-blue-100 border-blue-500' : ''}`}
+          onDragEnter={handleDragEnter}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+          ref={contentRef}
+        >
+            <FileManagement
+              selectable={selectable}
+              userfiles={resources}
+              deleteCallback={handleFileDeleted}
+              clickCallback={handleClick}
+              selectedResources={selectedResources || []}
+            />
+        </div> :
+        <Loading />
+       }
     </section>
   );
 };

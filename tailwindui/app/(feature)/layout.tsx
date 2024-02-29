@@ -23,7 +23,7 @@ export default function WorkflowLayout({
 					{/* only show Header on small screen */}
 					<Header loginRequired={true} isLanding={false} isAuth={false} />
 				</div>
-				<main className='grow flex flex-col flex-grow'>
+				<main className='grow flex flex-col'>
 					{/* Content */}
 					{children}
 				</main>
