@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC, useState, useRef, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import DrlambdaButton, { DrLambdaBackButton } from './button/DrlambdaButton';
+import DrlambdaButton, { BigBlueButton, DrLambdaBackButton } from './button/DrlambdaButton';
 
 // Allowed extensions defined in drlambda/app/user_file_manager.py
 // ALLOWED_DOC_EXTENSIONS = {"txt", "pdf"}
@@ -120,13 +120,13 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 				onChange={handleFileChange}
 				style={{ display: 'none' }}
 			/>
-			<DrlambdaButton
+			<BigBlueButton
 				onClick={handleClick}
 				isSubmitting={isSubmitting}
 				showArrow={false}
 			>
 				{!isSubmitting ? 'Upload from Local 💻' : 'Uploading File...'}
-			</DrlambdaButton>
+      </BigBlueButton>
 			<div className='text-sm text-gray-400'>
 				Supported file formats:{' '}
 				{formats.map((f, index) => {

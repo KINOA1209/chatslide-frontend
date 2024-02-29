@@ -166,7 +166,7 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 }) => {
 	return (
 		<button
-			className={`btn w-[100px] sm:w-[120px] h-[36px] sm:h-[36px] sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
+			className={`btn h-[36px] sm:h-[36px] sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
 				isSubmitting && 'animate-pulse'
 			} disabled:bg-gray-600 whitespace-nowrap rounded-xl`}
 			onClick={onClick}

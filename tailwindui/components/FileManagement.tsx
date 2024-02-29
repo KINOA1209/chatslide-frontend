@@ -11,7 +11,7 @@ import { DeleteIcon, SpinIcon } from '@/app/(feature)/icons';
 import { ResourceItem } from './ui/ResourceItem';
 import Resource from '@/models/Resource';
 import ResourceService from '@/services/ResourceService';
-import DrlambdaButton from './button/DrlambdaButton';
+import DrlambdaButton, { BigBlueButton } from './button/DrlambdaButton';
 import { FaCheckCircle } from 'react-icons/fa';
 import { useUser } from '@/hooks/use-user';
 import { Blank, Loading } from './ui/Loading';
@@ -531,13 +531,13 @@ const MyFiles: React.FC<filesInterface> = ({
 								overlapSize={20}
 								// entryPoint="LOCAL_FILES"
 							>
-								<DrlambdaButton
+								<BigBlueButton
 									onClick={() => {}}
 									isSubmitting={false}
 									showArrow={false}
 								>
 									Upload from Cloud ☁️
-								</DrlambdaButton>
+								</BigBlueButton>
 							</CarbonConnect>
 						</div>
 					</div>
