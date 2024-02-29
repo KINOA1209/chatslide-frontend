@@ -13,6 +13,7 @@ import { BlueLabel, GrayLabel } from './GrayLabel';
 import { UserStatus, useUser } from '@/hooks/use-user';
 import useHydrated from '@/hooks/use-hydrated';
 import Modal from './Modal';
+import FeedbackButton from './feedback';
 
 interface SideBarProps {}
 const SideBar = ({}: SideBarProps) => {
@@ -195,6 +196,10 @@ const SideBar = ({}: SideBarProps) => {
 							</a>
 						</>
 					)}
+
+					<div className='relative'>
+						<FeedbackButton timeout={location.pathname.includes('workflow-review-slides') ? 300 : 0} />
+					</div>
 				</div>
 			</div>
 

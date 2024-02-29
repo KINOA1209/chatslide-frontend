@@ -1,5 +1,11 @@
 import React from 'react';
-import { FaFileImage, FaRegFilePdf, FaFileWord, FaYoutube, FaRegFileWord } from 'react-icons/fa';
+import {
+	FaFileImage,
+	FaRegFilePdf,
+	FaFileWord,
+	FaYoutube,
+	FaRegFileWord,
+} from 'react-icons/fa';
 import Image from 'next/image';
 import Resource from '@/models/Resource';
 import { IoDocumentText } from 'react-icons/io5';
@@ -27,29 +33,29 @@ export const ResourceIcon: React.FC<{ resource: Resource }> = ({
 
 const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
 	if (!fileType) {
-    return <FiFilePlus size='40px'/>;
+		return <FiFilePlus size='40px' />;
 	}
 	fileType = fileType.toLowerCase();
 	switch (fileType) {
 		case 'doc':
-      return <FiFilePlus size='40px' />;
+			return <FiFilePlus size='40px' />;
 		case 'url':
 			return <FaYoutube size='40px' fill='#505050' />;
-		case 'youtube':  // will show thumbnail
+		case 'youtube': // will show thumbnail
 			return <FiYoutube size='40px' fill='#505050' />;
-		case 'pdf':  //unused
-      return <FaRegFilePdf size='40px' fill='#505050' />;
-		case 'docx':  //unused
+		case 'pdf': //unused
+			return <FaRegFilePdf size='40px' fill='#505050' />;
+		case 'docx': //unused
 			return <FaRegFileWord size='40px' fill='#505050' />;
-		case 'jpg':  //unused
-		case 'jpeg':  //unused
+		case 'jpg': //unused
+		case 'jpeg': //unused
 		case 'png':
 		case 'gif':
 		case 'logo':
 		case 'background':
 			return <FaFileImage size='40px' fill='#505050' />;
 		default:
-      return <FiFilePlus size='40px' />;
+			return <FiFilePlus size='40px' />;
 	}
 };
 

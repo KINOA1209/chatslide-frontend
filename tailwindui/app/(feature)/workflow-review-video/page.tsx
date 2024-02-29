@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Video from '@/components/Video';
-import FeedbackButton from '@/components/ui/feedback';
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
 import { toast, ToastContainer } from 'react-toastify';
 import VideoService from '@/services/VideoService';
@@ -148,8 +147,6 @@ export default function WorkflowStep6() {
 			<ToastContainer enableMultiContainer containerId={'video'} />
 
 			<VideoVisualizer videoUrl={videoUrl || ''} status={jobStatus || ''} />
-
-			<FeedbackButton />
 		</div>
 		// <div className='pt-32 max-w-3xl mx-auto text-center pb-12 md:pb-20'>
 		//<div className='max-w-4xl mx-auto' ref={contentRef}>

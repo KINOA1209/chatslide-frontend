@@ -66,7 +66,7 @@ const FeedbackButton: React.FC<FeedbackButtonProps> = ({
 	}, [timerFinished]);
 
 	return (
-		<div className='fixed bottom-10 left-40 hidden sm:block z-30'>
+		<div className='absolute bottom-10 -right-24 hidden sm:block z-30'>
 			<button
 				onClick={handleOpenModal}
 				className='bg-gray-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700'

@@ -2,7 +2,6 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import FeedbackButton from '@/components/ui/feedback';
 import SlideVisualizer from '@/components/slides/SlideVisualizer';
 import { ToastContainer } from 'react-toastify';
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
@@ -78,8 +77,6 @@ export default function WorkflowStep3() {
 					showScript={showScript}
 				/>
 			</div>
-
-			<FeedbackButton timeout={30000} />
 		</div>
 	);
 }

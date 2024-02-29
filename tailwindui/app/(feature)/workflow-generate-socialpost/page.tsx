@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import '@/app/css/workflow-edit-topic-css/topic_style.css';
 import 'react-toastify/dist/ReactToastify.css';
 import PaywallModal from '@/components/forms/paywallModal';
-import FeedbackButton from '@/components/ui/feedback';
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
 import { QuestionExplainIcon } from '@/app/(feature)/icons';
 import { FaFilePdf, FaRegFilePdf, FaYoutube } from 'react-icons/fa';
@@ -672,7 +671,6 @@ export default function Topic_SocialPost() {
 					</div>
 				</div>
 			</form>
-			<FeedbackButton />
 		</section>
 	);
 }

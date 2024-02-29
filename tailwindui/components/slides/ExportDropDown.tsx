@@ -126,7 +126,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 								isPaidUser={isPaidUser}
 								bgColor='bg-Gray'
 							>
-                <FaRegFilePdf />
+								<FaRegFilePdf />
 								<span>PDF (medium)</span>
 							</BigGrayButton>
 
@@ -137,7 +137,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 								isPaidFeature={true}
 								bgColor='bg-Gray'
 							>
-                <FaRegFilePdf />
+								<FaRegFilePdf />
 								<span>PDF (high) {!isPaidUser && '🔒'}</span>
 							</BigGrayButton>
 

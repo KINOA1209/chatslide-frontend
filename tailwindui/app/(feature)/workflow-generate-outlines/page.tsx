@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import '@/app/css/workflow-edit-topic-css/topic_style.css';
 import 'react-toastify/dist/ReactToastify.css';
-import FeedbackButton from '@/components/ui/feedback';
 import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
 import PaywallModal from '@/components/forms/paywallModal';
 import Resource from '@/models/Resource';
@@ -449,7 +448,6 @@ export default function Topic() {
 					)}
 				</div>
 			</div>
-			<FeedbackButton />
 		</section>
 	);
 }
