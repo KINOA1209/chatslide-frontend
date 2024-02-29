@@ -13,6 +13,7 @@ import Project from '@/models/Project';
 import { FaTimes } from 'react-icons/fa';
 import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
 import { useSlides } from '@/hooks/use-slides';
+import { Blank, Loading } from '@/components/ui/Loading';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
   ssr: false,
@@ -129,57 +130,61 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
   }, []);
 
   return (
-    <main className='grow'>
+    <div className='grow'>
       <Header loginRequired={false} isLanding={false} />
-      <ToastContainer />
-      {loading ? (
-        <div className='flex items-center justify-center min-h-screen'>⏳ Loading...</div>
-      ) : loadingFailed ? (
-          <div className='flex items-center justify-center min-h-screen'>
-            ❌ Oops! It looks like we couldn't find the project. <br/>
-            🔍 Could you double-check the project ID and make sure it's shared?
-          </div>
-      ) : (
-        <div className='flex flex-col items-center justify-center min-h-screen gap-8'>
-          {showDescription && project && project.description &&
-            <div className="hidden sm:flex sm:w-2/3 h-[10rem]text-gray-700 text-left m-2 gap-4">
-              <div className="border border-gray-200 rounded-xl overflow-y-scroll p-2">
-                <h1 className="text-2xl font-bold">{project.topic}</h1>
-                <h2 className="text-lg font-semibold">Created using DrLambda</h2>
-                {project.description}
+      <main className='grow'>
+        <ToastContainer />
+        {loading ? (
+          <Loading />
+        ) : loadingFailed ? (
+          <Blank>
+            <div>
+              ❌ Oops! It looks like we couldn't find the project. <br />
+              🔍 Could you double-check the project ID and make sure it's shared?
+            </div>
+          </Blank>
+        ) : (
+          <div className='flex flex-col items-center justify-center min-h-screen gap-8'>
+            {showDescription && project && project.description &&
+              <div className="hidden sm:flex sm:w-2/3 h-[10rem]text-gray-700 text-left m-2 gap-4">
+                <div className="border border-gray-200 rounded-xl overflow-y-scroll p-2">
+                  <h1 className="text-2xl font-bold">{project.topic}</h1>
+                  <h2 className="text-lg font-semibold">Created using DrLambda</h2>
+                  {project.description}
+                </div>
+                <button
+                  className="text-gray-500 hover:text-gray-700"
+                  onClick={() => setShowDescription(false)}
+                >
+                  <FaTimes />
+                </button>
               </div>
-              <button
-                className="text-gray-500 hover:text-gray-700"
-                onClick={() => setShowDescription(false)}
-              >
-                <FaTimes />
-              </button>
-            </div>
-          }
-          {projectType === 'presentation' &&
-            <div>
-              <SlidesHTML
-                isViewing={true}
-              />
-            </div>
-          }
+            }
+            {projectType === 'presentation' &&
+              <div>
+                <SlidesHTML
+                  isViewing={true}
+                />
+              </div>
+            }
 
-          {projectType === 'socialpost' &&
-            <div>
-              <SocialPostHTML
-                socialPostSlides={socialPosts}
-                setSocialPostSlides={setSocialPosts}
-                isViewing={true}
-                borderColorOptions={borderColorOptions}
-                res_scenario={postType}
-              />
-            </div>
-          }
-        </div>
-      )}
-
+            {projectType === 'socialpost' &&
+              <div>
+                <SocialPostHTML
+                  socialPostSlides={socialPosts}
+                  setSocialPostSlides={setSocialPosts}
+                  isViewing={true}
+                  borderColorOptions={borderColorOptions}
+                  res_scenario={postType}
+                />
+              </div>
+            }
+          </div>
+        )}
+      </main>
       <WorkflowFooter />
-    </main>
+    </div>
+
   );
 };
 

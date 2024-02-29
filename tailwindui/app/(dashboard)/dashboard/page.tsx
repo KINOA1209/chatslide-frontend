@@ -14,6 +14,7 @@ import Modal from '@/components/ui/Modal';
 import { UserStatus, useUser } from '@/hooks/use-user';
 import OnboardingSurvey from '@/components/slides/onboardingSurvey/OnboardingSurvey';
 import UserService from '@/services/UserService';
+import { Loading, Blank } from '@/components/ui/Loading';
 
 export default function Dashboard() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -153,13 +154,9 @@ export default function Dashboard() {
               onDelete={handleDelete}
             />
           ) : (
-            <div className='flex items-center mt-[1rem] md:mt-[6rem] justify-center text-gray-600 text-[14px] md:text-[20px] font-normal font-creato-medium leading-normal tracking-wide'>
-              You haven't created any project yet.
-            </div>
+            <Blank text={`You haven't created any project yet.`}/>
           ) : (
-            <div className='flex items-center mt-[1rem] md:mt-[6rem] justify-center text-gray-600 text-[14px] md:text-[20px] font-normal font-creato-medium leading-normal tracking-wide'>
-              Loading... ⏳
-            </div>
+            <Loading/>
           )}
         </div>
 

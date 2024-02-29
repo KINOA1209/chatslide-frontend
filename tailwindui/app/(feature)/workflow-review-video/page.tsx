@@ -8,27 +8,27 @@ import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
 import { toast, ToastContainer } from 'react-toastify';
 import VideoService from '@/services/VideoService';
 import { useUser } from '@/hooks/use-user';
+import { Loading, Blank } from '@/components/ui/Loading';
 
 const VideoVisualizer = ({ videoUrl, status }: { videoUrl: string, status: string }) => {
   const videoSource = videoUrl;
 
   return (
-    //<div className='max-w-4xl mx-auto px-4 sm:px-6'>
-    <div className='flex flex-col justify-center items-center gap-4 my-[4rem]'>
-      <div className='w-fit block m-auto'>
+    <>
         {videoUrl !== '' ? (
           <Video videoUrl={videoSource} />
         ) : status === 'failed' ? (
-          <div>We're sorry your video generation failed 😭. please retry generation in the script page again.</div>
+          <Blank>
+            <div>We're sorry your video generation failed 😭. please retry generation in the script page again.</div>
+          </Blank>
         ) : (
-          <div>
+          <Loading>
             <p>Your video is being generated ⏳. It usually takes 5 minutes to finish. </p>
             <p>You can stay on this page and wait, or safely leave the page and check back later.</p>
             <p>Once the video is ready, we will send you an notifying email 📧.</p>
-          </div>
+          </Loading>
         )}
-      </div>
-    </div>
+    </>
   );
 };
 
