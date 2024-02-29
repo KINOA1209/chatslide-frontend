@@ -199,7 +199,8 @@ export default function Topic() {
 				updateProject('id', outlinesJson.data.id);
 				updateProject('foldername', outlinesJson.data.foldername);
 				updateProject('pdf_images', outlinesJson.data.pdf_images);
-        initProject(outlinesJson.data);
+        updateProject('outlines', outlinesJson.data.outlines)
+        // initProject(outlinesJson.data);
 				sessionStorage.setItem(
 					'pdf_images',
 					JSON.stringify(outlinesJson.data.pdf_images),
