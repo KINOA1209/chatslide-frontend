@@ -16,8 +16,7 @@ import RadioButton, { RadioButtonOption } from '@/components/ui/RadioButton';
 import useHydrated from '@/hooks/use-hydrated';
 import { useProject } from '@/hooks/use-project';
 import { image } from 'd3';
-import ActionsToolBar from '@/components/ui/ActionsToolBar';
-import useTourStore from '@/components/user_onboarding/TourStore';
+import Card from '@/components/ui/Card';
 // const { changeTemplate } = useSlides();
 
 const SlideDesignPreview = dynamic(
@@ -103,13 +102,13 @@ export default function DesignPage() {
 				background_ids={selectedBackground.map((resource) => resource.id)}
 			/>
 
-			<div className='gap-y-4 w-full flex flex-col items-center md:my-[6rem]'>
+			<div className='w-full flex flex-col items-center md:my-[6rem]'>
 				{/* design */}
 				<div
 					className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1 font-creato-regular'
 					id='SummaryStep-4'
 				>
-					<div className='additional_container my-2 lg:my-5 border border-2 border-gray-200 flex flex-col gap-y-4'>
+          <Card>
 						<div className='title2'>
 							<p className='text-3xl'>Design</p>
 							<p id='after2'> (Optional)</p>
@@ -195,7 +194,7 @@ export default function DesignPage() {
 							selectedImage={selectedBackground}
 							setSelectedImage={setSelectedBackground}
 						/>
-					</div>
+					</Card>
 				</div>
 			</div>
 		</div>

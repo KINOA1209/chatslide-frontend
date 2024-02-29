@@ -18,7 +18,7 @@ export default function WorkflowLayout({
 				<SideBar />
 			</div>
 
-			<div className='flex flex-col grow'>
+			<div className='flex flex-col w-full sm:grow'>
 				<div className='block sm:hidden'>
 					{/* only show Header on small screen */}
 					<Header loginRequired={true} isLanding={false} isAuth={false} />
