@@ -3,7 +3,6 @@ import { Auth as AmplifyAuth } from '@aws-amplify/auth';
 import { createBearStore } from '@/utils/create-bear-store';
 import UserService from '@/services/UserService';
 import AuthService from '@/services/AuthService';
-import { sleep } from '@/components/utils/sleep';
 
 const useTokenBear = createBearStore<string>()('token', '', true, false);
 const useUidBear = createBearStore<string>()('uid', '', true, false);
@@ -18,6 +17,7 @@ export enum UserStatus {
 	NotInited,
 	Initing,
 	Inited,
+  Failed,
 }
 
 let userStatus: UserStatus = UserStatus.NotInited;
@@ -39,7 +39,8 @@ export const useUser = () => {
 		// console.log('-- initing user: ', {userStatus, user})
 
 		// avoid re-init user in cross components
-		if (userStatus !== UserStatus.NotInited) return;
+		if (userStatus == UserStatus.Inited || userStatus == UserStatus.Initing) return;
+    
 		userStatus = UserStatus.Initing;
 
     for (let attempt = 0; attempt < 2; attempt++) {
@@ -47,7 +48,7 @@ export const useUser = () => {
         const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
         if (!userId || !idToken) {
           console.warn('User not logged in');
-          userStatus = UserStatus.NotInited;
+          userStatus = UserStatus.Failed;
           return;
         }
         let username = await AuthService.getCurrentUserDisplayName();
@@ -79,6 +80,7 @@ export const useUser = () => {
         setIsPaidUser(isPaidUser);
         setUsername(username);
         setEmail(email);
+        userStatus = UserStatus.Inited;
 
         // Break out of the loop if successful
         break;
@@ -87,14 +89,13 @@ export const useUser = () => {
 
         // If it's the second attempt, throw the error
         if (attempt === 1) {
+          userStatus = UserStatus.Failed;
           throw e;
         }
 
         // Otherwise, retry the block after a delay (you can adjust the delay as needed)
-        await sleep(5000);
+        await new Promise(resolve => setTimeout(resolve, 500));
       }
-
-      userStatus = UserStatus.Inited;
     }
 	};
 

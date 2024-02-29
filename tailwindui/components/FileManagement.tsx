@@ -14,6 +14,7 @@ import ResourceService from '@/services/ResourceService';
 import DrlambdaButton from './button/DrlambdaButton';
 import { FaCheckCircle } from 'react-icons/fa';
 import { useUser } from '@/hooks/use-user';
+import { Loading } from './ui/Loading';
 
 interface UserFileList {
   selectable: boolean;
@@ -562,11 +563,7 @@ const MyFiles: React.FC<filesInterface> = ({
           />
         )}
         {resources.length === 0 && (
-          <div className='w-full grow flex items-center justify-center'>
-            <div className='text-gray-400' ref={promptRef}>
-              Loading...
-            </div>
-          </div>
+          <Loading/>
         )}
       </div>
     </section>

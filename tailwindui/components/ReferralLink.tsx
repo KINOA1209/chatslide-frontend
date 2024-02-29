@@ -25,7 +25,7 @@ const ReferralLink: React.FC = () => {
 			const { userId, idToken: token } =
 				await AuthService.getCurrentUserTokenAndId();
 			const user = await AuthService.getCurrentUser();
-			const email = user.attributes.email;
+			const email = user?.attributes.email;
 			fetch(`/api/user/create_referral_code`, {
 				method: 'POST',
 				headers: {
