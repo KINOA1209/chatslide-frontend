@@ -187,14 +187,18 @@ export const templateDispatch = (
 			canEdit={canEdit}
 			key={keyPrefix + index.toString()}
 			user_name={
-				<div
-					key={0}
-					className={`rounded-md outline-2 ${!exportToPdfMode} ${
-						index !== 0 ? 'hidden' : ''
-					}`}
-					contentEditable={false}
-					dangerouslySetInnerHTML={{ __html: slide.userName }}
-				/>
+				isShowingLogo ? (
+					<div
+						key={0}
+						className={`rounded-md outline-2 ${!exportToPdfMode} ${
+							index !== 0 ? 'hidden' : ''
+						}`}
+						contentEditable={false}
+						dangerouslySetInnerHTML={{ __html: slide.userName }}
+					/>
+				) : (
+					<></>
+				)
 			}
 			title={generateContentElement(
 				slide.head,
