@@ -63,7 +63,7 @@ const OneStep: React.FC<StepProps> = ({
 
 	if (current) {
 		return (
-			<div className='w-full flex flex-col'>
+			<div className='relative w-full flex flex-col'>
 				<div className='flex flex-row justify-center items-center'>
 					<div className='h-[30px] flex items-center justify-center'>
 						<CurrentStepCircle />
@@ -71,7 +71,7 @@ const OneStep: React.FC<StepProps> = ({
 					{renderLine}
 				</div>
 				<span
-					className={`text-neutral-800 text-white text-sm font-creato-bold leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-8px]'}`}
+					className={`absolute top-8 text-neutral-800 text-white text-sm font-creato-bold leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-8px]'}`}
 				>
 					{desc}
 				</span>
@@ -80,7 +80,7 @@ const OneStep: React.FC<StepProps> = ({
 	} else if (finished) {
 		return (
 			<div
-				className='w-full flex flex-col cursor-pointer hidden md:flex'
+				className='relative w-full flex flex-col cursor-pointer hidden md:flex'
 				onClick={handleClick}
 				onMouseEnter={handleHoverEnter}
 				onMouseLeave={handleHoverLeave}
@@ -92,7 +92,7 @@ const OneStep: React.FC<StepProps> = ({
 					{renderLine}
 				</div>
 				<span
-					className={`text-white text-sm font-normal font-creato-medium leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-18px]'}`}
+					className={`absolute top-8 text-white text-sm font-normal font-creato-medium leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-18px]'}`}
 				>
 					{desc}
 				</span>
@@ -101,7 +101,7 @@ const OneStep: React.FC<StepProps> = ({
 	} else {
 		return (
 			<div
-				className={`${isLastStep ? 'w-auto' : 'w-full'} flex flex-col hidden md:flex`}
+				className={`relative ${isLastStep ? 'w-auto' : 'w-full'} flex flex-col hidden md:flex`}
 			>
 				<div className='flex flex-row justify-center items-center'>
 					<div className='h-[30px] flex items-center justify-center'>
@@ -110,7 +110,7 @@ const OneStep: React.FC<StepProps> = ({
 					{renderLine}
 				</div>
 				<span
-					className={`text-white text-sm font-normal font-creato-medium leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-8px]'}`}
+					className={`absolute top-8 text-white text-sm font-normal font-creato-medium leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-8px]'}`}
 				>
 					{desc}
 				</span>
