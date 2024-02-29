@@ -148,7 +148,7 @@ export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({
 			className='h-[36px] sm:h-[36px] flex-row justify-center items-center gap-4 cursor-pointer flex rounded-3xl bg-white bg-opacity-0'
 			onClick={() => router.push(href)}
 		>
-      <FaChevronLeft style={{ color: '#FFFFFF' }} />
+			<FaChevronLeft style={{ color: '#FFFFFF' }} />
 			<div className='text-center self-center text-white font-medium font-creato-medium leading-normal tracking-[0.035rem] whitespace-nowrap hidden sm:block'>
 				Dashboard
 			</div>

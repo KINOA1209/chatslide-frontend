@@ -29,11 +29,16 @@ const ProjectItem: React.FC<{
 					{project.content_type === 'presentation' ? (
 						project.thumbnail_url ? (
 							<Image
+								unoptimized={true}
 								src={project.thumbnail_url}
 								alt='project thumbnail'
 								layout='responsive'
 								width={16}
 								height={9}
+								onError={(e) => {
+									e.currentTarget.src =
+										'https://ph-files.imgix.net/76b477f1-bc1b-4432-b52b-68674658d62b.png?auto=compress&codec=mozjpeg&cs=strip&fit=crop&dpr=3';
+								}}
 							/>
 						) : (
 							<RiSlideshow2Fill className='text-gray-600 w-[40px] h-[40px]' />

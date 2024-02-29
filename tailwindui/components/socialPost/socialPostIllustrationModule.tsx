@@ -8,6 +8,7 @@ import PaywallModal from '@/components/forms/paywallModal';
 import ResourceService from '@/services/ResourceService';
 import Resource from '@/models/Resource';
 import Image from 'next/image';
+import { ResourceIcon } from '@/components/ui/ResourceItem';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -366,10 +367,7 @@ export const ImgModule = ({
 										key={index}
 										className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-2`}
 									>
-										<img
-											className='w-full h-full object-cover'
-											src={resource.thumbnail_url}
-										/>
+										<ResourceIcon resource={resource} />
 									</div>
 								);
 							} else {
@@ -379,10 +377,7 @@ export const ImgModule = ({
 										key={index}
 										className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-2`}
 									>
-										<img
-											className='w-full h-full object-cover'
-											src={resource.thumbnail_url}
-										/>
+										<ResourceIcon resource={resource} />
 									</div>
 								);
 							}

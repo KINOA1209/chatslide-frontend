@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { FaCheckCircle, FaFilePdf } from 'react-icons/fa'; // Adjust the import according to where FaFilePdf is defined
+import { FaCheckCircle, FaFilePdf } from 'react-icons/fa';
 import { DeleteIcon, SpinIcon } from '@/app/(feature)/icons';
-import { RiQrScan2Line } from 'react-icons/ri';
 import { FiSearch } from 'react-icons/fi';
 import Resource from '@/models/Resource';
 import { useUser } from '@/hooks/use-user';
 import PaywallModal from './forms/paywallModal';
 import ResourceService from '@/services/ResourceService';
+import { ResourceIcon } from './ui/ResourceItem';
 
 type SelectedResourcesListProps = {
 	selectedResources: Resource[];
@@ -52,15 +52,7 @@ const ResourceEntry: React.FC<ResourceEntryProps> = ({
 			)}
 
 			<div className='flex items-center gap-2'>
-				{resource.thumbnail_url ? (
-					<img
-						src={resource.thumbnail_url}
-						alt={resource.name}
-						className='w-[40px]'
-					/>
-				) : (
-					<FaFilePdf className='w-[40px]' />
-				)}
+				<ResourceIcon resource={resource} />
 				<div className='flex-wrap'>{resource.name.replace('.txt', '')}</div>
 			</div>
 			<div className='flex items-center gap-4'>
