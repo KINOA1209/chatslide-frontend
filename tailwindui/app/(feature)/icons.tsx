@@ -183,7 +183,7 @@ export const RightTurnArrowIcon = () => (
 	>
 		<path
 			d='M13.9286 5L17.5 8.57143L13.9286 12.1429'
-			stroke='#F4F4F4'
+			stroke='#2044F2'
 			strokeWidth='2'
 			strokeLinecap='round'
 			strokeLinejoin='round'

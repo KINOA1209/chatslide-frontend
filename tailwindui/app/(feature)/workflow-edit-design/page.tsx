@@ -16,6 +16,8 @@ import RadioButton, { RadioButtonOption } from '@/components/ui/RadioButton';
 import useHydrated from '@/hooks/use-hydrated';
 import { useProject } from '@/hooks/use-project';
 import { image } from 'd3';
+import ActionsToolBar from '@/components/ui/ActionsToolBar';
+import useTourStore from '@/components/user_onboarding/TourStore';
 // const { changeTemplate } = useSlides();
 
 const SlideDesignPreview = dynamic(
@@ -26,6 +28,7 @@ const SlideDesignPreview = dynamic(
 );
 
 export default function DesignPage() {
+	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 	const [template, setTemplate] = useState('Business_002' as string);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [isGpt35, setIsGpt35] = useState(true);
@@ -72,7 +75,11 @@ export default function DesignPage() {
 	if (!useHydrated()) return <></>;
 
 	return (
-		<div className=''>
+		<div className='relative'>
+			{/* user tutorial */}
+			{/* <div className='absolute right-[3rem] top-[7rem] flex flex-col items-end space-x-4'>
+				<ActionsToolBar startTour={startTour} onlyShowTutorial={true} />
+			</div> */}
 			<ToastContainer />
 
 			<WorkflowStepsBanner

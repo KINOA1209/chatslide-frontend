@@ -17,7 +17,7 @@ function ButtonWithExplanation({
 		>
 			{button}
 			<div
-				className={`flex absolute top-15 z-10 p-1 bg-black text-white rounded-md transition-opacity duration-200 ${
+				className={`flex absolute top-15 left-[-3rem] z-10 p-1 bg-black text-white rounded-md transition-opacity duration-200 ${
 					showExplanation ? 'opacity-100' : 'opacity-0'
 				}`}
 			>

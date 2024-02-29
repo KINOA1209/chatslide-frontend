@@ -192,15 +192,16 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		};
 	});
 
-  function handleKeyDown(event: KeyboardEvent) {
-    if (isViewing) {  // todo: update iseditmode 
-      if (event.key === 'ArrowRight' && slideIndex < slides.length - 1) {
-        gotoPage(slideIndex + 1);
-      } else if (event.key === 'ArrowLeft' && slideIndex > 0) {
-        gotoPage(slideIndex - 1);
-      }
-    }
-  }
+	function handleKeyDown(event: KeyboardEvent) {
+		if (isViewing) {
+			// todo: update iseditmode
+			if (event.key === 'ArrowRight' && slideIndex < slides.length - 1) {
+				gotoPage(slideIndex + 1);
+			} else if (event.key === 'ArrowLeft' && slideIndex > 0) {
+				gotoPage(slideIndex - 1);
+			}
+		}
+	}
 
 	// auto scroll thumbnail to current slide
 	useEffect(() => {
@@ -228,7 +229,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	}, [slideIndex]);
 
 	function handleSlideEdit(
-		content: string | string[] | Array<string | string[] | Chart[] | boolean[] | ImagesPosition[]>,
+		content:
+			| string
+			| string[]
+			| Array<string | string[] | Chart[] | boolean[] | ImagesPosition[]>,
 		slideIndex: number,
 		tag: SlideKeys | SlideKeys[],
 		contentIndex?: number,
@@ -274,14 +278,19 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			} else if (className === 'is_chart') {
 				currentSlide.is_chart = content as boolean[];
 			} else if (className === 'images_position') {
-				currentSlide.images_position = content as ImagesPosition[]
+				currentSlide.images_position = content as ImagesPosition[];
 			} else {
 				console.error(`Unknown tag: ${tag}`);
 			}
 		};
 		if (Array.isArray(className)) {
 			className.forEach((current_tag: SlideKeys, idx: number) => {
-				let updateContent: string | string[] | Chart[] | boolean[] | ImagesPosition[];
+				let updateContent:
+					| string
+					| string[]
+					| Chart[]
+					| boolean[]
+					| ImagesPosition[];
 				if (Array.isArray(content)) {
 					if (idx < content.length) {
 						updateContent = content[idx];
@@ -409,12 +418,24 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		}
 	};
 
-  if (!slides || slides.length === 0) {
-    return <></>
-  }
+	if (!slides || slides.length === 0) {
+		return <></>;
+	}
 
 	return (
-		<div className='flex flex-col items-center justify-center gap-4 relative'>
+		<div className='flex flex-col items-center justify-center gap-4'>
+			<div className='absolute right-[3rem] top-[7rem] flex flex-col items-end space-x-4'>
+				{!isViewing && (
+					<ActionsToolBar
+						undo={undoChange}
+						redo={redoChange}
+						canRedo={canRedo}
+						canUndo={canUndo}
+						startTour={startTour}
+						onlyShowTutorial={false}
+					/>
+				)}
+			</div>
 			{/* hidden div for export to pdf */}
 			<div className='absolute left-[-9999px] top-[-9999px] -z-1'>
 				<div ref={exportSlidesRef}>
@@ -450,29 +471,28 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			)}
 
 			{!isViewing && (
-        <div className='flex flex-row justify-end items-end gap-1 sm:gap-4'>
-          <div className='hidden sm:block'>
-            <ChangeTemplateOptions
-              currentTemplate={slides[slideIndex].template}
-              templateOptions={Object.keys(availableTemplates)}
-              onChangeTemplate={selectTemplate}
-            />
-          </div>
+				<div className='flex flex-row justify-end items-end gap-1 sm:gap-4'>
+					<div className='hidden sm:block'>
+						<ChangeTemplateOptions
+							currentTemplate={slides[slideIndex].template}
+							templateOptions={Object.keys(availableTemplates)}
+							onChangeTemplate={selectTemplate}
+						/>
+					</div>
 
-          <BigGrayButton
-            onClick={() => setIsShowingLogo(!isShowingLogo)}
-            isPaidUser={isPaidUser}
-            isPaidFeature={true}
-            bgColor='bg-Gray'
-          >
-            <span>
-              {isShowingLogo ? 'Remove Logo' : 'Show Logo'}
-              {!isPaidUser && ' 🔒'}
-            </span>
-          </BigGrayButton>
-        </div>
+					<BigGrayButton
+						onClick={() => setIsShowingLogo(!isShowingLogo)}
+						isPaidUser={isPaidUser}
+						isPaidFeature={true}
+						bgColor='bg-Gray'
+					>
+						<span>
+							{isShowingLogo ? 'Remove Logo' : 'Show Logo'}
+							{!isPaidUser && ' 🔒'}
+						</span>
+					</BigGrayButton>
+				</div>
 			)}
-
 
 			{showPaymentModal && (
 				<PaywallModal
@@ -483,7 +503,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			)}
 
 			{/* buttons and contents */}
-			<div className='max-w-4xl relative flex flex-row items-center justify-center'>
+			<div className='max-w-4xl flex flex-row items-center justify-center'>
 				<ToastContainer />
 
 				{/* vertical bar */}
@@ -570,15 +590,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 									/>
 								}
 								explanation='Delete Page'
-							/>
-						)}
-						{!isViewing && (
-							<ActionsToolBar
-								undo={undoChange}
-								redo={redoChange}
-								canRedo={canRedo}
-								canUndo={canUndo}
-								startTour={startTour}
 							/>
 						)}
 					</div>

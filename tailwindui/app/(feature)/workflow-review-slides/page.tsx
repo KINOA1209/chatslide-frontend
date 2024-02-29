@@ -44,7 +44,7 @@ export default function WorkflowStep3() {
 	if (!useHydrated()) return <></>;
 
 	return (
-		<div className='min-h-[90vh] w-full bg-white'>
+		<div className='min-h-[90vh] w-full bg-white relative'>
 			{/* flex col container for steps, title, etc */}
 			<MyCustomJoyride steps={StepsSlidesPage()} />
 			{!showScript ? (
@@ -69,10 +69,7 @@ export default function WorkflowStep3() {
 
 			<ToastContainer enableMultiContainer containerId={'slides'} />
 
-			<div
-				className={`max-w-4xl px-6 flex flex-col relative mx-auto`}
-				ref={contentRef}
-			>
+			<div className={`max-w-4xl px-6 flex flex-col mx-auto`} ref={contentRef}>
 				{/* slides */}
 				<SlideVisualizer
 					isGpt35={isGpt35}

@@ -5,12 +5,13 @@ import { StartATourGuidePromptWindow } from '@/components/user_onboarding/Custom
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 
 type ActionsToolBarProps = {
-	undo: () => void;
-	redo: () => void;
-	canUndo: boolean;
-	canRedo: boolean;
+	undo?: () => void;
+	redo?: () => void;
+	canUndo?: boolean;
+	canRedo?: boolean;
 	// Other props...
 	startTour: () => void;
+	onlyShowTutorial: boolean;
 };
 
 const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
@@ -19,6 +20,7 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 	canUndo,
 	canRedo,
 	startTour,
+	onlyShowTutorial,
 }) => {
 	const [showTutorialPrompt, setShowTutorialPrompt] = useState(false);
 	const handleStartTour = () => {
@@ -33,42 +35,115 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 		startTour();
 		setShowTutorialPrompt(false);
 	};
-	return (
-		<section className={`shadow-md bg-white rounded-md px-2 py-1`}>
+	return onlyShowTutorial ? (
+		<section
+			className={`shadow-md bg-white rounded-[0.5rem] px-4 py-2 border-2 border-[#C6C6C6]`}
+		>
 			<div className='flex flex-row gap-4'>
 				{/* user tutorial control */}
 				<ButtonWithExplanation
 					button={
-						<button onClick={handleStartTour} style={{ color: '#2943E9' }}>
-							<GoQuestion />
+						<button
+							onClick={handleStartTour}
+							style={{
+								display: 'flex',
+								justifyContent: 'center',
+								alignItems: 'center',
+							}}
+						>
+							<GoQuestion
+								style={{
+									strokeWidth: '1',
+									flex: '1',
+									width: '1.5rem',
+									height: '1.5rem',
+									fontWeight: 'bold',
+									color: '#2943E9',
+								}}
+							/>
 						</button>
 					}
 					explanation={'Guided user tutorial'}
 				></ButtonWithExplanation>
 
-				<div style={{ backgroundColor: '#ccc', width: '2px' }}></div>
+				{showTutorialPrompt && (
+					<StartATourGuidePromptWindow
+						onClose={handleCloseTutorialPrompt}
+						onConfirm={handleConfirmStartTour}
+					/>
+				)}
+			</div>
+		</section>
+	) : (
+		<section
+			className={`shadow-md bg-white rounded-[0.5rem] px-4 py-2 border-2 border-[#C6C6C6]`}
+		>
+			<div className='flex flex-row gap-4'>
+				{/* user tutorial control */}
+				<ButtonWithExplanation
+					button={
+						<button
+							onClick={handleStartTour}
+							style={{
+								display: 'flex',
+								justifyContent: 'center',
+								alignItems: 'center',
+							}}
+						>
+							<GoQuestion
+								style={{
+									strokeWidth: '1',
+									flex: '1',
+									width: '1.5rem',
+									height: '1.5rem',
+									fontWeight: 'bold',
+									color: '#2943E9',
+								}}
+							/>
+						</button>
+					}
+					explanation={'Guided user tutorial'}
+				></ButtonWithExplanation>
+
+				<div style={{ backgroundColor: '#C6C6C6', width: '2px' }}></div>
 				<ButtonWithExplanation
 					button={
 						<button
 							onClick={undo}
-							style={{ color: canUndo ? '#2943E9' : '#ccc' }}
+							style={{ color: canUndo ? '#2943E9' : '#C6C6C6' }}
 							disabled={!canUndo}
 						>
-							<RiArrowGoBackFill />
+							<RiArrowGoBackFill
+								style={{
+									strokeWidth: '1',
+									flex: '1',
+									width: '1.5rem',
+									height: '1.5rem',
+									fontWeight: 'bold',
+								}}
+							/>
 						</button>
 					}
 					explanation={'Undo'}
 				></ButtonWithExplanation>
 
-				<div style={{ backgroundColor: '#ccc', width: '2px' }}></div>
+				<div style={{ backgroundColor: '#C6C6C6', width: '2px' }}></div>
 				<ButtonWithExplanation
 					button={
 						<button
 							onClick={redo}
-							style={{ color: canRedo ? '#2943E9' : '#ccc' }}
+							style={{ color: canRedo ? '#2943E9' : '#C6C6C6' }}
 							disabled={!canRedo}
 						>
-							<RiArrowGoForwardFill />
+							<RiArrowGoForwardFill
+								style={{
+									strokeWidth: '1',
+									flex: '1',
+									width: '1.5rem',
+									height: '1.5rem',
+									fontWeight: 'bold',
+								}}
+							/>
 						</button>
 					}
 					explanation={'Redo'}
