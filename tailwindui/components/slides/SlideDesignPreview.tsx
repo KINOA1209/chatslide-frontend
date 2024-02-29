@@ -96,7 +96,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			true,
 		);
 	return (
-		<div className='py-6 max-w-7xl flex overflow-x-auto overflow-x-scroll overflow-y-hidden'>
+		<div className='max-w-full py-6 flex overflow-x-auto overflow-x-scroll overflow-y-hidden'>
 			{slides.map((slide, index) => (
 				<div
 					className='flex flex-col items-center'
