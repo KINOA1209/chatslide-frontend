@@ -13,14 +13,14 @@ import {
 import SideBarItem from './SideBarItem';
 import { SideBarData } from './SideBarData';
 import { BlueLabel, GrayLabel } from './GrayLabel';
-import { useUser } from '@/hooks/use-user';
+import { UserStatus, useUser } from '@/hooks/use-user';
 import useHydrated from '@/hooks/use-hydrated';
 import Modal from './Modal';
 
 interface SideBarProps { }
 const SideBar = ({ }: SideBarProps) => {
   const [top, setTop] = useState<boolean>(true);
-  const { uid, credits, tier } = useUser();
+  const { uid, credits, tier, userStatus } = useUser();
   const router = useRouter();
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const { signOut: userSignOut } = useUser();
@@ -75,6 +75,8 @@ const SideBar = ({ }: SideBarProps) => {
 
   // avoid hydration error during development caused by persistence
   if (!useHydrated()) return <></>;
+
+  if (userStatus != UserStatus.Inited) return <></>;
 
   if (!uid)
     return (
@@ -180,7 +182,7 @@ const SideBar = ({ }: SideBarProps) => {
                 Get 100 ⭐️credits
               </a>
               <a
-                href='https://discord.gg/JPF46UEkUh'
+                href='https://discord.gg/B6PRtqsT'
                 target='_blank'
                 className='block flew flex-row items-center gap-1 py-1 text-sm text-white px-2 rounded-lg hover:bg-gray-400'
                 role='menuitem'

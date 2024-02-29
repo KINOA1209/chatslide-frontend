@@ -11,6 +11,7 @@ import ProjectService from '@/services/ProjectService';
 import { useUser } from '@/hooks/use-user';
 import { RiSlideshow2Fill } from 'react-icons/ri';
 import { useProject } from '@/hooks/use-project';
+import { sleep } from '../utils/sleep';
 
 interface ExportToPdfProps {
   slides: Slide[];
@@ -58,7 +59,29 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
     if (frontend) {
       await exportToPdfFrontend();
     } else {
-      await ProjectService.exportToFileBackend(token, project.id, type);
+      ProjectService.exportToFileBackend(token, project.id, type);
+
+      // wait for 10s for prev file to be deleted
+      await sleep(10000);
+
+      const maxAttempts = 30; // try 30 times in 60 seconds
+      for (let attempts = 0; attempts < maxAttempts; attempts++) {
+        try {
+          console.log(`Attempt ${attempts}: Trying to download the file...`);
+
+          const ok = await ProjectService.downloadFile(project.foldername, `slides.${type}`, type);
+
+          if (ok) {
+            console.log("Download successful. Stopping attempts.");
+            break;
+          } else {
+            console.log("Download not successful yet.");
+          }
+          await sleep(2000);
+        } catch (error) {
+          console.error("Error during file download:", error);
+        }
+      }
     }
     setDownloading(false);
   };

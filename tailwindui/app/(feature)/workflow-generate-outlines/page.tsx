@@ -20,12 +20,11 @@ import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
 import StepsSummaryPage from '@/components/user_onboarding/StepsSummaryPage';
 import { GPTToggleWithExplanation } from '@/components/button/WorkflowGPTToggle';
 import SessionStorage from '@/components/utils/SessionStorage';
-import FromDocsUploadFile from '@/components/AddResourcesSection';
+import AddResourcesSection from '@/components/AddResourcesSection';
 import useHydrated from '@/hooks/use-hydrated';
 import LinkInput from '@/components/summary/LinkInput';
 import { useProject } from '@/hooks/use-project';
-import ActionsToolBar from '@/components/ui/ActionsToolBar';
-import useTourStore from '@/components/user_onboarding/TourStore';
+
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 6;
 
@@ -39,7 +38,6 @@ const audienceList = [
 ];
 
 export default function Topic() {
-	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 	const router = useRouter();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [showFileModal, setShowFileModal] = useState(false);
@@ -310,22 +308,16 @@ export default function Topic() {
 			/>
 
 			{/* main content */}
-			<div className='my-4 gap-y-4 w-full flex flex-col items-center relative'>
+			<div className='my-4 gap-y-4 w-full flex flex-col items-center'>
 				<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
-				{/* user tutorial */}
-				<div className='absolute right-[3rem] top-[0rem] flex flex-col items-end space-x-4'>
-					<ActionsToolBar startTour={startTour} onlyShowTutorial={true} />
-				</div>
+
 				{/* Project Summary section */}
 				<div className='w-full lg:w-2/3 px-3 my-3 lg:my-1' id='SummaryStep-2'>
 					{generationMode === 'from_files' && (
 						<>
-							<FromDocsUploadFile
+							<AddResourcesSection
 								searchOnlineScope={searchOnlineScope}
 								setSearchOnlineScope={setSearchOnlineScope}
-								openSupportivePopup={openSupportivePopup}
-								closeSupportivePopup={closeSupportivePopup}
-								showSupportivePopup={showSupportivePopup}
 								setShowFileModal={setShowFileModal}
 								selectedResources={selectedResources}
 								setSelectedResources={setSelectedResources}
@@ -559,73 +551,15 @@ export default function Topic() {
 
 				{/* supporting docs  section */}
 				{generationMode === 'from_topic' && (
-					<div
-						className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1'
-						id='SummaryStep-3'
-					>
-						<div className='additional_container my-2 lg:my-5  border border-2 border-gray-200'>
-							<div className='title2'>
-								<p className='text-3xl'>Supporting Documents</p>
-								<p id='after2'> (Optional)</p>
-							</div>
-							<div className='my-4'>
-								<span className='text-sm text-gray-500'>
-									Offer more brilliant materials, your decks will been engaged
-									with more depth
-								</span>
-							</div>
-							<div className='upload gap-1'>
-								<span>Add Resources</span>
-								<div className='relative inline-block'>
-									<div
-										className='cursor-pointer'
-										onMouseEnter={openSupportivePopup}
-										onMouseLeave={closeSupportivePopup}
-										onTouchStart={openSupportivePopup}
-										onTouchEnd={closeSupportivePopup}
-									>
-										<QuestionExplainIcon />
-										{showSupportivePopup && (
-											<div
-												id='supportive_popup'
-												className='absolute z-10 p-2 bg-gray-800 text-white text-sm rounded shadow-md w-[15rem] md:w-80 md:h-[5rem] flex justify-center items-center'
-											>
-												Any additional files that can enhance and provide
-												context to your projects. This could be research data,
-												images, charts, or reference materials.
-											</div>
-										)}
-									</div>
-								</div>
-							</div>
-
-							<LinkInput
-								selectedResources={selectedResources}
-								setSelectedResources={setSelectedResources}
-							/>
-
-							<div className='drop_file bg-gray-100 border border-2 border-gray-200'>
-								<div className='flex items-center w-full'>
-									<FaFilePdf />
-									<span className='text-sm md:text-l'>Drop files here or </span>
-									<SmallBlueButton
-										onClick={(e) => {
-											e.preventDefault();
-											setShowFileModal(true);
-										}}
-									>
-										Browse File
-									</SmallBlueButton>
-								</div>
-							</div>
-							{selectedResources.length > 0 && <hr id='add_hr' />}
-							<div className='mt-[10px]'>
-								<SelectedResourcesList
-									selectedResources={selectedResources}
-									removeResourceAtIndex={removeResourceAtIndex}
-								/>
-							</div>
-						</div>
+					<div className='w-full lg:w-2/3 px-3 my-3 lg:my-1'>
+						<AddResourcesSection
+							searchOnlineScope={searchOnlineScope}
+							setSearchOnlineScope={setSearchOnlineScope}
+							setShowFileModal={setShowFileModal}
+							selectedResources={selectedResources}
+							setSelectedResources={setSelectedResources}
+							removeResourceAtIndex={removeResourceAtIndex}
+						/>
 					</div>
 				)}
 			</div>

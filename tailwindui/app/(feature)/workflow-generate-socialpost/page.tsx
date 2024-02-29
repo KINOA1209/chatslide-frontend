@@ -68,7 +68,7 @@ export default function Topic_SocialPost() {
 	const [isAddingLink, setIsAddingLink] = useState(false);
 
   const { token } = useUser();
-  const { project, initProject } = useProject();
+  const { project, initProject, updateProject } = useProject();
 
 	// bind form data between input and sessionStorage
 	const [topic, setTopic] = useState(
@@ -173,15 +173,18 @@ export default function Topic_SocialPost() {
 		);
 
 		try {
-			const outlinesJson = await callSocialPost(formData as FormatData);
+			const response = await callSocialPost(formData as FormatData);
 			//console.log(outlinesJson)
 			//const searchImagesResponse = await callSearchImages(JSON.stringify(formData.topic))
 			setIsSubmitting(false);
 
 			// Store the data in session storage
-			sessionStorage.setItem('foldername', outlinesJson.data.foldername);
-			sessionStorage.setItem('socialPost', outlinesJson.data.res);
-      initProject(outlinesJson.data);
+      sessionStorage.setItem('foldername', response.data.foldername);
+      sessionStorage.setItem('socialPost', response.data.res);
+      initProject(response.data);
+      updateProject('social_posts', response.data.res);
+      updateProject('content_type', 'social_posts');
+      updateProject('topic', formData.topic);
 			//sessionStorage.setItem('socialPostImages', JSON.stringify(searchImagesResponse.data.images))
 
 			// Retrieve the existing resources from sessionStorage and parse them
