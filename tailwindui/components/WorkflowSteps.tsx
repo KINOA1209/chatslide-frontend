@@ -56,7 +56,7 @@ const OneStep: React.FC<StepProps> = ({
 	};
 
 	const renderLine = !isLastStep && (
-		<div className='hidden md:flex flex-grow'>
+		<div className='hidden md:flex md:w-12 lg:w-20 overflow-x-hidden'>
 			{!isLastStep ? <ConnectedLine /> : null}
 		</div>
 	);
