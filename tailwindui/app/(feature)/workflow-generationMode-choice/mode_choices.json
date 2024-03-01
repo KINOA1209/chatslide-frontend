@@ -4,12 +4,12 @@
 		{
 			"id": "from_topic",
 			"title": "From a Topic",
-            "description": "Transfer a sepcific topic to presentation",
+			"description": "Transfer a sepcific topic to presentation",
 			"imageSrc": "/images/generation_mode/from_topic.png"
 		},
 		{
 			"id": "from_files",
-            "title": "From Files",
+			"title": "From Files",
 			"description": "Transfer existing docs to presentation",
 			"imageSrc": "/images/generation_mode/from_files.png"
 		}

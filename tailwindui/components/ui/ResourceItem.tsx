@@ -22,8 +22,8 @@ const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
 		case 'jpeg':
 		case 'png':
 		case 'gif':
-    case 'logo':
-    case 'background':
+		case 'logo':
+		case 'background':
 			return <FaFileImage size='32px' fill='#505050' />;
 		default:
 			return <FaFilePdf size='32px' fill='#505050' />;
@@ -40,8 +40,8 @@ export const ResourceItem: React.FC<Resource> = ({
 	type,
 	thumbnail_url,
 }) => {
-  // remove text like `.txt` from the end of the file name
-  name = name.replace('.txt', '');
+	// remove text like `.txt` from the end of the file name
+	name = name.replace('.txt', '');
 
 	return (
 		<div

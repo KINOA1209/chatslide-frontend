@@ -10,25 +10,25 @@ module.exports = {
 			backgroundImage: {
 				// 'template-default-cover': "url('https://via.placeholder.com/1200x800')",
 				// 'template-default-non-cover': "url('https://via.placeholder.com/1200x800')",
-				'template-fun-education-004-cover': "url('/images/template/Fun_Education_004/BackgroundElements.png')"
+				'template-fun-education-004-cover':
+					"url('/images/template/Fun_Education_004/BackgroundElements.png')",
 			},
 			backgroundColor: {
-				'Sky': 'var(--Sky, #F4F6FE)',
-				'Blue': 'var(--Blue, #2943E9)',
-				'Purple': 'var(--Purple, #6A7EF9)',
+				Sky: 'var(--Sky, #F4F6FE)',
+				Blue: 'var(--Blue, #2943E9)',
+				Purple: 'var(--Purple, #6A7EF9)',
 				'Grey-50': 'var(--Grey-50, #F4F4F4)',
 				'Grey-100': 'var(--Grey-100, #E7E9EB)',
 				'Workflow-bg-color': 'var(--Workflow-bg-color, #6A7EF9)',
 				'button-color': 'var(--Blue-600, #2943E9)',
-				'Lavender':
-					'var(--Lavender, #9AAEF9)',
+				Lavender: 'var(--Lavender, #9AAEF9)',
 			},
 			colors: {
 				'neutral-100': 'var(--neutral-100, #1E202C)',
 				'regal-blue': '#243c5a',
-				'Sky': 'var(--Sky, #F4F6FE)',
-				'Blue': 'var(--Blue, #2943E9)',
-				'Dark': 'var(--Dark, #2B2C2D)',
+				Sky: 'var(--Sky, #F4F6FE)',
+				Blue: 'var(--Blue, #2943E9)',
+				Dark: 'var(--Dark, #2B2C2D)',
 				'Grey-600': 'var(--Grey-600, #525C6A)',
 				gray: {
 					100: '#FBFBFB',
@@ -83,7 +83,7 @@ module.exports = {
 				'1/1': '100%',
 			},
 			fontFamily: {
-				'inter': ['Inter', 'sans-serif'],
+				inter: ['Inter', 'sans-serif'],
 				'creato-regular': ['Creato Display Regular', 'sans'],
 				'creato-thin': ['Creato Display Thin', 'sans'],
 				'creato-medium': ['Creato Display Medium', 'sans'],
@@ -93,10 +93,10 @@ module.exports = {
 				'caveat-bold': ['Caveat Bold', 'cursive'],
 				'caveat-medium': ['Caveat Medium', 'cursive'],
 				'caveat-regular': ['Caveat Regular', 'cursive'],
-				'sansita-swashed-medium':['Sansita Swashed Medium', 'sans'],
-				'sansita-swashed-regular':['Sansita Swashed Regular', 'sans'],
-				'libre-baskerville-bold':['Libre Baskerville Bold', 'sans'],
-				'libre-baskerville-regular':['Libre Baskerville Regular', 'sans'],
+				'sansita-swashed-medium': ['Sansita Swashed Medium', 'sans'],
+				'sansita-swashed-regular': ['Sansita Swashed Regular', 'sans'],
+				'libre-baskerville-bold': ['Libre Baskerville Bold', 'sans'],
+				'libre-baskerville-regular': ['Libre Baskerville Regular', 'sans'],
 			},
 			fontSize: {
 				xs: '0.75rem',

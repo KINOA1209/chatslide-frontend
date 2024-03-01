@@ -24,7 +24,7 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 	const [showEnt, setShowEnt] = useState(false);
 	const [clickedSubscribe, setClickedSubscribe] = useState(false);
 
-  const { tier, expirationDate } = useUser();
+	const { tier, expirationDate } = useUser();
 
 	const showPricingPanel = (index: number) => {
 		setShowFree(false);
@@ -481,9 +481,9 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 						</div>
 					</div>
 				</div>
-        {expirationDate && (
+				{expirationDate && (
 					<div className='w-full text-center text-red-700 my-2'>
-            Your subscription will expire on {expirationDate}.
+						Your subscription will expire on {expirationDate}.
 					</div>
 				)}
 				{clickedSubscribe && (

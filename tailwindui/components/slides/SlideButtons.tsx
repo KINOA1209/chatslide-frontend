@@ -68,17 +68,17 @@ export const PresentButton: React.FC<PresentButtonProps> = ({
 type ShareToggleButtonProps = {
 	share: boolean;
 	setShare: (share: boolean) => void;
-  project_id: string;
+	project_id: string;
 };
 
 export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
 	share,
 	setShare,
-  project_id,
+	project_id,
 }) => {
-  const { token } = useUser();
+	const { token } = useUser();
 	const toggleShare = async () => {
-    setShare(!share);  // updates db as well 
+		setShare(!share); // updates db as well
 	};
 
 	return (

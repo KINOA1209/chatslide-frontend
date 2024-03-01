@@ -119,7 +119,7 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '10',
-		}
+		},
 	},
 	Col_1_img_0_layout: {
 		canvaCSS: {
@@ -367,7 +367,7 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '10',
-		}
+		},
 	},
 	Col_1_img_1_layout: {
 		canvaCSS: {},
@@ -430,7 +430,7 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '10',
-		}
+		},
 	},
 	Col_2_img_2_layout: {
 		columnCSS: {
@@ -483,7 +483,7 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '10',
-		}
+		},
 	},
 	Col_3_img_3_layout: {
 		columnCSS: {
@@ -535,6 +535,6 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '10',
-		}
+		},
 	},
 };

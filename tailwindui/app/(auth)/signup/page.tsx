@@ -4,7 +4,8 @@ import Promo from '@/components/signup/Promo';
 import { generateMetadata } from '@/app/layout';
 
 const title = 'Sign Up | DrLambda';
-const description = 'DrLambda is your AI assistant to create professional slides and posts. Join us to experience the power of AI in creating professional slides and posts.';
+const description =
+	'DrLambda is your AI assistant to create professional slides and posts. Join us to experience the power of AI in creating professional slides and posts.';
 export const metadata = generateMetadata({ title, description });
 
 export default function SignUp() {
@@ -50,7 +51,7 @@ export default function SignUp() {
 						<div className='flex flex-wrap -mx-3 mt-6'>
 							<div className='w-full px-3'>
 								<a
-                  href={'/signup-with-email'}
+									href={'/signup-with-email'}
 									className='btn text-white font-bold bg-Blue w-full'
 								>
 									Sign up with email
@@ -60,8 +61,8 @@ export default function SignUp() {
 						</div>
 
 						<div className='text-sm text-gray-500 text-center mt-3'>
-              <input type='checkbox' id='agree' name='agree' checked readOnly /> By
-							creating an account, you agree to the{' '}
+							<input type='checkbox' id='agree' name='agree' checked readOnly />{' '}
+							By creating an account, you agree to the{' '}
 							<a className='underline' href='/terms'>
 								terms & conditions
 							</a>

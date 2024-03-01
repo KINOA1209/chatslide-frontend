@@ -2,44 +2,47 @@ import { useEffect, useMemo, useRef } from 'react';
 import { createBearStore } from '@/utils/create-bear-store';
 import ChatHistory from '@/models/ChatHistory';
 
-const useChatHistoryBear = createBearStore<ChatHistory[]>()('chatHistory', [], true);
+const useChatHistoryBear = createBearStore<ChatHistory[]>()(
+	'chatHistory',
+	[],
+	true,
+);
 
 export enum ChatHistoryStatus {
-  NotInited,
-  Initing,
-  Inited,
+	NotInited,
+	Initing,
+	Inited,
 }
 
 let chatHistoryStatus: ChatHistoryStatus = ChatHistoryStatus.NotInited;
 
 export const useChatHistory = () => {
-  const { chatHistory, setChatHistory } = useChatHistoryBear();
+	const { chatHistory, setChatHistory } = useChatHistoryBear();
 
-  const init = async () => {
-    if (chatHistoryStatus !== ChatHistoryStatus.NotInited) return;
-    chatHistoryStatus = ChatHistoryStatus.Initing;
+	const init = async () => {
+		if (chatHistoryStatus !== ChatHistoryStatus.NotInited) return;
+		chatHistoryStatus = ChatHistoryStatus.Initing;
 
-    console.log('-- init chat history: ', { chatHistoryStatus, chatHistory })
+		console.log('-- init chat history: ', { chatHistoryStatus, chatHistory });
 
-    chatHistoryStatus = ChatHistoryStatus.Inited;
-  }
+		chatHistoryStatus = ChatHistoryStatus.Inited;
+	};
 
-  const addChatHistory = (chat: ChatHistory) => {
-    console.log('-- add chat history: ', { chat })
-    setChatHistory(prevChatHistory => [...prevChatHistory, chat]);
-  }
+	const addChatHistory = (chat: ChatHistory) => {
+		console.log('-- add chat history: ', { chat });
+		setChatHistory((prevChatHistory) => [...prevChatHistory, chat]);
+	};
 
-  const clearChatHistory = () => {
-    console.log('-- clear chat history: ', { chatHistory })
-    setChatHistory([]);
-  }
+	const clearChatHistory = () => {
+		console.log('-- clear chat history: ', { chatHistory });
+		setChatHistory([]);
+	};
 
-  useEffect(() => {
-    void init();
-  }, []);
+	useEffect(() => {
+		void init();
+	}, []);
 
+	// console.log('-- useUser: ', {user, session, isPaidUser})
 
-  // console.log('-- useUser: ', {user, session, isPaidUser})
-
-  return { chatHistory, addChatHistory, clearChatHistory, chatHistoryStatus };
+	return { chatHistory, addChatHistory, clearChatHistory, chatHistoryStatus };
 };

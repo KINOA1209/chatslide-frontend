@@ -85,7 +85,7 @@ MainSlideProps) => {
 							height={540}
 							src={`${uploadedBackgroundImageUrl}`}
 							alt='Background Image'
-              unoptimized={true}
+							unoptimized={true}
 						/>
 					</div>
 				)}
@@ -159,7 +159,7 @@ MainSlideProps) => {
 							height={540}
 							src={`${uploadedBackgroundImageUrl}`}
 							alt='Background Image'
-              unoptimized= {true}
+							unoptimized={true}
 						/>
 					</div>
 				)}

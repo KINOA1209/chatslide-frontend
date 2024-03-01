@@ -99,8 +99,8 @@ export default function SocialMediaTemplate() {
 		}
 	}
 
-  // avoid hydration error during development caused by persistence
-  if (!useHydrated()) return <></>
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
 
 	return (
 		<section>
@@ -121,7 +121,7 @@ export default function SocialMediaTemplate() {
 					setIsSubmitting={() => {}}
 					isPaidUser={true}
 					nextIsPaidFeature={false}
-					lastStep = {true}
+					lastStep={true}
 					nextText={'Next'}
 				/>
 
@@ -132,7 +132,7 @@ export default function SocialMediaTemplate() {
 						socialPostSlides={socialPostSlides}
 						setSocialPostSlides={setSocialPostSlides}
 						borderColorOptions={borderColorOptions}
-						res_scenario = {res_scenario || 'casual_topic'}
+						res_scenario={res_scenario || 'casual_topic'}
 					/>
 				</div>
 				<FeedbackButton timeout={30000} />

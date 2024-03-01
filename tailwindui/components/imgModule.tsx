@@ -22,6 +22,12 @@ import {
 import Chart from '@/models/Chart';
 import { IoBarChartOutline } from 'react-icons/io5';
 
+const RANDOM_FILLER_IMAGES = [
+  'https://img.freepik.com/free-vector/linear-flat-abstract-lines-pattern_23-2148939391.jpg',
+  'https://img.freepik.com/free-vector/geometric-shapes-pattern-background_1319-136.jpg',
+  'https://img.freepik.com/free-vector/linear-flat-abstract-lines-pattern_23-2148952437.jpg',
+]
+
 interface ImgModuleProp {
 	imgsrc: string;
 	updateSingleCallback: Function;
@@ -933,8 +939,8 @@ export const ImgModule = ({
 					selectedImg === ''
 						? 'bg-[#E7E9EB]'
 						: canEdit
-						? 'hover:bg-[#CAD0D3]'
-						: ''
+							? 'hover:bg-[#CAD0D3]'
+							: ''
 				} flex flex-col items-center justify-center`}
 			>
 				{ischartArr &&
@@ -981,6 +987,11 @@ export const ImgModule = ({
 						className={`transition ease-in-out duration-150 ${
 							canEdit ? 'hover:brightness-90' : 'cursor-pointer'
 						}`}
+            onError={(e) => {
+              const src = RANDOM_FILLER_IMAGES[Math.floor(Math.random() * RANDOM_FILLER_IMAGES.length)];
+              e.currentTarget.src = src
+              updateSingleCallback(src);
+            }}
 					/>
 				)}
 			</div>

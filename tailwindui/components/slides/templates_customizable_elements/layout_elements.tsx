@@ -28,8 +28,8 @@ export type LayoutElements = {
 	contentTextCSS?: React.CSSProperties;
 	userNameTextDividerCSS?: React.CSSProperties;
 	titlesAndContentDividerCSS?: React.CSSProperties;
-	rndContainerCSS?:React.CSSProperties;
-	rndCSS?:React.CSSProperties;
+	rndContainerCSS?: React.CSSProperties;
+	rndCSS?: React.CSSProperties;
 };
 
 export type TemplateLayoutsConfig = {
@@ -108,7 +108,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_1_img_0_layout: {
 			canvaCSS: {
@@ -232,7 +232,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_1_img_1_layout: {
 			canvaCSS: { padding: '28px' },
@@ -269,7 +269,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_2_img_2_layout: {
 			canvaCSS: { padding: '28px' },
@@ -306,7 +306,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_3_img_3_layout: {
 			canvaCSS: { padding: '28px' },
@@ -342,7 +342,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 	},
 	Stanford: StanfordTemplateLayoutsConfig,
@@ -410,7 +410,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: 51,
-			}
+			},
 		},
 		Col_1_img_0_layout: {
 			canvaCSS: {
@@ -534,7 +534,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_1_img_1_layout: {
 			canvaCSS: { padding: '28px' },
@@ -571,7 +571,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_2_img_2_layout: {
 			canvaCSS: { padding: '28px' },
@@ -608,7 +608,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_3_img_3_layout: {
 			canvaCSS: { padding: '28px' },
@@ -644,7 +644,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 	},
 	MIT: {
@@ -711,7 +711,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_1_img_0_layout: {
 			canvaCSS: {
@@ -835,7 +835,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_1_img_1_layout: {
 			canvaCSS: { padding: '28px' },
@@ -872,7 +872,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_2_img_2_layout: {
 			canvaCSS: { padding: '28px' },
@@ -909,7 +909,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_3_img_3_layout: {
 			canvaCSS: { padding: '28px' },
@@ -945,7 +945,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 	},
 	Princeton: {
@@ -1012,7 +1012,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_1_img_0_layout: {
 			canvaCSS: {
@@ -1136,7 +1136,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_1_img_1_layout: {
 			canvaCSS: { padding: '28px' },
@@ -1173,7 +1173,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_2_img_2_layout: {
 			canvaCSS: { padding: '28px' },
@@ -1210,7 +1210,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_3_img_3_layout: {
 			canvaCSS: { padding: '28px' },
@@ -1246,7 +1246,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 	},
 	Caltech: {
@@ -1313,7 +1313,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_1_img_0_layout: {
 			canvaCSS: {
@@ -1437,7 +1437,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_1_img_1_layout: {
 			canvaCSS: { padding: '28px' },
@@ -1474,7 +1474,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_2_img_2_layout: {
 			canvaCSS: { padding: '28px' },
@@ -1511,7 +1511,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_3_img_3_layout: {
 			canvaCSS: { padding: '28px' },
@@ -1547,7 +1547,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 	},
 	Columbia: {
@@ -1614,7 +1614,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_1_img_0_layout: {
 			canvaCSS: {
@@ -1738,7 +1738,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_1_img_1_layout: {
 			canvaCSS: { padding: '28px' },
@@ -1775,7 +1775,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_2_img_2_layout: {
 			canvaCSS: { padding: '28px' },
@@ -1812,7 +1812,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_3_img_3_layout: {
 			canvaCSS: { padding: '28px' },
@@ -1848,7 +1848,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 	},
 	JHU: {
@@ -1915,7 +1915,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_1_img_0_layout: {
 			canvaCSS: {
@@ -2039,7 +2039,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_1_img_1_layout: {
 			canvaCSS: { padding: '28px' },
@@ -2076,7 +2076,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_2_img_2_layout: {
 			canvaCSS: { padding: '28px' },
@@ -2113,7 +2113,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_3_img_3_layout: {
 			canvaCSS: { padding: '28px' },
@@ -2149,7 +2149,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 	},
 	UChicago: {
@@ -2216,7 +2216,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_1_img_0_layout: {
 			canvaCSS: {
@@ -2340,7 +2340,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_1_img_1_layout: {
 			canvaCSS: { padding: '28px' },
@@ -2377,7 +2377,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_2_img_2_layout: {
 			canvaCSS: { padding: '28px' },
@@ -2414,7 +2414,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_3_img_3_layout: {
 			canvaCSS: { padding: '28px' },
@@ -2450,7 +2450,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 	},
 	Yale: {
@@ -2517,7 +2517,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_1_img_0_layout: {
 			canvaCSS: {
@@ -2641,7 +2641,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_1_img_1_layout: {
 			canvaCSS: { padding: '28px' },
@@ -2678,7 +2678,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_2_img_2_layout: {
 			canvaCSS: { padding: '28px' },
@@ -2715,7 +2715,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_3_img_3_layout: {
 			canvaCSS: { padding: '28px' },
@@ -2751,7 +2751,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 	},
 	UPenn: {
@@ -2818,7 +2818,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_1_img_0_layout: {
 			canvaCSS: {
@@ -2942,7 +2942,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_1_img_1_layout: {
 			canvaCSS: { padding: '28px' },
@@ -2979,7 +2979,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_2_img_2_layout: {
 			canvaCSS: { padding: '28px' },
@@ -3016,7 +3016,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 		Col_3_img_3_layout: {
 			canvaCSS: { padding: '28px' },
@@ -3052,7 +3052,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 			},
 			rndCSS: {
 				zIndex: '51',
-			}
+			},
 		},
 	},
 };

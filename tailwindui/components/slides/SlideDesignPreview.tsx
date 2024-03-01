@@ -10,6 +10,7 @@ import SlideContainer from './SlideContainer';
 import '@/components/slides/overflowScrollbar.css';
 import themeConfigData from './templates_customizable_elements/theme_elements';
 import layoutConfigData from './templates_customizable_elements/layout_elements';
+import { Explanation } from '../ui/Text';
 type SlideDesignPreviewProps = {
 	selectedTemplate: string;
 };
@@ -96,25 +97,21 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			true,
 		);
 	return (
-		<div className='py-6 max-w-7xl flex overflow-x-auto overflow-x-scroll overflow-y-hidden'>
+		<div className='py-6 flex flex-wrap'>
 			{slides.map((slide, index) => (
 				<div
-					className='flex flex-col items-center'
+					className='flex flex-col items-center gap-1 p-2'
 					key={`DesignpreviewContainer` + index.toString()}
 				>
-					<div className={`px-1`}>
-						{/* {index + 1} */}
-						<SlideContainer
-							slide={slide}
-							index={index}
-							scale={0.25}
-							isViewing={true}
-							templateDispatch={editableTemplateDispatch}
-						/>
-					</div>
-					<span className='text-sm font-normal font-creato-medium leading-normal tracking-tight mt-3'>
-						{layoutNameArray[index]}
-					</span>
+					{/* {index + 1} */}
+					<SlideContainer
+						slide={slide}
+						index={index}
+						scale={0.2}
+						isViewing={true}
+						templateDispatch={editableTemplateDispatch}
+					/>
+					<Explanation>{layoutNameArray[index]}</Explanation>
 				</div>
 			))}
 		</div>

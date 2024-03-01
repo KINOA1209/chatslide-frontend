@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import { Theme, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -114,7 +114,7 @@ type SlidesHTMLProps = {
 	finalSlideIndex?: number;
 	setFinalSlideIndex?: Function;
 	borderColorOptions: ThemeObject[];
-	res_scenario:string;
+	res_scenario: string;
 };
 
 const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
@@ -127,7 +127,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 	res_scenario,
 }) => {
 	const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
-  const { project } = useProject();
+	const { project } = useProject();
 	const foldername =
 		typeof sessionStorage !== 'undefined'
 			? sessionStorage.getItem('foldername')
@@ -553,8 +553,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 							explanation='Present'
 						/>
 
-						{res_scenario !== 'serious_subject' && 
-							!isViewing && (
+						{res_scenario !== 'serious_subject' && !isViewing && (
 							<ButtonWithExplanation
 								button={
 									<ThemeChanger

@@ -4,7 +4,8 @@ import CustomerServiceInfo from '@/components/customerService';
 import { generateMetadata } from '@/app/layout';
 
 const title = 'Sign Up with Email | DrLambda';
-const description = 'DrLambda is your AI assistant to create professional slides and posts. Join us to experience the power of AI in creating professional slides and posts.';
+const description =
+	'DrLambda is your AI assistant to create professional slides and posts. Join us to experience the power of AI in creating professional slides and posts.';
 export const metadata = generateMetadata({ title, description });
 
 export default function SignUp() {

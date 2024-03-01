@@ -81,8 +81,8 @@ export const templateDispatch = (
 	const finalLayoutKey = isLayoutOptionValid
 		? layoutOptionCover
 		: index === 0
-		? 'Cover_img_1_layout'
-		: 'Col_1_img_0_layout';
+			? 'Cover_img_1_layout'
+			: 'Col_1_img_0_layout';
 
 	// console.log(
 	// 	`availableTemplates has template key ${slide.template}`,
@@ -227,7 +227,7 @@ export const templateDispatch = (
 							'content',
 							themeElements.contentFontCSS,
 							true,
-					  )
+						)
 					: slide.content.map((content, contentIndex) => (
 							<div
 								key={
@@ -243,7 +243,7 @@ export const templateDispatch = (
 									contentIndex,
 								)}
 							</div>
-					  ))
+						))
 			}
 			imgs={slide.images as string[]}
 			update_callback={updateImgUrlArray(index)}

@@ -60,7 +60,7 @@ export const Default_TemplateLayoutsConfig: {
 			height: '100%', // Equivalent to h-full
 			borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
 			//overflow: 'hidden',
-			position: 'relative'
+			position: 'relative',
 		},
 		rndContainerCSS: {
 			width: '100%',
@@ -69,7 +69,7 @@ export const Default_TemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '51',
-		}
+		},
 
 		// visualElementsCSS: {
 		// 	zIndex: 20,
@@ -196,7 +196,7 @@ export const Default_TemplateLayoutsConfig: {
 			//overflow: 'hidden',
 			display: 'flex',
 			alignItems: 'center', // equivalent to items-center
-			position: 'relative'
+			position: 'relative',
 		},
 		rndContainerCSS: {
 			width: '100%',
@@ -205,7 +205,7 @@ export const Default_TemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '51',
-		}
+		},
 	},
 	Col_1_img_1_layout: {
 		canvaCSS: {
@@ -223,7 +223,7 @@ export const Default_TemplateLayoutsConfig: {
 			flexGrow: 1,
 			borderRadius: '0.375rem', // Assuming a typical rounded-md value
 			//overflow: 'hidden',
-			position:'relative',
+			position: 'relative',
 		},
 		contentContainerCSS: {
 			paddingTop: '0.5rem',
@@ -250,7 +250,7 @@ export const Default_TemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '51',
-		}
+		},
 	},
 	Col_2_img_2_layout: {
 		canvaCSS: {
@@ -293,7 +293,7 @@ export const Default_TemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '51',
-		}
+		},
 	},
 	Col_3_img_3_layout: {
 		canvaCSS: {
@@ -317,7 +317,7 @@ export const Default_TemplateLayoutsConfig: {
 			flexGrow: 1, // equivalent to grow
 			borderRadius: '0.375rem', // equivalent to rounded-md
 			//overflow: 'hidden', // equivalent to overflow-hidden
-			position:'relative',
+			position: 'relative',
 		},
 		contentCSS: {
 			width: '100%', // equivalent to w-full
@@ -332,6 +332,6 @@ export const Default_TemplateLayoutsConfig: {
 		},
 		rndCSS: {
 			zIndex: '51',
-		}
+		},
 	},
 };

@@ -7,10 +7,7 @@ import Link from 'next/link';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { FeedbackForm } from '@/components/ui/feedback';
-import {
-	PrimaryButton,
-	UserResearchWindow,
-} from './subscriptionCTAs';
+import { PrimaryButton, UserResearchWindow } from './subscriptionCTAs';
 
 const Subscription = () => {
 	const [portalURL, setPortalURL] = useState('');

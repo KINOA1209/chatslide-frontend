@@ -12,18 +12,18 @@ export default function WorkflowLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<div className='flex flex-row min-h-[100vh]'>
-			<div className='hidden sm:block'>
+		<div className='flex flex-row min-h-[100vh] w-screen'>
+			<div className='hidden sm:flex'>
 				{/* only show SideBar on mid-large screen */}
 				<SideBar />
 			</div>
 
-			<div className='flex flex-col w-full'>
+			<div className='flex flex-col w-full sm:grow overflow-x-hidden'>
 				<div className='block sm:hidden'>
 					{/* only show Header on small screen */}
 					<Header loginRequired={true} isLanding={false} isAuth={false} />
 				</div>
-				<main className='grow flex flex-col flex-grow'>
+				<main className='grow flex flex-col'>
 					{/* Content */}
 					{children}
 				</main>

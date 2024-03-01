@@ -31,38 +31,38 @@ export const DrLambdaAIAssistantIcon: React.FC<{
 };
 
 type ChatsProps = {
-  chatHistory: ChatHistory[];
+	chatHistory: ChatHistory[];
 };
 
 // Component definition using an arrow function
 export const Chats: React.FC<ChatsProps> = ({ chatHistory }) => {
-  const lastMessageRef = useRef<HTMLDivElement>(null); // Ensure you have a ref for the last message
+	const lastMessageRef = useRef<HTMLDivElement>(null); // Ensure you have a ref for the last message
 
-  return (
-    <>
-      {chatHistory.map((chat, index) => (
-        <div
-          key={index}
-          ref={index === chatHistory.length - 1 ? lastMessageRef : null}
-          className={
-            chat.role === 'user'
-              ? 'px-3.5 py-2.5 bg-indigo-500 rounded-tl-xl rounded-tr-xl rounded-bl-xl border border-white gap-2.5 self-end flex flex-wrap max-w-[15rem]'
-              : 'px-3.5 py-2.5 bg-indigo-50 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-white gap-2.5 max-w-[15rem] flex flex-wrap'
-          }
-        >
-          <div
-            className={
-              chat.role === 'user'
-                ? 'grow shrink basis-0 text-gray-100 text-base font-normal font-creato-medium text-wrap'
-                : 'text-neutral-800 text-base font-normal font-creato-medium text-wrap'
-            }
-          >
-            {chat.content}
-          </div>
-        </div>
-      ))}
-    </>
-  );
+	return (
+		<>
+			{chatHistory.map((chat, index) => (
+				<div
+					key={index}
+					ref={index === chatHistory.length - 1 ? lastMessageRef : null}
+					className={
+						chat.role === 'user'
+							? 'px-3.5 py-2.5 bg-indigo-500 rounded-tl-xl rounded-tr-xl rounded-bl-xl border border-white gap-2.5 self-end flex flex-wrap max-w-[15rem]'
+							: 'px-3.5 py-2.5 bg-indigo-50 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-white gap-2.5 max-w-[15rem] flex flex-wrap'
+					}
+				>
+					<div
+						className={
+							chat.role === 'user'
+								? 'grow shrink basis-0 text-gray-100 text-base font-normal font-creato-medium text-wrap'
+								: 'text-neutral-800 text-base font-normal font-creato-medium text-wrap'
+						}
+					>
+						{chat.content}
+					</div>
+				</div>
+			))}
+		</>
+	);
 };
 
 interface AIAssistantChatWindowProps {
@@ -88,7 +88,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		useChatHistory();
 	const { updateVersion } = useSlides();
 	const [loading, setLoading] = useState(false);
-  const { token } = useUser();
+	const { token } = useUser();
 
 	// Create a ref for the last message
 	const lastMessageRef = useRef<HTMLDivElement>(null);
@@ -121,13 +121,16 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		content,
 	});
 
-	const makeApiCall = async (prompt: string, token: string): Promise<Response> => {
+	const makeApiCall = async (
+		prompt: string,
+		token: string,
+	): Promise<Response> => {
 		try {
 			return await fetch('/api/ai_gen_slide', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token,
+					Authorization: 'Bearer ' + token,
 				},
 				body: JSON.stringify({
 					slide: slides[currentSlideIndex],
@@ -167,7 +170,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		try {
 			setLoading(true);
 
-      const response = await makeApiCall(inputToSend, token);
+			const response = await makeApiCall(inputToSend, token);
 
 			setLoading(false);
 
@@ -209,11 +212,10 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		}
 	};
 
-
 	useEffect(() => {
-    if (chatHistoryStatus == ChatHistoryStatus.Inited)
-		  console.log('chatHistory:', chatHistory);
-  }, [chatHistoryStatus]);
+		if (chatHistoryStatus == ChatHistoryStatus.Inited)
+			console.log('chatHistory:', chatHistory);
+	}, [chatHistoryStatus]);
 
 	return (
 		<section
@@ -329,7 +331,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						</div>
 					</div>
 					{/* chat history render */}
-					<Chats chatHistory={chatHistory}/>
+					<Chats chatHistory={chatHistory} />
 
 					{loading && (
 						<div className='px-3.5 py-2.5 bg-indigo-50 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-white  gap-2.5 max-w-[15rem] flex flex-wrap'>

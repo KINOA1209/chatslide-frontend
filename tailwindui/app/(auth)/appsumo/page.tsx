@@ -2,7 +2,6 @@ import Link from 'next/link';
 import GoogleSignIn from '@/components/button/GoogleSignIn';
 import Promo from '@/components/signup/Promo';
 
-
 export default function SignUp() {
 	return (
 		<section className='bg-gradient-to-b from-gray-100 to-white'>
@@ -15,9 +14,7 @@ export default function SignUp() {
 
 					{/* Form */}
 					<div className='max-w-sm mx-auto'>
-						<Promo
-              text='Enter your AppSumo redemption code here'
-						/>
+						<Promo text='Enter your AppSumo redemption code here' />
 
 						<div className='flex items-center my-6'>
 							<div
@@ -58,8 +55,8 @@ export default function SignUp() {
 						</div>
 
 						<div className='text-sm text-gray-500 text-center mt-3'>
-              <input type='checkbox' id='agree' name='agree' checked readOnly /> By
-							creating an account, you agree to the{' '}
+							<input type='checkbox' id='agree' name='agree' checked readOnly />{' '}
+							By creating an account, you agree to the{' '}
 							<a className='underline' href='/terms'>
 								terms & conditions
 							</a>

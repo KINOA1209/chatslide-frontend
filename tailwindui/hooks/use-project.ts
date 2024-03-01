@@ -7,98 +7,116 @@ import ProjectService from '@/services/ProjectService';
 import { useUser } from './use-user';
 import SessionStorage from '@/components/utils/SessionStorage';
 
-
 const useProjectBear = createBearStore<Project | null>()('project', null, true);
 const useResourcesBear = createBearStore<Resource[]>()('resources', [], true);
-const useSelectedResourcesBear = createBearStore<Resource[]>()('selectedResources', [], true);
+const useSelectedResourcesBear = createBearStore<Resource[]>()(
+	'selectedResources',
+	[],
+	true,
+);
 const useVideoJobIdBear = createBearStore<string>()('videoJobId', '', true);
 const useIsGpt35Bear = createBearStore<boolean>()('isGpt35', true, true);
 const useIsShared = createBearStore<boolean>()('isShared', false, true);
 const useOutlinesBear = createBearStore<Outlines>()('outlines', [], true);
 
 export enum ProjectStatus {
-  NotInited,
-  Initing,
-  Inited,
+	NotInited,
+	Initing,
+	Inited,
 }
 
 let projectStatus: ProjectStatus = ProjectStatus.NotInited;
 
 export const useProject = () => {
-  const { project, setProject } = useProjectBear();
-  const { resources, setResources } = useResourcesBear();
-  const { selectedResources, setSelectedResources } = useSelectedResourcesBear();
-  const { videoJobId, setVideoJobId } = useVideoJobIdBear();
-  const { isGpt35, setIsGpt35 } = useIsGpt35Bear();
-  const { isShared, setIsShared } = useIsShared();
-  const { token } = useUser();
-  const { outlines, setOutlines } = useOutlinesBear();
+	const { project, setProject } = useProjectBear();
+	const { resources, setResources } = useResourcesBear();
+	const { selectedResources, setSelectedResources } =
+		useSelectedResourcesBear();
+	const { videoJobId, setVideoJobId } = useVideoJobIdBear();
+	const { isGpt35, setIsGpt35 } = useIsGpt35Bear();
+	const { isShared, setIsShared } = useIsShared();
+	const { token } = useUser();
+	const { outlines, setOutlines } = useOutlinesBear();
 
-  const init = async () => {
-    if (projectStatus !== ProjectStatus.NotInited) return;
-    console.log('-- useProject init');
-    projectStatus = ProjectStatus.Inited;
-  };
+	const init = async () => {
+		if (projectStatus !== ProjectStatus.NotInited) return;
+		console.log('-- useProject init');
+		projectStatus = ProjectStatus.Inited;
+	};
 
-  useEffect(() => {
-    void init();
-  }, []);
+	useEffect(() => {
+		void init();
+	}, []);
 
-  const initProject = async (project: Project) => {
-    console.log('-- initProject', project);
-    setProject(project);
-    if (project.outlines)
-      setOutlines(Object.values(JSON.parse(project.outlines)) || []);
-    projectStatus = ProjectStatus.Inited;
-    setIsShared(project.is_shared || false);
-  }
+	const initProject = async (project: Project) => {
+		console.log('-- initProject', project);
+		setProject(project);
+		if (project.outlines)
+			setOutlines(Object.values(JSON.parse(project.outlines)) || []);
+		projectStatus = ProjectStatus.Inited;
+		setIsShared(project.is_shared || false);
+	};
 
-  const clearProject = () => {
-    setProject(null);
-    setResources([]);
-    setSelectedResources([]);
-    setVideoJobId('');
-    setIsGpt35(true);
-    setIsShared(false);
-    setOutlines([]);
-  }
+	const clearProject = () => {
+		setProject(null);
+		setResources([]);
+		setSelectedResources([]);
+		setVideoJobId('');
+		setIsGpt35(true);
+		setIsShared(false);
+		setOutlines([]);
+	};
 
-  const updateProject = <K extends keyof Project>(field: K, value: Project[K]) => {
-    console.log('-- updateProject', field, value);
-    setProject((currentProject) => {
-      // 'currentProject' is the most up-to-date state of 'project'
-      const newProject = { ...currentProject };
-      newProject[field] = value;
-      return newProject as Project;
-    });
-  };
+	const updateProject = <K extends keyof Project>(
+		field: K,
+		value: Project[K],
+	) => {
+		console.log('-- updateProject', field, value);
+		setProject((currentProject) => {
+			// 'currentProject' is the most up-to-date state of 'project'
+			const newProject = { ...currentProject };
+			newProject[field] = value;
+			return newProject as Project;
+		});
+	};
 
-  const updateIsShared = (value: boolean) => {
-    setIsShared(value);
-    setProject({ ...project, is_shared: value } as Project);
-    ProjectService.SlideShareLink(token, project?.id || '', value);
-  }
+	const updateIsShared = (value: boolean) => {
+		setIsShared(value);
+		setProject({ ...project, is_shared: value } as Project);
+		ProjectService.SlideShareLink(token, project?.id || '', value);
+	};
 
-  const updateOutlines = (outlines: Outlines) => {
-    // remove empty entries
-    const outlinesCopy = [...outlines];
-    for (let i = 0; i < outlinesCopy.length; i++) {
-      outlinesCopy[i].content = outlinesCopy[i].content.filter((s) => {
-        return s.length > 0;
-      });
-    }
+	const updateOutlines = (outlines: Outlines) => {
+		// remove empty entries
+		const outlinesCopy = [...outlines];
+		for (let i = 0; i < outlinesCopy.length; i++) {
+			outlinesCopy[i].content = outlinesCopy[i].content.filter((s) => {
+				return s.length > 0;
+			});
+		}
 
-    setOutlines(outlinesCopy);
-    // updateProject('outlines', outlinesCopy);
-    // todo: save outlines 
-  }
+		setOutlines(outlinesCopy);
+		// updateProject('outlines', outlinesCopy);
+		// todo: save outlines
+	};
 
-  return {
-    project, projectStatus, initProject, updateProject, clearProject, 
-    resources, setResources, selectedResources, setSelectedResources,
-    videoJobId, setVideoJobId,
-    isGpt35, setIsGpt35,
-    isShared, updateIsShared,
-    outlines, updateOutlines,
-  };
+	return {
+		project,
+		projectStatus,
+		initProject,
+		updateProject,
+		clearProject,
+		resources,
+		setResources,
+		selectedResources,
+		setSelectedResources,
+		videoJobId,
+		setVideoJobId,
+		isGpt35,
+		setIsGpt35,
+		isShared,
+		updateIsShared,
+		outlines,
+		updateOutlines,
+	};
 };

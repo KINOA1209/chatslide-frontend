@@ -20,14 +20,14 @@ const LoginForm: React.FC = () => {
 
 		try {
 			await AuthService.signIn(email, password);
-      router.push('/dashboard');
+			router.push('/dashboard');
 		} catch (error: any) {
 			console.error(error);
-      let message = error.message || 'An error occurred';
-      console.log('message', message);
-      if (message == 'User does not exist.') {
-        message += ' Please sign up first.';
-      }
+			let message = error.message || 'An error occurred';
+			console.log('message', message);
+			if (message == 'User does not exist.') {
+				message += ' Please sign up first.';
+			}
 			toast.error(message, {
 				position: 'top-center',
 				autoClose: 5000,

@@ -41,15 +41,23 @@ const createBearSlice =
 
 export const createBearStore =
 	<V>() =>
-	<K extends string>(k: K, defaultValue: V, persistEnabled?: boolean, useSessionStorage: boolean=true) => {
+	<K extends string>(
+		k: K,
+		defaultValue: V,
+		persistEnabled?: boolean,
+		useSessionStorage: boolean = true,
+	) => {
 		const f = (...a: any[]) => ({
 			// @ts-ignore
 			...createBearSlice<K, V>(k, defaultValue)(...a),
 		});
 
-    const storage = typeof window !== 'undefined' ?
-      (useSessionStorage ? window.sessionStorage : window.localStorage) :
-      undefined;
+		const storage =
+			typeof window !== 'undefined'
+				? useSessionStorage
+					? window.sessionStorage
+					: window.localStorage
+				: undefined;
 
 		return persistEnabled
 			? create<BearSlice<K, V>>()(
@@ -63,7 +71,7 @@ export const createBearStore =
 							}
 							return persistedState;
 						},
-            storage: storage ? createJSONStorage(() => storage) : undefined,
+						storage: storage ? createJSONStorage(() => storage) : undefined,
 					}),
 				)
 			: create<BearSlice<K, V>>()(f);
