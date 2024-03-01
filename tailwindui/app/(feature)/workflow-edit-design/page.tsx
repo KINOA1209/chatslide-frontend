@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect, Fragment } from 'react';
 import ContentWithImageImg from '@/public/images/summary/content_with_image.png';
 import ContentOnlyImg from '@/public/images/summary/content_only.png';
 import 'react-toastify/dist/ReactToastify.css';
-import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
+import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
 import { ToastContainer } from 'react-toastify';
 import '@/app/css/workflow-edit-topic-css/topic_style.css';
 import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';

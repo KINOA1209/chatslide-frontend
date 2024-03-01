@@ -6,7 +6,7 @@ import {
 	FaTwitter,
 	FaYoutube,
 } from 'react-icons/fa';
-import { BlackLogo, ColorLogo } from './logo';
+import { BlackLogo, ColorLogo } from '../ui/logo';
 
 const socialMediaBlock = (
 	<ul className='flex mb-4 md:order-1 md:ml-4 md:mb-0 justify-center'>

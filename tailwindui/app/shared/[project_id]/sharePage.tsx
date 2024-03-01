@@ -2,10 +2,10 @@
 
 import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import Footer, { WorkflowFooter } from '@/components/ui/footer';
+import Footer, { WorkflowFooter } from '@/components/layout/footer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Header from '@/components/ui/header';
+import Header from '@/components/layout/header';
 import dynamic from 'next/dynamic';
 import ProjectService from '@/services/ProjectService';
 import Slide from '@/models/Slide';

@@ -1,6 +1,6 @@
 import React, { use, useEffect, useRef, useState } from 'react';
 import { useUser } from '@/hooks/use-user';
-import PaywallModal from '../forms/paywallModal';
+import PaywallModal from '../paywallModal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import sanitizeHtml from 'sanitize-html';
@@ -456,7 +456,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				</div>
 			</div>
 
-			{/* absolute positionde ai assistant icon */}
+			{/* absolute positioned ai assistant icon */}
 			{!isChatWindowOpen && !isViewing && (
 				<div className='hidden sm:block fixed bottom-10 right-10 cursor-pointer z-50'>
 					<ButtonWithExplanation

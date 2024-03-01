@@ -4,7 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import DrlambdaButton, {
 	BigBlueButton,
 	DrLambdaBackButton,
-} from './button/DrlambdaButton';
+} from '../button/DrlambdaButton';
 
 // Allowed extensions defined in drlambda/app/user_file_manager.py
 // ALLOWED_DOC_EXTENSIONS = {"txt", "pdf"}

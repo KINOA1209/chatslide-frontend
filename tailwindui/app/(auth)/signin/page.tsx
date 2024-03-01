@@ -1,8 +1,8 @@
-import LoginForm from '@/components/forms/login-form';
+import LoginForm from '@/components/signup/login-form';
 import Link from 'next/link';
 import React from 'react';
 import GoogleSignIn from '@/components/button/GoogleSignIn';
-import CustomerServiceInfo from '@/components/customerService';
+import CustomerServiceInfo from '@/components/signup/customerService';
 import { generateMetadata } from '@/app/layout';
 
 const title = 'Sign In | DrLambda';

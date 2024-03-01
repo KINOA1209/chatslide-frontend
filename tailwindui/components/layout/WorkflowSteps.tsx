@@ -2,7 +2,7 @@
 
 import React, { useState, MouseEvent, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { CurrentStepCircle, FinishedStepCircle, ConnectedLine } from './icons';
+import { CurrentStepCircle, FinishedStepCircle, ConnectedLine } from '../icons';
 import { FaChevronCircleLeft, FaChevronCircleRight } from 'react-icons/fa';
 import { IoMdLock } from 'react-icons/io';
 import SessionStorage from '@/components/utils/SessionStorage';

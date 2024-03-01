@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import AuthService from '../../../services/AuthService';
 import Slide from '../../../models/Slide';
-import PaywallModal from '../../forms/paywallModal';
+import PaywallModal from '../../paywallModal';
 import { BigGrayButton } from '../../button/DrlambdaButton';
 import { FaDownload, FaRing, FaTruckLoading } from 'react-icons/fa';
 import { generatePdf } from '../../utils/DownloadImage';

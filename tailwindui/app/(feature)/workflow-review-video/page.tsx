@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Video from '@/components/Video';
-import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
+import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
 import { toast, ToastContainer } from 'react-toastify';
 import VideoService from '@/services/VideoService';
 import { useUser } from '@/hooks/use-user';

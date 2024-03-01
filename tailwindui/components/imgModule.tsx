@@ -4,7 +4,7 @@ import AuthService from '@/services/AuthService';
 import { LoadingIcon } from '@/components/ui/LoadingIcon';
 import { createPortal } from 'react-dom';
 import { toast } from 'react-toastify';
-import PaywallModal from './forms/paywallModal';
+import PaywallModal from './paywallModal';
 import ResourceService from '@/services/ResourceService';
 import Resource from '@/models/Resource';
 import Image from 'next/image';

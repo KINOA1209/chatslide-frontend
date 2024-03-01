@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import SlideVisualizer from '@/components/slides/SlideVisualizer';
 import { ToastContainer } from 'react-toastify';
-import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
+import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
 import { useUser } from '@/hooks/use-user';
 import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
 import StepsSlidesPage from '@/components/user_onboarding/StepsSlidesPage';

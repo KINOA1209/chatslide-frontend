@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 // Import your custom components and any other required dependencies
 import { DrLambdaBackButton } from '@/components/button/DrlambdaButton';
-import ProjectProgress from '@/components/WorkflowSteps';
+import ProjectProgress from '@/components/layout/WorkflowSteps';
 import DrlambdaButton from '@/components/button/DrlambdaButton';
 
 interface YourComponentProps {

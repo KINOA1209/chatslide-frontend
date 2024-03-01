@@ -1,6 +1,6 @@
-import SideBar from '@/components/ui/SideBar';
-import { WorkflowFooter } from '@/components/ui/footer';
-import Header from '@/components/ui/header';
+import SideBar from '@/components/layout/SideBar';
+import { WorkflowFooter } from '@/components/layout/footer';
+import Header from '@/components/layout/header';
 
 export const metadata = {
 	title: 'My Account - Dr. Lambda',

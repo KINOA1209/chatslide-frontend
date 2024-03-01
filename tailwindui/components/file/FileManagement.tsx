@@ -1,20 +1,20 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { FileUploadButton } from '@/components/FileUploadButton';
+import { FileUploadButton } from '@/components/file/FileUploadButton';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import moment from 'moment';
 // import mixpanel from 'mixpanel-browser'
 import { CarbonConnect, IntegrationName } from 'carbon-connect';
 import { DeleteIcon, SpinIcon } from '@/app/(feature)/icons';
-import { ResourceItem } from './ui/ResourceItem';
+import { ResourceItem } from '../ui/ResourceItem';
 import Resource from '@/models/Resource';
 import ResourceService from '@/services/ResourceService';
-import DrlambdaButton, { BigBlueButton } from './button/DrlambdaButton';
+import DrlambdaButton, { BigBlueButton } from '../button/DrlambdaButton';
 import { FaCheckCircle } from 'react-icons/fa';
 import { useUser } from '@/hooks/use-user';
-import { Blank, Loading } from './ui/Loading';
+import { Blank, Loading } from '../ui/Loading';
 
 interface UserFileList {
 	selectable: boolean;

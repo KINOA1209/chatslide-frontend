@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BigBlueButton } from '../button/DrlambdaButton';
-import MyFiles from '../FileManagement';
+import MyFiles from './FileManagement';
 import Modal from '../ui/Modal';
 import Resource from '@/models/Resource';
 

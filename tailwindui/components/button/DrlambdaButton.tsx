@@ -11,7 +11,7 @@ import React, {
 	useState,
 	MouseEvent,
 } from 'react';
-import PaywallModal from '../forms/paywallModal';
+import PaywallModal from '../paywallModal';
 import { useRouter } from 'next/navigation';
 import { GrayLabel } from '../ui/GrayLabel';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';

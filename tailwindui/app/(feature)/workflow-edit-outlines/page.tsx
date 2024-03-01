@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect, Fragment } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import OutlineVisualizer from '@/components/outline/OutlineVisulizer';
 import { useRouter } from 'next/navigation';
-import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
+import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
 import { ToastContainer } from 'react-toastify';
 import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
 import StepsOutlinePage from '@/components/user_onboarding/StepsOutlinePage';

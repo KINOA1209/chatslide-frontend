@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 import Link from 'next/link';
-import { Home, Logo } from './logo';
+import { Home, Logo } from '../ui/logo';
 import DropdownButton from '@/components/utils/dropdown';
 import { useRouter } from 'next/navigation';
 import GoogleAnalytics from '@/components/integrations/GoogleAnalytics';

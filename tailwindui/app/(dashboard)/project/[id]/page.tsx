@@ -10,7 +10,7 @@ import Project from '@/models/Project';
 import { useSlides } from '@/hooks/use-slides';
 import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';
-import { getLastStepReidrect } from '@/components/WorkflowSteps';
+import { getLastStepReidrect } from '@/components/layout/WorkflowSteps';
 import { Loading } from '@/components/ui/Loading';
 
 const ProjectLoading = () => {

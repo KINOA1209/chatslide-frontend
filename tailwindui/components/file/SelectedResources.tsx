@@ -4,9 +4,9 @@ import { DeleteIcon, SpinIcon } from '@/app/(feature)/icons';
 import { FiSearch } from 'react-icons/fi';
 import Resource from '@/models/Resource';
 import { useUser } from '@/hooks/use-user';
-import PaywallModal from './forms/paywallModal';
+import PaywallModal from '../paywallModal';
 import ResourceService from '@/services/ResourceService';
-import { ResourceIcon } from './ui/ResourceItem';
+import { ResourceIcon } from '../ui/ResourceItem';
 
 type SelectedResourcesListProps = {
 	selectedResources: Resource[];
