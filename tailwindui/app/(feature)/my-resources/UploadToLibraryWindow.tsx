@@ -446,7 +446,7 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
 									</span>
 									<span className='text-slate-500 text-sm font-normal font-creato-medium leading-normal tracking-tight'>
 										{' '}
-										16MB Maximum
+										10MB Maximum
 									</span>
 								</div>
 							</div>
