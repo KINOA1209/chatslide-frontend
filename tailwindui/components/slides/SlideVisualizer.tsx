@@ -147,7 +147,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 			} else {
 				toast.error(
 					'Server is busy now. Please try again later. Reference code: ' +
-						project_id,
+					project_id,
 				);
 				console.log(response);
 				setIsSubmitting(false);
@@ -166,41 +166,8 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 	}, [isSubmitting]);
 
 	return (
-		<div className='flex flex-col justify-center items-center gap-4 my-4'>
-			{/* buttons: export and scripts and share slides */}
-			<div className='SlidesStep-6 flex flex-col sm:flex-row justify-end items-center gap-1 sm:gap-4'>
-				<ExportToPdfButton slides={slides} exportSlidesRef={exportSlidesRef} />
-				<ShareToggleButton
-					setShare={updateIsShared}
-					share={isShared}
-					project_id={project?.id || ''}
-				/>
-				<PostDropDown
-					slides={slides}
-					post_type='slide'
-					setShare={updateIsShared}
-					description={project?.description || ''}
-					keywords={project?.keywords || []}
-				/>
-			</div>
+		<div className='w-full flex grow flex-col justify-center items-center gap-4 overflow-hidden'>
 
-			{/* shareable link */}
-			{isShared && showShareLink && (
-				<div>
-					<div className='w-[100] md:w-[40rem] flex-grow'>
-						<TextLabel>View only link:</TextLabel>
-						<div className='flex flex-row items-center gap-4'>
-							<ClickableLink link={`${host}/shared/${project?.id || ''}`} />
-							<button
-								className='text-gray-500 hover:text-gray-700'
-								onClick={() => setShowShareLink(false)}
-							>
-								<FaTimes />
-							</button>
-						</div>
-					</div>
-				</div>
-			)}
 
 			{/* slides and scripts contents */}
 			<SlidesHTML exportSlidesRef={exportSlidesRef} showScript={showScript} />

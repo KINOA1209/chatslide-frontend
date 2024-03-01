@@ -3,7 +3,9 @@ import { useUser } from '@/hooks/use-user';
 import PaywallModal from '../paywallModal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import sanitizeHtml from 'sanitize-html';
+import ExportToPdfButton from './ExportDropDown';
+import { ShareToggleButton } from '@/components/slides/SlideButtons';
+import PostDropDown from '../button/PostDropDown';
 import './slidesHTML.css';
 import { availableTemplates } from '@/components/slides/slideTemplates';
 import { LayoutKeys } from '@/components/slides/slideLayout';
@@ -45,6 +47,11 @@ import { current } from 'immer';
 import Chart from '@/models/Chart';
 import { BigGrayButton } from '../button/DrlambdaButton';
 import ImagesPosition from '@/models/ImagesPosition';
+import { Panel } from '../layout/Panel';
+import { useProject } from '@/hooks/use-project';
+import { FaTimes } from 'react-icons/fa';
+import ClickableLink from '../ui/ClickableLink';
+import { TextLabel } from '../ui/GrayLabel';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -129,6 +136,23 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	const currentSlideRef = useRef<HTMLDivElement>(null);
 	const thumbnailRef = useRef<HTMLDivElement>(null);
+
+	const { isShared, updateIsShared, project } = useProject();
+	const [showShareLink, setShowShareLink] = useState(true);
+
+	const [host, setHost] = useState('https://drlambda.ai');
+
+	useEffect(() => {
+		if (
+			window.location.hostname !== 'localhost' &&
+			window.location.hostname !== '127.0.0.1'
+		) {
+			setHost('https://' + window.location.hostname);
+		} else {
+			setHost(window.location.hostname);
+		}
+	}, []);
+
 
 	const toggleChatWindow = () => {
 		setIsChatWindowOpen(!isChatWindowOpen);
@@ -383,7 +407,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			exportToPdfMode, //exportToPdfMode
 			isEditMode, //editMathMode
 			setIsEditMode, //setIsEditMode
-			() => {}, // handleSlideEdit
+			() => { }, // handleSlideEdit
 			updateImgUrlArray,
 			toggleEditMode,
 			index === 0, // isCoverPage
@@ -423,7 +447,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	}
 
 	return (
-		<div className='flex flex-col items-center justify-center gap-4'>
+		<div className='w-full max-h-full flex flex-row items-start justify-center gap-4'>
 			<div className='absolute right-[3rem] top-[7rem] flex flex-col items-end space-x-4'>
 				{!isViewing && (
 					<ActionsToolBar
@@ -436,63 +460,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					/>
 				)}
 			</div>
-			{/* hidden div for export to pdf */}
-			<div className='absolute left-[-9999px] top-[-9999px] -z-1'>
-				<div ref={exportSlidesRef}>
-					{/* Render all of your slides here. This can be a map of your slides array */}
-					{slides.map((slide, index) => (
-						<div
-							key={`exportToPdfContainer` + index.toString()}
-							style={{ pageBreakAfter: 'always' }}
-						>
-							<SlideContainer
-								slide={slide}
-								index={index}
-								templateDispatch={uneditableTemplateDispatch}
-								exportToPdfMode={true}
-							/>
-						</div>
-					))}
-				</div>
-			</div>
-
-			{/* absolute positioned ai assistant icon */}
-			{!isChatWindowOpen && !isViewing && (
-				<div className='hidden sm:block fixed bottom-10 right-10 cursor-pointer z-50'>
-					<ButtonWithExplanation
-						button={
-							<DrLambdaAIAssistantIcon
-								onClick={toggleChatWindow}
-							></DrLambdaAIAssistantIcon>
-						}
-						explanation='AI Assistant'
-					/>
-				</div>
-			)}
-
-			{!isViewing && (
-				<div className='flex flex-row justify-end items-end gap-1 sm:gap-4'>
-					<div className='hidden sm:block'>
-						<ChangeTemplateOptions
-							currentTemplate={slides[slideIndex].template}
-							templateOptions={Object.keys(availableTemplates)}
-							onChangeTemplate={selectTemplate}
-						/>
-					</div>
-
-					<BigGrayButton
-						onClick={() => setIsShowingLogo(!isShowingLogo)}
-						isPaidUser={isPaidUser}
-						isPaidFeature={true}
-						bgColor='bg-Gray'
-					>
-						<span>
-							{isShowingLogo ? 'Remove Logo' : 'Show Logo'}
-							{!isPaidUser && ' 🔒'}
-						</span>
-					</BigGrayButton>
-				</div>
-			)}
 
 			{showPaymentModal && (
 				<PaywallModal
@@ -502,13 +469,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				/>
 			)}
 
-			{/* buttons and contents */}
-			<div className='max-w-4xl flex flex-row items-center justify-center'>
-				<ToastContainer />
-
+			<Panel>
 				{/* vertical bar */}
-				<div className='h-[540px] w-[144px] hidden xl:block mx-auto justify-center items-center'>
-					<div className='h-full flex flex-col flex-nowrap py-2 overflow-y-auto  overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
+				<div className='h-full w-[9rem] hidden xl:block mx-auto justify-center items-center'>
+					<div className='h-full flex shrink flex-col flex-nowrap py-2 overflow-y-auto  overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
 						{slides.map((slide, index) => (
 							<div
 								key={
@@ -534,167 +498,261 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						))}
 					</div>
 				</div>
+			</Panel>
 
-				<div className='hidden lg:block'>
-					<SlideLeftNavigator
-						currentSlideIndex={slideIndex}
-						slides={slides}
-						goToSlide={gotoPage}
+			<Panel>
+				{/* buttons and contents */}
+				{/* buttons: export and scripts and share slides */}
+				<div className='SlidesStep-6 flex flex-col justify-end items-center gap-2'>
+					<div className='flex flex-row items-center justify-center gap-1 sm:gap-4'>
+					<ExportToPdfButton slides={slides} exportSlidesRef={exportSlidesRef} />
+					<ShareToggleButton
+						setShare={updateIsShared}
+						share={isShared}
+						project_id={project?.id || ''}
 					/>
+					<PostDropDown
+						slides={slides}
+						post_type='slide'
+						setShare={updateIsShared}
+						description={project?.description || ''}
+						keywords={project?.keywords || []}
+					/>
+					</div>
+					{!isViewing && (
+						<div className='flex flex-row justify-end items-end gap-1 sm:gap-4'>
+							<div className='hidden sm:block'>
+								<ChangeTemplateOptions
+									currentTemplate={slides[slideIndex].template}
+									templateOptions={Object.keys(availableTemplates)}
+									onChangeTemplate={selectTemplate}
+								/>
+							</div>
+
+							<BigGrayButton
+								onClick={() => setIsShowingLogo(!isShowingLogo)}
+								isPaidUser={isPaidUser}
+								isPaidFeature={true}
+								bgColor='bg-Gray'
+							>
+								<span>
+									{isShowingLogo ? 'Remove Logo' : 'Show Logo'}
+									{!isPaidUser && ' 🔒'}
+								</span>
+							</BigGrayButton>
+						</div>
+					)}
 				</div>
 
-				<div className='flex flex-col items-end SlidesStep-3 SlidesStep-4 gap-2'>
-					<div className='flex flex-row items-center justify-center gap-4'>
-						{/* 4 buttons on smaller screen */}
-						<ButtonWithExplanation
-							button={<PresentButton openPresent={openPresent} />}
-							explanation='Present'
+				{/* shareable link */}
+				{isShared && showShareLink && (
+					<div className='w-[100] md:w-[40rem] flex-grow'>
+						<TextLabel>View only link:</TextLabel>
+						<div className='flex flex-row items-center gap-4'>
+							<ClickableLink link={`${host}/shared/${project?.id || ''}`} />
+							<button
+								className='text-gray-500 hover:text-gray-700'
+								onClick={() => setShowShareLink(false)}
+							>
+								<FaTimes />
+							</button>
+						</div>
+					</div>
+				)}
+
+				<div className='flex flex-row items-center justify-center'>
+
+
+					<div className='hidden lg:block'>
+						<SlideLeftNavigator
+							currentSlideIndex={slideIndex}
+							slides={slides}
+							goToSlide={gotoPage}
 						/>
-
-						{!isViewing && (
-							<ButtonWithExplanation
-								button={
-									<LayoutChanger
-										openModal={openModal}
-										showLayout={showLayout}
-										closeModal={closeModal}
-										currentSlideIndex={slideIndex}
-										// templateSamples={templateSamples}
-										slides={slides}
-										handleSlideEdit={handleSlideEdit}
-										availableLayouts={availableLayouts}
-									/>
-								}
-								explanation='Change Layout'
-							/>
-						)}
-
-						{!isViewing && slideIndex != 0 && (
-							<ButtonWithExplanation
-								button={
-									<AddSlideButton
-										addPage={handleAddPage}
-										currentSlideIndex={slideIndex}
-									/>
-								}
-								explanation='Add Page'
-							/>
-						)}
-
-						{!isViewing && slideIndex != 0 && (
-							<ButtonWithExplanation
-								button={
-									<DeleteSlideButton
-										deletePage={handleDeletePage}
-										currentSlideIndex={slideIndex}
-									/>
-								}
-								explanation='Delete Page'
-							/>
-						)}
 					</div>
 
-					{/* main container for viewing and editing */}
-					<SlideContainer
-						slide={slides[slideIndex]}
-						index={slideIndex}
-						isPresenting={present}
-						isViewing={isViewing}
-						scale={present ? presentScale : nonPresentScale}
-						templateDispatch={editableTemplateDispatch}
-						slideRef={slideRef}
-						containerRef={containerRef}
-						length={slides.length}
-						key={version}
-					/>
+					<div className='flex flex-col items-end SlidesStep-3 SlidesStep-4 gap-2'>
+						<div className='flex flex-row items-center justify-center gap-4'>
+							{/* 4 buttons on smaller screen */}
+							<ButtonWithExplanation
+								button={<PresentButton openPresent={openPresent} />}
+								explanation='Present'
+							/>
+
+							{!isViewing && (
+								<ButtonWithExplanation
+									button={
+										<LayoutChanger
+											openModal={openModal}
+											showLayout={showLayout}
+											closeModal={closeModal}
+											currentSlideIndex={slideIndex}
+											// templateSamples={templateSamples}
+											slides={slides}
+											handleSlideEdit={handleSlideEdit}
+											availableLayouts={availableLayouts}
+										/>
+									}
+									explanation='Change Layout'
+								/>
+							)}
+
+							{!isViewing && slideIndex != 0 && (
+								<ButtonWithExplanation
+									button={
+										<AddSlideButton
+											addPage={handleAddPage}
+											currentSlideIndex={slideIndex}
+										/>
+									}
+									explanation='Add Page'
+								/>
+							)}
+
+							{!isViewing && slideIndex != 0 && (
+								<ButtonWithExplanation
+									button={
+										<DeleteSlideButton
+											deletePage={handleDeletePage}
+											currentSlideIndex={slideIndex}
+										/>
+									}
+									explanation='Delete Page'
+								/>
+							)}
+						</div>
+
+						{/* main container for viewing and editing */}
+						<SlideContainer
+							slide={slides[slideIndex]}
+							index={slideIndex}
+							isPresenting={present}
+							isViewing={isViewing}
+							scale={present ? presentScale : nonPresentScale}
+							templateDispatch={editableTemplateDispatch}
+							slideRef={slideRef}
+							containerRef={containerRef}
+							length={slides.length}
+							key={version}
+						/>
+					</div>
+
+					<div className='hidden lg:block'>
+						<SlideRightNavigator
+							currentSlideIndex={slideIndex}
+							slides={slides}
+							goToSlide={gotoPage}
+						/>
+					</div>
+
+					{/* White modal for presentation mode */}
+					{present && (
+						<div
+							style={{
+								position: 'fixed',
+								top: 0,
+								left: 0,
+								width: '100%',
+								height: '100%',
+								backgroundColor: 'white',
+								zIndex: 40,
+							}}
+						></div>
+					)}
 				</div>
 
-				<div className='hidden lg:block'>
-					<SlideRightNavigator
-						currentSlideIndex={slideIndex}
+				<div className='py-[1rem] flex flex-row items-center'>
+					<div className='block lg:hidden'>
+						<SlideLeftNavigator
+							currentSlideIndex={slideIndex}
+							slides={slides}
+							goToSlide={gotoPage}
+						/>
+					</div>
+					<SlidePagesIndicator currentSlideIndex={slideIndex} slides={slides} />
+					<div className='block lg:hidden'>
+						<SlideRightNavigator
+							currentSlideIndex={slideIndex}
+							slides={slides}
+							goToSlide={gotoPage}
+						/>
+					</div>
+				</div>
+
+				{/* transcripotList */}
+				{showScript && (
+					<ScriptEditor
 						slides={slides}
-						goToSlide={gotoPage}
+						updateSlidePage={updateSlidePage}
+						currentSlideIndex={slideIndex}
 					/>
+				)}
+
+				{/* horizontal  */}
+				<div className='block xl:hidden max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
+					<div
+						className='w-full py-6 flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'
+						ref={thumbnailRef}
+					>
+						{slides.map((slide, index) => (
+							<div
+								key={
+									`previewContainer` + index.toString() + slides.length.toString()
+								} // force update when slide length changes
+								className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
+								onClick={() => gotoPage(index)}
+								ref={index === slideIndex ? currentSlideRef : null}
+							>
+								{/* {index + 1} */}
+								<SlideContainer
+									slide={slide}
+									index={index}
+									scale={0.12}
+									isViewing={true}
+									templateDispatch={uneditableTemplateDispatch}
+									highlightBorder={slideIndex === index}
+								/>
+							</div>
+						))}
+					</div>
 				</div>
+			</Panel>
 
-				{/* filler for alignment, leave space for ai agent */}
-				<div className='h-[540px] w-[144px] min-h-[540px] min-w-[144px] hidden xl:block mx-auto justify-center items-center'></div>
-
-				{isChatWindowOpen && (
+			{!isViewing && isChatWindowOpen ?
+				<Panel>
 					<AIAssistantChatWindow
 						onToggle={toggleChatWindow}
 						slides={slides}
 						currentSlideIndex={slideIndex}
 						updateSlidePage={updateSlidePage}
 					/>
-				)}
-
-				{/* White modal for presentation mode */}
-				{present && (
-					<div
-						style={{
-							position: 'fixed',
-							top: 0,
-							left: 0,
-							width: '100%',
-							height: '100%',
-							backgroundColor: 'white',
-							zIndex: 40,
-						}}
-					></div>
-				)}
-			</div>
-
-			<div className='py-[1rem] flex flex-row items-center'>
-				<div className='block lg:hidden'>
-					<SlideLeftNavigator
-						currentSlideIndex={slideIndex}
-						slides={slides}
-						goToSlide={gotoPage}
+				</Panel> :
+				<div className='hidden sm:block fixed bottom-10 right-10 cursor-pointer z-50'>
+					<ButtonWithExplanation
+						button={
+							<DrLambdaAIAssistantIcon
+								onClick={toggleChatWindow}
+							></DrLambdaAIAssistantIcon>
+						}
+						explanation='AI Assistant'
 					/>
 				</div>
-				<SlidePagesIndicator currentSlideIndex={slideIndex} slides={slides} />
-				<div className='block lg:hidden'>
-					<SlideRightNavigator
-						currentSlideIndex={slideIndex}
-						slides={slides}
-						goToSlide={gotoPage}
-					/>
-				</div>
-			</div>
+			}
 
-			{/* transcripotList */}
-			{showScript && (
-				<ScriptEditor
-					slides={slides}
-					updateSlidePage={updateSlidePage}
-					currentSlideIndex={slideIndex}
-				/>
-			)}
-
-			{/* horizontal  */}
-			<div className='block xl:hidden max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
-				<div
-					className='w-full py-6 flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'
-					ref={thumbnailRef}
-				>
+			{/* hidden div for export to pdf */}
+			<div className='absolute left-[-9999px] top-[-9999px] -z-1'>
+				<div ref={exportSlidesRef}>
+					{/* Render all of your slides here. This can be a map of your slides array */}
 					{slides.map((slide, index) => (
 						<div
-							key={
-								`previewContainer` + index.toString() + slides.length.toString()
-							} // force update when slide length changes
-							className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
-							onClick={() => gotoPage(index)}
-							ref={index === slideIndex ? currentSlideRef : null}
+							key={`exportToPdfContainer` + index.toString()}
+							style={{ pageBreakAfter: 'always' }}
 						>
-							{/* {index + 1} */}
 							<SlideContainer
 								slide={slide}
 								index={index}
-								scale={0.12}
-								isViewing={true}
 								templateDispatch={uneditableTemplateDispatch}
-								highlightBorder={slideIndex === index}
+								exportToPdfMode={true}
 							/>
 						</div>
 					))}
