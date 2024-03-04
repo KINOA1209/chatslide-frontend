@@ -47,11 +47,12 @@ import ImagesPosition from '@/models/ImagesPosition';
 import { Panel } from '../layout/Panel';
 import { useProject } from '@/hooks/use-project';
 import { GoEyeClosed } from 'react-icons/go';
+import ScriptWindow from './script/ScriptWindow';
+import ReactDOM from 'react-dom';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
 	exportSlidesRef?: React.RefObject<HTMLDivElement>;
-	isPresenting?: boolean;
 	initSlideIndex?: number;
 	toPdf?: boolean; // toPdf mode for backend
 	showScript?: boolean;
@@ -78,7 +79,6 @@ export const loadLayoutConfigElements = (
 const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	isViewing = false,
 	exportSlidesRef = useRef<HTMLDivElement>(null),
-	isPresenting = false,
 	initSlideIndex = 0,
 	toPdf = false,
 	showScript = false,
@@ -108,7 +108,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const { isPaidUser, token } = useUser();
 	const [showLayout, setShowLayout] = useState(false);
-	const [present, setPresent] = useState(isPresenting);
+	const { isPresenting, setIsPresenting } = useSlides();
 	const slideRef = useRef<HTMLDivElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [dimensions, setDimensions] = useState({
@@ -186,23 +186,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		toast.success(
 			'Use ESC to exit presentation mode, use arrow keys to navigate slides.',
 		);
-		setPresent(true);
+		setIsPresenting(true);
+		if (showScript)
+			openScriptPage();
 	};
-
-	useEffect(() => {
-		const handleKeyDown = (event: any) => {
-			if (event.key === 'Escape') {
-				setPresent(false); // Exit presentation mode
-			}
-		};
-
-		window.addEventListener('keydown', handleKeyDown);
-
-		// Cleanup: remove the event listener when the component is unmounted
-		return () => {
-			window.removeEventListener('keydown', handleKeyDown);
-		};
-	}, []); // Empty dependency array to ensure this effect runs only once (similar to componentDidMount)
 
 	useEffect(() => {
 		document.addEventListener('keydown', handleKeyDown);
@@ -212,12 +199,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	});
 
 	function handleKeyDown(event: KeyboardEvent) {
-		if (isViewing) {
+		if (isViewing || isPresenting) {
+			console.log('key pressed', event.key);
 			// todo: update iseditmode
 			if (event.key === 'ArrowRight' && slideIndex < slides.length - 1) {
 				gotoPage(slideIndex + 1);
 			} else if (event.key === 'ArrowLeft' && slideIndex > 0) {
 				gotoPage(slideIndex - 1);
+			} else if (event.key === 'Escape') {
+				setIsPresenting(false); // Exit presentation mode
 			}
 		}
 	}
@@ -348,6 +338,32 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		setIsEditMode(!isEditMode);
 	}
 
+	let scriptWindow: Window | null = null;
+
+	const openScriptPage = () => {
+		scriptWindow = window.open('', 'scriptPage', 'width=600,height=400');
+		if (!scriptWindow) return;
+
+		// Create a new document body
+		scriptWindow.document.body.innerHTML = `<div id="root"></div>`;
+
+		// Render your React component into the new window
+		ReactDOM.render(
+			<ScriptWindow />,
+			scriptWindow.document.getElementById('root'));
+	};
+
+	// close the scripts window, not working
+	// useEffect(() => {
+	// 	console.log('closing script window');
+	// 	console.log('isPresenting', isPresenting);
+	// 	if(!isPresenting) {
+	// 		console.log('really closing script window');
+	// 		scriptWindow?.close();
+	// 		scriptWindow = null;
+	// 	}
+	// }, [isPresenting]);
+
 	const updateImgUrlArray = (slideIndex: number) => {
 		const updateImgUrl = (urls: string[], ischart: boolean[]) => {
 			if (urls.length === 1 && urls[0] === '') {
@@ -418,9 +434,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			<SlideContainer
 				slide={slides[slideIndex]}
 				index={slideIndex}
-				isPresenting={present}
+				isPresenting={isPresenting}
 				isViewing={isViewing}
-				scale={present ? presentScale : nonPresentScale}
+				scale={isPresenting ? presentScale : nonPresentScale}
 				templateDispatch={editableTemplateDispatch}
 				slideRef={slideRef}
 				containerRef={containerRef}
@@ -428,14 +444,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				key={version}
 			/>
 		);
-	const handleTogglingLogo = () => {
-		if (!isPaidUser) {
-			setShowPaymentModal(true);
-			return;
-		} else {
-			ChangeIsShowingLogo();
-		}
-	};
 
 	if (!slides || slides.length === 0) {
 		return <></>;
@@ -580,9 +588,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							<SlideContainer
 								slide={slides[slideIndex]}
 								index={slideIndex}
-								isPresenting={present}
+								isPresenting={isPresenting}
 								isViewing={isViewing}
-								scale={present ? presentScale : nonPresentScale}
+								scale={isPresenting ? presentScale : nonPresentScale}
 								templateDispatch={editableTemplateDispatch}
 								slideRef={slideRef}
 								containerRef={containerRef}
@@ -600,7 +608,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						</div>
 
 						{/* White modal for presentation mode */}
-						{present && (
+						{isPresenting && (
 							<div
 								style={{
 									position: 'fixed',
@@ -683,7 +691,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						/>
 					</Panel> :
 					<>
-						{!isViewing &&
+						{!isViewing && !isPresenting &&
 							<div className='hidden sm:block fixed bottom-10 right-10 cursor-pointer z-50'>
 								<ButtonWithExplanation
 									button={
