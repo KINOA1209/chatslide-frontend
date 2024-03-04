@@ -39,6 +39,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 }) => {
 	const [resources, setResources] = useState<Resource[]>([]);
 	const { token } = useUser();
+	const [isUploading, setIsUploading] = useState(false);
 
 	const searchOnlineOptions: RadioButtonOption[] = [
 		{ value: 'none', text: 'Disabled', icon: <IoIosRemoveCircleOutline /> },
@@ -50,13 +51,10 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 	const onFileSelected = async (file: File | null) => {
 		if (file == null) return;
 		try {
-			ResourceService.uploadResource(file, token, 'summary').then(
-				(newResource) => {
-					setResources([newResource, ...resources]);
-					if (setSelectedResources && selectedResources)
-						setSelectedResources([newResource, ...selectedResources]);
-				},
-			);
+			const newResource = await ResourceService.uploadResource(file, token, 'summary');
+			setResources([newResource, ...resources]);
+			if (setSelectedResources && selectedResources)
+				setSelectedResources([newResource, ...selectedResources]);
 		} catch (error) {
 			console.error(error);
 			if (error instanceof Error) {
@@ -96,8 +94,12 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 		e.preventDefault();
 		setIsDragging(false);
 		if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+			setIsUploading(true);
+			console.log(e.dataTransfer.files[0]);
 			await onFileSelected(e.dataTransfer.files[0]);
 			e.dataTransfer.clearData();
+			setIsUploading(false);
+			console.log('dropped');
 		}
 	};
 
@@ -137,7 +139,9 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 			<div>
 				<Instruction>What additional files do you want to include?</Instruction>
 				<div
-					className={`w-full h-[150px] flex flex-col items-center justify-center border rounded-md border-2 border-gray-200 cursor-pointer ${isDragging ? 'bg-blue-100 border-blue-500' : ''}`}
+					className={`w-full h-[150px] flex flex-col items-center justify-center border rounded-md border-2 border-gray-200 cursor-pointer 
+						${isDragging ? 'bg-blue-100 border-blue-500' : ''}
+						${isUploading ? 'bg-gray-500 animate-pulse' : ''}`}
 					onDragEnter={handleDragEnter}
 					onDragOver={handleDragOver}
 					onDragLeave={handleDragLeave}
