@@ -1,29 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import AuthService from '../../services/AuthService';
 import {
 	LeftSlideNavIcon,
 	RightSlideNavIcon,
-	ShareSlidesIcon,
 } from '@/app/(feature)/workflow-review-slides/icons';
 import {
 	PresentationModeIcon,
-	ChangeLayoutIcon,
-	AddSlideIcon,
-	DeleteSlideIcon,
-	ScriptsIcon,
 } from '@/app/(feature)/icons';
 import { BigGrayButton, DropDown } from '../button/DrlambdaButton';
-import { FaShare, FaShareAlt } from 'react-icons/fa';
-import { InputBox } from '../ui/InputBox';
 import { TextLabel } from '../ui/GrayLabel';
-import { useProject } from '@/hooks/use-project';
-import ProjectService from '@/services/ProjectService';
 import { useUser } from '@/hooks/use-user';
-import { GoShare } from 'react-icons/go';
+import { GoPlus, GoShare, GoTrash } from 'react-icons/go';
+import { LuPaintbrush, LuPresentation, LuTrash2 } from 'react-icons/lu';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import Modal from '../ui/Modal';
 import ClickableLink from '../ui/ClickableLink';
 import PostPlatformConfigs from '@/components/button/PostPlatformConfig';
+import Project from '@/models/Project';
+import { TemplateSelector } from '@/app/(feature)/workflow-edit-design/page';
 
 type SaveButtonProps = {
 	saveSlides: () => void;
@@ -52,39 +45,43 @@ export const PresentButton: React.FC<PresentButtonProps> = ({
 	openPresent,
 }) => {
 	return (
-		<div className='col-span-1 hidden sm:block'>
-			<div className='w-fit h-fit'>
-				{/* <button
-          className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
-          onClick={openPresent}
-        >
-          Present
-        </button> */}
-				<div
-					className='w-6 h-6 rounded shadow flex justify-center items-center cursor-pointer'
+		<ButtonWithExplanation
+			button={
+				<button
 					onClick={openPresent}
 				>
-					<PresentationModeIcon />
-				</div>
-			</div>
-		</div>
+					<LuPresentation
+						style={{
+							strokeWidth: '2',
+							flex: '1',
+							width: '1.5rem',
+							height: '1.5rem',
+							fontWeight: 'bold',
+							color: '#2943E9',
+						}}
+					/>
+				</button>
+			}
+			explanation={'Present'}
+		></ButtonWithExplanation>
 	);
 };
 
 type ShareToggleButtonProps = {
 	share: boolean;
 	setShare: (share: boolean) => void;
-	project_id: string;
+	project: Project;
 	host: string;
 };
 
 export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
 	share,
 	setShare,
-	project_id,
+	project,
 	host = 'https://drlambda.ai',
 }) => {
 	const [showModal, setShowModal] = useState(false);
+	const project_id = project?.id || '';
 
 	const toggleShare = async () => {
 		setShare(true); // updates db as well
@@ -94,7 +91,6 @@ export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
 	const ShareModal: React.FC = () => {
 		const platforms = ['twitter', 'facebook', 'reddit', 'linkedin'];
 
-		const { project } = useProject();
 		const keywords = project?.keywords || [];
 		const description = project?.description || '';
 
@@ -155,30 +151,30 @@ export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
 		)
 	}
 
-return (
-	<div>
-		{showModal && <ShareModal />}
-		<ButtonWithExplanation
-			button={
-				<button
-					onClick={toggleShare}
-				>
-					<GoShare
-						style={{
-							strokeWidth: '1',
-							flex: '1',
-							width: '1.5rem',
-							height: '1.5rem',
-							fontWeight: 'bold',
-							color: '#2943E9',
-						}}
-					/>
-				</button>
-			}
-			explanation={'Share'}
-		></ButtonWithExplanation>
-	</div>
-);
+	return (
+		<div>
+			{showModal && <ShareModal />}
+			<ButtonWithExplanation
+				button={
+					<button
+						onClick={toggleShare}
+					>
+						<GoShare
+							style={{
+								strokeWidth: '1',
+								flex: '1',
+								width: '1.5rem',
+								height: '1.5rem',
+								fontWeight: 'bold',
+								color: '#2943E9',
+							}}
+						/>
+					</button>
+				}
+				explanation={'Share'}
+			></ButtonWithExplanation>
+		</div>
+	);
 };
 
 export const SlidePagesIndicator: React.FC<{
@@ -251,16 +247,25 @@ export const AddSlideButton: React.FC<{
 	addPage: () => void;
 }> = ({ currentSlideIndex, addPage }) => {
 	return (
-		<div className='col-span-1 hidden sm:block'>
-			<div className='w-fit h-fit'>
-				<div
-					className='w-6 h-6 shadow rounded flex justify-center items-center cursor-pointer'
+		<ButtonWithExplanation
+			button={
+				<button
 					onClick={addPage}
 				>
-					<AddSlideIcon />
-				</div>
-			</div>
-		</div>
+					<GoPlus
+						style={{
+							strokeWidth: '1',
+							flex: '1',
+							width: '1.5rem',
+							height: '1.5rem',
+							fontWeight: 'bold',
+							color: '#2943E9',
+						}}
+					/>
+				</button>
+			}
+			explanation={'Add Page'}
+		></ButtonWithExplanation>
 	);
 };
 
@@ -269,16 +274,25 @@ export const DeleteSlideButton: React.FC<{
 	deletePage: () => void;
 }> = ({ currentSlideIndex, deletePage }) => {
 	return (
-		<div className='col-span-1 hidden sm:block'>
-			<div className='w-fit h-fit'>
-				<div
-					className='w-6 h-6 shadow rounded flex justify-center items-center cursor-pointer'
+		<ButtonWithExplanation
+			button={
+				<button
 					onClick={deletePage}
 				>
-					<DeleteSlideIcon />
-				</div>
-			</div>
-		</div>
+					<LuTrash2
+						style={{
+							strokeWidth: '2',
+							flex: '1',
+							width: '1.5rem',
+							height: '1.5rem',
+							fontWeight: 'bold',
+							color: '#2943E9',
+						}}
+					/>
+				</button>
+			}
+			explanation={'Delete Page'}
+		></ButtonWithExplanation>
 	);
 };
 
@@ -331,40 +345,49 @@ export const ChangeTemplateOptions: React.FC<{
 }> = ({ currentTemplate, templateOptions, onChangeTemplate }) => {
 	const [selectedTemplate, setSelectedTemplate] =
 		useState<string>(currentTemplate);
+	const [showModal, setShowModal] = useState(false);
 
-	// useEffect(
-	// 	() => console.log('templateOptions are:', templateOptions),
-	// 	[selectedTemplate],
-	// );
+	const SelectTemplateModal: React.FC = () => {
+		return (
+			<Modal
+				showModal={showModal}
+				setShowModal={setShowModal}
+				title='Change Template'
+				description='Select a template for your slides'
+				onConfirm={() => {onChangeTemplate(selectedTemplate); setShowModal(false)}}
+			>
+				<div className='max-w-[40rem]'>
+				<TemplateSelector
+					template={selectedTemplate}
+					setTemplate={setSelectedTemplate}
+				/>
+				</div>
+			</Modal>
+		)
+	}
 
 	return (
-		<div className='flex flex-col'>
-			<TextLabel>Select Template:</TextLabel>
-
-			<DropDown
-				width='20rem'
-				onChange={(e) => {
-					setSelectedTemplate(e.target.value);
-					onChangeTemplate(e.target.value);
-				}}
-				defaultValue={currentTemplate}
-			>
-				<option value='Default'>Default</option>
-				<option value='Fun_Education_001'>Education</option>
-				<option value='Business_002'>Business</option>
-				<option value='Clean_Lifestyle_003'>Clean Lifestyle</option>
-				<option value='Fun_Education_004'>Fun</option>
-				<option value='Stanford'>Stanford University</option>
-				<option value='Berkeley'>UC Berkeley</option>
-				<option value='Harvard'>Harvard University</option>
-				<option value='MIT'>Massachusetts Institute of Technology</option>
-				<option value='Princeton'>Princeton University</option>
-				<option value='Caltech'>California Institute of Technology</option>
-				<option value='Columbia'>Columbia University</option>
-				<option value='JHU'>Johns Hopkins University</option>
-				<option value='Yale'>Yale University</option>
-				<option value='UPenn'>University of Pennsylvania</option>
-			</DropDown>
-		</div>
+		<>
+			{showModal && <SelectTemplateModal />}
+			<ButtonWithExplanation
+				button={
+					<button
+						onClick={() => { setShowModal(true) }}
+					>
+						<LuPaintbrush
+							style={{
+								strokeWidth: '2',
+								flex: '1',
+								width: '1.5rem',
+								height: '1.5rem',
+								fontWeight: 'bold',
+								color: '#2943E9',
+							}}
+						/>
+					</button>
+				}
+				explanation={'Change Template'}
+			></ButtonWithExplanation>
+		</>
 	);
 };

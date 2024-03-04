@@ -1,12 +1,10 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import AuthService from '../../services/AuthService';
 import Slide from '../../models/Slide';
 import PaywallModal from '../paywallModal';
 import { BigGrayButton, DropDown } from '../button/DrlambdaButton';
 import {
-	FaDownload,
 	FaRegFilePdf,
 } from 'react-icons/fa';
 import { generatePdf } from '../utils/DownloadImage';
@@ -17,6 +15,7 @@ import { useProject } from '@/hooks/use-project';
 import { sleep } from '../utils/sleep';
 import Modal from '../ui/Modal';
 import { GoDownload } from 'react-icons/go';
+import ButtonWithExplanation from '../button/ButtonWithExplanation';
 
 interface ExportToPdfProps {
 	slides: Slide[];
@@ -96,73 +95,78 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 	};
 
 	return (
-		<div className='flex flex-wrap flex-grow-0'>
-			<div className='flex flex-row gap-2'>
-				{showPaymentModal && (
-					<PaywallModal
-						setShowModal={setShowPaymentModal}
-						message='Upgrade for more ⭐️credits.'
-						showReferralLink={true}
-					/>
-				)}
+		<>
+			{showPaymentModal && (
+				<PaywallModal
+					setShowModal={setShowPaymentModal}
+					message='Upgrade for more ⭐️credits.'
+					showReferralLink={true}
+				/>
+			)}
 
-				<div className='h-[36px] flex flex-col items-center gap-2'>
-					<GoDownload
-						style={{
-							strokeWidth: '1',
-							flex: '1',
-							width: '1.5rem',
-							height: '1.5rem',
-							fontWeight: 'bold',
-							color: '#2943E9',
-						}}
-						className={downloading ? 'animate-spin' : ''}
+			<ButtonWithExplanation
+				button={
+					<button
 						onClick={() => setShowModal(!showModal)}
-					/>
+					>
+						<GoDownload
+							style={{
+								strokeWidth: '1',
+								flex: '1',
+								width: '1.5rem',
+								height: '1.5rem',
+								fontWeight: 'bold',
+								color: '#2943E9',
+							}}
+							className={downloading ? 'animate-spin' : ''}
 
-					{showModal && (
-						<Modal
-							showModal={showModal}
-							setShowModal={setShowModal}
-							title='Export to PDF / PPTX'
-							description='Choose the format and quality of the export.'
-						>
-							<BigGrayButton
-								onClick={() => handleExport('pdf', true)}
-								isSubmitting={downloading}
-								isPaidUser={isPaidUser}
-								bgColor='bg-Gray'
-							>
-								<FaRegFilePdf />
-								<span>PDF (medium)</span>
-							</BigGrayButton>
+						/>
+					</button>
+				}
+				explanation={'Export'}
+			></ButtonWithExplanation>
 
-							<BigGrayButton
-								onClick={() => handleExport('pdf', false)}
-								isSubmitting={downloading}
-								isPaidUser={isPaidUser}
-								isPaidFeature={true}
-								bgColor='bg-Gray'
-							>
-								<FaRegFilePdf />
-								<span>PDF (high) {!isPaidUser && '🔒'}</span>
-							</BigGrayButton>
+			{showModal && (
+				<Modal
+					showModal={showModal}
+					setShowModal={setShowModal}
+					title='Export to PDF / PPTX'
+					description='Choose the format and quality of the export.'
+				>
+					<BigGrayButton
+						onClick={() => handleExport('pdf', true)}
+						isSubmitting={downloading}
+						isPaidUser={isPaidUser}
+						bgColor='bg-Gray'
+					>
+						<FaRegFilePdf />
+						<span>PDF (medium)</span>
+					</BigGrayButton>
 
-							<BigGrayButton
-								onClick={() => handleExport('pptx', false)}
-								isSubmitting={downloading}
-								isPaidUser={isPaidUser}
-								isPaidFeature={true}
-								bgColor='bg-Gray'
-							>
-								<RiSlideshow2Fill />
-								<span>PPTX {!isPaidUser && '🔒'}</span>
-							</BigGrayButton>
-						</Modal>
-					)}
-				</div>
-			</div>
-		</div>
+					<BigGrayButton
+						onClick={() => handleExport('pdf', false)}
+						isSubmitting={downloading}
+						isPaidUser={isPaidUser}
+						isPaidFeature={true}
+						bgColor='bg-Gray'
+					>
+						<FaRegFilePdf />
+						<span>PDF (high) {!isPaidUser && '🔒'}</span>
+					</BigGrayButton>
+
+					<BigGrayButton
+						onClick={() => handleExport('pptx', false)}
+						isSubmitting={downloading}
+						isPaidUser={isPaidUser}
+						isPaidFeature={true}
+						bgColor='bg-Gray'
+					>
+						<RiSlideshow2Fill />
+						<span>PPTX {!isPaidUser && '🔒'}</span>
+					</BigGrayButton>
+				</Modal>
+			)}
+		</>
 	);
 };
 

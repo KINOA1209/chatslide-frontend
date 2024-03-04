@@ -13,6 +13,7 @@ type ActionsToolBarProps = {
 	// Other props...
 	startTour: () => void;
 	onlyShowTutorial: boolean;
+	children?: React.ReactNode;
 };
 
 const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
@@ -22,6 +23,7 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 	canRedo,
 	startTour,
 	onlyShowTutorial,
+	children
 }) => {
 	const [showTutorialPrompt, setShowTutorialPrompt] = useState(false);
 	const handleStartTour = () => {
@@ -152,6 +154,8 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 				}
 				explanation={'Redo'}
 			></ButtonWithExplanation>
+
+			{ children }
 
 			{showTutorialPrompt && (
 				<StartATourGuidePromptWindow
