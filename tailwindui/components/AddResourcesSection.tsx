@@ -17,6 +17,7 @@ import { FaInternetExplorer, FaWikipediaW } from 'react-icons/fa';
 import { IoIosRemoveCircle, IoIosRemoveCircleOutline } from 'react-icons/io';
 import { Instruction, Explanation } from './ui/Text';
 import Card from './ui/Card';
+import { determineSupportedFormats } from './file/FileUploadButton';
 
 interface AddResourcesProps {
 	searchOnlineScope: string;
@@ -39,6 +40,8 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 }) => {
 	const [resources, setResources] = useState<Resource[]>([]);
 	const { token } = useUser();
+	const [isUploading, setIsUploading] = useState(false);
+	const selectedResourcesRef = useRef<HTMLDivElement>(null);
 
 	const searchOnlineOptions: RadioButtonOption[] = [
 		{ value: 'none', text: 'Disabled', icon: <IoIosRemoveCircleOutline /> },
@@ -50,13 +53,11 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 	const onFileSelected = async (file: File | null) => {
 		if (file == null) return;
 		try {
-			ResourceService.uploadResource(file, token, 'summary').then(
-				(newResource) => {
-					setResources([newResource, ...resources]);
-					if (setSelectedResources && selectedResources)
-						setSelectedResources([newResource, ...selectedResources]);
-				},
-			);
+			const newResource = await ResourceService.uploadResource(file, token, 'summary');
+			setResources([newResource, ...resources]);
+			if (setSelectedResources && selectedResources) {
+				setSelectedResources([newResource, ...selectedResources]);
+			}
 		} catch (error) {
 			console.error(error);
 			if (error instanceof Error) {
@@ -95,14 +96,46 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 	const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
 		e.preventDefault();
 		setIsDragging(false);
+		const extensions = determineSupportedFormats('summary');	
+
 		if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-			await onFileSelected(e.dataTransfer.files[0]);
+			const file = e.dataTransfer.files[0];
+			const ext = file?.name.split('.').pop()?.toLowerCase();
+			if (ext && !extensions.includes(ext)) {
+				toast.error(ext.toUpperCase() + ' file is not supported!', {
+					position: 'top-center',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'light',
+					containerId: 'fileManagement',
+				});
+				return;
+			}
+
+			setIsUploading(true);
+			await onFileSelected(file);
 			e.dataTransfer.clearData();
+			setIsUploading(false);
 		}
 	};
 
+	const scrollToSelectedResources = () => {
+		if (selectedResourcesRef.current) {
+			selectedResourcesRef.current.scrollIntoView({ behavior: 'smooth' });
+		}
+	}
+
+	useEffect(() => {
+		scrollToSelectedResources();
+	}, [selectedResources]);
+
 	return (
 		<Card>
+			<ToastContainer />
 			<div>
 				{isRequired ? (
 					<div className='title2'>
@@ -137,7 +170,9 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 			<div>
 				<Instruction>What additional files do you want to include?</Instruction>
 				<div
-					className={`w-full h-[150px] flex flex-col items-center justify-center border rounded-md border-2 border-gray-200 cursor-pointer ${isDragging ? 'bg-blue-100 border-blue-500' : ''}`}
+					className={`w-full h-[150px] flex flex-col items-center justify-center border rounded-md border-2 border-gray-200 cursor-pointer 
+						${isDragging ? 'bg-blue-100 border-blue-500' : ''}
+						${isUploading ? 'bg-gray-500 animate-pulse' : ''}`}
 					onDragEnter={handleDragEnter}
 					onDragOver={handleDragOver}
 					onDragLeave={handleDragLeave}
@@ -155,7 +190,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 								<span className='text-blue-600'>Browse File</span>
 							</Instruction>
 							<Explanation>
-								<div className='text-center'>Supports PDF, TXT, DOCX, PPTX</div>
+								<div className='text-center'>Supports PDF, TXT, DOC, DOCX, PPT, PPTX</div>
 							</Explanation>
 						</div>
 					</div>
@@ -174,7 +209,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 			</div>
 
 			{selectedResources.length > 0 && (
-				<div>
+				<div ref={selectedResourcesRef}>
 					<Instruction>Your selected sources:</Instruction>
 					<SelectedResourcesList
 						selectedResources={selectedResources}

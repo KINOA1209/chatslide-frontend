@@ -66,7 +66,7 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 					</button>
 				}
 				explanation={'User tutorial'}
-			></ButtonWithExplanation>
+			/>
 
 			{showTutorialPrompt && (
 				<StartATourGuidePromptWindow
@@ -101,7 +101,7 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 					</button>
 				}
 				explanation={'User tutorial'}
-			></ButtonWithExplanation>
+			/>
 
 			{!isViewing && <>
 				<div className='h-8 w-0.5 bg-gray-200'></div>
@@ -130,14 +130,14 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 						</button>
 					}
 					explanation={'Undo'}
-				></ButtonWithExplanation>
+				/>
 
 				<ButtonWithExplanation
 					button={
 						<button
 							onClick={redo}
 							style={{
-								color: canUndo ? '#2943E9' : '#C6C6C6',
+								color: canRedo ? '#2943E9' : '#C6C6C6',
 								display: 'flex',
 								justifyContent: 'center',
 								alignItems: 'center',
@@ -156,7 +156,8 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 						</button>
 					}
 					explanation={'Redo'}
-				></ButtonWithExplanation></>}
+				/>
+			</>}
 
 			{children}
 

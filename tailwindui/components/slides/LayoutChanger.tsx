@@ -79,8 +79,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 						/>
 					</button>
 				}
-			>
-			</ButtonWithExplanation>
+			/>
 
 			<Transition
 				className='h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'

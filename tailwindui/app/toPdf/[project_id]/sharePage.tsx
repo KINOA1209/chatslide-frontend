@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import ProjectService from '@/services/ProjectService';
 import Project from '@/models/Project';
 import { useSlides } from '@/hooks/use-slides';
+import { Loading } from '@/components/ui/Loading';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -18,7 +19,7 @@ interface SharePageProps {
 
 const SharePage: React.FC<SharePageProps> = ({ project_id, page = 1 }) => {
 	const [loading, setLoading] = useState(true);
-	const { initSlides } = useSlides();
+	const { initSlides, setIsPresenting } = useSlides();
 
 	useEffect(() => {
 		const token = new URLSearchParams(window.location.search).get(
@@ -29,15 +30,18 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, page = 1 }) => {
 			const slides = ProjectService.parseSlides(project.presentation_slides);
 			initSlides(slides);
 			setLoading(false);
+			setIsPresenting(true);
 		};
 		init();
 	}, []);
+
+	if (loading)
+		return <Loading />;
 
 	return (
 		<main className='grow'>
 			<SlidesHTML
 				isViewing={true}
-				isPresenting={true}
 				initSlideIndex={page as number}
 				toPdf={true}
 			/>

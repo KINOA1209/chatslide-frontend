@@ -43,6 +43,12 @@ type ChatsProps = {
 export const Chats: React.FC<ChatsProps> = ({ chatHistory }) => {
 	const lastMessageRef = useRef<HTMLDivElement>(null); // Ensure you have a ref for the last message
 
+	useEffect(() => {
+		if (lastMessageRef.current) {
+			lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
+		}
+	}, [chatHistory]); 
+
 	return (
 		<>
 			{chatHistory.map((chat, index) => (

@@ -16,7 +16,7 @@ import Modal from '../ui/Modal';
 import ClickableLink from '../ui/ClickableLink';
 import PostPlatformConfigs from '@/components/button/PostPlatformConfig';
 import Project from '@/models/Project';
-import { TemplateSelector } from '@/app/(feature)/workflow-edit-design/page';
+import TemplateSelector from '@/app/(feature)/workflow-edit-design/TemplateSelector';
 import { FiPlay } from 'react-icons/fi';
 
 type SaveButtonProps = {
@@ -64,7 +64,7 @@ export const PresentButton: React.FC<PresentButtonProps> = ({
 				</button>
 			}
 			explanation={'Present'}
-		></ButtonWithExplanation>
+		/>
 	);
 };
 
@@ -173,7 +173,7 @@ export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
 					</button>
 				}
 				explanation={'Share'}
-			></ButtonWithExplanation>
+			/>
 		</div>
 	);
 };
@@ -266,7 +266,7 @@ export const AddSlideButton: React.FC<{
 				</button>
 			}
 			explanation={'Add Page'}
-		></ButtonWithExplanation>
+		/>
 	);
 };
 
@@ -293,7 +293,7 @@ export const DeleteSlideButton: React.FC<{
 				</button>
 			}
 			explanation={'Delete Page'}
-		></ButtonWithExplanation>
+		/>
 	);
 };
 
@@ -388,7 +388,7 @@ export const ChangeTemplateOptions: React.FC<{
 					</button>
 				}
 				explanation={'Change Template'}
-			></ButtonWithExplanation>
+			/>
 		</>
 	);
 };

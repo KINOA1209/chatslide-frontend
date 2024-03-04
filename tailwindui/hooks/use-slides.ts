@@ -158,6 +158,7 @@ export const useSlides = () => {
 		if (slidesHistoryIndex > 0) {
 			setSlides(slidesHistory[slidesHistoryIndex - 1]);
 			setSlidesHistoryIndex(slidesHistoryIndex - 1);
+			updateVersion();
 		}
 		console.log('Performing undo...');
 		// document.execCommand('undo', false, undefined); // Change null to undefined
@@ -174,6 +175,7 @@ export const useSlides = () => {
 		if (slidesHistoryIndex < slidesHistory.length - 1) {
 			setSlides(slidesHistory[slidesHistoryIndex + 1]);
 			setSlidesHistoryIndex(slidesHistoryIndex + 1);
+			updateVersion();
 		}
 		// Add your redo logic here
 		console.log('Performing redo...');
