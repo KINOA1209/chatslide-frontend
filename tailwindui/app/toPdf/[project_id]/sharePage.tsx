@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import ProjectService from '@/services/ProjectService';
 import Project from '@/models/Project';
 import { useSlides } from '@/hooks/use-slides';
+import { Loading } from '@/components/ui/Loading';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -33,6 +34,9 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, page = 1 }) => {
 		};
 		init();
 	}, []);
+
+	if (loading)
+		return <Loading />;
 
 	return (
 		<main className='grow'>
