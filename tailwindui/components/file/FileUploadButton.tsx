@@ -3,25 +3,16 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DrlambdaButton, {
 	BigBlueButton,
-	DrLambdaBackButton,
 } from '../button/DrlambdaButton';
 
-// Allowed extensions defined in drlambda/app/user_file_manager.py
-// ALLOWED_DOC_EXTENSIONS = {"txt", "pdf"}
-// ALLOWED_MEDIA_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
-
-const supportedFormats = ['pdf', 'txt', 'docx', 'png', 'jpg', 'jpeg', 'pptx']; // For prompt display
-const supportedExtensions = [
-	'pdf',
-	'txt',
-	'doc',
-	'docx',
-	'png',
-	'jpg',
-	'jpeg',
-	'ppt',
-	'pptx',
-]; // For checking logic
+const determineSupportedFormats = (pageInvoked: string) => {
+	if (pageInvoked === 'theme') {
+		return ['png', 'jpg', 'jpeg'];
+	} else if (pageInvoked === 'summary') {
+		return ['pdf', 'txt', 'doc', 'docx', 'ppt', 'pptx'];
+	}
+	return ['pdf', 'txt', 'docx', 'png', 'jpg', 'jpeg', 'pptx'];
+};
 
 const sizeLimit = 10 * 1024 * 1024; // 10mb
 
@@ -38,7 +29,7 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 	//formats = supportedFormats,
 	//extensions = supportedExtensions,
 	isSubmitting = false,
-	pageInvoked,
+	pageInvoked = 'summary',
 }) => {
 	const [fileName, setFileName] = useState<string | null>(null);
 	const inputFileRef = useRef<HTMLInputElement>(null);
@@ -47,26 +38,8 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 		console.log('isSubmitting', isSubmitting);
 	}, [isSubmitting]);
 
-	const determineSupportedFormats = () => {
-		if (pageInvoked === 'theme') {
-			return ['png', 'jpg', 'jpeg'];
-		} else if (pageInvoked === 'summary') {
-			return ['pdf', 'txt', 'doc', 'docx', 'ppt', 'pptx'];
-		}
-		return supportedFormats;
-	};
-
-	const determineSupportedExtensions = () => {
-		if (pageInvoked === 'theme') {
-			return ['png', 'jpg', 'jpeg'];
-		} else if (pageInvoked === 'summary') {
-			return ['pdf', 'txt', 'doc', 'docx', 'ppt', 'pptx'];
-		}
-		return supportedExtensions;
-	};
-
-	const formats = determineSupportedFormats();
-	const extensions = determineSupportedExtensions();
+	const formats = determineSupportedFormats(pageInvoked);
+	const extensions = determineSupportedFormats(pageInvoked);
 
 	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files ? e.target.files[0] : null;
@@ -149,3 +122,5 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 		</div>
 	);
 };
+
+export { determineSupportedFormats };

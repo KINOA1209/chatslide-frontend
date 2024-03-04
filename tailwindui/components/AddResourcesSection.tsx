@@ -17,6 +17,7 @@ import { FaInternetExplorer, FaWikipediaW } from 'react-icons/fa';
 import { IoIosRemoveCircle, IoIosRemoveCircleOutline } from 'react-icons/io';
 import { Instruction, Explanation } from './ui/Text';
 import Card from './ui/Card';
+import { determineSupportedFormats } from './file/FileUploadButton';
 
 interface AddResourcesProps {
 	searchOnlineScope: string;
@@ -54,7 +55,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 		try {
 			const newResource = await ResourceService.uploadResource(file, token, 'summary');
 			setResources([newResource, ...resources]);
-			if (setSelectedResources && selectedResources){
+			if (setSelectedResources && selectedResources) {
 				setSelectedResources([newResource, ...selectedResources]);
 			}
 		} catch (error) {
@@ -95,13 +96,30 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 	const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
 		e.preventDefault();
 		setIsDragging(false);
+		const extensions = determineSupportedFormats('summary');	
+
 		if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+			const file = e.dataTransfer.files[0];
+			const ext = file?.name.split('.').pop()?.toLowerCase();
+			if (ext && !extensions.includes(ext)) {
+				toast.error(ext.toUpperCase() + ' file is not supported!', {
+					position: 'top-center',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'light',
+					containerId: 'fileManagement',
+				});
+				return;
+			}
+
 			setIsUploading(true);
-			console.log(e.dataTransfer.files[0]);
-			await onFileSelected(e.dataTransfer.files[0]);
+			await onFileSelected(file);
 			e.dataTransfer.clearData();
 			setIsUploading(false);
-			console.log('dropped');
 		}
 	};
 
@@ -117,6 +135,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 
 	return (
 		<Card>
+			<ToastContainer />
 			<div>
 				{isRequired ? (
 					<div className='title2'>
