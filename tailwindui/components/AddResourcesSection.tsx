@@ -155,7 +155,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 								<span className='text-blue-600'>Browse File</span>
 							</Instruction>
 							<Explanation>
-								<div className='text-center'>Supports PDF, TXT, DOCX, PPTX</div>
+								<div className='text-center'>Supports PDF, TXT, DOC, DOCX, PPT, PPTX</div>
 							</Explanation>
 						</div>
 					</div>

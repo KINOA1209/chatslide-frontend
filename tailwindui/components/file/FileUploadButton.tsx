@@ -14,10 +14,12 @@ const supportedFormats = ['pdf', 'txt', 'docx', 'png', 'jpg', 'jpeg', 'pptx']; /
 const supportedExtensions = [
 	'pdf',
 	'txt',
+	'doc',
 	'docx',
 	'png',
 	'jpg',
 	'jpeg',
+	'ppt',
 	'pptx',
 ]; // For checking logic
 
@@ -49,7 +51,7 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 		if (pageInvoked === 'theme') {
 			return ['png', 'jpg', 'jpeg'];
 		} else if (pageInvoked === 'summary') {
-			return ['pdf', 'txt', 'docx', 'pptx'];
+			return ['pdf', 'txt', 'doc', 'docx', 'ppt', 'pptx'];
 		}
 		return supportedFormats;
 	};
@@ -58,7 +60,7 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 		if (pageInvoked === 'theme') {
 			return ['png', 'jpg', 'jpeg'];
 		} else if (pageInvoked === 'summary') {
-			return ['pdf', 'txt', 'docx', 'pptx'];
+			return ['pdf', 'txt', 'doc', 'docx', 'ppt', 'pptx'];
 		}
 		return supportedExtensions;
 	};
