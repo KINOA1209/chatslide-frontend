@@ -60,9 +60,10 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 				boxShadow: isPresenting
 					? 'none'
 					: !highlightBorder
-						? '0 0 10px rgba(0, 0, 0, 0.5)'
-						: '0 0 10px rgba(255, 255, 0, 1)',
+						? '0 0 5px rgba(0, 0, 0, 0.5)'
+						: '0 0 5px rgba(255, 255, 0, 1)',
 				borderRadius: isPresenting ? '0' : '5px',
+				margin: isPresenting ? '0' : '5px',
 				width: isPresenting ? '100vw' : `${960 * scale}px`,
 				height: isPresenting ? '100vh' : `${540 * scale}px`,
 			}}

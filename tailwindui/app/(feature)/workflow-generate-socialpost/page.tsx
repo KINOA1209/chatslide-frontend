@@ -4,18 +4,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import '@/app/css/workflow-edit-topic-css/topic_style.css';
 import 'react-toastify/dist/ReactToastify.css';
-import PaywallModal from '@/components/forms/paywallModal';
-import FeedbackButton from '@/components/ui/feedback';
-import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
+import PaywallModal from '@/components/paywallModal';
+import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
 import { QuestionExplainIcon } from '@/app/(feature)/icons';
-import { FaFilePdf, FaYoutube } from 'react-icons/fa';
+import { FaFilePdf, FaRegFilePdf, FaYoutube } from 'react-icons/fa';
 import YoutubeService from '@/services/YoutubeService';
 import { SmallBlueButton } from '@/components/button/DrlambdaButton';
 import WebService from '@/services/WebpageService';
 import Resource from '@/models/Resource';
 import { toast, ToastContainer } from 'react-toastify';
-import FileUploadModal from '@/components/forms/FileUploadModal';
-import SelectedResourcesList from '@/components/SelectedResources';
+import FileUploadModal from '@/components/file/FileUploadModal';
+import SelectedResourcesList from '@/components/file/SelectedResources';
 import { useUser } from '@/hooks/use-user';
 import { GPTToggleWithExplanation } from '@/components/button/WorkflowGPTToggle';
 import { IoIosLink } from 'react-icons/io';
@@ -649,7 +648,7 @@ export default function Topic_SocialPost() {
 
 							<div className='drop_file bg-gray-100 border border-2 border-gray-200'>
 								<div className='flex items-center w-full'>
-									<FaFilePdf />
+									<FaRegFilePdf />
 									<span className='text-sm md:text-l'>Drop files here or </span>
 									<SmallBlueButton
 										onClick={(e) => {
@@ -672,7 +671,6 @@ export default function Topic_SocialPost() {
 					</div>
 				</div>
 			</form>
-			<FeedbackButton />
 		</section>
 	);
 }

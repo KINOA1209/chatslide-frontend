@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
-import PaywallModal from '../forms/paywallModal';
+import PaywallModal from '../paywallModal';
 import SocialPostContainer from '@/components/socialPost/socialPostContainer';
 import { templateDispatch as defaultTemplateDispatch } from '@/components/socialPost/socialPostTemplateDispatch';
 import { templateDispatch as defaultTemplateDispatch2 } from '@/components/socialPost//socialPostTemplate2Dispatch';

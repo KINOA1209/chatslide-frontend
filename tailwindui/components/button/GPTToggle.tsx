@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Toggle from './Toggle';
-import PaywallModal from '@/components/forms/paywallModal';
+import PaywallModal from '@/components/paywallModal';
 import { useUser } from '@/hooks/use-user';
 
 interface GPTToggleProps {

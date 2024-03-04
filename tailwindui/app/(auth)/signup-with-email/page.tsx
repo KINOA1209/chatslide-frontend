@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import SignupForm from '@/components/signup-form';
-import CustomerServiceInfo from '@/components/customerService';
+import SignupForm from '@/components/signup/signup-form';
+import CustomerServiceInfo from '@/components/signup/customerService';
 import { generateMetadata } from '@/app/layout';
 
 const title = 'Sign Up with Email | DrLambda';

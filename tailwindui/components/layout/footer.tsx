@@ -6,10 +6,10 @@ import {
 	FaTwitter,
 	FaYoutube,
 } from 'react-icons/fa';
-import { BlackLogo, ColorLogo } from './logo';
+import { BlackLogo, ColorLogo } from '../ui/logo';
 
 const socialMediaBlock = (
-	<ul className='flex mb-4 md:order-1 md:ml-4 md:mb-0 justify-center'>
+	<ul className='flex md:order-1 md:ml-4 justify-center items-center'>
 		{/* Instagram */}
 		<li>
 			<a
@@ -201,12 +201,12 @@ export function WorkflowFooter() {
 		<footer>
 			<div className='w-full border-t border-gray-200 bg-[#F4F4F4]'>
 				{/* Bottom area */}
-				<div className='max-w-6xl mx-auto px-4 sm:px-6 md:grid md:grid-cols-2 py-4 md:py-8'>
+				<div className='max-w-6xl mx-auto px-4 sm:px-6 md:grid md:grid-cols-2 py-4 md:py-2'>
 					{/* Social as */}
 					{socialMediaBlock}
 
 					{/* Copyrights note */}
-					<div className='flex flex-col justify-center md:justify-start text-sm text-gray-600 mb-2 md:mb-0'>
+					<div className='flex flex-col justify-center md:justify-start text-sm text-gray-600 mb-0'>
 						<span>&copy; drlambda.ai. All rights reserved.</span>
 						<span>
 							Some images designed by{' '}

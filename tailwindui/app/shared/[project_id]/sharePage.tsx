@@ -2,10 +2,10 @@
 
 import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import Footer, { WorkflowFooter } from '@/components/ui/footer';
+import Footer, { WorkflowFooter } from '@/components/layout/footer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Header from '@/components/ui/header';
+import Header from '@/components/layout/header';
 import dynamic from 'next/dynamic';
 import ProjectService from '@/services/ProjectService';
 import Slide from '@/models/Slide';
@@ -133,9 +133,11 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 	}, []);
 
 	return (
-		<div className='grow'>
-			<Header loginRequired={false} isLanding={false} />
-			<main className='grow'>
+		<div className='flex flex-col h-screen w-screen'>
+			<div className='flex'>
+				<Header loginRequired={false} isLanding={false} />
+			</div>
+			<main className='w-full flex grow flex-col overflow-y-scroll'>
 				<ToastContainer />
 				{loading ? (
 					<Loading />
@@ -148,9 +150,9 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 						</div>
 					</Blank>
 				) : (
-					<div className='flex flex-col items-center justify-center min-h-screen gap-8'>
+					<div className='flex flex-col h-full items-center justify-center gap-4'>
 						{showDescription && project && project.description && (
-							<div className='hidden sm:flex sm:w-2/3 h-[10rem]text-gray-700 text-left m-2 gap-4'>
+							<div className='hidden sm:flex sm:w-2/3 h-[10rem] text-gray-700 text-left m-2 gap-4'>
 								<div className='border border-gray-200 rounded-xl overflow-y-scroll p-2'>
 									<h1 className='text-2xl font-bold'>{project.topic}</h1>
 									<h2 className='text-lg font-semibold'>
@@ -167,7 +169,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 							</div>
 						)}
 						{projectType === 'presentation' && (
-							<div>
+							<div className='w-full flex grow overflow-hidden'>
 								<SlidesHTML isViewing={true} />
 							</div>
 						)}

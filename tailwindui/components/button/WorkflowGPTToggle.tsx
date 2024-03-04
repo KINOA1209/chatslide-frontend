@@ -2,7 +2,7 @@
 
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import WorkflowToggle from './WorkflowToggle';
-import PaywallModal from '@/components/forms/paywallModal';
+import PaywallModal from '@/components/paywallModal';
 import { useUser } from '@/hooks/use-user';
 
 interface GPTToggleProps {

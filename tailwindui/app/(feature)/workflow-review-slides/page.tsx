@@ -2,10 +2,9 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import FeedbackButton from '@/components/ui/feedback';
 import SlideVisualizer from '@/components/slides/SlideVisualizer';
 import { ToastContainer } from 'react-toastify';
-import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
+import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
 import { useUser } from '@/hooks/use-user';
 import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
 import StepsSlidesPage from '@/components/user_onboarding/StepsSlidesPage';
@@ -44,7 +43,7 @@ export default function WorkflowStep3() {
 	if (!useHydrated()) return <></>;
 
 	return (
-		<div className='min-h-[90vh] w-full bg-white relative'>
+		<div className='h-full w-full flex flex-col relative'>
 			{/* flex col container for steps, title, etc */}
 			<MyCustomJoyride steps={StepsSlidesPage()} />
 			{!showScript ? (
@@ -69,17 +68,13 @@ export default function WorkflowStep3() {
 
 			<ToastContainer enableMultiContainer containerId={'slides'} />
 
-			<div className={`max-w-4xl px-6 flex flex-col mx-auto`} ref={contentRef}>
-				{/* slides */}
-				<SlideVisualizer
-					isGpt35={isGpt35}
-					isSubmitting={isSubmitting}
-					setIsSubmitting={setIsSubmitting}
-					showScript={showScript}
-				/>
-			</div>
-
-			<FeedbackButton timeout={30000} />
+			{/* slides */}
+			<SlideVisualizer
+				isGpt35={isGpt35}
+				isSubmitting={isSubmitting}
+				setIsSubmitting={setIsSubmitting}
+				showScript={showScript}
+			/>
 		</div>
 	);
 }

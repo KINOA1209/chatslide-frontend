@@ -4,15 +4,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import '@/app/css/workflow-edit-topic-css/topic_style.css';
 import 'react-toastify/dist/ReactToastify.css';
-import FeedbackButton from '@/components/ui/feedback';
-import { QuestionExplainIcon } from '@/app/(feature)/icons';
-import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
-import PaywallModal from '@/components/forms/paywallModal';
-import { FaFilePdf } from 'react-icons/fa';
-import { SmallBlueButton } from '@/components/button/DrlambdaButton';
+import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
+import PaywallModal from '@/components/paywallModal';
 import Resource from '@/models/Resource';
 import { toast, ToastContainer } from 'react-toastify';
-import FileUploadModal from '@/components/forms/FileUploadModal';
+import FileUploadModal from '@/components/file/FileUploadModal';
 import { useUser } from '@/hooks/use-user';
 import { Step } from 'react-joyride';
 import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
@@ -457,7 +453,6 @@ export default function Topic() {
 					)}
 				</div>
 			</div>
-			<FeedbackButton />
 		</section>
 	);
 }

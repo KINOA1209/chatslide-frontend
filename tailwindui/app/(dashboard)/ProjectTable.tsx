@@ -9,6 +9,9 @@ import Image from 'next/image';
 import { useUser } from '@/hooks/use-user';
 import ProjectService from '@/services/ProjectService';
 
+const DEFAULT_THUMBNAIL =
+	'https://ph-files.imgix.net/76b477f1-bc1b-4432-b52b-68674658d62b.png';
+
 const ProjectItem: React.FC<{
 	project: Project;
 	onProjectClick: (projectId: string) => void;
@@ -27,17 +30,17 @@ const ProjectItem: React.FC<{
 			>
 				<div className=''>
 					{project.content_type === 'presentation' ? (
-						project.thumbnail_url ? (
-							<Image
-								src={project.thumbnail_url}
-								alt='project thumbnail'
-								layout='responsive'
-								width={16}
-								height={9}
-							/>
-						) : (
-							<RiSlideshow2Fill className='text-gray-600 w-[40px] h-[40px]' />
-						)
+						<Image
+							unoptimized={true}
+							src={project.thumbnail_url || DEFAULT_THUMBNAIL}
+							alt='project thumbnail'
+							layout='responsive'
+							width={16}
+							height={9}
+							onError={(e) => {
+								e.currentTarget.src = DEFAULT_THUMBNAIL;
+							}}
+						/>
 					) : (
 						<FaPhotoVideo className='text-gray-600 w-[40px] h-[40px]' />
 					)}

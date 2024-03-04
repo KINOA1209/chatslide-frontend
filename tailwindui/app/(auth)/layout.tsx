@@ -1,4 +1,4 @@
-import Header from '@/components/ui/header';
+import Header from '@/components/layout/header';
 import { generateMetadata } from '../layout';
 
 const title = 'Sign Up | DrLambda';

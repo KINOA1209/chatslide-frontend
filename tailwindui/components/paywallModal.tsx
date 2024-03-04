@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Pricing from '@/components/landing/pricing';
-import ReferralLink from '../ReferralLink';
-import Modal from '../ui/Modal';
+import ReferralLink from './ReferralLink';
+import Modal from './ui/Modal';
 
 interface PaywallModalProps {
 	setShowModal: (value: boolean) => void;

@@ -1,13 +1,12 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import FeedbackButton from '@/components/ui/feedback';
 import SocialPostVisualizer from '@/components/socialPost/socialPostVisualizer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { useRouter } from 'next/navigation';
-import WorkflowStepsBanner from '@/components/WorkflowStepsBanner';
+import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
 import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
 import useHydrated from '@/hooks/use-hydrated';
@@ -135,7 +134,6 @@ export default function SocialMediaTemplate() {
 						res_scenario={res_scenario || 'casual_topic'}
 					/>
 				</div>
-				<FeedbackButton timeout={30000} />
 			</div>
 		</section>
 	);

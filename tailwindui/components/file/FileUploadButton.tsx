@@ -1,7 +1,10 @@
 import React, { ChangeEvent, FC, useState, useRef, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import DrlambdaButton, { DrLambdaBackButton } from './button/DrlambdaButton';
+import DrlambdaButton, {
+	BigBlueButton,
+	DrLambdaBackButton,
+} from '../button/DrlambdaButton';
 
 // Allowed extensions defined in drlambda/app/user_file_manager.py
 // ALLOWED_DOC_EXTENSIONS = {"txt", "pdf"}
@@ -18,7 +21,7 @@ const supportedExtensions = [
 	'pptx',
 ]; // For checking logic
 
-const sizeLimit = 16 * 1024 * 1024; // 16mb
+const sizeLimit = 10 * 1024 * 1024; // 10mb
 
 interface FileUploadButtonProps {
 	onFileSelected: (file: File | null) => void;
@@ -67,7 +70,7 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 		const file = e.target.files ? e.target.files[0] : null;
 		console.log(file?.size);
 		if (file?.size && file?.size > sizeLimit) {
-			toast.error('The maximum file size supported is 16 MB.', {
+			toast.error('The maximum file size supported is 10 MB.', {
 				position: 'top-center',
 				autoClose: 5000,
 				hideProgressBar: false,
@@ -120,13 +123,13 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 				onChange={handleFileChange}
 				style={{ display: 'none' }}
 			/>
-			<DrlambdaButton
+			<BigBlueButton
 				onClick={handleClick}
 				isSubmitting={isSubmitting}
 				showArrow={false}
 			>
 				{!isSubmitting ? 'Upload from Local 💻' : 'Uploading File...'}
-			</DrlambdaButton>
+			</BigBlueButton>
 			<div className='text-sm text-gray-400'>
 				Supported file formats:{' '}
 				{formats.map((f, index) => {
@@ -137,7 +140,7 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 					}
 				})}
 			</div>
-			<div className='text-sm text-gray-400'>Max file size: 16 MB</div>
+			<div className='text-sm text-gray-400'>Max file size: 10 MB</div>
 			{/* <div className='text-sm text-gray-400'>
         Subscribed users can select multiple files
       </div> */}

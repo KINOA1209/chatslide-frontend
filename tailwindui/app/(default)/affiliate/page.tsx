@@ -1,8 +1,8 @@
 import DrlambdaButton, {
 	DrlambdaLink,
 } from '@/components/button/DrlambdaButton';
-import Footer from '@/components/ui/footer';
-import Header from '@/components/ui/header';
+import Footer from '@/components/layout/footer';
+import Header from '@/components/layout/header';
 import { MouseEventHandler } from 'react';
 
 export const metadata = {

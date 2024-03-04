@@ -5,7 +5,7 @@ import AuthService from '../../../services/AuthService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation';
-import CustomerServiceInfo from '@/components/customerService';
+import CustomerServiceInfo from '@/components/signup/customerService';
 
 export default function ResetPassword(): JSX.Element {
 	const [email, setEmail] = useState<string>('');

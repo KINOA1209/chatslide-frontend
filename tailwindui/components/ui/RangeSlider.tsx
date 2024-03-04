@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PaywallModal from '../forms/paywallModal';
+import PaywallModal from '../paywallModal';
 
 interface RangeSliderProps {
 	onChange?: (value: number) => void;

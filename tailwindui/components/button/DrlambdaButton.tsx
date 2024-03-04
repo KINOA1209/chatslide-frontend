@@ -11,7 +11,7 @@ import React, {
 	useState,
 	MouseEvent,
 } from 'react';
-import PaywallModal from '../forms/paywallModal';
+import PaywallModal from '../paywallModal';
 import { useRouter } from 'next/navigation';
 import { GrayLabel } from '../ui/GrayLabel';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
@@ -148,7 +148,7 @@ export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({
 			className='h-[36px] sm:h-[36px] flex-row justify-center items-center gap-4 cursor-pointer flex rounded-3xl bg-white bg-opacity-0'
 			onClick={() => router.push(href)}
 		>
-      <FaChevronLeft style={{ color: '#FFFFFF' }} />
+			<FaChevronLeft style={{ color: '#FFFFFF' }} />
 			<div className='text-center self-center text-white font-medium font-creato-medium leading-normal tracking-[0.035rem] whitespace-nowrap hidden sm:block'>
 				Dashboard
 			</div>
@@ -166,7 +166,7 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 }) => {
 	return (
 		<button
-			className={`btn w-[100px] sm:w-[120px] h-[36px] sm:h-[36px] sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
+			className={`btn h-[36px] sm:h-[36px] sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
 				isSubmitting && 'animate-pulse'
 			} disabled:bg-gray-600 whitespace-nowrap rounded-xl`}
 			onClick={onClick}

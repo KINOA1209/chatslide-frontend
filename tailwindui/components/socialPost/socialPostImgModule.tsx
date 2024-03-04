@@ -4,7 +4,7 @@ import AuthService from '@/services/AuthService';
 import { LoadingIcon } from '@/components/ui/LoadingIcon';
 import { createPortal } from 'react-dom';
 import { toast } from 'react-toastify';
-import PaywallModal from '@/components/forms/paywallModal';
+import PaywallModal from '@/components/paywallModal';
 import ResourceService from '@/services/ResourceService';
 import Image from 'next/image';
 
@@ -259,10 +259,10 @@ export const ImgModule = ({
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const extensions = ['png', 'jpg', 'jpeg', 'gif', 'webp']; // For checking logic
-		const sizeLimit = 16 * 1024 * 1024; // 16mb
+		const sizeLimit = 10 * 1024 * 1024; // 16mb
 		const file = e.target.files ? e.target.files[0] : null;
 		if (file?.size && file?.size > sizeLimit) {
-			toast.error('The maximum file size supported is 16 MB.', {
+			toast.error('The maximum file size supported is 10 MB.', {
 				position: 'top-center',
 				autoClose: 5000,
 				hideProgressBar: false,

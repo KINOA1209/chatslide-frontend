@@ -1,16 +1,11 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import AuthService from '../../services/AuthService';
 import Slide from '../../models/Slide';
-import PaywallModal from '../forms/paywallModal';
+import PaywallModal from '../paywallModal';
 import { BigGrayButton, DropDown } from '../button/DrlambdaButton';
 import {
-	FaDownload,
-	FaFilePdf,
-	FaRing,
-	FaSlideshare,
-	FaTruckLoading,
+	FaRegFilePdf,
 } from 'react-icons/fa';
 import { generatePdf } from '../utils/DownloadImage';
 import ProjectService from '@/services/ProjectService';
@@ -18,15 +13,21 @@ import { useUser } from '@/hooks/use-user';
 import { RiSlideshow2Fill } from 'react-icons/ri';
 import { useProject } from '@/hooks/use-project';
 import { sleep } from '../utils/sleep';
+import Modal from '../ui/Modal';
+import { GoDownload } from 'react-icons/go';
+import ButtonWithExplanation from '../button/ButtonWithExplanation';
+import SaveScriptsButton from './script/SaveScriptsButton';
 
 interface ExportToPdfProps {
 	slides: Slide[];
 	exportSlidesRef: React.RefObject<HTMLDivElement>;
+	hasScript?: boolean;
 }
 
 const ExportToFile: React.FC<ExportToPdfProps> = ({
 	slides,
 	exportSlidesRef,
+	hasScript,
 }) => {
 	const topic =
 		typeof sessionStorage !== 'undefined'
@@ -36,7 +37,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const { isPaidUser, token } = useUser();
 	const { project } = useProject();
-	const [showDropdown, setShowDropdown] = useState(false);
+	const [showModal, setShowModal] = useState(false);
 
 	async function exportToPdfFrontend() {
 		const file = await generatePdf(topic || '', exportSlidesRef, slides.length);
@@ -59,7 +60,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 	const handleExport = async (type: string, frontend: boolean) => {
 		if (!project) return;
 
-		setShowDropdown(false);
+		setShowModal(false);
 
 		setDownloading(true);
 		if (frontend) {
@@ -97,64 +98,81 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 	};
 
 	return (
-		<div className='flex flex-wrap flex-grow-0'>
-			<div className='flex flex-row gap-2'>
-				{showPaymentModal && (
-					<PaywallModal
-						setShowModal={setShowPaymentModal}
-						message='Upgrade for more ⭐️credits.'
-						showReferralLink={true}
-					/>
-				)}
+		<>
+			{showPaymentModal && (
+				<PaywallModal
+					setShowModal={setShowPaymentModal}
+					message='Upgrade for more ⭐️credits.'
+					showReferralLink={true}
+				/>
+			)}
 
-				<div className='h-[36px] flex flex-col items-center gap-2'>
-					<BigGrayButton
-						bgColor='bg-Gray'
-						isSubmitting={downloading}
-						onClick={() => setShowDropdown(!showDropdown)}
+			<ButtonWithExplanation
+				button={
+					<button
+						onClick={() => setShowModal(!showModal)}
 					>
-						<FaDownload />
-						Export to PDF / PPTX
+						<GoDownload
+							style={{
+								strokeWidth: '1',
+								flex: '1',
+								width: '1.5rem',
+								height: '1.5rem',
+								fontWeight: 'bold',
+								color: '#2943E9',
+							}}
+							className={downloading ? 'animate-spin' : ''}
+
+						/>
+					</button>
+				}
+				explanation={'Export'}
+			></ButtonWithExplanation>
+
+			{showModal && (
+				<Modal
+					showModal={showModal}
+					setShowModal={setShowModal}
+					title='Export to PDF / PPTX'
+					description='Choose the format and quality of the export.'
+				>
+					<BigGrayButton
+						onClick={() => handleExport('pdf', true)}
+						isSubmitting={downloading}
+						isPaidUser={isPaidUser}
+						bgColor='bg-Gray'
+					>
+						<FaRegFilePdf />
+						<span>PDF (medium)</span>
 					</BigGrayButton>
 
-					{showDropdown && (
-						<div className='flex flex-col gap-2 bg-gray-100 rounded-xl shadow-md p-2 z-50'>
-							<BigGrayButton
-								onClick={() => handleExport('pdf', true)}
-								isSubmitting={downloading}
-								isPaidUser={isPaidUser}
-								bgColor='bg-Gray'
-							>
-								<FaFilePdf />
-								<span>PDF (medium)</span>
-							</BigGrayButton>
+					<BigGrayButton
+						onClick={() => handleExport('pdf', false)}
+						isSubmitting={downloading}
+						isPaidUser={isPaidUser}
+						isPaidFeature={true}
+						bgColor='bg-Gray'
+					>
+						<FaRegFilePdf />
+						<span>PDF (high) {!isPaidUser && '🔒'}</span>
+					</BigGrayButton>
 
-							<BigGrayButton
-								onClick={() => handleExport('pdf', false)}
-								isSubmitting={downloading}
-								isPaidUser={isPaidUser}
-								isPaidFeature={true}
-								bgColor='bg-Gray'
-							>
-								<FaFilePdf />
-								<span>PDF (high) {!isPaidUser && '🔒'}</span>
-							</BigGrayButton>
+					<BigGrayButton
+						onClick={() => handleExport('pptx', false)}
+						isSubmitting={downloading}
+						isPaidUser={isPaidUser}
+						isPaidFeature={true}
+						bgColor='bg-Gray'
+					>
+						<RiSlideshow2Fill />
+						<span>PPTX {!isPaidUser && '🔒'}</span>
+					</BigGrayButton>
 
-							<BigGrayButton
-								onClick={() => handleExport('pptx', false)}
-								isSubmitting={downloading}
-								isPaidUser={isPaidUser}
-								isPaidFeature={true}
-								bgColor='bg-Gray'
-							>
-								<RiSlideshow2Fill />
-								<span>PPTX {!isPaidUser && '🔒'}</span>
-							</BigGrayButton>
-						</div>
-					)}
-				</div>
-			</div>
-		</div>
+					{ hasScript && 
+					<SaveScriptsButton slides={slides}/>}
+				</Modal>
+			)}
+		</>
 	);
 };
 

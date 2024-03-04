@@ -1,7 +1,7 @@
-import SelectedResourcesList from '@/components/SelectedResources';
+import SelectedResourcesList from '@/components/file/SelectedResources';
 import { SmallBlueButton } from '@/components/button/DrlambdaButton';
-import FileUploadModal from '@/components/forms/FileUploadModal';
-import PaywallModal from '@/components/forms/paywallModal';
+import FileUploadModal from '@/components/file/FileUploadModal';
+import PaywallModal from '@/components/paywallModal';
 import { useUser } from '@/hooks/use-user';
 import Resource from '@/models/Resource';
 import { useState } from 'react';

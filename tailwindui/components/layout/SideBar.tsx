@@ -9,10 +9,11 @@ import AuthService from '../../services/AuthService';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import SideBarItem from './SideBarItem';
 import { SideBarData } from './SideBarData';
-import { BlueLabel, GrayLabel } from './GrayLabel';
+import { BlueLabel, GrayLabel } from '../ui/GrayLabel';
 import { UserStatus, useUser } from '@/hooks/use-user';
 import useHydrated from '@/hooks/use-hydrated';
-import Modal from './Modal';
+import Modal from '../ui/Modal';
+import FeedbackButton from '../ui/feedback';
 
 interface SideBarProps {}
 const SideBar = ({}: SideBarProps) => {
@@ -195,6 +196,10 @@ const SideBar = ({}: SideBarProps) => {
 							</a>
 						</>
 					)}
+
+					<div className='relative'>
+						<FeedbackButton timeout={location.pathname.includes('workflow-review-slides') ? 30 * 1000 : 0} />
+					</div>
 				</div>
 			</div>
 
