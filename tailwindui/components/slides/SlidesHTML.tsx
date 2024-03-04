@@ -121,7 +121,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		Math.min(dimensions.width / 960, dimensions.height / 540),
 	);
 	const [nonPresentScale, setNonPresentScale] = useState(
-		Math.min((dimensions.width-400) / 960, (dimensions.height-400) / 540),
+		Math.min((dimensions.width - 400) / 960, (dimensions.height - 400) / 540),
 	);
 
 	const [isChatWindowOpen, setIsChatWindowOpen] = useState(false);
@@ -196,8 +196,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			'Use ESC to exit presentation mode, use arrow keys to navigate slides.',
 		);
 		setIsPresenting(true);
-		if (showScript)
-			openScriptPage();
+		if (showScript) openScriptPage();
 	};
 
 	useEffect(() => {
@@ -359,7 +358,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		// Render your React component into the new window
 		ReactDOM.render(
 			<ScriptWindow />,
-			scriptWindow.document.getElementById('root'));
+			scriptWindow.document.getElementById('root'),
+		);
 	};
 
 	// close the scripts window, not working
@@ -427,7 +427,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			exportToPdfMode, //exportToPdfMode
 			isEditMode, //editMathMode
 			setIsEditMode, //setIsEditMode
-			() => { }, // handleSlideEdit
+			() => {}, // handleSlideEdit
 			updateImgUrlArray,
 			toggleEditMode,
 			index === 0, // isCoverPage
@@ -470,8 +470,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					onlyShowTutorial={false}
 					isViewing={isViewing}
 				>
-
-					{!isViewing && slideIndex != 0 && (
+					{!isViewing && (
 						<>
 							<AddSlideButton
 								addPage={handleAddPage}
@@ -499,12 +498,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 								handleSlideEdit={handleSlideEdit}
 								availableLayouts={availableLayouts}
 							/>
-							{isPaidUser &&
+							{isPaidUser && (
 								<ButtonWithExplanation
 									button={
-										<button
-											onClick={() => setIsShowingLogo(!isShowingLogo)}
-										>
+										<button onClick={() => setIsShowingLogo(!isShowingLogo)}>
 											<GoEyeClosed
 												style={{
 													strokeWidth: '1',
@@ -518,7 +515,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 										</button>
 									}
 									explanation={isShowingLogo ? 'Remove Logo' : 'Show Logo'}
-								></ButtonWithExplanation>}
+								></ButtonWithExplanation>
+							)}
 						</>
 					)}
 
@@ -529,16 +527,22 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						explanation='Present'
 					/>
 
-					{!isViewing &&
-						<ExportToPdfButton slides={slides} exportSlidesRef={exportSlidesRef} hasScript={showScript} />}
+					{!isViewing && (
+						<ExportToPdfButton
+							slides={slides}
+							exportSlidesRef={exportSlidesRef}
+							hasScript={showScript}
+						/>
+					)}
 
-					{project &&
+					{project && (
 						<ShareToggleButton
 							setShare={updateIsShared}
 							share={isShared}
 							project={project}
 							host={host}
-						/>}
+						/>
+					)}
 				</ActionsToolBar>
 			</div>
 
@@ -650,7 +654,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 								goToSlide={gotoPage}
 							/>
 						</div>
-						<SlidePagesIndicator currentSlideIndex={slideIndex} slides={slides} />
+						<SlidePagesIndicator
+							currentSlideIndex={slideIndex}
+							slides={slides}
+						/>
 						<div className='block lg:hidden'>
 							<SlideRightNavigator
 								currentSlideIndex={slideIndex}
@@ -669,7 +676,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							{slides.map((slide, index) => (
 								<div
 									key={
-										`previewContainer` + index.toString() + slides.length.toString()
+										`previewContainer` +
+										index.toString() +
+										slides.length.toString()
 									} // force update when slide length changes
 									className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
 									onClick={() => gotoPage(index)}
@@ -690,7 +699,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					</div>
 				</Panel>
 
-				{!isViewing && isChatWindowOpen ?
+				{!isViewing && isChatWindowOpen ? (
 					<Panel>
 						<AIAssistantChatWindow
 							onToggle={toggleChatWindow}
@@ -698,9 +707,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							currentSlideIndex={slideIndex}
 							updateSlidePage={updateSlidePage}
 						/>
-					</Panel> :
+					</Panel>
+				) : (
 					<>
-						{!isViewing && !isPresenting &&
+						{!isViewing && !isPresenting && (
 							<div className='hidden sm:block fixed bottom-10 right-10 cursor-pointer z-50'>
 								<ButtonWithExplanation
 									button={
@@ -710,13 +720,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 									}
 									explanation='AI Assistant'
 								/>
-							</div>}
+							</div>
+						)}
 						<Panel>
 							{/* balance pos of slide */}
 							<div className='hidden xl:flex w-[9rem]'></div>
 						</Panel>
 					</>
-				}
+				)}
 			</div>
 
 			{/* hidden div for export to pdf */}

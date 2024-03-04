@@ -277,6 +277,16 @@ export const Fun_Education_001_TemplateLogo: React.FC<TemplateLogoType> = (
 		logoWidth: 8, // Adjust the width as needed
 	});
 
+export const Fun_Vibrant_007_TemplateLogo: React.FC<TemplateLogoType> = (
+	props: TemplateLogoType,
+) =>
+	generateTemplateLogo({
+		...props,
+		coverLogo: drlambdaLogo,
+		nonCoverLogo: drlambdaLogo,
+		logoWidth: 8, // Adjust the width as needed
+	});
+
 type TemplateLogoType = {
 	isCoverPage: boolean;
 	custom_logo: string;
@@ -301,6 +311,10 @@ const templatesInfo: TemplateLogoInfo[] = [
 	{
 		templateName: 'Fun_Education_004' as TemplateKeys,
 		templateLogo: Fun_Education_004_TemplateLogo,
+	},
+	{
+		templateName: 'Fun_Vibrant_007' as TemplateKeys,
+		templateLogo: Fun_Vibrant_007_TemplateLogo,
 	},
 	{
 		templateName: 'Business_002' as TemplateKeys,

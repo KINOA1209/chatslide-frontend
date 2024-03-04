@@ -378,7 +378,7 @@ export const Col_1_img_0_layout = ({
 						unoptimized={true}
 					/>
 				)}
-				{themeElements.backgroundUrlDividerCol_1_img_0 && (
+				{/* {themeElements.backgroundUrlDividerCol_1_img_0 && (
 					<Image
 						style={{ objectFit: 'cover', height: '100%' }}
 						width={960}
@@ -387,7 +387,7 @@ export const Col_1_img_0_layout = ({
 						alt='Background Image'
 						unoptimized={true}
 					/>
-				)}
+				)} */}
 			</div>
 		</div>
 	);

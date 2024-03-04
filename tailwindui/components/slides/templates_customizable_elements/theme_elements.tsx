@@ -6,6 +6,7 @@ import { Business_002_TemplateThemeConfig } from './templatesThemeConfigDetails/
 import { Fun_Education_001_TemplateThemeConfig } from './templatesThemeConfigDetails/Fun_Education_001_TemplateThemeConfigDetails';
 import { Fun_Education_004_TemplateThemeConfig } from './templatesThemeConfigDetails/Fun_Education_004_TemplateThemeConfigDetails';
 import { Default_TemplateThemeConfig } from './templatesThemeConfigDetails/Default_TemplateThemeConfigDetails';
+import { Fun_Vibrant_007_TemplateThemeConfig } from './templatesThemeConfigDetails/Fun_Vibrant_007_TemplateThemeConfigDetails';
 export type ThemeElements = {
 	backgroundColorCover?: string;
 	backgroundColor?: string;
@@ -587,6 +588,7 @@ const themeConfigData: ThemeConfig = {
 	Business_002: Business_002_TemplateThemeConfig,
 	Clean_Lifestyle_003: Clean_Lifestyle_003_TemplateThemeConfig,
 	Fun_Education_001: Fun_Education_001_TemplateThemeConfig,
+	Fun_Vibrant_007: Fun_Vibrant_007_TemplateThemeConfig,
 };
 
 export default themeConfigData;
