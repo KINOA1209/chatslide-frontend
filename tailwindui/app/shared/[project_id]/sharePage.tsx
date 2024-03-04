@@ -150,7 +150,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 						</div>
 					</Blank>
 				) : (
-					<div className='flex flex-col h-full items-center justify-center gap-8'>
+					<div className='flex flex-col h-full items-center justify-center gap-4'>
 						{showDescription && project && project.description && (
 							<div className='hidden sm:flex sm:w-2/3 h-[10rem] text-gray-700 text-left m-2 gap-4'>
 								<div className='border border-gray-200 rounded-xl overflow-y-scroll p-2'>

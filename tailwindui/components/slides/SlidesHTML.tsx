@@ -444,89 +444,88 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	return (
 		<div className='w-full max-h-full flex flex-col items-start justify-start gap-4 relative'>
-			{!isViewing && (
-				<div className='p-4 w-full flex flex-row items-center justify-center'>
-					<ActionsToolBar
-						undo={undoChange}
-						redo={redoChange}
-						canRedo={canRedo}
-						canUndo={canUndo}
-						startTour={startTour}
-						onlyShowTutorial={false}
-					>
+			<div className='w-full flex flex-row items-center justify-center'>
+				<ActionsToolBar
+					undo={undoChange}
+					redo={redoChange}
+					canRedo={canRedo}
+					canUndo={canUndo}
+					startTour={startTour}
+					onlyShowTutorial={false}
+					isViewing={isViewing}
+				>
 
-						{!isViewing && slideIndex != 0 && (
-							<>
-								<AddSlideButton
-									addPage={handleAddPage}
-									currentSlideIndex={slideIndex}
-								/>
-								<DeleteSlideButton
-									deletePage={handleDeletePage}
-									currentSlideIndex={slideIndex}
-								/>
+					{!isViewing && slideIndex != 0 && (
+						<>
+							<AddSlideButton
+								addPage={handleAddPage}
+								currentSlideIndex={slideIndex}
+							/>
+							<DeleteSlideButton
+								deletePage={handleDeletePage}
+								currentSlideIndex={slideIndex}
+							/>
 
-								<div className='h-8 w-0.5 bg-gray-200'></div>
+							<div className='h-8 w-0.5 bg-gray-200'></div>
 
-								<ChangeTemplateOptions
-									currentTemplate={slides[slideIndex].template}
-									templateOptions={Object.keys(availableTemplates)}
-									onChangeTemplate={selectTemplate}
-								/>
-								<LayoutChanger
-									openModal={openModal}
-									showLayout={showLayout}
-									closeModal={closeModal}
-									currentSlideIndex={slideIndex}
-									// templateSamples={templateSamples}
-									slides={slides}
-									handleSlideEdit={handleSlideEdit}
-									availableLayouts={availableLayouts}
-								/>
-								{isPaidUser &&
-									<ButtonWithExplanation
-										button={
-											<button
-												onClick={() => setIsShowingLogo(!isShowingLogo)}
-											>
-												<GoEyeClosed
-													style={{
-														strokeWidth: '1',
-														flex: '1',
-														width: '1.5rem',
-														height: '1.5rem',
-														fontWeight: 'bold',
-														color: '#2943E9',
-													}}
-												/>
-											</button>
-										}
-										explanation={isShowingLogo ? 'Remove Logo' : 'Show Logo'}
-									></ButtonWithExplanation>}
-							</>
-						)}
+							<ChangeTemplateOptions
+								currentTemplate={slides[slideIndex].template}
+								templateOptions={Object.keys(availableTemplates)}
+								onChangeTemplate={selectTemplate}
+							/>
+							<LayoutChanger
+								openModal={openModal}
+								showLayout={showLayout}
+								closeModal={closeModal}
+								currentSlideIndex={slideIndex}
+								// templateSamples={templateSamples}
+								slides={slides}
+								handleSlideEdit={handleSlideEdit}
+								availableLayouts={availableLayouts}
+							/>
+							{isPaidUser &&
+								<ButtonWithExplanation
+									button={
+										<button
+											onClick={() => setIsShowingLogo(!isShowingLogo)}
+										>
+											<GoEyeClosed
+												style={{
+													strokeWidth: '1',
+													flex: '1',
+													width: '1.5rem',
+													height: '1.5rem',
+													fontWeight: 'bold',
+													color: '#2943E9',
+												}}
+											/>
+										</button>
+									}
+									explanation={isShowingLogo ? 'Remove Logo' : 'Show Logo'}
+								></ButtonWithExplanation>}
+						</>
+					)}
 
-						<div className='h-8 w-0.5 bg-gray-200'></div>
+					<div className='h-8 w-0.5 bg-gray-200'></div>
 
-						<ButtonWithExplanation
-							button={<PresentButton openPresent={openPresent} />}
-							explanation='Present'
-						/>
+					<ButtonWithExplanation
+						button={<PresentButton openPresent={openPresent} />}
+						explanation='Present'
+					/>
 
-						{!isViewing &&
-							<ExportToPdfButton slides={slides} exportSlidesRef={exportSlidesRef} />
-						}
+					{!isViewing &&
+						<ExportToPdfButton slides={slides} exportSlidesRef={exportSlidesRef} />
+					}
 
-						{project &&
-							<ShareToggleButton
-								setShare={updateIsShared}
-								share={isShared}
-								project={project}
-								host={host}
-							/>}
-					</ActionsToolBar>
-				</div>
-			)}
+					{project &&
+						<ShareToggleButton
+							setShare={updateIsShared}
+							share={isShared}
+							project={project}
+							host={host}
+						/>}
+				</ActionsToolBar>
+			</div>
 
 			{showPaymentModal && (
 				<PaywallModal
@@ -619,7 +618,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					</div>
 
 					{/* Slide pages indicator */}
-					<div className='py-[1rem] flex flex-row items-center'>
+					<div className='pt-2 flex flex-row items-center'>
 						<div className='block lg:hidden'>
 							<SlideLeftNavigator
 								currentSlideIndex={slideIndex}
