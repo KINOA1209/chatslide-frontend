@@ -19,6 +19,12 @@ import { TextLabel } from '../ui/GrayLabel';
 import { useProject } from '@/hooks/use-project';
 import ProjectService from '@/services/ProjectService';
 import { useUser } from '@/hooks/use-user';
+import { GoShare } from 'react-icons/go';
+import ButtonWithExplanation from '../button/ButtonWithExplanation';
+import Modal from '../ui/Modal';
+import ClickableLink from '../ui/ClickableLink';
+import PostPlatformConfigs from '@/components/button/PostPlatformConfig';
+
 type SaveButtonProps = {
 	saveSlides: () => void;
 };
@@ -69,28 +75,110 @@ type ShareToggleButtonProps = {
 	share: boolean;
 	setShare: (share: boolean) => void;
 	project_id: string;
+	host: string;
 };
 
 export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
 	share,
 	setShare,
 	project_id,
+	host = 'https://drlambda.ai',
 }) => {
-	const { token } = useUser();
+	const [showModal, setShowModal] = useState(false);
+
 	const toggleShare = async () => {
-		setShare(!share); // updates db as well
+		setShare(true); // updates db as well
+		setShowModal(true)
 	};
 
-	return (
-		<div className='col-span-1'>
-			<BigGrayButton onClick={toggleShare}>
-				<div className='flex flex-row items-center gap-x-2'>
-					{!share ? 'Share' : 'Stop Sharing'}
-					<FaShareAlt />
+	const ShareModal: React.FC = () => {
+		const platforms = ['twitter', 'facebook', 'reddit', 'linkedin'];
+
+		const { project } = useProject();
+		const keywords = project?.keywords || [];
+		const description = project?.description || '';
+
+		const limitedKeywords = keywords.slice(0, 3);
+		const truncatedDescription = truncateWithFullWords(description, 100);
+
+		function truncateWithFullWords(str: string, maxLength: number) {
+			if (str.length <= maxLength) return str;
+			return str.substring(0, str.lastIndexOf(' ', maxLength)) + '...';
+		}
+
+		const handlePost = async (platform: string) => {
+			try {
+				setShare(true);
+				const shareLink = `${host}/shared/${project_id}`;
+				const hashTags = limitedKeywords
+					.map((keyword) => `#${keyword}`)
+					.join(' ');
+				const postText = `${truncatedDescription}. Learn more at drlambda.ai!\n${hashTags}\n`;
+				const platformConfig =
+					PostPlatformConfigs[platform as keyof typeof PostPlatformConfigs];
+				const text = platformConfig.textTemplate(postText, shareLink);
+				const url = `${platformConfig.shareUrl}${text}`;
+				window.open(url, '_blank');
+			} catch (error) {
+				console.error('Failed to process Twitter post:', error);
+			}
+		};
+
+		return (
+			<Modal
+				showModal={showModal}
+				setShowModal={setShowModal}
+				title='Share'
+				description='Share your slides with others or on social media'
+			>
+				<div className='w-screen sm:w-[40rem]'>
+					<TextLabel>View only link:</TextLabel>
 				</div>
-			</BigGrayButton>
-		</div>
-	);
+				<ClickableLink link={`${host}/shared/${project_id || ''}`} />
+
+				<div className='flex flex-wrap gap-2'>
+					{platforms.map((platform) => (
+						<BigGrayButton
+							key={platform}
+							onClick={() => { handlePost(platform) }}>
+							Post to{' '}
+							{
+								PostPlatformConfigs[platform as keyof typeof PostPlatformConfigs]
+									.displayName
+							}
+
+						</BigGrayButton>
+					))}
+				</div>
+
+			</Modal >
+		)
+	}
+
+return (
+	<div>
+		{showModal && <ShareModal />}
+		<ButtonWithExplanation
+			button={
+				<button
+					onClick={toggleShare}
+				>
+					<GoShare
+						style={{
+							strokeWidth: '1',
+							flex: '1',
+							width: '1.5rem',
+							height: '1.5rem',
+							fontWeight: 'bold',
+							color: '#2943E9',
+						}}
+					/>
+				</button>
+			}
+			explanation={'Share'}
+		></ButtonWithExplanation>
+	</div>
+);
 };
 
 export const SlidePagesIndicator: React.FC<{
