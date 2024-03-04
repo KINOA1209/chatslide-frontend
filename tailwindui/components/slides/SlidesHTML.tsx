@@ -121,7 +121,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		Math.min(dimensions.width / 960, dimensions.height / 540),
 	);
 	const [nonPresentScale, setNonPresentScale] = useState(
-		Math.min(1, presentScale * 0.9),
+		Math.min((dimensions.width-400) / 960, (dimensions.height-400) / 540),
 	);
 
 	const [isChatWindowOpen, setIsChatWindowOpen] = useState(false);
@@ -148,6 +148,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		}
 	}, []);
 
+	// useEffect(() => {
+	// 	if (containerRef.current) {
+	// 		const { width, height } = containerRef.current.getBoundingClientRect();
+	// 		const scale = Math.min(width / 960, height / 540);
+	// 		console.log('update scale', scale);
+	// 		setNonPresentScale(scale);
+	// 	}
+	// }, [containerRef.current]);
 
 	const toggleChatWindow = () => {
 		setIsChatWindowOpen(!isChatWindowOpen);
@@ -160,7 +168,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				height: window.innerHeight,
 			});
 			//console.log('window.innerWidth', window.innerWidth);
-			setNonPresentScale(Math.min(1, (window.innerWidth / 960) * 0.9));
+			setNonPresentScale(Math.min(1, (window.innerWidth / 960) * 0.8));
+			// setNonPresentScale(Math.min(nonPresentScale, ((window.innerHeight-200)) / 540));
 			//console.log('nonPresentScale', nonPresentScale);
 		};
 		window.addEventListener('resize', handleResize);
@@ -564,7 +573,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 										isViewing={true}
 										templateDispatch={uneditableTemplateDispatch}
 										slideRef={slideRef}
-										containerRef={containerRef}
+										// containerRef={containerRef}
 										highlightBorder={slideIndex === index}
 									/>
 								</div>
@@ -652,9 +661,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					</div>
 
 					{/* horizontal  */}
-					<div className='block xl:hidden max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
+					<div className='block xl:hidden max-w-xs sm:max-w-4xl mx-auto py-4 justify-center items-center'>
 						<div
-							className='w-full py-6 flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'
+							className='w-full flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'
 							ref={thumbnailRef}
 						>
 							{slides.map((slide, index) => (
@@ -704,7 +713,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							</div>}
 						<Panel>
 							{/* balance pos of slide */}
-							<div className='hidden lg:flex w-[9rem]'></div>
+							<div className='hidden xl:flex w-[9rem]'></div>
 						</Panel>
 					</>
 				}
