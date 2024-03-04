@@ -224,11 +224,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 
 	return (
 		<section
-			className={`hidden sm:flex sm:flex-col h-full w-full rounded-l sm:items-center z-40 shadow-md bg-gray-100`}
-			style={{
-				boxShadow:
-					'-4px 0 8px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1)',
-			}}
+			className={`hidden sm:flex sm:flex-col h-full w-full rounded-lg sm:items-center z-40 border border-2 border-gray-200`}
 		>
 			{/* title and exit button */}
 			<div className='flex flex-row w-full justify-between items-center h-[5rem] p-2'>

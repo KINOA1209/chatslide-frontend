@@ -43,17 +43,11 @@ import {
 import ActionsToolBar from '../ui/ActionsToolBar';
 import { SlidesStatus, useSlides } from '@/hooks/use-slides';
 import useTourStore from '@/components/user_onboarding/TourStore';
-import { current } from 'immer';
 import Chart from '@/models/Chart';
-import { BigGrayButton } from '../button/DrlambdaButton';
 import ImagesPosition from '@/models/ImagesPosition';
 import { Panel } from '../layout/Panel';
 import { useProject } from '@/hooks/use-project';
-import { FaTimes } from 'react-icons/fa';
-import ClickableLink from '../ui/ClickableLink';
-import { TextLabel } from '../ui/GrayLabel';
 import { GoEyeClosed } from 'react-icons/go';
-import Project from '@/models/Project';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -624,6 +618,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						)}
 					</div>
 
+					{/* Slide pages indicator */}
 					<div className='py-[1rem] flex flex-row items-center'>
 						<div className='block lg:hidden'>
 							<SlideLeftNavigator
@@ -690,6 +685,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							updateSlidePage={updateSlidePage}
 						/>
 					</Panel> :
+					<>
 					<div className='hidden sm:block fixed bottom-10 right-10 cursor-pointer z-50'>
 						<ButtonWithExplanation
 							button={
@@ -700,6 +696,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							explanation='AI Assistant'
 						/>
 					</div>
+					<Panel>
+						{/* balance pos of slide */}
+						<div className='hidden lg:flex w-[9rem]'></div>
+					</Panel>
+					</>
 				}
 			</div>
 
