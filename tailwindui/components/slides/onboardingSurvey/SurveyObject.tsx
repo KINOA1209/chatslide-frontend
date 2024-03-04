@@ -34,6 +34,7 @@ const surveyObject: Record<string, SurveySectionConfig> = {
 			'X (Twitter)',
 			'Reddit',
 			'Instagram',
+			'Telegram',
 			'Yandex',
 			'Other',
 		],
