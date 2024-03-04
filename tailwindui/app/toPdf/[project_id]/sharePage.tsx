@@ -18,7 +18,7 @@ interface SharePageProps {
 
 const SharePage: React.FC<SharePageProps> = ({ project_id, page = 1 }) => {
 	const [loading, setLoading] = useState(true);
-	const { initSlides } = useSlides();
+	const { initSlides, setIsPresenting } = useSlides();
 
 	useEffect(() => {
 		const token = new URLSearchParams(window.location.search).get(
@@ -29,6 +29,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, page = 1 }) => {
 			const slides = ProjectService.parseSlides(project.presentation_slides);
 			initSlides(slides);
 			setLoading(false);
+			setIsPresenting(true);
 		};
 		init();
 	}, []);
