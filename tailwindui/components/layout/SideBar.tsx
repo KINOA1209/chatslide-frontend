@@ -198,7 +198,7 @@ const SideBar = ({}: SideBarProps) => {
 					)}
 
 					<div className='relative'>
-						<FeedbackButton timeout={location.pathname.includes('workflow-review-slides') ? 300 : 0} />
+						<FeedbackButton timeout={location.pathname.includes('workflow-review-slides') ? 30 * 1000 : 0} />
 					</div>
 				</div>
 			</div>
