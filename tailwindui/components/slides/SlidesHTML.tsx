@@ -518,7 +518,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 										</button>
 									}
 									explanation={isShowingLogo ? 'Remove Logo' : 'Show Logo'}
-								></ButtonWithExplanation>}
+								/>}
 						</>
 					)}
 

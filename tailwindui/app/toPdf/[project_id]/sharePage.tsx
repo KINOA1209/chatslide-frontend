@@ -37,7 +37,6 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, page = 1 }) => {
 		<main className='grow'>
 			<SlidesHTML
 				isViewing={true}
-				isPresenting={true}
 				initSlideIndex={page as number}
 				toPdf={true}
 			/>

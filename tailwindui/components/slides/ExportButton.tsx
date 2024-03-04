@@ -127,7 +127,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 					</button>
 				}
 				explanation={'Export'}
-			></ButtonWithExplanation>
+			/>
 
 			{showModal && (
 				<Modal
