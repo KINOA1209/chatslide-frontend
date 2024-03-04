@@ -84,8 +84,12 @@ export const useSlides = () => {
 
 	const addEmptyPage = (index: number) => {
 		console.log('-- add empty page: ', { index });
+		let newSlide = new Slide();
+		newSlide.template = slides[index].template;
+		newSlide.logo = slides[index].logo;
+		newSlide.background_url = slides[index].background_url;
 		const newSlides = [...slides];
-		newSlides.splice(index, 0, new Slide());
+		newSlides.splice(index, 0, newSlide);
 		setSlides(newSlides);
 
 		updateVersion();
