@@ -21,7 +21,7 @@ export const DrLambdaAIAssistantIcon: React.FC<{
 }> = ({ onClick }) => {
 	return (
 		<div
-			className='w-14 h-14 bg-neutral-50 rounded-[50%] shadow border border-black border-opacity-20 z-50 flex items-center justify-center relative'
+			className='w-14 h-14 bg-neutral-50 rounded-[50%] shadow border border-black border-opacity-20 z-40 flex items-center justify-center relative'
 			onClick={onClick}
 		// style={{ animation: 'pulse 0.5s infinite' }}
 		>
@@ -230,7 +230,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 
 	return (
 		<section
-			className={`hidden sm:flex sm:flex-col h-full w-full rounded-lg sm:items-center z-40 border border-2 border-gray-200`}
+			className={`hidden sm:flex sm:flex-col h-full w-full rounded-lg sm:items-center border border-2 border-gray-200`}
 		>
 			{/* title and exit button */}
 			<div className='flex flex-row w-full justify-between items-center h-[5rem] p-2'>
