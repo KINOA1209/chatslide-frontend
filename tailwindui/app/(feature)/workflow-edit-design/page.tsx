@@ -78,9 +78,9 @@ export default function DesignPage() {
 	return (
 		<div className='relative'>
 			{/* user tutorial */}
-			<div className='absolute right-[3rem] top-[7rem] flex flex-col items-end space-x-4'>
+			{/* <div className='absolute right-[3rem] top-[7rem] flex flex-col items-end space-x-4'>
 				<ActionsToolBar startTour={startTour} onlyShowTutorial={true} />
-			</div>
+			</div> */}
 			<ToastContainer />
 
 			<WorkflowStepsBanner

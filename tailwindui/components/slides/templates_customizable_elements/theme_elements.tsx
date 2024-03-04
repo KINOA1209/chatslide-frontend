@@ -13,6 +13,7 @@ export type ThemeElements = {
 	backgroundUrlCoverImg1?: string;
 	backgroundUrlCoverImg0?: string;
 	backgroundUrlCol_1_img_0?: string;
+	backgroundUrlDividerCol_1_img_0?: string;
 	backgroundUrlCol_2_img_0?: string;
 	backgroundUrlCol_3_img_0?: string;
 	backgroundUrlCol_1_img_1?: string;

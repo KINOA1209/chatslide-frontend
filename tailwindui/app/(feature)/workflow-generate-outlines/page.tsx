@@ -46,6 +46,7 @@ const audienceList = [
 ];
 
 export default function Topic() {
+	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 	const router = useRouter();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [showFileModal, setShowFileModal] = useState(false);
@@ -199,8 +200,8 @@ export default function Topic() {
 				updateProject('id', outlinesJson.data.id);
 				updateProject('foldername', outlinesJson.data.foldername);
 				updateProject('pdf_images', outlinesJson.data.pdf_images);
-        updateProject('outlines', outlinesJson.data.outlines)
-        // initProject(outlinesJson.data);
+				updateProject('outlines', outlinesJson.data.outlines);
+				// initProject(outlinesJson.data);
 				sessionStorage.setItem(
 					'pdf_images',
 					JSON.stringify(outlinesJson.data.pdf_images),
@@ -285,7 +286,11 @@ export default function Topic() {
 			/>
 
 			{/* main content */}
-			<div className='my-4 gap-y-4 w-full flex flex-col items-center'>
+			<div className='my-4 gap-y-4 w-full flex flex-col items-center relative'>
+				{/* user tutorial */}
+				<div className='absolute right-[3rem] top-[0rem] flex flex-col items-end space-x-4'>
+					<ActionsToolBar startTour={startTour} onlyShowTutorial={true} />
+				</div>
 				<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
 
 				{/* Project Summary section */}
