@@ -28,6 +28,7 @@ import {
 	Instruction,
 } from '@/components/ui/Text';
 import { DropDown } from '@/components/button/DrlambdaButton';
+import ResourceService from '@/services/ResourceService';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 6;
@@ -144,6 +145,12 @@ export default function Topic() {
 				? sessionStorage.scenarioType
 				: '';
 
+		const knowledge_summary =
+			typeof window !== 'undefined' &&
+			sessionStorage.knowledge_summary != undefined
+				? JSON.parse(sessionStorage.knowledge_summary)
+				: '';
+
 		setIsSubmitting(true);
 
 		const formData = {
@@ -157,6 +164,7 @@ export default function Topic() {
 			scenario_type: scenarioType,
 			generation_mode: generationMode,
 			search_online: searchOnlineScope,
+			knowledge_summary: knowledge_summary,
 		};
 
 		sessionStorage.setItem('topic', formData.topic);
@@ -167,6 +175,33 @@ export default function Topic() {
 			JSON.stringify(selectedResources),
 		);
 		//sessionStorage.setItem('schoolTemplate', schoolTemplate);
+
+		if (selectedResources && selectedResources.length > 0) {
+			try {
+				console.log('resources', selectedResources);
+				console.log('summarize resources');
+				const knowledge_summary = await ResourceService.summarizeResource(
+					project_id,
+					selectedResources.map((r: Resource) => r.id),
+					topic,
+					audience,
+					language,
+					searchOnlineScope,
+					token,
+				);
+				sessionStorage.setItem(
+					'knowledge_summary',
+					JSON.stringify(knowledge_summary),
+				);
+				formData.knowledge_summary = knowledge_summary;
+				updateProject('knowledge_summary', knowledge_summary);
+				console.log('knowledge_summary', knowledge_summary);
+			} catch (error) {
+				console.error('Error summarizing resources', error);
+			}
+		} else {
+			console.log('no need to summarize resources');
+		}
 
 		try {
 			const response = await fetch('/api/outlines', {
