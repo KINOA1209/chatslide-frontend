@@ -686,20 +686,21 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						/>
 					</Panel> :
 					<>
-					<div className='hidden sm:block fixed bottom-10 right-10 cursor-pointer z-50'>
-						<ButtonWithExplanation
-							button={
-								<DrLambdaAIAssistantIcon
-									onClick={toggleChatWindow}
-								></DrLambdaAIAssistantIcon>
-							}
-							explanation='AI Assistant'
-						/>
-					</div>
-					<Panel>
-						{/* balance pos of slide */}
-						<div className='hidden lg:flex w-[9rem]'></div>
-					</Panel>
+						{!isViewing &&
+							<div className='hidden sm:block fixed bottom-10 right-10 cursor-pointer z-50'>
+								<ButtonWithExplanation
+									button={
+										<DrLambdaAIAssistantIcon
+											onClick={toggleChatWindow}
+										></DrLambdaAIAssistantIcon>
+									}
+									explanation='AI Assistant'
+								/>
+							</div>}
+						<Panel>
+							{/* balance pos of slide */}
+							<div className='hidden lg:flex w-[9rem]'></div>
+						</Panel>
 					</>
 				}
 			</div>
