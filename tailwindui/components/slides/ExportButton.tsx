@@ -7,11 +7,7 @@ import PaywallModal from '../paywallModal';
 import { BigGrayButton, DropDown } from '../button/DrlambdaButton';
 import {
 	FaDownload,
-	FaFilePdf,
 	FaRegFilePdf,
-	FaRing,
-	FaSlideshare,
-	FaTruckLoading,
 } from 'react-icons/fa';
 import { generatePdf } from '../utils/DownloadImage';
 import ProjectService from '@/services/ProjectService';
@@ -19,6 +15,8 @@ import { useUser } from '@/hooks/use-user';
 import { RiSlideshow2Fill } from 'react-icons/ri';
 import { useProject } from '@/hooks/use-project';
 import { sleep } from '../utils/sleep';
+import Modal from '../ui/Modal';
+import { GoDownload } from 'react-icons/go';
 
 interface ExportToPdfProps {
 	slides: Slide[];
@@ -37,7 +35,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const { isPaidUser, token } = useUser();
 	const { project } = useProject();
-	const [showDropdown, setShowDropdown] = useState(false);
+	const [showModal, setShowModal] = useState(false);
 
 	async function exportToPdfFrontend() {
 		const file = await generatePdf(topic || '', exportSlidesRef, slides.length);
@@ -60,7 +58,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 	const handleExport = async (type: string, frontend: boolean) => {
 		if (!project) return;
 
-		setShowDropdown(false);
+		setShowModal(false);
 
 		setDownloading(true);
 		if (frontend) {
@@ -109,17 +107,26 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 				)}
 
 				<div className='h-[36px] flex flex-col items-center gap-2'>
-					<BigGrayButton
-						bgColor='bg-Gray'
-						isSubmitting={downloading}
-						onClick={() => setShowDropdown(!showDropdown)}
-					>
-						<FaDownload />
-						Export to PDF / PPTX
-					</BigGrayButton>
+					<GoDownload
+						style={{
+							strokeWidth: '1',
+							flex: '1',
+							width: '1.5rem',
+							height: '1.5rem',
+							fontWeight: 'bold',
+							color: '#2943E9',
+						}}
+						className={downloading ? 'animate-spin' : ''}
+						onClick={() => setShowModal(!showModal)}
+					/>
 
-					{showDropdown && (
-						<div className='flex flex-col gap-2 bg-gray-100 rounded-xl shadow-md p-2 z-30'>
+					{showModal && (
+						<Modal
+							showModal={showModal}
+							setShowModal={setShowModal}
+							title='Export to PDF / PPTX'
+							description='Choose the format and quality of the export.'
+						>
 							<BigGrayButton
 								onClick={() => handleExport('pdf', true)}
 								isSubmitting={downloading}
@@ -151,7 +158,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 								<RiSlideshow2Fill />
 								<span>PPTX {!isPaidUser && '🔒'}</span>
 							</BigGrayButton>
-						</div>
+						</Modal>
 					)}
 				</div>
 			</div>
