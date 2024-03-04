@@ -53,6 +53,7 @@ import { FaTimes } from 'react-icons/fa';
 import ClickableLink from '../ui/ClickableLink';
 import { TextLabel } from '../ui/GrayLabel';
 import { GoEyeClosed } from 'react-icons/go';
+import Project from '@/models/Project';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -443,7 +444,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		}
 	};
 
-	if (!slides || slides.length === 0 || !project) {
+	if (!slides || slides.length === 0) {
 		return <></>;
 	}
 
@@ -459,76 +460,76 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						startTour={startTour}
 						onlyShowTutorial={false}
 					>
-						{!isViewing && (
-							<ChangeTemplateOptions
-								currentTemplate={slides[slideIndex].template}
-								templateOptions={Object.keys(availableTemplates)}
-								onChangeTemplate={selectTemplate}
-							/>
+
+						{!isViewing && slideIndex != 0 && (
+							<>
+								<AddSlideButton
+									addPage={handleAddPage}
+									currentSlideIndex={slideIndex}
+								/>
+								<DeleteSlideButton
+									deletePage={handleDeletePage}
+									currentSlideIndex={slideIndex}
+								/>
+
+								<div className='h-8 w-0.5 bg-gray-200'></div>
+
+								<ChangeTemplateOptions
+									currentTemplate={slides[slideIndex].template}
+									templateOptions={Object.keys(availableTemplates)}
+									onChangeTemplate={selectTemplate}
+								/>
+								<LayoutChanger
+									openModal={openModal}
+									showLayout={showLayout}
+									closeModal={closeModal}
+									currentSlideIndex={slideIndex}
+									// templateSamples={templateSamples}
+									slides={slides}
+									handleSlideEdit={handleSlideEdit}
+									availableLayouts={availableLayouts}
+								/>
+								{isPaidUser &&
+									<ButtonWithExplanation
+										button={
+											<button
+												onClick={() => setIsShowingLogo(!isShowingLogo)}
+											>
+												<GoEyeClosed
+													style={{
+														strokeWidth: '1',
+														flex: '1',
+														width: '1.5rem',
+														height: '1.5rem',
+														fontWeight: 'bold',
+														color: '#2943E9',
+													}}
+												/>
+											</button>
+										}
+										explanation={isShowingLogo ? 'Remove Logo' : 'Show Logo'}
+									></ButtonWithExplanation>}
+							</>
 						)}
 
-						{isPaidUser && !isViewing &&
-							<ButtonWithExplanation
-								button={
-									<button
-										onClick={() => setIsShowingLogo(!isShowingLogo)}
-									>
-										<GoEyeClosed
-											style={{
-												strokeWidth: '1',
-												flex: '1',
-												width: '1.5rem',
-												height: '1.5rem',
-												fontWeight: 'bold',
-												color: '#2943E9',
-											}}
-										/>
-									</button>
-								}
-								explanation={isShowingLogo ? 'Remove Logo' : 'Show Logo'}
-							></ButtonWithExplanation>}
+						<div className='h-8 w-0.5 bg-gray-200'></div>
 
 						<ButtonWithExplanation
 							button={<PresentButton openPresent={openPresent} />}
 							explanation='Present'
 						/>
 
-						{!isViewing && (
-							<LayoutChanger
-								openModal={openModal}
-								showLayout={showLayout}
-								closeModal={closeModal}
-								currentSlideIndex={slideIndex}
-								// templateSamples={templateSamples}
-								slides={slides}
-								handleSlideEdit={handleSlideEdit}
-								availableLayouts={availableLayouts}
-							/>
-						)}
-
-						{!isViewing && slideIndex != 0 && (
-							<AddSlideButton
-								addPage={handleAddPage}
-								currentSlideIndex={slideIndex}
-							/>
-						)}
-
-						{!isViewing && slideIndex != 0 && (
-							<DeleteSlideButton
-								deletePage={handleDeletePage}
-								currentSlideIndex={slideIndex}
-							/>
-						)}
-
 						{!isViewing &&
 							<ExportToPdfButton slides={slides} exportSlidesRef={exportSlidesRef} />
 						}
-						<ShareToggleButton
-							setShare={updateIsShared}
-							share={isShared}
-							project={project}
-							host={host}
-						/>
+
+						{project &&
+							<ShareToggleButton
+								setShare={updateIsShared}
+								share={isShared}
+								project={project}
+								host={host}
+							/>}
 					</ActionsToolBar>
 				</div>
 			)}

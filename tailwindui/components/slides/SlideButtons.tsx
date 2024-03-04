@@ -9,7 +9,7 @@ import {
 import { BigGrayButton, DropDown } from '../button/DrlambdaButton';
 import { TextLabel } from '../ui/GrayLabel';
 import { useUser } from '@/hooks/use-user';
-import { GoPlus, GoShare, GoTrash } from 'react-icons/go';
+import { GoPlay, GoPlus, GoShare, GoTrash } from 'react-icons/go';
 import { LuPaintbrush, LuPresentation, LuTrash2 } from 'react-icons/lu';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import Modal from '../ui/Modal';
@@ -17,6 +17,7 @@ import ClickableLink from '../ui/ClickableLink';
 import PostPlatformConfigs from '@/components/button/PostPlatformConfig';
 import Project from '@/models/Project';
 import { TemplateSelector } from '@/app/(feature)/workflow-edit-design/page';
+import { FiPlay } from 'react-icons/fi';
 
 type SaveButtonProps = {
 	saveSlides: () => void;
@@ -50,7 +51,7 @@ export const PresentButton: React.FC<PresentButtonProps> = ({
 				<button
 					onClick={openPresent}
 				>
-					<LuPresentation
+					<FiPlay
 						style={{
 							strokeWidth: '2',
 							flex: '1',

@@ -101,7 +101,8 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 				explanation={'User tutorial'}
 			></ButtonWithExplanation>
 
-			<div style={{ backgroundColor: '#C6C6C6', width: '2px' }}></div>
+			<div className='h-8 w-0.5 bg-gray-200'></div>
+
 			<ButtonWithExplanation
 				button={
 					<button
@@ -128,7 +129,6 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 				explanation={'Undo'}
 			></ButtonWithExplanation>
 
-			<div style={{ backgroundColor: '#C6C6C6', width: '2px' }}></div>
 			<ButtonWithExplanation
 				button={
 					<button
@@ -155,7 +155,7 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 				explanation={'Redo'}
 			></ButtonWithExplanation>
 
-			{ children }
+			{children}
 
 			{showTutorialPrompt && (
 				<StartATourGuidePromptWindow
