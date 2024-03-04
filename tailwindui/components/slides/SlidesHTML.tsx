@@ -5,7 +5,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ExportToPdfButton from './ExportButton';
 import { ShareToggleButton } from '@/components/slides/SlideButtons';
-import PostDropDown from '../button/PostDropDown';
 import './slidesHTML.css';
 import { availableTemplates } from '@/components/slides/slideTemplates';
 import { LayoutKeys } from '@/components/slides/slideLayout';
@@ -443,7 +442,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	}
 
 	return (
-		<div className='w-full max-h-full flex flex-col items-start justify-start gap-4 relative'>
+		<div className='w-full max-h-full flex flex-col items-start justify-start py-4 gap-4 relative'>
 			<div className='w-full flex flex-row items-center justify-center'>
 				<ActionsToolBar
 					undo={undoChange}
@@ -514,8 +513,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					/>
 
 					{!isViewing &&
-						<ExportToPdfButton slides={slides} exportSlidesRef={exportSlidesRef} />
-					}
+						<ExportToPdfButton slides={slides} exportSlidesRef={exportSlidesRef} hasScript={showScript} />}
 
 					{project &&
 						<ShareToggleButton
@@ -617,6 +615,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						)}
 					</div>
 
+					{/* transcripotList */}
+					{showScript && (
+						<ScriptEditor
+							slides={slides}
+							updateSlidePage={updateSlidePage}
+							currentSlideIndex={slideIndex}
+						/>
+					)}
+
 					{/* Slide pages indicator */}
 					<div className='pt-2 flex flex-row items-center'>
 						<div className='block lg:hidden'>
@@ -635,15 +642,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							/>
 						</div>
 					</div>
-
-					{/* transcripotList */}
-					{showScript && (
-						<ScriptEditor
-							slides={slides}
-							updateSlidePage={updateSlidePage}
-							currentSlideIndex={slideIndex}
-						/>
-					)}
 
 					{/* horizontal  */}
 					<div className='block xl:hidden max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>

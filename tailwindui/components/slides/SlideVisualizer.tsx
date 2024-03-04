@@ -1,13 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import ClickableLink from '@/components/ui/ClickableLink';
-import ExportToPdfButton from './ExportButton';
 import dynamic from 'next/dynamic';
-import { ShareToggleButton } from '@/components/slides/SlideButtons';
 import { useRouter } from 'next/navigation';
-import { TextLabel } from '../ui/GrayLabel';
-import PostDropDown from '../button/PostDropDown';
-import { FaTimes } from 'react-icons/fa';
 import { useSlides } from '@/hooks/use-slides';
 import VideoService from '@/services/VideoService';
 import { useUser } from '@/hooks/use-user';

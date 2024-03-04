@@ -16,15 +16,18 @@ import { sleep } from '../utils/sleep';
 import Modal from '../ui/Modal';
 import { GoDownload } from 'react-icons/go';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
+import SaveScriptsButton from './script/SaveScriptsButton';
 
 interface ExportToPdfProps {
 	slides: Slide[];
 	exportSlidesRef: React.RefObject<HTMLDivElement>;
+	hasScript?: boolean;
 }
 
 const ExportToFile: React.FC<ExportToPdfProps> = ({
 	slides,
 	exportSlidesRef,
+	hasScript,
 }) => {
 	const topic =
 		typeof sessionStorage !== 'undefined'
@@ -164,6 +167,9 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 						<RiSlideshow2Fill />
 						<span>PPTX {!isPaidUser && '🔒'}</span>
 					</BigGrayButton>
+
+					{ hasScript && 
+					<SaveScriptsButton slides={slides}/>}
 				</Modal>
 			)}
 		</>
