@@ -40,6 +40,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 	const [resources, setResources] = useState<Resource[]>([]);
 	const { token } = useUser();
 	const [isUploading, setIsUploading] = useState(false);
+	const selectedResourcesRef = useRef<HTMLDivElement>(null);
 
 	const searchOnlineOptions: RadioButtonOption[] = [
 		{ value: 'none', text: 'Disabled', icon: <IoIosRemoveCircleOutline /> },
@@ -53,8 +54,9 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 		try {
 			const newResource = await ResourceService.uploadResource(file, token, 'summary');
 			setResources([newResource, ...resources]);
-			if (setSelectedResources && selectedResources)
+			if (setSelectedResources && selectedResources){
 				setSelectedResources([newResource, ...selectedResources]);
+			}
 		} catch (error) {
 			console.error(error);
 			if (error instanceof Error) {
@@ -102,6 +104,16 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 			console.log('dropped');
 		}
 	};
+
+	const scrollToSelectedResources = () => {
+		if (selectedResourcesRef.current) {
+			selectedResourcesRef.current.scrollIntoView({ behavior: 'smooth' });
+		}
+	}
+
+	useEffect(() => {
+		scrollToSelectedResources();
+	}, [selectedResources]);
 
 	return (
 		<Card>
@@ -178,7 +190,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 			</div>
 
 			{selectedResources.length > 0 && (
-				<div>
+				<div ref={selectedResourcesRef}>
 					<Instruction>Your selected sources:</Instruction>
 					<SelectedResourcesList
 						selectedResources={selectedResources}
