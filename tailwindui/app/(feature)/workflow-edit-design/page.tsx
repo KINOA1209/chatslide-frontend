@@ -98,7 +98,7 @@ export default function DesignPage() {
 				background_ids={selectedBackground.map((resource) => resource.id)}
 			/>
 
-			<div className='w-full flex flex-col items-center md:my-[6rem]'>
+			<div className='w-full flex flex-col items-center'>
 				{/* design */}
 				<div
 					className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1 font-creato-regular'
