@@ -32,7 +32,7 @@ import {
 	onResizeStart,
 	onResizeStop,
 	onMouseLeave,
-} from './dragAndResizeFunction';
+} from './drag_resize/dragAndResizeFunction';
 import { useSlides } from '@/hooks/use-slides';
 export type LayoutKeys =
 	| ''
@@ -45,6 +45,8 @@ export type LayoutKeys =
 	| 'Col_1_img_1_layout'
 	| 'Col_2_img_2_layout'
 	| 'Col_3_img_3_layout';
+import ResizeSlider from './drag_resize/resize_slider';
+import '@/components/slides/drag_resize/dragAndResizeCSS.css';
 
 // Extend the interface with new fields
 interface MainSlideProps extends BaseMainSlideProps {
@@ -149,56 +151,71 @@ export const Cover_img_1_layout = ({
 			else newIsCharts[index] = ischart;
 			update_callback(newImgs, newIsCharts);
 		};
-	const { slideIndex, slides } = useSlides();
-	const imageRefs = Array(3)
-		.fill(null)
-		.map(() => useRef<HTMLDivElement>(null));
-	const [isDraggingOrResizing, setIsDraggingOrResizing] = useState(false); //distinguish openModal and drag
-	const [hasInteracted, setHasInteracted] = useState(false);
-	const [imagesDimensions, setImagesDimensions] = useState<
-		(
-			| ImagesPosition
-			| { x?: number; y?: number; height?: number; width?: number }
-		)[]
-	>([]);
-	const [startPos, setStartPos] = useState<Array<{ x: number; y: number }>>(
-		Array(3).fill({ x: 0, y: 0 }),
-	);
+	// const { slideIndex, slides } = useSlides();
+	// const imageRefs = Array(3)
+	// 	.fill(null)
+	// 	.map(() => useRef<HTMLDivElement>(null));
+	// const [isDraggingOrResizing, setIsDraggingOrResizing] = useState(false); //distinguish openModal and drag
+	// const [hasInteracted, setHasInteracted] = useState(false);
+	// const [imagesDimensions, setImagesDimensions] = useState<
+	// 	(
+	// 		| ImagesPosition
+	// 		| { x?: number; y?: number; height?: number; width?: number }
+	// 	)[]
+	// >([]);
+	// const [startPos, setStartPos] = useState<Array<{ x: number; y: number }>>(
+	// 	Array(3).fill({ x: 0, y: 0 }),
+	// );
+	// const [isImgEditMode, setIsImgEditMode] = useState(false);
+	// const [showImgButton, setShowImgButton] = useState(false);
+	// const [zoomLevel, setZoomLevel] = useState(100);
 
-	//handler for drag and resize also autosave
-	const handleMouseLeave = onMouseLeave(
-		slideIndex,
-		imagesDimensions,
-		hasInteracted,
-		setHasInteracted,
-		handleSlideEdit,
-	);
-	const handleDragStart = onDragStart(
-		setIsDraggingOrResizing,
-		startPos,
-		setStartPos,
-		setHasInteracted,
-	);
-	const handleResizeStart = onResizeStart(
-		setIsDraggingOrResizing,
-		setHasInteracted,
-	);
-	const handleDragStop = onDragStop(
-		imagesDimensions,
-		setImagesDimensions,
-		startPos,
-		setIsDraggingOrResizing,
-	);
-	const handleResizeStop = onResizeStop(
-		imagesDimensions,
-		setImagesDimensions,
-		setIsDraggingOrResizing,
-	);
+	// //handler for drag and resize also autosave
+	// const handleSave = onMouseLeave(
+	// 	slideIndex,
+	// 	imagesDimensions,
+	// 	hasInteracted,
+	// 	setHasInteracted,
+	// 	setShowImgButton,
+	// 	handleSlideEdit,
+	// );
+	// const handleDragStart = onDragStart(
+	// 	setIsDraggingOrResizing,
+	// 	startPos,
+	// 	setStartPos,
+	// 	setHasInteracted,
+	// );
+	// const handleResizeStart = onResizeStart(
+	// 	setIsDraggingOrResizing,
+	// 	setHasInteracted,
+	// );
+	// const handleDragStop = onDragStop(
+	// 	imagesDimensions,
+	// 	setImagesDimensions,
+	// 	startPos,
+	// 	setIsDraggingOrResizing,
+	// );
+	// const handleResizeStop = onResizeStop(
+	// 	imagesDimensions,
+	// 	setImagesDimensions,
+	// 	setIsDraggingOrResizing,
+	// );
 
-	useEffect(() => {
-		const initializedData = initializeImageData(images_position, imageRefs);
-		setImagesDimensions(initializedData);
-	}, [images_position]);
+	// const toggleImgEditMode = () => {
+	// 	setIsImgEditMode(!isImgEditMode);
+	// };
+
+	// const applyZoom = () => {
+	// 	handleSave()
+	// 	setIsImgEditMode(false)
+	// };
+
+	// useEffect(() => {
+	// 	const initializedData = initializeImageData(images_position, imageRefs);
+	// 	setImagesDimensions(initializedData);
+	// }, [images_position]);
+
+	//console.log(showImgButton)
 	return (
 		<div style={layoutElements.canvaCSS}>
 			<div style={layoutElements.columnCSS}>
@@ -216,10 +233,21 @@ export const Cover_img_1_layout = ({
 				<div style={layoutElements.titleCSS}>{title}</div>
 			</div>
 
-			<div style={layoutElements.imageContainerCSS}>
-				<div style={layoutElements.rndContainerCSS} ref={imageRefs[0]}>
+			<div style={{
+				...layoutElements.imageContainerCSS,
+				
+			}}>
+				{/* <div 
+					className={`${isImgEditMode ? "rndContainerWithBorder" : ""}`}
+					style={{
+						...layoutElements.rndContainerCSS,
+						overflow: isImgEditMode ? 'visible' : 'hidden'
+					}}
+					ref={imageRefs[0]}
+				>
+					
 					<Rnd
-						style={layoutElements.rndCSS}
+						style={{...layoutElements.rndCSS,}}
 						size={{
 							width:
 								imagesDimensions[0]?.width ??
@@ -234,12 +262,15 @@ export const Cover_img_1_layout = ({
 							x: imagesDimensions[0]?.x ?? 0,
 							y: imagesDimensions[0]?.y ?? 0,
 						}}
+						enableResizing={canEdit && showImgButton && isImgEditMode}
+						disableDragging={!canEdit || !showImgButton || !isImgEditMode}
 						onDragStart={handleDragStart(0)}
 						onDragStop={handleDragStop(0)}
 						onResizeStart={handleResizeStart}
 						onResizeStop={handleResizeStop(0)}
-						onMouseLeave={handleMouseLeave}
-					>
+						onMouseEnter={() => setShowImgButton(true)}
+						//onMouseLeave={handleMouseLeave}
+					> */}
 						<ImgModule
 							imgsrc={imgs[0]}
 							updateSingleCallback={updateImgAtIndex(0)}
@@ -249,10 +280,37 @@ export const Cover_img_1_layout = ({
 							currentSlideIndex={currentSlideIndex}
 							currentContentIndex={0}
 							canEdit={canEdit}
-							isDraggingOrResizing={isDraggingOrResizing}
+							images_position={images_position}
+							layoutElements={layoutElements}
+							// isDraggingOrResizing={isDraggingOrResizing}
+							// isImgEditMode={isImgEditMode}
+							// setShowImgButton={setShowImgButton}
+							// zoomLevel={zoomLevel}
 						/>
-					</Rnd>
-				</div>
+					{/* </Rnd> */}
+					{/* {showImgButton && canEdit && (
+							<button
+									onClick={toggleImgEditMode}
+									style={{
+										position: 'absolute',
+										top: '2%',
+										right: '50%',
+										transform: 'translate(50%, -50%)',
+										zIndex: 53,
+									}}
+									className="bg-gray-300 px-2 h-5 rounded-full shadow-lg border border-gray-300 flex items-center justify-center"
+								>
+									&middot;&middot;&middot;
+							</button>
+					)}
+					{isImgEditMode && canEdit && (
+							<ResizeSlider
+								zoomLevel={zoomLevel}
+								setZoomLevel={setZoomLevel}
+								applyZoom={applyZoom}
+							/>
+					)} */}
+				{/* </div> */}
 			</div>
 
 			<div style={layoutElements.visualElementsCSS}>

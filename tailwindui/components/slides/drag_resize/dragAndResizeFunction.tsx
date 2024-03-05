@@ -2,7 +2,7 @@ import ImagesPosition from "@/models/ImagesPosition";
 
 export const initializeImageData = (
     images_position: Array<ImagesPosition | {}>,
-    refs: React.RefObject<HTMLElement>[]
+    refs: React.RefObject<HTMLElement>[],
   ): ImagesPosition[] => {
     const positions = images_position || [{}, {}, {}];
     return positions.map((pos, index) => {
@@ -11,15 +11,6 @@ export const initializeImageData = (
             return pos as ImagesPosition;
         }
         else {
-            // const ref = refs[index]?.current;
-            // if (ref) {
-            //     // Obtain the dimensions from the ref
-            //     const { offsetWidth: width, offsetHeight: height } = ref;
-            //     console.log(width, height)
-            //     if (width !== 0 && height !== 0) {
-            //         return { x: 0, y: 0, width: width, height: height };
-            //     }
-            // }
             return {};
         }
     });
@@ -31,12 +22,14 @@ export const onMouseLeave = (
     imagesDimensions: (ImagesPosition | { x?: number; y?: number; height?: number; width?: number })[],
     hasInteracted: boolean,
     setHasInteracted: React.Dispatch<React.SetStateAction<boolean>>,
+    setShowImgButton: React.Dispatch<React.SetStateAction<boolean>>,
     handleSlideEdit:Function,
 ) => () => {
     if (hasInteracted) {
         handleSlideEdit([imagesDimensions], slideIdx, ['images_position'])
         setHasInteracted(false);
     }
+    setShowImgButton(false);
 };
 
 //handle function when drag start
