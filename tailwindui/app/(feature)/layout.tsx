@@ -27,7 +27,7 @@ export default function WorkflowLayout({
 					{/* Content */}
 					{children}
 				</main>
-				<WorkflowFooter />
+				{/* <WorkflowFooter /> */}
 			</div>
 		</div>
 	);

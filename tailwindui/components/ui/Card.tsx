@@ -9,7 +9,7 @@ const Card: React.FC<{
 	if (!show) return null;
 
 	return (
-		<div className='w-full rounded-lg p-2 m-2 sm:m-4 border border-2 border-gray-200 flex flex-col justify-start gap-y-2 relative'>
+		<div className='w-full rounded-lg p-2 sm:p-4 m-2 sm:m-4 border border-2 border-gray-200 flex flex-col justify-start gap-y-2 relative'>
 			{canClose && (
 				<button
 					className='absolute top-2 right-2 focus:outline-none'

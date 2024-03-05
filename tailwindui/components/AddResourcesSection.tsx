@@ -15,7 +15,7 @@ import { useUser } from '@/hooks/use-user';
 import RadioButton, { RadioButtonOption } from './ui/RadioButton';
 import { FaInternetExplorer, FaWikipediaW } from 'react-icons/fa';
 import { IoIosRemoveCircle, IoIosRemoveCircleOutline } from 'react-icons/io';
-import { Instruction, Explanation } from './ui/Text';
+import { Instruction, Explanation, BigTitle } from './ui/Text';
 import Card from './ui/Card';
 import { determineSupportedFormats } from './file/FileUploadButton';
 
@@ -139,19 +139,11 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 
 	return (
 		<Card>
-			<ToastContainer />
 			<div>
-				{isRequired ? (
-					<div className='title2'>
-						<p className='text-3xl'>Import Sources</p>
-						<p id='after2'> (Required)</p>
-					</div>
-				) : (
-					<div className='title2'>
-						<p className='text-3xl'>Supporting Sources</p>
-						<p id='after2'> (Optional)</p>
-					</div>
-				)}
+				{isRequired ?
+					<BigTitle>Import Sources</BigTitle> :
+					<BigTitle>Supporting Sources</BigTitle>
+				}
 				<Explanation>
 					{isRequired
 						? 'Add any sources that would support your topic. This could be online sources, files, or links.'

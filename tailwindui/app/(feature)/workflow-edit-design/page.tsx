@@ -18,6 +18,7 @@ import Card from '@/components/ui/Card';
 import ActionsToolBar from '@/components/ui/ActionsToolBar';
 import useTourStore from '@/components/user_onboarding/TourStore';
 import TemplateSelector from './TemplateSelector';
+import { BigTitle, Explanation, Title } from '@/components/ui/Text';
 // const { changeTemplate } = useSlides();
 
 
@@ -104,14 +105,11 @@ export default function DesignPage() {
 					id='SummaryStep-4'
 				>
 					<Card>
-						<div className='title2'>
-							<p className='text-3xl'>Design</p>
-							<p id='after2'> (Optional)</p>
-						</div>
-						<span className='text-md text-gray-500'>
+						<BigTitle>Design</BigTitle>
+						<Explanation>
 							Customize the design for your slide, you can also skip this step
 							and use the default
-						</span>
+						</Explanation>
 						{/* tempalte */}
 						<TemplateSelector template={template} setTemplate={setTemplate} />
 						{/* images */}

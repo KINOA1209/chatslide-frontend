@@ -22,6 +22,7 @@ import ActionsToolBar from '@/components/ui/ActionsToolBar';
 import useTourStore from '@/components/user_onboarding/TourStore';
 import Card from '@/components/ui/Card';
 import {
+	BigTitle,
 	ErrorMessage,
 	Explanation,
 	ExplanationPopup,
@@ -343,11 +344,11 @@ export default function Topic() {
 					<Card>
 						{/* title */}
 						<div className='title1'>
-							<p className='text-3xl'>Summary</p>
-							<p id='after1'>
+							<BigTitle>Summary</BigTitle>
+							{/* <p id='after1'>
 								{' '}
 								{generationMode === 'from_topic' ? '(Required)' : '(Optional)'}
-							</p>
+							</p> */}
 							<Explanation>
 								To get started, give us some high-level intro about your
 								project.

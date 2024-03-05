@@ -26,8 +26,9 @@ import { useUser } from '@/hooks/use-user';
 import useHydrated from '@/hooks/use-hydrated';
 import SessionStorage from '@/components/utils/SessionStorage';
 import Card from '@/components/ui/Card';
-import { Explanation, Instruction } from '@/components/ui/Text';
+import { BigTitle, Explanation, Instruction } from '@/components/ui/Text';
 import { Panel } from '@/components/layout/Panel';
+import { Title } from 'chart.js';
 
 const Profile = () => {
 	const { username, email, token, setUsername } = useUser();
@@ -120,9 +121,9 @@ const Profile = () => {
 	return (
 		<>
 			<div className='w-full'>
-				<Instruction>
+				<BigTitle>
 					Hi, {userFirstName()}
-				</Instruction>
+				</BigTitle>
 			</div>
 			<div className='w-full'>
 				<Instruction>
@@ -326,7 +327,7 @@ const CreditHistory = () => {
 			<Instruction>
 				Credit Balance
 			</Instruction>
-			<div className='w-fit text-[#212121] text-[36px]'>{credits}</div>
+			<BigTitle><>{credits}</></BigTitle>
 		</div>
 	);
 };
