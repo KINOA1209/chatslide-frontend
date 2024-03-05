@@ -59,6 +59,6 @@ export const Fun_Education_001_TemplateThemeConfig: ThemeElements = {
 		fontWeight: 'normal',
 		fontFamily: 'Helvetica Neue', // font-nimbus-sans-regular
 		lineHeight: 1.3, // leading-9 is equivalent to a line height of 1.5
-		color: '##3C3C3C', // text-zinc-800 color
+		color: '#3C3C3C', // text-zinc-800 color
 	},
 };

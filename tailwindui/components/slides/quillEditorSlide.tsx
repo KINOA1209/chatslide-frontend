@@ -34,7 +34,7 @@ Font.whitelist = [
 	'Arimo',
 	'Arial',
 	'Big Shoulders Text',
-	'Brygada 1918',
+	'Brygada 1918 SemiBold',
 	'Caveat',
 	'Caveat Medium',
 	'Caveat Regular',
