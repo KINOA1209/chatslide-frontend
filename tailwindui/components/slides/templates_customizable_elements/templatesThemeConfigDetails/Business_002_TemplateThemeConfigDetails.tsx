@@ -35,7 +35,7 @@ export const Business_002_TemplateThemeConfig: ThemeElements = {
 		'text-[16pt] font-Creato-Display-Medium font-normal leading-[100%]',
 	userNameFontColor: 'text-[#6B7A2D]',
 	headFontCSS: {
-		fontSize: '48pt',
+		fontSize: '30pt',
 		fontWeight: 'bold',
 		fontFamily: 'Big Shoulders Text',
 		lineHeight: 1.2,

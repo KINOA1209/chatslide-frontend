@@ -201,7 +201,7 @@ class ProjectService {
 				'Some more content here',
 				'Even more content here',
 			];
-			slide.images = slideData.images || [];
+			slide.images = slideData.images.filter((img: string) => (img && img !== '')) || [];
 			slide.chart = slideData.chart;
 			slide.is_chart = slideData.is_chart || [false, false, false];
 			slide.images_position = slideData.images_position || [{}, {}, {}];

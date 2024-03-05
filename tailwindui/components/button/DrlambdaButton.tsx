@@ -145,7 +145,7 @@ export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({
 	const router = useRouter();
 	return (
 		<div
-			className='h-[36px] sm:h-[36px] flex-row justify-center items-center gap-4 cursor-pointer flex rounded-3xl bg-white bg-opacity-0'
+			className='h-[36px] sm:h-[36px] min-w-[10rem] lg:min-w-[12rem] flex-row justify-center items-center gap-4 cursor-pointer flex rounded-3xl bg-white bg-opacity-0'
 			onClick={() => router.push(href)}
 		>
 			<FaChevronLeft style={{ color: '#FFFFFF' }} />

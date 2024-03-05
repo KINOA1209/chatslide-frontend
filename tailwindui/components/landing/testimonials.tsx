@@ -14,9 +14,9 @@ export default function Testimonails() {
 			title='Embedded post'
 		></iframe>,
 		<TiktokEmbed src='https://www.tiktok.com/embed/7307629718143012102' />,
-		<div className='relative w-full scale-[1.05]'>
-			<TwitterTweetEmbed tweetId={'1698559011107602603'} />
-		</div>,
+		// <div className='relative w-full scale-[1.05]'>
+		// 	<TwitterTweetEmbed tweetId={'1698559011107602603'} />
+		// </div>,
 		<TiktokEmbed src='https://www.tiktok.com/embed/7304055660713381162' />,
 		<iframe
 			className='w-full'

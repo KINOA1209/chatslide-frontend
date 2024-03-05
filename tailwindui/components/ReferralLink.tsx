@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // import 'aos/dist/aos.css'
 import ClickableLink from '@/components/ui/ClickableLink';
 import { useUser } from '@/hooks/use-user';
+import { Explanation } from './ui/Text';
 
 const ReferralLink: React.FC = () => {
 	const [host, setHost] = useState('https://drlambda.ai');
@@ -52,9 +53,9 @@ const ReferralLink: React.FC = () => {
 	return (
 		<div className='w-fit mx-auto'>
 			<ClickableLink link={host + referralLink} />
-			<div className='text-center text-[#707C8A] text-[16px]'>
+			<Explanation>
 				You and your friend will both get 50 ⭐️credits.
-			</div>
+			</Explanation>
 		</div>
 	);
 };

@@ -51,11 +51,13 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
 						socialPostSlide={socialPostSlides}
 						currentSlideIndex={finalSlideIndex}
 					/>
-					<ShareToggleButton
-						setShare={updateIsShared}
-						share={isShared}
-						project_id={project?.id || ''}
-					/>
+					{project &&
+						<ShareToggleButton
+							setShare={updateIsShared}
+							share={isShared}
+							project={project}
+							host={host}
+						/>}
 					<PostDropDown
 						slides={socialPostSlides}
 						post_type='socialpost'

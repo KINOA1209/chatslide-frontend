@@ -116,6 +116,12 @@ const Header = ({
 						<div className='w-1/3 hidden sm:flex'>
 							<div className='flex-grow flex w-full justify-between items-center'>
 								<a
+									href='#testimonials'
+									className='whitespace-nowrap cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-medium'
+								>
+									<span>Testimonials</span>
+								</a>
+								<a
 									href='#scenarios'
 									className='cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-medium'
 								>
@@ -126,12 +132,6 @@ const Header = ({
 									className='whitespace-nowrap cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-medium'
 								>
 									<span>Features</span>
-								</a>
-								<a
-									href='#testimonials'
-									className='whitespace-nowrap cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-medium'
-								>
-									<span>Testimonials</span>
 								</a>
 								<a
 									href='#pricing'
