@@ -172,7 +172,7 @@ export default function Topic_SocialPost() {
 		);
 
 		try {
-			const outlinesJson = await callSocialPost(formData as FormatData);
+			const response = await callSocialPost(formData as FormatData);
 			//console.log(outlinesJson)
 			//const searchImagesResponse = await callSearchImages(JSON.stringify(formData.topic))
 			setIsSubmitting(false);
