@@ -14,6 +14,8 @@ import { FaTimes } from 'react-icons/fa';
 import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
 import { useSlides } from '@/hooks/use-slides';
 import { Blank, Loading } from '@/components/ui/Loading';
+import { Explanation, Instruction, Title } from '@/components/ui/Text';
+import Card from '@/components/ui/Card';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -150,23 +152,17 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 						</div>
 					</Blank>
 				) : (
-					<div className='flex flex-col h-full items-center justify-center gap-4'>
+					<div className='flex flex-col h-full items-center justify-center'>
 						{showDescription && project && project.description && (
-							<div className='hidden sm:flex sm:w-2/3 h-[10rem] text-gray-700 text-left m-2 gap-4'>
-								<div className='border border-gray-200 rounded-xl overflow-y-scroll p-2'>
-									<h1 className='text-2xl font-bold'>{project.topic}</h1>
-									<h2 className='text-lg font-semibold'>
+							<Card canClose={true}>
+								<div className='flex flex-row items-end gap-x-4'>
+									<Title>{project.topic}</Title>
+									<Instruction>
 										Created using DrLambda
-									</h2>
-									{project.description}
+									</Instruction>
 								</div>
-								<button
-									className='text-gray-500 hover:text-gray-700'
-									onClick={() => setShowDescription(false)}
-								>
-									<FaTimes />
-								</button>
-							</div>
+								<Explanation>{project.description}</Explanation>
+							</Card>
 						)}
 						{projectType === 'presentation' && (
 							<div className='w-full flex grow overflow-hidden'>
@@ -188,7 +184,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 					</div>
 				)}
 			</main>
-			<WorkflowFooter />
+			{/* <WorkflowFooter /> */}
 		</div>
 	);
 };

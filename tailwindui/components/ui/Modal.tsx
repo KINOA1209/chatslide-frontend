@@ -106,7 +106,7 @@ const Modal: React.FC<ModalProps> = ({
 						<div className='relative flex flex-col gap-y-4'>
 							{canClose && (
 								<button
-									className='absolute top-0 right-0 text-2xl focus:outline-none'
+									className='absolute top-0 right-0 text-xl focus:outline-none'
 									onClick={handleCloseModal}
 								>
 									<FaTimes className='text-gray-600 hover:text-gray-800' />

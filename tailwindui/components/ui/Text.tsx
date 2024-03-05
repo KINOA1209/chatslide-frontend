@@ -1,8 +1,12 @@
 import { QuestionExplainIcon } from '@/app/(feature)/icons';
 import React from 'react';
 
+const Title: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+	return <div className='text-neutral-800 text-xl font-bold py-1'>{children}</div>;
+};
+
 const Instruction: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-	return <div className='text-neutral-800 text-md py-2'>{children}</div>;
+	return <div className='text-neutral-800 text-md py-1'>{children}</div>;
 };
 
 const Explanation: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -40,4 +44,4 @@ const ExplanationPopup: React.FC<{ children: React.ReactNode }> = ({
 	);
 };
 
-export { Instruction, Explanation, ErrorMessage, ExplanationPopup };
+export { Title, Instruction, Explanation, ErrorMessage, ExplanationPopup };
