@@ -101,15 +101,6 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	const [loading, setLoading] = useState(false);
 	const { token } = useUser();
 
-	// Create a ref for the last message
-	const lastMessageRef = useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		if (lastMessageRef.current) {
-			lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
-		}
-	}, [chatHistory]);
-
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
 			event.preventDefault(); // Prevents the newline character in the input field
