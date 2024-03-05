@@ -38,19 +38,19 @@ export const pricingPlansMonthlyData = [
 		cta: 'Claim special offer',
 		link: '/signup',
 	},
-	{
-		title: 'ENTERPRISE',
-		price: 'Upon Request',
-		frequency: '',
-		features: [
-			'All features in Pro',
-			'Shared workspace',
-			'Customized branding',
-			'Want more feature? Contact us at contact@drlambda.ai for a demo or quote',
-		],
-		cta: 'Book a call',
-		link: 'https://calendly.com/quanlai',
-	},
+	// {
+	// 	title: 'ENTERPRISE',
+	// 	price: 'Upon Request',
+	// 	frequency: '',
+	// 	features: [
+	// 		'All features in Pro',
+	// 		'Shared workspace',
+	// 		'Customized branding',
+	// 		'Want more feature? Contact us at contact@drlambda.ai for a demo or quote',
+	// 	],
+	// 	cta: 'Book a call',
+	// 	link: 'https://calendly.com/quanlai',
+	// },
 ];
 
 export const pricingPlansYearlyData = [
@@ -93,17 +93,17 @@ export const pricingPlansYearlyData = [
 		cta: 'Claim special offer',
 		link: '/signup',
 	},
-	{
-		title: 'ENTERPRISE',
-		price: 'Upon Request',
-		frequency: '',
-		features: [
-			'All features in Pro',
-			'Shared workspace',
-			'Customized branding',
-			'Want more feature? Contact us at contact@drlambda.ai for a demo or quote',
-		],
-		cta: 'Book a call',
-		link: 'https://calendly.com/quanlai',
-	},
+	// {
+	// 	title: 'ENTERPRISE',
+	// 	price: 'Upon Request',
+	// 	frequency: '',
+	// 	features: [
+	// 		'All features in Pro',
+	// 		'Shared workspace',
+	// 		'Customized branding',
+	// 		'Want more feature? Contact us at contact@drlambda.ai for a demo or quote',
+	// 	],
+	// 	cta: 'Book a call',
+	// 	link: 'https://calendly.com/quanlai',
+	// },
 ];

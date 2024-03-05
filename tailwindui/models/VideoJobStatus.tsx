@@ -1,4 +1,4 @@
 export default interface VideoJobStatus {
-    job_status: string;
-    video_url: string;
+	job_status: string;
+	video_url: string;
 }

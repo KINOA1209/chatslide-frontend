@@ -1,15 +1,15 @@
 import {
-  FaFacebook,
+	FaFacebook,
 	FaInstagram,
 	FaLinkedin,
 	FaTiktok,
 	FaTwitter,
 	FaYoutube,
 } from 'react-icons/fa';
-import { BlackLogo, ColorLogo } from './logo';
+import { BlackLogo, ColorLogo } from '../ui/logo';
 
 const socialMediaBlock = (
-	<ul className='flex mb-4 md:order-1 md:ml-4 md:mb-0 justify-center'>
+	<ul className='flex md:order-1 md:ml-4 justify-center items-center'>
 		{/* Instagram */}
 		<li>
 			<a
@@ -45,7 +45,7 @@ const socialMediaBlock = (
 				aria-label='Twitter'
 			>
 				<div className='w-8 h-8 fill-current flex items-center justify-center'>
-          𝕏
+					𝕏
 				</div>
 			</a>
 		</li>
@@ -75,21 +75,20 @@ const socialMediaBlock = (
 				</div>
 			</a>
 		</li>
-    {/* facebook */}
-    <li className='ml-4'>
-      <a
-        href='https://www.facebook.com/profile.php?id=61556624723234'
-        target='_blank'
-        className='flex justify-center items-center text-gray-600 hover:text-gray-900 bg-white hover:bg-white-100 rounded-full shadow transition duration-150 ease-in-out'
-        aria-label='Facebook'
-      >
-        <div className='w-8 h-8 fill-current flex items-center justify-center'>
-          <FaFacebook />
-        </div>
-      </a>
-    </li>
+		{/* facebook */}
+		<li className='ml-4'>
+			<a
+				href='https://www.facebook.com/profile.php?id=61556624723234'
+				target='_blank'
+				className='flex justify-center items-center text-gray-600 hover:text-gray-900 bg-white hover:bg-white-100 rounded-full shadow transition duration-150 ease-in-out'
+				aria-label='Facebook'
+			>
+				<div className='w-8 h-8 fill-current flex items-center justify-center'>
+					<FaFacebook />
+				</div>
+			</a>
+		</li>
 	</ul>
-
 );
 
 export default function Footer() {
@@ -133,14 +132,14 @@ export default function Footer() {
 									Terms and Services
 								</a>
 							</li>
-              <li className='mb-2'>
-                <a
-                  href='https://blog.drlambda.ai'
-                  className='text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out'
-                >
-                  Blog
-                </a>
-              </li>
+							<li className='mb-2'>
+								<a
+									href='https://blog.drlambda.ai'
+									className='text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out'
+								>
+									Blog
+								</a>
+							</li>
 						</ul>
 					</div>
 
@@ -202,12 +201,12 @@ export function WorkflowFooter() {
 		<footer>
 			<div className='w-full border-t border-gray-200 bg-[#F4F4F4]'>
 				{/* Bottom area */}
-				<div className='max-w-6xl mx-auto px-4 sm:px-6 md:grid md:grid-cols-2 py-4 md:py-8'>
+				<div className='max-w-6xl mx-auto px-4 sm:px-6 md:grid md:grid-cols-2 py-4 md:py-2'>
 					{/* Social as */}
 					{socialMediaBlock}
 
 					{/* Copyrights note */}
-					<div className='flex flex-col justify-center md:justify-start text-sm text-gray-600 mb-2 md:mb-0'>
+					<div className='flex flex-col justify-center md:justify-start text-sm text-gray-600 mb-0'>
 						<span>&copy; drlambda.ai. All rights reserved.</span>
 						<span>
 							Some images designed by{' '}

@@ -81,8 +81,8 @@ export const templateDispatch = (
 	const finalLayoutKey = isLayoutOptionValid
 		? layoutOptionCover
 		: index === 0
-		? 'Cover_img_1_layout'
-		: 'Col_1_img_0_layout';
+			? 'Cover_img_1_layout'
+			: 'Col_1_img_0_layout';
 
 	// console.log(
 	// 	`availableTemplates has template key ${slide.template}`,
@@ -187,14 +187,18 @@ export const templateDispatch = (
 			canEdit={canEdit}
 			key={keyPrefix + index.toString()}
 			user_name={
-				<div
-					key={0}
-					className={`rounded-md outline-2 ${!exportToPdfMode} ${
-						index !== 0 ? 'hidden' : ''
-					}`}
-					contentEditable={false}
-					dangerouslySetInnerHTML={{ __html: slide.userName }}
-				/>
+				isShowingLogo ? (
+					<div
+						key={0}
+						className={`rounded-md outline-2 ${!exportToPdfMode} ${
+							index !== 0 ? 'hidden' : ''
+						}`}
+						contentEditable={false}
+						dangerouslySetInnerHTML={{ __html: slide.userName }}
+					/>
+				) : (
+					<></>
+				)
 			}
 			title={generateContentElement(
 				slide.head,
@@ -223,7 +227,7 @@ export const templateDispatch = (
 							'content',
 							themeElements.contentFontCSS,
 							true,
-					  )
+						)
 					: slide.content.map((content, contentIndex) => (
 							<div
 								key={
@@ -239,7 +243,7 @@ export const templateDispatch = (
 									contentIndex,
 								)}
 							</div>
-					  ))
+						))
 			}
 			imgs={slide.images as string[]}
 			update_callback={updateImgUrlArray(index)}

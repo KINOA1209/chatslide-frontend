@@ -4,7 +4,7 @@ import AuthService from '@/services/AuthService';
 import { LoadingIcon } from '@/components/ui/LoadingIcon';
 import { createPortal } from 'react-dom';
 import { toast } from 'react-toastify';
-import PaywallModal from './forms/paywallModal';
+import PaywallModal from './paywallModal';
 import ResourceService from '@/services/ResourceService';
 import Resource from '@/models/Resource';
 import Image from 'next/image';
@@ -22,6 +22,7 @@ import {
 import Chart from '@/models/Chart';
 import { IoBarChartOutline } from 'react-icons/io5';
 import { Rnd } from 'react-rnd';
+import { ResourceIcon } from './ui/ResourceItem';
 
 const RANDOM_FILLER_IMAGES = [
 	'https://img.freepik.com/free-vector/linear-flat-abstract-lines-pattern_23-2148939391.jpg',
@@ -307,10 +308,10 @@ export const ImgModule = ({
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const extensions = ['png', 'jpg', 'jpeg', 'gif', 'webp']; // For checking logic
-		const sizeLimit = 16 * 1024 * 1024; // 16mb
+		const sizeLimit = 10 * 1024 * 1024; // 16mb
 		const file = e.target.files ? e.target.files[0] : null;
 		if (file?.size && file?.size > sizeLimit) {
-			toast.error('The maximum file size supported is 16 MB.', {
+			toast.error('The maximum file size supported is 10 MB.', {
 				position: 'top-center',
 				autoClose: 5000,
 				hideProgressBar: false,
@@ -419,10 +420,7 @@ export const ImgModule = ({
 										key={index}
 										className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-2`}
 									>
-										<img
-											className='w-full h-full object-cover'
-											src={resource.thumbnail_url}
-										/>
+										<ResourceIcon resource={resource} />
 									</div>
 								);
 							} else {
@@ -432,10 +430,7 @@ export const ImgModule = ({
 										key={index}
 										className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-2`}
 									>
-										<img
-											className='w-full h-full object-cover'
-											src={resource.thumbnail_url}
-										/>
+										<ResourceIcon resource={resource} />
 									</div>
 								);
 							}

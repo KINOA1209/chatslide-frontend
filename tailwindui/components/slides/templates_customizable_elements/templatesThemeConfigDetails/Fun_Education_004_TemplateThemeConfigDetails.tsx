@@ -51,7 +51,7 @@ export const Fun_Education_004_TemplateThemeConfig: ThemeElements = {
 	userNameFont: 'text-sm font-creato-regular  font-normal leading-[100%]',
 	userNameFontColor: 'text-[#868686]', //(Lin: color #868686)
 	headFontCSS: {
-		fontSize: '48pt', // text-4xl in points (assuming 1rem is 1pt)
+		fontSize: '30pt', // text-4xl in points (assuming 1rem is 1pt)
 		fontWeight: 'normal', // font-bold, (Lin: 700)
 		fontFamily: 'Caveat', // font-nimbus-sans-bold
 		lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2

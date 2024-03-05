@@ -1,14 +1,14 @@
-import { ChartTypeRegistry } from "chart.js";
+import { ChartTypeRegistry } from 'chart.js';
 import { ReactNode } from 'react';
 
 export interface BaseDataPoint {
-    label: string;
-    color: string;
+	label: string;
+	color: string;
 }
-  
+
 //pie chart, bar chart, line chart
 export interface ValueDataPoint extends BaseDataPoint {
-    value: number;
+	value: number;
 }
 
 // export interface MultiValueDataPoint extends BaseDataPoint {
@@ -17,13 +17,13 @@ export interface ValueDataPoint extends BaseDataPoint {
 
 //scatter plot
 export interface ScatterDataPoint {
-    x: number;
-    y: number;
+	x: number;
+	y: number;
 }
 
 export interface ChartConfig {
-    displayName: string;
-    imgSrc: JSX.Element;
-    chartType: keyof ChartTypeRegistry
-    dataStructure: 'ValueDataPoint' | 'ScatterDataPoint'
+	displayName: string;
+	imgSrc: JSX.Element;
+	chartType: keyof ChartTypeRegistry;
+	dataStructure: 'ValueDataPoint' | 'ScatterDataPoint';
 }

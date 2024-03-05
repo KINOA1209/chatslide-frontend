@@ -15,7 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import '@/app/(feature)/my-resources/UploadToLibraryWindow.css';
 import ResourceService from '@/services/ResourceService';
 import Resource from '@/models/Resource';
-import { FileUploadButton } from '@/components/FileUploadButton';
+import { FileUploadButton } from '@/components/file/FileUploadButton';
 
 interface UploadToLibraryWindowProps {
 	showModal: boolean;
@@ -232,7 +232,7 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
 					(uploadedFile) => uploadedFile.name === file.name,
 				)
 			) {
-        toast.error('Duplicate file! Please choose a different file.');
+				toast.error('Duplicate file! Please choose a different file.');
 			} else {
 				setUploadedResources([...uploadedResources, file]);
 				setUploadedResourcesClicked([...uploadedResourcesClicked, true]);
@@ -446,7 +446,7 @@ const UploadToLibraryWindow: React.FC<UploadToLibraryWindowProps> = ({
 									</span>
 									<span className='text-slate-500 text-sm font-normal font-creato-medium leading-normal tracking-tight'>
 										{' '}
-										16MB Maximum
+										10MB Maximum
 									</span>
 								</div>
 							</div>

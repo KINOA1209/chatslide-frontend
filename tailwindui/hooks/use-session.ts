@@ -15,22 +15,28 @@ export enum SessionStatus {
 let sessionStatus: SessionStatus = SessionStatus.NotInited;
 
 export const useSession = () => {
-  const { promo, setPromo } = usePromo();
-  const { openSideBar, setOpenSideBar } = useOpenSideBar();
-  const { openAIAgent, setOpenAIAgent } = useOpenAIAgent();
-
+	const { promo, setPromo } = usePromo();
+	const { openSideBar, setOpenSideBar } = useOpenSideBar();
+	const { openAIAgent, setOpenAIAgent } = useOpenAIAgent();
 
 	const initSession = async () => {
-    if (sessionStatus !== SessionStatus.NotInited) return;
-    sessionStatus = SessionStatus.Initing;
-  }
+		if (sessionStatus !== SessionStatus.NotInited) return;
+		sessionStatus = SessionStatus.Initing;
+	};
 
-  useEffect(() => {
-    void initSession();
-  }, []);
-    
+	useEffect(() => {
+		void initSession();
+	}, []);
 
 	// console.log('-- useUser: ', {user, session, isPaidUser})
 
-  return { promo, setPromo, openSideBar, setOpenSideBar, openAIAgent, setOpenAIAgent, sessionStatus };
+	return {
+		promo,
+		setPromo,
+		openSideBar,
+		setOpenSideBar,
+		openAIAgent,
+		setOpenAIAgent,
+		sessionStatus,
+	};
 };

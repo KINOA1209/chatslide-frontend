@@ -10,13 +10,13 @@ const HeroText = () => {
 				<h1 className='text-4xl sm:text-5xl font-extrabold leading-tighter tracking-tighte font-creato-medium mb-0.5'>
 					Documents to
 				</h1>
-        <div>
-				<TextCarousel
-					slides={['Slides', 'Social Posts', 'Video']}
-					interval={3000}
-					color='text-blue-700'
-				/>
-        </div>
+				<div>
+					<TextCarousel
+						slides={['Slides', 'Social Posts', 'Video']}
+						interval={3000}
+						color='text-blue-700'
+					/>
+				</div>
 			</div>
 		</div>
 	);

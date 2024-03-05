@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import MyResourcePageHeader from './MyResourcePageHeader';
-import MyFiles from '@/components/FileManagement';
+import MyFiles from '@/components/file/FileManagement';
 
 export default function FileManagementServer() {
 	return (

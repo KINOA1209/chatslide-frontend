@@ -15,12 +15,11 @@ import { useUser } from '@/hooks/use-user';
 
 export default function Dashboard() {
 	const [projects, setProjects] = useState<Project[]>([]);
-  const { token } = useUser();
+	const { token } = useUser();
 	const router = useRouter();
 	const promptRef = useRef<HTMLDivElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
 	const [rendered, setRendered] = useState<boolean>(false);
-
 
 	const currentProjects = projects;
 
@@ -80,8 +79,8 @@ export default function Dashboard() {
 				{/* flex container controlling max width */}
 				<div className='w-full max-w-7xl flex flex-wrap items-end justify-center'>
 					{/* my project title text */}
-          <div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-white text-base font-bold font-creato-medium leading-10 tracking-wide border-white border-b-2'>
-            Discover Community Projects
+					<div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-white text-base font-bold font-creato-medium leading-10 tracking-wide border-white border-b-2'>
+						Discover Community Projects
 					</div>
 
 					{/* create new project button */}
@@ -112,7 +111,6 @@ export default function Dashboard() {
 					</div>
 				)}
 			</div>
-
 		</section>
 	);
 }

@@ -9,28 +9,31 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const project_id = params.project_id;
 	//const project = {topic: "drlambda", description: "drlambda"};
-	let topic = "drlambda"
-	let description = "drlambda"
-  let author = "drlambda"
+	let topic = 'drlambda';
+	let description = 'drlambda';
+	let author = 'drlambda';
 	let publicImageUrl = 'https://drlambda.ai/new_landing/imgs/ogimage.png';
-  let keywords = ['DrLambda', 'presentation', 'slides', 'ai_agent'];
+	let keywords = ['DrLambda', 'presentation', 'slides', 'ai_agent'];
 	try {
-    const project = await ProjectService.getSharedProjectDetails(project_id, true)
-    // console.log(project)
-    publicImageUrl = project.thumbnail_url || publicImageUrl
-    topic = project.topic || "DrLambda"
-    description = project.description || "Created using DrLambda"
-    author = project.author || "DrLambda"
-    keywords = project.keywords || keywords
-	} catch (error){
+		const project = await ProjectService.getSharedProjectDetails(
+			project_id,
+			true,
+		);
+		// console.log(project)
+		publicImageUrl = project.thumbnail_url || publicImageUrl;
+		topic = project.topic || 'DrLambda';
+		description = project.description || 'Created using DrLambda';
+		author = project.author || 'DrLambda';
+		keywords = project.keywords || keywords;
+	} catch (error) {
 		console.error(`Error fetching project ${project_id} details:`, error);
 	}
 	const metadata: Metadata = {
 		title: topic + ' | DrLambda',
 		description: description,
-    publisher: 'DrLambda',
-    authors: [{ name: author }],
-    keywords: keywords,
+		publisher: 'DrLambda',
+		authors: [{ name: author }],
+		keywords: keywords,
 		openGraph: {
 			title: topic,
 			description: description,
@@ -46,24 +49,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 			creator: '@drlambda_ai',
 			title: 'DrLambda',
 			description: description,
-			images: [{
-				url:publicImageUrl,
-				width: 1200,
-				height: 628,
-			}],
+			images: [
+				{
+					url: publicImageUrl,
+					width: 1200,
+					height: 628,
+				},
+			],
 		},
 	};
 	return metadata;
 }
 
 export default async function Page({ params }: Props) {
-  const project_id = params.project_id;
+	const project_id = params.project_id;
 
-  // const project = await ProjectService.getSharedProjectDetails(project_id, true);
+	// const project = await ProjectService.getSharedProjectDetails(project_id, true);
 
-  return (
-    <div>
-      <SharePage project_id={project_id} /> {/* The project is now passed as a prop */}
-    </div>
-  );
-};
+	return <SharePage project_id={project_id} />;
+}

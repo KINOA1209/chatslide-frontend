@@ -4,10 +4,13 @@ import { useState, useEffect, useRef, RefObject } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 // import 'aos/dist/aos.css'
 import ClickableLink from '@/components/ui/ClickableLink';
+import { useUser } from '@/hooks/use-user';
+import { Explanation } from './ui/Text';
 
 const ReferralLink: React.FC = () => {
 	const [host, setHost] = useState('https://drlambda.ai');
 	const [referralLink, setReferralLink] = useState('');
+	const { token, email } = useUser();
 
 	useEffect(() => {
 		if (
@@ -21,18 +24,15 @@ const ReferralLink: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-		const fetchReferral = async () => {
-			const { userId, idToken: token } =
-				await AuthService.getCurrentUserTokenAndId();
-			const user = await AuthService.getCurrentUser();
-			const email = user.attributes.email;
+		const fetchReferral = async (token: string) => {
+			if (!token) return;
+
 			fetch(`/api/user/create_referral_code`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 					Authorization: `Bearer ${token}`,
 				},
-				body: JSON.stringify({ email: email }),
 			})
 				.then((response) => {
 					if (response.ok) {
@@ -47,15 +47,15 @@ const ReferralLink: React.FC = () => {
 				})
 				.catch((error) => console.error);
 		};
-		fetchReferral();
+		fetchReferral(token);
 	}, []);
 
 	return (
 		<div className='w-fit mx-auto'>
 			<ClickableLink link={host + referralLink} />
-			<div className='text-center text-[#707C8A] text-[16px]'>
+			<Explanation>
 				You and your friend will both get 50 ⭐️credits.
-			</div>
+			</Explanation>
 		</div>
 	);
 };

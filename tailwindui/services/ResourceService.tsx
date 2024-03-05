@@ -46,11 +46,16 @@ class ResourceService {
 		return response.ok || response.status === 404; // 404 means resource already deleted
 	}
 
-	static async uploadResource(file: File, token: string, pageInvoked: string | undefined, type: string = ''): Promise<Resource> {
+	static async uploadResource(
+		file: File,
+		token: string,
+		pageInvoked: string | undefined,
+		type: string = '',
+	): Promise<Resource> {
 		const body = new FormData();
 		body.append('file', file);
-		if (pageInvoked === 'theme'){
-			body.append('resource_type', type || 'logo')
+		if (pageInvoked === 'theme') {
+			body.append('resource_type', type || 'logo');
 		}
 
 		const response = await fetch('/api/upload_user_file', {
@@ -65,7 +70,43 @@ class ResourceService {
 			const data = await response.json();
 			return data.data;
 		} else {
-			throw new Error(`Failed to upload resource: ${response.status}; filename: ${file.name}`);
+			throw new Error(
+				`Failed to upload resource: ${response.status}; filename: ${file.name}`,
+			);
+		}
+	}
+
+	static async summarizeResource(
+		project_id: string,
+		resources: string[],
+		topic: string,
+		audience: string,
+		language: string,
+		search_online: string,
+		toekn: string,
+	): Promise<any> {
+		const header = new Headers();
+		if (toekn) {
+			header.append('Authorization', `Bearer ${toekn}`);
+		}
+
+		const response = await fetch('/api/summary', {
+			method: 'POST',
+			headers: header,
+			body: JSON.stringify({
+				project_id: project_id,
+				resources: resources,
+				topic: topic,
+				audience: audience,
+				language: language,
+				search_online: search_online,
+			}),
+		});
+
+		if (response.ok) {
+			return await response.json();
+		} else {
+			throw new Error(`Failed to summarize resources: ${response.status}`);
 		}
 	}
 
@@ -96,35 +137,34 @@ class ResourceService {
 		}
 	}
 
-  static async ocr(
-    resource_id: string,
-    token: string,
-  ): Promise<boolean> {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    if (token) {
-      headers.append('Authorization', `Bearer ${token}`);
-    }
-    try {
-      const response = await fetch('/api/ocr', {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify({
-          resource_id: resource_id,
-        }),
-      });
+	static async ocr(resource_id: string, token: string): Promise<boolean> {
+		const headers = new Headers();
+		headers.append('Content-Type', 'application/json');
+		if (token) {
+			headers.append('Authorization', `Bearer ${token}`);
+		}
+		try {
+			const response = await fetch('/api/ocr', {
+				method: 'POST',
+				headers: headers,
+				body: JSON.stringify({
+					resource_id: resource_id,
+				}),
+			});
 
-      if (response.ok) {
-        return true;
-      } else {
-        console.error(`Failed to OCR resource ${resource_id}: ${response.status}`);
-        return false;
-      }
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
-  }
+			if (response.ok) {
+				return true;
+			} else {
+				console.error(
+					`Failed to OCR resource ${resource_id}: ${response.status}`,
+				);
+				return false;
+			}
+		} catch (error) {
+			console.error(error);
+			return false;
+		}
+	}
 }
 
 export default ResourceService;

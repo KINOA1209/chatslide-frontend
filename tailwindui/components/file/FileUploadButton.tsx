@@ -1,24 +1,20 @@
 import React, { ChangeEvent, FC, useState, useRef, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import DrlambdaButton, { DrLambdaBackButton } from './button/DrlambdaButton';
+import DrlambdaButton, {
+	BigBlueButton,
+} from '../button/DrlambdaButton';
 
-// Allowed extensions defined in drlambda/app/user_file_manager.py
-// ALLOWED_DOC_EXTENSIONS = {"txt", "pdf"}
-// ALLOWED_MEDIA_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
+const determineSupportedFormats = (pageInvoked: string) => {
+	if (pageInvoked === 'theme') {
+		return ['png', 'jpg', 'jpeg'];
+	} else if (pageInvoked === 'summary') {
+		return ['pdf', 'txt', 'doc', 'docx', 'ppt', 'pptx'];
+	}
+	return ['pdf', 'txt', 'docx', 'png', 'jpg', 'jpeg', 'pptx'];
+};
 
-const supportedFormats = ['pdf', 'txt', 'docx', 'png', 'jpg', 'jpeg', 'pptx']; // For prompt display
-const supportedExtensions = [
-	'pdf',
-	'txt',
-	'docx',
-	'png',
-	'jpg',
-	'jpeg',
-	'pptx',
-]; // For checking logic
-
-const sizeLimit = 16 * 1024 * 1024; // 16mb
+const sizeLimit = 10 * 1024 * 1024; // 10mb
 
 interface FileUploadButtonProps {
 	onFileSelected: (file: File | null) => void;
@@ -33,7 +29,7 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 	//formats = supportedFormats,
 	//extensions = supportedExtensions,
 	isSubmitting = false,
-	pageInvoked,
+	pageInvoked = 'summary',
 }) => {
 	const [fileName, setFileName] = useState<string | null>(null);
 	const inputFileRef = useRef<HTMLInputElement>(null);
@@ -42,34 +38,14 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 		console.log('isSubmitting', isSubmitting);
 	}, [isSubmitting]);
 
-	const determineSupportedFormats = () => {
-        if (pageInvoked === 'theme') {
-            return ['png', 'jpg', 'jpeg'];
-        }
-		else if (pageInvoked === 'summary'){
-			return ['pdf', 'txt', 'docx', 'pptx']
-		}
-        return supportedFormats;
-    };
-
-	const determineSupportedExtensions = () => {
-        if (pageInvoked === 'theme') {
-            return ['png', 'jpg', 'jpeg'];
-        }
-		else if (pageInvoked === 'summary'){
-			return ['pdf', 'txt', 'docx', 'pptx']
-		}
-        return supportedExtensions;
-    };
-
-	const formats = determineSupportedFormats()
-	const extensions = determineSupportedExtensions()
+	const formats = determineSupportedFormats(pageInvoked);
+	const extensions = determineSupportedFormats(pageInvoked);
 
 	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files ? e.target.files[0] : null;
 		console.log(file?.size);
 		if (file?.size && file?.size > sizeLimit) {
-			toast.error('The maximum file size supported is 16 MB.', {
+			toast.error('The maximum file size supported is 10 MB.', {
 				position: 'top-center',
 				autoClose: 5000,
 				hideProgressBar: false,
@@ -122,13 +98,13 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 				onChange={handleFileChange}
 				style={{ display: 'none' }}
 			/>
-			<DrlambdaButton
+			<BigBlueButton
 				onClick={handleClick}
 				isSubmitting={isSubmitting}
 				showArrow={false}
 			>
 				{!isSubmitting ? 'Upload from Local 💻' : 'Uploading File...'}
-			</DrlambdaButton>
+			</BigBlueButton>
 			<div className='text-sm text-gray-400'>
 				Supported file formats:{' '}
 				{formats.map((f, index) => {
@@ -139,10 +115,12 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 					}
 				})}
 			</div>
-			<div className='text-sm text-gray-400'>Max file size: 16 MB</div>
+			<div className='text-sm text-gray-400'>Max file size: 10 MB</div>
 			{/* <div className='text-sm text-gray-400'>
         Subscribed users can select multiple files
       </div> */}
 		</div>
 	);
 };
+
+export { determineSupportedFormats };

@@ -6,29 +6,29 @@ import SessionStorage from '../utils/SessionStorage';
 import { GrayLabel } from '../ui/GrayLabel';
 
 interface PromoComponentProps {
-  text?: string;
+	text?: string;
 }
 
 const PromoComponent: React.FC<PromoComponentProps> = ({
-  text = 'You are going to get more credits with this code!',
+	text = 'You are going to get more credits with this code!',
 }) => {
+	const [referralValue, setReferralValue] = useState('');
+	const [showPromo, setShowPromo] = useState(false);
+	const searchParams = useSearchParams();
 
-  const [referralValue, setReferralValue] = useState('');
-  const [showPromo, setShowPromo] = useState(false);
-  const searchParams = useSearchParams();
+	useEffect(() => {
+		const handlePromoChange = (promo: string) => {
+			SessionStorage.setItem('promo', promo);
+		};
 
-  useEffect(() => {
-    const handlePromoChange = (promo: string) => {
-      SessionStorage.setItem('promo', promo);
-    };
-
-    const promo = searchParams?.get('referral') || SessionStorage.getItem('promo');
-    if (promo) {
-      handlePromoChange(promo);
-      setReferralValue(promo);
-      setShowPromo(true);
-    }
-  }, []);
+		const promo =
+			searchParams?.get('referral') || SessionStorage.getItem('promo');
+		if (promo) {
+			handlePromoChange(promo);
+			setReferralValue(promo);
+			setShowPromo(true);
+		}
+	}, []);
 
 	return (
 		<>
@@ -48,9 +48,9 @@ const PromoComponent: React.FC<PromoComponentProps> = ({
 									type='text'
 									value={referralValue}
 									onChange={(e) => {
-                    setReferralValue(e.target.value);
-                    SessionStorage.setItem('promo', e.target.value);
-                  }}
+										setReferralValue(e.target.value);
+										SessionStorage.setItem('promo', e.target.value);
+									}}
 									className='form-input w-full text-gray-800'
 								/>
 							</div>

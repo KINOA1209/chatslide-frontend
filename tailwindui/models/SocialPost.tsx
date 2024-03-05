@@ -21,7 +21,6 @@ export interface SlideElement {
 	content: string | string[];
 }
 
-
 export type SlideKeys =
 	| 'topic'
 	| 'subtopic'

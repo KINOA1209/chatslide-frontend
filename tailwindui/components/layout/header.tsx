@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 import Link from 'next/link';
-import { Home, Logo } from './logo';
+import { Home, Logo } from '../ui/logo';
 import DropdownButton from '@/components/utils/dropdown';
 import { useRouter } from 'next/navigation';
 import GoogleAnalytics from '@/components/integrations/GoogleAnalytics';
@@ -93,7 +93,7 @@ const Header = ({
 
 	return (
 		<header
-      className={`relative sticky top-0 w-full z-30 bg-Dark transition duration-300 ease-in-out ${
+			className={`relative sticky top-0 w-full z-30 bg-Dark transition duration-300 ease-in-out ${
 				!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
 			}`}
 		>
@@ -116,6 +116,12 @@ const Header = ({
 						<div className='w-1/3 hidden sm:flex'>
 							<div className='flex-grow flex w-full justify-between items-center'>
 								<a
+									href='#testimonials'
+									className='whitespace-nowrap cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-medium'
+								>
+									<span>Testimonials</span>
+								</a>
+								<a
 									href='#scenarios'
 									className='cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-medium'
 								>
@@ -126,12 +132,6 @@ const Header = ({
 									className='whitespace-nowrap cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-medium'
 								>
 									<span>Features</span>
-								</a>
-								<a
-									href='#testimonials'
-									className='whitespace-nowrap cursor-pointer hover:border rounded-xl py-1 px-2 text-white font-creato-medium'
-								>
-									<span>Testimonials</span>
 								</a>
 								<a
 									href='#pricing'
@@ -179,7 +179,10 @@ const Header = ({
 			<GoogleAnalytics />
 
 			{/* only render hotjar on desktop for performance */}
-			<div className='hidden sm:flex'> <Hotjar /></div>
+			<div className='hidden sm:flex'>
+				{' '}
+				<Hotjar />
+			</div>
 		</header>
 	);
 };

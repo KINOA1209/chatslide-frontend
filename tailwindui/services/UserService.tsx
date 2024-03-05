@@ -55,10 +55,39 @@ class UserService {
 		}
 	}
 
+	static async checkSurveyFinished(token: string): Promise<boolean> {
+		try {
+			const response = await fetch('/api/user/check_survey_status', {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
+				},
+			});
+
+			if (response.ok) {
+				const data = await response.json();
+				if (data.survey_status === 'incomplete') {
+					console.log('The user had not completed the survey before');
+					return false; // show survey
+				} else {
+					console.log('The user had completed the survey before');
+					return true; // skip showing survey
+				}
+			} else {
+				console.error('HTTP Error:', response.statusText);
+				return true; // skip showing survey
+			}
+		} catch (error) {
+			console.error('Error:', error);
+			return true; // skip showing survey
+		}
+	}
+
 	static async applyPromoCode(
 		promo: string,
 		token: string,
-    promoOnly: boolean = false,
+		promoOnly: boolean = false,
 	): Promise<{ status: number; message: string }> {
 		try {
 			const response = await fetch(`/api/user/apply_code`, {
@@ -67,7 +96,7 @@ class UserService {
 					'Content-Type': 'application/json',
 					Authorization: `Bearer ${token}`,
 				},
-        body: JSON.stringify({ code: promo, promoOnly: promoOnly }),
+				body: JSON.stringify({ code: promo, promoOnly: promoOnly }),
 			})
 				.then((response) => {
 					return response.json();
@@ -93,7 +122,7 @@ class UserService {
 
 	static async getUserCreditsAndTier(
 		idToken: string,
-  ): Promise<{ credits: string; tier: string, expirationDate: string }> {
+	): Promise<{ credits: string; tier: string; expirationDate: string }> {
 		if (!idToken) throw new Error('No idToken provided');
 
 		try {
@@ -117,16 +146,16 @@ class UserService {
 
 			const data = await response.json();
 			const creditNum: number = data.credits;
-      let credits = creditNum.toString();
-      if (creditNum > 10000){
-        credits = 'Infinite';
-      }
+			let credits = creditNum.toString();
+			if (creditNum > 10000) {
+				credits = 'Infinite';
+			}
 			const tier: string = data['tier'] || 'FREE';
-      const expirationDate: string = data['expiration_date'] || '';
+			const expirationDate: string = data['expiration_date'] || '';
 
 			console.log(`User credits: ${credits}`);
 
-      return { credits, tier, expirationDate };
+			return { credits, tier, expirationDate };
 		} catch (error) {
 			const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
 			console.error(`Failed to fetch user credits: ${userId}`, error);
@@ -217,7 +246,7 @@ class UserService {
 			});
 
 			if (response.ok) {
-				const data = await response.json(); 
+				const data = await response.json();
 				return data.openai_key; // this could be an empty string
 			} else {
 				throw new Error(`Error ${response.status}: ${await response.text()}`);

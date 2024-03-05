@@ -13,8 +13,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthService from '@/services/AuthService';
 import UserService from '@/services/UserService';
-import Promo from './signup/Promo';
-import SessionStorage from './utils/SessionStorage';
+import Promo from './Promo';
+import SessionStorage from '../utils/SessionStorage';
 
 const SignupForm: React.FC = () => {
 	const router = useRouter();
@@ -37,29 +37,29 @@ const SignupForm: React.FC = () => {
 
 	const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-  useEffect(() => {
-    const handlePromoChange = (promo: string) => {
-      SessionStorage.setItem('promo', promo);
-    };
+	useEffect(() => {
+		const handlePromoChange = (promo: string) => {
+			SessionStorage.setItem('promo', promo);
+		};
 
-    const promo = searchParams?.get('referral');
-    if (promo) {
-      handlePromoChange(promo);
-      setReferralValue(promo);
-    }
+		const promo = searchParams?.get('referral');
+		if (promo) {
+			handlePromoChange(promo);
+			setReferralValue(promo);
+		}
 
-    const appSumoRedepmtionCode = searchParams?.get('sumocode');
-    if (appSumoRedepmtionCode) {
-      handlePromoChange(appSumoRedepmtionCode);
-      setReferralValue(appSumoRedepmtionCode);
-    }
+		const appSumoRedepmtionCode = searchParams?.get('sumocode');
+		if (appSumoRedepmtionCode) {
+			handlePromoChange(appSumoRedepmtionCode);
+			setReferralValue(appSumoRedepmtionCode);
+		}
 
-    const dealMirrorRedepmtionCode = searchParams?.get('dealcode');
-    if (dealMirrorRedepmtionCode) {
-      handlePromoChange(dealMirrorRedepmtionCode);
-      setReferralValue(dealMirrorRedepmtionCode);
-    }
-  }, []);
+		const dealMirrorRedepmtionCode = searchParams?.get('dealcode');
+		if (dealMirrorRedepmtionCode) {
+			handlePromoChange(dealMirrorRedepmtionCode);
+			setReferralValue(dealMirrorRedepmtionCode);
+		}
+	}, []);
 
 	function handleEmailChange(event: any) {
 		const value = event.target.value;
@@ -252,8 +252,8 @@ const SignupForm: React.FC = () => {
 				</div>
 			</div>
 			<div className='text-sm text-gray-500 text-center mt-3'>
-        <input type='checkbox' id='agree' name='agree' checked readOnly /> By creating an
-				account, you agree to the{' '}
+				<input type='checkbox' id='agree' name='agree' checked readOnly /> By
+				creating an account, you agree to the{' '}
 				<a className='underline' href='/terms'>
 					terms & conditions
 				</a>

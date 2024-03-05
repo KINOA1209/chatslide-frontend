@@ -10,21 +10,20 @@ import SessionStorage from '@/components/utils/SessionStorage';
 
 const ScenarioChoicePage = () => {
 	const router = useRouter();
-	const workflowType = SessionStorage.getItem('workflowType', 'slides');
+	const workflowType = SessionStorage.getItem('workflowType', 'presentation');
 	const scenarios =
-		workflowType == 'slides' ? slides_scenarios : socialpost_scenarios;
+		workflowType == 'presentation' ? slides_scenarios : socialpost_scenarios;
 
 	// Function to navigate to the "workflow-scenario-choice" page
 	const navigateToSummary = (scenarioType: string) => {
 		sessionStorage.setItem('scenarioType', scenarioType);
-    if (workflowType == 'slides') 
-      router.push('/workflow-generationMode-choice');
-    else
-      router.push('/workflow-generate-socialpost');
+		if (workflowType == 'presentation')
+			router.push('/workflow-generationMode-choice');
+		else router.push('/workflow-generate-socialpost');
 	};
 
 	return (
-    <div className='bg-zinc-100 flex flex-col flex-grow justify-center items-center'>
+		<div className='bg-zinc-100 flex flex-col flex-grow justify-center items-center'>
 			<div className='flex flex-col justify-center items-center gap-4 sm:gap-12 p-4 sm:p-8'>
 				{/* title */}
 				<div className='w-[80vh] text-center text-neutral-800 text-xl sm:text-2xl font-normal font-creato-medium leading-9 tracking-wide'>
@@ -36,7 +35,10 @@ const ScenarioChoicePage = () => {
 				{/* three types of scenarios */}
 				<div className='flex flex-col gap-4 md:gap-6' id='choice_container'>
 					{scenarios.options.map((scenario) => (
-            <div key={scenario.id} className='flex flex-col w-full transition-transform transform-gpu hover:scale-110'>
+						<div
+							key={scenario.id}
+							className='flex flex-col w-full transition-transform transform-gpu hover:scale-110'
+						>
 							<div
 								className='w-full h-[200px] sm:h-[300px] bg-gray-300 rounded-lg shadow flex justify-center items-center cursor-pointer mb-4'
 								onClick={() => navigateToSummary(scenario.id)}

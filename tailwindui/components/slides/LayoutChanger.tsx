@@ -3,6 +3,8 @@ import { Transition } from '@headlessui/react'; // Assuming you're using Headles
 import { SlideKeys } from '@/models/Slide';
 import { ChangeLayoutIcon } from '@/app/(feature)/icons';
 import { LayoutKeys } from './slideLayout';
+import ButtonWithExplanation from '../button/ButtonWithExplanation';
+import { FiLayout } from 'react-icons/fi';
 type LayoutProps = {
 	openModal: () => void;
 	showLayout: boolean;
@@ -54,24 +56,30 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 		slideIndex: number,
 	) => {
 		e.preventDefault();
-    console.log('updateLayout', layoutName, slideIndex);
+		console.log('updateLayout', layoutName, slideIndex);
 		handleSlideEdit(layoutName, slideIndex, 'layout');
 	};
 
 	return (
-		<div className='col-span-1 flex flex-row-reverse hidden sm:block'>
-			{/* <div className='w-fit h-fit rounded-full overflow-hidden'>
-                <button
-                    className='px-4 py-1 h-11 text-white bg-slate-600/40 hover:bg-slate-400'
-                    onClick={openModal}>Change Layout</button>
-            </div> */}
-			{/* change layout icon */}
-			<div
-				className='w-6 h-6 shadow rounded flex justify-center items-center cursor-pointer'
-				onClick={openModal}
-			>
-				<ChangeLayoutIcon />
-			</div>
+		<>
+			<ButtonWithExplanation
+				explanation='Change Page Layout'
+				button={
+					<button
+						onClick={openModal}>
+						<FiLayout
+							style={{
+								strokeWidth: '2',
+								flex: '1',
+								width: '1.5rem',
+								height: '1.5rem',
+								fontWeight: 'bold',
+								color: '#2943E9',
+							}}
+						/>
+					</button>
+				}
+			/>
 
 			<Transition
 				className='h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
@@ -182,7 +190,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 					</div>
 				</Transition>
 			</Transition>
-		</div>
+		</>
 	);
 };
 
