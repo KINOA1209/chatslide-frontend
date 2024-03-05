@@ -32,6 +32,7 @@ const TemplateSelector: React.FC<{
 					<option value='Business_002'>Business</option>
 					<option value='Clean_Lifestyle_003'>Clean Lifestyle</option>
 					<option value='Fun_Education_004'>Fun</option>
+					<option value='Fun_Vibrant_007'>Fun Vibrant</option>
 					<option value='Stanford'>Stanford University</option>
 					<option value='Berkeley'>UC Berkeley</option>
 					<option value='Harvard'>Harvard University</option>
