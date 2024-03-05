@@ -53,7 +53,7 @@ export default function Topic() {
 	const [showAudienceInput, setShowAudienceInput] = useState(false);
 	const { isPaidUser } = useUser();
 	const { project, updateOutlines, updateProject, initProject } = useProject();
-	const [searchOnlineScope, setSearchOnlineScope] = useState('none');
+	const [searchOnlineScope, setSearchOnlineScope] = useState('');
 
 	// bind form data between input and sessionStorage
 	const [topic, setTopic] = useState(
@@ -180,7 +180,7 @@ export default function Topic() {
 			try {
 				console.log('resources', selectedResources);
 				console.log('summarize resources');
-				const knowledge_summary = await ResourceService.summarizeResource(
+				const response = await ResourceService.summarizeResource(
 					project_id,
 					selectedResources.map((r: Resource) => r.id),
 					topic,
@@ -191,11 +191,18 @@ export default function Topic() {
 				);
 				sessionStorage.setItem(
 					'knowledge_summary',
-					JSON.stringify(knowledge_summary),
+					JSON.stringify(response.data.knowledge_summary),
 				);
-				formData.knowledge_summary = knowledge_summary;
-				updateProject('knowledge_summary', knowledge_summary);
-				console.log('knowledge_summary', knowledge_summary);
+				sessionStorage.setItem(
+					'project_id',
+					JSON.stringify(response.data.project_id),
+				);
+				formData.knowledge_summary = response.data.knowledge_summary;
+				formData.project_id = response.data.project_id;
+				updateProject('knowledge_summary', response.data.knowledge_summary);
+				updateProject('id', response.data.project_id);
+
+				console.log('knowledge_summary', response.data.knowledge_summary);
 			} catch (error) {
 				console.error('Error summarizing resources', error);
 			}

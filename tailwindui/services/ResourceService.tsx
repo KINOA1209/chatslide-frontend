@@ -78,7 +78,7 @@ class ResourceService {
 
 	static async summarizeResource(
 		project_id: string,
-		resource_id: string[],
+		resources: string[],
 		topic: string,
 		audience: string,
 		language: string,
@@ -95,7 +95,7 @@ class ResourceService {
 			headers: header,
 			body: JSON.stringify({
 				project_id: project_id,
-				resource_id: resource_id,
+				resources: resources,
 				topic: topic,
 				audience: audience,
 				language: language,

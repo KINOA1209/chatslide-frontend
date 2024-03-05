@@ -44,7 +44,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 	const selectedResourcesRef = useRef<HTMLDivElement>(null);
 
 	const searchOnlineOptions: RadioButtonOption[] = [
-		{ value: 'none', text: 'Disabled', icon: <IoIosRemoveCircleOutline /> },
+		{ value: '', text: 'Disabled', icon: <IoIosRemoveCircleOutline /> },
 		{ value: 'google', text: 'Internet', icon: <FiGlobe /> },
 		{ value: 'wikipedia', text: 'Wikipedia', icon: <FaWikipediaW /> },
 		// { value: 'reddit', text: 'Reddit' },
@@ -53,7 +53,11 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 	const onFileSelected = async (file: File | null) => {
 		if (file == null) return;
 		try {
-			const newResource = await ResourceService.uploadResource(file, token, 'summary');
+			const newResource = await ResourceService.uploadResource(
+				file,
+				token,
+				'summary',
+			);
 			setResources([newResource, ...resources]);
 			if (setSelectedResources && selectedResources) {
 				setSelectedResources([newResource, ...selectedResources]);
@@ -96,7 +100,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 	const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
 		e.preventDefault();
 		setIsDragging(false);
-		const extensions = determineSupportedFormats('summary');	
+		const extensions = determineSupportedFormats('summary');
 
 		if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
 			const file = e.dataTransfer.files[0];
@@ -127,7 +131,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 		if (selectedResourcesRef.current) {
 			selectedResourcesRef.current.scrollIntoView({ behavior: 'smooth' });
 		}
-	}
+	};
 
 	useEffect(() => {
 		scrollToSelectedResources();
@@ -190,7 +194,9 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 								<span className='text-blue-600'>Browse File</span>
 							</Instruction>
 							<Explanation>
-								<div className='text-center'>Supports PDF, TXT, DOC, DOCX, PPT, PPTX</div>
+								<div className='text-center'>
+									Supports PDF, TXT, DOC, DOCX, PPT, PPTX
+								</div>
 							</Explanation>
 						</div>
 					</div>
