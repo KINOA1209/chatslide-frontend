@@ -2,23 +2,23 @@ import { ThemeElements } from '../theme_elements';
 
 export const Fun_Vibrant_007_TemplateThemeConfig: ThemeElements = {
 	backgroundUrlCoverImg1:
-		'/images/template/Fun_Education_001/BackgroundElementsCover_img_1.png',
+		'/images/template/Fun_Vibrant_007/BackgroundElementsCover_img_0.png',
 	backgroundUrlCoverImg0:
-		'/images/template/Fun_Education_001/BackgroundElementsCover_img_0.png',
+		'/images/template/Fun_Vibrant_007/BackgroundElementsCover_img_0.png',
 	backgroundUrlCol_1_img_0:
-		'/images/template/Fun_Education_001/BackgroundElementsCol_1_img_0.png',
+		'/images/template/Fun_Vibrant_007/BackgroundElementsCol_1_img_0.png',
 	backgroundUrlCol_2_img_0:
-		'/images/template/Fun_Education_001/BackgroundElementsCol_2_img_0.png',
+		'/images/template/Fun_Vibrant_007/BackgroundElementsCol_2_img_0.png',
 	backgroundUrlCol_3_img_0:
-		'/images/template/Fun_Education_001/BackgroundElementsCol_3_img_0.png',
+		'/images/template/Fun_Vibrant_007/BackgroundElementsCol_3_img_0.png',
 	backgroundUrlCol_2_img_1:
-		'/images/template/Fun_Education_001/BackgroundElementsCol_2_img_1.png',
+		'/images/template/Fun_Vibrant_007/BackgroundElementsCol_2_img_1.png',
 	backgroundUrlCol_1_img_1:
-		'/images/template/Fun_Education_001/BackgroundElementsCol_1_img_1.png',
+		'/images/template/Fun_Vibrant_007/BackgroundElementsCol_1_img_1.png',
 	backgroundUrlCol_2_img_2:
-		'/images/template/Fun_Education_001/BackgroundElementsCol_2_img_2.png',
+		'/images/template/Fun_Vibrant_007/BackgroundElementsCol_2_img_2.png',
 	backgroundUrlCol_3_img_3:
-		'/images/template/Fun_Education_001/BackgroundElementsCol_3_img_3.png',
+		'/images/template/Fun_Vibrant_007/BackgroundElementsCol_3_img_3.png',
 
 	backgroundColorCover: 'bg-[#FFFFFF]',
 	backgroundColor: 'bg-[#FFFFFF]',
