@@ -1,16 +1,12 @@
 'use client';
 import { ChatHistoryStatus, useChatHistory } from '@/hooks/use-chat-history';
-import { useSession } from '@/hooks/use-session';
 import { useSlides } from '@/hooks/use-slides';
 import { useUser } from '@/hooks/use-user';
 import ChatHistory from '@/models/ChatHistory';
 import Slide from '@/models/Slide';
 import DrlambdaCartoonImage from '@/public/images/AIAssistant/DrLambdaCartoon.png';
-import sendTextButtonImage from '@/public/images/AIAssistant/sendTextIcon.png';
 import Image from 'next/image';
 import { useEffect, useState, useRef, use } from 'react';
-import { AiOutlineClose } from 'react-icons/ai';
-import { FiSend } from 'react-icons/fi';
 import { InputBox } from './InputBox';
 import { IoSend, IoSendOutline } from 'react-icons/io5';
 import { DeleteIcon } from '@/app/(feature)/icons';
@@ -43,11 +39,11 @@ type ChatsProps = {
 export const Chats: React.FC<ChatsProps> = ({ chatHistory }) => {
 	const lastMessageRef = useRef<HTMLDivElement>(null); // Ensure you have a ref for the last message
 
-	useEffect(() => {
-		if (lastMessageRef.current) {
-			lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
-		}
-	}, [chatHistory]); 
+	// useEffect(() => {
+	// 	if (lastMessageRef.current) {
+	// 		lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
+	// 	}
+	// }, [chatHistory]); 
 
 	return (
 		<>
@@ -100,15 +96,6 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	const { updateVersion } = useSlides();
 	const [loading, setLoading] = useState(false);
 	const { token } = useUser();
-
-	// Create a ref for the last message
-	const lastMessageRef = useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		if (lastMessageRef.current) {
-			lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
-		}
-	}, [chatHistory]);
 
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
