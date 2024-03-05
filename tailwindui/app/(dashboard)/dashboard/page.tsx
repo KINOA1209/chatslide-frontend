@@ -74,11 +74,8 @@ export default function Dashboard() {
 	};
 
 	const handleDelete = (
-		e: React.MouseEvent<HTMLDivElement>,
 		projectId: string,
 	) => {
-		e.stopPropagation();
-		// Modal for warning
 		setDeleteInd(projectId);
 		setShowDeleteModal(true);
 	};

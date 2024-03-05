@@ -28,6 +28,8 @@ import {
 	Instruction,
 } from '@/components/ui/Text';
 import { DropDown } from '@/components/button/DrlambdaButton';
+import ResourceService from '@/services/ResourceService';
+import LanguageSelector from './LanguageSelector';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 6;
@@ -53,7 +55,7 @@ export default function Topic() {
 	const [showAudienceInput, setShowAudienceInput] = useState(false);
 	const { isPaidUser } = useUser();
 	const { project, updateOutlines, updateProject, initProject } = useProject();
-	const [searchOnlineScope, setSearchOnlineScope] = useState('none');
+	const [searchOnlineScope, setSearchOnlineScope] = useState('');
 
 	// bind form data between input and sessionStorage
 	const [topic, setTopic] = useState(
@@ -145,6 +147,12 @@ export default function Topic() {
 				? sessionStorage.scenarioType
 				: '';
 
+		const knowledge_summary =
+			typeof window !== 'undefined' &&
+			sessionStorage.knowledge_summary != undefined
+				? JSON.parse(sessionStorage.knowledge_summary)
+				: '';
+
 		setIsSubmitting(true);
 
 		const formData = {
@@ -158,6 +166,7 @@ export default function Topic() {
 			scenario_type: scenarioType,
 			generation_mode: generationMode,
 			search_online: searchOnlineScope,
+			knowledge_summary: knowledge_summary,
 		};
 
 		sessionStorage.setItem('topic', formData.topic);
@@ -168,6 +177,40 @@ export default function Topic() {
 			JSON.stringify(selectedResources),
 		);
 		//sessionStorage.setItem('schoolTemplate', schoolTemplate);
+
+		if (selectedResources && selectedResources.length > 0) {
+			try {
+				console.log('resources', selectedResources);
+				console.log('summarize resources');
+				const response = await ResourceService.summarizeResource(
+					project_id,
+					selectedResources.map((r: Resource) => r.id),
+					topic,
+					audience,
+					language,
+					searchOnlineScope,
+					token,
+				);
+				sessionStorage.setItem(
+					'knowledge_summary',
+					JSON.stringify(response.data.knowledge_summary),
+				);
+				sessionStorage.setItem(
+					'project_id',
+					JSON.stringify(response.data.project_id),
+				);
+				formData.knowledge_summary = response.data.knowledge_summary;
+				formData.project_id = response.data.project_id;
+				updateProject('knowledge_summary', response.data.knowledge_summary);
+				updateProject('id', response.data.project_id);
+
+				console.log('knowledge_summary', response.data.knowledge_summary);
+			} catch (error) {
+				console.error('Error summarizing resources', error);
+			}
+		} else {
+			console.log('no need to summarize resources');
+		}
 
 		try {
 			const response = await fetch('/api/outlines', {
@@ -211,7 +254,7 @@ export default function Topic() {
 			} else {
 				toast.error(
 					'Server is busy now. Please try again later. Reference code: ' +
-						project?.id,
+					project?.id,
 				);
 				setIsSubmitting(false);
 			}
@@ -356,7 +399,7 @@ export default function Topic() {
 									onChange={(e) => setAudience(e.target.value)}
 									style='input'
 									width='80%'
-									defaultValue='unselected'
+									value={audience}
 								>
 									<option key='unselected' value='unselected' disabled>
 										Choose your audience
@@ -368,75 +411,9 @@ export default function Topic() {
 									))}
 								</DropDown>
 							</div>
-							<div className='flex flex-col'>
-								<div className='flex flex-row gap-1 items-center'>
-									<Instruction>Language</Instruction>
-									<ExplanationPopup>
-										Specify the intended language of your projects.
-									</ExplanationPopup>
-								</div>
-								<DropDown
-									onChange={(e) => setLanguage(e.target.value)}
-									style='input'
-									width='80%'
-									defaultValue='English'
-								>
-									<option key='English' value='English'>
-										🇺🇸 English (United States)
-									</option>
-									<option key='British English' value='British English'>
-										🇬🇧 English (British)
-									</option>
-									<option key='Spanish' value='Spanish'>
-										🌎 Español (Latinoamérica)
-									</option>
-									<option key='Continental Spanish' value='Continental Spanish'>
-										🇪🇸 Español (España)
-									</option>
-									<option key='Chinese' value='Chinese'>
-										🇨🇳 中文 (简体)
-									</option>
-									<option key='Traditional Chinese' value='Traditional Chinese'>
-										🇹🇼 中文 (繁體)
-									</option>
-									<option key='French' value='French'>
-										🇫🇷 Français
-									</option>
-									<option key='Russian' value='Russian'>
-										🇷🇺 Русский
-									</option>
-									<option key='Ukrainian' value='Ukrainian'>
-										🇺🇦 Українська
-									</option>
-									<option key='German' value='German'>
-										🇩🇪 Deutsch
-									</option>
-									<option
-										key='Brazilian Portuguese'
-										value='Brazilian Portuguese'
-									>
-										🇧🇷 Português (Brasil)
-									</option>
-									<option key='Portuguese' value='Portuguese'>
-										🇵🇹 Português
-									</option>
-									<option key='Hindi' value='Hindi'>
-										🇮🇳 हिन्दी
-									</option>
-									<option key='Japanese' value='Japanese'>
-										🇯🇵 日本語
-									</option>
-									<option key='Korean' value='Korean'>
-										🇰🇷 한국어
-									</option>
-									<option key='Arabic' value='Arabic'>
-										🇸🇦 العربية
-									</option>
-									<option key='Hebrew' value='Hebrew'>
-										🇮🇱 עברית
-									</option>
-								</DropDown>
-							</div>
+							<LanguageSelector
+								language={language}
+								setLanguage={setLanguage} />
 						</div>
 					</Card>
 
