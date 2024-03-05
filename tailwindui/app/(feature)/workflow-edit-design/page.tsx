@@ -19,6 +19,8 @@ import ActionsToolBar from '@/components/ui/ActionsToolBar';
 import useTourStore from '@/components/user_onboarding/TourStore';
 import TemplateSelector from './TemplateSelector';
 import { BigTitle, Explanation, Title } from '@/components/ui/Text';
+import { Panel } from '@/components/layout/Panel';
+import { Column } from '@/components/layout/Column';
 // const { changeTemplate } = useSlides();
 
 
@@ -70,7 +72,7 @@ export default function DesignPage() {
 	if (!useHydrated()) return <></>;
 
 	return (
-		<div className='relative'>
+		<section className='relative'>
 			{/* user tutorial */}
 			<div className='absolute right-[3rem] top-[7rem] flex flex-col items-end space-x-4'>
 				<ActionsToolBar startTour={startTour} onlyShowTutorial={true} />
@@ -98,12 +100,9 @@ export default function DesignPage() {
 				background_ids={selectedBackground.map((resource) => resource.id)}
 			/>
 
-			<div className='w-full flex flex-col items-center'>
-				{/* design */}
-				<div
-					className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1 font-creato-regular'
-					id='SummaryStep-4'
-				>
+			<Column>
+				<Panel>
+					{/* design */}
 					<Card>
 						<BigTitle>Design</BigTitle>
 						<Explanation>
@@ -148,8 +147,8 @@ export default function DesignPage() {
 							setSelectedImage={setSelectedBackground}
 						/>
 					</Card>
-				</div>
-			</div>
-		</div>
+				</Panel>
+			</Column>
+		</section >
 	);
 }

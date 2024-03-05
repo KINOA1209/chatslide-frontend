@@ -31,6 +31,8 @@ import {
 import { DropDown } from '@/components/button/DrlambdaButton';
 import ResourceService from '@/services/ResourceService';
 import LanguageSelector from './LanguageSelector';
+import { Panel } from '@/components/layout/Panel';
+import { Column } from '@/components/layout/Column';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 6;
@@ -149,7 +151,7 @@ export default function Topic() {
 
 		const knowledge_summary =
 			typeof window !== 'undefined' &&
-			sessionStorage.knowledge_summary != undefined
+				sessionStorage.knowledge_summary != undefined
 				? JSON.parse(sessionStorage.knowledge_summary)
 				: '';
 
@@ -325,11 +327,11 @@ export default function Topic() {
 			/>
 
 			{/* main content */}
-			<div className='my-4 gap-y-4 w-full flex flex-col items-center'>
-				<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
+			<Column>
+				<Panel>
+					<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
 
-				{/* Project Summary section */}
-				<div className='w-full lg:w-2/3 px-3 my-3 lg:my-1' id='SummaryStep-2'>
+					{/* Project Summary section */}
 					{generationMode === 'from_files' && (
 						<AddResourcesSection
 							searchOnlineScope={searchOnlineScope}
@@ -424,8 +426,8 @@ export default function Topic() {
 							removeResourceAtIndex={removeResourceAtIndex}
 						/>
 					)}
-				</div>
-			</div>
+				</Panel>
+			</Column>
 		</section>
 	);
 }

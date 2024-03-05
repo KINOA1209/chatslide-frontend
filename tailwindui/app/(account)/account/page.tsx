@@ -29,6 +29,7 @@ import Card from '@/components/ui/Card';
 import { BigTitle, Explanation, Instruction } from '@/components/ui/Text';
 import { Panel } from '@/components/layout/Panel';
 import { Title } from 'chart.js';
+import { Column } from '@/components/layout/Column';
 
 const Profile = () => {
 	const { username, email, token, setUsername } = useUser();
@@ -352,7 +353,7 @@ export default function Account() {
 	if (!useHydrated()) return <></>;
 
 	return (
-		<div className='w-full sm:w-2/3 md:w-1/2 mx-auto'>
+		<Column>
 			<Panel>
 				<ToastContainer />
 				<Card>
@@ -375,6 +376,6 @@ export default function Account() {
 					</div>
 				</Card>
 			</Panel>
-		</div>
+		</Column>
 	);
 }
