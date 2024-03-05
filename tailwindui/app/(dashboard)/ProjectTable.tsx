@@ -8,17 +8,90 @@ import { RiSlideshow2Fill } from 'react-icons/ri';
 import Image from 'next/image';
 import { useUser } from '@/hooks/use-user';
 import ProjectService from '@/services/ProjectService';
+import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
+import { LuTrash2 } from 'react-icons/lu';
+import Modal from '@/components/ui/Modal';
+import { Instruction } from '@/components/ui/Text';
+import LanguageSelector from '../(feature)/workflow-generate-outlines/LanguageSelector';
 
 const DEFAULT_THUMBNAIL =
 	'https://ph-files.imgix.net/76b477f1-bc1b-4432-b52b-68674658d62b.png';
 
+
+const CloneButton: React.FC<{
+	project: Project;
+	setCurrentProjects: React.Dispatch<React.SetStateAction<Project[]>>;
+}> = ({ project, setCurrentProjects }) => {
+	const [targetCloneLanguage, setTargetCloneLanguage] = useState<string>('English');
+	const [showCloneModal, setShowCloneModal] = useState(false);
+	const { token } = useUser();
+
+	const CloneModal: React.FC = () => {
+		return <Modal
+			showModal={showCloneModal}
+			setShowModal={setShowCloneModal}
+			title='Clone / Translate Project'
+			description='You can create a new project with the same content, but optionally in a different language.'
+			onConfirm={onClone}
+		>
+			<Instruction>
+				Current project language: English
+			</Instruction>
+			<LanguageSelector
+				language={targetCloneLanguage}
+				setLanguage={setTargetCloneLanguage}
+				text='New project language:'
+				showExplanation={false}
+			/>
+		</Modal>
+	};
+
+	async function onClone() {
+		console.log(`cloning project ${project.id} to ${'English'}`);
+		if (!project) return;
+		try {
+			const newProject = await ProjectService.clone(
+				project.id,
+				targetCloneLanguage,
+				token,
+			);
+			setCurrentProjects(projects => [newProject, ...projects]);
+		} catch (e) {
+			console.error(e);
+		}
+	}
+
+	return <>
+		{showCloneModal && <CloneModal />}
+		<ButtonWithExplanation
+			button={
+				<button
+					onClick={() => setShowCloneModal(true)}
+				>
+					<FaRegClone
+						style={{
+							strokeWidth: '1',
+							flex: '1',
+							width: '1.3rem',
+							height: '1.3rem',
+							fontWeight: 'bold',
+							color: '#2943E9',
+						}}
+					/>
+				</button>
+			}
+			explanation={'Clone / Translate'}
+		/>
+	</>
+};
+
 const ProjectItem: React.FC<{
 	project: Project;
 	onProjectClick: (projectId: string) => void;
-	onDelete?: (e: React.MouseEvent<HTMLDivElement>, projectId: string) => void;
-	onClone?: (index: number) => void;
+	onDelete?: (projectId: string) => void;
 	index: number;
-}> = ({ project, onProjectClick, onDelete, onClone, index }) => {
+	setCurrentProjects?: React.Dispatch<React.SetStateAction<Project[]>>;
+}> = ({ project, onProjectClick, onDelete, index, setCurrentProjects }) => {
 	const isCloning = index === -1;
 
 	return (
@@ -68,32 +141,41 @@ const ProjectItem: React.FC<{
 				</div>
 			</div>
 
-			{/* create date */}
+			{/* buttons */}
 			<div className='col-span-1 p-2 border-b-2 flex'>
-				<div className='h-full flex justify-between items-center w-full py-4 px-2 text-gray-600 text-[13px] font-normal font-creato-medium leading-normal tracking-[0.12rem]'>
-					<span className='hidden md:flex'>
+				<div className='h-full flex justify-end items-center w-full gap-4'>
+					{/* <span className='hidden md:flex'>
 						{moment(project.created_datetime).format('L')}
-					</span>
+					</span> */}
 
-					{/* clonable if deletable, and not already a clone */}
-					{onClone && onDelete && (
-						<div className='cursor-pointer' onClick={() => onClone(index)}>
-							<FaRegClone className='h-[16px] w-[16px]' />
-						</div>
-					)}
+					{setCurrentProjects &&
+						<CloneButton
+							project={project}
+							setCurrentProjects={setCurrentProjects}
+						/>}
 
 					{/* deletable if this is dashboard, not discover */}
 					{onDelete && (
-						<div
-							className='cursor-pointer'
-							onClick={(e) => onDelete(e, project.id)}
-						>
-							<DeleteIcon />
-						</div>
+						<ButtonWithExplanation
+							button={
+								<button
+									onClick={() => onDelete(project.id)}
+								>
+									<LuTrash2
+										style={{
+											strokeWidth: '2',
+											flex: '1',
+											width: '1.5rem',
+											height: '1.5rem',
+											fontWeight: 'bold',
+											color: '#2943E9',
+										}}
+									/>
+								</button>
+							}
+							explanation={'Delete'}
+						/>
 					)}
-
-					{/* loading spinner */}
-					{isCloning && <SpinIcon />}
 				</div>
 			</div>
 		</React.Fragment>
@@ -102,9 +184,9 @@ const ProjectItem: React.FC<{
 
 interface Props {
 	currentProjects: Project[];
-	setCurrentProjects?: (projects: Project[]) => void;
+	setCurrentProjects?: React.Dispatch<React.SetStateAction<Project[]>>;
 	onProjectClick: (projectId: string) => void;
-	onDelete?: (e: React.MouseEvent<HTMLDivElement>, projectId: string) => void;
+	onDelete?: (projectId: string) => void;
 }
 
 const ProjectTable: React.FC<Props> = ({
@@ -114,58 +196,9 @@ const ProjectTable: React.FC<Props> = ({
 	onDelete,
 }) => {
 	const [cloningProject, setCloningProject] = useState<Project>();
-	const { token } = useUser();
-	const [isCloning, setIsCloning] = useState(false);
-	// const [targetLanguage, setTargetLanguage] = useState('en');
-	// const [showModal, setShowModal] = useState(false);
-
-	async function onClone(project: Project) {
-		console.log(`cloning project ${project.id} to ${'English'}`);
-		if (!project) return;
-		setIsCloning(true);
-		setCloningProject(project);
-		try {
-			const newProject = await ProjectService.clone(
-				project.id,
-				'English',
-				token,
-			);
-			const newProjects = [...currentProjects];
-			newProjects.splice(0, 0, newProject);
-			setCurrentProjects && setCurrentProjects(newProjects);
-		} catch (e) {
-			console.error(e);
-		}
-		setCloningProject(undefined);
-		setIsCloning(false);
-	}
 
 	return (
 		<>
-			{/* {showModal && (
-        <Modal
-          showModal={showModal}
-          setShowModal={setShowModal}
-          title='Clone Project'
-          description='You can clone this project into another language:'
-          onConfirm={onClone}
-        >
-          <div className='flex flex-col items-center justify-center'>
-            <button
-              onClick={() => setTargetLanguage('en')}
-              className='bg-[#ECF1FE] border border-gray-200 p-2 m-2 rounded-md text-lg font-bold text-indigo-300'
-            >
-              English
-            </button>
-            <button
-              onClick={() => setTargetLanguage('es')}
-              className='bg-[#ECF1FE] border border-gray-200 p-2 m-2 rounded-md text-lg font-bold text-indigo-300'
-            >
-              Spanish
-            </button>
-          </div>
-        </Modal>
-      )} */}
 			<div className='w-full lg:w-2/3 mx-auto'>
 				<div className='grid bg-[#ECF1FE] border border-gray-200 grid-cols-3 md:grid-cols-6'>
 					<div className='hidden md:flex col-span-1 w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
@@ -178,7 +211,7 @@ const ProjectTable: React.FC<Props> = ({
 						Resources
 					</div>
 					<div className='col-span-1 w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
-						Date
+
 					</div>
 				</div>
 				<div className='grid border bg-[white] border-gray-200 grid-cols-3 md:grid-cols-6'>
@@ -187,7 +220,7 @@ const ProjectTable: React.FC<Props> = ({
 						<ProjectItem
 							key={cloningProject.id + '_clone'}
 							project={cloningProject}
-							onProjectClick={() => {}}
+							onProjectClick={() => { }}
 							index={-1}
 						/>
 					)}
@@ -197,12 +230,7 @@ const ProjectTable: React.FC<Props> = ({
 							project={project}
 							onProjectClick={onProjectClick}
 							onDelete={onDelete}
-							onClone={() => {
-								onClone(project);
-								setCloningProject(currentProjects[index]);
-
-								// setShowModal(true)
-							}}
+							setCurrentProjects={setCurrentProjects}
 							index={index}
 						/>
 					))}

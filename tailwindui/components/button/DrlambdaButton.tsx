@@ -145,7 +145,7 @@ export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({
 	const router = useRouter();
 	return (
 		<div
-			className='h-[36px] sm:h-[36px] flex-row justify-center items-center gap-4 cursor-pointer flex rounded-3xl bg-white bg-opacity-0'
+			className='h-[36px] sm:h-[36px] min-w-[10rem] lg:min-w-[12rem] flex-row justify-center items-center gap-4 cursor-pointer flex rounded-3xl bg-white bg-opacity-0'
 			onClick={() => router.push(href)}
 		>
 			<FaChevronLeft style={{ color: '#FFFFFF' }} />
@@ -217,7 +217,7 @@ type DrlambdaDropDownProps = {
 	displayText?: string;
 	width?: string;
 	style?: 'button' | 'input';
-	defaultValue?: string;
+	value?: string;
 	disabled?: boolean;
 };
 
@@ -227,7 +227,7 @@ export const DropDown: React.FC<DrlambdaDropDownProps> = ({
 	displayText,
 	width = '12rem',
 	style = 'button',
-	defaultValue = 'default',
+	value = 'default',
 	disabled = false,
 }) => {
 	const styleClassName =
@@ -238,7 +238,7 @@ export const DropDown: React.FC<DrlambdaDropDownProps> = ({
 		<select
 			className={`shadow-lg h-[36px] flex ${styleClassName} text-sm py-0 overflow-visible disabled:text-gray-600 disabled:animate-pulse`}
 			onChange={onChange}
-			defaultValue={defaultValue}
+			value={value}
 			style={{ width: width }}
 			disabled={disabled}
 		>

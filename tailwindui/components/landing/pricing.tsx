@@ -439,7 +439,8 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 									</div>
 								</div>
 							</div>
-							{!fewerCards && (
+							{/* enterprise, disabled */}
+							{!fewerCards && false && (
 								<div
 									className={`transition ease-in-out delay-150 hover:-translate-y-2 mx-2 grow basis-0 min-w-[260px] max-w-sm ${
 										showEnt ? 'block' : 'hidden'

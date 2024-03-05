@@ -54,7 +54,7 @@ export const Clean_Lifestyle_003_TemplateThemeConfig: ThemeElements = {
 	userNameFontColor: 'text-[#A9A9A9]',
 
 	headFontCSS: {
-		fontSize: '48pt', // text-4xl in points
+		fontSize: '30pt', // text-4xl in points
 		fontWeight: 'bold', // font-normal
 		fontFamily: 'Libre Baskerville Regular', // font-creato-medium
 		lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2

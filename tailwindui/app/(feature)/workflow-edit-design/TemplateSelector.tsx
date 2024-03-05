@@ -29,7 +29,7 @@ const TemplateSelector: React.FC<{
 						// onChange={(e) =>
 						// 	changeTemplate(e.target.value as TemplateKeys)
 						// }
-						defaultValue={template}
+						value={template}
 						style='input'
 					>
 						<option value='Default'>Default</option>

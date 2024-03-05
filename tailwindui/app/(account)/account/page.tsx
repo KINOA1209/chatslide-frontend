@@ -25,6 +25,9 @@ import { useLocation } from 'react-router-dom';
 import { useUser } from '@/hooks/use-user';
 import useHydrated from '@/hooks/use-hydrated';
 import SessionStorage from '@/components/utils/SessionStorage';
+import Card from '@/components/ui/Card';
+import { Explanation, Instruction } from '@/components/ui/Text';
+import { Panel } from '@/components/layout/Panel';
 
 const Profile = () => {
 	const { username, email, token, setUsername } = useUser();
@@ -115,79 +118,63 @@ const Profile = () => {
 	};
 
 	return (
-		<div className='w-full px-4 sm:px-6'>
-			<div className='mb-8 w-full'>
-				<div className='w-fit text-[#525C6A] text-[17px] font-bold'>
-					Profile
-				</div>
-				<div className='w-fit text-[#212121] text-[50px] md:text-[80px] font-light'>
+		<>
+			<div className='w-full'>
+				<Instruction>
 					Hi, {userFirstName()}
-				</div>
+				</Instruction>
 			</div>
-			<div className='w-fit mx-auto'>
-				<div className='w-full'>
-					<label
-						className='block text-[14px] mb-1 text-gray-700'
-						htmlFor='email'
-					>
-						Email
-					</label>
+			<div className='w-full'>
+				<Instruction>
+					Email
+				</Instruction>
 
-					<InputBox>
-						<FaInbox className='text-gray-600' />
-						<input
-							id='email'
-							type='text'
-							className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
-							// disabled
-							value={email}
-							readOnly
-						/>
-						<FaLock className='text-gray-600' />
-					</InputBox>
-				</div>
-				<form onSubmit={handleSubmitUsername}>
-					<div className='w-full mt-4'>
-						<label
-							className='block text-[14px] mb-1 text-gray-700'
-							htmlFor='username'
-						>
-							Username
-						</label>
-						<div className='flex w-full flex-row gap-4 justify-center mt-2'>
-							<InputBox>
-								<FaUser className='text-gray-600' />
-								<input
-									id='username'
-									type='text'
-									className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
-									onChange={(e) => handleUsernameChange(e)}
-									value={editUsername}
-								/>
-							</InputBox>
-							<BigBlueButton onClick={() => {}} isSubmitting={isSubmitting}>
-								Update
-							</BigBlueButton>
-						</div>
-					</div>
-				</form>
+				<InputBox>
+					<FaInbox className='text-gray-600' />
+					<input
+						id='email'
+						type='text'
+						className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+						// disabled
+						value={email}
+						readOnly
+					/>
+					<FaLock className='text-gray-600' />
+				</InputBox>
 			</div>
-		</div>
+			<form onSubmit={handleSubmitUsername}>
+				<div className='w-full'>
+					<Instruction>
+						Username
+					</Instruction>
+					<div className='flex w-full flex-row gap-4 justify-center mt-2'>
+						<InputBox>
+							<FaUser className='text-gray-600' />
+							<input
+								id='username'
+								type='text'
+								className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+								onChange={(e) => handleUsernameChange(e)}
+								value={editUsername}
+							/>
+						</InputBox>
+						<BigBlueButton onClick={() => { }} isSubmitting={isSubmitting}>
+							Update
+						</BigBlueButton>
+					</div>
+				</div>
+			</form>
+		</>
 	);
 };
 
 const Referral = () => {
 	return (
-		<div className='w-full px-4 sm:px-6'>
-			<div className='mb-8 w-full'>
-				<div className='w-fit text-[#363E4A] text-[17px] font-bold'>
-					Referral
-				</div>
-				<div className='w-fit text-[#212121] text-[80px]'>
-					50<span className='text-[24px]'>credit/invite</span>
-				</div>
-				<ReferralLink />
-			</div>
+		<div className='w-full'>
+			<Instruction>
+				Referral
+			</Instruction>
+			<ReferralLink />
 		</div>
 	);
 };
@@ -223,33 +210,31 @@ const OpenAIKey = () => {
 	}, [token]);
 
 	return (
-		<div className='w-full px-4 sm:px-6'>
-			<div className='mb-8 w-full'>
-				<div className='w-fit text-[#363E4A] text-[17px] font-bold'>
-					Your OpenAI Key
-				</div>
-				<div>
-					Paste your own OpenAI key here so that generation does not cost
-					credits:
-				</div>
-				<div className='w-full justify-center flex flex-row'>
-					<div className='flex grow max-w-[60rem] flex-row gap-4 justify-center mt-2'>
-						<InputBox>
-							<FaKey className='text-gray-600' />
-							<input
-								id='key'
-								type='text'
-								className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
-								onChange={(e) => setKey(e.target.value)}
-								onClick={(e) => (e.target as HTMLInputElement)?.select()}
-								value={key}
-							/>
-						</InputBox>
+		<div className='w-full'>
+			<Instruction>
+				Your OpenAI Key
+			</Instruction>
+			<Explanation>
+				Paste your own OpenAI key here so that generation does not cost
+				credits:
+			</Explanation>
+			<div className='w-full justify-center flex flex-row'>
+				<div className='flex grow max-w-[60rem] flex-row gap-4 justify-center mt-2'>
+					<InputBox>
+						<FaKey className='text-gray-600' />
+						<input
+							id='key'
+							type='text'
+							className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+							onChange={(e) => setKey(e.target.value)}
+							onClick={(e) => (e.target as HTMLInputElement)?.select()}
+							value={key}
+						/>
+					</InputBox>
 
-						<BigBlueButton onClick={updateKey} isSubmitting={isSubmitting}>
-							Update
-						</BigBlueButton>
-					</div>
+					<BigBlueButton onClick={updateKey} isSubmitting={isSubmitting}>
+						Update
+					</BigBlueButton>
 				</div>
 			</div>
 		</div>
@@ -307,28 +292,26 @@ const ApplyPromo = () => {
 	};
 
 	return (
-		<div className='w-full px-4 sm:px-6'>
-			<div className='mb-8 w-full'>
-				<div className='w-fit text-[#363E4A] text-[17px] font-bold'>
-					Apply Promo Code or License Key
-				</div>
-				<div className='w-full justify-center flex flex-row'>
-					<div className='flex w-[30rem] flex-row gap-4 justify-center mt-2'>
-						<InputBox>
-							<input
-								id='promo'
-								type='text'
-								className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
-								onChange={(e) => setPromo(e.target.value)}
-								onClick={(e) => (e.target as HTMLInputElement)?.select()}
-								value={promo}
-							/>
-						</InputBox>
+		<div className='w-full'>
+			<Instruction>
+				Apply Promo Code or License Key
+			</Instruction>
+			<div className='w-full justify-center flex flex-row'>
+				<div className='flex w-[30rem] flex-row gap-4 justify-center mt-2'>
+					<InputBox>
+						<input
+							id='promo'
+							type='text'
+							className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+							onChange={(e) => setPromo(e.target.value)}
+							onClick={(e) => (e.target as HTMLInputElement)?.select()}
+							value={promo}
+						/>
+					</InputBox>
 
-						<BigBlueButton onClick={applyPromo} isSubmitting={isSubmitting}>
-							Apply
-						</BigBlueButton>
-					</div>
+					<BigBlueButton onClick={applyPromo} isSubmitting={isSubmitting}>
+						Apply
+					</BigBlueButton>
 				</div>
 			</div>
 		</div>
@@ -339,13 +322,11 @@ const CreditHistory = () => {
 	const { credits } = useUser();
 
 	return (
-		<div className='w-full px-4 sm:px-6'>
-			<div className='mb-8 w-full'>
-				<div className='w-fit text-[#363E4A] text-[17px] font-bold'>
-					Credit Balance
-				</div>
-				<div className='w-fit text-[#212121] text-[80px]'>{credits}</div>
-			</div>
+		<div className='w-full'>
+			<Instruction>
+				Credit Balance
+			</Instruction>
+			<div className='w-fit text-[#212121] text-[36px]'>{credits}</div>
 		</div>
 	);
 };
@@ -370,42 +351,29 @@ export default function Account() {
 	if (!useHydrated()) return <></>;
 
 	return (
-		<div className='flex flex-col items-center gap-[70px] mx-auto w-full'>
-			<ToastContainer />
-			{/* <div className='fixed w-full top-0 h-[130px] md:h-[160px] bg-[#E7E9EB] flex flex-col z-20 max-w-none 2xl:max-w-[80%]'> */}
-			{/* <div className='grow flex flex-row mb-2 items-end'>
-                    <div className='text-[#363E4A] text-[16px] mx-1 md:mx-5 cursor-pointer' onClick={e => { toSection(0) }} onMouseMove={e => { handleMouseOver(0) }} onMouseOut={handleMouseOut} ref={tab1Ref}>Account Settings</div>
-                    <div className='text-[#363E4A] text-[16px] mx-1 md:mx-5 cursor-pointer' onClick={e => { toSection(1) }} onMouseMove={e => { handleMouseOver(1) }} onMouseOut={handleMouseOut} ref={tab4Ref}>Credits</div>
-                    <div className='text-[#363E4A] text-[16px] mx-1 md:mx-5 cursor-pointer' onClick={e => { toSection(2) }} onMouseMove={e => { handleMouseOver(2) }} onMouseOut={handleMouseOut} ref={tab3Ref}>Subscription</div>
-                </div> */}
-			{/* <div className='w-full flex flex-row'>
-                    <div className='border-b-2 w-fit border-black h-0 overflow-hidden text-[16px] mx-1 md:mx-5 transition-all duration-300' ref={tabUnderlineRef}></div>
-                </div> */}
-			{/* </div> */}
-			<section
-				id='profile'
-				className='w-full mt-[20px] md:mt-0 max-w-[100%] lg:max-w-[80%]'
-			>
-				<Profile />
-			</section>
-			{/* <div className='w-full max-w-none 2xl:max-w-[80%]'><PasswordModule /></div> */}
-			{bar}
-			<section id='credit' className='w-full max-w-[100%] lg:max-w-[80%]'>
-				<CreditHistory />
-			</section>
-			<section id='referral' className='w-full max-w-[100%] lg:max-w-[80%]'>
-				<Referral />
-			</section>
-			<section id='openai' className='w-full max-w-[100%] lg:max-w-[80%]'>
-				<OpenAIKey />
-			</section>
-			<section id='promo' className='w-full max-w-[100%] lg:max-w-[80%]'>
-				<ApplyPromo />
-			</section>
-			{bar}
-			{/* <section id='subscription' className='w-full'>
-				<Subscription />
-      </section> */}
+		<div className='w-full sm:w-2/3 md:w-1/2 mx-auto'>
+			<Panel>
+				<ToastContainer />
+				<Card>
+						<Profile />
+				</Card>
+				{/* <div className='w-full max-w-none 2xl:max-w-[80%]'><PasswordModule /></div> */}
+				<Card>
+					{ /* id is for better locating the section */}
+					<div id='credit'>
+						<CreditHistory />
+					</div>
+					<div id='referral'>
+						<Referral />
+					</div>
+					<div id='openai'>
+						<OpenAIKey />
+					</div>
+					<div id='promo'>  
+						<ApplyPromo />
+					</div>
+				</Card>
+			</Panel>
 		</div>
 	);
 }
