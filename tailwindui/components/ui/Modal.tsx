@@ -7,7 +7,8 @@ interface ModalProps {
 	showModal: boolean;
 	setShowModal: (value: boolean) => void;
 	position?: string;
-	onConfirm?: () => void;
+	onConfirm?: () => Promise<void> | void;
+	onConfirmAsync?: () => Promise<void>;
 	title?: string;
 	description?: string;
 	clickOutsideToClose?: boolean;
@@ -27,6 +28,7 @@ const Modal: React.FC<ModalProps> = ({
 }) => {
 	const modalRef = React.useRef<HTMLDivElement>(null);
 	const modalContentRef = React.useRef<HTMLDivElement>(null);
+	const [isSubmitting, setIsSubmitting] = React.useState(false);
 
 	const handleCloseModal = () => {
 		console.log('handleCloseModal');
@@ -42,6 +44,16 @@ const Modal: React.FC<ModalProps> = ({
 		}
 		handleCloseModal(); // Click outside the modal content, close the modal
 	};
+
+	const onClick = async () => {
+		if (!onConfirm) return;
+		setIsSubmitting(true);
+		console.log('onConfirm');
+		await onConfirm();
+		console.log('onConfirm resolved');
+		setIsSubmitting(false);
+		setShowModal(false);
+	}
 
 	// press esc to close modal
 	React.useEffect(() => {
@@ -124,7 +136,12 @@ const Modal: React.FC<ModalProps> = ({
 											Cancel
 										</InversedBigBlueButton>
 									)}
-									<BigBlueButton onClick={onConfirm}>Confirm</BigBlueButton>
+									<BigBlueButton
+										isSubmitting={isSubmitting}
+										onClick={onClick}
+									>
+										Confirm
+									</BigBlueButton>
 								</div>
 							)}
 						</div>
