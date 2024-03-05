@@ -211,7 +211,7 @@ export default function Topic() {
 			} else {
 				toast.error(
 					'Server is busy now. Please try again later. Reference code: ' +
-						project?.id,
+					project?.id,
 				);
 				setIsSubmitting(false);
 			}
@@ -352,7 +352,7 @@ export default function Topic() {
 									onChange={(e) => setAudience(e.target.value)}
 									style='input'
 									width='80%'
-									defaultValue='unselected'
+									value={audience}
 								>
 									<option key='unselected' value='unselected' disabled>
 										Choose your audience
@@ -364,7 +364,9 @@ export default function Topic() {
 									))}
 								</DropDown>
 							</div>
-							<LanguageSelector setLanguage={setLanguage} />
+							<LanguageSelector
+								language={language}
+								setLanguage={setLanguage} />
 						</div>
 					</Card>
 

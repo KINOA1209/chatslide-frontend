@@ -12,6 +12,7 @@ import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
 import { LuTrash2 } from 'react-icons/lu';
 import Modal from '@/components/ui/Modal';
 import { Instruction } from '@/components/ui/Text';
+import LanguageSelector from '../(feature)/workflow-generate-outlines/LanguageSelector';
 
 const DEFAULT_THUMBNAIL =
 	'https://ph-files.imgix.net/76b477f1-bc1b-4432-b52b-68674658d62b.png';
@@ -19,8 +20,9 @@ const DEFAULT_THUMBNAIL =
 
 const CloneButton: React.FC<{
 	project: Project;
-}> = ({ project }) => {
-	const [targetCloneLanguage, setTargetCloneLanguage] = useState('en');
+	setCurrentProjects: React.Dispatch<React.SetStateAction<Project[]>>;
+}> = ({ project, setCurrentProjects }) => {
+	const [targetCloneLanguage, setTargetCloneLanguage] = useState<string>('English');
 	const [showCloneModal, setShowCloneModal] = useState(false);
 	const { token } = useUser();
 
@@ -28,15 +30,19 @@ const CloneButton: React.FC<{
 		return <Modal
 			showModal={showCloneModal}
 			setShowModal={setShowCloneModal}
-			title='Clone Project'
-			description='You can clone this project into another language:'
+			title='Clone / Translate Project'
+			description='You can create a new project with the same content, but optionally in a different language.'
 			onConfirm={onClone}
 		>
 			<Instruction>
-				Current project language: {project.language}
+				Current project language: English
 			</Instruction>
-
-			
+			<LanguageSelector
+				language={targetCloneLanguage}
+				setLanguage={setTargetCloneLanguage}
+				text='New project language:'
+				showExplanation={false}
+			/>
 		</Modal>
 	};
 
@@ -44,11 +50,12 @@ const CloneButton: React.FC<{
 		console.log(`cloning project ${project.id} to ${'English'}`);
 		if (!project) return;
 		try {
-			await ProjectService.clone(
+			const newProject = await ProjectService.clone(
 				project.id,
 				targetCloneLanguage,
 				token,
 			);
+			setCurrentProjects(projects => [newProject, ...projects]);
 		} catch (e) {
 			console.error(e);
 		}
@@ -83,7 +90,8 @@ const ProjectItem: React.FC<{
 	onProjectClick: (projectId: string) => void;
 	onDelete?: (projectId: string) => void;
 	index: number;
-}> = ({ project, onProjectClick, onDelete, index }) => {
+	setCurrentProjects?: React.Dispatch<React.SetStateAction<Project[]>>;
+}> = ({ project, onProjectClick, onDelete, index, setCurrentProjects }) => {
 	const isCloning = index === -1;
 
 	return (
@@ -140,7 +148,11 @@ const ProjectItem: React.FC<{
 						{moment(project.created_datetime).format('L')}
 					</span> */}
 
-					<CloneButton project={project} />
+					{setCurrentProjects &&
+						<CloneButton
+							project={project}
+							setCurrentProjects={setCurrentProjects}
+						/>}
 
 					{/* deletable if this is dashboard, not discover */}
 					{onDelete && (
@@ -164,9 +176,6 @@ const ProjectItem: React.FC<{
 							explanation={'Delete'}
 						/>
 					)}
-
-					{/* loading spinner */}
-					{isCloning && <SpinIcon />}
 				</div>
 			</div>
 		</React.Fragment>
@@ -175,7 +184,7 @@ const ProjectItem: React.FC<{
 
 interface Props {
 	currentProjects: Project[];
-	setCurrentProjects?: (projects: Project[]) => void;
+	setCurrentProjects?: React.Dispatch<React.SetStateAction<Project[]>>;
 	onProjectClick: (projectId: string) => void;
 	onDelete?: (projectId: string) => void;
 }
@@ -187,39 +196,9 @@ const ProjectTable: React.FC<Props> = ({
 	onDelete,
 }) => {
 	const [cloningProject, setCloningProject] = useState<Project>();
-	const { token } = useUser();
-
-	// const [targetLanguage, setTargetLanguage] = useState('en');
-	// const [showModal, setShowModal] = useState(false);
-
-
 
 	return (
 		<>
-			{/* {showModal && (
-        <Modal
-          showModal={showModal}
-          setShowModal={setShowModal}
-          title='Clone Project'
-          description='You can clone this project into another language:'
-          onConfirm={onClone}
-        >
-          <div className='flex flex-col items-center justify-center'>
-            <button
-              onClick={() => setTargetLanguage('en')}
-              className='bg-[#ECF1FE] border border-gray-200 p-2 m-2 rounded-md text-lg font-bold text-indigo-300'
-            >
-              English
-            </button>
-            <button
-              onClick={() => setTargetLanguage('es')}
-              className='bg-[#ECF1FE] border border-gray-200 p-2 m-2 rounded-md text-lg font-bold text-indigo-300'
-            >
-              Spanish
-            </button>
-          </div>
-        </Modal>
-      )} */}
 			<div className='w-full lg:w-2/3 mx-auto'>
 				<div className='grid bg-[#ECF1FE] border border-gray-200 grid-cols-3 md:grid-cols-6'>
 					<div className='hidden md:flex col-span-1 w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
@@ -251,6 +230,7 @@ const ProjectTable: React.FC<Props> = ({
 							project={project}
 							onProjectClick={onProjectClick}
 							onDelete={onDelete}
+							setCurrentProjects={setCurrentProjects}
 							index={index}
 						/>
 					))}
