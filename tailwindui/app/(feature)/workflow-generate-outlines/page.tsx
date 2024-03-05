@@ -28,6 +28,7 @@ import {
 	Instruction,
 } from '@/components/ui/Text';
 import { DropDown } from '@/components/button/DrlambdaButton';
+import ResourceService from '@/services/ResourceService';
 import LanguageSelector from './LanguageSelector';
 
 const MAX_TOPIC_LENGTH = 128;
@@ -53,7 +54,7 @@ export default function Topic() {
 	const [showAudienceInput, setShowAudienceInput] = useState(false);
 	const { isPaidUser } = useUser();
 	const { project, updateOutlines, updateProject, initProject } = useProject();
-	const [searchOnlineScope, setSearchOnlineScope] = useState('none');
+	const [searchOnlineScope, setSearchOnlineScope] = useState('');
 
 	// bind form data between input and sessionStorage
 	const [topic, setTopic] = useState(
@@ -145,6 +146,12 @@ export default function Topic() {
 				? sessionStorage.scenarioType
 				: '';
 
+		const knowledge_summary =
+			typeof window !== 'undefined' &&
+			sessionStorage.knowledge_summary != undefined
+				? JSON.parse(sessionStorage.knowledge_summary)
+				: '';
+
 		setIsSubmitting(true);
 
 		const formData = {
@@ -158,6 +165,7 @@ export default function Topic() {
 			scenario_type: scenarioType,
 			generation_mode: generationMode,
 			search_online: searchOnlineScope,
+			knowledge_summary: knowledge_summary,
 		};
 
 		sessionStorage.setItem('topic', formData.topic);
@@ -168,6 +176,40 @@ export default function Topic() {
 			JSON.stringify(selectedResources),
 		);
 		//sessionStorage.setItem('schoolTemplate', schoolTemplate);
+
+		if (selectedResources && selectedResources.length > 0) {
+			try {
+				console.log('resources', selectedResources);
+				console.log('summarize resources');
+				const response = await ResourceService.summarizeResource(
+					project_id,
+					selectedResources.map((r: Resource) => r.id),
+					topic,
+					audience,
+					language,
+					searchOnlineScope,
+					token,
+				);
+				sessionStorage.setItem(
+					'knowledge_summary',
+					JSON.stringify(response.data.knowledge_summary),
+				);
+				sessionStorage.setItem(
+					'project_id',
+					JSON.stringify(response.data.project_id),
+				);
+				formData.knowledge_summary = response.data.knowledge_summary;
+				formData.project_id = response.data.project_id;
+				updateProject('knowledge_summary', response.data.knowledge_summary);
+				updateProject('id', response.data.project_id);
+
+				console.log('knowledge_summary', response.data.knowledge_summary);
+			} catch (error) {
+				console.error('Error summarizing resources', error);
+			}
+		} else {
+			console.log('no need to summarize resources');
+		}
 
 		try {
 			const response = await fetch('/api/outlines', {

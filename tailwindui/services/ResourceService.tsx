@@ -76,6 +76,40 @@ class ResourceService {
 		}
 	}
 
+	static async summarizeResource(
+		project_id: string,
+		resources: string[],
+		topic: string,
+		audience: string,
+		language: string,
+		search_online: string,
+		toekn: string,
+	): Promise<any> {
+		const header = new Headers();
+		if (toekn) {
+			header.append('Authorization', `Bearer ${toekn}`);
+		}
+
+		const response = await fetch('/api/summary', {
+			method: 'POST',
+			headers: header,
+			body: JSON.stringify({
+				project_id: project_id,
+				resources: resources,
+				topic: topic,
+				audience: audience,
+				language: language,
+				search_online: search_online,
+			}),
+		});
+
+		if (response.ok) {
+			return await response.json();
+		} else {
+			throw new Error(`Failed to summarize resources: ${response.status}`);
+		}
+	}
+
 	static async queryResource(
 		project_id: string,
 		resource_id: string[],

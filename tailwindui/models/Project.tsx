@@ -22,6 +22,7 @@ type Project = {
 	// Presentation-specific fields
 	audience: string;
 	outlines: string; // will be parsed into Outlines type: todo: use outlines type in backend as well
+	knowledge_summary: string;
 	extra_knowledge: string;
 	outline_item_counts: string;
 	video_url: string;
