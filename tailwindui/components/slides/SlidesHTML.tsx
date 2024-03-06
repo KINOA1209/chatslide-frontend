@@ -554,7 +554,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				<Panel>
 					{/* vertical bar */}
 					<div className='h-full w-[9rem] hidden xl:block mx-auto justify-center items-center'>
-						<div className='h-full flex shrink flex-col flex-nowrap py-2 overflow-y-auto  overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
+						<div className='h-full max-h-[540px] flex shrink flex-col flex-nowrap py-2 overflow-y-auto  overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
 							{slides.map((slide, index) => (
 								<div
 									key={
