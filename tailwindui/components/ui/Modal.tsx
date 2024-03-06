@@ -99,11 +99,11 @@ const Modal: React.FC<ModalProps> = ({
 
 					<div
 						ref={modalContentRef}
-						className={`z-50 ${position} bg-white rounded-lg shadow sm:max-w-[80%] max-h-[80%] overflow-y-auto p-2 sm:p-4`}
+						className={`z-50 ${position} bg-white rounded-lg shadow sm:max-w-[80%] max-h-[90%] overflow-y-auto p-2`}
 						onClick={(e) => e.stopPropagation()}
 					>
-						{/* Close button */}
 						<div className='relative flex flex-col gap-y-4'>
+							{/* Close button */}
 							{canClose && (
 								<button
 									className='absolute top-0 right-0 text-xl focus:outline-none'
