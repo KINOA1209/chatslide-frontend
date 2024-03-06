@@ -47,6 +47,7 @@ const audienceList = [
 ];
 
 export default function Topic() {
+	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 	const router = useRouter();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [showFileModal, setShowFileModal] = useState(false);
@@ -151,7 +152,7 @@ export default function Topic() {
 
 		const knowledge_summary =
 			typeof window !== 'undefined' &&
-				sessionStorage.knowledge_summary != undefined
+			sessionStorage.knowledge_summary != undefined
 				? JSON.parse(sessionStorage.knowledge_summary)
 				: '';
 
@@ -256,7 +257,7 @@ export default function Topic() {
 			} else {
 				toast.error(
 					'Server is busy now. Please try again later. Reference code: ' +
-					project?.id,
+						project?.id,
 				);
 				setIsSubmitting(false);
 			}
@@ -409,9 +410,7 @@ export default function Topic() {
 									))}
 								</DropDown>
 							</div>
-							<LanguageSelector
-								language={language}
-								setLanguage={setLanguage} />
+							<LanguageSelector language={language} setLanguage={setLanguage} />
 						</div>
 					</Card>
 

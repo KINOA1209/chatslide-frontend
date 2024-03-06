@@ -23,7 +23,6 @@ import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
 // const { changeTemplate } = useSlides();
 
-
 export default function DesignPage() {
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 	const [template, setTemplate] = useState('Business_002' as string);
@@ -74,9 +73,9 @@ export default function DesignPage() {
 	return (
 		<section className='relative'>
 			{/* user tutorial */}
-			<div className='absolute right-[3rem] top-[7rem] flex flex-col items-end space-x-4'>
+			{/* <div className='absolute right-[3rem] top-[7rem] flex flex-col items-end space-x-4'>
 				<ActionsToolBar startTour={startTour} onlyShowTutorial={true} />
-			</div>
+			</div> */}
 			<ToastContainer />
 
 			<WorkflowStepsBanner

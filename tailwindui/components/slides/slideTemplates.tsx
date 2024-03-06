@@ -17,6 +17,7 @@ import { Fun_Education_001_template } from './new_templates/Fun_Education_001_te
 import { Clean_Lifestyle_003_template } from './new_templates/Clean_Lifestyle_003_template';
 import { Fun_Education_004_template } from './new_templates/Fun_Education_004_template';
 import { Business_002_template } from './new_templates/Business_002_template';
+import { Fun_Vibrant_007_template } from './new_templates/Fun_Vibrant_007_template';
 import { LayoutKeys } from './slideLayout';
 import { layoutOptions } from './slideLayout';
 import {
@@ -109,6 +110,7 @@ export const availableTemplates = {
 	Business_002: Business_002_template,
 	Fun_Education_001: Fun_Education_001_template,
 	Clean_Lifestyle_003: Clean_Lifestyle_003_template,
+	Fun_Vibrant_007: Fun_Vibrant_007_template,
 };
 
 // Define a type for template keys
