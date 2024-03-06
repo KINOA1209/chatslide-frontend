@@ -127,11 +127,11 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 		visualElementsCSS: {
 			zIndex: 0,
 			width: '100%',
-			height: '10%',
+			height: '20%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '90%',
+			top: '80%',
 		},
 		titleAndSubtopicBoxCSS: {
 			marginTop: '2rem',
@@ -174,11 +174,11 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 		visualElementsCSS: {
 			zIndex: 0,
 			width: '100%',
-			height: '10%',
+			height: '20%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '90%',
+			top: '80%',
 		},
 		titleAndSubtopicBoxCSS: {
 			marginTop: '2rem',
@@ -261,11 +261,11 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 		visualElementsCSS: {
 			zIndex: 0,
 			width: '100%',
-			height: '10%',
+			height: '20%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '90%',
+			top: '80%',
 		},
 		titleAndSubtopicBoxCSS: {
 			marginTop: '2rem',
