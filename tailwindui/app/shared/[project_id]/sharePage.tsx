@@ -131,57 +131,39 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 		init();
 	}, []);
 
-	return (
-		<div className='flex flex-col h-screen w-screen'>
-			<div className='flex'>
-				<Header loginRequired={false} isLanding={false} />
-			</div>
-			<main className='w-full flex grow flex-col overflow-y-scroll'>
-				<ToastContainer />
-				{loading ? (
-					<Loading />
-				) : loadingFailed ? (
-					<Blank>
-						<div>
-							❌ Oops! It looks like we couldn't find the project. <br />
-							🔍 Could you double-check the project ID and make sure it's
-							shared?
-						</div>
-					</Blank>
-				) : (
-					<div className='flex flex-col h-full items-center justify-center'>
-						{showDescription && project && project.description && (
-							<Card canClose={true}>
-								<div className='flex flex-row items-end gap-x-4'>
-									<Title>{project.topic}</Title>
-									<Instruction>
-										Created using DrLambda
-									</Instruction>
-								</div>
-								<Explanation>{project.description}</Explanation>
-							</Card>
-						)}
-						{projectType === 'presentation' && (
-							<div className='w-full flex grow overflow-hidden'>
-								<SlidesHTML isViewing={true} />
-							</div>
-						)}
+	if (loading)
+		return <Loading />
 
-						{projectType === 'socialpost' && (
-							<div>
-								<SocialPostHTML
-									socialPostSlides={socialPosts}
-									setSocialPostSlides={setSocialPosts}
-									isViewing={true}
-									borderColorOptions={borderColorOptions}
-									res_scenario={postType}
-								/>
-							</div>
-						)}
+	if (loadingFailed)
+		return <Blank>
+			<div>
+				❌ Oops! It looks like we couldn't find the project. <br />
+				🔍 Could you double-check the project ID and make sure it's shared?
+			</div>
+		</Blank>
+
+	return (
+		<div>
+			<ToastContainer />
+			<div className='flex flex-col h-full items-center justify-center'>
+				{projectType === 'presentation' && (
+					<div className='w-full flex grow overflow-hidden'>
+						<SlidesHTML isViewing={true} />
 					</div>
 				)}
-			</main>
-			{/* <WorkflowFooter /> */}
+
+				{projectType === 'socialpost' && (
+					<div>
+						<SocialPostHTML
+							socialPostSlides={socialPosts}
+							setSocialPostSlides={setSocialPosts}
+							isViewing={true}
+							borderColorOptions={borderColorOptions}
+							res_scenario={postType}
+						/>
+					</div>
+				)}
+			</div>
 		</div>
 	);
 };
