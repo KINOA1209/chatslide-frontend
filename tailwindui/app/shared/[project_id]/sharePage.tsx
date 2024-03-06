@@ -1,21 +1,18 @@
 'use client';
 
-import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import Footer, { WorkflowFooter } from '@/components/layout/footer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from '@/components/layout/header';
 import dynamic from 'next/dynamic';
 import ProjectService from '@/services/ProjectService';
-import Slide from '@/models/Slide';
 import Project from '@/models/Project';
-import { FaTimes } from 'react-icons/fa';
 import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
 import { useSlides } from '@/hooks/use-slides';
 import { Blank, Loading } from '@/components/ui/Loading';
 import { Explanation, Instruction, Title } from '@/components/ui/Text';
 import Card from '@/components/ui/Card';
+import { useProject } from '@/hooks/use-project';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -33,7 +30,7 @@ interface SharePageProps {
 }
 
 const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
-	const [project, setProject] = useState<Project>();
+	const { project, initProject } = useProject();
 	const [loading, setLoading] = useState(true);
 	const [loadingFailed, setLoadingFailed] = useState(false);
 	const { initSlides } = useSlides();
@@ -117,7 +114,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 				setLoadingFailed(true);
 				return;
 			}
-			setProject(project);
+			initProject(project);
 			console.log('project', project);
 			if (project.content_type === 'presentation') {
 				const slides = ProjectService.parseSlides(project.presentation_slides);

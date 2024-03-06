@@ -534,7 +534,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 					{project &&
 						<ShareToggleButton
-							setShare={updateIsShared}
+							setShare={isViewing ? null : updateIsShared}
 							share={isShared}
 							project={project}
 							host={host}

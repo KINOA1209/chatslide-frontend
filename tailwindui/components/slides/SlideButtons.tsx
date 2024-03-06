@@ -73,7 +73,7 @@ export const PresentButton: React.FC<PresentButtonProps> = ({
 
 type ShareToggleButtonProps = {
 	share: boolean;
-	setShare: (is_shared: boolean, is_public?: boolean) => void;
+	setShare: null | ((is_shared: boolean, is_public?: boolean) => void);
 	project: Project;
 	host: string;
 };
@@ -88,7 +88,7 @@ export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
 	const project_id = project?.id || '';
 
 	const toggleShare = async () => {
-		setShare(true); // updates db as well
+		setShare && setShare(true); // updates db as well
 		setShowModal(true)
 	};
 
@@ -108,7 +108,7 @@ export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
 
 		const handlePost = async (platform: string) => {
 			try {
-				setShare(true);
+				setShare && setShare(true);
 				const shareLink = `${host}/shared/${project_id}`;
 				const hashTags = limitedKeywords
 					.map((keyword) => `#${keyword}`)
@@ -133,7 +133,7 @@ export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
 			>
 				<div>
 					<Instruction>Share Slides</Instruction>
-					<RadioButton
+					{setShare && <RadioButton
 						name='share'
 						options={[
 							{ text: 'Yes', value: 'yes' },
@@ -143,7 +143,7 @@ export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
 						setSelectedValue={(value) => {
 							setShare(value === 'yes');
 						}}
-					/>
+					/>}
 
 					{share && (
 						<div>
@@ -168,7 +168,7 @@ export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
 					))}
 				</div>
 
-				{project.is_shared &&
+				{project.is_shared && setShare &&
 					<div>
 						<Instruction>Publish Slides</Instruction>
 						<Explanation>Your slides will be published to DrLambda Discover, people can also find the slides on search engine.</Explanation>
