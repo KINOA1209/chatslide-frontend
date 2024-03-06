@@ -54,9 +54,8 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
 					onChange={handleOnChange}
 					className='slider-thumb appearance-none w-full h-2 bg-gray-200 cursor-pointer rounded-full outline-none'
 					style={{
-						backgroundImage: `linear-gradient(90deg, #3AC7B1 ${
-							(index / MAX_VALUE) * 100
-						}%, #E5E7EB ${(index / MAX_VALUE) * 100}%)`,
+						backgroundImage: `linear-gradient(90deg, #3AC7B1 ${(index / MAX_VALUE) * 100
+							}%, #E5E7EB ${(index / MAX_VALUE) * 100}%)`,
 					}}
 				/>
 
@@ -89,12 +88,11 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
 					}
 				`}</style>
 			</div>
-			{showPaymentModal && (
-				<PaywallModal
-					setShowModal={setShowPaymentModal}
-					message='Upgrade to unlock more features. 🚀'
-				/>
-			)}
+			<PaywallModal
+				showModal={showPaymentModal}
+				setShowModal={setShowPaymentModal}
+				message='Upgrade to unlock more features. 🚀'
+			/>
 		</div>
 	);
 };

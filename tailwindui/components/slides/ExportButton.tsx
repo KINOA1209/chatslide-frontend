@@ -100,13 +100,12 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 
 	return (
 		<>
-			{showPaymentModal && (
-				<PaywallModal
-					setShowModal={setShowPaymentModal}
-					message='Upgrade for more ⭐️credits.'
-					showReferralLink={true}
-				/>
-			)}
+			<PaywallModal
+				showModal={showPaymentModal}
+				setShowModal={setShowPaymentModal}
+				message='Upgrade for more ⭐️credits.'
+				showReferralLink={true}
+			/>
 
 			<ButtonWithExplanation
 				button={
@@ -123,7 +122,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 								color: '#2943E9',
 							}}
 						/> :
-						<SpinIcon />}
+							<SpinIcon />}
 					</button>
 				}
 				explanation={'Export'}
@@ -167,8 +166,8 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 					<span>PPTX {!isPaidUser && '🔒'}</span>
 				</BigGrayButton>
 
-				{ hasScript && 
-				<SaveScriptsButton slides={slides}/>}
+				{hasScript &&
+					<SaveScriptsButton slides={slides} />}
 			</Modal>
 		</>
 	);

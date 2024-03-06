@@ -701,13 +701,12 @@ export const ImgModule = ({
 					leaveFrom='opacity-100 translate-y-0'
 					leaveTo='opacity-0 translate-y-12'
 				>
-					{showPaymentModal && (
-						<PaywallModal
-							setShowModal={setShowPaymentModal}
-							message='Upgrade for more ⭐️credits.'
-							showReferralLink={true}
-						/>
-					)}
+					<PaywallModal
+						showModal={showPaymentModal}
+						setShowModal={setShowPaymentModal}
+						message='Upgrade for more ⭐️credits.'
+						showReferralLink={true}
+					/>
 					<div className='grow md:grow-0'></div>
 					{/* image choosing modal */}
 					<Transition
@@ -885,9 +884,8 @@ export const ImgModule = ({
 								</div>
 								<div className='w-full bg-slate-200'>
 									<div
-										className={`w-1/4 h-[2px] bg-black ${
-											hoverQueryMode == ImgQueryMode.SEARCH && 'ml-[25%]'
-										} 
+										className={`w-1/4 h-[2px] bg-black ${hoverQueryMode == ImgQueryMode.SEARCH && 'ml-[25%]'
+											} 
 										${hoverQueryMode == ImgQueryMode.GENERATION && 'ml-[50%]'} 
 										${hoverQueryMode == ImgQueryMode.CHART_SELECTION && 'ml-[75%]'} 
                                 		transition-all ease-in-out`}
@@ -930,18 +928,17 @@ export const ImgModule = ({
 			{/* image itself */}
 			<div
 				onClick={openModal}
-				className={`w-full h-full transition ease-in-out duration-150 relative ${
-					selectedImg === ''
+				className={`w-full h-full transition ease-in-out duration-150 relative ${selectedImg === ''
 						? 'bg-[#E7E9EB]'
 						: canEdit
 							? 'hover:bg-[#CAD0D3]'
 							: ''
-				} flex flex-col items-center justify-center`}
+					} flex flex-col items-center justify-center`}
 			>
 				{ischartArr &&
-				ischartArr[currentContentIndex] &&
-				selectedChartType &&
-				chartData.length > 0 ? (
+					ischartArr[currentContentIndex] &&
+					selectedChartType &&
+					chartData.length > 0 ? (
 					<div className='w-full h-full flex items-center justify-center'>
 						<DynamicChart
 							chartType={selectedChartType}
@@ -979,13 +976,12 @@ export const ImgModule = ({
 						width={960}
 						height={540}
 						objectFit='contain'
-						className={`transition ease-in-out duration-150 ${
-							canEdit ? 'hover:brightness-90' : 'cursor-pointer'
-						}`}
+						className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-pointer'
+							}`}
 						onError={(e) => {
 							const src =
 								RANDOM_FILLER_IMAGES[
-									Math.floor(Math.random() * RANDOM_FILLER_IMAGES.length)
+								Math.floor(Math.random() * RANDOM_FILLER_IMAGES.length)
 								];
 							e.currentTarget.src = src;
 							updateSingleCallback(src);

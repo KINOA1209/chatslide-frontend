@@ -418,7 +418,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			exportToPdfMode, //exportToPdfMode
 			isEditMode, //editMathMode
 			setIsEditMode, //setIsEditMode
-			() => {}, // handleSlideEdit
+			() => { }, // handleSlideEdit
 			updateImgUrlArray,
 			toggleEditMode,
 			index === 0, // isCoverPage
@@ -534,13 +534,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				</ActionsToolBar>
 			</div>
 
-			{showPaymentModal && (
-				<PaywallModal
-					setShowModal={setShowPaymentModal}
-					message='Upgrade for more ⭐️credits.'
-					showReferralLink={true}
-				/>
-			)}
+			<PaywallModal
+				showModal={showPaymentModal}
+				setShowModal={setShowPaymentModal}
+				message='Upgrade for more ⭐️credits.'
+				showReferralLink={true}
+			/>
 
 			<div className='w-full h-full flex flex-row items-center justify-start overflow-hidden gap-2'>
 				<Panel>

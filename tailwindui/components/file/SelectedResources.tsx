@@ -44,12 +44,11 @@ const ResourceEntry: React.FC<ResourceEntryProps> = ({
 
 	return (
 		<div className='flex items-center bg-white rounded min-h-[50px] justify-between'>
-			{showPaywall && (
-				<PaywallModal
-					message='You need to be a paid user to use OCR'
-					setShowModal={setShowPaywall}
-				/>
-			)}
+			<PaywallModal
+				message='You need to be a paid user to use OCR'
+				showModal={showPaywall}
+				setShowModal={setShowPaywall}
+			/>
 
 			<div className='flex items-center gap-2'>
 				<ResourceIcon resource={resource} />

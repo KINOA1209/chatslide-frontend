@@ -557,13 +557,12 @@ export const ImgModule = ({
 					leaveFrom='opacity-100 translate-y-0'
 					leaveTo='opacity-0 translate-y-12'
 				>
-					{showPaymentModal && (
-						<PaywallModal
-							setShowModal={setShowPaymentModal}
-							message='Upgrade for more ⭐️credits.'
-							showReferralLink={true}
-						/>
-					)}
+					<PaywallModal
+						showModal={showPaymentModal}
+						setShowModal={setShowPaymentModal}
+						message='Upgrade for more ⭐️credits.'
+						showReferralLink={true}
+					/>
 					<div className='grow md:grow-0'></div>
 					<Transition
 						className='bg-gray-100 w-full h-3/4 md:h-[65vh]
@@ -714,14 +713,12 @@ export const ImgModule = ({
 								<div className='w-full bg-slate-200'>
 									<div
 										className={`w-1/3 h-[2px] bg-black 
-                                ${
-																	hoverQueryMode == ImgQueryMode.SEARCH &&
-																	'ml-[33.3%]'
-																} 
-                                ${
-																	hoverQueryMode == ImgQueryMode.GENERATION &&
-																	'ml-[66.7%]'
-																} 
+                                ${hoverQueryMode == ImgQueryMode.SEARCH &&
+											'ml-[33.3%]'
+											} 
+                                ${hoverQueryMode == ImgQueryMode.GENERATION &&
+											'ml-[66.7%]'
+											} 
                                 transition-all ease-in-out`}
 									></div>
 								</div>
@@ -760,22 +757,21 @@ export const ImgModule = ({
 			{/* image itsefl */}
 			<div
 				onClick={openModal}
-				className={`w-full h-full transition ease-in-out duration-150 ${
-					selectedImg === ''
+				className={`w-full h-full transition ease-in-out duration-150 ${selectedImg === ''
 						? 'bg-[#E7E9EB]'
 						: canEdit
 							? 'hover:bg-[#CAD0D3] hover:brightness-90'
 							: ''
-				} flex flex-col items-center justify-center cursor-pointer`}
-				// style={{
-				// 	backgroundImage:
-				// 		selectedImg !== '' && isTemp1Cover
-				// 			? `linear-gradient(180deg, ${cover_start}, ${cover_end} 40%), url(${selectedImg})`
-				// 			: '',
-				// 	backgroundSize: selectedImg !== '' && isTemp1Cover ? 'cover' : '',
-				// 	backgroundPosition:
-				// 		selectedImg !== '' && isTemp1Cover ? 'center center' : '',
-				// }}
+					} flex flex-col items-center justify-center cursor-pointer`}
+			// style={{
+			// 	backgroundImage:
+			// 		selectedImg !== '' && isTemp1Cover
+			// 			? `linear-gradient(180deg, ${cover_start}, ${cover_end} 40%), url(${selectedImg})`
+			// 			: '',
+			// 	backgroundSize: selectedImg !== '' && isTemp1Cover ? 'cover' : '',
+			// 	backgroundPosition:
+			// 		selectedImg !== '' && isTemp1Cover ? 'center center' : '',
+			// }}
 			>
 				{selectedImg === '' ? (
 					<div className='flex flex-col items-center justify-center'>
@@ -804,9 +800,8 @@ export const ImgModule = ({
 						alt='Image'
 						width={500}
 						height={500}
-						className={`transition ease-in-out duration-150 ${
-							canEdit ? 'hover:brightness-90' : 'cursor-default'
-						}`}
+						className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'
+							}`}
 					/>
 				) : (
 					<div className='relative w-full h-full'>
@@ -816,9 +811,8 @@ export const ImgModule = ({
 							layout='fill'
 							objectFit='cover'
 							objectPosition='center center'
-							className={`transition ease-in-out duration-150 ${
-								canEdit ? 'hover:brightness-90' : ''
-							}`}
+							className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : ''
+								}`}
 						/>
 						<div
 							className='absolute inset-0'

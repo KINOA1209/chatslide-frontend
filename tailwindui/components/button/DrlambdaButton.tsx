@@ -64,12 +64,11 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
 
 	return (
 		<>
-			{showPaywallModal && (
-				<PaywallModal
-					setShowModal={setShowPaywallModal}
-					message='Upgrade to unlock more features. 🚀'
-				/>
-			)}
+			<PaywallModal
+				showModal={showPaywallModal}
+				setShowModal={setShowPaywallModal}
+				message='Upgrade to unlock more features. 🚀'
+			/>
 			<button
 				disabled={isSubmitting}
 				onClick={checkPaidUser}
@@ -166,9 +165,8 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 }) => {
 	return (
 		<button
-			className={`btn h-[36px] sm:h-[36px] sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
-				isSubmitting && 'animate-pulse'
-			} disabled:bg-gray-600 whitespace-nowrap rounded-xl`}
+			className={`btn h-[36px] sm:h-[36px] sm:gap-x-2 text-white sm:font-semibold bg-Blue ${isSubmitting && 'animate-pulse'
+				} disabled:bg-gray-600 whitespace-nowrap rounded-xl`}
 			onClick={onClick}
 			disabled={isSubmitting || disabled}
 		>
@@ -188,12 +186,11 @@ export const BigGrayButton: React.FC<DrlambdaButtonProps> = ({
 
 	return (
 		<div>
-			{paywallModal && (
-				<PaywallModal
-					setShowModal={setShowPaywallModal}
-					message='Upgrade to unlock more features. 🚀'
-				/>
-			)}
+			<PaywallModal
+				showModal
+				setShowModal={setShowPaywallModal}
+				message='Upgrade to unlock more features. 🚀'
+			/>
 			<button
 				className='btn min-w-[100px] sm:min-w-[120px] h-[36px] sm:h-[36px] sm:gap-x-2 text-gray-800 text-sm bg-gray-300 disabled:bg-gray-600 disabled:animate-pulse whitespace-nowrap rounded-xl'
 				onClick={(e) => {

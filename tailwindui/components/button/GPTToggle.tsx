@@ -30,12 +30,11 @@ const GPTToggle: React.FC<GPTToggleProps> = ({ isGpt35, setIsGpt35 }) => {
 				rightText='🚀 GPT-4'
 			/>
 
-			{showPaymentModal && (
-				<PaywallModal
-					setShowModal={setShowPaymentModal}
-					message='Upgrade to unlock more features. 🚀'
-				/>
-			)}
+			<PaywallModal
+				showModal={showPaymentModal}
+				setShowModal={setShowPaymentModal}
+				message='Upgrade to unlock more features. 🚀'
+			/>
 		</div>
 	);
 };
