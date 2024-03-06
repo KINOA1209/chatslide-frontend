@@ -471,7 +471,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					isViewing={isViewing}
 				>
 
-					{!isViewing && slideIndex != 0 && (
+					{!isViewing && (
 						<>
 							<AddSlideButton
 								addPage={handleAddPage}

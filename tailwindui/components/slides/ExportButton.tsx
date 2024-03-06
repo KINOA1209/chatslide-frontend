@@ -17,6 +17,7 @@ import Modal from '../ui/Modal';
 import { GoDownload } from 'react-icons/go';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import SaveScriptsButton from './script/SaveScriptsButton';
+import { SpinIcon } from '@/app/(feature)/icons';
 
 interface ExportToPdfProps {
 	slides: Slide[];
@@ -112,7 +113,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 					<button
 						onClick={() => setShowModal(!showModal)}
 					>
-						<GoDownload
+						{!downloading ? <GoDownload
 							style={{
 								strokeWidth: '1',
 								flex: '1',
@@ -121,9 +122,8 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 								fontWeight: 'bold',
 								color: '#2943E9',
 							}}
-							className={downloading ? 'animate-spin' : ''}
-
-						/>
+						/> :
+						<SpinIcon />}
 					</button>
 				}
 				explanation={'Export'}
