@@ -57,7 +57,7 @@ const ResourceEntry: React.FC<ResourceEntryProps> = ({
 			<div className='flex items-center gap-4'>
 				{resource.type === 'doc' && (
 					<button onClick={handleOCR} disabled={runningOCR}>
-						<span className='flex flex-row items-center gap-1'>
+						<span className='flex flex-row whitespace-nowrap items-center gap-1'>
 							{doneOCR && <FaCheckCircle className='text-green-500' />}
 							<FiSearch
 								className={`w-[20px] h-[20px] ${runningOCR && 'animate-bounce'}`}
