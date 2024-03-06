@@ -179,9 +179,13 @@ export default function Topic() {
 			'selectedResources',
 			JSON.stringify(selectedResources),
 		);
+		sessionStorage.setItem('search_online', searchOnlineScope);
 		//sessionStorage.setItem('schoolTemplate', schoolTemplate);
 
-		if (selectedResources && selectedResources.length > 0) {
+		if (
+			(selectedResources && selectedResources.length > 0) ||
+			(searchOnlineScope && searchOnlineScope !== '')
+		) {
 			try {
 				console.log('resources', selectedResources);
 				console.log('summarize resources');
