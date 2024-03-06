@@ -2,6 +2,7 @@ import React from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { BigBlueButton, InversedBigBlueButton } from '../button/DrlambdaButton';
 import { Transition } from '@headlessui/react';
+import { Title, Explanation } from '@/components/ui/Text';
 
 interface ModalProps {
 	children?: React.ReactNode;
@@ -35,15 +36,6 @@ const Modal: React.FC<ModalProps> = ({
 		console.log('handleCloseModal');
 		if (!canClose) return;
 		setShowModal(false);
-	};
-
-	const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
-		if (!clickOutsideToClose) return;
-		if (!canClose) return;
-		if (modalContentRef.current?.contains(e.target as Node)) {
-			return; // Click inside the modal content, do nothing
-		}
-		handleCloseModal(); // Click outside the modal content, close the modal
 	};
 
 	const onClick = async () => {
@@ -112,16 +104,15 @@ const Modal: React.FC<ModalProps> = ({
 					)}
 
 					{title && (
-						<h3
-							className='text-lg leading-6 font-bold text-gray-900'
-							id='modal-headline'
-						>
-							{title}
-						</h3>
+						<div className='w-full felx flex-col items-center justify-center'>
+							<Title>
+								{title}
+							</Title>
+						</div>
 					)}
 
 					{description && (
-						<p className='text-sm text-gray-500'>{description}</p>
+						<Explanation>{description}</Explanation>
 					)}
 
 					{/* Modal body */}

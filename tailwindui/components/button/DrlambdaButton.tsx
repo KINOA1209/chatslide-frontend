@@ -187,7 +187,7 @@ export const BigGrayButton: React.FC<DrlambdaButtonProps> = ({
 	return (
 		<div>
 			<PaywallModal
-				showModal
+				showModal={paywallModal}
 				setShowModal={setShowPaywallModal}
 				message='Upgrade to unlock more features. 🚀'
 			/>

@@ -31,11 +31,13 @@ const PaywallModal: React.FC<PaywallModalProps> = ({
 	};
 
 	return (
-		<Modal showModal={showModal} setShowModal={setShowModal}>
+		<Modal
+			title={message}
+			showModal={showModal}
+			setShowModal={setShowModal}>
 			<div className='py-2 space-y-4'>
 				{' '}
 				{/* Reduced bottom padding */}
-				<h4 className='h4 text-center text-red-700'>{message}</h4>
 				<Pricing fewerCards={true} />
 				{showReferralLink && (
 					<div className='space-y-4'>

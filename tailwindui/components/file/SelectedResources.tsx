@@ -45,7 +45,7 @@ const ResourceEntry: React.FC<ResourceEntryProps> = ({
 	return (
 		<div className='flex items-center bg-white rounded min-h-[50px] justify-between'>
 			<PaywallModal
-				message='You need to be a paid user to use OCR'
+				message='Subscribe to use OCR'
 				showModal={showPaywall}
 				setShowModal={setShowPaywall}
 			/>

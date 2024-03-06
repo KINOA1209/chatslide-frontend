@@ -134,40 +134,42 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 				title='Export to PDF / PPTX'
 				description='Choose the format and quality of the export.'
 			>
-				<BigGrayButton
-					onClick={() => handleExport('pdf', true)}
-					isSubmitting={downloading}
-					isPaidUser={isPaidUser}
-					bgColor='bg-Gray'
-				>
-					<FaRegFilePdf />
-					<span>PDF (medium)</span>
-				</BigGrayButton>
+				<div className='flex flex-row flex-wrap gap-4'>
+					<BigGrayButton
+						onClick={() => handleExport('pdf', true)}
+						isSubmitting={downloading}
+						isPaidUser={isPaidUser}
+						bgColor='bg-Gray'
+					>
+						<FaRegFilePdf />
+						<span>PDF (medium)</span>
+					</BigGrayButton>
 
-				<BigGrayButton
-					onClick={() => handleExport('pdf', false)}
-					isSubmitting={downloading}
-					isPaidUser={isPaidUser}
-					isPaidFeature={true}
-					bgColor='bg-Gray'
-				>
-					<FaRegFilePdf />
-					<span>PDF (high) {!isPaidUser && '🔒'}</span>
-				</BigGrayButton>
+					<BigGrayButton
+						onClick={() => handleExport('pdf', false)}
+						isSubmitting={downloading}
+						isPaidUser={isPaidUser}
+						isPaidFeature={true}
+						bgColor='bg-Gray'
+					>
+						<FaRegFilePdf />
+						<span>PDF (high) {!isPaidUser && '🔒'}</span>
+					</BigGrayButton>
 
-				<BigGrayButton
-					onClick={() => handleExport('pptx', false)}
-					isSubmitting={downloading}
-					isPaidUser={isPaidUser}
-					isPaidFeature={true}
-					bgColor='bg-Gray'
-				>
-					<RiSlideshow2Fill />
-					<span>PPTX {!isPaidUser && '🔒'}</span>
-				</BigGrayButton>
+					<BigGrayButton
+						onClick={() => handleExport('pptx', false)}
+						isSubmitting={downloading}
+						isPaidUser={isPaidUser}
+						isPaidFeature={true}
+						bgColor='bg-Gray'
+					>
+						<RiSlideshow2Fill />
+						<span>PPTX {!isPaidUser && '🔒'}</span>
+					</BigGrayButton>
 
-				{hasScript &&
-					<SaveScriptsButton slides={slides} />}
+					{hasScript &&
+						<SaveScriptsButton slides={slides} />}
+				</div>
 			</Modal>
 		</>
 	);

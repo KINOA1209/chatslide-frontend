@@ -3,12 +3,7 @@ import {
 	LeftSlideNavIcon,
 	RightSlideNavIcon,
 } from '@/app/(feature)/workflow-review-slides/icons';
-import {
-	PresentationModeIcon,
-} from '@/app/(feature)/icons';
 import { BigGrayButton, DropDown } from '../button/DrlambdaButton';
-import { TextLabel } from '../ui/GrayLabel';
-import { useUser } from '@/hooks/use-user';
 import { GoPlay, GoPlus, GoShare, GoTrash } from 'react-icons/go';
 import { LuPaintbrush, LuPresentation, LuTrash2 } from 'react-icons/lu';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
@@ -20,7 +15,6 @@ import TemplateSelector from '@/app/(feature)/workflow-edit-design/TemplateSelec
 import { FiPlay } from 'react-icons/fi';
 import { Explanation, Instruction } from '../ui/Text';
 import RadioButton from '../ui/RadioButton';
-import { useProject } from '@/hooks/use-project';
 
 type SaveButtonProps = {
 	saveSlides: () => void;
