@@ -107,7 +107,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const { isPaidUser, token } = useUser();
-	const [showLayout, setShowLayout] = useState(false);
 	const { isPresenting, setIsPresenting } = useSlides();
 	const slideRef = useRef<HTMLDivElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -181,14 +180,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const selectTemplate = (newTemplate: string) => {
 		console.log('Changing template to:', newTemplate);
 		changeTemplate(newTemplate as TemplateKeys);
-	};
-
-	const openModal = () => {
-		setShowLayout(true);
-	};
-
-	const closeModal = () => {
-		setShowLayout(false);
 	};
 
 	const openPresent = () => {
@@ -489,9 +480,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 								onChangeTemplate={selectTemplate}
 							/>
 							<LayoutChanger
-								openModal={openModal}
-								showLayout={showLayout}
-								closeModal={closeModal}
 								currentSlideIndex={slideIndex}
 								// templateSamples={templateSamples}
 								slides={slides}

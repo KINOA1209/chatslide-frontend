@@ -5,10 +5,8 @@ import { ChangeLayoutIcon } from '@/app/(feature)/icons';
 import { LayoutKeys } from './slideLayout';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import { FiLayout } from 'react-icons/fi';
+import Modal from '../ui/Modal';
 type LayoutProps = {
-	openModal: () => void;
-	showLayout: boolean;
-	closeModal: () => void;
 	currentSlideIndex: number;
 	// templateSamples: {
 	//   cover: { name: string; img: string }[]
@@ -27,15 +25,14 @@ type LayoutProps = {
 };
 
 const LayoutChanger: React.FC<LayoutProps> = ({
-	openModal,
-	showLayout,
-	closeModal,
 	currentSlideIndex,
 	// templateSamples,
 	slides,
 	handleSlideEdit,
 	availableLayouts,
 }) => {
+	const [showModal, setShowModal] = React.useState(false);
+
 	// const updateTemplate = (
 	//   e: React.MouseEvent<HTMLDivElement>,
 	//   templateName: string,
@@ -66,7 +63,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 				explanation='Change Page Layout'
 				button={
 					<button
-						onClick={openModal}>
+						onClick={() => setShowModal(true)}>
 						<FiLayout
 							style={{
 								strokeWidth: '2',
@@ -80,116 +77,70 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 					</button>
 				}
 			/>
-
-			<Transition
-				className='h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
-				show={showLayout}
-				onClick={closeModal}
-				enter='transition ease duration-300 transform'
-				enterFrom='opacity-0 translate-y-12'
-				enterTo='opacity-100 translate-y-0'
-				leave='transition ease duration-300 transform'
-				leaveFrom='opacity-100 translate-y-0'
-				leaveTo='opacity-0 translate-y-12'
-			>
-				<div className='grow md:grow-0'></div>
-				<Transition
-					className='bg-gray-100 w-full h-3/4 md:h-fit
-                    md:max-w-3xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
-                    overflow-hidden flex flex-col p-4'
-					show={showLayout}
-					enter='transition ease duration-500 transform delay-300'
-					enterFrom='opacity-0 translate-y-12'
-					enterTo='opacity-100 translate-y-0'
-					leave='transition ease duration-300 transform'
-					leaveFrom='opacity-100 translate-y-0'
-					leaveTo='opacity-0 translate-y-12'
-					onClick={(e) => {
-						e.stopPropagation();
-					}}
-				>
-					<h4 className='font-semibold text-xl text-center'>Page Layout</h4>
-					<div className='w-full text-center mb-3'>
-						Change layout of current page
-					</div>
-					<div className='grow flex flex-col overflow-hidden'>
-						<div className='mt-2 mb-5 grow overflow-hidden'>
-							<div className='w-full h-full'>
-								<div className='w-full h-full flex flex-col'>
-									<div className='w-full h-full overflow-y-auto'>
-										<div className='w-full h-fit grid grid-cols-3 gap-4 p-2'>
-											{layoutsToDisplay.map((currLayout, index) => {
-												// Check if slides[currentSlideIndex] is defined
-												if (
-													slides[currentSlideIndex] &&
-													currLayout.name !== slides[currentSlideIndex].layout
-												) {
-													return (
-														<div
-															key={`layout-${index}-${currLayout}`} // Use the name as the key
-															onClick={(e) =>
-																updateLayout(
-																	e,
-																	currLayout.name,
-																	currentSlideIndex,
-																)
-															}
-															className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'
-														>
-															<img
-																src={currLayout.img}
-																className='w-full h-full object-contain'
-															/>
-														</div>
-													);
-												} else if (slides[currentSlideIndex]) {
-													return (
-														<div
-															key={`layout-${index}-${currLayout}`} // Use the name as the key
-															onClick={(e) =>
-																updateLayout(
-																	e,
-																	currLayout.name,
-																	currentSlideIndex,
-																)
-															}
-															className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'
-														>
-															<img
-																src={currLayout.img}
-																className='w-full h-full object-contain'
-															/>
-														</div>
-													);
-												} else {
-													// Handle the case when slides[currentSlideIndex] is undefined
-													return <></>;
-												}
-											})}
-										</div>
-									</div>
+			<Modal
+				showModal={showModal}
+				setShowModal={setShowModal}
+				onConfirm={() => { setShowModal(false) }}
+				title='Change Page Layout'>
+				<div className='grow flex flex-col overflow-hidden'>
+					<div className='mt-2 mb-5 grow overflow-hidden'>
+						<div className='w-full h-full flex flex-col'>
+							<div className='w-full h-full overflow-y-auto'>
+								<div className='w-full h-fit grid grid-cols-3 gap-4 p-2'>
+									{layoutsToDisplay.map((currLayout, index) => {
+										// Check if slides[currentSlideIndex] is defined
+										if (
+											slides[currentSlideIndex] &&
+											currLayout.name !== slides[currentSlideIndex].layout
+										) {
+											return (
+												<div
+													key={`layout-${index}-${currLayout}`} // Use the name as the key
+													onClick={(e) =>
+														updateLayout(
+															e,
+															currLayout.name,
+															currentSlideIndex,
+														)
+													}
+													className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'
+												>
+													<img
+														src={currLayout.img}
+														className='w-full h-full object-contain'
+													/>
+												</div>
+											);
+										} else if (slides[currentSlideIndex]) {
+											return (
+												<div
+													key={`layout-${index}-${currLayout}`} // Use the name as the key
+													onClick={(e) =>
+														updateLayout(
+															e,
+															currLayout.name,
+															currentSlideIndex,
+														)
+													}
+													className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'
+												>
+													<img
+														src={currLayout.img}
+														className='w-full h-full object-contain'
+													/>
+												</div>
+											);
+										} else {
+											// Handle the case when slides[currentSlideIndex] is undefined
+											return <></>;
+										}
+									})}
 								</div>
 							</div>
 						</div>
 					</div>
-					<div className='w-full mx-auto'>
-						<div className='w-full flex flex-wrap'>
-							<div className='w-full'>
-								<button
-									// className="btn text-white font-bold bg-gradient-to-r from-blue-600  to-teal-500 w-full rounded-lg"
-									type='button'
-									onClick={(e) => {
-										e.preventDefault();
-										closeModal();
-									}}
-								>
-									Done
-								</button>
-							</div>
-						</div>
-					</div>
-				</Transition>
-			</Transition>
+				</div>
+			</Modal >
 		</>
 	);
 };
