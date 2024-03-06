@@ -1,17 +1,11 @@
 import React from 'react';
-import { Transition } from '@headlessui/react'; // Assuming you're using Headless UI for Transitions
 import { SlideKeys } from '@/models/Slide';
-import { ChangeLayoutIcon } from '@/app/(feature)/icons';
 import { LayoutKeys } from './slideLayout';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import { FiLayout } from 'react-icons/fi';
 import Modal from '../ui/Modal';
 type LayoutProps = {
 	currentSlideIndex: number;
-	// templateSamples: {
-	//   cover: { name: string; img: string }[]
-	//   main: { name: string; img: string }[]
-	// }
 	slides: { layout: string }[];
 	handleSlideEdit: (
 		content: string | string[],
@@ -33,14 +27,6 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 }) => {
 	const [showModal, setShowModal] = React.useState(false);
 
-	// const updateTemplate = (
-	//   e: React.MouseEvent<HTMLDivElement>,
-	//   templateName: string,
-	//   slideIndex: number
-	// ) => {
-	//   e.preventDefault()
-	//   handleSlideEdit(templateName, slideIndex, 'template')
-	// }
 	const availableLayoutsNonCover = availableLayouts.main; // Assuming main contains non-cover layouts
 	const availableLayoutsCover = availableLayouts.cover; // Add your cover layouts here
 	// Filter layouts based on the currentSlideIndex
