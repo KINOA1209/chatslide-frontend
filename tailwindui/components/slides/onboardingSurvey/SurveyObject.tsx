@@ -52,7 +52,6 @@ const surveyObject: Record<string, SurveySectionConfig> = {
 			'Webinar',
 			'Portfolio',
 			'Storytelling',
-			'Marketing',
 			'Other',
 		],
 	},
