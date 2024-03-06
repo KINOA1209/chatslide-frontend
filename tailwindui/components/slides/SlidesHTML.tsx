@@ -49,6 +49,7 @@ import { useProject } from '@/hooks/use-project';
 import { GoEyeClosed } from 'react-icons/go';
 import ScriptWindow from './script/ScriptWindow';
 import ReactDOM from 'react-dom';
+import { ScrollBar } from '../ui/ScrollBar';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -129,10 +130,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const canRedo = slidesHistoryIndex < slidesHistory.length - 1;
 
 	const currentSlideRef = useRef<HTMLDivElement>(null);
-	const thumbnailRef = useRef<HTMLDivElement>(null);
-
 	const { isShared, updateIsShared, project } = useProject();
-	const [showShareLink, setShowShareLink] = useState(true);
 
 	const [host, setHost] = useState('https://drlambda.ai');
 
@@ -210,31 +208,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			}
 		}
 	}
-
-	// auto scroll thumbnail to current slide
-	useEffect(() => {
-		if (thumbnailRef.current && currentSlideRef.current) {
-			console.log('scrolling to current slide');
-
-			const container = thumbnailRef.current;
-			const currentSlide = currentSlideRef.current;
-
-			const containerRect = container.getBoundingClientRect();
-			const currentSlideRect = currentSlide.getBoundingClientRect();
-
-			// scroll to horizontal center
-			const scrollAmount =
-				currentSlideRect.left +
-				currentSlideRect.width / 2 -
-				(containerRect.left + containerRect.width / 2);
-			console.log('scrollAmount', scrollAmount);
-
-			container.scrollTo({
-				left: container.scrollLeft + scrollAmount,
-				behavior: 'smooth',
-			});
-		}
-	}, [slideIndex]);
 
 	function handleSlideEdit(
 		content:
@@ -657,10 +630,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 					{/* horizontal  */}
 					<div className='block xl:hidden max-w-xs sm:max-w-4xl mx-auto py-4 justify-center items-center'>
-						<div
-							className='w-full flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'
-							ref={thumbnailRef}
-						>
+						<ScrollBar currentElementRef={currentSlideRef} index={slideIndex}>
 							{slides.map((slide, index) => (
 								<div
 									key={
@@ -684,7 +654,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 									/>
 								</div>
 							))}
-						</div>
+						</ScrollBar>
 					</div>
 				</Panel>
 
