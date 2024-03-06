@@ -128,7 +128,7 @@ export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
 			<Modal
 				showModal={showModal}
 				setShowModal={setShowModal}
-				title='Share'
+				title='Share / Publish'
 			// description='Share your slides with others or on social media'
 			>
 				<div>
@@ -208,7 +208,7 @@ export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
 						/>
 					</button>
 				}
-				explanation={'Share'}
+				explanation={'Share / Publish'}
 			/>
 		</div>
 	);
