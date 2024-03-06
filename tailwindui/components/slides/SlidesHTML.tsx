@@ -507,7 +507,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 										>
 											<GoEyeClosed
 												style={{
-													strokeWidth: '1',
+													strokeWidth: '0.8',
 													flex: '1',
 													width: '1.5rem',
 													height: '1.5rem',

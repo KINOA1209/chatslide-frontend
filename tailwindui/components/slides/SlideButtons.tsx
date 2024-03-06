@@ -18,6 +18,9 @@ import PostPlatformConfigs from '@/components/button/PostPlatformConfig';
 import Project from '@/models/Project';
 import TemplateSelector from '@/app/(feature)/workflow-edit-design/TemplateSelector';
 import { FiPlay } from 'react-icons/fi';
+import { Explanation, Instruction } from '../ui/Text';
+import RadioButton from '../ui/RadioButton';
+import { useProject } from '@/hooks/use-project';
 
 type SaveButtonProps = {
 	saveSlides: () => void;
@@ -70,7 +73,7 @@ export const PresentButton: React.FC<PresentButtonProps> = ({
 
 type ShareToggleButtonProps = {
 	share: boolean;
-	setShare: (share: boolean) => void;
+	setShare: (is_shared: boolean, is_public?: boolean) => void;
 	project: Project;
 	host: string;
 };
@@ -126,12 +129,29 @@ export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
 				showModal={showModal}
 				setShowModal={setShowModal}
 				title='Share'
-				description='Share your slides with others or on social media'
+			// description='Share your slides with others or on social media'
 			>
-				<div className='w-screen sm:w-[40rem]'>
-					<TextLabel>View only link:</TextLabel>
+				<div>
+					<Instruction>Share Slides</Instruction>
+					<RadioButton
+						name='share'
+						options={[
+							{ text: 'Yes', value: 'yes' },
+							{ text: 'No', value: 'no' },
+						]}
+						selectedValue={share ? 'yes' : 'no'}
+						setSelectedValue={(value) => {
+							setShare(value === 'yes');
+						}}
+					/>
+
+					{share && (
+						<div>
+							<Explanation>View only link:</Explanation>
+							<ClickableLink link={`${host}/shared/${project_id || ''}`} />
+						</div>
+					)}
 				</div>
-				<ClickableLink link={`${host}/shared/${project_id || ''}`} />
 
 				<div className='flex flex-wrap gap-2'>
 					{platforms.map((platform) => (
@@ -148,6 +168,22 @@ export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
 					))}
 				</div>
 
+				{project.is_shared &&
+					<div>
+						<Instruction>Publish Slides</Instruction>
+						<Explanation>Your slides will be published to DrLambda Discover, people can also find the slides on search engine.</Explanation>
+						<RadioButton
+							name='publish'
+							options={[
+								{ text: 'Yes', value: 'yes' },
+								{ text: 'No', value: 'no' },
+							]}
+							selectedValue={project.is_public ? 'yes' : 'no'}
+							setSelectedValue={(value) => {
+								setShare(true, value === 'yes');
+							}}
+						/>
+					</div>}
 			</Modal >
 		)
 	}
@@ -255,10 +291,10 @@ export const AddSlideButton: React.FC<{
 				>
 					<GoPlus
 						style={{
-							strokeWidth: '1',
+							strokeWidth: '0.9',
 							flex: '1',
-							width: '1.5rem',
-							height: '1.5rem',
+							width: '1.7rem',
+							height: '1.7rem',
 							fontWeight: 'bold',
 							color: '#2943E9',
 						}}
@@ -355,13 +391,13 @@ export const ChangeTemplateOptions: React.FC<{
 				setShowModal={setShowModal}
 				title='Change Template'
 				description='Select a template for your slides'
-				onConfirm={() => {onChangeTemplate(selectedTemplate); setShowModal(false)}}
+				onConfirm={() => { onChangeTemplate(selectedTemplate); setShowModal(false) }}
 			>
 				<div className='max-w-[60rem]'>
-				<TemplateSelector
-					template={selectedTemplate}
-					setTemplate={setSelectedTemplate}
-				/>
+					<TemplateSelector
+						template={selectedTemplate}
+						setTemplate={setSelectedTemplate}
+					/>
 				</div>
 			</Modal>
 		)
