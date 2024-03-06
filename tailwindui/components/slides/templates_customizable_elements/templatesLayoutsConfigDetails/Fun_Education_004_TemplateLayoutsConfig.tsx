@@ -15,8 +15,8 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 		// },
 		titleCSS: {
 			backgroundColor: 'white',
-			paddingBottom: '20rem',
-			paddingTop: '4rem',
+			paddingBottom: '10rem',
+			paddingTop: '2rem',
 			paddingLeft: '2rem',
 			paddingRight: '2rem',
 			// height: '80%',
@@ -32,7 +32,7 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			display: 'none',
 		},
 		userNameCSS: {
-			zIndex: 30,
+			zIndex: 20,
 			position: 'absolute',
 			top: '65%',
 			left: '22%',
@@ -58,8 +58,10 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			position: 'absolute',
 		},
 		visualElementsCSS: {
-			zIndex: 30,
+			zIndex: 10,
 			position: 'absolute',
+			top: '0%',
+			left: '0%',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
 		},
@@ -67,8 +69,8 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 	Cover_img_1_layout: {
 		titleCSS: {
 			backgroundColor: 'white',
-			paddingBottom: '20rem',
-			paddingTop: '4rem',
+			paddingBottom: '10rem',
+			paddingTop: '2rem',
 			paddingLeft: '2rem',
 			paddingRight: '2rem',
 			// height: '80%',
@@ -81,7 +83,7 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			maxHeight: '80%',
 		},
 		userNameCSS: {
-			zIndex: 30,
+			zIndex: 20,
 			position: 'absolute',
 			top: '65%',
 			left: '22%',
@@ -105,9 +107,10 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			//overflow: 'hidden',
 			borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
 			position: 'absolute',
+			zIndex: 10,
 		},
 		visualElementsCSS: {
-			zIndex: 30,
+			zIndex: 20,
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
