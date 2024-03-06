@@ -85,7 +85,7 @@ const SideBar = ({}: SideBarProps) => {
 				setShowModal={() => {}} // cannot close modal
 				title='Sign in to continue'
 				description='You need to sign in to continue'
-				onConfirm={() => router.push('/signin')}
+				onConfirm={() => router.push('/signup')}
 			/>
 		);
 
