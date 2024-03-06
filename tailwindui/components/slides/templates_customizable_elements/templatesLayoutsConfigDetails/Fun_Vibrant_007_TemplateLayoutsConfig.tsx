@@ -14,7 +14,7 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			// overflow: 'hidden',
 		},
 		titleCSS: {
-			backgroundColor: 'white',
+			// backgroundColor: 'white',
 			width: '50%',
 			zIndex: 20,
 			position: 'absolute',
@@ -352,19 +352,14 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			paddingTop: '2rem',
 			paddingLeft: '2rem',
 		},
-		subtopicCSS: {
-			paddingBottom: '1rem',
-			borderBottom: '1px solid #B7B7B7',
-		},
 		visualElementsCSS: {
-			zIndex: 20,
-			width: '10%',
-			height: '100%',
+			zIndex: 0,
+			width: '70%',
+			height: '50%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '0%',
-			left: '90%',
+			top: '50%',
 		},
 		contentContainerCSS: {
 			paddingTop: '2rem',
@@ -384,6 +379,8 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			flexDirection: 'column',
 			width: '100%',
 			zIndex: 30,
+			paddingBottom: '1rem',
+			borderBottom: '7px solid #AFE5F3',
 		},
 		imageContainerCSS: {
 			width: '50%',
@@ -392,8 +389,8 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			//overflow: 'hidden',
 			display: 'flex',
 			alignItems: 'center',
-			padding: '0rem 0rem 0rem 4rem', // top right bottom left
-			zIndex: 10,
+			padding: '2rem 2rem 2rem 2rem', // top right bottom left
+			zIndex: 30,
 		},
 		imageCSS: {
 			// borderRadius: '1.25rem', // border radius 1.25rem for image
@@ -409,7 +406,12 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 	},
 	Col_1_img_1_layout: {
 		canvaCSS: { width: '100%', height: '100%' },
-		subtopicCSS: { paddingBottom: '1rem', borderBottom: '1px solid #B7B7B7' },
+		subtopicCSS: {
+			paddingBottom: '1rem',
+			borderBottom: '7px solid #AFE5F3',
+			borderRadius:
+				'1rem 1rem 1rem 1rem' /* Adjust the radius values as needed */,
+		},
 		columnCSS: {
 			width: '100%',
 			height: '100%',
@@ -432,12 +434,16 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			flexGrow: 1,
 			borderRadius: '0.375rem', // Assuming a typical rounded-md value
 			//overflow: 'hidden',
+			paddingLeft: '2rem',
+			paddingRight: '2rem',
+			paddingTop: '2rem',
+			paddingBottom: '2rem',
 			// gridRow: 3,
 			order: 3,
 			zIndex: 30,
 		},
 		imageCSS: {
-			borderRadius: '0rem 0rem 0.375rem 0.375rem',
+			borderRadius: '0rem 0rem 0rem 0rem',
 			// borderBottomLeftRadius: '0.375rem',
 			// borderBottomRightRadius: '0.375rem',
 		},
@@ -457,12 +463,12 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 		},
 		visualElementsCSS: {
 			zIndex: 0,
-			width: '100%',
-			height: '100%',
+			width: '70%',
+			height: '50%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '0%',
+			top: '50%',
 		},
 		contentTextCSS: {
 			display: 'flex',
@@ -494,7 +500,9 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 		},
 		subtopicCSS: {
 			paddingBottom: '1rem',
-			borderBottom: '1px solid #B7B7B7',
+			borderBottom: '7px solid #AFE5F3',
+			borderRadius:
+				'1rem 1rem 1rem 1rem' /* Adjust the radius values as needed */,
 		},
 		titleAndSubtopicBoxCSS: {
 			zIndex: 30,
@@ -503,14 +511,16 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			// justifyContent: 'center',
 			// alignItems: 'center',
 			padding: '2rem 2rem 2rem 2rem',
-			order: 1,
+			order: 0,
 		},
 		imageContainerCSS: {
 			width: '100%', // equivalent to w-full
 			display: 'grid',
 			gridTemplateColumns: 'repeat(2, 1fr)', //
-			order: 0,
-			zIndex: 30,
+			order: 1,
+			zIndex: 20,
+			gap: '2rem',
+			padding: '0rem 2rem 0rem 2rem',
 		},
 		imageCSS: {
 			height: '11rem', // equivalent to h-[11rem]
@@ -519,8 +529,8 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			//overflow: 'hidden', // equivalent to overflow-hidden
 			position: 'relative', // equivalent to relative
 			// gridRow: 3,
-			order: 3,
-			zIndex: 30,
+			// order: 3,
+			zIndex: 20,
 		},
 		contentCSS: {
 			zIndex: 30,
@@ -532,13 +542,13 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			order: 2,
 		},
 		visualElementsCSS: {
-			zIndex: 0,
-			width: '100%',
-			height: '100%',
+			zIndex: 10,
+			width: '70%',
+			height: '50%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '0%',
+			top: '50%',
 		},
 		rndContainerCSS: {
 			width: '100%',
@@ -555,6 +565,12 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			flexDirection: 'column',
 			gap: '0.5rem',
 		},
+		subtopicCSS: {
+			paddingBottom: '1rem',
+			borderBottom: '7px solid #FFC458',
+			borderRadius:
+				'1rem 1rem 1rem 1rem' /* Adjust the radius values as needed */,
+		},
 		titleAndSubtopicBoxCSS: {
 			zIndex: 30,
 			display: 'flex',
@@ -563,19 +579,22 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			// alignItems: 'center',
 			padding: '2rem 2rem 2rem 2rem',
 			order: 0,
-			borderBottom: '1px solid #B7B7B7',
 		},
 		imageContainerCSS: {
 			width: '100%', // equivalent to w-full
 			display: 'grid',
 			gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
-			order: 2,
+			order: 1,
+			gap: '2rem',
+			padding: '0rem 2rem 0rem 2rem',
+			zIndex: 20,
 		},
 		imageCSS: {
 			height: '11rem', // equivalent to h-[11rem]
 			flexGrow: 1, // equivalent to grow
 			// borderRadius: '0.375rem', // equivalent to rounded-md
 			//overflow: 'hidden', // equivalent to overflow-hidden
+			zIndex: 20,
 		},
 		contentCSS: {
 			zIndex: 30,
@@ -584,16 +603,16 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			display: 'grid',
 			gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
 			gap: '2rem', // equivalent to gap-[2rem]
-			order: 1,
+			order: 2,
 		},
 		visualElementsCSS: {
-			zIndex: 20,
-			width: '100%',
-			height: '10%',
+			zIndex: 10,
+			width: '70%',
+			height: '50%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '90%',
+			top: '50%',
 		},
 		rndContainerCSS: {
 			width: '100%',
