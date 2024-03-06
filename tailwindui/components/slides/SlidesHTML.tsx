@@ -575,6 +575,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 										slideRef={slideRef}
 										// containerRef={containerRef}
 										highlightBorder={slideIndex === index}
+										pageNumber={index + 1}
 									/>
 								</div>
 							))}
@@ -683,6 +684,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 										isViewing={true}
 										templateDispatch={uneditableTemplateDispatch}
 										highlightBorder={slideIndex === index}
+										pageNumber={index + 1}
 									/>
 								</div>
 							))}
