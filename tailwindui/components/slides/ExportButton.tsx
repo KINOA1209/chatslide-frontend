@@ -129,49 +129,47 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 				explanation={'Export'}
 			/>
 
-			{showModal && (
-				<Modal
-					showModal={showModal}
-					setShowModal={setShowModal}
-					title='Export to PDF / PPTX'
-					description='Choose the format and quality of the export.'
+			<Modal
+				showModal={showModal}
+				setShowModal={setShowModal}
+				title='Export to PDF / PPTX'
+				description='Choose the format and quality of the export.'
+			>
+				<BigGrayButton
+					onClick={() => handleExport('pdf', true)}
+					isSubmitting={downloading}
+					isPaidUser={isPaidUser}
+					bgColor='bg-Gray'
 				>
-					<BigGrayButton
-						onClick={() => handleExport('pdf', true)}
-						isSubmitting={downloading}
-						isPaidUser={isPaidUser}
-						bgColor='bg-Gray'
-					>
-						<FaRegFilePdf />
-						<span>PDF (medium)</span>
-					</BigGrayButton>
+					<FaRegFilePdf />
+					<span>PDF (medium)</span>
+				</BigGrayButton>
 
-					<BigGrayButton
-						onClick={() => handleExport('pdf', false)}
-						isSubmitting={downloading}
-						isPaidUser={isPaidUser}
-						isPaidFeature={true}
-						bgColor='bg-Gray'
-					>
-						<FaRegFilePdf />
-						<span>PDF (high) {!isPaidUser && '🔒'}</span>
-					</BigGrayButton>
+				<BigGrayButton
+					onClick={() => handleExport('pdf', false)}
+					isSubmitting={downloading}
+					isPaidUser={isPaidUser}
+					isPaidFeature={true}
+					bgColor='bg-Gray'
+				>
+					<FaRegFilePdf />
+					<span>PDF (high) {!isPaidUser && '🔒'}</span>
+				</BigGrayButton>
 
-					<BigGrayButton
-						onClick={() => handleExport('pptx', false)}
-						isSubmitting={downloading}
-						isPaidUser={isPaidUser}
-						isPaidFeature={true}
-						bgColor='bg-Gray'
-					>
-						<RiSlideshow2Fill />
-						<span>PPTX {!isPaidUser && '🔒'}</span>
-					</BigGrayButton>
+				<BigGrayButton
+					onClick={() => handleExport('pptx', false)}
+					isSubmitting={downloading}
+					isPaidUser={isPaidUser}
+					isPaidFeature={true}
+					bgColor='bg-Gray'
+				>
+					<RiSlideshow2Fill />
+					<span>PPTX {!isPaidUser && '🔒'}</span>
+				</BigGrayButton>
 
-					{ hasScript && 
-					<SaveScriptsButton slides={slides}/>}
-				</Modal>
-			)}
+				{ hasScript && 
+				<SaveScriptsButton slides={slides}/>}
+			</Modal>
 		</>
 	);
 };

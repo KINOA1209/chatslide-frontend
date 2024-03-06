@@ -4,7 +4,7 @@ import PaywallModal from '../paywallModal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ExportToPdfButton from './ExportButton';
-import { ShareToggleButton } from '@/components/slides/SlideButtons';
+import { ShareButton } from '@/components/slides/SlideButtons';
 import './slidesHTML.css';
 import { availableTemplates } from '@/components/slides/slideTemplates';
 import { LayoutKeys } from '@/components/slides/slideLayout';
@@ -524,7 +524,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					)}
 
 					{project && (
-						<ShareToggleButton
+						<ShareButton
 							setShare={isViewing ? null : updateIsShared}
 							share={isShared}
 							project={project}
