@@ -11,6 +11,7 @@ import StepsOutlinePage from '@/components/user_onboarding/StepsOutlinePage';
 import { useProject } from '@/hooks/use-project';
 import ActionsToolBar from '@/components/ui/ActionsToolBar';
 import useTourStore from '@/components/user_onboarding/TourStore';
+import useHydrated from '@/hooks/use-hydrated';
 
 export default function WorkflowStep2() {
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
@@ -48,6 +49,9 @@ export default function WorkflowStep2() {
 			});
 		}
 	};
+
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
 
 	if (!outlines || !outlines.length) {
 		return <></>;
