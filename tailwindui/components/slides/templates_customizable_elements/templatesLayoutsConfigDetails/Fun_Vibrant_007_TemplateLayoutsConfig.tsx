@@ -93,7 +93,7 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
 			//overflow: 'hidden',
 			position: 'relative',
-			zIndex: 10,
+			zIndex: 30,
 		},
 		rndContainerCSS: {
 			width: '100%',
@@ -112,7 +112,7 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
 			top: '0%',
-			left: '50%',
+			left: '0%',
 		},
 	},
 	Col_1_img_0_layout: {
@@ -190,8 +190,10 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 		},
 		subtopicCSS: {
 			paddingBottom: '1rem',
-			borderBottom: '1px solid #B7B7B7',
 			zIndex: 30,
+			borderBottom: '7px solid #FFC458',
+			borderRadius:
+				'1rem 1rem 1rem 1rem' /* Adjust the radius values as needed */,
 		},
 
 		contentContainerCSS: {
@@ -216,19 +218,28 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			// zIndex: 30,
 		},
 		contentIndexCSS: {
-			fontFamily: 'Lemonada',
+			fontFamily: 'Brygada 1918 Semibold',
 			position: 'absolute',
-			color: '#E1F3F7',
-			fontSize: '15rem',
+			color: '#000000',
+			fontSize: '2.5rem',
 			fontWeight: '700',
 			// fontFamily: 'Creato Display Medium',
 			textTransform: 'uppercase',
 			lineHeight: '120%',
 			letterSpacing: '0.15rem',
-			paddingTop: '2rem',
+			// paddingTop: '2rem',
+			padding: '1rem', // Adjust padding as needed
+			backgroundColor: '#FFF0D4', // Light yellow background color
+			borderRadius: '50%',
+			height: '4rem',
+			width: '4rem',
 			zIndex: 20,
-			top: '-50%',
-			left: '0%',
+			top: '10%', // Adjust as needed
+			left: '10%', // Adjust as needed
+			transform: 'translate(-50%, -50%)', // Center the element
+			display: 'flex',
+			alignItems: 'center',
+			justifyContent: 'center',
 		},
 		contentIndexTextDividerCSS: {
 			display: 'none',
@@ -266,8 +277,10 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 		},
 		subtopicCSS: {
 			paddingBottom: '1rem',
-			borderBottom: '1px solid #B7B7B7',
 			zIndex: 30,
+			borderBottom: '7px solid #AFE5F3',
+			borderRadius:
+				'1rem 1rem 1rem 1rem' /* Adjust the radius values as needed */,
 		},
 
 		contentContainerCSS: {
@@ -292,19 +305,27 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			// zIndex: 30,
 		},
 		contentIndexCSS: {
-			fontFamily: 'Lemonada',
+			fontFamily: 'Brygada 1918 Semibold',
 			position: 'absolute',
-			color: '#FAEDF5',
-			fontSize: '15rem',
+			color: '#000000',
+			fontSize: '2.5rem',
 			fontWeight: '700',
 			// fontFamily: 'Creato Display Medium',
 			textTransform: 'uppercase',
 			lineHeight: '120%',
 			letterSpacing: '0.15rem',
-			paddingTop: '2rem',
+			padding: '1rem', // Adjust padding as needed
+			backgroundColor: '#E6FAFF',
+			borderRadius: '50%',
+			height: '4rem',
+			width: '4rem',
 			zIndex: 20,
-			top: '-50%',
-			left: '0%',
+			top: '10%', // Adjust as needed
+			left: '10%', // Adjust as needed
+			transform: 'translate(-50%, -50%)', // Center the element
+			display: 'flex',
+			alignItems: 'center',
+			justifyContent: 'center',
 		},
 		contentIndexTextDividerCSS: {
 			display: 'none',
