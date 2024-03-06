@@ -504,7 +504,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 										<button onClick={() => setIsShowingLogo(!isShowingLogo)}>
 											<GoEyeClosed
 												style={{
-													strokeWidth: '1',
+													strokeWidth: '0.8',
 													flex: '1',
 													width: '1.5rem',
 													height: '1.5rem',
@@ -537,7 +537,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 					{project && (
 						<ShareToggleButton
-							setShare={updateIsShared}
+							setShare={isViewing ? null : updateIsShared}
 							share={isShared}
 							project={project}
 							host={host}
@@ -558,7 +558,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				<Panel>
 					{/* vertical bar */}
 					<div className='h-full w-[9rem] hidden xl:block mx-auto justify-center items-center'>
-						<div className='h-full flex shrink flex-col flex-nowrap py-2 overflow-y-auto  overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
+						<div className='h-full max-h-[540px] flex shrink flex-col flex-nowrap py-2 overflow-y-auto  overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
 							{slides.map((slide, index) => (
 								<div
 									key={
@@ -579,6 +579,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 										slideRef={slideRef}
 										// containerRef={containerRef}
 										highlightBorder={slideIndex === index}
+										pageNumber={index + 1}
 									/>
 								</div>
 							))}
@@ -692,6 +693,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 										isViewing={true}
 										templateDispatch={uneditableTemplateDispatch}
 										highlightBorder={slideIndex === index}
+										pageNumber={index + 1}
 									/>
 								</div>
 							))}

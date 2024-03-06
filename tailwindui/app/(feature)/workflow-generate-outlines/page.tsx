@@ -22,6 +22,7 @@ import ActionsToolBar from '@/components/ui/ActionsToolBar';
 import useTourStore from '@/components/user_onboarding/TourStore';
 import Card from '@/components/ui/Card';
 import {
+	BigTitle,
 	ErrorMessage,
 	Explanation,
 	ExplanationPopup,
@@ -30,6 +31,8 @@ import {
 import { DropDown } from '@/components/button/DrlambdaButton';
 import ResourceService from '@/services/ResourceService';
 import LanguageSelector from './LanguageSelector';
+import { Panel } from '@/components/layout/Panel';
+import { Column } from '@/components/layout/Column';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 6;
@@ -254,7 +257,7 @@ export default function Topic() {
 			} else {
 				toast.error(
 					'Server is busy now. Please try again later. Reference code: ' +
-					project?.id,
+						project?.id,
 				);
 				setIsSubmitting(false);
 			}
@@ -325,15 +328,11 @@ export default function Topic() {
 			/>
 
 			{/* main content */}
-			<div className='my-4 gap-y-4 w-full flex flex-col items-center relative'>
-				{/* user tutorial */}
-				<div className='absolute right-[3rem] top-[0rem] flex flex-col items-end space-x-4'>
-					<ActionsToolBar startTour={startTour} onlyShowTutorial={true} />
-				</div>
-				<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
+			<Column>
+				<Panel>
+					<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
 
-				{/* Project Summary section */}
-				<div className='w-full lg:w-2/3 px-3 my-3 lg:my-1' id='SummaryStep-2'>
+					{/* Project Summary section */}
 					{generationMode === 'from_files' && (
 						<AddResourcesSection
 							searchOnlineScope={searchOnlineScope}
@@ -348,11 +347,11 @@ export default function Topic() {
 					<Card>
 						{/* title */}
 						<div className='title1'>
-							<p className='text-3xl'>Summary</p>
-							<p id='after1'>
+							<BigTitle>Summary</BigTitle>
+							{/* <p id='after1'>
 								{' '}
 								{generationMode === 'from_topic' ? '(Required)' : '(Optional)'}
-							</p>
+							</p> */}
 							<Explanation>
 								To get started, give us some high-level intro about your
 								project.
@@ -411,9 +410,7 @@ export default function Topic() {
 									))}
 								</DropDown>
 							</div>
-							<LanguageSelector
-								language={language}
-								setLanguage={setLanguage} />
+							<LanguageSelector language={language} setLanguage={setLanguage} />
 						</div>
 					</Card>
 
@@ -428,8 +425,8 @@ export default function Topic() {
 							removeResourceAtIndex={removeResourceAtIndex}
 						/>
 					)}
-				</div>
-			</div>
+				</Panel>
+			</Column>
 		</section>
 	);
 }

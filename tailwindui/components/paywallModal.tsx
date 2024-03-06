@@ -30,7 +30,7 @@ const PaywallModal: React.FC<PaywallModalProps> = ({
 
 	return (
 		<Modal showModal={true} setShowModal={setShowModal}>
-			<div className='pt-4 pb-4 space-y-4'>
+			<div className='py-2 space-y-4'>
 				{' '}
 				{/* Reduced bottom padding */}
 				<h4 className='h4 text-center text-red-700'>{message}</h4>

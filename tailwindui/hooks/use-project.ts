@@ -80,10 +80,11 @@ export const useProject = () => {
 		});
 	};
 
-	const updateIsShared = (value: boolean) => {
-		setIsShared(value);
-		setProject({ ...project, is_shared: value } as Project);
-		ProjectService.SlideShareLink(token, project?.id || '', value);
+	const updateIsShared = (is_shared: boolean, is_public: boolean=false) => {
+		if(!project) return;
+		setIsShared(is_shared);
+		setProject({ ...project, is_shared: is_shared, is_public: is_public } as Project);
+		ProjectService.SlideShareLink(token, project.id, is_shared, is_public);
 	};
 
 	const updateOutlines = (outlines: Outlines) => {

@@ -7,17 +7,18 @@ import ProjectService from '@/services/ProjectService';
 import Project from '@/models/Project';
 import { useSlides } from '@/hooks/use-slides';
 import { Loading } from '@/components/ui/Loading';
+import { useProject } from '@/hooks/use-project';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
 });
 
-interface SharePageProps {
+interface PdfPageProps {
 	project_id: string;
 	page?: number;
 }
 
-const SharePage: React.FC<SharePageProps> = ({ project_id, page = 1 }) => {
+const PdfPage: React.FC<PdfPageProps> = ({ project_id, page = 1 }) => {
 	const [loading, setLoading] = useState(true);
 	const { initSlides, setIsPresenting } = useSlides();
 
@@ -49,4 +50,4 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, page = 1 }) => {
 	);
 };
 
-export default SharePage;
+export default PdfPage;

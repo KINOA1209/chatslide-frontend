@@ -275,7 +275,7 @@ class ProjectService {
 				slide.keywords = slideData.keywords || '';
 				slide.topic = slideData.topic || 'Your topic here';
 				slide.subtopic = slideData.subtopic;
-				slide.images = slideData.images;
+				slide.images = slideData.images.filter((img: string) => (img && img !== '')) || [];
 				slide.theme = slideData.theme;
 				slide.content = slideData.content || ['Your content here'];
 				slide.section_title = slideData.section_title || [
@@ -361,6 +361,7 @@ class ProjectService {
 		token: string,
 		project_id: string,
 		is_shared: boolean,
+		is_public: boolean = false,
 	): Promise<void> {
 		const headers = new Headers();
 		if (token) {
@@ -377,6 +378,7 @@ class ProjectService {
 				body: JSON.stringify({
 					project_id: project_id,
 					is_shared: is_shared,
+					is_public: is_public,
 				}),
 			});
 			const responseData = await response.json();

@@ -1,16 +1,12 @@
 'use client';
 import { ChatHistoryStatus, useChatHistory } from '@/hooks/use-chat-history';
-import { useSession } from '@/hooks/use-session';
 import { useSlides } from '@/hooks/use-slides';
 import { useUser } from '@/hooks/use-user';
 import ChatHistory from '@/models/ChatHistory';
 import Slide from '@/models/Slide';
 import DrlambdaCartoonImage from '@/public/images/AIAssistant/DrLambdaCartoon.png';
-import sendTextButtonImage from '@/public/images/AIAssistant/sendTextIcon.png';
 import Image from 'next/image';
 import { useEffect, useState, useRef, use } from 'react';
-import { AiOutlineClose } from 'react-icons/ai';
-import { FiSend } from 'react-icons/fi';
 import { InputBox } from './InputBox';
 import { IoSend, IoSendOutline } from 'react-icons/io5';
 import { DeleteIcon } from '@/app/(feature)/icons';
@@ -43,11 +39,11 @@ type ChatsProps = {
 export const Chats: React.FC<ChatsProps> = ({ chatHistory }) => {
 	const lastMessageRef = useRef<HTMLDivElement>(null); // Ensure you have a ref for the last message
 
-	useEffect(() => {
-		if (lastMessageRef.current) {
-			lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
-		}
-	}, [chatHistory]); 
+	// useEffect(() => {
+	// 	if (lastMessageRef.current) {
+	// 		lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
+	// 	}
+	// }, [chatHistory]); 
 
 	return (
 		<>
@@ -97,18 +93,9 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	const [userInput, setUserInput] = useState('');
 	const { chatHistory, addChatHistory, clearChatHistory, chatHistoryStatus } =
 		useChatHistory();
-	const { updateVersion } = useSlides();
+	const { updateVersion, slideIndex } = useSlides();
 	const [loading, setLoading] = useState(false);
 	const { token } = useUser();
-
-	// Create a ref for the last message
-	const lastMessageRef = useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		if (lastMessageRef.current) {
-			lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
-		}
-	}, [chatHistory]);
 
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
@@ -283,40 +270,51 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 							Here are some ways I can help:
 						</div>
 						<div className='self-stretch flex-col justify-start items-start gap-2 inline-flex'>
-							<div
-								className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
-								onClick={() => handleSend('Add data to the content')}
-							>
-								<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
-									Add data to the content
+							{slideIndex == 0 ?
+								(<div
+									className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
+									onClick={() => handleSend('Change topic to be more professional')}
+								>
+									<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
+										Change topic to be more professional
+									</div>
+								</div>) :
+								(<><div
+									className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
+									onClick={() => handleSend('Add data to the content')}
+								>
+									<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
+										Add data to the content
+									</div>
 								</div>
-							</div>
-							<div
-								className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
-								onClick={() => handleSend('Make content more concise')}
-							>
-								<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
-									Make content more concise
-								</div>
-							</div>
-							<div
-								className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
-								onClick={() =>
-									handleSend('Change subtopic to be more professional')
-								}
-							>
-								<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
-									Change subtopic to be more professional
-								</div>
-							</div>
-							<div
-								className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
-								onClick={() => handleSend('Add an example to the content')}
-							>
-								<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
-									Add an example to the content
-								</div>
-							</div>
+									<div
+										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
+										onClick={() => handleSend('Make content more concise')}
+									>
+										<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
+											Make content more concise
+										</div>
+									</div>
+									<div
+										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
+										onClick={() =>
+											handleSend('Change subtopic to be more professional')
+										}
+									>
+										<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
+											Change subtopic to be more professional
+										</div>
+									</div>
+									<div
+										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
+										onClick={() => handleSend('Add an example to the content')}
+									>
+										<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
+											Add an example to the content
+										</div>
+									</div></>)
+							}
+
 						</div>
 					</div>
 					{/* chat history render */}
