@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import OnboardingSurveyButton from './OnboardingSurveyButton';
 import surveyStaticDataObject from './SurveyObject';
 import { BigBlueButton } from '@/components/button/DrlambdaButton';
+import { Instruction, Title } from '@/components/ui/Text';
 
 type SurveySectionProps = {
 	section: string;
@@ -29,9 +30,9 @@ const SurveySection: React.FC<SurveySectionProps> = ({
 
 	return (
 		<div className='flex flex-col text-center font-creato-medium' ref={ref}>
-			<span className='text-2xl font-semibold leading-normal tracking-wide'>
+			<Title>
 				{sectionObject.question}
-			</span>
+			</Title>
 			<div className='mt-6 max-w-[100%] md:max-w-[80%] mx-auto'>
 				<div className='flex flex-wrap items-center justify-center gap-3'>
 					{sectionObject.itemsArr.map((item) => (

@@ -6,12 +6,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import Header from '@/components/layout/header';
 import dynamic from 'next/dynamic';
 import ProjectService from '@/services/ProjectService';
-import Project from '@/models/Project';
 import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
 import { useSlides } from '@/hooks/use-slides';
 import { Blank, Loading } from '@/components/ui/Loading';
-import { Explanation, Instruction, Title } from '@/components/ui/Text';
-import Card from '@/components/ui/Card';
 import { useProject } from '@/hooks/use-project';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
