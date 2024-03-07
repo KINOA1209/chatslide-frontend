@@ -33,6 +33,8 @@ const Font = Quill.import('attributors/style/font');
 Font.whitelist = [
 	'Arimo',
 	'Arial',
+	'Assistant Medium',
+	'Assistant Regular',
 	'Big Shoulders Text',
 	'Brygada 1918 SemiBold',
 	'Caveat',
@@ -47,6 +49,8 @@ Font.whitelist = [
 	'Libre Baskerville Regular',
 	'Libre Baskerville Bold',
 	'Nimbus Sans Regular',
+	'Playfair Display Bold',
+	'Playfair Display Medium',
 	'Rubik',
 	'Sansita Swashed Regular',
 	'Sansita Swashed Medium',

@@ -247,6 +247,16 @@ export const Fun_Education_004_TemplateLogo: React.FC<TemplateLogoType> = (
 		logoWidth: 8, // Adjust the width as needed
 	});
 
+export const Business_Dark_005_TemplateLogo: React.FC<TemplateLogoType> = (
+	props: TemplateLogoType,
+) =>
+	generateTemplateLogo({
+		...props,
+		coverLogo: drlambdaLogo,
+		nonCoverLogo: drlambdaLogo,
+		logoWidth: 8, // Adjust the width as needed
+	});
+
 export const Business_002_TemplateLogo: React.FC<TemplateLogoType> = (
 	props: TemplateLogoType,
 ) =>
@@ -315,6 +325,10 @@ const templatesInfo: TemplateLogoInfo[] = [
 	{
 		templateName: 'Fun_Vibrant_007' as TemplateKeys,
 		templateLogo: Fun_Vibrant_007_TemplateLogo,
+	},
+	{
+		templateName: 'Business_Dark_005' as TemplateKeys,
+		templateLogo: Business_Dark_005_TemplateLogo,
 	},
 	{
 		templateName: 'Business_002' as TemplateKeys,

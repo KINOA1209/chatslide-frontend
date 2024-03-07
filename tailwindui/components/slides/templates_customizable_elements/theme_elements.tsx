@@ -7,6 +7,7 @@ import { Fun_Education_001_TemplateThemeConfig } from './templatesThemeConfigDet
 import { Fun_Education_004_TemplateThemeConfig } from './templatesThemeConfigDetails/Fun_Education_004_TemplateThemeConfigDetails';
 import { Default_TemplateThemeConfig } from './templatesThemeConfigDetails/Default_TemplateThemeConfigDetails';
 import { Fun_Vibrant_007_TemplateThemeConfig } from './templatesThemeConfigDetails/Fun_Vibrant_007_TemplateThemeConfigDetails';
+import { Business_Dark_005_TemplateThemeConfig } from './templatesThemeConfigDetails/Business_Dark_005_TemplateThemeConfigDetails';
 export type ThemeElements = {
 	backgroundColorCover?: string;
 	backgroundColor?: string;
@@ -584,10 +585,11 @@ const themeConfigData: ThemeConfig = {
 		},
 	},
 	Default: Default_TemplateThemeConfig,
-	Fun_Education_004: Fun_Education_004_TemplateThemeConfig,
+	Fun_Education_001: Fun_Education_001_TemplateThemeConfig,
 	Business_002: Business_002_TemplateThemeConfig,
 	Clean_Lifestyle_003: Clean_Lifestyle_003_TemplateThemeConfig,
-	Fun_Education_001: Fun_Education_001_TemplateThemeConfig,
+	Fun_Education_004: Fun_Education_004_TemplateThemeConfig,
+	Business_Dark_005: Business_Dark_005_TemplateThemeConfig,
 	Fun_Vibrant_007: Fun_Vibrant_007_TemplateThemeConfig,
 };
 
