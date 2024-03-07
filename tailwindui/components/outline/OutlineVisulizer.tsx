@@ -139,11 +139,10 @@ const OutlineVisualizer = ({
 				outlineData.map((section: OutlineSection, sectionIndex: number) => (
 					<div key={sectionIndex}>
 						<div
-							className={`OutlineStep-2 my-[1rem] ${
-								outlineData.length >= maxOutlineSectionCount
-									? 'opacity-50 cursor-not-allowed'
-									: ''
-							}`}
+							className={`OutlineStep-2 my-[1rem] ${outlineData.length >= maxOutlineSectionCount
+								? 'opacity-50 cursor-not-allowed'
+								: ''
+								}`}
 						>
 							<button
 								disabled={outlineData.length >= maxOutlineSectionCount}
@@ -207,12 +206,11 @@ const OutlineVisualizer = ({
 											>
 												<input
 													key={detailIndex}
-													className={`form-input border-none w-full text-gray-800 grow overflow-ellipsis ${
-														hoveredDetailIndex === detailIndex &&
+													className={`form-input border-none w-full text-gray-800 grow overflow-ellipsis ${hoveredDetailIndex === detailIndex &&
 														sectionIndex === hoveredSectionIndex
-															? 'bg-gray-200'
-															: 'bg-neutral-50 '
-													}`}
+														? 'bg-gray-200'
+														: 'bg-neutral-50 '
+														}`}
 													value={content}
 													onClick={(e) =>
 														(e.target as HTMLInputElement).select()
@@ -233,49 +231,49 @@ const OutlineVisualizer = ({
 															<div className='absolute flex flex-row gap-4 bottom-[70%] right-0 mt-1 mr-1'>
 																{outlineData[sectionIndex].content.length >
 																	minOutlineDetailCount && (
-																	<div
-																		onClick={(e) =>
-																			handleDeleteDetail(
-																				e,
-																				sectionIndex,
-																				detailIndex,
-																			)
-																		}
-																	>
-																		<DeleteIcon shadow={true} />
-																	</div>
-																)}
+																		<div
+																			onClick={(e) =>
+																				handleDeleteDetail(
+																					e,
+																					sectionIndex,
+																					detailIndex,
+																				)
+																			}
+																		>
+																			<DeleteIcon shadow={true} />
+																		</div>
+																	)}
 
 																{outlineData[sectionIndex].content.length <
 																	maxOutlineDetailCount && (
-																	<div
-																		onClick={(e) =>
-																			handleAddDetail(
-																				e,
-																				sectionIndex,
-																				detailIndex,
-																			)
-																		}
-																	>
-																		<AddTopicIcon />
-																	</div>
-																)}
+																		<div
+																			onClick={(e) =>
+																				handleAddDetail(
+																					e,
+																					sectionIndex,
+																					detailIndex,
+																				)
+																			}
+																		>
+																			<AddTopicIcon />
+																		</div>
+																	)}
 															</div>
 															<div className='absolute flex flex-row gap-4 top-[70%] right-0 mb-1 mr-1 z-10'>
 																{outlineData[sectionIndex].content.length <
 																	maxOutlineDetailCount && (
-																	<div
-																		onClick={(e) =>
-																			handleAddDetail(
-																				e,
-																				sectionIndex,
-																				detailIndex + 1,
-																			)
-																		}
-																	>
-																		<AddTopicIcon />
-																	</div>
-																)}
+																		<div
+																			onClick={(e) =>
+																				handleAddDetail(
+																					e,
+																					sectionIndex,
+																					detailIndex + 1,
+																				)
+																			}
+																		>
+																			<AddTopicIcon />
+																		</div>
+																	)}
 															</div>
 														</>
 													)}
@@ -287,6 +285,27 @@ const OutlineVisualizer = ({
 						</div>
 					</div>
 				))}
+
+			<div key={outlineData.length}>
+				<div
+					className={`OutlineStep-2 my-[1rem] ${outlineData.length >= maxOutlineSectionCount
+						? 'opacity-50 cursor-not-allowed'
+						: ''
+						}`}
+				>
+					<button
+						disabled={outlineData.length >= maxOutlineSectionCount}
+						onClick={(e) => {
+							if (outlineData.length < maxOutlineSectionCount) {
+								handleAddSection(outlineData.length);
+							}
+						}}
+						className='focus:outline-none'
+					>
+						<AddSectionIcon />
+					</button>
+				</div>
+			</div>
 		</div>
 	);
 };

@@ -112,6 +112,11 @@ const GenerateSlidesSubmit = ({
 			typeof window !== 'undefined'
 				? sessionStorage.getItem('scenarioType')
 				: null;
+		const searchOnline =
+			typeof window !== 'undefined'
+				? sessionStorage.getItem('search_online')
+				: null;
+
 		formData = {
 			outlines: JSON.stringify({ ...outlines }),
 			audience: audience,
@@ -129,7 +134,10 @@ const GenerateSlidesSubmit = ({
 			logo_ids: logo_ids,
 			background_ids: background_ids,
 		};
-		if (selectedResources && selectedResources.length > 0 && !extraKnowledge) {
+		if (
+			(selectedResources && selectedResources.length > 0 && !extraKnowledge) ||
+			(!extraKnowledge && searchOnline !== null)
+		) {
 			try {
 				console.log('resources', selectedResources);
 				console.log('querying vector database');
@@ -137,6 +145,7 @@ const GenerateSlidesSubmit = ({
 					project_id || '',
 					selectedResources.map((r: Resource) => r.id),
 					outlines,
+					searchOnline || '',
 					token,
 				);
 				sessionStorage.setItem(

@@ -159,7 +159,7 @@ class UserService {
 		} catch (error) {
 			const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
 			console.error(`Failed to fetch user credits: ${userId}`, error);
-			throw new Error(`Error fetching user credits: ${error}`);
+			return { credits: '0', tier: 'FREE', expirationDate: '' };
 		}
 	}
 

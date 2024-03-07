@@ -93,7 +93,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	const [userInput, setUserInput] = useState('');
 	const { chatHistory, addChatHistory, clearChatHistory, chatHistoryStatus } =
 		useChatHistory();
-	const { updateVersion } = useSlides();
+	const { updateVersion, slideIndex } = useSlides();
 	const [loading, setLoading] = useState(false);
 	const { token } = useUser();
 
@@ -270,40 +270,51 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 							Here are some ways I can help:
 						</div>
 						<div className='self-stretch flex-col justify-start items-start gap-2 inline-flex'>
-							<div
-								className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
-								onClick={() => handleSend('Add data to the content')}
-							>
-								<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
-									Add data to the content
+							{slideIndex == 0 ?
+								(<div
+									className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
+									onClick={() => handleSend('Change topic to be more professional')}
+								>
+									<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
+										Change topic to be more professional
+									</div>
+								</div>) :
+								(<><div
+									className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
+									onClick={() => handleSend('Add data to the content')}
+								>
+									<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
+										Add data to the content
+									</div>
 								</div>
-							</div>
-							<div
-								className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
-								onClick={() => handleSend('Make content more concise')}
-							>
-								<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
-									Make content more concise
-								</div>
-							</div>
-							<div
-								className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
-								onClick={() =>
-									handleSend('Change subtopic to be more professional')
-								}
-							>
-								<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
-									Change subtopic to be more professional
-								</div>
-							</div>
-							<div
-								className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
-								onClick={() => handleSend('Add an example to the content')}
-							>
-								<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
-									Add an example to the content
-								</div>
-							</div>
+									<div
+										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
+										onClick={() => handleSend('Make content more concise')}
+									>
+										<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
+											Make content more concise
+										</div>
+									</div>
+									<div
+										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
+										onClick={() =>
+											handleSend('Change subtopic to be more professional')
+										}
+									>
+										<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
+											Change subtopic to be more professional
+										</div>
+									</div>
+									<div
+										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
+										onClick={() => handleSend('Add an example to the content')}
+									>
+										<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
+											Add an example to the content
+										</div>
+									</div></>)
+							}
+
 						</div>
 					</div>
 					{/* chat history render */}

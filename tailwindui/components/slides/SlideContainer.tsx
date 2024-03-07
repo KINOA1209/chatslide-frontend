@@ -23,6 +23,7 @@ type SlideContainerProps = {
 	setIsPresenting?: React.Dispatch<React.SetStateAction<boolean>>;
 	length?: number; // force rerender when length changes and index does not change
 	version?: number; // force rerender when version changes
+	pageNumber?: number;
 };
 
 const SlideContainer: React.FC<SlideContainerProps> = ({
@@ -39,6 +40,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 	setIsPresenting,
 	length,
 	version,
+	pageNumber,
 }) => {
 	const { slides } = useSlides();
 
@@ -51,7 +53,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 		<div
 			id='slideContainer'
 			className={`${
-				isPresenting ? 'fixed top-0 left-0 w-full h-full z-50' : ''
+				isPresenting ? 'fixed top-0 left-0 w-full h-full z-50' : 'relative'
 			}`}
 			ref={containerRef}
 			style={{
@@ -68,6 +70,11 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 				height: isPresenting ? '100vh' : `${540 * scale}px`,
 			}}
 		>
+			{pageNumber && 
+				<div className='absolute bottom-0 right-0 bg-gray-400 px-1 text-white text-sm rounded-sm z-10'>
+					{pageNumber}
+				</div>
+			}
 			{isPresenting && setIsPresenting && (
 				<button
 					className='fixed top-10 right-10 p-2 w-10 h-10 bg-gray-400 text-white rounded-full cursor-pointer hover:bg-gray-600'

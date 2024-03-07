@@ -1,6 +1,9 @@
 import { GetServerSideProps, Metadata } from 'next';
 import SharePage from './sharePage';
 import ProjectService from '@/services/ProjectService';
+import Header from '@/components/layout/header';
+import Card from '@/components/ui/Card';
+import { Explanation, Instruction, Title } from '@/components/ui/Text';
 
 type Props = {
 	params: { project_id: string };
@@ -64,7 +67,32 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Page({ params }: Props) {
 	const project_id = params.project_id;
 
-	// const project = await ProjectService.getSharedProjectDetails(project_id, true);
+	const project = await ProjectService.getSharedProjectDetails(project_id, true);
 
-	return <SharePage project_id={project_id} />;
+	return (
+		<div className='flex flex-col h-screen w-screen'>
+			<div className='flex'>
+				<Header loginRequired={false} isLanding={false} />
+			</div>
+			<main className='w-full flex grow flex-col overflow-y-scroll'>
+				{project && project.description && (
+					<div className='hidden sm:m-4'>
+					<Card>
+						<div className='flex flex-row items-end gap-x-4'>
+							<Title>{project.topic}</Title>
+							<Instruction>
+								Created using DrLambda
+							</Instruction>
+						</div>
+						<Explanation>{project.description}</Explanation>
+					</Card>
+					</div>
+				)}
+
+				<SharePage project_id={project_id} />
+
+			</main>
+			{/* <WorkflowFooter /> */}
+		</div>
+	)
 }

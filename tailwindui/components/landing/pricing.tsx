@@ -277,7 +277,6 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 														<DrlambdaButton
 															onClick={() => handleClick('free')}
 															showArrow={false}
-															bgColor='bg-gray-400'
 														>
 															Sign up to Start
 														</DrlambdaButton>
@@ -420,7 +419,6 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 													<DrlambdaButton
 														onClick={() => handleClick('pro')}
 														showArrow={false}
-														bgColor='bg-gradient-to-r from-purple-500 to-purple-700'
 													>
 														{getCta()}
 													</DrlambdaButton>
@@ -469,7 +467,6 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 																'https://calendly.com/drlambda/30min')
 														}
 														showArrow={false}
-														bgColor='bg-black'
 													>
 														Book a call
 													</DrlambdaButton>

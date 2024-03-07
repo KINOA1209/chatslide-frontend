@@ -1,5 +1,4 @@
-import ProjectService from '@/services/ProjectService';
-import SharePage from './sharePage';
+import PdfPage from './pdfPage';
 
 type Props = {
 	params: { project_id: string };
@@ -13,7 +12,7 @@ export default async function Page({ params }: Props) {
 
 	return (
 		<div>
-			<SharePage project_id={project_id} />{' '}
+			<PdfPage project_id={project_id} />{' '}
 			{/* The project is now passed as a prop */}
 		</div>
 	);

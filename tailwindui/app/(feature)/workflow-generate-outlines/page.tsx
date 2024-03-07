@@ -47,6 +47,7 @@ const audienceList = [
 ];
 
 export default function Topic() {
+	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 	const router = useRouter();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [showFileModal, setShowFileModal] = useState(false);
@@ -178,9 +179,13 @@ export default function Topic() {
 			'selectedResources',
 			JSON.stringify(selectedResources),
 		);
+		sessionStorage.setItem('search_online', searchOnlineScope);
 		//sessionStorage.setItem('schoolTemplate', schoolTemplate);
 
-		if (selectedResources && selectedResources.length > 0) {
+		if (
+			(selectedResources && selectedResources.length > 0) ||
+			(searchOnlineScope && searchOnlineScope !== '')
+		) {
 			try {
 				console.log('resources', selectedResources);
 				console.log('summarize resources');
@@ -296,13 +301,12 @@ export default function Topic() {
 	return (
 		<section>
 			<MyCustomJoyride steps={StepsSummaryPage()} />
-			{showPaymentModal && (
-				<PaywallModal
-					setShowModal={setShowPaymentModal}
-					message='Upgrade for more ⭐️credits.'
-					showReferralLink={true}
-				/>
-			)}
+			<PaywallModal
+				showModal={showPaymentModal}
+				setShowModal={setShowPaymentModal}
+				message='Upgrade for more ⭐️credits.'
+				showReferralLink={true}
+			/>
 
 			<ToastContainer />
 
@@ -409,9 +413,7 @@ export default function Topic() {
 									))}
 								</DropDown>
 							</div>
-							<LanguageSelector
-								language={language}
-								setLanguage={setLanguage} />
+							<LanguageSelector language={language} setLanguage={setLanguage} />
 						</div>
 					</Card>
 

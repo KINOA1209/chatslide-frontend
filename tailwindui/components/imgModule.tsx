@@ -420,7 +420,7 @@ export const ImgModule = ({
 										key={index}
 										className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-2`}
 									>
-										<ResourceIcon resource={resource} />
+										<ResourceIcon resource={resource} cover={true}/>
 									</div>
 								);
 							} else {
@@ -430,7 +430,7 @@ export const ImgModule = ({
 										key={index}
 										className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-2`}
 									>
-										<ResourceIcon resource={resource} />
+										<ResourceIcon resource={resource} cover={true}/>
 									</div>
 								);
 							}
@@ -837,13 +837,12 @@ export const ImgModule = ({
 					leaveFrom='opacity-100 translate-y-0'
 					leaveTo='opacity-0 translate-y-12'
 				>
-					{showPaymentModal && (
-						<PaywallModal
-							setShowModal={setShowPaymentModal}
-							message='Upgrade for more ⭐️credits.'
-							showReferralLink={true}
-						/>
-					)}
+					<PaywallModal
+						showModal={showPaymentModal}
+						setShowModal={setShowPaymentModal}
+						message='Upgrade for more ⭐️credits.'
+						showReferralLink={true}
+					/>
 					<div className='grow md:grow-0'></div>
 					{/* image choosing modal */}
 					<Transition
@@ -1021,9 +1020,8 @@ export const ImgModule = ({
 								</div>
 								<div className='w-full bg-slate-200'>
 									<div
-										className={`w-1/4 h-[2px] bg-black ${
-											hoverQueryMode == ImgQueryMode.SEARCH && 'ml-[25%]'
-										} 
+										className={`w-1/4 h-[2px] bg-black ${hoverQueryMode == ImgQueryMode.SEARCH && 'ml-[25%]'
+											} 
 										${hoverQueryMode == ImgQueryMode.GENERATION && 'ml-[50%]'} 
 										${hoverQueryMode == ImgQueryMode.CHART_SELECTION && 'ml-[75%]'} 
                                 		transition-all ease-in-out`}
@@ -1066,8 +1064,7 @@ export const ImgModule = ({
 			{/* image itself */}
 			<div
 				onClick={openModal}
-				className={`w-full h-full transition ease-in-out duration-150 relative ${
-					selectedImg === ''
+				className={`w-full h-full transition ease-in-out duration-150 relative ${selectedImg === ''
 						? 'bg-[#E7E9EB]'
 						: canEdit
 						? 'hover:bg-[#CAD0D3]'
@@ -1075,9 +1072,9 @@ export const ImgModule = ({
 				} flex flex-col items-center justify-center ${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}`}
 			>
 				{ischartArr &&
-				ischartArr[currentContentIndex] &&
-				selectedChartType &&
-				chartData.length > 0 ? (
+					ischartArr[currentContentIndex] &&
+					selectedChartType &&
+					chartData.length > 0 ? (
 					<div className='w-full h-full flex items-center justify-center'>
 						<DynamicChart
 							chartType={selectedChartType}

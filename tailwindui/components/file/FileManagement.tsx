@@ -463,7 +463,7 @@ const MyFiles: React.FC<filesInterface> = ({
 	};
 
 	return (
-		<section className='bg-white grow flex flex-col h-full min-w-[50vh]'>
+		<section className='bg-white grow flex flex-col h-full w-full'>
 			<ToastContainer enableMultiContainer containerId={'fileManagement'} />
 			<div
 				className={`max-w-7xl w-full mx-auto px-4 flex flex-wrap justify-around`}
@@ -548,7 +548,7 @@ const MyFiles: React.FC<filesInterface> = ({
 					<Blank text='You have no uploaded file' />
 				) : (
 					<div
-						className={`max-w-6xl w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto border border-gray-200 ${isDragging ? 'bg-blue-100 border-blue-500' : ''}`}
+						className={`w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto border border-gray-200 ${isDragging ? 'bg-blue-100 border-blue-500' : ''}`}
 						onDragEnter={handleDragEnter}
 						onDragOver={handleDragOver}
 						onDragLeave={handleDragLeave}

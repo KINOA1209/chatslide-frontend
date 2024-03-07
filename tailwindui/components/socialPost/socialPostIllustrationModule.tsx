@@ -561,12 +561,11 @@ export const ImgModule = ({
 					leaveFrom='opacity-100 translate-y-0'
 					leaveTo='opacity-0 translate-y-12'
 				>
-					{showPaymentModal && (
-						<PaywallModal
-							setShowModal={setShowPaymentModal}
-							message='Upgrade for more ⭐️credits.'
-						/>
-					)}
+					<PaywallModal
+						showModal={showPaymentModal}
+						setShowModal={setShowPaymentModal}
+						message='Upgrade for more ⭐️credits.'
+					/>
 					<div className='grow md:grow-0'></div>
 					<Transition
 						className='bg-gray-100 w-full h-3/4 md:h-[65vh]
@@ -717,14 +716,12 @@ export const ImgModule = ({
 								<div className='w-full bg-slate-200'>
 									<div
 										className={`w-1/3 h-[2px] bg-black 
-                                ${
-																	hoverQueryMode == ImgQueryMode.SEARCH &&
-																	'ml-[33.3%]'
-																} 
-                                ${
-																	hoverQueryMode == ImgQueryMode.GENERATION &&
-																	'ml-[66.7%]'
-																} 
+                                ${hoverQueryMode == ImgQueryMode.SEARCH &&
+											'ml-[33.3%]'
+											} 
+                                ${hoverQueryMode == ImgQueryMode.GENERATION &&
+											'ml-[66.7%]'
+											} 
                                 transition-all ease-in-out`}
 									></div>
 								</div>
@@ -763,13 +760,12 @@ export const ImgModule = ({
 			{/* image itsefl */}
 			<div
 				onClick={openModal}
-				className={`w-full h-full transition ease-in-out duration-150 ${
-					selectedImg === ''
+				className={`w-full h-full transition ease-in-out duration-150 ${selectedImg === ''
 						? 'bg-[#E7E9EB]'
 						: canEdit
 							? 'hover:bg-[#CAD0D3]'
 							: ''
-				} flex flex-col items-center justify-center cursor-pointer`}
+					} flex flex-col items-center justify-center cursor-pointer`}
 			>
 				{selectedImg === '' ? (
 					<div className='flex flex-col items-center justify-center'>
@@ -793,9 +789,8 @@ export const ImgModule = ({
 						alt='Image'
 						height={270}
 						width={300}
-						className={`transition ease-in-out duration-150 ${
-							canEdit ? 'hover:brightness-90' : 'cursor-default'
-						}`}
+						className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-default'
+							}`}
 					/>
 				)}
 			</div>

@@ -11,6 +11,7 @@ import '@/components/slides/overflowScrollbar.css';
 import themeConfigData from './templates_customizable_elements/theme_elements';
 import layoutConfigData from './templates_customizable_elements/layout_elements';
 import { Explanation } from '../ui/Text';
+import { ScrollBar } from '../ui/ScrollBar';
 type SlideDesignPreviewProps = {
 	selectedTemplate: string;
 };
@@ -97,7 +98,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			true,
 		);
 	return (
-		<div className='py-2 flex flex-row w-full overflow-x-scroll'> 
+		<ScrollBar>
 			{slides.map((slide, index) => (
 				<div
 					className='flex flex-col items-center gap-1 p-2'
@@ -114,7 +115,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 					<Explanation>{layoutNameArray[index]}</Explanation>
 				</div>
 			))}
-		</div>
+		</ScrollBar>
 	);
 };
 

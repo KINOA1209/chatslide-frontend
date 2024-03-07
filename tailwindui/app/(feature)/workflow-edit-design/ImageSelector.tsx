@@ -31,12 +31,11 @@ const ImageSelector: React.FC<Props> = ({
 
 	return (
 		<div>
-			{showPaywall && (
-				<PaywallModal
-					message='Upgrade for this 🌟premium feature!'
-					setShowModal={setShowPaywall}
-				/>
-			)}
+			<PaywallModal
+				showModal={showPaywall}
+				message='Upgrade for this 🌟premium feature!'
+				setShowModal={setShowPaywall}
+			/>
 			<div className='grid grid-cols-2 gap-x-4 mt-4'>
 				<div className='gap-1 flex flex-col justify-start'>
 					<span className='text-md font-bold'>

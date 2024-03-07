@@ -4,7 +4,7 @@ import PaywallModal from '../paywallModal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ExportToPdfButton from './ExportButton';
-import { ShareToggleButton } from '@/components/slides/SlideButtons';
+import { ShareButton } from '@/components/slides/SlideButtons';
 import './slidesHTML.css';
 import { availableTemplates } from '@/components/slides/slideTemplates';
 import { LayoutKeys } from '@/components/slides/slideLayout';
@@ -49,6 +49,7 @@ import { useProject } from '@/hooks/use-project';
 import { GoEyeClosed } from 'react-icons/go';
 import ScriptWindow from './script/ScriptWindow';
 import ReactDOM from 'react-dom';
+import { ScrollBar } from '../ui/ScrollBar';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -107,7 +108,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const { isPaidUser, token } = useUser();
-	const [showLayout, setShowLayout] = useState(false);
 	const { isPresenting, setIsPresenting } = useSlides();
 	const slideRef = useRef<HTMLDivElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -121,7 +121,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		Math.min(dimensions.width / 960, dimensions.height / 540),
 	);
 	const [nonPresentScale, setNonPresentScale] = useState(
-		Math.min((dimensions.width-400) / 960, (dimensions.height-400) / 540),
+		Math.min((dimensions.width - 400) / 960, (dimensions.height - 400) / 540),
 	);
 
 	const [isChatWindowOpen, setIsChatWindowOpen] = useState(false);
@@ -130,10 +130,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const canRedo = slidesHistoryIndex < slidesHistory.length - 1;
 
 	const currentSlideRef = useRef<HTMLDivElement>(null);
-	const thumbnailRef = useRef<HTMLDivElement>(null);
-
 	const { isShared, updateIsShared, project } = useProject();
-	const [showShareLink, setShowShareLink] = useState(true);
 
 	const [host, setHost] = useState('https://drlambda.ai');
 
@@ -183,21 +180,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		changeTemplate(newTemplate as TemplateKeys);
 	};
 
-	const openModal = () => {
-		setShowLayout(true);
-	};
-
-	const closeModal = () => {
-		setShowLayout(false);
-	};
-
 	const openPresent = () => {
 		toast.success(
 			'Use ESC to exit presentation mode, use arrow keys to navigate slides.',
 		);
 		setIsPresenting(true);
-		if (showScript)
-			openScriptPage();
+		if (showScript) openScriptPage();
 	};
 
 	useEffect(() => {
@@ -221,31 +209,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		}
 	}
 
-	// auto scroll thumbnail to current slide
-	useEffect(() => {
-		if (thumbnailRef.current && currentSlideRef.current) {
-			console.log('scrolling to current slide');
-
-			const container = thumbnailRef.current;
-			const currentSlide = currentSlideRef.current;
-
-			const containerRect = container.getBoundingClientRect();
-			const currentSlideRect = currentSlide.getBoundingClientRect();
-
-			// scroll to horizontal center
-			const scrollAmount =
-				currentSlideRect.left +
-				currentSlideRect.width / 2 -
-				(containerRect.left + containerRect.width / 2);
-			console.log('scrollAmount', scrollAmount);
-
-			container.scrollTo({
-				left: container.scrollLeft + scrollAmount,
-				behavior: 'smooth',
-			});
-		}
-	}, [slideIndex]);
-
 	function handleSlideEdit(
 		content:
 			| string
@@ -255,14 +218,22 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		tag: SlideKeys | SlideKeys[],
 		contentIndex?: number,
 	) {
+		console.log('handleSlideEdit', content, slideIndex, tag, contentIndex);
 		setIsEditMode(false);
 
 		const currentSlide = { ...slides[slideIndex] };
 		const className = tag;
+		if (className as string === 'images_position' || className[0] === 'images_position') {
+			console.log('skip saving images_position');
+			return;
+		}
+
 		const applyUpdate = (
 			content: string | string[] | Chart[] | boolean[] | ImagesPosition[],
 			className: string,
 		) => {
+			if (className === 'images_position') return; // dont samve images position
+
 			if (className === 'head') {
 				currentSlide.head = content as string;
 			} else if (className === 'title') {
@@ -359,7 +330,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		// Render your React component into the new window
 		ReactDOM.render(
 			<ScriptWindow />,
-			scriptWindow.document.getElementById('root'));
+			scriptWindow.document.getElementById('root'),
+		);
 	};
 
 	// close the scripts window, not working
@@ -470,8 +442,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					onlyShowTutorial={false}
 					isViewing={isViewing}
 				>
-
-					{!isViewing && slideIndex != 0 && (
+					{!isViewing && (
 						<>
 							<AddSlideButton
 								addPage={handleAddPage}
@@ -490,24 +461,19 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 								onChangeTemplate={selectTemplate}
 							/>
 							<LayoutChanger
-								openModal={openModal}
-								showLayout={showLayout}
-								closeModal={closeModal}
 								currentSlideIndex={slideIndex}
 								// templateSamples={templateSamples}
 								slides={slides}
 								handleSlideEdit={handleSlideEdit}
 								availableLayouts={availableLayouts}
 							/>
-							{isPaidUser &&
+							{isPaidUser && (
 								<ButtonWithExplanation
 									button={
-										<button
-											onClick={() => setIsShowingLogo(!isShowingLogo)}
-										>
+										<button onClick={() => setIsShowingLogo(!isShowingLogo)}>
 											<GoEyeClosed
 												style={{
-													strokeWidth: '1',
+													strokeWidth: '0.8',
 													flex: '1',
 													width: '1.5rem',
 													height: '1.5rem',
@@ -518,7 +484,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 										</button>
 									}
 									explanation={isShowingLogo ? 'Remove Logo' : 'Show Logo'}
-								/>}
+								></ButtonWithExplanation>
+							)}
 						</>
 					)}
 
@@ -529,32 +496,37 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						explanation='Present'
 					/>
 
-					{!isViewing &&
-						<ExportToPdfButton slides={slides} exportSlidesRef={exportSlidesRef} hasScript={showScript} />}
+					{!isViewing && (
+						<ExportToPdfButton
+							slides={slides}
+							exportSlidesRef={exportSlidesRef}
+							hasScript={showScript}
+						/>
+					)}
 
-					{project &&
-						<ShareToggleButton
-							setShare={updateIsShared}
+					{project && (
+						<ShareButton
+							setShare={isViewing ? null : updateIsShared}
 							share={isShared}
 							project={project}
 							host={host}
-						/>}
+						/>
+					)}
 				</ActionsToolBar>
 			</div>
 
-			{showPaymentModal && (
-				<PaywallModal
-					setShowModal={setShowPaymentModal}
-					message='Upgrade for more ⭐️credits.'
-					showReferralLink={true}
-				/>
-			)}
+			<PaywallModal
+				showModal={showPaymentModal}
+				setShowModal={setShowPaymentModal}
+				message='Upgrade for more ⭐️credits.'
+				showReferralLink={true}
+			/>
 
 			<div className='w-full h-full flex flex-row items-center justify-start overflow-hidden gap-2'>
 				<Panel>
 					{/* vertical bar */}
 					<div className='h-full w-[9rem] hidden xl:block mx-auto justify-center items-center'>
-						<div className='h-full flex shrink flex-col flex-nowrap py-2 overflow-y-auto  overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
+						<div className='h-full max-h-[540px] flex shrink flex-col flex-nowrap py-2 overflow-y-auto  overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
 							{slides.map((slide, index) => (
 								<div
 									key={
@@ -575,6 +547,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 										slideRef={slideRef}
 										// containerRef={containerRef}
 										highlightBorder={slideIndex === index}
+										pageNumber={index + 1}
 									/>
 								</div>
 							))}
@@ -650,7 +623,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 								goToSlide={gotoPage}
 							/>
 						</div>
-						<SlidePagesIndicator currentSlideIndex={slideIndex} slides={slides} />
+						<SlidePagesIndicator
+							currentSlideIndex={slideIndex}
+							slides={slides}
+						/>
 						<div className='block lg:hidden'>
 							<SlideRightNavigator
 								currentSlideIndex={slideIndex}
@@ -662,14 +638,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 					{/* horizontal  */}
 					<div className='block xl:hidden max-w-xs sm:max-w-4xl mx-auto py-4 justify-center items-center'>
-						<div
-							className='w-full flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'
-							ref={thumbnailRef}
-						>
+						<ScrollBar currentElementRef={currentSlideRef} index={slideIndex}>
 							{slides.map((slide, index) => (
 								<div
 									key={
-										`previewContainer` + index.toString() + slides.length.toString()
+										`previewContainer` +
+										index.toString() +
+										slides.length.toString()
 									} // force update when slide length changes
 									className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
 									onClick={() => gotoPage(index)}
@@ -683,14 +658,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 										isViewing={true}
 										templateDispatch={uneditableTemplateDispatch}
 										highlightBorder={slideIndex === index}
+										pageNumber={index + 1}
 									/>
 								</div>
 							))}
-						</div>
+						</ScrollBar>
 					</div>
 				</Panel>
 
-				{!isViewing && isChatWindowOpen ?
+				{!isViewing && isChatWindowOpen ? (
 					<Panel>
 						<AIAssistantChatWindow
 							onToggle={toggleChatWindow}
@@ -698,9 +674,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							currentSlideIndex={slideIndex}
 							updateSlidePage={updateSlidePage}
 						/>
-					</Panel> :
+					</Panel>
+				) : (
 					<>
-						{!isViewing && !isPresenting &&
+						{!isViewing && !isPresenting && (
 							<div className='hidden sm:block fixed bottom-10 right-10 cursor-pointer z-50'>
 								<ButtonWithExplanation
 									button={
@@ -710,13 +687,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 									}
 									explanation='AI Assistant'
 								/>
-							</div>}
+							</div>
+						)}
 						<Panel>
 							{/* balance pos of slide */}
 							<div className='hidden xl:flex w-[9rem]'></div>
 						</Panel>
 					</>
-				}
+				)}
 			</div>
 
 			{/* hidden div for export to pdf */}

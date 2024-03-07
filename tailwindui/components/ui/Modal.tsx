@@ -1,6 +1,8 @@
 import React from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { BigBlueButton, InversedBigBlueButton } from '../button/DrlambdaButton';
+import { Transition } from '@headlessui/react';
+import { Title, Explanation } from '@/components/ui/Text';
 
 interface ModalProps {
 	children?: React.ReactNode;
@@ -13,6 +15,7 @@ interface ModalProps {
 	description?: string;
 	clickOutsideToClose?: boolean;
 	canClose?: boolean;
+	width?: string;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -25,6 +28,7 @@ const Modal: React.FC<ModalProps> = ({
 	description,
 	clickOutsideToClose = true,
 	canClose = true,
+	width
 }) => {
 	const modalRef = React.useRef<HTMLDivElement>(null);
 	const modalContentRef = React.useRef<HTMLDivElement>(null);
@@ -34,15 +38,6 @@ const Modal: React.FC<ModalProps> = ({
 		console.log('handleCloseModal');
 		if (!canClose) return;
 		setShowModal(false);
-	};
-
-	const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
-		if (!clickOutsideToClose) return;
-		if (!canClose) return;
-		if (modalContentRef.current?.contains(e.target as Node)) {
-			return; // Click inside the modal content, do nothing
-		}
-		handleCloseModal(); // Click outside the modal content, close the modal
 	};
 
 	const onClick = async () => {
@@ -72,83 +67,78 @@ const Modal: React.FC<ModalProps> = ({
 	}, []);
 
 	return (
-		<>
-			{showModal && (
-				<div
-					ref={modalRef}
-					id='staticModal'
-					data-modal-backdrop='static'
-					tabIndex={-1}
-					aria-hidden='true'
-					className='fixed top-0 left-0 right-0 flex items-center justify-center w-scren h-screen z-50'
-					onClick={handleOutsideClick}
-				>
-					{/* closable modal */}
-					<div
-						className='fixed inset-0 transition-opacity w-scree h-screen z-40'
-						aria-hidden='true'
-					>
-						<div className='absolute inset-0 bg-gray-500 opacity-75'></div>
-					</div>
-					<span
-						className='hidden sm:inline-block sm:align-middle sm:h-screen'
-						aria-hidden='true'
-					>
-						&#8203;
-					</span>
+		<Transition
+			className='h-[100vh] w-[100vw] z-40 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
+			show={showModal}
+			onClick={() => setShowModal(false)}
+			enter='transition ease duration-300 transform'
+			enterFrom='opacity-0 translate-y-12'
+			enterTo='opacity-100 translate-y-0'
+			leave='transition ease duration-300 transform'
+			leaveFrom='opacity-100 translate-y-0'
+			leaveTo='opacity-0 translate-y-12'
+			ref={modalRef}
+		>
+			<div className='grow md:grow-0'></div>
+			<Transition
+				className={`${position} bg-white rounded-lg shadow w-full sm:max-w-[80%] lg:max-w-[50%] max-h-[90%] overflow-y-hidden p-2 sm:p-4`}
+				show={showModal}
+				enter='transition ease duration-500 transform delay-300'
+				enterFrom='opacity-0 translate-y-12'
+				enterTo='opacity-100 translate-y-0'
+				leave='transition ease duration-300 transform'
+				leaveFrom='opacity-100 translate-y-0'
+				leaveTo='opacity-0 translate-y-12'
+				onClick={(e) => {
+					e.stopPropagation();
+				}}
+				ref={modalContentRef}
+				style={{ width: width ? width : 'auto' }}
+			>
+				<div className='relative flex flex-col gap-y-4'>
+					{/* Close button */}
+					{canClose && (
+						<button
+							className='absolute top-0 right-0 text-xl focus:outline-none'
+							onClick={handleCloseModal}
+						>
+							<FaTimes className='text-gray-600 hover:text-gray-800' />
+						</button>
+					)}
 
-					<div
-						ref={modalContentRef}
-						className={`z-50 ${position} bg-white rounded-lg shadow sm:max-w-[80%] max-h-[80%] overflow-y-auto p-2 sm:p-4`}
-						onClick={(e) => e.stopPropagation()}
-					>
-						{/* Close button */}
-						<div className='relative flex flex-col gap-y-4'>
-							{canClose && (
-								<button
-									className='absolute top-0 right-0 text-xl focus:outline-none'
-									onClick={handleCloseModal}
-								>
-									<FaTimes className='text-gray-600 hover:text-gray-800' />
-								</button>
-							)}
-
-							{title && (
-								<h3
-									className='text-lg leading-6 font-bold text-gray-900'
-									id='modal-headline'
-								>
-									{title}
-								</h3>
-							)}
-
-							{description && (
-								<p className='text-sm text-gray-500'>{description}</p>
-							)}
-
-							{/* Modal body */}
-							{children}
-
-							{onConfirm && (
-								<div className='flex gap-x-2 justify-end'>
-									{canClose && (
-										<InversedBigBlueButton onClick={handleCloseModal}>
-											Cancel
-										</InversedBigBlueButton>
-									)}
-									<BigBlueButton
-										isSubmitting={isSubmitting}
-										onClick={onClick}
-									>
-										Confirm
-									</BigBlueButton>
-								</div>
-							)}
+					{title && (
+						<div className='w-full felx flex-col items-center justify-center'>
+							<Title>
+								{title}
+							</Title>
 						</div>
-					</div>
+					)}
+
+					{description && (
+						<Explanation>{description}</Explanation>
+					)}
+
+					{/* Modal body */}
+					{children}
+
+					{onConfirm && (
+						<div className='flex gap-x-2 justify-end'>
+							{canClose && (
+								<InversedBigBlueButton onClick={handleCloseModal}>
+									Cancel
+								</InversedBigBlueButton>
+							)}
+							<BigBlueButton
+								isSubmitting={isSubmitting}
+								onClick={onClick}
+							>
+								Confirm
+							</BigBlueButton>
+						</div>
+					)}
 				</div>
-			)}
-		</>
+			</Transition>
+		</Transition >
 	);
 };
 

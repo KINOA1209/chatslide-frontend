@@ -17,6 +17,7 @@ import Modal from '../ui/Modal';
 import { GoDownload } from 'react-icons/go';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import SaveScriptsButton from './script/SaveScriptsButton';
+import { SpinIcon } from '@/app/(feature)/icons';
 
 interface ExportToPdfProps {
 	slides: Slide[];
@@ -99,20 +100,19 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 
 	return (
 		<>
-			{showPaymentModal && (
-				<PaywallModal
-					setShowModal={setShowPaymentModal}
-					message='Upgrade for more ⭐️credits.'
-					showReferralLink={true}
-				/>
-			)}
+			<PaywallModal
+				showModal={showPaymentModal}
+				setShowModal={setShowPaymentModal}
+				message='Upgrade for more ⭐️credits.'
+				showReferralLink={true}
+			/>
 
 			<ButtonWithExplanation
 				button={
 					<button
 						onClick={() => setShowModal(!showModal)}
 					>
-						<GoDownload
+						{!downloading ? <GoDownload
 							style={{
 								strokeWidth: '1',
 								flex: '1',
@@ -121,21 +121,20 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 								fontWeight: 'bold',
 								color: '#2943E9',
 							}}
-							className={downloading ? 'animate-spin' : ''}
-
-						/>
+						/> :
+							<SpinIcon />}
 					</button>
 				}
 				explanation={'Export'}
 			/>
 
-			{showModal && (
-				<Modal
-					showModal={showModal}
-					setShowModal={setShowModal}
-					title='Export to PDF / PPTX'
-					description='Choose the format and quality of the export.'
-				>
+			<Modal
+				showModal={showModal}
+				setShowModal={setShowModal}
+				title='Export to PDF / PPTX'
+				description='Choose the format and quality of the export.'
+			>
+				<div className='flex flex-row flex-wrap gap-4'>
 					<BigGrayButton
 						onClick={() => handleExport('pdf', true)}
 						isSubmitting={downloading}
@@ -168,10 +167,10 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 						<span>PPTX {!isPaidUser && '🔒'}</span>
 					</BigGrayButton>
 
-					{ hasScript && 
-					<SaveScriptsButton slides={slides}/>}
-				</Modal>
-			)}
+					{hasScript &&
+						<SaveScriptsButton slides={slides} />}
+				</div>
+			</Modal>
 		</>
 	);
 };

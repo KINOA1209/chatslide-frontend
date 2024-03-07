@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import ExportToPngButton from '@/components/socialPost/socialPostPngButton';
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
 import PostDropDown from '../button/PostDropDown';
-import { ShareToggleButton } from '@/components/slides/SlideButtons';
+import { ShareButton } from '@/components/slides/SlideButtons';
 import { TextLabel } from '../ui/GrayLabel';
 import ClickableLink from '@/components/ui/ClickableLink';
 import { useProject } from '@/hooks/use-project';
@@ -52,7 +52,7 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
 						currentSlideIndex={finalSlideIndex}
 					/>
 					{project &&
-						<ShareToggleButton
+						<ShareButton
 							setShare={updateIsShared}
 							share={isShared}
 							project={project}
