@@ -2,13 +2,11 @@ import React from 'react';
 import {
 	FaFileImage,
 	FaRegFilePdf,
-	FaFileWord,
 	FaYoutube,
 	FaRegFileWord,
 } from 'react-icons/fa';
 import Image from 'next/image';
 import Resource from '@/models/Resource';
-import { IoDocumentText } from 'react-icons/io5';
 import { FiFilePlus, FiGlobe, FiYoutube } from 'react-icons/fi';
 
 export const ResourceIcon: React.FC<{ resource: Resource, cover?: boolean }> = ({
@@ -16,9 +14,11 @@ export const ResourceIcon: React.FC<{ resource: Resource, cover?: boolean }> = (
 	cover = false,
 }) => {
 	if (!resource.thumbnail_url) {
-		return <FileIcon fileType={resource.type} />;
+		return <div className='w-[40px]'>
+			<FileIcon fileType={resource.type} />
+		</div>;
 	}
-	const style = cover ? { width: '100%', height: '100%', objectFit: 'cover' } : {};
+	const style = cover ? { width: '100%', height: '100%' } : {};
 	return (
 		<Image
 			src={resource.thumbnail_url}
@@ -26,7 +26,7 @@ export const ResourceIcon: React.FC<{ resource: Resource, cover?: boolean }> = (
 			width={40}
 			height={40}
 			unoptimized={true}
-			style={style} 
+			style={style}
 			onError={(e) => {
 				e.currentTarget.src = 'https://drlambda.ai/images/logo_no_text.png';
 			}}
