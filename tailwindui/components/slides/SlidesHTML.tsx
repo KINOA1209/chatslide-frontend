@@ -146,15 +146,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		}
 	}, []);
 
-	// useEffect(() => {
-	// 	if (containerRef.current) {
-	// 		const { width, height } = containerRef.current.getBoundingClientRect();
-	// 		const scale = Math.min(width / 960, height / 540);
-	// 		console.log('update scale', scale);
-	// 		setNonPresentScale(scale);
-	// 	}
-	// }, [containerRef.current]);
-
 	const toggleChatWindow = () => {
 		setIsChatWindowOpen(!isChatWindowOpen);
 	};
