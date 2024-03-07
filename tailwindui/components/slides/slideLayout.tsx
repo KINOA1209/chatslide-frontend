@@ -457,7 +457,7 @@ export const Col_2_img_0_layout = ({
 								// className={`flex flex-row w-full h-full grow `}
 								style={layoutElements.contentTextCSS}
 							>
-								<li>{item}</li>
+								<li style={{ width: '100%' }}>{item}</li>
 							</ul>
 						</div>
 					))}
@@ -533,7 +533,7 @@ export const Col_3_img_0_layout = ({
 								// className={`flex flex-row w-full h-full grow `}
 								style={layoutElements.contentTextCSS}
 							>
-								<li>{item}</li>
+								<li style={{ width: '100%' }}>{item}</li>
 							</ul>
 						</div>
 					))}
@@ -1321,7 +1321,7 @@ export const Col_2_img_2_layout = ({
 									key={index}
 									// className={`flex flex-row w-full h-full grow `}
 								>
-									<li>{item}</li>
+									<li style={{ width: '100%' }}>{item}</li>
 								</ul>
 							</div>
 						))}
@@ -1599,7 +1599,7 @@ export const Col_3_img_3_layout = ({
 								}}
 							>
 								<ul key={index} className={`flex flex-row w-full h-full grow`}>
-									<li>{item}</li>
+									<li style={{ width: '100%' }}>{item}</li>
 								</ul>
 							</div>
 						))}
