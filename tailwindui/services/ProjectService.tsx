@@ -27,6 +27,15 @@ class ProjectService {
 				headers: headers,
 			});
 
+			if(response.status === 404) {
+				return {
+					id: project_id,
+					topic: 'Project not found',
+					project_name: 'Project not found',
+					// description: 'The project you are looking for does not exist, or is no longer shared.',
+				} as Project;
+			}
+
 			if (!response.ok) {
 				throw new Error(`getSharedProjectDetails failed, project_id: ${project_id},
         url: ${url},

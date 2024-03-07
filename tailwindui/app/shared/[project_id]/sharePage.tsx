@@ -126,7 +126,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 	if (loading)
 		return <Loading />
 
-	if (loadingFailed)
+	if (loadingFailed || project?.topic === 'Project not found')
 		return <Blank>
 			<div>
 				❌ Oops! It looks like we couldn't find the project. <br />
