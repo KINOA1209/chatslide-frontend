@@ -35,7 +35,7 @@ import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
 
 const MAX_TOPIC_LENGTH = 128;
-const MIN_TOPIC_LENGTH = 6;
+const MIN_TOPIC_LENGTH = 3;
 
 const audienceList = [
 	'Researchers',

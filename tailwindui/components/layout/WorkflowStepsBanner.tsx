@@ -1,8 +1,9 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, use, useEffect, useState } from 'react';
 // Import your custom components and any other required dependencies
 import { DrLambdaBackButton } from '@/components/button/DrlambdaButton';
 import ProjectProgress from '@/components/layout/WorkflowSteps';
 import DrlambdaButton from '@/components/button/DrlambdaButton';
+import { sleep } from '../utils/sleep';
 
 interface YourComponentProps {
 	currentIndex: number;
@@ -23,6 +24,20 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 	lastStep = false,
 	nextText = 'Next',
 }) => {
+	const [showPing, setShowPing] = useState(false);
+
+	useEffect(() => {
+		sleep(10 * 1000).then(() =>
+			setShowPing(true)
+		);
+	}, []);
+
+	useEffect(() => {
+		if (isSubmitting) {
+			setShowPing(false);
+		}
+	}, [isSubmitting]);
+
 	return (
 		<section className='sticky top-0 z-10 flex flex-col'>
 			<div className='relative w-full h-[80px] flex flex-row items-center bg-[#2044F2] gap-x-4 px-4 sm:px-6 lg:px-8'>
@@ -31,7 +46,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 					<ProjectProgress currentInd={currentIndex} />
 				</div>
 				{!lastStep && (
-					<div className='user-onboarding-generate'>
+					<div className='user-onboarding-generate relative'>
 						<DrlambdaButton
 							isSubmitting={isSubmitting}
 							isPaidUser={isPaidUser}
@@ -40,6 +55,10 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 						>
 							{nextText}
 						</DrlambdaButton>
+						{showPing && <span className="flex h-3 w-3 absolute -top-1 -right-1">
+							<span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+							{/* <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span> */}
+						</span>}
 					</div>
 				)}
 			</div>

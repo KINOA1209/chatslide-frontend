@@ -27,6 +27,15 @@ class ProjectService {
 				headers: headers,
 			});
 
+			if(response.status === 404) {
+				return {
+					id: project_id,
+					topic: 'Project not found',
+					project_name: 'Project not found',
+					// description: 'The project you are looking for does not exist, or is no longer shared.',
+				} as Project;
+			}
+
 			if (!response.ok) {
 				throw new Error(`getSharedProjectDetails failed, project_id: ${project_id},
         url: ${url},
@@ -95,6 +104,7 @@ class ProjectService {
 			//console.log('Project data:', project);
 
 			if (project?.presentation_slides) {
+				project.content_type = 'presentation';
 				project.parsed_slides = this.parseSlides(project.presentation_slides);
 			}
 
@@ -111,7 +121,7 @@ class ProjectService {
 		is_public: boolean = false,
 	): Promise<Project[]> {
 		const headers = new Headers();
-		if (token.length == 0 && is_public) {
+		if (is_public) {
 			token = process.env.SELF_TOKEN || '';
 		}
 		if (token) {
@@ -119,8 +129,12 @@ class ProjectService {
 		}
 		headers.append('Content-Type', 'application/json');
 
+		const baseUrl = process.env.HOST ? process.env.HOST : 'localhost';
+		const protocol = baseUrl == 'localhost' ? 'http' : 'https';
+		const url = `${protocol}://${baseUrl}/api/get_projects`;
+
 		try {
-			const response = await fetch('/api/get_projects', {
+			const response = await fetch(url, {
 				method: 'POST',
 				headers: headers,
 				body: JSON.stringify({ public: is_public }),

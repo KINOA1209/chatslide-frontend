@@ -1,4 +1,12 @@
 import AuthService from './AuthService';
+import {
+	ISignUpResult,
+	CognitoUser,
+	MFAOption,
+	CognitoUserSession,
+	CognitoUserAttribute,
+	NodeCallback,
+} from 'amazon-cognito-identity-js';
 
 class UserService {
 	static async initializeUser(token: string): Promise<boolean> {

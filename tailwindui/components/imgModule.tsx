@@ -21,6 +21,7 @@ import {
 } from './chart/chartDataConvert';
 import Chart from '@/models/Chart';
 import { IoBarChartOutline } from 'react-icons/io5';
+import { Rnd } from 'react-rnd';
 import { ResourceIcon } from './ui/ResourceItem';
 
 const RANDOM_FILLER_IMAGES = [
@@ -28,6 +29,20 @@ const RANDOM_FILLER_IMAGES = [
 	'https://img.freepik.com/free-vector/geometric-shapes-pattern-background_1319-136.jpg',
 	'https://img.freepik.com/free-vector/linear-flat-abstract-lines-pattern_23-2148952437.jpg',
 ];
+
+import ImagesPosition from '@/models/ImagesPosition';
+import {
+	initializeImageData,
+	onDragStart,
+	onDragStop,
+	onResizeStart,
+	onResizeStop,
+	onMouseLeave,
+} from '@/components/slides/drag_resize/dragAndResizeFunction';
+import ResizeSlider from '@/components/slides/drag_resize/resize_slider';
+import '@/components/slides/drag_resize/dragAndResizeCSS.css';
+import { useSlides } from '@/hooks/use-slides';
+import { LayoutElements } from './slides/templates_customizable_elements/layout_elements';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -38,7 +53,12 @@ interface ImgModuleProp {
 	currentSlideIndex: number;
 	currentContentIndex: number;
 	canEdit: boolean;
-	isDraggingOrResizing: boolean;
+	// isDraggingOrResizing: boolean;
+	// isImgEditMode: boolean;
+	// setShowImgButton: React.Dispatch<React.SetStateAction<boolean>>;
+	// zoomLevel: number;
+	images_position: ImagesPosition[];
+	layoutElements?: LayoutElements;
 	customImageStyle?: React.CSSProperties;
 }
 
@@ -58,7 +78,12 @@ export const ImgModule = ({
 	currentSlideIndex,
 	currentContentIndex,
 	canEdit,
-	isDraggingOrResizing,
+	// isDraggingOrResizing,
+	// isImgEditMode,
+	// setShowImgButton,
+	// zoomLevel,
+	images_position,
+	layoutElements,
 	customImageStyle,
 }: ImgModuleProp) => {
 	const [showModal, setShowModal] = useState(false);
@@ -91,7 +116,8 @@ export const ImgModule = ({
 	}, [imgsrc]);
 
 	const openModal = () => {
-		if (canEdit && !isDraggingOrResizing) {
+		if (canEdit && !isImgEditMode) {
+			setShowImgButton(false);
 			setShowModal(true);
 			fetchFiles();
 		}
@@ -394,7 +420,7 @@ export const ImgModule = ({
 										key={index}
 										className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-2`}
 									>
-										<ResourceIcon resource={resource} cover={true}/>
+										<ResourceIcon resource={resource} contain={true}/>
 									</div>
 								);
 							} else {
@@ -404,7 +430,7 @@ export const ImgModule = ({
 										key={index}
 										className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-2`}
 									>
-										<ResourceIcon resource={resource} cover={true}/>
+										<ResourceIcon resource={resource} contain={true}/>
 									</div>
 								);
 							}
@@ -564,8 +590,6 @@ export const ImgModule = ({
 			</div>
 		</div>
 	);
-	//console.log(chartArr)
-	//console.log(ischartArr[currentContentIndex])
 	// tab for chart
 	const [chartModalContent, setChartModalContent] = useState('selection');
 	const [selectedChartType, setSelectedChartType] = useState<
@@ -583,13 +607,6 @@ export const ImgModule = ({
 		setSelectedChartType(chartType);
 		setChartModalContent('edit');
 	};
-	// useEffect(() => {
-	// 	console.log(currentSlideIndex)
-	// 	console.log(chartArr)
-	// 	console.log(ischartArr)
-	// 	console.log(selectedChartType)
-	// 	console.log(chartData)
-	//   }, [selectedChartType, chartData]);
 	useEffect(() => {
 		if (chartArr && chartArr.length > 0) {
 			const chartConfig = chartArr[currentContentIndex];
@@ -606,36 +623,6 @@ export const ImgModule = ({
 			}
 		}
 	}, []);
-	// const updateChartDataAsync = async (
-	// 	slideIndex:number,
-	// 	updatedChartData:ValueDataPoint[] | ScatterDataPoint[],
-	// 	selectedChartType:keyof ChartTypeRegistry
-	// ) => {
-	// 	try {
-	// 		const updated_chartdata = convertToChartData(selectedChartType, updatedChartData)
-	// 		let updated_chartArr = [...chartArr]
-	// 		updated_chartArr[currentContentIndex] = updated_chartdata
-	// 		await handleSlideEdit(updated_chartArr, slideIndex, 'chart');
-	// 	}
-	// 	catch (error) {
-	// 		console.error("Error updating chart data:", error);
-	// 	}
-	// }
-
-	// const updateIsChartAsync = async (
-	// 	slideIndex: number,
-	// 	ischartArr: boolean[],
-	// 	showChart: boolean,
-	// ) => {
-	// 	try {
-	// 		let updated_ischartArr = [...ischartArr]
-	// 		updated_ischartArr[currentContentIndex] = showChart
-	// 		await handleSlideEdit(updated_ischartArr, slideIndex, 'is_chart');
-	// 	}
-	// 	catch (error) {
-	// 		console.error("Error updating ischart array:", error);
-	// 	}
-	// };
 
 	const handleDoneClickChart = async () => {
 		if (
@@ -650,12 +637,10 @@ export const ImgModule = ({
 			);
 			let updated_chartArr = [...chartArr];
 			updated_chartArr[currentContentIndex] = updated_chartdata;
-			//await updateChartDataAsync(currentSlideIndex, chartData, selectedChartType)
 
 			//autosave ischart
 			let updated_ischartArr = [...ischartArr];
 			updated_ischartArr[currentContentIndex] = true;
-			//await updateIsChartAsync(currentSlideIndex, ischartArr, true)
 			handleSlideEdit(
 				[updated_chartArr, updated_ischartArr],
 				currentSlideIndex,
@@ -686,6 +671,169 @@ export const ImgModule = ({
 			)}
 		</div>
 	);
+	
+	//for drag and resize
+
+	const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
+	const { slideIndex, slides } = useSlides();
+	const imageRefs = Array(3)
+		.fill(null)
+		.map(() => useRef<HTMLDivElement>(null));
+	//const [isDraggingOrResizing, setIsDraggingOrResizing] = useState(false); //distinguish openModal and drag
+	const [hasInteracted, setHasInteracted] = useState(false);
+	const [imagesDimensions, setImagesDimensions] = useState<
+		(
+			| ImagesPosition
+			| { x?: number; y?: number; height?: number; width?: number }
+		)[]
+	>([]);
+	const [startPos, setStartPos] = useState<Array<{ x: number; y: number }>>(
+		Array(3).fill({ x: 0, y: 0 }),
+	);
+	const [isImgEditMode, setIsImgEditMode] = useState(false);
+	const [showImgButton, setShowImgButton] = useState(false);
+	const [zoomLevel, setZoomLevel] = useState(100);
+	const [parentDimension, setParentDimension] = useState({height: 0, width: 0})
+	const [isParentDimension, setIsParentDimension] = useState(false)
+
+	//handler for drag and resize also autosave
+	const handleSave = onMouseLeave(
+		slideIndex,
+		imagesDimensions,
+		hasInteracted,
+		setHasInteracted,
+		setShowImgButton,
+		handleSlideEdit,
+	);
+	const handleDragStart = onDragStart(
+		//setIsDraggingOrResizing,
+		startPos,
+		setStartPos,
+		setHasInteracted,
+	);
+	const handleResizeStart = onResizeStart(
+		//setIsDraggingOrResizing,
+		setHasInteracted,
+	);
+	const handleDragStop = onDragStop(
+		imagesDimensions,
+		setImagesDimensions,
+		startPos,
+		//setIsDraggingOrResizing,
+	);
+	const handleResizeStop = onResizeStop(
+		imagesDimensions,
+		setImagesDimensions,
+		//setIsDraggingOrResizing,
+	);
+
+	const toggleImgEditMode = (event:any) => {
+		event.stopPropagation();
+		if (isImgEditMode) {
+			handleSave();
+		}
+		setIsImgEditMode(!isImgEditMode);
+	};
+
+	const applyZoom = () => {
+		handleSave()
+		setIsImgEditMode(false)
+	};
+
+	const customScale = (width:number, height:number, parentWidth:number, parentHeight: number) => {
+		const aspectRatio = width / height;
+		const parentAspectRatio = parentWidth / parentHeight;
+		let newWidth, newHeight, newX, newY;
+	
+		// Compare the aspect ratios to decide how to scale
+		if (aspectRatio > parentAspectRatio) {
+			// Image is wider than the container proportionally
+			newWidth = parentHeight * aspectRatio;
+			newHeight = parentHeight;
+			newX = (parentWidth - newWidth) / 2; // Center horizontally
+			newY = 0;
+		} else {
+			// Image is taller than the container proportionally
+			newWidth = parentWidth;
+			newHeight = parentWidth / aspectRatio;
+			newX = 0; // Align to left
+			newY = (parentHeight - newHeight) / 2; // Center vertically
+		}
+	
+		return { width: newWidth, height: newHeight, x: newX, y: newY };
+	}
+
+	const onZoomChange = (newZoomLevel: number) => {
+		const scale = newZoomLevel / 100;
+		const dimension = imagesDimensions[currentContentIndex];
+		const currentWidth = dimension.width ?? 0;
+		const currentHeight = dimension.height ?? 0;
+		const newWidth = currentWidth * scale;
+		const newHeight = currentHeight * scale;
+		//const currentX = dimension.x ?? 0;
+		//const currentY = dimension.y ?? 0;
+
+		//const deltaX = (newWidth - imageSize.width) / 2;
+		//const deltaY = (newHeight - imageSize.height) / 2;
+		//const newX = currentX - deltaX;
+		//const newY = currentY - deltaY;
+
+		const updatedDimensions = [...imagesDimensions];
+		updatedDimensions[currentContentIndex] = {
+			...dimension,
+			width: newWidth,
+			height: newHeight,
+			//x: newX,
+			//y: newY,
+		};
+
+		setImagesDimensions(updatedDimensions);
+	};
+
+	//reposition to default if images changed
+	useEffect(() => {
+		// make sure we got non-zero value for parentDimension
+		if (isParentDimension && Object.keys(images_position[currentContentIndex]).length == 0) { 
+			const img = new window.Image();
+			img.src = imgsrc;
+			img.onload = () => {
+				const {height: newHeight, width: newWidth, x: newX, y:newY} = customScale(
+					img.naturalWidth, img.naturalHeight, parentDimension.width, parentDimension.height
+				)
+				if (newWidth !== imageSize.width || newHeight !== imageSize.height) {
+					setImageSize({ width: newWidth, height: newHeight });
+				};
+				const updatedDimensions = [...imagesDimensions]
+				updatedDimensions[currentContentIndex] = {
+					...updatedDimensions[currentContentIndex],
+					width: newWidth,
+					height: newHeight,
+					x: newX,
+					y: newY,
+				}
+				setImagesDimensions(updatedDimensions)
+			};
+		}
+	}, [imgsrc, isParentDimension]);
+
+	useEffect(() => {
+		const initializedData = initializeImageData(images_position, imageRefs);
+		setImagesDimensions(initializedData);
+	}, [images_position]);
+
+	useEffect(() => {
+		const currentElement = imageRefs[currentContentIndex]?.current;
+		if (currentElement && currentElement.clientHeight > 0 && currentElement.clientWidth > 0) {
+		  const newDimensions = { height: currentElement.clientHeight, width: currentElement.clientWidth };
+		  if (newDimensions.height !== parentDimension.height || newDimensions.width !== parentDimension.width) {
+			setParentDimension(newDimensions);
+			setIsParentDimension(true);
+		  }
+		} else {
+		  setIsParentDimension(false);
+		}
+	  }, [currentContentIndex, imageRefs, parentDimension]);
+
 	return (
 		<>
 			{/* select image modal */}
@@ -931,9 +1079,9 @@ export const ImgModule = ({
 				className={`w-full h-full transition ease-in-out duration-150 relative ${selectedImg === ''
 						? 'bg-[#E7E9EB]'
 						: canEdit
-							? 'hover:bg-[#CAD0D3]'
-							: ''
-					} flex flex-col items-center justify-center`}
+						? 'hover:bg-[#CAD0D3]'
+						: ''
+				} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
 			>
 				{ischartArr &&
 					ischartArr[currentContentIndex] &&
@@ -963,30 +1111,95 @@ export const ImgModule = ({
 						</div>
 					</div>
 				) : (
-					<Image
-						unoptimized={true}
+					<div 
+						className={`${isImgEditMode ? "rndContainerWithOutBorder" : ""}`}
 						style={{
-							objectFit: 'cover',
-							height: '100%',
-							width: '100%',
-							borderRadius: customImageStyle?.borderRadius,
+							...layoutElements?.rndContainerCSS,
+							overflow: isImgEditMode ? 'visible' : 'hidden'
 						}}
-						src={imgsrc}
-						alt='Image'
-						width={960}
-						height={540}
-						objectFit='contain'
-						className={`transition ease-in-out duration-150 ${canEdit ? 'hover:brightness-90' : 'cursor-pointer'
-							}`}
-						onError={(e) => {
-							const src =
-								RANDOM_FILLER_IMAGES[
-								Math.floor(Math.random() * RANDOM_FILLER_IMAGES.length)
-								];
-							e.currentTarget.src = src;
-							updateSingleCallback(src);
-						}}
-					/>
+						ref={imageRefs[currentContentIndex]}
+						onMouseEnter={() => setShowImgButton(true)}
+						onMouseLeave={() => setShowImgButton(false)}
+					>
+						<Rnd
+							className={`${isImgEditMode ? "rndContainerWithBorder" : ""}`}
+							style={{...layoutElements?.rndCSS,}}
+							size={{
+								width:
+									imagesDimensions[currentContentIndex]?.width ?? 'auto',
+									//imageRefs[currentContentIndex]?.current?.clientWidth ??
+									//imageSize.width ? imageSize.width : ,
+								height:
+									imagesDimensions[currentContentIndex]?.height ?? 'auto',
+									// imageRefs[currentContentIndex]?.current?.clientHeight ??
+									//imageSize.height ? imageSize.height : 'auto',
+
+							}}
+							position={{
+								x: imagesDimensions[currentContentIndex]?.x ?? 0,
+								y: imagesDimensions[currentContentIndex]?.y ?? 0,
+							}}
+							enableResizing={canEdit && showImgButton && isImgEditMode}
+							disableDragging={!canEdit || !showImgButton || !isImgEditMode || showModal}
+							onDragStart={handleDragStart(currentContentIndex)}
+							onDragStop={handleDragStop(currentContentIndex)}
+							onResizeStart={handleResizeStart}
+							onResizeStop={handleResizeStop(currentContentIndex)}
+						>
+							<Image
+								unoptimized={true}
+								style={{
+									objectFit: 'cover',
+									height: '100%',
+									//width: 'auto',
+									width: '100%',
+									borderRadius: customImageStyle?.borderRadius,
+									//transform: `scale(${zoomLevel / 100})`,
+									//transformOrigin: 'center center',
+								}}
+								src={imgsrc}
+								alt='Image'
+								//layout='fill'
+								width={960}
+								height={540}
+								//objectFit='contain'
+								className={`transition ease-in-out duration-150 ${
+									canEdit ? (isImgEditMode ? 'brightness-100' : 'hover:brightness-90') : 'cursor-pointer'
+								}`}
+								onError={(e) => {
+									const src =
+										RANDOM_FILLER_IMAGES[
+											Math.floor(Math.random() * RANDOM_FILLER_IMAGES.length)
+										];
+									e.currentTarget.src = src;
+									updateSingleCallback(src);
+								}}
+							/>
+						</Rnd>
+						{showImgButton && canEdit && (
+								<button
+										onClick={toggleImgEditMode}
+										style={{
+											position: 'absolute',
+											top: '2%',
+											right: '50%',
+											transform: 'translate(50%, -50%)',
+											zIndex: 53,
+										}}
+										className="bg-gray-300 px-2 h-5 rounded-full shadow-lg border border-gray-300 flex items-center justify-center"
+									>
+										&middot;&middot;&middot;
+								</button>
+						)}
+						{/* {isImgEditMode && canEdit && (
+								<ResizeSlider
+									zoomLevel={zoomLevel}
+									setZoomLevel={setZoomLevel}
+									applyZoom={applyZoom}
+									onZoomChange={onZoomChange}
+								/>
+						)} */}
+					</div>
 				)}
 			</div>
 		</>

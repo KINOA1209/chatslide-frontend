@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import '@/components/slides/onboardingSurvey/onboardingSurvey.css';
 import SurveySection from './SurveySection';
 import surveyStaticDataObject from './SurveyObject';
-import AuthService from '@/services/AuthService';
+import { useUser } from '@/hooks/use-user';
 
 type OnboardingSurveyProps = {
 	handleBack: () => void;
@@ -20,15 +20,7 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({ handleBack }) => {
 	// ease-in-out effect
 	const [referralSectionEffect, setReferralSectionEffect] = useState(false);
 	const [purposeSectionEffect, setPurposeSectionEffect] = useState(false);
-
-	const ref = useRef<HTMLDivElement>(null);
-
-	//auto scroll to ref
-	useEffect(() => {
-		if (ref.current) {
-			ref.current.scrollIntoView({ behavior: 'smooth' });
-		}
-	}, [ref]);
+	const { token } = useUser();
 
 	useEffect(() => {
 		if (showReferralSection) {
@@ -47,6 +39,7 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({ handleBack }) => {
 	};
 
 	const handleNextToPurpose = () => {
+		setShowReferralSection(false);
 		setShowPurposeSection(true);
 	};
 
@@ -159,12 +152,11 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({ handleBack }) => {
 		};
 		//console.log(formData)
 		try {
-			const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
 			const response = await fetch('/api/user/save_survey', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: `Bearer ${idToken}`,
+					Authorization: `Bearer ${token}`,
 				},
 				body: JSON.stringify({ OnboardingSurvey: formData }),
 			});
@@ -182,10 +174,6 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({ handleBack }) => {
 		}
 	};
 
-	const handleSkip = () => {
-		handleBack();
-	};
-
 	return (
 		<div className='flex flex-col justify-center items-center gap-4 sm:gap-6 overflow-y-auto'>
 			<div className='w-full p-4 sm:p-y-8 sm:p-x-4'>
@@ -197,16 +185,15 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({ handleBack }) => {
 				</div>
 			</div>
 
-			<SurveySection
-				section={'industry'}
-				selectedItems={selectedIndustries}
-				toggleSelection={(item) => toggleSelection(item, 'industry')}
-				showNextSection={showReferralSection}
-				handleButtonClick={handleNextToReferral}
-				handleCustomInput={(value) => handleCustomInput(value, 'industry')}
-				ref={!showReferralSection && !showPurposeSection ? ref : undefined}
-				// handleSkip={handleSkip}
-			/>
+			{!showReferralSection && !showPurposeSection &&
+				<SurveySection
+					section={'industry'}
+					selectedItems={selectedIndustries}
+					toggleSelection={(item) => toggleSelection(item, 'industry')}
+					showNextSection={showReferralSection}
+					handleButtonClick={handleNextToReferral}
+					handleCustomInput={(value) => handleCustomInput(value, 'industry')}
+				/>}
 
 			{showReferralSection && (
 				<div
@@ -219,8 +206,6 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({ handleBack }) => {
 						showNextSection={showPurposeSection}
 						handleButtonClick={handleNextToPurpose}
 						handleCustomInput={(value) => handleCustomInput(value, 'referral')}
-						ref={!showPurposeSection ? ref : undefined}
-						// handleSkip={handleSkip}
 					/>
 				</div>
 			)}
@@ -236,8 +221,6 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({ handleBack }) => {
 						isLastSection={true}
 						handleCustomInput={(value) => handleCustomInput(value, 'purpose')}
 						handleButtonClick={handleLastButtonSubmit}
-						ref={ref}
-						// handleSkip={handleSkip}
 					/>
 				</div>
 			)}
