@@ -121,7 +121,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		Math.min(dimensions.width / 960, dimensions.height / 540),
 	);
 	const [nonPresentScale, setNonPresentScale] = useState(
-		Math.min((dimensions.width - 400) / 960, (dimensions.height - 400) / 540),
+		Math.min(1, Math.min(dimensions.width / 960, (dimensions.height-100) / 540) * 0.8),
 	);
 
 	const [isChatWindowOpen, setIsChatWindowOpen] = useState(false);
@@ -129,7 +129,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const canUndo = slidesHistoryIndex > 0;
 	const canRedo = slidesHistoryIndex < slidesHistory.length - 1;
 
-	const currentSlideRef = useRef<HTMLDivElement>(null);
+	const horizontalCurrentSlideRef = useRef<HTMLDivElement>(null);
+	const verticalCurrentSlideRef = useRef<HTMLDivElement>(null);
 	const { isShared, updateIsShared, project } = useProject();
 
 	const [host, setHost] = useState('https://drlambda.ai');
@@ -145,30 +146,18 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		}
 	}, []);
 
-	// useEffect(() => {
-	// 	if (containerRef.current) {
-	// 		const { width, height } = containerRef.current.getBoundingClientRect();
-	// 		const scale = Math.min(width / 960, height / 540);
-	// 		console.log('update scale', scale);
-	// 		setNonPresentScale(scale);
-	// 	}
-	// }, [containerRef.current]);
-
 	const toggleChatWindow = () => {
 		setIsChatWindowOpen(!isChatWindowOpen);
 	};
 
 	useEffect(() => {
 		const handleResize = () => {
-			setDimensions({
-				width: window.innerWidth,
-				height: window.innerHeight,
-			});
-			//console.log('window.innerWidth', window.innerWidth);
-			setNonPresentScale(Math.min(1, (window.innerWidth / 960) * 0.8));
-			// setNonPresentScale(Math.min(nonPresentScale, ((window.innerHeight-200)) / 540));
-			//console.log('nonPresentScale', nonPresentScale);
-		};
+			
+			const scale = Math.min(window.innerWidth / 960, window.innerHeight / 540);
+			setPresentScale(scale);
+			setNonPresentScale(Math.min(1, Math.min(window.innerWidth / 960, (window.innerHeight - 100) / 540) * 0.8));
+		}
+			
 		window.addEventListener('resize', handleResize);
 
 		return () => window.removeEventListener('resize', handleResize);
@@ -341,6 +330,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	const updateImgUrlArray = (slideIndex: number) => {
 		const updateImgUrl = (urls: string[], ischart: boolean[]) => {
+			// change all null to ''
+			urls = urls.map((url) => (url === null ? '' : url));
+
 			if (urls.length === 1 && urls[0] === '') {
 				return;
 			}
@@ -411,7 +403,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				index={slideIndex}
 				isPresenting={isPresenting}
 				isViewing={isViewing}
-				scale={isPresenting ? presentScale : nonPresentScale}
+				scale={presentScale}
 				templateDispatch={editableTemplateDispatch}
 				slideRef={slideRef}
 				containerRef={containerRef}
@@ -425,7 +417,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	}
 
 	return (
-		<div className='w-full max-h-full flex flex-col items-start justify-start py-4 gap-4 relative'>
+		<div className='w-full h-full flex flex-col items-start justify-between py-4 gap-4 relative'>
 			<div className='w-full flex flex-row items-center justify-center'>
 				<ActionsToolBar
 					undo={undoChange}
@@ -516,11 +508,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				showReferralLink={true}
 			/>
 
-			<div className='w-full h-full flex flex-row items-center justify-start overflow-hidden gap-2'>
+			<div className='w-full flex flex-row grow items-start justify-center xl:justify-between gap-4 overflow-auto'>
+				{/* vertical bar */}
+				
 				<Panel>
-					{/* vertical bar */}
-					<div className='h-full w-[9rem] hidden xl:block mx-auto justify-center items-center'>
-						<div className='h-full max-h-[540px] flex shrink flex-col flex-nowrap py-2 overflow-y-auto  overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
+					<div className='h-full hidden xl:flex w-[150px]'>
+						<ScrollBar currentElementRef={verticalCurrentSlideRef} index={slideIndex} axial='y'>
 							{slides.map((slide, index) => (
 								<div
 									key={
@@ -529,7 +522,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 										slides.length.toString()
 									} // force update when slide length changes
 									className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
-									onClick={() => gotoPage(index)} // Added onClick handler
+									onClick={() => gotoPage(index)}
+									ref={index === slideIndex ? verticalCurrentSlideRef : null}
 								>
 									{/* {index + 1} */}
 									<SlideContainer
@@ -538,14 +532,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 										scale={0.12}
 										isViewing={true}
 										templateDispatch={uneditableTemplateDispatch}
-										slideRef={slideRef}
-										// containerRef={containerRef}
 										highlightBorder={slideIndex === index}
 										pageNumber={index + 1}
 									/>
 								</div>
 							))}
-						</div>
+						</ScrollBar>
 					</div>
 				</Panel>
 
@@ -631,8 +623,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					</div>
 
 					{/* horizontal  */}
-					<div className='block xl:hidden max-w-xs sm:max-w-4xl mx-auto py-4 justify-center items-center'>
-						<ScrollBar currentElementRef={currentSlideRef} index={slideIndex}>
+					<div className='block xl:hidden max-w-xl sm:max-w-4xl mx-auto py-4 justify-center items-center'>
+						<ScrollBar currentElementRef={horizontalCurrentSlideRef} index={slideIndex}>
 							{slides.map((slide, index) => (
 								<div
 									key={
@@ -642,7 +634,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 									} // force update when slide length changes
 									className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
 									onClick={() => gotoPage(index)}
-									ref={index === slideIndex ? currentSlideRef : null}
+									ref={index === slideIndex ? horizontalCurrentSlideRef : null}
 								>
 									{/* {index + 1} */}
 									<SlideContainer

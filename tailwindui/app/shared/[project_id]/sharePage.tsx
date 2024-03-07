@@ -35,9 +35,6 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 	const [loadingFailed, setLoadingFailed] = useState(false);
 	const { initSlides } = useSlides();
 	const [showDescription, setShowDescription] = useState<boolean>(true);
-	const [projectType, setProjectType] = useState<'presentation' | 'socialpost'>(
-		'presentation',
-	);
 	const [socialPosts, setSocialPosts] = useState<SocialPostSlide[]>([]);
 	const [postType, setPostType] = useState<string>('casual_topic');
 	const borderColorOptions = [
@@ -116,13 +113,11 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 			}
 			initProject(project);
 			console.log('project', project);
-			if (project.content_type === 'presentation') {
+			if (!project.content_type || project.content_type) {
 				const slides = ProjectService.parseSlides(project.presentation_slides);
-				setProjectType('presentation');
 				initSlides(slides);
 				setLoading(false);
 			} else if (project.content_type === 'social_posts') {
-				setProjectType('socialpost');
 				setPostType(project.post_type);
 				setSocialPosts(project.parsed_socialPosts);
 				setLoading(false);
@@ -143,16 +138,16 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 		</Blank>
 
 	return (
-		<div>
+		<>
 			<ToastContainer />
-			<div className='flex flex-col h-full items-center justify-center'>
-				{projectType === 'presentation' && (
+			<div className='flex flex-col h-full items-center justify-center overflow-hidden'>
+				{project?.content_type === 'presentation' && (
 					<div className='w-full flex grow overflow-hidden'>
 						<SlidesHTML isViewing={true} />
 					</div>
 				)}
 
-				{projectType === 'socialpost' && (
+				{project?.content_type === 'social_posts' && (
 					<div>
 						<SocialPostHTML
 							socialPostSlides={socialPosts}
@@ -164,7 +159,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 					</div>
 				)}
 			</div>
-		</div>
+		</>
 	);
 };
 

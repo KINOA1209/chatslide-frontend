@@ -9,16 +9,16 @@ import Image from 'next/image';
 import Resource from '@/models/Resource';
 import { FiFilePlus, FiGlobe, FiYoutube } from 'react-icons/fi';
 
-export const ResourceIcon: React.FC<{ resource: Resource, cover?: boolean }> = ({
+export const ResourceIcon: React.FC<{ resource: Resource, contain?: boolean }> = ({
 	resource,
-	cover = false,
+	contain = false,
 }) => {
 	if (!resource.thumbnail_url) {
 		return <div className='w-[40px]'>
 			<FileIcon fileType={resource.type} />
 		</div>;
 	}
-	const style = cover ? { width: '100%', height: '100%' } : {};
+	const style = contain ? { width: '100%', height: '100%', objectFit: 'contain' as 'contain' } : {};
 	return (
 		<Image
 			src={resource.thumbnail_url}

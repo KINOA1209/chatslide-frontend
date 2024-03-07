@@ -11,6 +11,7 @@ import { InputBox } from './InputBox';
 import { IoSend, IoSendOutline } from 'react-icons/io5';
 import { DeleteIcon } from '@/app/(feature)/icons';
 import { FaTimes } from 'react-icons/fa';
+import { ScrollBar } from './ScrollBar';
 
 export const DrLambdaAIAssistantIcon: React.FC<{
 	onClick: () => void;
@@ -33,17 +34,12 @@ export const DrLambdaAIAssistantIcon: React.FC<{
 
 type ChatsProps = {
 	chatHistory: ChatHistory[];
+	lastMessageRef: React.MutableRefObject<HTMLDivElement | null>;
 };
 
 // Component definition using an arrow function
-export const Chats: React.FC<ChatsProps> = ({ chatHistory }) => {
-	const lastMessageRef = useRef<HTMLDivElement>(null); // Ensure you have a ref for the last message
+export const Chats: React.FC<ChatsProps> = ({ chatHistory, lastMessageRef }) => {
 
-	// useEffect(() => {
-	// 	if (lastMessageRef.current) {
-	// 		lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
-	// 	}
-	// }, [chatHistory]); 
 
 	return (
 		<>
@@ -60,8 +56,8 @@ export const Chats: React.FC<ChatsProps> = ({ chatHistory }) => {
 					<div
 						className={
 							chat.role === 'user'
-								? 'grow shrink basis-0 text-gray-100 text-base font-normal font-creato-medium text-wrap'
-								: 'text-neutral-800 text-base font-normal font-creato-medium text-wrap'
+								? 'grow shrink basis-0 text-gray-100 text-base font-normal   text-wrap'
+								: 'text-neutral-800 text-base font-normal   text-wrap'
 						}
 					>
 						{chat.content}
@@ -96,6 +92,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	const { updateVersion, slideIndex } = useSlides();
 	const [loading, setLoading] = useState(false);
 	const { token } = useUser();
+	const lastMessageRef = useRef<HTMLDivElement>(null); // Ensure you have a ref for the last message
 
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
@@ -255,18 +252,18 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 
 			{/* chat history text area */}
 			<div className='w-full h-full border-t-2 border-gray-300 overflow-y-scroll p-2 flex flex-col flex-grow'>
-				<div className='flex flex-col grow items-start gap-3 justify-end'>
+				<ScrollBar axial='y' index={chatHistory.length} currentElementRef={lastMessageRef}>
 					{/* welcoming text */}
 					<div className='px-3.5 py-2.5 bg-indigo-50 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-white justify-center items-center gap-2.5 inline-flex'>
-						<div className='max-w-[15rem] text-neutral-800 text-base font-normal  -creato-medium tracking-tight'>
+						<div className='max-w-[15rem] text-neutral-800 text-base font-normal tracking-tight'>
 							Welcome to DrLambda! I'm your AI assistant, ready to help with
 							slide design 🎨, content ideas ✍️, data organization 📊,
 							proofreading, and updating. Just type your request here!
 						</div>
 					</div>
 					{/* welcoming options */}
-					<div className='flex-col justify-center items-start gap-2 flex'>
-						<div className='text-neutral-800 text-sm font-normal font-creato-medium'>
+					<div className='flex-col justify-center items-start gap-2 flex shrink'>
+						<div className='text-neutral-800 text-sm font-normal  '>
 							Here are some ways I can help:
 						</div>
 						<div className='self-stretch flex-col justify-start items-start gap-2 inline-flex'>
@@ -318,16 +315,17 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						</div>
 					</div>
 					{/* chat history render */}
-					<Chats chatHistory={chatHistory} />
+					<Chats chatHistory={chatHistory} lastMessageRef={lastMessageRef} />
 
 					{loading && (
 						<div className='px-3.5 py-2.5 bg-indigo-50 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-white  gap-2.5 max-w-[15rem] flex flex-wrap'>
-							<div className='animate-pulse text-neutral-800 text-base font-normal font-creato-medium text-wrap'>
+							<div className='animate-pulse text-neutral-800 text-base font-normal   text-wrap'
+								ref={loading ? lastMessageRef : null}>
 								🤔 I am thinking...
 							</div>
 						</div>
 					)}
-				</div>
+				</ScrollBar>
 			</div>
 			{/* input area */}
 			<div className='w-full bg-blue-100'>
