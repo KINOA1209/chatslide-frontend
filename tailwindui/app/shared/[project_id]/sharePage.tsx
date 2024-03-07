@@ -110,7 +110,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 			}
 			initProject(project);
 			console.log('project', project);
-			if (!project.content_type || project.content_type) {
+			if (!project.content_type || project.content_type === 'presentation') {
 				const slides = ProjectService.parseSlides(project.presentation_slides);
 				initSlides(slides);
 				setLoading(false);
@@ -138,7 +138,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 		<>
 			<ToastContainer />
 			<div className='flex flex-col h-full items-center justify-center overflow-hidden'>
-				{!project?.content_type || project?.content_type === 'presentation' && (
+				{(!project?.content_type || project?.content_type === 'presentation') && (
 					<div className='w-full flex grow overflow-hidden'>
 						<SlidesHTML isViewing={true} />
 					</div>
