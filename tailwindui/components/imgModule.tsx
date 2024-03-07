@@ -751,7 +751,6 @@ export const ImgModule = ({
 	const onZoomChange = (newZoomLevel: number) => {
 		const scale = newZoomLevel / 100;
 		const dimension = imagesDimensions[currentContentIndex];
-		console.log(dimension)
 		const currentWidth = dimension.width ?? 0;
 		const currentHeight = dimension.height ?? 0;
 		const newWidth = currentWidth * scale;
@@ -774,7 +773,6 @@ export const ImgModule = ({
 		};
 
 		setImagesDimensions(updatedDimensions);
-		console.log(imagesDimensions)
 	};
 
 	//reposition to default if images changed
@@ -795,14 +793,14 @@ export const ImgModule = ({
 					...updatedDimensions[currentContentIndex],
 					width: newWidth,
 					height: newHeight,
-					x: newX,
+					x: 0,
 					y: 0
 				}
 				setImagesDimensions(updatedDimensions)
-				console.log(imagesDimensions)
 			};
 		}
 	}, [imgsrc, isParentDimension]);
+	console.log(parentDimension, currentContentIndex, slideIndex)
 
 	useEffect(() => {
 		const initializedData = initializeImageData(images_position, imageRefs);
@@ -811,8 +809,8 @@ export const ImgModule = ({
 
 	useEffect(() => {
 		const currentElement = imageRefs[currentContentIndex]?.current;
-		if (currentElement && currentElement.offsetHeight > 0 && currentElement.offsetWidth > 0) {
-		  const newDimensions = { height: currentElement.offsetHeight, width: currentElement.offsetWidth };
+		if (currentElement && currentElement.clientHeight > 0 && currentElement.clientWidth > 0) {
+		  const newDimensions = { height: currentElement.clientHeight, width: currentElement.clientWidth };
 		  if (newDimensions.height !== parentDimension.height || newDimensions.width !== parentDimension.width) {
 			setParentDimension(newDimensions);
 			setIsParentDimension(true);
@@ -821,7 +819,6 @@ export const ImgModule = ({
 		  setIsParentDimension(false);
 		}
 	  }, [currentContentIndex, imageRefs, parentDimension]);
-	console.log('imagedimension', imagesDimensions)
 	return (
 		<>
 			{/* select image modal */}
@@ -1069,7 +1066,7 @@ export const ImgModule = ({
 						: canEdit
 						? 'hover:bg-[#CAD0D3]'
 						: ''
-				} flex flex-col items-center justify-center ${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}`}
+				} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
 			>
 				{ischartArr &&
 					ischartArr[currentContentIndex] &&

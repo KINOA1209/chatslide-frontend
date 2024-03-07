@@ -223,17 +223,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 		const currentSlide = { ...slides[slideIndex] };
 		const className = tag;
-		if (className as string === 'images_position' || className[0] === 'images_position') {
-			console.log('skip saving images_position');
-			return;
-		}
 
 		const applyUpdate = (
 			content: string | string[] | Chart[] | boolean[] | ImagesPosition[],
 			className: string,
 		) => {
-			if (className === 'images_position') return; // dont samve images position
-
 			if (className === 'head') {
 				currentSlide.head = content as string;
 			} else if (className === 'title') {
