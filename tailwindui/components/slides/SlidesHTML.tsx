@@ -525,7 +525,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				showReferralLink={true}
 			/>
 
-			<div className='w-full h-full flex flex-row items-center justify-start overflow-hidden gap-2'>
+			<div className='w-full h-full flex flex-row items-center justify-start gap-2'>
 				<Panel>
 					{/* vertical bar */}
 					<div className='h-full w-[9rem] hidden xl:block mx-auto justify-center items-center'>
