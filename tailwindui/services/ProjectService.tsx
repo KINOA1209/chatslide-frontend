@@ -119,6 +119,7 @@ class ProjectService {
 	static async getProjects(
 		token: string,
 		is_public: boolean = false,
+		server_side = false,
 	): Promise<Project[]> {
 		const headers = new Headers();
 		if (is_public) {
@@ -131,7 +132,7 @@ class ProjectService {
 
 		const baseUrl = process.env.HOST ? process.env.HOST : 'localhost';
 		const protocol = baseUrl == 'localhost' ? 'http' : 'https';
-		const url = `${protocol}://${baseUrl}/api/get_projects`;
+		const url = server_side ? `${protocol}://${baseUrl}/api/get_projects` : '/api/get_projects';
 
 		try {
 			const response = await fetch(url, {

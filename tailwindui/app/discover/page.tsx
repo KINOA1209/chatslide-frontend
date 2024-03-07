@@ -14,7 +14,7 @@ export const metadata = {
 
 export default async function Discover() {
 
-	const projects = await ProjectService.getProjects('', true);
+	const projects = await ProjectService.getProjects('', true, true);
 
 	return (
 		<section className='grow flex flex-col'>
