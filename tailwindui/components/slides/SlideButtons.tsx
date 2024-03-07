@@ -69,7 +69,7 @@ type ShareButtonProps = {
 	share: boolean;
 	setShare: null | ((is_shared: boolean, is_public?: boolean) => void);
 	project: Project;
-	host: string;
+	host?: string;
 };
 
 export const ShareButton: React.FC<ShareButtonProps> = ({
@@ -186,11 +186,11 @@ export const ShareButton: React.FC<ShareButtonProps> = ({
 					>
 						<GoShare
 							style={{
-								strokeWidth: '1',
+								strokeWidth: '0.8',
 								flex: '1',
 								width: '1.5rem',
 								height: '1.5rem',
-								fontWeight: 'bold',
+								// fontWeight: 'bold',
 								color: '#2943E9',
 							}}
 						/>

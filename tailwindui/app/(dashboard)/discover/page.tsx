@@ -1,75 +1,20 @@
 'use client';
 
-import React, { useState, useEffect, Fragment, useRef } from 'react';
+import React from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation';
 import ProjectTable from '../ProjectTable';
 import DrlambdaButton, {
-	BigBlueButton,
-	InversedBigBlueButton,
 } from '@/components/button/DrlambdaButton';
 import Project from '@/models/Project';
 import ProjectService from '@/services/ProjectService';
 import { useUser } from '@/hooks/use-user';
+import Link from 'next/link';
 
-export default function Dashboard() {
-	const [projects, setProjects] = useState<Project[]>([]);
-	const { token } = useUser();
-	const router = useRouter();
-	const promptRef = useRef<HTMLDivElement>(null);
-	const contentRef = useRef<HTMLDivElement>(null);
-	const [rendered, setRendered] = useState<boolean>(false);
+export default async function Discover() {
 
-	const currentProjects = projects;
-
-	useEffect(() => {
-		if (contentRef.current) {
-			contentRef.current.style.height = contentRef.current.offsetHeight + 'px';
-		}
-		// Create a scoped async function within the hook.
-		const fetchUserAndProject = async () => {
-			try {
-				handleRequest(token);
-			} catch (error: any) {
-				console.error(error);
-			}
-		};
-		// Execute the created function directly
-		fetchUserAndProject();
-	}, []);
-
-	// get projects from backend
-	const handleRequest = async (token: string) => {
-		ProjectService.getProjects(token, true).then((projects) => {
-			setProjects(projects);
-			setRendered(true);
-			if (projects.length == 0) {
-				sessionStorage.clear();
-				router.push('/workflow-type-choice');
-			}
-		});
-	};
-
-	const handleProjectClick = (projectId: string) => {
-		// Open the project detail page in a new tab
-		window.open(`/shared/${projectId}`, '_blank');
-	};
-
-	useEffect(() => {
-		if (rendered && projects.length === 0 && promptRef.current) {
-			promptRef.current.innerHTML = 'You have no project created.';
-		}
-	}, [projects, rendered]);
-
-	// function to handle click start new project, clear sessionstorage
-	const handleStartNewProject = () => {
-		sessionStorage.clear();
-		//route to workflow-generate-outlines
-		router.push('/workflow-type-choice');
-		//route to type choosing page (new workflow)
-		// router.push('/workflow-type-choice')
-	};
+	const projects = await ProjectService.getProjects('', true);
 
 	return (
 		<section className='grow flex flex-col'>
@@ -87,9 +32,8 @@ export default function Dashboard() {
 					<div className='absolute right-5 pb-1'>
 						<DrlambdaButton
 							isPaidFeature={false}
-							onClick={handleStartNewProject}
 						>
-							Start your own project
+							<Link href='/workflow-scenario-choice'>Start your own project</Link>
 						</DrlambdaButton>
 					</div>
 				</div>
@@ -98,12 +42,11 @@ export default function Dashboard() {
 			{/* projects details area */}
 			<div
 				className='pb-[1rem] w-full px-8 pt-8 flex flex-col grow overflow-auto'
-				ref={contentRef}
 			>
 				{projects && projects.length > 0 ? (
 					<ProjectTable
-						currentProjects={currentProjects}
-						onProjectClick={handleProjectClick}
+						currentProjects={projects}
+						onProjectClick={()=>{}}
 					/>
 				) : (
 					<div className='flex items-center mt-[1rem] md:mt-[6rem] justify-center text-gray-600 text-[14px] md:text-[20px] font-normal font-creato-medium leading-normal tracking-wide'>

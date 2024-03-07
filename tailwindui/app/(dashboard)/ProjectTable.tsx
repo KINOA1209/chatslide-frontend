@@ -13,6 +13,7 @@ import { LuTrash2 } from 'react-icons/lu';
 import Modal from '@/components/ui/Modal';
 import { Instruction } from '@/components/ui/Text';
 import LanguageSelector from '../(feature)/workflow-generate-outlines/LanguageSelector';
+import { ShareButton } from '@/components/slides/SlideButtons';
 
 const DEFAULT_THUMBNAIL =
 	'https://ph-files.imgix.net/76b477f1-bc1b-4432-b52b-68674658d62b.png';
@@ -90,6 +91,8 @@ const ProjectItem: React.FC<{
 }> = ({ project, onProjectClick, onDelete, index, setCurrentProjects }) => {
 	const isCloning = index === -1;
 
+	const [share, setShare] = useState(false);
+
 	return (
 		<React.Fragment key={project.id}>
 			{/* type */}
@@ -144,6 +147,12 @@ const ProjectItem: React.FC<{
 						{moment(project.created_datetime).format('L')}
 					</span> */}
 
+					<ShareButton
+						share={share}
+						setShare={setShare}
+						project={project}>
+					</ShareButton>
+
 					{setCurrentProjects &&
 						<CloneButton
 							project={project}
@@ -172,9 +181,10 @@ const ProjectItem: React.FC<{
 							explanation={'Delete'}
 						/>
 					)}
+
 				</div>
 			</div>
-		</React.Fragment>
+		</React.Fragment >
 	);
 };
 

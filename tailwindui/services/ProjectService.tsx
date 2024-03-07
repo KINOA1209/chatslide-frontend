@@ -111,7 +111,7 @@ class ProjectService {
 		is_public: boolean = false,
 	): Promise<Project[]> {
 		const headers = new Headers();
-		if (token.length == 0 && is_public) {
+		if (is_public) {
 			token = process.env.SELF_TOKEN || '';
 		}
 		if (token) {
@@ -119,8 +119,12 @@ class ProjectService {
 		}
 		headers.append('Content-Type', 'application/json');
 
+		const baseUrl = process.env.HOST ? process.env.HOST : 'localhost';
+		const protocol = baseUrl == 'localhost' ? 'http' : 'https';
+		const url = `${protocol}://${baseUrl}/api/get_projects`;
+
 		try {
-			const response = await fetch('/api/get_projects', {
+			const response = await fetch(url, {
 				method: 'POST',
 				headers: headers,
 				body: JSON.stringify({ public: is_public }),
