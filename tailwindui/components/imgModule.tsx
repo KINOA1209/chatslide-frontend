@@ -742,10 +742,25 @@ export const ImgModule = ({
 
 	const customScale = (width:number, height:number, parentWidth:number, parentHeight: number) => {
 		const aspectRatio = width / height;
-		const newWidth = parentHeight * aspectRatio;
-		const newHeight = parentHeight; // Always match the container's height
-		const newX = (parentWidth - newWidth) / 2;
-		return { width: newWidth, height: newHeight, x: newX};
+		const parentAspectRatio = parentWidth / parentHeight;
+		let newWidth, newHeight, newX, newY;
+	
+		// Compare the aspect ratios to decide how to scale
+		if (aspectRatio > parentAspectRatio) {
+			// Image is wider than the container proportionally
+			newWidth = parentHeight * aspectRatio;
+			newHeight = parentHeight;
+			newX = (parentWidth - newWidth) / 2; // Center horizontally
+			newY = 0;
+		} else {
+			// Image is taller than the container proportionally
+			newWidth = parentWidth;
+			newHeight = parentWidth / aspectRatio;
+			newX = 0; // Align to left
+			newY = (parentHeight - newHeight) / 2; // Center vertically
+		}
+	
+		return { width: newWidth, height: newHeight, x: newX, y: newY };
 	}
 
 	const onZoomChange = (newZoomLevel: number) => {
@@ -782,7 +797,7 @@ export const ImgModule = ({
 			const img = new window.Image();
 			img.src = imgsrc;
 			img.onload = () => {
-				const {height: newHeight, width: newWidth, x: newX} = customScale(
+				const {height: newHeight, width: newWidth, x: newX, y:newY} = customScale(
 					img.naturalWidth, img.naturalHeight, parentDimension.width, parentDimension.height
 				)
 				if (newWidth !== imageSize.width || newHeight !== imageSize.height) {
@@ -794,7 +809,7 @@ export const ImgModule = ({
 					width: newWidth,
 					height: newHeight,
 					x: newX,
-					y: 0
+					y: newY,
 				}
 				setImagesDimensions(updatedDimensions)
 			};
@@ -818,9 +833,6 @@ export const ImgModule = ({
 		  setIsParentDimension(false);
 		}
 	  }, [currentContentIndex, imageRefs, parentDimension]);
-
-		console.log(images_position, currentContentIndex, canEdit)
-		console.log(imagesDimensions, currentContentIndex, canEdit)
 
 	return (
 		<>
@@ -1150,7 +1162,7 @@ export const ImgModule = ({
 								//layout='fill'
 								width={960}
 								height={540}
-								objectFit='contain'
+								//objectFit='contain'
 								className={`transition ease-in-out duration-150 ${
 									canEdit ? (isImgEditMode ? 'brightness-100' : 'hover:brightness-90') : 'cursor-pointer'
 								}`}
