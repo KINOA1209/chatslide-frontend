@@ -22,7 +22,7 @@ import { FiYoutube } from 'react-icons/fi';
 import { useProject } from '@/hooks/use-project';
 
 const MAX_TOPIC_LENGTH = 128;
-const MIN_TOPIC_LENGTH = 6;
+const MIN_TOPIC_LENGTH = 3;
 
 const audienceList = [
 	'Researchers',
