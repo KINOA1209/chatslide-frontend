@@ -25,7 +25,7 @@ import { Column } from '@/components/layout/Column';
 
 export default function DesignPage() {
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
-	const [template, setTemplate] = useState('Business_002' as string);
+	const [template, setTemplate] = useState('Clean_Lifestyle_003' as string);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [isGpt35, setIsGpt35] = useState(true);
 	const { outlines } = useProject();

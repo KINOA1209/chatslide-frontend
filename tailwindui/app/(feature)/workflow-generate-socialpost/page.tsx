@@ -229,7 +229,7 @@ export default function Topic_SocialPost() {
 			} else {
 				toast.error(
 					`Server is busy now. Please try again later. Reference code: ` +
-						project?.id,
+					project?.id,
 				);
 				setIsSubmitting(false);
 			}
@@ -392,13 +392,12 @@ export default function Topic_SocialPost() {
 
 	return (
 		<section>
-			{showPaymentModal && (
-				<PaywallModal
-					setShowModal={setShowPaymentModal}
-					message='Upgrade for more ⭐️credits.'
-					showReferralLink={true}
-				/>
-			)}
+			<PaywallModal
+				showModal={showPaymentModal}
+				setShowModal={setShowPaymentModal}
+				message='Upgrade for more ⭐️credits.'
+				showReferralLink={true}
+			/>
 
 			<ToastContainer />
 

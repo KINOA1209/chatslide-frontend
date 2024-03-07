@@ -219,6 +219,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 			showModal={true}
 			setShowModal={onClose}
 			position='fixed bottom-0 left-0'
+			width='400px'
 		>
 			<div className='bg-white'>
 				{submitSuccessful ? (

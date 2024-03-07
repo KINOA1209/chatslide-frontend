@@ -26,23 +26,6 @@ const CloneButton: React.FC<{
 	const [showCloneModal, setShowCloneModal] = useState(false);
 	const { token } = useUser();
 
-	const CloneModal: React.FC = () => {
-		return <Modal
-			showModal={showCloneModal}
-			setShowModal={setShowCloneModal}
-			title='Clone / Translate Project'
-			description='You can create a new project with the same content, but optionally in a different language.'
-			onConfirm={onClone}
-		>
-			<LanguageSelector
-				language={targetCloneLanguage}
-				setLanguage={setTargetCloneLanguage}
-				text='New project language:'
-				showExplanation={false}
-			/>
-		</Modal>
-	};
-
 	async function onClone() {
 		console.log(`cloning project ${project.id} to ${'English'}`);
 		if (!project) return;
@@ -59,7 +42,20 @@ const CloneButton: React.FC<{
 	}
 
 	return <>
-		{showCloneModal && <CloneModal />}
+		<Modal
+			showModal={showCloneModal}
+			setShowModal={setShowCloneModal}
+			title='Clone / Translate Project'
+			description='You can create a new project with the same content, but optionally in a different language.'
+			onConfirm={onClone}
+		>
+			<LanguageSelector
+				language={targetCloneLanguage}
+				setLanguage={setTargetCloneLanguage}
+				text='New project language:'
+				showExplanation={false}
+			/>
+		</Modal>
 		<ButtonWithExplanation
 			button={
 				<button

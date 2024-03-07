@@ -152,7 +152,7 @@ export default function Topic() {
 
 		const knowledge_summary =
 			typeof window !== 'undefined' &&
-			sessionStorage.knowledge_summary != undefined
+				sessionStorage.knowledge_summary != undefined
 				? JSON.parse(sessionStorage.knowledge_summary)
 				: '';
 
@@ -179,9 +179,13 @@ export default function Topic() {
 			'selectedResources',
 			JSON.stringify(selectedResources),
 		);
+		sessionStorage.setItem('search_online', searchOnlineScope);
 		//sessionStorage.setItem('schoolTemplate', schoolTemplate);
 
-		if (selectedResources && selectedResources.length > 0) {
+		if (
+			(selectedResources && selectedResources.length > 0) ||
+			(searchOnlineScope && searchOnlineScope !== '')
+		) {
 			try {
 				console.log('resources', selectedResources);
 				console.log('summarize resources');
@@ -257,7 +261,7 @@ export default function Topic() {
 			} else {
 				toast.error(
 					'Server is busy now. Please try again later. Reference code: ' +
-						project?.id,
+					project?.id,
 				);
 				setIsSubmitting(false);
 			}
@@ -297,13 +301,12 @@ export default function Topic() {
 	return (
 		<section>
 			<MyCustomJoyride steps={StepsSummaryPage()} />
-			{showPaymentModal && (
-				<PaywallModal
-					setShowModal={setShowPaymentModal}
-					message='Upgrade for more ⭐️credits.'
-					showReferralLink={true}
-				/>
-			)}
+			<PaywallModal
+				showModal={showPaymentModal}
+				setShowModal={setShowPaymentModal}
+				message='Upgrade for more ⭐️credits.'
+				showReferralLink={true}
+			/>
 
 			<ToastContainer />
 

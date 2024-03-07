@@ -55,13 +55,12 @@ const ExportToPngButton: React.FC<ExportToPdfProps> = ({
 	return (
 		<div className='flex flex-wrap flex-grow-0'>
 			<div className=''>
-				{showPaymentModal && (
-					<PaywallModal
-						setShowModal={setShowPaymentModal}
-						message='Upgrade for more ⭐️credits.'
-						showReferralLink={true}
-					/>
-				)}
+				<PaywallModal
+					showModal={showPaymentModal}
+					setShowModal={setShowPaymentModal}
+					message='Upgrade for more ⭐️credits.'
+					showReferralLink={true}
+				/>
 
 				<BigGrayButton onClick={handleSaveImage} isSubmitting={downloadingPDF}>
 					<div className='flex flex-row items-center gap-x-2'>

@@ -24,7 +24,7 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
 	return (
 		<Modal showModal={showModal} setShowModal={setShowModal}>
 			<h4 className='h4 text-blue-600 text-center'>Select {type}</h4>
-			<div className='h-[60vh] max-w-[80vw] overflow-y-auto '>
+			<div className='h-[60vh] w-full overflow-y-hidden '>
 				<MyFiles
 					selectable={true}
 					selectedResources={selectedResources}

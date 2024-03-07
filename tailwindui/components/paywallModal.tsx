@@ -4,12 +4,14 @@ import ReferralLink from './ReferralLink';
 import Modal from './ui/Modal';
 
 interface PaywallModalProps {
+	showModal: boolean;
 	setShowModal: (value: boolean) => void;
 	message: string;
 	showReferralLink?: boolean;
 }
 
 const PaywallModal: React.FC<PaywallModalProps> = ({
+	showModal,
 	setShowModal,
 	message,
 	showReferralLink = false,
@@ -29,11 +31,13 @@ const PaywallModal: React.FC<PaywallModalProps> = ({
 	};
 
 	return (
-		<Modal showModal={true} setShowModal={setShowModal}>
+		<Modal
+			title={message}
+			showModal={showModal}
+			setShowModal={setShowModal}>
 			<div className='py-2 space-y-4'>
 				{' '}
 				{/* Reduced bottom padding */}
-				<h4 className='h4 text-center text-red-700'>{message}</h4>
 				<Pricing fewerCards={true} />
 				{showReferralLink && (
 					<div className='space-y-4'>

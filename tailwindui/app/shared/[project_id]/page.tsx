@@ -76,7 +76,7 @@ export default async function Page({ params }: Props) {
 			</div>
 			<main className='w-full flex grow flex-col overflow-y-scroll'>
 				{project && project.description && (
-					<div className='m-4'>
+					<div className='hidden sm:m-4'>
 					<Card>
 						<div className='flex flex-row items-end gap-x-4'>
 							<Title>{project.topic}</Title>

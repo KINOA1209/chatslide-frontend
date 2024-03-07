@@ -3,12 +3,7 @@ import {
 	LeftSlideNavIcon,
 	RightSlideNavIcon,
 } from '@/app/(feature)/workflow-review-slides/icons';
-import {
-	PresentationModeIcon,
-} from '@/app/(feature)/icons';
 import { BigGrayButton, DropDown } from '../button/DrlambdaButton';
-import { TextLabel } from '../ui/GrayLabel';
-import { useUser } from '@/hooks/use-user';
 import { GoPlay, GoPlus, GoShare, GoTrash } from 'react-icons/go';
 import { LuPaintbrush, LuPresentation, LuTrash2 } from 'react-icons/lu';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
@@ -20,7 +15,6 @@ import TemplateSelector from '@/app/(feature)/workflow-edit-design/TemplateSelec
 import { FiPlay } from 'react-icons/fi';
 import { Explanation, Instruction } from '../ui/Text';
 import RadioButton from '../ui/RadioButton';
-import { useProject } from '@/hooks/use-project';
 
 type SaveButtonProps = {
 	saveSlides: () => void;
@@ -71,14 +65,14 @@ export const PresentButton: React.FC<PresentButtonProps> = ({
 	);
 };
 
-type ShareToggleButtonProps = {
+type ShareButtonProps = {
 	share: boolean;
 	setShare: null | ((is_shared: boolean, is_public?: boolean) => void);
 	project: Project;
 	host: string;
 };
 
-export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
+export const ShareButton: React.FC<ShareButtonProps> = ({
 	share,
 	setShare,
 	project,
@@ -92,39 +86,39 @@ export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
 		setShowModal(true)
 	};
 
-	const ShareModal: React.FC = () => {
-		const platforms = ['twitter', 'facebook', 'reddit', 'linkedin'];
+	const platforms = ['twitter', 'facebook', 'reddit', 'linkedin'];
 
-		const keywords = project?.keywords || [];
-		const description = project?.description || '';
+	const keywords = project?.keywords || [];
+	const description = project?.description || '';
 
-		const limitedKeywords = keywords.slice(0, 3);
-		const truncatedDescription = truncateWithFullWords(description, 100);
+	const limitedKeywords = keywords.slice(0, 3);
+	const truncatedDescription = truncateWithFullWords(description, 100);
 
-		function truncateWithFullWords(str: string, maxLength: number) {
-			if (str.length <= maxLength) return str;
-			return str.substring(0, str.lastIndexOf(' ', maxLength)) + '...';
+	function truncateWithFullWords(str: string, maxLength: number) {
+		if (str.length <= maxLength) return str;
+		return str.substring(0, str.lastIndexOf(' ', maxLength)) + '...';
+	}
+
+	const handlePost = async (platform: string) => {
+		try {
+			setShare && setShare(true);
+			const shareLink = `${host}/shared/${project_id}`;
+			const hashTags = limitedKeywords
+				.map((keyword) => `#${keyword}`)
+				.join(' ');
+			const postText = `${truncatedDescription}. Learn more at drlambda.ai!\n${hashTags}\n`;
+			const platformConfig =
+				PostPlatformConfigs[platform as keyof typeof PostPlatformConfigs];
+			const text = platformConfig.textTemplate(postText, shareLink);
+			const url = `${platformConfig.shareUrl}${text}`;
+			window.open(url, '_blank');
+		} catch (error) {
+			console.error('Failed to process Twitter post:', error);
 		}
+	};
 
-		const handlePost = async (platform: string) => {
-			try {
-				setShare && setShare(true);
-				const shareLink = `${host}/shared/${project_id}`;
-				const hashTags = limitedKeywords
-					.map((keyword) => `#${keyword}`)
-					.join(' ');
-				const postText = `${truncatedDescription}. Learn more at drlambda.ai!\n${hashTags}\n`;
-				const platformConfig =
-					PostPlatformConfigs[platform as keyof typeof PostPlatformConfigs];
-				const text = platformConfig.textTemplate(postText, shareLink);
-				const url = `${platformConfig.shareUrl}${text}`;
-				window.open(url, '_blank');
-			} catch (error) {
-				console.error('Failed to process Twitter post:', error);
-			}
-		};
-
-		return (
+	return (
+		<div>
 			<Modal
 				showModal={showModal}
 				setShowModal={setShowModal}
@@ -185,12 +179,6 @@ export const ShareToggleButton: React.FC<ShareToggleButtonProps> = ({
 						/>
 					</div>}
 			</Modal >
-		)
-	}
-
-	return (
-		<div>
-			{showModal && <ShareModal />}
 			<ButtonWithExplanation
 				button={
 					<button
@@ -384,8 +372,8 @@ export const ChangeTemplateOptions: React.FC<{
 		useState<string>(currentTemplate);
 	const [showModal, setShowModal] = useState(false);
 
-	const SelectTemplateModal: React.FC = () => {
-		return (
+	return (
+		<>
 			<Modal
 				showModal={showModal}
 				setShowModal={setShowModal}
@@ -400,12 +388,6 @@ export const ChangeTemplateOptions: React.FC<{
 					/>
 				</div>
 			</Modal>
-		)
-	}
-
-	return (
-		<>
-			{showModal && <SelectTemplateModal />}
 			<ButtonWithExplanation
 				button={
 					<button

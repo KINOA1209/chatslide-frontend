@@ -114,8 +114,10 @@ class ResourceService {
 		project_id: string,
 		resource_id: string[],
 		outlineData: any,
+		search_online: string,
 		token: string,
 	): Promise<any> {
+		console.log('project_id', project_id);
 		const headers = new Headers();
 		if (token) {
 			headers.append('Authorization', `Bearer ${token}`);
@@ -127,6 +129,7 @@ class ResourceService {
 				outlines: JSON.stringify({ ...outlineData }),
 				resources: resource_id,
 				project_id: project_id,
+				search_online: search_online,
 			}),
 		});
 

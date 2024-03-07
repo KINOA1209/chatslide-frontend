@@ -4,7 +4,7 @@ import PaywallModal from '../paywallModal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ExportToPdfButton from './ExportButton';
-import { ShareToggleButton } from '@/components/slides/SlideButtons';
+import { ShareButton } from '@/components/slides/SlideButtons';
 import './slidesHTML.css';
 import { availableTemplates } from '@/components/slides/slideTemplates';
 import { LayoutKeys } from '@/components/slides/slideLayout';
@@ -49,6 +49,7 @@ import { useProject } from '@/hooks/use-project';
 import { GoEyeClosed } from 'react-icons/go';
 import ScriptWindow from './script/ScriptWindow';
 import ReactDOM from 'react-dom';
+import { ScrollBar } from '../ui/ScrollBar';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -107,7 +108,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const { isPaidUser, token } = useUser();
-	const [showLayout, setShowLayout] = useState(false);
 	const { isPresenting, setIsPresenting } = useSlides();
 	const slideRef = useRef<HTMLDivElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -130,10 +130,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const canRedo = slidesHistoryIndex < slidesHistory.length - 1;
 
 	const currentSlideRef = useRef<HTMLDivElement>(null);
-	const thumbnailRef = useRef<HTMLDivElement>(null);
-
 	const { isShared, updateIsShared, project } = useProject();
-	const [showShareLink, setShowShareLink] = useState(true);
 
 	const [host, setHost] = useState('https://drlambda.ai');
 
@@ -183,14 +180,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		changeTemplate(newTemplate as TemplateKeys);
 	};
 
-	const openModal = () => {
-		setShowLayout(true);
-	};
-
-	const closeModal = () => {
-		setShowLayout(false);
-	};
-
 	const openPresent = () => {
 		toast.success(
 			'Use ESC to exit presentation mode, use arrow keys to navigate slides.',
@@ -220,31 +209,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		}
 	}
 
-	// auto scroll thumbnail to current slide
-	useEffect(() => {
-		if (thumbnailRef.current && currentSlideRef.current) {
-			console.log('scrolling to current slide');
-
-			const container = thumbnailRef.current;
-			const currentSlide = currentSlideRef.current;
-
-			const containerRect = container.getBoundingClientRect();
-			const currentSlideRect = currentSlide.getBoundingClientRect();
-
-			// scroll to horizontal center
-			const scrollAmount =
-				currentSlideRect.left +
-				currentSlideRect.width / 2 -
-				(containerRect.left + containerRect.width / 2);
-			console.log('scrollAmount', scrollAmount);
-
-			container.scrollTo({
-				left: container.scrollLeft + scrollAmount,
-				behavior: 'smooth',
-			});
-		}
-	}, [slideIndex]);
-
 	function handleSlideEdit(
 		content:
 			| string
@@ -254,14 +218,22 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		tag: SlideKeys | SlideKeys[],
 		contentIndex?: number,
 	) {
+		console.log('handleSlideEdit', content, slideIndex, tag, contentIndex);
 		setIsEditMode(false);
 
 		const currentSlide = { ...slides[slideIndex] };
 		const className = tag;
+		if (className as string === 'images_position' || className[0] === 'images_position') {
+			console.log('skip saving images_position');
+			return;
+		}
+
 		const applyUpdate = (
 			content: string | string[] | Chart[] | boolean[] | ImagesPosition[],
 			className: string,
 		) => {
+			if (className === 'images_position') return; // dont samve images position
+
 			if (className === 'head') {
 				currentSlide.head = content as string;
 			} else if (className === 'title') {
@@ -427,7 +399,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			exportToPdfMode, //exportToPdfMode
 			isEditMode, //editMathMode
 			setIsEditMode, //setIsEditMode
-			() => {}, // handleSlideEdit
+			() => { }, // handleSlideEdit
 			updateImgUrlArray,
 			toggleEditMode,
 			index === 0, // isCoverPage
@@ -489,9 +461,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 								onChangeTemplate={selectTemplate}
 							/>
 							<LayoutChanger
-								openModal={openModal}
-								showLayout={showLayout}
-								closeModal={closeModal}
 								currentSlideIndex={slideIndex}
 								// templateSamples={templateSamples}
 								slides={slides}
@@ -536,7 +505,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					)}
 
 					{project && (
-						<ShareToggleButton
+						<ShareButton
 							setShare={isViewing ? null : updateIsShared}
 							share={isShared}
 							project={project}
@@ -546,13 +515,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				</ActionsToolBar>
 			</div>
 
-			{showPaymentModal && (
-				<PaywallModal
-					setShowModal={setShowPaymentModal}
-					message='Upgrade for more ⭐️credits.'
-					showReferralLink={true}
-				/>
-			)}
+			<PaywallModal
+				showModal={showPaymentModal}
+				setShowModal={setShowPaymentModal}
+				message='Upgrade for more ⭐️credits.'
+				showReferralLink={true}
+			/>
 
 			<div className='w-full h-full flex flex-row items-center justify-start overflow-hidden gap-2'>
 				<Panel>
@@ -670,10 +638,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 					{/* horizontal  */}
 					<div className='block xl:hidden max-w-xs sm:max-w-4xl mx-auto py-4 justify-center items-center'>
-						<div
-							className='w-full flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'
-							ref={thumbnailRef}
-						>
+						<ScrollBar currentElementRef={currentSlideRef} index={slideIndex}>
 							{slides.map((slide, index) => (
 								<div
 									key={
@@ -697,7 +662,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 									/>
 								</div>
 							))}
-						</div>
+						</ScrollBar>
 					</div>
 				</Panel>
 

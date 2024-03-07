@@ -100,13 +100,12 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 
 	return (
 		<>
-			{showPaymentModal && (
-				<PaywallModal
-					setShowModal={setShowPaymentModal}
-					message='Upgrade for more ⭐️credits.'
-					showReferralLink={true}
-				/>
-			)}
+			<PaywallModal
+				showModal={showPaymentModal}
+				setShowModal={setShowPaymentModal}
+				message='Upgrade for more ⭐️credits.'
+				showReferralLink={true}
+			/>
 
 			<ButtonWithExplanation
 				button={
@@ -123,19 +122,19 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 								color: '#2943E9',
 							}}
 						/> :
-						<SpinIcon />}
+							<SpinIcon />}
 					</button>
 				}
 				explanation={'Export'}
 			/>
 
-			{showModal && (
-				<Modal
-					showModal={showModal}
-					setShowModal={setShowModal}
-					title='Export to PDF / PPTX'
-					description='Choose the format and quality of the export.'
-				>
+			<Modal
+				showModal={showModal}
+				setShowModal={setShowModal}
+				title='Export to PDF / PPTX'
+				description='Choose the format and quality of the export.'
+			>
+				<div className='flex flex-row flex-wrap gap-4'>
 					<BigGrayButton
 						onClick={() => handleExport('pdf', true)}
 						isSubmitting={downloading}
@@ -168,10 +167,10 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 						<span>PPTX {!isPaidUser && '🔒'}</span>
 					</BigGrayButton>
 
-					{ hasScript && 
-					<SaveScriptsButton slides={slides}/>}
-				</Modal>
-			)}
+					{hasScript &&
+						<SaveScriptsButton slides={slides} />}
+				</div>
+			</Modal>
 		</>
 	);
 };

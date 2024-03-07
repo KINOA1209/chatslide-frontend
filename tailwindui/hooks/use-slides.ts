@@ -59,7 +59,7 @@ export const useSlides = () => {
 		if (slidesStatus !== SlidesStatus.NotInited) return;
 		slidesStatus = SlidesStatus.Initing;
 
-		setSlideIndex(0);
+		// setSlideIndex(0);
 		setVersion(0);
 		setSlidesHistory([slides]);
 		setSlidesHistoryIndex(0);
