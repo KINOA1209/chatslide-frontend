@@ -46,7 +46,6 @@ export const onDragStart =
 	(e: any, position: { x: number; y: number }) => {
 		e.preventDefault();
 		const newStartPos = [...startPos];
-        console.log(newStartPos)
 		newStartPos[imgIdx] = { x: position.x, y: position.y };
 		//setIsDraggingOrResizing(false);
 		setHasInteracted(true);
@@ -75,7 +74,6 @@ export const onDragStop =
 	(e: any, position: { x: number; y: number }) => {
 		const adjustedX = position.x;
 		const adjustedY = position.y;
-        console.log(adjustedX, adjustedY)
 		const curr_startPos = startPos[imgIdx];
 		const distance = Math.sqrt(
 			Math.pow(adjustedX - curr_startPos.x, 2) +
