@@ -28,7 +28,7 @@ const ProjectItem: React.FC<{
 			<div
 				className={`hidden md:flex col-span-1 p-2 items-center justify-center border-b-2 ${!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'} font-creato-medium leading-normal`}
 			>
-				<Link href={`/project/${project.id}`}>
+				<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
 					<div className=''>
 						{project.content_type === 'presentation' ? (
 							<Image
@@ -55,7 +55,7 @@ const ProjectItem: React.FC<{
 			<div
 				className={`col-span-2 p-2 flex items-center border-b-2 ${!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'} font-creato-medium leading-normal`}
 			>
-				<Link href={`/project/${project.id}`}>
+				<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
 					<div className='flex-wrap'>
 						{project.name} {isCloning && '(Cloning...⏳)'}
 					</div>
