@@ -213,6 +213,7 @@ export const useSlides = () => {
 		setSlidesHistory([slides]);
 		setSlidesHistoryIndex(0);
 		clearChatHistory();
+		setIsPresenting(false);
 		slidesStatus = SlidesStatus.Inited;
 	};
 
