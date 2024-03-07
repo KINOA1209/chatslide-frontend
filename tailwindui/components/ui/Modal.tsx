@@ -15,6 +15,7 @@ interface ModalProps {
 	description?: string;
 	clickOutsideToClose?: boolean;
 	canClose?: boolean;
+	width?: string;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -27,6 +28,7 @@ const Modal: React.FC<ModalProps> = ({
 	description,
 	clickOutsideToClose = true,
 	canClose = true,
+	width
 }) => {
 	const modalRef = React.useRef<HTMLDivElement>(null);
 	const modalContentRef = React.useRef<HTMLDivElement>(null);
@@ -91,6 +93,7 @@ const Modal: React.FC<ModalProps> = ({
 					e.stopPropagation();
 				}}
 				ref={modalContentRef}
+				style={{ width: width ? width : 'auto' }}
 			>
 				<div className='relative flex flex-col gap-y-4'>
 					{/* Close button */}
