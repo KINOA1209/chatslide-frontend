@@ -141,7 +141,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 		<>
 			<ToastContainer />
 			<div className='flex flex-col h-full items-center justify-center overflow-hidden'>
-				{project?.content_type === 'presentation' && (
+				{!project?.content_type || project?.content_type === 'presentation' && (
 					<div className='w-full flex grow overflow-hidden'>
 						<SlidesHTML isViewing={true} />
 					</div>
