@@ -6,12 +6,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import Header from '@/components/layout/header';
 import dynamic from 'next/dynamic';
 import ProjectService from '@/services/ProjectService';
-import Project from '@/models/Project';
 import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
 import { useSlides } from '@/hooks/use-slides';
 import { Blank, Loading } from '@/components/ui/Loading';
-import { Explanation, Instruction, Title } from '@/components/ui/Text';
-import Card from '@/components/ui/Card';
 import { useProject } from '@/hooks/use-project';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
@@ -113,7 +110,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 			}
 			initProject(project);
 			console.log('project', project);
-			if (!project.content_type || project.content_type) {
+			if (!project.content_type || project.content_type === 'presentation') {
 				const slides = ProjectService.parseSlides(project.presentation_slides);
 				initSlides(slides);
 				setLoading(false);
@@ -129,7 +126,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 	if (loading)
 		return <Loading />
 
-	if (loadingFailed)
+	if (loadingFailed || project?.topic === 'Project not found')
 		return <Blank>
 			<div>
 				❌ Oops! It looks like we couldn't find the project. <br />
@@ -141,7 +138,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 		<>
 			<ToastContainer />
 			<div className='flex flex-col h-full items-center justify-center overflow-hidden'>
-				{project?.content_type === 'presentation' && (
+				{(!project?.content_type || project?.content_type === 'presentation') && (
 					<div className='w-full flex grow overflow-hidden'>
 						<SlidesHTML isViewing={true} />
 					</div>
