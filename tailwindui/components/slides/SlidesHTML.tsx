@@ -347,6 +347,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	const updateImgUrlArray = (slideIndex: number) => {
 		const updateImgUrl = (urls: string[], ischart: boolean[]) => {
+			// change all null to ''
+			urls = urls.map((url) => (url === null ? '' : url));
+			
 			if (urls.length === 1 && urls[0] === '') {
 				return;
 			}
