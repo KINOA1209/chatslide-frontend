@@ -74,7 +74,7 @@ export default async function Page({ params }: Props) {
 			<div className='flex'>
 				<Header loginRequired={false} isLanding={false} />
 			</div>
-			<main className='w-full flex grow flex-col overflow-y-scroll'>
+			<main className='w-full flex grow flex-col overflow-y-hidden'>
 				{project && project.description && (
 					<div className='hidden sm:m-4'>
 					<Card>

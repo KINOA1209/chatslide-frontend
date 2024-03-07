@@ -435,7 +435,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	}
 
 	return (
-		<div className='w-full max-h-full flex flex-col items-start justify-start py-4 gap-4 relative'>
+		<div className='w-full max-h-full flex flex-col grow items-start justify-between py-4 gap-4 relative'>
 			<div className='w-full flex flex-row items-center justify-center'>
 				<ActionsToolBar
 					undo={undoChange}
@@ -526,35 +526,35 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				showReferralLink={true}
 			/>
 
-			<div className='w-full h-full flex flex-row items-start justify-start gap-2'>
+			<div className='w-full flex flex-row grow items-start justify-between gap-2 overflow-clip'>
 				{/* vertical bar */}
-				<div className='h-[540px] w-[150px] py-2'>
-					<ScrollBar currentElementRef={verticalCurrentSlideRef} index={slideIndex} axial='y'>
-						{slides.map((slide, index) => (
-							<div
-								key={
-									`previewContainer` +
-									index.toString() +
-									slides.length.toString()
-								} // force update when slide length changes
-								className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
-								onClick={() => gotoPage(index)}
-								ref={index === slideIndex ? verticalCurrentSlideRef : null}
-							>
-								{/* {index + 1} */}
-								<SlideContainer
-									slide={slide}
-									index={index}
-									scale={0.12}
-									isViewing={true}
-									templateDispatch={uneditableTemplateDispatch}
-									highlightBorder={slideIndex === index}
-									pageNumber={index + 1}
-								/>
-							</div>
-						))}
-					</ScrollBar>
-				</div>
+				<Panel>
+						<ScrollBar currentElementRef={verticalCurrentSlideRef} index={slideIndex} axial='y'>
+							{slides.map((slide, index) => (
+								<div
+									key={
+										`previewContainer` +
+										index.toString() +
+										slides.length.toString()
+									} // force update when slide length changes
+									className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
+									onClick={() => gotoPage(index)}
+									ref={index === slideIndex ? verticalCurrentSlideRef : null}
+								>
+									{/* {index + 1} */}
+									<SlideContainer
+										slide={slide}
+										index={index}
+										scale={0.12}
+										isViewing={true}
+										templateDispatch={uneditableTemplateDispatch}
+										highlightBorder={slideIndex === index}
+										pageNumber={index + 1}
+									/>
+								</div>
+							))}
+						</ScrollBar>
+				</Panel>
 
 				<Panel>
 					<div className='flex flex-row items-center justify-center'>

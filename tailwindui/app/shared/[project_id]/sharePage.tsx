@@ -143,9 +143,9 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 		</Blank>
 
 	return (
-		<div>
+		<>
 			<ToastContainer />
-			<div className='flex flex-col h-full items-center justify-center'>
+			<div className='flex flex-col h-full items-center justify-center overflow-hidden'>
 				{projectType === 'presentation' && (
 					<div className='w-full flex grow overflow-hidden'>
 						<SlidesHTML isViewing={true} />
@@ -164,7 +164,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 					</div>
 				)}
 			</div>
-		</div>
+		</>
 	);
 };
 

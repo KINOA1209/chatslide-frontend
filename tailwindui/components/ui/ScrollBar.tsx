@@ -53,7 +53,7 @@ export const ScrollBar: React.FC<{
 	return (
 		<div
 			ref={containerRef}
-			className={`w-full h-full flex ${flexDirClass} ${overflowClass} scrollbar scrollbar-thin`}
+			className={`w-full h-full flex ${flexDirClass} ${overflowClass} scrollbar scrollbar-thin gap-2 items-start`}
 		>
 			{children}
 		</div>
