@@ -49,6 +49,9 @@ const CloneButton: React.FC<{
 			description='You can create a new project with the same content, but optionally in a different language.'
 			onConfirm={onClone}
 		>
+			<Instruction>
+				Your current project language is {project.language}.
+			</Instruction>
 			<LanguageSelector
 				language={targetCloneLanguage}
 				setLanguage={setTargetCloneLanguage}
