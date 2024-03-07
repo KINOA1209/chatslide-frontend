@@ -63,7 +63,7 @@ export default function DesignPage() {
 		},
 		{
 			value: 'creative',
-			text: 'Creative Commons',
+			text: 'Creative',
 		},
 	];
 
