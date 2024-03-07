@@ -68,11 +68,6 @@ export default function Dashboard() {
 		}
 	};
 
-	const handleProjectClick = (projectId: string) => {
-		// Open the project detail page in a new tab
-		window.open(`/project/${projectId}`, '_blank');
-	};
-
 	const handleDelete = (
 		projectId: string,
 	) => {
@@ -147,7 +142,6 @@ export default function Dashboard() {
 							<ProjectTable
 								currentProjects={currentProjects}
 								setCurrentProjects={setProjects}
-								onProjectClick={handleProjectClick}
 								onDelete={handleDelete}
 							/>
 						) : (
