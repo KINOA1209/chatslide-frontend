@@ -385,7 +385,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			exportToPdfMode, //exportToPdfMode
 			isEditMode, //editMathMode
 			setIsEditMode, //setIsEditMode
-			() => { }, // handleSlideEdit
+			() => {}, // handleSlideEdit
 			updateImgUrlArray,
 			toggleEditMode,
 			index === 0, // isCoverPage

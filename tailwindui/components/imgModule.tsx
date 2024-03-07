@@ -116,7 +116,7 @@ export const ImgModule = ({
 	}, [imgsrc]);
 
 	const openModal = () => {
-		if (canEdit && !isDraggingOrResizing && !isImgEditMode) {
+		if (canEdit && !isImgEditMode) {
 			setShowImgButton(false);
 			setShowModal(true);
 			fetchFiles();
@@ -679,7 +679,7 @@ export const ImgModule = ({
 	const imageRefs = Array(3)
 		.fill(null)
 		.map(() => useRef<HTMLDivElement>(null));
-	const [isDraggingOrResizing, setIsDraggingOrResizing] = useState(false); //distinguish openModal and drag
+	//const [isDraggingOrResizing, setIsDraggingOrResizing] = useState(false); //distinguish openModal and drag
 	const [hasInteracted, setHasInteracted] = useState(false);
 	const [imagesDimensions, setImagesDimensions] = useState<
 		(
@@ -706,25 +706,25 @@ export const ImgModule = ({
 		handleSlideEdit,
 	);
 	const handleDragStart = onDragStart(
-		setIsDraggingOrResizing,
+		//setIsDraggingOrResizing,
 		startPos,
 		setStartPos,
 		setHasInteracted,
 	);
 	const handleResizeStart = onResizeStart(
-		setIsDraggingOrResizing,
+		//setIsDraggingOrResizing,
 		setHasInteracted,
 	);
 	const handleDragStop = onDragStop(
 		imagesDimensions,
 		setImagesDimensions,
 		startPos,
-		setIsDraggingOrResizing,
+		//setIsDraggingOrResizing,
 	);
 	const handleResizeStop = onResizeStop(
 		imagesDimensions,
 		setImagesDimensions,
-		setIsDraggingOrResizing,
+		//setIsDraggingOrResizing,
 	);
 
 	const toggleImgEditMode = (event:any) => {
@@ -793,14 +793,13 @@ export const ImgModule = ({
 					...updatedDimensions[currentContentIndex],
 					width: newWidth,
 					height: newHeight,
-					x: 0,
+					x: newX,
 					y: 0
 				}
 				setImagesDimensions(updatedDimensions)
 			};
 		}
 	}, [imgsrc, isParentDimension]);
-	console.log(parentDimension, currentContentIndex, slideIndex)
 
 	useEffect(() => {
 		const initializedData = initializeImageData(images_position, imageRefs);
@@ -819,6 +818,10 @@ export const ImgModule = ({
 		  setIsParentDimension(false);
 		}
 	  }, [currentContentIndex, imageRefs, parentDimension]);
+
+		console.log(images_position, currentContentIndex, canEdit)
+		console.log(imagesDimensions, currentContentIndex, canEdit)
+
 	return (
 		<>
 			{/* select image modal */}
