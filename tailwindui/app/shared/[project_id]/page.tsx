@@ -75,19 +75,18 @@ export default async function Page({ params }: Props) {
 				<Header loginRequired={false} isLanding={false} />
 			</div>
 			<main className='w-full flex grow flex-col overflow-y-hidden'>
-				{project && project.description && (
-					<div className='hidden sm:m-4'>
-					<Card>
-						<div className='flex flex-row items-end gap-x-4'>
-							<Title>{project.topic}</Title>
-							<Instruction>
-								Created using DrLambda
-							</Instruction>
-						</div>
-						<Explanation>{project.description}</Explanation>
-					</Card>
-					</div>
-				)}
+				{project.description &&
+					<div className='hidden sm:flex m-4'>
+						<Card>
+							<div className='flex flex-row items-end gap-x-4'>
+								<Title>{project.topic}</Title>
+								<Instruction>
+									Created using DrLambda
+								</Instruction>
+							</div>
+							<Explanation>{project.description}</Explanation>
+						</Card>
+					</div>}
 
 				<SharePage project_id={project_id} />
 
