@@ -104,6 +104,7 @@ class ProjectService {
 			//console.log('Project data:', project);
 
 			if (project?.presentation_slides) {
+				project.content_type = 'presentation';
 				project.parsed_slides = this.parseSlides(project.presentation_slides);
 			}
 
