@@ -129,7 +129,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const canUndo = slidesHistoryIndex > 0;
 	const canRedo = slidesHistoryIndex < slidesHistory.length - 1;
 
-	const currentSlideRef = useRef<HTMLDivElement>(null);
+	const horizontalCurrentSlideRef = useRef<HTMLDivElement>(null);
+	const verticalCurrentSlideRef = useRef<HTMLDivElement>(null);
 	const { isShared, updateIsShared, project } = useProject();
 
 	const [host, setHost] = useState('https://drlambda.ai');
@@ -349,7 +350,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		const updateImgUrl = (urls: string[], ischart: boolean[]) => {
 			// change all null to ''
 			urls = urls.map((url) => (url === null ? '' : url));
-			
+
 			if (urls.length === 1 && urls[0] === '') {
 				return;
 			}
@@ -525,38 +526,35 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				showReferralLink={true}
 			/>
 
-			<div className='w-full h-full flex flex-row items-center justify-start gap-2'>
-				<Panel>
-					{/* vertical bar */}
-					<div className='h-full w-[9rem] hidden xl:block mx-auto justify-center items-center'>
-						<div className='h-full max-h-[540px] flex shrink flex-col flex-nowrap py-2 overflow-y-auto  overflow-y-scroll overflow-x-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
-							{slides.map((slide, index) => (
-								<div
-									key={
-										`previewContainer` +
-										index.toString() +
-										slides.length.toString()
-									} // force update when slide length changes
-									className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
-									onClick={() => gotoPage(index)} // Added onClick handler
-								>
-									{/* {index + 1} */}
-									<SlideContainer
-										slide={slide}
-										index={index}
-										scale={0.12}
-										isViewing={true}
-										templateDispatch={uneditableTemplateDispatch}
-										slideRef={slideRef}
-										// containerRef={containerRef}
-										highlightBorder={slideIndex === index}
-										pageNumber={index + 1}
-									/>
-								</div>
-							))}
-						</div>
-					</div>
-				</Panel>
+			<div className='w-full h-full flex flex-row items-start justify-start gap-2'>
+				{/* vertical bar */}
+				<div className='h-[540px] w-[150px] py-2'>
+					<ScrollBar currentElementRef={verticalCurrentSlideRef} index={slideIndex} axial='y'>
+						{slides.map((slide, index) => (
+							<div
+								key={
+									`previewContainer` +
+									index.toString() +
+									slides.length.toString()
+								} // force update when slide length changes
+								className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
+								onClick={() => gotoPage(index)}
+								ref={index === slideIndex ? verticalCurrentSlideRef : null}
+							>
+								{/* {index + 1} */}
+								<SlideContainer
+									slide={slide}
+									index={index}
+									scale={0.12}
+									isViewing={true}
+									templateDispatch={uneditableTemplateDispatch}
+									highlightBorder={slideIndex === index}
+									pageNumber={index + 1}
+								/>
+							</div>
+						))}
+					</ScrollBar>
+				</div>
 
 				<Panel>
 					<div className='flex flex-row items-center justify-center'>
@@ -641,7 +639,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 					{/* horizontal  */}
 					<div className='block xl:hidden max-w-xs sm:max-w-4xl mx-auto py-4 justify-center items-center'>
-						<ScrollBar currentElementRef={currentSlideRef} index={slideIndex}>
+						<ScrollBar currentElementRef={horizontalCurrentSlideRef} index={slideIndex}>
 							{slides.map((slide, index) => (
 								<div
 									key={
@@ -651,7 +649,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 									} // force update when slide length changes
 									className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
 									onClick={() => gotoPage(index)}
-									ref={index === slideIndex ? currentSlideRef : null}
+									ref={index === slideIndex ? horizontalCurrentSlideRef : null}
 								>
 									{/* {index + 1} */}
 									<SlideContainer
