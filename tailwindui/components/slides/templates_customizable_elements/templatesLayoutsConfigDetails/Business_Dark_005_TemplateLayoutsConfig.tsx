@@ -2,7 +2,7 @@ import { LayoutElements } from '../layout_elements';
 import { LayoutKeys } from '../../slideLayout';
 import { TemplateKeys } from '../../slideTemplates';
 
-export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
+export const Business_Dark_005_TemplateLayoutsConfig: {
 	[key in LayoutKeys]?: LayoutElements;
 } = {
 	Cover_img_0_layout: {
@@ -87,7 +87,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			paddingTop: '4rem', // Equivalent to pt-[1rem]
 			paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 			paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
-			width: '50%', // Equivalent to w-1/2
+			width: '70%', // Equivalent to w-1/2
 			display: 'flex', // Equivalent to flex
 			flexDirection: 'column', // Equivalent to flex-col
 			justifyContent: 'flex-start', // Equivalent to justify-start
@@ -95,13 +95,13 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			gap: '2rem',
 		},
 		imageContainerCSS: {
-			width: '50%', // Equivalent to w-1/2
+			width: '30%', // Equivalent to w-1/2
 			height: '100%', // Equivalent to h-full
-			borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
+			// borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
 			//overflow: 'hidden',
 			display: 'flex',
 			alignItems: 'center',
-			padding: '4rem 2rem 4rem 4rem', // top right bottom left
+			// padding: '4rem 2rem 4rem 4rem', // top right bottom left
 			zIndex: 20,
 		},
 
@@ -146,7 +146,8 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			marginLeft: '2rem',
 			marginRight: '2rem',
 			zIndex: 30,
-			borderBottom: '1px solid #666666',
+			paddingBottom: '1rem',
+			borderBottom: '1px solid #8891AB',
 		},
 		topicCSS: {
 			zIndex: 30,
@@ -198,7 +199,8 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			marginLeft: '2rem',
 			marginRight: '2rem',
 			zIndex: 30,
-			borderBottom: '1px solid #666666',
+			paddingBottom: '1rem',
+			borderBottom: '1px solid #8891AB',
 		},
 		topicCSS: {
 			zIndex: 30,
@@ -229,13 +231,13 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			// zIndex: 30,
 		},
 		contentIndexCSS: {
-			fontFamily: 'Creato Display Bold',
-			color: '#000000', // Assuming text-neutral-900 corresponds to #374155
+			fontFamily: 'Creato Display Medium', // font-nimbus-sans-bold
+			color: '#8891AB', // Assuming text-neutral-900 corresponds to #374155
 			fontSize: '2.5rem',
 			fontWeight: 'bold',
 			// fontFamily: 'Creato Display Medium',
 			textTransform: 'uppercase',
-			lineHeight: '2.5rem',
+			lineHeight: '3.375rem',
 			letterSpacing: '0.5rem',
 			paddingTop: '2rem',
 			zIndex: 30,
@@ -275,7 +277,8 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			marginLeft: '2rem',
 			marginRight: '2rem',
 			zIndex: 30,
-			borderBottom: '1px solid #666666',
+			paddingBottom: '1rem',
+			borderBottom: '1px solid #8891AB',
 		},
 		topicCSS: {
 			zIndex: 30,
@@ -308,12 +311,12 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 		},
 		contentIndexCSS: {
 			fontFamily: 'Creato Display Medium', // font-nimbus-sans-bold
-			color: '#000000', // Assuming text-neutral-900 corresponds to #374155
+			color: '#8891AB', // Assuming text-neutral-900 corresponds to #374155
 			fontSize: '2.5rem',
 			fontWeight: 'bold',
 			// fontFamily: 'Creato Display Medium',
 			textTransform: 'uppercase',
-			lineHeight: '2.5rem',
+			lineHeight: '3.375rem',
 			letterSpacing: '0.5rem',
 			paddingTop: '2rem',
 			zIndex: 30,
@@ -345,12 +348,12 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 		},
 		visualElementsCSS: {
 			zIndex: 0,
-			width: '100%',
-			height: '100%',
+			width: '70%',
+			height: '50%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '0%',
+			top: '50%',
 		},
 		contentContainerCSS: {
 			paddingTop: '2rem',
@@ -370,7 +373,8 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			flexDirection: 'column',
 			width: '100%',
 			zIndex: 30,
-			borderBottom: '1px solid #666666',
+			paddingBottom: '1rem',
+			borderBottom: '1px solid #8891AB',
 		},
 		imageContainerCSS: {
 			width: '50%',
@@ -379,7 +383,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			//overflow: 'hidden',
 			display: 'flex',
 			alignItems: 'center',
-			padding: '2rem 4rem 0rem 4rem', // top right bottom left
+			padding: '0rem 0rem 0rem 2rem', // top right bottom left
 			zIndex: 30,
 		},
 		imageCSS: {
@@ -395,55 +399,66 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 		},
 	},
 	Col_1_img_1_layout: {
-		canvaCSS: {},
+		canvaCSS: { width: '100%', height: '100%' },
+		subtopicCSS: {
+			paddingBottom: '1rem',
+			borderBottom: '1px solid #8891AB',
+		},
 		columnCSS: {
 			width: '100%',
-			display: 'grid',
-			gridTemplateColumns: '1fr',
+			height: '100%',
+			// display: 'grid',
+			display: 'flex',
+			flexDirection: 'column',
+			// gridTemplateColumns: '1fr',
 			paddingTop: '2rem',
-			paddingBottom: '2rem',
 		},
 		titleAndSubtopicBoxCSS: {
 			display: 'flex',
 			flexDirection: 'column',
 			zIndex: 30,
-			borderBottom: '1px solid #666666',
-			paddingRight: '2rem',
 			paddingLeft: '2rem',
+			paddingRight: '2rem',
+			order: 1,
 		},
 		imageContainerCSS: {
-			height: '10rem',
+			height: '100%',
 			flexGrow: 1,
-			borderRadius: '0.375rem', // Assuming a typical rounded-md value
+			// borderRadius: '0.375rem', // Assuming a typical rounded-md value
 			//overflow: 'hidden',
-			gridRow: 3,
+
+			paddingTop: '2rem',
+			// gridRow: 3,
+			order: 3,
 			zIndex: 30,
-			paddingRight: '6rem',
 		},
 		imageCSS: {
-			// borderRadius: '1.25rem',
+			borderRadius: '0rem 0rem 0rem 0rem',
+			// borderBottomLeftRadius: '0.375rem',
+			// borderBottomRightRadius: '0.375rem',
 		},
 		contentContainerCSS: {
 			zIndex: 30,
-			paddingTop: '2rem',
-			paddingBottom: '2rem',
-			paddingRight: '6rem',
-			paddingLeft: '6rem',
+			paddingTop: '0.5rem',
+			paddingBottom: '0.5rem',
+			paddingLeft: '2rem',
+			paddingRight: '2rem',
 			height: '100%',
 			width: '100%',
 			display: 'flex',
 			flexDirection: 'column',
 			gap: '0.5rem',
-			gridRow: 2,
+			// gridRow: 2,
+			order: 2,
 		},
 		visualElementsCSS: {
 			zIndex: 0,
-			width: '100%',
-			height: '100%',
+			width: '70%',
+			height: '50%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '0%',
+			top: '50%',
 		},
 		contentTextCSS: {
 			display: 'flex',
@@ -463,25 +478,38 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 		},
 	},
 	Col_2_img_2_layout: {
+		canvaCSS: {
+			width: '100%',
+			height: '100%',
+			display: 'flex',
+		},
 		columnCSS: {
 			display: 'flex',
 			flexDirection: 'column',
+			justifyContent: 'space-between',
 			gap: '0.5rem',
+		},
+		subtopicCSS: {
+			paddingBottom: '1rem',
+			borderBottom: '1px solid #8891AB',
 		},
 		titleAndSubtopicBoxCSS: {
 			zIndex: 30,
 			display: 'flex',
 			flexDirection: 'column',
-			padding: '2rem 2rem 2rem 2rem',
 			// justifyContent: 'center',
 			// alignItems: 'center',
+			padding: '2rem 2rem 0rem 2rem',
+			order: 0,
 		},
 		imageContainerCSS: {
 			width: '100%', // equivalent to w-full
 			display: 'grid',
-			gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
-			gap: '2rem', // equivalent to gap-[2rem]
+			gridTemplateColumns: 'repeat(2, 1fr)', //
+			order: 2,
 			zIndex: 20,
+			// gap: '2rem',
+			padding: '0rem 0rem 0rem 0rem',
 		},
 		imageCSS: {
 			height: '11rem', // equivalent to h-[11rem]
@@ -489,31 +517,36 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			// borderRadius: '1.25rem', // equivalent to rounded-md
 			//overflow: 'hidden', // equivalent to overflow-hidden
 			position: 'relative', // equivalent to relative
+			// gridRow: 3,
+			// order: 3,
+			zIndex: 20,
 		},
 		contentCSS: {
 			zIndex: 30,
-			width: '100%', // equivalent to w-full
+			padding: '1rem 2rem 2rem 2rem',
+			width: '100%',
 			display: 'grid',
-			gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
-			gap: '2rem', // equivalent to gap-[2rem]
-			padding: '2rem 2rem 2rem 2rem',
+			gridTemplateColumns: 'repeat(2, 1fr)', //
+			gap: '2rem',
+			order: 1,
 		},
 		contentIndexCSS: {
-			fontFamily: 'Creato Display Bold',
-			color: '#000000', // Assuming text-neutral-900 corresponds to #374155
+			display: 'flex',
+			fontFamily: 'Creato Display Medium', // font-nimbus-sans-bold
+			color: '#8891AB', // Assuming text-neutral-900 corresponds to #374155
 			fontSize: '2.5rem',
 			fontWeight: 'bold',
 			// fontFamily: 'Creato Display Medium',
 			textTransform: 'uppercase',
-			lineHeight: '2.5rem',
+			lineHeight: '3.375rem',
 			letterSpacing: '0.5rem',
-			paddingTop: '2rem',
+			// paddingTop: '2rem',
 			zIndex: 30,
 		},
 		visualElementsCSS: {
-			zIndex: 0,
+			zIndex: 10,
 			width: '100%',
-			height: '100%',
+			height: '80%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
@@ -529,11 +562,20 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 		},
 	},
 	Col_3_img_3_layout: {
+		canvaCSS: {
+			width: '100%',
+			height: '100%',
+			display: 'flex',
+		},
 		columnCSS: {
 			display: 'flex',
 			flexDirection: 'column',
+			justifyContent: 'space-between',
 			gap: '0.5rem',
-			padding: '2rem 2rem 2rem 2rem',
+		},
+		subtopicCSS: {
+			paddingBottom: '1rem',
+			borderBottom: '1px solid #8891AB',
 		},
 		titleAndSubtopicBoxCSS: {
 			zIndex: 30,
@@ -541,44 +583,54 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			flexDirection: 'column',
 			// justifyContent: 'center',
 			// alignItems: 'center',
+			padding: '2rem 2rem 0rem 2rem',
+			order: 0,
 		},
 		imageContainerCSS: {
 			width: '100%', // equivalent to w-full
 			display: 'grid',
-			gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
-			gap: '2rem', // equivalent to gap-[2rem]
+			gridTemplateColumns: 'repeat(3, 1fr)', //
+			order: 2,
 			zIndex: 20,
+			// gap: '2rem',
+			padding: '0rem 0rem 0rem 0rem',
 		},
 		imageCSS: {
 			height: '11rem', // equivalent to h-[11rem]
 			flexGrow: 1, // equivalent to grow
-			borderRadius: '0.375rem', // equivalent to rounded-md
+			// borderRadius: '1.25rem', // equivalent to rounded-md
 			//overflow: 'hidden', // equivalent to overflow-hidden
+			position: 'relative', // equivalent to relative
+			// gridRow: 3,
+			// order: 3,
+			zIndex: 20,
 		},
 		contentCSS: {
 			zIndex: 30,
-			paddingTop: '1rem',
-			width: '100%', // equivalent to w-full
+			padding: '1rem 2rem 2rem 2rem',
+			width: '100%',
 			display: 'grid',
-			gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
-			gap: '2rem', // equivalent to gap-[2rem]
+			gridTemplateColumns: 'repeat(3, 1fr)', //
+			gap: '2rem',
+			order: 1,
 		},
 		contentIndexCSS: {
-			fontFamily: 'Creato Display Bold',
-			color: '#000000', // Assuming text-neutral-900 corresponds to #374155
+			display: 'flex',
+			fontFamily: 'Creato Display Medium', // font-nimbus-sans-bold
+			color: '#8891AB', // Assuming text-neutral-900 corresponds to #374155
 			fontSize: '2.5rem',
 			fontWeight: 'bold',
 			// fontFamily: 'Creato Display Medium',
 			textTransform: 'uppercase',
-			lineHeight: '2.5rem',
+			lineHeight: '3.375rem',
 			letterSpacing: '0.5rem',
-			paddingTop: '2rem',
+			// paddingTop: '2rem',
 			zIndex: 30,
 		},
 		visualElementsCSS: {
-			zIndex: 0,
+			zIndex: 10,
 			width: '100%',
-			height: '100%',
+			height: '80%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,

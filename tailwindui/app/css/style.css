@@ -102,6 +102,31 @@
 	src: url('/fonts/LibreBaskerville-Regular.ttf') format('truetype');
 	/* Add more src declarations for different font weights or styles if needed */
 }
+/* Assistant font family */
+@font-face {
+	font-family: 'Assistant Regular';
+	src: url('/fonts/Assistant-Regular.ttf') format('truetype');
+	/* Add more src declarations for different font weights or styles if needed */
+}
+
+@font-face {
+	font-family: 'Assistant Medium';
+	src: url('/fonts/Assistant-Medium.ttf') format('truetype');
+	/* Add more src declarations for different font weights or styles if needed */
+}
+/* Playfair Display font family */
+@font-face {
+	font-family: 'Playfair Display Medium';
+	src: url('/fonts/PlayfairDisplay-Medium.ttf') format('truetype');
+	/* Add more src declarations for different font weights or styles if needed */
+}
+
+@font-face {
+	font-family: 'Playfair Display Bold';
+	src: url('/fonts/PlayfairDisplay-Bold.ttf') format('truetype');
+	/* Add more src declarations for different font weights or styles if needed */
+}
+/* Brygada 1918 font family */
 @font-face {
 	font-family: 'Brygada 1918 SemiBold';
 	src: url('/fonts/Brygada1918-SemiBold.ttf') format('truetype');

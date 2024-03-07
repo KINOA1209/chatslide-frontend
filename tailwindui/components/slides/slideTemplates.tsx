@@ -28,6 +28,7 @@ import Image from 'next/image';
 import { SlideKeys } from '@/models/Slide';
 import Chart from '@/models/Chart';
 import ImagesPosition from '@/models/ImagesPosition';
+import { Business_Dark_005_template } from './new_templates/Business_Dark_005_template';
 
 export interface MainSlideProps {
 	user_name: JSX.Element;
@@ -106,10 +107,11 @@ export const availableTemplates = {
 	Yale: Yale_school_template,
 	UPenn: UPenn_school_template,
 	Default: Default,
-	Fun_Education_004: Fun_Education_004_template,
-	Business_002: Business_002_template,
 	Fun_Education_001: Fun_Education_001_template,
+	Business_002: Business_002_template,
 	Clean_Lifestyle_003: Clean_Lifestyle_003_template,
+	Fun_Education_004: Fun_Education_004_template,
+	Business_Dark_005: Business_Dark_005_template,
 	Fun_Vibrant_007: Fun_Vibrant_007_template,
 };
 

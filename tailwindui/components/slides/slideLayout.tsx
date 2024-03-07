@@ -389,7 +389,7 @@ export const Col_2_img_0_layout = ({
 								// className={`flex flex-row w-full h-full grow `}
 								style={layoutElements.contentTextCSS}
 							>
-								<li>{item}</li>
+								<li style={{ width: '100%' }}>{item}</li>
 							</ul>
 						</div>
 					))}
@@ -465,7 +465,7 @@ export const Col_3_img_0_layout = ({
 								// className={`flex flex-row w-full h-full grow `}
 								style={layoutElements.contentTextCSS}
 							>
-								<li>{item}</li>
+								<li style={{ width: '100%' }}>{item}</li>
 							</ul>
 						</div>
 					))}
@@ -1001,11 +1001,24 @@ export const Col_2_img_2_layout = ({
 									display: item === null || index > 1 ? 'none' : 'block', // or 'flex' based on your layout
 								}}
 							>
+								<div
+									style={
+										layoutElements.contentIndexCSS !== undefined
+											? { ...layoutElements.contentIndexCSS }
+											: { display: 'none' }
+									}
+								>
+									{index + 1}
+								</div>
+								<div
+									// className='opacity-50 border border-neutral-900 border-opacity-40'
+									style={layoutElements.contentIndexTextDividerCSS}
+								></div>
 								<ul
 									key={index}
 									// className={`flex flex-row w-full h-full grow `}
 								>
-									<li>{item}</li>
+									<li style={{ width: '100%' }}>{item}</li>
 								</ul>
 							</div>
 						))}
@@ -1159,8 +1172,21 @@ export const Col_3_img_3_layout = ({
 									display: item === null || index > 2 ? 'none' : 'block', // or 'flex' based on your layout
 								}}
 							>
+								<div
+									style={
+										layoutElements.contentIndexCSS !== undefined
+											? { ...layoutElements.contentIndexCSS }
+											: { display: 'none' }
+									}
+								>
+									{index + 1}
+								</div>
+								<div
+									// className='opacity-50 border border-neutral-900 border-opacity-40'
+									style={layoutElements.contentIndexTextDividerCSS}
+								></div>
 								<ul key={index} className={`flex flex-row w-full h-full grow`}>
-									<li>{item}</li>
+									<li style={{ width: '100%' }}>{item}</li>
 								</ul>
 							</div>
 						))}
