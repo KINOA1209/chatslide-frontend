@@ -729,16 +729,13 @@ export const ImgModule = ({
 
 	const toggleImgEditMode = (event:any) => {
 		event.stopPropagation();
+		if (isImgEditMode) {
+			handleSave();
+		}
 		setIsImgEditMode(!isImgEditMode);
 	};
 
 	const applyZoom = () => {
-		const scale = zoomLevel / 100;
-		const newWidth = imageSize.width * scale;
-		const newHeight = imageSize.height * scale;
-		const updatedDimensions = [...imagesDimensions];
-        updatedDimensions[currentContentIndex] = { ...updatedDimensions[currentContentIndex], width: newWidth, height: newHeight };
-		setImagesDimensions(updatedDimensions);
 		handleSave()
 		setIsImgEditMode(false)
 	};
@@ -751,31 +748,60 @@ export const ImgModule = ({
 		return { width: newWidth, height: newHeight, x: newX};
 	}
 
+	const onZoomChange = (newZoomLevel: number) => {
+		const scale = newZoomLevel / 100;
+		const dimension = imagesDimensions[currentContentIndex];
+		console.log(dimension)
+		const currentWidth = dimension.width ?? 0;
+		const currentHeight = dimension.height ?? 0;
+		const newWidth = currentWidth * scale;
+		const newHeight = currentHeight * scale;
+		//const currentX = dimension.x ?? 0;
+		//const currentY = dimension.y ?? 0;
+
+		//const deltaX = (newWidth - imageSize.width) / 2;
+		//const deltaY = (newHeight - imageSize.height) / 2;
+		//const newX = currentX - deltaX;
+		//const newY = currentY - deltaY;
+
+		const updatedDimensions = [...imagesDimensions];
+		updatedDimensions[currentContentIndex] = {
+			...dimension,
+			width: newWidth,
+			height: newHeight,
+			//x: newX,
+			//y: newY,
+		};
+
+		setImagesDimensions(updatedDimensions);
+		console.log(imagesDimensions)
+	};
+
 	//reposition to default if images changed
 	useEffect(() => {
 		// make sure we got non-zero value for parentDimension
-		if (isParentDimension) { 
-		const img = new window.Image();
-		img.src = imgsrc;
-		img.onload = () => {
-			const {height: newHeight, width: newWidth, x: newX} = customScale(
-				img.naturalWidth, img.naturalHeight, parentDimension.width, parentDimension.height
-			)
-			if (newWidth !== imageSize.width || newHeight !== imageSize.height) {
-				setImageSize({ width: newWidth, height: newHeight });
+		if (isParentDimension && Object.keys(images_position[currentContentIndex]).length == 0) { 
+			const img = new window.Image();
+			img.src = imgsrc;
+			img.onload = () => {
+				const {height: newHeight, width: newWidth, x: newX} = customScale(
+					img.naturalWidth, img.naturalHeight, parentDimension.width, parentDimension.height
+				)
+				if (newWidth !== imageSize.width || newHeight !== imageSize.height) {
+					setImageSize({ width: newWidth, height: newHeight });
+				};
+				const updatedDimensions = [...imagesDimensions]
+				updatedDimensions[currentContentIndex] = {
+					...updatedDimensions[currentContentIndex],
+					width: newWidth,
+					height: newHeight,
+					x: newX,
+					y: 0
+				}
+				setImagesDimensions(updatedDimensions)
+				console.log(imagesDimensions)
 			};
-			const updatedDimensions = [...imagesDimensions]
-			updatedDimensions[currentContentIndex] = {
-				...updatedDimensions[currentContentIndex],
-				width: newWidth,
-				height: newHeight,
-				x: newX,
-				y: 0
-			}
-			setImagesDimensions(updatedDimensions)
-			console.log(imagesDimensions)
-		};
-	}
+		}
 	}, [imgsrc, isParentDimension]);
 
 	useEffect(() => {
@@ -795,6 +821,7 @@ export const ImgModule = ({
 		  setIsParentDimension(false);
 		}
 	  }, [currentContentIndex, imageRefs, parentDimension]);
+	console.log('imagedimension', imagesDimensions)
 	return (
 		<>
 			{/* select image modal */}
@@ -1082,6 +1109,8 @@ export const ImgModule = ({
 							overflow: isImgEditMode ? 'visible' : 'hidden'
 						}}
 						ref={imageRefs[currentContentIndex]}
+						onMouseEnter={() => setShowImgButton(true)}
+						onMouseLeave={() => setShowImgButton(false)}
 					>
 						<Rnd
 							className={`${isImgEditMode ? "rndContainerWithBorder" : ""}`}
@@ -1107,25 +1136,24 @@ export const ImgModule = ({
 							onDragStop={handleDragStop(currentContentIndex)}
 							onResizeStart={handleResizeStart}
 							onResizeStop={handleResizeStop(currentContentIndex)}
-							onMouseEnter={() => setShowImgButton(true)}
-							//onMouseLeave={handleSave}
 						>
 							<Image
 								unoptimized={true}
 								style={{
-									//objectFit: 'cover',
+									objectFit: 'cover',
 									height: '100%',
-									width: 'auto',
+									//width: 'auto',
+									width: '100%',
 									borderRadius: customImageStyle?.borderRadius,
-									transform: `scale(${zoomLevel / 100})`,
-									transformOrigin: 'center center',
+									//transform: `scale(${zoomLevel / 100})`,
+									//transformOrigin: 'center center',
 								}}
 								src={imgsrc}
 								alt='Image'
 								//layout='fill'
 								width={960}
 								height={540}
-								//objectFit='contain'
+								objectFit='contain'
 								className={`transition ease-in-out duration-150 ${
 									canEdit ? (isImgEditMode ? 'brightness-100' : 'hover:brightness-90') : 'cursor-pointer'
 								}`}
@@ -1154,13 +1182,14 @@ export const ImgModule = ({
 										&middot;&middot;&middot;
 								</button>
 						)}
-						{isImgEditMode && canEdit && (
+						{/* {isImgEditMode && canEdit && (
 								<ResizeSlider
 									zoomLevel={zoomLevel}
 									setZoomLevel={setZoomLevel}
 									applyZoom={applyZoom}
+									onZoomChange={onZoomChange}
 								/>
-						)}
+						)} */}
 					</div>
 				)}
 			</div>

@@ -4,12 +4,14 @@ type ResizeSliderProps = {
     zoomLevel:number;
     setZoomLevel: React.Dispatch<React.SetStateAction<number>>;
     applyZoom: () => void;
+    onZoomChange: (newZoomLevel: number) => void; 
 }
   
 const ResizeSlider: React.FC<ResizeSliderProps> = ({
     zoomLevel,
     setZoomLevel,
     applyZoom,
+    onZoomChange,
 }) => {
     return (
         <div 
@@ -27,7 +29,11 @@ const ResizeSlider: React.FC<ResizeSliderProps> = ({
                 min="10"
                 max="500"
                 value={zoomLevel}
-                onChange={(e) => setZoomLevel(Number(e.target.value))}
+                onChange={(e) => {
+                    const newZoomLevel = Number(e.target.value);
+                    setZoomLevel(newZoomLevel);
+                    onZoomChange(newZoomLevel);
+                }}
                 className="slider"
             />
             <span className="text-gray-700">{`${zoomLevel}%`}</span>

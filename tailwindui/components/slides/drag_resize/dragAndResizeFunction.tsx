@@ -25,10 +25,10 @@ export const onMouseLeave = (
     setShowImgButton: React.Dispatch<React.SetStateAction<boolean>>,
     handleSlideEdit:Function,
 ) => () => {
-    if (hasInteracted) {
+    //if (hasInteracted) {
         handleSlideEdit([imagesDimensions], slideIdx, ['images_position'])
-        setHasInteracted(false);
-    }
+        //setHasInteracted(false);
+    //}
     setShowImgButton(false);
 };
 
@@ -48,7 +48,7 @@ export const onDragStart =
 		const newStartPos = [...startPos];
 		newStartPos[imgIdx] = { x: position.x, y: position.y };
 		setIsDraggingOrResizing(false);
-		setHasInteracted(true);
+		//setHasInteracted(true);
 		setStartPos(newStartPos);
 	};
 
@@ -100,7 +100,7 @@ export const onResizeStart =
 	) =>
 	() => {
 		setIsDraggingOrResizing(true);
-		setHasInteracted(true);
+		//setHasInteracted(true);
 	};
 
 //handle function when resize stop
