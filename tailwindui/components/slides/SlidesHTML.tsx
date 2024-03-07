@@ -121,7 +121,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		Math.min(dimensions.width / 960, dimensions.height / 540),
 	);
 	const [nonPresentScale, setNonPresentScale] = useState(
-		Math.min((dimensions.width - 400) / 960, (dimensions.height - 400) / 540),
+		Math.min(1, Math.min(dimensions.width / 960, (dimensions.height-100) / 540) * 0.8),
 	);
 
 	const [isChatWindowOpen, setIsChatWindowOpen] = useState(false);
@@ -161,15 +161,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	useEffect(() => {
 		const handleResize = () => {
-			setDimensions({
-				width: window.innerWidth,
-				height: window.innerHeight,
-			});
-			//console.log('window.innerWidth', window.innerWidth);
-			setNonPresentScale(Math.min(1, (window.innerWidth / 960) * 0.8));
-			// setNonPresentScale(Math.min(nonPresentScale, ((window.innerHeight-200)) / 540));
-			//console.log('nonPresentScale', nonPresentScale);
-		};
+			
+			const scale = Math.min(window.innerWidth / 960, window.innerHeight / 540);
+			setPresentScale(scale);
+			setNonPresentScale(Math.min(1, Math.min(window.innerWidth / 960, (window.innerHeight - 100) / 540) * 0.8));
+		}
+			
 		window.addEventListener('resize', handleResize);
 
 		return () => window.removeEventListener('resize', handleResize);
@@ -421,7 +418,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				index={slideIndex}
 				isPresenting={isPresenting}
 				isViewing={isViewing}
-				scale={isPresenting ? presentScale : nonPresentScale}
+				scale={presentScale}
 				templateDispatch={editableTemplateDispatch}
 				slideRef={slideRef}
 				containerRef={containerRef}
@@ -526,9 +523,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				showReferralLink={true}
 			/>
 
-			<div className='w-full flex flex-row grow items-start justify-between gap-2 overflow-clip'>
+			<div className='w-full flex flex-row grow items-start justify-center xl:justify-between gap-4 overflow-clip'>
 				{/* vertical bar */}
+				
 				<Panel>
+					<div className='h-full hidden xl:flex w-[150px]'>
 						<ScrollBar currentElementRef={verticalCurrentSlideRef} index={slideIndex} axial='y'>
 							{slides.map((slide, index) => (
 								<div
@@ -554,6 +553,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 								</div>
 							))}
 						</ScrollBar>
+					</div>
 				</Panel>
 
 				<Panel>
@@ -638,7 +638,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					</div>
 
 					{/* horizontal  */}
-					<div className='block xl:hidden max-w-xs sm:max-w-4xl mx-auto py-4 justify-center items-center'>
+					<div className='block xl:hidden max-w-xl sm:max-w-4xl mx-auto py-4 justify-center items-center'>
 						<ScrollBar currentElementRef={horizontalCurrentSlideRef} index={slideIndex}>
 							{slides.map((slide, index) => (
 								<div
