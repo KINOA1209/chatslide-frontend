@@ -394,7 +394,7 @@ export const ImgModule = ({
 										key={index}
 										className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-2`}
 									>
-										<ResourceIcon resource={resource} cover={true}/>
+										<ResourceIcon resource={resource} contain={true}/>
 									</div>
 								);
 							} else {
@@ -404,7 +404,7 @@ export const ImgModule = ({
 										key={index}
 										className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-2`}
 									>
-										<ResourceIcon resource={resource} cover={true}/>
+										<ResourceIcon resource={resource} contain={true}/>
 									</div>
 								);
 							}
