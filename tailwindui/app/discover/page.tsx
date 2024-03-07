@@ -25,7 +25,7 @@ export default async function Discover() {
 				<div className='w-full max-w-7xl flex flex-wrap items-end justify-center'>
 					{/* my project title text */}
 					<div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-white text-base font-bold font-creato-medium leading-10 tracking-wide border-white border-b-2'>
-						Discover Community Projects
+						Discover Projects
 					</div>
 
 					{/* create new project button */}
@@ -33,7 +33,7 @@ export default async function Discover() {
 						<DrlambdaButton
 							isPaidFeature={false}
 						>
-							<Link href='/workflow-scenario-choice'>Start your own project</Link>
+							<Link href='/workflow-scenario-choice'>Start Yours</Link>
 						</DrlambdaButton>
 					</div>
 				</div>

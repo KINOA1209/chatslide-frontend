@@ -136,10 +136,12 @@ const ProjectTable: React.FC<Props> = ({
 	isDiscover = false,
 }) => {
 
+	const grids = isDiscover ? 'grid-cols-3 md:grid-cols-4' : 'grid-cols-3 md:grid-cols-6';
+
 	return (
 		<>
 			<div className='w-full lg:w-2/3 mx-auto'>
-				<div className={`grid bg-[#ECF1FE] border border-gray-200 grid-cols-${isDiscover ? '4' : '3'} md:grid-cols-${isDiscover ? '4' : '6'}`}>
+				<div className={`grid bg-[#ECF1FE] border border-gray-200 ${grids}`}>
 					<div className='hidden md:flex col-span-1 w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
 						Type
 					</div>
@@ -154,7 +156,7 @@ const ProjectTable: React.FC<Props> = ({
 
 					</div>
 				</div>
-				<div className={`grid border bg-[white] border-gray-200 grid-cols-${isDiscover ? '4' : '3'} md:grid-cols-${isDiscover ? '4' : '6'}`}>
+				<div className={`grid border bg-[white] border-gray-200 ${grids}`}>
 					{' '}
 					{currentProjects.map((project, index) => (
 						<ProjectItem

@@ -143,6 +143,7 @@ export default function Dashboard() {
 								currentProjects={currentProjects}
 								setCurrentProjects={setProjects}
 								onDelete={handleDelete}
+								isDiscover={false}
 							/>
 						) : (
 							<Blank text={`You haven't created any project yet.`} />
