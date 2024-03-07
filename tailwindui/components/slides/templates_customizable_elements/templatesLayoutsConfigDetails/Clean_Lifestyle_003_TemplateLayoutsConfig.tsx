@@ -498,6 +498,18 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			gap: '2rem', // equivalent to gap-[2rem]
 			padding: '2rem 2rem 2rem 2rem',
 		},
+		contentIndexCSS: {
+			fontFamily: 'Creato Display Bold',
+			color: '#000000', // Assuming text-neutral-900 corresponds to #374155
+			fontSize: '2.5rem',
+			fontWeight: 'bold',
+			// fontFamily: 'Creato Display Medium',
+			textTransform: 'uppercase',
+			lineHeight: '2.5rem',
+			letterSpacing: '0.5rem',
+			paddingTop: '2rem',
+			zIndex: 30,
+		},
 		visualElementsCSS: {
 			zIndex: 0,
 			width: '100%',
@@ -550,6 +562,18 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			display: 'grid',
 			gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
 			gap: '2rem', // equivalent to gap-[2rem]
+		},
+		contentIndexCSS: {
+			fontFamily: 'Creato Display Bold',
+			color: '#000000', // Assuming text-neutral-900 corresponds to #374155
+			fontSize: '2.5rem',
+			fontWeight: 'bold',
+			// fontFamily: 'Creato Display Medium',
+			textTransform: 'uppercase',
+			lineHeight: '2.5rem',
+			letterSpacing: '0.5rem',
+			paddingTop: '2rem',
+			zIndex: 30,
 		},
 		visualElementsCSS: {
 			zIndex: 0,

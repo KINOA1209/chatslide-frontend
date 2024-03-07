@@ -541,6 +541,7 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			gap: '2rem',
 			order: 2,
 		},
+
 		visualElementsCSS: {
 			zIndex: 10,
 			width: '70%',
