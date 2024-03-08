@@ -903,7 +903,8 @@ export const ImgModule = ({
 
 					{selectedQueryMode === ImgQueryMode.CHART_SELECTION &&
 						selectedChartType &&
-						chartData.length > 0 && (
+						chartData.length > 0 &&
+						chartModalContent !== 'selection' && (
 							<div className='w-full mx-auto flex justify-center items-center' ref={doneButtonRef}>
 								<BigBlueButton
 									isSubmitting={uploading || searching}
@@ -914,7 +915,9 @@ export const ImgModule = ({
 								>
 									Add Chart
 								</BigBlueButton>
-							</div>)}
+							</div>
+						)
+					}
 				</Modal>,
 				document.body,
 			)}
@@ -933,7 +936,7 @@ export const ImgModule = ({
 					ischartArr[currentContentIndex] &&
 					selectedChartType &&
 					chartData.length > 0 ? (  // chart
-					<div className='w-full h-full flex items-center justify-center'>
+					<div className='w-full h-full flex items-center justify-center' onClick={openModal}>
 						<DynamicChart
 							chartType={selectedChartType}
 							chartData={chartData}
@@ -1048,23 +1051,23 @@ export const ImgModule = ({
 													}} />
 												}
 											</button>} />
-											{!isImgEditMode && 
-											<ButtonWithExplanation
-										explanation='Change'
-										button={
-										<button
-											onClick={openModal}>
-												<GoPencil style={{
-													strokeWidth: '1',
-													flex: '1',
-													width: '1.5rem',
-													height: '1.5rem',
-													fontWeight: 'bold',
-													color: '#2943E9',
-												}} />
-											</button>
-										}
-									/>}
+									{!isImgEditMode &&
+										<ButtonWithExplanation
+											explanation='Change'
+											button={
+												<button
+													onClick={openModal}>
+													<GoPencil style={{
+														strokeWidth: '1',
+														flex: '1',
+														width: '1.5rem',
+														height: '1.5rem',
+														fontWeight: 'bold',
+														color: '#2943E9',
+													}} />
+												</button>
+											}
+										/>}
 								</ToolBar>
 							</div>
 						}
