@@ -10,6 +10,7 @@ import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
 import { useSlides } from '@/hooks/use-slides';
 import { Blank, Loading } from '@/components/ui/Loading';
 import { useProject } from '@/hooks/use-project';
+import { JoinUsBanner } from '@/components/layout/JoinUsBanner';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -31,7 +32,6 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 	const [loading, setLoading] = useState(true);
 	const [loadingFailed, setLoadingFailed] = useState(false);
 	const { initSlides } = useSlides();
-	const [showDescription, setShowDescription] = useState<boolean>(true);
 	const [socialPosts, setSocialPosts] = useState<SocialPostSlide[]>([]);
 	const [postType, setPostType] = useState<string>('casual_topic');
 	const borderColorOptions = [

@@ -48,7 +48,7 @@ const OutlineVisualizer = ({
 	) => {
 		e.preventDefault();
 		let newOutlineData = [...outlineData];
-		newOutlineData[sectionIndex].content.splice(detailIndex, 0, '');
+		newOutlineData[sectionIndex].content.splice(detailIndex, 0, 'Provide some details about this section');
 		setOutlineData(newOutlineData);
 	};
 

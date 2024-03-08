@@ -15,8 +15,8 @@ import useHydrated from '@/hooks/use-hydrated';
 import Modal from '../ui/Modal';
 import FeedbackButton from '../ui/feedback';
 
-interface SideBarProps {}
-const SideBar = ({}: SideBarProps) => {
+interface SideBarProps { }
+const SideBar = ({ }: SideBarProps) => {
 	const [top, setTop] = useState<boolean>(true);
 	const { uid, credits, tier, userStatus } = useUser();
 	const router = useRouter();
@@ -77,31 +77,32 @@ const SideBar = ({}: SideBarProps) => {
 	if (userStatus == UserStatus.Initing || userStatus == UserStatus.NotInited)
 		return <></>;
 
-	if (userStatus == UserStatus.Failed || !uid)
-		return (
-			<Modal
-				showModal={true}
-				canClose={false} // cannot close modal
-				setShowModal={() => {}} // cannot close modal
-				title='Sign in to continue'
-				description='You need to sign in to continue'
-				onConfirm={() => router.push('/signup')}
-			/>
-		);
+	if (userStatus == UserStatus.Failed || !uid) {
+		if (location.pathname.includes('/discover'))
+			return <></>  // do not show sidebar if user is a visitor
+		else
+			return (
+				<Modal
+					showModal={true}
+					canClose={false} // cannot close modal
+					setShowModal={() => { }} // cannot close modal
+					title='Sign in to continue'
+					description='You need to sign in to continue'
+					onConfirm={() => router.push('/signup')}
+				/>
+			);
+	}
 
 	return (
 		<header
-			className={`hidden sm:flex sticky left-0 top-0 ${
-				isSidebarOpen ? 'w-[10rem]' : 'w-[3rem]'
-			} h-[100vh] flex flex-col items-center justify-between z-30 bg-gradient-to-b from-Dark to-[#121212] bg-opacity-90 transition duration-300 ease-in-out ${
-				!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
-			}`}
+			className={`hidden sm:flex sticky left-0 top-0 ${isSidebarOpen ? 'w-[10rem]' : 'w-[3rem]'
+				} h-[100vh] flex flex-col items-center justify-between z-30 bg-gradient-to-b from-Dark to-[#121212] bg-opacity-90 transition duration-300 ease-in-out ${!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
+				}`}
 		>
 			{/* toggle sidebar button */}
 			<button
-				className={`rounded-full p-1.5 bg-Dark text-white fixed top-5 ${
-					isSidebarOpen ? 'left-[9rem]' : 'left-[2rem]'
-				} focus:outline-none`}
+				className={`rounded-full p-1.5 bg-Dark text-white fixed top-5 ${isSidebarOpen ? 'left-[9rem]' : 'left-[2rem]'
+					} focus:outline-none`}
 				onClick={toggleSidebar}
 			>
 				{isSidebarOpen ? <FaChevronLeft /> : <FaChevronRight />}
@@ -150,9 +151,8 @@ const SideBar = ({}: SideBarProps) => {
 					{credits !== 'Infinite' && (
 						<a
 							href='/account'
-							className={`block  py-1 text-sm text-white ${
-								isSidebarOpen ? 'px-2' : 'px-0'
-							} rounded-lg hover:bg-gray-400`}
+							className={`block  py-1 text-sm text-white ${isSidebarOpen ? 'px-2' : 'px-0'
+								} rounded-lg hover:bg-gray-400`}
 							role='menuitem'
 						>
 							{credits} ⭐️ {isSidebarOpen && 'Credits'}

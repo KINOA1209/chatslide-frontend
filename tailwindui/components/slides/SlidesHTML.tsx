@@ -475,8 +475,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						</>
 					)}
 
-					<div className='h-8 w-0.5 bg-gray-200'></div>
-
 					<ButtonWithExplanation
 						button={<PresentButton openPresent={openPresent} />}
 						explanation='Present'

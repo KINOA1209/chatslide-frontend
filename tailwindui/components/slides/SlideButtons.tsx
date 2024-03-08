@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
 	LeftSlideNavIcon,
 	RightSlideNavIcon,
 } from '@/app/(feature)/workflow-review-slides/icons';
-import { BigGrayButton, DropDown } from '../button/DrlambdaButton';
-import { GoPlay, GoPlus, GoShare, GoTrash } from 'react-icons/go';
-import { LuPaintbrush, LuPresentation, LuTrash2 } from 'react-icons/lu';
+import { BigGrayButton } from '../button/DrlambdaButton';
+import { GoPlus, GoShare, } from 'react-icons/go';
+import { LuTrash2, LuPalette } from 'react-icons/lu';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import Modal from '../ui/Modal';
 import ClickableLink from '../ui/ClickableLink';
@@ -395,7 +395,7 @@ export const ChangeTemplateOptions: React.FC<{
 					<button
 						onClick={() => { setShowModal(true) }}
 					>
-						<LuPaintbrush
+						<LuPalette
 							style={{
 								strokeWidth: '2',
 								flex: '1',

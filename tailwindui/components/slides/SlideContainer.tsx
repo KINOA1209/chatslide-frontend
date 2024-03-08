@@ -52,9 +52,8 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 	return (
 		<div
 			id='slideContainer'
-			className={`${
-				isPresenting ? 'fixed top-0 left-0 w-full h-full z-50' : 'relative'
-			}`}
+			className={`${isPresenting ? 'fixed top-0 left-0 w-full h-full z-50' : 'relative'
+				}`}
 			ref={containerRef}
 			style={{
 				boxSizing: 'border-box',
@@ -70,7 +69,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 				height: isPresenting ? '100vh' : `${540 * scale}px`,
 			}}
 		>
-			{pageNumber && 
+			{pageNumber &&
 				<div className='absolute bottom-0 right-0 bg-gray-400 px-1 text-white text-sm rounded-sm z-10'>
 					{pageNumber}
 				</div>
@@ -88,32 +87,30 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 					❌
 				</button>
 			)}
-			{slides.length > 0 && (
-				<div
-					className='slide h-full w-full'
-					ref={slideRef}
-					style={{
-						width: '960px',
-						height: '540px',
-						transformOrigin: 'top left',
-						transform: `scale(${scale})`,
-						backgroundSize: 'cover',
-						display: 'flex',
-						flexDirection: 'column',
-						justifyContent: 'flex-start',
-						alignItems: 'flex-start',
-						position: 'relative',
-					}}
-				>
-					{slide &&
-						templateDispatch(
-							slide,
-							index,
-							!isViewing && !isPresenting,
-							exportToPdfMode,
-						)}
-				</div>
-			)}
+			<div
+				className='slide h-full w-full'
+				ref={slideRef}
+				style={{
+					width: '960px',
+					height: '540px',
+					transformOrigin: 'top left',
+					transform: `scale(${scale})`,
+					backgroundSize: 'cover',
+					display: 'flex',
+					flexDirection: 'column',
+					justifyContent: 'flex-start',
+					alignItems: 'flex-start',
+					position: 'relative',
+				}}
+			>
+				{slide &&
+					templateDispatch(
+						slide,
+						index,
+						!isViewing && !isPresenting,
+						exportToPdfMode,
+					)}
+			</div>
 		</div>
 	);
 };

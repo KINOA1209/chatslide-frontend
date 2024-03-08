@@ -78,34 +78,35 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 	) : (
 		<ToolBar>
 			{/* user tutorial control */}
-			<ButtonWithExplanation
-				button={
-					<button
-						onClick={handleStartTour}
-						style={{
-							display: 'flex',
-							justifyContent: 'center',
-							alignItems: 'center',
-						}}
-					>
-						<GoQuestion
+			{!isViewing && <>
+				<ButtonWithExplanation
+					button={
+						<button
+							onClick={handleStartTour}
 							style={{
-								strokeWidth: '1',
-								flex: '1',
-								width: '1.5rem',
-								height: '1.5rem',
-								fontWeight: 'bold',
-								color: '#2943E9',
+								display: 'flex',
+								justifyContent: 'center',
+								alignItems: 'center',
 							}}
-						/>
-					</button>
-				}
-				explanation={'User tutorial'}
-			/>
+						>
+							<GoQuestion
+								style={{
+									strokeWidth: '1',
+									flex: '1',
+									width: '1.5rem',
+									height: '1.5rem',
+									fontWeight: 'bold',
+									color: '#2943E9',
+								}}
+							/>
+						</button>
+					}
+					explanation={'User tutorial'}
+				/>
+				<div className='h-8 w-0.5 bg-gray-200'></div>
+			</>}
 
 			{!isViewing && <>
-				<div className='h-8 w-0.5 bg-gray-200'></div>
-
 				<ButtonWithExplanation
 					button={
 						<button
@@ -157,6 +158,7 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 					}
 					explanation={'Redo'}
 				/>
+				<div className='h-8 w-0.5 bg-gray-200'></div>
 			</>}
 
 			{children}

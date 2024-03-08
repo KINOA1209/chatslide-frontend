@@ -13,7 +13,7 @@ export const pricingPlansMonthlyData = [
 	},
 	{
 		title: 'Plus',
-		price: '$0.99',
+		price: '$3.96',
 		frequency: 'for 1st month, then $9.99/month',
 		features: [
 			'All features in Free',
@@ -28,7 +28,7 @@ export const pricingPlansMonthlyData = [
 	},
 	{
 		title: '* Pro',
-		price: '$3.99',
+		price: '$15.96',
 		frequency: 'for 1st month, then $39.99/month',
 		features: [
 			'All features in Plus',

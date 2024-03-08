@@ -68,7 +68,7 @@ const Modal: React.FC<ModalProps> = ({
 
 	return (
 		<Transition
-			className='h-[100vh] w-[100vw] z-40 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
+			className='h-[100vh] w-[100vw] z-40 bg-slate-200/80 fixed top-0 left-0 flex flex-col items-center justify-center'
 			show={showModal}
 			onClick={() => setShowModal(false)}
 			enter='transition ease duration-300 transform'
@@ -79,9 +79,8 @@ const Modal: React.FC<ModalProps> = ({
 			leaveTo='opacity-0 translate-y-12'
 			ref={modalRef}
 		>
-			<div className='grow md:grow-0'></div>
 			<Transition
-				className={`${position} bg-white rounded-lg shadow w-full sm:max-w-[80%] lg:max-w-[50%] max-h-[90%] overflow-y-hidden p-2 sm:p-4`}
+				className={`${position} bg-white rounded-lg shadow max-w-full sm:max-w-[80%] lg:max-w-[50%] max-h-[90%] overflow-y-hidden p-2 sm:p-4`}
 				show={showModal}
 				enter='transition ease duration-500 transform delay-300'
 				enterFrom='opacity-0 translate-y-12'
