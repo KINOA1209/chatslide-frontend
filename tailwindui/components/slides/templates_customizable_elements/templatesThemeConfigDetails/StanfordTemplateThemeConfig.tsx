@@ -8,7 +8,7 @@ export const StanfordTemplateThemeConfig: ThemeElements = {
 		fontWeight: 'bold', // font-bold
 		fontFamily: 'Nimbus Sans Bold', // font-nimbus-sans-bold
 		lineHeight: 1.2, // leading-[110%] is equivalent to a line height of 1.1
-		whiteSpace: 'nowrap', // whitespace-nowrap},
+		// whiteSpace: 'nowrap', // whitespace-nowrap},
 		color: '#8C1515', // text-[#8C1515] color
 	},
 	subtopicFontCSS: {

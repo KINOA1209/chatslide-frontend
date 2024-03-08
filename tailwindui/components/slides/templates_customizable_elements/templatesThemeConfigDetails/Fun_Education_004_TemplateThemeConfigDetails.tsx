@@ -28,7 +28,7 @@ export const Fun_Education_004_TemplateThemeConfig: ThemeElements = {
 		fontWeight: 'bold', // font-bold,(Lin: 700)
 		fontFamily: 'Caveat', // font-nimbus-sans-bold
 		lineHeight: 1.2, // leading-[110%] is equivalent to a line height of 1.1
-		whiteSpace: 'nowrap', // whitespace-nowrap},
+		// whiteSpace: 'nowrap', // whitespace-nowrap},
 		color: '#4B4B4B', // text-[#8C1515] color
 	},
 	subtopicFontCSS: {
