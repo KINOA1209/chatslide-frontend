@@ -43,6 +43,11 @@ import ResizeSlider from '@/components/slides/drag_resize/resize_slider';
 import '@/components/slides/drag_resize/dragAndResizeCSS.css';
 import { useSlides } from '@/hooks/use-slides';
 import { LayoutElements } from './slides/templates_customizable_elements/layout_elements';
+import Modal from './ui/Modal';
+import { InputBox } from './ui/InputBox';
+import { SpinIcon } from '@/app/(feature)/icons';
+import { FaSearch } from 'react-icons/fa';
+import DrlambdaButton, { BigBlueButton } from './button/DrlambdaButton';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -420,7 +425,7 @@ export const ImgModule = ({
 										key={index}
 										className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-2`}
 									>
-										<ResourceIcon resource={resource} contain={true}/>
+										<ResourceIcon resource={resource} contain={true} />
 									</div>
 								);
 							} else {
@@ -430,7 +435,7 @@ export const ImgModule = ({
 										key={index}
 										className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-2`}
 									>
-										<ResourceIcon resource={resource} contain={true}/>
+										<ResourceIcon resource={resource} contain={true} />
 									</div>
 								);
 							}
@@ -444,14 +449,11 @@ export const ImgModule = ({
 	const imgSearchDiv = (
 		<div className='w-full h-full flex flex-col'>
 			<form onSubmit={handleImageSearchSubmit} className='w-full'>
-				<div
-					className='w-full form-input flex flex-row flex-nowrap mb-2 focus-within:border focus-within:border-gray-500 p-0 cursor-text rounded-xl'
-					onClick={(e) => handleClickSearchInput(e, searchRef)}
-				>
+				<InputBox onClick={(e) => handleClickSearchInput(e, searchRef)}>
 					<input
 						id='search_keyword'
 						type='text'
-						className=' text-gray-800 grow border-0 p-0 h-6 focus:outline-none focus:ring-0 mx-3 my-3 w-full overflow-hidden'
+						className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
 						placeholder='Search from internet'
 						required
 						ref={searchRef}
@@ -460,31 +462,14 @@ export const ImgModule = ({
 						}}
 						value={keyword}
 					/>
-					<div className='h-[22px] ml-[14px] my-auto mr-2' hidden={!searching}>
-						<LoadingIcon />
-					</div>
-					{!searching && (
+					{searching ? <SpinIcon /> : (
 						<button
 							type='submit'
-							className='my-1 ml-3 opacity-40 hover:opacity-100 mr-2'
 						>
-							<svg
-								className='w-6 h-6'
-								viewBox='0 0 24 24'
-								fill='none'
-								xmlns='http://www.w3.org/2000/svg'
-							>
-								<path
-									d='M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z'
-									stroke='#000000'
-									strokeWidth='2'
-									strokeLinecap='round'
-									strokeLinejoin='round'
-								/>
-							</svg>
+							<FaSearch className='h-[24px] w-[24px] text-gray-400' />
 						</button>
 					)}
-				</div>
+				</InputBox>
 			</form>
 			<div className='w-full h-full overflow-y-auto p-1'>
 				<div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-2'>
@@ -519,15 +504,12 @@ export const ImgModule = ({
 	const imgGenerationDiv = (
 		<div className='w-full h-full flex flex-col'>
 			<form onSubmit={handleImageGenerationSubmit} className='w-full'>
-				<div
-					className='w-full form-input flex flex-row flex-nowrap mb-2 focus-within:border focus-within:border-gray-500 p-0 cursor-text rounded-xl'
-					onClick={(e) => handleClickSearchInput(e, searchRef)}
-				>
+				<InputBox onClick={(e) => handleClickSearchInput(e, searchRef)}>
 					<input
 						id='search_keyword'
 						type='text'
-						className=' text-gray-800 grow border-0 p-0 h-6 focus:outline-none focus:ring-0 mx-3 my-3 w-full overflow-hidden'
-						placeholder='Generate from AI'
+						className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+						placeholder='Generate from AI (10⭐️)'
 						required
 						ref={searchRef}
 						onChange={(e) => {
@@ -535,31 +517,15 @@ export const ImgModule = ({
 						}}
 						value={keyword}
 					/>
-					<div className='h-[22px] ml-[14px] my-auto mr-2' hidden={!searching}>
-						<LoadingIcon />
-					</div>
-					{!searching && (
+					{searching ? <SpinIcon /> : (
 						<button
 							type='submit'
-							className='my-1 ml-3 opacity-40 hover:opacity-100 mr-2'
 						>
-							<svg
-								className='w-6 h-6'
-								viewBox='0 0 24 24'
-								fill='none'
-								xmlns='http://www.w3.org/2000/svg'
-							>
-								<path
-									d='M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z'
-									stroke='#000000'
-									strokeWidth='2'
-									strokeLinecap='round'
-									strokeLinejoin='round'
-								/>
-							</svg>
+							<FaSearch className='h-[24px] w-[24px] text-gray-400' />
 						</button>
 					)}
-				</div>
+				</InputBox>
+
 			</form>
 			<div className='w-full h-full overflow-y-auto p-1'>
 				<div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-2'>
@@ -671,7 +637,7 @@ export const ImgModule = ({
 			)}
 		</div>
 	);
-	
+
 	//for drag and resize
 
 	const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
@@ -693,7 +659,7 @@ export const ImgModule = ({
 	const [isImgEditMode, setIsImgEditMode] = useState(false);
 	const [showImgButton, setShowImgButton] = useState(false);
 	const [zoomLevel, setZoomLevel] = useState(100);
-	const [parentDimension, setParentDimension] = useState({height: 0, width: 0})
+	const [parentDimension, setParentDimension] = useState({ height: 0, width: 0 })
 	const [isParentDimension, setIsParentDimension] = useState(false)
 
 	//handler for drag and resize also autosave
@@ -727,7 +693,7 @@ export const ImgModule = ({
 		//setIsDraggingOrResizing,
 	);
 
-	const toggleImgEditMode = (event:any) => {
+	const toggleImgEditMode = (event: any) => {
 		event.stopPropagation();
 		if (isImgEditMode) {
 			handleSave();
@@ -740,11 +706,11 @@ export const ImgModule = ({
 		setIsImgEditMode(false)
 	};
 
-	const customScale = (width:number, height:number, parentWidth:number, parentHeight: number) => {
+	const customScale = (width: number, height: number, parentWidth: number, parentHeight: number) => {
 		const aspectRatio = width / height;
 		const parentAspectRatio = parentWidth / parentHeight;
 		let newWidth, newHeight, newX, newY;
-	
+
 		// Compare the aspect ratios to decide how to scale
 		if (aspectRatio > parentAspectRatio) {
 			// Image is wider than the container proportionally
@@ -759,7 +725,7 @@ export const ImgModule = ({
 			newX = 0; // Align to left
 			newY = (parentHeight - newHeight) / 2; // Center vertically
 		}
-	
+
 		return { width: newWidth, height: newHeight, x: newX, y: newY };
 	}
 
@@ -793,11 +759,11 @@ export const ImgModule = ({
 	//reposition to default if images changed
 	useEffect(() => {
 		// make sure we got non-zero value for parentDimension
-		if (isParentDimension && Object.keys(images_position[currentContentIndex]).length == 0) { 
+		if (isParentDimension && Object.keys(images_position[currentContentIndex]).length == 0) {
 			const img = new window.Image();
 			img.src = imgsrc;
 			img.onload = () => {
-				const {height: newHeight, width: newWidth, x: newX, y:newY} = customScale(
+				const { height: newHeight, width: newWidth, x: newX, y: newY } = customScale(
 					img.naturalWidth, img.naturalHeight, parentDimension.width, parentDimension.height
 				)
 				if (newWidth !== imageSize.width || newHeight !== imageSize.height) {
@@ -824,252 +790,126 @@ export const ImgModule = ({
 	useEffect(() => {
 		const currentElement = imageRefs[currentContentIndex]?.current;
 		if (currentElement && currentElement.clientHeight > 0 && currentElement.clientWidth > 0) {
-		  const newDimensions = { height: currentElement.clientHeight, width: currentElement.clientWidth };
-		  if (newDimensions.height !== parentDimension.height || newDimensions.width !== parentDimension.width) {
-			setParentDimension(newDimensions);
-			setIsParentDimension(true);
-		  }
+			const newDimensions = { height: currentElement.clientHeight, width: currentElement.clientWidth };
+			if (newDimensions.height !== parentDimension.height || newDimensions.width !== parentDimension.width) {
+				setParentDimension(newDimensions);
+				setIsParentDimension(true);
+			}
 		} else {
-		  setIsParentDimension(false);
+			setIsParentDimension(false);
 		}
-	  }, [currentContentIndex, imageRefs, parentDimension]);
+	}, [currentContentIndex, imageRefs, parentDimension]);
 
 	return (
 		<>
 			{/* select image modal */}
 			{createPortal(
-				<Transition
-					className='flex h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex-col md:items-center md:justify-center'
-					show={showModal}
-					//onClick={closeModal}
-					enter='transition ease duration-300 transform'
-					enterFrom='opacity-0 translate-y-12'
-					enterTo='opacity-100 translate-y-0'
-					leave='transition ease duration-300 transform'
-					leaveFrom='opacity-100 translate-y-0'
-					leaveTo='opacity-0 translate-y-12'
-				>
-					<PaywallModal
-						showModal={showPaymentModal}
-						setShowModal={setShowPaymentModal}
-						message='Upgrade for more ⭐️credits.'
-						showReferralLink={true}
-					/>
-					<div className='grow md:grow-0'></div>
-					{/* image choosing modal */}
-					<Transition
-						className='SlidesStep-5 bg-gray-100 w-full h-3/4 md:h-[65vh]
-                    md:max-w-3xl z-20 rounded-t-xl md:rounded-xl drop-shadow-2xl 
-                    overflow-hidden flex flex-col p-4'
-						show={showModal}
-						enter='transition ease duration-500 transform delay-300'
-						enterFrom='opacity-0 translate-y-12'
-						enterTo='opacity-100 translate-y-0'
-						leave='transition ease duration-300 transform'
-						leaveFrom='opacity-100 translate-y-0'
-						leaveTo='opacity-0 translate-y-12'
-						onClick={(e) => {
-							e.stopPropagation();
-						}}
-						ref={imgmoduleRef}
-					>
-						<h4
-							className='font-semibold text-xl text-center mb-3'
-							ref={titleRef}
-						>
-							Image
-						</h4>
-						<div className='grow mt-4 flex flex-col overflow-hidden'>
-							<div className='w-full flex flex-col' ref={typeRef}>
-								<div className='w-full grid grid-cols-4'>
-									<button
-										className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
-										onClick={(e) => {
-											setSelectedQueryMode(ImgQueryMode.RESOURCE);
-											setSearchResult([]);
-											setKeyword('');
-										}}
-										onMouseOver={(e) => {
-											handleMouseOver(e, ImgQueryMode.RESOURCE);
-										}}
-										onMouseOut={(e) => {
-											handleMouseOut(e, ImgQueryMode.RESOURCE);
-										}}
-									>
-										<div className='flex justify-center items-center'>
-											<svg
-												className='w-[20px] h-[20px] mr-2'
-												viewBox='0 0 16 16'
-												fill='none'
-												xmlns='http://www.w3.org/2000/svg'
-											>
-												<path
-													d='M1.71436 6.33105H14.2858V14.3311C14.2858 14.6342 14.1654 14.9248 13.951 15.1392C13.7367 15.3535 13.446 15.4739 13.1429 15.4739H2.85721C2.55411 15.4739 2.26342 15.3535 2.04909 15.1392C1.83476 14.9248 1.71436 14.6342 1.71436 14.3311V6.33105Z'
-													stroke='#121212'
-													strokeLinecap='round'
-													strokeLinejoin='round'
-												/>
-												<path
-													d='M15.4282 5.18834V2.90262C15.4282 2.27144 14.9165 1.75977 14.2854 1.75977L1.71394 1.75977C1.08276 1.75977 0.571081 2.27144 0.571081 2.90262V5.18834C0.571081 5.81952 1.08276 6.33119 1.71394 6.33119L14.2854 6.33119C14.9165 6.33119 15.4282 5.81952 15.4282 5.18834Z'
-													stroke='#121212'
-													strokeLinecap='round'
-													strokeLinejoin='round'
-												/>
-												<path
-													d='M6.28564 9.75977H9.71422'
-													stroke='#121212'
-													strokeLinecap='round'
-													strokeLinejoin='round'
-												/>
-											</svg>
-										</div>
-										My Resources
-									</button>
-									<button
-										className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
-										onClick={(e) => {
-											setSelectedQueryMode(ImgQueryMode.SEARCH);
-											setSearchResult([]);
-											setKeyword('');
-										}}
-										onMouseOver={(e) => {
-											handleMouseOver(e, ImgQueryMode.SEARCH);
-										}}
-										onMouseOut={(e) => {
-											handleMouseOut(e, ImgQueryMode.SEARCH);
-										}}
-									>
-										<div className='flex justify-center items-center'>
-											<svg
-												className='w-[20px] h-[20px] mr-2'
-												viewBox='0 0 16 16'
-												fill='none'
-												xmlns='http://www.w3.org/2000/svg'
-											>
-												<g clipPath='url(#clip0_276_3476)'>
-													<path
-														d='M6.59985 12.2007C9.69283 12.2007 12.2002 9.69331 12.2002 6.60034C12.2002 3.50736 9.69283 1 6.59985 1C3.50687 1 0.999512 3.50736 0.999512 6.60034C0.999512 9.69331 3.50687 12.2007 6.59985 12.2007Z'
-														stroke='#121212'
-														strokeLinecap='round'
-														strokeLinejoin='round'
-													/>
-													<path
-														d='M15.0005 15.001L10.8003 10.8008'
-														stroke='#121212'
-														strokeLinecap='round'
-														strokeLinejoin='round'
-													/>
-												</g>
-												<defs>
-													<clipPath id='clip0_276_3476'>
-														<rect width='16' height='16' fill='white' />
-													</clipPath>
-												</defs>
-											</svg>
-										</div>
-										Search
-									</button>
-									<button
-										className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
-										onClick={(e) => {
-											setSelectedQueryMode(ImgQueryMode.GENERATION);
-											setSearchResult([]);
-											setKeyword('');
-										}}
-										onMouseOver={(e) => {
-											handleMouseOver(e, ImgQueryMode.GENERATION);
-										}}
-										onMouseOut={(e) => {
-											handleMouseOut(e, ImgQueryMode.GENERATION);
-										}}
-									>
-										<div className='flex justify-center items-center'>
-											<svg
-												className='w-[20px] h-[20px] mr-2'
-												viewBox='0 0 24 24'
-												fill='none'
-												xmlns='http://www.w3.org/2000/svg'
-											>
-												<g>
-													<polygon
-														points='12 2 15.09 8.26 22 9.27 17 14.14 17.18 21.02 12 17.77 6.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'
-														stroke='#121212'
-														strokeLinecap='round'
-														strokeLinejoin='round'
-														fill='none'
-													/>
-												</g>
-												<defs>
-													<clipPath id='clip0_276_3476'>
-														<rect width='16' height='16' fill='white' />
-													</clipPath>
-												</defs>
-											</svg>
-										</div>
-										Generate (10⭐️)
-									</button>
-									<button
-										className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
-										onClick={(e) => {
-											setSelectedQueryMode(ImgQueryMode.CHART_SELECTION);
-											setSearchResult([]);
-											setKeyword('');
-										}}
-										onMouseOver={(e) => {
-											handleMouseOver(e, ImgQueryMode.CHART_SELECTION);
-										}}
-										onMouseOut={(e) => {
-											handleMouseOut(e, ImgQueryMode.CHART_SELECTION);
-										}}
-									>
-										<div className='flex justify-center items-center'>
-											<div className='mr-2'>
-												<IoBarChartOutline size={20} />
-											</div>
-										</div>
-										Chart
-									</button>
-								</div>
-								<div className='w-full bg-slate-200'>
-									<div
-										className={`w-1/4 h-[2px] bg-black ${hoverQueryMode == ImgQueryMode.SEARCH && 'ml-[25%]'
-											} 
+				<Modal showModal={showModal} setShowModal={setShowModal} title='Image / Chart'>
+					<div className='flex grow h-[400px] w-full sm:w-[600px] flex-col overflow-auto'>
+						<div className='w-full flex flex-col' ref={typeRef}>
+							<div className='w-full grid grid-cols-4'>
+								<button
+									className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
+									onClick={(e) => {
+										setSelectedQueryMode(ImgQueryMode.RESOURCE);
+										setSearchResult([]);
+										setKeyword('');
+									}}
+									onMouseOver={(e) => {
+										handleMouseOver(e, ImgQueryMode.RESOURCE);
+									}}
+									onMouseOut={(e) => {
+										handleMouseOut(e, ImgQueryMode.RESOURCE);
+									}}
+								>
+									My Resources
+								</button>
+								<button
+									className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
+									onClick={(e) => {
+										setSelectedQueryMode(ImgQueryMode.SEARCH);
+										setSearchResult([]);
+										setKeyword('');
+									}}
+									onMouseOver={(e) => {
+										handleMouseOver(e, ImgQueryMode.SEARCH);
+									}}
+									onMouseOut={(e) => {
+										handleMouseOut(e, ImgQueryMode.SEARCH);
+									}}
+								>
+									Search
+								</button>
+								<button
+									className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
+									onClick={(e) => {
+										setSelectedQueryMode(ImgQueryMode.GENERATION);
+										setSearchResult([]);
+										setKeyword('');
+									}}
+									onMouseOver={(e) => {
+										handleMouseOver(e, ImgQueryMode.GENERATION);
+									}}
+									onMouseOut={(e) => {
+										handleMouseOut(e, ImgQueryMode.GENERATION);
+									}}
+								>
+									Generate
+								</button>
+								<button
+									className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
+									onClick={(e) => {
+										setSelectedQueryMode(ImgQueryMode.CHART_SELECTION);
+										setSearchResult([]);
+										setKeyword('');
+									}}
+									onMouseOver={(e) => {
+										handleMouseOver(e, ImgQueryMode.CHART_SELECTION);
+									}}
+									onMouseOut={(e) => {
+										handleMouseOut(e, ImgQueryMode.CHART_SELECTION);
+									}}
+								>
+									Chart
+								</button>
+							</div>
+							<div className='w-full bg-slate-200 mb-2'>
+								<div
+									className={`w-1/4 h-[2px] bg-black ${hoverQueryMode == ImgQueryMode.SEARCH && 'ml-[25%]'
+										} 
 										${hoverQueryMode == ImgQueryMode.GENERATION && 'ml-[50%]'} 
 										${hoverQueryMode == ImgQueryMode.CHART_SELECTION && 'ml-[75%]'} 
                                 		transition-all ease-in-out`}
-									></div>
-								</div>
+								></div>
 							</div>
+						</div>
 
-							<div className='mt-3 mb-5 grow overflow-hidden'>
-								{selectedQueryMode == ImgQueryMode.RESOURCE &&
-									resourceSelectionDiv}
-								{selectedQueryMode == ImgQueryMode.SEARCH && imgSearchDiv}
-								{selectedQueryMode == ImgQueryMode.GENERATION &&
-									imgGenerationDiv}
-								{selectedQueryMode == ImgQueryMode.CHART_SELECTION &&
-									chartSelectionDiv}
-							</div>
+						<div className='overflow-grow'>
+							{selectedQueryMode == ImgQueryMode.RESOURCE &&
+								resourceSelectionDiv}
+							{selectedQueryMode == ImgQueryMode.SEARCH && imgSearchDiv}
+							{selectedQueryMode == ImgQueryMode.GENERATION &&
+								imgGenerationDiv}
+							{selectedQueryMode == ImgQueryMode.CHART_SELECTION &&
+								chartSelectionDiv}
 						</div>
-						<div className='w-full mx-auto' ref={doneButtonRef}>
-							<div className='w-full flex flex-wrap'>
-								<div className='w-full'>
-									<button
-										className='btn text-white font-bold bg-blue-600 disabled:bg-gray-400 w-full rounded-lg '
-										type='button'
-										disabled={uploading || searching}
-										onClick={(e) => {
-											e.preventDefault();
-											handleDoneClickChart();
-										}}
-									>
-										{uploading ? 'Uploading' : searching ? 'Searching' : 'Done'}
-									</button>
-								</div>
-							</div>
-						</div>
-					</Transition>
-				</Transition>,
+					</div>
+					
+					{selectedQueryMode === ImgQueryMode.CHART_SELECTION &&
+						selectedChartType &&
+						chartData.length > 0 && (
+							<div className='w-full mx-auto flex justify-center items-center' ref={doneButtonRef}>
+								<BigBlueButton
+									isSubmitting={uploading || searching}
+									onClick={(e) => {
+										e.preventDefault();
+										handleDoneClickChart();
+									}}
+								>
+									Add Chart
+								</BigBlueButton>
+							</div>)}
+				</Modal>,
 				document.body,
 			)}
 
@@ -1077,11 +917,11 @@ export const ImgModule = ({
 			<div
 				onClick={openModal}
 				className={`w-full h-full transition ease-in-out duration-150 relative ${selectedImg === ''
-						? 'bg-[#E7E9EB]'
-						: canEdit
+					? 'bg-[#E7E9EB]'
+					: canEdit
 						? 'hover:bg-[#CAD0D3]'
 						: ''
-				} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
+					} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
 			>
 				{ischartArr &&
 					ischartArr[currentContentIndex] &&
@@ -1111,7 +951,7 @@ export const ImgModule = ({
 						</div>
 					</div>
 				) : (
-					<div 
+					<div
 						className={`${isImgEditMode ? "rndContainerWithOutBorder" : ""}`}
 						style={{
 							...layoutElements?.rndContainerCSS,
@@ -1123,16 +963,16 @@ export const ImgModule = ({
 					>
 						<Rnd
 							className={`${isImgEditMode ? "rndContainerWithBorder" : ""}`}
-							style={{...layoutElements?.rndCSS,}}
+							style={{ ...layoutElements?.rndCSS, }}
 							size={{
 								width:
 									imagesDimensions[currentContentIndex]?.width ?? 'auto',
-									//imageRefs[currentContentIndex]?.current?.clientWidth ??
-									//imageSize.width ? imageSize.width : ,
+								//imageRefs[currentContentIndex]?.current?.clientWidth ??
+								//imageSize.width ? imageSize.width : ,
 								height:
 									imagesDimensions[currentContentIndex]?.height ?? 'auto',
-									// imageRefs[currentContentIndex]?.current?.clientHeight ??
-									//imageSize.height ? imageSize.height : 'auto',
+								// imageRefs[currentContentIndex]?.current?.clientHeight ??
+								//imageSize.height ? imageSize.height : 'auto',
 
 							}}
 							position={{
@@ -1163,13 +1003,12 @@ export const ImgModule = ({
 								width={960}
 								height={540}
 								//objectFit='contain'
-								className={`transition ease-in-out duration-150 ${
-									canEdit ? (isImgEditMode ? 'brightness-100' : 'hover:brightness-90') : 'cursor-pointer'
-								}`}
+								className={`transition ease-in-out duration-150 ${canEdit ? (isImgEditMode ? 'brightness-100' : 'hover:brightness-90') : 'cursor-pointer'
+									}`}
 								onError={(e) => {
 									const src =
 										RANDOM_FILLER_IMAGES[
-											Math.floor(Math.random() * RANDOM_FILLER_IMAGES.length)
+										Math.floor(Math.random() * RANDOM_FILLER_IMAGES.length)
 										];
 									e.currentTarget.src = src;
 									updateSingleCallback(src);
@@ -1177,19 +1016,19 @@ export const ImgModule = ({
 							/>
 						</Rnd>
 						{showImgButton && canEdit && (
-								<button
-										onClick={toggleImgEditMode}
-										style={{
-											position: 'absolute',
-											top: '2%',
-											right: '50%',
-											transform: 'translate(50%, -50%)',
-											zIndex: 53,
-										}}
-										className="bg-gray-300 px-2 h-5 rounded-full shadow-lg border border-gray-300 flex items-center justify-center"
-									>
-										&middot;&middot;&middot;
-								</button>
+							<button
+								onClick={toggleImgEditMode}
+								style={{
+									position: 'absolute',
+									top: '2%',
+									right: '50%',
+									transform: 'translate(50%, -50%)',
+									zIndex: 53,
+								}}
+								className="bg-gray-300 px-2 h-5 rounded-full shadow-lg border border-gray-300 flex items-center justify-center"
+							>
+								&middot;&middot;&middot;
+							</button>
 						)}
 						{/* {isImgEditMode && canEdit && (
 								<ResizeSlider
