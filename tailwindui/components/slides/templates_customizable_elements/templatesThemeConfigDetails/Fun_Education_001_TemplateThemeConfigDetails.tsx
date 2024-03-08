@@ -27,7 +27,7 @@ export const Fun_Education_001_TemplateThemeConfig: ThemeElements = {
 		fontWeight: 'bold',
 		fontFamily: 'Sansita Swashed Medium',
 		lineHeight: 1.2,
-		whiteSpace: 'nowrap',
+		// whiteSpace: 'nowrap',
 		color: '#013E3F',
 	},
 	subtopicFontCSS: {

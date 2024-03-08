@@ -47,7 +47,7 @@ const themeConfigData: ThemeConfig = {
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			fontWeight: 'bold', // font-bold
 			fontFamily: 'sans-serif', // font-sans (assuming sans-serif as a default)
-			whiteSpace: 'nowrap', // whitespace-nowrap
+			// whiteSpace: 'nowrap', // whitespace-nowrap
 			color: '#003262', // text-[#003262] color
 		},
 		// subtopicFont: 'text-xl font-semibold leading-[120%] font-sans',
@@ -99,7 +99,7 @@ const themeConfigData: ThemeConfig = {
 			fontWeight: 'normal', // font-normal
 			fontFamily: 'Georgia', // font-['Georgia']
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
-			whiteSpace: 'nowrap', // whitespace-nowrap
+			// whiteSpace: 'nowrap', // whitespace-nowrap
 			color: '#374151', // text-neutral-800 color
 		},
 		// subtopicFont: "text-xl font-bold font-['Arial'] leading-[120%]",

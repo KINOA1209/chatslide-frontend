@@ -352,6 +352,14 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			paddingTop: '2rem',
 			paddingLeft: '2rem',
 		},
+		topicCSS: {
+			width: '100%', // Take full width of the parent
+			whiteSpace: 'normal', // Allow text to wrap in the title box
+		},
+		subtopicCSS: {
+			width: '100%', // Take full width of the parent
+			whiteSpace: 'normal', // Allow text to wrap in the title box
+		},
 		visualElementsCSS: {
 			zIndex: 0,
 			width: '70%',
@@ -379,6 +387,7 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			flexDirection: 'column',
 			width: '100%',
 			zIndex: 30,
+			// overflow: 'hidden',
 			paddingBottom: '1rem',
 			borderBottom: '7px solid #AFE5F3',
 		},

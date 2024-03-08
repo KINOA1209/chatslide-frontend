@@ -27,7 +27,7 @@ export const Business_Dark_005_TemplateThemeConfig: ThemeElements = {
 		fontWeight: 'normal',
 		fontFamily: 'Playfair Display Bold',
 		lineHeight: 1.2,
-		whiteSpace: 'nowrap',
+		// whiteSpace: 'nowrap',
 		color: '#FFFFFF',
 	},
 	subtopicFontCSS: {
