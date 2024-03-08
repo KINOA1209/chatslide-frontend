@@ -20,7 +20,8 @@ import {
 	convertFromChartData,
 } from './chart/chartDataConvert';
 import Chart from '@/models/Chart';
-import { IoBarChartOutline } from 'react-icons/io5';
+import { IoBarChartOutline, IoResize, IoResizeOutline, IoSave } from 'react-icons/io5';
+import { MdDone, MdOutlineZoomIn, MdOutlineZoomInMap, MdOutlineZoomOut } from 'react-icons/md';
 import { Rnd } from 'react-rnd';
 import { ResourceIcon } from './ui/ResourceItem';
 
@@ -46,8 +47,13 @@ import { LayoutElements } from './slides/templates_customizable_elements/layout_
 import Modal from './ui/Modal';
 import { InputBox } from './ui/InputBox';
 import { SpinIcon } from '@/app/(feature)/icons';
-import { FaSearch } from 'react-icons/fa';
+import { FaCheck, FaSearch } from 'react-icons/fa';
 import DrlambdaButton, { BigBlueButton } from './button/DrlambdaButton';
+import { ToolBar } from './ui/ToolBar';
+import ButtonWithExplanation from './button/ButtonWithExplanation';
+import { index } from 'd3';
+import { GoPencil } from 'react-icons/go';
+import { IoMdResize } from 'react-icons/io';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -894,7 +900,7 @@ export const ImgModule = ({
 								chartSelectionDiv}
 						</div>
 					</div>
-					
+
 					{selectedQueryMode === ImgQueryMode.CHART_SELECTION &&
 						selectedChartType &&
 						chartData.length > 0 && (
@@ -915,7 +921,7 @@ export const ImgModule = ({
 
 			{/* image itself */}
 			<div
-				onClick={openModal}
+				// onClick={openModal}
 				className={`w-full h-full transition ease-in-out duration-150 relative ${selectedImg === ''
 					? 'bg-[#E7E9EB]'
 					: canEdit
@@ -926,7 +932,7 @@ export const ImgModule = ({
 				{ischartArr &&
 					ischartArr[currentContentIndex] &&
 					selectedChartType &&
-					chartData.length > 0 ? (
+					chartData.length > 0 ? (  // chart
 					<div className='w-full h-full flex items-center justify-center'>
 						<DynamicChart
 							chartType={selectedChartType}
@@ -934,7 +940,7 @@ export const ImgModule = ({
 							isPrview={false}
 						/>
 					</div>
-				) : selectedImg === '' ? (
+				) : selectedImg === '' ? ( // updload icon 
 					<div className='flex flex-col items-center justify-center'>
 						<svg
 							className='w-20 h-20 opacity-50'
@@ -950,7 +956,7 @@ export const ImgModule = ({
 							{canEdit && 'Click to add image'}
 						</div>
 					</div>
-				) : (
+				) : (  // image
 					<div
 						className={`${isImgEditMode ? "rndContainerWithOutBorder" : ""}`}
 						style={{
@@ -1015,21 +1021,53 @@ export const ImgModule = ({
 								}}
 							/>
 						</Rnd>
-						{showImgButton && canEdit && (
-							<button
-								onClick={toggleImgEditMode}
-								style={{
-									position: 'absolute',
-									top: '2%',
-									right: '50%',
-									transform: 'translate(50%, -50%)',
-									zIndex: 53,
-								}}
-								className="bg-gray-300 px-2 h-5 rounded-full shadow-lg border border-gray-300 flex items-center justify-center"
-							>
-								&middot;&middot;&middot;
-							</button>
-						)}
+						{canEdit && showImgButton &&
+							<div className='absolute top-2 left-2' style={{ zIndex: 53 }}>
+								<ToolBar>
+									<ButtonWithExplanation
+										explanation={!isImgEditMode ? 'Resize' : 'Apply'}
+										button={
+											<button
+												onClick={toggleImgEditMode}
+											>
+												{!isImgEditMode ?
+													<IoMdResize style={{
+														strokeWidth: '2',
+														flex: '1',
+														width: '1.5rem',
+														height: '1.5rem',
+														fontWeight: 'bold',
+														color: '#2943E9',
+													}} /> :
+													<FaCheck style={{
+														strokeWidth: '0.8',
+														width: '1.5rem',
+														height: '1.5rem',
+														fontWeight: 'bold',
+														color: '#2943E9',
+													}} />
+												}
+											</button>} />
+											{!isImgEditMode && 
+											<ButtonWithExplanation
+										explanation='Change'
+										button={
+										<button
+											onClick={openModal}>
+												<GoPencil style={{
+													strokeWidth: '1',
+													flex: '1',
+													width: '1.5rem',
+													height: '1.5rem',
+													fontWeight: 'bold',
+													color: '#2943E9',
+												}} />
+											</button>
+										}
+									/>}
+								</ToolBar>
+							</div>
+						}
 						{/* {isImgEditMode && canEdit && (
 								<ResizeSlider
 									zoomLevel={zoomLevel}
@@ -1040,7 +1078,7 @@ export const ImgModule = ({
 						)} */}
 					</div>
 				)}
-			</div>
+			</div >
 		</>
 	);
 };
