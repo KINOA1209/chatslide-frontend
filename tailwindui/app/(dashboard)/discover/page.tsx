@@ -6,6 +6,7 @@ import DrlambdaButton, {
 } from '@/components/button/DrlambdaButton';
 import ProjectService from '@/services/ProjectService';
 import Link from 'next/link';
+import { JoinUsBanner } from '@/components/layout/JoinUsBanner';
 
 export const metadata = {
 	title: 'Discover - DrLambda',
@@ -20,14 +21,13 @@ export default async function Discover() {
 		<section className='grow flex flex-col'>
 			<ToastContainer />
 			{/* top background container of my projects title text and button */}
-			<div className='flex items-end w-full z-10 pt-[4rem] bg-Blue border-b-2 px-[5rem]'>
+			<div className='flex items-end w-full z-10 pt-[4rem] bg-Blue border-b-1 px-[5rem]'>
 				{/* flex container controlling max width */}
 				<div className='w-full max-w-7xl flex flex-wrap items-end justify-center'>
 					{/* my project title text */}
 					<div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-white text-base font-bold font-creato-medium leading-10 tracking-wide border-white border-b-2'>
 						Discover Projects
 					</div>
-
 					{/* create new project button */}
 					<div className='absolute right-5 pb-1'>
 						<DrlambdaButton
@@ -38,6 +38,7 @@ export default async function Discover() {
 					</div>
 				</div>
 			</div>
+			<JoinUsBanner />
 
 			{/* projects details area */}
 			<div

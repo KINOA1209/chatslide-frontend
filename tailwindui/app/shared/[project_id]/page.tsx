@@ -4,6 +4,7 @@ import ProjectService from '@/services/ProjectService';
 import Header from '@/components/layout/header';
 import Card from '@/components/ui/Card';
 import { Explanation, Instruction, Title } from '@/components/ui/Text';
+import { JoinUsBanner } from '@/components/layout/JoinUsBanner';
 
 type Props = {
 	params: { project_id: string };
@@ -74,6 +75,7 @@ export default async function Page({ params }: Props) {
 			<div className='flex'>
 				<Header loginRequired={false} isLanding={false} />
 			</div>
+			<JoinUsBanner />
 			<main className='w-full flex grow flex-col overflow-y-hidden'>
 				{project.description &&
 					<div className='hidden sm:flex m-4'>

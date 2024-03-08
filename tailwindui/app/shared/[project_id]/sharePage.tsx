@@ -10,6 +10,7 @@ import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
 import { useSlides } from '@/hooks/use-slides';
 import { Blank, Loading } from '@/components/ui/Loading';
 import { useProject } from '@/hooks/use-project';
+import { JoinUsBanner } from '@/components/layout/JoinUsBanner';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
