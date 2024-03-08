@@ -52,7 +52,7 @@ export const Business_Dark_005_TemplateThemeConfig: ThemeElements = {
 		fontWeight: 'bold',
 		fontFamily: 'Playfair Display Medium',
 		lineHeight: 1.2,
-		color: '#004260',
+		color: '#FFFFFF',
 	},
 	contentFontCSS_non_vertical_content: {
 		fontSize: '12pt',
