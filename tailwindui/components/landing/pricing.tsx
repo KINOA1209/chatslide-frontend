@@ -321,11 +321,11 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 										)}
 
 										<div className='w-full text-center text-3xl md:text-4xl'>
-											{!isMonthly ? 'Free' : '$0.99'}
+											{!isMonthly ? '$39.6' : '$3.96'}
 										</div>
 										<div className='w-full text-center text-md text-gray-700'>
 											{!isMonthly
-												? 'for 2 months, then $99/year'
+												? '1st year, then $99/year'
 												: '1st month, then $9.9/month'}
 										</div>
 
@@ -395,11 +395,11 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 										)}
 										{/* <div className="w-full text-center text-md text-red-700">7 Day Free Trial</div> */}
 										<div className='w-full text-center text-3xl md:text-4xl'>
-											{!isMonthly ? 'Free' : '$3.99'}
+											{!isMonthly ? '$159.6' : '$15.96'}
 										</div>
 										<div className='w-full text-center text-md text-gray-700'>
 											{!isMonthly
-												? 'for 2 months, then $399/year'
+												? '1st year, then $399/year'
 												: '1st month, then $39.9/month'}
 										</div>
 
