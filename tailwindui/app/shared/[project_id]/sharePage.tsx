@@ -31,7 +31,6 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 	const [loading, setLoading] = useState(true);
 	const [loadingFailed, setLoadingFailed] = useState(false);
 	const { initSlides } = useSlides();
-	const [showDescription, setShowDescription] = useState<boolean>(true);
 	const [socialPosts, setSocialPosts] = useState<SocialPostSlide[]>([]);
 	const [postType, setPostType] = useState<string>('casual_topic');
 	const borderColorOptions = [

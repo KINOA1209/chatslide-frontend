@@ -78,7 +78,7 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 	) : (
 		<ToolBar>
 			{/* user tutorial control */}
-			{!isViewing &&
+			{!isViewing && <>
 				<ButtonWithExplanation
 					button={
 						<button
@@ -102,11 +102,11 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 						</button>
 					}
 					explanation={'User tutorial'}
-				/>}
+				/>
+				<div className='h-8 w-0.5 bg-gray-200'></div>
+			</>}
 
 			{!isViewing && <>
-				<div className='h-8 w-0.5 bg-gray-200'></div>
-
 				<ButtonWithExplanation
 					button={
 						<button
@@ -158,6 +158,7 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 					}
 					explanation={'Redo'}
 				/>
+				<div className='h-8 w-0.5 bg-gray-200'></div>
 			</>}
 
 			{children}
