@@ -42,7 +42,6 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 	version,
 	pageNumber,
 }) => {
-	const { slides } = useSlides();
 
 	useEffect(() => {
 		if (length)
@@ -52,25 +51,19 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 	return (
 		<div
 			id='slideContainer'
-			className={`${isPresenting ? 'fixed top-0 left-0 w-full h-full z-50' : 'relative'
-				}`}
+			className={`${isPresenting ? 'fixed top-0 left-0 w-full h-full z-50' : 'relative rounded border-2 p-1' + (highlightBorder ? ' border-Blue' : ' border-gray-200')}`}
 			ref={containerRef}
 			style={{
 				boxSizing: 'border-box',
-				border: 'none',
-				boxShadow: isPresenting
-					? 'none'
-					: !highlightBorder
-						? '0 0 5px rgba(0, 0, 0, 0.5)'
-						: '0 0 5px rgba(255, 255, 0, 1)',
+				boxShadow: 'none',
 				borderRadius: isPresenting ? '0' : '5px',
 				margin: isPresenting ? '0' : '5px',
-				width: isPresenting ? '100vw' : `${960 * scale}px`,
-				height: isPresenting ? '100vh' : `${540 * scale}px`,
+				width: isPresenting ? '100vw' : `${960 * scale + 12}px`,
+				height: isPresenting ? '100vh' : `${540 * scale + 12}px`,
 			}}
 		>
 			{pageNumber &&
-				<div className='absolute bottom-0 right-0 bg-gray-400 px-1 text-white text-sm rounded-sm z-10'>
+				<div className={`absolute bottom-1 left-1 border rounded-xs border-1 ${highlightBorder ? 'bg-Blue text-white border-Blue' : 'bg-white text-black border-gray-400'} px-1  text-sm rounded-sm z-10`}>
 					{pageNumber}
 				</div>
 			}
