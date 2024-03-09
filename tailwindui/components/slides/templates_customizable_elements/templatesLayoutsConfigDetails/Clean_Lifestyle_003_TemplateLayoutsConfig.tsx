@@ -484,7 +484,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			zIndex: 20,
 		},
 		imageCSS: {
-			height: '11rem', // equivalent to h-[11rem]
+			height: '13rem', // equivalent to h-[13rem]
 			flexGrow: 1, // equivalent to grow
 			// borderRadius: '1.25rem', // equivalent to rounded-md
 			//overflow: 'hidden', // equivalent to overflow-hidden
@@ -505,9 +505,9 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			fontWeight: 'bold',
 			// fontFamily: 'Creato Display Medium',
 			textTransform: 'uppercase',
-			lineHeight: '2.5rem',
+			lineHeight: '1.5rem',
 			letterSpacing: '0.5rem',
-			paddingTop: '2rem',
+			paddingTop: '0rem',
 			zIndex: 30,
 		},
 		visualElementsCSS: {
@@ -550,7 +550,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			zIndex: 20,
 		},
 		imageCSS: {
-			height: '11rem', // equivalent to h-[11rem]
+			height: '13rem', // equivalent to h-[13rem]
 			flexGrow: 1, // equivalent to grow
 			borderRadius: '0.375rem', // equivalent to rounded-md
 			//overflow: 'hidden', // equivalent to overflow-hidden
@@ -570,9 +570,9 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			fontWeight: 'bold',
 			// fontFamily: 'Creato Display Medium',
 			textTransform: 'uppercase',
-			lineHeight: '2.5rem',
+			lineHeight: '1.5rem',
 			letterSpacing: '0.5rem',
-			paddingTop: '2rem',
+			paddingTop: '0rem',
 			zIndex: 30,
 		},
 		visualElementsCSS: {
