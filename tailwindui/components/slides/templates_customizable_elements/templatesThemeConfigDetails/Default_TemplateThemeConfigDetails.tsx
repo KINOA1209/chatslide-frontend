@@ -43,7 +43,7 @@ export const Default_TemplateThemeConfig: ThemeElements = {
 	},
 
 	headFontCSS: {
-		fontSize: '40pt', // text-4xl in points
+		fontSize: '32pt', // text-4xl in points
 		fontWeight: 'bold', // font-normal
 		fontFamily: 'Creato Display Bold', // font-creato-medium
 		lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
