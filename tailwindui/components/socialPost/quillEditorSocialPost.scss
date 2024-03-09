@@ -1,0 +1,92 @@
+.ql-editor {
+	padding: 4px 4px;
+	font-size: 12pt;
+	font-family: 'Arimo', sans-serif;
+}
+
+.ql-editor:hover,
+.ql-editor:focus {
+	outline: 2px solid #545657;
+}
+
+.ql-editor ul {
+	padding-left: 0 !important;
+}
+
+.ql-bubble .ql-picker .ql-picker-options {
+	max-height: 200px;
+	overflow-y: auto;
+}
+
+.ql-tooltip {
+	z-index: 100;
+	padding: 10px 10px !important;
+	height: 100px;
+	width: 450px;
+}
+
+.non-editable-ql-editor,
+.non-editable-ql-editor * {
+	cursor: pointer !important;
+}
+
+.ql-editor ul li {
+	padding-bottom: 10px;
+}
+
+$i: 8;
+@while $i <= 80 {
+	.ql-bubble .ql-picker.ql-size .ql-picker-label[data-value='#{$i}pt']::before,
+	.ql-bubble .ql-picker.ql-size .ql-picker-item[data-value='#{$i}pt']::before {
+		content: '#{$i}pt';
+		font-size: 12pt;
+	}
+	$i: $i + 1;
+}
+
+.ql-bubble .ql-picker.ql-size {
+	width: 90px;
+}
+
+.ql-bubble .ql-picker.ql-font {
+	width: 190px;
+}
+
+$font-families: (
+	'Arimo',
+	'Arial',
+	'Assistant Medium',
+	'Assistant Regular',
+	'Big Shoulders Text',
+	'Brygada 1918 SemiBold',
+	'Caveat',
+	'Caveat Medium',
+	'Caveat Regular',
+	'Creato Display Medium',
+	'Creato Display Regular',
+	'Creato Display Thin',
+	'Georgia',
+	'Helvetica Neue',
+	'Lemonada',
+	'Libre Baskerville Regular',
+	'Libre Baskerville Bold',
+	'Nimbus Sans Regular',
+	'Playfair Display Bold',
+	'Playfair Display Medium',
+	'Rubik',
+	'Sansita Swashed Regular',
+	'Sansita Swashed Medium'
+);
+
+@each $font-family in $font-families {
+	.ql-bubble
+		.ql-picker.ql-font
+		.ql-picker-label[data-value='#{$font-family}']::before,
+	.ql-bubble
+		.ql-picker.ql-font
+		.ql-picker-item[data-value='#{$font-family}']::before {
+		content: '#{$font-family}';
+		font-family: $font-family, sans-serif;
+		font-size: 12pt;
+	}
+}
