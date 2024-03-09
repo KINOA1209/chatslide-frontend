@@ -479,7 +479,7 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			flexDirection: 'column',
 			// justifyContent: 'center',
 			// alignItems: 'center',
-			padding: '2rem 2rem 2rem 2rem',
+			padding: '1rem 2rem 1rem 2rem',
 			order: 1,
 		},
 		imageContainerCSS: {
@@ -490,7 +490,7 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			zIndex: 30,
 		},
 		imageCSS: {
-			height: '11rem', // equivalent to h-[11rem]
+			height: '13rem', // equivalent to h-[13rem]
 			flexGrow: 1, // equivalent to grow
 			// borderRadius: '1.25rem', // equivalent to rounded-md
 			//overflow: 'hidden', // equivalent to overflow-hidden
@@ -538,7 +538,7 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			flexDirection: 'column',
 			// justifyContent: 'center',
 			// alignItems: 'center',
-			padding: '2rem 2rem 2rem 2rem',
+			padding: '1rem 2rem 1rem 2rem',
 			order: 0,
 			borderBottom: '1px solid #B7B7B7',
 		},
@@ -549,7 +549,7 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			order: 2,
 		},
 		imageCSS: {
-			height: '11rem', // equivalent to h-[11rem]
+			height: '13rem', // equivalent to h-[13rem]
 			flexGrow: 1, // equivalent to grow
 			// borderRadius: '0.375rem', // equivalent to rounded-md
 			//overflow: 'hidden', // equivalent to overflow-hidden
