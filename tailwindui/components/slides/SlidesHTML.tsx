@@ -527,7 +527,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 										index.toString() +
 										slides.length.toString()
 									} // force update when slide length changes
-									className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
+									className={`w-[8rem] h-[6rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
 									onClick={() => gotoPage(index)}
 									ref={index === slideIndex ? verticalCurrentSlideRef : null}
 								>
@@ -638,7 +638,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 										index.toString() +
 										slides.length.toString()
 									} // force update when slide length changes
-									className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
+									className={`w-[8rem] h-[6rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
 									onClick={() => gotoPage(index)}
 									ref={index === slideIndex ? horizontalCurrentSlideRef : null}
 								>
