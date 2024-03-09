@@ -272,7 +272,7 @@ export const OnboardingFeedbackForm: React.FC<FeedbackFormProps> = ({
 							</label>
 							{/* Increase the number of rows for the textarea to make it taller */}
 							<textarea
-								className='resize-none w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500'
+								className='resize-none w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 text-black'
 								rows={10} // Increase the number of rows here to make the text field larger
 								value={feedbackText}
 								onChange={handleFeedbackTextChange}

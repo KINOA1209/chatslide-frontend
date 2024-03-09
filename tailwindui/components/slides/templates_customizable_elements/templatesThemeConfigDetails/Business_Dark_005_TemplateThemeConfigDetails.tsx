@@ -38,7 +38,7 @@ export const Business_Dark_005_TemplateThemeConfig: ThemeElements = {
 		color: '#8891AB',
 	},
 	contentFontCSS: {
-		fontSize: '12pt',
+		fontSize: '14pt',
 		fontWeight: 'normal',
 		fontFamily: 'Assistant Regular',
 		lineHeight: 1.3,
@@ -52,10 +52,10 @@ export const Business_Dark_005_TemplateThemeConfig: ThemeElements = {
 		fontWeight: 'bold',
 		fontFamily: 'Playfair Display Medium',
 		lineHeight: 1.2,
-		color: '#004260',
+		color: '#FFFFFF',
 	},
 	contentFontCSS_non_vertical_content: {
-		fontSize: '12pt',
+		fontSize: '14pt',
 		fontWeight: 'normal',
 		fontFamily: 'Assistant Regular',
 		lineHeight: 1.3, // leading-9 is equivalent to a line height of 1.5

@@ -193,10 +193,27 @@ export const useSlides = () => {
 		);
 	};
 
+	const removeTags = (text: string | string[]) => {
+		if (Array.isArray(text)) {
+			return text.map((t) => t.replace(/<[^>]*>?/gm, ''));
+		} else {
+			return text.replace(/<[^>]*>?/gm, '');
+		}
+	}
+
 	const changeTemplate = (newTemplate: TemplateKeys) => {
 		console.log('Changing template to:', newTemplate);
-		const newSlides = slides.map((slide, index) => {
+		let newSlides = slides.map((slide, index) => {
 			return { ...slide, template: newTemplate, images_position: [{}, {}, {}] };
+		});
+		newSlides = newSlides.map((slide, index) => {
+			return {
+				...slide,
+				content: removeTags(slide.content) as string[],
+				head: removeTags(slide.head) as string,
+				title: removeTags(slide.title) as string,
+				subtopic: removeTags(slide.subtopic) as string,
+			};
 		});
 		//set into session storage to update
 		sessionStorage.setItem('schoolTemplate', newTemplate);
@@ -303,7 +320,7 @@ export const useSlides = () => {
 		isShowingLogo,
 		setIsShowingLogo,
 		ChangeIsShowingLogo,
-		isPresenting, 
+		isPresenting,
 		setIsPresenting
 	};
 };

@@ -22,7 +22,7 @@ export const Default_TemplateThemeConfig: ThemeElements = {
 		color: '#111827', // text-neutral-900 color
 	},
 	contentFontCSS: {
-		fontSize: '12pt', // base size sent from backend
+		fontSize: '14pt', // base size sent from backend
 		fontWeight: 'normal', // font-normal
 		fontFamily: 'Creato Display Regular', // font-creato-medium
 		lineHeight: 1.2, // leading-[140%]
@@ -52,7 +52,7 @@ export const Default_TemplateThemeConfig: ThemeElements = {
 	},
 
 	contentFontCSS_non_vertical_content: {
-		fontSize: '12pt', // base size sent from backend
+		fontSize: '14pt', // base size sent from backend
 		fontWeight: 'normal', // font-normal
 		fontFamily: 'Creato Display Regular', // font-creato-medium
 		lineHeight: 1.2, // leading-[140%]

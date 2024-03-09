@@ -7,6 +7,7 @@ import { useUser } from '@/hooks/use-user';
 import PaywallModal from '../paywallModal';
 import ResourceService from '@/services/ResourceService';
 import { ResourceIcon } from '../ui/ResourceItem';
+import { PlusLabel } from '../ui/GrayLabel';
 
 type SelectedResourcesListProps = {
 	selectedResources: Resource[];
@@ -63,7 +64,7 @@ const ResourceEntry: React.FC<ResourceEntryProps> = ({
 								className={`w-[20px] h-[20px] ${runningOCR && 'animate-bounce'}`}
 							/>
 							OCR
-							{!isPaidUser && '🔒'}
+							{!isPaidUser && <PlusLabel />}
 						</span>
 					</button>
 				)}

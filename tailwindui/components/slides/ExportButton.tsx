@@ -18,6 +18,7 @@ import { GoDownload } from 'react-icons/go';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import SaveScriptsButton from './script/SaveScriptsButton';
 import { SpinIcon } from '@/app/(feature)/icons';
+import { PlusLabel } from '../ui/GrayLabel';
 
 interface ExportToPdfProps {
 	slides: Slide[];
@@ -153,7 +154,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 						bgColor='bg-Gray'
 					>
 						<FaRegFilePdf />
-						<span>PDF (high) {!isPaidUser && '🔒'}</span>
+						<span className='flex flex-row gap-2 items-center'>PDF (high) {!isPaidUser && <PlusLabel/>}</span>
 					</BigGrayButton>
 
 					<BigGrayButton
@@ -164,7 +165,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 						bgColor='bg-Gray'
 					>
 						<RiSlideshow2Fill />
-						<span>PPTX {!isPaidUser && '🔒'}</span>
+						<span className='flex flex-row gap-2 items-center'>PPTX {!isPaidUser && <PlusLabel />}</span>
 					</BigGrayButton>
 
 					{hasScript &&

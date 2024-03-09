@@ -13,7 +13,7 @@ import React, {
 } from 'react';
 import PaywallModal from '../paywallModal';
 import { useRouter } from 'next/navigation';
-import { GrayLabel } from '../ui/GrayLabel';
+import { GrayLabel, PlusLabel } from '../ui/GrayLabel';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 type DrlambdaButtonProps = {
 	children: ReactNode;
@@ -75,10 +75,10 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
 				className={`sm:min-w-[10rem] lg:min-w-[12rem] px-2 h-[36px] sm:h-[36px] ${getButtonBg()} disabled:animate-pulse rounded-[0.4375rem] flex justify-center items-center gap-4 cursor-pointer }`}
 			>
 				{isSubmitting && <SpinIcon />}
-				<span className='text-[#2044F2] font-semibold tracking-tight whitespace-nowrap'>
-					{isPaidFeature && !isPaidUser && '🔒 '}
-					{isPaidFeature && isPaidUser && '🚀 '}
+				<span className='text-[#2044F2] font-semibold tracking-tight whitespace-nowrap flex flex-row gap-2'>
 					{children}
+					{isPaidFeature && !isPaidUser && <PlusLabel />}
+					{isPaidFeature && isPaidUser && '🚀 '}
 				</span>
 				{/* Replace with the actual icon component or element */}
 				{/* {!isSubmitting && showArrow && <RightTurnArrowIcon />} */}
