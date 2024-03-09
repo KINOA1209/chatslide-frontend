@@ -24,7 +24,7 @@ export const Business_002_TemplateThemeConfig: ThemeElements = {
 		color: '#6B7A2D',
 	},
 	contentFontCSS: {
-		fontSize: '12pt',
+		fontSize: '14pt',
 		fontWeight: 'normal',
 		fontFamily: 'Arimo',
 		lineHeight: 1.3,
@@ -42,7 +42,7 @@ export const Business_002_TemplateThemeConfig: ThemeElements = {
 		color: '#2E2E2E',
 	},
 	contentFontCSS_non_vertical_content: {
-		fontSize: '12pt',
+		fontSize: '14pt',
 		fontWeight: 'normal',
 		fontFamily: 'Arimo',
 		lineHeight: 1.3,
