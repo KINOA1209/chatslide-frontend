@@ -89,7 +89,7 @@ export const useSlides = () => {
 		newSlide.logo = slides[index].logo;
 		newSlide.background_url = slides[index].background_url;
 		const newSlides = [...slides];
-		newSlides.splice(index, 0, newSlide);
+		newSlides.splice(index+1, 0, newSlide);
 		setSlides(newSlides);
 
 		updateVersion();
