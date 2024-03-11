@@ -4,7 +4,7 @@
 		{
 			"id": "from_topic",
 			"title": "From a Topic",
-			"description": "Transfer a sepcific topic to presentation",
+			"description": "Transfer a specific topic to presentation",
 			"imageSrc": "/images/generation_mode/from_topic.png"
 		},
 		{
