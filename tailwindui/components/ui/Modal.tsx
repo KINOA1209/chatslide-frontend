@@ -35,7 +35,7 @@ const Modal: React.FC<ModalProps> = ({
 	const [isSubmitting, setIsSubmitting] = React.useState(false);
 
 	const handleCloseModal = () => {
-		console.log('handleCloseModal');
+		// console.log('handleCloseModal');
 		if (!canClose) return;
 		setShowModal(false);
 	};
