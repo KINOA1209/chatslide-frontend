@@ -91,6 +91,7 @@ export const useSlides = () => {
 		const newSlides = [...slides];
 		newSlides.splice(index+1, 0, newSlide);
 		setSlides(newSlides);
+		setSlideIndex(index+1);
 
 		updateVersion();
 		updateSlideHistory(newSlides);
