@@ -9,6 +9,7 @@ import { ShareButton } from '@/components/slides/SlideButtons';
 import { TextLabel } from '../ui/GrayLabel';
 import ClickableLink from '@/components/ui/ClickableLink';
 import { useProject } from '@/hooks/use-project';
+import { ToolBar } from '../ui/ToolBar';
 
 const SocialPostHTML = dynamic(
 	() => import('@/components/socialPost/socialPostHTML'),
@@ -45,7 +46,7 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
 	return (
 		<div>
 			<div className='px-4 sm:px-6 flex flex-col justify-center items-center gap-4'>
-				<div className='flex flex-col sm:flex-row justify-end items-center gap-1 sm:gap-4'>
+				<ToolBar >
 					{/* slides contents */}
 					<ExportToPngButton
 						socialPostSlide={socialPostSlides}
@@ -57,19 +58,9 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
 							share={isShared}
 							project={project}
 							host={host}
+							isSocialPost={true}
 						/>}
-					<PostDropDown
-						slides={socialPostSlides}
-						post_type='socialpost'
-						setShare={updateIsShared}
-					/>
-				</div>
-				{isShared && (
-					<div className='w-[100] md:w-[40rem] flex-grow'>
-						<TextLabel>View only link:</TextLabel>
-						<ClickableLink link={`${host}/shared/${project?.id}`} />
-					</div>
-				)}
+				</ToolBar>
 
 				<SocialPostHTML
 					socialPostSlides={socialPostSlides}

@@ -72,6 +72,7 @@ type ShareButtonProps = {
 	setShare: null | ((is_shared: boolean, is_public?: boolean) => void);
 	project: Project;
 	host?: string;
+	isSocialPost?: boolean;
 };
 
 export const ShareButton: React.FC<ShareButtonProps> = ({
@@ -79,6 +80,7 @@ export const ShareButton: React.FC<ShareButtonProps> = ({
 	setShare,
 	project,
 	host = 'https://drlambda.ai',
+	isSocialPost = false,
 }) => {
 	const [showModal, setShowModal] = useState(false);
 	const project_id = project?.id || '';
@@ -128,7 +130,7 @@ export const ShareButton: React.FC<ShareButtonProps> = ({
 			// description='Share your slides with others or on social media'
 			>
 				<div>
-					<Instruction>Share Slides</Instruction>
+					<Instruction>Share { isSocialPost ? ' Social Post' : ' Slides'}</Instruction>
 					{setShare && <RadioButton
 						name='share'
 						options={[
@@ -164,7 +166,7 @@ export const ShareButton: React.FC<ShareButtonProps> = ({
 					))}
 				</div>
 
-				{project.is_shared && setShare &&
+				{project.is_shared && setShare && !isSocialPost &&
 					<div>
 						<Instruction>Publish Slides</Instruction>
 						<Explanation>Your slides will be published to DrLambda Discover, people can also find the slides on search engine.</Explanation>
