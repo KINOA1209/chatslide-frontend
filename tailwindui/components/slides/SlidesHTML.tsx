@@ -477,10 +477,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 									explanation={isShowingLogo ? 'Remove Logo' : 'Show Logo'}
 								></ButtonWithExplanation>
 							)}
+							<div className='h-8 w-0.5 bg-gray-200'></div>
 						</>
 					)}
-
-					<div className='h-8 w-0.5 bg-gray-200'></div>
 
 					<ButtonWithExplanation
 						button={<PresentButton openPresent={openPresent} />}
