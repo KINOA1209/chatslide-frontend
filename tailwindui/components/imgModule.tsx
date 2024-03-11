@@ -634,15 +634,15 @@ export const ImgModule = ({
 				<>
 					<div className='hidden sm:flex'>
 						<EditChartData
-						chartType={selectedChartType}
-						chartData={chartData}
-						setChartData={setChartData}
-						onBack={() => setChartModalContent('selection')}
-						imgModuleRef={imgmoduleRef}
-						titleRef={titleRef}
-						typeRef={typeRef}
-						doneButtonRef={doneButtonRef}
-					/></div>
+							chartType={selectedChartType}
+							chartData={chartData}
+							setChartData={setChartData}
+							onBack={() => setChartModalContent('selection')}
+							imgModuleRef={imgmoduleRef}
+							titleRef={titleRef}
+							typeRef={typeRef}
+							doneButtonRef={doneButtonRef}
+						/></div>
 					<div className='flex sm:hidden'>
 						<Blank>
 							Please use desktop to edit chart
@@ -953,7 +953,7 @@ export const ImgModule = ({
 						/>
 					</div>
 				) : selectedImg === '' ? ( // updload icon 
-					<div className='flex flex-col items-center justify-center'>
+					<div className='flex flex-col items-center justify-center cursor-pointer' onClick={openModal}>
 						<svg
 							className='w-20 h-20 opacity-50'
 							viewBox='0 0 24 24'
