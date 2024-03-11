@@ -19,6 +19,7 @@ import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import SaveScriptsButton from './script/SaveScriptsButton';
 import { SpinIcon } from '@/app/(feature)/icons';
 import { PlusLabel } from '../ui/GrayLabel';
+import { toast } from 'react-toastify';
 
 interface ExportToPdfProps {
 	slides: Slide[];
@@ -65,6 +66,18 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 		setShowModal(false);
 
 		setDownloading(true);
+
+		toast.info('Exporting...', {
+			position: 'top-center',
+			autoClose: 5000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+		});
+
+
 		if (frontend) {
 			await exportToPdfFrontend();
 		} else {

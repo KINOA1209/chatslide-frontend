@@ -54,6 +54,7 @@ import ButtonWithExplanation from './button/ButtonWithExplanation';
 import { index } from 'd3';
 import { GoPencil } from 'react-icons/go';
 import { IoMdResize } from 'react-icons/io';
+import { Blank } from './ui/Loading';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -630,16 +631,24 @@ export const ImgModule = ({
 			)}
 
 			{chartModalContent === 'edit' && selectedChartType && (
-				<EditChartData
-					chartType={selectedChartType}
-					chartData={chartData}
-					setChartData={setChartData}
-					onBack={() => setChartModalContent('selection')}
-					imgModuleRef={imgmoduleRef}
-					titleRef={titleRef}
-					typeRef={typeRef}
-					doneButtonRef={doneButtonRef}
-				/>
+				<>
+					<div className='hidden sm:flex'>
+						<EditChartData
+						chartType={selectedChartType}
+						chartData={chartData}
+						setChartData={setChartData}
+						onBack={() => setChartModalContent('selection')}
+						imgModuleRef={imgmoduleRef}
+						titleRef={titleRef}
+						typeRef={typeRef}
+						doneButtonRef={doneButtonRef}
+					/></div>
+					<div className='flex sm:hidden'>
+						<Blank>
+							Please use desktop to edit chart
+						</Blank>
+					</div>
+				</>
 			)}
 		</div>
 	);
