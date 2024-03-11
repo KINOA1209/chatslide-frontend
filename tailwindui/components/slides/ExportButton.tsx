@@ -19,7 +19,7 @@ import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import SaveScriptsButton from './script/SaveScriptsButton';
 import { SpinIcon } from '@/app/(feature)/icons';
 import { PlusLabel } from '../ui/GrayLabel';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 
 interface ExportToPdfProps {
 	slides: Slide[];
@@ -67,7 +67,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 
 		setDownloading(true);
 
-		toast.info('Exporting...', {
+		toast.info('Exporting your file, please wait...', {
 			position: 'top-center',
 			autoClose: 5000,
 			hideProgressBar: false,
@@ -120,6 +120,8 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 				message='Upgrade for more ⭐️credits.'
 				showReferralLink={true}
 			/>
+
+			<ToastContainer />
 
 			<ButtonWithExplanation
 				button={
