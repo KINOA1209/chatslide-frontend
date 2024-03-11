@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import AuthService from '@/services/AuthService';
 import { useRouter } from 'next/navigation';
 import Toggle from '../button/Toggle';
 import { GrayLabel } from '../ui/GrayLabel';
@@ -14,7 +13,6 @@ interface PricingProps {
 
 export default function Pricing({ fewerCards = false }: PricingProps) {
 	const [isMonthly, setIsMonthly] = useState(true);
-	const [currentUser, setCurrentUser] = useState(null);
 	const buttonRef = useRef<HTMLDivElement>(null);
 	const router = useRouter();
 
@@ -24,7 +22,7 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 	const [showEnt, setShowEnt] = useState(false);
 	const [clickedSubscribe, setClickedSubscribe] = useState(false);
 
-	const { tier, expirationDate } = useUser();
+	const { token, tier, expirationDate, email } = useUser();
 
 	const showPricingPanel = (index: number) => {
 		setShowFree(false);
@@ -44,19 +42,11 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 	};
 
 	const getCta = (): string => {
-		if (!currentUser) {
+		if (!token) {
 			return 'Sign up to Start';
 		}
 		return 'Claim Offer ✅';
 	};
-
-	useEffect(() => {
-		const fetchCurrentUser = async () => {
-			const user = await AuthService.getCurrentUser();
-			setCurrentUser(user);
-		};
-		fetchCurrentUser();
-	}, []);
 
 	useEffect(() => {
 		const animationProp = [
@@ -77,16 +67,10 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 		}
 	}, []);
 
-	const handleProSubscription = async () => {
+	const handleProSubscription = async (token: string) => {
 		try {
 			// Determine the tier based on isYearly
 			const tier = !isMonthly ? 'PRO_YEARLY' : 'PRO_MONTHLY';
-
-			// Get current user's token and email
-			const { userId, idToken: token } =
-				await AuthService.getCurrentUserTokenAndId();
-			const email = await AuthService.getCurrentUserEmail();
-			// console.log(email);
 
 			// Create a request object
 			const requestData = {
@@ -118,16 +102,10 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 		}
 	};
 
-	const handlePlusSubscription = async () => {
+	const handlePlusSubscription = async (token: string) => {
 		try {
 			// Determine the tier based on isYearly
 			const tier = !isMonthly ? 'PLUS_YEARLY' : 'PLUS_MONTHLY';
-
-			// Get current user's token and email
-			const { userId, idToken: token } =
-				await AuthService.getCurrentUserTokenAndId();
-			const email = await AuthService.getCurrentUserEmail();
-			// console.log(email);
 
 			// Create a request object
 			const requestData = {
@@ -161,15 +139,15 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 	};
 
 	const handleClick = async (tier: string) => {
-		if (!currentUser) {
+		if (!token) {
 			router.push('/signup');
 			return;
 		}
 
 		if (tier == 'pro') {
-			handleProSubscription();
+			handleProSubscription(token);
 		} else if (tier == 'plus') {
-			handlePlusSubscription();
+			handlePlusSubscription(token);
 		} else if (tier == 'free') {
 			router.push('/signup');
 		}
@@ -273,7 +251,7 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 											<div className='grow'></div>
 											<div className='h-10 max-w-xs mx-auto sm:max-w-none flex-col flex justify-center items-center my-3'>
 												<div>
-													{!currentUser && (
+													{!token && (
 														<DrlambdaButton
 															onClick={() => handleClick('free')}
 															showArrow={false}
@@ -282,7 +260,7 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 														</DrlambdaButton>
 													)}
 
-													{currentUser && (tier === 'FREE' || tier === '') && (
+													{token && (tier === 'FREE' || tier === '') && (
 														<div className='text-lg text-center'>
 															Current Subscription
 														</div>
@@ -342,7 +320,7 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 										<div className='grow'></div>
 										<div className='h-10 max-w-xs mx-auto sm:max-w-none flex-col flex justify-center items-center my-3'>
 											<div>
-												{(!currentUser || tier === 'FREE' || tier === '') && (
+												{(!token || tier === 'FREE' || tier === '') && (
 													<DrlambdaButton
 														onClick={() => handleClick('plus')}
 														showArrow={false}
@@ -350,7 +328,7 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 														{getCta()}
 													</DrlambdaButton>
 												)}
-												{currentUser &&
+												{token &&
 													(tier === 'PLUS_MONTHLY' ||
 														tier === 'PLUS_YEARLY') && (
 														<>
@@ -415,7 +393,7 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 										<div className='grow'></div>
 										<div className='h-10 max-w-xs mx-auto sm:max-w-none flex-col flex justify-center items-center my-3'>
 											<div>
-												{(!currentUser || tier === 'FREE' || tier === '') && (
+												{(!token || tier === 'FREE' || tier === '') && (
 													<DrlambdaButton
 														onClick={() => handleClick('pro')}
 														showArrow={false}
@@ -423,7 +401,7 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 														{getCta()}
 													</DrlambdaButton>
 												)}
-												{currentUser &&
+												{token &&
 													(tier === 'PRO_MONTHLY' || tier === 'PRO_YEARLY') && (
 														<>
 															{/* <div className="w-full text-center">Expiring: {moment.utc(expiration).format('L')}</div> */}
