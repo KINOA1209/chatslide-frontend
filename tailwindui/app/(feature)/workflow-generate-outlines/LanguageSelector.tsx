@@ -65,14 +65,14 @@ const LanguageSelector: React.FC<{
 					>
 						🇧🇷 Português (Brasil)
 					</option>
+					<option key='Portuguese' value='Portuguese'>
+						🇵🇹 Português
+					</option>
 					<option
 						key='Italian'
 						value='Italian'
 					>
 						🇮🇹 Italiano
-					</option>
-					<option key='Portuguese' value='Portuguese'>
-						🇵🇹 Português
 					</option>
 					<option key='Hindi' value='Hindi'>
 						🇮🇳 हिन्दी

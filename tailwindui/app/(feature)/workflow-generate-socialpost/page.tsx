@@ -499,6 +499,7 @@ export default function Topic_SocialPost() {
 											</div>
 										</div>
 									</div>
+
 									<div className='language_drop'>
 										<select
 											className='focus:ring-0 bg-gray-100 border border-2 border-gray-200'
@@ -552,6 +553,12 @@ export default function Topic_SocialPost() {
 											<option key='Portuguese' value='Portuguese'>
 												🇵🇹 Português
 											</option>
+											<option
+												key='Italian'
+												value='Italian'
+											>
+												🇮🇹 Italiano
+											</option>
 											<option key='Hindi' value='Hindi'>
 												🇮🇳 हिन्दी
 											</option>
@@ -566,6 +573,12 @@ export default function Topic_SocialPost() {
 											</option>
 											<option key='Hebrew' value='Hebrew'>
 												🇮🇱 עברית
+											</option>
+											<option key='Dutch' value='Dutch'>
+												🇳🇱 Nederlands
+											</option>
+											<option key='Croatian' value='Croatian'>
+												🇭🇷 Hrvatski
 											</option>
 										</select>
 									</div>
