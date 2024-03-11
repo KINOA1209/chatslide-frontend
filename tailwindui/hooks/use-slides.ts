@@ -53,7 +53,7 @@ export const useSlides = () => {
 	const { clearChatHistory } = useChatHistory();
 
 	// to control show or not show logo
-	const { isShowingLogo, setIsShowingLogo } = useIsShowingLogo();
+	const [isShowingLogo, setIsShowingLogo] = useState(false);
 
 	const init = async () => {
 		if (slidesStatus !== SlidesStatus.NotInited) return;
@@ -68,10 +68,10 @@ export const useSlides = () => {
 		slidesStatus = SlidesStatus.Inited;
 	};
 
-	const ChangeIsShowingLogo = () => {
+	const toggleIsShowingLogo = () => {
 		setIsShowingLogo(!isShowingLogo);
 		const newSlides = slides.map((slide, index) => {
-			return { ...slide };
+			return { ...slide, show_logo: !isShowingLogo };
 		});
 		setSlides(newSlides);
 		updateSlideHistory(newSlides);
@@ -226,6 +226,7 @@ export const useSlides = () => {
 	const initSlides = (slides: Slide[]) => {
 		console.log('-- init slides: ', { slides });
 		setSlides(slides);
+		setIsShowingLogo(slides.some((slide) => slide.show_logo));
 		setSlideIndex(0);
 		setSlidesHistory([slides]);
 		setSlidesHistoryIndex(0);
@@ -319,7 +320,7 @@ export const useSlides = () => {
 		setTranscripts,
 		isShowingLogo,
 		setIsShowingLogo,
-		ChangeIsShowingLogo,
+		toggleIsShowingLogo,
 		isPresenting,
 		setIsPresenting
 	};

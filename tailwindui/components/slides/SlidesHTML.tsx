@@ -102,8 +102,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		version,
 		saveStatus,
 		isShowingLogo,
-		setIsShowingLogo,
-		ChangeIsShowingLogo,
+		toggleIsShowingLogo,
 	} = useSlides();
 
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -462,7 +461,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							{isPaidUser && (
 								<ButtonWithExplanation
 									button={
-										<button onClick={() => setIsShowingLogo(!isShowingLogo)}>
+										<button onClick={() => toggleIsShowingLogo()}>
 											<GoEyeClosed
 												style={{
 													strokeWidth: '0.8',

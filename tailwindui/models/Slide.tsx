@@ -45,6 +45,7 @@ export default class Slide {
 	images_position: ImagesPosition[];
 	chart: Chart[]; // data of charts
 	layout: LayoutKeys;
+	show_logo?: boolean;
 	logo: string; // enum for school tempaltes, if user has custom logo, then use logo_url
 	logo_url?: string; // overwrites logo if present
 	background_url?: string;
