@@ -71,12 +71,12 @@ export default async function Page({ params }: Props) {
 	const project = await ProjectService.getSharedProjectDetails(project_id, true);
 
 	return (
-		<div className='flex flex-col h-screen w-screen'>
+		<div className='flex flex-col w-screen'>
 			<div className='flex'>
 				<Header loginRequired={false} isLanding={false} />
 			</div>
 			<JoinUsBanner />
-			<main className='w-full flex grow flex-col overflow-y-hidden'>
+			<main className='w-full flex h-full flex-col overflow-y-scroll'>
 				{project.description &&
 					<div className='hidden sm:flex m-4'>
 						<Card>
@@ -90,7 +90,9 @@ export default async function Page({ params }: Props) {
 						</Card>
 					</div>}
 
-				<SharePage project_id={project_id} />
+				<div className='w-full h-screen'>
+					<SharePage project_id={project_id} />
+				</div>
 
 			</main>
 			{/* <WorkflowFooter /> */}
