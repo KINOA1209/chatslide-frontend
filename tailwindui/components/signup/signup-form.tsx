@@ -103,6 +103,7 @@ const SignupForm: React.FC = () => {
 
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		setSubmitting(true);
 
 		// const username = (event.target as HTMLFormElement).username.value;
 		const email = (event.target as HTMLFormElement).email.value;
@@ -112,7 +113,7 @@ const SignupForm: React.FC = () => {
 		}
 
 		try {
-			setSubmitting(true);
+			
 			await AuthService.signupNoCode(email, password, email);
 			const { user } = await AuthService.signIn(email, password);
 			console.log(user);
@@ -159,9 +160,8 @@ const SignupForm: React.FC = () => {
 				progress: undefined,
 				theme: 'light',
 			});
-		} finally {
-			setSubmitting(false);
-		}
+		} 
+		setSubmitting(false);
 	};
 
 	useEffect(() => {
