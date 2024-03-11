@@ -11,6 +11,7 @@ import { useSlides } from '@/hooks/use-slides';
 import { Blank, Loading } from '@/components/ui/Loading';
 import { useProject } from '@/hooks/use-project';
 import { JoinUsBanner } from '@/components/layout/JoinUsBanner';
+import useHydrated from '@/hooks/use-hydrated';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -122,6 +123,9 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 		};
 		init();
 	}, []);
+
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
 
 	if (loading)
 		return <Loading />
