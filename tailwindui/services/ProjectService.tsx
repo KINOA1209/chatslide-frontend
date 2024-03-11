@@ -237,7 +237,7 @@ class ProjectService {
 				} else if (slideData.content.length === 2) {
 					slide.layout =
 						slideData.layout || ('Col_2_img_2_layout' as LayoutKeys);
-				} else if (slideData.content.length === 3) {
+				} else if (slideData.content.length >= 3) {
 					// Generate a random number between 0 and 1
 					const randomNumber = Math.random();
 					// Choose layout based on probability distribution
