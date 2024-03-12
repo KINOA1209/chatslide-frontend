@@ -132,3 +132,9 @@
 	src: url('/fonts/Brygada1918-SemiBold.ttf') format('truetype');
 	/* Add more src declarations for different font weights or styles if needed */
 }
+/* Yrsa */
+@font-face {
+	font-family: 'Yrsa Medium';
+	src: url('/fonts/Yrsa-Medium.ttf') format('truetype');
+	/* Add more src declarations for different font weights or styles if needed */
+}
