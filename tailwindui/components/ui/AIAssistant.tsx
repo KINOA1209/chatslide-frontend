@@ -12,6 +12,7 @@ import { IoSend, IoSendOutline } from 'react-icons/io5';
 import { DeleteIcon } from '@/app/(feature)/icons';
 import { FaTimes } from 'react-icons/fa';
 import { ScrollBar } from './ScrollBar';
+import { useProject } from '@/hooks/use-project';
 
 export const DrLambdaAIAssistantIcon: React.FC<{
 	onClick: () => void;
@@ -93,6 +94,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	const [loading, setLoading] = useState(false);
 	const { token } = useUser();
 	const lastMessageRef = useRef<HTMLDivElement>(null); // Ensure you have a ref for the last message
+	const { project } = useProject();
 
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
@@ -129,7 +131,8 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				},
 				body: JSON.stringify({
 					slide: slides[currentSlideIndex],
-					prompt,
+					project_id: project?.id || '',
+					prompt: prompt,
 				}),
 			});
 		} catch (error) {
