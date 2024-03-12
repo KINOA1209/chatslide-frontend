@@ -244,7 +244,7 @@ export const useSlides = () => {
 	const setTranscripts = (transcripts: string[]) => {
 		console.log('-- set transcripts: ', { transcripts });
 		for (let i = 0; i < transcripts.length; i++) {
-			if (i < slides.length) slides[i].transcript = transcripts[i];
+			if (i < slides.length) slides[i] = { ...slides[i], transcript: transcripts[i] };
 		}
 		setSlides(slides);
 		syncSlides(slides);
