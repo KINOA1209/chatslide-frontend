@@ -38,7 +38,7 @@ export const Fun_Vibrant_007_TemplateThemeConfig: ThemeElements = {
 		color: '#004260',
 	},
 	contentFontCSS: {
-		fontSize: '14pt',
+		fontSize: '16pt',
 		fontWeight: 'normal',
 		fontFamily: 'Helvetica Neue',
 		lineHeight: 1.3,

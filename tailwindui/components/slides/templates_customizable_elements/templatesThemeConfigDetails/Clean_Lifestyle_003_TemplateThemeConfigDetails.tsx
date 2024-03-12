@@ -41,7 +41,7 @@ export const Clean_Lifestyle_003_TemplateThemeConfig: ThemeElements = {
 		color: '#666666', // text-neutral-900 color
 	},
 	contentFontCSS: {
-		fontSize: '14pt', // base size sent from backend
+		fontSize: '16pt', // base size sent from backend
 		fontWeight: 'normal', // font-normal
 		fontFamily: 'Creato Display Regular', // font-creato-medium
 		lineHeight: 1.2, // leading-[140%]

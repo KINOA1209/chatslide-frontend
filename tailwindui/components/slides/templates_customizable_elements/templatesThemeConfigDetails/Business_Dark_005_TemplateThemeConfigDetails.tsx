@@ -38,7 +38,7 @@ export const Business_Dark_005_TemplateThemeConfig: ThemeElements = {
 		color: '#8891AB',
 	},
 	contentFontCSS: {
-		fontSize: '14pt',
+		fontSize: '16pt',
 		fontWeight: 'normal',
 		fontFamily: 'Assistant Regular',
 		lineHeight: 1.3,
