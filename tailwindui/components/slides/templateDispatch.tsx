@@ -31,7 +31,7 @@ export const templateDispatch = (
 	) => void = () => {}, // Replace with your default function if you have one
 	updateImgUrlArray: (
 		slideIndex: number,
-	) => (urls: string[], ischart: boolean[]) => void = () => () => {}, // Replace with your default function if you have one
+	) => (urls: string[], ischart: boolean[], images_position: ImagesPosition[]) => void = () => () => {}, // Replace with your default function if you have one
 	toggleEditMathMode: () => void = () => {}, // Replace with your default function if you have one
 
 	isCoverPage: boolean = false,

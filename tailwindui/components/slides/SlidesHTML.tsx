@@ -211,16 +211,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 		const currentSlide = { ...slides[slideIndex] };
 		const className = tag;
-		if (className as string === 'images_position' || className[0] === 'images_position') {
-			console.log('skip saving images_position');
-			return;
-		}
 
 		const applyUpdate = (
 			content: string | string[] | Chart[] | boolean[] | ImagesPosition[],
 			className: string,
 		) => {
-			if (className === 'images_position') return; // dont samve images position
 
 			if (className === 'head') {
 				currentSlide.head = content as string;
@@ -334,7 +329,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	// }, [isPresenting]);
 
 	const updateImgUrlArray = (slideIndex: number) => {
-		const updateImgUrl = (urls: string[], ischart: boolean[]) => {
+		const updateImgUrl = (urls: string[], ischart: boolean[], images_position: ImagesPosition[]) => {
 			// change all null to ''
 			urls = urls.map((url) => (url === null ? '' : url));
 
@@ -349,7 +344,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			console.log('updateImgUrlArray called');
 			console.log('urls', urls);
 			console.log('prevUrls', prevUrls);
-			handleSlideEdit([urls, ischart], slideIndex, ['images', 'is_chart']);
+			handleSlideEdit([urls, ischart, images_position], slideIndex, ['images', 'is_chart', 'images_position']);
 		};
 		return updateImgUrl;
 	};

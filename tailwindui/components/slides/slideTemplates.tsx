@@ -39,7 +39,7 @@ export interface MainSlideProps {
 	content: JSX.Element | JSX.Element[];
 	imgs: string[];
 	//   imgs: JSX.Element
-	update_callback: (imgs: string[], ischart: boolean[]) => void;
+	update_callback: (imgs: string[], ischart: boolean[], images_position: ImagesPosition[]) => void;
 	canEdit: boolean;
 	isCoverPage: boolean;
 	layoutOptionNonCover: LayoutKeys;
