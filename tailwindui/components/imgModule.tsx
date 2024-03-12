@@ -1,10 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Transition } from '@headlessui/react';
 import AuthService from '@/services/AuthService';
-import { LoadingIcon } from '@/components/ui/LoadingIcon';
 import { createPortal } from 'react-dom';
 import { toast } from 'react-toastify';
-import PaywallModal from './paywallModal';
 import ResourceService from '@/services/ResourceService';
 import Resource from '@/models/Resource';
 import Image from 'next/image';
@@ -14,22 +11,13 @@ import { ChartConfig, ValueDataPoint } from './chart/chartDataConfig';
 import { ScatterDataPoint } from 'chart.js';
 import DynamicChart from './chart/DynamicChart';
 import { ChartTypeRegistry } from 'chart.js';
-import ReactDOM from 'react-dom';
 import {
 	convertToChartData,
 	convertFromChartData,
 } from './chart/chartDataConvert';
 import Chart from '@/models/Chart';
-import { IoBarChartOutline, IoResize, IoResizeOutline, IoSave } from 'react-icons/io5';
-import { MdDone, MdOutlineZoomIn, MdOutlineZoomInMap, MdOutlineZoomOut } from 'react-icons/md';
 import { Rnd } from 'react-rnd';
 import { ResourceIcon } from './ui/ResourceItem';
-
-const RANDOM_FILLER_IMAGES = [
-	'https://img.freepik.com/free-vector/linear-flat-abstract-lines-pattern_23-2148939391.jpg',
-	'https://img.freepik.com/free-vector/geometric-shapes-pattern-background_1319-136.jpg',
-	'https://img.freepik.com/free-vector/linear-flat-abstract-lines-pattern_23-2148952437.jpg',
-];
 
 import ImagesPosition from '@/models/ImagesPosition';
 import {
@@ -40,7 +28,6 @@ import {
 	onResizeStop,
 	onMouseLeave,
 } from '@/components/slides/drag_resize/dragAndResizeFunction';
-import ResizeSlider from '@/components/slides/drag_resize/resize_slider';
 import '@/components/slides/drag_resize/dragAndResizeCSS.css';
 import { useSlides } from '@/hooks/use-slides';
 import { LayoutElements } from './slides/templates_customizable_elements/layout_elements';
@@ -678,6 +665,7 @@ export const ImgModule = ({
 	const [zoomLevel, setZoomLevel] = useState(100);
 	const [parentDimension, setParentDimension] = useState({ height: 0, width: 0 })
 	const [isParentDimension, setIsParentDimension] = useState(false)
+	const [imgLoadError, setImgLoadError] = useState(false)
 
 	//handler for drag and resize also autosave
 	const handleSave = onMouseLeave(
@@ -970,7 +958,7 @@ export const ImgModule = ({
 							isPrview={false}
 						/>
 					</div>
-				) : selectedImg === '' ? ( // updload icon 
+				) : (selectedImg === '' || imgLoadError) ? ( // updload icon 
 					<div className='flex flex-col items-center justify-center cursor-pointer' onClick={openModal}>
 						<svg
 							className='w-20 h-20 opacity-50'
@@ -1042,12 +1030,9 @@ export const ImgModule = ({
 								className={`transition ease-in-out duration-150 ${canEdit ? (isImgEditMode ? 'brightness-100' : 'hover:brightness-90') : 'cursor-pointer'
 									}`}
 								onError={(e) => {
-									const src =
-										RANDOM_FILLER_IMAGES[
-										Math.floor(Math.random() * RANDOM_FILLER_IMAGES.length)
-										];
-									e.currentTarget.src = src;
-									updateSingleCallback(src);
+									console.log('failed to load image', imgsrc)
+									setImgLoadError(true);
+									updateSingleCallback('');
 								}}
 							/>
 						</Rnd>
