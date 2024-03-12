@@ -46,7 +46,7 @@ import Chart from '@/models/Chart';
 import ImagesPosition from '@/models/ImagesPosition';
 import { Panel } from '../layout/Panel';
 import { useProject } from '@/hooks/use-project';
-import { GoEyeClosed } from 'react-icons/go';
+import { GoEye, GoEyeClosed } from 'react-icons/go';
 import ScriptWindow from './script/ScriptWindow';
 import ReactDOM from 'react-dom';
 import { ScrollBar } from '../ui/ScrollBar';
@@ -141,7 +141,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		Math.min(dimensions.width / 960, dimensions.height / 540),
 	);
 	const [nonPresentScale, setNonPresentScale] = useState(
-		Math.min(1, Math.min(dimensions.width / 960, (dimensions.height-100) / 540) * 0.8),
+		Math.min(
+			1,
+			Math.min(dimensions.width / 960, (dimensions.height - 100) / 540) * 0.8,
+		),
 	);
 
 	const [isChatWindowOpen, setIsChatWindowOpen] = useState(false);
@@ -172,12 +175,17 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	useEffect(() => {
 		const handleResize = () => {
-			
 			const scale = Math.min(window.innerWidth / 960, window.innerHeight / 540);
 			setPresentScale(scale);
-			setNonPresentScale(Math.min(1, Math.min(window.innerWidth / 960, (window.innerHeight - 100) / 540) * 0.8));
-		}
-			
+			setNonPresentScale(
+				Math.min(
+					1,
+					Math.min(window.innerWidth / 960, (window.innerHeight - 100) / 540) *
+						0.8,
+				),
+			);
+		};
+
 		window.addEventListener('resize', handleResize);
 
 		return () => window.removeEventListener('resize', handleResize);
@@ -232,7 +240,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 		const currentSlide = { ...slides[slideIndex] };
 		const className = tag;
-		if (className as string === 'images_position' || className[0] === 'images_position') {
+		if (
+			(className as string) === 'images_position' ||
+			className[0] === 'images_position'
+		) {
 			console.log('skip saving images_position');
 			return;
 		}
@@ -399,8 +410,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			isShowingLogo, // isShowingLogo
 		);
 
-	
-
 	if (toPdf)
 		// a simple page for backend to capture the slides
 		return (
@@ -463,21 +472,35 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 								<ButtonWithExplanation
 									button={
 										<button onClick={() => toggleIsShowingLogo()}>
-											<GoEyeClosed
-												style={{
-													strokeWidth: '0.8',
-													flex: '1',
-													width: '1.5rem',
-													height: '1.5rem',
-													fontWeight: 'bold',
-													color: '#2943E9',
-												}}
-											/>
+											{isShowingLogo ? (
+												<GoEyeClosed
+													style={{
+														strokeWidth: '0.8',
+														flex: '1',
+														width: '1.5rem',
+														height: '1.5rem',
+														fontWeight: 'bold',
+														color: '#2943E9',
+													}}
+												/>
+											) : (
+												<GoEye
+													style={{
+														strokeWidth: '0.8',
+														flex: '1',
+														width: '1.5rem',
+														height: '1.5rem',
+														fontWeight: 'bold',
+														color: '#2943E9',
+													}}
+												/>
+											)}
 										</button>
 									}
 									explanation={isShowingLogo ? 'Remove Logo' : 'Show Logo'}
 								></ButtonWithExplanation>
 							)}
+
 							<div className='h-8 w-0.5 bg-gray-200'></div>
 						</>
 					)}
@@ -514,10 +537,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 			<div className='w-full flex flex-row grow items-start justify-center xl:justify-between gap-4 overflow-auto'>
 				{/* vertical bar */}
-				
+
 				<Panel>
 					<div className='h-full hidden xl:flex w-[150px]'>
-						<ScrollBar currentElementRef={verticalCurrentSlideRef} index={slideIndex} axial='y'>
+						<ScrollBar
+							currentElementRef={verticalCurrentSlideRef}
+							index={slideIndex}
+							axial='y'
+						>
 							{slides.map((slide, index) => (
 								<div
 									key={
@@ -628,7 +655,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 					{/* horizontal  */}
 					<div className='block xl:hidden max-w-xl sm:max-w-4xl mx-auto py-4 justify-center items-center'>
-						<ScrollBar currentElementRef={horizontalCurrentSlideRef} index={slideIndex}>
+						<ScrollBar
+							currentElementRef={horizontalCurrentSlideRef}
+							index={slideIndex}
+						>
 							{slides.map((slide, index) => (
 								<div
 									key={

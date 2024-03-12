@@ -56,29 +56,35 @@ interface MainSlideProps extends BaseMainSlideProps {
 	showContentBulletPoint?: boolean;
 }
 
-const filterEmptyLines = (content: JSX.Element[] | JSX.Element): JSX.Element[] => {
+const filterEmptyLines = (
+	content: JSX.Element[] | JSX.Element,
+): JSX.Element[] => {
 	const elements = React.Children.toArray(content);
 	const nonEmptyElements: JSX.Element[] = [];
-  
+
 	for (const element of elements) {
 		if (React.isValidElement(element)) {
 			let hasVisibleContent = true;
-			const htmlContent = 
-				element.props?.children?.props?.children?.props?.dangerouslySetInnerHTML?.__html ||
-				element.props?.children?.props?.content;
+			const htmlContent =
+				element.props?.children?.props?.children?.props?.dangerouslySetInnerHTML
+					?.__html || element.props?.children?.props?.content;
 			if (htmlContent) {
 				const parser = new DOMParser();
 				const doc = parser.parseFromString(htmlContent, 'text/html');
-				const hasVisibleContent = Array.from(doc.body.childNodes).some(node => {
-					if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
-						return true;  // Text node with non-whitespace content
-					} else if (node.nodeType === Node.ELEMENT_NODE) {
-						const elementNode = node as Element;
-						return elementNode.textContent?.trim() ||  // Element with non-whitespace content
-								elementNode.querySelectorAll('img, table, iframe').length > 0;  // Element containing meaningful tags
-					}
-					return false;
-				});
+				const hasVisibleContent = Array.from(doc.body.childNodes).some(
+					(node) => {
+						if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
+							return true; // Text node with non-whitespace content
+						} else if (node.nodeType === Node.ELEMENT_NODE) {
+							const elementNode = node as Element;
+							return (
+								elementNode.textContent?.trim() || // Element with non-whitespace content
+								elementNode.querySelectorAll('img, table, iframe').length > 0
+							); // Element containing meaningful tags
+						}
+						return false;
+					},
+				);
 
 				if (hasVisibleContent) {
 					nonEmptyElements.push(element);
@@ -89,7 +95,7 @@ const filterEmptyLines = (content: JSX.Element[] | JSX.Element): JSX.Element[] =
 			}
 		}
 	}
-		
+
 	return nonEmptyElements;
 };
 
@@ -387,7 +393,7 @@ export const Col_2_img_0_layout = ({
 	isShowingLogo,
 }: MainSlideProps) => {
 	//console.log('content: ' + Array(content));
-	const filteredContent:JSX.Element[] = filterEmptyLines(content)
+	const filteredContent: JSX.Element[] = filterEmptyLines(content);
 
 	return (
 		<div className={`SlideLayoutCanvas`} style={layoutElements.canvaCSS}>
@@ -483,11 +489,9 @@ export const Col_3_img_0_layout = ({
 	templateLogo,
 	isShowingLogo,
 }: MainSlideProps) => {
-	const contentText = '';
-	useEffect(() => {
-		console.log('content text is:', content);
-	}, []);
-	const filteredContent:JSX.Element[] = filterEmptyLines(content)
+
+	const filteredContent: JSX.Element[] = filterEmptyLines(content);
+
 	return (
 		<div style={layoutElements.canvaCSS}>
 			<div style={layoutElements.titleAndSubtopicBoxCSS}>
@@ -991,7 +995,7 @@ export const Col_2_img_2_layout = ({
 		};
 	}, []);
 
-	const filteredContent:JSX.Element[] = filterEmptyLines(content)
+	const filteredContent: JSX.Element[] = filterEmptyLines(content);
 
 	return (
 		<div style={layoutElements.canvaCSS}>
@@ -1173,7 +1177,7 @@ export const Col_3_img_3_layout = ({
 			update_callback(newImgs, newIsCharts);
 		};
 
-	const filteredContent:JSX.Element[] = filterEmptyLines(content)
+	const filteredContent: JSX.Element[] = filterEmptyLines(content);
 	return (
 		<div style={layoutElements.canvaCSS}>
 			<div

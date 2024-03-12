@@ -85,9 +85,9 @@ export const useSlides = () => {
 		newSlide.logo = slides[index].logo;
 		newSlide.background_url = slides[index].background_url;
 		const newSlides = [...slides];
-		newSlides.splice(index+1, 0, newSlide);
+		newSlides.splice(index + 1, 0, newSlide);
 		setSlides(newSlides);
-		setSlideIndex(index+1);
+		setSlideIndex(index + 1);
 
 		updateVersion();
 		updateSlideHistory(newSlides);
@@ -196,7 +196,7 @@ export const useSlides = () => {
 		} else {
 			return text.replace(/<[^>]*>?/gm, '');
 		}
-	}
+	};
 
 	const changeTemplate = (newTemplate: TemplateKeys) => {
 		console.log('Changing template to:', newTemplate);
@@ -240,7 +240,8 @@ export const useSlides = () => {
 	const setTranscripts = (transcripts: string[]) => {
 		console.log('-- set transcripts: ', { transcripts });
 		for (let i = 0; i < transcripts.length; i++) {
-			if (i < slides.length) slides[i] = { ...slides[i], transcript: transcripts[i] };
+			if (i < slides.length)
+				slides[i] = { ...slides[i], transcript: transcripts[i] };
 		}
 		setSlides(slides);
 		syncSlides(slides);
@@ -319,6 +320,6 @@ export const useSlides = () => {
 		setIsShowingLogo,
 		toggleIsShowingLogo,
 		isPresenting,
-		setIsPresenting
+		setIsPresenting,
 	};
 };
