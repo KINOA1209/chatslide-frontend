@@ -20,7 +20,7 @@ export const StanfordTemplateThemeConfig: ThemeElements = {
 		color: '#EF4444', // text-red-800 color
 	},
 	contentFontCSS: {
-		fontSize: '14pt', // text-base in points (assuming 1rem is 1pt)
+		fontSize: '16pt', // text-base in points (assuming 1rem is 1pt)
 		fontWeight: 'normal', // font-normal
 		fontFamily: 'Nimbus Sans Regular', // font-nimbus-sans-regular
 		lineHeight: 1.2, // leading-9 is equivalent to a line height of 1.5

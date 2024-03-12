@@ -38,7 +38,7 @@ export const Fun_Education_001_TemplateThemeConfig: ThemeElements = {
 		color: '#B2B2B2',
 	},
 	contentFontCSS: {
-		fontSize: '14pt',
+		fontSize: '16pt',
 		fontWeight: 'normal',
 		fontFamily: 'Helvetica Neue',
 		lineHeight: 1.3,

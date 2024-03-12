@@ -63,7 +63,7 @@ const themeConfigData: ThemeConfig = {
 		// contentFont: 'text-base font-normal font-sans leading-[120%]',
 		// contentFontColor: 'text-[#1B1B1B]',
 		contentFontCSS: {
-			fontSize: '14pt', // text-base in points (assuming 1rem is 1pt)
+			fontSize: '16pt', // text-base in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
 			fontFamily: 'sans-serif', // font-sans (assuming sans-serif as a default)
@@ -117,7 +117,7 @@ const themeConfigData: ThemeConfig = {
 		// contentFontColor: 'text-neutral-700 ',
 		contentFontCSS: {
 			opacity: 0.7, // opacity-70
-			fontSize: '14pt', // text-base in points (assuming 1rem is 1pt)
+			fontSize: '16pt', // text-base in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal
 			fontFamily: 'Arial', // font-['Arial']
 			lineHeight: 1.2, // leading-loose, assuming 'normal' or '1.5' depending on your design
@@ -167,7 +167,7 @@ const themeConfigData: ThemeConfig = {
 		//   'text-opacity-70 text-base font-normal font-creato-medium leading-[140%] tracking-[0.025rem] ',
 		// contentFontColor: 'text-neutral-900',
 		contentFontCSS: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '16pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -221,7 +221,7 @@ const themeConfigData: ThemeConfig = {
 		},
 
 		contentFontCSS: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '16pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -272,7 +272,7 @@ const themeConfigData: ThemeConfig = {
 		},
 
 		contentFontCSS: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '16pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -333,7 +333,7 @@ const themeConfigData: ThemeConfig = {
 		//   'text-opacity-70 text-base font-normal font-creato-medium leading-[140%] tracking-[0.025rem] ',
 		// contentFontColor: 'text-neutral-900',
 		contentFontCSS: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '16pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -396,7 +396,7 @@ const themeConfigData: ThemeConfig = {
 		//   'text-opacity-70 text-base font-normal font-creato-medium leading-[140%] tracking-[0.025rem] ',
 		// contentFontColor: 'text-neutral-900',
 		contentFontCSS: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '16pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -450,7 +450,7 @@ const themeConfigData: ThemeConfig = {
 		},
 
 		contentFontCSS: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '16pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -505,7 +505,7 @@ const themeConfigData: ThemeConfig = {
 		},
 
 		contentFontCSS: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '16pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
@@ -555,7 +555,7 @@ const themeConfigData: ThemeConfig = {
 			color: '#111827', // text-neutral-900 color
 		},
 		contentFontCSS: {
-			fontSize: '14pt', // base size sent from backend
+			fontSize: '16pt', // base size sent from backend
 			fontWeight: 'normal', // font-normal
 			fontFamily: 'Creato Display Regular', // font-creato-medium
 			lineHeight: 1.2, // leading-[140%]
