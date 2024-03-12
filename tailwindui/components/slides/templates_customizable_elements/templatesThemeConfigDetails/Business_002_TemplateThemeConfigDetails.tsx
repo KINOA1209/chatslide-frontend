@@ -11,7 +11,7 @@ export const Business_002_TemplateThemeConfig: ThemeElements = {
 		fontWeight: 'bold',
 		fontFamily: 'Big Shoulders Text',
 		lineHeight: 1.2,
-		whiteSpace: 'nowrap',
+		// whiteSpace: 'nowrap',
 		color: '#2E2E2E',
 	},
 	subtopicFontCSS: {
@@ -24,7 +24,7 @@ export const Business_002_TemplateThemeConfig: ThemeElements = {
 		color: '#6B7A2D',
 	},
 	contentFontCSS: {
-		fontSize: '14pt',
+		fontSize: '16pt',
 		fontWeight: 'normal',
 		fontFamily: 'Arimo',
 		lineHeight: 1.3,

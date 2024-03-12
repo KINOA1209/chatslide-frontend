@@ -27,7 +27,7 @@ export const Fun_Education_001_TemplateThemeConfig: ThemeElements = {
 		fontWeight: 'bold',
 		fontFamily: 'Sansita Swashed Medium',
 		lineHeight: 1.2,
-		whiteSpace: 'nowrap',
+		// whiteSpace: 'nowrap',
 		color: '#013E3F',
 	},
 	subtopicFontCSS: {
@@ -38,7 +38,7 @@ export const Fun_Education_001_TemplateThemeConfig: ThemeElements = {
 		color: '#B2B2B2',
 	},
 	contentFontCSS: {
-		fontSize: '14pt',
+		fontSize: '16pt',
 		fontWeight: 'normal',
 		fontFamily: 'Helvetica Neue',
 		lineHeight: 1.3,

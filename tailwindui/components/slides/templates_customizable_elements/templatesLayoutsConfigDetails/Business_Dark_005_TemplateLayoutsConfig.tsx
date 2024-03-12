@@ -453,12 +453,12 @@ export const Business_Dark_005_TemplateLayoutsConfig: {
 		},
 		visualElementsCSS: {
 			zIndex: 0,
-			width: '70%',
+			width: '100%',
 			height: '50%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '50%',
+			top: '10%',
 		},
 		contentTextCSS: {
 			display: 'flex',

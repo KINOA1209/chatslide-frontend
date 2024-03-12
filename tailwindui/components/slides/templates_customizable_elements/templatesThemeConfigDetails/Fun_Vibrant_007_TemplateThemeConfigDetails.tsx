@@ -27,7 +27,7 @@ export const Fun_Vibrant_007_TemplateThemeConfig: ThemeElements = {
 		fontWeight: 'bold',
 		fontFamily: 'Brygada 1918 SemiBold',
 		lineHeight: 1.2,
-		whiteSpace: 'nowrap',
+		// whiteSpace: 'nowrap',
 		color: '#004260',
 	},
 	subtopicFontCSS: {
@@ -38,7 +38,7 @@ export const Fun_Vibrant_007_TemplateThemeConfig: ThemeElements = {
 		color: '#004260',
 	},
 	contentFontCSS: {
-		fontSize: '14pt',
+		fontSize: '16pt',
 		fontWeight: 'normal',
 		fontFamily: 'Helvetica Neue',
 		lineHeight: 1.3,

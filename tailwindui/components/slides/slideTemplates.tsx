@@ -18,6 +18,7 @@ import { Clean_Lifestyle_003_template } from './new_templates/Clean_Lifestyle_00
 import { Fun_Education_004_template } from './new_templates/Fun_Education_004_template';
 import { Business_002_template } from './new_templates/Business_002_template';
 import { Fun_Vibrant_007_template } from './new_templates/Fun_Vibrant_007_template';
+import { Business_Light_006_template } from './new_templates/Business_Light_006_template';
 import { LayoutKeys } from './slideLayout';
 import { layoutOptions } from './slideLayout';
 import {
@@ -112,6 +113,7 @@ export const availableTemplates = {
 	Clean_Lifestyle_003: Clean_Lifestyle_003_template,
 	Fun_Education_004: Fun_Education_004_template,
 	Business_Dark_005: Business_Dark_005_template,
+	Business_Light_006: Business_Light_006_template,
 	Fun_Vibrant_007: Fun_Vibrant_007_template,
 };
 

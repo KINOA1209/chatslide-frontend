@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<style>
+			.titleAndSubtopicBoxCSS {
+				display: flex;
+				flex-direction: column;
+				width: 20rem;
+				z-index: 30;
+				padding-bottom: 1rem;
+				border-bottom: 7px solid #afe5f3;
+			}
+
+			.titleBox,
+			.subtopicBox {
+				width: 100%;
+				white-space: normal;
+				overflow: hidden;
+			}
+		</style>
+		<title>Test Title and Subtopic Boxes</title>
+	</head>
+	<body>
+		<div class="titleAndSubtopicBoxCSS">
+			<div class="titleBox">
+				<h2>
+					This is a long title that will wrap to the next line instead of
+					creating a scrollbar
+				</h2>
+			</div>
+			<div class="subtopicBox">
+				<p>
+					This is a long subtopic that will also wrap to the next line without a
+					scrollbar.
+				</p>
+			</div>
+		</div>
+	</body>
+</html>

@@ -56,29 +56,35 @@ interface MainSlideProps extends BaseMainSlideProps {
 	showContentBulletPoint?: boolean;
 }
 
-const filterEmptyLines = (content: JSX.Element[] | JSX.Element): JSX.Element[] => {
+const filterEmptyLines = (
+	content: JSX.Element[] | JSX.Element,
+): JSX.Element[] => {
 	const elements = React.Children.toArray(content);
 	const nonEmptyElements: JSX.Element[] = [];
-  
+
 	for (const element of elements) {
 		if (React.isValidElement(element)) {
 			let hasVisibleContent = true;
-			const htmlContent = 
-				element.props?.children?.props?.children?.props?.dangerouslySetInnerHTML?.__html ||
-				element.props?.children?.props?.content;
+			const htmlContent =
+				element.props?.children?.props?.children?.props?.dangerouslySetInnerHTML
+					?.__html || element.props?.children?.props?.content;
 			if (htmlContent) {
 				const parser = new DOMParser();
 				const doc = parser.parseFromString(htmlContent, 'text/html');
-				const hasVisibleContent = Array.from(doc.body.childNodes).some(node => {
-					if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
-						return true;  // Text node with non-whitespace content
-					} else if (node.nodeType === Node.ELEMENT_NODE) {
-						const elementNode = node as Element;
-						return elementNode.textContent?.trim() ||  // Element with non-whitespace content
-								elementNode.querySelectorAll('img, table, iframe').length > 0;  // Element containing meaningful tags
-					}
-					return false;
-				});
+				const hasVisibleContent = Array.from(doc.body.childNodes).some(
+					(node) => {
+						if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
+							return true; // Text node with non-whitespace content
+						} else if (node.nodeType === Node.ELEMENT_NODE) {
+							const elementNode = node as Element;
+							return (
+								elementNode.textContent?.trim() || // Element with non-whitespace content
+								elementNode.querySelectorAll('img, table, iframe').length > 0
+							); // Element containing meaningful tags
+						}
+						return false;
+					},
+				);
 
 				if (hasVisibleContent) {
 					nonEmptyElements.push(element);
@@ -89,7 +95,7 @@ const filterEmptyLines = (content: JSX.Element[] | JSX.Element): JSX.Element[] =
 			}
 		}
 	}
-		
+
 	return nonEmptyElements;
 };
 
@@ -206,10 +212,11 @@ export const Cover_img_1_layout = ({
 				<div style={layoutElements.titleCSS}>{title}</div>
 			</div>
 
-			<div style={{
-				...layoutElements.imageContainerCSS,
-				
-			}}>
+			<div
+				style={{
+					...layoutElements.imageContainerCSS,
+				}}
+			>
 				<ImgModule
 					imgsrc={imgs[0]}
 					updateSingleCallback={updateImgAtIndex(0)}
@@ -300,12 +307,19 @@ export const Col_1_img_0_layout = ({
 
 	return (
 		<div ref={containerRef} style={layoutElements.canvaCSS}>
-			<div style={layoutElements.titleAndSubtopicBoxCSS}>
-				<div ref={topicRef} className={``} style={layoutElements.topicCSS}>
+			<div
+				className={`titleAndSubtopicBox`}
+				style={layoutElements.titleAndSubtopicBoxCSS}
+			>
+				<div
+					ref={topicRef}
+					className={`topicBox`}
+					style={layoutElements.topicCSS}
+				>
 					{topic}
 				</div>
 				<div
-					className={``}
+					className={`subtopicBox`}
 					ref={subtopicRef}
 					style={layoutElements.subtopicCSS}
 				>
@@ -379,7 +393,7 @@ export const Col_2_img_0_layout = ({
 	isShowingLogo,
 }: MainSlideProps) => {
 	//console.log('content: ' + Array(content));
-	const filteredContent:JSX.Element[] = filterEmptyLines(content)
+	const filteredContent: JSX.Element[] = filterEmptyLines(content);
 
 	return (
 		<div className={`SlideLayoutCanvas`} style={layoutElements.canvaCSS}>
@@ -475,7 +489,7 @@ export const Col_3_img_0_layout = ({
 	templateLogo,
 	isShowingLogo,
 }: MainSlideProps) => {
-	const filteredContent:JSX.Element[] = filterEmptyLines(content)
+	const filteredContent: JSX.Element[] = filterEmptyLines(content);
 	return (
 		<div style={layoutElements.canvaCSS}>
 			<div style={layoutElements.titleAndSubtopicBoxCSS}>
@@ -504,11 +518,50 @@ export const Col_3_img_0_layout = ({
 								// className={`flex flex-row w-full h-full grow `}
 								style={layoutElements.contentTextCSS}
 							>
-								<li style={{ width: '100%' }}>{item}</li>
+								<li className='contentBulletPoint' style={{ width: '100%' }}>
+									{item}
+								</li>
 							</ul>
 						</div>
 					))}
 			</div>
+
+			{/* <div style={layoutElements.contentContainerCSS}>
+				{Array.isArray(content) &&
+					content
+						.filter((item) => React.isValidElement(item))
+						.filter((item) => {
+							const spanText = React.Children.toArray(item.props.children)
+								.filter((child) => {
+									if (React.isValidElement(child) && child.type === 'span') {
+										return typeof child.props.children === 'string';
+									}
+									return typeof child === 'string';
+								})
+								.map((child) =>
+									React.isValidElement(child) ? child.props.children : child,
+								)
+								.join('');
+
+							return spanText.trim() !== '';
+						})
+						.map((item, index) => (
+							<div
+								key={index}
+								style={{
+									...layoutElements.contentCSS,
+									display: item === null || index > 2 ? 'none' : 'flex',
+								}}
+							>
+								<div style={layoutElements.contentIndexCSS}>{index + 1}</div>
+								<div style={layoutElements.contentIndexTextDividerCSS}></div>
+								<ul style={layoutElements.contentTextCSS}>
+									<li style={{ width: '100%' }}>{item}</li>
+								</ul>
+							</div>
+						))}
+			</div> */}
+
 			<div
 				style={{
 					...layoutElements.logoCSS,
@@ -640,7 +693,7 @@ export const Col_2_img_1_layout = ({
 								maxContentHeight !== null ? `${maxContentHeight}px` : 'none',
 						}}
 					>
-						{content}
+						<div style={layoutElements.contentCSS}>{content}</div>
 					</div>
 				</div>
 			</div>
@@ -733,7 +786,7 @@ export const Col_1_img_1_layout = ({
 			const containerElement = containerRef.current;
 			const topicAndSubtopicElement = topicAndSubtopicRef.current;
 			//const subtopicElement = subtopicRef.current;
-			const imgContainerElement = imgContainerRef.current
+			const imgContainerElement = imgContainerRef.current;
 
 			if (containerElement && topicAndSubtopicElement && imgContainerElement) {
 				const containerHeight = containerElement.clientHeight;
@@ -832,7 +885,7 @@ export const Col_1_img_1_layout = ({
 									</ul>
 								</div>
 							))} */}
-					{content}
+					<div style={layoutElements.contentCSS}>{content}</div>
 				</div>
 				{/* <div
 					className='w-full flex'
@@ -940,7 +993,7 @@ export const Col_2_img_2_layout = ({
 		};
 	}, []);
 
-	const filteredContent:JSX.Element[] = filterEmptyLines(content)
+	const filteredContent: JSX.Element[] = filterEmptyLines(content);
 
 	return (
 		<div style={layoutElements.canvaCSS}>
@@ -1122,7 +1175,7 @@ export const Col_3_img_3_layout = ({
 			update_callback(newImgs, newIsCharts);
 		};
 
-	const filteredContent:JSX.Element[] = filterEmptyLines(content)
+	const filteredContent: JSX.Element[] = filterEmptyLines(content);
 	return (
 		<div style={layoutElements.canvaCSS}>
 			<div

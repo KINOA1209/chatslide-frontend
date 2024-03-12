@@ -297,6 +297,16 @@ export const Fun_Vibrant_007_TemplateLogo: React.FC<TemplateLogoType> = (
 		logoWidth: 8, // Adjust the width as needed
 	});
 
+export const Business_Light_006_TemplateLogo: React.FC<TemplateLogoType> = (
+	props: TemplateLogoType,
+) =>
+	generateTemplateLogo({
+		...props,
+		coverLogo: drlambdaLogo,
+		nonCoverLogo: drlambdaLogo,
+		logoWidth: 8, // Adjust the width as needed
+	});
+
 type TemplateLogoType = {
 	isCoverPage: boolean;
 	custom_logo: string;
@@ -329,6 +339,10 @@ const templatesInfo: TemplateLogoInfo[] = [
 	{
 		templateName: 'Business_Dark_005' as TemplateKeys,
 		templateLogo: Business_Dark_005_TemplateLogo,
+	},
+	{
+		templateName: 'Business_Light_006' as TemplateKeys,
+		templateLogo: Business_Light_006_TemplateLogo,
 	},
 	{
 		templateName: 'Business_002' as TemplateKeys,
