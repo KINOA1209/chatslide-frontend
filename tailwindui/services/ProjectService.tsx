@@ -227,6 +227,7 @@ class ProjectService {
 			slide.transcript = slideData.transcript || '';
 			slide.logo_url = slideData.logo_url || '';
 			slide.background_url = slideData.background_url || '';
+			slide.show_logo = slideData.show_logo;
 			if (index === 0) {
 				slide.layout = slideData.layout || ('Cover_img_1_layout' as LayoutKeys);
 			} else {

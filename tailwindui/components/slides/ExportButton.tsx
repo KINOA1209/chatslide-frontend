@@ -20,15 +20,17 @@ import SaveScriptsButton from './script/SaveScriptsButton';
 import { SpinIcon } from '@/app/(feature)/icons';
 import { PlusLabel } from '../ui/GrayLabel';
 import { ToastContainer, toast } from 'react-toastify';
+import SlideContainer from './SlideContainer';
+import { templateDispatch } from './templateDispatch';
+import { useSlides } from '@/hooks/use-slides';
+import { uneditableTemplateDispatch } from './SlidesHTML';
 
 interface ExportToPdfProps {
-	slides: Slide[];
 	exportSlidesRef: React.RefObject<HTMLDivElement>;
 	hasScript?: boolean;
 }
 
 const ExportToFile: React.FC<ExportToPdfProps> = ({
-	slides,
 	exportSlidesRef,
 	hasScript,
 }) => {
@@ -41,6 +43,8 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 	const { isPaidUser, token } = useUser();
 	const { project } = useProject();
 	const [showModal, setShowModal] = useState(false);
+	const [showHiddenDiv, setShowHiddenDiv] = useState(false);
+	const { slides } = useSlides();
 
 	async function exportToPdfFrontend() {
 		const file = await generatePdf(topic || '', exportSlidesRef, slides.length);
@@ -66,8 +70,16 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 		setShowModal(false);
 
 		setDownloading(true);
+		
+		let waitTime = 15;
+		if (!frontend) {
+			waitTime += 15;
+		}
+		if (type === 'pptx') {
+			waitTime += 30;
+		}
 
-		toast.info('Exporting your file, please wait...', {
+		toast.info(`Exporting your file, please wait for about ${waitTime}s...`, {
 			position: 'top-center',
 			autoClose: 5000,
 			hideProgressBar: false,
@@ -79,7 +91,9 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 
 
 		if (frontend) {
+			setShowHiddenDiv(true);
 			await exportToPdfFrontend();
+			setShowHiddenDiv(false);
 		} else {
 			ProjectService.exportToFileBackend(token, project.id, type);
 
@@ -113,7 +127,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 	};
 
 	return (
-		<>
+		<div>
 			<PaywallModal
 				showModal={showPaymentModal}
 				setShowModal={setShowPaymentModal}
@@ -144,6 +158,26 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 				explanation={'Export'}
 			/>
 
+			{/* hidden div for export to pdf */}
+				<div className='absolute left-[-9999px] top-[-9999px] -z-1'>
+					<div ref={exportSlidesRef}>
+						{/* Render all of your slides here. This can be a map of your slides array */}
+						{slides.map((slide, index) => (
+							<div
+								key={`exportToPdfContainer` + index.toString()}
+								style={{ pageBreakAfter: 'always' }}
+							>
+								<SlideContainer
+									slide={slide}
+									index={index}
+									templateDispatch={uneditableTemplateDispatch}
+									exportToPdfMode={true}
+								/>
+							</div>
+						))}
+					</div>
+				</div>
+
 			<Modal
 				showModal={showModal}
 				setShowModal={setShowModal}
@@ -169,7 +203,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 						bgColor='bg-Gray'
 					>
 						<FaRegFilePdf />
-						<span className='flex flex-row gap-2 items-center'>PDF (high) {!isPaidUser && <PlusLabel/>}</span>
+						<span className='flex flex-row gap-2 items-center'>PDF (high) {!isPaidUser && <PlusLabel />}</span>
 					</BigGrayButton>
 
 					<BigGrayButton
@@ -187,7 +221,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 						<SaveScriptsButton slides={slides} />}
 				</div>
 			</Modal>
-		</>
+		</div>
 	);
 };
 
