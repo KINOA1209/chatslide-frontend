@@ -182,10 +182,10 @@ export const projectFinishedSteps = (project: Project | null) => {
 	const finishedStepsArray: number[] = [];
 	if (!project) return finishedStepsArray;
 	if (project.content_type === 'social_posts') {
-		if (project.topic) finishedStepsArray.push(0);
+		finishedStepsArray.push(0);
 		if (project.social_posts) finishedStepsArray.push(1);
 	} else {
-		if (project.topic) finishedStepsArray.push(0);
+		finishedStepsArray.push(0);
 		if (project.outlines) {
 			finishedStepsArray.push(1);
 			finishedStepsArray.push(2);
