@@ -127,25 +127,26 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 		visualElementsCSS: {
 			zIndex: 0,
 			width: '100%',
-			height: '20%',
+			height: '80%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '80%',
+			top: '20%',
 		},
 		titleAndSubtopicBoxCSS: {
 			marginTop: '2rem',
 			marginLeft: '2rem',
 			marginRight: '2rem',
+			zIndex: 30,
 		},
 		topicCSS: {
 			zIndex: 30,
 		},
 		subtopicCSS: {
 			paddingBottom: '1rem',
-			borderBottom: '7px solid #AFE5F3',
-			borderRadius:
-				'1rem 1rem 1rem 1rem' /* Adjust the radius values as needed */,
+			// borderBottom: '7px solid #AFE5F3',
+			// borderRadius:
+			// 	'1rem 1rem 1rem 1rem' /* Adjust the radius values as needed */,
 			zIndex: 30,
 		},
 		contentCSS: {
@@ -174,16 +175,17 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 		visualElementsCSS: {
 			zIndex: 0,
 			width: '100%',
-			height: '20%',
+			height: '80%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '80%',
+			top: '20%',
 		},
 		titleAndSubtopicBoxCSS: {
 			marginTop: '2rem',
 			marginLeft: '2rem',
 			marginRight: '2rem',
+			zIndex: 30,
 		},
 		topicCSS: {
 			zIndex: 30,
@@ -191,9 +193,9 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 		subtopicCSS: {
 			paddingBottom: '1rem',
 			zIndex: 30,
-			borderBottom: '7px solid #FFC458',
-			borderRadius:
-				'1rem 1rem 1rem 1rem' /* Adjust the radius values as needed */,
+			// borderBottom: '7px solid #FFC458',
+			// borderRadius:
+			// 	'1rem 1rem 1rem 1rem' /* Adjust the radius values as needed */,
 		},
 
 		contentContainerCSS: {
@@ -261,16 +263,17 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 		visualElementsCSS: {
 			zIndex: 0,
 			width: '100%',
-			height: '20%',
+			height: '80%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '80%',
+			top: '20%',
 		},
 		titleAndSubtopicBoxCSS: {
 			marginTop: '2rem',
 			marginLeft: '2rem',
 			marginRight: '2rem',
+			zIndex: 30,
 		},
 		topicCSS: {
 			zIndex: 30,
@@ -278,9 +281,9 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 		subtopicCSS: {
 			paddingBottom: '1rem',
 			zIndex: 30,
-			borderBottom: '7px solid #AFE5F3',
-			borderRadius:
-				'1rem 1rem 1rem 1rem' /* Adjust the radius values as needed */,
+			// borderBottom: '7px solid #AFE5F3',
+			// borderRadius:
+			// 	'1rem 1rem 1rem 1rem' /* Adjust the radius values as needed */,
 		},
 
 		contentContainerCSS: {
@@ -417,9 +420,9 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 		canvaCSS: { width: '100%', height: '100%' },
 		subtopicCSS: {
 			paddingBottom: '1rem',
-			borderBottom: '7px solid #AFE5F3',
-			borderRadius:
-				'1rem 1rem 1rem 1rem' /* Adjust the radius values as needed */,
+			// borderBottom: '7px solid #AFE5F3',
+			// borderRadius:
+			// 	'1rem 1rem 1rem 1rem' /* Adjust the radius values as needed */,
 		},
 		columnCSS: {
 			width: '100%',
@@ -472,12 +475,12 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 		},
 		visualElementsCSS: {
 			zIndex: 0,
-			width: '70%',
-			height: '50%',
+			width: '100%',
+			height: '80%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '50%',
+			top: '20%',
 		},
 		contentTextCSS: {
 			display: 'flex',
@@ -509,9 +512,9 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 		},
 		subtopicCSS: {
 			paddingBottom: '1rem',
-			borderBottom: '7px solid #AFE5F3',
-			borderRadius:
-				'1rem 1rem 1rem 1rem' /* Adjust the radius values as needed */,
+			// borderBottom: '7px solid #AFE5F3',
+			// borderRadius:
+			// 	'1rem 1rem 1rem 1rem' /* Adjust the radius values as needed */,
 		},
 		titleAndSubtopicBoxCSS: {
 			zIndex: 30,
@@ -552,13 +555,13 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 		},
 
 		visualElementsCSS: {
-			zIndex: 10,
-			width: '70%',
-			height: '50%',
+			zIndex: 0,
+			width: '100%',
+			height: '80%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '50%',
+			top: '20%',
 		},
 		rndContainerCSS: {
 			width: '100%',
@@ -577,9 +580,9 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 		},
 		subtopicCSS: {
 			paddingBottom: '1rem',
-			borderBottom: '7px solid #FFC458',
-			borderRadius:
-				'1rem 1rem 1rem 1rem' /* Adjust the radius values as needed */,
+			// borderBottom: '7px solid #FFC458',
+			// borderRadius:
+			// 	'1rem 1rem 1rem 1rem' /* Adjust the radius values as needed */,
 		},
 		titleAndSubtopicBoxCSS: {
 			zIndex: 30,
@@ -616,13 +619,13 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			order: 2,
 		},
 		visualElementsCSS: {
-			zIndex: 10,
-			width: '70%',
-			height: '50%',
+			zIndex: 0,
+			width: '100%',
+			height: '80%',
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
-			top: '50%',
+			top: '20%',
 		},
 		rndContainerCSS: {
 			width: '100%',
