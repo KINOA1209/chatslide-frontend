@@ -119,7 +119,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 	};
 
 	return (
-		<>
+		<div>
 			<PaywallModal
 				showModal={showPaymentModal}
 				setShowModal={setShowPaymentModal}
@@ -213,7 +213,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 						<SaveScriptsButton slides={slides} />}
 				</div>
 			</Modal>
-		</>
+		</div>
 	);
 };
 
