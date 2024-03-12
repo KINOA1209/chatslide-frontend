@@ -77,6 +77,27 @@ export const loadLayoutConfigElements = (
 	return selectedLayoutOptionElements;
 };
 
+export const uneditableTemplateDispatch = (
+	slide: Slide,
+	index: number,
+	exportToPdfMode: boolean = false,
+) =>
+	templateDispatch(
+		slide,
+		index,
+		false, // canEdit
+		exportToPdfMode, //exportToPdfMode
+		false, //editMathMode
+		() => { }, //setIsEditMode
+		() => { }, // handleSlideEdit
+		() => () => { }, // updateImgUrlArray,
+		() => { }, // toggleEditMode,
+		index === 0, // isCoverPage
+		slide.layout, // layoutOptionNonCover
+		slide.layout, // layoutOptionCover
+		false, // isCurrentSlide
+	);
+
 const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	isViewing = false,
 	exportSlidesRef = useRef<HTMLDivElement>(null),
@@ -378,27 +399,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			isShowingLogo, // isShowingLogo
 		);
 
-	const uneditableTemplateDispatch = (
-		slide: Slide,
-		index: number,
-		exportToPdfMode: boolean = false,
-	) =>
-		templateDispatch(
-			slide,
-			index,
-			false, // canEdit
-			exportToPdfMode, //exportToPdfMode
-			isEditMode, //editMathMode
-			setIsEditMode, //setIsEditMode
-			() => { }, // handleSlideEdit
-			updateImgUrlArray,
-			toggleEditMode,
-			index === 0, // isCoverPage
-			slide.layout, // layoutOptionNonCover
-			slide.layout, // layoutOptionCover
-			index === slideIndex, // isCurrentSlide
-			isShowingLogo, // isShowingLogo
-		);
+	
 
 	if (toPdf)
 		// a simple page for backend to capture the slides
@@ -488,7 +489,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 					{!isViewing && (
 						<ExportToPdfButton
-							slides={slides}
 							exportSlidesRef={exportSlidesRef}
 							hasScript={showScript}
 						/>
@@ -685,26 +685,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						</Panel>
 					</>
 				)}
-			</div>
-
-			{/* hidden div for export to pdf */}
-			<div className='absolute left-[-9999px] top-[-9999px] -z-1'>
-				<div ref={exportSlidesRef}>
-					{/* Render all of your slides here. This can be a map of your slides array */}
-					{slides.map((slide, index) => (
-						<div
-							key={`exportToPdfContainer` + index.toString()}
-							style={{ pageBreakAfter: 'always' }}
-						>
-							<SlideContainer
-								slide={slide}
-								index={index}
-								templateDispatch={uneditableTemplateDispatch}
-								exportToPdfMode={true}
-							/>
-						</div>
-					))}
-				</div>
 			</div>
 		</div>
 	);
