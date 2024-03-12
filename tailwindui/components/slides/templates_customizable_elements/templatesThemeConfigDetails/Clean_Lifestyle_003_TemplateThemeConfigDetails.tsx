@@ -41,7 +41,7 @@ export const Clean_Lifestyle_003_TemplateThemeConfig: ThemeElements = {
 		color: '#666666', // text-neutral-900 color
 	},
 	contentFontCSS: {
-		fontSize: '12pt', // base size sent from backend
+		fontSize: '14pt', // base size sent from backend
 		fontWeight: 'normal', // font-normal
 		fontFamily: 'Creato Display Regular', // font-creato-medium
 		lineHeight: 1.2, // leading-[140%]
@@ -50,7 +50,7 @@ export const Clean_Lifestyle_003_TemplateThemeConfig: ThemeElements = {
 		display: 'list-item',
 	},
 	userNameFont:
-		'text-[12pt] font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
+		'text-[14pt] font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
 	userNameFontColor: 'text-[#A9A9A9]',
 
 	headFontCSS: {
@@ -63,7 +63,7 @@ export const Clean_Lifestyle_003_TemplateThemeConfig: ThemeElements = {
 	},
 
 	contentFontCSS_non_vertical_content: {
-		fontSize: '12pt', // base size sent from backend
+		fontSize: '14pt', // base size sent from backend
 		fontWeight: 'normal', // font-normal
 		fontFamily: 'Creato Display Regular', // font-creato-medium
 		lineHeight: 1.2, // leading-[140%]

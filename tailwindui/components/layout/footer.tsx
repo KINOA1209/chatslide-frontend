@@ -140,6 +140,22 @@ export default function Footer() {
 									Blog
 								</a>
 							</li>
+							<li className='mb-2'>
+								<a
+									href='https://blog.drlambda.ai/frequently-asked-questions/'
+									className='text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out'
+								>
+									Frequently Asked Questions
+								</a>
+							</li>
+							<li className='mb-2'>
+								<a
+									href='https://blog.drlambda.ai/drlambda-product-roadmap/'
+									className='text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out'
+								>
+									Roadmap
+								</a>
+							</li>
 						</ul>
 					</div>
 

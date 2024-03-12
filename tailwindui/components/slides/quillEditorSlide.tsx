@@ -134,24 +134,24 @@ export const isHTML = (input: string): boolean => {
 	return Array.from(doc.body.childNodes).some((node) => node.nodeType === 1);
 };
 
-const BubbleTheme = Quill.import('themes/bubble');
+// const BubbleTheme = Quill.import('themes/bubble');
 
-class ExtendBubbleTheme extends BubbleTheme {
-	constructor(quill: Quill, options: any) {
-		super(quill, options);
+// class ExtendBubbleTheme extends BubbleTheme {
+// 	constructor(quill: Quill, options: any) {
+// 		super(quill, options);
 
-		quill.on('selection-change', (range) => {
-			if (range) {
-				const bounds = quill.getBounds(range.index);
-				const quillAny = quill as any;
-				quillAny.theme.tooltip.show();
-				quillAny.theme.tooltip.position(bounds);
-			}
-		});
-	}
-}
+// 		quill.on('selection-change', (range) => {
+// 			if (range) {
+// 				const bounds = quill.getBounds(range.index);
+// 				const quillAny = quill as any;
+// 				quillAny.theme.tooltip.show();
+// 				quillAny.theme.tooltip.position(bounds);
+// 			}
+// 		});
+// 	}
+// }
 
-Quill.register('themes/bubble', ExtendBubbleTheme);
+// Quill.register('themes/bubble', ExtendBubbleTheme);
 
 const QuillEditable: React.FC<QuillEditableProps> = ({
 	content,
@@ -210,7 +210,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			quillInstanceRef.current = new Quill(editorRef.current, {
 				modules: { toolbar: customizedToolbarOptions },
 				theme: 'bubble',
-				bounds: editorRef.current,
+				//bounds: editorRef.current,
 			});
 
 			// const toolbar = quillInstanceRef.current.getModule('toolbar');

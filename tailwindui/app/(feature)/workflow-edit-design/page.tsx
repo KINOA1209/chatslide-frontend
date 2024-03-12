@@ -124,7 +124,7 @@ export default function DesignPage() {
 						</div>
 						<div>
 							<span className='text-md font-bold'>
-								What online image lincese do you want to use?
+								What online image license do you want to use?
 							</span>
 							<RadioButton
 								options={imageLicenseOptions}

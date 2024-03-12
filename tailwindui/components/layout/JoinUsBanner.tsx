@@ -2,6 +2,7 @@
 
 import { useUser } from "@/hooks/use-user"
 import Link from "next/link";
+import useHydrated from '@/hooks/use-hydrated';
 
 export const JoinUsBanner: React.FC = () => {
 	const { uid } = useUser();
@@ -9,6 +10,9 @@ export const JoinUsBanner: React.FC = () => {
 	if (uid && uid !== "") {
 		return null;
 	}
+
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
 
 	return (
 		<Link href="/signup">

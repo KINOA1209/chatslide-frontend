@@ -41,7 +41,7 @@ export const Fun_Education_004_TemplateThemeConfig: ThemeElements = {
 		color: '#BCBCBC', // text-red-800 color
 	},
 	contentFontCSS: {
-		fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
+		fontSize: '14pt', // text-base in points (assuming 1rem is 1pt)
 		fontWeight: 'normal', // font-normal (Lin: 400)
 		fontFamily: 'Helvetica Neue', // font-nimbus-sans-regular
 		lineHeight: 1.3, // leading-9 is equivalent to a line height of 1.5
@@ -58,7 +58,7 @@ export const Fun_Education_004_TemplateThemeConfig: ThemeElements = {
 		color: '#2E2E2E', // text-white color
 	},
 	contentFontCSS_non_vertical_content: {
-		fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
+		fontSize: '14pt', // text-base in points (assuming 1rem is 1pt)
 		fontWeight: 'normal', // font-normal
 		fontFamily: 'Helvetica Neue', // font-nimbus-sans-regular
 		lineHeight: 1.3, // leading-9 is equivalent to a line height of 1.5

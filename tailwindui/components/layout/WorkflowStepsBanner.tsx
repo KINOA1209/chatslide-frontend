@@ -45,7 +45,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 				<div className='flex-grow items-center justify-center flex py-2'>
 					<ProjectProgress currentInd={currentIndex} />
 				</div>
-				{!lastStep && (
+				{!lastStep ? (
 					<div className='user-onboarding-generate relative'>
 						<DrlambdaButton
 							isSubmitting={isSubmitting}
@@ -60,7 +60,11 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 							{/* <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span> */}
 						</span>}
 					</div>
-				)}
+				) : (
+					// empty div to keep the layout consistent
+						<div className='min-w-[10rem] sm:min-w-[12rem]'></div>
+				)
+			}
 			</div>
 
 			{/* <div className='relative w-full h-[0px] flex items-center w-full bg-transparent'>

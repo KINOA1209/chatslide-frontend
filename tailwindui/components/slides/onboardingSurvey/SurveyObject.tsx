@@ -26,6 +26,7 @@ const surveyObject: Record<string, SurveySectionConfig> = {
 			'Friend',
 			'Google',
 			'ProductHunt',
+			'AppSumo',
 			'Newsletter',
 			'Facebook',
 			'Tiktok',

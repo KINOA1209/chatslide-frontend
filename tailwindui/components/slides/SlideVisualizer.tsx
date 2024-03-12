@@ -66,13 +66,12 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 
 			try {
 				const project_id = project.id;
-				const job_id = await VideoService.generateVideo(
+				VideoService.generateVideo(
 					project_id,
 					foldername,
 					language,
 					token,
 				);
-				sessionStorage.setItem('video_job_id', job_id);
 				router.push('workflow-review-video');
 			} catch (error) {
 				console.error('Error in fetchData:', error);

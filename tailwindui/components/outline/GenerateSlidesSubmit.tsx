@@ -100,14 +100,8 @@ const GenerateSlidesSubmit = ({
 			typeof window !== 'undefined'
 				? sessionStorage.getItem('addEquations')
 				: null;
-		const extraKnowledge =
-			typeof window !== 'undefined'
-				? sessionStorage.getItem('extraKnowledge')
-				: null;
-		const outline_item_counts =
-			typeof window !== 'undefined'
-				? sessionStorage.getItem('outline_item_counts')
-				: null;
+		const extraKnowledge = project?.extra_knowledge || null;
+		const outline_item_counts = project?.outline_item_counts || null;
 		const scenarioType =
 			typeof window !== 'undefined'
 				? sessionStorage.getItem('scenarioType')

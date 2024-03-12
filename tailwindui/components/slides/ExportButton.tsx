@@ -18,6 +18,8 @@ import { GoDownload } from 'react-icons/go';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import SaveScriptsButton from './script/SaveScriptsButton';
 import { SpinIcon } from '@/app/(feature)/icons';
+import { PlusLabel } from '../ui/GrayLabel';
+import { ToastContainer, toast } from 'react-toastify';
 
 interface ExportToPdfProps {
 	slides: Slide[];
@@ -64,6 +66,18 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 		setShowModal(false);
 
 		setDownloading(true);
+
+		toast.info('Exporting your file, please wait...', {
+			position: 'top-center',
+			autoClose: 5000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+		});
+
+
 		if (frontend) {
 			await exportToPdfFrontend();
 		} else {
@@ -106,6 +120,8 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 				message='Upgrade for more ⭐️credits.'
 				showReferralLink={true}
 			/>
+
+			<ToastContainer />
 
 			<ButtonWithExplanation
 				button={
@@ -153,7 +169,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 						bgColor='bg-Gray'
 					>
 						<FaRegFilePdf />
-						<span>PDF (high) {!isPaidUser && '🔒'}</span>
+						<span className='flex flex-row gap-2 items-center'>PDF (high) {!isPaidUser && <PlusLabel/>}</span>
 					</BigGrayButton>
 
 					<BigGrayButton
@@ -164,7 +180,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 						bgColor='bg-Gray'
 					>
 						<RiSlideshow2Fill />
-						<span>PPTX {!isPaidUser && '🔒'}</span>
+						<span className='flex flex-row gap-2 items-center'>PPTX {!isPaidUser && <PlusLabel />}</span>
 					</BigGrayButton>
 
 					{hasScript &&

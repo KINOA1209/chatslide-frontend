@@ -20,7 +20,7 @@ export const StanfordTemplateThemeConfig: ThemeElements = {
 		color: '#EF4444', // text-red-800 color
 	},
 	contentFontCSS: {
-		fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
+		fontSize: '14pt', // text-base in points (assuming 1rem is 1pt)
 		fontWeight: 'normal', // font-normal
 		fontFamily: 'Nimbus Sans Regular', // font-nimbus-sans-regular
 		lineHeight: 1.2, // leading-9 is equivalent to a line height of 1.5
@@ -37,7 +37,7 @@ export const StanfordTemplateThemeConfig: ThemeElements = {
 		color: '#FFFFFF', // text-white color
 	},
 	contentFontCSS_non_vertical_content: {
-		fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
+		fontSize: '14pt', // text-base in points (assuming 1rem is 1pt)
 		fontWeight: 'normal', // font-normal
 		fontFamily: 'Nimbus Sans Regular', // font-nimbus-sans-regular
 		lineHeight: 1.2, // leading-9 is equivalent to a line height of 1.5

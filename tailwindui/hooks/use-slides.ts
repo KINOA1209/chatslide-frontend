@@ -53,7 +53,7 @@ export const useSlides = () => {
 	const { clearChatHistory } = useChatHistory();
 
 	// to control show or not show logo
-	const { isShowingLogo, setIsShowingLogo } = useIsShowingLogo();
+	const [isShowingLogo, setIsShowingLogo] = useState(false);
 
 	const init = async () => {
 		if (slidesStatus !== SlidesStatus.NotInited) return;
@@ -68,10 +68,10 @@ export const useSlides = () => {
 		slidesStatus = SlidesStatus.Inited;
 	};
 
-	const ChangeIsShowingLogo = () => {
+	const toggleIsShowingLogo = () => {
 		setIsShowingLogo(!isShowingLogo);
 		const newSlides = slides.map((slide, index) => {
-			return { ...slide };
+			return { ...slide, show_logo: !isShowingLogo };
 		});
 		setSlides(newSlides);
 		updateSlideHistory(newSlides);
@@ -89,8 +89,9 @@ export const useSlides = () => {
 		newSlide.logo = slides[index].logo;
 		newSlide.background_url = slides[index].background_url;
 		const newSlides = [...slides];
-		newSlides.splice(index, 0, newSlide);
+		newSlides.splice(index+1, 0, newSlide);
 		setSlides(newSlides);
+		setSlideIndex(index+1);
 
 		updateVersion();
 		updateSlideHistory(newSlides);
@@ -193,10 +194,27 @@ export const useSlides = () => {
 		);
 	};
 
+	const removeTags = (text: string | string[]) => {
+		if (Array.isArray(text)) {
+			return text.map((t) => t.replace(/<[^>]*>?/gm, ''));
+		} else {
+			return text.replace(/<[^>]*>?/gm, '');
+		}
+	}
+
 	const changeTemplate = (newTemplate: TemplateKeys) => {
 		console.log('Changing template to:', newTemplate);
-		const newSlides = slides.map((slide, index) => {
+		let newSlides = slides.map((slide, index) => {
 			return { ...slide, template: newTemplate, images_position: [{}, {}, {}] };
+		});
+		newSlides = newSlides.map((slide, index) => {
+			return {
+				...slide,
+				content: removeTags(slide.content) as string[],
+				head: removeTags(slide.head) as string,
+				title: removeTags(slide.title) as string,
+				subtopic: removeTags(slide.subtopic) as string,
+			};
 		});
 		//set into session storage to update
 		sessionStorage.setItem('schoolTemplate', newTemplate);
@@ -209,6 +227,7 @@ export const useSlides = () => {
 	const initSlides = (slides: Slide[]) => {
 		console.log('-- init slides: ', { slides });
 		setSlides(slides);
+		setIsShowingLogo(slides.some((slide) => slide.show_logo));
 		setSlideIndex(0);
 		setSlidesHistory([slides]);
 		setSlidesHistoryIndex(0);
@@ -225,7 +244,7 @@ export const useSlides = () => {
 	const setTranscripts = (transcripts: string[]) => {
 		console.log('-- set transcripts: ', { transcripts });
 		for (let i = 0; i < transcripts.length; i++) {
-			if (i < slides.length) slides[i].transcript = transcripts[i];
+			if (i < slides.length) slides[i] = { ...slides[i], transcript: transcripts[i] };
 		}
 		setSlides(slides);
 		syncSlides(slides);
@@ -302,8 +321,8 @@ export const useSlides = () => {
 		setTranscripts,
 		isShowingLogo,
 		setIsShowingLogo,
-		ChangeIsShowingLogo,
-		isPresenting, 
+		toggleIsShowingLogo,
+		isPresenting,
 		setIsPresenting
 	};
 };

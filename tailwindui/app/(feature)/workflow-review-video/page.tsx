@@ -21,7 +21,9 @@ const VideoVisualizer = ({
 	return (
 		<>
 			{videoUrl !== '' ? (
-				<Video videoUrl={videoSource} />
+				<div className='w-full sm:w-3/4 mx-auto border rounded border-2 border-gray-200'>
+					<Video videoUrl={videoSource} />
+				</div>
 			) : status === 'failed' ? (
 				<Blank>
 					<div>

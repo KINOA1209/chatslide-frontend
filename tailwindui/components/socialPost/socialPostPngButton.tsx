@@ -10,6 +10,9 @@ import { templateDispatch as defaultTemplateDispatch3 } from '@/components/socia
 import { BigGrayButton } from '../button/DrlambdaButton';
 import { FaDownload } from 'react-icons/fa';
 import { downloadImage } from '../utils/DownloadImage';
+import ButtonWithExplanation from '../button/ButtonWithExplanation';
+import { SpinIcon } from '@/app/(feature)/icons';
+import { GoDownload } from 'react-icons/go';
 
 interface ExportToPdfProps {
 	socialPostSlide: SocialPostSlide[];
@@ -28,8 +31,7 @@ const ExportToPngButton: React.FC<ExportToPdfProps> = ({
 		typeof sessionStorage !== 'undefined'
 			? sessionStorage.getItem('scenarioType')
 			: '';
-	const [downloadingPDF, setDownloadingPDF] = useState(false);
-	const [showPaymentModal, setShowPaymentModal] = useState(false);
+	const [downloading, setDownloading] = useState(false);
 	const exportSlidesRef = useRef<HTMLDivElement>(null);
 	const [slideRef, setSlideRef] = useState(React.createRef<HTMLDivElement>());
 
@@ -47,28 +49,37 @@ const ExportToPngButton: React.FC<ExportToPdfProps> = ({
 	}
 
 	const handleSaveImage = async () => {
-		setDownloadingPDF(true);
+		setDownloading(true);
 		await downloadImage(topic || '', slideRef);
-		setDownloadingPDF(false);
+		setDownloading(false);
 	};
 
 	return (
 		<div className='flex flex-wrap flex-grow-0'>
 			<div className=''>
-				<PaywallModal
-					showModal={showPaymentModal}
-					setShowModal={setShowPaymentModal}
-					message='Upgrade for more ⭐️credits.'
-					showReferralLink={true}
+
+				<ButtonWithExplanation
+					button={
+						<button
+							onClick={handleSaveImage}
+						>
+							{!downloading ? 
+							<GoDownload
+								style={{
+									strokeWidth: '1',
+									flex: '1',
+									width: '1.5rem',
+									height: '1.5rem',
+									fontWeight: 'bold',
+									color: '#2943E9',
+								}}
+							/> :
+								<SpinIcon />}
+						</button>
+					}
+					explanation={'Save this Page'}
 				/>
-
-				<BigGrayButton onClick={handleSaveImage} isSubmitting={downloadingPDF}>
-					<div className='flex flex-row items-center gap-x-2'>
-						Save this page
-						<FaDownload className='text-gray-800' />
-					</div>
-				</BigGrayButton>
-
+		
 				{/* hidden div for export to pdf */}
 				<div className='absolute left-[-9999px] top-[-9999px] -z-1'>
 					<div ref={exportSlidesRef}>

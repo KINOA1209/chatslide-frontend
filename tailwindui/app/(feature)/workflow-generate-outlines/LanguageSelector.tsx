@@ -68,6 +68,12 @@ const LanguageSelector: React.FC<{
 					<option key='Portuguese' value='Portuguese'>
 						🇵🇹 Português
 					</option>
+					<option
+						key='Italian'
+						value='Italian'
+					>
+						🇮🇹 Italiano
+					</option>
 					<option key='Hindi' value='Hindi'>
 						🇮🇳 हिन्दी
 					</option>
@@ -82,6 +88,12 @@ const LanguageSelector: React.FC<{
 					</option>
 					<option key='Hebrew' value='Hebrew'>
 						🇮🇱 עברית
+					</option>
+					<option key='Dutch' value='Dutch'>
+						🇳🇱 Nederlands
+					</option>
+					<option key='Croatian' value='Croatian'>
+						🇭🇷 Hrvatski
 					</option>
 				</DropDown>
 			</div>

@@ -293,7 +293,7 @@ export const Business_002_TemplateLayoutsConfig: {
 			paddingRight: '2rem',
 		},
 		imageContainerCSS: {
-			height: '8rem',
+			height: '15rem',
 			flexGrow: 1,
 			borderRadius: '0.375rem', // Assuming a typical rounded-md value
 			//overflow: 'hidden',
@@ -347,7 +347,7 @@ export const Business_002_TemplateLayoutsConfig: {
 			// gap: '2rem', // equivalent to gap-[2rem]
 		},
 		imageCSS: {
-			height: '8rem', // equivalent to h-[11rem]
+			height: '15rem', // equivalent to h-[11rem]
 			flexGrow: 1, // equivalent to grow
 			borderRadius: '0.375rem', // equivalent to rounded-md
 			//overflow: 'hidden', // equivalent to overflow-hidden
@@ -391,7 +391,7 @@ export const Business_002_TemplateLayoutsConfig: {
 			// gap: '2rem', // equivalent to gap-[2rem]
 		},
 		imageCSS: {
-			height: '8rem', // equivalent to h-[11rem]
+			height: '15rem', // equivalent to h-[11rem]
 			flexGrow: 1, // equivalent to grow
 			borderRadius: '0.375rem', // equivalent to rounded-md
 			//overflow: 'hidden', // equivalent to overflow-hidden
