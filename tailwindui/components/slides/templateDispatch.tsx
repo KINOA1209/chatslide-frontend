@@ -225,7 +225,10 @@ export const templateDispatch = (
 					? generateContentElement(
 							slide.content,
 							'content',
-							themeElements.contentFontCSS,
+							// when the layout is col_2_img_1, we should make this layout's fontsize to be 12pt
+							slide.layout === 'Col_2_img_1_layout'
+								? { ...themeElements.contentFontCSS, fontSize: '12pt' }
+								: themeElements.contentFontCSS,
 							true,
 					  )
 					: slide.content.map((content, contentIndex) => (
