@@ -241,9 +241,11 @@ export const ImgModule = ({
 	const handleImageClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.preventDefault();
 		// update image here to template & source html
+		// reset images position after changing image
 		updateSingleCallback(
 			(e.target as HTMLImageElement).getAttribute('src'),
 			false,
+			{},
 		);
 	};
 
@@ -713,7 +715,10 @@ export const ImgModule = ({
 		if (isImgEditMode) {
 			handleSave();
 		}
-		setIsImgEditMode(!isImgEditMode);
+		// prevent enlarge image on preview section
+		if (canEdit){
+			setIsImgEditMode(!isImgEditMode);
+		}
 	};
 
 	const applyZoom = () => {
@@ -815,6 +820,19 @@ export const ImgModule = ({
 		}
 	}, [currentContentIndex, imageRefs, parentDimension]);
 
+	//detect the mouse click event is outside the image container or not, if it's, trigger autosave
+	useEffect(() => {
+		const handleClickOutside = (event:MouseEvent) => {
+			const currentRef = imageRefs[currentContentIndex]?.current;
+			if (isImgEditMode && currentRef && !currentRef.contains(event.target as Node)) {
+				toggleImgEditMode(event)
+			}
+		};
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, [currentContentIndex, imageRefs, isImgEditMode, toggleImgEditMode]);
 	return (
 		<>
 			{/* select image modal */}

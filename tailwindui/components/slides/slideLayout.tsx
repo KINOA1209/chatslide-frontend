@@ -184,7 +184,7 @@ export const Cover_img_1_layout = ({
 	images_position,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
-		(index: number) => (imgSrc: string, ischart: boolean) => {
+		(index: number) => (imgSrc: string, ischart: boolean, image_position:ImagesPosition) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -192,7 +192,12 @@ export const Cover_img_1_layout = ({
 			const newIsCharts = [...ischarts];
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
-			update_callback(newImgs, newIsCharts);
+
+			const newImagesPosition = [...images_position];
+			if (index >= newImagesPosition.length) newImagesPosition.push(image_position);
+			else newImagesPosition[index] = image_position;
+
+			update_callback(newImgs, newIsCharts, newImagesPosition);
 		};
 
 	return (
@@ -610,7 +615,7 @@ export const Col_2_img_1_layout = ({
 	images_position,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
-		(index: number) => (imgSrc: string, ischart: boolean) => {
+		(index: number) => (imgSrc: string, ischart: boolean, image_position:ImagesPosition) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -618,8 +623,13 @@ export const Col_2_img_1_layout = ({
 			const newIsCharts = [...ischarts];
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
-			update_callback(newImgs, newIsCharts);
-		};
+
+			const newImagesPosition = [...images_position];
+			if (index >= newImagesPosition.length) newImagesPosition.push(image_position);
+			else newImagesPosition[index] = image_position;
+
+			update_callback(newImgs, newIsCharts, newImagesPosition);
+	};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -766,7 +776,7 @@ export const Col_1_img_1_layout = ({
 	images_position,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
-		(index: number) => (imgSrc: string, ischart: boolean) => {
+		(index: number) => (imgSrc: string, ischart: boolean, image_position:ImagesPosition) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -774,7 +784,12 @@ export const Col_1_img_1_layout = ({
 			const newIsCharts = [...ischarts];
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
-			update_callback(newImgs, newIsCharts);
+
+			const newImagesPosition = [...images_position];
+			if (index >= newImagesPosition.length) newImagesPosition.push(image_position);
+			else newImagesPosition[index] = image_position;
+
+			update_callback(newImgs, newIsCharts, newImagesPosition);
 		};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
@@ -948,7 +963,7 @@ export const Col_2_img_2_layout = ({
 	images_position,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
-		(index: number) => (imgSrc: string, ischart: boolean) => {
+		(index: number) => (imgSrc: string, ischart: boolean, image_position:ImagesPosition) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -956,7 +971,12 @@ export const Col_2_img_2_layout = ({
 			const newIsCharts = [...ischarts];
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
-			update_callback(newImgs, newIsCharts);
+
+			const newImagesPosition = [...images_position];
+			if (index >= newImagesPosition.length) newImagesPosition.push(image_position);
+			else newImagesPosition[index] = image_position;
+
+			update_callback(newImgs, newIsCharts, newImagesPosition);
 		};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
@@ -1166,7 +1186,7 @@ export const Col_3_img_3_layout = ({
 	images_position,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
-		(index: number) => (imgSrc: string, ischart: boolean) => {
+		(index: number) => (imgSrc: string, ischart: boolean, image_position:ImagesPosition) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -1174,7 +1194,12 @@ export const Col_3_img_3_layout = ({
 			const newIsCharts = [...ischarts];
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
-			update_callback(newImgs, newIsCharts);
+
+			const newImagesPosition = [...images_position];
+			if (index >= newImagesPosition.length) newImagesPosition.push(image_position);
+			else newImagesPosition[index] = image_position;
+
+			update_callback(newImgs, newIsCharts, newImagesPosition);
 		};
 
 	const filteredContent: JSX.Element[] = filterEmptyLines(content);

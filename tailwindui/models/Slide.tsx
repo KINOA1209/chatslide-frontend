@@ -31,7 +31,8 @@ export type SlideKeys =
 	| 'layout'
 	| 'logo'
 	| 'chart'
-	| 'is_chart';
+	| 'is_chart'
+	| 'images_position';
 
 export default class Slide {
 	head: string;
