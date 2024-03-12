@@ -494,7 +494,9 @@ export const Col_3_img_0_layout = ({
 	templateLogo,
 	isShowingLogo,
 }: MainSlideProps) => {
+
 	const filteredContent: JSX.Element[] = filterEmptyLines(content);
+
 	return (
 		<div style={layoutElements.canvaCSS}>
 			<div style={layoutElements.titleAndSubtopicBoxCSS}>
