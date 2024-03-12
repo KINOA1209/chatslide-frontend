@@ -37,7 +37,7 @@ export const StanfordTemplateLayoutsConfig: {
 			height: '100%',
 		},
 		userNameCSS: {
-			zIndex: 30,
+			// zIndex: 30,
 		},
 		titleCSS: {
 			paddingLeft: '2rem',
@@ -60,6 +60,7 @@ export const StanfordTemplateLayoutsConfig: {
 			height: '100%', // Equivalent to h-full
 			borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
 			//overflow: 'hidden',
+			zIndex: 10,
 		},
 		rndContainerCSS: {
 			width: '100%',

@@ -2,50 +2,40 @@ import { LayoutElements } from '../layout_elements';
 import { LayoutKeys } from '../../slideLayout';
 import { TemplateKeys } from '../../slideTemplates';
 
-export const Default_TemplateLayoutsConfig: {
+export const Business_Light_006_TemplateLayoutsConfig: {
 	[key in LayoutKeys]?: LayoutElements;
 } = {
 	Cover_img_0_layout: {
-		columnCSS: {
-			paddingTop: '1rem', // Equivalent to pt-[1rem]
-			paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
-			paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
-			width: '100%', // Equivalent to w-full
-			display: 'flex', // Equivalent to flex
-			flexDirection: 'column', // Equivalent to flex-col
-			justifyContent: 'flex-start', // Equivalent to justify-start
-			height: '100%', // Equivalent to h-full
-			gap: '2rem', // Equivalent to gap-[2rem]
-		},
-		titleCSS: {
-			paddingLeft: '2rem',
-			zIndex: 20,
-		},
 		canvaCSS: {
 			display: 'flex',
 			width: '100%',
 			height: '100%',
-		},
-		userNameCSS: {
-			zIndex: 30,
-		},
-	},
-	Cover_img_1_layout: {
-		canvaCSS: {
-			display: 'flex',
-			width: '100%',
-			height: '100%',
-		},
-		userNameCSS: {
-			zIndex: 30,
+			position: 'relative',
+			// overflow: 'hidden',
 		},
 		titleCSS: {
-			paddingLeft: '2rem',
+			backgroundColor: '#F1F1F1',
+			padding: '4rem',
+			width: '100%',
+			height: '70%',
 			zIndex: 20,
-			maxHeight: '80%',
+			position: 'absolute',
+			top: '65%',
+			left: '50%',
+			transform: 'translate(-50%, -50%)', // Centering trick
+		},
+		userNameTextDividerCSS: {
+			display: 'none',
+		},
+		userNameCSS: {
+			zIndex: 30,
+			position: 'absolute',
+			top: '92%',
+			left: '80%',
+			transform: 'translate(-50%, -40%)', // Centering trick
 		},
 		columnCSS: {
-			paddingTop: '1rem', // Equivalent to pt-[1rem]
+			// paddingTop: '1rem', // Equivalent to pt-[1rem]
 			paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 			paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
 			width: '50%', // Equivalent to w-1/2
@@ -55,12 +45,77 @@ export const Default_TemplateLayoutsConfig: {
 			height: '100%', // Equivalent to h-full
 			gap: '2rem',
 		},
+
 		imageContainerCSS: {
-			width: '50%', // Equivalent to w-1/2
+			width: '100%', // Equivalent to w-full
 			height: '100%', // Equivalent to h-full
+			overflow: 'hidden',
 			borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
-			//overflow: 'hidden',
+			position: 'absolute',
+		},
+		visualElementsCSS: {
+			zIndex: 10,
+			position: 'absolute',
+			top: '0%',
+			left: '0%',
+			// display: 'none',
+			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
+		},
+	},
+	Cover_img_1_layout: {
+		canvaCSS: {
+			display: 'flex',
+			width: '100%',
+			height: '100%',
 			position: 'relative',
+			// overflow: 'hidden',
+		},
+		titleCSS: {
+			backgroundColor: '#F1F1F1',
+			padding: '4rem',
+			width: '100%',
+			height: '70%',
+			zIndex: 20,
+			position: 'absolute',
+			top: '65%',
+			left: '50%',
+			transform: 'translate(-50%, -50%)', // Centering trick
+		},
+		userNameTextDividerCSS: {
+			display: 'none',
+		},
+		userNameCSS: {
+			zIndex: 30,
+			position: 'absolute',
+			top: '92%',
+			left: '80%',
+			transform: 'translate(-50%, -40%)', // Centering trick
+		},
+		columnCSS: {
+			// paddingTop: '1rem', // Equivalent to pt-[1rem]
+			paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
+			paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
+			width: '50%', // Equivalent to w-1/2
+			display: 'flex', // Equivalent to flex
+			flexDirection: 'column', // Equivalent to flex-col
+			justifyContent: 'flex-start', // Equivalent to justify-start
+			height: '100%', // Equivalent to h-full
+			gap: '2rem',
+		},
+
+		imageContainerCSS: {
+			width: '100%', // Equivalent to w-full
+			height: '100%', // Equivalent to h-full
+			//overflow: 'hidden',
+			borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
+			position: 'absolute',
+			zIndex: 10,
+		},
+		visualElementsCSS: {
+			zIndex: 20,
+			position: 'absolute',
+			// display: 'none',
+			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
 		},
 		rndContainerCSS: {
 			width: '100%',
@@ -68,14 +123,8 @@ export const Default_TemplateLayoutsConfig: {
 			position: 'relative',
 		},
 		rndCSS: {
-			zIndex: '51',
+			zIndex: '10',
 		},
-
-		// visualElementsCSS: {
-		// 	zIndex: 20,
-		// 	position: 'absolute',
-		// 	display: 'none',
-		// },
 	},
 	Col_1_img_0_layout: {
 		canvaCSS: {
@@ -83,11 +132,11 @@ export const Default_TemplateLayoutsConfig: {
 			height: '100%', // Equivalent to h-full
 			display: 'flex', // Equivalent to flex
 			flexDirection: 'column', // Equivalent to flex-col
-			padding: '28px',
 		},
 		contentCSS: {
 			width: '100%', // Equivalent to w-full
-			fontSize: '30pt',
+			paddingLeft: '4rem',
+			paddingRight: '4rem',
 		},
 		columnCSS: {
 			width: '100%', // Equivalent to w-full
@@ -96,35 +145,77 @@ export const Default_TemplateLayoutsConfig: {
 			paddingBottom: '1.2rem',
 			display: 'flex',
 		},
+		titleAndSubtopicBoxCSS: {
+			backgroundColor: '#F1F1F1',
+			paddingTop: '2rem',
+			paddingBottom: '2rem',
+			paddingLeft: '4rem',
+			paddingRight: '4rem',
+			display: 'flex',
+			flexDirection: 'column', // Equivalent to flex
+		},
+		topicCSS: {
+			order: '2',
+			paddingTop: '1rem',
+		},
+		subtopicCSS: {
+			order: '1',
+			borderBottom: '1px solid #C2C2C2',
+			paddingBottom: '0.5rem',
+		},
 	},
 	Col_2_img_0_layout: {
-		canvaCSS: {
-			padding: '28px',
-			// position: 'relative',
+		titleAndSubtopicBoxCSS: {
+			backgroundColor: '#F1F1F1',
+			paddingTop: '2rem',
+			paddingBottom: '2rem',
+			paddingLeft: '4rem',
+			paddingRight: '4rem',
+			display: 'flex',
+			flexDirection: 'column', // Equivalent to flex
+		},
+		topicCSS: {
+			order: '2',
+			paddingTop: '1rem',
+		},
+		subtopicCSS: {
+			order: '1',
+			borderBottom: '1px solid #C2C2C2',
+			paddingBottom: '0.5rem',
 		},
 		contentContainerCSS: {
 			height: '100%',
 			width: '100%',
 			display: 'grid',
 			gridTemplateColumns: 'repeat(2, 1fr)',
-			gap: '2rem',
+			gap: '4rem',
+			paddingTop: '2rem',
+			paddingBottom: '4rem',
+			paddingLeft: '4rem',
+			paddingRight: '4rem',
 		},
-		contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+		contentCSS: {
+			display: 'flex',
+			flexDirection: 'column',
+			gap: '0.5rem',
+			paddingLeft: '1rem',
+			borderLeft: '1px solid #C2C2C2',
+		},
 		contentIndexCSS: {
 			mixBlendMode: 'hard-light',
-			color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
-			fontSize: '2rem',
+			color: 'black', // Assuming text-neutral-900 corresponds to #374155
+			fontSize: '2.5rem',
 			fontWeight: 'bold',
-			fontFamily: 'Creato Display Medium',
+			fontFamily: 'Yrsa Medium',
 			textTransform: 'uppercase',
 			lineHeight: '2.5rem',
 			letterSpacing: '0.5rem',
-			paddingTop: '2rem',
+			paddingTop: '1rem',
 		},
 		contentIndexTextDividerCSS: {
-			display: 'flex',
-			opacity: 0.5,
-			border: '1px solid rgba(55, 65, 81, 0.4)',
+			// display: 'flex',
+			// opacity: 0.5,
+			// border: '1px solid rgba(55, 65, 81, 0.4)',
 		},
 		contentTextCSS: {
 			display: 'flex',
@@ -135,32 +226,57 @@ export const Default_TemplateLayoutsConfig: {
 		},
 	},
 	Col_3_img_0_layout: {
-		canvaCSS: {
-			padding: '28px',
+		titleAndSubtopicBoxCSS: {
+			backgroundColor: '#F1F1F1',
+			paddingTop: '2rem',
+			paddingBottom: '2rem',
+			paddingLeft: '4rem',
+			paddingRight: '4rem',
+			display: 'flex',
+			flexDirection: 'column', // Equivalent to flex
+		},
+		topicCSS: {
+			order: '2',
+			paddingTop: '1rem',
+		},
+		subtopicCSS: {
+			order: '1',
+			borderBottom: '1px solid #C2C2C2',
+			paddingBottom: '0.5rem',
 		},
 		contentContainerCSS: {
 			height: '100%',
 			width: '100%',
 			display: 'grid',
 			gridTemplateColumns: 'repeat(3, 1fr)',
-			gap: '2rem',
+			gap: '4rem',
+			paddingTop: '2rem',
+			paddingBottom: '4rem',
+			paddingLeft: '4rem',
+			paddingRight: '4rem',
 		},
-		contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+		contentCSS: {
+			display: 'flex',
+			paddingLeft: '1rem',
+			flexDirection: 'column',
+			gap: '0.5rem',
+			borderLeft: '1px solid #C2C2C2',
+		},
 		contentIndexCSS: {
 			mixBlendMode: 'hard-light',
-			color: 'rgba(55, 65, 81, 0.25)', // Assuming text-neutral-900 corresponds to #374155
-			fontSize: '2rem',
+			color: 'black', // Assuming text-neutral-900 corresponds to #374155
+			fontSize: '2.5rem',
 			fontWeight: 'bold',
-			fontFamily: 'Creato Display Medium',
+			fontFamily: 'Yrsa Medium',
 			textTransform: 'uppercase',
 			lineHeight: '2.5rem',
 			letterSpacing: '0.5rem',
-			paddingTop: '2rem',
+			paddingTop: '1rem',
 		},
 		contentIndexTextDividerCSS: {
-			display: 'flex',
-			opacity: 0.5,
-			border: '1px solid rgba(55, 65, 81, 0.4)',
+			// display: 'flex',
+			// opacity: 0.5,
+			// border: '1px solid rgba(55, 65, 81, 0.4)',
 		},
 		contentTextCSS: {
 			display: 'flex',
@@ -184,12 +300,28 @@ export const Default_TemplateLayoutsConfig: {
 			height: '100%',
 			display: 'flex',
 			flexDirection: 'row',
-			gap: '2rem',
 			justifyContent: 'flex-start',
 			alignItems: 'flex-start',
-			padding: '28px',
 		},
-		titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
+		titleAndSubtopicBoxCSS: {
+			backgroundColor: '#F1F1F1',
+			paddingTop: '2rem',
+			paddingBottom: '2rem',
+			paddingLeft: '4rem',
+			paddingRight: '4rem',
+			display: 'flex',
+			flexDirection: 'column', // Equivalent to flex
+			width: '100%',
+		},
+		topicCSS: {
+			order: '2',
+			paddingTop: '1rem',
+		},
+		subtopicCSS: {
+			order: '1',
+			borderBottom: '1px solid #C2C2C2',
+			paddingBottom: '0.5rem',
+		},
 		imageContainerCSS: {
 			width: '50%', // equivalent to w-1/2
 			height: '100%', // equivalent to h-[90%]
@@ -197,7 +329,15 @@ export const Default_TemplateLayoutsConfig: {
 			//overflow: 'hidden',
 			display: 'flex',
 			alignItems: 'center', // equivalent to items-center
-			position: 'relative',
+		},
+		contentContainerCSS: {
+			paddingTop: '1rem',
+			paddingLeft: '2rem',
+			paddingRight: '2rem',
+		},
+		contentCSS: {
+			borderLeft: '1px solid #C2C2C2',
+			paddingLeft: '0.5rem',
 		},
 		rndContainerCSS: {
 			width: '100%',
@@ -209,33 +349,54 @@ export const Default_TemplateLayoutsConfig: {
 		},
 	},
 	Col_1_img_1_layout: {
-		canvaCSS: {
-			padding: '28px',
-		},
 		columnCSS: {
 			width: '100%',
-			display: 'grid',
 			height: '100%',
+			display: 'grid',
 			gridTemplateColumns: '1fr',
+			gridAutoRows: '30% auto 30%',
 		},
-		titleAndSubtopicBoxCSS: { display: 'flex', flexDirection: 'column' },
+		titleAndSubtopicBoxCSS: {
+			backgroundColor: '#F1F1F1',
+			paddingTop: '2rem',
+			paddingBottom: '2rem',
+			paddingLeft: '4rem',
+			paddingRight: '4rem',
+			display: 'flex',
+			flexDirection: 'column', // Equivalent to flex
+			width: '100%',
+		},
+		topicCSS: {
+			order: '2',
+			paddingTop: '1rem',
+		},
+		subtopicCSS: {
+			order: '1',
+			borderBottom: '1px solid #C2C2C2',
+			paddingBottom: '0.5rem',
+		},
 		imageContainerCSS: {
-			height: '15rem',
+			height: '100%',
 			flexGrow: 1,
 			borderRadius: '0.375rem', // Assuming a typical rounded-md value
 			//overflow: 'hidden',
-			position: 'relative',
+			gridRow: 3,
+			zIndex: 10,
 		},
 		contentContainerCSS: {
 			paddingTop: '0.5rem',
 			paddingBottom: '0.5rem',
+			paddingLeft: '4rem',
+			paddingRight: '4rem',
 			height: '100%',
 			width: '100%',
 			display: 'flex',
 			flexDirection: 'column',
 			gap: '0.5rem',
+			gridRow: 2,
+			zIndex: 20,
 		},
-		contentCSS: {},
+		contentCSS: { borderLeft: '1px solid #C2C2C2', paddingLeft: '0.5rem' },
 		contentTextCSS: {
 			display: 'flex',
 			flexDirection: 'row',
@@ -267,6 +428,13 @@ export const Default_TemplateLayoutsConfig: {
 			flexDirection: 'column',
 			justifyContent: 'center',
 			alignItems: 'center',
+			paddingBottom: '2rem',
+		},
+		topicCSS: {
+			borderBottom: '1px solid #C2C2C2',
+		},
+		subtopicCSS: {
+			paddingTop: '0.5rem',
 		},
 		imageContainerCSS: {
 			width: '100%', // equivalent to w-full
@@ -306,6 +474,13 @@ export const Default_TemplateLayoutsConfig: {
 			flexDirection: 'column',
 			justifyContent: 'center',
 			alignItems: 'center',
+			paddingBottom: '2rem',
+		},
+		topicCSS: {
+			borderBottom: '1px solid #C2C2C2',
+		},
+		subtopicCSS: {
+			paddingTop: '0.5rem',
 		},
 		imageContainerCSS: {
 			width: '100%', // equivalent to w-full

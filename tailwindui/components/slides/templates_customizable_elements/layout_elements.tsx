@@ -9,6 +9,7 @@ import { Fun_Education_001_TemplateLayoutsConfig } from './templatesLayoutsConfi
 import { Default_TemplateLayoutsConfig } from './templatesLayoutsConfigDetails/Default_TemplateLayoutsConfig';
 import { Fun_Vibrant_007_TemplateLayoutsConfig } from './templatesLayoutsConfigDetails/Fun_Vibrant_007_TemplateLayoutsConfig';
 import { Business_Dark_005_TemplateLayoutsConfig } from './templatesLayoutsConfigDetails/Business_Dark_005_TemplateLayoutsConfig';
+import { Business_Light_006_TemplateLayoutsConfig } from './templatesLayoutsConfigDetails/Business_Light_006_TemplateLayoutsConfig';
 export type LayoutElements = {
 	canvaCSS?: React.CSSProperties;
 	logoCSS?: React.CSSProperties;
@@ -46,6 +47,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 	Clean_Lifestyle_003: Clean_Lifestyle_003_TemplateLayoutsConfig,
 	Fun_Education_004: Fun_Education_004_TemplateLayoutsConfig,
 	Business_Dark_005: Business_Dark_005_TemplateLayoutsConfig,
+	Business_Light_006: Business_Light_006_TemplateLayoutsConfig,
 	Fun_Vibrant_007: Fun_Vibrant_007_TemplateLayoutsConfig,
 	Default: Default_TemplateLayoutsConfig,
 	Berkeley: {

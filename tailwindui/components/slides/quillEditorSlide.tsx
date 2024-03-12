@@ -54,6 +54,7 @@ Font.whitelist = [
 	'Rubik',
 	'Sansita Swashed Regular',
 	'Sansita Swashed Medium',
+	'Yrsa Medium',
 ];
 Quill.register(Font, true);
 
