@@ -70,8 +70,16 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 		setShowModal(false);
 
 		setDownloading(true);
+		
+		let waitTime = 15;
+		if (!frontend) {
+			waitTime += 15;
+		}
+		if (type === 'pptx') {
+			waitTime += 30;
+		}
 
-		toast.info('Exporting your file, please wait...', {
+		toast.info(`Exporting your file, please wait for about ${waitTime}s...`, {
 			position: 'top-center',
 			autoClose: 5000,
 			hideProgressBar: false,
