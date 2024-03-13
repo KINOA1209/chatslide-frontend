@@ -48,8 +48,16 @@ export const Fun_Education_004_TemplateThemeConfig: ThemeElements = {
 		color: '#4B4B4B', // text-zinc-800 color
 		display: 'list-item',
 	},
-	userNameFont: 'text-sm font-creato-regular  font-normal leading-[100%]',
-	userNameFontColor: 'text-[#868686]', //(Lin: color #868686)
+	// userNameFont: 'text-sm font-creato-regular  font-normal leading-[100%]',
+	// userNameFontColor: 'text-[#868686]', //(Lin: color #868686)
+	userNameFontCSS: {
+		fontSize: '1rem', // Equivalent to text-sm
+		// fontWeight: '400',
+		fontFamily: 'Creato Display Regular',
+		lineHeight: '140%', // Equivalent to leading-[140%]
+		letterSpacing: '0.026rem', // Equivalent to tracking-[0.026rem]
+		color: '#868686', // Equivalent to text-[#3D3D3D]
+	},
 	headFontCSS: {
 		fontSize: '30pt', // text-4xl in points (assuming 1rem is 1pt)
 		fontWeight: 'normal', // font-bold, (Lin: 700)

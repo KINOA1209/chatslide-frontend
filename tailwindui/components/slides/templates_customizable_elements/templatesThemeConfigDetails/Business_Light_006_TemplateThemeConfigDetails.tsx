@@ -26,8 +26,16 @@ export const Business_Light_006_TemplateThemeConfig: ThemeElements = {
 		color: '#000000',
 		display: 'list-item',
 	},
-	userNameFont: 'text-[1rem] font-creato-regular font-normal leading-[100%]',
-	userNameFontColor: 'text-[#5F5F5F]',
+	// userNameFont: 'text-[1rem] font-creato-regular font-normal leading-[100%]',
+	// userNameFontColor: 'text-[#5F5F5F]',
+	userNameFontCSS: {
+		fontSize: '1rem', // Equivalent to text-sm
+		// fontWeight: '400',
+		fontFamily: 'Creato Display Regular',
+		lineHeight: '140%', // Equivalent to leading-[140%]
+		letterSpacing: '0.026rem', // Equivalent to tracking-[0.026rem]
+		color: '#5F5F5F', // Equivalent to text-[#3D3D3D]
+	},
 	headFontCSS: {
 		fontSize: '30pt',
 		fontWeight: 'bold',

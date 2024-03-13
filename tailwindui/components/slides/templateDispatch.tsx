@@ -1,6 +1,7 @@
 import Slide from '@/models/Slide';
 import { SlideKeys } from '@/models/Slide';
 import { availableTemplates } from '@/components/slides/slideTemplates';
+import { useUser } from '@/hooks/use-user';
 import {
 	Col_1_img_1_layout,
 	LayoutKeys,
@@ -53,6 +54,7 @@ export const templateDispatch = (
 	// 	console.log('chosen template string:', slide.template);
 	// 	console.log('template config:', themeElements);
 	// }, []);
+	const { isPaidUser, token } = useUser();
 	let keyPrefix = '';
 	if (exportToPdfMode) {
 		keyPrefix = 'exportToPdf';
@@ -195,14 +197,24 @@ export const templateDispatch = (
 			key={keyPrefix + index.toString()}
 			user_name={
 				isShowingLogo ? (
-					<div
-						key={0}
-						className={`rounded-md outline-2 ${!exportToPdfMode} ${
-							index !== 0 ? 'hidden' : ''
-						}`}
-						contentEditable={false}
-						dangerouslySetInnerHTML={{ __html: slide.userName }}
-					/>
+					isPaidUser ? (
+						generateContentElement(
+							slide.userName,
+							'userName',
+							themeElements.userNameFontCSS,
+							false,
+						)
+					) : (
+						<div
+							key={0}
+							className={`rounded-md outline-2 ${!exportToPdfMode} ${
+								index !== 0 ? 'hidden' : ''
+							}`}
+							style={themeElements.userNameFontCSS}
+							contentEditable={false}
+							dangerouslySetInnerHTML={{ __html: slide.userName }}
+						/>
+					)
 				) : (
 					<></>
 				)
