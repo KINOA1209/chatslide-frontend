@@ -233,7 +233,6 @@ export const Cover_img_1_layout = ({
 					canEdit={canEdit}
 					images_position={images_position}
 					layoutElements={layoutElements}
-					additional_images={imgs.length > 3 ? imgs.slice(3) : []}
 				/>
 			</div>
 
@@ -727,7 +726,6 @@ export const Col_2_img_1_layout = ({
 					images_position={images_position}
 					layoutElements={layoutElements}
 					customImageStyle={layoutElements.imageCSS}
-					additional_images={imgs.length > 3 ? imgs.slice(3) : []}
 				/>
 			</div>
 			{/* logo section */}
@@ -876,7 +874,6 @@ export const Col_1_img_1_layout = ({
 						images_position={images_position}
 						layoutElements={layoutElements}
 						customImageStyle={layoutElements.imageCSS}
-						additional_images={imgs.length > 3 ? imgs.slice(3) : []}
 					/>
 				</div>
 				{/* row3 for contents */}
@@ -1071,7 +1068,6 @@ export const Col_2_img_2_layout = ({
 							images_position={images_position}
 							layoutElements={layoutElements}
 							customImageStyle={layoutElements.imageCSS}
-							additional_images={imgs.length > 3 ? imgs.slice(3) : []}
 						/>
 					</div>
 					<div
@@ -1099,7 +1095,6 @@ export const Col_2_img_2_layout = ({
 							images_position={images_position}
 							layoutElements={layoutElements}
 							customImageStyle={layoutElements.imageCSS}
-							additional_images={imgs.length > 3 ? imgs.slice(3) : []}
 						/>
 					</div>
 				</div>
@@ -1246,7 +1241,6 @@ export const Col_3_img_3_layout = ({
 							images_position={images_position}
 							layoutElements={layoutElements}
 							customImageStyle={layoutElements.imageCSS}
-							additional_images={imgs.length > 3 ? imgs.slice(3) : []}
 						/>
 					</div>
 					<div
@@ -1265,7 +1259,6 @@ export const Col_3_img_3_layout = ({
 							images_position={images_position}
 							layoutElements={layoutElements}
 							customImageStyle={layoutElements.imageCSS}
-							additional_images={imgs.length > 3 ? imgs.slice(3) : []}
 						/>
 					</div>
 					<div
@@ -1284,7 +1277,6 @@ export const Col_3_img_3_layout = ({
 							images_position={images_position}
 							layoutElements={layoutElements}
 							customImageStyle={layoutElements.imageCSS}
-							additional_images={imgs.length > 3 ? imgs.slice(3) : []}
 						/>
 					</div>
 				</div>
