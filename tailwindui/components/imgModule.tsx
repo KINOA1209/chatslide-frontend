@@ -1013,7 +1013,7 @@ export const ImgModule = ({
 							onResizeStop={handleResizeStop(currentContentIndex)}
 						>
 							<Image
-								unoptimized={true}
+								unoptimized={!canEdit}
 								style={{
 									objectFit: 'cover',
 									height: '100%',
