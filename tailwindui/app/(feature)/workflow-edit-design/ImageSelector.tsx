@@ -37,7 +37,7 @@ const ImageSelector: React.FC<Props> = ({
 				message='Upgrade for this 🌟premium feature!'
 				setShowModal={setShowPaywall}
 			/>
-			<div className='grid grid-cols-2 gap-x-4 mt-4'>
+			<div className='grid grid-cols-2 gap-x-4'>
 				<div className='gap-1 flex flex-col justify-start'>
 					<span className='text-md font-bold flex flex-row gap-2'>
 						Do you want to use your {type} for slides? {!isPaidUser && <PlusLabel />}

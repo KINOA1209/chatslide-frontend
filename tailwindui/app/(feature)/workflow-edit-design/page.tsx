@@ -51,12 +51,8 @@ export default function DesignPage() {
 		},
 	];
 
-	const [imageLicense, setImageLicense] = useState('all');
+	const [imageLicense, setImageLicense] = useState('commercial');
 	const imageLicenseOptions: RadioButtonOption[] = [
-		{
-			value: 'all',
-			text: 'All',
-		},
 		{
 			value: 'commercial',
 			text: 'Commercial',
@@ -64,6 +60,10 @@ export default function DesignPage() {
 		{
 			value: 'creative',
 			text: 'Creative',
+		},
+		{
+			value: 'all',
+			text: 'All',
 		},
 	];
 
@@ -126,6 +126,9 @@ export default function DesignPage() {
 							<span className='text-md font-bold'>
 								What online image license do you want to use?
 							</span>
+							<Explanation>
+								Some images may not load properly due to the license you choose.
+							</Explanation>
 							<RadioButton
 								options={imageLicenseOptions}
 								selectedValue={imageLicense}
