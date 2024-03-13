@@ -1036,7 +1036,8 @@ export const ImgModule = ({
 									if (additional_images.length > 0) {
 										// randomly choose from additional images
 										const index = Math.floor(Math.random() * additional_images.length);
-										updateSingleCallback(additional_images[index]);
+										console.log("additional_images[index]", additional_images[index]);
+										updateSingleCallback(imgsrc);
 									} else {
 										setImgLoadError(true);
 										updateSingleCallback('');
