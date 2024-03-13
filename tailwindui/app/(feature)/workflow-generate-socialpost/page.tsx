@@ -577,6 +577,9 @@ export default function Topic_SocialPost() {
 											<option key='Dutch' value='Dutch'>
 												🇳🇱 Nederlands
 											</option>
+											<option key='Norwegian' value='Norwegian'>
+												🇳🇴 Norsk
+											</option>
 											<option key='Croatian' value='Croatian'>
 												🇭🇷 Hrvatski
 											</option>
