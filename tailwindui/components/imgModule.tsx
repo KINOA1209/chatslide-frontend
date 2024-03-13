@@ -59,6 +59,7 @@ interface ImgModuleProp {
 	images_position: ImagesPosition[];
 	layoutElements?: LayoutElements;
 	customImageStyle?: React.CSSProperties;
+	additional_images?: string[];
 }
 
 enum ImgQueryMode {
@@ -84,6 +85,7 @@ export const ImgModule = ({
 	images_position,
 	layoutElements,
 	customImageStyle,
+	additional_images = [],
 }: ImgModuleProp) => {
 	const [showModal, setShowModal] = useState(false);
 	const [keyword, setKeyword] = useState('');
@@ -1030,9 +1032,15 @@ export const ImgModule = ({
 								className={`transition ease-in-out duration-150 ${canEdit ? (isImgEditMode ? 'brightness-100' : 'hover:brightness-90') : 'cursor-pointer'
 									}`}
 								onError={(e) => {
-									console.log('failed to load image', imgsrc)
-									setImgLoadError(true);
-									updateSingleCallback('');
+									console.log('failed to load image', imgsrc);
+									if (additional_images.length > 0) {
+										// randomly choose from additional images
+										const index = Math.floor(Math.random() * additional_images.length);
+										updateSingleCallback(additional_images[index]);
+									} else {
+										setImgLoadError(true);
+										updateSingleCallback('');
+									}
 								}}
 							/>
 						</Rnd>
