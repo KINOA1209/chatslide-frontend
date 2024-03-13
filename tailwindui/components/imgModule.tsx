@@ -1033,15 +1033,8 @@ export const ImgModule = ({
 									}`}
 								onError={(e) => {
 									console.log('failed to load image', imgsrc);
-									if (additional_images.length > 0) {
-										// randomly choose from additional images
-										const index = Math.floor(Math.random() * additional_images.length);
-										console.log("additional_images[index]", additional_images[index]);
-										updateSingleCallback(imgsrc);
-									} else {
-										setImgLoadError(true);
-										updateSingleCallback('');
-									}
+									setImgLoadError(true);
+									updateSingleCallback('');
 								}}
 							/>
 						</Rnd>
