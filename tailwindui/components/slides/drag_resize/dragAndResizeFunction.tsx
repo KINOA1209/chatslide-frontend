@@ -6,7 +6,7 @@ export const initializeImageData = (
   ): ImagesPosition[] => {
     const positions = images_position || [{}, {}, {}];
     return positions.map((pos, index) => {
-        if (Object.keys(pos).length !== 0) {
+        if (pos && Object.keys(pos).length !== 0) {
             // If position data is available, use it directly
             return pos as ImagesPosition;
         }

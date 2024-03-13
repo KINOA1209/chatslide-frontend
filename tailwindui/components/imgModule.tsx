@@ -769,7 +769,7 @@ export const ImgModule = ({
 	//reposition to default if images changed
 	useEffect(() => {
 		// make sure we got non-zero value for parentDimension
-		if (isParentDimension && Object.keys(images_position[currentContentIndex]).length == 0) {
+		if (isParentDimension && images_position[currentContentIndex] && Object.keys(images_position[currentContentIndex]).length == 0) {
 			const img = new window.Image();
 			img.src = imgsrc;
 			img.onload = () => {
