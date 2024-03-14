@@ -239,12 +239,13 @@ export const useSlides = () => {
 
 	const setTranscripts = (transcripts: string[]) => {
 		console.log('-- set transcripts: ', { transcripts });
+		const newSlides = [...slides];
 		for (let i = 0; i < transcripts.length; i++) {
 			if (i < slides.length)
-				slides[i] = { ...slides[i], transcript: transcripts[i] };
+				newSlides[i] = { ...slides[i], transcript: transcripts[i] };
 		}
-		setSlides(slides);
-		syncSlides(slides);
+		setSlides(newSlides);
+		syncSlides(newSlides);
 	};
 
 	const syncSlides = async (
