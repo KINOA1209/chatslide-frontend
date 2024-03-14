@@ -42,12 +42,12 @@ export default function DesignPage() {
 		{
 			img: ContentWithImageImg,
 			value: 'content_with_image',
-			text: 'More images(70% decks contain images)',
+			text: 'More images (70% decks contain images)',
 		},
 		{
 			img: ContentOnlyImg,
 			value: 'content_only',
-			text: 'Less images(30% decks contain images)',
+			text: 'Fewer images (30% decks contain images)',
 		},
 	];
 
@@ -63,7 +63,7 @@ export default function DesignPage() {
 		},
 		{
 			value: 'all',
-			text: 'All (wide range, self use)',
+			text: 'All (wider range, personal use)',
 		},
 	];
 
