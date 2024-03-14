@@ -66,9 +66,9 @@ export default class Slide {
 		this.userName = '';
 		this.template = 'Default';
 		this.content = [
-			'Some content here',
-			'Some more content here',
-			'Even more content here',
+			'You can edit this text',
+			'You can also ask AI Assistant to generate content for you',
+			'AI Assistant is at bottom right corner of the screen',
 		];
 		this.is_chart = [false, false, false];
 		this.images = ['', '', ''];
