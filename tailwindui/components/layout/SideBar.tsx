@@ -79,6 +79,11 @@ const SideBar = ({ }: SideBarProps) => {
 	if (userStatus == UserStatus.Failed || !uid) {
 		if (location.pathname.includes('/discover'))
 			return <></>  // do not show sidebar if user is a visitor
+		if (location.pathname.includes('/dashboard')) {
+			console.log('No uid yet');
+			console.log('userStatus', userStatus);
+			return <></>  // do not show sidebar if user just logged in
+		}
 		else
 			return (
 				<Modal
