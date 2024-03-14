@@ -159,6 +159,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 			/>
 
 			{/* hidden div for export to pdf */}
+				{ showHiddenDiv && 
 				<div className='absolute left-[-9999px] top-[-9999px] -z-1'>
 					<div ref={exportSlidesRef}>
 						{/* Render all of your slides here. This can be a map of your slides array */}
@@ -176,7 +177,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 							</div>
 						))}
 					</div>
-				</div>
+				</div>}
 
 			<Modal
 				showModal={showModal}
