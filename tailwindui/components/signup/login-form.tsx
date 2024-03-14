@@ -22,7 +22,7 @@ const LoginForm: React.FC = () => {
 
 		try {
 			await AuthService.signIn(email, password);
-			router.push('/dashboard');
+			router.push('/sso');
 		} catch (error: any) {
 			console.error(error);
 			let message = error.message || 'An error occurred';
