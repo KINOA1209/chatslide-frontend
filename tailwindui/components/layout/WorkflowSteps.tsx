@@ -28,9 +28,11 @@ const OneStep: React.FC<StepProps> = ({
 	redirect,
 	isLastStep, // Pass this prop to indicate if it's the last step
 }) => {
+	const router = useRouter();
+
 	const handleClick = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault();
-
+		router.push(addIdToRedir(redirect));
 	};
 
 	const handleHoverEnter = (e: MouseEvent<HTMLDivElement>) => {
