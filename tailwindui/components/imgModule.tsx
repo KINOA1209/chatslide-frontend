@@ -1038,7 +1038,7 @@ export const ImgModule = ({
 								onError={(e) => {
 									console.log('failed to load image', imgsrc);
 									setImgLoadError(true);
-									updateSingleCallback('');
+									updateSingleCallback('shuffle');
 								}}
 							/>
 						</Rnd>
