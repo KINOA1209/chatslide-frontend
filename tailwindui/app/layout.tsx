@@ -216,7 +216,6 @@ export default function RootLayout({
 })()`}
 				</Script>
 
-				<GoogleAnalytics />
 			</head>
 			<body
 				className={`font-inter antialiased bg-white text-gray-900 tracking-tight`}

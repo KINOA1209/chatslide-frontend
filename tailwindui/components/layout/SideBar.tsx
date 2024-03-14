@@ -201,6 +201,8 @@ const SideBar = ({ }: SideBarProps) => {
 					</div>
 				</div>
 			</div>
+
+			<GoogleAnalytics />
 		</header>
 	);
 };

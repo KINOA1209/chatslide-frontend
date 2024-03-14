@@ -175,6 +175,8 @@ const Header = ({
 					</nav>
 				</div>
 			</div>
+
+			<GoogleAnalytics />
 		</header>
 	);
 };
