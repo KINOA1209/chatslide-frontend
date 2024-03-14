@@ -365,7 +365,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			// if one element in url is 'shuffle', replace that with a random url in additional_images
 			const shuffleIndex = urls.indexOf('shuffle');
 			if (shuffleIndex !== -1) {
-				const additional_images = slides[slideIndex].additional_images || [];
+				const additional_images = project?.additional_images || [];
 				if (additional_images.length === 0) {
 					return;
 				}

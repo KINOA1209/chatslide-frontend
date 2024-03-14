@@ -18,6 +18,7 @@ type Project = {
 	thumbnail_url: string;
 	is_shared: boolean;
 	is_public: boolean;
+	additional_images: string[];
 
 	// Presentation-specific fields
 	audience: string;
