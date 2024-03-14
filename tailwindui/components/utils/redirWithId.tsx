@@ -1,15 +1,13 @@
-import { useRouter, useSearchParams } from 'next/navigation';
+export function addIdToRedir(redirect: string, projectId?: string)  {
+	const searchParams = new URLSearchParams(window.location.search);
+	const idFromUrl = searchParams.get('id');
+	const id = projectId || idFromUrl;
 
-
-export async function redirWithId(redirect: string, project_id?: string) {
-	const router = useRouter();
-	const searchParams = useSearchParams();
-	// add get id param from path, and add it to the redir url if it doesn't exist
-	const id = project_id || searchParams.get('id');
 	if (id) {
-		const redirectUrl = new URL(redirect, window.location.origin);
-		redirectUrl.searchParams.set('id', id);
-		redirect = redirectUrl.toString();
+		const url = new URL(redirect, typeof window !== 'undefined' ? window.location.origin : 'http://localhost');
+		url.searchParams.set('id', id);
+		redirect = url.toString().replace(url.origin, ''); // Remove origin for Next.js router compatibility
 	}
-	router.push(redirect);
+
+	return redirect;
 }

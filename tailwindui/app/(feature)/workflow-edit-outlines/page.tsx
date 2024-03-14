@@ -12,7 +12,7 @@ import { useProject } from '@/hooks/use-project';
 import ActionsToolBar from '@/components/ui/ActionsToolBar';
 import useTourStore from '@/components/user_onboarding/TourStore';
 import useHydrated from '@/hooks/use-hydrated';
-import { redirWithId } from '@/components/utils/redirWithId';
+import { addIdToRedir } from '@/components/utils/redirWithId';
 
 export default function WorkflowStep2() {
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
@@ -31,7 +31,7 @@ export default function WorkflowStep2() {
 	useEffect(() => {
 		if (isSubmitting) {
 			if (outlines) {
-				redirWithId('workflow-edit-design')
+				router.push(addIdToRedir('workflow-edit-design'));
 			}
 		}
 	}, [isSubmitting]);

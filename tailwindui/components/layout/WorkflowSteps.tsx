@@ -8,7 +8,8 @@ import SessionStorage from '@/components/utils/SessionStorage';
 import Project from '@/models/Project';
 import { useProject } from '@/hooks/use-project';
 import useHydrated from '@/hooks/use-hydrated';
-import { redirWithId } from '../utils/redirWithId';
+import { addIdToRedir } from '../utils/redirWithId';
+import { useRouter } from 'next/navigation';
 
 interface StepProps {
 	id: number;
@@ -29,7 +30,7 @@ const OneStep: React.FC<StepProps> = ({
 }) => {
 	const handleClick = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault();
-		
+
 	};
 
 	const handleHoverEnter = (e: MouseEvent<HTMLDivElement>) => {
@@ -121,10 +122,11 @@ const ProgressBox: React.FC<ProgressBoxProps> = ({
 		name,
 		redirect[index],
 	]);
+	const router = useRouter();
 	const stepAvailable = (step: number) =>
 		step >= 0 && step < stepRedirectPair.length && finishedSteps.includes(step);
 	const goToStep = (step: number) =>
-		stepAvailable(step) && redirWithId(stepRedirectPair[step][1]);
+		stepAvailable(step) && router.push(addIdToRedir(stepRedirectPair[step][1]));
 
 	return (
 		<div className='w-fit select-none grow-0'>

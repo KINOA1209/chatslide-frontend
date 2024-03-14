@@ -19,7 +19,7 @@ import { useUser } from '@/hooks/use-user';
 import { GPTToggleWithExplanation } from '@/components/button/WorkflowGPTToggle';
 import { IoIosLink } from 'react-icons/io';
 import { useProject } from '@/hooks/use-project';
-import { redirWithId } from '@/components/utils/redirWithId';
+import { addIdToRedir } from '@/components/utils/redirWithId';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 3;
@@ -205,7 +205,7 @@ export default function Topic_SocialPost() {
 			sessionStorage.setItem('resources', updatedResourcesJSON);
 
 			// Redirect to a new page with the data
-			redirWithId('/workflow-review-socialpost', project?.id);
+			router.push(addIdToRedir('/workflow-review-socialpost', project?.id));
 		} catch (error) {
 			console.error('Error:', error);
 			setIsSubmitting(false);

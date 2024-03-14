@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import 'react-toastify/dist/ReactToastify.css';
 import ProjectService from '@/services/ProjectService';
 import Project from '@/models/Project';
@@ -11,10 +11,11 @@ import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';
 import { getLastStepReidrect } from '@/components/layout/WorkflowSteps';
 import { Loading } from '@/components/ui/Loading';
-import { redirWithId } from '@/components/utils/redirWithId';
+import { addIdToRedir } from '@/components/utils/redirWithId';
 
 const ProjectLoading = () => {
 	const pathname = usePathname();
+	const router = useRouter();
 	const { initSlides } = useSlides();
 	const { project, initProject } = useProject();
 	const { token } = useUser();
@@ -141,7 +142,7 @@ const ProjectLoading = () => {
 	};
 
 	const handleRedirect = async (project: Project, project_id: string) => {
-		redirWithId(getLastStepReidrect(project), project_id);
+		router.push(addIdToRedir(getLastStepReidrect(project), project_id));
 	};
 
 	return <Loading />;

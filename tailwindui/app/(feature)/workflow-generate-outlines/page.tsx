@@ -33,7 +33,7 @@ import ResourceService from '@/services/ResourceService';
 import LanguageSelector from './LanguageSelector';
 import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
-import { redirWithId } from '@/components/utils/redirWithId';
+import { addIdToRedir } from '@/components/utils/redirWithId';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 3;
@@ -255,7 +255,7 @@ export default function Topic() {
 				);
 
 				// Redirect to a new page with the data, and id in the query string
-				redirWithId('workflow-edit-outlines', outlinesJson.data.id);
+				router.push(addIdToRedir('workflow-edit-outlines', outlinesJson.data.id));
 			} else if (response.status == 402) {
 				setShowPaymentModal(true);
 				setIsSubmitting(false);
