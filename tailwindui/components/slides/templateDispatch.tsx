@@ -244,7 +244,8 @@ export const templateDispatch = (
 					? generateContentElement(
 							slide.content,
 							'content',
-							slide.layout === 'Col_2_img_1_layout'
+							slide.layout === 'Col_2_img_1_layout' ||
+								slide.layout === 'Col_1_img_1_layout'
 								? { ...themeElements.contentFontCSS, fontSize: '14pt' }
 								: themeElements.contentFontCSS,
 							true,
@@ -259,7 +260,14 @@ export const templateDispatch = (
 								{generateContentElement(
 									content,
 									'content',
-									themeElements.contentFontCSS_non_vertical_content,
+									// themeElements.contentFontCSS_non_vertical_content,
+									slide.layout === 'Col_2_img_0_layout' ||
+										slide.layout === 'Col_3_img_0_layout'
+										? {
+												...themeElements.contentFontCSS_non_vertical_content,
+												fontSize: '16pt',
+										  }
+										: themeElements.contentFontCSS_non_vertical_content,
 									false,
 									contentIndex,
 								)}

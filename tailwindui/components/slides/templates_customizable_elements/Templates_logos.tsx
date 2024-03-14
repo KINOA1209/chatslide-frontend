@@ -101,7 +101,7 @@ const generateTemplateLogo = ({
 }: TemplateLogoType) => {
 	return (
 		<div
-			className={`absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-50`}
+			className={`absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-40`}
 		>
 			{custom_logo === template_name ? (
 				// use original template logo

@@ -153,6 +153,7 @@ export const Cover_img_0_layout = ({
 				style={{
 					...layoutElements.logoCSS,
 					display: `${isShowingLogo ? 'contents' : 'none'}`,
+					zIndex: 40,
 				}}
 			>
 				{templateLogo}

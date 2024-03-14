@@ -1,36 +1,40 @@
 import ImagesPosition from '@/models/ImagesPosition';
 
 export const initializeImageData = (
-    images_position: Array<ImagesPosition | {}>,
-    refs: React.RefObject<HTMLElement>[],
-  ): ImagesPosition[] => {
-    const positions = images_position || [{}, {}, {}];
-    return positions.map((pos, index) => {
-        if (Object.keys(pos).length !== 0) {
-            // If position data is available, use it directly
-            return pos as ImagesPosition;
-        }
-        else {
-            return {};
-        }
-    });
+	images_position: Array<ImagesPosition | {}>,
+	refs: React.RefObject<HTMLElement>[],
+): ImagesPosition[] => {
+	const positions = images_position || [{}, {}, {}];
+	return positions.map((pos, index) => {
+		if (pos && Object.keys(pos).length !== 0) {
+			// If position data is available, use it directly
+			return pos as ImagesPosition;
+		} else {
+			return {};
+		}
+	});
 };
 
 //handle autosave
-export const onMouseLeave = (
-    slideIdx: number,
-    imagesDimensions: (ImagesPosition | { x?: number; y?: number; height?: number; width?: number })[],
-    hasInteracted: boolean,
-    setHasInteracted: React.Dispatch<React.SetStateAction<boolean>>,
-    setShowImgButton: React.Dispatch<React.SetStateAction<boolean>>,
-    handleSlideEdit:Function,
-) => () => {
-    if (hasInteracted) {
-        handleSlideEdit([imagesDimensions], slideIdx, ['images_position'])
-        setHasInteracted(false);
-    }
-    setShowImgButton(false);
-};
+export const onMouseLeave =
+	(
+		slideIdx: number,
+		imagesDimensions: (
+			| ImagesPosition
+			| { x?: number; y?: number; height?: number; width?: number }
+		)[],
+		hasInteracted: boolean,
+		setHasInteracted: React.Dispatch<React.SetStateAction<boolean>>,
+		setShowImgButton: React.Dispatch<React.SetStateAction<boolean>>,
+		handleSlideEdit: Function,
+	) =>
+	() => {
+		if (hasInteracted) {
+			handleSlideEdit([imagesDimensions], slideIdx, ['images_position']);
+			setHasInteracted(false);
+		}
+		setShowImgButton(false);
+	};
 
 //handle function when drag start
 export const onDragStart =
