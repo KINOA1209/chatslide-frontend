@@ -94,7 +94,7 @@ const LoginForm: React.FC = () => {
 			</div>
 			<div className='flex flex-wrap -mx-3 mt-6'>
 				<div className='w-full px-3'>
-					<button className='btn text-white font-bold bg-Blue w-full'>
+					<button className='btn text-white font-bold w-full bg-Blue disabled:bg-gray-200 disabled:text-gray-600' disabled={isSubmitting}>
 						{ isSubmitting ? 'Signing in...' : 'Sign in' }
 					</button>
 					<ToastContainer />
