@@ -11,10 +11,12 @@ const LoginForm: React.FC = () => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const nextUri = searchParams?.get('next');
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	/* write a function that will take the form data and send it to the backend */
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		setIsSubmitting(true);
 		const email = (event.target as HTMLFormElement).email.value;
 		const password = (event.target as HTMLFormElement).password.value;
 
@@ -39,6 +41,8 @@ const LoginForm: React.FC = () => {
 				theme: 'light',
 			});
 		}
+
+		setIsSubmitting(false);
 	};
 
 	return (
@@ -91,7 +95,7 @@ const LoginForm: React.FC = () => {
 			<div className='flex flex-wrap -mx-3 mt-6'>
 				<div className='w-full px-3'>
 					<button className='btn text-white font-bold bg-Blue w-full'>
-						Sign in
+						{ isSubmitting ? 'Signing in...' : 'Sign in' }
 					</button>
 					<ToastContainer />
 				</div>
