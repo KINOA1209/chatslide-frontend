@@ -2,6 +2,7 @@
 
 import { Blank } from '@/components/ui/Loading';
 import SessionStorage from '@/components/utils/SessionStorage';
+import { useUser } from '@/hooks/use-user';
 import AuthService from '@/services/AuthService';
 import UserService from '@/services/UserService';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -10,6 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 export default function SSORedirect() {
 	const router = useRouter();
+	const { signOut }	= useUser();
 
 	useEffect(() => {
 		const initUser = async () => {
@@ -58,6 +60,8 @@ export default function SSORedirect() {
 				router.push('/signup');
 			}
 		};
+
+		signOut();
 		initUser();
 	}, []);
 
