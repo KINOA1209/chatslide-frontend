@@ -51,6 +51,7 @@ export default class Slide {
 	logo_url?: string; // overwrites logo if present
 	background_url?: string;
 	transcript?: string;
+	additional_images?: string[];
 
 	constructor() {
 		const emptyGroup: Group = {
@@ -81,5 +82,6 @@ export default class Slide {
 		this.images_position = [{}, {}, {}];
 		this.layout = 'Col_2_img_1_layout';
 		this.logo = 'Default';
+		this.additional_images = [];
 	}
 }

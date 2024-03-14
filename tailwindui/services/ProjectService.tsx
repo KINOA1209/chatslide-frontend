@@ -217,8 +217,7 @@ class ProjectService {
 				'Even more content here',
 			];
 			slide.images = slideData.images.filter((img: string) => (img && img !== '')) || [];
-			const additionalImages = (slideData.additional_images || []).filter((img: string) => img && img !== '' && img !== ';');
-			slide.images = [...slide.images, ...additionalImages];
+			slide.additional_images = (slideData.additional_images || []).filter((img: string) => img && img !== '' && img !== ';');
 			slide.chart = slideData.chart;
 			slide.is_chart = slideData.is_chart || [false, false, false];
 			slide.images_position = slideData.images_position || [{}, {}, {}];

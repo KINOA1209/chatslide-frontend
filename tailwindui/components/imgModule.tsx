@@ -34,7 +34,7 @@ import { LayoutElements } from './slides/templates_customizable_elements/layout_
 import Modal from './ui/Modal';
 import { InputBox } from './ui/InputBox';
 import { SpinIcon } from '@/app/(feature)/icons';
-import { FaCheck, FaSearch } from 'react-icons/fa';
+import { FaCheck, FaSearch, FaTrash } from 'react-icons/fa';
 import DrlambdaButton, { BigBlueButton } from './button/DrlambdaButton';
 import { ToolBar } from './ui/ToolBar';
 import ButtonWithExplanation from './button/ButtonWithExplanation';
@@ -42,6 +42,8 @@ import { index } from 'd3';
 import { GoPencil } from 'react-icons/go';
 import { IoMdResize } from 'react-icons/io';
 import { Blank } from './ui/Loading';
+import { LuTrash2 } from 'react-icons/lu';
+import { HiOutlineRefresh } from 'react-icons/hi';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -706,7 +708,7 @@ export const ImgModule = ({
 			handleSave();
 		}
 		// prevent enlarge image on preview section
-		if (canEdit){
+		if (canEdit) {
 			setIsImgEditMode(!isImgEditMode);
 		}
 	};
@@ -812,7 +814,7 @@ export const ImgModule = ({
 
 	//detect the mouse click event is outside the image container or not, if it's, trigger autosave
 	useEffect(() => {
-		const handleClickOutside = (event:MouseEvent) => {
+		const handleClickOutside = (event: MouseEvent) => {
 			const currentRef = imageRefs[currentContentIndex]?.current;
 			if (isImgEditMode && currentRef && !currentRef.contains(event.target as Node)) {
 				toggleImgEditMode(event)
@@ -1082,6 +1084,49 @@ export const ImgModule = ({
 												</button>
 											}
 										/>}
+									{!isImgEditMode && (
+										<>
+											<ButtonWithExplanation
+												explanation="Delete"
+												button={(
+													<button
+														onClick={() => {
+															updateSingleCallback('');
+														}}
+													>
+														<LuTrash2 style={{
+															strokeWidth: '2',
+															flex: '1',
+															width: '1.5rem',
+															height: '1.5rem',
+															fontWeight: 'bold',
+															color: '#2943E9',
+														}} />
+													</button>
+												)}
+											/>
+											<ButtonWithExplanation
+												explanation="Shuffle"
+												button={(
+													<button
+														onClick={() => {
+															updateSingleCallback('shuffle');
+														}}
+													>
+														<HiOutlineRefresh style={{
+															strokeWidth: '2',
+															flex: '1',
+															width: '1.5rem',
+															height: '1.5rem',
+															fontWeight: 'bold',
+															color: '#2943E9',
+														}} />
+													</button>
+												)}
+											/>
+										</>
+									)}
+
 								</ToolBar>
 							</div>
 						}

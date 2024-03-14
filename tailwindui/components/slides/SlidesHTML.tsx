@@ -359,14 +359,19 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	const updateImgUrlArray = (slideIndex: number) => {
 		const updateImgUrl = (urls: string[], ischart: boolean[], images_position: ImagesPosition[]) => {
-			urls = urls.filter(url => url !== null && url !== '');
-			// add '' to the end of the array if it is < 3
-			if (urls.length < 3) {
-				urls = urls.concat(Array(3 - urls.length).fill(''));
-			}
+			// change all null to ''
+			urls = urls.map((url) => (url === null ? '' : url));
 
-			if (urls.length === 1 && urls[0] === '') {
-				return;
+			// if one element in url is 'shuffle', replace that with a random url in additional_images
+			const shuffleIndex = urls.indexOf('shuffle');
+			if (shuffleIndex !== -1) {
+				const additional_images = slides[slideIndex].additional_images || [];
+				if (additional_images.length === 0) {
+					return;
+				}
+				console.log('random url', additional_images);
+				const randomIndex = Math.floor(Math.random() * additional_images.length);
+				urls[shuffleIndex] = additional_images[randomIndex];
 			}
 
 			const prevUrls = slides[slideIndex].images;
