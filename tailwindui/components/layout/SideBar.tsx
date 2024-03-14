@@ -4,7 +4,6 @@ import { useState, useEffect, ReactNode, cloneElement } from 'react';
 
 import { useRouter } from 'next/navigation';
 import GoogleAnalytics from '@/components/integrations/GoogleAnalytics';
-import Hotjar from '@/components/integrations/Hotjar';
 import AuthService from '../../services/AuthService';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import SideBarItem from './SideBarItem';
@@ -202,11 +201,6 @@ const SideBar = ({ }: SideBarProps) => {
 					</div>
 				</div>
 			</div>
-
-			<GoogleAnalytics />
-
-			{/* only render hotjar on desktop for performance */}
-			{!isMobile && <Hotjar />}
 		</header>
 	);
 };

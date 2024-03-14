@@ -1,6 +1,7 @@
 import './css/style.css';
 import React from 'react';
 import Script from 'next/script';
+import GoogleAnalytics from '@/components/integrations/GoogleAnalytics';
 
 interface MetadataOptions {
 	title?: string;
@@ -214,6 +215,8 @@ export default function RootLayout({
   }
 })()`}
 				</Script>
+
+				<GoogleAnalytics />
 			</head>
 			<body
 				className={`font-inter antialiased bg-white text-gray-900 tracking-tight`}
