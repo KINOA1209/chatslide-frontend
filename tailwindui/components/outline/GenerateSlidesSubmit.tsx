@@ -8,6 +8,7 @@ import ProjectService from '@/services/ProjectService';
 import { toast } from 'react-toastify';
 import { useUser } from '@/hooks/use-user';
 import { useProject } from '@/hooks/use-project';
+import { redirWithId } from '../utils/redirWithId';
 
 // this class has no UI, it is used to submit the outline to the backend when isSubmitting is true
 const GenerateSlidesSubmit = ({
@@ -63,7 +64,7 @@ const GenerateSlidesSubmit = ({
 			updateProject('presentation_slides', presentation_slides);
 			updateProject('description', resp.data.description);
 			updateProject('keywords', resp.data.keywords);
-			router.push('workflow-review-slides');
+			redirWithId('workflow-review-slides');
 		} else {
 			setIsSubmitting(false);
 			toast.error(

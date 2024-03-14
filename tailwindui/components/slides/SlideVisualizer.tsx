@@ -7,6 +7,7 @@ import VideoService from '@/services/VideoService';
 import { useUser } from '@/hooks/use-user';
 import { toast } from 'react-toastify';
 import { useProject } from '@/hooks/use-project';
+import { redirWithId } from '../utils/redirWithId';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -72,7 +73,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 					language,
 					token,
 				);
-				router.push('workflow-review-video');
+				redirWithId('workflow-review-video');
 			} catch (error) {
 				console.error('Error in fetchData:', error);
 				toast.error(

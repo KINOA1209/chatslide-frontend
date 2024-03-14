@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useState, MouseEvent, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
-import { useSearchParams } from 'next/navigation';
 import { CurrentStepCircle, FinishedStepCircle, ConnectedLine } from '../icons';
 import { FaChevronCircleLeft, FaChevronCircleRight } from 'react-icons/fa';
 import { IoMdLock } from 'react-icons/io';
@@ -10,6 +8,7 @@ import SessionStorage from '@/components/utils/SessionStorage';
 import Project from '@/models/Project';
 import { useProject } from '@/hooks/use-project';
 import useHydrated from '@/hooks/use-hydrated';
+import { redirWithId } from '../utils/redirWithId';
 
 interface StepProps {
 	id: number;
@@ -28,23 +27,9 @@ const OneStep: React.FC<StepProps> = ({
 	redirect,
 	isLastStep, // Pass this prop to indicate if it's the last step
 }) => {
-	const router = useRouter();
-	const searchParams = useSearchParams();
-
 	const handleClick = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault();
-		// add get id param from path, and add it to the redir url if it doesn't exist
-		const id = searchParams.get('id');
-		if (id) {
-			const redirectUrl = new URL(redirect, window.location.origin);
-			// Check if the 'id' query parameter is not already present in the redirect URL
-			if (!redirectUrl.searchParams.has('id')) {
-				// Add the 'id' parameter to the redirect URL
-				redirectUrl.searchParams.set('id', id);
-			}
-			redirect = redirectUrl.toString();
-		}
-		router.push(redirect);
+		
 	};
 
 	const handleHoverEnter = (e: MouseEvent<HTMLDivElement>) => {
@@ -136,12 +121,10 @@ const ProgressBox: React.FC<ProgressBoxProps> = ({
 		name,
 		redirect[index],
 	]);
-	const router = useRouter();
-
 	const stepAvailable = (step: number) =>
 		step >= 0 && step < stepRedirectPair.length && finishedSteps.includes(step);
 	const goToStep = (step: number) =>
-		stepAvailable(step) && router.push(stepRedirectPair[step][1]);
+		stepAvailable(step) && redirWithId(stepRedirectPair[step][1]);
 
 	return (
 		<div className='w-fit select-none grow-0'>
@@ -212,7 +195,7 @@ export const projectFinishedSteps = (project: Project | null) => {
 	return finishedStepsArray;
 };
 
-export const getLastStepReidrect = (project: Project, withId: boolean = true) => {
+export const getLastStepReidrect = (project: Project) => {
 	const finishedSteps = projectFinishedSteps(project);
 	console.log('finishedSteps', finishedSteps);
 	console.log('project', project.content_type);
@@ -221,9 +204,6 @@ export const getLastStepReidrect = (project: Project, withId: boolean = true) =>
 		url = SOCIAL_POSTS_REDIRECTS[finishedSteps.length - 1];
 	} else {
 		url = PRESENTATION_REDIRECTS[finishedSteps.length - 1];
-	}
-	if (withId) {
-		url = url + `?id=${project.id}`;
 	}
 	return url;
 };
