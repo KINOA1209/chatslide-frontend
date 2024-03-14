@@ -11,7 +11,6 @@ import { ToastContainer, toast } from 'react-toastify';
 
 export default function SSORedirect() {
 	const router = useRouter();
-	const { signOut }	= useUser();
 
 	useEffect(() => {
 		const initUser = async () => {
@@ -61,7 +60,6 @@ export default function SSORedirect() {
 			}
 		};
 
-		signOut();
 		initUser();
 	}, []);
 
