@@ -126,6 +126,7 @@ const GenerateSlidesSubmit = ({
 			scenario_type: scenarioType,
 			// endIndex: 2,  // generate first 2 sections only
 			template: template,
+			imageLicense: imageLicense,
 			logo_ids: logo_ids,
 			background_ids: background_ids,
 		};
