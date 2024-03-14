@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, MouseEvent, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
 import { CurrentStepCircle, FinishedStepCircle, ConnectedLine } from '../icons';
 import { FaChevronCircleLeft, FaChevronCircleRight } from 'react-icons/fa';
 import { IoMdLock } from 'react-icons/io';
@@ -9,6 +8,8 @@ import SessionStorage from '@/components/utils/SessionStorage';
 import Project from '@/models/Project';
 import { useProject } from '@/hooks/use-project';
 import useHydrated from '@/hooks/use-hydrated';
+import { addIdToRedir } from '../utils/redirWithId';
+import { useRouter } from 'next/navigation';
 
 interface StepProps {
 	id: number;
@@ -31,7 +32,7 @@ const OneStep: React.FC<StepProps> = ({
 
 	const handleClick = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault();
-		router.push(redirect);
+		router.push(addIdToRedir(redirect));
 	};
 
 	const handleHoverEnter = (e: MouseEvent<HTMLDivElement>) => {
@@ -124,11 +125,10 @@ const ProgressBox: React.FC<ProgressBoxProps> = ({
 		redirect[index],
 	]);
 	const router = useRouter();
-
 	const stepAvailable = (step: number) =>
 		step >= 0 && step < stepRedirectPair.length && finishedSteps.includes(step);
 	const goToStep = (step: number) =>
-		stepAvailable(step) && router.push(stepRedirectPair[step][1]);
+		stepAvailable(step) && router.push(addIdToRedir(stepRedirectPair[step][1]));
 
 	return (
 		<div className='w-fit select-none grow-0'>
@@ -203,11 +203,13 @@ export const getLastStepReidrect = (project: Project) => {
 	const finishedSteps = projectFinishedSteps(project);
 	console.log('finishedSteps', finishedSteps);
 	console.log('project', project.content_type);
+	let url = '';
 	if (project.content_type == 'social_posts') {
-		return SOCIAL_POSTS_REDIRECTS[finishedSteps.length - 1];
+		url = SOCIAL_POSTS_REDIRECTS[finishedSteps.length - 1];
 	} else {
-		return PRESENTATION_REDIRECTS[finishedSteps.length - 1];
+		url = PRESENTATION_REDIRECTS[finishedSteps.length - 1];
 	}
+	return url;
 };
 
 // Set up actual progress indicators with texts and redirections

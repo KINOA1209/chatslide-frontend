@@ -4,7 +4,6 @@ import { useState, useEffect, ReactNode, cloneElement } from 'react';
 
 import { useRouter } from 'next/navigation';
 import GoogleAnalytics from '@/components/integrations/GoogleAnalytics';
-import Hotjar from '@/components/integrations/Hotjar';
 import AuthService from '../../services/AuthService';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import SideBarItem from './SideBarItem';
@@ -80,6 +79,11 @@ const SideBar = ({ }: SideBarProps) => {
 	if (userStatus == UserStatus.Failed || !uid) {
 		if (location.pathname.includes('/discover'))
 			return <></>  // do not show sidebar if user is a visitor
+		if (location.pathname.includes('/dashboard')) {
+			console.log('No uid yet');
+			console.log('userStatus', userStatus);
+			return <></>  // do not show sidebar if user just logged in
+		}
 		else
 			return (
 				<Modal
@@ -204,9 +208,6 @@ const SideBar = ({ }: SideBarProps) => {
 			</div>
 
 			<GoogleAnalytics />
-
-			{/* only render hotjar on desktop for performance */}
-			{!isMobile && <Hotjar />}
 		</header>
 	);
 };

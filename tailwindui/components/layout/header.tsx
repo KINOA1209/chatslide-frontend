@@ -177,12 +177,6 @@ const Header = ({
 			</div>
 
 			<GoogleAnalytics />
-
-			{/* only render hotjar on desktop for performance */}
-			<div className='hidden sm:flex'>
-				{' '}
-				<Hotjar />
-			</div>
 		</header>
 	);
 };

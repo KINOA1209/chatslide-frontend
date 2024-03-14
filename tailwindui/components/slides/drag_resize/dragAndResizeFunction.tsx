@@ -1,18 +1,19 @@
 import ImagesPosition from '@/models/ImagesPosition';
 
 export const initializeImageData = (
-	images_position: Array<ImagesPosition | {}>,
-	refs: React.RefObject<HTMLElement>[],
-): ImagesPosition[] => {
-	const positions = images_position || [{}, {}, {}];
-	return positions.map((pos, index) => {
-		if (pos && Object.keys(pos).length !== 0) {
-			// If position data is available, use it directly
-			return pos as ImagesPosition;
-		} else {
-			return {};
-		}
-	});
+    images_position: Array<ImagesPosition | {}>,
+    refs: React.RefObject<HTMLElement>[],
+  ): ImagesPosition[] => {
+    const positions = images_position || [{}, {}, {}];
+    return positions.map((pos, index) => {
+        if (pos && Object.keys(pos).length !== 0) {
+            // If position data is available, use it directly
+            return pos as ImagesPosition;
+        }
+        else {
+            return {};
+        }
+    });
 };
 
 //handle autosave

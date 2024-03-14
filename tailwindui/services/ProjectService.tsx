@@ -217,6 +217,7 @@ class ProjectService {
 				'Even more content here',
 			];
 			slide.images = slideData.images.filter((img: string) => (img && img !== '')) || [];
+			slide.additional_images = (slideData.additional_images || []).filter((img: string) => img && img !== '' && img !== ';');
 			slide.chart = slideData.chart;
 			slide.is_chart = slideData.is_chart || [false, false, false];
 			slide.images_position = slideData.images_position || [{}, {}, {}];
@@ -228,6 +229,7 @@ class ProjectService {
 			slide.logo_url = slideData.logo_url || '';
 			slide.background_url = slideData.background_url || '';
 			slide.show_logo = slideData.show_logo;
+			console.log("slide.images", slide.images);
 			if (index === 0) {
 				slide.layout = slideData.layout || ('Cover_img_1_layout' as LayoutKeys);
 			} else {

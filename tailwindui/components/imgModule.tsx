@@ -34,7 +34,7 @@ import { LayoutElements } from './slides/templates_customizable_elements/layout_
 import Modal from './ui/Modal';
 import { InputBox } from './ui/InputBox';
 import { SpinIcon } from '@/app/(feature)/icons';
-import { FaCheck, FaSearch } from 'react-icons/fa';
+import { FaCheck, FaSearch, FaTrash } from 'react-icons/fa';
 import DrlambdaButton, { BigBlueButton } from './button/DrlambdaButton';
 import { ToolBar } from './ui/ToolBar';
 import ButtonWithExplanation from './button/ButtonWithExplanation';
@@ -43,6 +43,9 @@ import { GoPencil } from 'react-icons/go';
 import { IoMdResize } from 'react-icons/io';
 import { Blank } from './ui/Loading';
 import { useImageStore } from '@/hooks/use-img-store';
+import { LuTrash2 } from 'react-icons/lu';
+import { HiOutlineRefresh } from 'react-icons/hi';
+import { useProject } from '@/hooks/use-project';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -60,6 +63,7 @@ interface ImgModuleProp {
 	images_position: ImagesPosition[];
 	layoutElements?: LayoutElements;
 	customImageStyle?: React.CSSProperties;
+	additional_images?: string[];
 }
 
 enum ImgQueryMode {
@@ -85,6 +89,7 @@ export const ImgModule = ({
 	images_position,
 	layoutElements,
 	customImageStyle,
+	additional_images = [],
 }: ImgModuleProp) => {
 	const sourceImage = useImageStore((state) => state.sourceImage);
 
@@ -97,6 +102,7 @@ export const ImgModule = ({
 	const searchRef = useRef<HTMLInputElement>(null);
 	const inputFileRef = useRef<HTMLInputElement>(null);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
+	const { project } = useProject();
 
 	const [hoverQueryMode, setHoverQueryMode] = useState<ImgQueryMode>(
 		ImgQueryMode.RESOURCE,
@@ -1100,7 +1106,7 @@ export const ImgModule = ({
 								onError={(e) => {
 									console.log('failed to load image', imgsrc);
 									setImgLoadError(true);
-									updateSingleCallback('');
+									updateSingleCallback('shuffle');
 								}}
 							/>
 						</Rnd>
@@ -1154,6 +1160,55 @@ export const ImgModule = ({
 												</button>
 											}
 										/>
+									)}
+
+									{!isImgEditMode && (
+										<>
+											<ButtonWithExplanation
+												explanation='Delete'
+												button={
+													<button
+														onClick={() => {
+															updateSingleCallback('');
+														}}
+													>
+														<LuTrash2
+															style={{
+																strokeWidth: '2',
+																flex: '1',
+																width: '1.5rem',
+																height: '1.5rem',
+																fontWeight: 'bold',
+																color: '#2943E9',
+															}}
+														/>
+													</button>
+												}
+											/>
+											{project?.additional_images && (
+												<ButtonWithExplanation
+													explanation='Shuffle'
+													button={
+														<button
+															onClick={() => {
+																updateSingleCallback('shuffle');
+															}}
+														>
+															<HiOutlineRefresh
+																style={{
+																	strokeWidth: '2',
+																	flex: '1',
+																	width: '1.5rem',
+																	height: '1.5rem',
+																	fontWeight: 'bold',
+																	color: '#2943E9',
+																}}
+															/>
+														</button>
+													}
+												/>
+											)}
+										</>
 									)}
 								</ToolBar>
 							</div>

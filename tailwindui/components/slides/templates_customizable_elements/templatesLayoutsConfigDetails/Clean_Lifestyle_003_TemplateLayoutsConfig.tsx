@@ -381,7 +381,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			//overflow: 'hidden',
 			display: 'flex',
 			alignItems: 'center',
-			padding: '2rem 4rem 0rem 4rem', // top right bottom left
+			padding: '0rem 0rem 0rem 2rem', // top right bottom left
 			zIndex: 30,
 		},
 		imageCSS: {

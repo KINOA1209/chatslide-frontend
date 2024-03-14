@@ -42,28 +42,28 @@ export default function DesignPage() {
 		{
 			img: ContentWithImageImg,
 			value: 'content_with_image',
-			text: 'More images(70% decks contain images)',
+			text: 'More images (70% decks contain images)',
 		},
 		{
 			img: ContentOnlyImg,
 			value: 'content_only',
-			text: 'Less images(30% decks contain images)',
+			text: 'Fewer images (30% decks contain images)',
 		},
 	];
 
-	const [imageLicense, setImageLicense] = useState('all');
+	const [imageLicense, setImageLicense] = useState('creative');
 	const imageLicenseOptions: RadioButtonOption[] = [
 		{
-			value: 'all',
-			text: 'All',
-		},
-		{
-			value: 'commercial',
-			text: 'Commercial',
-		},
-		{
 			value: 'creative',
-			text: 'Creative',
+			text: 'Creative (wide range)',
+		},
+		{
+			value: 'stock',
+			text: 'Stock (high quality)',
+		},
+		{
+			value: 'all',
+			text: 'All (wider range, personal use)',
 		},
 	];
 
@@ -124,8 +124,12 @@ export default function DesignPage() {
 						</div>
 						<div>
 							<span className='text-md font-bold'>
-								What online image license do you want to use?
+								For images on your slides, what image license do you want to use?
 							</span>
+							<Explanation>
+								An image license is a set of rules that tell you how you can use a picture. <br/>
+								You are free to use images with a creative license or stock pictures for commercial use. <br/>
+							</Explanation>
 							<RadioButton
 								options={imageLicenseOptions}
 								selectedValue={imageLicense}

@@ -109,8 +109,10 @@ export default function ResetPassword(): JSX.Element {
 					<div className='max-w-3xl mx-auto text-center pb-12 md:pb-20'>
 						<h1 className='h1 mb-4'>Reset password</h1>
 						<p className='text-xl text-gray-600'>
-							Enter the email address you used when you signed up for your
-							account
+							Enter the email address you used when you signed up for your account.
+						</p>
+						<p className='text-xl text-gray-600'>
+							You might need to find your confirmation code in your junk folder.
 						</p>
 					</div>
 

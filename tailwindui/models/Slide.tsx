@@ -51,6 +51,7 @@ export default class Slide {
 	logo_url?: string; // overwrites logo if present
 	background_url?: string;
 	transcript?: string;
+	additional_images?: string[];
 
 	constructor() {
 		const emptyGroup: Group = {
@@ -66,9 +67,9 @@ export default class Slide {
 		this.userName = '';
 		this.template = 'Default';
 		this.content = [
-			'Some content here',
-			'Some more content here',
-			'Even more content here',
+			'You can edit this text',
+			'You can also ask AI Assistant to generate content for you',
+			'AI Assistant is at bottom right corner of the screen',
 		];
 		this.is_chart = [false, false, false];
 		this.images = ['', '', ''];
@@ -81,5 +82,6 @@ export default class Slide {
 		this.images_position = [{}, {}, {}];
 		this.layout = 'Col_2_img_1_layout';
 		this.logo = 'Default';
+		this.additional_images = [];
 	}
 }

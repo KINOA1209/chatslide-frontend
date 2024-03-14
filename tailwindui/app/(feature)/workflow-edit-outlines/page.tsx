@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect, Fragment } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import OutlineVisualizer from '@/components/outline/OutlineVisulizer';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
 import { ToastContainer } from 'react-toastify';
 import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
@@ -12,6 +12,7 @@ import { useProject } from '@/hooks/use-project';
 import ActionsToolBar from '@/components/ui/ActionsToolBar';
 import useTourStore from '@/components/user_onboarding/TourStore';
 import useHydrated from '@/hooks/use-hydrated';
+import { addIdToRedir } from '@/components/utils/redirWithId';
 
 export default function WorkflowStep2() {
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
@@ -30,7 +31,7 @@ export default function WorkflowStep2() {
 	useEffect(() => {
 		if (isSubmitting) {
 			if (outlines) {
-				router.push('workflow-edit-design');
+				router.push(addIdToRedir('workflow-edit-design'));
 			}
 		}
 	}, [isSubmitting]);

@@ -244,7 +244,7 @@ const SignupForm: React.FC = () => {
 			<div className='flex flex-wrap -mx-3 mt-6'>
 				<div className='w-full px-3'>
 					<button
-						className='btn text-white font-bold bg-Blue w-full disabled:from-gray-200 disabled:to-gray-200 disabled:text-gray-400'
+					className='btn text-white font-bold bg-Blue w-full disabled:bg-gray-200 disabled:text-gray-600'
 						disabled={submitting}
 					>
 						{!submitting ? 'Sign up' : 'Signing up...'}

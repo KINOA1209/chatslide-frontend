@@ -1,9 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
-import AuthService from '@/services/AuthService';
 import { ToastContainer, toast } from 'react-toastify';
+import { usePathname, useRouter } from 'next/navigation';
 import 'react-toastify/dist/ReactToastify.css';
 import ProjectService from '@/services/ProjectService';
 import Project from '@/models/Project';
@@ -12,6 +11,7 @@ import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';
 import { getLastStepReidrect } from '@/components/layout/WorkflowSteps';
 import { Loading } from '@/components/ui/Loading';
+import { addIdToRedir } from '@/components/utils/redirWithId';
 
 const ProjectLoading = () => {
 	const pathname = usePathname();
@@ -125,7 +125,7 @@ const ProjectLoading = () => {
 					initSlides(project.parsed_slides);
 				}
 				setSessionStorage(project);
-				handleRedirect(project);
+				handleRedirect(project, project_id);
 			}
 		} catch (error) {
 			toast.error('The project is not found or you do not have access to it.', {
@@ -141,8 +141,8 @@ const ProjectLoading = () => {
 		}
 	};
 
-	const handleRedirect = async (project: Project) => {
-		router.push(getLastStepReidrect(project));
+	const handleRedirect = async (project: Project, project_id: string) => {
+		router.push(addIdToRedir(getLastStepReidrect(project), project_id));
 	};
 
 	return <Loading />;

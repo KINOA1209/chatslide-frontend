@@ -43,7 +43,6 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 	const { isPaidUser, token } = useUser();
 	const { project } = useProject();
 	const [showModal, setShowModal] = useState(false);
-	const [showHiddenDiv, setShowHiddenDiv] = useState(false);
 	const { slides } = useSlides();
 
 	async function exportToPdfFrontend() {
@@ -91,9 +90,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 
 
 		if (frontend) {
-			setShowHiddenDiv(true);
 			await exportToPdfFrontend();
-			setShowHiddenDiv(false);
 		} else {
 			ProjectService.exportToFileBackend(token, project.id, type);
 
@@ -159,7 +156,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 			/>
 
 			{/* hidden div for export to pdf */}
-				<div className='absolute left-[-9999px] top-[-9999px] -z-1'>
+				<div className='fixed left-[-9999px] top-[-9999px] -z-1'>
 					<div ref={exportSlidesRef}>
 						{/* Render all of your slides here. This can be a map of your slides array */}
 						{slides.map((slide, index) => (
