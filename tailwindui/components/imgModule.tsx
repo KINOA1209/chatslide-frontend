@@ -44,6 +44,7 @@ import { IoMdResize } from 'react-icons/io';
 import { Blank } from './ui/Loading';
 import { LuTrash2 } from 'react-icons/lu';
 import { HiOutlineRefresh } from 'react-icons/hi';
+import { useProject } from '@/hooks/use-project';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -98,6 +99,7 @@ export const ImgModule = ({
 	const searchRef = useRef<HTMLInputElement>(null);
 	const inputFileRef = useRef<HTMLInputElement>(null);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
+	const { project } = useProject();
 
 	const [hoverQueryMode, setHoverQueryMode] = useState<ImgQueryMode>(
 		ImgQueryMode.RESOURCE,
@@ -1105,25 +1107,27 @@ export const ImgModule = ({
 													</button>
 												)}
 											/>
-											<ButtonWithExplanation
-												explanation="Shuffle"
-												button={(
-													<button
-														onClick={() => {
-															updateSingleCallback('shuffle');
-														}}
-													>
-														<HiOutlineRefresh style={{
-															strokeWidth: '2',
-															flex: '1',
-															width: '1.5rem',
-															height: '1.5rem',
-															fontWeight: 'bold',
-															color: '#2943E9',
-														}} />
-													</button>
-												)}
-											/>
+											{project?.additional_images &&
+												<ButtonWithExplanation
+													explanation="Shuffle"
+													button={(
+														<button
+															onClick={() => {
+																updateSingleCallback('shuffle');
+															}}
+														>
+															<HiOutlineRefresh style={{
+																strokeWidth: '2',
+																flex: '1',
+																width: '1.5rem',
+																height: '1.5rem',
+																fontWeight: 'bold',
+																color: '#2943E9',
+															}} />
+														</button>
+													)}
+												/>
+											}
 										</>
 									)}
 
