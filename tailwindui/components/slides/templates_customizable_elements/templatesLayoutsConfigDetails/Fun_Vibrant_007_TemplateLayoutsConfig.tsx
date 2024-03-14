@@ -499,6 +499,7 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			zIndex: '51',
 		},
 	},
+
 	Col_2_img_2_layout: {
 		canvaCSS: {
 			width: '100%',
@@ -509,12 +510,7 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			display: 'flex',
 			flexDirection: 'column',
 			gap: '0.5rem',
-		},
-		subtopicCSS: {
-			paddingBottom: '1rem',
-			// borderBottom: '7px solid #AFE5F3',
-			// borderRadius:
-			// 	'1rem 1rem 1rem 1rem' /* Adjust the radius values as needed */,
+			padding: '2rem 2rem 2rem 2rem',
 		},
 		titleAndSubtopicBoxCSS: {
 			zIndex: 30,
@@ -522,38 +518,36 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			flexDirection: 'column',
 			// justifyContent: 'center',
 			// alignItems: 'center',
-			padding: '2rem 2rem 2rem 2rem',
 			order: 0,
+		},
+		subtopicCSS: {
+			paddingBottom: '0.5rem',
 		},
 		imageContainerCSS: {
 			width: '100%', // equivalent to w-full
 			display: 'grid',
-			gridTemplateColumns: 'repeat(2, 1fr)', //
+			gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
+			gap: '2rem', // equivalent to gap-[2rem]
 			order: 1,
 			zIndex: 20,
-			gap: '2rem',
-			padding: '0rem 2rem 0rem 2rem',
+			padding: '1rem 2rem 1rem 2rem',
 		},
 		imageCSS: {
 			height: '11rem', // equivalent to h-[11rem]
 			flexGrow: 1, // equivalent to grow
-			// borderRadius: '1.25rem', // equivalent to rounded-md
+			borderRadius: '1.25rem', // equivalent to rounded-md
 			//overflow: 'hidden', // equivalent to overflow-hidden
 			position: 'relative', // equivalent to relative
-			// gridRow: 3,
-			// order: 3,
-			zIndex: 20,
 		},
 		contentCSS: {
 			zIndex: 30,
-			padding: '1rem 2rem 2rem 2rem',
-			width: '100%',
+			width: '100%', // equivalent to w-full
 			display: 'grid',
-			gridTemplateColumns: 'repeat(2, 1fr)', //
-			gap: '2rem',
+			gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
+			gap: '2rem', // equivalent to gap-[2rem]
 			order: 2,
+			padding: '1rem 2rem 2rem 2rem',
 		},
-
 		visualElementsCSS: {
 			zIndex: 0,
 			width: '100%',
@@ -569,7 +563,7 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			position: 'relative',
 		},
 		rndCSS: {
-			zIndex: '51',
+			zIndex: '10',
 		},
 	},
 	Col_3_img_3_layout: {
