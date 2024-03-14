@@ -1,11 +1,11 @@
 'use client';
 
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
 const Referral = () => {
-	const pathname = usePathname();
-	const code = pathname ? pathname.split('/').pop() : null;
+	const searchParams = useSearchParams();
+	const code = searchParams.get('code');
 	const router = useRouter();
 	useEffect(() => {
 		if (code) {

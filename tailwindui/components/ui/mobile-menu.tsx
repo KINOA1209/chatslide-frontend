@@ -7,7 +7,6 @@ import { Transition } from '@headlessui/react';
 import Link from 'next/link';
 import AuthService from '../../services/AuthService';
 import { toast } from 'react-toastify';
-import { usePathname } from 'next/navigation';
 
 interface HeaderProps {
 	refList?: Array<React.RefObject<HTMLDivElement>>;
@@ -20,7 +19,6 @@ const MobileMenu = ({ refList = [] }: HeaderProps) => {
 	const mobileNav = useRef<HTMLDivElement>(null);
 	const [username, setUsername] = useState<string>('');
 	const [landingPage, setLandingPage] = useState(false);
-	const pathname = usePathname();
 
 	function userFirstName() {
 		return username.split(' ')[0];
