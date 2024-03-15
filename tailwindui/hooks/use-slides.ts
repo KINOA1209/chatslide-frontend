@@ -109,14 +109,15 @@ export const useSlides = () => {
 		syncSlides(newSlides, false, newSlides.length);
 	};
 
-	const updateSlidePage = (index: number, slide: Slide) => {
+	const updateSlidePage = (index: number, slide: Slide, rerender: boolean=true) => {
 		console.log('-- update slide page: ', { index, slide });
 		const newSlides = [...slides];
 		console.log('new slides deck: ', newSlides);
 		newSlides[index] = slide;
 		setSlides(newSlides);
 
-		updateVersion();
+		if(rerender)
+			updateVersion();
 		updateSlideHistory(newSlides);
 		syncSlides(newSlides, index === 0);
 	};

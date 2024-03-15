@@ -234,6 +234,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		slideIndex: number,
 		tag: SlideKeys | SlideKeys[],
 		contentIndex?: number,
+		rerender: boolean = true,
 	) {
 		console.log('handleSlideEdit', content, slideIndex, tag, contentIndex);
 		setIsEditMode(false);
@@ -314,7 +315,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		}
 		console.log('updating slide page', slideIndex);
 		console.log(currentSlide);
-		updateSlidePage(slideIndex, currentSlide);
+		updateSlidePage(slideIndex, currentSlide, rerender);
 	}
 
 	function handleAddPage() {
