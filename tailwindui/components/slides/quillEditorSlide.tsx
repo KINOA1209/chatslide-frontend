@@ -78,8 +78,8 @@ Size.whitelist = [
 Quill.register(Size, true);
 
 const toolbarOptions = [
-	[{ size: Size.whitelist }, { font: Font.whitelist }],
-	['bold', 'italic', 'underline', 'strike', 'code-block'],
+	[{ size: Size.whitelist }, { font: Font.whitelist }, 'bold', 'italic',],
+	['underline', 'strike', 'code-block'],
 	[{ list: 'bullet' }],
 	[{ script: 'sub' }, { script: 'super' }],
 	[
@@ -126,7 +126,7 @@ const toolbarOptions = [
 		{ background: [] },
 	],
 	[{ align: [] }],
-	['clean'],
+	['link', 'clean'],
 ];
 
 export const isHTML = (input: string): boolean => {
@@ -265,6 +265,83 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 								);
 							}
 						});
+					}
+				}
+			});
+
+			// insert link button
+			toolbar.addHandler('link', () => {
+				const quill = quillInstanceRef.current;
+				if (quill){
+					const range = quill.getSelection();
+					if (range && range.length > 0) {
+						const formats = quill.getFormat(range);
+						// Check if the selected text is already a link
+						if (formats.link) {
+							// If it is a link, remove the link format
+							quill.format('link', false);
+						} else {
+							// If it is not a link, add the link format
+							const text = quill.getText(range.index, range.length).trim();
+							const urlRegex = /(?:https?:\/\/|www\.)[^\s]+/;
+							if (urlRegex.test(text)) {
+								quill.format('link', text);
+							} else {
+								alert('Selected text is not a valid URL');
+							}
+						}
+					}
+				}
+			})
+
+			editorRef.current.addEventListener('click', (event) => {
+				const target = event.target as HTMLElement;
+				// Check if the target is not null and is an anchor tag
+				if (target && target.tagName === 'A') {
+					const editorParent = target.closest('.ql-editor');
+					if (editorParent) {
+						event.preventDefault();
+						let url = target.getAttribute('href');
+						if (url) {
+							if (url.startsWith('www.')) {
+								url = 'https://' + url;
+							}
+							const newWindow = window.open(url, '_blank');
+							if (newWindow) {
+								newWindow.focus();
+							} else {
+								console.log('Popup blocked or failed to open');
+							}
+						}
+					}
+				}
+			});
+
+			const quill = quillInstanceRef.current;
+
+			// Handling the paste event, fix the bug that cannot copy/paste link from browser into editor
+			quill.root.addEventListener('paste', (event) => {
+				const clipboardData = event.clipboardData;
+				if (clipboardData) {
+					const text = clipboardData.getData('text/plain');
+					const html = clipboardData.getData('text/html');
+	
+					event.preventDefault();
+	
+					// Ensure there is a valid selection before inserting text
+					const selection = quill.getSelection();
+					if (selection) {
+						const index = selection.index;
+	
+						// Insert the content into Quill editor at the current selection
+						if (html) {
+							quill.clipboard.dangerouslyPasteHTML(index, html);
+						} else if (text) {
+							quill.insertText(index, text);
+						}
+					} else {
+						// If there's no selection, insert at the end or handle as needed
+						quill.insertText(quill.getLength(), text);
 					}
 				}
 			});
