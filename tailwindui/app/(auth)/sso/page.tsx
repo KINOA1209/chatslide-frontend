@@ -2,7 +2,6 @@
 
 import { Blank } from '@/components/ui/Loading';
 import SessionStorage from '@/components/utils/SessionStorage';
-import { useUser } from '@/hooks/use-user';
 import AuthService from '@/services/AuthService';
 import UserService from '@/services/UserService';
 import { useRouter, useSearchParams } from 'next/navigation';
