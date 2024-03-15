@@ -34,6 +34,12 @@
 	padding-bottom: 10px;
 }
 
+.ql-editor a, .ql-editor li a {
+    color: #0047b2 !important;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 $font-sizes: (
 	'12pt',
 	'13pt',
