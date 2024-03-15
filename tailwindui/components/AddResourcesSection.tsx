@@ -13,7 +13,7 @@ import Resource from '@/models/Resource';
 import LinkInput from './ui/LinkInput';
 import { useUser } from '@/hooks/use-user';
 import RadioButton, { RadioButtonOption } from './ui/RadioButton';
-import { FaInternetExplorer, FaWikipediaW } from 'react-icons/fa';
+import { FaInternetExplorer, FaNewspaper, FaWikipediaW } from 'react-icons/fa';
 import { IoIosRemoveCircle, IoIosRemoveCircleOutline } from 'react-icons/io';
 import { Instruction, Explanation, BigTitle } from './ui/Text';
 import Card from './ui/Card';
@@ -47,6 +47,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 		{ value: '', text: 'None', icon: <IoIosRemoveCircleOutline /> },
 		{ value: 'bing', text: 'Internet', icon: <FiGlobe /> },
 		{ value: 'wikipedia', text: 'Wikipedia', icon: <FaWikipediaW /> },
+		{ value: 'news', text: 'News', icon: <FaNewspaper /> },
 		// { value: 'reddit', text: 'Reddit' },
 	];
 
