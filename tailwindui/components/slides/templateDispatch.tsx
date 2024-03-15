@@ -1,7 +1,11 @@
 import Slide from '@/models/Slide';
 import { SlideKeys } from '@/models/Slide';
 import { availableTemplates } from '@/components/slides/slideTemplates';
-import { LayoutKeys } from '@/components/slides/slideLayout';
+import { useUser } from '@/hooks/use-user';
+import {
+	Col_1_img_1_layout,
+	LayoutKeys,
+} from '@/components/slides/slideLayout';
 import dynamic from 'next/dynamic';
 import React, { CSSProperties, useEffect, useRef } from 'react';
 import { loadCustomizableElements } from './SlidesHTML';
@@ -31,7 +35,11 @@ export const templateDispatch = (
 	) => void = () => {}, // Replace with your default function if you have one
 	updateImgUrlArray: (
 		slideIndex: number,
-	) => (urls: string[], ischart: boolean[], images_position: ImagesPosition[]) => void = () => () => {}, // Replace with your default function if you have one
+	) => (
+		urls: string[],
+		ischart: boolean[],
+		images_position: ImagesPosition[],
+	) => void = () => () => {}, // Replace with your default function if you have one
 	toggleEditMathMode: () => void = () => {}, // Replace with your default function if you have one
 
 	isCoverPage: boolean = false,
@@ -46,6 +54,7 @@ export const templateDispatch = (
 	// 	console.log('chosen template string:', slide.template);
 	// 	console.log('template config:', themeElements);
 	// }, []);
+	const { isPaidUser, token } = useUser();
 	let keyPrefix = '';
 	if (exportToPdfMode) {
 		keyPrefix = 'exportToPdf';
@@ -188,14 +197,24 @@ export const templateDispatch = (
 			key={keyPrefix + index.toString()}
 			user_name={
 				isShowingLogo ? (
-					<div
-						key={0}
-						className={`rounded-md outline-2 ${!exportToPdfMode} ${
-							index !== 0 ? 'hidden' : ''
-						}`}
-						contentEditable={false}
-						dangerouslySetInnerHTML={{ __html: slide.userName }}
-					/>
+					isPaidUser ? (
+						generateContentElement(
+							slide.userName,
+							'userName',
+							themeElements.userNameFontCSS,
+							false,
+						)
+					) : (
+						<div
+							key={0}
+							className={`rounded-md outline-2 ${!exportToPdfMode} ${
+								index !== 0 ? 'hidden' : ''
+							}`}
+							style={themeElements.userNameFontCSS}
+							contentEditable={false}
+							dangerouslySetInnerHTML={{ __html: slide.userName }}
+						/>
+					)
 				) : (
 					<></>
 				)
@@ -225,9 +244,9 @@ export const templateDispatch = (
 					? generateContentElement(
 							slide.content,
 							'content',
-							// when the layout is col_2_img_1, we should make this layout's fontsize to be 12pt
-							slide.layout === 'Col_2_img_1_layout'
-								? { ...themeElements.contentFontCSS, fontSize: '12pt' }
+							slide.layout === 'Col_2_img_1_layout' ||
+								slide.layout === 'Col_1_img_1_layout'
+								? { ...themeElements.contentFontCSS, fontSize: '14pt' }
 								: themeElements.contentFontCSS,
 							true,
 					  )
@@ -241,7 +260,14 @@ export const templateDispatch = (
 								{generateContentElement(
 									content,
 									'content',
-									themeElements.contentFontCSS_non_vertical_content,
+									// themeElements.contentFontCSS_non_vertical_content,
+									slide.layout === 'Col_2_img_0_layout' ||
+										slide.layout === 'Col_3_img_0_layout'
+										? {
+												...themeElements.contentFontCSS_non_vertical_content,
+												fontSize: '16pt',
+										  }
+										: themeElements.contentFontCSS_non_vertical_content,
 									false,
 									contentIndex,
 								)}

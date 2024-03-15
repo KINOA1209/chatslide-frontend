@@ -42,6 +42,7 @@ import { index } from 'd3';
 import { GoPencil } from 'react-icons/go';
 import { IoMdResize } from 'react-icons/io';
 import { Blank } from './ui/Loading';
+import { useImageStore } from '@/hooks/use-img-store';
 import { LuTrash2 } from 'react-icons/lu';
 import { HiOutlineRefresh } from 'react-icons/hi';
 import { useProject } from '@/hooks/use-project';
@@ -90,6 +91,8 @@ export const ImgModule = ({
 	customImageStyle,
 	additional_images = [],
 }: ImgModuleProp) => {
+	const sourceImage = useImageStore((state) => state.sourceImage);
+
 	const [showModal, setShowModal] = useState(false);
 	const [keyword, setKeyword] = useState('');
 	const [searchResult, setSearchResult] = useState<string[]>([]);
@@ -119,6 +122,15 @@ export const ImgModule = ({
 			setSelectedImg(imgsrc);
 		}
 	}, [imgsrc]);
+
+	const handleImageDrop = (e: React.DragEvent<HTMLDivElement>) => {
+		e.preventDefault();
+		if (sourceImage) {
+			const droppedImageUrl = sourceImage;
+			// Update the image source with the dropped image URL
+			updateSingleCallback(droppedImageUrl, false, {});
+		}
+	};
 
 	const openModal = () => {
 		if (canEdit && !isImgEditMode) {
@@ -377,6 +389,7 @@ export const ImgModule = ({
 		<div className='w-full h-full'>
 			<div className='w-full h-full flex flex-col'>
 				<div className='w-full h-full overflow-y-auto p-1'>
+					{/* My resources tab*/}
 					<div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-2'>
 						<div
 							onClick={handleClick}
@@ -389,6 +402,7 @@ export const ImgModule = ({
 								onChange={handleFileChange}
 								style={{ display: 'none' }}
 							/>
+							{/* upload area icon and text */}
 							<svg
 								className='w-12 h-12'
 								viewBox='0 0 48 48'
@@ -419,6 +433,7 @@ export const ImgModule = ({
 							</svg>
 							<div className='text-[#A6B1BB]'>Upload</div>
 						</div>
+						{/* resources images arrays */}
 						{resources.map((resource, index) => {
 							if (resource.thumbnail_url === selectedImg) {
 								return (
@@ -464,10 +479,10 @@ export const ImgModule = ({
 						}}
 						value={keyword}
 					/>
-					{searching ? <SpinIcon /> : (
-						<button
-							type='submit'
-						>
+					{searching ? (
+						<SpinIcon />
+					) : (
+						<button type='submit'>
 							<FaSearch className='h-[24px] w-[24px] text-gray-400' />
 						</button>
 					)}
@@ -519,15 +534,14 @@ export const ImgModule = ({
 						}}
 						value={keyword}
 					/>
-					{searching ? <SpinIcon /> : (
-						<button
-							type='submit'
-						>
+					{searching ? (
+						<SpinIcon />
+					) : (
+						<button type='submit'>
 							<FaSearch className='h-[24px] w-[24px] text-gray-400' />
 						</button>
 					)}
 				</InputBox>
-
 			</form>
 			<div className='w-full h-full overflow-y-auto p-1'>
 				<div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-2'>
@@ -637,11 +651,10 @@ export const ImgModule = ({
 							titleRef={titleRef}
 							typeRef={typeRef}
 							doneButtonRef={doneButtonRef}
-						/></div>
+						/>
+					</div>
 					<div className='flex sm:hidden'>
-						<Blank>
-							Please use desktop to edit chart
-						</Blank>
+						<Blank>Please use desktop to edit chart</Blank>
 					</div>
 				</>
 			)}
@@ -669,9 +682,12 @@ export const ImgModule = ({
 	const [isImgEditMode, setIsImgEditMode] = useState(false);
 	const [showImgButton, setShowImgButton] = useState(false);
 	const [zoomLevel, setZoomLevel] = useState(100);
-	const [parentDimension, setParentDimension] = useState({ height: 0, width: 0 })
-	const [isParentDimension, setIsParentDimension] = useState(false)
-	const [imgLoadError, setImgLoadError] = useState(false)
+	const [parentDimension, setParentDimension] = useState({
+		height: 0,
+		width: 0,
+	});
+	const [isParentDimension, setIsParentDimension] = useState(false);
+	const [imgLoadError, setImgLoadError] = useState(false);
 
 	//handler for drag and resize also autosave
 	const handleSave = onMouseLeave(
@@ -716,11 +732,16 @@ export const ImgModule = ({
 	};
 
 	const applyZoom = () => {
-		handleSave()
-		setIsImgEditMode(false)
+		handleSave();
+		setIsImgEditMode(false);
 	};
 
-	const customScale = (width: number, height: number, parentWidth: number, parentHeight: number) => {
+	const customScale = (
+		width: number,
+		height: number,
+		parentWidth: number,
+		parentHeight: number,
+	) => {
 		const aspectRatio = width / height;
 		const parentAspectRatio = parentWidth / parentHeight;
 		let newWidth, newHeight, newX, newY;
@@ -741,7 +762,7 @@ export const ImgModule = ({
 		}
 
 		return { width: newWidth, height: newHeight, x: newX, y: newY };
-	}
+	};
 
 	const onZoomChange = (newZoomLevel: number) => {
 		const scale = newZoomLevel / 100;
@@ -773,25 +794,37 @@ export const ImgModule = ({
 	//reposition to default if images changed
 	useEffect(() => {
 		// make sure we got non-zero value for parentDimension
-		if (isParentDimension && images_position[currentContentIndex] && Object.keys(images_position[currentContentIndex]).length == 0) {
+		if (
+			isParentDimension &&
+			images_position[currentContentIndex] &&
+			Object.keys(images_position[currentContentIndex]).length == 0
+		) {
 			const img = new window.Image();
 			img.src = imgsrc;
 			img.onload = () => {
-				const { height: newHeight, width: newWidth, x: newX, y: newY } = customScale(
-					img.naturalWidth, img.naturalHeight, parentDimension.width, parentDimension.height
-				)
+				const {
+					height: newHeight,
+					width: newWidth,
+					x: newX,
+					y: newY,
+				} = customScale(
+					img.naturalWidth,
+					img.naturalHeight,
+					parentDimension.width,
+					parentDimension.height,
+				);
 				if (newWidth !== imageSize.width || newHeight !== imageSize.height) {
 					setImageSize({ width: newWidth, height: newHeight });
-				};
-				const updatedDimensions = [...imagesDimensions]
+				}
+				const updatedDimensions = [...imagesDimensions];
 				updatedDimensions[currentContentIndex] = {
 					...updatedDimensions[currentContentIndex],
 					width: newWidth,
 					height: newHeight,
 					x: newX,
 					y: newY,
-				}
-				setImagesDimensions(updatedDimensions)
+				};
+				setImagesDimensions(updatedDimensions);
 			};
 		}
 	}, [imgsrc, isParentDimension]);
@@ -803,9 +836,19 @@ export const ImgModule = ({
 
 	useEffect(() => {
 		const currentElement = imageRefs[currentContentIndex]?.current;
-		if (currentElement && currentElement.clientHeight > 0 && currentElement.clientWidth > 0) {
-			const newDimensions = { height: currentElement.clientHeight, width: currentElement.clientWidth };
-			if (newDimensions.height !== parentDimension.height || newDimensions.width !== parentDimension.width) {
+		if (
+			currentElement &&
+			currentElement.clientHeight > 0 &&
+			currentElement.clientWidth > 0
+		) {
+			const newDimensions = {
+				height: currentElement.clientHeight,
+				width: currentElement.clientWidth,
+			};
+			if (
+				newDimensions.height !== parentDimension.height ||
+				newDimensions.width !== parentDimension.width
+			) {
 				setParentDimension(newDimensions);
 				setIsParentDimension(true);
 			}
@@ -818,8 +861,12 @@ export const ImgModule = ({
 	useEffect(() => {
 		const handleClickOutside = (event: MouseEvent) => {
 			const currentRef = imageRefs[currentContentIndex]?.current;
-			if (isImgEditMode && currentRef && !currentRef.contains(event.target as Node)) {
-				toggleImgEditMode(event)
+			if (
+				isImgEditMode &&
+				currentRef &&
+				!currentRef.contains(event.target as Node)
+			) {
+				toggleImgEditMode(event);
 			}
 		};
 		document.addEventListener('mousedown', handleClickOutside);
@@ -831,7 +878,11 @@ export const ImgModule = ({
 		<>
 			{/* select image modal */}
 			{createPortal(
-				<Modal showModal={showModal} setShowModal={setShowModal} title='Image / Chart'>
+				<Modal
+					showModal={showModal}
+					setShowModal={setShowModal}
+					title='Image / Chart'
+				>
 					<div className='flex grow h-[400px] w-full sm:w-[600px] flex-col overflow-auto'>
 						<div className='w-full flex flex-col' ref={typeRef}>
 							<div className='w-full grid grid-cols-4'>
@@ -902,8 +953,9 @@ export const ImgModule = ({
 							</div>
 							<div className='w-full bg-slate-200 mb-2'>
 								<div
-									className={`w-1/4 h-[2px] bg-black ${hoverQueryMode == ImgQueryMode.SEARCH && 'ml-[25%]'
-										} 
+									className={`w-1/4 h-[2px] bg-black ${
+										hoverQueryMode == ImgQueryMode.SEARCH && 'ml-[25%]'
+									} 
 										${hoverQueryMode == ImgQueryMode.GENERATION && 'ml-[50%]'} 
 										${hoverQueryMode == ImgQueryMode.CHART_SELECTION && 'ml-[75%]'} 
                                 		transition-all ease-in-out`}
@@ -911,12 +963,12 @@ export const ImgModule = ({
 							</div>
 						</div>
 
+						{/* tab divs */}
 						<div className='overflow-grow'>
 							{selectedQueryMode == ImgQueryMode.RESOURCE &&
 								resourceSelectionDiv}
 							{selectedQueryMode == ImgQueryMode.SEARCH && imgSearchDiv}
-							{selectedQueryMode == ImgQueryMode.GENERATION &&
-								imgGenerationDiv}
+							{selectedQueryMode == ImgQueryMode.GENERATION && imgGenerationDiv}
 							{selectedQueryMode == ImgQueryMode.CHART_SELECTION &&
 								chartSelectionDiv}
 						</div>
@@ -926,7 +978,10 @@ export const ImgModule = ({
 						selectedChartType &&
 						chartData.length > 0 &&
 						chartModalContent !== 'selection' && (
-							<div className='w-full mx-auto flex justify-center items-center' ref={doneButtonRef}>
+							<div
+								className='w-full mx-auto flex justify-center items-center'
+								ref={doneButtonRef}
+							>
 								<BigBlueButton
 									isSubmitting={uploading || searching}
 									onClick={(e) => {
@@ -937,35 +992,43 @@ export const ImgModule = ({
 									Add Chart
 								</BigBlueButton>
 							</div>
-						)
-					}
+						)}
 				</Modal>,
 				document.body,
 			)}
 
 			{/* image itself */}
 			<div
+				onDrop={handleImageDrop}
+				onDragOver={(e) => e.preventDefault()}
 				// onClick={openModal}
-				className={`w-full h-full transition ease-in-out duration-150 relative ${selectedImg === ''
-					? 'bg-[#E7E9EB]'
-					: canEdit
+				className={`w-full h-full transition ease-in-out duration-150 relative ${
+					selectedImg === ''
+						? 'bg-[#E7E9EB]'
+						: canEdit
 						? 'hover:bg-[#CAD0D3]'
 						: ''
-					} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
+				} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
 			>
 				{ischartArr &&
-					ischartArr[currentContentIndex] &&
-					selectedChartType &&
-					chartData.length > 0 ? (  // chart
-					<div className='w-full h-full flex items-center justify-center' onClick={openModal}>
+				ischartArr[currentContentIndex] &&
+				selectedChartType &&
+				chartData.length > 0 ? ( // chart
+					<div
+						className='w-full h-full flex items-center justify-center'
+						onClick={openModal}
+					>
 						<DynamicChart
 							chartType={selectedChartType}
 							chartData={chartData}
 							isPrview={false}
 						/>
 					</div>
-				) : (selectedImg === '' || imgLoadError) ? ( // updload icon 
-					<div className='flex flex-col items-center justify-center cursor-pointer' onClick={openModal}>
+				) : selectedImg === '' || imgLoadError ? ( // updload icon
+					<div
+						className='flex flex-col items-center justify-center cursor-pointer'
+						onClick={openModal}
+					>
 						<svg
 							className='w-20 h-20 opacity-50'
 							viewBox='0 0 24 24'
@@ -980,37 +1043,37 @@ export const ImgModule = ({
 							{canEdit && 'Click to add image'}
 						</div>
 					</div>
-				) : (  // image
+				) : (
+					// image
 					<div
-						className={`${isImgEditMode ? "rndContainerWithOutBorder" : ""}`}
+						className={`${isImgEditMode ? 'rndContainerWithOutBorder' : ''}`}
 						style={{
 							...layoutElements?.rndContainerCSS,
-							overflow: isImgEditMode ? 'visible' : 'hidden'
+							overflow: isImgEditMode ? 'visible' : 'hidden',
 						}}
 						ref={imageRefs[currentContentIndex]}
 						onMouseEnter={() => setShowImgButton(true)}
 						onMouseLeave={() => setShowImgButton(false)}
 					>
 						<Rnd
-							className={`${isImgEditMode ? "rndContainerWithBorder" : ""}`}
-							style={{ ...layoutElements?.rndCSS, }}
+							className={`${isImgEditMode ? 'rndContainerWithBorder' : ''}`}
+							style={{ ...layoutElements?.rndCSS }}
 							size={{
-								width:
-									imagesDimensions[currentContentIndex]?.width ?? 'auto',
+								width: imagesDimensions[currentContentIndex]?.width ?? 'auto',
 								//imageRefs[currentContentIndex]?.current?.clientWidth ??
 								//imageSize.width ? imageSize.width : ,
-								height:
-									imagesDimensions[currentContentIndex]?.height ?? 'auto',
+								height: imagesDimensions[currentContentIndex]?.height ?? 'auto',
 								// imageRefs[currentContentIndex]?.current?.clientHeight ??
 								//imageSize.height ? imageSize.height : 'auto',
-
 							}}
 							position={{
 								x: imagesDimensions[currentContentIndex]?.x ?? 0,
 								y: imagesDimensions[currentContentIndex]?.y ?? 0,
 							}}
 							enableResizing={canEdit && showImgButton && isImgEditMode}
-							disableDragging={!canEdit || !showImgButton || !isImgEditMode || showModal}
+							disableDragging={
+								!canEdit || !showImgButton || !isImgEditMode || showModal
+							}
 							onDragStart={handleDragStart(currentContentIndex)}
 							onDragStop={handleDragStop(currentContentIndex)}
 							onResizeStart={handleResizeStart}
@@ -1033,8 +1096,13 @@ export const ImgModule = ({
 								width={960}
 								height={540}
 								//objectFit='contain'
-								className={`transition ease-in-out duration-150 ${canEdit ? (isImgEditMode ? 'brightness-100' : 'hover:brightness-90') : 'cursor-pointer'
-									}`}
+								className={`transition ease-in-out duration-150 ${
+									canEdit
+										? isImgEditMode
+											? 'brightness-100'
+											: 'hover:brightness-90'
+										: 'cursor-pointer'
+								}`}
 								onError={(e) => {
 									console.log('failed to load image', imgsrc);
 									setImgLoadError(true);
@@ -1042,98 +1110,109 @@ export const ImgModule = ({
 								}}
 							/>
 						</Rnd>
-						{canEdit && showImgButton &&
+						{canEdit && showImgButton && (
 							<div className='absolute top-2 left-2' style={{ zIndex: 53 }}>
 								<ToolBar>
 									<ButtonWithExplanation
 										explanation={!isImgEditMode ? 'Resize' : 'Apply'}
 										button={
-											<button
-												onClick={toggleImgEditMode}
-											>
-												{!isImgEditMode ?
-													<IoMdResize style={{
-														strokeWidth: '2',
-														flex: '1',
-														width: '1.5rem',
-														height: '1.5rem',
-														fontWeight: 'bold',
-														color: '#2943E9',
-													}} /> :
-													<FaCheck style={{
-														strokeWidth: '0.8',
-														width: '1.5rem',
-														height: '1.5rem',
-														fontWeight: 'bold',
-														color: '#2943E9',
-													}} />
-												}
-											</button>} />
-									{!isImgEditMode &&
-										<ButtonWithExplanation
-											explanation='Change'
-											button={
-												<button
-													onClick={openModal}>
-													<GoPencil style={{
-														strokeWidth: '1',
-														flex: '1',
-														width: '1.5rem',
-														height: '1.5rem',
-														fontWeight: 'bold',
-														color: '#2943E9',
-													}} />
-												</button>
-											}
-										/>}
-									{!isImgEditMode && (
-										<>
-											<ButtonWithExplanation
-												explanation="Delete"
-												button={(
-													<button
-														onClick={() => {
-															updateSingleCallback('');
-														}}
-													>
-														<LuTrash2 style={{
+											<button onClick={toggleImgEditMode}>
+												{!isImgEditMode ? (
+													<IoMdResize
+														style={{
 															strokeWidth: '2',
 															flex: '1',
 															width: '1.5rem',
 															height: '1.5rem',
 															fontWeight: 'bold',
 															color: '#2943E9',
-														}} />
-													</button>
+														}}
+													/>
+												) : (
+													<FaCheck
+														style={{
+															strokeWidth: '0.8',
+															width: '1.5rem',
+															height: '1.5rem',
+															fontWeight: 'bold',
+															color: '#2943E9',
+														}}
+													/>
 												)}
-											/>
-											{project?.additional_images &&
-												<ButtonWithExplanation
-													explanation="Shuffle"
-													button={(
-														<button
-															onClick={() => {
-																updateSingleCallback('shuffle');
-															}}
-														>
-															<HiOutlineRefresh style={{
+											</button>
+										}
+									/>
+									{!isImgEditMode && (
+										<ButtonWithExplanation
+											explanation='Change'
+											button={
+												<button onClick={openModal}>
+													<GoPencil
+														style={{
+															strokeWidth: '1',
+															flex: '1',
+															width: '1.5rem',
+															height: '1.5rem',
+															fontWeight: 'bold',
+															color: '#2943E9',
+														}}
+													/>
+												</button>
+											}
+										/>
+									)}
+
+									{!isImgEditMode && (
+										<>
+											<ButtonWithExplanation
+												explanation='Delete'
+												button={
+													<button
+														onClick={() => {
+															updateSingleCallback('');
+														}}
+													>
+														<LuTrash2
+															style={{
 																strokeWidth: '2',
 																flex: '1',
 																width: '1.5rem',
 																height: '1.5rem',
 																fontWeight: 'bold',
 																color: '#2943E9',
-															}} />
+															}}
+														/>
+													</button>
+												}
+											/>
+											{project?.additional_images && (
+												<ButtonWithExplanation
+													explanation='Shuffle'
+													button={
+														<button
+															onClick={() => {
+																updateSingleCallback('shuffle');
+															}}
+														>
+															<HiOutlineRefresh
+																style={{
+																	strokeWidth: '2',
+																	flex: '1',
+																	width: '1.5rem',
+																	height: '1.5rem',
+																	fontWeight: 'bold',
+																	color: '#2943E9',
+																}}
+															/>
 														</button>
-													)}
+													}
 												/>
-											}
+											)}
 										</>
 									)}
-
 								</ToolBar>
 							</div>
-						}
+						)}
 						{/* {isImgEditMode && canEdit && (
 								<ResizeSlider
 									zoomLevel={zoomLevel}
@@ -1144,7 +1223,7 @@ export const ImgModule = ({
 						)} */}
 					</div>
 				)}
-			</div >
+			</div>
 		</>
 	);
 };

@@ -13,7 +13,7 @@ import { DeleteIcon } from '@/app/(feature)/icons';
 import { FaTimes } from 'react-icons/fa';
 import { ScrollBar } from './ScrollBar';
 import { useProject } from '@/hooks/use-project';
-
+import { useImageStore } from '@/hooks/use-img-store';
 export const DrLambdaAIAssistantIcon: React.FC<{
 	onClick: () => void;
 }> = ({ onClick }) => {
@@ -21,7 +21,7 @@ export const DrLambdaAIAssistantIcon: React.FC<{
 		<div
 			className='w-14 h-14 bg-neutral-50 rounded-[50%] shadow border border-black border-opacity-20 z-40 flex items-center justify-center relative'
 			onClick={onClick}
-		// style={{ animation: 'pulse 0.5s infinite' }}
+			// style={{ animation: 'pulse 0.5s infinite' }}
 		>
 			<div className='absolute inset-0 bg-gradient-to-b from-[#0B84FF] via-[#0B84FF] to-transparent rounded-[50%] opacity-0 animate-pulse'></div>
 			<Image
@@ -36,11 +36,75 @@ export const DrLambdaAIAssistantIcon: React.FC<{
 type ChatsProps = {
 	chatHistory: ChatHistory[];
 	lastMessageRef: React.MutableRefObject<HTMLDivElement | null>;
+	addChatHistory: (chat: ChatHistory) => void; // Change setChatHistory to addChatHistory
+	updateImgUrlArray: Function;
+	slides: Slide[];
+	currentSlideIndex: number;
+	updateSlidePage: Function;
 };
 
 // Component definition using an arrow function
-export const Chats: React.FC<ChatsProps> = ({ chatHistory, lastMessageRef }) => {
+export const Chats: React.FC<ChatsProps> = ({
+	chatHistory,
+	lastMessageRef,
+	addChatHistory, // Replace setChatHistory with addChatHistory
+	updateImgUrlArray,
+	slides,
+	currentSlideIndex,
+	updateSlidePage,
+}) => {
+	const setImageSource = useImageStore((state) => state.setSourceImage);
+	// const setImageUrl = useImageStore((state) => state.setImageUrl);
+	const [currentImageUrls, setCurrentImageUrls] = useState<string[]>([]);
+	useEffect(() => {
+		// Find the current chat's image URLs and set them in state
+		const currentChat = chatHistory[chatHistory.length - 1];
+		if (currentChat && currentChat.imageUrls) {
+			setCurrentImageUrls(currentChat.imageUrls);
+		} else {
+			setCurrentImageUrls([]);
+		}
+	}, [chatHistory]);
+	// const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+	const [sourceImage, setSourceImage] = useState<string>('');
 
+	// const handleImageDragStart = (imageUrl: string) => {
+	const handleImageDragStart = (imageUrl: string) => {
+		setImageSource(imageUrl); // Update the sourceImage in the store
+	};
+	// const handleImageDragStart = (
+	// 	e: React.DragEvent<HTMLImageElement>,
+	// 	index: number,
+	// ) => {
+	// 	e.dataTransfer.setData('index', index.toString());
+	// 	setImageSource(imageUrl); // Update the sourceImage in the store
+	// };
+
+	const handleDragOver = (e: React.DragEvent<HTMLImageElement>) => {
+		e.preventDefault();
+	};
+
+	const handleDrop = (
+		e: React.DragEvent<HTMLImageElement>,
+		// targetIndex: number,
+		imageUrls: string[],
+	) => {
+		e.preventDefault();
+		const sourceIndex = parseInt(e.dataTransfer.getData('index'));
+		if (!isNaN(sourceIndex)) {
+			const sourceImage = imageUrls[sourceIndex];
+			// const targetImage = imageUrls[targetIndex];
+			console.log('sourceIndex: ' + sourceIndex);
+			console.log('sourceImage: ' + sourceImage);
+			// console.log('targetIndex: ' + targetIndex);
+			// console.log('targetImage: ' + targetImage);
+			console.log('currentSlideIndex is :', currentSlideIndex);
+			// if (sourceImage !== undefined && targetImage !== undefined) {
+			// 	// Call the updateImgUrlArray function with the dropped image URL
+			// 	updateImgUrlArray(currentSlideIndex)(imageUrls, false, {});
+			// }
+		}
+	};
 
 	return (
 		<>
@@ -62,6 +126,33 @@ export const Chats: React.FC<ChatsProps> = ({ chatHistory, lastMessageRef }) => 
 						}
 					>
 						{chat.content}
+						{/* Check if there are imageUrls and render image previews */}
+
+						{chat.imageUrls && chat.imageUrls.length > 0 && (
+							<div className='flex flex-wrap gap-2 mt-2'>
+								{chat.imageUrls.map((imageUrl, i) => (
+									<img
+										key={i}
+										src={imageUrl}
+										alt={`Image ${i + 1}`}
+										style={{
+											width: 'calc(50% - 4px)',
+											height: '100px',
+											marginBottom: '4px',
+										}}
+										draggable // Make the image draggable
+										onDragStart={() => handleImageDragStart(imageUrl)} // Call handleImageDragStart with imageUrl
+										// onDragStart={(e) => handleImageDragStart(e, i)} // Handle drag start event
+										// onDragOver={(e) => handleDragOver(e)} // Handle drag over event
+										// onDrop={
+										// 	currentImageUrls
+										// 		? (e) => handleDrop(e, i, currentImageUrls)
+										// 		: undefined
+										// }
+									/>
+								))}
+							</div>
+						)}
 					</div>
 				</div>
 			))}
@@ -74,6 +165,7 @@ interface AIAssistantChatWindowProps {
 	slides: Slide[];
 	currentSlideIndex: number;
 	updateSlidePage: Function;
+	updateImgUrlArray: Function;
 }
 
 export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
@@ -81,6 +173,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	slides,
 	currentSlideIndex,
 	updateSlidePage,
+	updateImgUrlArray,
 }) => {
 	// const [isChatWindowOpen, setIsChatWindowOpen] = useState(true);
 	// const toggleChatWindow = () => {
@@ -108,9 +201,13 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		content,
 	});
 
-	const addSuccessMessage = (content: string): ChatHistory => ({
+	const addSuccessMessage = (
+		content: string | JSX.Element,
+		imageUrls?: string[],
+	): ChatHistory => ({
 		role: 'assistant',
 		content,
+		imageUrls, // Include imageUrls in the chat history entry
 	});
 
 	const addErrorMessage = (content: string): ChatHistory => ({
@@ -175,6 +272,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			if (response.ok) {
 				const responseData = await response.json();
 
+				console.log('responseData structure:', responseData);
 				// If the slide is updated, add a success message
 				if (responseData.data.slide) {
 					// Update the slide at the current index with new data
@@ -195,7 +293,10 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				}
 
 				// Update chat history with AI's response
-				const newAIMessage = addSuccessMessage(`${responseData.data.chat}`);
+				const newAIMessage = addSuccessMessage(
+					`${responseData.data.chat}`,
+					responseData.data.images, // Include imageUrls in the chat history entry
+				);
 				addChatHistory(newAIMessage);
 			} else {
 				console.error('Failed to get AI response');
@@ -236,18 +337,13 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				</div>
 
 				<div className='flex flex-row gap-2'>
-
 					{/* Clear Chat button */}
-					<button
-						onClick={() => clearChatHistory()}
-					>
+					<button onClick={() => clearChatHistory()}>
 						<DeleteIcon />
 					</button>
 
 					{/* exit button */}
-					<button
-						onClick={onToggle}
-					>
+					<button onClick={onToggle}>
 						<FaTimes color='#5168F6' />
 					</button>
 				</div>
@@ -255,7 +351,11 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 
 			{/* chat history text area */}
 			<div className='w-full h-full border-t-2 border-gray-300 overflow-y-scroll p-2 flex flex-col flex-grow'>
-				<ScrollBar axial='y' index={chatHistory.length} currentElementRef={lastMessageRef}>
+				<ScrollBar
+					axial='y'
+					index={chatHistory.length}
+					currentElementRef={lastMessageRef}
+				>
 					{/* welcoming text */}
 					<div className='px-3.5 py-2.5 bg-indigo-50 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-white justify-center items-center gap-2.5 inline-flex'>
 						<div className='max-w-[15rem] text-neutral-800 text-base font-normal tracking-tight'>
@@ -270,23 +370,27 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 							Here are some ways I can help:
 						</div>
 						<div className='self-stretch flex-col justify-start items-start gap-2 inline-flex'>
-							{slideIndex == 0 ?
-								(<div
+							{slideIndex == 0 ? (
+								<div
 									className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
-									onClick={() => handleSend('Change topic to be more professional')}
+									onClick={() =>
+										handleSend('Change topic to be more professional')
+									}
 								>
 									<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
 										Change topic to be more professional
 									</div>
-								</div>) :
-								(<><div
-									className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
-									onClick={() => handleSend('Add data to the content')}
-								>
-									<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
-										Add data to the content
-									</div>
 								</div>
+							) : (
+								<>
+									<div
+										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
+										onClick={() => handleSend('Add data to the content')}
+									>
+										<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
+											Add data to the content
+										</div>
+									</div>
 									<div
 										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
 										onClick={() => handleSend('Make content more concise')}
@@ -312,18 +416,28 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 										<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
 											Add an example to the content
 										</div>
-									</div></>)
-							}
-
+									</div>
+								</>
+							)}
 						</div>
 					</div>
 					{/* chat history render */}
-					<Chats chatHistory={chatHistory} lastMessageRef={lastMessageRef} />
+					<Chats
+						chatHistory={chatHistory}
+						lastMessageRef={lastMessageRef}
+						addChatHistory={addChatHistory}
+						updateImgUrlArray={updateImgUrlArray}
+						slides={slides}
+						currentSlideIndex={currentSlideIndex}
+						updateSlidePage={updateSlidePage}
+					></Chats>
 
 					{loading && (
 						<div className='px-3.5 py-2.5 bg-indigo-50 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-white  gap-2.5 max-w-[15rem] flex flex-wrap'>
-							<div className='animate-pulse text-neutral-800 text-base font-normal   text-wrap'
-								ref={loading ? lastMessageRef : null}>
+							<div
+								className='animate-pulse text-neutral-800 text-base font-normal   text-wrap'
+								ref={loading ? lastMessageRef : null}
+							>
 								🤔 I am thinking...
 							</div>
 						</div>

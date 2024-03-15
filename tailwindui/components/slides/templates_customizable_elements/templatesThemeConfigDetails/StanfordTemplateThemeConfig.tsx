@@ -27,8 +27,16 @@ export const StanfordTemplateThemeConfig: ThemeElements = {
 		color: '#4B5563', // text-zinc-800 color
 		display: 'list-item',
 	},
-	userNameFont: 'text-sm font-nimbus-sans-regular font-normal leading-[120%]',
-	userNameFontColor: 'text-white',
+	// userNameFont: 'text-sm font-nimbus-sans-regular font-normal leading-[120%]',
+	// userNameFontColor: 'text-white',
+	userNameFontCSS: {
+		fontSize: '1rem', // Equivalent to text-sm
+		// fontWeight: '400',
+		fontFamily: 'Nimbus Sans Regular',
+		lineHeight: '140%', // Equivalent to leading-[140%]
+		letterSpacing: '0.026rem', // Equivalent to tracking-[0.026rem]
+		color: '#FFFFFF', // Equivalent to text-[#3D3D3D]
+	},
 	headFontCSS: {
 		fontSize: '32pt', // text-4xl in points (assuming 1rem is 1pt)
 		fontWeight: 'bold', // font-bold

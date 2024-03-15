@@ -17,20 +17,25 @@ export const initializeImageData = (
 };
 
 //handle autosave
-export const onMouseLeave = (
-    slideIdx: number,
-    imagesDimensions: (ImagesPosition | { x?: number; y?: number; height?: number; width?: number })[],
-    hasInteracted: boolean,
-    setHasInteracted: React.Dispatch<React.SetStateAction<boolean>>,
-    setShowImgButton: React.Dispatch<React.SetStateAction<boolean>>,
-    handleSlideEdit:Function,
-) => () => {
-    if (hasInteracted) {
-        handleSlideEdit([imagesDimensions], slideIdx, ['images_position'])
-        setHasInteracted(false);
-    }
-    setShowImgButton(false);
-};
+export const onMouseLeave =
+	(
+		slideIdx: number,
+		imagesDimensions: (
+			| ImagesPosition
+			| { x?: number; y?: number; height?: number; width?: number }
+		)[],
+		hasInteracted: boolean,
+		setHasInteracted: React.Dispatch<React.SetStateAction<boolean>>,
+		setShowImgButton: React.Dispatch<React.SetStateAction<boolean>>,
+		handleSlideEdit: Function,
+	) =>
+	() => {
+		if (hasInteracted) {
+			handleSlideEdit([imagesDimensions], slideIdx, ['images_position']);
+			setHasInteracted(false);
+		}
+		setShowImgButton(false);
+	};
 
 //handle function when drag start
 export const onDragStart =

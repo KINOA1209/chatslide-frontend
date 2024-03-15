@@ -88,10 +88,10 @@ export const uneditableTemplateDispatch = (
 		false, // canEdit
 		exportToPdfMode, //exportToPdfMode
 		false, //editMathMode
-		() => { }, //setIsEditMode
-		() => { }, // handleSlideEdit
-		() => () => { }, // updateImgUrlArray,
-		() => { }, // toggleEditMode,
+		() => {}, //setIsEditMode
+		() => {}, // handleSlideEdit
+		() => () => {}, // updateImgUrlArray,
+		() => {}, // toggleEditMode,
 		index === 0, // isCoverPage
 		slide.layout, // layoutOptionNonCover
 		slide.layout, // layoutOptionCover
@@ -245,7 +245,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			content: string | string[] | Chart[] | boolean[] | ImagesPosition[],
 			className: string,
 		) => {
-
 			if (className === 'head') {
 				currentSlide.head = content as string;
 			} else if (className === 'title') {
@@ -358,7 +357,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	// }, [isPresenting]);
 
 	const updateImgUrlArray = (slideIndex: number) => {
-		const updateImgUrl = (urls: string[], ischart: boolean[], images_position: ImagesPosition[]) => {
+		const updateImgUrl = (
+			urls: string[],
+			ischart: boolean[],
+			images_position: ImagesPosition[],
+		) => {
 			// change all null to ''
 			urls = urls.map((url) => (url === null ? '' : url));
 
@@ -381,7 +384,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			console.log('updateImgUrlArray called');
 			console.log('urls', urls);
 			console.log('prevUrls', prevUrls);
-			handleSlideEdit([urls, ischart, images_position], slideIndex, ['images', 'is_chart', 'images_position']);
+			handleSlideEdit([urls, ischart, images_position], slideIndex, [
+				'images',
+				'is_chart',
+				'images_position',
+			]);
 		};
 		return updateImgUrl;
 	};
@@ -693,6 +700,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							slides={slides}
 							currentSlideIndex={slideIndex}
 							updateSlidePage={updateSlidePage}
+							updateImgUrlArray={updateImgUrlArray}
 						/>
 					</Panel>
 				) : (

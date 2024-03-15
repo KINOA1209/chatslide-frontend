@@ -49,10 +49,17 @@ export const Clean_Lifestyle_003_TemplateThemeConfig: ThemeElements = {
 		color: '#000000', // text-neutral-900 color
 		display: 'list-item',
 	},
-	userNameFont:
-		'text-[14pt] font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
-	userNameFontColor: 'text-[#A9A9A9]',
-
+	// userNameFont:
+	// 	'text-[14pt] font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
+	// userNameFontColor: 'text-[#A9A9A9]',
+	userNameFontCSS: {
+		fontSize: '1rem', // Equivalent to text-sm
+		// fontWeight: '400',
+		fontFamily: 'Creato Display Regular',
+		lineHeight: '140%', // Equivalent to leading-[140%]
+		letterSpacing: '0.026rem', // Equivalent to tracking-[0.026rem]
+		color: 'black', // Equivalent to text-[#3D3D3D]
+	},
 	headFontCSS: {
 		fontSize: '30pt', // text-4xl in points
 		fontWeight: 'bold', // font-normal
