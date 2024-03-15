@@ -55,9 +55,9 @@ export const useUser = () => {
 
 		for (let attempt = 0; attempt < 2; attempt++) {
 			try {
-				const { userId, idToken } =
-					await AuthService.getCurrentUserTokenAndId();
-				if (!userId || !idToken) {
+				const { idToken } =
+					await AuthService.getCurrentUserTokenAndEmail();
+				if ( !idToken) {
 					console.warn('User not logged in');
 					userStatus = UserStatus.Failed;
 					return;
@@ -76,7 +76,7 @@ export const useUser = () => {
 
 				console.log('-- initUser: ', {
 					username: username,
-					userId: userId,
+					userId: email,
 					idToken: idToken,
 					email: email,
 					credits: credits,
@@ -86,7 +86,7 @@ export const useUser = () => {
 
 				setCredits(credits);
 				setTier(tier);
-				setUid(userId);
+				setUid(email);
 				setToken(idToken);
 				setIsPaidUser(isPaidUser);
 				setUsername(username);

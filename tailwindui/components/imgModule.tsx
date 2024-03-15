@@ -46,6 +46,7 @@ import { useImageStore } from '@/hooks/use-img-store';
 import { LuTrash2 } from 'react-icons/lu';
 import { HiOutlineRefresh } from 'react-icons/hi';
 import { useProject } from '@/hooks/use-project';
+import { useUser } from '@/hooks/use-user';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -103,6 +104,7 @@ export const ImgModule = ({
 	const inputFileRef = useRef<HTMLInputElement>(null);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const { project } = useProject();
+	const { token } = useUser();
 
 	const [hoverQueryMode, setHoverQueryMode] = useState<ImgQueryMode>(
 		ImgQueryMode.RESOURCE,
@@ -152,13 +154,12 @@ export const ImgModule = ({
 		setSelectedQueryMode(ImgQueryMode.SEARCH);
 		setSearchResult([]);
 		setSearching(true);
-		const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
 
 		const response = await fetch('/api/search_images', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${idToken}`,
+				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify({
 				search_keyword: (e.target as HTMLFormElement).search_keyword.value,
@@ -188,13 +189,12 @@ export const ImgModule = ({
 		setSelectedQueryMode(ImgQueryMode.GENERATION);
 		setSearchResult([]);
 		setSearching(true);
-		const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
 
 		const response = await fetch('/api/generate_images', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${idToken}`,
+				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify({
 				prompt: (e.target as HTMLFormElement).search_keyword.value,
@@ -255,9 +255,7 @@ export const ImgModule = ({
 	};
 
 	const fetchFiles = async (file_id?: string) => {
-		const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-
-		ResourceService.fetchResources(['media'], idToken).then((resources) => {
+		ResourceService.fetchResources(['media'], token).then((resources) => {
 			const resourceTemps = resources.map((resource) => {
 				if (file_id && resource.id === file_id) {
 					updateSingleCallback(resource.thumbnail_url);
@@ -283,14 +281,13 @@ export const ImgModule = ({
 		if (file == null) {
 			return;
 		}
-		const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
 		const body = new FormData();
 		setUploading(true);
 		body.append('file', file);
 		const response = await fetch('/api/upload_user_file', {
 			method: 'POST',
 			headers: {
-				Authorization: `Bearer ${idToken}`,
+				Authorization: `Bearer ${token}`,
 			},
 			body: body,
 		})

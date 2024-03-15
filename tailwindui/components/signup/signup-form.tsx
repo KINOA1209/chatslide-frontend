@@ -118,7 +118,7 @@ const SignupForm: React.FC = () => {
 			const { user } = await AuthService.signIn(email, password);
 			console.log(user);
 
-			const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+			const { idToken } = await AuthService.getCurrentUserTokenAndEmail();
 
 			await UserService.initializeUser(idToken); // in our db
 			if (referralValue) {

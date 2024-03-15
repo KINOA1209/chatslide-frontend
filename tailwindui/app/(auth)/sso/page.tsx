@@ -19,7 +19,7 @@ export default function SSORedirect() {
 
 			while (retries < maxRetries && !idToken) {
 				try {
-					const result = await AuthService.getCurrentUserTokenAndId();
+					const result = await AuthService.getCurrentUserTokenAndEmail();
 					idToken = result.idToken;
 				} catch (error) {
 					console.error('Error fetching token, retrying...', error);

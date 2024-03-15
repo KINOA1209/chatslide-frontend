@@ -80,8 +80,6 @@ export default function Dashboard() {
 			throw 'Error';
 		}
 		try {
-			const { userId, idToken: token } =
-				await AuthService.getCurrentUserTokenAndId();
 			const response = await ProjectService.deleteProject(token, deleteInd);
 
 			setProjects(projects.filter((proj) => proj.id !== deleteInd));
