@@ -19,7 +19,7 @@ import { useUser } from '@/hooks/use-user';
 import { GPTToggleWithExplanation } from '@/components/button/WorkflowGPTToggle';
 import { IoIosLink } from 'react-icons/io';
 import { useProject } from '@/hooks/use-project';
-import { addIdToRedir } from '@/components/utils/redirWithId';
+import { addIdToRedir } from '@/utils/redirWithId';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 3;

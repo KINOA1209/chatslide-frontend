@@ -5,7 +5,7 @@ import Resource from '@/models/Resource';
 import Slide from '@/models/Slide';
 import ProjectService from '@/services/ProjectService';
 import { useUser } from './use-user';
-import SessionStorage from '@/components/utils/SessionStorage';
+import SessionStorage from '@/utils/SessionStorage';
 
 const useProjectBear = createBearStore<Project | null>()('project', null, true);
 const useResourcesBear = createBearStore<Resource[]>()('resources', [], true);

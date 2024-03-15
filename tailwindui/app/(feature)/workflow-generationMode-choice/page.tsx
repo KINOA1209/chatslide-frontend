@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import '@/app/css/workflow-scenario-choice.css';
 import Image from 'next/image';
 import mode_choices from './mode_choices.json';
-import SessionStorage from '@/components/utils/SessionStorage';
+import SessionStorage from '@/utils/SessionStorage';
 import AuthService from '@/services/AuthService';
 import { useProject } from '@/hooks/use-project';
 

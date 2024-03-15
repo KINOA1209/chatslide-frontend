@@ -14,7 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AuthService from '@/services/AuthService';
 import UserService from '@/services/UserService';
 import Promo from './Promo';
-import SessionStorage from '../utils/SessionStorage';
+import SessionStorage from '../../utils/SessionStorage';
 
 const SignupForm: React.FC = () => {
 	const router = useRouter();

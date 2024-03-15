@@ -14,7 +14,7 @@ import { Step } from 'react-joyride';
 import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
 import StepsSummaryPage from '@/components/user_onboarding/StepsSummaryPage';
 import { GPTToggleWithExplanation } from '@/components/button/WorkflowGPTToggle';
-import SessionStorage from '@/components/utils/SessionStorage';
+import SessionStorage from '@/utils/SessionStorage';
 import AddResourcesSection from '@/components/AddResourcesSection';
 import useHydrated from '@/hooks/use-hydrated';
 import { useProject } from '@/hooks/use-project';
@@ -33,7 +33,7 @@ import ResourceService from '@/services/ResourceService';
 import LanguageSelector from './LanguageSelector';
 import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
-import { addIdToRedir } from '@/components/utils/redirWithId';
+import { addIdToRedir } from '@/utils/redirWithId';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 3;

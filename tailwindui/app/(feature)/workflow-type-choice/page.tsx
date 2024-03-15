@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import '@/app/css/workflow-scenario-choice.css';
 import Image from 'next/image';
 import scenarios from './choices.json';
-import SessionStorage from '@/components/utils/SessionStorage';
+import SessionStorage from '@/utils/SessionStorage';
 import AuthService from '@/services/AuthService';
 
 const ScenarioChoicePage = () => {

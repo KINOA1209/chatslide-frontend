@@ -3,7 +3,7 @@ import React, { FunctionComponent, use, useEffect, useState } from 'react';
 import { DrLambdaBackButton } from '@/components/button/DrlambdaButton';
 import ProjectProgress from '@/components/layout/WorkflowSteps';
 import DrlambdaButton from '@/components/button/DrlambdaButton';
-import { sleep } from '../utils/sleep';
+import { sleep } from '../../utils/sleep';
 
 interface YourComponentProps {
 	currentIndex: number;

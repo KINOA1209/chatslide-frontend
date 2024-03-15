@@ -2,7 +2,7 @@
 
 import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import SessionStorage from '../utils/SessionStorage';
+import SessionStorage from '../../utils/SessionStorage';
 import { GrayLabel } from '../ui/GrayLabel';
 
 interface PromoComponentProps {

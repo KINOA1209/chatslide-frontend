@@ -12,7 +12,7 @@ import ProjectService from '@/services/ProjectService';
 import { useUser } from '@/hooks/use-user';
 import { RiSlideshow2Fill } from 'react-icons/ri';
 import { useProject } from '@/hooks/use-project';
-import { sleep } from '../utils/sleep';
+import { sleep } from '../../utils/sleep';
 import Modal from '../ui/Modal';
 import { GoDownload } from 'react-icons/go';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';

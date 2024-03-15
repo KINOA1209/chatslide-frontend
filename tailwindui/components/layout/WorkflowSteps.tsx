@@ -4,11 +4,11 @@ import React, { useState, MouseEvent, useEffect, useRef } from 'react';
 import { CurrentStepCircle, FinishedStepCircle, ConnectedLine } from '../icons';
 import { FaChevronCircleLeft, FaChevronCircleRight } from 'react-icons/fa';
 import { IoMdLock } from 'react-icons/io';
-import SessionStorage from '@/components/utils/SessionStorage';
+import SessionStorage from '@/utils/SessionStorage';
 import Project from '@/models/Project';
 import { useProject } from '@/hooks/use-project';
 import useHydrated from '@/hooks/use-hydrated';
-import { addIdToRedir } from '../utils/redirWithId';
+import { addIdToRedir } from '../../utils/redirWithId';
 import { useRouter } from 'next/navigation';
 
 interface StepProps {

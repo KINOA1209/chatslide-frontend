@@ -24,7 +24,7 @@ import {
 import { useLocation } from 'react-router-dom';
 import { useUser } from '@/hooks/use-user';
 import useHydrated from '@/hooks/use-hydrated';
-import SessionStorage from '@/components/utils/SessionStorage';
+import SessionStorage from '@/utils/SessionStorage';
 import Card from '@/components/ui/Card';
 import { BigTitle, Explanation, Instruction } from '@/components/ui/Text';
 import { Panel } from '@/components/layout/Panel';

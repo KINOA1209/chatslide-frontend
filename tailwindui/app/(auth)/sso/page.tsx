@@ -1,7 +1,7 @@
 'use client';
 
 import { Blank } from '@/components/ui/Loading';
-import SessionStorage from '@/components/utils/SessionStorage';
+import SessionStorage from '@/utils/SessionStorage';
 import AuthService from '@/services/AuthService';
 import UserService from '@/services/UserService';
 import { useRouter, useSearchParams } from 'next/navigation';

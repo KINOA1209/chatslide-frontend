@@ -7,7 +7,7 @@ import VideoService from '@/services/VideoService';
 import { useUser } from '@/hooks/use-user';
 import { toast } from 'react-toastify';
 import { useProject } from '@/hooks/use-project';
-import { addIdToRedir } from '../utils/redirWithId';
+import { addIdToRedir } from '../../utils/redirWithId';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,

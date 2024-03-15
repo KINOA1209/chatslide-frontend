@@ -8,7 +8,7 @@ import ProjectService from '@/services/ProjectService';
 import { toast } from 'react-toastify';
 import { useUser } from '@/hooks/use-user';
 import { useProject } from '@/hooks/use-project';
-import { addIdToRedir } from '../utils/redirWithId';
+import { addIdToRedir } from '../../utils/redirWithId';
 
 // this class has no UI, it is used to submit the outline to the backend when isSubmitting is true
 const GenerateSlidesSubmit = ({

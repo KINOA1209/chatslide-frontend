@@ -6,7 +6,7 @@ import '@/app/css/workflow-scenario-choice.css';
 import Image from 'next/image';
 import socialpost_scenarios from './socialpost_scenarios.json';
 import slides_scenarios from './slides_scenarios.json';
-import SessionStorage from '@/components/utils/SessionStorage';
+import SessionStorage from '@/utils/SessionStorage';
 
 const ScenarioChoicePage = () => {
 	const router = useRouter();

@@ -11,7 +11,7 @@ import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';
 import { getLastStepReidrect } from '@/components/layout/WorkflowSteps';
 import { Loading } from '@/components/ui/Loading';
-import { addIdToRedir } from '@/components/utils/redirWithId';
+import { addIdToRedir } from '@/utils/redirWithId';
 
 const ProjectLoading = () => {
 	const pathname = usePathname();
