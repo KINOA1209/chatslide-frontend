@@ -370,7 +370,8 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 							Here are some ways I can help:
 						</div>
 						<div className='self-stretch flex-col justify-start items-start gap-2 inline-flex'>
-							{slideIndex == 0 ? (
+							{slideIndex == 0 ?
+								(<>
 								<div
 									className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
 									onClick={() =>
@@ -381,22 +382,37 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 										Change topic to be more professional
 									</div>
 								</div>
-							) : (
-								<>
 									<div
 										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
-										onClick={() => handleSend('Add data to the content')}
+										onClick={() => handleSend('Translate topic to Spanish')}
 									>
 										<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
-											Add data to the content
+											Translate topic to Spanish
 										</div>
 									</div>
 									<div
 										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
-										onClick={() => handleSend('Make content more concise')}
+										onClick={() => handleSend('Change the image on the slide')}
 									>
 										<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
-											Make content more concise
+											Change the image on the slide
+										</div>
+									</div>
+								</>) :
+								(<><div
+									className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
+									onClick={() => handleSend('Add data to the content')}
+								>
+									<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
+										Add data to the content
+									</div>
+								</div>
+									<div
+										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
+										onClick={() => handleSend('Change the image on the slide')}
+									>
+										<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
+											Change the image on the slide
 										</div>
 									</div>
 									<div
