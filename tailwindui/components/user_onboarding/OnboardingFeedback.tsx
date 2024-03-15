@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import AuthService from '../../services/AuthService';
 import ReferralLink from '../ReferralLink';
 import Modal from '@/components/ui/Modal';
-import { BigBlueButton, InversedBigBlueButton } from '../button/DrlambdaButton';
 import { PrimaryColorButton } from './UserOnboardingButtons';
 import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';

@@ -77,7 +77,7 @@ export const useUser = () => {
 				console.log('-- initUser: ', {
 					username: username,
 					userId: email,
-					idToken: idToken,
+					// idToken: idToken,
 					email: email,
 					credits: credits,
 					tier: tier,
