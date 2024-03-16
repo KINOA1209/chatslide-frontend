@@ -76,7 +76,7 @@ export const useUser = () => {
 
 				console.log('-- initUser: ', {
 					username: username,
-					userId: email,
+					userId: uid,
 					// idToken: idToken,
 					email: email,
 					credits: credits,
@@ -86,7 +86,7 @@ export const useUser = () => {
 
 				setCredits(credits);
 				setTier(tier);
-				setUid(email);
+				setUid(uid);
 				setToken(idToken);
 				setIsPaidUser(isPaidUser);
 				setUsername(username);
