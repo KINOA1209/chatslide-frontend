@@ -43,10 +43,9 @@ MainSlideProps) => {
 		'Default' as TemplateKeys,
 		layoutOptionCover as keyof typeof layoutOptions,
 	);
-
-	useEffect(() => {
-		console.log('will show logo?', isShowingLogo);
-	}, []);
+	// useEffect(() => {
+	// 	console.log('will show logo?', isShowingLogo);
+	// }, []);
 
 	// useEffect(() => {
 	// 	console.log(

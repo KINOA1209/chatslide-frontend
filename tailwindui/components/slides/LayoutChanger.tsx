@@ -4,14 +4,11 @@ import { LayoutKeys } from './slideLayout';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import { FiLayout } from 'react-icons/fi';
 import Modal from '../ui/Modal';
+import Slide from '@/models/Slide';
 type LayoutProps = {
 	currentSlideIndex: number;
-	slides: { layout: string }[];
-	handleSlideEdit: (
-		content: string | string[],
-		slideIndex: number,
-		tag: SlideKeys,
-	) => void;
+	slides: Slide[]//{ layout: string }[];
+	handleSlideEdit: Function;
 	availableLayouts: {
 		cover: { name: LayoutKeys; img: string }[];
 		main: { name: LayoutKeys; img: string }[];
@@ -40,7 +37,14 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 	) => {
 		e.preventDefault();
 		console.log('updateLayout', layoutName, slideIndex);
-		handleSlideEdit(layoutName, slideIndex, 'layout');
+		const filteredContent = slides[slideIndex].content.filter((element) => {
+			//need to filter out <p><br></p>, <li><p><br></p></li>, <li><span ...></span></li> or <li><span ...>  </span></li>
+			//multipe space also should be filtered
+			const isEmptyOrWhitespace = !element.trim() || /^<(\w+)(\s+[^>]*)?>\s*<\/\1>$/.test(element.trim());
+			const hasOnlyEmptyHTML = /<(p|li)(\s+[^>]*)?>\s*(<[^>]+>\s*)*<\/\1>/.test(element.trim());
+			return !isEmptyOrWhitespace && !hasOnlyEmptyHTML;
+		});
+		handleSlideEdit([layoutName, filteredContent], slideIndex, ['layout', 'content']);
 	};
 
 	return (
