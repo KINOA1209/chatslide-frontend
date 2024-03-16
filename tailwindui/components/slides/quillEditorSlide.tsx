@@ -134,6 +134,26 @@ export const isHTML = (input: string): boolean => {
 	return Array.from(doc.body.childNodes).some((node) => node.nodeType === 1);
 };
 
+function wrapListItem(item: string, level: number): string {
+    // Determine the type of list (ul or ol) based on the presence of ql-indent class
+    const listType = item.includes('ql-indent-') ? 'ul' : 'ol';
+
+    // Construct the opening and closing tags for the list
+    const listOpeningTag = `<${listType}>`;
+    const listClosingTag = `</${listType}>`;
+    let wrappedItem = listOpeningTag + item;
+
+    // Calculate the number of closing tags needed to match the indentation level
+    const closingTagsCount = level > 0 ? level : 0;
+
+    // Add closing tags to match the indentation level
+    for (let i = 0; i < closingTagsCount; i++) {
+        wrappedItem += listClosingTag;
+    }
+
+    return wrappedItem;
+}
+
 // const BubbleTheme = Quill.import('themes/bubble');
 
 // class ExtendBubbleTheme extends BubbleTheme {
@@ -352,10 +372,21 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 
 			const insertContent = (item: string) => {
 				if (isHTML(item)) {
-					const convertedDelta = quillInstanceRef?.current?.clipboard.convert(
-						item as any,
-					);
-					initialDelta = initialDelta.concat(convertedDelta);
+					const convertedDelta = quillInstanceRef?.current?.clipboard.convert(item as any);
+					//console.log(convertedDelta)
+					if (convertedDelta?.ops?.length === 0 || 
+					   (convertedDelta?.ops?.length === 1 && typeof convertedDelta.ops[0].insert === 'string' && !convertedDelta.ops[0].insert.trim())) {
+						// If it's empty, we might want to ensure a new line is inserted correctly
+						initialDelta.insert('\n');
+					} else {
+						initialDelta = initialDelta.concat(convertedDelta);
+						if (item.includes('<p>')) {
+							initialDelta.insert('\n');
+						} 
+					}
+				} else if (item.trim() === '') {
+					// For items meant to represent an empty line (like pressing Enter), insert a paragraph break
+					initialDelta.insert('\n');
 				} else {
 					initialDelta.insert(`${item}\n`, quillFormats);
 				}
@@ -364,24 +395,24 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			//iterate throught the content array, if it's <li> tag, wrap into <ul> tag
 			if (Array.isArray(content)) {
 				content.forEach((item, index) => {
-					if (
-						isHTML(item) &&
-						item.trim().startsWith('<li>') &&
-						item.trim().endsWith('</li>')
-					) {
-						const listHTML = `<ul>${item}</ul>`;
-						insertContent(listHTML);
+					if (isHTML(item)) {
+						if (item.trim().startsWith('<li') && item.includes('ql-indent-')) {
+							// Find the level of indentation from the class
+							const indentLevel = item.match(/ql-indent-(\d+)/);
+							const level = indentLevel ? parseInt(indentLevel[1], 10) : 0;
+							item = wrapListItem(item, level);
+						} else if (item.trim().startsWith('<li>') && item.trim().endsWith('</li>')) {
+							item = `<ul>${item}</ul>`;
+						}
+						insertContent(item);
 					} else {
 						insertContent(item);
-						if (!item.endsWith('\n') || !item.includes('<br>')) {
-							initialDelta.insert('\n');
-						}
 					}
 				});
 			} else {
 				insertContent(content);
 			}
-
+			//console.log('whole', initialDelta)
 			quillInstanceRef.current.setContents(initialDelta);
 			quillInstanceRef.current.on('text-change', () => {
 				//console.log('triggered')

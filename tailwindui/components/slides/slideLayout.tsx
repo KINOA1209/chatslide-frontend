@@ -402,7 +402,7 @@ export const Col_2_img_0_layout = ({
 	isShowingLogo,
 }: MainSlideProps) => {
 	//console.log('content: ' + Array(content));
-	const filteredContent: JSX.Element[] = filterEmptyLines(content);
+	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
 
 	return (
 		<div className={`SlideLayoutCanvas`} style={layoutElements.canvaCSS}>
@@ -422,8 +422,8 @@ export const Col_2_img_0_layout = ({
 				className={`SlideContentContainer`}
 				style={layoutElements.contentContainerCSS}
 			>
-				{Array.isArray(filteredContent) &&
-					filteredContent.map((item, index) => (
+				{Array.isArray(content) &&
+					content.map((item, index) => (
 						<div
 							// className='flex flex-col gap-[0.5rem]'
 							key={index}
@@ -498,7 +498,7 @@ export const Col_3_img_0_layout = ({
 	templateLogo,
 	isShowingLogo,
 }: MainSlideProps) => {
-	const filteredContent: JSX.Element[] = filterEmptyLines(content);
+	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
 
 	return (
 		<div style={layoutElements.canvaCSS}>
@@ -508,8 +508,8 @@ export const Col_3_img_0_layout = ({
 			</div>
 
 			<div style={layoutElements.contentContainerCSS}>
-				{Array.isArray(filteredContent) &&
-					filteredContent.map((item, index) => (
+				{Array.isArray(content) &&
+					content.map((item, index) => (
 						<div
 							// className='flex flex-col gap-[0.5rem]'
 							key={index}
@@ -1026,7 +1026,7 @@ export const Col_2_img_2_layout = ({
 		};
 	}, []);
 
-	const filteredContent: JSX.Element[] = filterEmptyLines(content);
+	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
 
 	return (
 		<div style={layoutElements.canvaCSS}>
@@ -1121,8 +1121,8 @@ export const Col_2_img_2_layout = ({
 							maxContentHeight !== null ? `${maxContentHeight}px` : 'none',
 					}}
 				>
-					{Array.isArray(filteredContent) &&
-						filteredContent.map((item, index) => (
+					{Array.isArray(content) &&
+						content.map((item, index) => (
 							<div
 								// className='flex flex-col gap-[0.5rem]'
 								key={index}
@@ -1217,7 +1217,7 @@ export const Col_3_img_3_layout = ({
 			update_callback(newImgs, newIsCharts, newImagesPosition);
 		};
 
-	const filteredContent: JSX.Element[] = filterEmptyLines(content);
+	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
 	return (
 		<div style={layoutElements.canvaCSS}>
 			<div
@@ -1303,8 +1303,8 @@ export const Col_3_img_3_layout = ({
 					// className='w-full grid grid-cols-3 gap-[2rem]'
 					style={layoutElements.contentCSS}
 				>
-					{Array.isArray(filteredContent) &&
-						filteredContent.map((item, index) => (
+					{Array.isArray(content) &&
+						content.map((item, index) => (
 							<div
 								// className='flex flex-col gap-[0.5rem]'
 								key={index}
