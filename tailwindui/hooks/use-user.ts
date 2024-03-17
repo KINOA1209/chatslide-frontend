@@ -55,7 +55,7 @@ export const useUser = () => {
 
 		for (let attempt = 0; attempt < 2; attempt++) {
 			try {
-				const { idToken } =
+				const { uid, email, idToken } =
 					await AuthService.getCurrentUserTokenAndEmail();
 				if ( !idToken) {
 					console.warn('User not logged in');
@@ -64,7 +64,6 @@ export const useUser = () => {
 				}
 				let username = await AuthService.getCurrentUserDisplayName();
 				username = username?.split('@')[0] || 'User';
-				const email = await AuthService.getCurrentUserEmail();
 				const { credits, tier } =
 					await UserService.getUserCreditsAndTier(idToken);
 				const isPaidUser = [

@@ -145,17 +145,18 @@ class AuthService {
 	async getCurrentUserTokenAndEmail() {
 		try {
 			const user = await AmplifyAuth.currentAuthenticatedUser();
+			const uid = user.attributes['sub'];
 			const session = await AmplifyAuth.currentSession();
 
 			const email = user.attributes['email'];
 			const idToken = session.getIdToken().getJwtToken();
 
-			return { email, idToken };
+			return { email, idToken, uid };
 		} catch (error) {
 			console.warn(
 				`Error getting user token and id: ${error}, user probably did not log in.`,
 			);
-			return { email: '', idToken: '' };
+			return { email: '', idToken: '', uid: ''};
 		}
 	}
 
