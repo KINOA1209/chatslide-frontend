@@ -47,7 +47,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 		{ value: '', text: 'None', icon: <IoIosRemoveCircleOutline /> },
 		{ value: 'bing', text: 'Internet', icon: <FiGlobe /> },
 		{ value: 'wikipedia', text: 'Wikipedia', icon: <FaWikipediaW /> },
-		// { value: 'news', text: 'News', icon: <FaNewspaper /> },
+		{ value: 'news', text: 'News', icon: <FaNewspaper /> },
 		// { value: 'reddit', text: 'Reddit' },
 	];
 
