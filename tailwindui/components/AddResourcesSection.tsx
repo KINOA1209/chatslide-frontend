@@ -20,8 +20,8 @@ import Card from './ui/Card';
 import { determineSupportedFormats } from './file/FileUploadButton';
 
 interface AddResourcesProps {
-	searchOnlineScope: string;
-	setSearchOnlineScope: React.Dispatch<React.SetStateAction<string>>;
+	searchOnlineScope?: string;
+	setSearchOnlineScope?: React.Dispatch<React.SetStateAction<string>>;
 	setShowFileModal: (show: boolean) => void;
 	selectedResources: any[];
 	setSelectedResources: React.Dispatch<React.SetStateAction<any[]>>;
@@ -153,15 +153,16 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 			</div>
 
 			{/* search online */}
-			<div>
-				<Instruction>Which online sources you want to include?</Instruction>
-				<RadioButton
-					name='search_online'
-					options={searchOnlineOptions}
-					selectedValue={searchOnlineScope}
-					setSelectedValue={setSearchOnlineScope}
-				/>
-			</div>
+			{searchOnlineScope && setSearchOnlineScope &&
+				<div>
+					<Instruction>Which online sources you want to include?</Instruction>
+					<RadioButton
+						name='search_online'
+						options={searchOnlineOptions}
+						selectedValue={searchOnlineScope}
+						setSelectedValue={setSearchOnlineScope}
+					/>
+				</div>}
 
 			{/* files */}
 			<div>

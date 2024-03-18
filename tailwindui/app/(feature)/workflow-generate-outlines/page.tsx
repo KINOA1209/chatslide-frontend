@@ -339,8 +339,6 @@ export default function Topic() {
 					{/* Project Summary section */}
 					{generationMode === 'from_files' && (
 						<AddResourcesSection
-							searchOnlineScope={searchOnlineScope}
-							setSearchOnlineScope={setSearchOnlineScope}
 							setShowFileModal={setShowFileModal}
 							selectedResources={selectedResources}
 							setSelectedResources={setSelectedResources}
