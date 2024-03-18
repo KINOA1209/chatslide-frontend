@@ -112,7 +112,7 @@ export default function ResetPassword(): JSX.Element {
 							Enter the email address you used when you signed up for your account.
 						</p>
 						<p className='text-xl text-gray-600'>
-							You might need to find your confirmation code in your junk folder.
+							You might need to find your confirmation code in your spam folder.
 						</p>
 					</div>
 
