@@ -357,7 +357,7 @@ export const Business_Dark_005_TemplateLayoutsConfig: {
 		},
 		contentContainerCSS: {
 			paddingTop: '2rem',
-			zIndex: 30,
+			// zIndex: 30,
 		},
 		canvaCSS: {
 			width: '100%',
