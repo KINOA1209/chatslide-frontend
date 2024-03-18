@@ -30,7 +30,7 @@ interface AddResourcesProps {
 }
 
 const AddResourcesSection: React.FC<AddResourcesProps> = ({
-	searchOnlineScope,
+	searchOnlineScope = '',
 	setSearchOnlineScope,
 	setShowFileModal,
 	selectedResources,
@@ -153,7 +153,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 			</div>
 
 			{/* search online */}
-			{searchOnlineScope && setSearchOnlineScope &&
+			{setSearchOnlineScope &&
 				<div>
 					<Instruction>Which online sources you want to include?</Instruction>
 					<RadioButton
