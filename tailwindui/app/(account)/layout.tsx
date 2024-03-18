@@ -19,11 +19,11 @@ export default function AccountLayout({
 				<SideBar />
 			</div>
 			<div className='flex flex-col w-full'>
-				<div className='block sm:hidden sticky top-0'>
+				<div className='block sm:hidden sticky top-0 z-20'>
 					{/* only show Header on small screen */}
 					<Header loginRequired={true} isLanding={false} isAuth={false} />
 				</div>
-				<main className='grow flex flex-col'>
+				<main className='grow flex flex-col z-10'>
 					<div className='grow h-full w-full mx-auto px-4 flex flex-row'>
 						{children}
 					</div>
