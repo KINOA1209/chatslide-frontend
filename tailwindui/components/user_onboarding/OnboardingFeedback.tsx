@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import AuthService from '../../services/AuthService';
 import ReferralLink from '../ReferralLink';
 import Modal from '@/components/ui/Modal';
-import { BigBlueButton, InversedBigBlueButton } from '../button/DrlambdaButton';
 import { PrimaryColorButton } from './UserOnboardingButtons';
 import { useProject } from '@/hooks/use-project';
+import { useUser } from '@/hooks/use-user';
 
 interface FeedbackFormProps {
 	onClose: () => void;
@@ -96,6 +95,7 @@ export const OnboardingFeedbackForm: React.FC<FeedbackFormProps> = ({
 	const [submitSuccessful, setSubmitSuccessful] = useState<boolean>(false);
 	const [ratingError, setRatingError] = useState<string | null>(null);
 	const { project } = useProject();
+	const { token } = useUser();
 
 	const handleRatingChange = (newRating: number) => {
 		setRating(newRating);
@@ -146,8 +146,6 @@ export const OnboardingFeedbackForm: React.FC<FeedbackFormProps> = ({
 			setRatingError('Please leave your feedback.');
 		} else {
 			try {
-				const { userId, idToken: token } =
-					await AuthService.getCurrentUserTokenAndId();
 
 				const headers = new Headers();
 				if (token) {

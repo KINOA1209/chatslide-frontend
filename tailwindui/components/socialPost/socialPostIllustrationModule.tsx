@@ -9,6 +9,7 @@ import ResourceService from '@/services/ResourceService';
 import Resource from '@/models/Resource';
 import Image from 'next/image';
 import { ResourceIcon } from '@/components/ui/ResourceItem';
+import { useUser } from '@/hooks/use-user';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -29,6 +30,7 @@ export const ImgModule = ({
 	canEdit,
 	autoSave,
 }: ImgModuleProp) => {
+	const { token } = useUser();
 	const [showModal, setShowModal] = useState(false);
 	const [keyword, setKeyword] = useState('');
 	const [searchResult, setSearchResult] = useState<string[]>([]);
@@ -74,7 +76,7 @@ export const ImgModule = ({
 		setSelectedQueryMode(ImgQueryMode.SEARCH);
 		setSearchResult([]);
 		setSearching(true);
-		const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
+		const { token } = useUser();
 		const dummyParam = `dummy=${Math.random()}`;
 		const response = await fetch(
 			`/api/search_illustration_images?keyword=${encodeURIComponent(
@@ -85,7 +87,7 @@ export const ImgModule = ({
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
-					Authorization: `Bearer ${idToken}`,
+					Authorization: `Bearer ${token}`,
 				},
 			},
 		);
@@ -110,13 +112,12 @@ export const ImgModule = ({
 		setSelectedQueryMode(ImgQueryMode.GENERATION);
 		setSearchResult([]);
 		setSearching(true);
-		const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
 
 		const response = await fetch('/api/generate_images', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${idToken}`,
+				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify({
 				prompt: (e.target as HTMLFormElement).search_keyword.value,
@@ -175,9 +176,7 @@ export const ImgModule = ({
 	};
 
 	const fetchFiles = async (file_id?: string) => {
-		const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-
-		ResourceService.fetchResources(['media'], idToken).then((resources) => {
+		ResourceService.fetchResources(['media'], token).then((resources) => {
 			const resourceTemps = resources.map((resource) => {
 				if (file_id && resource.id === file_id) {
 					updateSingleCallback(resource.thumbnail_url);
@@ -203,13 +202,12 @@ export const ImgModule = ({
 		if (file == null) {
 			return;
 		}
-		const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
 		const body = new FormData();
 		body.append('file', file);
 		const response = await fetch('/api/upload_user_file', {
 			method: 'POST',
 			headers: {
-				Authorization: `Bearer ${idToken}`,
+				Authorization: `Bearer ${token}`,
 			},
 			body: body,
 		})

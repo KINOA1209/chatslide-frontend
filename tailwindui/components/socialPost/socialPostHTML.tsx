@@ -25,6 +25,7 @@ import templates, {
 } from '@/components/socialPost/socialPostTemplates';
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
 import { useProject } from '@/hooks/use-project';
+import { useUser } from '@/hooks/use-user';
 
 export interface SlideElement {
 	type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
@@ -126,6 +127,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 	borderColorOptions,
 	res_scenario,
 }) => {
+	const { token } = useUser();
 	const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
 	const { project } = useProject();
 	const foldername =
@@ -260,8 +262,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		}
 		setSaveStatus('Saving...');
 		//console.log(finalSlides)
-		const { userId, idToken: token } =
-			await AuthService.getCurrentUserTokenAndId();
 
 		const formData = {
 			foldername: foldername,

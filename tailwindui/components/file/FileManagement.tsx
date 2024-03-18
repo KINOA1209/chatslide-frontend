@@ -319,7 +319,6 @@ const MyFiles: React.FC<filesInterface> = ({
 
 	const carbonTokenFetcher = async () => {
 		try {
-			// Assuming AuthService.getCurrentUserTokenAndId() returns an object with userId and idToken properties
 			const headers = new Headers();
 			if (token) {
 				headers.append('Authorization', `Bearer ${token}`);

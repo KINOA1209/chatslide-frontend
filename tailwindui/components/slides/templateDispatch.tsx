@@ -32,6 +32,7 @@ export const templateDispatch = (
 		index: number,
 		tag: SlideKeys,
 		contentIndex?: number,
+		rerender?:boolean,
 	) => void = () => {}, // Replace with your default function if you have one
 	updateImgUrlArray: (
 		slideIndex: number,
@@ -148,7 +149,7 @@ export const templateDispatch = (
 					<QuillEditable
 						content={content}
 						handleBlur={(newContent) =>
-							handleSlideEdit(newContent, index, contentTag, contentIndex)
+							handleSlideEdit(newContent, index, contentTag, contentIndex,false)
 						}
 						style={style}
 						isVerticalContent={isVerticalContent}
@@ -160,7 +161,7 @@ export const templateDispatch = (
 					<QuillEditable
 						content={content}
 						handleBlur={(newContent) =>
-							handleSlideEdit(newContent, index, contentTag)
+							handleSlideEdit(newContent, index, contentTag, undefined, false)
 						}
 						style={style}
 						isVerticalContent={isVerticalContent}

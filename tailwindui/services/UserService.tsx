@@ -1,12 +1,4 @@
 import AuthService from './AuthService';
-import {
-	ISignUpResult,
-	CognitoUser,
-	MFAOption,
-	CognitoUserSession,
-	CognitoUserAttribute,
-	NodeCallback,
-} from 'amazon-cognito-identity-js';
 
 class UserService {
 	static async initializeUser(token: string): Promise<boolean> {
@@ -134,10 +126,10 @@ class UserService {
 			});
 
 			if (!response.ok) {
-				const { userId, idToken } =
-					await AuthService.getCurrentUserTokenAndId();
+				const { email, idToken } =
+					await AuthService.getCurrentUserTokenAndEmail();
 				console.error(
-					`Failed to fetch user credits: ${userId}, initializing user...`,
+					`Failed to fetch user credits: ${email}, initializing user...`,
 					response.status,
 				);
 				const resp = await UserService.initializeUser(idToken); // if user does not exist in db, initialize the user
@@ -157,8 +149,8 @@ class UserService {
 
 			return { credits, tier, expirationDate };
 		} catch (error) {
-			const { userId, idToken } = await AuthService.getCurrentUserTokenAndId();
-			console.error(`Failed to fetch user credits: ${userId}`, error);
+			const { email, idToken } = await AuthService.getCurrentUserTokenAndEmail();
+			console.error(`Failed to fetch user credits: ${email}`, error);
 			return { credits: '0', tier: 'FREE', expirationDate: '' };
 		}
 	}
