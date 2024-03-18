@@ -122,22 +122,31 @@ export const Cover_img_0_layout = ({
 	// }, []);
 
 	return (
-		<div style={layoutElements.canvaCSS}>
-			<div style={layoutElements.columnCSS}>
+		<div className={`SlideCanvas`} style={layoutElements.canvaCSS}>
+			<div
+				className={`SlideUserNameAndHeadColumn`}
+				style={layoutElements.columnCSS}
+			>
 				<div
 					// className={`${themeElements.userNameFont} ${themeElements.userNameFontColor}`}
+					className={`SlideUserName`}
 					style={{ ...layoutElements.userNameCSS, zIndex: 50 }}
 				>
 					{user_name}
 				</div>
 				<div
-					className={`pl-[2rem] basis-0 opacity-50 border
+					className={`SlideUserNameTextDivider pl-[2rem] basis-0 opacity-50 border
 		        border-black border-opacity-40 mt-4`}
 					style={layoutElements.userNameTextDividerCSS}
 				></div>
-				<div style={layoutElements.titleCSS}>{title}</div>
+				<div className={`SlideHead`} style={layoutElements.titleCSS}>
+					{title}
+				</div>
 			</div>
-			<div style={layoutElements.visualElementsCSS}>
+			<div
+				className={`SlideVisualElement`}
+				style={layoutElements.visualElementsCSS}
+			>
 				{themeElements.backgroundUrlCoverImg0 && (
 					<Image
 						style={{ objectFit: 'cover', height: '100%' }}
@@ -150,6 +159,7 @@ export const Cover_img_0_layout = ({
 				)}
 			</div>
 			<div
+				className={`SlideLogo`}
 				style={{
 					...layoutElements.logoCSS,
 					display: `${isShowingLogo ? 'contents' : 'none'}`,
@@ -206,15 +216,7 @@ export const Cover_img_1_layout = ({
 	return (
 		<div style={layoutElements.canvaCSS}>
 			<div style={layoutElements.columnCSS}>
-				<div
-					// className={`${themeElements.userNameFont} ${themeElements.userNameFontColor}`}
-					style={{ ...layoutElements.userNameCSS, zIndex: 50 }}
-					// style={
-					// 	// ...layoutElements.userNameCSS,
-					// 	themeElements.userNameFont,
-					// 	// ...themeElements.userNameFontColor,
-					// }
-				>
+				<div style={{ ...layoutElements.userNameCSS, zIndex: '50' }}>
 					{user_name}
 				</div>
 				<div style={layoutElements.titleCSS}>{title}</div>
@@ -318,7 +320,7 @@ export const Col_1_img_0_layout = ({
 		<div ref={containerRef} style={layoutElements.canvaCSS}>
 			<div
 				className={`titleAndSubtopicBox`}
-				style={layoutElements.titleAndSubtopicBoxCSS}
+				style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 40 }}
 			>
 				<div
 					ref={topicRef}
@@ -408,7 +410,7 @@ export const Col_2_img_0_layout = ({
 		<div className={`SlideLayoutCanvas`} style={layoutElements.canvaCSS}>
 			<div
 				className={`SlideTopicAndSubtopicBox`}
-				style={layoutElements.titleAndSubtopicBoxCSS}
+				style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 40 }}
 			>
 				<div className={`SlideTopic`} style={layoutElements.topicCSS}>
 					{topic}
@@ -502,7 +504,7 @@ export const Col_3_img_0_layout = ({
 
 	return (
 		<div style={layoutElements.canvaCSS}>
-			<div style={layoutElements.titleAndSubtopicBoxCSS}>
+			<div style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 40 }}>
 				<div style={layoutElements.topicCSS}>{topic}</div>
 				<div style={layoutElements.subtopicCSS}>{subtopic}</div>
 			</div>
@@ -683,13 +685,10 @@ export const Col_2_img_1_layout = ({
 			>
 				<div
 					// className='flex flex-col'
-					style={layoutElements.titleAndSubtopicBoxCSS}
+					// topic subtopic box zindex 40 prevent covering content text
+					style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: '40' }}
 				>
-					<div
-						className={`z-50`}
-						ref={topicRef}
-						style={layoutElements.topicCSS}
-					>
+					<div className={``} ref={topicRef} style={layoutElements.topicCSS}>
 						{topic}
 					</div>
 					<div
@@ -852,13 +851,13 @@ export const Col_1_img_1_layout = ({
 
 				<div
 					// className='flex flex-col'
-					style={layoutElements.titleAndSubtopicBoxCSS}
+					style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: '40' }}
 					ref={topicAndSubtopicRef}
 				>
-					<div className={`z-50`} style={layoutElements.topicCSS}>
+					<div className={``} style={layoutElements.topicCSS}>
 						{topic}
 					</div>
-					<div className={`z-50`} style={layoutElements.subtopicCSS}>
+					<div className={``} style={layoutElements.subtopicCSS}>
 						{subtopic}
 					</div>
 				</div>
@@ -1037,7 +1036,7 @@ export const Col_2_img_2_layout = ({
 			>
 				<div
 					// className='flex flex-col justify-center items-center'
-					style={layoutElements.titleAndSubtopicBoxCSS}
+					style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 40 }}
 					ref={topicAndSubtopicRef}
 				>
 					<div className={``} style={layoutElements.topicCSS}>
@@ -1226,7 +1225,7 @@ export const Col_3_img_3_layout = ({
 			>
 				<div
 					// className='flex flex-col justify-center items-center'
-					style={layoutElements.titleAndSubtopicBoxCSS}
+					style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 40 }}
 				>
 					<div className={``} style={layoutElements.topicCSS}>
 						{topic}

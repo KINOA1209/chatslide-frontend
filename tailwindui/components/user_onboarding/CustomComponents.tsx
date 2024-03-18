@@ -18,11 +18,14 @@ export const TutorialStepContent: FC<TutorialStepContentProps> = ({
 }) => {
 	return (
 		<div className='h-auto z-50 flex flex-col'>
-			<div className='flex flex-col items-start gap-[0.5rem]'>
-				<div className='text-neutral-900 text-xl font-bold font-creato-bold leading-tight tracking-tight'>
+			<div
+				className='flex flex-col items-start gap-[0.5rem] flex-wrap'
+				style={{ maxWidth: '25rem' }}
+			>
+				<div className='text-neutral-900 text-base font-bold font-creato-bold leading-tight tracking-tight'>
 					{action}
 				</div>
-				<p className='text-neutral-800 text-base font-normal font-creato=regular leading-normal tracking-tight text-left'>
+				<p className='text-neutral-800 text-sm font-normal font-creato=regular leading-normal tracking-tight text-left'>
 					{explanation}
 				</p>
 			</div>
@@ -44,7 +47,11 @@ export const TutorialEndStepPromptWindow: FC<
 			setShowModal={onClose}
 			position='fixed max-w-lg h-auto'
 		>
-			<img src={SlidesPageEndTour.src} alt='Step end' />
+			<img
+				src={SlidesPageEndTour.src}
+				alt='Step end'
+				style={{ maxWidth: '12rem', alignSelf: 'center' }}
+			/>
 
 			<TutorialStepContent
 				action={'Congratulation! 🎉'}
@@ -81,7 +88,11 @@ export const StartATourGuidePromptWindow: React.FC<
 			setShowModal={onClose}
 			position='fixed max-w-lg h-auto'
 		>
-			<img src={StartATourImg.src} alt='Start Tour Guide' />
+			<img
+				src={StartATourImg.src}
+				alt='Start Tour Guide'
+				style={{ maxWidth: '12rem', alignSelf: 'center' }}
+			/>
 
 			<TutorialStepContent
 				action={'Welcome to the Guided Tutorial! 🌟'}
@@ -119,7 +130,11 @@ export const ExitConfirmationWindow: FC<ExitConfirmationWindowProps> = ({
 				onClick={() => onConfirmation(false)} // Close the confirmation on overlay click
 			></div>
 			<div className='confirmation-tooltip bg-white p-8 rounded-lg shadow-lg fixed top-1/2 left-1/2 max-w-lg h-auto transform -translate-x-1/2 -translate-y-1/2 z-50 flex flex-col'>
-				<img src={ExitUserGuideWarningImg.src} alt='Exit warning' />
+				<img
+					src={ExitUserGuideWarningImg.src}
+					alt='Exit warning'
+					style={{ maxWidth: '12rem', alignSelf: 'center' }}
+				/>
 
 				<TutorialStepContent
 					action={'Are you sure to leave the tutorial?'}

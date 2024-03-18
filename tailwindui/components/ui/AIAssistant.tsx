@@ -129,27 +129,24 @@ export const Chats: React.FC<ChatsProps> = ({
 						{/* Check if there are imageUrls and render image previews */}
 
 						{chat.imageUrls && chat.imageUrls.length > 0 && (
-							<div className='flex flex-wrap gap-2 mt-2'>
+							<div
+								className='flex flex-wrap gap-2 mt-2'
+								style={{ width: '100%' }}
+							>
 								{chat.imageUrls.map((imageUrl, i) => (
-									<img
+									<div
 										key={i}
-										src={imageUrl}
-										alt={`Image ${i + 1}`}
-										style={{
-											width: 'calc(50% - 4px)',
-											height: '100px',
-											marginBottom: '4px',
-										}}
-										draggable // Make the image draggable
+										className='image-preview-container'
+										style={{ width: 'calc(50% - 4px)', marginBottom: '4px' }}
+										draggable // Make the image container draggable
 										onDragStart={() => handleImageDragStart(imageUrl)} // Call handleImageDragStart with imageUrl
-										// onDragStart={(e) => handleImageDragStart(e, i)} // Handle drag start event
-										// onDragOver={(e) => handleDragOver(e)} // Handle drag over event
-										// onDrop={
-										// 	currentImageUrls
-										// 		? (e) => handleDrop(e, i, currentImageUrls)
-										// 		: undefined
-										// }
-									/>
+									>
+										<img
+											src={imageUrl}
+											alt={`Image ${i + 1}`}
+											style={{ width: '100%', height: 'auto' }}
+										/>
+									</div>
 								))}
 							</div>
 						)}
@@ -370,18 +367,18 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 							Here are some ways I can help:
 						</div>
 						<div className='self-stretch flex-col justify-start items-start gap-2 inline-flex'>
-							{slideIndex == 0 ?
-								(<>
-								<div
-									className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
-									onClick={() =>
-										handleSend('Change topic to be more professional')
-									}
-								>
-									<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
-										Change topic to be more professional
+							{slideIndex == 0 ? (
+								<>
+									<div
+										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
+										onClick={() =>
+											handleSend('Change topic to be more professional')
+										}
+									>
+										<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
+											Change topic to be more professional
+										</div>
 									</div>
-								</div>
 									<div
 										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
 										onClick={() => handleSend('Translate topic to Spanish')}
@@ -398,15 +395,17 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 											Change the image on the slide
 										</div>
 									</div>
-								</>) :
-								(<><div
-									className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
-									onClick={() => handleSend('Add data to the content')}
-								>
-									<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
-										Add data to the content
+								</>
+							) : (
+								<>
+									<div
+										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
+										onClick={() => handleSend('Add data to the content')}
+									>
+										<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
+											Add data to the content
+										</div>
 									</div>
-								</div>
 									<div
 										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
 										onClick={() => handleSend('Change the image on the slide')}

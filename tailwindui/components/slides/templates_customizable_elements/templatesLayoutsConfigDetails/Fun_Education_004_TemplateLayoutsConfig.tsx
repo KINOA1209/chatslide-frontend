@@ -349,7 +349,7 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			display: 'flex',
 			flexDirection: 'column',
 			width: '100%',
-			zIndex: 30,
+			zIndex: 40,
 		},
 		imageContainerCSS: {
 			width: '100%',
@@ -386,7 +386,7 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 		titleAndSubtopicBoxCSS: {
 			display: 'flex',
 			flexDirection: 'column',
-			zIndex: 30,
+			zIndex: 40,
 		},
 		imageContainerCSS: {
 			height: '15rem',
