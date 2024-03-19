@@ -94,6 +94,20 @@ export const useSlides = () => {
 		syncSlides(newSlides, false, newSlides.length);
 	};
 
+	const duplicatePage = (index: number) => {
+		console.log('-- duplicate page: ', { index });
+		const oldSlide = slides[index];
+		const newSlide = { ...oldSlide };
+		const newSlides = [...slides];
+		newSlides.splice(index + 1, 0, newSlide);
+		setSlides(newSlides);
+		setSlideIndex(index + 1);
+
+		updateVersion();
+		updateSlideHistory(newSlides);
+		syncSlides(newSlides, false, newSlides.length);
+	};
+
 	const deleteSlidePage = (index: number) => {
 		console.log('-- delete slide page: ', { index });
 		const newSlides = [...slides];
@@ -303,6 +317,7 @@ export const useSlides = () => {
 	return {
 		slides,
 		addEmptyPage,
+		duplicatePage,
 		deleteSlidePage,
 		updateSlidePage,
 		changeTemplate,

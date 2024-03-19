@@ -18,6 +18,7 @@ import { FiPlay } from 'react-icons/fi';
 import { Explanation, Instruction } from '../ui/Text';
 import RadioButton from '../ui/RadioButton';
 import { InputBox } from '../ui/InputBox';
+import { FaRegClone } from 'react-icons/fa';
 
 type SaveButtonProps = {
   saveSlides: () => void;
@@ -286,27 +287,54 @@ export const AddSlideButton: React.FC<{
   currentSlideIndex: number;
   addPage: () => void;
 }> = ({ currentSlideIndex, addPage }) => {
-  return (
-    <ButtonWithExplanation
-      button={
-        <button
-          onClick={addPage}
-        >
-          <GoPlus
-            style={{
-              strokeWidth: '0.9',
-              flex: '1',
-              width: '1.7rem',
-              height: '1.7rem',
-              fontWeight: 'bold',
-              color: '#2943E9',
-            }}
-          />
-        </button>
-      }
-      explanation={'Add Page'}
-    />
-  );
+	return (
+		<ButtonWithExplanation
+			button={
+				<button
+					onClick={addPage}
+				>
+					<GoPlus
+						style={{
+							strokeWidth: '0.9',
+							flex: '1',
+							width: '1.7rem',
+							height: '1.7rem',
+							fontWeight: 'bold',
+							color: '#2943E9',
+						}}
+					/>
+				</button>
+			}
+			explanation={'Add Page'}
+		/>
+	);
+};
+
+export const DuplicateSlidePageButton: React.FC<{
+	currentSlideIndex: number;
+	duplicatePage: () => void;
+}> = ({ currentSlideIndex, duplicatePage }) => {
+	return (
+		<ButtonWithExplanation
+			button={
+				<button
+					onClick={duplicatePage}
+				>
+					<FaRegClone
+						style={{
+							strokeWidth: '1',
+							flex: '1',
+							width: '1.3rem',
+							height: '1.3rem',
+							fontWeight: 'bold',
+							color: '#2943E9',
+						}}
+					/>
+				</button>
+			}
+			explanation={'Duplicate Page'}
+		/>
+	);
 };
 
 export const DeleteSlideButton: React.FC<{

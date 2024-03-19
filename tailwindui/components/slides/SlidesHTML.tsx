@@ -4,7 +4,7 @@ import PaywallModal from '../paywallModal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ExportToPdfButton from './ExportButton';
-import { ShareButton } from '@/components/slides/SlideButtons';
+import { DuplicateSlidePageButton, ShareButton } from '@/components/slides/SlideButtons';
 import './slidesHTML.css';
 import { availableTemplates } from '@/components/slides/slideTemplates';
 import { LayoutKeys } from '@/components/slides/slideLayout';
@@ -111,6 +111,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		slideIndex,
 		slidesHistory,
 		addEmptyPage,
+		duplicatePage,
 		deleteSlidePage,
 		changeTemplate,
 		undoChange,
@@ -322,6 +323,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		addEmptyPage(slideIndex);
 	}
 
+	function handleDuplicatePage() {
+		duplicatePage(slideIndex);
+	}
+
 	function handleDeletePage() {
 		deleteSlidePage(slideIndex);
 	}
@@ -455,6 +460,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						<>
 							<AddSlideButton
 								addPage={handleAddPage}
+								currentSlideIndex={slideIndex}
+							/>
+							<DuplicateSlidePageButton
+								duplicatePage={handleDuplicatePage}
 								currentSlideIndex={slideIndex}
 							/>
 							<DeleteSlideButton
