@@ -3,7 +3,7 @@ const Loading: React.FC<{
 	text?: string;
 }> = ({ children, text }) => {
 	return (
-		<div className='flex-grow flex flex-row items-center justify-center overflow-auto'>
+		<div className='w-full h-full flex flex-row items-center justify-center overflow-auto'>
 			<div className='text-center text-lg text-gray-600'>
 				{children ? children : text ? text : 'Loading...⏳'}
 			</div>
