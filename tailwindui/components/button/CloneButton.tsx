@@ -38,18 +38,21 @@ export const CloneButton: React.FC<{
 			showModal={showCloneModal}
 			setShowModal={setShowCloneModal}
 			title='Clone / Translate Project'
-			description='You can create a new project with the same content, but optionally in a different language.'
+			description='You can create a new project with the same content.'
 			onConfirm={onClone}
 		>
-			<Instruction>
-				Your current project language is {project.language}.
-			</Instruction>
-			<LanguageSelector
-				language={targetCloneLanguage}
-				setLanguage={setTargetCloneLanguage}
-				text='New project language:'
-				showExplanation={false}
-			/>
+			{project.content_type === 'presentation' &&
+				<>
+					<Instruction>
+						Your current project language is {project.language}.
+					</Instruction>
+					<LanguageSelector
+						language={targetCloneLanguage}
+						setLanguage={setTargetCloneLanguage}
+						text='New project language:'
+						showExplanation={false}
+					/>
+				</>}
 		</Modal>
 		<ButtonWithExplanation
 			button={
