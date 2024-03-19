@@ -86,10 +86,10 @@ export const uneditableTemplateDispatch = (
 		false, // canEdit
 		exportToPdfMode, //exportToPdfMode
 		false, //editMathMode
-		() => {}, //setIsEditMode
-		() => {}, // handleSlideEdit
-		() => () => {}, // updateImgUrlArray,
-		() => {}, // toggleEditMode,
+		() => { }, //setIsEditMode
+		() => { }, // handleSlideEdit
+		() => () => { }, // updateImgUrlArray,
+		() => { }, // toggleEditMode,
 		index === 0, // isCoverPage
 		slide.layout, // layoutOptionNonCover
 		slide.layout, // layoutOptionCover
@@ -139,12 +139,24 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const [presentScale, setPresentScale] = useState(
 		Math.min(dimensions.width / 960, dimensions.height / 540),
 	);
-	const [nonPresentScale, setNonPresentScale] = useState(
-		Math.min(
-			1,
-			Math.min((dimensions.width - 300)/ 960, (dimensions.height - 200) / 540) * 0.8,
-		),
-	);
+
+
+	const calculateNonPresentScale = (width: number, height: number) => {
+		if (width < 640) {
+			// mobile, layout vertically
+			return Math.min(
+				1,
+				Math.min((width) / 960, (height - 200) / 540) * 0.8,
+			);
+		} else {
+			return Math.min(
+				1,
+				Math.min((width - 300) / 960, (height - 200) / 540) * 0.8,
+			);
+		}
+	}
+	
+	const [nonPresentScale, setNonPresentScale] = useState(calculateNonPresentScale(dimensions.width, dimensions.height));
 
 	const [isChatWindowOpen, setIsChatWindowOpen] = useState(false);
 
@@ -176,13 +188,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		const handleResize = () => {
 			const scale = Math.min(window.innerWidth / 960, window.innerHeight / 540);
 			setPresentScale(scale);
-			setNonPresentScale(
-				Math.min(
-					1,
-					Math.min((window.innerWidth - 300) / 960, (window.innerHeight - 200) / 540) *
-						0.8,
-				),
-			);
+			setNonPresentScale(calculateNonPresentScale(window.innerWidth, window.innerHeight));
 		};
 
 		window.addEventListener('resize', handleResize);
