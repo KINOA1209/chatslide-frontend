@@ -25,8 +25,6 @@ import SlideContainer from './SlideContainer';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import { templateDispatch } from './templateDispatch';
 import { availableLayouts } from './slideLayout';
-import TestSlidesData from './TestSlidesData.json';
-import AuthService from '@/services/AuthService';
 import themeConfigData, {
 	ThemeConfig,
 } from './templates_customizable_elements/theme_elements';
@@ -144,7 +142,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const [nonPresentScale, setNonPresentScale] = useState(
 		Math.min(
 			1,
-			Math.min(dimensions.width / 960, (dimensions.height - 200) / 540) * 0.8,
+			Math.min((dimensions.width - 300)/ 960, (dimensions.height - 200) / 540) * 0.8,
 		),
 	);
 
@@ -181,7 +179,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			setNonPresentScale(
 				Math.min(
 					1,
-					Math.min(window.innerWidth / 960, (window.innerHeight - 200) / 540) *
+					Math.min((window.innerWidth - 300) / 960, (window.innerHeight - 200) / 540) *
 						0.8,
 				),
 			);
@@ -553,11 +551,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				showReferralLink={true}
 			/>
 
-			<div className='w-full flex flex-row grow items-start justify-center sm:justify-between gap-4 overflow-auto'>
+			<div className='w-full flex flex-row grow items-start justify-center sm:justify-between gap-2 overflow-auto'>
 				{/* vertical bar */}
 
 				<Panel>
-					<div className='h-full hidden sm:flex w-[150px]'>
+					<div className='h-full hidden sm:flex w-[100px] lg:w-[150px]'>
 						<ScrollBar
 							currentElementRef={verticalCurrentSlideRef}
 							index={slideIndex}
@@ -570,7 +568,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 										index.toString() +
 										slides.length.toString()
 									} // force update when slide length changes
-									className={`w-[8rem] h-[6rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
+									className={`w-[6rem] h-[4.5rem] lg:w-[8rem] lg:h-[6rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
 									onClick={() => gotoPage(index)}
 									ref={index === slideIndex ? verticalCurrentSlideRef : null}
 								>
@@ -578,7 +576,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 									<SlideContainer
 										slide={slide}
 										index={index}
-										scale={0.12}
+										scale={0.12 * nonPresentScale}
 										isViewing={true}
 										templateDispatch={uneditableTemplateDispatch}
 										highlightBorder={slideIndex === index}
@@ -646,6 +644,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							slides={slides}
 							updateSlidePage={updateSlidePage}
 							currentSlideIndex={slideIndex}
+							scale={nonPresentScale}
 						/>
 					)}
 
