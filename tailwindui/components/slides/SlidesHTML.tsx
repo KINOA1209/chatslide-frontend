@@ -427,8 +427,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		// a simple page for backend to capture the slides
 		return (
 			<SlideContainer
-				slide={slides[slideIndex]}
-				index={slideIndex}
+				slide={slides[initSlideIndex]}
+				index={initSlideIndex}
 				isPresenting={isPresenting}
 				isViewing={isViewing}
 				scale={presentScale}
@@ -540,6 +540,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							share={isShared}
 							project={project}
 							host={host}
+							currentSlideIndex={slideIndex}
 						/>
 					)}
 				</ActionsToolBar>

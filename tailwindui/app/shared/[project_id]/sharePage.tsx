@@ -12,6 +12,7 @@ import { Blank, Loading } from '@/components/ui/Loading';
 import { useProject } from '@/hooks/use-project';
 import { JoinUsBanner } from '@/components/layout/JoinUsBanner';
 import useHydrated from '@/hooks/use-hydrated';
+import { useSearchParams } from 'next/navigation';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -29,13 +30,15 @@ interface SharePageProps {
   embed?: boolean;
 }
 
-const SharePage: React.FC<SharePageProps> = ({ project_id, embed=false }) => {
+const SharePage: React.FC<SharePageProps> = ({ project_id, embed = false }) => {
 	const { project, initProject } = useProject();
 	const [loading, setLoading] = useState(true);
 	const [loadingFailed, setLoadingFailed] = useState(false);
 	const { initSlides } = useSlides();
 	const [socialPosts, setSocialPosts] = useState<SocialPostSlide[]>([]);
 	const [postType, setPostType] = useState<string>('casual_topic');
+	const params = useSearchParams();
+	const initSlideIndex = parseInt(params.get('page') || '1') - 1 ;
 	const borderColorOptions = [
 		{
 			border_start: '#FF7A41',
@@ -100,6 +103,8 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, embed=false }) => {
 	];
 
 	useEffect(() => {
+		console.log('initSlideIndex', initSlideIndex);
+
 		const init = async () => {
 			let project;
 			try {
@@ -145,6 +150,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, embed=false }) => {
         <SlidesHTML
           isViewing={true}
           toPdf={true}
+					initSlideIndex={initSlideIndex}
         />
       </main>
     );
