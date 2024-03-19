@@ -143,7 +143,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const [nonPresentScale, setNonPresentScale] = useState(
 		Math.min(
 			1,
-			Math.min(dimensions.width / 960, (dimensions.height - 100) / 540) * 0.8,
+			Math.min(dimensions.width / 960, (dimensions.height - 200) / 540) * 0.8,
 		),
 	);
 
@@ -180,7 +180,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			setNonPresentScale(
 				Math.min(
 					1,
-					Math.min(window.innerWidth / 960, (window.innerHeight - 100) / 540) *
+					Math.min(window.innerWidth / 960, (window.innerHeight - 200) / 540) *
 						0.8,
 				),
 			);
@@ -543,11 +543,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				showReferralLink={true}
 			/>
 
-			<div className='w-full flex flex-row grow items-start justify-center xl:justify-between gap-4 overflow-auto'>
+			<div className='w-full flex flex-row grow items-start justify-center sm:justify-between gap-4 overflow-auto'>
 				{/* vertical bar */}
 
 				<Panel>
-					<div className='h-full hidden xl:flex w-[150px]'>
+					<div className='h-full hidden sm:flex w-[150px]'>
 						<ScrollBar
 							currentElementRef={verticalCurrentSlideRef}
 							index={slideIndex}
@@ -582,7 +582,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 				<Panel>
 					<div className='flex flex-row items-center justify-center'>
-						<div className='hidden lg:block'>
+						<div className='hidden sm:block'>
 							<SlideLeftNavigator
 								currentSlideIndex={slideIndex}
 								slides={slides}
@@ -606,7 +606,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							/>
 						</div>
 
-						<div className='hidden lg:block'>
+						<div className='hidden sm:block'>
 							<SlideRightNavigator
 								currentSlideIndex={slideIndex}
 								slides={slides}
@@ -641,7 +641,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 					{/* Slide pages indicator */}
 					<div className='pt-2 flex flex-row items-center'>
-						<div className='block lg:hidden'>
+						<div className='block sm:hidden'>
 							<SlideLeftNavigator
 								currentSlideIndex={slideIndex}
 								slides={slides}
@@ -652,7 +652,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							currentSlideIndex={slideIndex}
 							slides={slides}
 						/>
-						<div className='block lg:hidden'>
+						<div className='block sm:hidden'>
 							<SlideRightNavigator
 								currentSlideIndex={slideIndex}
 								slides={slides}
@@ -662,7 +662,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					</div>
 
 					{/* horizontal  */}
-					<div className='block xl:hidden max-w-xl sm:max-w-4xl mx-auto py-4 justify-center items-center'>
+					<div className='block sm:hidden max-w-xl sm:max-w-4xl mx-auto py-4 justify-center items-center'>
 						<ScrollBar
 							currentElementRef={horizontalCurrentSlideRef}
 							index={slideIndex}
@@ -720,7 +720,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						)}
 						<Panel>
 							{/* balance pos of slide */}
-							<div className='hidden xl:flex w-[9rem]'></div>
+							<div className='hidden sm:flex w-[9rem]'></div>
 						</Panel>
 					</>
 				)}
