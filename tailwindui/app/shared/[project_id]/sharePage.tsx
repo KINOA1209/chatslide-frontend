@@ -26,9 +26,10 @@ const SocialPostHTML = dynamic(
 
 interface SharePageProps {
 	project_id: string;
+  embed?: boolean;
 }
 
-const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
+const SharePage: React.FC<SharePageProps> = ({ project_id, embed=false }) => {
 	const { project, initProject } = useProject();
 	const [loading, setLoading] = useState(true);
 	const [loadingFailed, setLoadingFailed] = useState(false);
@@ -137,6 +138,16 @@ const SharePage: React.FC<SharePageProps> = ({ project_id }) => {
 				🔍 Could you double-check the project ID and make sure it's shared?
 			</div>
 		</Blank>
+
+  if (embed) 
+    return (
+      <main className='grow'>
+        <SlidesHTML
+          isViewing={true}
+          toPdf={true}
+        />
+      </main>
+    );
 
 	return (
 		<>
