@@ -327,6 +327,7 @@ export const useSlides = () => {
 		undoChange,
 		redoChange,
 		slideIndex,
+		setSlideIndex,
 		gotoPage,
 		slidesStatus,
 		version,

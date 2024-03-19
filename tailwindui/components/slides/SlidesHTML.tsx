@@ -52,8 +52,9 @@ import { ScrollBar } from '../ui/ScrollBar';
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
 	exportSlidesRef?: React.RefObject<HTMLDivElement>;
-	initSlideIndex?: number;
+	initSlideIndex?: number;  // only for embed
 	toPdf?: boolean; // toPdf mode for backend
+	embed?: boolean; // embed mode for backend
 	showScript?: boolean;
 };
 
@@ -101,12 +102,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	exportSlidesRef = useRef<HTMLDivElement>(null),
 	initSlideIndex = 0,
 	toPdf = false,
+	embed = false,
 	showScript = false,
 }) => {
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 	const {
 		slides,
 		slideIndex,
+		setSlideIndex,
 		slidesHistory,
 		addEmptyPage,
 		duplicatePage,
@@ -140,7 +143,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		Math.min(dimensions.width / 960, dimensions.height / 540),
 	);
 
-
 	const calculateNonPresentScale = (width: number, height: number) => {
 		if (width < 640) {
 			// mobile, layout vertically
@@ -155,7 +157,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			);
 		}
 	}
-	
+
 	const [nonPresentScale, setNonPresentScale] = useState(calculateNonPresentScale(dimensions.width, dimensions.height));
 
 	const [isChatWindowOpen, setIsChatWindowOpen] = useState(false);
@@ -429,6 +431,22 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	if (toPdf)
 		// a simple page for backend to capture the slides
+		return (
+			<SlideContainer
+				slide={slides[slideIndex]}
+				index={slideIndex}
+				isPresenting={isPresenting}
+				isViewing={isViewing}
+				scale={presentScale}
+				templateDispatch={editableTemplateDispatch}
+				slideRef={slideRef}
+				containerRef={containerRef}
+				length={slides.length}
+				key={version}
+			/>
+		);
+
+	if (embed) 
 		return (
 			<SlideContainer
 				slide={slides[initSlideIndex]}
