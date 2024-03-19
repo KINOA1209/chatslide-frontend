@@ -50,10 +50,6 @@ const Header = ({
 				case 'signIn':
 					console.log('user signed in');
 					break;
-				case 'signOut':
-					console.log('user signed out');
-					signOut();
-					break;
 				default:
 					break;
 			}

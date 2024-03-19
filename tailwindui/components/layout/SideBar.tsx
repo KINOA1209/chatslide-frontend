@@ -20,7 +20,7 @@ const SideBar = ({ }: SideBarProps) => {
 	const { uid, credits, tier, userStatus } = useUser();
 	const router = useRouter();
 	const [isMobile, setIsMobile] = useState<boolean>(false);
-	const { signOut: userSignOut } = useUser();
+	const { signOut } = useUser();
 
 	// detect whether user has scrolled the page down by 10px
 	const scrollHandler = () => {
@@ -38,12 +38,11 @@ const SideBar = ({ }: SideBarProps) => {
 		return () => window.removeEventListener('scroll', scrollHandler);
 	}, [top]);
 
-	const signOut = async () => {
+	const onSignOut = async () => {
 		try {
-			await AuthService.signOut();
+			signOut();
 			sessionStorage.clear();
 			localStorage.clear();
-			userSignOut();
 			console.log('You have signed out!');
 			router.push('/');
 		} catch (error: any) {
@@ -134,7 +133,7 @@ const SideBar = ({ }: SideBarProps) => {
 					<SideBarItem
 						key={index}
 						{...item}
-						onSignOut={signOut}
+						onSignOut={onSignOut}
 						isSidebarOpen={isSidebarOpen}
 						setIsSidebarOpen={setIsSidebarOpen}
 					/>

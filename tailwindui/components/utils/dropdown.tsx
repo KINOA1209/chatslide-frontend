@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import AuthService from '../../services/AuthService';
 import { useUser } from '@/hooks/use-user';
+import { sign } from 'crypto';
 
 interface DropdownButtonProps {}
 
@@ -12,7 +13,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const router = useRouter();
-	const { username, uid, token, credits, tier } = useUser();
+	const { username, signOut, credits, tier } = useUser();
 
 	function userFirstName() {
 		return username.split(' ')[0];
@@ -35,9 +36,9 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
 		};
 	}, []);
 
-	const signOut = async () => {
+	const onSignOut = async () => {
 		try {
-			await AuthService.signOut();
+			signOut();
 			sessionStorage.clear();
 			localStorage.clear();
 			console.log('You have signed out!');
@@ -139,7 +140,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
 					<div className='py-1' role='none'>
 						<div className='py-0.2' role='none'>
 							<a
-								onClick={signOut}
+								onClick={onSignOut}
 								className='block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200 cursor-pointer'
 								role='menuitem'
 							>
