@@ -149,7 +149,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, embed = false }) => {
       <main className='grow'>
         <SlidesHTML
           isViewing={true}
-          toPdf={true}
+          embed={true}
 					initSlideIndex={initSlideIndex}
         />
       </main>
