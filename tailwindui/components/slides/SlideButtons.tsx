@@ -135,7 +135,7 @@ export const ShareButton: React.FC<ShareButtonProps> = ({
 				title='Share / Publish'
 			// description='Share your slides with others or on social media'
 			>
-				<div>
+				<div className='flex flex-col gap-2'>
 					<Instruction>Share {isSocialPost ? ' Social Post' : ' Slides'}</Instruction>
 					{setShare && <RadioButton
 						name='share'
@@ -155,6 +155,21 @@ export const ShareButton: React.FC<ShareButtonProps> = ({
 							<ClickableLink link={`${host}/shared/${project_id || ''}`} />
 						</div>
 					)}
+
+					<div className='flex flex-wrap gap-2'>
+						{platforms.map((platform) => (
+							<BigGrayButton
+								key={platform}
+								onClick={() => { handlePost(platform) }}>
+								Post to{' '}
+								{
+									PostPlatformConfigs[platform as keyof typeof PostPlatformConfigs]
+										.displayName
+								}
+
+							</BigGrayButton>
+						))}
+					</div>
 				</div>
 
 				{!isSocialPost &&
@@ -164,21 +179,6 @@ export const ShareButton: React.FC<ShareButtonProps> = ({
 						<ClickableLink link={iframe} />
 					</div>
 				}
-
-				<div className='flex flex-wrap gap-2'>
-					{platforms.map((platform) => (
-						<BigGrayButton
-							key={platform}
-							onClick={() => { handlePost(platform) }}>
-							Post to{' '}
-							{
-								PostPlatformConfigs[platform as keyof typeof PostPlatformConfigs]
-									.displayName
-							}
-
-						</BigGrayButton>
-					))}
-				</div>
 
 				{project.is_shared && setShare && !isSocialPost &&
 					<div>
