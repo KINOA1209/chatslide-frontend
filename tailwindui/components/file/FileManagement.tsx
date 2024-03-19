@@ -231,8 +231,26 @@ const MyFiles: React.FC<filesInterface> = ({
 				fileType,
 			);
 			setResources([newResource, ...resources]);
-			if (setSelectedResources && selectedResources)
-				setSelectedResources([newResource, ...selectedResources]);
+			if (setSelectedResources && selectedResources) {
+				if ([newResource, ...selectedResources].length > 1 && !isPaidUser) {
+					toast.info('You will need to upgrade to select multiple files!', {
+						position: 'top-center',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: 'light',
+						containerId: 'fileManagement',
+					});
+					setSelectedResources([newResource]);
+				} else {
+					setSelectedResources([newResource, ...selectedResources]);
+				}
+				setIsSubmitting(false);
+				return;
+			}
 		} catch (error) {
 			console.error(error);
 			if (error instanceof Error) {
@@ -279,7 +297,7 @@ const MyFiles: React.FC<filesInterface> = ({
 			}
 			if (newSelectedResourceId.length > 0 && selectedResourceId.length > 0) {
 				if (pageInvoked !== 'theme') {
-					toast.info('Only subscribed user can select multiple files!', {
+					toast.info('You will need to upgrade to select multiple files!', {
 						position: 'top-center',
 						autoClose: 5000,
 						hideProgressBar: false,
@@ -291,7 +309,7 @@ const MyFiles: React.FC<filesInterface> = ({
 						containerId: 'fileManagement',
 					});
 				} else {
-					toast.info('Each project can only select one logo!', {
+					toast.info('Each project can only select one.', {
 						position: 'top-center',
 						autoClose: 5000,
 						hideProgressBar: false,
@@ -528,10 +546,10 @@ const MyFiles: React.FC<filesInterface> = ({
 								open={false}
 								chunkSize={1500}
 								overlapSize={20}
-								// entryPoint="LOCAL_FILES"
+							// entryPoint="LOCAL_FILES"
 							>
 								<BigBlueButton
-									onClick={() => {}}
+									onClick={() => { }}
 									isSubmitting={false}
 									showArrow={false}
 								>
