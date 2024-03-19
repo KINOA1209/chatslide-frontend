@@ -1,11 +1,11 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { Blank } from '@/components/ui/Loading';
+import { useRouter, usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
 const Referral = () => {
-	const searchParams = useSearchParams();
-	const code = searchParams.get('code');
+  const code = usePathname().split('/').pop();
 	const router = useRouter();
 	useEffect(() => {
 		if (code) {
@@ -14,9 +14,7 @@ const Referral = () => {
 	}, [code, router]);
 
 	return (
-		<div className='flex items-center justify-center min-h-screen'>
-			<div className='text-lg'>Redirecting...</div>
-		</div>
+		<Blank>Redirecting...</Blank>
 	);
 };
 
