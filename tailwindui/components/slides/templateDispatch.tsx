@@ -32,7 +32,7 @@ export const templateDispatch = (
 		index: number,
 		tag: SlideKeys,
 		contentIndex?: number,
-		rerender?:boolean,
+		rerender?: boolean,
 	) => void = () => {}, // Replace with your default function if you have one
 	updateImgUrlArray: (
 		slideIndex: number,
@@ -149,7 +149,13 @@ export const templateDispatch = (
 					<QuillEditable
 						content={content}
 						handleBlur={(newContent) =>
-							handleSlideEdit(newContent, index, contentTag, contentIndex,false)
+							handleSlideEdit(
+								newContent,
+								index,
+								contentTag,
+								contentIndex,
+								false,
+							)
 						}
 						style={style}
 						isVerticalContent={isVerticalContent}
@@ -251,7 +257,7 @@ export const templateDispatch = (
 								: themeElements.contentFontCSS,
 							true,
 					  )
-					: slide.content.map((content, contentIndex) => (
+					: slide.content.map((item, contentIndex) => (
 							<div
 								key={
 									keyPrefix + index.toString() + '_' + contentIndex.toString()
@@ -259,7 +265,7 @@ export const templateDispatch = (
 								className={`${index === 0 ? 'hidden' : ''}`}
 							>
 								{generateContentElement(
-									content,
+									item,
 									'content',
 									// themeElements.contentFontCSS_non_vertical_content,
 									slide.layout === 'Col_2_img_0_layout' ||
