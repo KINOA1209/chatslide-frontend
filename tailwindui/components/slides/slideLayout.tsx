@@ -6,6 +6,7 @@ import React, {
 	useLayoutEffect,
 	useCallback,
 } from 'react';
+import { RiAddLine } from 'react-icons/ri'; // Import the Add icon from React Icons
 import Image from 'next/image';
 import { ImgModule } from '@/components/imgModule';
 import { MainSlideProps as BaseMainSlideProps } from './slideTemplates';
@@ -47,7 +48,12 @@ export type LayoutKeys =
 	| 'Col_3_img_3_layout';
 import ResizeSlider from './drag_resize/resize_slider';
 import '@/components/slides/drag_resize/dragAndResizeCSS.css';
-
+import dynamic from 'next/dynamic';
+import { isArray } from 'chart.js/dist/helpers/helpers.core';
+const QuillEditable = dynamic(
+	() => import('@/components/slides/quillEditorSlide'),
+	{ ssr: false },
+);
 // Extend the interface with new fields
 interface MainSlideProps extends BaseMainSlideProps {
 	brandingColor?: string;
@@ -402,10 +408,99 @@ export const Col_2_img_0_layout = ({
 	layoutElements,
 	templateLogo,
 	isShowingLogo,
+	handleSlideEdit,
 }: MainSlideProps) => {
-	//console.log('content: ' + Array(content));
+	// Ensure content is always an array
+	const items = Array.isArray(content) ? content : [content];
+	const { slides, slideIndex, updateSlidePage } = useSlides();
 	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
+	const [updatedContent, setUpdatedContent] = useState(items);
+	// useEffect(() => {
+	// 	// console.log(
+	// 	// 	'currentSlideIndex, items length, items content',
+	// 	// 	currentSlideIndex,
+	// 	// 	items.length,
+	// 	// 	items,
+	// 	// );
+	// 	console.log(
+	// 		'index and current slide content length',
+	// 		slideIndex,
+	// 		slides[slideIndex].content.length,
+	// 	);
+	// 	console.log(
+	// 		'index and current slide content',
+	// 		slideIndex,
+	// 		slides[slideIndex].content,
+	// 	);
+	// }, [slides[slideIndex].content]);
 
+	useEffect(() => {
+		console.log('updatedContent on page', slideIndex, updatedContent);
+	}, [updatedContent]);
+
+	const addButtonStyle = `
+    flex items-center justify-center
+    w-auto h-12
+    bg-gray-100 border-2 border-gray-300
+    text-gray-600 font-medium
+    px-6 py-2
+    text-base
+    cursor-pointer
+    rounded-md
+    shadow-md
+    transition duration-300 ease-in-out
+`;
+
+	const addButtonHoverStyle = `
+    hover:bg-gray-200
+    hover:text-gray-800
+    hover:border-gray-400
+    hover:shadow-lg
+`;
+
+	const addIconStyle = `
+    mr-2
+`;
+	const [showAddButton, setShowAddButton] = useState(
+		slides[slideIndex].content.length <= 1,
+	);
+
+	// let updatedContent = [...items];
+
+	const handleAddColumn = () => {
+		// Store the previous number of items
+		// const prevItemCount = slides[slideIndex].content.length;
+		// Update showAddButton based on the updated content array
+		setShowAddButton(updatedContent.length > 1);
+		// Call function to add new content item
+		console.log('add a new content item column:');
+		const newContentItem = (
+			<div
+				key={`content_${Date.now()}`}
+				className={`${slideIndex === 0 ? 'hidden' : ''}`}
+			>
+				<QuillEditable
+					content={''}
+					handleBlur={(newContent) =>
+						handleSlideEdit(
+							newContent,
+							slideIndex,
+							'content',
+							slides[slideIndex].content.length === 0 ? 0 : 1,
+							true,
+						)
+					}
+					style={{
+						...themeElements.contentFontCSS_non_vertical_content,
+						fontSize: '16pt',
+					}}
+					isVerticalContent={false}
+					templateKey={slides[slideIndex].template}
+				/>
+			</div>
+		);
+		setUpdatedContent((prevContent) => [...prevContent, newContentItem]);
+	};
 	return (
 		<div className={`SlideLayoutCanvas`} style={layoutElements.canvaCSS}>
 			<div
@@ -421,41 +516,80 @@ export const Col_2_img_0_layout = ({
 			</div>
 
 			<div
-				className={`SlideContentContainer`}
+				className={`w-full felx SlideContentContainer`}
 				style={layoutElements.contentContainerCSS}
 			>
-				{Array.isArray(content) &&
-					content.map((item, index) => (
+				<div className='Column1' style={layoutElements.contentCSS}>
+					<div
+						className={`SlideContentIndex`}
+						style={layoutElements.contentIndexCSS}
+					>
+						{1}
+					</div>
+					<div
+						className={`SlideContentIndexTextDivider`}
+						style={layoutElements.contentIndexTextDividerCSS}
+					></div>
+					{updatedContent.length === 0 && showAddButton && (
 						<div
-							// className='flex flex-col gap-[0.5rem]'
-							key={index}
-							className={`SlideContent`}
-							style={{
-								...layoutElements.contentCSS,
-								display: item === null || index > 1 ? 'none' : 'flex', // or 'flex' based on your layout
-							}}
+							className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
+							onClick={handleAddColumn}
 						>
-							<div
-								className={`SlideContentIndex`}
-								style={layoutElements.contentIndexCSS}
-							>
-								{index + 1}
-							</div>
-							<div
-								className={`SlideContentIndexTextDivider`}
-								// className='opacity-50 border border-neutral-900 border-opacity-40'
-								style={layoutElements.contentIndexTextDividerCSS}
-							></div>
+							<RiAddLine className={addIconStyle} />
+							Add One Column of text
+						</div>
+					)}
+					{updatedContent.slice(0, 1).map((item, index) => (
+						<>
 							<ul
+								key={`contentText_${index}_${Date.now()}`}
 								className={`SlideContentText`}
-								key={index}
-								// className={`flex flex-row w-full h-full grow `}
 								style={layoutElements.contentTextCSS}
 							>
 								<li style={{ width: '100%' }}>{item}</li>
 							</ul>
-						</div>
+						</>
 					))}
+				</div>
+
+				{
+					<div className='Column2' style={layoutElements.contentCSS}>
+						<div
+							className={`SlideContentIndex`}
+							style={layoutElements.contentIndexCSS}
+						>
+							{2}
+						</div>
+						<div
+							className={`SlideContentIndexTextDivider`}
+							style={layoutElements.contentIndexTextDividerCSS}
+						></div>
+						{updatedContent.length === 1 && showAddButton && (
+							<div
+								className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
+								onClick={handleAddColumn}
+							>
+								<div
+									className={`SlideContentIndexTextDivider`}
+									style={layoutElements.contentIndexTextDividerCSS}
+								></div>
+								<RiAddLine className={addIconStyle} />
+								Add One Column of text
+							</div>
+						)}
+						{updatedContent.slice(1, 2).map((item, index) => (
+							<>
+								<ul
+									key={`contentText_${index}_${Date.now()}`}
+									className={`SlideContentText`}
+									style={layoutElements.contentTextCSS}
+								>
+									<li style={{ width: '100%' }}>{item}</li>
+								</ul>
+							</>
+						))}
+					</div>
+				}
 			</div>
 			<div
 				className={`SlideLogo`}
