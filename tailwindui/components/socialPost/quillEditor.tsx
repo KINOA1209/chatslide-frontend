@@ -71,7 +71,7 @@ const toolbarOptions = [
 	['clean'],
 ];
 
-let Size = Quill.import('attributors/style/size');
+let Size = Quill.import('attributors/style/size') as any;
 Size.whitelist = fontSizes;
 Quill.register(Size, true);
 
@@ -90,7 +90,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			});
 
 			//quillInstanceRef.current.clipboard.dangerouslyPasteHTML(content);
-			const delta = quillInstanceRef.current.clipboard.convert(content as any);
+			const delta = quillInstanceRef.current.clipboard.convert({ html: content });
 			quillInstanceRef.current.setContents(delta);
 
 			quillInstanceRef.current.on('selection-change', () => {

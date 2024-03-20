@@ -1,7 +1,8 @@
 .ql-editor {
 	padding: 4px 4px;
 	font-size: 16pt;
-	font-family: 'Arimo', sans-serif;
+	font-family: 'Arimo';
+	white-space: normal !important;
 }
 
 .ql-editor:hover,
@@ -9,7 +10,7 @@
 	outline: 2px solid #545657;
 }
 
-.ql-editor ul {
+.ql-editor ol {
 	padding-left: 0 !important;
 }
 
@@ -19,7 +20,7 @@
 }
 
 .ql-tooltip {
-	z-index: 100;
+	z-index: 100 !important;
 	padding: 10px 10px !important;
 	height: 100px;
 	width: 450px;
@@ -30,7 +31,7 @@
 	cursor: pointer !important;
 }
 
-.ql-editor ul li {
+.ql-editor ol li {
 	padding-bottom: 10px;
 }
 
@@ -38,6 +39,7 @@
     color: #0047b2 !important;
     text-decoration: underline;
     cursor: pointer;
+	white-space: normal !important;
 }
 
 $font-sizes: (
