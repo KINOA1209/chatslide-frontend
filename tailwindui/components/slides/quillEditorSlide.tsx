@@ -29,7 +29,8 @@ function isKeyOfThemeColorConfig(
 	return key in themeColorConfigData;
 }
 
-const Font = Quill.import('attributors/style/font');
+//use attributors instead of formats to avoid requirement of hyphens
+const Font = Quill.import('attributors/style/font') as any;
 Font.whitelist = [
 	'Arimo',
 	'Arial',
@@ -58,7 +59,7 @@ Font.whitelist = [
 ];
 Quill.register(Font, true);
 
-let Size = Quill.import('attributors/style/size');
+let Size = Quill.import('attributors/style/size') as any;
 Size.whitelist = [
 	'12pt',
 	'13pt',
@@ -246,7 +247,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				font: style?.fontFamily,
 			};
 
-			const toolbar = quillInstanceRef.current.getModule('toolbar');
+			const toolbar = quillInstanceRef.current.getModule('toolbar') as any;
 
 			// clean logic redesign
 			// remove all the formatting except bullet point related style first
@@ -308,7 +309,12 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 							if (urlRegex.test(text)) {
 								quill.format('link', text);
 							} else {
-								alert('Selected text is not a valid URL');
+								const url = prompt('Enter a valid URL:', 'http://');
+								if (url && urlRegex.test(url)) {
+									quill.format('link', url);
+								} else {
+									alert('Please provide a valid URL.');
+								}
 							}
 						}
 					}
@@ -338,98 +344,107 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				}
 			});
 
-			const quill = quillInstanceRef.current;
-
-			// Handling the paste event, fix the bug that cannot copy/paste link from browser into editor
-			quill.root.addEventListener('paste', (event) => {
-				const clipboardData = event.clipboardData;
-				if (clipboardData) {
-					const text = clipboardData.getData('text/plain');
-					const html = clipboardData.getData('text/html');
-
-					event.preventDefault();
-
-					// Ensure there is a valid selection before inserting text
-					const selection = quill.getSelection();
-					if (selection) {
-						const index = selection.index;
-
-						// Insert the content into Quill editor at the current selection
-						if (html) {
-							quill.clipboard.dangerouslyPasteHTML(index, html);
-						} else if (text) {
-							quill.insertText(index, text);
-						}
-					} else {
-						// If there's no selection, insert at the end or handle as needed
-						quill.insertText(quill.getLength(), text);
-					}
-				}
-			});
-
-			// console.log(quillFormats);
-			const Delta = Quill.import('delta');
-			let initialDelta = new Delta();
-
+			const QuillDelta = Quill.import('delta');
+			let combinedDelta = new QuillDelta();
+		
 			const insertContent = (item: string) => {
 				if (isHTML(item)) {
-					const convertedDelta = quillInstanceRef?.current?.clipboard.convert(
-						item as any,
-					);
-					//console.log(convertedDelta)
-					if (
-						convertedDelta?.ops?.length === 0 ||
-						(convertedDelta?.ops?.length === 1 &&
-							typeof convertedDelta.ops[0].insert === 'string' &&
-							!convertedDelta.ops[0].insert.trim())
-					) {
-						// If it's empty, we might want to ensure a new line is inserted correctly
-						initialDelta.insert('\n');
+					// Convert HTML string to Delta format
+					const convertedDelta = quillInstanceRef.current?.clipboard.convert({ html: item });
+					//console.log("Converted Delta:", convertedDelta);
+			
+					// Check if the converted Delta is empty or not properly formatted
+					if (!convertedDelta || convertedDelta.ops.length === 0 ||
+						(convertedDelta.ops.length === 1 && typeof convertedDelta.ops[0].insert === 'string' && !convertedDelta.ops[0].insert.trim())) {
+						// Ensure a new line is inserted correctly if the converted content is empty
+						return new QuillDelta().insert('\n');
 					} else {
-						initialDelta = initialDelta.concat(convertedDelta);
-						if (item.includes('<p>')) {
-							initialDelta.insert('\n');
-						}
+						// Return the converted Delta as is, assuming it has the necessary content and formatting
+						return new QuillDelta(convertedDelta);
 					}
 				} else if (item.trim() === '') {
-					// For items meant to represent an empty line (like pressing Enter), insert a paragraph break
-					initialDelta.insert('\n');
+					// Handle case where item is meant to represent an empty line (like pressing Enter)
+					return new QuillDelta().insert('\n');
 				} else {
-					initialDelta.insert(`${item}\n`, quillFormats);
+					// For plain text, insert it with the defined formatting options
+					return new QuillDelta().insert(`${item}\n`, quillFormats);
 				}
 			};
-
-			//iterate throught the content array, if it's <li> tag, wrap into <ul> tag
+		
 			if (Array.isArray(content)) {
-				content.forEach((item, index) => {
-					if (isHTML(item)) {
-						if (item.trim().startsWith('<li') && item.includes('ql-indent-')) {
-							// Find the level of indentation from the class
-							const indentLevel = item.match(/ql-indent-(\d+)/);
-							const level = indentLevel ? parseInt(indentLevel[1], 10) : 0;
-							item = wrapListItem(item, level);
-						} else if (
-							item.trim().startsWith('<li>') &&
-							item.trim().endsWith('</li>')
-						) {
-							item = `<ul>${item}</ul>`;
-						}
-						insertContent(item);
-					} else {
-						insertContent(item);
-					}
+				content.forEach(item => {
+					const itemDelta = insertContent(item);
+					combinedDelta = combinedDelta.concat(itemDelta);
 				});
 			} else {
-				insertContent(content);
+				combinedDelta = insertContent(content);
 			}
-			//console.log('whole', initialDelta)
-			quillInstanceRef.current.setContents(initialDelta);
+			//console.log(combinedDelta)
+			quillInstanceRef.current.setContents(combinedDelta);
+			
+
+			// const Delta = Quill.import('delta');
+			// let initialDelta = new Delta();
+
+			// const insertContent = (item: string) => {
+			// 	if (isHTML(item)) {
+			// 		console.log(isHTML(item),item)
+			// 		const convertedDelta = quillInstanceRef?.current?.clipboard.convert({'html': item});
+			// 		console.log(convertedDelta)
+			// 		if (convertedDelta && convertedDelta?.ops?.length === 0 || 
+			// 		   (convertedDelta?.ops?.length === 1 && typeof convertedDelta.ops[0].insert === 'string' && !convertedDelta.ops[0].insert.trim())) {
+			// 			// If it's empty, we might want to ensure a new line is inserted correctly
+			// 			initialDelta.insert('\n');
+			// 		} 
+			// 		else {
+			// 			initialDelta = initialDelta.concat(convertedDelta as any);
+			// 			if (item.includes('<p>')) {
+			// 				initialDelta.insert('\n');
+			// 			} 
+			// 			else{
+			// 				initialDelta.insert(item)
+			// 			}
+			// 		}
+			// 	} 
+			// 	else if (item.trim() === '') {
+			// 		// For items meant to represent an empty line (like pressing Enter), insert a paragraph break
+			// 		initialDelta.insert('\n');
+			// 	} 
+			// 	else {
+			// 		initialDelta.insert(`${item}\n`, quillFormats);
+			// 	}
+			// };
+
+			//iterate throught the content array, if it's <li> tag, wrap into <ul> tag
+			//let combinedDelta = new Quill.import('delta')();
+			// if (Array.isArray(content)) {
+			// 	content.forEach((item) => {
+			// 		// if (isHTML(item)) {
+			// 		// 	if (item.trim().startsWith('<li') && item.includes('ql-indent-')) {
+			// 		// 		// Find the level of indentation from the class
+			// 		// 		const indentLevel = item.match(/ql-indent-(\d+)/);
+			// 		// 		const level = indentLevel ? parseInt(indentLevel[1], 10) : 0;
+			// 		// 		item = wrapListItem(item, level);
+			// 		// 	} 
+			// 		// 	else if (item.trim().startsWith('<li') && item.trim().endsWith('</li>')) {
+			// 		// 		item = `<ul>${item}</ul>`;
+			// 		// 	}
+			// 		// 	insertContent(item);
+			// 		// } else {
+			// 		// 	insertContent(item);
+			// 		// }
+			// 		insertContent(item);
+			// 	});
+			// } else {
+			// 	insertContent(content);
+			// }
+			//quillInstanceRef.current.setContents(initialDelta);
+
 			quillInstanceRef.current.on('text-change', () => {
-				//console.log('triggered')
 				isTextChangeRef.current = true;
 			});
+
 			quillInstanceRef.current.on('selection-change', () => {
-				//console.log(isTextChangeRef.current)
 				// if textchangeref is false, it will not trigger autosave
 				if (!isTextChangeRef.current) return;
 				const currentContent = quillInstanceRef.current?.root.innerHTML;
@@ -466,41 +481,6 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 					}
 				}
 			});
-
-			// const editor = editorRef.current;
-			// const updateTooltipPosition = () => {
-			// 	const toolbar = editor?.querySelector('.ql-tooltip');
-			// 	const arrow = editor?.querySelector('.ql-tooltip-arrow');
-			// 	const qlEditor = editor?.querySelector('.ql-editor');
-			// 	if (toolbar instanceof HTMLElement && arrow instanceof HTMLElement && qlEditor) {
-			// 		const topPosition = editor.offsetHeight + qlEditor.scrollTop;
-			// 		toolbar.style.position = 'absolute';
-			// 		toolbar.style.top = `${topPosition}px`;
-			// 		toolbar.style.display = 'block';
-			// 		arrow.style.position = 'absolute';
-			// 	}
-			// };
-
-			// quillInstanceRef.current.on('text-change', () => updateTooltipPosition());
-
-			// const qlEditor = editor.querySelector('.ql-editor');
-			// if (qlEditor) {
-			// 	qlEditor.addEventListener('scroll', () => updateTooltipPosition());
-			// }
-
-			// editorRef.current.addEventListener('focusin', () => {
-			// 	if (!isToolbarInteraction) {
-			// 		updateTooltipPosition()
-			// 	}});
-
-			// editorRef.current.addEventListener('focusout', (event) => {
-			// 	const toolbar = editorRef.current?.querySelector('.ql-tooltip');
-			// 	const relatedTarget = event.relatedTarget as Node;
-
-			// 	if (toolbar && toolbar instanceof HTMLElement && !toolbar.contains(relatedTarget)) {
-			// 		toolbar.style.display = 'none';
-			// 	}
-			// });
 		}
 	}, [handleBlur, content, style]);
 
