@@ -37,70 +37,63 @@ const ImageSelector: React.FC<Props> = ({
 				message='Upgrade for this 🌟premium feature!'
 				setShowModal={setShowPaywall}
 			/>
-			<div className='grid'>
-				<div className='gap-1 flex flex-col justify-start'>
-					<span className='text-md font-bold flex flex-row gap-2'>
-						<div>Do you want to use your {type} for slides?</div> {!isPaidUser && <PlusLabel />}
-					</span>
-					<form className='flex flex-row gap-x-4 mt-2 items-center'>
-						<label>
-							<div className='flex flex-row items-center gap-x-1'>
-								<input
-									type='radio'
-									value='yes'
-									checked={useImage}
-									onChange={(e) => {
-										if (!isPaidUser) setShowPaywall(true);
-										else setUseImage(true);
-									}}
-								/>
-								<span>Yes</span>
-							</div>
-						</label>
-						<label>
-							<div className='flex flex-row items-center gap-x-1'>
-								<input
-									type='radio'
-									value='no'
-									checked={!useImage}
-									onChange={(e) => setUseImage(false)}
-								/>
-								<span>No</span>
-							</div>
-						</label>
-					</form>
-				</div>
-
-				{useImage && (
-					<div
-						className={`transition-opacity duration-300 ease-in-out gap-1 flex flex-col justify-start`}
-					>
-						<span className='ml-2 text-md font-bold'>Upload {type}:</span>
-						<div className=''>
-							<SmallBlueButton
-								onClick={(e) => {
-									e.preventDefault();
-									setShowFileModal(true);
+			<div className='gap-1 flex flex-col justify-start'>
+				<span className='text-md font-bold flex flex-row gap-2'>
+					<div>Do you want to use your {type} for slides?</div> {!isPaidUser && <PlusLabel />}
+				</span>
+				<form className='flex flex-row gap-x-4 mt-2 items-center'>
+					<label>
+						<div className='flex flex-row items-center gap-x-1'>
+							<input
+								type='radio'
+								value='yes'
+								checked={useImage}
+								onChange={(e) => {
+									if (!isPaidUser) setShowPaywall(true);
+									else setUseImage(true);
 								}}
-							>
-								Browse File
-							</SmallBlueButton>
+							/>
+							<span>Yes</span>
 						</div>
-					</div>
-				)}
+					</label>
+					<label>
+						<div className='flex flex-row items-center gap-x-1'>
+							<input
+								type='radio'
+								value='no'
+								checked={!useImage}
+								onChange={(e) => setUseImage(false)}
+							/>
+							<span>No</span>
+						</div>
+					</label>
+				</form>
 			</div>
 
 			{useImage && (
-				<>
-					{selectedImage.length > 0 && <hr id='add_hr' />}
-					<div className='mt-[10px]'>
-						<SelectedResourcesList
-							selectedResources={selectedImage}
-							removeResourceAtIndex={removeImageAtIndex}
-						/>
+				<div
+					className={`transition-opacity duration-300 ease-in-out gap-1 flex flex-rol justify-start mt-2`}
+				>
+					<div className=''>
+						<SmallBlueButton
+							onClick={(e) => {
+								e.preventDefault();
+								setShowFileModal(true);
+							}}
+						>
+							Select {type}
+						</SmallBlueButton>
 					</div>
-					{selectedImage.length > 0 && type == 'logo' && <hr id='add_hr' />}
-				</>
+				</div>
+			)}
+
+			{useImage && (
+				<div className='mt-[10px]'>
+					<SelectedResourcesList
+						selectedResources={selectedImage}
+						removeResourceAtIndex={removeImageAtIndex}
+					/>
+				</div>
 			)}
 
 			<FileUploadModal
