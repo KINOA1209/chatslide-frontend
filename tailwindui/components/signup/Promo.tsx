@@ -22,11 +22,12 @@ const PromoComponent: React.FC<PromoComponentProps> = ({
 		};
 
 		const promo =
-			searchParams?.get('referral') || SessionStorage.getItem('promo');
+			searchParams?.get('referral') || searchParams?.get('sumocode') || searchParams?.get('code')  || SessionStorage.getItem('promo');
 		if (promo) {
 			handlePromoChange(promo);
 			setReferralValue(promo);
 			setShowPromo(true);
+			SessionStorage.setItem('promo', promo);	
 		}
 	}, []);
 

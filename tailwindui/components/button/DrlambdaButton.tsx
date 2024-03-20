@@ -284,7 +284,7 @@ export const SmallBlueButton: React.FC<DrlambdaButtonProps> = ({
 	return (
 		<button
 			onClick={onClick}
-			className={`mx-2 border border-1 ${getButtonStyle()} rounded text-Blue px-3 py-1`}
+			className={`border border-1 ${getButtonStyle()} rounded text-Blue px-3 py-1`}
 			disabled={isSubmitting || disabled}
 		>
 			{children}
