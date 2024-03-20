@@ -32,9 +32,10 @@ export const Business_002_TemplateLayoutsConfig: {
 		userNameCSS: {
 			zIndex: 30,
 			position: 'absolute',
-			top: '70%',
-			left: '30%',
-			transform: 'translate(-85%, 0%)', // Centering trick
+			top: '92%',
+			left: '80%',
+			transform: 'translate(-50%, -40%)', // Centering trick
+			width: 'max-content',
 		},
 		columnCSS: {
 			width: '100%', // Equivalent to w-1/2
@@ -77,12 +78,20 @@ export const Business_002_TemplateLayoutsConfig: {
 			backgroundColor: '#DEFF56',
 			// margin: '0rem 4rem 2rem 1rem',
 		},
+		// userNameCSS: {
+		// 	zIndex: 30,
+		// 	position: 'absolute',
+		// 	top: '70%',
+		// 	left: '30%',
+		// 	transform: 'translate(-85%, 0%)', // Centering trick
+		// },
 		userNameCSS: {
 			zIndex: 30,
 			position: 'absolute',
-			top: '70%',
-			left: '30%',
-			transform: 'translate(-85%, 0%)', // Centering trick
+			top: '92%',
+			left: '80%',
+			transform: 'translate(-50%, -40%)', // Centering trick
+			width: 'max-content',
 		},
 		columnCSS: {
 			// paddingTop: '1rem', // Equivalent to pt-[1rem]
