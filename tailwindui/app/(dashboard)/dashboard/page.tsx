@@ -14,6 +14,7 @@ import { UserStatus, useUser } from '@/hooks/use-user';
 import OnboardingSurvey from '@/components/slides/onboardingSurvey/OnboardingSurvey';
 import UserService from '@/services/UserService';
 import { Loading, Blank } from '@/components/ui/Loading';
+import SessionStorage from '@/utils/SessionStorage';
 
 export default function Dashboard() {
 	const [projects, setProjects] = useState<Project[]>([]);
@@ -50,6 +51,29 @@ export default function Dashboard() {
 
 	const init = async () => {
 		if (!token) return; // sidebar will show a modal to ask user to login
+
+		const promo = SessionStorage.getItem('promo');
+		if (promo) {
+			const { status, message } = await UserService.applyPromoCode(
+				promo,
+				token,
+			);
+			console.log(status, message);
+			if (status == 200) {
+				toast.success("Your code is successfully applied!", {
+					position: 'top-center',
+					autoClose: 2000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'light',
+				});
+				SessionStorage.removeItem('promo');
+			}
+		}
+
 		fetchProjects();
 		const surveyFinished = await UserService.checkSurveyFinished(token);
 		if (!surveyFinished) {

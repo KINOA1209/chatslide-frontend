@@ -30,28 +30,6 @@ export default function SSORedirect() {
 
 			if (idToken) {
 				await UserService.initializeUser(idToken);
-				const promo = SessionStorage.getItem('promo');
-				if (promo) {
-					const { status, message } = await UserService.applyPromoCode(
-						promo,
-						idToken,
-					);
-					console.log(status, message);
-					if (status == 200) {
-						toast.success(message, {
-							position: 'top-center',
-							autoClose: 2000,
-							hideProgressBar: false,
-							closeOnClick: true,
-							pauseOnHover: true,
-							draggable: true,
-							progress: undefined,
-							theme: 'light',
-						});
-						SessionStorage.removeItem('promo');
-					}
-				}
-
 				router.push('/dashboard');
 			} else {
 				console.error('Error fetching token, need to sign up again.');
