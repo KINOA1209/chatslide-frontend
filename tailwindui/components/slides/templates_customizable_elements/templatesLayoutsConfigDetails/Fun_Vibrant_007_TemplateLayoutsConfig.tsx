@@ -31,6 +31,7 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			top: '92%',
 			left: '80%',
 			transform: 'translate(-50%, -40%)', // Centering trick
+			width: 'max-content',
 		},
 		columnCSS: {
 			paddingTop: '1rem', // Equivalent to pt-[1rem]
@@ -70,6 +71,7 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			top: '92%',
 			left: '80%',
 			transform: 'translate(-50%, -40%)', // Centering trick
+			width: 'max-content',
 		},
 		titleCSS: {
 			paddingLeft: '2rem',

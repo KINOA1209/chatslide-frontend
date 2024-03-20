@@ -415,24 +415,6 @@ export const Col_2_img_0_layout = ({
 	const { slides, slideIndex, updateSlidePage } = useSlides();
 	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
 	const [updatedContent, setUpdatedContent] = useState(items);
-	// useEffect(() => {
-	// 	// console.log(
-	// 	// 	'currentSlideIndex, items length, items content',
-	// 	// 	currentSlideIndex,
-	// 	// 	items.length,
-	// 	// 	items,
-	// 	// );
-	// 	console.log(
-	// 		'index and current slide content length',
-	// 		slideIndex,
-	// 		slides[slideIndex].content.length,
-	// 	);
-	// 	console.log(
-	// 		'index and current slide content',
-	// 		slideIndex,
-	// 		slides[slideIndex].content,
-	// 	);
-	// }, [slides[slideIndex].content]);
 
 	useEffect(() => {
 		console.log('updatedContent on page', slideIndex, updatedContent);
@@ -462,7 +444,8 @@ export const Col_2_img_0_layout = ({
     mr-2
 `;
 	const [showAddButton, setShowAddButton] = useState(
-		slides[slideIndex].content.length <= 1,
+		// slides[slideIndex].content.length <= 1,
+		updatedContent.length <= 1,
 	);
 
 	// let updatedContent = [...items];
@@ -470,8 +453,7 @@ export const Col_2_img_0_layout = ({
 	const handleAddColumn = () => {
 		// Store the previous number of items
 		// const prevItemCount = slides[slideIndex].content.length;
-		// Update showAddButton based on the updated content array
-		setShowAddButton(updatedContent.length > 1);
+
 		// Call function to add new content item
 		console.log('add a new content item column:');
 		const newContentItem = (
@@ -492,7 +474,7 @@ export const Col_2_img_0_layout = ({
 					}
 					style={{
 						...themeElements.contentFontCSS_non_vertical_content,
-						fontSize: '16pt',
+						fontSize: '24pt',
 					}}
 					isVerticalContent={false}
 					templateKey={slides[slideIndex].template}
@@ -500,6 +482,9 @@ export const Col_2_img_0_layout = ({
 			</div>
 		);
 		setUpdatedContent((prevContent) => [...prevContent, newContentItem]);
+		// Update showAddButton based on the updated content array
+		setShowAddButton(updatedContent.length <= 1);
+		// updateSlidePage(slideIndex, slides[slideIndex], false);
 	};
 	return (
 		<div className={`SlideLayoutCanvas`} style={layoutElements.canvaCSS}>

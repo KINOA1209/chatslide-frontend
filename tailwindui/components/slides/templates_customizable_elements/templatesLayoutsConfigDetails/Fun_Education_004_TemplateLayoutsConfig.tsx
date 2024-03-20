@@ -31,12 +31,20 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 		userNameTextDividerCSS: {
 			display: 'none',
 		},
+		// userNameCSS: {
+		// 	zIndex: 20,
+		// 	position: 'absolute',
+		// 	top: '65%',
+		// 	left: '22%',
+		// 	transform: 'translate(-50%, -50%)', // Centering trick
+		// },
 		userNameCSS: {
-			zIndex: 20,
+			zIndex: 30,
 			position: 'absolute',
-			top: '65%',
-			left: '22%',
-			transform: 'translate(-50%, -50%)', // Centering trick
+			top: '92%',
+			left: '80%',
+			transform: 'translate(-50%, -40%)', // Centering trick
+			width: 'max-content',
 		},
 		columnCSS: {
 			paddingTop: '1rem', // Equivalent to pt-[1rem]
@@ -82,12 +90,20 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			transform: 'translate(-50%, -50%)', // Centering trick
 			maxHeight: '80%',
 		},
+		// userNameCSS: {
+		// 	zIndex: 20,
+		// 	position: 'absolute',
+		// 	top: '65%',
+		// 	left: '22%',
+		// 	transform: 'translate(-50%, -50%)', // Centering trick
+		// },
 		userNameCSS: {
-			zIndex: 20,
+			zIndex: 30,
 			position: 'absolute',
-			top: '65%',
-			left: '22%',
-			transform: 'translate(-50%, -50%)', // Centering trick
+			top: '92%',
+			left: '80%',
+			transform: 'translate(-50%, -40%)', // Centering trick
+			width: 'max-content',
 		},
 		columnCSS: {
 			// paddingTop: '1rem', // Equivalent to pt-[1rem]
