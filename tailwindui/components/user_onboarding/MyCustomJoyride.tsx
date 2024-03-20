@@ -143,12 +143,19 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 	return (
 		<>
 			{/* {shouldShowOverlay && <div className='custom-overlay' />} */}
-			<ExitTourButton
+			{isTourActive && (
+				<ExitTourButton
+					onClick={handleExitTour}
+					imgSRC={ExitTourButtonImg.src}
+					isTourActive={isTourActive}
+				></ExitTourButton>
+			)}
+			{/* <ExitTourButton
 				onClick={handleExitTour}
 				imgSRC={ExitTourButtonImg.src}
 				isTourActive={isTourActive}
-			></ExitTourButton>
-			<UserOnboardingButton onClick={startTour}></UserOnboardingButton>
+			></ExitTourButton> */}
+			{/* <UserOnboardingButton onClick={startTour}></UserOnboardingButton> */}
 			<Joyride
 				steps={steps}
 				continuous
