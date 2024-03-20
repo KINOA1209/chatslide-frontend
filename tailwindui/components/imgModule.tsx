@@ -1103,7 +1103,7 @@ export const ImgModule = ({
 								onError={(e) => {
 									console.log('failed to load image', imgsrc);
 									setImgLoadError(true);
-									updateSingleCallback('shuffle');
+									updateSingleCallback('shuffle', false, {});
 								}}
 							/>
 						</Rnd>
@@ -1188,7 +1188,7 @@ export const ImgModule = ({
 													button={
 														<button
 															onClick={() => {
-																updateSingleCallback('shuffle');
+																updateSingleCallback('shuffle', false, {});
 															}}
 														>
 															<HiOutlineRefresh
