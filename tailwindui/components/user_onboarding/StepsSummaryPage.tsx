@@ -1,5 +1,5 @@
 // stepsSummaryPage.tsx
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { CustomStep } from './MyCustomJoyride';
 import SummaryPageStep1Welcome from '@/public/images/user_onboarding/SummaryPageStep1Welcom.png';
 import { TutorialStepContent } from './CustomComponents';
@@ -7,8 +7,11 @@ import {
 	PrimaryColorButton,
 	SecondaryColorButton,
 } from './UserOnboardingButtons';
+import useTourStore from './TourStore';
 
-const StepsSummaryPage: () => CustomStep[] = () => {
+const StepsSummaryPage: (isNextEnabled: boolean) => CustomStep[] = (
+	isNextEnabled,
+) => {
 	const getImagePlaceholder = (index: number) => {
 		return `https://via.placeholder.com/300x200.png?text=Step+${index + 1}`;
 	};
@@ -57,13 +60,12 @@ const StepsSummaryPage: () => CustomStep[] = () => {
 			showSkipButton: false,
 			locale: {
 				back: <SecondaryColorButton label={'Back'} />,
-				next: <PrimaryColorButton label={'Next'} />,
+				next: <PrimaryColorButton label={'Next'} disabled={!isNextEnabled} />,
 			},
-			placement: 'bottom',
+			placement: 'top',
 			styles: {
 				tooltip: {
 					maxWidth: '32rem', // Set the max width of the tooltip
-					// Add any other styles as needed
 				},
 				// Add styles for other elements as needed
 			},
@@ -93,31 +95,31 @@ const StepsSummaryPage: () => CustomStep[] = () => {
 				// Add styles for other elements as needed
 			},
 		},
-		{
-			target: '#SummaryStep-4',
-			content: (
-				<TutorialStepContent
-					action={'Choose a theme 🎨'}
-					explanation={
-						'You could choose a theme based on your needs - whether you need more images or more charts.'
-					}
-				></TutorialStepContent>
-			),
-			showSkipButton: false,
-			locale: {
-				back: <SecondaryColorButton label={'Back'} />,
-				next: <PrimaryColorButton label={'Next'} />,
-				// last: <PrimaryColorButton label={'End Tour'} />,
-			},
-			placement: 'bottom',
-			styles: {
-				tooltip: {
-					maxWidth: '32rem', // Set the max width of the tooltip
-					// Add any other styles as needed
-				},
-				// Add styles for other elements as needed
-			},
-		},
+		// {
+		// 	target: '#SummaryStep-4',
+		// 	content: (
+		// 		<TutorialStepContent
+		// 			action={'Choose a theme 🎨'}
+		// 			explanation={
+		// 				'You could choose a theme based on your needs - whether you need more images or more charts.'
+		// 			}
+		// 		></TutorialStepContent>
+		// 	),
+		// 	showSkipButton: false,
+		// 	locale: {
+		// 		back: <SecondaryColorButton label={'Back'} />,
+		// 		next: <PrimaryColorButton label={'Next'} />,
+		// 		// last: <PrimaryColorButton label={'End Tour'} />,
+		// 	},
+		// 	placement: 'bottom',
+		// 	styles: {
+		// 		tooltip: {
+		// 			maxWidth: '32rem', // Set the max width of the tooltip
+		// 			// Add any other styles as needed
+		// 		},
+		// 		// Add styles for other elements as needed
+		// 	},
+		// },
 		{
 			target: '.user-onboarding-GPTToggle',
 			content: (
