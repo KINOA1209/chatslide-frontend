@@ -67,6 +67,7 @@ const StepsSummaryPage: (isNextEnabled: boolean) => CustomStep[] = (
 				tooltip: {
 					maxWidth: '32rem', // Set the max width of the tooltip
 				},
+
 				// Add styles for other elements as needed
 			},
 		},
