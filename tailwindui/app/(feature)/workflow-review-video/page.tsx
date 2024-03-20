@@ -38,11 +38,10 @@ const VideoVisualizer = ({
 						finish.{' '}
 					</p>
 					<p>
-						You can stay on this page and wait, or safely leave the page and
-						check back later.
+						You can safely leave the page and check back later.
 					</p>
 					<p>
-						Once the video is ready, we will send you an notifying email 📧.
+						Once the video is ready, we will also send you an notifying email 📧.
 					</p>
 				</Loading>
 			)}

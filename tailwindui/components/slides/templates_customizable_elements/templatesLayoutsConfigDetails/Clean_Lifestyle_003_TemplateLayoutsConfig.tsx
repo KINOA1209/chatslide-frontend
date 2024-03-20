@@ -33,7 +33,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			top: '92%',
 			left: '80%',
 			transform: 'translate(-50%, -40%)', // Centering trick
-			whiteSpace: 'nowrap',
+			width: 'max-content',
 		},
 		columnCSS: {
 			// paddingTop: '1rem', // Equivalent to pt-[1rem]
@@ -78,7 +78,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			top: '92%',
 			left: '80%',
 			transform: 'translate(-50%, -40%)', // Centering trick
-			whiteSpace: 'nowrap',
+			width: 'max-content',
 		},
 		titleCSS: {
 			paddingLeft: '2rem',
@@ -474,7 +474,9 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			zIndex: 30,
 			display: 'flex',
 			flexDirection: 'column',
-			padding: '2rem 2rem 2rem 2rem',
+			paddingLeft: '2rem',
+			paddingRight: '2rem',
+			paddingTop: '2rem',
 			// justifyContent: 'center',
 			// alignItems: 'center',
 		},

@@ -79,7 +79,7 @@ Size.whitelist = [
 Quill.register(Size, true);
 
 const toolbarOptions = [
-	[{ size: Size.whitelist }, { font: Font.whitelist }, 'bold', 'italic',],
+	[{ size: Size.whitelist }, { font: Font.whitelist }, 'bold', 'italic'],
 	['underline', 'strike', 'code-block'],
 	[{ list: 'bullet' }],
 	[{ script: 'sub' }, { script: 'super' }],
@@ -136,23 +136,23 @@ export const isHTML = (input: string): boolean => {
 };
 
 function wrapListItem(item: string, level: number): string {
-    // Determine the type of list (ul or ol) based on the presence of ql-indent class
-    const listType = item.includes('ql-indent-') ? 'ul' : 'ol';
+	// Determine the type of list (ul or ol) based on the presence of ql-indent class
+	const listType = item.includes('ql-indent-') ? 'ul' : 'ol';
 
-    // Construct the opening and closing tags for the list
-    const listOpeningTag = `<${listType}>`;
-    const listClosingTag = `</${listType}>`;
-    let wrappedItem = listOpeningTag + item;
+	// Construct the opening and closing tags for the list
+	const listOpeningTag = `<${listType}>`;
+	const listClosingTag = `</${listType}>`;
+	let wrappedItem = listOpeningTag + item;
 
-    // Calculate the number of closing tags needed to match the indentation level
-    const closingTagsCount = level > 0 ? level : 0;
+	// Calculate the number of closing tags needed to match the indentation level
+	const closingTagsCount = level > 0 ? level : 0;
 
-    // Add closing tags to match the indentation level
-    for (let i = 0; i < closingTagsCount; i++) {
-        wrappedItem += listClosingTag;
-    }
+	// Add closing tags to match the indentation level
+	for (let i = 0; i < closingTagsCount; i++) {
+		wrappedItem += listClosingTag;
+	}
 
-    return wrappedItem;
+	return wrappedItem;
 }
 
 // const BubbleTheme = Quill.import('themes/bubble');
@@ -231,6 +231,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			quillInstanceRef.current = new Quill(editorRef.current, {
 				modules: { toolbar: customizedToolbarOptions },
 				theme: 'bubble',
+				placeholder: 'add some text here...',
 				//bounds: editorRef.current,
 			});
 
@@ -293,7 +294,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			// insert link button
 			toolbar.addHandler('link', () => {
 				const quill = quillInstanceRef.current;
-				if (quill){
+				if (quill) {
 					const range = quill.getSelection();
 					if (range && range.length > 0) {
 						const formats = quill.getFormat(range);
@@ -318,7 +319,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 						}
 					}
 				}
-			})
+			});
 
 			editorRef.current.addEventListener('click', (event) => {
 				const target = event.target as HTMLElement;

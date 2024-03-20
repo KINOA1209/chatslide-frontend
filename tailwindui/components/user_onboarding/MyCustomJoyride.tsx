@@ -29,7 +29,13 @@ interface MyCustomJoyrideProps {
 
 const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 	// const [isTourActive, setIsTourActive] = useState(true);
-	const { isTourActive, startTour, setIsTourActive } = useTourStore();
+	const {
+		isTourActive,
+		startTour,
+		setIsTourActive,
+		isNextEnabled,
+		setIsNextEnabled,
+	} = useTourStore();
 	const [showConfirmation, setShowConfirmation] = useState(false);
 	const [showFeedbackWindow, setShowFeedbackWindow] = useState(false);
 	const [showTourEndPromptWindow, setShowTourEndPromptWindow] = useState(false);
@@ -83,6 +89,9 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 		} else if (data.action === 'reset') {
 			setIsTourActive(false);
 			setShowFeedbackWindow(true);
+		} else if (data.action === 'next') {
+			// Here, you can update isNextEnabled based on user interaction
+			setIsNextEnabled(true);
 		}
 
 		// Check if the current step is the last step and the page is "SlidesPage"
@@ -134,12 +143,19 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 	return (
 		<>
 			{/* {shouldShowOverlay && <div className='custom-overlay' />} */}
-			<ExitTourButton
+			{isTourActive && (
+				<ExitTourButton
+					onClick={handleExitTour}
+					imgSRC={ExitTourButtonImg.src}
+					isTourActive={isTourActive}
+				></ExitTourButton>
+			)}
+			{/* <ExitTourButton
 				onClick={handleExitTour}
 				imgSRC={ExitTourButtonImg.src}
 				isTourActive={isTourActive}
-			></ExitTourButton>
-			<UserOnboardingButton onClick={startTour}></UserOnboardingButton>
+			></ExitTourButton> */}
+			{/* <UserOnboardingButton onClick={startTour}></UserOnboardingButton> */}
 			<Joyride
 				steps={steps}
 				continuous

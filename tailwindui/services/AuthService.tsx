@@ -6,28 +6,12 @@ AmplifyAuth.configure(awsConfig);
 
 class AuthService {
 	async googleSignIn() {
-		const signInWindow = window.open('', '_blank');
-
 		try {
-			const credentials = await AmplifyAuth.federatedSignIn({
+			await AmplifyAuth.federatedSignIn({
 				provider: CognitoHostedUIIdentityProvider.Google,
 			});
-
-			if (signInWindow) {
-				signInWindow.close();
-			}
-
-			const uid = credentials.identityId;
-			const token = credentials.sessionToken;
-
-			return { uid, token };
 		} catch (error) {
 			console.error(error);
-
-			if (signInWindow) {
-				signInWindow.close();
-			}
-
 			throw error;
 		}
 	}

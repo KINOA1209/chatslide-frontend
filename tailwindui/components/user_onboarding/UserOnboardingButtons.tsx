@@ -36,13 +36,17 @@ interface ButtonProps {
 	onClick?: () => void;
 	label: string;
 	primary?: boolean;
+	disabled?: boolean;
 }
 
-const PrimaryColorButton: FC<ButtonProps> = ({ onClick, label }) => {
+const PrimaryColorButton: FC<ButtonProps> = ({ onClick, label, disabled }) => {
 	return (
 		<button
 			onClick={onClick}
-			className='w-24 h-10 px-2 py-0.5 bg-[#2943E9] rounded justify-center items-center gap-1.5 inline-flex'
+			className={`w-24 h-10 px-2 py-0.5 ${
+				disabled ? 'bg-[#919DAA]' : 'bg-[#2943E9]'
+			} rounded justify-center items-center gap-1.5 inline-flex`}
+			disabled={disabled}
 		>
 			<span className='text-center text-zinc-100 text-base font-medium font-creato-medium leading-none tracking-wide'>
 				{label}
@@ -51,11 +55,16 @@ const PrimaryColorButton: FC<ButtonProps> = ({ onClick, label }) => {
 	);
 };
 
-const SecondaryColorButton: FC<ButtonProps> = ({ onClick, label }) => {
+const SecondaryColorButton: FC<ButtonProps> = ({
+	onClick,
+	label,
+	disabled,
+}) => {
 	return (
 		<button
 			onClick={onClick}
 			className='w-24 h-10 px-2 py-0.5 rounded border border-[#FFFFFF] justify-center items-center gap-1.5 inline-flex'
+			disabled={disabled}
 		>
 			<span className='text-center text-[#2943E9] text-base font-medium font-creato-medium leading-none tracking-wide'>
 				{label}

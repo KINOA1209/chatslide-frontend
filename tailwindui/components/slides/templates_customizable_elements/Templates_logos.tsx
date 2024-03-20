@@ -109,7 +109,7 @@ const generateTemplateLogo = ({
 					unoptimized={true}
 					src={isCoverPage ? coverLogo : nonCoverLogo}
 					alt='Template Logo'
-					className={`w-[${logoWidth}rem] h-auto`}
+					className={`w-[${logoWidth}rem] h-auto opacity-40`}
 				/>
 			) : (
 				// 			<div

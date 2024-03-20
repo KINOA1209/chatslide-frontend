@@ -48,7 +48,13 @@ const audienceList = [
 ];
 
 export default function Topic() {
-	const { isTourActive, startTour, setIsTourActive } = useTourStore();
+	const {
+		isTourActive,
+		startTour,
+		setIsTourActive,
+		isNextEnabled,
+		setIsNextEnabled,
+	} = useTourStore();
 	const router = useRouter();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [showFileModal, setShowFileModal] = useState(false);
@@ -117,11 +123,17 @@ export default function Topic() {
 	}
 
 	const updateTopic = (topic: string) => {
+		if (topic.length < MIN_TOPIC_LENGTH) {
+			setIsNextEnabled(false);
+			setTopicError(`Please enter at least ${MIN_TOPIC_LENGTH} characters.`);
+		}
 		if (topic.length >= MIN_TOPIC_LENGTH) {
+			setIsNextEnabled(true);
 			setTopicError('');
 		}
 		if (topic.length > MAX_TOPIC_LENGTH) {
 			setTopic(topic.slice(0, MAX_TOPIC_LENGTH));
+			setIsNextEnabled(true);
 		} else {
 			setTopic(topic);
 		}
@@ -153,7 +165,7 @@ export default function Topic() {
 
 		const knowledge_summary =
 			typeof window !== 'undefined' &&
-				sessionStorage.knowledge_summary != undefined
+			sessionStorage.knowledge_summary != undefined
 				? JSON.parse(sessionStorage.knowledge_summary)
 				: '';
 
@@ -255,14 +267,17 @@ export default function Topic() {
 				);
 
 				// Redirect to a new page with the data, and id in the query string
-				router.push(addIdToRedir('workflow-edit-outlines', outlinesJson.data.id));
+				router.push(
+					addIdToRedir('workflow-edit-outlines', outlinesJson.data.id),
+				);
 			} else if (response.status == 402) {
 				setShowPaymentModal(true);
 				setIsSubmitting(false);
 			} else {
+				console.error('Error when generating outlines:', response);
 				toast.error(
 					'Server is busy now. Please try again later. Reference code: ' +
-					project?.id,
+						project?.id,
 				);
 				setIsSubmitting(false);
 			}
@@ -300,8 +315,12 @@ export default function Topic() {
 	if (!useHydrated()) return <></>;
 
 	return (
-		<section>
-			<MyCustomJoyride steps={StepsSummaryPage()} />
+		<div className='relative'>
+			{/* user tutorial */}
+			<div className='absolute right-[2rem] top-[7rem] flex flex-col items-end space-x-4'>
+				<ActionsToolBar startTour={startTour} onlyShowTutorial={true} />
+			</div>
+			<MyCustomJoyride steps={StepsSummaryPage(isNextEnabled)} />
 			<PaywallModal
 				showModal={showPaymentModal}
 				setShowModal={setShowPaymentModal}
@@ -345,78 +364,88 @@ export default function Topic() {
 							removeResourceAtIndex={removeResourceAtIndex}
 						/>
 					)}
+
 					{/* text area section */}
+
 					<Card>
-						{/* title */}
-						<div className='title1'>
-							<BigTitle>Summary</BigTitle>
-							{/* <p id='after1'>
+						{/* for tutorial step 1, the summary #SummaryStep-2 */}
+						<div id='SummaryStep-2'>
+							{/* title */}
+							<div className='title1'>
+								<BigTitle>Summary</BigTitle>
+								{/* <p id='after1'>
 								{' '}
 								{generationMode === 'from_topic' ? '(Required)' : '(Optional)'}
 							</p> */}
-							<Explanation>
-								To get started, give us some high-level intro about your
-								project.
-							</Explanation>
-						</div>
-						{generationMode === 'from_topic' && (
-							<div>
-								<div className='flex items-center gap-1'>
-									<Instruction>Project Topic</Instruction>
-									<ExplanationPopup>
-										The main subject or theme of your project. It will set the
-										direction and focus of the contents.
-									</ExplanationPopup>
-								</div>
-								<div className='border border-2 border-gray-200 rounded-md'>
-									<textarea
-										onChange={(e) => updateTopic(e.target.value)}
-										className='focus:ring-0 text-l md:text-xl'
-										id='topic'
-										value={topic}
-										maxLength={MAX_TOPIC_LENGTH}
-										required
-										placeholder='How to use ultrasound to detect breast cancer'
-									></textarea>
-								</div>
 								<Explanation>
-									{MAX_TOPIC_LENGTH - topic.length} characters left
+									To get started, give us some high-level intro about your
+									project.
 								</Explanation>
-								<ErrorMessage>{topicError}</ErrorMessage>
 							</div>
-						)}
-
-						{/* DropDown menu section */}
-						<div className='w-full gap-2 flex flex-col sm:grid sm:grid-cols-2'>
-							<div className='flex flex-col'>
-								<div className='flex flex-row gap-1 items-center'>
-									<Instruction>Your Audience</Instruction>
-									<ExplanationPopup>
-										Specify the intended viewers of your projects, tailoring to
-										your audience ensures the content resonates effectively.
-									</ExplanationPopup>
+							{generationMode === 'from_topic' && (
+								<div>
+									<div className='flex items-center gap-1'>
+										<Instruction>Project Topic</Instruction>
+										<ExplanationPopup>
+											The main subject or theme of your project. It will set the
+											direction and focus of the contents.
+										</ExplanationPopup>
+									</div>
+									<div className='border border-2 border-gray-200 rounded-md'>
+										<textarea
+											onChange={(e) => updateTopic(e.target.value)}
+											className='focus:ring-0 text-l md:text-xl'
+											id='topic'
+											value={topic}
+											maxLength={MAX_TOPIC_LENGTH}
+											required
+											placeholder='How to use ultrasound to detect breast cancer'
+										></textarea>
+									</div>
+									<Explanation>
+										{MAX_TOPIC_LENGTH - topic.length} characters left
+									</Explanation>
+									<ErrorMessage>{topicError}</ErrorMessage>
 								</div>
-								<DropDown
-									onChange={(e) => setAudience(e.target.value)}
-									style='input'
-									width='80%'
-									value={audience}
-								>
-									<option key='unselected' value='unselected' disabled>
-										Choose your audience
-									</option>
-									{audienceList.map((value) => (
-										<option key={value} value={value}>
-											{value}
+							)}
+
+							{/* DropDown menu section */}
+							<div className='w-full gap-2 flex flex-col sm:grid sm:grid-cols-2'>
+								<div className='flex flex-col'>
+									<div className='flex flex-row gap-1 items-center'>
+										<Instruction>Your Audience</Instruction>
+										<ExplanationPopup>
+											Specify the intended viewers of your projects, tailoring
+											to your audience ensures the content resonates
+											effectively.
+										</ExplanationPopup>
+									</div>
+									<DropDown
+										onChange={(e) => setAudience(e.target.value)}
+										style='input'
+										width='80%'
+										value={audience}
+									>
+										<option key='unselected' value='unselected' disabled>
+											Choose your audience
 										</option>
-									))}
-								</DropDown>
+										{audienceList.map((value) => (
+											<option key={value} value={value}>
+												{value}
+											</option>
+										))}
+									</DropDown>
+								</div>
+								<LanguageSelector
+									language={language}
+									setLanguage={setLanguage}
+								/>
 							</div>
-							<LanguageSelector language={language} setLanguage={setLanguage} />
 						</div>
 					</Card>
 
 					{/* supporting docs  section */}
+
 					{generationMode === 'from_topic' && (
 						<AddResourcesSection
 							searchOnlineScope={searchOnlineScope}
@@ -429,6 +458,6 @@ export default function Topic() {
 					)}
 				</Panel>
 			</Column>
-		</section>
+		</div>
 	);
 }

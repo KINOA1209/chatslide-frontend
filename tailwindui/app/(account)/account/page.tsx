@@ -130,39 +130,45 @@ const Profile = () => {
 				<Instruction>
 					Email
 				</Instruction>
-
-				<InputBox>
-					<FaInbox className='text-gray-600' />
-					<input
-						id='email'
-						type='text'
-						className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
-						// disabled
-						value={email}
-						readOnly
-					/>
-					<FaLock className='text-gray-600' />
-				</InputBox>
+				<div className='w-full justify-center flex flex-row'>
+					<div className='w-full flex grow max-w-[60rem] justify-center'>
+						<InputBox>
+							<FaInbox className='text-gray-600' />
+							<input
+								id='email'
+								type='text'
+								className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+								// disabled
+								value={email}
+								readOnly
+							/>
+							<FaLock className='text-gray-600' />
+						</InputBox>
+					</div>
+				</div>
 			</div>
 			<form onSubmit={handleSubmitUsername}>
 				<div className='w-full'>
 					<Instruction>
 						Username
 					</Instruction>
-					<div className='flex w-full flex-row gap-4 justify-center mt-2'>
-						<InputBox>
-							<FaUser className='text-gray-600' />
-							<input
-								id='username'
-								type='text'
-								className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
-								onChange={(e) => handleUsernameChange(e)}
-								value={editUsername}
-							/>
-						</InputBox>
-						<BigBlueButton onClick={() => { }} isSubmitting={isSubmitting}>
-							Update
-						</BigBlueButton>
+
+					<div className='w-full justify-center flex flex-row'>
+						<div className='flex w-full max-w-[60rem] flex-row gap-4 justify-center mt-2'>
+							<InputBox>
+								<FaUser className='text-gray-600' />
+								<input
+									id='username'
+									type='text'
+									className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+									onChange={(e) => handleUsernameChange(e)}
+									value={editUsername}
+								/>
+							</InputBox>
+							<BigBlueButton onClick={() => { }} isSubmitting={isSubmitting}>
+								Update
+							</BigBlueButton>
+						</div>
 					</div>
 				</div>
 			</form>
@@ -176,7 +182,11 @@ const Referral = () => {
 			<Instruction>
 				Referral
 			</Instruction>
-			<ReferralLink />
+			<div className='w-full justify-center flex grow flex-row'>
+				<div className='max-w-[60rem] w-full'>
+					<ReferralLink />
+				</div>
+			</div>
 		</div>
 	);
 };
@@ -267,7 +277,7 @@ const ApplyPromo = () => {
 			true,
 		);
 		if (status == 200) {
-			toast.success(message, {
+			toast.success("Your code is successfully applied!", {
 				position: 'top-center',
 				autoClose: 2000,
 				hideProgressBar: false,
@@ -299,7 +309,7 @@ const ApplyPromo = () => {
 				Apply Promo Code or License Key
 			</Instruction>
 			<div className='w-full justify-center flex flex-row'>
-				<div className='flex w-[30rem] flex-row gap-4 justify-center mt-2'>
+				<div className='flex grow max-w-[60rem] flex-row gap-4 justify-center mt-2'>
 					<InputBox>
 						<input
 							id='promo'
@@ -357,7 +367,7 @@ export default function Account() {
 			<Panel>
 				<ToastContainer />
 				<Card>
-						<Profile />
+					<Profile />
 				</Card>
 				{/* <div className='w-full max-w-none 2xl:max-w-[80%]'><PasswordModule /></div> */}
 				<Card>
@@ -371,7 +381,7 @@ export default function Account() {
 					<div id='openai'>
 						<OpenAIKey />
 					</div>
-					<div id='promo'>  
+					<div id='promo'>
 						<ApplyPromo />
 					</div>
 				</Card>

@@ -7,13 +7,18 @@ interface TranscriptEditorProps {
 	slides: Slide[];
 	updateSlidePage: (index: number, slide: Slide) => void;
 	currentSlideIndex: number;
+	scale: number;
 }
 
 const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 	slides,
 	updateSlidePage,
 	currentSlideIndex,
+	scale,
 }) => {
+
+	const maxWidth = 960 * scale + 12;
+
 	const updateTranscriptList = (newValue: string) => {
 		const newSlide = { ...slides[currentSlideIndex] };
 		newSlide.transcript = newValue;
@@ -22,7 +27,8 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 
 	return (
 		<div
-			className={`w-full max-w-[960px] max-w-[90vw] min-h-[4rem] border border-2 border-gray-200 rounded shadow flex flex-col overflow-y-auto`} // shift left to align with slide
+			style={{ maxWidth: `${maxWidth}px` }}
+			className={`w-full min-h-[4rem] border border-2 border-gray-200 rounded flex flex-col overflow-y-auto`} // shift left to align with slide
 		>
 			<textarea
 				className='grow px-4 py-2 w-full h-full border-none text-gray-700 text-xs font-normal focus:ring-0'
