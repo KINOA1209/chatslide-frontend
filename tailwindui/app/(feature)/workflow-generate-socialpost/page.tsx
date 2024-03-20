@@ -227,6 +227,7 @@ export default function Topic_SocialPost() {
 				setShowPaymentModal(true);
 				setIsSubmitting(false);
 			} else {
+				console.error('Error when generating social posts:', response);
 				toast.error(
 					`Server is busy now. Please try again later. Reference code: ` +
 					project?.id,

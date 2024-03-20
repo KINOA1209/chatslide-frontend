@@ -68,6 +68,7 @@ const GenerateSlidesSubmit = ({
 			router.push(addIdToRedir('workflow-review-slides'));
 		} else {
 			setIsSubmitting(false);
+			console.error('Error when generating slides:', response);
 			toast.error(
 				'Server is busy now. Please try again later. Reference code: ' +
 					project?.id,
