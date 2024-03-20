@@ -379,7 +379,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			} else {
 				combinedDelta = insertContent(content);
 			}
-			console.log(combinedDelta)
+			//console.log(combinedDelta)
 			quillInstanceRef.current.setContents(combinedDelta);
 			
 
