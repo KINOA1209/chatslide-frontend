@@ -309,7 +309,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 							if (urlRegex.test(text)) {
 								quill.format('link', text);
 							} else {
-								const url = prompt('Enter a valid URL:', 'http://');
+								const url = prompt('Enter a valid URL:', '');
 								if (url && urlRegex.test(url)) {
 									quill.format('link', url);
 								} else {
