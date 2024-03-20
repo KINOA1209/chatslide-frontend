@@ -13,6 +13,7 @@ import { UserStatus, useUser } from '@/hooks/use-user';
 import useHydrated from '@/hooks/use-hydrated';
 import Modal from '../ui/Modal';
 import FeedbackButton from '../ui/feedback';
+import { usePathname } from 'next/navigation';
 
 interface SideBarProps { }
 const SideBar = ({ }: SideBarProps) => {
@@ -21,6 +22,7 @@ const SideBar = ({ }: SideBarProps) => {
 	const router = useRouter();
 	const [isMobile, setIsMobile] = useState<boolean>(false);
 	const { signOut } = useUser();
+	const path = usePathname();
 
 	// detect whether user has scrolled the page down by 10px
 	const scrollHandler = () => {
@@ -61,13 +63,14 @@ const SideBar = ({ }: SideBarProps) => {
 			setIsSidebarOpen(false);
 		}
 
-		if (
-			location.pathname.includes('/workflow-review-slides') &&
-			window.innerWidth < 1600
-		) {
-			setIsSidebarOpen(false);
+		else if (window.innerWidth < 1600) {
+			if (path.includes('/workflow-review-slides')){
+				setIsSidebarOpen(false);
+			} else{
+				setIsSidebarOpen(true);
+			}
 		}
-	}, []);
+	}, [path]);
 
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
@@ -76,9 +79,9 @@ const SideBar = ({ }: SideBarProps) => {
 		return <></>;
 
 	if (userStatus == UserStatus.Failed || !uid) {
-		if (location.pathname.includes('/discover'))
+		if (path.includes('/discover'))
 			return <></>  // do not show sidebar if user is a visitor
-		if (location.pathname.includes('/dashboard')) {
+		if (path.includes('/dashboard')) {
 			console.log('No uid yet');
 			console.log('userStatus', userStatus);
 			return <></>  // do not show sidebar if user just logged in
@@ -201,7 +204,7 @@ const SideBar = ({ }: SideBarProps) => {
 					)}
 
 					<div className='relative'>
-						<FeedbackButton timeout={location.pathname.includes('workflow-review-slides') ? 30 * 1000 : 0} />
+						<FeedbackButton timeout={path.includes('workflow-review-slides') ? 30 * 1000 : 0} />
 					</div>
 				</div>
 			</div>

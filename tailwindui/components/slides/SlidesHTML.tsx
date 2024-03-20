@@ -25,8 +25,6 @@ import SlideContainer from './SlideContainer';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import { templateDispatch } from './templateDispatch';
 import { availableLayouts } from './slideLayout';
-import TestSlidesData from './TestSlidesData.json';
-import AuthService from '@/services/AuthService';
 import themeConfigData, {
 	ThemeConfig,
 } from './templates_customizable_elements/theme_elements';
@@ -54,8 +52,9 @@ import { ScrollBar } from '../ui/ScrollBar';
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
 	exportSlidesRef?: React.RefObject<HTMLDivElement>;
-	initSlideIndex?: number;
+	initSlideIndex?: number;  // only for embed
 	toPdf?: boolean; // toPdf mode for backend
+	embed?: boolean; // embed mode for backend
 	showScript?: boolean;
 };
 
@@ -88,10 +87,10 @@ export const uneditableTemplateDispatch = (
 		false, // canEdit
 		exportToPdfMode, //exportToPdfMode
 		false, //editMathMode
-		() => {}, //setIsEditMode
-		() => {}, // handleSlideEdit
-		() => () => {}, // updateImgUrlArray,
-		() => {}, // toggleEditMode,
+		() => { }, //setIsEditMode
+		() => { }, // handleSlideEdit
+		() => () => { }, // updateImgUrlArray,
+		() => { }, // toggleEditMode,
 		index === 0, // isCoverPage
 		slide.layout, // layoutOptionNonCover
 		slide.layout, // layoutOptionCover
@@ -103,12 +102,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	exportSlidesRef = useRef<HTMLDivElement>(null),
 	initSlideIndex = 0,
 	toPdf = false,
+	embed = false,
 	showScript = false,
 }) => {
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 	const {
 		slides,
 		slideIndex,
+		setSlideIndex,
 		slidesHistory,
 		addEmptyPage,
 		duplicatePage,
@@ -141,12 +142,23 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const [presentScale, setPresentScale] = useState(
 		Math.min(dimensions.width / 960, dimensions.height / 540),
 	);
-	const [nonPresentScale, setNonPresentScale] = useState(
-		Math.min(
-			1,
-			Math.min(dimensions.width / 960, (dimensions.height - 200) / 540) * 0.8,
-		),
-	);
+
+	const calculateNonPresentScale = (width: number, height: number) => {
+		if (width < 640) {
+			// mobile, layout vertically
+			return Math.min(
+				1,
+				Math.min((width) / 960, (height - 200) / 540) * 0.8,
+			);
+		} else {
+			return Math.min(
+				1,
+				Math.min((width - 300) / 960, (height - 200) / 540) * 0.8,
+			);
+		}
+	}
+
+	const [nonPresentScale, setNonPresentScale] = useState(calculateNonPresentScale(dimensions.width, dimensions.height));
 
 	const [isChatWindowOpen, setIsChatWindowOpen] = useState(false);
 
@@ -178,13 +190,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		const handleResize = () => {
 			const scale = Math.min(window.innerWidth / 960, window.innerHeight / 540);
 			setPresentScale(scale);
-			setNonPresentScale(
-				Math.min(
-					1,
-					Math.min(window.innerWidth / 960, (window.innerHeight - 200) / 540) *
-						0.8,
-				),
-			);
+			setNonPresentScale(calculateNonPresentScale(window.innerWidth, window.innerHeight));
 		};
 
 		window.addEventListener('resize', handleResize);
@@ -440,6 +446,22 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			/>
 		);
 
+	if (embed) 
+		return (
+			<SlideContainer
+				slide={slides[initSlideIndex]}
+				index={initSlideIndex}
+				isPresenting={isPresenting}
+				isViewing={isViewing}
+				scale={presentScale}
+				templateDispatch={editableTemplateDispatch}
+				slideRef={slideRef}
+				containerRef={containerRef}
+				length={slides.length}
+				key={version}
+			/>
+		);
+
 	if (!slides || slides.length === 0) {
 		return <></>;
 	}
@@ -540,6 +562,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							share={isShared}
 							project={project}
 							host={host}
+							currentSlideIndex={slideIndex}
 						/>
 					)}
 				</ActionsToolBar>
@@ -552,11 +575,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				showReferralLink={true}
 			/>
 
-			<div className='w-full flex flex-row grow items-start justify-center sm:justify-between gap-4 overflow-auto'>
+			<div className='w-full flex flex-row grow items-start justify-center sm:justify-between gap-2 overflow-auto'>
 				{/* vertical bar */}
 
 				<Panel>
-					<div className='h-full hidden sm:flex w-[150px]'>
+					<div className='h-full hidden sm:flex w-[100px] lg:w-[150px]'>
 						<ScrollBar
 							currentElementRef={verticalCurrentSlideRef}
 							index={slideIndex}
@@ -569,7 +592,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 										index.toString() +
 										slides.length.toString()
 									} // force update when slide length changes
-									className={`w-[8rem] h-[6rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
+									className={`w-[6rem] h-[4.5rem] lg:w-[8rem] lg:h-[6rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
 									onClick={() => gotoPage(index)}
 									ref={index === slideIndex ? verticalCurrentSlideRef : null}
 								>
@@ -577,7 +600,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 									<SlideContainer
 										slide={slide}
 										index={index}
-										scale={0.12}
+										scale={0.12 * nonPresentScale}
 										isViewing={true}
 										templateDispatch={uneditableTemplateDispatch}
 										highlightBorder={slideIndex === index}
@@ -645,6 +668,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							slides={slides}
 							updateSlidePage={updateSlidePage}
 							currentSlideIndex={slideIndex}
+							scale={nonPresentScale}
 						/>
 					)}
 

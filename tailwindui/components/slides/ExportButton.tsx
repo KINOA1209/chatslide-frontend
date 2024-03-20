@@ -70,20 +70,21 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 
 		setDownloading(true);
 		
-		let waitTime = 15;
+		let waitTime = 10;
 		if (!frontend) {
-			waitTime += 15;
+			waitTime += 10;
 		}
 		if (type === 'pptx') {
-			waitTime += 30;
+			waitTime += 20;
 		}
 
-		toast.info(`Exporting your file, please wait for about ${waitTime}s...`, {
+		const toastId = toast.info(`Exporting your file, please wait for about ${waitTime}s...`, {
 			position: 'top-center',
-			autoClose: 5000,
+			autoClose: waitTime * 1000,
 			hideProgressBar: false,
 			closeOnClick: true,
-			pauseOnHover: true,
+			pauseOnHover: false,
+			pauseOnFocusLoss: false,
 			draggable: true,
 			progress: undefined,
 		});
@@ -121,6 +122,9 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 			}
 		}
 		setDownloading(false);
+		if(toastId) {
+			toast.dismiss(toastId);
+		}
 	};
 
 	return (

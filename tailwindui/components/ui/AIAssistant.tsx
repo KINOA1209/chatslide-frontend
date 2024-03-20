@@ -372,11 +372,11 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 									<div
 										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
 										onClick={() =>
-											handleSend('Change topic to be more professional')
+											handleSend('Change topic to be more engaging')
 										}
 									>
 										<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
-											Change topic to be more professional
+											Change topic to be more engaging
 										</div>
 									</div>
 									<div
@@ -417,11 +417,11 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 									<div
 										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
 										onClick={() =>
-											handleSend('Change subtopic to be more professional')
+											handleSend('Change subtopic to be more engaging')
 										}
 									>
 										<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
-											Change subtopic to be more professional
+											Change subtopic to be more engaging
 										</div>
 									</div>
 									<div

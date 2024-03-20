@@ -4,10 +4,8 @@ import { useState, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import dynamic from 'next/dynamic';
 import ProjectService from '@/services/ProjectService';
-import Project from '@/models/Project';
 import { useSlides } from '@/hooks/use-slides';
 import { Loading } from '@/components/ui/Loading';
-import { useProject } from '@/hooks/use-project';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -43,7 +41,6 @@ const PdfPage: React.FC<PdfPageProps> = ({ project_id, page = 1 }) => {
 		<main className='grow'>
 			<SlidesHTML
 				isViewing={true}
-				initSlideIndex={page as number}
 				toPdf={true}
 			/>
 		</main>

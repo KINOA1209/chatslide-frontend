@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import AuthService from '../../services/AuthService';
 import { useRouter, useSearchParams } from 'next/navigation';
 import './GoogleSignIn.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 interface GoogleSignInProps {
 	signup?: boolean;
@@ -20,14 +21,26 @@ const GoogleSignIn: React.FC<GoogleSignInProps> = ({ signup = false }) => {
 			localStorage.setItem('nextUri', nextUri);
 		}
 		try {
-			const { uid, token } = await AuthService.googleSignIn();
+			await AuthService.googleSignIn();
 		} catch (error) {
+			toast.error('Failed to sign in with Google, can you try again later?',
+				{
+					position: 'top-center',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				}
+			);
 			console.error(error);
 		}
 	};
 
 	return (
 		<div className='w-full flex items-center justify-center'>
+			<ToastContainer />
 			<button className='gsi-material-button w-full' onClick={signInWithGoogle}>
 				<div className='gsi-material-button-state'></div>
 				<div className='gsi-material-button-content-wrapper'>
