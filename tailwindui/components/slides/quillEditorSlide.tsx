@@ -444,7 +444,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				if (source === 'user') {
 					const quill = quillInstanceRef.current;
 					if (quill){
-						const regex = /((https?:\/\/)?(?:www\.)[\w-]+(\.[\w-]+)+([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?)/g///(?:https?:\/\/|www\.)\S+\b/g;
+						const regex = /(?:https?:\/\/|www\.)\S+\b/g;
 						const text = quill.getText();
 						let match;
 						// index wrong when link feature is triggered
