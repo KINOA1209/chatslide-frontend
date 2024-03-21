@@ -440,8 +440,37 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			// }
 			//quillInstanceRef.current.setContents(initialDelta);
 
-			quillInstanceRef.current.on('text-change', () => {
-				isTextChangeRef.current = true;
+			quillInstanceRef.current.on('text-change', (delta, oldDelta, source) => {
+				if (source === 'user') {
+					const quill = quillInstanceRef.current;
+					if (quill){
+						const regex = /((https?:\/\/)?(?:www\.)[\w-]+(\.[\w-]+)+([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?)/g///(?:https?:\/\/|www\.)\S+\b/g;
+						const text = quill.getText();
+						let match;
+						// index wrong when link feature is triggered
+						let lastMatchEndIndex = 0;
+		
+						while ((match = regex.exec(text)) !== null) {
+							const url = match[0];
+							const startIndex = match.index;
+							const urlLength = url.length;
+		
+							const formats = quill.getFormat(startIndex, urlLength);
+							if (!formats.link) {
+								quill.formatText({index:startIndex, length:urlLength}, 'link', url);
+								lastMatchEndIndex = startIndex + urlLength;
+							}
+						}
+		
+						// Set cursor position to the end of the last formatted link if a link was formatted
+						if (lastMatchEndIndex > 0) {
+							quill.setSelection(lastMatchEndIndex, 0, Quill.sources.SILENT);
+						}
+
+						// Mark content changed for auto-saving
+						isTextChangeRef.current = true;
+					}
+				}
 			});
 
 			quillInstanceRef.current.on('selection-change', () => {
