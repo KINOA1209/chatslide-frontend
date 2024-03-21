@@ -61,4 +61,26 @@ export default class VideoService {
 			video_url: json.data.video_url,
 		};
 	}
+
+	static async getTTS(text: string, language: string, voice: string, token: string): Promise<File> {
+		const response = await fetch('/api/tts', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				text: text,
+				language: language,
+				voice: voice,
+			}),
+		});
+
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
+
+		const blob = await response.blob();
+		return new File([blob], 'tts.mp3', { type: 'audio/mpeg' });
+	}
 }

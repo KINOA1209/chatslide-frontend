@@ -97,6 +97,21 @@ export const uneditableTemplateDispatch = (
 		false, // isCurrentSlide
 	);
 
+export const calculateNonPresentScale = (width: number, height: number) => {
+	if (width < 640) {
+		// mobile, layout vertically
+		return Math.min(
+			1,
+			Math.min((width) / 960, (height - 200) / 540) * 0.8,
+		);
+	} else {
+		return Math.min(
+			1,
+			Math.min((width - 300) / 960, (height - 200) / 540) * 0.8,
+		);
+	}
+}
+
 const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	isViewing = false,
 	exportSlidesRef = useRef<HTMLDivElement>(null),
@@ -142,21 +157,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const [presentScale, setPresentScale] = useState(
 		Math.min(dimensions.width / 960, dimensions.height / 540),
 	);
-
-	const calculateNonPresentScale = (width: number, height: number) => {
-		if (width < 640) {
-			// mobile, layout vertically
-			return Math.min(
-				1,
-				Math.min((width) / 960, (height - 200) / 540) * 0.8,
-			);
-		} else {
-			return Math.min(
-				1,
-				Math.min((width - 300) / 960, (height - 200) / 540) * 0.8,
-			);
-		}
-	}
 
 	const [nonPresentScale, setNonPresentScale] = useState(calculateNonPresentScale(dimensions.width, dimensions.height));
 
