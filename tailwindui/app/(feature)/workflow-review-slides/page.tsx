@@ -25,7 +25,7 @@ export default function WorkflowStep3() {
 
 	useEffect(() => {
 		if (!isSubmitting) {
-			if (slides.some((slide) => slide.transcript)) {
+			if (slides?.some((slide) => slide.transcript)) {
 				setShowScript(true);
 				console.log('showScript', showScript);
 			}

@@ -238,7 +238,7 @@ export const useSlides = () => {
 	const initSlides = (slides: Slide[]) => {
 		console.log('-- init slides: ', { slides });
 		setSlides(slides);
-		setIsShowingLogo(slides.some((slide) => slide.show_logo));
+		setIsShowingLogo(slides?.some((slide) => slide.show_logo));
 		setSlideIndex(0);
 		setSlidesHistory([slides]);
 		setSlidesHistoryIndex(0);
