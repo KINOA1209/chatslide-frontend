@@ -85,6 +85,7 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 			const requestData = {
 				tier: tier,
 				email: email,
+				currency: currency === '$' ? 'usd' : 'eur',
 			};
 
 			console.log(requestData);
@@ -120,6 +121,7 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 			const requestData = {
 				tier: tier,
 				email: email,
+				currency: currency === '$' ? 'usd' : 'eur',
 			};
 
 			console.log(requestData);
