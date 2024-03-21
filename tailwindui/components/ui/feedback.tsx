@@ -70,7 +70,7 @@ const FeedbackButton: React.FC<FeedbackButtonProps> = ({
 		<div className='absolute bottom-0 -right-36 hidden sm:block z-30'>
 			<button
 				onClick={handleOpenModal}
-				className='bg-gray-600 text-white font-bold flex flex-row items-center py-1 px-2 gap-x-2 rounded-2xl focus:outline-none focus:shadow-outline-blue active:bg-blue-700'
+				className='bg-Blue text-white font-bold flex flex-row items-center py-1 px-2 gap-x-2 rounded-2xl focus:outline-none focus:shadow-outline-blue active:bg-blue-700'
 			>
 				<Image src={Laura} alt='Laura' width={30} height={30} style={{ borderRadius: '50%' }} />
 				<span>Talk with us</span>
