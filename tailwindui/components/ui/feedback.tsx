@@ -6,6 +6,7 @@ import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';
 import Laura from '@/public/images/laura.jpeg'
 import Image from 'next/image';
+import { Instruction } from './Text';
 
 interface FeedbackFormProps {
 	onClose: () => void;
@@ -237,13 +238,6 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 								{message ? message : `We'd love to hear from you!`}
 							</h3>
 						</div>
-						<p className='text-sm text-gray-500 mt-2'>
-							You can also book a meeting with us {' '}
-							<a href='https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3Ly0YZMnlcouxHwvv7cUsVLziVxNPfqNBoDl8H9D9ob6sn9-WMDg7Uu0ZTPzUlKjXFjmMBeJGS' className='underline text-blue-600'>
-								here
-							</a>
-							.
-						</p>
 					</div>
 				)}
 
@@ -267,9 +261,9 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 							)}
 						</div>
 						<div className='mt-4'>
-							<label className='block text-gray-700 text-sm font-bold my-2'>
+							<Instruction>
 								Tell us what you think about this slides or DrLambda:
-							</label>
+							</Instruction>
 							{/* Increase the number of rows for the textarea to make it taller */}
 							<textarea
 								className='resize-none w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 text-black'
@@ -278,6 +272,13 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 								onChange={handleFeedbackTextChange}
 							></textarea>
 						</div>
+						<Instruction>
+							Want help? Book a meeting with me {' '}
+							<a href='https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3Ly0YZMnlcouxHwvv7cUsVLziVxNPfqNBoDl8H9D9ob6sn9-WMDg7Uu0ZTPzUlKjXFjmMBeJGS' className='underline text-blue-600'>
+								here
+							</a>
+							.
+						</Instruction>
 						<div className='mt-4 flex justify-end gap-x-4'>
 							<InversedBigBlueButton onClick={onClose}>
 								Close
