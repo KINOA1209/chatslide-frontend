@@ -17,7 +17,7 @@ const ProjectLoading = () => {
 	const pathname = usePathname();
 	const router = useRouter();
 	const { initSlides } = useSlides();
-	const { project, initProject } = useProject();
+	const { project, initProject, updateProject } = useProject();
 	const { token } = useUser();
 
 	useEffect(() => {
@@ -123,6 +123,10 @@ const ProjectLoading = () => {
 				await initProject(project); // will also init outlines
 				if (project?.parsed_slides) {
 					initSlides(project.parsed_slides);
+
+					if (project.parsed_slides?.some((slide) => slide.transcript)){
+						updateProject('has_scripts', true);
+					}
 				}
 				setSessionStorage(project);
 				handleRedirect(project, project_id);
