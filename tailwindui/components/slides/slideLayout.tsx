@@ -136,7 +136,7 @@ export const Cover_img_0_layout = ({
 				<div
 					// className={`${themeElements.userNameFont} ${themeElements.userNameFontColor}`}
 					className={`SlideUserName`}
-					style={{ ...layoutElements.userNameCSS, zIndex: 50 }}
+					style={{ ...layoutElements.userNameCSS, zIndex: 60 }}
 				>
 					{user_name}
 				</div>
@@ -145,7 +145,10 @@ export const Cover_img_0_layout = ({
 		        border-black border-opacity-40 mt-4`}
 					style={layoutElements.userNameTextDividerCSS}
 				></div>
-				<div className={`SlideHead`} style={layoutElements.titleCSS}>
+				<div
+					className={`SlideHead`}
+					style={{ ...layoutElements.titleCSS, zIndex: 50 }}
+				>
 					{title}
 				</div>
 			</div>
@@ -169,7 +172,8 @@ export const Cover_img_0_layout = ({
 				style={{
 					...layoutElements.logoCSS,
 					display: `${isShowingLogo ? 'contents' : 'none'}`,
-					zIndex: 40,
+					zIndex: 30,
+					pointerEvents: 'none',
 				}}
 			>
 				{templateLogo}
@@ -222,15 +226,16 @@ export const Cover_img_1_layout = ({
 	return (
 		<div style={layoutElements.canvaCSS}>
 			<div style={layoutElements.columnCSS}>
-				<div style={{ ...layoutElements.userNameCSS, zIndex: '50' }}>
+				<div style={{ ...layoutElements.userNameCSS, zIndex: 60 }}>
 					{user_name}
 				</div>
-				<div style={layoutElements.titleCSS}>{title}</div>
+				<div style={{ ...layoutElements.titleCSS, zIndex: 50 }}>{title}</div>
 			</div>
 
 			<div
 				style={{
 					...layoutElements.imageContainerCSS,
+					zIndex: 20,
 				}}
 			>
 				<ImgModule
@@ -264,6 +269,8 @@ export const Cover_img_1_layout = ({
 				style={{
 					...layoutElements.logoCSS,
 					display: `${isShowingLogo ? 'contents' : 'none'}`,
+					zIndex: 30,
+					pointerEvents: 'none',
 				}}
 			>
 				{templateLogo}
@@ -326,7 +333,7 @@ export const Col_1_img_0_layout = ({
 		<div ref={containerRef} style={layoutElements.canvaCSS}>
 			<div
 				className={`titleAndSubtopicBox`}
-				style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 40 }}
+				style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 50 }}
 			>
 				<div
 					ref={topicRef}
@@ -348,7 +355,7 @@ export const Col_1_img_0_layout = ({
 				className='opacity-50 border border-neutral-900 border-opacity-40'
 				style={layoutElements.titlesAndContentDividerCSS}
 			></div>
-			<div style={layoutElements.columnCSS}>
+			<div style={{ ...layoutElements.columnCSS, zIndex: 40 }}>
 				<div
 					style={{
 						...layoutElements.contentCSS, // Spread the existing styles first
@@ -363,6 +370,8 @@ export const Col_1_img_0_layout = ({
 				style={{
 					...layoutElements.logoCSS,
 					display: `${isShowingLogo ? 'contents' : 'none'}`,
+					zIndex: 30,
+					pointerEvents: 'none',
 				}}
 			>
 				{templateLogo}
@@ -490,7 +499,7 @@ export const Col_2_img_0_layout = ({
 		<div className={`SlideLayoutCanvas`} style={layoutElements.canvaCSS}>
 			<div
 				className={`SlideTopicAndSubtopicBox`}
-				style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 40 }}
+				style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 50 }}
 			>
 				<div className={`SlideTopic`} style={layoutElements.topicCSS}>
 					{topic}
@@ -502,7 +511,7 @@ export const Col_2_img_0_layout = ({
 
 			<div
 				className={`w-full felx SlideContentContainer`}
-				style={layoutElements.contentContainerCSS}
+				style={{ ...layoutElements.contentContainerCSS, zIndex: 40 }}
 			>
 				<div className='Column1' style={layoutElements.contentCSS}>
 					<div
@@ -581,6 +590,8 @@ export const Col_2_img_0_layout = ({
 				style={{
 					...layoutElements.logoCSS,
 					display: `${isShowingLogo ? 'contents' : 'none'}`,
+					zIndex: 30,
+					pointerEvents: 'none',
 				}}
 			>
 				{templateLogo}
@@ -623,12 +634,12 @@ export const Col_3_img_0_layout = ({
 
 	return (
 		<div style={layoutElements.canvaCSS}>
-			<div style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 40 }}>
+			<div style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 50 }}>
 				<div style={layoutElements.topicCSS}>{topic}</div>
 				<div style={layoutElements.subtopicCSS}>{subtopic}</div>
 			</div>
 
-			<div style={layoutElements.contentContainerCSS}>
+			<div style={{ ...layoutElements.contentContainerCSS, zIndex: 40 }}>
 				{Array.isArray(content) &&
 					content.map((item, index) => (
 						<div
@@ -697,6 +708,8 @@ export const Col_3_img_0_layout = ({
 				style={{
 					...layoutElements.logoCSS,
 					display: `${isShowingLogo ? 'contents' : 'none'}`,
+					zIndex: 30,
+					pointerEvents: 'none',
 				}}
 			>
 				{templateLogo}
@@ -805,7 +818,7 @@ export const Col_2_img_1_layout = ({
 				<div
 					// className='flex flex-col'
 					// topic subtopic box zindex 40 prevent covering content text
-					style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: '40' }}
+					style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 50 }}
 				>
 					<div className={``} ref={topicRef} style={layoutElements.topicCSS}>
 						{topic}
@@ -820,7 +833,10 @@ export const Col_2_img_1_layout = ({
 				</div>
 
 				{/* contents */}
-				<div className='w-full flex' style={layoutElements.contentContainerCSS}>
+				<div
+					className='w-full flex'
+					style={{ ...layoutElements.contentContainerCSS, zIndex: 40 }}
+				>
 					<div
 						className={`w-full`}
 						style={{
@@ -835,7 +851,7 @@ export const Col_2_img_1_layout = ({
 			{/* column 2 for img container */}
 			<div
 				// className={`w-1/2 h-[90%] rounded-md overflow-hidden items-center`}
-				style={layoutElements.imageContainerCSS}
+				style={{ ...layoutElements.imageContainerCSS, zIndex: 20 }}
 			>
 				<ImgModule
 					imgsrc={imgs[0]}
@@ -857,6 +873,8 @@ export const Col_2_img_1_layout = ({
 				style={{
 					...layoutElements.logoCSS,
 					display: `${isShowingLogo ? 'contents' : 'none'}`,
+					zIndex: 30,
+					pointerEvents: 'none',
 				}}
 			>
 				{templateLogo}
@@ -970,7 +988,7 @@ export const Col_1_img_1_layout = ({
 
 				<div
 					// className='flex flex-col'
-					style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: '40' }}
+					style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: '50' }}
 					ref={topicAndSubtopicRef}
 				>
 					<div className={``} style={layoutElements.topicCSS}>
@@ -985,7 +1003,7 @@ export const Col_1_img_1_layout = ({
 				{/* image section */}
 				<div
 					// className='h-[15rem] grow rounded-md overflow-hidden'
-					style={layoutElements.imageContainerCSS}
+					style={{ ...layoutElements.imageContainerCSS, zIndex: 20 }}
 					ref={imgContainerRef}
 				>
 					<ImgModule
@@ -1015,6 +1033,7 @@ export const Col_1_img_1_layout = ({
 						...layoutElements.contentContainerCSS,
 						maxHeight:
 							maxContentHeight !== null ? `${maxContentHeight}px` : 'none',
+						zIndex: 40,
 					}}
 				>
 					{/* {Array.isArray(content) &&
@@ -1047,6 +1066,8 @@ export const Col_1_img_1_layout = ({
 				style={{
 					...layoutElements.logoCSS,
 					display: `${isShowingLogo ? 'contents' : 'none'}`,
+					zIndex: 30,
+					pointerEvents: 'none',
 				}}
 			>
 				{templateLogo}
@@ -1155,7 +1176,7 @@ export const Col_2_img_2_layout = ({
 			>
 				<div
 					// className='flex flex-col justify-center items-center'
-					style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 40 }}
+					style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 50 }}
 					ref={topicAndSubtopicRef}
 				>
 					<div className={``} style={layoutElements.topicCSS}>
@@ -1169,7 +1190,7 @@ export const Col_2_img_2_layout = ({
 				{/* two columns of images */}
 				<div
 					// className='w-full grid grid-cols-2 gap-[2rem]'
-					style={layoutElements.imageContainerCSS}
+					style={{ ...layoutElements.imageContainerCSS, zIndex: 20 }}
 					ref={imgContainerRef}
 				>
 					<div
@@ -1237,6 +1258,7 @@ export const Col_2_img_2_layout = ({
 						...layoutElements.contentCSS,
 						maxHeight:
 							maxContentHeight !== null ? `${maxContentHeight}px` : 'none',
+						zIndex: 40,
 					}}
 				>
 					{Array.isArray(content) &&
@@ -1275,6 +1297,8 @@ export const Col_2_img_2_layout = ({
 				style={{
 					...layoutElements.logoCSS,
 					display: `${isShowingLogo ? 'contents' : 'none'}`,
+					zIndex: 30,
+					pointerEvents: 'none',
 				}}
 			>
 				{templateLogo}
@@ -1344,7 +1368,7 @@ export const Col_3_img_3_layout = ({
 			>
 				<div
 					// className='flex flex-col justify-center items-center'
-					style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 40 }}
+					style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 50 }}
 				>
 					<div className={``} style={layoutElements.topicCSS}>
 						{topic}
@@ -1356,7 +1380,7 @@ export const Col_3_img_3_layout = ({
 				{/* three columns of images */}
 				<div
 					// className='w-full grid grid-cols-3 gap-[2rem] '
-					style={layoutElements.imageContainerCSS}
+					style={{ ...layoutElements.imageContainerCSS, zIndex: 20 }}
 				>
 					<div
 						// className='h-[11rem] grow rounded-md overflow-hidden'
@@ -1419,7 +1443,7 @@ export const Col_3_img_3_layout = ({
 				{/* three columns of text */}
 				<div
 					// className='w-full grid grid-cols-3 gap-[2rem]'
-					style={layoutElements.contentCSS}
+					style={{ ...layoutElements.contentCSS, zIndex: 40 }}
 				>
 					{Array.isArray(content) &&
 						content.map((item, index) => (
@@ -1454,6 +1478,8 @@ export const Col_3_img_3_layout = ({
 				style={{
 					...layoutElements.logoCSS,
 					display: `${isShowingLogo ? 'contents' : 'none'}`,
+					zIndex: 30,
+					pointerEvents: 'none',
 				}}
 			>
 				{templateLogo}

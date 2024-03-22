@@ -33,7 +33,7 @@ export const Business_Dark_005_TemplateLayoutsConfig: {
 			top: '92%',
 			left: '80%',
 			transform: 'translate(-50%, -40%)', // Centering trick
-			width: 'max-content',
+			width: '40%',
 		},
 		columnCSS: {
 			// paddingTop: '1rem', // Equivalent to pt-[1rem]
@@ -78,7 +78,7 @@ export const Business_Dark_005_TemplateLayoutsConfig: {
 			top: '92%',
 			left: '80%',
 			transform: 'translate(-50%, -40%)', // Centering trick
-			width: 'max-content',
+			width: '40%',
 		},
 		titleCSS: {
 			paddingLeft: '2rem',
@@ -490,6 +490,7 @@ export const Business_Dark_005_TemplateLayoutsConfig: {
 			flexDirection: 'column',
 			justifyContent: 'space-between',
 			gap: '0.5rem',
+			width: '100%',
 		},
 		subtopicCSS: {
 			paddingBottom: '1rem',

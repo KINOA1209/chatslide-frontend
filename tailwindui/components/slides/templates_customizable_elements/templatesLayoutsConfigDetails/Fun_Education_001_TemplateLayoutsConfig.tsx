@@ -31,7 +31,7 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			top: '92%',
 			left: '80%',
 			transform: 'translate(-50%, -40%)', // Centering trick
-			width: 'max-content',
+			width: '40%',
 		},
 		columnCSS: {
 			paddingTop: '1rem', // Equivalent to pt-[1rem]
@@ -71,7 +71,7 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			top: '92%',
 			left: '80%',
 			transform: 'translate(-50%, -40%)', // Centering trick
-			width: 'max-content',
+			width: '40%',
 		},
 		titleCSS: {
 			paddingLeft: '2rem',
@@ -470,6 +470,7 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			display: 'flex',
 			flexDirection: 'column',
 			gap: '0.5rem',
+			width: '100%',
 		},
 		subtopicCSS: {
 			paddingBottom: '1rem',
