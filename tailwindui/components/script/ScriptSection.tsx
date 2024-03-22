@@ -11,6 +11,8 @@ import { FiPause, FiPlay } from 'react-icons/fi';
 import Slide from '@/models/Slide';
 import { useProject } from '@/hooks/use-project';
 import VideoService from '@/services/VideoService';
+import { Loading } from '../ui/Loading';
+import { SpinIcon } from '@/app/(feature)/icons';
 
 
 const ScriptSection: React.FC<{
@@ -27,6 +29,7 @@ const ScriptSection: React.FC<{
 	updateSlidePage,
 }) => {
 		const [isPlaying, setIsPlaying] = useState(false);
+		const [isLoading, setIsLoading] = useState(false);
 		// Add a state to store the audio element
 		const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
 		const { token } = useUser();
@@ -35,12 +38,14 @@ const ScriptSection: React.FC<{
 		const playScript = async () => {
 			const script = slides[index].transcript || '';
 			console.log('Playing script:', script);
-			setIsPlaying(true);
-
+			setIsLoading(true);
+			
 			// Assuming VideoService.playScript returns a Promise that resolves to an audio URL or blob
 			try {
 				const audio = await VideoService.getTTS(script, voice, project?.foldername as string, token); // Fetch voice from backend
 				const audioElement = new Audio(audio); // Create an audio element with the fetched voice
+				setIsLoading(false);
+				setIsPlaying(true);
 				audioElement.play(); // Play the voice
 				setAudio(audioElement); // Store the audio element in state for access by pauseScript
 				console.log('playing audio:', audioElement);
@@ -80,7 +85,9 @@ const ScriptSection: React.FC<{
 				{/* play and pause the script */}
 
 				<div className='mt-4'>
-					{!isPlaying ?
+					{isLoading ? 
+					<SpinIcon /> :
+					!isPlaying ?
 						<ButtonWithExplanation
 							explanation='Play the script'
 							button={
