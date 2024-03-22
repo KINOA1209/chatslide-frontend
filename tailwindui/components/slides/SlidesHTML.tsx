@@ -471,7 +471,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			() => {}, // handleSlideEdit
 			() => () => {}, // updateImgUrlArray,
 			() => {}, // toggleEditMode,
-			slide.palette,
+			// slide.palette,
 			index === 0, // isCoverPage
 			slide.layout, // layoutOptionNonCover
 			slide.layout, // layoutOptionCover
@@ -496,7 +496,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			handleSlideEdit, // handleSlideEdit
 			updateImgUrlArray,
 			toggleEditMode,
-			slide.palette, // color theme
+			// slide.palette, // color theme
 			index === 0, // isCoverPage
 			slide.layout, // layoutOptionNonCover
 			slide.layout, // layoutOptionCover

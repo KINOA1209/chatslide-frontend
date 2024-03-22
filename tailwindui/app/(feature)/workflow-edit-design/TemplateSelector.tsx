@@ -39,6 +39,10 @@ const TemplateSelector: React.FC<{
 		const selectedValue = e.target.value;
 		setSelectedTemplate(selectedValue);
 		setTemplate(selectedValue);
+		console.log(
+			'current template and color options',
+			availableColorThemes[selectedValue as TemplateKeys]?.length,
+		);
 		// If the newly selected template has only one color theme option, set color theme to 'Original'
 		if (availableColorThemes[selectedValue as TemplateKeys]?.length === 1) {
 			setColorTheme('Original');

@@ -73,6 +73,11 @@ export default function DesignPage() {
 	if (!useHydrated()) return <></>;
 	console.log('Template:', template);
 	console.log('Color Palette:', colorPalette);
+	console.log(
+		'current template color options:',
+		template,
+		availableColorThemes[template as keyof typeof availableColorThemes],
+	);
 
 	return (
 		<section className='relative'>

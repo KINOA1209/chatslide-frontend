@@ -103,7 +103,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			() => {},
 			() => () => {},
 			() => {},
-			slide.palette,
+			// slide.palette,
 			index === 0 || index === 1,
 			slide.layout,
 			slide.layout,

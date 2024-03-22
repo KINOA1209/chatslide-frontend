@@ -46,7 +46,7 @@ export const templateDispatch = (
 		images_position: ImagesPosition[],
 	) => void = () => () => {}, // Replace with your default function if you have one
 	toggleEditMathMode: () => void = () => {}, // Replace with your default function if you have one
-	palette: ColorThemeKeys = 'Original',
+	// palette: ColorThemeKeys = 'Original',
 	isCoverPage: boolean = false,
 	layoutOptionNonCover: LayoutKeys = 'Col_2_img_1_layout',
 	layoutOptionCover: LayoutKeys = 'Cover_img_1_layout',
