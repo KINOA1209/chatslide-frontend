@@ -10,7 +10,7 @@ import { Column } from '@/components/layout/Column';
 import { useSlides } from '@/hooks/use-slides';
 import SlideContainer from '@/components/slides/SlideContainer';
 import { calculateNonPresentScale, uneditableTemplateDispatch } from '@/components/slides/SlidesHTML';
-import { Title, Instruction } from '@/components/ui/Text';
+import { Title, Instruction, BigTitle } from '@/components/ui/Text';
 import Card from '@/components/ui/Card';
 import { InputBox } from '@/components/ui/InputBox';
 import ScriptEditor from '@/components/slides/script/ScriptEditor';
@@ -21,7 +21,7 @@ import { useProject } from '@/hooks/use-project';
 import VoiceSelector from '@/components/language/VoiceSelector';
 
 
-const ScriptPage: React.FC<{
+const ScriptSection: React.FC<{
 	slides: Array<Slide>;
 	index: number;
 	scale: number;
@@ -87,41 +87,44 @@ const ScriptPage: React.FC<{
 					scale={scale}
 				/>
 				{/* play and pause the script */}
-				{!isPlaying ?
-					<ButtonWithExplanation
-						explanation='Play the script'
-						button={
-							<button onClick={playScript}>
-								<FiPlay
-									style={{
-										strokeWidth: '2',
-										flex: '1',
-										width: '1.5rem',
-										height: '1.5rem',
-										fontWeight: 'bold',
-										color: '#2943E9',
-									}}
-								/>
-							</button>
-						}
-					/> :
-					<ButtonWithExplanation
-						explanation='Pause the script'
-						button={
-							<button onClick={pauseScript}>
-								<FiPause
-									style={{
-										strokeWidth: '2',
-										flex: '1',
-										width: '1.5rem',
-										height: '1.5rem',
-										fontWeight: 'bold',
-										color: '#2943E9',
-									}}
-								/>
-							</button>
-						}
-					/>}
+
+				<div className='mt-4'>
+					{!isPlaying ?
+						<ButtonWithExplanation
+							explanation='Play the script'
+							button={
+								<button onClick={playScript}>
+									<FiPlay
+										style={{
+											strokeWidth: '2',
+											flex: '1',
+											width: '1.5rem',
+											height: '1.5rem',
+											fontWeight: 'bold',
+											color: '#2943E9',
+										}}
+									/>
+								</button>
+							}
+						/> :
+						<ButtonWithExplanation
+							explanation='Pause the script'
+							button={
+								<button onClick={pauseScript}>
+									<FiPause
+										style={{
+											strokeWidth: '2',
+											flex: '1',
+											width: '1.5rem',
+											height: '1.5rem',
+											fontWeight: 'bold',
+											color: '#2943E9',
+										}}
+									/>
+								</button>
+							}
+						/>}
+				</div>
 			</div>
 		)
 	};
@@ -164,21 +167,21 @@ export default function WorkflowStep5() {
 
 			<Column>
 				<Card>
-					<Title center={false}>Voice</Title>
+					<BigTitle>Voice</BigTitle>
 					<Instruction>
 						Select the voice you want to use for your video.
 					</Instruction>
 					<VoiceSelector selectedVoice={voice} setSelectedVoice={setVoice} />
 				</Card>
 				<Card>
-					<Title center={false}>Scripts</Title>
+					<BigTitle>Scripts</BigTitle>
 					<Instruction>
 						You can edit your scripts here:
 						If you want to edit slides, you can go back to the previous step.
 					</Instruction>
 					<div className='flex flex-col gap-y-2'>
 						{slides.map((_, index) => (
-							<ScriptPage
+							<ScriptSection
 								slides={slides}
 								index={index}
 								scale={scale}

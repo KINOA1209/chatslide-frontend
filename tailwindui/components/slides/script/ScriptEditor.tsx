@@ -28,7 +28,7 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 	return (
 		<div
 			style={{ maxWidth: `${maxWidth}px` }}
-			className={`w-full min-h-[4rem] border border-2 border-gray-200 rounded flex flex-col overflow-y-auto m-[5px]`} // shift left to align with slide
+			className={`w-full min-h-[4rem] border border-2 border-gray-200 rounded flex flex-col overflow-y-auto`} // shift left to align with slide
 		>
 			<textarea
 				className='grow px-4 py-2 w-full h-full border-none text-gray-700 text-xs font-normal focus:ring-0'
