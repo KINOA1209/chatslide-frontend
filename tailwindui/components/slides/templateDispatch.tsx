@@ -46,7 +46,7 @@ export const templateDispatch = (
 		images_position: ImagesPosition[],
 	) => void = () => () => {}, // Replace with your default function if you have one
 	toggleEditMathMode: () => void = () => {}, // Replace with your default function if you have one
-	color_theme: ColorThemeKeys = 'Original',
+	palette: ColorThemeKeys = 'Original',
 	isCoverPage: boolean = false,
 	layoutOptionNonCover: LayoutKeys = 'Col_2_img_1_layout',
 	layoutOptionCover: LayoutKeys = 'Cover_img_1_layout',
@@ -118,7 +118,7 @@ export const templateDispatch = (
 	// this decide which themeelement to use
 	const themeElements = loadCustomizableElements(
 		templateKey as TemplateKeys,
-		slide.color_theme as ColorThemeKeys,
+		slide.palette as ColorThemeKeys,
 	);
 	const processContent = (item: string) => {
 		if (isHTML(item)) {
@@ -319,7 +319,7 @@ export const templateDispatch = (
 			currentSlideIndex={index}
 			isShowingLogo={isShowingLogo}
 			images_position={slide.images_position || [{}, {}, {}]}
-			color_theme={slide.color_theme}
+			palette={slide.palette}
 		/>
 	);
 	// }

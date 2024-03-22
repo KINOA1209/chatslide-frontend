@@ -462,15 +462,7 @@ export const ChangeTemplateOptions: React.FC<{
 				setShowModal={setShowModal}
 				title='Change Template'
 				description='Select a template for your slides'
-				onConfirm={() => {
-					onChangeTemplateAndColorPalette(
-						selectedTemplate,
-						selectedColorThemeOption,
-					);
-					// onChangeColorTheme(selectedColorThemeOption);
-					// onChangeTemplate(selectedTemplate);
-					setShowModal(false);
-				}}
+				onConfirm={handleConfirm}
 			>
 				<div className='max-w-[60rem]'>
 					<TemplateSelector

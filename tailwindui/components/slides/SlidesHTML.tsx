@@ -156,7 +156,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		console.log(
 			'slides template and color palette',
 			slides[slideIndex].template,
-			slides[slideIndex].color_theme,
+			slides[slideIndex].palette,
 		);
 	}, [slides[slideIndex].template]);
 
@@ -314,8 +314,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				currentSlide.layout = content as LayoutKeys;
 			} else if (className === 'logo') {
 				currentSlide.logo = content as string;
-			} else if (className === 'color_theme') {
-				currentSlide.color_theme = content as ColorThemeKeys;
+			} else if (className === 'palette') {
+				currentSlide.palette = content as ColorThemeKeys;
 			} else if (className === 'images') {
 				currentSlide.images = [...(content as string[])]; // deep copy
 			} else if (className === 'content') {
@@ -471,7 +471,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			() => {}, // handleSlideEdit
 			() => () => {}, // updateImgUrlArray,
 			() => {}, // toggleEditMode,
-			slide.color_theme,
+			slide.palette,
 			index === 0, // isCoverPage
 			slide.layout, // layoutOptionNonCover
 			slide.layout, // layoutOptionCover
@@ -496,7 +496,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			handleSlideEdit, // handleSlideEdit
 			updateImgUrlArray,
 			toggleEditMode,
-			slide.color_theme, // color theme
+			slide.palette, // color theme
 			index === 0, // isCoverPage
 			slide.layout, // layoutOptionNonCover
 			slide.layout, // layoutOptionCover
@@ -572,7 +572,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 							<ChangeTemplateOptions
 								currentTemplate={slides[slideIndex].template}
-								currentColorTheme={slides[slideIndex].color_theme}
+								currentColorTheme={slides[slideIndex].palette}
 								templateOptions={Object.keys(availableTemplates)}
 								onChangeTemplate={selectTemplate}
 								onChangeColorTheme={selectColorTheme}

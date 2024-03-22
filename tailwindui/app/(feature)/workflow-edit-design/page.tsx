@@ -27,7 +27,7 @@ import { availableColorThemes } from '@/components/slides/slideTemplates';
 export default function DesignPage() {
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 	const [template, setTemplate] = useState('Clean_Lifestyle_003' as string);
-	const [colorTheme, setColorTheme] = useState('Original' as string);
+	const [colorPalette, setColorPalette] = useState('Original' as string);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [isGpt35, setIsGpt35] = useState(true);
 	const { outlines } = useProject();
@@ -71,6 +71,8 @@ export default function DesignPage() {
 
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
+	console.log('Template:', template);
+	console.log('Color Palette:', colorPalette);
 
 	return (
 		<section className='relative'>
@@ -95,7 +97,7 @@ export default function DesignPage() {
 				isSubmitting={isSubmitting}
 				setIsSubmitting={setIsSubmitting}
 				template={template}
-				color_theme={colorTheme}
+				palette={colorPalette}
 				imageAmount={imageAmount}
 				imageLicense={imageLicense}
 				logo_ids={selectedLogo.map((resource) => resource.id)}
@@ -115,13 +117,13 @@ export default function DesignPage() {
 						<TemplateSelector
 							template={template}
 							setTemplate={setTemplate}
-							setColorTheme={setColorTheme}
+							setColorTheme={setColorPalette}
 							colorThemeOptions={
 								availableColorThemes[
 									template as keyof typeof availableColorThemes
 								] || ['Original']
 							}
-							colorTheme={colorTheme}
+							colorTheme={colorPalette}
 						/>
 
 						{/* images */}

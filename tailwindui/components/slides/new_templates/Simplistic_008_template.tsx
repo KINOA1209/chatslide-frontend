@@ -30,11 +30,11 @@ export const Simplistic_008_template = ({
 	currentSlideIndex,
 	isShowingLogo,
 	images_position,
-	color_theme,
+	palette,
 }: MainSlideProps) => {
-	useEffect(() => {
-		console.log('selected color theme is ', color_theme, themeElements);
-	});
+	// useEffect(() => {
+	// 	console.log('selected color theme is ', palette, themeElements);
+	// });
 	const ChosenLayoutNonCover =
 		layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
 	const ChosenLayoutCover =
@@ -43,7 +43,7 @@ export const Simplistic_008_template = ({
 	// Load customizable elements for the current template
 	const themeElements = loadCustomizableElements(
 		'Simplistic_008' as TemplateKeys,
-		color_theme as ColorThemeKeys,
+		palette as ColorThemeKeys,
 	);
 	const layoutConfigElements = loadLayoutConfigElements(
 		'Simplistic_008' as TemplateKeys,

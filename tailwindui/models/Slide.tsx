@@ -25,7 +25,7 @@ export interface SlideElement {
 		| 'additional_images'
 		| 'chart'
 		| 'is_chart'
-		| 'color_theme';
+		| 'palette';
 	content: string | string[];
 }
 
@@ -47,7 +47,7 @@ export type SlideKeys =
 	| 'chart'
 	| 'is_chart'
 	| 'images_position'
-	| 'color_theme';
+	| 'palette';
 
 export default class Slide {
 	head: string;
@@ -67,7 +67,7 @@ export default class Slide {
 	background_url?: string;
 	transcript?: string;
 	additional_images?: string[];
-	color_theme: ColorThemeKeys;
+	palette: ColorThemeKeys;
 
 	constructor() {
 		const emptyGroup: Group = {
@@ -99,6 +99,6 @@ export default class Slide {
 		this.layout = 'Col_2_img_1_layout';
 		this.logo = 'Default';
 		this.additional_images = [];
-		this.color_theme = 'Original';
+		this.palette = 'Original';
 	}
 }

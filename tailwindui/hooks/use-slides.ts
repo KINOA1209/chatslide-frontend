@@ -227,13 +227,17 @@ export const useSlides = () => {
 		newTemplate: TemplateKeys,
 		newColorTheme: ColorThemeKeys,
 	) => {
-		console.log('Changing color theme to:', newColorTheme);
-		console.log('Changing template to:', newTemplate);
+		console.log(
+			'Changing template and color theme to:',
+			newTemplate,
+			newColorTheme,
+		);
+
 		let newSlides = slides.map((slide, index) => {
 			return {
 				...slide,
 				template: newTemplate,
-				color_theme: newColorTheme,
+				palette: newColorTheme,
 				images_position: [{}, {}, {}],
 			};
 		});
@@ -259,7 +263,7 @@ export const useSlides = () => {
 		let newSlides = slides.map((slide, index) => {
 			return {
 				...slide,
-				color_theme: newColorTheme,
+				palette: newColorTheme,
 				images_position: [{}, {}, {}],
 			};
 		});

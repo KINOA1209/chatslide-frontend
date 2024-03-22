@@ -17,7 +17,7 @@ const GenerateSlidesSubmit = ({
 	isSubmitting,
 	setIsSubmitting,
 	template,
-	color_theme,
+	palette,
 	imageAmount,
 	imageLicense,
 	logo_ids,
@@ -28,7 +28,7 @@ const GenerateSlidesSubmit = ({
 	isSubmitting: boolean;
 	setIsSubmitting: (submitting: boolean) => void;
 	template: string;
-	color_theme: string;
+	palette: string;
 	imageAmount: string;
 	imageLicense: string;
 	logo_ids: string[];
@@ -130,7 +130,7 @@ const GenerateSlidesSubmit = ({
 			scenario_type: scenarioType,
 			// endIndex: 2,  // generate first 2 sections only
 			template: template,
-			color_theme: color_theme,
+			palette: palette,
 			imageLicense: imageLicense,
 			logo_ids: logo_ids,
 			background_ids: background_ids,

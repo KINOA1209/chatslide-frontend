@@ -26,8 +26,8 @@ const TemplateSelector: React.FC<{
 	colorTheme,
 }) => {
 	const [selectedTemplate, setSelectedTemplate] = useState<string>(template);
-	const [selectedColorTheme, setSelectedColorTheme] =
-		useState<string>(colorTheme);
+	// const [selectedColorTheme, setSelectedColorTheme] =
+	// 	useState<string>(colorTheme);
 	const [colorThemesOptionLenghth, setColorThemesOptionLenghth] = useState(0);
 	useEffect(() => {
 		// Update color theme dropdown options length when template changes
@@ -39,20 +39,20 @@ const TemplateSelector: React.FC<{
 		const selectedValue = e.target.value;
 		setSelectedTemplate(selectedValue);
 		setTemplate(selectedValue);
+		// If the newly selected template has only one color theme option, set color theme to 'Original'
+		if (availableColorThemes[selectedValue as TemplateKeys]?.length === 1) {
+			setColorTheme('Original');
+		}
 	};
 
 	const handleColorThemeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const selectedValue = e.target.value;
-		setSelectedColorTheme(selectedValue);
+		// setSelectedColorTheme(selectedValue);
 		setColorTheme(selectedValue);
 	};
 	useEffect(() => {
-		// If the newly selected template has only one color theme option, set color theme to 'Original'
-		if (colorThemeOptions.length === 1) {
-			setColorTheme('Original');
-		}
-		console.log('Setting color theme to ' + colorTheme);
-	}, [selectedTemplate]);
+		console.log('Color theme changed:', template, colorTheme);
+	}, [template, colorTheme]);
 	return (
 		<div>
 			<div
@@ -112,7 +112,7 @@ const TemplateSelector: React.FC<{
 								// onChange={(e) => setColorTheme(e.target.value)}
 								onChange={handleColorThemeChange}
 								// value={colorTheme}
-								value={selectedColorTheme}
+								value={colorTheme}
 								// value={
 								// 	colorTheme === 'Original' ? 'Original' : colorThemeOptions[0]
 								// }

@@ -59,7 +59,7 @@ export interface MainSlideProps {
 	currentSlideIndex: number;
 	isShowingLogo?: boolean;
 	images_position: ImagesPosition[];
-	color_theme?: ColorThemeKeys;
+	palette?: ColorThemeKeys;
 }
 
 // deprecated

@@ -30,7 +30,7 @@ export const Business_Dark_005_template = ({
 	currentSlideIndex,
 	isShowingLogo,
 	images_position,
-	color_theme,
+	palette,
 }: MainSlideProps) => {
 	const ChosenLayoutNonCover =
 		layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
@@ -40,7 +40,7 @@ export const Business_Dark_005_template = ({
 	// Load customizable elements for the current template
 	const themeElements = loadCustomizableElements(
 		'Business_Dark_005' as TemplateKeys,
-		color_theme,
+		palette,
 	);
 	const layoutConfigElements = loadLayoutConfigElements(
 		'Business_Dark_005' as TemplateKeys,

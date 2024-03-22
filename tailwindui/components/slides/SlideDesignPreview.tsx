@@ -54,7 +54,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 		const newSlides = Object.keys(layoutOptions).map((layoutKey) => {
 			const newSlide = new Slide();
 			newSlide.template = template;
-			newSlide.color_theme = color_theme;
+			newSlide.palette = color_theme;
 			newSlide.layout = layoutKey as keyof typeof layoutOptions;
 
 			if (
@@ -103,7 +103,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			() => {},
 			() => () => {},
 			() => {},
-			slide.color_theme,
+			slide.palette,
 			index === 0 || index === 1,
 			slide.layout,
 			slide.layout,
