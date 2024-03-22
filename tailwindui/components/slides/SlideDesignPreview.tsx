@@ -73,7 +73,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 		});
 
 		setSlides(newSlides);
-	}, [selectedTemplate]);
+	}, [selectedTemplate, selectedColorTheme]);
 
 	const layoutNameArray = [
 		'Cover Page without image',

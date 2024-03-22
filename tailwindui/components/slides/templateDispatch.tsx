@@ -118,7 +118,7 @@ export const templateDispatch = (
 	// this decide which themeelement to use
 	const themeElements = loadCustomizableElements(
 		templateKey as TemplateKeys,
-		color_theme as ColorThemeKeys,
+		slide.color_theme as ColorThemeKeys,
 	);
 	const processContent = (item: string) => {
 		if (isHTML(item)) {
@@ -319,7 +319,7 @@ export const templateDispatch = (
 			currentSlideIndex={index}
 			isShowingLogo={isShowingLogo}
 			images_position={slide.images_position || [{}, {}, {}]}
-			color_theme={color_theme}
+			color_theme={slide.color_theme}
 		/>
 	);
 	// }

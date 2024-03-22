@@ -95,6 +95,7 @@ export default function DesignPage() {
 				isSubmitting={isSubmitting}
 				setIsSubmitting={setIsSubmitting}
 				template={template}
+				color_theme={colorTheme}
 				imageAmount={imageAmount}
 				imageLicense={imageLicense}
 				logo_ids={selectedLogo.map((resource) => resource.id)}
@@ -118,7 +119,7 @@ export default function DesignPage() {
 							colorThemeOptions={
 								availableColorThemes[
 									template as keyof typeof availableColorThemes
-								] || []
+								] || ['Original']
 							}
 							colorTheme={colorTheme}
 						/>
