@@ -18,6 +18,7 @@ const useVideoJobIdBear = createBearStore<string>()('videoJobId', '', true);
 const useIsGpt35Bear = createBearStore<boolean>()('isGpt35', true, true);
 const useIsShared = createBearStore<boolean>()('isShared', false, true);
 const useOutlinesBear = createBearStore<Outlines>()('outlines', [], true);
+const useHasScripts = createBearStore<boolean>()('hasScripts', false, true);
 
 export enum ProjectStatus {
 	NotInited,
@@ -37,6 +38,7 @@ export const useProject = () => {
 	const { isShared, setIsShared } = useIsShared();
 	const { token } = useUser();
 	const { outlines, setOutlines } = useOutlinesBear();
+	const { hasScripts, setHasScripts } = useHasScripts();
 
 	const init = async () => {
 		if (projectStatus !== ProjectStatus.NotInited) return;
@@ -119,5 +121,7 @@ export const useProject = () => {
 		updateIsShared,
 		outlines,
 		updateOutlines,
+		hasScripts,
+		setHasScripts,
 	};
 };

@@ -62,8 +62,8 @@ export default class VideoService {
 		};
 	}
 
-	static async getTTS(text: string, language: string, voice: string, token: string): Promise<File> {
-		const response = await fetch('/api/tts', {
+	static async getTTS(text: string, voice: string, foldername: string, token: string): Promise<string> {
+		const response = await fetch('/api/generate_audio_single_slide', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -71,8 +71,8 @@ export default class VideoService {
 			},
 			body: JSON.stringify({
 				text: text,
-				language: language,
 				voice: voice,
+				foldername: foldername,
 			}),
 		});
 
@@ -80,7 +80,7 @@ export default class VideoService {
 			throw new Error(`HTTP error! status: ${response.status}`);
 		}
 
-		const blob = await response.blob();
-		return new File([blob], 'tts.mp3', { type: 'audio/mpeg' });
+		const data = await response.json();
+		return `/api/audio?foldername=${foldername}&filename=${data.data.filename}`
 	}
 }

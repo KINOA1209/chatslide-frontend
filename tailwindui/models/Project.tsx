@@ -31,6 +31,7 @@ type Project = {
 	presentation_slides: string; // JSONified slide object
 	parsed_slides: Slide[];
 	scenario_type: string;
+	has_scripts: boolean;
 
 	// Social Post-specific fields
 	post_type: string;

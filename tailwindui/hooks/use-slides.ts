@@ -46,6 +46,7 @@ export const useSlides = () => {
 	const { project } = useProject();
 	const { isPresenting, setIsPresenting } = usePresenting();
 	const { isShowingLogo, setIsShowingLogo } = useIsShowingLogo();
+	const { hasScripts, setHasScripts } = useProject();
 
 	const { clearChatHistory } = useChatHistory();
 
@@ -261,6 +262,7 @@ export const useSlides = () => {
 		}
 		setSlides(newSlides);
 		syncSlides(newSlides);
+		setHasScripts(true);
 	};
 
 	const syncSlides = async (

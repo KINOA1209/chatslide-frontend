@@ -15,35 +15,42 @@ import Card from '@/components/ui/Card';
 import { InputBox } from '@/components/ui/InputBox';
 import ScriptEditor from '@/components/slides/script/ScriptEditor';
 import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
-import { FiPlay } from 'react-icons/fi';
+import { FiPause, FiPlay } from 'react-icons/fi';
 import Slide from '@/models/Slide';
+import { useProject } from '@/hooks/use-project';
 
 
 const ScriptPage: React.FC<{
 	slides: Array<Slide>;
 	index: number;
 	scale: number;
+	voice: string;
+	updateSlidePage: (index: number, slide: Slide) => void;
 }> = ({
 	slides,
 	index,
 	scale,
+	voice,
+	updateSlidePage,
 }) => {
 		const [isPlaying, setIsPlaying] = useState(false);
 		// Add a state to store the audio element
 		const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+		const { token } = useUser();
+		const { project } = useProject();
 
 		const playScript = async () => {
 			const script = slides[index].transcript || '';
-			
+			console.log('Playing script:', script);
 			setIsPlaying(true);
 
 			// Assuming VideoService.playScript returns a Promise that resolves to an audio URL or blob
 			try {
-				const voice = await VideoService.getTTS(script); // Fetch voice from backend
-				const audioElement = new Audio(voice); // Create an audio element with the fetched voice
+				const audio = await VideoService.getTTS(script, voice, project?.foldername as string, token); // Fetch voice from backend
+				const audioElement = new Audio(audio); // Create an audio element with the fetched voice
 				audioElement.play(); // Play the voice
 				setAudio(audioElement); // Store the audio element in state for access by pauseScript
-
+				console.log('playing audio:', audioElement);
 				audioElement.onended = () => {
 					setIsPlaying(false); // Automatically set to not playing when playback finishes
 				};
@@ -54,15 +61,17 @@ const ScriptPage: React.FC<{
 		};
 
 		const pauseScript = () => {
+			console.log('pausing audio:', audio);
 			if (audio) {
 				audio.pause(); // Pause the currently playing audio
-				setIsPlaying(false); // Update the state to reflect that playback has stopped
 			}
+			setIsPlaying(false); // Update the state to reflect that playback has stopped
 		};
 
 
 		return (
 			<div key={index} className='flex flex-row justify-between gap-x-2'>
+
 				<SlideContainer
 					index={index}
 					slide={slides[index]}
@@ -72,7 +81,7 @@ const ScriptPage: React.FC<{
 				/>
 				<ScriptEditor
 					slides={slides}
-					updateSlidePage={() => { }}
+					updateSlidePage={updateSlidePage}
 					currentSlideIndex={index}
 					scale={scale}
 				/>
@@ -99,7 +108,7 @@ const ScriptPage: React.FC<{
 						explanation='Pause the script'
 						button={
 							<button onClick={pauseScript}>
-								<FiPlay
+								<FiPause
 									style={{
 										strokeWidth: '2',
 										flex: '1',
@@ -125,6 +134,7 @@ export default function WorkflowStep5() {
 		height: typeof window !== 'undefined' ? window.innerHeight : 540,
 	});
 	const [scale, setScale] = useState(calculateNonPresentScale(dimensions.width, dimensions.height) * 0.5);
+	const [voice, setVoice] = useState('en-US-AvaNeural');
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -146,7 +156,7 @@ export default function WorkflowStep5() {
 				setIsSubmitting={setIsSubmitting}
 				isPaidUser={true}
 				nextIsPaidFeature={true}
-				lastStep={true}
+				nextText='Create Video'
 			/>
 
 			<ToastContainer enableMultiContainer containerId={'script'} />
@@ -167,6 +177,8 @@ export default function WorkflowStep5() {
 								slides={slides}
 								index={index}
 								scale={scale}
+								voice={voice}
+								updateSlidePage={updateSlidePage}
 							/>
 						))}
 					</div>
