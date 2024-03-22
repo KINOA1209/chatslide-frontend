@@ -1,6 +1,6 @@
 import Slide from '@/models/Slide';
 import React, { useEffect, useState } from 'react';
-import SlideContainer from '../SlideContainer';
+import SlideContainer from '../slides/SlideContainer';
 import { ToolBar } from '@/components/ui/ToolBar';
 import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
 import { FaChevronLeft, FaChevronRight, FaTimes } from 'react-icons/fa';

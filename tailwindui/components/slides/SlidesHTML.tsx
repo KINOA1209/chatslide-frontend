@@ -23,7 +23,7 @@ import {
 
 import SlideContainer from './SlideContainer';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
-import { templateDispatch } from './templateDispatch';
+import { templateDispatch, uneditableTemplateDispatch } from './templateDispatch';
 import { availableLayouts } from './slideLayout';
 import themeConfigData, {
 	ThemeConfig,
@@ -31,7 +31,7 @@ import themeConfigData, {
 import layoutConfigData, {
 	TemplateLayoutsConfig,
 } from './templates_customizable_elements/layout_elements';
-import ScriptEditor from './script/ScriptEditor';
+import ScriptEditor from '../script/ScriptEditor';
 import Slide, { SlideKeys } from '@/models/Slide';
 import {
 	DrLambdaAIAssistantIcon,
@@ -45,7 +45,7 @@ import ImagesPosition from '@/models/ImagesPosition';
 import { Panel } from '../layout/Panel';
 import { useProject } from '@/hooks/use-project';
 import { GoEye, GoEyeClosed } from 'react-icons/go';
-import ScriptWindow from './script/ScriptWindow';
+import ScriptWindow from '../script/ScriptWindow';
 import ReactDOM from 'react-dom';
 import { ScrollBar } from '../ui/ScrollBar';
 
@@ -75,27 +75,6 @@ export const loadLayoutConfigElements = (
 		templateElements[layoutOption as LayoutKeys] || {};
 	return selectedLayoutOptionElements;
 };
-
-export const uneditableTemplateDispatch = (
-	slide: Slide,
-	index: number,
-	exportToPdfMode: boolean = false,
-) =>
-	templateDispatch(
-		slide,
-		index,
-		false, // canEdit
-		exportToPdfMode, //exportToPdfMode
-		false, //editMathMode
-		() => { }, //setIsEditMode
-		() => { }, // handleSlideEdit
-		() => () => { }, // updateImgUrlArray,
-		() => { }, // toggleEditMode,
-		index === 0, // isCoverPage
-		slide.layout, // layoutOptionNonCover
-		slide.layout, // layoutOptionCover
-		false, // isCurrentSlide
-	);
 
 export const calculateNonPresentScale = (width: number, height: number) => {
 	if (width < 640) {

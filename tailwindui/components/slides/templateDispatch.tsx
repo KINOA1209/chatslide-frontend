@@ -310,3 +310,25 @@ export const templateDispatch = (
 	);
 	// }
 };
+
+
+export const uneditableTemplateDispatch = (
+	slide: Slide,
+	index: number,
+	exportToPdfMode: boolean = false,
+) =>
+	templateDispatch(
+		slide,
+		index,
+		false, // canEdit
+		exportToPdfMode, //exportToPdfMode
+		false, //editMathMode
+		() => { }, //setIsEditMode
+		() => { }, // handleSlideEdit
+		() => () => { }, // updateImgUrlArray,
+		() => { }, // toggleEditMode,
+		index === 0, // isCoverPage
+		slide.layout, // layoutOptionNonCover
+		slide.layout, // layoutOptionCover
+		false, // isCurrentSlide
+	);
