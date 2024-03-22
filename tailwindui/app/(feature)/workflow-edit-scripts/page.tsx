@@ -10,7 +10,7 @@ import { Column } from '@/components/layout/Column';
 import { useSlides } from '@/hooks/use-slides';
 import SlideContainer from '@/components/slides/SlideContainer';
 import { calculateNonPresentScale, uneditableTemplateDispatch } from '@/components/slides/SlidesHTML';
-import { Instruction } from '@/components/ui/Text';
+import { Title, Instruction } from '@/components/ui/Text';
 import Card from '@/components/ui/Card';
 import { InputBox } from '@/components/ui/InputBox';
 import ScriptEditor from '@/components/slides/script/ScriptEditor';
@@ -18,7 +18,78 @@ import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
 import { FiPause, FiPlay } from 'react-icons/fi';
 import Slide from '@/models/Slide';
 import { useProject } from '@/hooks/use-project';
+import { LANGUAGE_OPTIONS, VOICE_OPTIONS } from './voiceOptions';
+import { DropDown } from '@/components/button/DrlambdaButton';
 
+
+const VoiceSelector: React.FC<{
+	selectedVoice: string;
+	setSelectedVoice: (language: string) => void;
+}> = ({
+	selectedVoice,
+	setSelectedVoice,
+}) => {
+	const [selectedLanguage, setSelectedLanguage] = useState<string>('en-US');
+	const [selectedGender, setSelectedGender] = useState<'female' | 'male'>('female');
+	const genderOptions = ['female', 'male'];
+	const [voiceOptions, setVoiceOptions] = useState<string[]>([]);
+
+	// Update voice options based on selected language and gender
+	useEffect(() => {
+		const voices = VOICE_OPTIONS[selectedLanguage][selectedGender];
+		setVoiceOptions(voices);
+		setSelectedVoice(voices[0]);
+	}, [selectedLanguage, selectedGender]);
+
+	const formatVoiceName = (voiceName: string): string => {
+		// Ensure the string is long enough to avoid negative substring indices
+		if (voiceName.length > 12) {
+			let formattedName = voiceName.substring(6, voiceName.length - 6);
+			// Capitalize the first letter and return
+			formattedName = formattedName.charAt(0).toUpperCase() + formattedName.slice(1);
+			// replace Multilingual with `-Mulilingual`
+			if (formattedName.includes('Multilingual')) {
+				return formattedName.replace('Multilingual', '-Multilingual');
+			}
+			return formattedName;
+		}
+
+		// If the name is not in the expected format, return it as is or handle accordingly
+		return voiceName;
+	};
+
+
+	return (
+		<div className='flex flex-row justify-between'>
+			<div>
+				<Instruction>Language: </Instruction>
+				<DropDown value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)}>
+					{LANGUAGE_OPTIONS.map((option) => (
+						<option key={option.code} value={option.code}>{option.name}</option>
+					))}
+				</DropDown>
+			</div>
+
+			<div>
+				<Instruction>Gender: </Instruction>
+				<DropDown value={selectedGender} onChange={(e) => setSelectedGender(e.target.value as 'female' | 'male')}>
+					{genderOptions.map((gender) => (
+						<option key={gender} value={gender}>{gender.charAt(0).toUpperCase() + gender.slice(1)}</option>
+					))}
+				</DropDown>
+			</div>
+
+			<div>
+				<Instruction>Voice: </Instruction>
+				<DropDown value={selectedVoice} onChange={(e) => setSelectedVoice(e.target.value)}>
+					{voiceOptions.map((voice) => (
+						<option key={voice} value={voice}>{formatVoiceName(voice)}</option>
+					))}
+				</DropDown>
+			</div>
+		</div>
+	);
+};
 
 const ScriptPage: React.FC<{
 	slides: Array<Slide>;
@@ -163,13 +234,17 @@ export default function WorkflowStep5() {
 
 			<Column>
 				<Card>
+					<Title center={false}>Voice</Title>
 					<Instruction>
 						Select the voice you want to use for your video.
 					</Instruction>
+					<VoiceSelector selectedVoice={voice} setSelectedVoice={setVoice} />
 				</Card>
 				<Card>
+					<Title center={false}>Scripts</Title>
 					<Instruction>
 						You can edit your scripts here:
+						If you want to edit slides, you can go back to the previous step.
 					</Instruction>
 					<div className='flex flex-col gap-y-2'>
 						{slides.map((_, index) => (
