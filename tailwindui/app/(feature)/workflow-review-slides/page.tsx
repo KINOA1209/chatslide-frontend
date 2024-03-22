@@ -12,7 +12,7 @@ import useHydrated from '@/hooks/use-hydrated';
 import { useProject } from '@/hooks/use-project';
 export default function WorkflowStep3() {
 	const { isPaidUser } = useUser();
-	const { hasScripts } = useProject();
+	const { project } = useProject();
 	const [isGpt35, setIsGpt35] = useState(
 		typeof sessionStorage !== 'undefined'
 			? JSON.parse(sessionStorage.getItem('isGpt35') || 'true')
@@ -51,7 +51,7 @@ export default function WorkflowStep3() {
 				isGpt35={isGpt35}
 				isSubmitting={isSubmitting}
 				setIsSubmitting={setIsSubmitting}
-				showScript={hasScripts}
+				showScript={project?.has_scripts || false}
 			/>
 		</div>
 	);

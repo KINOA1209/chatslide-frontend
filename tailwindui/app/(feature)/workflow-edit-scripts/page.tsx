@@ -19,6 +19,8 @@ import { FiPause, FiPlay } from 'react-icons/fi';
 import Slide from '@/models/Slide';
 import { useProject } from '@/hooks/use-project';
 import VoiceSelector from '@/components/language/VoiceSelector';
+import { useRouter } from 'next/navigation';
+import { addIdToRedir } from '@/utils/redirWithId';
 
 
 const ScriptSection: React.FC<{
@@ -132,6 +134,9 @@ const ScriptSection: React.FC<{
 export default function WorkflowStep5() {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { slides, updateSlidePage } = useSlides();
+	const { project } = useProject();
+	const { token } = useUser();
+	const router = useRouter();
 
 	const [dimensions, setDimensions] = useState({
 		width: typeof window !== 'undefined' ? window.innerWidth : 960,
@@ -139,6 +144,42 @@ export default function WorkflowStep5() {
 	});
 	const [scale, setScale] = useState(calculateNonPresentScale(dimensions.width, dimensions.height) * 0.5);
 	const [voice, setVoice] = useState('en-US-AvaNeural');
+
+	async function handleSubmitVideo() {
+		console.log('submitting');
+
+		const language = sessionStorage.getItem('language') || 'English';
+		const foldername = sessionStorage.getItem('foldername') || '';
+
+		const fetchData = async () => {
+			if (!project) {
+				return;
+			}
+			try {
+				const project_id = project.id;
+				VideoService.generateVideo(
+					project_id,
+					foldername,
+					language,
+					token,
+				);
+				router.push(addIdToRedir('workflow-review-video'));
+			} catch (error) {
+				console.error('Error in fetchData:', error);
+				toast.error(
+					'We have some problem creating your video, please try again later.',
+				);
+				// TODO: add toast prompts for user
+			}
+			setIsSubmitting(false);
+		};
+	}
+
+	useEffect(() => {
+		if (isSubmitting) {
+			handleSubmitVideo();
+		}
+	}, [isSubmitting]);
 
 	useEffect(() => {
 		const handleResize = () => {

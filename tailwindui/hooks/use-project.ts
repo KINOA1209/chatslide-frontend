@@ -38,7 +38,6 @@ export const useProject = () => {
 	const { isShared, setIsShared } = useIsShared();
 	const { token } = useUser();
 	const { outlines, setOutlines } = useOutlinesBear();
-	const { hasScripts, setHasScripts } = useHasScripts();
 
 	const init = async () => {
 		if (projectStatus !== ProjectStatus.NotInited) return;
@@ -121,7 +120,5 @@ export const useProject = () => {
 		updateIsShared,
 		outlines,
 		updateOutlines,
-		hasScripts,
-		setHasScripts,
 	};
 };

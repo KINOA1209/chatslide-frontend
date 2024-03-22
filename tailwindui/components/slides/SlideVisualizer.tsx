@@ -53,42 +53,6 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 		}
 	}, []);
 
-	async function handleSubmitVideo() {
-		console.log('submitting');
-
-		const language = sessionStorage.getItem('language') || 'English';
-		const foldername = sessionStorage.getItem('foldername') || '';
-
-		const fetchData = async () => {
-			if (!project) {
-				console.log('SlideVisualizer: No project found');
-				return;
-			}
-
-			try {
-				const project_id = project.id;
-				VideoService.generateVideo(
-					project_id,
-					foldername,
-					language,
-					token,
-				);
-				router.push(addIdToRedir('workflow-review-video'));
-			} catch (error) {
-				console.error('Error in fetchData:', error);
-				toast.error(
-					'We have some problem creating your video, please try again later.',
-				);
-				// TODO: add toast prompts for user
-			}
-			setIsSubmitting(false);
-		};
-
-		if (isSubmitting) {
-			fetchData();
-		}
-	}
-
 	async function handleSubmitTranscript() {
 		if (!project) {
 			console.log('SlideVisualizer: No project found');
@@ -147,6 +111,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 				console.log(response);
 				setIsSubmitting(false);
 			}
+			router.push(addIdToRedir('workflow-edit-scripts'));
 		} catch (error) {
 			console.error('Error:', error);
 			setIsSubmitting(false);
@@ -155,8 +120,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 
 	useEffect(() => {
 		if (isSubmitting) {
-			if (!showScript) handleSubmitTranscript();
-			else handleSubmitVideo();
+			handleSubmitTranscript();
 		}
 	}, [isSubmitting]);
 
