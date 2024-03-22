@@ -22,7 +22,8 @@ export default class VideoService {
 		});
 
 		if (!response.ok) {
-			throw new Error(`HTTP error! status: ${response.status}`);
+			// throw new Error(`HTTP error! status: ${response.status}`);
+			console.error(`HTTP error in generateVideo! status: ${response.status}`);
 		}
 
 		console.log(`generate video response: ${response}`);
@@ -77,7 +78,7 @@ export default class VideoService {
 		});
 
 		if (!response.ok) {
-			throw new Error(`HTTP error! status: ${response.status}`);
+			throw new Error(`HTTP error in getTTS! status: ${response.status}`);
 		}
 
 		const data = await response.json();

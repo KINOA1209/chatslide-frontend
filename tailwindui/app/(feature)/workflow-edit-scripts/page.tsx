@@ -153,6 +153,7 @@ export default function WorkflowStep5() {
 
 		const fetchData = async () => {
 			if (!project) {
+				console.error('No project found');
 				return;
 			}
 			try {
@@ -171,8 +172,10 @@ export default function WorkflowStep5() {
 				);
 				// TODO: add toast prompts for user
 			}
-			setIsSubmitting(false);
 		};
+
+		fetchData();
+		setIsSubmitting(false);
 	}
 
 	useEffect(() => {
