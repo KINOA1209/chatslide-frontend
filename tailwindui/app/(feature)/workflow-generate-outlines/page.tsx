@@ -30,7 +30,7 @@ import {
 } from '@/components/ui/Text';
 import { DropDown } from '@/components/button/DrlambdaButton';
 import ResourceService from '@/services/ResourceService';
-import LanguageSelector from './LanguageSelector';
+import LanguageSelector from '../../../components/language/LanguageSelector';
 import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
 import { addIdToRedir } from '@/utils/redirWithId';
@@ -274,7 +274,7 @@ export default function Topic() {
 				setShowPaymentModal(true);
 				setIsSubmitting(false);
 			} else {
-				console.error('Error when generating outlines:', response);
+				console.error('Error when generating outlines:', response.status);
 				toast.error(
 					'Server is busy now. Please try again later. Reference code: ' +
 						project?.id,

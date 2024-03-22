@@ -1,0 +1,242 @@
+'use client';
+
+import React, { useEffect, useRef, useState } from 'react';
+import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
+import { toast, ToastContainer } from 'react-toastify';
+import VideoService from '@/services/VideoService';
+import { useUser } from '@/hooks/use-user';
+import { Loading, Blank } from '@/components/ui/Loading';
+import { Column } from '@/components/layout/Column';
+import { useSlides } from '@/hooks/use-slides';
+import SlideContainer from '@/components/slides/SlideContainer';
+import { calculateNonPresentScale, uneditableTemplateDispatch } from '@/components/slides/SlidesHTML';
+import { Title, Instruction, BigTitle } from '@/components/ui/Text';
+import Card from '@/components/ui/Card';
+import { InputBox } from '@/components/ui/InputBox';
+import ScriptEditor from '@/components/slides/script/ScriptEditor';
+import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
+import { FiPause, FiPlay } from 'react-icons/fi';
+import Slide from '@/models/Slide';
+import { useProject } from '@/hooks/use-project';
+import VoiceSelector from '@/components/language/VoiceSelector';
+import { useRouter } from 'next/navigation';
+import { addIdToRedir } from '@/utils/redirWithId';
+
+
+const ScriptSection: React.FC<{
+	slides: Array<Slide>;
+	index: number;
+	scale: number;
+	voice: string;
+	updateSlidePage: (index: number, slide: Slide) => void;
+}> = ({
+	slides,
+	index,
+	scale,
+	voice,
+	updateSlidePage,
+}) => {
+		const [isPlaying, setIsPlaying] = useState(false);
+		// Add a state to store the audio element
+		const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+		const { token } = useUser();
+		const { project } = useProject();
+
+		const playScript = async () => {
+			const script = slides[index].transcript || '';
+			console.log('Playing script:', script);
+			setIsPlaying(true);
+
+			// Assuming VideoService.playScript returns a Promise that resolves to an audio URL or blob
+			try {
+				const audio = await VideoService.getTTS(script, voice, project?.foldername as string, token); // Fetch voice from backend
+				const audioElement = new Audio(audio); // Create an audio element with the fetched voice
+				audioElement.play(); // Play the voice
+				setAudio(audioElement); // Store the audio element in state for access by pauseScript
+				console.log('playing audio:', audioElement);
+				audioElement.onended = () => {
+					setIsPlaying(false); // Automatically set to not playing when playback finishes
+				};
+			} catch (error) {
+				console.error("Error playing script audio:", error);
+				setIsPlaying(false); // Ensure we reset the state if there's an error
+			}
+		};
+
+		const pauseScript = () => {
+			console.log('pausing audio:', audio);
+			if (audio) {
+				audio.pause(); // Pause the currently playing audio
+			}
+			setIsPlaying(false); // Update the state to reflect that playback has stopped
+		};
+
+
+		return (
+			<div key={index} className='flex flex-row justify-between gap-x-2'>
+
+				<SlideContainer
+					index={index}
+					slide={slides[index]}
+					scale={scale}
+					isViewing={true}
+					templateDispatch={uneditableTemplateDispatch}
+				/>
+				<ScriptEditor
+					slides={slides}
+					updateSlidePage={updateSlidePage}
+					currentSlideIndex={index}
+					scale={scale}
+				/>
+				{/* play and pause the script */}
+
+				<div className='mt-4'>
+					{!isPlaying ?
+						<ButtonWithExplanation
+							explanation='Play the script'
+							button={
+								<button onClick={playScript}>
+									<FiPlay
+										style={{
+											strokeWidth: '2',
+											flex: '1',
+											width: '1.5rem',
+											height: '1.5rem',
+											fontWeight: 'bold',
+											color: '#2943E9',
+										}}
+									/>
+								</button>
+							}
+						/> :
+						<ButtonWithExplanation
+							explanation='Pause the script'
+							button={
+								<button onClick={pauseScript}>
+									<FiPause
+										style={{
+											strokeWidth: '2',
+											flex: '1',
+											width: '1.5rem',
+											height: '1.5rem',
+											fontWeight: 'bold',
+											color: '#2943E9',
+										}}
+									/>
+								</button>
+							}
+						/>}
+				</div>
+			</div>
+		)
+	};
+
+export default function WorkflowStep5() {
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const { slides, updateSlidePage } = useSlides();
+	const { project } = useProject();
+	const { token } = useUser();
+	const router = useRouter();
+
+	const [dimensions, setDimensions] = useState({
+		width: typeof window !== 'undefined' ? window.innerWidth : 960,
+		height: typeof window !== 'undefined' ? window.innerHeight : 540,
+	});
+	const [scale, setScale] = useState(calculateNonPresentScale(dimensions.width, dimensions.height) * 0.5);
+	const [voice, setVoice] = useState('en-US-AvaNeural');
+
+	async function handleSubmitVideo() {
+		console.log('submitting');
+
+		const language = sessionStorage.getItem('language') || 'English';
+		const foldername = sessionStorage.getItem('foldername') || '';
+
+		const fetchData = async () => {
+			if (!project) {
+				console.error('No project found');
+				return;
+			}
+			try {
+				const project_id = project.id;
+				VideoService.generateVideo(
+					project_id,
+					foldername,
+					language,
+					token,
+				);
+				router.push(addIdToRedir('workflow-review-video'));
+			} catch (error) {
+				console.error('Error in fetchData:', error);
+				toast.error(
+					'We have some problem creating your video, please try again later.',
+				);
+				// TODO: add toast prompts for user
+			}
+		};
+
+		fetchData();
+		setIsSubmitting(false);
+	}
+
+	useEffect(() => {
+		if (isSubmitting) {
+			handleSubmitVideo();
+		}
+	}, [isSubmitting]);
+
+	useEffect(() => {
+		const handleResize = () => {
+			setScale(calculateNonPresentScale(window.innerWidth, window.innerHeight) * 0.5);
+		};
+
+		window.addEventListener('resize', handleResize);
+
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
+
+	return (
+		<div className='h-full w-full bg-white flex flex-col'>
+			{/* flex col container for steps, title, etc */}
+
+			<WorkflowStepsBanner
+				currentIndex={4}
+				isSubmitting={isSubmitting}
+				setIsSubmitting={setIsSubmitting}
+				isPaidUser={true}
+				nextIsPaidFeature={true}
+				nextText='Create Video'
+			/>
+
+			<ToastContainer enableMultiContainer containerId={'script'} />
+
+			<Column>
+				<Card>
+					<BigTitle>Voice</BigTitle>
+					<Instruction>
+						Select the voice you want to use for your video.
+					</Instruction>
+					<VoiceSelector selectedVoice={voice} setSelectedVoice={setVoice} />
+				</Card>
+				<Card>
+					<BigTitle>Scripts</BigTitle>
+					<Instruction>
+						You can edit your scripts here:
+						If you want to edit slides, you can go back to the previous step.
+					</Instruction>
+					<div className='flex flex-col gap-y-2'>
+						{slides.map((_, index) => (
+							<ScriptSection
+								slides={slides}
+								index={index}
+								scale={scale}
+								voice={voice}
+								updateSlidePage={updateSlidePage}
+							/>
+						))}
+					</div>
+				</Card>
+			</Column>
+
+		</div>
+	);
+}

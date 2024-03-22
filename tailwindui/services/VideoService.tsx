@@ -22,7 +22,8 @@ export default class VideoService {
 		});
 
 		if (!response.ok) {
-			throw new Error(`HTTP error! status: ${response.status}`);
+			// throw new Error(`HTTP error! status: ${response.status}`);
+			console.error(`HTTP error in generateVideo! status: ${response.status}`);
 		}
 
 		console.log(`generate video response: ${response}`);
@@ -60,5 +61,27 @@ export default class VideoService {
 			job_status: json.data.job_status,
 			video_url: json.data.video_url,
 		};
+	}
+
+	static async getTTS(text: string, voice: string, foldername: string, token: string): Promise<string> {
+		const response = await fetch('/api/generate_audio_single_slide', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				text: text,
+				voice: voice,
+				foldername: foldername,
+			}),
+		});
+
+		if (!response.ok) {
+			throw new Error(`HTTP error in getTTS! status: ${response.status}`);
+		}
+
+		const data = await response.json();
+		return `/api/audio?foldername=${foldername}&filename=${data.data.filename}`
 	}
 }

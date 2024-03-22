@@ -223,7 +223,7 @@ export const DropDown: React.FC<DrlambdaDropDownProps> = ({
 	onChange,
 	displayText,
 	width = '12rem',
-	style = 'button',
+	style = 'input',
 	value = 'default',
 	disabled = false,
 }) => {
