@@ -274,7 +274,7 @@ export default function Topic() {
 				setShowPaymentModal(true);
 				setIsSubmitting(false);
 			} else {
-				console.error('Error when generating outlines:', response);
+				console.error('Error when generating outlines:', response.status);
 				toast.error(
 					'Server is busy now. Please try again later. Reference code: ' +
 						project?.id,

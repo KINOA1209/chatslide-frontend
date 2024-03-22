@@ -139,7 +139,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 				const transcripts = resp.data.res;
 				setTranscripts(transcripts); // and auto-save
 			} else {
-				console.error('Error when generating scripts:', response);
+				console.error('Error when generating scripts:', response.status);
 				toast.error(
 					'Server is busy now. Please try again later. Reference code: ' +
 					project_id,
