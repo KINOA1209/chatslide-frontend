@@ -27,6 +27,12 @@ const ErrorMessage: React.FC<{ children: React.ReactNode }> = ({
 	return <div className='text-red-500 text-sm'>{children}</div>;
 };
 
+const WarningMessage: React.FC<{ children: React.ReactNode }> = ({
+	children,
+}) => {
+	return <div className='text-yellow-600 text-sm'>{children}</div>;
+};
+
 const ExplanationPopup: React.FC<{ children: React.ReactNode }> = ({
 	children,
 }) => {
@@ -52,4 +58,4 @@ const ExplanationPopup: React.FC<{ children: React.ReactNode }> = ({
 	);
 };
 
-export { Title, BigTitle, Instruction, Explanation, ErrorMessage, ExplanationPopup };
+export { Title, BigTitle, Instruction, Explanation, ErrorMessage, WarningMessage, ExplanationPopup };

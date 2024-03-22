@@ -1,6 +1,6 @@
 'use client';
 
-import LanguageSelector from "@/app/(feature)/workflow-generate-outlines/LanguageSelector";
+import LanguageSelector from "@/components/language/LanguageSelector";
 import { Instruction } from "../ui/Text";
 import ButtonWithExplanation from "./ButtonWithExplanation";
 import { FaRegClone } from "react-icons/fa";
