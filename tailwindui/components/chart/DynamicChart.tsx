@@ -132,6 +132,9 @@ const DynamicChart: React.FC<DynamicChartProps> = ({
 	if (!isPrview) {
 		options = {
 			devicePixelRatio: 1.5,
+			animation: {
+				duration: false,
+			},
 			plugins: {
 				legend: {
 					display: chartType !== 'bar' && chartType !== 'line',
