@@ -59,7 +59,7 @@ export const PresentButton: React.FC<PresentButtonProps> = ({
 							width: '1.5rem',
 							height: '1.5rem',
 							fontWeight: 'bold',
-							color: '#2943E9',
+							color: '#344054',
 						}}
 					/>
 				</button>
@@ -209,7 +209,7 @@ export const ShareButton: React.FC<ShareButtonProps> = ({
 								width: '1.5rem',
 								height: '1.5rem',
 								// fontWeight: 'bold',
-								color: '#2943E9',
+								color: '#344054',
 							}}
 						/>
 					</button>
@@ -302,7 +302,7 @@ export const AddSlideButton: React.FC<{
 							width: '1.7rem',
 							height: '1.7rem',
 							fontWeight: 'bold',
-							color: '#2943E9',
+							color: '#344054',
 						}}
 					/>
 				</button>
@@ -329,7 +329,7 @@ export const DuplicateSlidePageButton: React.FC<{
 							width: '1.3rem',
 							height: '1.3rem',
 							fontWeight: 'bold',
-							color: '#2943E9',
+							color: '#344054',
 						}}
 					/>
 				</button>
@@ -356,7 +356,7 @@ export const DeleteSlideButton: React.FC<{
 							width: '1.5rem',
 							height: '1.5rem',
 							fontWeight: 'bold',
-							color: '#2943E9',
+							color: '#344054',
 						}}
 					/>
 				</button>
@@ -445,7 +445,7 @@ export const ChangeTemplateOptions: React.FC<{
 								width: '1.5rem',
 								height: '1.5rem',
 								fontWeight: 'bold',
-								color: '#2943E9',
+								color: '#344054',
 							}}
 						/>
 					</button>

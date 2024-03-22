@@ -150,7 +150,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 								width: '1.5rem',
 								height: '1.5rem',
 								fontWeight: 'bold',
-								color: '#2943E9',
+								color: '#344054',
 							}}
 						/> :
 							<SpinIcon />}

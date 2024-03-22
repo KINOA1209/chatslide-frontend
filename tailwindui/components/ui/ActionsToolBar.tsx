@@ -60,7 +60,7 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 								width: '1.5rem',
 								height: '1.5rem',
 								fontWeight: 'bold',
-								color: '#2943E9',
+								color: '#344054',
 							}}
 						/>
 					</button>
@@ -96,7 +96,7 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 									width: '1.5rem',
 									height: '1.5rem',
 									fontWeight: 'bold',
-									color: '#2943E9',
+									color: '#344054',
 								}}
 							/>
 						</button>
@@ -112,7 +112,7 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 						<button
 							onClick={undo}
 							style={{
-								color: canUndo ? '#2943E9' : '#C6C6C6',
+								color: canUndo ? '#344054' : '#C6C6C6',
 								display: 'flex',
 								justifyContent: 'center',
 								alignItems: 'center',
@@ -138,7 +138,7 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 						<button
 							onClick={redo}
 							style={{
-								color: canRedo ? '#2943E9' : '#C6C6C6',
+								color: canRedo ? '#344054' : '#C6C6C6',
 								display: 'flex',
 								justifyContent: 'center',
 								alignItems: 'center',
