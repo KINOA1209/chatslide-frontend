@@ -7,12 +7,12 @@ import useHydrated from '@/hooks/use-hydrated';
 export const JoinUsBanner: React.FC = () => {
 	const { uid } = useUser();
 
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
+
 	if (uid && uid !== "") {
 		return null;
 	}
-
-	// avoid hydration error during development caused by persistence
-	if (!useHydrated()) return <></>;
 
 	return (
 		<Link href="/signup">

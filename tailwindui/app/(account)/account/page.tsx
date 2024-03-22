@@ -277,7 +277,7 @@ const ApplyPromo = () => {
 			true,
 		);
 		if (status == 200) {
-			toast.success(message, {
+			toast.success("Your code is successfully applied!", {
 				position: 'top-center',
 				autoClose: 2000,
 				hideProgressBar: false,

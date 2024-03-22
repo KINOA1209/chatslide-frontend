@@ -18,6 +18,7 @@ const useVideoJobIdBear = createBearStore<string>()('videoJobId', '', true);
 const useIsGpt35Bear = createBearStore<boolean>()('isGpt35', true, true);
 const useIsShared = createBearStore<boolean>()('isShared', false, true);
 const useOutlinesBear = createBearStore<Outlines>()('outlines', [], true);
+const useHasScripts = createBearStore<boolean>()('hasScripts', false, true);
 
 export enum ProjectStatus {
 	NotInited,

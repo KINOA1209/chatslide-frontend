@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import AuthService from '../../services/AuthService';
 import ReferralLink from '../ReferralLink';
 import Modal from './Modal';
 import { BigBlueButton, InversedBigBlueButton } from '../button/DrlambdaButton';
 import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';
+import Laura from '@/public/images/laura.jpeg'
+import Image from 'next/image';
+import { Instruction } from './Text';
 
 interface FeedbackFormProps {
 	onClose: () => void;
@@ -66,12 +68,13 @@ const FeedbackButton: React.FC<FeedbackButtonProps> = ({
 	}, [timerFinished]);
 
 	return (
-		<div className='absolute bottom-0 -right-24 hidden sm:block z-30'>
+		<div className='absolute bottom-0 -right-36 hidden sm:block z-30'>
 			<button
 				onClick={handleOpenModal}
-				className='bg-gray-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-700'
+				className='bg-Blue text-white font-bold flex flex-row items-center py-1 px-2 gap-x-2 rounded-2xl focus:outline-none focus:shadow-outline-blue active:bg-blue-700'
 			>
-				Feedback
+				<Image src={Laura} alt='Laura' width={30} height={30} style={{ borderRadius: '50%' }} />
+				<span>Talk with us</span>
 			</button>
 
 			{showModal && (
@@ -226,19 +229,15 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 					successDiv
 				) : (
 					<div>
-						<h3
-							className='text-lg leading-6 font-bold text-gray-900'
-							id='modal-headline'
-						>
-							{message ? message : `We'd love to hear from you!`}
-						</h3>
-						<p className='text-sm text-gray-500 mt-2'>
-							You can also send us an email at{' '}
-							<a href='mailto:contact@drlambda.ai' className='underline'>
-								contact@drlambda.ai
-							</a>
-							.
-						</p>
+						<div className='flex flex-row items-center justify-start gap-x-2'>
+							<Image src={Laura} alt='Laura' width={30} height={30} style={{ borderRadius: '50%' }} />
+							<h3
+								className='text-lg leading-6 font-bold text-gray-900'
+								id='modal-headline'
+							>
+								{message ? message : `We'd love to hear from you!`}
+							</h3>
+						</div>
 					</div>
 				)}
 
@@ -262,9 +261,9 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 							)}
 						</div>
 						<div className='mt-4'>
-							<label className='block text-gray-700 text-sm font-bold mb-2'>
-								Please leave your feedback below:
-							</label>
+							<Instruction>
+								Tell us what you think about this slides or DrLambda:
+							</Instruction>
 							{/* Increase the number of rows for the textarea to make it taller */}
 							<textarea
 								className='resize-none w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 text-black'
@@ -273,12 +272,19 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 								onChange={handleFeedbackTextChange}
 							></textarea>
 						</div>
+						<Instruction>
+							Want help? Book a meeting with me {' '}
+							<a href='https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3Ly0YZMnlcouxHwvv7cUsVLziVxNPfqNBoDl8H9D9ob6sn9-WMDg7Uu0ZTPzUlKjXFjmMBeJGS' className='underline text-blue-600'>
+								here
+							</a>
+							.
+						</Instruction>
 						<div className='mt-4 flex justify-end gap-x-4'>
 							<InversedBigBlueButton onClick={onClose}>
 								Close
 							</InversedBigBlueButton>
 
-							<BigBlueButton onClick={() => {}}>Submit</BigBlueButton>
+							<BigBlueButton onClick={() => { }}>Submit</BigBlueButton>
 						</div>
 					</form>
 				)}

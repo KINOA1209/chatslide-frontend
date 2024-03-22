@@ -165,7 +165,7 @@ const ProgressBox: React.FC<ProgressBoxProps> = ({
 };
 
 const SOCIAL_POSTS_STEPS = ['Summary', 'Post'];
-const PRESENTATION_STEPS = ['Summary', 'Outlines', 'Design', 'Slides', 'Video'];
+const PRESENTATION_STEPS = ['Summary', 'Outlines', 'Design', 'Slides', 'Scripts', 'Video'];
 const SOCIAL_POSTS_REDIRECTS = [
 	'/workflow-generate-socialpost',
 	'/workflow-review-socialpost',
@@ -175,6 +175,7 @@ const PRESENTATION_REDIRECTS = [
 	'/workflow-edit-outlines',
 	'/workflow-edit-design',
 	'/workflow-review-slides',
+	'/workflow-edit-scripts',
 	'/workflow-review-video',
 ];
 
@@ -193,7 +194,8 @@ export const projectFinishedSteps = (project: Project | null) => {
 		if (project.presentation_slides) {
 			finishedStepsArray.push(3);
 		}
-		if (project.video_url) finishedStepsArray.push(4);
+		if (project.has_scripts) finishedStepsArray.push(4);
+		if (project.video_url) finishedStepsArray.push(5);
 	}
 
 	return finishedStepsArray;

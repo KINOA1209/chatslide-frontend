@@ -1,6 +1,6 @@
 'use client';
 
-import LanguageSelector from "@/app/(feature)/workflow-generate-outlines/LanguageSelector";
+import LanguageSelector from "@/components/language/LanguageSelector";
 import { Instruction } from "../ui/Text";
 import ButtonWithExplanation from "./ButtonWithExplanation";
 import { FaRegClone } from "react-icons/fa";
@@ -66,7 +66,7 @@ export const CloneButton: React.FC<{
 							width: '1.3rem',
 							height: '1.3rem',
 							fontWeight: 'bold',
-							color: '#2943E9',
+							color: '#344054',
 						}}
 					/>
 				</button>

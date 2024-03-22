@@ -6,6 +6,8 @@ import Toggle from '../button/Toggle';
 import { GrayLabel } from '../ui/GrayLabel';
 import DrlambdaButton from '../button/DrlambdaButton';
 import { useUser } from '@/hooks/use-user';
+import { userInEU } from '@/utils/userLocation';
+
 
 interface PricingProps {
 	fewerCards?: boolean;
@@ -21,6 +23,7 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 	const [showPro, setShowPro] = useState(false);
 	const [showEnt, setShowEnt] = useState(false);
 	const [clickedSubscribe, setClickedSubscribe] = useState(false);
+	const [currency, setCurrency] = useState('$');
 
 	const { token, tier, expirationDate, email } = useUser();
 
@@ -65,6 +68,12 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 		} else if (buttonRef.current) {
 			buttonRef.current.style.backgroundPosition = '35% 50%';
 		}
+
+		userInEU().then((res) => {
+			setCurrency(
+				res ? '€' : '$'
+			);
+		});
 	}, []);
 
 	const handleProSubscription = async (token: string) => {
@@ -76,6 +85,7 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 			const requestData = {
 				tier: tier,
 				email: email,
+				currency: currency === '$' ? 'usd' : 'eur',
 			};
 
 			console.log(requestData);
@@ -111,6 +121,7 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 			const requestData = {
 				tier: tier,
 				email: email,
+				currency: currency === '$' ? 'usd' : 'eur',
 			};
 
 			console.log(requestData);
@@ -173,9 +184,8 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 							<button
 								type='button'
 								onClick={() => showPricingPanel(1)}
-								className={`py-2 px-4 rounded-l-full border-r border-gray-300 ${
-									showFree ? 'bg-teal-400 text-white' : 'bg-gray-200'
-								}`}
+								className={`py-2 px-4 rounded-l-full border-r border-gray-300 ${showFree ? 'bg-teal-400 text-white' : 'bg-gray-200'
+									}`}
 							>
 								Free
 							</button>
@@ -183,22 +193,18 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 						<button
 							type='button'
 							onClick={() => showPricingPanel(2)}
-							className={`py-2 px-4 ${
-								fewerCards ? 'rounded-l-full' : ''
-							} border-r border-gray-300 ${
-								showPlus ? 'bg-teal-400 text-white' : 'bg-gray-200'
-							}`}
+							className={`py-2 px-4 ${fewerCards ? 'rounded-l-full' : ''
+								} border-r border-gray-300 ${showPlus ? 'bg-teal-400 text-white' : 'bg-gray-200'
+								}`}
 						>
 							Plus
 						</button>
 						<button
 							type='button'
 							onClick={() => showPricingPanel(3)}
-							className={`py-2 px-4 ${
-								fewerCards ? 'rounded-r-full' : ''
-							} border-r border-gray-300 ${
-								showPro ? 'bg-teal-400 text-white' : 'bg-gray-200'
-							}`}
+							className={`py-2 px-4 ${fewerCards ? 'rounded-r-full' : ''
+								} border-r border-gray-300 ${showPro ? 'bg-teal-400 text-white' : 'bg-gray-200'
+								}`}
 						>
 							Pro
 						</button>
@@ -206,9 +212,8 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 							<button
 								type='button'
 								onClick={() => showPricingPanel(4)}
-								className={`py-2 px-4 rounded-r-full ${
-									showEnt ? 'bg-teal-400 text-white' : 'bg-gray-200'
-								}`}
+								className={`py-2 px-4 rounded-r-full ${showEnt ? 'bg-teal-400 text-white' : 'bg-gray-200'
+									}`}
 							>
 								Enterprise
 							</button>
@@ -220,9 +225,8 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 						<div className='w-fit flex flex-row mx-auto'>
 							{!fewerCards && (
 								<div
-									className={`transition ease-in-out delay-150 hover:-translate-y-2 mx-2 grow basis-0 min-w-[260px] max-w-sm ${
-										showFree ? 'block' : 'hidden'
-									} md:block`}
+									className={`transition ease-in-out delay-150 hover:-translate-y-2 mx-2 grow basis-0 min-w-[260px] max-w-sm ${showFree ? 'block' : 'hidden'
+										} md:block`}
 								>
 									<div className='flex flex-col w-full drop-shadow-lg rounded-xl overflow-hidden h-full bg-gray-400'>
 										<div className='px-8 py-2'>
@@ -236,7 +240,7 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 												Join us for free!
 											</div>
 											<div className='w-full text-center text-3xl md:text-4xl'>
-												$0
+												{currency}0
 											</div>
 
 											<div className='text-xl mt-4'>Include</div>
@@ -272,9 +276,8 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 								</div>
 							)}
 							<div
-								className={`transition ease-in-out delay-150 hover:-translate-y-2 mx-2 grow basis-0 min-w-[260px] max-w-sm ${
-									showPlus ? 'block' : 'hidden'
-								} md:block`}
+								className={`transition ease-in-out delay-150 hover:-translate-y-2 mx-2 grow basis-0 min-w-[260px] max-w-sm ${showPlus ? 'block' : 'hidden'
+									} md:block`}
 							>
 								<div className='flex flex-col w-full drop-shadow-md rounded-xl overflow-hidden h-full bg-blue-400'>
 									{/* ... You can adjust the content for "Plus" pricing here ... */}
@@ -299,12 +302,10 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 										)}
 
 										<div className='w-full text-center text-3xl md:text-4xl'>
-											{!isMonthly ? '$39.6' : '$3.96'}
+											{!isMonthly ? `${currency}39.6` : `${currency}3.96`}
 										</div>
 										<div className='w-full text-center text-md text-gray-700'>
-											{!isMonthly
-												? '1st year, then $99/year'
-												: '1st month, then $9.9/month'}
+											{!isMonthly ? `1st year, then ${currency}99/year` : `1st month, then ${currency}9.9/month`}
 										</div>
 
 										<div className='text-xl mt-4'>Include</div>
@@ -344,9 +345,8 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 								</div>
 							</div>
 							<div
-								className={`transition ease-in-out delay-150 hover:-translate-y-2 mx-2 grow basis-0 min-w-[260px] max-w-sm ${
-									showPro ? 'block' : 'hidden'
-								} md:block`}
+								className={`transition ease-in-out delay-150 hover:-translate-y-2 mx-2 grow basis-0 min-w-[260px] max-w-sm ${showPro ? 'block' : 'hidden'
+									} md:block`}
 							>
 								<div className='flex flex-col w-full drop-shadow-md rounded-xl overflow-hidden h-full bg-purple-500'>
 									{/* ... You can adjust the content for "Pro" pricing here ... */}
@@ -373,12 +373,10 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 										)}
 										{/* <div className="w-full text-center text-md text-red-700">7 Day Free Trial</div> */}
 										<div className='w-full text-center text-3xl md:text-4xl'>
-											{!isMonthly ? '$159.6' : '$15.96'}
+											{!isMonthly ? `${currency}159.6` : `${currency}15.96`}
 										</div>
 										<div className='w-full text-center text-md text-gray-700'>
-											{!isMonthly
-												? '1st year, then $399/year'
-												: '1st month, then $39.9/month'}
+											{!isMonthly ? `1st year, then ${currency}399/year` : `1st month, then ${currency}39.9/month`}
 										</div>
 
 										<div className='text-xl mt-4'>Include</div>
@@ -418,9 +416,8 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 							{/* enterprise, disabled */}
 							{!fewerCards && false && (
 								<div
-									className={`transition ease-in-out delay-150 hover:-translate-y-2 mx-2 grow basis-0 min-w-[260px] max-w-sm ${
-										showEnt ? 'block' : 'hidden'
-									} md:block`}
+									className={`transition ease-in-out delay-150 hover:-translate-y-2 mx-2 grow basis-0 min-w-[260px] max-w-sm ${showEnt ? 'block' : 'hidden'
+										} md:block`}
 								>
 									<div className='flex flex-col w-full drop-shadow-md rounded-xl overflow-hidden h-full bg-black'>
 										{/* ... You can adjust the content for "Enterprise" pricing here ... */}
@@ -441,8 +438,8 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 												<div>
 													<DrlambdaButton
 														onClick={() =>
-															(window.location.href =
-																'https://calendly.com/drlambda/30min')
+														(window.location.href =
+															'https://calendly.com/drlambda/30min')
 														}
 														showArrow={false}
 													>

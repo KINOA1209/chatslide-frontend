@@ -8,12 +8,11 @@ import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
 import { useUser } from '@/hooks/use-user';
 import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
 import StepsSlidesPage from '@/components/user_onboarding/StepsSlidesPage';
-import { useSlides } from '@/hooks/use-slides';
 import useHydrated from '@/hooks/use-hydrated';
+import { useProject } from '@/hooks/use-project';
 export default function WorkflowStep3() {
-	const contentRef = useRef<HTMLDivElement>(null);
 	const { isPaidUser } = useUser();
-	const { slides } = useSlides();
+	const { project } = useProject();
 	const [isGpt35, setIsGpt35] = useState(
 		typeof sessionStorage !== 'undefined'
 			? JSON.parse(sessionStorage.getItem('isGpt35') || 'true')
@@ -21,16 +20,6 @@ export default function WorkflowStep3() {
 	);
 
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [showScript, setShowScript] = useState(false);
-
-	useEffect(() => {
-		if (!isSubmitting) {
-			if (slides.some((slide) => slide.transcript)) {
-				setShowScript(true);
-				console.log('showScript', showScript);
-			}
-		}
-	}, [isSubmitting, slides]);
 
 	// set current page to local storage
 	useEffect(() => {
@@ -46,25 +35,14 @@ export default function WorkflowStep3() {
 		<div className='h-full w-full flex flex-col relative'>
 			{/* flex col container for steps, title, etc */}
 			<MyCustomJoyride steps={StepsSlidesPage()} />
-			{!showScript ? (
-				<WorkflowStepsBanner
-					currentIndex={3}
-					isSubmitting={isSubmitting}
-					setIsSubmitting={setIsSubmitting}
-					isPaidUser={isPaidUser}
-					nextIsPaidFeature={true}
-					nextText={!isSubmitting ? 'Write Scripts' : 'Writing Scripts'}
-				/>
-			) : (
-				<WorkflowStepsBanner
-					currentIndex={3}
-					isSubmitting={isSubmitting}
-					setIsSubmitting={setIsSubmitting}
-					isPaidUser={isPaidUser}
-					nextIsPaidFeature={true}
-					nextText={!isSubmitting ? 'Create Video' : 'Creating Video'}
-				/>
-			)}
+			<WorkflowStepsBanner
+				currentIndex={3}
+				isSubmitting={isSubmitting}
+				setIsSubmitting={setIsSubmitting}
+				isPaidUser={isPaidUser}
+				nextIsPaidFeature={true}
+				nextText={!isSubmitting ? 'Write Scripts' : 'Writing Scripts'}
+			/>
 
 			<ToastContainer enableMultiContainer containerId={'slides'} />
 
@@ -73,7 +51,7 @@ export default function WorkflowStep3() {
 				isGpt35={isGpt35}
 				isSubmitting={isSubmitting}
 				setIsSubmitting={setIsSubmitting}
-				showScript={showScript}
+				showScript={project?.has_scripts || false}
 			/>
 		</div>
 	);

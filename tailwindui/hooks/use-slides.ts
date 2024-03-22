@@ -53,6 +53,7 @@ export const useSlides = () => {
 	const { project } = useProject();
 	const { isPresenting, setIsPresenting } = usePresenting();
 	const { isShowingLogo, setIsShowingLogo } = useIsShowingLogo();
+	const { updateProject } = useProject();
 
 	const { clearChatHistory } = useChatHistory();
 
@@ -308,7 +309,7 @@ export const useSlides = () => {
 	const initSlides = (slides: Slide[]) => {
 		console.log('-- init slides: ', { slides });
 		setSlides(slides);
-		setIsShowingLogo(slides.some((slide) => slide.show_logo));
+		setIsShowingLogo(slides?.some((slide) => slide.show_logo));
 		setSlideIndex(0);
 		setSlidesHistory([slides]);
 		setSlidesHistoryIndex(0);
@@ -331,6 +332,7 @@ export const useSlides = () => {
 		}
 		setSlides(newSlides);
 		syncSlides(newSlides);
+		updateProject('has_scripts', true);
 	};
 
 	const syncSlides = async (

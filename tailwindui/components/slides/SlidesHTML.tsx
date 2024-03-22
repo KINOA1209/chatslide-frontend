@@ -32,7 +32,10 @@ import {
 
 import SlideContainer from './SlideContainer';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
-import { templateDispatch } from './templateDispatch';
+import {
+	templateDispatch,
+	uneditableTemplateDispatch,
+} from './templateDispatch';
 import { availableLayouts } from './slideLayout';
 import themeConfigData, {
 	ThemeConfig,
@@ -41,7 +44,7 @@ import themeConfigData, {
 import layoutConfigData, {
 	TemplateLayoutsConfig,
 } from './templates_customizable_elements/layout_elements';
-import ScriptEditor from './script/ScriptEditor';
+import ScriptEditor from '../script/ScriptEditor';
 import Slide, { SlideKeys } from '@/models/Slide';
 import {
 	DrLambdaAIAssistantIcon,
@@ -55,7 +58,7 @@ import ImagesPosition from '@/models/ImagesPosition';
 import { Panel } from '../layout/Panel';
 import { useProject } from '@/hooks/use-project';
 import { GoEye, GoEyeClosed } from 'react-icons/go';
-import ScriptWindow from './script/ScriptWindow';
+import ScriptWindow from '../script/ScriptWindow';
 import ReactDOM from 'react-dom';
 import { ScrollBar } from '../ui/ScrollBar';
 
@@ -96,28 +99,17 @@ export const loadLayoutConfigElements = (
 	return selectedLayoutOptionElements;
 };
 
-// export const uneditableTemplateDispatch = (
-// 	slide: Slide,
-// 	index: number,
-// 	exportToPdfMode: boolean = false,
-// ) =>
-// 	templateDispatch(
-// 		slide,
-// 		index,
-// 		false, // canEdit
-// 		exportToPdfMode, //exportToPdfMode
-// 		false, //editMathMode
-// 		() => {}, //setIsEditMode
-// 		() => {}, // handleSlideEdit
-// 		() => () => {}, // updateImgUrlArray,
-// 		() => {}, // toggleEditMode,
-// 		index === 0, // isCoverPage
-// 		slide.layout, // layoutOptionNonCover
-// 		slide.layout, // layoutOptionCover
-// 		false, // isCurrentSlide
-// 		isShowingLogo,
-// 		slide.color_theme
-// 	);
+export const calculateNonPresentScale = (width: number, height: number) => {
+	if (width < 640) {
+		// mobile, layout vertically
+		return Math.min(1, Math.min(width / 960, (height - 200) / 540) * 0.8);
+	} else {
+		return Math.min(
+			1,
+			Math.min((width - 300) / 960, (height - 200) / 540) * 0.8,
+		);
+	}
+};
 
 const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	isViewing = false,
@@ -174,18 +166,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const [presentScale, setPresentScale] = useState(
 		Math.min(dimensions.width / 960, dimensions.height / 540),
 	);
-
-	const calculateNonPresentScale = (width: number, height: number) => {
-		if (width < 640) {
-			// mobile, layout vertically
-			return Math.min(1, Math.min(width / 960, (height - 200) / 540) * 0.8);
-		} else {
-			return Math.min(
-				1,
-				Math.min((width - 300) / 960, (height - 200) / 540) * 0.8,
-			);
-		}
-	};
 
 	const [nonPresentScale, setNonPresentScale] = useState(
 		calculateNonPresentScale(dimensions.width, dimensions.height),
@@ -597,7 +577,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 														width: '1.5rem',
 														height: '1.5rem',
 														fontWeight: 'bold',
-														color: '#2943E9',
+														color: '#344054',
 													}}
 												/>
 											) : (
@@ -608,7 +588,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 														width: '1.5rem',
 														height: '1.5rem',
 														fontWeight: 'bold',
-														color: '#2943E9',
+														color: '#344054',
 													}}
 												/>
 											)}

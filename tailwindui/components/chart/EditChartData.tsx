@@ -176,17 +176,21 @@ const EditChartData: React.FC<EditChartDataProps> = ({
 						<>
 							<input
 								type='text'
-								value={dataPoint.label}
-								onChange={(e) =>
-									handleDataChange(index, 'label', e.target.value)
-								}
+								value={dataPoint.label === '' ? '' : dataPoint.label}
+								placeholder='Ex. Group A'
+								onChange={(e) => {
+									const newValue = e.target.value === '' ? '' : e.target.value;
+									handleDataChange(index, 'label', newValue)
+								}}
 							/>
 							<input
 								type='number'
-								value={dataPoint.value}
-								onChange={(e) =>
-									handleDataChange(index, 'value', Number(e.target.value))
-								}
+								value={dataPoint.value === 0 ? '' : dataPoint.value}
+								placeholder="Ex. 100"
+								onChange={(e) => {
+									const newValue = e.target.value === '' ? 0 : Number(e.target.value);
+									handleDataChange(index, 'value', newValue)
+								}}
 							/>
 							{chartType !== 'line' && (
 								<div className='relative' ref={pickerRef}>

@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import AuthService from '../../../services/AuthService';
-import Slide from '../../../models/Slide';
-import PaywallModal from '../../paywallModal';
-import { BigGrayButton } from '../../button/DrlambdaButton';
+import AuthService from '../../services/AuthService';
+import Slide from '../../models/Slide';
+import PaywallModal from '../paywallModal';
+import { BigGrayButton } from '../button/DrlambdaButton';
 import { FaDownload, FaRing, FaTruckLoading } from 'react-icons/fa';
-import { generatePdf } from '../../utils/DownloadImage';
+import { generatePdf } from '../utils/DownloadImage';
 import ProjectService from '@/services/ProjectService';
 
 interface Props {

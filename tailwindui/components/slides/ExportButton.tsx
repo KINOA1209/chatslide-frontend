@@ -16,14 +16,14 @@ import { sleep } from '../../utils/sleep';
 import Modal from '../ui/Modal';
 import { GoDownload } from 'react-icons/go';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
-import SaveScriptsButton from './script/SaveScriptsButton';
+import SaveScriptsButton from '../script/SaveScriptsButton';
 import { SpinIcon } from '@/app/(feature)/icons';
 import { PlusLabel } from '../ui/GrayLabel';
 import { ToastContainer, toast } from 'react-toastify';
 import SlideContainer from './SlideContainer';
 import { templateDispatch } from './templateDispatch';
 import { useSlides } from '@/hooks/use-slides';
-import { uneditableTemplateDispatch } from './SlidesHTML';
+import { uneditableTemplateDispatch } from '@/components/slides/templateDispatch';
 
 interface ExportToPdfProps {
 	exportSlidesRef: React.RefObject<HTMLDivElement>;
@@ -150,7 +150,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 								width: '1.5rem',
 								height: '1.5rem',
 								fontWeight: 'bold',
-								color: '#2943E9',
+								color: '#344054',
 							}}
 						/> :
 							<SpinIcon />}

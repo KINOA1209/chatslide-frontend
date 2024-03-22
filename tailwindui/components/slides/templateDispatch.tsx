@@ -122,13 +122,13 @@ export const templateDispatch = (
 	);
 	const processContent = (item: string) => {
 		if (isHTML(item)) {
-			if (item.trim().startsWith('<li>') && item.trim().endsWith('</li>')) {
-				return `<ul>${item}</ul>`;
+			if (item.trim().startsWith('<li') && item.trim().endsWith('</li>')) {
+				return `<ol>${item}</ol>`;
 			} else {
 				return item;
 			}
 		} else {
-			return `<ul><li>${item}</li></ul>\n`;
+			return `<ol><li>${item}</li></ol>\n`;
 		}
 	};
 	const generateContentElement = (
@@ -324,3 +324,25 @@ export const templateDispatch = (
 	);
 	// }
 };
+
+
+export const uneditableTemplateDispatch = (
+	slide: Slide,
+	index: number,
+	exportToPdfMode: boolean = false,
+) =>
+	templateDispatch(
+		slide,
+		index,
+		false, // canEdit
+		exportToPdfMode, //exportToPdfMode
+		false, //editMathMode
+		() => { }, //setIsEditMode
+		() => { }, // handleSlideEdit
+		() => () => { }, // updateImgUrlArray,
+		() => { }, // toggleEditMode,
+		index === 0, // isCoverPage
+		slide.layout, // layoutOptionNonCover
+		slide.layout, // layoutOptionCover
+		false, // isCurrentSlide
+	);

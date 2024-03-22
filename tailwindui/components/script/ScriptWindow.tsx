@@ -1,6 +1,6 @@
 import Slide from '@/models/Slide';
 import React, { useEffect, useState } from 'react';
-import SlideContainer from '../SlideContainer';
+import SlideContainer from '../slides/SlideContainer';
 import { ToolBar } from '@/components/ui/ToolBar';
 import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
 import { FaChevronLeft, FaChevronRight, FaTimes } from 'react-icons/fa';
@@ -54,7 +54,7 @@ const ScriptWindow: React.FC<TranscriptEditorProps> = ({
 							width: '1.5rem',
 							height: '1.5rem',
 							fontWeight: 'bold',
-							color: '#2943E9',
+							color: '#344054',
 						}}
 					/>
 				</button>
@@ -68,7 +68,7 @@ const ScriptWindow: React.FC<TranscriptEditorProps> = ({
 							width: '1.5rem',
 							height: '1.5rem',
 							fontWeight: 'bold',
-							color: '#2943E9',
+							color: '#344054',
 						}}
 					/>
 				</button>

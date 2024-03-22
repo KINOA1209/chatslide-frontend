@@ -13,6 +13,7 @@ import Card from '@/components/ui/Card';
 import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
 import useHydrated from '@/hooks/use-hydrated';
+import { BigBlueButton, SmallBlueButton } from '@/components/button/DrlambdaButton';
 
 const Subscription = () => {
 	const [portalURL, setPortalURL] = useState('');
@@ -93,7 +94,7 @@ export default function SubscriptionAndUserResearch() {
 	if (!useHydrated()) return <></>;
 
 	return (
-		<div className='flex flex-col items-center gap-[30px] md:gap-[70px] mx-auto w-full'>
+		<div className='flex flex-col items-center mx-auto w-full'>
 			<ToastContainer />
 			{/* user research modal */}
 			{showUserResearchModal && (
@@ -106,17 +107,16 @@ export default function SubscriptionAndUserResearch() {
 					<Subscription />
 				</section>
 				<Card>
-					<Instruction>
+					<Title>
 						Earn free credits⭐ by joining our user study
-					</Instruction>
-					<Explanation>
+					</Title>
+					<Instruction>
 						We want to learn more about what you think of DrLambda, and how you
 						use DrLambda.
-					</Explanation>
-					<PrimaryButton
+					</Instruction>
+					<SmallBlueButton
 						onClick={handleUserResearchModal}
-						label={'Join today!'}
-					></PrimaryButton>
+					>{'Join today!'}</SmallBlueButton>
 				</Card>
 			</Column>
 		</div>
