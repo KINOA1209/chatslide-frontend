@@ -464,7 +464,7 @@ export default function Topic_SocialPost() {
 									value={topic}
 									maxLength={MAX_TOPIC_LENGTH}
 									required
-									placeholder='How to use ultrasound to detect breast cancer'
+									placeholder='What do you have in mind?'
 								></textarea>
 								{
 									<div className='text-gray-500 text-sm mt-1'>

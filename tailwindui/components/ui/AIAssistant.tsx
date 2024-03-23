@@ -6,7 +6,7 @@ import ChatHistory from '@/models/ChatHistory';
 import Slide from '@/models/Slide';
 import DrlambdaCartoonImage from '@/public/images/AIAssistant/DrLambdaCartoon.png';
 import Image from 'next/image';
-import { useEffect, useState, useRef, use } from 'react';
+import { useEffect, useState, useRef, use, ChangeEvent } from 'react';
 import { InputBox } from './InputBox';
 import { IoSend, IoSendOutline } from 'react-icons/io5';
 import { DeleteIcon } from '@/app/(feature)/icons';
@@ -14,6 +14,8 @@ import { FaTimes } from 'react-icons/fa';
 import { ScrollBar } from './ScrollBar';
 import { useProject } from '@/hooks/use-project';
 import { useImageStore } from '@/hooks/use-img-store';
+
+
 export const DrLambdaAIAssistantIcon: React.FC<{
 	onClick: () => void;
 }> = ({ onClick }) => {
@@ -115,7 +117,7 @@ export const Chats: React.FC<ChatsProps> = ({
 					className={
 						chat.role === 'user'
 							? 'px-3.5 py-2.5 bg-indigo-500 rounded-tl-xl rounded-tr-xl rounded-bl-xl border border-white gap-2.5 self-end flex flex-wrap max-w-[15rem]'
-							: 'px-3.5 py-2.5 bg-indigo-50 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-white gap-2.5 max-w-[15rem] flex flex-wrap'
+							: 'px-3.5 py-2.5 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-gray-200 gap-2.5 max-w-[15rem] flex flex-wrap'
 					}
 				>
 					<div
@@ -186,11 +188,21 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	const lastMessageRef = useRef<HTMLDivElement>(null); // Ensure you have a ref for the last message
 	const { project } = useProject();
 
-	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+	const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
 		if (event.key === 'Enter') {
 			event.preventDefault(); // Prevents the newline character in the input field
 			handleSend();
 		}
+	};
+
+	const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+		const textarea = e.target;
+		setUserInput(textarea.value);
+
+		// Automatically adjust the height to fit the content
+		textarea.style.height = 'auto'; // Reset height to recalculate
+		const newHeight = Math.min(textarea.scrollHeight, 100); 
+		textarea.style.height = `${newHeight}px`; 
 	};
 
 	const updateUserMessage = (content: string): ChatHistory => ({
@@ -354,86 +366,11 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					currentElementRef={lastMessageRef}
 				>
 					{/* welcoming text */}
-					<div className='px-3.5 py-2.5 bg-indigo-50 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-white justify-center items-center gap-2.5 inline-flex'>
+					<div className='px-3.5 py-2.5 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-gray-200 justify-center items-center gap-2.5 inline-flex'>
 						<div className='max-w-[15rem] text-neutral-800 text-base font-normal tracking-tight'>
 							Welcome to DrLambda! I'm your AI assistant, ready to help with
 							slide design 🎨, content ideas ✍️, data organization 📊,
 							proofreading, and updating. Just type your request here!
-						</div>
-					</div>
-					{/* welcoming options */}
-					<div className='flex-col justify-center items-start gap-2 flex shrink'>
-						<div className='text-neutral-800 text-sm font-normal  '>
-							Here are some ways I can help:
-						</div>
-						<div className='self-stretch flex-col justify-start items-start gap-2 inline-flex'>
-							{slideIndex == 0 ? (
-								<>
-									<div
-										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
-										onClick={() =>
-											handleSend('Change topic to be more engaging')
-										}
-									>
-										<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
-											Change topic to be more engaging
-										</div>
-									</div>
-									<div
-										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
-										onClick={() => handleSend('Translate topic to Spanish')}
-									>
-										<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
-											Translate topic to Spanish
-										</div>
-									</div>
-									<div
-										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
-										onClick={() => handleSend('Change the image on the slide')}
-									>
-										<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
-											Change the image on the slide
-										</div>
-									</div>
-								</>
-							) : (
-								<>
-									<div
-										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
-										onClick={() => handleSend('Add data to the content')}
-									>
-										<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
-											Add data to the content
-										</div>
-									</div>
-									<div
-										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
-										onClick={() => handleSend('Change the image on the slide')}
-									>
-										<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
-											Change the image on the slide
-										</div>
-									</div>
-									<div
-										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
-										onClick={() =>
-											handleSend('Change subtopic to be more engaging')
-										}
-									>
-										<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
-											Change subtopic to be more engaging
-										</div>
-									</div>
-									<div
-										className='self-stretch px-4 py-2 bg-white rounded-lg border border-black border-opacity-20 justify-between items-start inline-flex cursor-pointer'
-										onClick={() => handleSend('Add an example to the content')}
-									>
-										<div className='max-w-[15rem] text-blue-700 text-sm font-normal'>
-											Add an example to the content
-										</div>
-									</div>
-								</>
-							)}
 						</div>
 					</div>
 					{/* chat history render */}
@@ -459,19 +396,17 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					)}
 				</ScrollBar>
 			</div>
+			{/* suggestions */}
 			{/* input area */}
-			<div className='w-full bg-blue-100'>
-				<div className='flex flex-row justify-between py-3 px-4 items-center gap-4'>
-					{/* input area */}
-					<InputBox>
-						<input
-							type='input'
+			<div className='w-full border border-gray-200 border-t border-t-2'>
+				<div className='flex flex-row justify-between p-2 items-center gap-4'>
+						<textarea
 							value={userInput}
-							className='w-full border-0 focus:outline-none focus:ring-0 bg-gray-100'
-							onChange={(e) => setUserInput(e.target.value)}
-							onKeyDown={handleKeyDown} // Add the event listener for Enter key
+							className="w-full border-0 focus:outline-none focus:ring-0 resize-none overflow-y-scroll"
+							onChange={handleInputChange}
+							onKeyDown={handleKeyDown}
+							style={{ minHeight: '32px' }} // Set minimum height to resemble input field
 						/>
-					</InputBox>
 
 					{/* send text, call api to get response */}
 					<button onClick={() => handleSend()}>
