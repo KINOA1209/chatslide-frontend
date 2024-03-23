@@ -14,6 +14,7 @@ import { FaTimes } from 'react-icons/fa';
 import { ScrollBar } from './ScrollBar';
 import { useProject } from '@/hooks/use-project';
 import { useImageStore } from '@/hooks/use-img-store';
+import ChatSuggestions from '../language/ChatSuggestions';
 
 
 export const DrLambdaAIAssistantIcon: React.FC<{
@@ -23,7 +24,7 @@ export const DrLambdaAIAssistantIcon: React.FC<{
 		<div
 			className='w-14 h-14 bg-neutral-50 rounded-[50%] shadow border border-black border-opacity-20 z-40 flex items-center justify-center relative'
 			onClick={onClick}
-			// style={{ animation: 'pulse 0.5s infinite' }}
+		// style={{ animation: 'pulse 0.5s infinite' }}
 		>
 			<div className='absolute inset-0 bg-gradient-to-b from-[#0B84FF] via-[#0B84FF] to-transparent rounded-[50%] opacity-0 animate-pulse'></div>
 			<Image
@@ -201,8 +202,8 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 
 		// Automatically adjust the height to fit the content
 		textarea.style.height = 'auto'; // Reset height to recalculate
-		const newHeight = Math.min(textarea.scrollHeight, 100); 
-		textarea.style.height = `${newHeight}px`; 
+		const newHeight = Math.min(textarea.scrollHeight, 100);
+		textarea.style.height = `${newHeight}px`;
 	};
 
 	const updateUserMessage = (content: string): ChatHistory => ({
@@ -327,7 +328,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 
 	return (
 		<section
-      className={`hidden sm:flex sm:flex-col sm:fixed xl:relative sm:bottom-0 sm:right-0 sm:w-[15rem] sm:h-[30rem] xl:h-full xl:w-full bg-white rounded-lg sm:items-center border border-2 border-gray-200`}
+			className={`hidden sm:flex sm:flex-col sm:fixed xl:relative sm:bottom-0 sm:right-0 sm:min-w-[20rem] sm:h-[30rem] xl:h-full xl:w-full bg-white rounded-lg sm:items-center border border-2 border-gray-200`}
 		>
 			{/* title and exit button */}
 			<div className='flex flex-row w-full justify-between items-center h-[5rem] p-2'>
@@ -398,15 +399,21 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			</div>
 			{/* suggestions */}
 			{/* input area */}
-			<div className='w-full border border-gray-200 border-t border-t-2'>
+			<div className='w-full border-t border-gray-200 border-t-2'>
+				{!userInput &&
+					<ChatSuggestions
+						isCover={currentSlideIndex === 0}
+						sendChat={handleSend}
+					/>
+				}
 				<div className='flex flex-row justify-between p-2 items-center gap-4'>
-						<textarea
-							value={userInput}
-							className="w-full border-0 focus:outline-none focus:ring-0 resize-none overflow-y-scroll"
-							onChange={handleInputChange}
-							onKeyDown={handleKeyDown}
-							style={{ minHeight: '32px' }} // Set minimum height to resemble input field
-						/>
+					<textarea
+						value={userInput}
+						className="w-full border-0 focus:outline-none focus:ring-0 resize-none overflow-y-scroll"
+						onChange={handleInputChange}
+						onKeyDown={handleKeyDown}
+						style={{ minHeight: '32px' }} // Set minimum height to resemble input field
+					/>
 
 					{/* send text, call api to get response */}
 					<button onClick={() => handleSend()}>
