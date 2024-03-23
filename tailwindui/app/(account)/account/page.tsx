@@ -315,9 +315,9 @@ const ApplyPromo = () => {
 
 	return (
 		<div className='w-full'>
-			<Instruction>
-				Apply Promo Code or License Key
-			</Instruction>
+			<div className='text-green-600 text-md py-1'>
+					Apply Promo Code or License Key
+			</div>
 			<div className='w-full justify-center flex flex-row'>
 				<div className='flex grow max-w-[60rem] flex-row gap-4 justify-center mt-2'>
 					<InputBox>

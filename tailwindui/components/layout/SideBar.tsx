@@ -64,9 +64,9 @@ const SideBar = ({ }: SideBarProps) => {
 		}
 
 		else if (window.innerWidth < 1600) {
-			if (path.includes('/workflow-review-slides')){
+			if (path.includes('/workflow-review-slides')) {
 				setIsSidebarOpen(false);
-			} else{
+			} else {
 				setIsSidebarOpen(true);
 			}
 		}
@@ -154,6 +154,14 @@ const SideBar = ({ }: SideBarProps) => {
 			{/* credits and user studies */}
 			<div className='flex flex-col items-left justify-between'>
 				<div className='block py-1 text-sm text-white'>
+					{parseInt(credits) < 1000 && <a
+						href='/account'
+						className={`block py-1 text-sm text-green-400 ${isSidebarOpen ? 'px-2' : 'px-0'
+							} rounded-lg hover:bg-gray-400`}
+						role='menuitem'
+					>
+						{'Missing credits?'}
+					</a>}
 					{credits !== 'Infinite' && (
 						<a
 							href='/account'
