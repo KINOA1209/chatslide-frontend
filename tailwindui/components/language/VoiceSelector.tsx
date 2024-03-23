@@ -15,7 +15,7 @@ const VoiceSelector: React.FC<{
   setSelectedVoice,
 }) => {
     const getCodeFromLanguage = (language: string | undefined): string => {
-      const selectedLanguage = LANGUAGES.find((lang) => lang.displayName === language);
+      const selectedLanguage = LANGUAGES.find((lang) => lang.englishName === language);
       return selectedLanguage?.code ?? 'en-US';
     }
 
