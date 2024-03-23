@@ -35,7 +35,7 @@ import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
 import { addIdToRedir } from '@/utils/redirWithId';
 import TextSlider, { TextBox } from '@/components/ui/TextSlider';
-import TOPIC_SUGGESTIONS from '@/components/data/TopicSuggestions';
+import { getTopicSuggestions } from '@/components/data/TopicSuggestions';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 3;
@@ -393,7 +393,7 @@ export default function Topic() {
 											direction and focus of the contents.
 										</ExplanationPopup>
 									</div>
-									<div className='border border-2 border-gray-200 rounded-md'>
+									<div className='border border-2 border-gray-200 rounded-md py-2'>
 										<textarea
 											onChange={(e) => updateTopic(e.target.value)}
 											className='focus:ring-0 text-l md:text-xl'
@@ -403,18 +403,20 @@ export default function Topic() {
 											required
 											placeholder='What do you have in mind?'
 										></textarea>
+										{!topic &&
+											<TextSlider>
+												{getTopicSuggestions().map((topic) => (
+													<div className='hover:cursor-pointer' key={topic} onClick={() => setTopic(topic)}>
+														<TextBox key={topic}>{topic}</TextBox>
+													</div>
+												))}
+											</TextSlider>
+										}
 									</div>
 									<Explanation>
 										{MAX_TOPIC_LENGTH - topic.length} characters left
 									</Explanation>
 									<ErrorMessage>{topicError}</ErrorMessage>
-									<TextSlider>
-										{TOPIC_SUGGESTIONS.map((topic) => (
-											<div className='hover:cursor-pointer' key={topic} onClick={() => setTopic(topic)}>
-												<TextBox key={topic}>{topic}</TextBox>
-											</div>
-										))}
-									</TextSlider>
 								</div>
 							)}
 

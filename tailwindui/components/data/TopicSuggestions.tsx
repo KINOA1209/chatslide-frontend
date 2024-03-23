@@ -1,9 +1,13 @@
 const TOPIC_SUGGESTIONS = [
 	'How to use ultraviolet light to kill germs 🦠☀️',
+	'Bootstrap your business in five steps 🚀',
+	'Komodo dragons: The largest lizards in the world 🦎',
 	'The benefits of daily meditation 🧘‍♂️✨',
+	'Latest NVIDIA earnings report analysis 📈💰',
 	'Understanding the basics of blockchain technology 🔗💻',
 	'Tips for sustainable living and reducing waste 🌿♻️',
-	'Exploring the world of coffee from bean to cup ☕🌍',
+	'Geopolitical challenges in 2024 🌍🔍',
+	'Exploring the world of coffee from bean to cup ☕',
 	'The impact of music on mental health 🎵💖',
 	'Beginner’s guide to astronomy: Stargazing 🌌🔭',
 	'How to start your own vegetable garden 🥕🌱',
@@ -15,5 +19,11 @@ const TOPIC_SUGGESTIONS = [
 	'Learning a new language: Strategies and benefits 🗣️🌐',
 	'DIY home decor ideas on a budget 🛠️🏠',
 ];
+
+export const getTopicSuggestions = ({languageCode = 'en-US'} = {}) => {
+
+	// return a shuffled array of topic suggestions
+	return TOPIC_SUGGESTIONS.sort(() => 0.5 - Math.random());
+}
 
 export default TOPIC_SUGGESTIONS;
