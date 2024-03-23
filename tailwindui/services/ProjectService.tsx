@@ -27,7 +27,7 @@ class ProjectService {
 				headers: headers,
 			});
 
-			if(response.status === 404) {
+			if (response.status === 404) {
 				return {
 					id: project_id,
 					topic: 'Project not found',
@@ -132,7 +132,9 @@ class ProjectService {
 
 		const baseUrl = process.env.HOST ? process.env.HOST : 'localhost';
 		const protocol = baseUrl == 'localhost' ? 'http' : 'https';
-		const url = server_side ? `${protocol}://${baseUrl}/api/get_projects` : '/api/get_projects';
+		const url = server_side
+			? `${protocol}://${baseUrl}/api/get_projects`
+			: '/api/get_projects';
 
 		try {
 			const response = await fetch(url, {
@@ -211,13 +213,17 @@ class ProjectService {
 			slide.subtopic = slideData.subtopic || 'New Slide';
 			slide.userName = slideData.userName || '';
 			slide.template = slideData.template || ('Default' as TemplateKeys);
+			slide.palette = slideData.palette || 'Original';
 			slide.content = slideData.content || [
 				'Some content here',
 				'Some more content here',
 				'Even more content here',
 			];
-			slide.images = slideData.images.filter((img: string) => (img && img !== '')) || [];
-			slide.additional_images = (slideData.additional_images || []).filter((img: string) => img && img !== '' && img !== ';');
+			slide.images =
+				slideData.images.filter((img: string) => img && img !== '') || [];
+			slide.additional_images = (slideData.additional_images || []).filter(
+				(img: string) => img && img !== '' && img !== ';',
+			);
 			slide.chart = slideData.chart;
 			slide.is_chart = slideData.is_chart || [false, false, false];
 			slide.images_position = slideData.images_position || [{}, {}, {}];
@@ -228,9 +234,11 @@ class ProjectService {
 			slide.transcript = slideData.transcript || '';
 			slide.logo_url = slideData.logo_url || '';
 			slide.background_url = slideData.background_url || '';
-			slide.show_logo = slideData.hasOwnProperty('show_logo') ? slideData.show_logo : true;
+			slide.show_logo = slideData.hasOwnProperty('show_logo')
+				? slideData.show_logo
+				: true;
 
-			console.log("slide.images", slide.images);
+			console.log('slide.images', slide.images);
 			if (index === 0) {
 				slide.layout = slideData.layout || ('Cover_img_1_layout' as LayoutKeys);
 			} else {
@@ -294,7 +302,8 @@ class ProjectService {
 				slide.keywords = slideData.keywords || '';
 				slide.topic = slideData.topic || 'Your topic here';
 				slide.subtopic = slideData.subtopic;
-				slide.images = slideData.images.filter((img: string) => (img && img !== '')) || [];
+				slide.images =
+					slideData.images.filter((img: string) => img && img !== '') || [];
 				slide.theme = slideData.theme;
 				slide.content = slideData.content || ['Your content here'];
 				slide.section_title = slideData.section_title || [
@@ -308,7 +317,7 @@ class ProjectService {
 						? slideData.illustration
 						: [
 								'https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png',
-							];
+						  ];
 				slide.quote = slideData.quote || 'Your quote here';
 				slide.source = slideData.source || '';
 
