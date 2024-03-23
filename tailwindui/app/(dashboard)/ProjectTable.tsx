@@ -107,7 +107,7 @@ const ProjectItem: React.FC<{
 											width: '1.5rem',
 											height: '1.5rem',
 											fontWeight: 'bold',
-											color: '#2943E9',
+											color: '#344054',
 										}}
 									/>
 								</button>
