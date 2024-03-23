@@ -360,6 +360,11 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 						return new QuillDelta().insert('\n');
 					} else {
 						// Return the converted Delta as is, assuming it has the necessary content and formatting
+						// make sure <p> has new line between, while list dont require it.
+						// this is for the case like two or more consecutive <p> element will merge into one delta if we dont set \n
+						if (item.includes('<p>')) {
+							convertedDelta.insert('\n');
+						} 
 						return new QuillDelta(convertedDelta);
 					}
 				} else if (item.trim() === '') {
@@ -379,7 +384,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			} else {
 				combinedDelta = insertContent(content);
 			}
-			//console.log(combinedDelta)
+			console.log(combinedDelta)
 			quillInstanceRef.current.setContents(combinedDelta);
 			
 
