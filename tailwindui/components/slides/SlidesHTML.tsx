@@ -48,6 +48,10 @@ import { GoEye, GoEyeClosed } from 'react-icons/go';
 import ScriptWindow from '../script/ScriptWindow';
 import ReactDOM from 'react-dom';
 import { ScrollBar } from '../ui/ScrollBar';
+import Image from 'next/image';
+import showLogo from 'public/icons/button/show_logo.svg';
+import hideLogo from 'public/icons/button/hide_logo.svg';
+
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -491,27 +495,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 									button={
 										<button onClick={() => toggleIsShowingLogo()}>
 											{isShowingLogo ? (
-												<GoEyeClosed
-													style={{
-														strokeWidth: '0.8',
-														flex: '1',
-														width: '1.5rem',
-														height: '1.5rem',
-														fontWeight: 'bold',
-														color: '#344054',
-													}}
-												/>
+												<Image src={hideLogo} alt='Hide Logo' width={24} height={24} />
 											) : (
-												<GoEye
-													style={{
-														strokeWidth: '0.8',
-														flex: '1',
-														width: '1.5rem',
-														height: '1.5rem',
-														fontWeight: 'bold',
-														color: '#344054',
-													}}
-												/>
+												<Image src={showLogo} alt='Show Logo' width={24} height={24} />
 											)}
 										</button>
 									}
