@@ -39,9 +39,6 @@ const ProjectLoading = () => {
 		if (project.topic) {
 			sessionStorage.setItem('topic', project.topic);
 		}
-		if (project.language) {
-			sessionStorage.setItem('language', project.language);
-		}
 		if (project.foldername) {
 			sessionStorage.setItem('foldername', project.foldername);
 		}

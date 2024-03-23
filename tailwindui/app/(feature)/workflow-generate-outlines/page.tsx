@@ -187,7 +187,7 @@ export default function Topic() {
 
 		sessionStorage.setItem('topic', formData.topic);
 		sessionStorage.setItem('audience', formData.audience);
-		sessionStorage.setItem('language', formData.language);
+		updateProject('language', language);
 		sessionStorage.setItem(
 			'selectedResources',
 			JSON.stringify(selectedResources),

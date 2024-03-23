@@ -165,7 +165,7 @@ export default function Topic_SocialPost() {
 			post_style: scenarioType,
 		};
 		sessionStorage.setItem('topic', formData.topic);
-		sessionStorage.setItem('language', formData.language);
+		updateProject('language', language);
 		sessionStorage.setItem(
 			'selectedResources',
 			JSON.stringify(selectedResources),

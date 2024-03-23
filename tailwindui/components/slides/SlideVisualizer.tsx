@@ -70,10 +70,6 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 			typeof sessionStorage !== 'undefined'
 				? sessionStorage.getItem('topic')
 				: null;
-		const language =
-			typeof window !== 'undefined'
-				? sessionStorage.getItem('language')
-				: 'English';
 
 		const project_id = project.id;
 		const formData = {
@@ -81,7 +77,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 			foldername: foldername,
 			topic: topic,
 			project_id: project_id,
-			language: language,
+			language: project.language,
 			json_list: slides,
 			model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
 		};

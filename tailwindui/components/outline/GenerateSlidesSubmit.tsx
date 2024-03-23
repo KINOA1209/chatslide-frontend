@@ -90,10 +90,6 @@ const GenerateSlidesSubmit = ({
 				: null;
 		const topic =
 			typeof window !== 'undefined' ? sessionStorage.getItem('topic') : null;
-		const language =
-			typeof window !== 'undefined'
-				? sessionStorage.getItem('language')
-				: 'English';
 		const project_id = project?.id || '';
 		const selectedResources =
 			typeof window !== 'undefined'
@@ -119,7 +115,7 @@ const GenerateSlidesSubmit = ({
 			audience: audience,
 			foldername: foldername,
 			topic: topic,
-			language: language,
+			language: project?.language,
 			project_id: project_id,
 			addEquations: addEquations,
 			extraKnowledge: extraKnowledge,
