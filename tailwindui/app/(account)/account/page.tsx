@@ -210,6 +210,16 @@ const OpenAIKey = () => {
 		setIsSubmitting(true);
 		console.log(isSubmitting);
 		await UserService.updateOpenaiApiKey(token, key);
+		toast.success('OpenAI key updated!', {
+			position: 'top-center',
+			autoClose: 2000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: 'light',
+		});
 		setIsSubmitting(false);
 		console.log(isSubmitting);
 	};
