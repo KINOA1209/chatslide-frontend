@@ -34,7 +34,8 @@ import LanguageSelector from '../../../components/language/LanguageSelector';
 import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
 import { addIdToRedir } from '@/utils/redirWithId';
-import TopicSuggestions from '@/components/data/TopicSuggestions';
+import TopicSuggestions from '@/components/language/TopicSuggestions';
+import { getUserCountryCode, getUserLanguage } from '@/utils/userLocation';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 3;
@@ -79,11 +80,7 @@ export default function Topic() {
 			? sessionStorage.audience
 			: 'unselected',
 	);
-	const [language, setLanguage] = useState(
-		typeof window !== 'undefined' && sessionStorage.language != undefined
-			? sessionStorage.language
-			: 'English',
-	);
+	const [language, setLanguage] = useState(SessionStorage.getItem('language'));
 	const [selectedResources, setSelectedResources] = useState<Resource[]>(
 		typeof window !== 'undefined' &&
 			sessionStorage.selectedResources != undefined
@@ -102,6 +99,14 @@ export default function Topic() {
 		},
 		// Add more steps as needed
 	];
+
+	useEffect(() => {
+		if (!language) {
+			getUserLanguage().then((language) => {
+				setLanguage(language);
+			});
+		}
+	}, []);
 
 	useEffect(() => {
 		if (selectedResources.length > 0) {

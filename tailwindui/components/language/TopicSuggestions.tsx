@@ -43,6 +43,27 @@ export const TOPIC_SUGGESTIONS = {
 		'Aprender idiomas 🗣️🌐',
 		'Decoración DIY económica 🛠️🏠',
 	],
+	FR: [
+		'UV pour tuer les germes 🦠☀️',
+		'Créer entreprise en 5 étapes 🚀',
+		'Dragons de Komodo 🦎',
+		'Bienfaits méditation 🧘‍♂️✨',
+		'Analyse NVIDIA 📈💰',
+		'Bases blockchain 🔗💻',
+		'Vie durable & moins de déchets 🌿♻️',
+		'Défis géopolitiques 2024 🌍🔍',
+		'Monde du café ☕',
+		'Musique & santé mentale 🎵💖',
+		'Astronomie pour débutants 🌌🔭',
+		'Jardin potager 🥕🌱',
+		'Art du pain au levain 🍞🎨',
+		'Productivité & Pomodoro ⏱️📈',
+		'Science des rêves 💤🧠',
+		'Anciennes civilisations 🏛️🗺️',
+		'Astuces photographie nature 📸🌳',
+		'Apprendre langue nouvelle 🗣️🌐',
+		'Déco DIY budget limité 🛠️🏠',
+	],
 	zhCN: [
 		'如何使用紫外线消灭细菌 🦠☀️',
 		'五步启动你的业务 🚀',
@@ -85,7 +106,7 @@ export const TOPIC_SUGGESTIONS = {
 		'新しい言語を学ぶ：戦略と利点 🗣️🌐',
 		'予算内でのDIYホームデコのアイデア 🛠️🏠',
 	],
-	'DE': [
+	DE: [
 		'UV-Licht gegen Keime 🦠☀️',
 		'Business-Start in 5 Schritten 🚀',
 		'Komodowarane: Größte Echsen 🦎',
@@ -142,6 +163,9 @@ export const getTopicSuggestions = (language = 'English') => {
 	}
 	else if (language.includes('German')) {
 		suggestions = TOPIC_SUGGESTIONS.DE;
+	}
+	else if (language.includes('French')) {
+		suggestions = TOPIC_SUGGESTIONS.FR;
 	}
 
 	// return a shuffled array of topic suggestions
