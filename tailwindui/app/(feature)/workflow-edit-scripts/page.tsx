@@ -14,7 +14,6 @@ import VoiceSelector from '@/components/language/VoiceSelector';
 import { useRouter } from 'next/navigation';
 import { addIdToRedir } from '@/utils/redirWithId';
 import dynamic from 'next/dynamic';
-import { calculateNonPresentScale } from '@/components/slides/SlidesHTML';
 
 const ScriptSection = dynamic(() => import('@/components/script/ScriptSection'), { ssr: false });
 
@@ -25,13 +24,11 @@ export default function WorkflowStep5() {
 	const { project } = useProject();
 	const { token } = useUser();
 	const router = useRouter();
-
-	const [scale, setScale] = useState(0);
 	const [voice, setVoice] = useState('en-US-AvaNeural');
 
-	useEffect(() => {
-		setScale(calculateNonPresentScale(window.innerWidth, window.innerHeight) * 0.5);
-	}, []);
+	if (typeof window === "undefined" || typeof document === "undefined") {
+		return null;
+	}
 
 	async function handleSubmitVideo() {
 		console.log('submitting');
@@ -72,20 +69,6 @@ export default function WorkflowStep5() {
 		}
 	}, [isSubmitting]);
 
-	useEffect(() => {
-		const handleResize = () => {
-			setScale(calculateNonPresentScale(window.innerWidth, window.innerHeight) * 0.5);
-		};
-
-		window.addEventListener('resize', handleResize);
-
-		return () => window.removeEventListener('resize', handleResize);
-	}, []);
-
-	if (typeof window === "undefined" || typeof document === "undefined") {
-		return null;
-	}
-
 	return (
 		<div className='h-full w-full bg-white flex flex-col'>
 			{/* flex col container for steps, title, etc */}
@@ -120,7 +103,6 @@ export default function WorkflowStep5() {
 							<ScriptSection
 								slides={slides}
 								index={index}
-								scale={scale}
 								voice={voice}
 								updateSlidePage={updateSlidePage}
 							/>
@@ -128,7 +110,6 @@ export default function WorkflowStep5() {
 					</div>
 				</Card>
 			</Column>
-
 		</div>
 	);
 }
