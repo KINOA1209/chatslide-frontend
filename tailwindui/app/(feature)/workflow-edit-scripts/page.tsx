@@ -26,21 +26,19 @@ export default function WorkflowStep5() {
 	const router = useRouter();
 	const [voice, setVoice] = useState('en-US-AvaNeural');
 
-	if (typeof window === "undefined" || typeof document === "undefined") {
-		return null;
-	}
-
 	async function handleSubmitVideo() {
-		console.log('submitting');
-
-		const language = sessionStorage.getItem('language') || 'English';
-		const foldername = sessionStorage.getItem('foldername') || '';
+		if (!project) {
+			console.error('No project found');
+			return;
+		}
+		const language = project?.language;
+		const foldername = project?.foldername;
+		if (!language || !foldername) {
+			console.error('No language or foldername found');
+			return;
+		}
 
 		const fetchData = async () => {
-			if (!project) {
-				console.error('No project found');
-				return;
-			}
 			try {
 				const project_id = project.id;
 				VideoService.generateVideo(
@@ -52,13 +50,8 @@ export default function WorkflowStep5() {
 				router.push(addIdToRedir('workflow-review-video'));
 			} catch (error) {
 				console.error('Error in fetchData:', error);
-				toast.error(
-					'We have some problem creating your video, please try again later.',
-				);
-				// TODO: add toast prompts for user
 			}
 		};
-
 		fetchData();
 		setIsSubmitting(false);
 	}
