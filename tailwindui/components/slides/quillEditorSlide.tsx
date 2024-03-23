@@ -346,13 +346,13 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 
 			const QuillDelta = Quill.import('delta');
 			let combinedDelta = new QuillDelta();
-		
+
 			const insertContent = (item: string) => {
 				if (isHTML(item)) {
 					// Convert HTML string to Delta format
 					const convertedDelta = quillInstanceRef.current?.clipboard.convert({ html: item });
 					//console.log("Converted Delta:", convertedDelta);
-			
+
 					// Check if the converted Delta is empty or not properly formatted
 					if (!convertedDelta || convertedDelta.ops.length === 0 ||
 						(convertedDelta.ops.length === 1 && typeof convertedDelta.ops[0].insert === 'string' && !convertedDelta.ops[0].insert.trim())) {
@@ -360,6 +360,11 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 						return new QuillDelta().insert('\n');
 					} else {
 						// Return the converted Delta as is, assuming it has the necessary content and formatting
+						// make sure <p> has new line between, while list dont require it.
+						// this is for the case like two or more consecutive <p> element will merge into one delta if we dont set \n
+						if (item.includes('<p>')) {
+							convertedDelta.insert('\n');
+						}
 						return new QuillDelta(convertedDelta);
 					}
 				} else if (item.trim() === '') {
@@ -370,7 +375,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 					return new QuillDelta().insert(`${item}\n`, quillFormats);
 				}
 			};
-		
+
 			if (Array.isArray(content)) {
 				content.forEach(item => {
 					const itemDelta = insertContent(item);
@@ -381,7 +386,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			}
 			//console.log(combinedDelta)
 			quillInstanceRef.current.setContents(combinedDelta);
-			
+
 
 			// const Delta = Quill.import('delta');
 			// let initialDelta = new Delta();
@@ -443,25 +448,25 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			quillInstanceRef.current.on('text-change', (delta, oldDelta, source) => {
 				if (source === 'user') {
 					const quill = quillInstanceRef.current;
-					if (quill){
+					if (quill) {
 						const regex = /(?:https?:\/\/|www\.)\S+\b/g;
 						const text = quill.getText();
 						let match;
 						// index wrong when link feature is triggered
 						let lastMatchEndIndex = 0;
-		
+
 						while ((match = regex.exec(text)) !== null) {
 							const url = match[0];
 							const startIndex = match.index;
 							const urlLength = url.length;
-		
+
 							const formats = quill.getFormat(startIndex, urlLength);
 							if (!formats.link) {
-								quill.formatText({index:startIndex, length:urlLength}, 'link', url);
+								quill.formatText({ index: startIndex, length: urlLength }, 'link', url);
 								lastMatchEndIndex = startIndex + urlLength;
 							}
 						}
-		
+
 						// Set cursor position to the end of the last formatted link if a link was formatted
 						if (lastMatchEndIndex > 0) {
 							quill.setSelection(lastMatchEndIndex, 0, Quill.sources.SILENT);
