@@ -40,6 +40,16 @@ const VOICE_OPTIONS: VoiceOption = {
 			'es-ES-SaulNeural', 'es-ES-TeoNeural'
 		]
 	},
+	'es-MX': {
+		'female': [
+			'es-MX-DaliaNeural', 'es-MX-BeatrizNeural', 'es-MX-CandelaNeural', 'es-MX-CarlotaNeural', 'es-MX-LarissaNeural',
+			'es-MX-MarinaNeural', 'es-MX-NuriaNeural', 'es-MX-RenataNeural'
+		],
+		'male': [
+			'es-MX-JorgeNeural', 'es-MX-CecilioNeural', 'es-MX-GerardoNeural', 'es-MX-LibertoNeural', 'es-MX-LucianoNeural',
+			'es-MX-PelayoNeural', 'es-MX-YagoNeural'
+		]
+	},
 	'zh-CN': {
 		'female': [
 			'zh-CN-XiaoxiaoNeural', 'zh-CN-XiaoyiNeural', 'zh-CN-XiaochenNeural', 'zh-CN-XiaohanNeural',
@@ -91,6 +101,16 @@ const VOICE_OPTIONS: VoiceOption = {
 	'pt-PT': {
 		'female': ['pt-PT-RaquelNeural', 'pt-PT-FernandaNeural'],
 		'male': ['pt-PT-DuarteNeural']
+	},
+	'pt-BR': {
+		'female': [
+			'pt-BR-FranciscaNeural', 'pt-BR-BrendaNeural', 'pt-BR-ElzaNeural', 'pt-BR-GiovannaNeural', 'pt-BR-LeilaNeural',
+			'pt-BR-LeticiaNeural', 'pt-BR-ManuelaNeural', 'pt-BR-ThalitaNeural', 'pt-BR-YaraNeural'
+		],
+		'male': [
+			'pt-BR-AntonioNeural', 'pt-BR-DonatoNeural', 'pt-BR-FabioNeural', 'pt-BR-HumbertoNeural', 'pt-BR-JulioNeural',
+			'pt-BR-NicolauNeural', 'pt-BR-ValerioNeural'
+		]
 	},
 	'it-IT': {
 		'female': [
