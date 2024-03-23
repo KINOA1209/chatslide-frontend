@@ -33,14 +33,15 @@ export default function WorkflowStep5() {
 		}
 		const language = project?.language;
 		const foldername = project?.foldername;
-		if (!language || !foldername) {
-			console.error('No language or foldername found');
+		const project_id = project.id;
+		if (!language || !foldername || !project_id) {
+			console.error('No language or foldername or project_id found');
 			return;
 		}
 
 		const fetchData = async () => {
 			try {
-				const project_id = project.id;
+				console.log('project_id:', project_id);
 				VideoService.generateVideo(
 					project_id,
 					foldername,
