@@ -34,8 +34,7 @@ import LanguageSelector from '../../../components/language/LanguageSelector';
 import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
 import { addIdToRedir } from '@/utils/redirWithId';
-import TextSlider, { TextBox } from '@/components/ui/TextSlider';
-import { getTopicSuggestions } from '@/components/data/TopicSuggestions';
+import TopicSuggestions from '@/components/data/TopicSuggestions';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 3;
@@ -404,13 +403,10 @@ export default function Topic() {
 											placeholder='What do you have in mind?'
 										></textarea>
 										{!topic &&
-											<TextSlider>
-												{getTopicSuggestions().map((topic) => (
-													<div className='hover:cursor-pointer' key={topic} onClick={() => setTopic(topic)}>
-														<TextBox key={topic}>{topic}</TextBox>
-													</div>
-												))}
-											</TextSlider>
+											<TopicSuggestions
+												language={language}
+												setTopic={setTopic}
+											/>
 										}
 									</div>
 									<Explanation>
