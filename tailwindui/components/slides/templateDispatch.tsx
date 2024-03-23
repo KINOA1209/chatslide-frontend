@@ -1,6 +1,10 @@
 import Slide from '@/models/Slide';
 import { SlideKeys } from '@/models/Slide';
-import { availableTemplates } from '@/components/slides/slideTemplates';
+import {
+	availableTemplates,
+	availableColorThemes,
+	ColorThemeKeys,
+} from '@/components/slides/slideTemplates';
 import { useUser } from '@/hooks/use-user';
 import {
 	Col_1_img_1_layout,
@@ -42,7 +46,7 @@ export const templateDispatch = (
 		images_position: ImagesPosition[],
 	) => void = () => () => {}, // Replace with your default function if you have one
 	toggleEditMathMode: () => void = () => {}, // Replace with your default function if you have one
-
+	// palette: ColorThemeKeys = 'Original',
 	isCoverPage: boolean = false,
 	layoutOptionNonCover: LayoutKeys = 'Col_2_img_1_layout',
 	layoutOptionCover: LayoutKeys = 'Cover_img_1_layout',
@@ -71,6 +75,11 @@ export const templateDispatch = (
 	const templateKey = availableTemplates.hasOwnProperty(slide.template)
 		? slide.template
 		: 'Default';
+
+	//TODO: when backenis available
+	// const colorThemeKey = availableColorThemes.hasOwnProperty(slide.color_theme)
+	// 	? slide.color_theme
+	// 	: 'Original';
 
 	// check for layout keys validity, make sure layoutKeys are valid
 	const layoutKeysArray: LayoutKeys[] = [
@@ -106,7 +115,11 @@ export const templateDispatch = (
 	// 	TemplatesLogos[templateLogo as keyof typeof TemplatesLogos];
 	const userUploadedLogo = slide?.logo_url;
 	const userUploadedBackgroundImage = slide?.background_url;
-	const themeElements = loadCustomizableElements(templateKey as TemplateKeys);
+	// this decide which themeelement to use
+	const themeElements = loadCustomizableElements(
+		templateKey as TemplateKeys,
+		slide.palette as ColorThemeKeys,
+	);
 	const processContent = (item: string) => {
 		if (isHTML(item)) {
 			if (item.trim().startsWith('<li') && item.trim().endsWith('</li>')) {
@@ -306,6 +319,7 @@ export const templateDispatch = (
 			currentSlideIndex={index}
 			isShowingLogo={isShowingLogo}
 			images_position={slide.images_position || [{}, {}, {}]}
+			palette={slide.palette}
 		/>
 	);
 	// }

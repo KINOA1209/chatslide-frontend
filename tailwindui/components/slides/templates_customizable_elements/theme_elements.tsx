@@ -1,5 +1,10 @@
 // YourConfig.tsx
-import { TemplateKeys } from '../slideTemplates';
+import {
+	ColorThemeKeys,
+	TemplateKeys,
+	availableColorThemesObject,
+} from '../slideTemplates';
+
 import { StanfordTemplateThemeConfig } from './templatesThemeConfigDetails/StanfordTemplateThemeConfig';
 import { Clean_Lifestyle_003_TemplateThemeConfig } from './templatesThemeConfigDetails/Clean_Lifestyle_003_TemplateThemeConfigDetails';
 import { Business_002_TemplateThemeConfig } from './templatesThemeConfigDetails/Business_002_TemplateThemeConfigDetails';
@@ -19,6 +24,8 @@ import { UChicagoTemplateThemeConfig } from './templatesThemeConfigDetails/UChic
 import { YaleTemplateThemeConfig } from './templatesThemeConfigDetails/YaleTemplateThemeConfig';
 import { UPennTemplateThemeConfig } from './templatesThemeConfigDetails/UPennTemplateThemeConfig';
 import { JHUTemplateThemeConfig } from './templatesThemeConfigDetails/JHUTemplateThemeConfig';
+import { Simplistic_008_TemplateThemeConfig } from './templatesThemeConfigDetails/Simplistic_008_TemplateThemeConfigDetails';
+
 export type ThemeElements = {
 	backgroundColorCover?: string;
 	backgroundColor?: string;
@@ -44,8 +51,19 @@ export type ThemeElements = {
 };
 
 export type ThemeConfig = {
-	[templateName in TemplateKeys]?: ThemeElements;
+	[templateName in TemplateKeys]?: {
+		[key in ColorThemeKeys]?: ThemeElements;
+	};
 };
+
+// type TemplateColorThemes<T extends TemplateKeys> =
+// 	keyof availableColorThemesObject[T];
+
+// export type ThemeConfig = {
+// 	[templateName in TemplateKeys]?: {
+// 		[colorTheme: string]: ThemeElements; // Use conditional type to ensure colorTheme matches available color options for the current template
+// 	};
+// };
 
 const themeConfigData: ThemeConfig = {
 	Stanford: StanfordTemplateThemeConfig,
@@ -67,6 +85,7 @@ const themeConfigData: ThemeConfig = {
 	Business_Dark_005: Business_Dark_005_TemplateThemeConfig,
 	Business_Light_006: Business_Light_006_TemplateThemeConfig,
 	Fun_Vibrant_007: Fun_Vibrant_007_TemplateThemeConfig,
+	Simplistic_008: Simplistic_008_TemplateThemeConfig,
 };
 
 export default themeConfigData;

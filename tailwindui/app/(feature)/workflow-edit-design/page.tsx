@@ -21,11 +21,13 @@ import TemplateSelector from './TemplateSelector';
 import { BigTitle, Explanation, Title } from '@/components/ui/Text';
 import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
+import { availableColorThemes } from '@/components/slides/slideTemplates';
 // const { changeTemplate } = useSlides();
 
 export default function DesignPage() {
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 	const [template, setTemplate] = useState('Clean_Lifestyle_003' as string);
+	const [colorPalette, setColorPalette] = useState('Original' as string);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [isGpt35, setIsGpt35] = useState(true);
 	const { outlines } = useProject();
@@ -69,6 +71,13 @@ export default function DesignPage() {
 
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
+	console.log('Template:', template);
+	console.log('Color Palette:', colorPalette);
+	console.log(
+		'current template color options:',
+		template,
+		availableColorThemes[template as keyof typeof availableColorThemes],
+	);
 
 	return (
 		<section className='relative'>
@@ -93,6 +102,7 @@ export default function DesignPage() {
 				isSubmitting={isSubmitting}
 				setIsSubmitting={setIsSubmitting}
 				template={template}
+				palette={colorPalette}
 				imageAmount={imageAmount}
 				imageLicense={imageLicense}
 				logo_ids={selectedLogo.map((resource) => resource.id)}
@@ -109,7 +119,18 @@ export default function DesignPage() {
 							and use the default
 						</Explanation>
 						{/* tempalte */}
-						<TemplateSelector template={template} setTemplate={setTemplate} />
+						<TemplateSelector
+							template={template}
+							setTemplate={setTemplate}
+							setColorTheme={setColorPalette}
+							colorThemeOptions={
+								availableColorThemes[
+									template as keyof typeof availableColorThemes
+								] || ['Original']
+							}
+							colorTheme={colorPalette}
+						/>
+
 						{/* images */}
 						<div>
 							<span className='text-md font-bold'>
@@ -124,11 +145,14 @@ export default function DesignPage() {
 						</div>
 						<div>
 							<span className='text-md font-bold'>
-								For images on your slides, what image license do you want to use?
+								For images on your slides, what image license do you want to
+								use?
 							</span>
 							<Explanation>
-								An image license is a set of rules that tell you how you can use a picture. <br/>
-								You are free to use images with a creative license or stock pictures for commercial use. <br/>
+								An image license is a set of rules that tell you how you can use
+								a picture. <br />
+								You are free to use images with a creative license or stock
+								pictures for commercial use. <br />
 							</Explanation>
 							<RadioButton
 								options={imageLicenseOptions}
@@ -152,6 +176,6 @@ export default function DesignPage() {
 					</Card>
 				</Panel>
 			</Column>
-		</section >
+		</section>
 	);
 }

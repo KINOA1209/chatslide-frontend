@@ -19,6 +19,7 @@ import { Fun_Education_004_template } from './new_templates/Fun_Education_004_te
 import { Business_002_template } from './new_templates/Business_002_template';
 import { Fun_Vibrant_007_template } from './new_templates/Fun_Vibrant_007_template';
 import { Business_Light_006_template } from './new_templates/Business_Light_006_template';
+import { Simplistic_008_template } from './new_templates/Simplistic_008_template';
 import { LayoutKeys } from './slideLayout';
 import { layoutOptions } from './slideLayout';
 import {
@@ -39,7 +40,11 @@ export interface MainSlideProps {
 	content: JSX.Element | JSX.Element[];
 	imgs: string[];
 	//   imgs: JSX.Element
-	update_callback: (imgs: string[], ischart: boolean[], images_position: ImagesPosition[]) => void;
+	update_callback: (
+		imgs: string[],
+		ischart: boolean[],
+		images_position: ImagesPosition[],
+	) => void;
 	canEdit: boolean;
 	isCoverPage: boolean;
 	layoutOptionNonCover: LayoutKeys;
@@ -54,6 +59,7 @@ export interface MainSlideProps {
 	currentSlideIndex: number;
 	isShowingLogo?: boolean;
 	images_position: ImagesPosition[];
+	palette?: ColorThemeKeys;
 }
 
 // deprecated
@@ -94,6 +100,35 @@ export const useLocalImgs = (
 	return { localImgs, updateImgAtIndex };
 };
 
+export type ColorThemeKeys = 'Original' | 'Blue' | 'Red' | 'Yellow' | '';
+
+export type availableColorThemesObject = {
+	[templateName in TemplateKeys]?: ColorThemeKeys[];
+};
+
+export const availableColorThemes: availableColorThemesObject = {
+	Stanford: ['Original'],
+	Berkeley: ['Original'],
+	Harvard: ['Original'],
+	MIT: ['Original'],
+	Princeton: ['Original'],
+	Caltech: ['Original'],
+	Columbia: ['Original'],
+	JHU: ['Original'],
+	UChicago: ['Original'],
+	Yale: ['Original'],
+	UPenn: ['Original'],
+	Default: ['Original'],
+	Fun_Education_001: ['Original'],
+	Business_002: ['Original'],
+	Clean_Lifestyle_003: ['Original'],
+	Fun_Education_004: ['Original'],
+	Business_Dark_005: ['Original'],
+	Business_Light_006: ['Original'],
+	Fun_Vibrant_007: ['Original'],
+	Simplistic_008: ['Original', 'Blue', 'Yellow', 'Red'],
+};
+
 // add template keys here
 export const availableTemplates = {
 	Stanford: Stanford_school_template,
@@ -115,6 +150,7 @@ export const availableTemplates = {
 	Business_Dark_005: Business_Dark_005_template,
 	Business_Light_006: Business_Light_006_template,
 	Fun_Vibrant_007: Fun_Vibrant_007_template,
+	Simplistic_008: Simplistic_008_template,
 };
 
 // Define a type for template keys

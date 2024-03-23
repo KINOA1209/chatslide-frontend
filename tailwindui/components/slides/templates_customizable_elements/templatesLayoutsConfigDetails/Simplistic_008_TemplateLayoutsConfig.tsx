@@ -2,29 +2,27 @@ import { LayoutElements } from '../layout_elements';
 import { LayoutKeys } from '../../slideLayout';
 import { TemplateKeys } from '../../slideTemplates';
 
-export const Business_002_TemplateLayoutsConfig: {
+export const Simplistic_008_TemplateLayoutsConfig: {
 	[key in LayoutKeys]?: LayoutElements;
 } = {
 	Cover_img_0_layout: {
-		// canvaCSS: {
-		// 	backgroundColor: '#2E2E2E',
-		// 	margin: 0,
-		// 	padding: 0,
-		// },
+		canvaCSS: {
+			display: 'flex',
+			width: '100%',
+			height: '100%',
+			position: 'relative',
+			// overflow: 'hidden',
+		},
 		titleCSS: {
-			backgroundColor: '#DEFF56',
-			paddingBottom: '20rem',
-			paddingTop: '4rem',
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
-			// height: '80%',
-			width: '80%',
+			backgroundColor: '#F1F1F1',
+			padding: '4rem',
+			width: '100%',
+			height: '70%',
 			zIndex: 20,
 			position: 'absolute',
 			top: '50%',
-			left: '40%',
-			transform: 'translate(-45%, -50%)', // Centering trick
-			maxHeight: '80%',
+			left: '50%',
+			transform: 'translate(-50%, -50%)', // Centering trick
 		},
 		userNameTextDividerCSS: {
 			display: 'none',
@@ -38,7 +36,10 @@ export const Business_002_TemplateLayoutsConfig: {
 			width: '40%',
 		},
 		columnCSS: {
-			width: '100%', // Equivalent to w-1/2
+			// paddingTop: '1rem', // Equivalent to pt-[1rem]
+			paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
+			paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
+			width: '50%', // Equivalent to w-1/2
 			display: 'flex', // Equivalent to flex
 			flexDirection: 'column', // Equivalent to flex-col
 			justifyContent: 'flex-start', // Equivalent to justify-start
@@ -54,37 +55,36 @@ export const Business_002_TemplateLayoutsConfig: {
 			position: 'absolute',
 		},
 		visualElementsCSS: {
-			height: '100%', // must-have
-			zIndex: 0,
+			zIndex: 10,
 			position: 'absolute',
+			top: '0%',
+			left: '0%',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
 		},
 	},
 	Cover_img_1_layout: {
+		canvaCSS: {
+			display: 'flex',
+			width: '100%',
+			height: '100%',
+			position: 'relative',
+			// overflow: 'hidden',
+		},
 		titleCSS: {
-			paddingBottom: '10rem', // 20rem -> 10rem to solve print problem
-			paddingTop: '4rem',
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
-			// height: '80%',
-			width: '80%',
+			backgroundColor: '#F1F1F1',
+			padding: '4rem',
+			width: '70%',
+			height: '50%',
 			zIndex: 20,
 			position: 'absolute',
 			top: '50%',
-			left: '40%',
-			transform: 'translate(-45%, -50%)', // Centering trick
-			maxHeight: '80%',
-			backgroundColor: '#DEFF56',
-			// margin: '0rem 4rem 2rem 1rem',
+			left: '50%',
+			transform: 'translate(-50%, -50%)', // Centering trick
 		},
-		// userNameCSS: {
-		// 	zIndex: 30,
-		// 	position: 'absolute',
-		// 	top: '70%',
-		// 	left: '30%',
-		// 	transform: 'translate(-85%, 0%)', // Centering trick
-		// },
+		userNameTextDividerCSS: {
+			display: 'none',
+		},
 		userNameCSS: {
 			zIndex: 30,
 			position: 'absolute',
@@ -95,7 +95,6 @@ export const Business_002_TemplateLayoutsConfig: {
 		},
 		columnCSS: {
 			// paddingTop: '1rem', // Equivalent to pt-[1rem]
-
 			paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 			paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
 			width: '50%', // Equivalent to w-1/2
@@ -112,9 +111,10 @@ export const Business_002_TemplateLayoutsConfig: {
 			//overflow: 'hidden',
 			borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
 			position: 'absolute',
+			zIndex: 10,
 		},
 		visualElementsCSS: {
-			zIndex: 0,
+			zIndex: 20,
 			position: 'absolute',
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
@@ -124,7 +124,9 @@ export const Business_002_TemplateLayoutsConfig: {
 			height: '100%',
 			position: 'relative',
 		},
-		rndCSS: {},
+		rndCSS: {
+			zIndex: '10',
+		},
 	},
 	Col_1_img_0_layout: {
 		canvaCSS: {
@@ -135,8 +137,8 @@ export const Business_002_TemplateLayoutsConfig: {
 		},
 		contentCSS: {
 			width: '100%', // Equivalent to w-full
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
+			paddingLeft: '4rem',
+			paddingRight: '4rem',
 		},
 		columnCSS: {
 			width: '100%', // Equivalent to w-full
@@ -146,20 +148,42 @@ export const Business_002_TemplateLayoutsConfig: {
 			display: 'flex',
 		},
 		titleAndSubtopicBoxCSS: {
-			backgroundColor: '#DEFF56',
+			backgroundColor: '#F1F1F1',
+			paddingTop: '2rem',
+			paddingBottom: '2rem',
+			paddingLeft: '4rem',
+			paddingRight: '4rem',
+			display: 'flex',
+			flexDirection: 'column', // Equivalent to flex
+		},
+		topicCSS: {
+			order: '2',
 			paddingTop: '1rem',
-			paddingBottom: '1rem',
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
+		},
+		subtopicCSS: {
+			order: '1',
+			borderBottom: '1px solid #C2C2C2',
+			paddingBottom: '0.5rem',
 		},
 	},
 	Col_2_img_0_layout: {
 		titleAndSubtopicBoxCSS: {
-			backgroundColor: '#DEFF56',
+			backgroundColor: '#F1F1F1',
+			paddingTop: '2rem',
+			paddingBottom: '2rem',
+			paddingLeft: '4rem',
+			paddingRight: '4rem',
+			display: 'flex',
+			flexDirection: 'column', // Equivalent to flex
+		},
+		topicCSS: {
+			order: '2',
 			paddingTop: '1rem',
-			paddingBottom: '1rem',
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
+		},
+		subtopicCSS: {
+			order: '1',
+			borderBottom: '1px solid #C2C2C2',
+			paddingBottom: '0.5rem',
 		},
 		contentContainerCSS: {
 			height: '100%',
@@ -169,25 +193,31 @@ export const Business_002_TemplateLayoutsConfig: {
 			gap: '4rem',
 			paddingTop: '2rem',
 			paddingBottom: '4rem',
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
+			paddingLeft: '4rem',
+			paddingRight: '4rem',
 		},
-		contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+		contentCSS: {
+			display: 'flex',
+			flexDirection: 'column',
+			gap: '0.5rem',
+			paddingLeft: '1rem',
+			borderLeft: '1px solid #C2C2C2',
+		},
 		contentIndexCSS: {
 			mixBlendMode: 'hard-light',
 			color: 'black', // Assuming text-neutral-900 corresponds to #374155
-			fontSize: '2rem',
+			fontSize: '2.5rem',
 			fontWeight: 'bold',
-			fontFamily: 'Creato Display Medium',
+			fontFamily: 'Yrsa Medium',
 			textTransform: 'uppercase',
 			lineHeight: '2.5rem',
 			letterSpacing: '0.5rem',
-			paddingTop: '2rem',
+			paddingTop: '1rem',
 		},
 		contentIndexTextDividerCSS: {
-			display: 'flex',
-			opacity: 0.5,
-			border: '1px solid rgba(55, 65, 81, 0.4)',
+			// display: 'flex',
+			// opacity: 0.5,
+			// border: '1px solid rgba(55, 65, 81, 0.4)',
 		},
 		contentTextCSS: {
 			display: 'flex',
@@ -199,11 +229,22 @@ export const Business_002_TemplateLayoutsConfig: {
 	},
 	Col_3_img_0_layout: {
 		titleAndSubtopicBoxCSS: {
-			backgroundColor: '#DEFF56',
+			backgroundColor: '#F1F1F1',
+			paddingTop: '2rem',
+			paddingBottom: '2rem',
+			paddingLeft: '4rem',
+			paddingRight: '4rem',
+			display: 'flex',
+			flexDirection: 'column', // Equivalent to flex
+		},
+		topicCSS: {
+			order: '2',
 			paddingTop: '1rem',
-			paddingBottom: '1rem',
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
+		},
+		subtopicCSS: {
+			order: '1',
+			borderBottom: '1px solid #C2C2C2',
+			paddingBottom: '0.5rem',
 		},
 		contentContainerCSS: {
 			height: '100%',
@@ -213,25 +254,31 @@ export const Business_002_TemplateLayoutsConfig: {
 			gap: '4rem',
 			paddingTop: '2rem',
 			paddingBottom: '4rem',
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
+			paddingLeft: '4rem',
+			paddingRight: '4rem',
 		},
-		contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+		contentCSS: {
+			display: 'flex',
+			paddingLeft: '1rem',
+			flexDirection: 'column',
+			gap: '0.5rem',
+			borderLeft: '1px solid #C2C2C2',
+		},
 		contentIndexCSS: {
 			mixBlendMode: 'hard-light',
 			color: 'black', // Assuming text-neutral-900 corresponds to #374155
-			fontSize: '2rem',
+			fontSize: '2.5rem',
 			fontWeight: 'bold',
-			fontFamily: 'Creato Display Medium',
+			fontFamily: 'Yrsa Medium',
 			textTransform: 'uppercase',
 			lineHeight: '2.5rem',
 			letterSpacing: '0.5rem',
-			paddingTop: '2rem',
+			paddingTop: '1rem',
 		},
 		contentIndexTextDividerCSS: {
-			display: 'flex',
-			opacity: 0.5,
-			border: '1px solid rgba(55, 65, 81, 0.4)',
+			// display: 'flex',
+			// opacity: 0.5,
+			// border: '1px solid rgba(55, 65, 81, 0.4)',
 		},
 		contentTextCSS: {
 			display: 'flex',
@@ -259,14 +306,23 @@ export const Business_002_TemplateLayoutsConfig: {
 			alignItems: 'flex-start',
 		},
 		titleAndSubtopicBoxCSS: {
-			width: '100%',
+			backgroundColor: '#F1F1F1',
+			paddingTop: '2rem',
+			paddingBottom: '2rem',
+			paddingLeft: '4rem',
+			paddingRight: '4rem',
 			display: 'flex',
-			flexDirection: 'column',
-			backgroundColor: '#DEFF56',
+			flexDirection: 'column', // Equivalent to flex
+			width: '100%',
+		},
+		topicCSS: {
+			order: '2',
 			paddingTop: '1rem',
-			paddingBottom: '1rem',
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
+		},
+		subtopicCSS: {
+			order: '1',
+			borderBottom: '1px solid #C2C2C2',
+			paddingBottom: '0.5rem',
 		},
 		imageContainerCSS: {
 			width: '50%', // equivalent to w-1/2
@@ -281,6 +337,10 @@ export const Business_002_TemplateLayoutsConfig: {
 			paddingLeft: '2rem',
 			paddingRight: '2rem',
 		},
+		contentCSS: {
+			borderLeft: '1px solid #C2C2C2',
+			paddingLeft: '0.5rem',
+		},
 		rndContainerCSS: {
 			width: '100%',
 			height: '100%',
@@ -291,34 +351,54 @@ export const Business_002_TemplateLayoutsConfig: {
 		},
 	},
 	Col_1_img_1_layout: {
-		columnCSS: { width: '100%', display: 'grid', gridTemplateColumns: '1fr' },
+		columnCSS: {
+			width: '100%',
+			height: '100%',
+			display: 'grid',
+			gridTemplateColumns: '1fr',
+			gridAutoRows: '30% auto 30%',
+		},
 		titleAndSubtopicBoxCSS: {
+			backgroundColor: '#F1F1F1',
+			paddingTop: '2rem',
+			paddingBottom: '2rem',
+			paddingLeft: '4rem',
+			paddingRight: '4rem',
 			display: 'flex',
-			flexDirection: 'column',
-			backgroundColor: '#DEFF56',
+			flexDirection: 'column', // Equivalent to flex
+			width: '100%',
+		},
+		topicCSS: {
+			order: '2',
 			paddingTop: '1rem',
-			paddingBottom: '1rem',
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
+		},
+		subtopicCSS: {
+			order: '1',
+			borderBottom: '1px solid #C2C2C2',
+			paddingBottom: '0.5rem',
 		},
 		imageContainerCSS: {
-			height: '15rem',
+			height: '100%',
 			flexGrow: 1,
 			borderRadius: '0.375rem', // Assuming a typical rounded-md value
 			//overflow: 'hidden',
+			gridRow: 3,
+			zIndex: 10,
 		},
 		contentContainerCSS: {
 			paddingTop: '0.5rem',
 			paddingBottom: '0.5rem',
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
+			paddingLeft: '4rem',
+			paddingRight: '4rem',
 			height: '100%',
 			width: '100%',
 			display: 'flex',
 			flexDirection: 'column',
 			gap: '0.5rem',
+			gridRow: 2,
+			zIndex: 20,
 		},
-		contentCSS: {},
+		contentCSS: { borderLeft: '1px solid #C2C2C2', paddingLeft: '0.5rem' },
 		contentTextCSS: {
 			display: 'flex',
 			flexDirection: 'row',
@@ -337,26 +417,35 @@ export const Business_002_TemplateLayoutsConfig: {
 		},
 	},
 	Col_2_img_2_layout: {
-		columnCSS: { display: 'flex', flexDirection: 'column' },
+		canvaCSS: {
+			padding: '28px',
+		},
+		columnCSS: {
+			display: 'flex',
+			flexDirection: 'column',
+			gap: '0.5rem',
+		},
 		titleAndSubtopicBoxCSS: {
 			display: 'flex',
 			flexDirection: 'column',
-			// justifyContent: 'center',
-			// alignItems: 'center',
-			backgroundColor: '#DEFF56',
-			paddingTop: '1rem',
-			paddingBottom: '1rem',
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
+			justifyContent: 'center',
+			alignItems: 'center',
+			paddingBottom: '2rem',
+		},
+		topicCSS: {
+			borderBottom: '1px solid #C2C2C2',
+		},
+		subtopicCSS: {
+			paddingTop: '0.5rem',
 		},
 		imageContainerCSS: {
 			width: '100%', // equivalent to w-full
 			display: 'grid',
 			gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
-			// gap: '2rem', // equivalent to gap-[2rem]
+			gap: '2rem', // equivalent to gap-[2rem]
 		},
 		imageCSS: {
-			height: '15rem', // equivalent to h-[11rem]
+			height: '11rem', // equivalent to h-[11rem]
 			flexGrow: 1, // equivalent to grow
 			borderRadius: '0.375rem', // equivalent to rounded-md
 			//overflow: 'hidden', // equivalent to overflow-hidden
@@ -367,9 +456,6 @@ export const Business_002_TemplateLayoutsConfig: {
 			display: 'grid',
 			gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
 			gap: '2rem', // equivalent to gap-[2rem]
-			paddingTop: '1rem',
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
 		},
 		rndContainerCSS: {
 			width: '100%',
@@ -381,38 +467,41 @@ export const Business_002_TemplateLayoutsConfig: {
 		},
 	},
 	Col_3_img_3_layout: {
-		columnCSS: { display: 'flex', flexDirection: 'column' },
+		canvaCSS: {
+			padding: '28px',
+		},
+		columnCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
 		titleAndSubtopicBoxCSS: {
 			display: 'flex',
 			flexDirection: 'column',
-			// justifyContent: 'center',
-			// alignItems: 'center',
-			backgroundColor: '#DEFF56',
-			paddingTop: '1rem',
-			paddingBottom: '1rem',
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
+			justifyContent: 'center',
+			alignItems: 'center',
+			paddingBottom: '2rem',
+		},
+		topicCSS: {
+			borderBottom: '1px solid #C2C2C2',
+		},
+		subtopicCSS: {
+			paddingTop: '0.5rem',
 		},
 		imageContainerCSS: {
 			width: '100%', // equivalent to w-full
 			display: 'grid',
 			gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
-			// gap: '2rem', // equivalent to gap-[2rem]
+			gap: '2rem', // equivalent to gap-[2rem]
 		},
 		imageCSS: {
-			height: '15rem', // equivalent to h-[11rem]
+			height: '11rem', // equivalent to h-[11rem]
 			flexGrow: 1, // equivalent to grow
 			borderRadius: '0.375rem', // equivalent to rounded-md
 			//overflow: 'hidden', // equivalent to overflow-hidden
+			position: 'relative',
 		},
 		contentCSS: {
 			width: '100%', // equivalent to w-full
 			display: 'grid',
 			gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
 			gap: '2rem', // equivalent to gap-[2rem]
-			paddingTop: '1rem',
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
 		},
 		rndContainerCSS: {
 			width: '100%',

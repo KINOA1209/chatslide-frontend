@@ -130,6 +130,7 @@ export default function Topic() {
 		if (topic.length >= MIN_TOPIC_LENGTH) {
 			setIsNextEnabled(true);
 			setTopicError('');
+			setTopic(topic);
 		}
 		if (topic.length > MAX_TOPIC_LENGTH) {
 			setTopic(topic.slice(0, MAX_TOPIC_LENGTH));

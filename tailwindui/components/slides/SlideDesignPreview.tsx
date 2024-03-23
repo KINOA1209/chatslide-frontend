@@ -2,7 +2,9 @@ import React, { useRef, useEffect, useState } from 'react';
 import Slide from '@/models/Slide';
 import { templateDispatch } from './templateDispatch';
 import {
+	ColorThemeKeys,
 	TemplateKeys,
+	availableColorThemes,
 	availableTemplates,
 } from '@/components/slides/slideTemplates';
 import { layoutOptions } from './slideLayout';
@@ -14,10 +16,12 @@ import { Explanation } from '../ui/Text';
 import { ScrollBar } from '../ui/ScrollBar';
 type SlideDesignPreviewProps = {
 	selectedTemplate: string;
+	selectedColorTheme: string;
 };
 
 const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 	selectedTemplate,
+	selectedColorTheme,
 }) => {
 	const [slides, setSlides] = useState<Slide[]>([]);
 	// const template = isValidTemplateKey(selectedTemplate) ? selectedTemplate : 'Default';
@@ -41,9 +45,16 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			? selectedTemplate
 			: 'Default';
 
+		// const color_theme =
+		// 	typeof selectedColorTheme === 'string'
+		// 		? (selectedColorTheme as ColorThemeKeys)
+		// 		: ('Original' as ColorThemeKeys);
+		const color_theme = selectedColorTheme as ColorThemeKeys;
+
 		const newSlides = Object.keys(layoutOptions).map((layoutKey) => {
 			const newSlide = new Slide();
 			newSlide.template = template;
+			newSlide.palette = color_theme;
 			newSlide.layout = layoutKey as keyof typeof layoutOptions;
 
 			if (
@@ -62,7 +73,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 		});
 
 		setSlides(newSlides);
-	}, [selectedTemplate]);
+	}, [selectedTemplate, selectedColorTheme]);
 
 	const layoutNameArray = [
 		'Cover Page without image',
@@ -70,10 +81,10 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 		'1 column without image',
 		'2 columns without image',
 		'3 columns without image',
-		'1 column with image',
-		'1 column with image',
-		'2 columns with image',
-		'3 columns with image',
+		'1 column with 1 image',
+		'2 column with 1 image',
+		'2 columns with 2 image',
+		'3 columns with 3 image',
 	];
 
 	const editableTemplateDispatch = (
@@ -92,6 +103,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			() => {},
 			() => () => {},
 			() => {},
+			// slide.palette,
 			index === 0 || index === 1,
 			slide.layout,
 			slide.layout,
