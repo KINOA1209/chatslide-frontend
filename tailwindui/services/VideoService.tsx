@@ -5,7 +5,7 @@ export default class VideoService {
 	static async generateVideo(
 		project_id: string,
 		foldername: string | null,
-		language: string | null,
+		voice: string | null,
 		userToken: string,
 	): Promise<string> {
 		const response = await fetch('/api/generate_video', {
@@ -17,7 +17,7 @@ export default class VideoService {
 			body: JSON.stringify({
 				project_id: project_id,
 				foldername: foldername,
-				language: language,
+				voice: voice,
 			}),
 		});
 

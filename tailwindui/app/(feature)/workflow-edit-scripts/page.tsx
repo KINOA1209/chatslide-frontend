@@ -31,11 +31,11 @@ export default function WorkflowStep5() {
 			console.error('No project found');
 			return;
 		}
-		const language = project?.language;
 		const foldername = project?.foldername;
 		const project_id = project.id;
-		if (!language || !foldername || !project_id) {
+		if (!foldername || !project_id) {
 			console.error('No language or foldername or project_id found');
+			setIsSubmitting(false);
 			return;
 		}
 
@@ -45,7 +45,7 @@ export default function WorkflowStep5() {
 				VideoService.generateVideo(
 					project_id,
 					foldername,
-					language,
+					voice,
 					token,
 				);
 				router.push(addIdToRedir('workflow-review-video'));
