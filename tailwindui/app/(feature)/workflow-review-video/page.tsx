@@ -1,10 +1,9 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Video from '@/components/Video';
 import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
-import { toast, ToastContainer } from 'react-toastify';
+import { Id, toast, ToastContainer } from 'react-toastify';
 import VideoService from '@/services/VideoService';
 import { useUser } from '@/hooks/use-user';
 import { Loading, Blank } from '@/components/ui/Loading';
@@ -54,28 +53,12 @@ export default function WorkflowStep6() {
 		typeof sessionStorage !== 'undefined'
 			? sessionStorage.getItem('video_job_id') || ''
 			: '';
-	const router = useRouter();
-	const contentRef = useRef<HTMLDivElement>(null);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [videoUrl, setVideoUrl] = useState<string>();
 	const [jobStatus, setJobStatus] = useState<string>();
 	const [isLoading, setIsLoading] = useState(false);
+  const [toastId, setToastId] = useState<Id | null>(null);
 	const { token } = useUser();
-
-	const showErrorAndRedirect = () => {
-		toast.error(`Your video is not yet ready.`, {
-			position: 'top-center',
-			autoClose: 5000,
-			hideProgressBar: false,
-			closeOnClick: true,
-			pauseOnHover: true,
-			draggable: true,
-			progress: undefined,
-			theme: 'light',
-			containerId: 'reviewVideo',
-		});
-		// router.push('/workflow-review-slides');
-	};
 
 	useEffect(() => {
 		if (typeof sessionStorage !== 'undefined') {
@@ -83,9 +66,6 @@ export default function WorkflowStep6() {
 			if (url) {
 				setVideoUrl(url);
 			} else {
-				if (videoJobId === '') {
-					showErrorAndRedirect();
-				}
 				setIsLoading(true);
 			}
 		}
@@ -109,16 +89,15 @@ export default function WorkflowStep6() {
 				jobStatus.job_status === 'failed'
 			) {
 				if (jobStatus.video_url) {
+          if (toastId) {
+            toast.dismiss(toastId);
+          }
 					setVideoUrl(jobStatus.video_url);
 				}
 				setIsLoading(false); // Stop polling once the video is ready or failed
 			}
 		} catch (error) {
 			console.error('Error fetching video status:', error);
-
-			if ((error as Error).message.includes('404')) {
-				showErrorAndRedirect();
-			}
 		}
 	};
 
@@ -131,6 +110,25 @@ export default function WorkflowStep6() {
 			return () => clearInterval(intervalId);
 		}
 	}, [isLoading]);
+
+
+  useEffect(() => {
+    if (jobStatus !== 'failed') {
+      const toastId = toast.info(`Please wait for about 5 minutes for the video to be generated.`, {
+        position: 'top-center',
+        autoClose: 30000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        pauseOnFocusLoss: false,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        containerId: 'reviewVideo',
+      });
+      setToastId(toastId);
+    }
+  }, [jobStatus]);
 
 	return (
 		<div className='h-full w-full bg-white flex flex-col'>
