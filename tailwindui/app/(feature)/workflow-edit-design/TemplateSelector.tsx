@@ -2,8 +2,8 @@ import { DropDown } from '@/components/button/DrlambdaButton';
 import {
 	ColorThemeKeys,
 	TemplateKeys,
-	availableColorThemes,
 } from '@/components/slides/slideTemplates';
+import availablePalettes from '@/components/slides/palette';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 
@@ -32,7 +32,7 @@ const TemplateSelector: React.FC<{
 	useEffect(() => {
 		// Update color theme dropdown options length when template changes
 		setColorThemesOptionLenghth(
-			availableColorThemes[template as TemplateKeys]?.length ?? 0,
+			availablePalettes[template as TemplateKeys]?.length ?? 0,
 		);
 	}, [template]);
 	const handleTemplateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -41,10 +41,10 @@ const TemplateSelector: React.FC<{
 		setTemplate(selectedValue);
 		console.log(
 			'current template and color options',
-			availableColorThemes[selectedValue as TemplateKeys]?.length,
+			availablePalettes[selectedValue as TemplateKeys]?.length,
 		);
 		// If the newly selected template has only one color theme option, set color theme to 'Original'
-		if (availableColorThemes[selectedValue as TemplateKeys]?.length === 1) {
+		if (availablePalettes[selectedValue as TemplateKeys]?.length === 1) {
 			setColorTheme('Original');
 		}
 	};
@@ -99,7 +99,7 @@ const TemplateSelector: React.FC<{
 							}).map(([key, value]) => (
 								<option key={key} value={key}>
 									{`${value} (${
-										availableColorThemes[key as TemplateKeys]?.length ?? 0
+										availablePalettes[key as TemplateKeys]?.length ?? 0
 									} color theme(s))`}
 								</option>
 							))}

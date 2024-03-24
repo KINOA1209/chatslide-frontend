@@ -4,7 +4,6 @@ import { templateDispatch } from './templateDispatch';
 import {
 	ColorThemeKeys,
 	TemplateKeys,
-	availableColorThemes,
 	availableTemplates,
 } from '@/components/slides/slideTemplates';
 import { layoutOptions } from './slideLayout';

@@ -2,7 +2,6 @@ import Slide from '@/models/Slide';
 import { SlideKeys } from '@/models/Slide';
 import {
 	availableTemplates,
-	availableColorThemes,
 	ColorThemeKeys,
 } from '@/components/slides/slideTemplates';
 import { useUser } from '@/hooks/use-user';

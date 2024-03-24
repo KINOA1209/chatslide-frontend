@@ -7,7 +7,7 @@ import {
 	loadCustomizableElements,
 	loadLayoutConfigElements,
 } from '@/components/slides/SlidesHTML';
-import { TemplateKeys, availableColorThemes } from '../slideTemplates';
+import { TemplateKeys } from '../slideTemplates';
 export const Simplistic_008_template = ({
 	user_name,
 	title,

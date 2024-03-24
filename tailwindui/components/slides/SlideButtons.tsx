@@ -15,8 +15,8 @@ import { FaRegClone } from 'react-icons/fa';
 import {
 	ColorThemeKeys,
 	TemplateKeys,
-	availableColorThemes,
 } from './slideTemplates';
+import availablePalettes from './palette';
 
 type SaveButtonProps = {
 	saveSlides: () => void;
@@ -295,8 +295,8 @@ export const ChangeTemplateOptions: React.FC<{
 					<TemplateSelector
 						// colorThemeOptions={colorThemeOption}
 						colorThemeOptions={
-							availableColorThemes[
-								selectedTemplate as keyof typeof availableColorThemes
+							availablePalettes[
+							selectedTemplate as keyof typeof availablePalettes
 							] || ['Original']
 						}
 						template={selectedTemplate}

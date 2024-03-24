@@ -1,5 +1,5 @@
 import { ThemeElements } from '../theme_elements';
-import { ColorThemeKeys, availableColorThemes } from '../../slideTemplates';
+import { ColorThemeKeys } from '../../slideTemplates';
 
 // type SimplisticColorThemes =
 // 	(typeof availableColorThemes)['Simplistic_008'][number];

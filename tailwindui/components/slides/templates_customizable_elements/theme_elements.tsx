@@ -2,7 +2,6 @@
 import {
 	ColorThemeKeys,
 	TemplateKeys,
-	availableColorThemesObject,
 } from '../slideTemplates';
 
 import { StanfordTemplateThemeConfig } from './templatesThemeConfigDetails/StanfordTemplateThemeConfig';

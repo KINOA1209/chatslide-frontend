@@ -14,7 +14,6 @@ import {
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import {
 	TemplateKeys,
-	availableColorThemes,
 } from '@/components/slides/slideTemplates';
 import LayoutChanger from './LayoutChanger';
 import { Default_TemplateThemeConfig } from './templates_customizable_elements/templatesThemeConfigDetails/Default_TemplateThemeConfigDetails';
