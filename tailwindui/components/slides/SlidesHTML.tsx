@@ -80,7 +80,7 @@ export const loadLayoutConfigElements = (
 	return selectedLayoutOptionElements;
 };
 
-export const calculateNonPresentScale = (width: number, height: number) => {
+export const calculateNonPresentScale = (width: number, height: number, isChatWindowOpen = false) => {
 	if (width < 640) {
 		// mobile, layout vertically
 		return Math.min(
@@ -88,9 +88,10 @@ export const calculateNonPresentScale = (width: number, height: number) => {
 			Math.min((width) / 960, (height - 200) / 540) * 0.8,
 		);
 	} else {
+		const chatWindowWidth =(width > 1280 && isChatWindowOpen) ? 250 : 0;
 		return Math.min(
 			1,
-			Math.min((width - 300) / 960, (height - 200) / 540) * 0.8,
+			Math.min((width - 400 - chatWindowWidth) / 960, (height - 300) / 540) ,
 		);
 	}
 }
@@ -166,6 +167,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	}, []);
 
 	const toggleChatWindow = () => {
+		setNonPresentScale(calculateNonPresentScale(window.innerWidth, window.innerHeight, !isChatWindowOpen));
 		setIsChatWindowOpen(!isChatWindowOpen);
 	};
 
@@ -173,13 +175,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		const handleResize = () => {
 			const scale = Math.min(window.innerWidth / 960, window.innerHeight / 540);
 			setPresentScale(scale);
-			setNonPresentScale(calculateNonPresentScale(window.innerWidth, window.innerHeight));
+			setNonPresentScale(calculateNonPresentScale(window.outerWidth, window.outerHeight, isChatWindowOpen));
 		};
 
 		window.addEventListener('resize', handleResize);
 
 		return () => window.removeEventListener('resize', handleResize);
-	}, []);
+	}, [isChatWindowOpen]);
 
 	// Function to change the template of slides starting from the second one
 	const selectTemplate = (newTemplate: string) => {
@@ -544,7 +546,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				{/* vertical bar */}
 
 				<Panel>
-					<div className='h-full hidden sm:flex w-[100px] lg:w-[150px]'>
+					<div className='h-full hidden sm:flex md:w-[150px]'>
 						<ScrollBar
 							currentElementRef={verticalCurrentSlideRef}
 							index={slideIndex}
@@ -716,10 +718,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 								/>
 							</div>
 						)}
-						<Panel>
-							{/* balance pos of slide */}
-							<div className='hidden sm:flex w-[9rem]'></div>
-						</Panel>
+						<div className='w-1'></div>  {/* spacer */}
 					</>
 				)}
 			</div>
