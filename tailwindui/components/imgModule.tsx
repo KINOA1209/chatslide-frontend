@@ -495,7 +495,7 @@ export const ImgModule = ({
 									key={index}
 									className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-[3px]`}
 								>
-									<img className='w-full h-full object-cover' src={url} />
+									<img className='w-full h-full object-contain' src={url} />
 								</div>
 							);
 						} else {
@@ -505,7 +505,7 @@ export const ImgModule = ({
 									key={index}
 									className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-[3px]`}
 								>
-									<img className='w-full h-full object-cover' src={url} />
+									<img className='w-full h-full object-contain' src={url} />
 								</div>
 							);
 						}
@@ -550,7 +550,7 @@ export const ImgModule = ({
 									key={index}
 									className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-[3px]`}
 								>
-									<img className='w-full h-full object-cover' src={url} />
+									<img className='w-full h-full object-contain' src={url} />
 								</div>
 							);
 						} else {
@@ -560,7 +560,7 @@ export const ImgModule = ({
 									key={index}
 									className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-[3px]`}
 								>
-									<img className='w-full h-full object-cover' src={url} />
+									<img className='w-full h-full object-contain' src={url} />
 								</div>
 							);
 						}
