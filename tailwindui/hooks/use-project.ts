@@ -2,10 +2,8 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { createBearStore } from '@/utils/create-bear-store';
 import Project from '@/models/Project';
 import Resource from '@/models/Resource';
-import Slide from '@/models/Slide';
 import ProjectService from '@/services/ProjectService';
 import { useUser } from './use-user';
-import SessionStorage from '@/utils/SessionStorage';
 
 const useProjectBear = createBearStore<Project | null>()('project', null, true);
 const useResourcesBear = createBearStore<Resource[]>()('resources', [], true);
@@ -18,7 +16,6 @@ const useVideoJobIdBear = createBearStore<string>()('videoJobId', '', true);
 const useIsGpt35Bear = createBearStore<boolean>()('isGpt35', true, true);
 const useIsShared = createBearStore<boolean>()('isShared', false, true);
 const useOutlinesBear = createBearStore<Outlines>()('outlines', [], true);
-const useHasScripts = createBearStore<boolean>()('hasScripts', false, true);
 
 export enum ProjectStatus {
 	NotInited,
