@@ -6,7 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 export const TextBox = ({ children }: { children: React.ReactNode }) => {
 	return (
-		<div className='py-1 px-2 my-1 mx-2 h-[36px] border border-gray-200 flex shrink rounded-lg text-center text-sm text-gray-600 whitespace-nowrap hover:border-[#2943E9] overflow-hidden'>
+		<div className='py-1 px-2 my-1 mx-2 h-[36px] border border-gray-200 flex shrink rounded-lg items-center text-center text-sm text-gray-600 whitespace-nowrap hover:border-[#2943E9] overflow-hidden'>
 			{children}
 		</div>
 	)
