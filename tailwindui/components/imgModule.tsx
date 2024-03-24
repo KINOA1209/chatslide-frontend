@@ -234,15 +234,6 @@ export const ImgModule = ({
 		setSearching(false);
 	};
 
-	function handleClickSearchInput(
-		e: React.MouseEvent<HTMLDivElement>,
-		textRef: React.RefObject<HTMLInputElement>,
-	) {
-		if (textRef.current) {
-			textRef.current.focus();
-		}
-	}
-
 	const handleImageClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.preventDefault();
 		// update image here to template & source html
@@ -463,7 +454,7 @@ export const ImgModule = ({
 	const imgSearchDiv = (
 		<div className='w-full h-full flex flex-col'>
 			<form onSubmit={handleImageSearchSubmit} className='w-full'>
-				<InputBox onClick={(e) => handleClickSearchInput(e, searchRef)}>
+				<InputBox>
 					<input
 						id='search_keyword'
 						type='text'
@@ -471,6 +462,7 @@ export const ImgModule = ({
 						placeholder='Search from internet'
 						required
 						ref={searchRef}
+            onClick={(e) => {(e.target as HTMLInputElement)?.select();}}
 						onChange={(e) => {
 							setKeyword(e.target.value);
 						}}
@@ -518,7 +510,7 @@ export const ImgModule = ({
 	const imgGenerationDiv = (
 		<div className='w-full h-full flex flex-col'>
 			<form onSubmit={handleImageGenerationSubmit} className='w-full'>
-				<InputBox onClick={(e) => handleClickSearchInput(e, searchRef)}>
+				<InputBox>
 					<input
 						id='search_keyword'
 						type='text'
@@ -526,6 +518,7 @@ export const ImgModule = ({
 						placeholder='Generate from AI (10⭐️)'
 						required
 						ref={searchRef}
+            onClick={(e) => { (e.target as HTMLInputElement)?.select(); }}
 						onChange={(e) => {
 							setKeyword(e.target.value);
 						}}
