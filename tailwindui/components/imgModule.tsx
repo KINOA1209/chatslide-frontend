@@ -93,9 +93,10 @@ export const ImgModule = ({
 	additional_images = [],
 }: ImgModuleProp) => {
 	const sourceImage = useImageStore((state) => state.sourceImage);
-
+	const { project } = useProject();
+	const { slideIndex, slides } = useSlides();
 	const [showModal, setShowModal] = useState(false);
-	const [keyword, setKeyword] = useState('');
+	const [keyword, setKeyword] = useState(project?.topic || '');
 	const [searchResult, setSearchResult] = useState<string[]>([]);
 	const [resources, setResources] = useState<Resource[]>([]);
 	const [searching, setSearching] = useState(false);
@@ -103,14 +104,13 @@ export const ImgModule = ({
 	const searchRef = useRef<HTMLInputElement>(null);
 	const inputFileRef = useRef<HTMLInputElement>(null);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
-	const { project } = useProject();
 	const { token } = useUser();
 
 	const [hoverQueryMode, setHoverQueryMode] = useState<ImgQueryMode>(
-		ImgQueryMode.RESOURCE,
+		ImgQueryMode.SEARCH,
 	);
 	const [selectedQueryMode, setSelectedQueryMode] = useState<ImgQueryMode>(
-		ImgQueryMode.RESOURCE,
+		ImgQueryMode.SEARCH,
 	);
 
 	const [uploading, setUploading] = useState(false);
@@ -661,7 +661,6 @@ export const ImgModule = ({
 	//for drag and resize
 
 	const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
-	const { slideIndex, slides } = useSlides();
 	const imageRefs = Array(3)
 		.fill(null)
 		.map(() => useRef<HTMLDivElement>(null));
@@ -886,25 +885,9 @@ export const ImgModule = ({
 								<button
 									className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
 									onClick={(e) => {
-										setSelectedQueryMode(ImgQueryMode.RESOURCE);
-										setSearchResult([]);
-										setKeyword('');
-									}}
-									onMouseOver={(e) => {
-										handleMouseOver(e, ImgQueryMode.RESOURCE);
-									}}
-									onMouseOut={(e) => {
-										handleMouseOut(e, ImgQueryMode.RESOURCE);
-									}}
-								>
-									My Resources
-								</button>
-								<button
-									className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
-									onClick={(e) => {
 										setSelectedQueryMode(ImgQueryMode.SEARCH);
 										setSearchResult([]);
-										setKeyword('');
+										// setKeyword('');
 									}}
 									onMouseOver={(e) => {
 										handleMouseOver(e, ImgQueryMode.SEARCH);
@@ -918,9 +901,25 @@ export const ImgModule = ({
 								<button
 									className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
 									onClick={(e) => {
+										setSelectedQueryMode(ImgQueryMode.RESOURCE);
+										setSearchResult([]);
+										// setKeyword('');
+									}}
+									onMouseOver={(e) => {
+										handleMouseOver(e, ImgQueryMode.RESOURCE);
+									}}
+									onMouseOut={(e) => {
+										handleMouseOut(e, ImgQueryMode.RESOURCE);
+									}}
+								>
+									My Resources
+								</button>
+								<button
+									className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
+									onClick={(e) => {
 										setSelectedQueryMode(ImgQueryMode.GENERATION);
 										setSearchResult([]);
-										setKeyword('');
+										// setKeyword('');
 									}}
 									onMouseOver={(e) => {
 										handleMouseOver(e, ImgQueryMode.GENERATION);
@@ -936,7 +935,7 @@ export const ImgModule = ({
 									onClick={(e) => {
 										setSelectedQueryMode(ImgQueryMode.CHART_SELECTION);
 										setSearchResult([]);
-										setKeyword('');
+										// setKeyword('');
 									}}
 									onMouseOver={(e) => {
 										handleMouseOver(e, ImgQueryMode.CHART_SELECTION);
@@ -950,9 +949,8 @@ export const ImgModule = ({
 							</div>
 							<div className='w-full bg-slate-200 mb-2'>
 								<div
-									className={`w-1/4 h-[2px] bg-black ${
-										hoverQueryMode == ImgQueryMode.SEARCH && 'ml-[25%]'
-									} 
+									className={`w-1/4 h-[2px] bg-black
+										${hoverQueryMode == ImgQueryMode.RESOURCE && 'ml-[25%]'} 
 										${hoverQueryMode == ImgQueryMode.GENERATION && 'ml-[50%]'} 
 										${hoverQueryMode == ImgQueryMode.CHART_SELECTION && 'ml-[75%]'} 
                                 		transition-all ease-in-out`}
@@ -999,18 +997,17 @@ export const ImgModule = ({
 				onDrop={handleImageDrop}
 				onDragOver={(e) => e.preventDefault()}
 				// onClick={openModal}
-				className={`w-full h-full transition ease-in-out duration-150 relative ${
-					selectedImg === ''
+				className={`w-full h-full transition ease-in-out duration-150 relative ${selectedImg === ''
 						? 'bg-[#E7E9EB]'
 						: canEdit
-						? 'hover:bg-[#CAD0D3]'
-						: ''
-				} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
+							? 'hover:bg-[#CAD0D3]'
+							: ''
+					} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
 			>
 				{ischartArr &&
-				ischartArr[currentContentIndex] &&
-				selectedChartType &&
-				chartData.length > 0 ? ( // chart
+					ischartArr[currentContentIndex] &&
+					selectedChartType &&
+					chartData.length > 0 ? ( // chart
 					<div
 						className='w-full h-full flex items-center justify-center'
 						onClick={openModal}
@@ -1093,13 +1090,12 @@ export const ImgModule = ({
 								width={960}
 								height={540}
 								//objectFit='contain'
-								className={`transition ease-in-out duration-150 ${
-									canEdit
+								className={`transition ease-in-out duration-150 ${canEdit
 										? isImgEditMode
 											? 'brightness-100'
 											: 'hover:brightness-90'
 										: 'cursor-pointer'
-								}`}
+									}`}
 								onError={(e) => {
 									console.log('failed to load image', imgsrc);
 									setImgLoadError(true);
