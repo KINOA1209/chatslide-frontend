@@ -5,9 +5,10 @@ import { FaPhotoVideo, FaRegClone } from 'react-icons/fa';
 import Image from 'next/image';
 import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
 import { LuTrash2 } from 'react-icons/lu';
-import { ShareButton } from '@/components/slides/SlideButtons';
 import { CloneButton } from '@/components/button/CloneButton';
 import Link from 'next/link';
+import ShareButton from '@/components/button/ShareButton';
+
 
 const DEFAULT_THUMBNAIL =
 	'https://ph-files.imgix.net/76b477f1-bc1b-4432-b52b-68674658d62b.png';

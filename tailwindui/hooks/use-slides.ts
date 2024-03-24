@@ -1,7 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createBearStore } from '@/utils/create-bear-store';
 import Slide from '@/models/Slide';
-import { TemplateKeys } from '@/components/slides/slideTemplates';
+import {
+	ColorThemeKeys,
+	TemplateKeys,
+} from '@/components/slides/slideTemplates';
 import { useUser } from './use-user';
 import { useChatHistory } from './use-chat-history';
 import { useProject } from './use-project';
@@ -20,7 +23,11 @@ const useSlidesHistoryIndex = createBearStore<number>()(
 );
 const useVersion = createBearStore<number>()('version', 0, true);
 const usePresenting = createBearStore<boolean>()('isPresenting', false, false);
-const useIsShowingLogo = createBearStore<boolean>()('isShowingLogo', true, false);
+const useIsShowingLogo = createBearStore<boolean>()(
+	'isShowingLogo',
+	true,
+	false,
+);
 
 export enum SlidesStatus {
 	NotInited,
@@ -124,15 +131,18 @@ export const useSlides = () => {
 		syncSlides(newSlides, false, newSlides.length);
 	};
 
-	const updateSlidePage = (index: number, slide: Slide, rerender: boolean=true) => {
+	const updateSlidePage = (
+		index: number,
+		slide: Slide,
+		rerender: boolean = true,
+	) => {
 		console.log('-- update slide page: ', { index, slide });
 		const newSlides = [...slides];
 		console.log('new slides deck: ', newSlides);
 		newSlides[index] = slide;
 		setSlides(newSlides);
 
-		if(rerender)
-			updateVersion();
+		if (rerender) updateVersion();
 		updateSlideHistory(newSlides);
 		syncSlides(newSlides, index === 0);
 	};
@@ -214,6 +224,66 @@ export const useSlides = () => {
 		}
 	};
 
+	const chageTemplateAndColorPalette = (
+		newTemplate: TemplateKeys,
+		newColorTheme: ColorThemeKeys,
+	) => {
+		console.log(
+			'Changing template and color theme to:',
+			newTemplate,
+			newColorTheme,
+		);
+
+		let newSlides = slides.map((slide, index) => {
+			return {
+				...slide,
+				template: newTemplate,
+				palette: newColorTheme,
+				images_position: [{}, {}, {}],
+			};
+		});
+		newSlides = newSlides.map((slide, index) => {
+			return {
+				...slide,
+				content: removeTags(slide.content) as string[],
+				head: removeTags(slide.head) as string,
+				title: removeTags(slide.title) as string,
+				subtopic: removeTags(slide.subtopic) as string,
+			};
+		});
+		//set into session storage to update
+		sessionStorage.setItem('schoolTemplate', newTemplate);
+		sessionStorage.setItem('templateColorTheme', newColorTheme);
+		setSlides(newSlides);
+
+		updateSlideHistory(newSlides);
+		syncSlides(newSlides, true);
+	};
+	const changeColorTheme = (newColorTheme: ColorThemeKeys) => {
+		console.log('Changing color theme to:', newColorTheme);
+		let newSlides = slides.map((slide, index) => {
+			return {
+				...slide,
+				palette: newColorTheme,
+				images_position: [{}, {}, {}],
+			};
+		});
+		newSlides = newSlides.map((slide, index) => {
+			return {
+				...slide,
+				content: removeTags(slide.content) as string[],
+				head: removeTags(slide.head) as string,
+				title: removeTags(slide.title) as string,
+				subtopic: removeTags(slide.subtopic) as string,
+			};
+		});
+		//set into session storage to update
+		sessionStorage.setItem('templateColorTheme', newColorTheme);
+		setSlides(newSlides);
+
+		updateSlideHistory(newSlides);
+		syncSlides(newSlides, true);
+	};
 	const changeTemplate = (newTemplate: TemplateKeys) => {
 		console.log('Changing template to:', newTemplate);
 		let newSlides = slides.map((slide, index) => {
@@ -323,6 +393,8 @@ export const useSlides = () => {
 		deleteSlidePage,
 		updateSlidePage,
 		changeTemplate,
+		changeColorTheme,
+		chageTemplateAndColorPalette,
 		initSlides,
 		slidesHistory,
 		slidesHistoryIndex,

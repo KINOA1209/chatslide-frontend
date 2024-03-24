@@ -307,6 +307,16 @@ export const Business_Light_006_TemplateLogo: React.FC<TemplateLogoType> = (
 		logoWidth: 8, // Adjust the width as needed
 	});
 
+export const Simplistic_008_TemplateLogo: React.FC<TemplateLogoType> = (
+	props: TemplateLogoType,
+) =>
+	generateTemplateLogo({
+		...props,
+		coverLogo: drlambdaLogo,
+		nonCoverLogo: drlambdaLogo,
+		logoWidth: 8, // Adjust the width as needed
+	});
+
 type TemplateLogoType = {
 	isCoverPage: boolean;
 	custom_logo: string;
@@ -327,6 +337,10 @@ const templatesInfo: TemplateLogoInfo[] = [
 	{
 		templateName: 'Default' as TemplateKeys,
 		templateLogo: DefaultTemplateLogo,
+	},
+	{
+		templateName: 'Simplistic_008' as TemplateKeys,
+		templateLogo: Simplistic_008_TemplateLogo,
 	},
 	{
 		templateName: 'Fun_Education_004' as TemplateKeys,

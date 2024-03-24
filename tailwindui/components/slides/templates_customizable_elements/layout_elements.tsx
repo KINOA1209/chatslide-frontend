@@ -20,6 +20,7 @@ import { YaleTemplateLayoutsConfig } from './templatesLayoutsConfigDetails/YaleT
 import { JHUTemplateLayoutsConfig } from './templatesLayoutsConfigDetails/JHUTemplateLayoutsConfig';
 import { ColumbiaTemplateLayoutsConfig } from './templatesLayoutsConfigDetails/ColumbiaTemplateLayoutsConfig';
 import { UChicagoTemplateLayoutsConfig } from './templatesLayoutsConfigDetails/UChicagoLayoutsConfigDetails';
+import { Simplistic_008_TemplateLayoutsConfig } from './templatesLayoutsConfigDetails/Simplistic_008_TemplateLayoutsConfig';
 export type LayoutElements = {
 	canvaCSS?: React.CSSProperties;
 	logoCSS?: React.CSSProperties;
@@ -59,6 +60,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 	Business_Dark_005: Business_Dark_005_TemplateLayoutsConfig,
 	Business_Light_006: Business_Light_006_TemplateLayoutsConfig,
 	Fun_Vibrant_007: Fun_Vibrant_007_TemplateLayoutsConfig,
+	Simplistic_008: Simplistic_008_TemplateLayoutsConfig,
 	Default: Default_TemplateLayoutsConfig,
 	Berkeley: BerkeleyTemplateLayoutsConfig,
 	Stanford: StanfordTemplateLayoutsConfig,

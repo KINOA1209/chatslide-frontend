@@ -1,5 +1,8 @@
 import { LayoutKeys } from '@/components/slides/slideLayout';
-import { TemplateKeys } from '@/components/slides/slideTemplates';
+import {
+	ColorThemeKeys,
+	TemplateKeys,
+} from '@/components/slides/slideTemplates';
 import Chart, { Group } from '@/models/Chart';
 import ImagesPosition from './ImagesPosition';
 
@@ -15,8 +18,14 @@ export interface SlideElement {
 		| 'template'
 		| 'layout'
 		| 'logo'
+		| 'show_logo'
+		| 'logo_url'
+		| 'background_url'
+		| 'transcript'
+		| 'additional_images'
 		| 'chart'
-		| 'is_chart';
+		| 'is_chart'
+		| 'palette';
 	content: string | string[];
 }
 
@@ -30,9 +39,15 @@ export type SlideKeys =
 	| 'images'
 	| 'layout'
 	| 'logo'
+	| 'show_logo'
+	| 'logo_url'
+	| 'background_url'
+	| 'transcript'
+	| 'additional_images'
 	| 'chart'
 	| 'is_chart'
-	| 'images_position';
+	| 'images_position'
+	| 'palette';
 
 export default class Slide {
 	head: string;
@@ -52,6 +67,7 @@ export default class Slide {
 	background_url?: string;
 	transcript?: string;
 	additional_images?: string[];
+	palette: ColorThemeKeys;
 
 	constructor() {
 		const emptyGroup: Group = {
@@ -83,5 +99,6 @@ export default class Slide {
 		this.layout = 'Col_2_img_1_layout';
 		this.logo = 'Default';
 		this.additional_images = [];
+		this.palette = 'Original';
 	}
 }
