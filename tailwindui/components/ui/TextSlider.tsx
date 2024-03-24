@@ -32,7 +32,7 @@ export default function TextSlider(
 			{
 				breakpoint: 1024,
 				settings: {
-					slidesToShow: 2,
+					slidesToShow: Math.min(2, slidesToShow),
 					slidesToScroll: 1,
 					infinite: true,
 				}
