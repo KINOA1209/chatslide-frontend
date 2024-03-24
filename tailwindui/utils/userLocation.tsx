@@ -22,14 +22,19 @@ export const getUserLanguage = async () => {
 	}
 
 	// if country code is a German speaking country, use German
-	if (['AT', 'CH', 'DE'].includes(countryCode)) {
+  if (['AT', 'CH', 'DE', 'LU'].includes(countryCode)) {
 		return 'German';
 	}
 
-	// if country code is a French speaking country, use French
-	if (['BE', 'FR'].includes(countryCode)) {
+	// if country code is a French speaking country, including African ones, use French
+	if (['BE', 'FR', 'BJ', 'BF', 'BI', 'CM', 'CD', 'CF', 'CG', 'CI', 'DJ', 'GA', 'GN', 'GW', 'ML', 'NE', 'RW', 'SN', 'TG'].includes(countryCode)) {
 		return 'French';
 	}
+
+  // if country code is USA, Canada, use American English
+  if (['US', 'CA'].includes(countryCode)) {
+    return 'English';
+  }
 
 	// if country code is a Arabic speaking country, use Arabic
 	if (['AE', 'BH', 'DZ', 'EG', 'IQ', 'JO', 'KW', 'LB', 'LY', 'MA', 'OM', 'QA', 'SA', 'SD', 'SY', 'TN', 'YE'].includes(countryCode)) {
@@ -39,7 +44,7 @@ export const getUserLanguage = async () => {
 	// find language code from country code in LANGUAGES
 	const language = LANGUAGES.find((lang) => lang.code.includes(countryCode));
 
-	return language?.englishName || 'English';
+	return language?.englishName || 'British English';
 }
 
 export const userInEU = () => {
