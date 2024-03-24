@@ -4,28 +4,33 @@ import React, { useState, useRef, useEffect, Fragment } from 'react';
 import ContentWithImageImg from '@/public/images/summary/content_with_image.png';
 import ContentOnlyImg from '@/public/images/summary/content_only.png';
 import 'react-toastify/dist/ReactToastify.css';
-import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
 import { ToastContainer } from 'react-toastify';
 import '@/app/css/workflow-edit-topic-css/topic_style.css';
-import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
-
 import Resource from '@/models/Resource';
-import ImageSelector from './ImageSelector';
-import RadioButton, { RadioButtonOption } from '@/components/ui/RadioButton';
-import useHydrated from '@/hooks/use-hydrated';
-import { useProject } from '@/hooks/use-project';
 import Card from '@/components/ui/Card';
-import ActionsToolBar from '@/components/ui/ActionsToolBar';
-import useTourStore from '@/components/user_onboarding/TourStore';
-import TemplateSelector from './TemplateSelector';
-import { BigTitle, Explanation, Title } from '@/components/ui/Text';
+import RadioButton, { RadioButtonOption } from '@/components/ui/RadioButton';
 import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
+import { BigTitle, Explanation, Title } from '@/components/ui/Text';
+
+import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
+import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
+
+import useHydrated from '@/hooks/use-hydrated';
+import { useProject } from '@/hooks/use-project';
+
+import ImageSelector from './ImageSelector';
+import TemplateSelector from './TemplateSelector';
+
+import useTourStore from '@/components/user_onboarding/TourStore';
+
+import availablePalettes from '@/components/slides/palette';
 // const { changeTemplate } = useSlides();
 
 export default function DesignPage() {
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 	const [template, setTemplate] = useState('Clean_Lifestyle_003' as string);
+	const [colorPalette, setColorPalette] = useState('Original' as string);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [isGpt35, setIsGpt35] = useState(true);
 	const { outlines } = useProject();
@@ -69,6 +74,13 @@ export default function DesignPage() {
 
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
+	console.log('Template:', template);
+	console.log('Color Palette:', colorPalette);
+	console.log(
+		'current template color options:',
+		template,
+		availablePalettes[template as keyof typeof availablePalettes],
+	);
 
 	return (
 		<section className='relative'>
@@ -93,6 +105,7 @@ export default function DesignPage() {
 				isSubmitting={isSubmitting}
 				setIsSubmitting={setIsSubmitting}
 				template={template}
+				palette={colorPalette}
 				imageAmount={imageAmount}
 				imageLicense={imageLicense}
 				logo_ids={selectedLogo.map((resource) => resource.id)}
@@ -109,7 +122,18 @@ export default function DesignPage() {
 							and use the default
 						</Explanation>
 						{/* tempalte */}
-						<TemplateSelector template={template} setTemplate={setTemplate} />
+						<TemplateSelector
+							template={template}
+							setTemplate={setTemplate}
+							setColorTheme={setColorPalette}
+							colorThemeOptions={
+								availablePalettes[
+								template as keyof typeof availablePalettes
+								] || ['Original']
+							}
+							colorTheme={colorPalette}
+						/>
+
 						{/* images */}
 						<div>
 							<span className='text-md font-bold'>
@@ -124,11 +148,14 @@ export default function DesignPage() {
 						</div>
 						<div>
 							<span className='text-md font-bold'>
-								For images on your slides, what image license do you want to use?
+								For images on your slides, what image license do you want to
+								use?
 							</span>
 							<Explanation>
-								An image license is a set of rules that tell you how you can use a picture. <br/>
-								You are free to use images with a creative license or stock pictures for commercial use. <br/>
+								An image license is a set of rules that tell you how you can use
+								a picture. <br />
+								You are free to use images with a creative license or stock
+								pictures for commercial use. <br />
 							</Explanation>
 							<RadioButton
 								options={imageLicenseOptions}
@@ -152,6 +179,6 @@ export default function DesignPage() {
 					</Card>
 				</Panel>
 			</Column>
-		</section >
+		</section>
 	);
 }

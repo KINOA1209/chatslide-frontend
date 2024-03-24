@@ -4,9 +4,13 @@ import PaywallModal from '../paywallModal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ExportToPdfButton from './ExportButton';
-import { DuplicateSlidePageButton, ShareButton } from '@/components/slides/SlideButtons';
+import { DuplicateSlidePageButton } from '@/components/slides/SlideButtons';
+import ShareButton from '@/components/button/ShareButton';
 import './slidesHTML.css';
-import { availableTemplates } from '@/components/slides/slideTemplates';
+import {
+	ColorThemeKeys,
+	availableTemplates,
+} from '@/components/slides/slideTemplates';
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import { TemplateKeys } from '@/components/slides/slideTemplates';
 import LayoutChanger from './LayoutChanger';
@@ -23,10 +27,14 @@ import {
 
 import SlideContainer from './SlideContainer';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
-import { templateDispatch, uneditableTemplateDispatch } from './templateDispatch';
+import {
+	templateDispatch,
+	uneditableTemplateDispatch,
+} from './templateDispatch';
 import { availableLayouts } from './slideLayout';
 import themeConfigData, {
 	ThemeConfig,
+	ThemeElements,
 } from './templates_customizable_elements/theme_elements';
 import layoutConfigData, {
 	TemplateLayoutsConfig,
@@ -52,21 +60,30 @@ import Image from 'next/image';
 import showLogo from 'public/icons/button/show_logo.svg';
 import hideLogo from 'public/icons/button/hide_logo.svg';
 
-
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
 	exportSlidesRef?: React.RefObject<HTMLDivElement>;
-	initSlideIndex?: number;  // only for embed
+	initSlideIndex?: number; // only for embed
 	toPdf?: boolean; // toPdf mode for backend
 	embed?: boolean; // embed mode for backend
 	showScript?: boolean;
 };
 
-export const loadCustomizableElements = (templateName: string) => {
-	return (
+export const loadCustomizableElements = (
+	templateName: string,
+	colorThemeName: string = 'Original',
+) => {
+	// return (
+	// 	themeConfigData[templateName as keyof ThemeConfig] ||
+	// 	Default_TemplateThemeConfig
+	// );
+	const themeElements =
 		themeConfigData[templateName as keyof ThemeConfig] ||
-		Default_TemplateThemeConfig
-	);
+		Default_TemplateThemeConfig;
+	const selectedThemeElements =
+		themeElements[colorThemeName as ColorThemeKeys] ||
+		(Default_TemplateThemeConfig['Original'] as ThemeElements);
+	return selectedThemeElements;
 };
 
 export const loadLayoutConfigElements = (
@@ -80,21 +97,22 @@ export const loadLayoutConfigElements = (
 	return selectedLayoutOptionElements;
 };
 
-export const calculateNonPresentScale = (width: number, height: number, isChatWindowOpen = false) => {
+export const calculateNonPresentScale = (
+	width: number,
+	height: number,
+	isChatWindowOpen = false,
+) => {
 	if (width < 640) {
 		// mobile, layout vertically
-		return Math.min(
-			1,
-			Math.min((width) / 960, (height - 200) / 540) * 0.8,
-		);
+		return Math.min(1, Math.min(width / 960, (height - 200) / 540) * 0.8);
 	} else {
-		const chatWindowWidth =(width > 1280 && isChatWindowOpen) ? 250 : 0;
+		const chatWindowWidth = width > 1280 && isChatWindowOpen ? 250 : 0;
 		return Math.min(
 			1,
-			Math.min((width - 400 - chatWindowWidth) / 960, (height - 300) / 540) ,
+			Math.min((width - 400 - chatWindowWidth) / 960, (height - 300) / 540),
 		);
 	}
-}
+};
 
 const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	isViewing = false,
@@ -114,6 +132,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		duplicatePage,
 		deleteSlidePage,
 		changeTemplate,
+		changeColorTheme,
+		chageTemplateAndColorPalette,
 		undoChange,
 		redoChange,
 		slidesHistoryIndex,
@@ -126,6 +146,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		isShowingLogo,
 		toggleIsShowingLogo,
 	} = useSlides();
+
+	useEffect(() => {
+		console.log(
+			'slides template and color palette',
+			slides[slideIndex].template,
+			slides[slideIndex].palette,
+		);
+	}, [slides[slideIndex].template]);
 
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const { isPaidUser, token } = useUser();
@@ -142,7 +170,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		Math.min(dimensions.width / 960, dimensions.height / 540),
 	);
 
-	const [nonPresentScale, setNonPresentScale] = useState(calculateNonPresentScale(dimensions.width, dimensions.height));
+	const [nonPresentScale, setNonPresentScale] = useState(
+		calculateNonPresentScale(dimensions.width, dimensions.height),
+	);
 
 	const [isChatWindowOpen, setIsChatWindowOpen] = useState(false);
 
@@ -167,7 +197,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	}, []);
 
 	const toggleChatWindow = () => {
-		setNonPresentScale(calculateNonPresentScale(window.innerWidth, window.innerHeight, !isChatWindowOpen));
+		setNonPresentScale(
+			calculateNonPresentScale(
+				window.innerWidth,
+				window.innerHeight,
+				!isChatWindowOpen,
+			),
+		);
 		setIsChatWindowOpen(!isChatWindowOpen);
 	};
 
@@ -175,7 +211,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		const handleResize = () => {
 			const scale = Math.min(window.innerWidth / 960, window.innerHeight / 540);
 			setPresentScale(scale);
-			setNonPresentScale(calculateNonPresentScale(window.outerWidth, window.outerHeight, isChatWindowOpen));
+			setNonPresentScale(
+				calculateNonPresentScale(
+					window.outerWidth,
+					window.outerHeight,
+					isChatWindowOpen,
+				),
+			);
 		};
 
 		window.addEventListener('resize', handleResize);
@@ -183,10 +225,24 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		return () => window.removeEventListener('resize', handleResize);
 	}, [isChatWindowOpen]);
 
+	const selectTemplateAndColorPalette = (
+		newTemplate: string | TemplateKeys, // Accepts string or TemplateKeys
+		newColorPalette: string | ColorThemeKeys,
+	) => {
+		chageTemplateAndColorPalette(
+			newTemplate as TemplateKeys,
+			newColorPalette as ColorThemeKeys,
+		);
+	};
 	// Function to change the template of slides starting from the second one
 	const selectTemplate = (newTemplate: string) => {
 		console.log('Changing template to:', newTemplate);
 		changeTemplate(newTemplate as TemplateKeys);
+	};
+
+	const selectColorTheme = (newColorTheme: string) => {
+		console.log('Changing template color theme to:', newColorTheme);
+		changeColorTheme(newColorTheme as ColorThemeKeys);
 	};
 
 	const openPresent = () => {
@@ -252,6 +308,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				currentSlide.layout = content as LayoutKeys;
 			} else if (className === 'logo') {
 				currentSlide.logo = content as string;
+			} else if (className === 'palette') {
+				currentSlide.palette = content as ColorThemeKeys;
 			} else if (className === 'images') {
 				currentSlide.images = [...(content as string[])]; // deep copy
 			} else if (className === 'content') {
@@ -370,7 +428,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					return;
 				}
 				console.log('random url', additional_images);
-				const randomIndex = Math.floor(Math.random() * additional_images.length);
+				const randomIndex = Math.floor(
+					Math.random() * additional_images.length,
+				);
 				urls[shuffleIndex] = additional_images[randomIndex];
 			}
 
@@ -390,6 +450,29 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		return updateImgUrl;
 	};
 
+	const uneditableTemplateDispatch = (
+		slide: Slide,
+		index: number,
+		exportToPdfMode: boolean = false,
+	) =>
+		templateDispatch(
+			slide,
+			index,
+			false, // canEdit
+			exportToPdfMode, //exportToPdfMode
+			false, //editMathMode
+			() => {}, //setIsEditMode
+			() => {}, // handleSlideEdit
+			() => () => {}, // updateImgUrlArray,
+			() => {}, // toggleEditMode,
+			// slide.palette,
+			index === 0, // isCoverPage
+			slide.layout, // layoutOptionNonCover
+			slide.layout, // layoutOptionCover
+			false, // isCurrentSlide
+			isShowingLogo,
+		);
+
 	//console.log(slides)
 	const editableTemplateDispatch = (
 		slide: Slide,
@@ -407,6 +490,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			handleSlideEdit, // handleSlideEdit
 			updateImgUrlArray,
 			toggleEditMode,
+			// slide.palette, // color theme
 			index === 0, // isCoverPage
 			slide.layout, // layoutOptionNonCover
 			slide.layout, // layoutOptionCover
@@ -431,7 +515,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			/>
 		);
 
-	if (embed) 
+	if (embed)
 		return (
 			<SlideContainer
 				slide={slides[initSlideIndex]}
@@ -482,8 +566,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 							<ChangeTemplateOptions
 								currentTemplate={slides[slideIndex].template}
+								currentColorTheme={slides[slideIndex].palette}
 								templateOptions={Object.keys(availableTemplates)}
 								onChangeTemplate={selectTemplate}
+								onChangeColorTheme={selectColorTheme}
+								onChangeTemplateAndColorPalette={selectTemplateAndColorPalette}
 							/>
 							<LayoutChanger
 								currentSlideIndex={slideIndex}
@@ -497,9 +584,19 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 									button={
 										<button onClick={() => toggleIsShowingLogo()}>
 											{isShowingLogo ? (
-												<Image src={hideLogo} alt='Hide Logo' width={24} height={24} />
+												<Image
+													src={hideLogo}
+													alt='Hide Logo'
+													width={24}
+													height={24}
+												/>
 											) : (
-												<Image src={showLogo} alt='Show Logo' width={24} height={24} />
+												<Image
+													src={showLogo}
+													alt='Show Logo'
+													width={24}
+													height={24}
+												/>
 											)}
 										</button>
 									}
@@ -718,7 +815,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 								/>
 							</div>
 						)}
-						<div className='w-1'></div>  {/* spacer */}
+						<div className='w-1'></div> {/* spacer */}
 					</>
 				)}
 			</div>

@@ -44,7 +44,7 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			top: '92%',
 			left: '80%',
 			transform: 'translate(-50%, -40%)', // Centering trick
-			width: 'max-content',
+			width: '40%',
 		},
 		columnCSS: {
 			paddingTop: '1rem', // Equivalent to pt-[1rem]
@@ -103,7 +103,7 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			top: '92%',
 			left: '80%',
 			transform: 'translate(-50%, -40%)', // Centering trick
-			width: 'max-content',
+			width: '40%',
 		},
 		columnCSS: {
 			// paddingTop: '1rem', // Equivalent to pt-[1rem]

@@ -15,8 +15,10 @@ import { useRouter } from 'next/navigation';
 import { addIdToRedir } from '@/utils/redirWithId';
 import dynamic from 'next/dynamic';
 
-const ScriptSection = dynamic(() => import('@/components/script/ScriptSection'), { ssr: false });
-
+const ScriptSection = dynamic(
+	() => import('@/components/script/ScriptSection'),
+	{ ssr: false },
+);
 
 export default function WorkflowStep5() {
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -36,74 +38,73 @@ export default function WorkflowStep5() {
 		if (!foldername || !project_id) {
 			console.error('No language or foldername or project_id found');
 			setIsSubmitting(false);
-			return;
-		}
-
-		const fetchData = async () => {
-			try {
-				console.log('project_id:', project_id);
-				VideoService.generateVideo(
-					project_id,
-					foldername,
-					voice,
-					token,
-				);
-				router.push(addIdToRedir('workflow-review-video'));
-			} catch (error) {
-				console.error('Error in fetchData:', error);
+			const language = project?.language;
+			if (!language || !foldername) {
+				console.error('No language or foldername found');
+				return;
 			}
-		};
-		fetchData();
-		setIsSubmitting(false);
-	}
 
-	useEffect(() => {
-		if (isSubmitting) {
-			handleSubmitVideo();
+			const fetchData = async () => {
+				try {
+					console.log('project_id:', project_id);
+					VideoService.generateVideo(project_id, foldername, voice, token);
+					router.push(addIdToRedir('workflow-review-video'));
+				} catch (error) {
+					console.error('Error in fetchData:', error);
+				}
+			};
+			fetchData();
+			setIsSubmitting(false);
 		}
-	}, [isSubmitting]);
 
-	return (
-		<div className='h-full w-full bg-white flex flex-col'>
-			{/* flex col container for steps, title, etc */}
+		useEffect(() => {
+			if (isSubmitting) {
+				handleSubmitVideo();
+			}
+		}, [isSubmitting]);
 
-			<WorkflowStepsBanner
-				currentIndex={4}
-				isSubmitting={isSubmitting}
-				setIsSubmitting={setIsSubmitting}
-				isPaidUser={true}
-				nextIsPaidFeature={true}
-				nextText='Create Video'
-			/>
+		return (
+			<div className='h-full w-full bg-white flex flex-col'>
+				{/* flex col container for steps, title, etc */}
 
-			<ToastContainer enableMultiContainer containerId={'script'} />
+				<WorkflowStepsBanner
+					currentIndex={4}
+					isSubmitting={isSubmitting}
+					setIsSubmitting={setIsSubmitting}
+					isPaidUser={true}
+					nextIsPaidFeature={true}
+					nextText='Create Video'
+				/>
 
-			<Column>
-				<Card>
-					<BigTitle>Voice</BigTitle>
-					<Instruction>
-						Select the voice you want to use for your video.
-					</Instruction>
-					<VoiceSelector selectedVoice={voice} setSelectedVoice={setVoice} />
-				</Card>
-				<Card>
-					<BigTitle>Scripts</BigTitle>
-					<Instruction>
-						You can edit your scripts here:
-						If you want to edit slides, you can go back to the previous step.
-					</Instruction>
-					<div className='flex flex-col gap-y-2'>
-						{slides.map((_, index) => (
-							<ScriptSection
-								slides={slides}
-								index={index}
-								voice={voice}
-								updateSlidePage={updateSlidePage}
-							/>
-						))}
-					</div>
-				</Card>
-			</Column>
-		</div>
-	);
+				<ToastContainer enableMultiContainer containerId={'script'} />
+
+				<Column>
+					<Card>
+						<BigTitle>Voice</BigTitle>
+						<Instruction>
+							Select the voice you want to use for your video.
+						</Instruction>
+						<VoiceSelector selectedVoice={voice} setSelectedVoice={setVoice} />
+					</Card>
+					<Card>
+						<BigTitle>Scripts</BigTitle>
+						<Instruction>
+							You can edit your scripts here: If you want to edit slides, you
+							can go back to the previous step.
+						</Instruction>
+						<div className='flex flex-col gap-y-2'>
+							{slides.map((_, index) => (
+								<ScriptSection
+									slides={slides}
+									index={index}
+									voice={voice}
+									updateSlidePage={updateSlidePage}
+								/>
+							))}
+						</div>
+					</Card>
+				</Column>
+			</div>
+		);
+	}
 }

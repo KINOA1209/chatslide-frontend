@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { MainSlideProps } from '../slideTemplates';
+import { ColorThemeKeys, MainSlideProps } from '../slideTemplates';
 import Image, { StaticImageData } from 'next/image';
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import { layoutOptions } from '@/components/slides/slideLayout';
@@ -30,6 +30,7 @@ export const Business_Dark_005_template = ({
 	currentSlideIndex,
 	isShowingLogo,
 	images_position,
+	palette,
 }: MainSlideProps) => {
 	const ChosenLayoutNonCover =
 		layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
@@ -39,6 +40,7 @@ export const Business_Dark_005_template = ({
 	// Load customizable elements for the current template
 	const themeElements = loadCustomizableElements(
 		'Business_Dark_005' as TemplateKeys,
+		palette,
 	);
 	const layoutConfigElements = loadLayoutConfigElements(
 		'Business_Dark_005' as TemplateKeys,
