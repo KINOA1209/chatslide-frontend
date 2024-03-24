@@ -4,10 +4,8 @@ import PaywallModal from '../paywallModal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ExportToPdfButton from './ExportButton';
-import {
-	DuplicateSlidePageButton,
-	ShareButton,
-} from '@/components/slides/SlideButtons';
+import { DuplicateSlidePageButton } from '@/components/slides/SlideButtons';
+import ShareButton from '@/components/button/ShareButton';
 import './slidesHTML.css';
 import {
 	ColorThemeKeys,
