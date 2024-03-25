@@ -810,7 +810,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					</div>
 
 					{/* horizontal  */}
-					<div className='block sm:hidden max-w-xl sm:max-w-4xl mx-auto py-4 justify-center items-center'>
+					<div className='block sm:hidden max-w-screen sm:max-w-4xl mx-auto py-4 justify-center items-center'>
 						<ScrollBar
 							currentElementRef={horizontalCurrentSlideRef}
 							index={slideIndex}
