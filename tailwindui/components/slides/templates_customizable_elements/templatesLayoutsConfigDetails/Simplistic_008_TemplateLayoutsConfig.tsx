@@ -148,7 +148,7 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			display: 'flex',
 		},
 		titleAndSubtopicBoxCSS: {
-			backgroundColor: '#F1F1F1',
+			// backgroundColor: '#F1F1F1',
 			paddingTop: '2rem',
 			paddingBottom: '2rem',
 			paddingLeft: '4rem',
@@ -162,8 +162,8 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 		},
 		subtopicCSS: {
 			order: '1',
-			borderBottom: '1px solid #C2C2C2',
-			paddingBottom: '0.5rem',
+			// borderBottom: '1px solid #C2C2C2',
+			// paddingBottom: '0.5rem',
 		},
 	},
 	Col_2_img_0_layout: {

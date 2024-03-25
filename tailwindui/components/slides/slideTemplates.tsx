@@ -102,7 +102,16 @@ export const useLocalImgs = (
 	return { localImgs, updateImgAtIndex };
 };
 
-export type ColorThemeKeys = 'Original' | 'Blue' | 'Red' | 'Yellow' | '';
+export type ColorThemeKeys =
+	| 'Original'
+	| 'Blue'
+	| 'Red'
+	| 'Yellow'
+	| 'Dynamic Purple'
+	| 'Light Cyan'
+	| 'Royal Blue'
+	| 'Bees Wax'
+	| '';
 
 // add template keys here
 export const availableTemplates = {

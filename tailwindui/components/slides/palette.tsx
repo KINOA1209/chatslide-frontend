@@ -1,4 +1,4 @@
-import { ColorThemeKeys, TemplateKeys } from "./slideTemplates";
+import { ColorThemeKeys, TemplateKeys } from './slideTemplates';
 
 export type availablePalettesObject = {
 	[templateName in TemplateKeys]?: ColorThemeKeys[];
@@ -24,7 +24,7 @@ const availablePalettes: availablePalettesObject = {
 	Business_Dark_005: ['Original'],
 	Business_Light_006: ['Original'],
 	Fun_Vibrant_007: ['Original'],
-	Simplistic_008: ['Original', 'Blue', 'Yellow', 'Red'],
+	Simplistic_008: ['Dynamic Purple', 'Light Cyan', 'Royal Blue', 'Bees Wax'],
 };
 
 export default availablePalettes;

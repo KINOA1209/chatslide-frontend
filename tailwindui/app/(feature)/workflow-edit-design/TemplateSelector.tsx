@@ -85,7 +85,7 @@ const TemplateSelector: React.FC<{
 								Business_Dark_005: 'Business Dark',
 								Business_Light_006: 'Business Light',
 								Fun_Vibrant_007: 'Fun Vibrant',
-								Simplistic_008: 'Simplistic',
+								Simplistic_008: 'Sales Pitch',
 								Stanford: 'Stanford University',
 								Berkeley: 'UC Berkeley',
 								Harvard: 'Harvard University',
