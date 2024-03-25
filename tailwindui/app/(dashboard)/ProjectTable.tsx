@@ -8,6 +8,8 @@ import { LuTrash2 } from 'react-icons/lu';
 import { CloneButton } from '@/components/button/CloneButton';
 import Link from 'next/link';
 import ShareButton from '@/components/button/ShareButton';
+import ProjectService from '@/services/ProjectService';
+import { useUser } from '@/hooks/use-user';
 
 
 const DEFAULT_THUMBNAIL =
@@ -21,6 +23,8 @@ const ProjectItem: React.FC<{
 	isDiscover?: boolean;
 }> = ({ project, onDelete, index, setCurrentProjects, isDiscover = false }) => {
 	const isCloning = index === -1;
+	const { token } = useUser();
+	const [ isShared, setIsShared ] = React.useState(false);
 
 	return (
 		<React.Fragment key={project.id}>
@@ -84,8 +88,11 @@ const ProjectItem: React.FC<{
 					</span> */}
 
 					<ShareButton
-						share={true}
-						setShare={null}
+						share={isShared}
+						setShare={(share: boolean) => {
+							setIsShared(share);
+							ProjectService.SlideShareLink(token, project.id, share)
+						}}
 						project={project}/>
 
 					{!isDiscover && setCurrentProjects &&
