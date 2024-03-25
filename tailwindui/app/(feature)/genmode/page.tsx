@@ -8,6 +8,7 @@ import mode_choices from './mode_choices.json';
 import SessionStorage from '@/utils/SessionStorage';
 import AuthService from '@/services/AuthService';
 import { useProject } from '@/hooks/use-project';
+import { DrLambdaBackButton } from '@/components/button/DrlambdaButton';
 
 const GenerationModePage = () => {
 	const router = useRouter(); // Initialize the router
@@ -37,12 +38,15 @@ const GenerationModePage = () => {
 	}, []);
 
 	return (
-		<div className='bg-zinc-100 flex flex-col flex-grow justify-center items-center'>
+		<div className='bg-zinc-100 flex flex-col flex-grow justify-center items-center relative'>
+			<div className='absolute hidden sm:block top-5 left-5'>
+				<DrLambdaBackButton href='/scenario-choice' dark={true} text='Scenario Choice' />
+			</div>
 			<div className='flex flex-col justify-center items-center gap-4 sm:gap-12 p-4 sm:p-8'>
 				{/* title */}
 				<div className='w-[80vh] text-center text-neutral-800 text-xl sm:text-2xl font-normal font-creato-medium leading-9 tracking-wide whitespace-normal break-words'>
-					Hey {username}, <br />
-					How would you like to generate your output?
+					Great! <br/>
+					How would you like to get started?
 				</div>
 				<div className='flex flex-col gap-4 md:gap-6' id='choice_container'>
 					{mode_choices.options.map((option) => (

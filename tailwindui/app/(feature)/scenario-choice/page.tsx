@@ -7,6 +7,8 @@ import Image from 'next/image';
 import socialpost_scenarios from './socialpost_scenarios.json';
 import slides_scenarios from './slides_scenarios.json';
 import SessionStorage from '@/utils/SessionStorage';
+import { DrLambdaBackButton } from '@/components/button/DrlambdaButton';
+import useHydrated from '@/hooks/use-hydrated';
 
 const ScenarioChoicePage = () => {
 	const router = useRouter();
@@ -22,8 +24,14 @@ const ScenarioChoicePage = () => {
 		else router.push('/summary-socialpost');
 	};
 
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
+
 	return (
-		<div className='bg-zinc-100 flex flex-col flex-grow justify-center items-center'>
+		<div className='bg-zinc-100 flex flex-col flex-grow justify-center items-center relative'>
+			<div className='absolute hidden sm:block top-5 left-5'>
+				<DrLambdaBackButton href='/type-choice' dark={true} text='Type Choice' />
+			</div>
 			<div className='flex flex-col justify-center items-center gap-4 sm:gap-12 p-4 sm:p-8'>
 				{/* title */}
 				<div className='w-[80vh] text-center text-neutral-800 text-xl sm:text-2xl font-normal font-creato-medium leading-9 tracking-wide'>
