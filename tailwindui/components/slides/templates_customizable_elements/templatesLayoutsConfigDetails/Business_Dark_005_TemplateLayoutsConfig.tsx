@@ -89,7 +89,7 @@ export const Business_Dark_005_TemplateLayoutsConfig: {
 			paddingTop: '4rem', // Equivalent to pt-[1rem]
 			paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 			paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
-			width: '70%', // Equivalent to w-1/2
+			width: '50%', // Equivalent to w-1/2
 			display: 'flex', // Equivalent to flex
 			flexDirection: 'column', // Equivalent to flex-col
 			justifyContent: 'flex-start', // Equivalent to justify-start
@@ -97,7 +97,7 @@ export const Business_Dark_005_TemplateLayoutsConfig: {
 			gap: '2rem',
 		},
 		imageContainerCSS: {
-			width: '30%', // Equivalent to w-1/2
+			width: '50%', // Equivalent to w-1/2
 			height: '100%', // Equivalent to h-full
 			// borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
 			//overflow: 'hidden',
