@@ -14,6 +14,7 @@ import VoiceSelector from '@/components/language/VoiceSelector';
 import { useRouter } from 'next/navigation';
 import { addIdToRedir } from '@/utils/redirWithId';
 import dynamic from 'next/dynamic';
+import useHydrated from '@/hooks/use-hydrated';
 
 const ScriptSection = dynamic(
 	() => import('@/components/script/ScriptSection'),
@@ -23,16 +24,48 @@ const ScriptSection = dynamic(
 export default function WorkflowStep5() {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { slides, updateSlidePage } = useSlides();
+	const { project, updateProject } = useProject();
+	const { token } = useUser();
+	const router = useRouter();
 	const [voice, setVoice] = useState('en-US-AvaNeural');
 
 	async function handleSubmitVideo() {
-	}
+		console.log('handleSubmitVideo');
+		if (!project) {
+			console.error('No project found');
+			return;
+		}
+		const foldername = project?.foldername;
+		const project_id = project.id;
+		if (!foldername || !project_id) {
+			console.error('No pid or foldername or project_id found');
+			setIsSubmitting(false);
+			return;
+		}
+
+		const fetchData = async () => {
+			try {
+				console.log('project_id:', project_id);
+				updateProject('video_url', '');
+				VideoService.generateVideo(project_id, foldername, voice, token);
+				router.push(addIdToRedir('workflow-review-video'));
+			} catch (error) {
+				console.error('Error in fetchData:', error);
+				setIsSubmitting(false);
+			}
+		};
+		fetchData();
+	};
+
 
 	useEffect(() => {
 		if (isSubmitting) {
 			handleSubmitVideo();
 		}
 	}, [isSubmitting]);
+
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
 
 	return (
 		<div className='h-full w-full bg-white flex flex-col'>
@@ -66,6 +99,7 @@ export default function WorkflowStep5() {
 					<div className='flex flex-col gap-y-2'>
 						{slides.map((_, index) => (
 							<ScriptSection
+								key={index}
 								slides={slides}
 								index={index}
 								voice={voice}

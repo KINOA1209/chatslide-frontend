@@ -12,7 +12,6 @@ const useSelectedResourcesBear = createBearStore<Resource[]>()(
 	[],
 	true,
 );
-const useVideoJobIdBear = createBearStore<string>()('videoJobId', '', true);
 const useIsGpt35Bear = createBearStore<boolean>()('isGpt35', true, true);
 const useIsShared = createBearStore<boolean>()('isShared', false, true);
 const useOutlinesBear = createBearStore<Outlines>()('outlines', [], true);
@@ -30,7 +29,6 @@ export const useProject = () => {
 	const { resources, setResources } = useResourcesBear();
 	const { selectedResources, setSelectedResources } =
 		useSelectedResourcesBear();
-	const { videoJobId, setVideoJobId } = useVideoJobIdBear();
 	const { isGpt35, setIsGpt35 } = useIsGpt35Bear();
 	const { isShared, setIsShared } = useIsShared();
 	const { token } = useUser();
@@ -59,7 +57,6 @@ export const useProject = () => {
 		setProject(null);
 		setResources([]);
 		setSelectedResources([]);
-		setVideoJobId('');
 		setIsGpt35(true);
 		setIsShared(false);
 		setOutlines([]);
@@ -109,8 +106,6 @@ export const useProject = () => {
 		setResources,
 		selectedResources,
 		setSelectedResources,
-		videoJobId,
-		setVideoJobId,
 		isGpt35,
 		setIsGpt35,
 		isShared,
