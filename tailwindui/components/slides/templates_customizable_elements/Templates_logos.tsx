@@ -3,6 +3,8 @@ import { StaticImageData } from 'next/image';
 import { TemplateKeys } from '../slideTemplates';
 import drlambdaLogo from '@/public/images/template/drlambdaLogo.png';
 import drlambdaLogoSingle from '@/public/images/template/drlambdaLogoSingle.png';
+import drlambdaLogoBadgeBlackBG from '@/public/images/template/drlambdaLogoBadgeBlackBG.png';
+import drlambdaLogoBadgeWhiteBG from '@/public/images/template/drlambdaLogoBadgeWhiteBG.png';
 import BerkeleyLogo from '@/public/images/template/Berkeley/Berkeley_logo.png';
 import BerkeleyLogoWhite from '@/public/images/template/Berkeley/Berkeley_logo_white.png';
 import StanfordLogo from '@/public/images/template/Stanford/StanfordLogo.png';
@@ -90,14 +92,28 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 // Inside DefaultTemplateLogo component
 export const DefaultTemplateLogo = DrLambdaLogo;
 
+export type TemplateLogoType = {
+	isCoverPage: boolean;
+	isLightBackground: boolean;
+	custom_logo: string;
+	template_name: string | undefined;
+	logoWidth?: number;
+	coverLogo?: StaticImageData;
+	nonCoverLogo?: StaticImageData;
+	lightBGLogo?: StaticImageData;
+	darkBGLogo?: StaticImageData;
+};
 // generate school template logo logic
-const generateTemplateLogo = ({
+export const generateTemplateLogo = ({
 	isCoverPage,
 	custom_logo,
 	template_name,
 	logoWidth,
-	coverLogo,
-	nonCoverLogo,
+	isLightBackground = true,
+	coverLogo = drlambdaLogo,
+	nonCoverLogo = drlambdaLogo,
+	lightBGLogo = drlambdaLogo,
+	darkBGLogo = drlambdaLogo,
 }: TemplateLogoType) => {
 	return (
 		<div
@@ -107,7 +123,7 @@ const generateTemplateLogo = ({
 				// use original template logo
 				<Image
 					unoptimized={true}
-					src={isCoverPage ? coverLogo : nonCoverLogo}
+					src={isLightBackground ? lightBGLogo : darkBGLogo}
 					alt='Template Logo'
 					className={`w-[${logoWidth}rem] h-auto opacity-40`}
 				/>
@@ -307,24 +323,27 @@ export const Business_Light_006_TemplateLogo: React.FC<TemplateLogoType> = (
 		logoWidth: 8, // Adjust the width as needed
 	});
 
+// export const Simplistic_008_TemplateLogoDark: React.FC<TemplateLogoType> = (
+// 	props: TemplateLogoType,
+// ) =>
+// 	generateTemplateLogo({
+// 		...props,
+// 		coverLogo: drlambdaLogoBadgeBlackBG,
+// 		nonCoverLogo: drlambdaLogoBadgeBlackBG,
+// 		logoWidth: 8, // Adjust the width as needed
+// 	});
+
 export const Simplistic_008_TemplateLogo: React.FC<TemplateLogoType> = (
 	props: TemplateLogoType,
 ) =>
 	generateTemplateLogo({
 		...props,
-		coverLogo: drlambdaLogo,
-		nonCoverLogo: drlambdaLogo,
+		// coverLogo: drlambdaLogo,
+		// nonCoverLogo: drlambdaLogo,
+		lightBGLogo: drlambdaLogoBadgeWhiteBG,
+		darkBGLogo: drlambdaLogoBadgeBlackBG,
 		logoWidth: 8, // Adjust the width as needed
 	});
-
-type TemplateLogoType = {
-	isCoverPage: boolean;
-	custom_logo: string;
-	template_name: string | undefined;
-	logoWidth: number;
-	coverLogo: StaticImageData;
-	nonCoverLogo: StaticImageData;
-};
 
 // Define the type for template logo information
 type TemplateLogoInfo = {
@@ -338,6 +357,14 @@ const templatesInfo: TemplateLogoInfo[] = [
 		templateName: 'Default' as TemplateKeys,
 		templateLogo: DefaultTemplateLogo,
 	},
+	// {
+	// 	templateName: 'Simplistic_008_Light' as TemplateKeys,
+	// 	templateLogo: Simplistic_008_TemplateLogoLight,
+	// },
+	// {
+	// 	templateName: 'Simplistic_008_dark' as TemplateKeys,
+	// 	templateLogo: Simplistic_008_TemplateLogoDark,
+	// },
 	{
 		templateName: 'Simplistic_008' as TemplateKeys,
 		templateLogo: Simplistic_008_TemplateLogo,
@@ -423,11 +450,13 @@ export const TemplatesLogos = Object.fromEntries(
 	]),
 ) as Record<
 	TemplateKeys,
-	React.ComponentType<{
-		isCoverPage: boolean;
-		custom_logo: string;
-		template_name: string | undefined;
-	}>
+	// React.ComponentType<{
+	// 	isCoverPage: boolean;
+	// 	custom_logo: string;
+	// 	template_name: string | undefined;
+	// 	isLightBackground: boolean;
+	// }>
+	React.ComponentType<TemplateLogoType>
 >;
 
 /*

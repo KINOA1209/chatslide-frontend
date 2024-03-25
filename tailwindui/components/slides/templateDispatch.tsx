@@ -17,6 +17,7 @@ import { isHTML } from '@/components/slides/quillEditorSlide';
 import { TemplateKeys } from '@/components/slides/slideTemplates';
 import Chart, { Group } from '@/models/Chart';
 import ImagesPosition from '@/models/ImagesPosition';
+import { lightColorPalette, darkColorPalette } from './palette';
 
 const QuillEditable = dynamic(
 	() => import('@/components/slides/quillEditorSlide'),
@@ -95,6 +96,9 @@ export const templateDispatch = (
 	];
 
 	const isLayoutOptionValid = layoutKeysArray.includes(layoutOptionCover);
+
+	// whether has light background, to decide which version of logo to dispatch according to palette
+	const isLightBackground = lightColorPalette.includes(slide.palette);
 
 	const finalLayoutKey = isLayoutOptionValid
 		? layoutOptionCover
@@ -305,6 +309,7 @@ export const templateDispatch = (
 						isCoverPage={isCoverPage}
 						custom_logo={custom_logo}
 						template_name={slide.template}
+						isLightBackground={isLightBackground}
 					/>
 				) : (
 					<></>
@@ -324,7 +329,6 @@ export const templateDispatch = (
 	// }
 };
 
-
 export const uneditableTemplateDispatch = (
 	slide: Slide,
 	index: number,
@@ -336,10 +340,10 @@ export const uneditableTemplateDispatch = (
 		false, // canEdit
 		exportToPdfMode, //exportToPdfMode
 		false, //editMathMode
-		() => { }, //setIsEditMode
-		() => { }, // handleSlideEdit
-		() => () => { }, // updateImgUrlArray,
-		() => { }, // toggleEditMode,
+		() => {}, //setIsEditMode
+		() => {}, // handleSlideEdit
+		() => () => {}, // updateImgUrlArray,
+		() => {}, // toggleEditMode,
 		index === 0, // isCoverPage
 		slide.layout, // layoutOptionNonCover
 		slide.layout, // layoutOptionCover

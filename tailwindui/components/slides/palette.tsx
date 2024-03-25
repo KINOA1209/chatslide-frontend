@@ -27,4 +27,8 @@ const availablePalettes: availablePalettesObject = {
 	Simplistic_008: ['Dynamic Purple', 'Light Cyan', 'Royal Blue', 'Bees Wax'],
 };
 
+export const lightColorPalette = ['Light Cyan', 'Bees Wax'];
+
+export const darkColorPalette = ['Dynamic Purple', 'Royal Blue'];
+
 export default availablePalettes;

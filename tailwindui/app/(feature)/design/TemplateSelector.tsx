@@ -1,31 +1,28 @@
 import { DropDown } from '@/components/button/DrlambdaButton';
-import {
-	PaletteKeys,
-	TemplateKeys,
-} from '@/components/slides/slideTemplates';
+import { PaletteKeys, TemplateKeys } from '@/components/slides/slideTemplates';
 import availablePalettes from '@/components/slides/palette';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
+import Select from 'react-select';
 
 const SlideDesignPreview = dynamic(
 	() => import('@/components/slides/SlideDesignPreview'),
 	{ ssr: false },
 );
 
-export const paletteDisplayNames = (key: PaletteKeys) => {
-	switch (key) {
-		case 'Original':
-			return '⬜️ Original';
-		case 'Blue':
-			return '🟦 Blue';
-		case 'Red':
-			return '🟥 Red';
-		case 'Yellow':
-			return '🟨 Yellow';
-		default:
-			return '⬜️ Original';
-	}
-}
+// const colorPreviews: Record<PaletteKeys, string> = {
+// 	// "Original" | "Blue" | "Red" | "Yellow" | "Dynamic Purple" | "Light Cyan" | "Royal Blue" | "Bees Wax
+// 	'': '',
+// 	Original: '#FFFFFF',
+// 	Blue: '#7E96F7',
+// 	Red: '#FF0000',
+// 	Yellow: '#FFFF00',
+// 	'Dynamic Purple': '#000000',
+// 	'Light Cyan': '#FFFFFF',
+// 	'Royal Blue': '#FFFFFF',
+// 	'Bees Wax': '#FFFFFF',
+// 	// Add more color previews for other palette keys if needed
+// };
 
 const TemplateSelector: React.FC<{
 	template: TemplateKeys | string;
@@ -33,32 +30,23 @@ const TemplateSelector: React.FC<{
 	paletteOptions: string[];
 	palette: PaletteKeys | string;
 	setPalette: (palette: string | PaletteKeys) => void;
-}> = ({
-	template,
-	setTemplate,
-	paletteOptions,
-	setPalette,
-	palette,
-}) => {
+}> = ({ template, setTemplate, paletteOptions, setPalette, palette }) => {
 	const [selectedTemplate, setSelectedTemplate] = useState<string>(template);
-	// const [selectedPalette, setSelectedPalette] =
-	// 	useState<string>(palette);
-	const [palettesOptionLenghth, setPalettesOptionLenghth] = useState(0);
+	const [palettesOptionLength, setPalettesOptionLength] = useState(0);
+
 	useEffect(() => {
-		// Update color theme dropdown options length when template changes
-		setPalettesOptionLenghth(
+		// Update color palette dropdown options length when template changes
+		setPalettesOptionLength(
 			availablePalettes[template as TemplateKeys]?.length ?? 0,
 		);
 	}, [template]);
+
 	const handleTemplateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const selectedValue = e.target.value;
 		setSelectedTemplate(selectedValue);
 		setTemplate(selectedValue);
-		console.log(
-			'current template and color options',
-			availablePalettes[selectedValue as TemplateKeys]?.length,
-		);
-		// If the newly selected template has only one color theme option, set color theme to 'Original'
+
+		// If the newly selected template has only one color palette option, set palette to 'Original'
 		if (availablePalettes[selectedValue as TemplateKeys]?.length === 1) {
 			setPalette('Original');
 		}
@@ -66,12 +54,9 @@ const TemplateSelector: React.FC<{
 
 	const handlePaletteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const selectedValue = e.target.value;
-		// setSelectedPalette(selectedValue);
 		setPalette(selectedValue);
 	};
-	useEffect(() => {
-		console.log('Color theme changed:', template, palette);
-	}, [template, palette]);
+
 	return (
 		<div>
 			<div
@@ -84,9 +69,7 @@ const TemplateSelector: React.FC<{
 						<span className='text-md font-bold'>Select your template:</span>
 						<DropDown
 							width='15rem'
-							// onChange={(e) => setTemplate(e.target.value)}
 							onChange={handleTemplateChange}
-							// value={template}
 							value={selectedTemplate}
 							style='input'
 						>
@@ -113,13 +96,16 @@ const TemplateSelector: React.FC<{
 								UPenn: 'University of Pennsylvania',
 							}).map(([key, value]) => (
 								<option key={key} value={key}>
-									{`${value} 
-									${(availablePalettes[key as TemplateKeys]?.length ?? 0) > 1 ? '(🎨 available)' : ''}`}
+									{`${value} ${
+										(availablePalettes[key as TemplateKeys]?.length ?? 0) > 1
+											? '(🎨 available)'
+											: ''
+									}`}
 								</option>
 							))}
 						</DropDown>
 					</div>
-					{/* Render color theme options only if there are more than one */}
+					{/* Render color palette options only if there are more than one */}
 					{paletteOptions.length > 1 && (
 						<div className={`paletteChoice flex flex-col `}>
 							<span className='text-md font-bold'>
@@ -127,19 +113,22 @@ const TemplateSelector: React.FC<{
 							</span>
 							<DropDown
 								width='15rem'
-								// onChange={(e) => setPalette(e.target.value)}
 								onChange={handlePaletteChange}
-								// value={palette}
 								value={palette}
-								// value={
-								// 	palette === 'Original' ? 'Original' : paletteOptions[0]
-								// }
 								style='input'
 							>
 								{/* Map over paletteOptions to generate option elements */}
+
 								{paletteOptions.map((paletteOption, index) => (
-									<option key={index} value={paletteOption}>
-										{paletteDisplayNames(paletteOption as PaletteKeys)}
+									<option
+										key={index}
+										value={paletteOption}
+										// style={{
+										// 	backgroundColor:
+										// 		colorPreviews[paletteOption as PaletteKeys],
+										// }}
+									>
+										<div>{paletteOption}</div>
 									</option>
 								))}
 							</DropDown>
