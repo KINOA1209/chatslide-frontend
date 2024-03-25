@@ -10,6 +10,9 @@ import { useProject } from '@/hooks/use-project';
 import useHydrated from '@/hooks/use-hydrated';
 import { addIdToRedir } from '../../utils/redirWithId';
 import { useRouter } from 'next/navigation';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 interface StepProps {
 	id: number;
@@ -34,6 +37,13 @@ const OneStep: React.FC<StepProps> = ({
 		e.preventDefault();
 		router.push(addIdToRedir(redirect));
 	};
+
+	const handleUnavailableClick = (e: MouseEvent<HTMLDivElement>) => {
+		e.preventDefault();
+		toast.info('Please click the button on the right to generate.',
+			{ position: 'top-center', autoClose: 5000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, });
+
+	}
 
 	const handleHoverEnter = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault();
@@ -90,6 +100,7 @@ const OneStep: React.FC<StepProps> = ({
 		return (
 			<div
 				className={`relative ${isLastStep ? 'w-auto' : 'w-full'} flex flex-col hidden md:flex`}
+				onClick={handleUnavailableClick}
 			>
 				<div className='flex flex-row justify-center items-center'>
 					<div className='h-[30px] flex items-center justify-center'>
@@ -132,6 +143,7 @@ const ProgressBox: React.FC<ProgressBoxProps> = ({
 
 	return (
 		<div className='w-fit select-none grow-0'>
+			<ToastContainer />
 			<div className='flex flex-row items-start justify-center gap-x-7'>
 				<FaChevronCircleLeft
 					className={`h-[30px] ${stepAvailable(currentInd - 1) ? 'text-white cursor-pointer' : 'text-gray-400 cursor-not-allowed'}`}
@@ -167,16 +179,16 @@ const ProgressBox: React.FC<ProgressBoxProps> = ({
 const SOCIAL_POSTS_STEPS = ['Summary', 'Post'];
 const PRESENTATION_STEPS = ['Summary', 'Outlines', 'Design', 'Slides', 'Scripts', 'Video'];
 const SOCIAL_POSTS_REDIRECTS = [
-	'/workflow-generate-socialpost',
-	'/workflow-review-socialpost',
+	'/summary-socialpost',
+	'/socialpost',
 ];
 const PRESENTATION_REDIRECTS = [
-	'/workflow-generate-outlines',
-	'/workflow-edit-outlines',
-	'/workflow-edit-design',
-	'/workflow-review-slides',
-	'/workflow-edit-scripts',
-	'/workflow-review-video',
+	'/summary',
+	'/outlines',
+	'/design',
+	'/slides',
+	'/scripts',
+	'/video',
 ];
 
 export const projectFinishedSteps = (project: Project | null) => {

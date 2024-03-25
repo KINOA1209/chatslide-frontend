@@ -165,7 +165,7 @@ export default function Topic_SocialPost() {
 			post_style: scenarioType,
 		};
 		sessionStorage.setItem('topic', formData.topic);
-		sessionStorage.setItem('language', formData.language);
+		updateProject('language', language);
 		sessionStorage.setItem(
 			'selectedResources',
 			JSON.stringify(selectedResources),
@@ -205,7 +205,7 @@ export default function Topic_SocialPost() {
 			sessionStorage.setItem('resources', updatedResourcesJSON);
 
 			// Redirect to a new page with the data
-			router.push(addIdToRedir('/workflow-review-socialpost', project?.id));
+			router.push(addIdToRedir('/socialpost', project?.id));
 		} catch (error) {
 			console.error('Error:', error);
 			setIsSubmitting(false);
@@ -464,7 +464,7 @@ export default function Topic_SocialPost() {
 									value={topic}
 									maxLength={MAX_TOPIC_LENGTH}
 									required
-									placeholder='How to use ultrasound to detect breast cancer'
+									placeholder='What do you have in mind?'
 								></textarea>
 								{
 									<div className='text-gray-500 text-sm mt-1'>

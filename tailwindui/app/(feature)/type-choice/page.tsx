@@ -7,15 +7,16 @@ import Image from 'next/image';
 import scenarios from './choices.json';
 import SessionStorage from '@/utils/SessionStorage';
 import AuthService from '@/services/AuthService';
+import { DrLambdaBackButton } from '@/components/button/DrlambdaButton';
 
 const ScenarioChoicePage = () => {
 	const router = useRouter(); // Initialize the router
 	const [username, setUsername] = useState(''); // Initialize the username state
 
-	// Function to navigate to the "workflow-scenario-choice" page
+	// Function to navigate to the "scenario-choice" page
 	const navigate = (type: string) => {
 		sessionStorage.setItem('workflowType', type);
-		router.push('/workflow-scenario-choice');
+		router.push('/scenario-choice');
 	};
 
 	useEffect(() => {
@@ -32,7 +33,14 @@ const ScenarioChoicePage = () => {
 	}, []);
 
 	return (
-		<div className='bg-zinc-100 flex flex-col flex-grow justify-center items-center'>
+		<div className='bg-zinc-100 flex flex-col flex-grow justify-center items-center relative'>
+			<div className='absolute hidden sm:block top-5 left-5'>
+				<DrLambdaBackButton
+					href='/dashboard'
+					dark={true}
+					text='Dashboard'
+				/>
+			</div>
 			<div className='flex flex-col justify-center items-center gap-4 sm:gap-12 p-4 sm:p-8'>
 				{/* title */}
 				<div className='w-[80vh] text-center text-neutral-800 text-xl sm:text-2xl font-normal font-creato-medium leading-9 tracking-wide whitespace-normal break-words'>

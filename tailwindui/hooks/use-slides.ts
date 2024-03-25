@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { createBearStore } from '@/utils/create-bear-store';
 import Slide from '@/models/Slide';
 import {
-	ColorThemeKeys,
+	PaletteKeys,
 	TemplateKeys,
 } from '@/components/slides/slideTemplates';
 import { useUser } from './use-user';
@@ -226,19 +226,19 @@ export const useSlides = () => {
 
 	const chageTemplateAndColorPalette = (
 		newTemplate: TemplateKeys,
-		newColorTheme: ColorThemeKeys,
+		newPalette: PaletteKeys,
 	) => {
 		console.log(
 			'Changing template and color theme to:',
 			newTemplate,
-			newColorTheme,
+			newPalette,
 		);
 
 		let newSlides = slides.map((slide, index) => {
 			return {
 				...slide,
 				template: newTemplate,
-				palette: newColorTheme,
+				palette: newPalette,
 				images_position: [{}, {}, {}],
 			};
 		});
@@ -253,18 +253,18 @@ export const useSlides = () => {
 		});
 		//set into session storage to update
 		sessionStorage.setItem('schoolTemplate', newTemplate);
-		sessionStorage.setItem('templateColorTheme', newColorTheme);
+		sessionStorage.setItem('templatePalette', newPalette);
 		setSlides(newSlides);
 
 		updateSlideHistory(newSlides);
 		syncSlides(newSlides, true);
 	};
-	const changeColorTheme = (newColorTheme: ColorThemeKeys) => {
-		console.log('Changing color theme to:', newColorTheme);
+	const changePalette = (newPalette: PaletteKeys) => {
+		console.log('Changing color theme to:', newPalette);
 		let newSlides = slides.map((slide, index) => {
 			return {
 				...slide,
-				palette: newColorTheme,
+				palette: newPalette,
 				images_position: [{}, {}, {}],
 			};
 		});
@@ -278,7 +278,7 @@ export const useSlides = () => {
 			};
 		});
 		//set into session storage to update
-		sessionStorage.setItem('templateColorTheme', newColorTheme);
+		sessionStorage.setItem('templatePalette', newPalette);
 		setSlides(newSlides);
 
 		updateSlideHistory(newSlides);
@@ -393,7 +393,7 @@ export const useSlides = () => {
 		deleteSlidePage,
 		updateSlidePage,
 		changeTemplate,
-		changeColorTheme,
+		changePalette,
 		chageTemplateAndColorPalette,
 		initSlides,
 		slidesHistory,

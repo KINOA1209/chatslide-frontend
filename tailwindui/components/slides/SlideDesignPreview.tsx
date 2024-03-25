@@ -2,9 +2,8 @@ import React, { useRef, useEffect, useState } from 'react';
 import Slide from '@/models/Slide';
 import { templateDispatch } from './templateDispatch';
 import {
-	ColorThemeKeys,
+	PaletteKeys,
 	TemplateKeys,
-	availableColorThemes,
 	availableTemplates,
 } from '@/components/slides/slideTemplates';
 import { layoutOptions } from './slideLayout';
@@ -16,12 +15,12 @@ import { Explanation } from '../ui/Text';
 import { ScrollBar } from '../ui/ScrollBar';
 type SlideDesignPreviewProps = {
 	selectedTemplate: string;
-	selectedColorTheme: string;
+	selectedPalette: string;
 };
 
 const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 	selectedTemplate,
-	selectedColorTheme,
+	selectedPalette,
 }) => {
 	const [slides, setSlides] = useState<Slide[]>([]);
 	// const template = isValidTemplateKey(selectedTemplate) ? selectedTemplate : 'Default';
@@ -46,10 +45,10 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			: 'Default';
 
 		// const color_theme =
-		// 	typeof selectedColorTheme === 'string'
-		// 		? (selectedColorTheme as ColorThemeKeys)
-		// 		: ('Original' as ColorThemeKeys);
-		const color_theme = selectedColorTheme as ColorThemeKeys;
+		// 	typeof selectedPalette === 'string'
+		// 		? (selectedPalette as PaletteKeys)
+		// 		: ('Original' as PaletteKeys);
+		const color_theme = selectedPalette as PaletteKeys;
 
 		const newSlides = Object.keys(layoutOptions).map((layoutKey) => {
 			const newSlide = new Slide();
@@ -73,7 +72,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 		});
 
 		setSlides(newSlides);
-	}, [selectedTemplate, selectedColorTheme]);
+	}, [selectedTemplate, selectedPalette]);
 
 	const layoutNameArray = [
 		'Cover Page without image',

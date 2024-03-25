@@ -4,24 +4,27 @@ import React, { useState, useRef, useEffect, Fragment } from 'react';
 import ContentWithImageImg from '@/public/images/summary/content_with_image.png';
 import ContentOnlyImg from '@/public/images/summary/content_only.png';
 import 'react-toastify/dist/ReactToastify.css';
-import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
 import { ToastContainer } from 'react-toastify';
 import '@/app/css/workflow-edit-topic-css/topic_style.css';
-import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
-
 import Resource from '@/models/Resource';
-import ImageSelector from './ImageSelector';
-import RadioButton, { RadioButtonOption } from '@/components/ui/RadioButton';
-import useHydrated from '@/hooks/use-hydrated';
-import { useProject } from '@/hooks/use-project';
 import Card from '@/components/ui/Card';
-import ActionsToolBar from '@/components/ui/ActionsToolBar';
-import useTourStore from '@/components/user_onboarding/TourStore';
-import TemplateSelector from './TemplateSelector';
-import { BigTitle, Explanation, Title } from '@/components/ui/Text';
+import RadioButton, { RadioButtonOption } from '@/components/ui/RadioButton';
 import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
-import { availableColorThemes } from '@/components/slides/slideTemplates';
+import { BigTitle, Explanation, Title } from '@/components/ui/Text';
+
+import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
+import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
+
+import useHydrated from '@/hooks/use-hydrated';
+import { useProject } from '@/hooks/use-project';
+
+import ImageSelector from './ImageSelector';
+import TemplateSelector from './TemplateSelector';
+
+import useTourStore from '@/components/user_onboarding/TourStore';
+
+import availablePalettes from '@/components/slides/palette';
 // const { changeTemplate } = useSlides();
 
 export default function DesignPage() {
@@ -76,7 +79,7 @@ export default function DesignPage() {
 	console.log(
 		'current template color options:',
 		template,
-		availableColorThemes[template as keyof typeof availableColorThemes],
+		availablePalettes[template as keyof typeof availablePalettes],
 	);
 
 	return (
@@ -122,13 +125,13 @@ export default function DesignPage() {
 						<TemplateSelector
 							template={template}
 							setTemplate={setTemplate}
-							setColorTheme={setColorPalette}
-							colorThemeOptions={
-								availableColorThemes[
-									template as keyof typeof availableColorThemes
+							setPalette={setColorPalette}
+							paletteOptions={
+								availablePalettes[
+								template as keyof typeof availablePalettes
 								] || ['Original']
 							}
-							colorTheme={colorPalette}
+							palette={colorPalette}
 						/>
 
 						{/* images */}

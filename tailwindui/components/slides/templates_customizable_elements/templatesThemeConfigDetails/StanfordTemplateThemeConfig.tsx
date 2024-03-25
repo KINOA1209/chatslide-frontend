@@ -1,12 +1,12 @@
 import { ThemeElements } from '../theme_elements';
-import { ColorThemeKeys, availableColorThemes } from '../../slideTemplates';
-// const currentTemplateColorOptions = availableColorThemes['Stanford'] ?? [];
-// type AvailableColorThemeKeys = (typeof currentTemplateColorOptions)[number];
+import { PaletteKeys } from '../../slideTemplates';
+// const currentTemplateColorOptions = availablePalettes['Stanford'] ?? [];
+// type AvailablePaletteKeys = (typeof currentTemplateColorOptions)[number];
 // type CurrentThemeConfig = {
-// 	[colorTheme in AvailableColorThemeKeys]: ThemeElements;
+// 	[palette in AvailablePaletteKeys]: ThemeElements;
 // };
 export const StanfordTemplateThemeConfig: {
-	[key in ColorThemeKeys]?: ThemeElements;
+	[key in PaletteKeys]?: ThemeElements;
 } = {
 	Original: {
 		backgroundColorCover: 'bg-[#8C1515]',

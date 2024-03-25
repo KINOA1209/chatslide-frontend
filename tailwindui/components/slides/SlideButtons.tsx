@@ -4,27 +4,19 @@ import React, { useState } from 'react';
 import {
 	LeftSlideNavIcon,
 	RightSlideNavIcon,
-} from '@/app/(feature)/workflow-review-slides/icons';
-import { BigGrayButton } from '../button/DrlambdaButton';
+} from '@/app/(feature)/slides/icons';
 import { GoPlus, GoShare } from 'react-icons/go';
 import { LuTrash2, LuPalette } from 'react-icons/lu';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import Modal from '../ui/Modal';
-import ClickableLink from '../ui/ClickableLink';
-import PostPlatformConfigs from '@/components/button/PostPlatformConfig';
-import Project from '@/models/Project';
-import TemplateSelector from '@/app/(feature)/workflow-edit-design/TemplateSelector';
+import TemplateSelector from '@/app/(feature)/design/TemplateSelector';
 import { FiPlay } from 'react-icons/fi';
-import { Explanation, Instruction } from '../ui/Text';
-import RadioButton from '../ui/RadioButton';
-import { InputBox } from '../ui/InputBox';
 import { FaRegClone } from 'react-icons/fa';
 import {
-	ColorThemeKeys,
+	PaletteKeys,
 	TemplateKeys,
-	availableColorThemes,
-	availableColorThemesObject,
 } from './slideTemplates';
+import availablePalettes from './palette';
 
 type SaveButtonProps = {
 	saveSlides: () => void;
@@ -70,171 +62,6 @@ export const PresentButton: React.FC<PresentButtonProps> = ({
 			}
 			explanation={'Present'}
 		/>
-	);
-};
-
-type ShareButtonProps = {
-	share: boolean;
-	setShare: null | ((is_shared: boolean, is_public?: boolean) => void);
-	project: Project;
-	host?: string;
-	isSocialPost?: boolean;
-	currentSlideIndex?: number;
-};
-
-export const ShareButton: React.FC<ShareButtonProps> = ({
-	share,
-	setShare,
-	project,
-	host = 'https://drlambda.ai',
-	isSocialPost = false,
-	currentSlideIndex = 0,
-}) => {
-	const [showModal, setShowModal] = useState(false);
-	const project_id = project?.id || '';
-
-	const toggleShare = async () => {
-		setShare && setShare(true); // updates db as well
-		setShowModal(true);
-	};
-
-	const platforms = ['twitter', 'facebook', 'reddit', 'linkedin'];
-
-	const keywords = project?.keywords || [];
-	const description = project?.description || '';
-
-	const limitedKeywords = keywords.slice(0, 3);
-	const truncatedDescription = truncateWithFullWords(description, 100);
-
-	const iframe = `<iframe src="${host}/embed/${project_id}?page=${
-		currentSlideIndex + 1
-	}" width="100%" height="600px" frameborder="0"></iframe>`;
-
-	function truncateWithFullWords(str: string, maxLength: number) {
-		if (str.length <= maxLength) return str;
-		return str.substring(0, str.lastIndexOf(' ', maxLength)) + '...';
-	}
-
-	const handlePost = async (platform: string) => {
-		try {
-			setShare && setShare(true);
-			const shareLink = `${host}/shared/${project_id}`;
-			const hashTags = limitedKeywords
-				.map((keyword) => `#${keyword}`)
-				.join(' ');
-			const postText = `${truncatedDescription}. Learn more at drlambda.ai!\n${hashTags}\n`;
-			const platformConfig =
-				PostPlatformConfigs[platform as keyof typeof PostPlatformConfigs];
-			const text = platformConfig.textTemplate(postText, shareLink);
-			const url = `${platformConfig.shareUrl}${text}`;
-			window.open(url, '_blank');
-		} catch (error) {
-			console.error('Failed to process Twitter post:', error);
-		}
-	};
-
-	return (
-		<div>
-			<Modal
-				showModal={showModal}
-				setShowModal={setShowModal}
-				title='Share / Publish'
-				// description='Share your slides with others or on social media'
-			>
-				<div className='flex flex-col gap-2'>
-					<Instruction>
-						Share {isSocialPost ? ' Social Post' : ' Slides'}
-					</Instruction>
-					{setShare && (
-						<RadioButton
-							name='share'
-							options={[
-								{ text: 'Yes', value: 'yes' },
-								{ text: 'No', value: 'no' },
-							]}
-							selectedValue={share ? 'yes' : 'no'}
-							setSelectedValue={(value) => {
-								setShare(value === 'yes');
-							}}
-						/>
-					)}
-
-					{share && (
-						<div>
-							<Explanation>View only link:</Explanation>
-							<ClickableLink link={`${host}/shared/${project_id || ''}`} />
-						</div>
-					)}
-
-					<div className='flex flex-wrap gap-2'>
-						{platforms.map((platform) => (
-							<BigGrayButton
-								key={platform}
-								onClick={() => {
-									handlePost(platform);
-								}}
-							>
-								Post to{' '}
-								{
-									PostPlatformConfigs[
-										platform as keyof typeof PostPlatformConfigs
-									].displayName
-								}
-							</BigGrayButton>
-						))}
-					</div>
-				</div>
-
-				{!isSocialPost && (
-					<div>
-						<Instruction>Embed this Page</Instruction>
-						<Explanation>
-							Copy the code below and put it on your webpage, the content will
-							be updated as you update your slides.
-						</Explanation>
-						<ClickableLink link={iframe} />
-					</div>
-				)}
-
-				{project.is_shared && setShare && !isSocialPost && (
-					<div>
-						<Instruction>Publish Slides</Instruction>
-						<Explanation>
-							Your slides will be published to DrLambda Discover, people can
-							also find the slides on search engine.
-						</Explanation>
-						<RadioButton
-							name='publish'
-							options={[
-								{ text: 'Yes', value: 'yes' },
-								{ text: 'No', value: 'no' },
-							]}
-							selectedValue={project.is_public ? 'yes' : 'no'}
-							setSelectedValue={(value) => {
-								setShare(true, value === 'yes');
-							}}
-						/>
-					</div>
-				)}
-			</Modal>
-			<ButtonWithExplanation
-				button={
-					<button onClick={toggleShare}>
-						<GoShare
-							style={{
-								strokeWidth: '0.8',
-								flex: '1',
-								width: '1.5rem',
-								height: '1.5rem',
-								// fontWeight: 'bold',
-								color: '#344054',
-							}}
-						/>
-					</button>
-				}
-				explanation={'Share / Publish'}
-			/>
-		</div>
 	);
 };
 
@@ -422,37 +249,37 @@ export const DeleteSlideButton: React.FC<{
 // }
 export const ChangeTemplateOptions: React.FC<{
 	currentTemplate: TemplateKeys | string;
-	currentColorTheme: ColorThemeKeys | string;
+	currentPalette: PaletteKeys | string;
 	templateOptions: string[] | undefined;
 	onChangeTemplate: (newTemplate: string) => void;
-	onChangeColorTheme: (newColorTheme: string) => void;
+	onChangePalette: (newPalette: string) => void;
 	onChangeTemplateAndColorPalette: (
 		newTemplate: TemplateKeys | string,
-		newColorTheme: ColorThemeKeys | string,
+		newPalette: PaletteKeys | string,
 	) => void;
 }> = ({
 	currentTemplate,
 	templateOptions,
 	onChangeTemplate,
-	currentColorTheme,
-	onChangeColorTheme,
+	currentPalette,
+	onChangePalette,
 	onChangeTemplateAndColorPalette,
 }) => {
 	const [selectedTemplate, setSelectedTemplate] =
 		useState<string>(currentTemplate);
 	const [showModal, setShowModal] = useState(false);
 	// Assert the type of selectedTemplate as TemplateKeys
-	// const colorThemeOption =
-	// 	availableColorThemes[
-	// 		selectedTemplate as keyof typeof availableColorThemes
+	// const paletteOption =
+	// 	availablePalettes[
+	// 		selectedTemplate as keyof typeof availablePalettes
 	// 	] || [];
 	// layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
-	const [selectedColorThemeOption, SetSelectedColorThemeOption] = useState<
-		string | ColorThemeKeys
-	>(currentColorTheme);
+	const [selectedPaletteOption, SetSelectedPaletteOption] = useState<
+		string | PaletteKeys
+	>(currentPalette);
 
 	const handleConfirm = () => {
-		onChangeTemplateAndColorPalette(selectedTemplate, selectedColorThemeOption);
+		onChangeTemplateAndColorPalette(selectedTemplate, selectedPaletteOption);
 		setShowModal(false);
 	};
 	return (
@@ -466,16 +293,16 @@ export const ChangeTemplateOptions: React.FC<{
 			>
 				<div className='max-w-[60rem]'>
 					<TemplateSelector
-						// colorThemeOptions={colorThemeOption}
-						colorThemeOptions={
-							availableColorThemes[
-								selectedTemplate as keyof typeof availableColorThemes
+						// paletteOptions={paletteOption}
+						paletteOptions={
+							availablePalettes[
+							selectedTemplate as keyof typeof availablePalettes
 							] || ['Original']
 						}
 						template={selectedTemplate}
-						colorTheme={selectedColorThemeOption}
+						palette={selectedPaletteOption}
 						setTemplate={setSelectedTemplate}
-						setColorTheme={SetSelectedColorThemeOption}
+						setPalette={SetSelectedPaletteOption}
 					/>
 				</div>
 			</Modal>

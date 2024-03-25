@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useMemo, useState } from 'react';
 // import { TemplatesLogos } from './templates_customizable_elements/Templates_logos';
 import { Berkeley_school_template } from './school_templates/Berkeley_school_template';
@@ -59,7 +61,7 @@ export interface MainSlideProps {
 	currentSlideIndex: number;
 	isShowingLogo?: boolean;
 	images_position: ImagesPosition[];
-	palette?: ColorThemeKeys;
+	palette?: PaletteKeys;
 }
 
 // deprecated
@@ -100,34 +102,7 @@ export const useLocalImgs = (
 	return { localImgs, updateImgAtIndex };
 };
 
-export type ColorThemeKeys = 'Original' | 'Blue' | 'Red' | 'Yellow' | '';
-
-export type availableColorThemesObject = {
-	[templateName in TemplateKeys]?: ColorThemeKeys[];
-};
-
-export const availableColorThemes: availableColorThemesObject = {
-	Stanford: ['Original'],
-	Berkeley: ['Original'],
-	Harvard: ['Original'],
-	MIT: ['Original'],
-	Princeton: ['Original'],
-	Caltech: ['Original'],
-	Columbia: ['Original'],
-	JHU: ['Original'],
-	UChicago: ['Original'],
-	Yale: ['Original'],
-	UPenn: ['Original'],
-	Default: ['Original'],
-	Fun_Education_001: ['Original'],
-	Business_002: ['Original'],
-	Clean_Lifestyle_003: ['Original'],
-	Fun_Education_004: ['Original'],
-	Business_Dark_005: ['Original'],
-	Business_Light_006: ['Original'],
-	Fun_Vibrant_007: ['Original'],
-	Simplistic_008: ['Original', 'Blue', 'Yellow', 'Red'],
-};
+export type PaletteKeys = 'Original' | 'Blue' | 'Red' | 'Yellow' | '';
 
 // add template keys here
 export const availableTemplates = {

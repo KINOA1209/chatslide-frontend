@@ -4,20 +4,15 @@ import PaywallModal from '../paywallModal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ExportToPdfButton from './ExportButton';
-import {
-	DuplicateSlidePageButton,
-	ShareButton,
-} from '@/components/slides/SlideButtons';
+import { DuplicateSlidePageButton } from '@/components/slides/SlideButtons';
+import ShareButton from '@/components/button/ShareButton';
 import './slidesHTML.css';
 import {
-	ColorThemeKeys,
+	PaletteKeys,
 	availableTemplates,
 } from '@/components/slides/slideTemplates';
 import { LayoutKeys } from '@/components/slides/slideLayout';
-import {
-	TemplateKeys,
-	availableColorThemes,
-} from '@/components/slides/slideTemplates';
+import { TemplateKeys } from '@/components/slides/slideTemplates';
 import LayoutChanger from './LayoutChanger';
 import { Default_TemplateThemeConfig } from './templates_customizable_elements/templatesThemeConfigDetails/Default_TemplateThemeConfigDetails';
 import {
@@ -65,7 +60,6 @@ import Image from 'next/image';
 import showLogo from 'public/icons/button/show_logo.svg';
 import hideLogo from 'public/icons/button/hide_logo.svg';
 
-
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
 	exportSlidesRef?: React.RefObject<HTMLDivElement>;
@@ -77,7 +71,7 @@ type SlidesHTMLProps = {
 
 export const loadCustomizableElements = (
 	templateName: string,
-	colorThemeName: string = 'Original',
+	paletteName: string = 'Original',
 ) => {
 	// return (
 	// 	themeConfigData[templateName as keyof ThemeConfig] ||
@@ -87,7 +81,7 @@ export const loadCustomizableElements = (
 		themeConfigData[templateName as keyof ThemeConfig] ||
 		Default_TemplateThemeConfig;
 	const selectedThemeElements =
-		themeElements[colorThemeName as ColorThemeKeys] ||
+		themeElements[paletteName as PaletteKeys] ||
 		(Default_TemplateThemeConfig['Original'] as ThemeElements);
 	return selectedThemeElements;
 };
@@ -103,14 +97,19 @@ export const loadLayoutConfigElements = (
 	return selectedLayoutOptionElements;
 };
 
-export const calculateNonPresentScale = (width: number, height: number) => {
+export const calculateNonPresentScale = (
+	width: number,
+	height: number,
+	isChatWindowOpen = false,
+) => {
 	if (width < 640) {
 		// mobile, layout vertically
 		return Math.min(1, Math.min(width / 960, (height - 200) / 540) * 0.8);
 	} else {
+		const chatWindowWidth = width > 1280 && isChatWindowOpen ? 250 : 0;
 		return Math.min(
 			1,
-			Math.min((width - 300) / 960, (height - 200) / 540) * 0.8,
+			Math.min((width - 400 - chatWindowWidth) / 960, (height - 300) / 540),
 		);
 	}
 };
@@ -133,7 +132,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		duplicatePage,
 		deleteSlidePage,
 		changeTemplate,
-		changeColorTheme,
+		changePalette,
 		chageTemplateAndColorPalette,
 		undoChange,
 		redoChange,
@@ -198,6 +197,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	}, []);
 
 	const toggleChatWindow = () => {
+		setNonPresentScale(
+			calculateNonPresentScale(
+				window.innerWidth,
+				window.innerHeight,
+				!isChatWindowOpen,
+			),
+		);
 		setIsChatWindowOpen(!isChatWindowOpen);
 	};
 
@@ -206,22 +212,26 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			const scale = Math.min(window.innerWidth / 960, window.innerHeight / 540);
 			setPresentScale(scale);
 			setNonPresentScale(
-				calculateNonPresentScale(window.innerWidth, window.innerHeight),
+				calculateNonPresentScale(
+					window.outerWidth,
+					window.outerHeight,
+					isChatWindowOpen,
+				),
 			);
 		};
 
 		window.addEventListener('resize', handleResize);
 
 		return () => window.removeEventListener('resize', handleResize);
-	}, []);
+	}, [isChatWindowOpen]);
 
 	const selectTemplateAndColorPalette = (
 		newTemplate: string | TemplateKeys, // Accepts string or TemplateKeys
-		newColorPalette: string | ColorThemeKeys,
+		newColorPalette: string | PaletteKeys,
 	) => {
 		chageTemplateAndColorPalette(
 			newTemplate as TemplateKeys,
-			newColorPalette as ColorThemeKeys,
+			newColorPalette as PaletteKeys,
 		);
 	};
 	// Function to change the template of slides starting from the second one
@@ -230,9 +240,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		changeTemplate(newTemplate as TemplateKeys);
 	};
 
-	const selectColorTheme = (newColorTheme: string) => {
-		console.log('Changing template color theme to:', newColorTheme);
-		changeColorTheme(newColorTheme as ColorThemeKeys);
+	const selectPalette = (newPalette: string) => {
+		console.log('Changing template color theme to:', newPalette);
+		changePalette(newPalette as PaletteKeys);
 	};
 
 	const openPresent = () => {
@@ -299,7 +309,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			} else if (className === 'logo') {
 				currentSlide.logo = content as string;
 			} else if (className === 'palette') {
-				currentSlide.palette = content as ColorThemeKeys;
+				currentSlide.palette = content as PaletteKeys;
 			} else if (className === 'images') {
 				currentSlide.images = [...(content as string[])]; // deep copy
 			} else if (className === 'content') {
@@ -556,10 +566,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 							<ChangeTemplateOptions
 								currentTemplate={slides[slideIndex].template}
-								currentColorTheme={slides[slideIndex].palette}
+								currentPalette={slides[slideIndex].palette}
 								templateOptions={Object.keys(availableTemplates)}
 								onChangeTemplate={selectTemplate}
-								onChangeColorTheme={selectColorTheme}
+								onChangePalette={selectPalette}
 								onChangeTemplateAndColorPalette={selectTemplateAndColorPalette}
 							/>
 							<LayoutChanger
@@ -574,9 +584,19 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 									button={
 										<button onClick={() => toggleIsShowingLogo()}>
 											{isShowingLogo ? (
-												<Image src={hideLogo} alt='Hide Logo' width={24} height={24} />
+												<Image
+													src={hideLogo}
+													alt='Hide Logo'
+													width={24}
+													height={24}
+												/>
 											) : (
-												<Image src={showLogo} alt='Show Logo' width={24} height={24} />
+												<Image
+													src={showLogo}
+													alt='Show Logo'
+													width={24}
+													height={24}
+												/>
 											)}
 										</button>
 									}
@@ -623,7 +643,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				{/* vertical bar */}
 
 				<Panel>
-					<div className='h-full hidden sm:flex w-[100px] lg:w-[150px]'>
+					<div className='h-full hidden sm:flex md:w-[150px]'>
 						<ScrollBar
 							currentElementRef={verticalCurrentSlideRef}
 							index={slideIndex}
@@ -795,10 +815,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 								/>
 							</div>
 						)}
-						<Panel>
-							{/* balance pos of slide */}
-							<div className='hidden sm:flex w-[9rem]'></div>
-						</Panel>
+						<div className='w-1'></div> {/* spacer */}
 					</>
 				)}
 			</div>

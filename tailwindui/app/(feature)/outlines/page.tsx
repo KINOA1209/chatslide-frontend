@@ -31,7 +31,7 @@ export default function WorkflowStep2() {
 	useEffect(() => {
 		if (isSubmitting) {
 			if (outlines) {
-				router.push(addIdToRedir('workflow-edit-design'));
+				router.push(addIdToRedir('/design'));
 			}
 		}
 	}, [isSubmitting]);

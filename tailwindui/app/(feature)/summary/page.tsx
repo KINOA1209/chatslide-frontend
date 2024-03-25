@@ -34,6 +34,8 @@ import LanguageSelector from '../../../components/language/LanguageSelector';
 import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
 import { addIdToRedir } from '@/utils/redirWithId';
+import TopicSuggestions from '@/components/language/TopicSuggestions';
+import { getUserCountryCode, getUserLanguage } from '@/utils/userLocation';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 3;
@@ -78,11 +80,7 @@ export default function Topic() {
 			? sessionStorage.audience
 			: 'unselected',
 	);
-	const [language, setLanguage] = useState(
-		typeof window !== 'undefined' && sessionStorage.language != undefined
-			? sessionStorage.language
-			: 'English',
-	);
+	const [language, setLanguage] = useState(SessionStorage.getItem('language'));
 	const [selectedResources, setSelectedResources] = useState<Resource[]>(
 		typeof window !== 'undefined' &&
 			sessionStorage.selectedResources != undefined
@@ -101,6 +99,14 @@ export default function Topic() {
 		},
 		// Add more steps as needed
 	];
+
+	useEffect(() => {
+		if (!language) {
+			getUserLanguage().then((language) => {
+				setLanguage(language);
+			});
+		}
+	}, []);
 
 	useEffect(() => {
 		if (selectedResources.length > 0) {
@@ -166,7 +172,7 @@ export default function Topic() {
 
 		const knowledge_summary =
 			typeof window !== 'undefined' &&
-			sessionStorage.knowledge_summary != undefined
+				sessionStorage.knowledge_summary != undefined
 				? JSON.parse(sessionStorage.knowledge_summary)
 				: '';
 
@@ -188,7 +194,7 @@ export default function Topic() {
 
 		sessionStorage.setItem('topic', formData.topic);
 		sessionStorage.setItem('audience', formData.audience);
-		sessionStorage.setItem('language', formData.language);
+		updateProject('language', language);
 		sessionStorage.setItem(
 			'selectedResources',
 			JSON.stringify(selectedResources),
@@ -269,7 +275,7 @@ export default function Topic() {
 
 				// Redirect to a new page with the data, and id in the query string
 				router.push(
-					addIdToRedir('workflow-edit-outlines', outlinesJson.data.id),
+					addIdToRedir('outlines', outlinesJson.data.id),
 				);
 			} else if (response.status == 402) {
 				setShowPaymentModal(true);
@@ -278,7 +284,7 @@ export default function Topic() {
 				console.error('Error when generating outlines:', response.status);
 				toast.error(
 					'Server is busy now. Please try again later. Reference code: ' +
-						project?.id,
+					project?.id,
 				);
 				setIsSubmitting(false);
 			}
@@ -392,7 +398,7 @@ export default function Topic() {
 											direction and focus of the contents.
 										</ExplanationPopup>
 									</div>
-									<div className='border border-2 border-gray-200 rounded-md'>
+									<div className='border border-2 border-gray-200 rounded-md py-2'>
 										<textarea
 											onChange={(e) => updateTopic(e.target.value)}
 											className='focus:ring-0 text-l md:text-xl'
@@ -400,8 +406,14 @@ export default function Topic() {
 											value={topic}
 											maxLength={MAX_TOPIC_LENGTH}
 											required
-											placeholder='How to use ultrasound to detect breast cancer'
+											placeholder='What do you have in mind?'
 										></textarea>
+										{!topic &&
+											<TopicSuggestions
+												language={language}
+												setTopic={setTopic}
+											/>
+										}
 									</div>
 									<Explanation>
 										{MAX_TOPIC_LENGTH - topic.length} characters left

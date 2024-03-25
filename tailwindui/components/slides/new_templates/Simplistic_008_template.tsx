@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ColorThemeKeys, MainSlideProps } from '../slideTemplates';
+import { PaletteKeys, MainSlideProps } from '../slideTemplates';
 import Image, { StaticImageData } from 'next/image';
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import { layoutOptions } from '@/components/slides/slideLayout';
@@ -7,7 +7,7 @@ import {
 	loadCustomizableElements,
 	loadLayoutConfigElements,
 } from '@/components/slides/SlidesHTML';
-import { TemplateKeys, availableColorThemes } from '../slideTemplates';
+import { TemplateKeys } from '../slideTemplates';
 export const Simplistic_008_template = ({
 	user_name,
 	title,
@@ -43,7 +43,7 @@ export const Simplistic_008_template = ({
 	// Load customizable elements for the current template
 	const themeElements = loadCustomizableElements(
 		'Simplistic_008' as TemplateKeys,
-		palette as ColorThemeKeys,
+		palette as PaletteKeys,
 	);
 	const layoutConfigElements = loadLayoutConfigElements(
 		'Simplistic_008' as TemplateKeys,

@@ -1,12 +1,12 @@
 'use client';
 
 import { Blank } from '@/components/ui/Loading';
-import SessionStorage from '@/utils/SessionStorage';
 import AuthService from '@/services/AuthService';
 import UserService from '@/services/UserService';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function SSORedirect() {
 	const router = useRouter();
@@ -45,11 +45,25 @@ export default function SSORedirect() {
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			setShowLink(true);
-		}, 2000);
+		}, 4000);
 
 		// Clean up the timer if the component is unmounted
 		return () => clearTimeout(timer);
 	}, []);
+
+	useEffect(() => {
+		toast.info('Welcome to DrLambda, we are preparing your workspace for you! 💪', {
+			position: 'top-center',
+			autoClose: 4000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: 'light',
+			containerId: 'welcome-toast',
+		});
+	});
 
 	return (
 		<div className='flex items-center justify-center min-h-screen'>

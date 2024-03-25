@@ -70,10 +70,6 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 			typeof sessionStorage !== 'undefined'
 				? sessionStorage.getItem('topic')
 				: null;
-		const language =
-			typeof window !== 'undefined'
-				? sessionStorage.getItem('language')
-				: 'English';
 
 		const project_id = project.id;
 		const formData = {
@@ -81,13 +77,13 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 			foldername: foldername,
 			topic: topic,
 			project_id: project_id,
-			language: language,
+			language: project.language,
 			json_list: slides,
 			model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
 		};
 
 		try {
-			const response = await fetch('/api/transcript_json', {
+			const response = await fetch('/api/generate_script', {
 				method: 'POST',
 				headers: {
 					Authorization: `Bearer ${token}`,
@@ -98,10 +94,9 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 
 			if (response.ok) {
 				const resp = await response.json();
-				setIsSubmitting(false);
-				// console.log(resp.data.res);
 				const transcripts = resp.data.res;
 				setTranscripts(transcripts); // and auto-save
+				router.push(addIdToRedir('/scripts'));
 			} else {
 				console.error('Error when generating scripts:', response.status);
 				toast.error(
@@ -109,13 +104,11 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 					project_id,
 				);
 				console.log(response);
-				setIsSubmitting(false);
 			}
-			router.push(addIdToRedir('workflow-edit-scripts'));
 		} catch (error) {
 			console.error('Error:', error);
-			setIsSubmitting(false);
 		}
+		setIsSubmitting(false);
 	}
 
 	useEffect(() => {
