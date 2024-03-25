@@ -586,7 +586,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	}
 
 	return (
-		<div className='w-full h-full flex flex-col items-start justify-between py-2 gap-2 relative'>
+		<div className='w-full h-full flex flex-col items-start justify-around py-2 gap-2 relative'>
 			<div className='w-full flex flex-row items-center justify-center'>
 				<ActionsToolBar
 					undo={undoChange}
@@ -689,7 +689,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				showReferralLink={true}
 			/>
 
-			<div className='w-full flex flex-row grow items-start justify-center sm:justify-between gap-2 overflow-auto'>
+			<div className='w-full flex flex-row grow items-start justify-center sm:justify-around gap-2 overflow-auto'>
 				{/* vertical bar */}
 
 				<Panel>
