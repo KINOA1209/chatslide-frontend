@@ -136,10 +136,14 @@ export const DrlambdaLink: React.FC<DrlambdaLinkProps> = ({
 
 type DrLambdaBackButtonProps = {
 	href: string;
+	dark?: boolean;
+	text?: string;
 };
 
 export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({
 	href,
+	dark = false,
+	text = 'Dashboard',
 }) => {
 	const router = useRouter();
 	return (
@@ -147,9 +151,9 @@ export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({
 			className='h-[36px] sm:h-[36px] sm:min-w-[10rem] lg:min-w-[12rem] flex-row justify-center items-center gap-4 cursor-pointer flex rounded-3xl bg-white bg-opacity-0'
 			onClick={() => router.push(href)}
 		>
-			<FaChevronLeft style={{ color: '#FFFFFF' }} />
-			<div className='text-center self-center text-white font-medium font-creato-medium leading-normal tracking-[0.035rem] whitespace-nowrap hidden sm:block'>
-				Dashboard
+			<FaChevronLeft style={{ color: dark ? '#222222' : '#FFFFFF' }} />
+			<div className={`text-center self-center ${dark ? 'text-neural-800' : 'text-white'} font-medium font-creato-medium leading-normal tracking-[0.035rem] whitespace-nowrap hidden sm:block`}>
+				{text}
 			</div>
 		</div>
 	);

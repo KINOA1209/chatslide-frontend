@@ -9,6 +9,7 @@ interface TranscriptEditorProps {
 	updateSlidePage: (index: number, slide: Slide) => void;
 	currentSlideIndex: number;
 	scale: number;
+	tight?: boolean;
 }
 
 const ScriptEditor: React.FC<TranscriptEditorProps> = ({
@@ -16,6 +17,7 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 	updateSlidePage,
 	currentSlideIndex,
 	scale,
+	tight=false
 }) => {
 
 	// avoid hydration error during development caused by persistence
@@ -35,7 +37,7 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 			className={`w-full min-h-[4rem] border border-2 border-gray-200 rounded-lg flex flex-col overflow-y-auto my-1`} // shift left to align with slide
 		>
 			<textarea
-				className='grow px-4 py-2 w-full h-full border-none text-gray-700 text-xs font-normal focus:ring-0'
+				className={`grow px-4 py-2 w-full h-full border-none text-gray-700 text-xs font-normal focus:ring-0 ${tight && 'leading-tight'}`}
 				value={slides[currentSlideIndex].transcript}
 				onChange={(e) => updateTranscriptList(e.target.value)}
 			>

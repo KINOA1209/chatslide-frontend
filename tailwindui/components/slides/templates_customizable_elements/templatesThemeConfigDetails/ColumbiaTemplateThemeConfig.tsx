@@ -1,8 +1,8 @@
-import { ColorThemeKeys } from '../../slideTemplates';
+import { PaletteKeys } from '../../slideTemplates';
 import { ThemeElements } from '../theme_elements';
 
 export const ColumbiaTemplateThemeConfig: {
-	[key in ColorThemeKeys]?: ThemeElements;
+	[key in PaletteKeys]?: ThemeElements;
 } = {
 	Original: {
 		// color: '#1f2937',

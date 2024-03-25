@@ -67,7 +67,7 @@ const GenerateSlidesSubmit = ({
 			updateProject('description', resp.data.description);
 			updateProject('keywords', resp.data.keywords);
 			updateProject('additional_images', resp.data.additional_images);
-			router.push(addIdToRedir('workflow-review-slides'));
+			router.push(addIdToRedir('/slides'));
 		} else {
 			setIsSubmitting(false);
 			console.error('Error when generating slides:', response.status);

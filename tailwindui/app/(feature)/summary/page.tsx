@@ -36,6 +36,7 @@ import { Column } from '@/components/layout/Column';
 import { addIdToRedir } from '@/utils/redirWithId';
 import TopicSuggestions from '@/components/language/TopicSuggestions';
 import { getUserCountryCode, getUserLanguage } from '@/utils/userLocation';
+import { Session } from 'inspector';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 3;
@@ -48,6 +49,19 @@ const audienceList = [
 	'Video Viewers',
 	'Myself',
 ];
+
+const getAudienceFromSceario = (scenarioType: string) => {
+	switch (scenarioType) {
+		case 'business':
+			return 'Business Clients';
+		case 'academic':
+			return 'Students';
+		case 'life_style':
+			return 'Video Viewers';
+		default:
+			return 'unselected';
+	}
+}
 
 export default function Topic() {
 	const {
@@ -76,11 +90,11 @@ export default function Topic() {
 			: '',
 	);
 	const [audience, setAudience] = useState(
-		typeof window !== 'undefined' && sessionStorage.audience != undefined
-			? sessionStorage.audience
-			: 'unselected',
+		project?.audience ||
+		SessionStorage.getItem('audience') ||
+		getAudienceFromSceario(SessionStorage.getItem('scenarioType')),
 	);
-	const [language, setLanguage] = useState(SessionStorage.getItem('language'));
+	const [language, setLanguage] = useState(project?.language || SessionStorage.getItem('language'));
 	const [selectedResources, setSelectedResources] = useState<Resource[]>(
 		typeof window !== 'undefined' &&
 			sessionStorage.selectedResources != undefined
@@ -165,10 +179,7 @@ export default function Topic() {
 
 		const project_id = project?.id || '';
 
-		const scenarioType =
-			typeof window !== 'undefined' && sessionStorage.scenarioType != undefined
-				? sessionStorage.scenarioType
-				: '';
+		const scenarioType = SessionStorage.getItem('scenarioType', 'business');
 
 		const knowledge_summary =
 			typeof window !== 'undefined' &&
@@ -275,7 +286,7 @@ export default function Topic() {
 
 				// Redirect to a new page with the data, and id in the query string
 				router.push(
-					addIdToRedir('workflow-edit-outlines', outlinesJson.data.id),
+					addIdToRedir('outlines', outlinesJson.data.id),
 				);
 			} else if (response.status == 402) {
 				setShowPaymentModal(true);

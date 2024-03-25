@@ -1,8 +1,8 @@
-import { ColorThemeKeys } from '../../slideTemplates';
+import { PaletteKeys } from '../../slideTemplates';
 import { ThemeElements } from '../theme_elements';
 
 export const Clean_Lifestyle_003_TemplateThemeConfig: {
-	[key in ColorThemeKeys]?: ThemeElements;
+	[key in PaletteKeys]?: ThemeElements;
 } = {
 	Original: {
 		backgroundUrlCoverImg1:

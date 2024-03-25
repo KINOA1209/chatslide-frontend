@@ -4,16 +4,16 @@ import React, { useState } from 'react';
 import {
 	LeftSlideNavIcon,
 	RightSlideNavIcon,
-} from '@/app/(feature)/workflow-review-slides/icons';
+} from '@/app/(feature)/slides/icons';
 import { GoPlus, GoShare } from 'react-icons/go';
 import { LuTrash2, LuPalette } from 'react-icons/lu';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import Modal from '../ui/Modal';
-import TemplateSelector from '@/app/(feature)/workflow-edit-design/TemplateSelector';
+import TemplateSelector from '@/app/(feature)/design/TemplateSelector';
 import { FiPlay } from 'react-icons/fi';
 import { FaRegClone } from 'react-icons/fa';
 import {
-	ColorThemeKeys,
+	PaletteKeys,
 	TemplateKeys,
 } from './slideTemplates';
 import availablePalettes from './palette';
@@ -249,37 +249,37 @@ export const DeleteSlideButton: React.FC<{
 // }
 export const ChangeTemplateOptions: React.FC<{
 	currentTemplate: TemplateKeys | string;
-	currentColorTheme: ColorThemeKeys | string;
+	currentPalette: PaletteKeys | string;
 	templateOptions: string[] | undefined;
 	onChangeTemplate: (newTemplate: string) => void;
-	onChangeColorTheme: (newColorTheme: string) => void;
+	onChangePalette: (newPalette: string) => void;
 	onChangeTemplateAndColorPalette: (
 		newTemplate: TemplateKeys | string,
-		newColorTheme: ColorThemeKeys | string,
+		newPalette: PaletteKeys | string,
 	) => void;
 }> = ({
 	currentTemplate,
 	templateOptions,
 	onChangeTemplate,
-	currentColorTheme,
-	onChangeColorTheme,
+	currentPalette,
+	onChangePalette,
 	onChangeTemplateAndColorPalette,
 }) => {
 	const [selectedTemplate, setSelectedTemplate] =
 		useState<string>(currentTemplate);
 	const [showModal, setShowModal] = useState(false);
 	// Assert the type of selectedTemplate as TemplateKeys
-	// const colorThemeOption =
-	// 	availableColorThemes[
-	// 		selectedTemplate as keyof typeof availableColorThemes
+	// const paletteOption =
+	// 	availablePalettes[
+	// 		selectedTemplate as keyof typeof availablePalettes
 	// 	] || [];
 	// layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
-	const [selectedColorThemeOption, SetSelectedColorThemeOption] = useState<
-		string | ColorThemeKeys
-	>(currentColorTheme);
+	const [selectedPaletteOption, SetSelectedPaletteOption] = useState<
+		string | PaletteKeys
+	>(currentPalette);
 
 	const handleConfirm = () => {
-		onChangeTemplateAndColorPalette(selectedTemplate, selectedColorThemeOption);
+		onChangeTemplateAndColorPalette(selectedTemplate, selectedPaletteOption);
 		setShowModal(false);
 	};
 	return (
@@ -293,16 +293,16 @@ export const ChangeTemplateOptions: React.FC<{
 			>
 				<div className='max-w-[60rem]'>
 					<TemplateSelector
-						// colorThemeOptions={colorThemeOption}
-						colorThemeOptions={
+						// paletteOptions={paletteOption}
+						paletteOptions={
 							availablePalettes[
 							selectedTemplate as keyof typeof availablePalettes
 							] || ['Original']
 						}
 						template={selectedTemplate}
-						colorTheme={selectedColorThemeOption}
+						palette={selectedPaletteOption}
 						setTemplate={setSelectedTemplate}
-						setColorTheme={SetSelectedColorThemeOption}
+						setPalette={SetSelectedPaletteOption}
 					/>
 				</div>
 			</Modal>

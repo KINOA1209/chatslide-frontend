@@ -61,7 +61,7 @@ export interface MainSlideProps {
 	currentSlideIndex: number;
 	isShowingLogo?: boolean;
 	images_position: ImagesPosition[];
-	palette?: ColorThemeKeys;
+	palette?: PaletteKeys;
 }
 
 // deprecated
@@ -102,7 +102,7 @@ export const useLocalImgs = (
 	return { localImgs, updateImgAtIndex };
 };
 
-export type ColorThemeKeys =
+export type PaletteKeys =
 	| 'Original'
 	| 'Blue'
 	| 'Red'

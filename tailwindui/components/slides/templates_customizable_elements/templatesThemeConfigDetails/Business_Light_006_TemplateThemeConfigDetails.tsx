@@ -1,8 +1,8 @@
-import { ColorThemeKeys } from '../../slideTemplates';
+import { PaletteKeys } from '../../slideTemplates';
 import { ThemeElements } from '../theme_elements';
 
 export const Business_Light_006_TemplateThemeConfig: {
-	[key in ColorThemeKeys]?: ThemeElements;
+	[key in PaletteKeys]?: ThemeElements;
 } = {
 	Original: {
 		backgroundColorCover: 'bg-[#FFFFFF]',

@@ -1,7 +1,7 @@
-import { ColorThemeKeys, TemplateKeys } from './slideTemplates';
+import { PaletteKeys, TemplateKeys } from './slideTemplates';
 
 export type availablePalettesObject = {
-	[templateName in TemplateKeys]?: ColorThemeKeys[];
+	[templateName in TemplateKeys]?: PaletteKeys[];
 };
 
 const availablePalettes: availablePalettesObject = {

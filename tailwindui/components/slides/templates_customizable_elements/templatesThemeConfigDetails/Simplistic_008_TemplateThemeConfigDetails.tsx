@@ -1,18 +1,17 @@
 import { ThemeElements } from '../theme_elements';
-import { ColorThemeKeys } from '../../slideTemplates';
+import { PaletteKeys } from '../../slideTemplates';
 
-// type SimplisticColorThemes =
-// 	(typeof availableColorThemes)['Simplistic_008'][number];
+// type SimplisticPalettes =
+// 	(typeof availablePalettes)['Simplistic_008'][number];
 // const currentTemplateColorOptions =
-// 	availableColorThemes['Simplistic_008'] ?? [];
-// type AvailableColorThemeKeys = (typeof currentTemplateColorOptions)[number];
+// 	availablePalettes['Simplistic_008'] ?? [];
+// type AvailablePaletteKeys = (typeof currentTemplateColorOptions)[number];
 // type CurrentThemeConfig = {
-// 	[colorTheme in AvailableColorThemeKeys]: ThemeElements;
+// 	[palette in AvailablePaletteKeys]: ThemeElements;
 // };
 
 export const Simplistic_008_TemplateThemeConfig: {
-	[key in ColorThemeKeys]?: ThemeElements;
-	// 'Dynamic Purple', 'Light Cyan', 'Royal Blue', 'Bees Wax'
+	[key in PaletteKeys]?: ThemeElements;
 } = {
 	'Dynamic Purple': {
 		backgroundColorCover: 'bg-gradient-to-br from-[#7E96F7] to-[#A388F7]',

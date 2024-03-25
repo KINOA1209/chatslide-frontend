@@ -1,14 +1,13 @@
 import React, { use, useEffect, useRef, useState } from 'react';
 import { useUser } from '@/hooks/use-user';
 import PaywallModal from '../paywallModal';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ExportToPdfButton from './ExportButton';
 import { DuplicateSlidePageButton } from '@/components/slides/SlideButtons';
 import ShareButton from '@/components/button/ShareButton';
 import './slidesHTML.css';
 import {
-	ColorThemeKeys,
+	PaletteKeys,
 	availableTemplates,
 } from '@/components/slides/slideTemplates';
 import { LayoutKeys } from '@/components/slides/slideLayout';
@@ -52,7 +51,6 @@ import Chart from '@/models/Chart';
 import ImagesPosition from '@/models/ImagesPosition';
 import { Panel } from '../layout/Panel';
 import { useProject } from '@/hooks/use-project';
-import { GoEye, GoEyeClosed } from 'react-icons/go';
 import ScriptWindow from '../script/ScriptWindow';
 import ReactDOM from 'react-dom';
 import { ScrollBar } from '../ui/ScrollBar';
@@ -71,7 +69,7 @@ type SlidesHTMLProps = {
 
 export const loadCustomizableElements = (
 	templateName: string,
-	colorThemeName: string = 'Original',
+	paletteName: string = 'Original',
 ) => {
 	// return (
 	// 	themeConfigData[templateName as keyof ThemeConfig] ||
@@ -81,7 +79,7 @@ export const loadCustomizableElements = (
 		themeConfigData[templateName as keyof ThemeConfig] ||
 		Default_TemplateThemeConfig;
 	const selectedThemeElements =
-		themeElements[colorThemeName as ColorThemeKeys] ||
+		themeElements[paletteName as PaletteKeys] ||
 		(Default_TemplateThemeConfig['Original'] as ThemeElements);
 	return selectedThemeElements;
 };
@@ -101,15 +99,17 @@ export const calculateNonPresentScale = (
 	width: number,
 	height: number,
 	isChatWindowOpen = false,
+	showScript = false,
 ) => {
 	if (width < 640) {
 		// mobile, layout vertically
 		return Math.min(1, Math.min(width / 960, (height - 200) / 540) * 0.8);
 	} else {
 		const chatWindowWidth = width > 1280 && isChatWindowOpen ? 250 : 0;
+		const scriptEditorHeight = showScript ? 200 : 0;
 		return Math.min(
 			1,
-			Math.min((width - 400 - chatWindowWidth) / 960, (height - 300) / 540),
+			Math.min((width - 400 - chatWindowWidth) / 960, (height - 300 - scriptEditorHeight) / 540),
 		);
 	}
 };
@@ -132,7 +132,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		duplicatePage,
 		deleteSlidePage,
 		changeTemplate,
-		changeColorTheme,
+		changePalette,
 		chageTemplateAndColorPalette,
 		undoChange,
 		redoChange,
@@ -216,6 +216,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					window.outerWidth,
 					window.outerHeight,
 					isChatWindowOpen,
+					showScript,
 				),
 			);
 		};
@@ -225,13 +226,26 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		return () => window.removeEventListener('resize', handleResize);
 	}, [isChatWindowOpen]);
 
+	useEffect(() => {
+		if(showScript) {
+			setNonPresentScale(
+				calculateNonPresentScale(
+					window.outerWidth,
+					window.outerHeight,
+					isChatWindowOpen,
+					showScript,
+				),
+			);
+		}
+	}, [showScript]);
+
 	const selectTemplateAndColorPalette = (
 		newTemplate: string | TemplateKeys, // Accepts string or TemplateKeys
-		newColorPalette: string | ColorThemeKeys,
+		newColorPalette: string | PaletteKeys,
 	) => {
 		chageTemplateAndColorPalette(
 			newTemplate as TemplateKeys,
-			newColorPalette as ColorThemeKeys,
+			newColorPalette as PaletteKeys,
 		);
 	};
 	// Function to change the template of slides starting from the second one
@@ -240,32 +254,68 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		changeTemplate(newTemplate as TemplateKeys);
 	};
 
-	const selectColorTheme = (newColorTheme: string) => {
-		console.log('Changing template color theme to:', newColorTheme);
-		changeColorTheme(newColorTheme as ColorThemeKeys);
+	const selectPalette = (newPalette: string) => {
+		console.log('Changing template color theme to:', newPalette);
+		changePalette(newPalette as PaletteKeys);
 	};
 
 	const openPresent = () => {
-		toast.success(
-			'Use ESC to exit presentation mode, use arrow keys to navigate slides.',
-		);
 		setIsPresenting(true);
 		if (showScript) openScriptPage();
 	};
 
 	useEffect(() => {
 		document.addEventListener('keydown', handleKeyDown);
+		// click to go to next page
+		document.addEventListener('click', handleClick);
+		document.addEventListener('wheel', handleScroll);
 		return () => {
 			document.removeEventListener('keydown', handleKeyDown);
+			document.removeEventListener('click', handleClick);	
+			document.removeEventListener('wheel', handleScroll);
 		};
 	});
+
+	function handleClick(event: MouseEvent) {
+		if (isPresenting) {
+			if (slideIndex < slides.length - 1) {
+				gotoPage(slideIndex + 1);
+			} else {
+				setIsPresenting(false);
+			}
+		}
+	}
+
+	let scrollTimeout: NodeJS.Timeout;
+
+	function handleScroll(event: WheelEvent) {
+		if (isPresenting) {
+			clearTimeout(scrollTimeout);
+			scrollTimeout = setTimeout(() => {
+				if (event.deltaY > 0) {
+					if (slideIndex < slides.length - 1) {
+						gotoPage(slideIndex + 1);
+					} else {
+						setIsPresenting(false);
+						// Optionally, trigger an animation or sound to indicate the end of the presentation
+					}
+				} else if (event.deltaY < 0 && slideIndex > 0) {
+					gotoPage(slideIndex - 1);
+				}
+			}, 100); // Debounce time of 100ms
+		}
+	}
 
 	function handleKeyDown(event: KeyboardEvent) {
 		if (isViewing || isPresenting) {
 			console.log('key pressed', event.key);
 			// todo: update iseditmode
-			if (event.key === 'ArrowRight' && slideIndex < slides.length - 1) {
-				gotoPage(slideIndex + 1);
+			if (event.key === 'ArrowRight') {
+				if (slideIndex < slides.length - 1) {
+					gotoPage(slideIndex + 1);
+				} else {
+					setIsPresenting(false);
+				}
 			} else if (event.key === 'ArrowLeft' && slideIndex > 0) {
 				gotoPage(slideIndex - 1);
 			} else if (event.key === 'Escape') {
@@ -309,7 +359,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			} else if (className === 'logo') {
 				currentSlide.logo = content as string;
 			} else if (className === 'palette') {
-				currentSlide.palette = content as ColorThemeKeys;
+				currentSlide.palette = content as PaletteKeys;
 			} else if (className === 'images') {
 				currentSlide.images = [...(content as string[])]; // deep copy
 			} else if (className === 'content') {
@@ -566,10 +616,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 							<ChangeTemplateOptions
 								currentTemplate={slides[slideIndex].template}
-								currentColorTheme={slides[slideIndex].palette}
+								currentPalette={slides[slideIndex].palette}
 								templateOptions={Object.keys(availableTemplates)}
 								onChangeTemplate={selectTemplate}
-								onChangeColorTheme={selectColorTheme}
+								onChangePalette={selectPalette}
 								onChangeTemplateAndColorPalette={selectTemplateAndColorPalette}
 							/>
 							<LayoutChanger
@@ -733,6 +783,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							updateSlidePage={updateSlidePage}
 							currentSlideIndex={slideIndex}
 							scale={nonPresentScale}
+							tight={true}
 						/>
 					)}
 
@@ -759,7 +810,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					</div>
 
 					{/* horizontal  */}
-					<div className='block sm:hidden max-w-xl sm:max-w-4xl mx-auto py-4 justify-center items-center'>
+					<div className='block sm:hidden max-w-screen sm:max-w-4xl mx-auto py-4 justify-center items-center'>
 						<ScrollBar
 							currentElementRef={horizontalCurrentSlideRef}
 							index={slideIndex}

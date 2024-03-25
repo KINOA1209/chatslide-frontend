@@ -1,8 +1,8 @@
-import { ColorThemeKeys } from '../../slideTemplates';
+import { PaletteKeys } from '../../slideTemplates';
 import { ThemeElements } from '../theme_elements';
 
 export const YaleTemplateThemeConfig: {
-	[key in ColorThemeKeys]?: ThemeElements;
+	[key in PaletteKeys]?: ThemeElements;
 } = {
 	Original: {
 		backgroundColorCover: 'bg-[#03346A]',

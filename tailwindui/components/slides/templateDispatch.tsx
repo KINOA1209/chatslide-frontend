@@ -2,7 +2,7 @@ import Slide from '@/models/Slide';
 import { SlideKeys } from '@/models/Slide';
 import {
 	availableTemplates,
-	ColorThemeKeys,
+	PaletteKeys,
 } from '@/components/slides/slideTemplates';
 import { useUser } from '@/hooks/use-user';
 import {
@@ -45,7 +45,7 @@ export const templateDispatch = (
 		images_position: ImagesPosition[],
 	) => void = () => () => {}, // Replace with your default function if you have one
 	toggleEditMathMode: () => void = () => {}, // Replace with your default function if you have one
-	// palette: ColorThemeKeys = 'Original',
+	// palette: PaletteKeys = 'Original',
 	isCoverPage: boolean = false,
 	layoutOptionNonCover: LayoutKeys = 'Col_2_img_1_layout',
 	layoutOptionCover: LayoutKeys = 'Cover_img_1_layout',
@@ -76,7 +76,7 @@ export const templateDispatch = (
 		: 'Default';
 
 	//TODO: when backenis available
-	// const colorThemeKey = availableColorThemes.hasOwnProperty(slide.color_theme)
+	// const paletteKey = availablePalettes.hasOwnProperty(slide.color_theme)
 	// 	? slide.color_theme
 	// 	: 'Original';
 
@@ -117,7 +117,7 @@ export const templateDispatch = (
 	// this decide which themeelement to use
 	const themeElements = loadCustomizableElements(
 		templateKey as TemplateKeys,
-		slide.palette as ColorThemeKeys,
+		slide.palette as PaletteKeys,
 	);
 	const processContent = (item: string) => {
 		if (isHTML(item)) {

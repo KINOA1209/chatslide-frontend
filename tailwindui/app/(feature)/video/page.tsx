@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Video from '@/components/Video';
 import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
-import { toast, ToastContainer } from 'react-toastify';
 import VideoService from '@/services/VideoService';
 import { useUser } from '@/hooks/use-user';
 import { Loading, Blank } from '@/components/ui/Loading';
+import { useProject } from '@/hooks/use-project';
+import useHydrated from '@/hooks/use-hydrated';
 
 const VideoVisualizer = ({
 	videoUrl,
@@ -38,7 +38,7 @@ const VideoVisualizer = ({
 						finish.{' '}
 					</p>
 					<p>
-						You can safely leave the page and check back later.
+						You can safely leave the page and check back later. Or stay on this page and wait.
 					</p>
 					<p>
 						Once the video is ready, we will also send you an notifying email 📧.
@@ -50,56 +50,23 @@ const VideoVisualizer = ({
 };
 
 export default function WorkflowStep6() {
-	const videoJobId =
-		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('video_job_id') || ''
-			: '';
-	const router = useRouter();
-	const contentRef = useRef<HTMLDivElement>(null);
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [videoUrl, setVideoUrl] = useState<string>();
+	const { project, updateProject } = useProject();
+	const [videoUrl, setVideoUrl] = useState<string>(project?.video_url || '');
 	const [jobStatus, setJobStatus] = useState<string>();
-	const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(project?.video_url ? false : true);
 	const { token } = useUser();
 
-	const showErrorAndRedirect = () => {
-		toast.error(`Your video is not yet ready.`, {
-			position: 'top-center',
-			autoClose: 5000,
-			hideProgressBar: false,
-			closeOnClick: true,
-			pauseOnHover: true,
-			draggable: true,
-			progress: undefined,
-			theme: 'light',
-			containerId: 'reviewVideo',
-		});
-		// router.push('/workflow-review-slides');
-	};
-
-	useEffect(() => {
-		if (typeof sessionStorage !== 'undefined') {
-			const url = sessionStorage.getItem('video_url');
-			if (url) {
-				setVideoUrl(url);
-			} else {
-				if (videoJobId === '') {
-					showErrorAndRedirect();
-				}
-				setIsLoading(true);
-			}
-		}
-		if (isLoading) {
-			checkVideoJobStatus();
-		}
-	}, []);
+	if (!project) {
+		return <Blank>Project not found</Blank>;
+	}
 
 	const checkVideoJobStatus = async () => {
 		if (!isLoading) {
 			return;
 		}
 		try {
-			const jobStatus = await VideoService.getVideoJobStatus(videoJobId, token);
+			const jobStatus = await VideoService.getVideoJobStatus(project.id, token);
 			console.log(
 				`jobStatus = ${jobStatus}, job_status = ${jobStatus.job_status}, video_url = ${jobStatus.video_url}`,
 			);
@@ -110,15 +77,12 @@ export default function WorkflowStep6() {
 			) {
 				if (jobStatus.video_url) {
 					setVideoUrl(jobStatus.video_url);
+					updateProject('video_url', jobStatus.video_url);
 				}
 				setIsLoading(false); // Stop polling once the video is ready or failed
 			}
 		} catch (error) {
 			console.error('Error fetching video status:', error);
-
-			if ((error as Error).message.includes('404')) {
-				showErrorAndRedirect();
-			}
 		}
 	};
 
@@ -132,6 +96,9 @@ export default function WorkflowStep6() {
 		}
 	}, [isLoading]);
 
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
+
 	return (
 		<div className='h-full w-full bg-white flex flex-col'>
 			{/* flex col container for steps, title, etc */}
@@ -144,8 +111,6 @@ export default function WorkflowStep6() {
 				nextIsPaidFeature={true}
 				lastStep={true}
 			/>
-
-			<ToastContainer enableMultiContainer containerId={'video'} />
 
 			<VideoVisualizer videoUrl={videoUrl || ''} status={jobStatus || ''} />
 		</div>

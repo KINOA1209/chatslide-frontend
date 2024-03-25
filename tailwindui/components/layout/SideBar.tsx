@@ -64,7 +64,7 @@ const SideBar = ({ }: SideBarProps) => {
 		}
 
 		else if (window.innerWidth < 1600) {
-			if (path.includes('/workflow-review-slides')) {
+			if (path.includes('/slides')) {
 				setIsSidebarOpen(false);
 			} else {
 				setIsSidebarOpen(true);
@@ -212,7 +212,7 @@ const SideBar = ({ }: SideBarProps) => {
 					)}
 
 					<div className='relative'>
-						<FeedbackButton timeout={path.includes('workflow-review-slides') ? 30 * 1000 : 0} />
+						<FeedbackButton timeout={path.includes('/slides') ? 30 * 1000 : 0} />
 					</div>
 				</div>
 			</div>

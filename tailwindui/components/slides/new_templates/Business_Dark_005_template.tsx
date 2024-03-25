@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ColorThemeKeys, MainSlideProps } from '../slideTemplates';
+import { PaletteKeys, MainSlideProps } from '../slideTemplates';
 import Image, { StaticImageData } from 'next/image';
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import { layoutOptions } from '@/components/slides/slideLayout';
