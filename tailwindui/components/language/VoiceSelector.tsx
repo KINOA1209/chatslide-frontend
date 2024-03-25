@@ -71,9 +71,8 @@ const VoiceSelector: React.FC<{
             <div>
               <Instruction>Gender: </Instruction>
               <DropDown value={selectedGender} onChange={(e) => setSelectedGender(e.target.value as 'female' | 'male')} width='8rem'>
-                {genderOptions.map((gender) => (
-                  <option key={gender} value={gender}>{gender.charAt(0).toUpperCase() + gender.slice(1)}</option>
-                ))}
+								<option key='female' value='female'>👩 Female</option>
+								<option key='male' value='male'>👨 Male</option>
               </DropDown>
             </div>
 

@@ -128,7 +128,7 @@ const Profile = () => {
 			</div>
 			<div className='w-full'>
 				<Instruction>
-					Email
+					📭 Email
 				</Instruction>
 				<div className='w-full justify-center flex flex-row'>
 					<div className='w-full flex grow max-w-[60rem] justify-center'>
@@ -150,7 +150,7 @@ const Profile = () => {
 			<form onSubmit={handleSubmitUsername}>
 				<div className='w-full'>
 					<Instruction>
-						Username
+						🏷️ Username
 					</Instruction>
 
 					<div className='w-full justify-center flex flex-row'>
@@ -180,7 +180,7 @@ const Referral = () => {
 	return (
 		<div className='w-full'>
 			<Instruction>
-				Referral
+				👍 Referral
 			</Instruction>
 			<div className='w-full justify-center flex grow flex-row'>
 				<div className='max-w-[60rem] w-full'>
@@ -234,7 +234,7 @@ const OpenAIKey = () => {
 	return (
 		<div className='w-full'>
 			<Instruction>
-				Your OpenAI Key
+				🔑 Your OpenAI Key
 			</Instruction>
 			<Explanation>
 				Paste your own OpenAI key here so that generation does not cost
@@ -316,7 +316,7 @@ const ApplyPromo = () => {
 	return (
 		<div className='w-full'>
 			<div className='text-green-600 text-md py-1'>
-					Apply Promo Code or License Key
+					🌟 Apply Promo Code or License Key
 			</div>
 			<div className='w-full justify-center flex flex-row'>
 				<div className='flex grow max-w-[60rem] flex-row gap-4 justify-center mt-2'>
@@ -346,7 +346,7 @@ const CreditHistory = () => {
 	return (
 		<div className='w-full'>
 			<Instruction>
-				Credit Balance
+				⭐️ Credit Balance
 			</Instruction>
 			<BigTitle><>{credits}</></BigTitle>
 		</div>

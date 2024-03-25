@@ -41,14 +41,14 @@ import { Session } from 'inspector';
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 3;
 
-const audienceList = [
-	'Researchers',
-	'Students',
-	'Business Clients',
-	'Office Colleagues',
-	'Video Viewers',
-	'Myself',
-];
+const audienceDict = {
+	Researchers: '🔬 Researchers',
+	Students: '📚 Students',
+	Business_Clients: '💼 Business Clients',
+	Office_Colleagues: '👔 Office Colleagues',
+	Video_Viewers: '📱 Video Viewers',
+	Myself: '🧑‍💻 Myself',
+};
 
 const getAudienceFromSceario = (scenarioType: string) => {
 	switch (scenarioType) {
@@ -78,7 +78,6 @@ export default function Topic() {
 	const [topicError, setTopicError] = useState('');
 	const [isGpt35, setIsGpt35] = useState(true);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
-	const [showAudienceInput, setShowAudienceInput] = useState(false);
 	const { isPaidUser } = useUser();
 	const { project, updateOutlines, updateProject, initProject } = useProject();
 	const [searchOnlineScope, setSearchOnlineScope] = useState('');
@@ -305,17 +304,6 @@ export default function Topic() {
 		}
 	};
 
-	// Show/hide audience input based on `audience` value
-	useEffect(() => {
-		if (audienceList.includes(audience)) {
-			setShowAudienceInput(false);
-		} else if (audience === 'unselected') {
-			setShowAudienceInput(false);
-		} else {
-			setShowAudienceInput(true);
-		}
-	}, [audience]);
-
 	// set current page to local storage
 	useEffect(() => {
 		if (typeof window !== 'undefined' && localStorage) {
@@ -453,9 +441,9 @@ export default function Topic() {
 										<option key='unselected' value='unselected' disabled>
 											Choose your audience
 										</option>
-										{audienceList.map((value) => (
-											<option key={value} value={value}>
-												{value}
+										{Object.entries(audienceDict).map(([key, displayname]) => (
+											<option key={key} value={key}>
+												{displayname}
 											</option>
 										))}
 									</DropDown>
