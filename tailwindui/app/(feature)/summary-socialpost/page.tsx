@@ -205,7 +205,7 @@ export default function Topic_SocialPost() {
 			sessionStorage.setItem('resources', updatedResourcesJSON);
 
 			// Redirect to a new page with the data
-			router.push(addIdToRedir('/workflow-review-socialpost', project?.id));
+			router.push(addIdToRedir('/socialpost', project?.id));
 		} catch (error) {
 			console.error('Error:', error);
 			setIsSubmitting(false);

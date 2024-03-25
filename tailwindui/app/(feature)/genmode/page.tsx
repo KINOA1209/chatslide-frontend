@@ -4,18 +4,23 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import '@/app/css/workflow-scenario-choice.css';
 import Image from 'next/image';
-import scenarios from './choices.json';
+import mode_choices from './mode_choices.json';
 import SessionStorage from '@/utils/SessionStorage';
 import AuthService from '@/services/AuthService';
+import { useProject } from '@/hooks/use-project';
 
-const ScenarioChoicePage = () => {
+const GenerationModePage = () => {
 	const router = useRouter(); // Initialize the router
 	const [username, setUsername] = useState(''); // Initialize the username state
+	const workflowType = SessionStorage.getItem('workflowType', 'presentation');
+	const { clearProject } = useProject();
 
-	// Function to navigate to the "workflow-scenario-choice" page
 	const navigate = (type: string) => {
-		sessionStorage.setItem('workflowType', type);
-		router.push('/workflow-scenario-choice');
+		sessionStorage.setItem('generation_mode', type);
+		clearProject();
+		if (workflowType == 'presentation')
+			router.push('/summary');
+		else router.push('/summary-socialpost');
 	};
 
 	useEffect(() => {
@@ -37,32 +42,31 @@ const ScenarioChoicePage = () => {
 				{/* title */}
 				<div className='w-[80vh] text-center text-neutral-800 text-xl sm:text-2xl font-normal font-creato-medium leading-9 tracking-wide whitespace-normal break-words'>
 					Hey {username}, <br />
-					what are you planning to create today?
+					How would you like to generate your output?
 				</div>
-				{/* <div className='w-[80vh] h-8 text-center text-gray-600 text-base font-normal font-creato-medium leading-normal tracking-tight'>
-          {scenarios.description}
-        </div> */}
-				{/* three types of scenarios */}
 				<div className='flex flex-col gap-4 md:gap-6' id='choice_container'>
-					{scenarios.options.map((scenario) => (
+					{mode_choices.options.map((option) => (
 						<div
-							key={scenario.id}
+							key={option.id}
 							className='flex flex-col w-full transition-transform transform-gpu hover:scale-110'
 						>
 							<div
-								className='w-full h-[250px] sm:h-[300px] bg-gray-300 rounded-lg shadow flex justify-center items-center cursor-pointer mb-4'
-								onClick={() => navigate(scenario.id)}
+								className='w-full h-[300px] sm:h-[350px] bg-[#FCFCFC] rounded-lg shadow flex justify-center items-center cursor-pointer mb-4 flex-col'
+								onClick={() => navigate(option.id)}
 							>
 								<Image
-									className='mx-[20px] mh-[20px]'
-									width={281}
-									height={174}
-									alt={scenario.id}
-									src={scenario.imageSrc}
+									className='mx-[80px] mh-[80px]'
+									width={220}
+									height={220}
+									alt={option.id}
+									src={option.imageSrc}
 								/>
-							</div>
-							<div className='text-center my-2 font-creato-medium leading-snug tracking-tight whitespace-nowrap font-bold'>
-								{scenario.title}
+								<div className='text-center text-lg my-3 font-creato-medium leading-snug tracking-wide whitespace-nowrap font-bold'>
+									{option.title}
+								</div>
+								<div className='text-center my-2 font-creato-medium leading-snug tracking-tight whitespace-nowrap font-normal'>
+									{option.description}
+								</div>
 							</div>
 						</div>
 					))}
@@ -72,4 +76,4 @@ const ScenarioChoicePage = () => {
 	);
 };
 
-export default ScenarioChoicePage;
+export default GenerationModePage;

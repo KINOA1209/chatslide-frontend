@@ -33,7 +33,7 @@ export default async function Discover() {
 						<DrlambdaButton
 							isPaidFeature={false}
 						>
-							<Link href='/workflow-scenario-choice'>Start Yours</Link>
+							<Link href='/scenario-choice'>Start Yours</Link>
 						</DrlambdaButton>
 					</div>
 				</div>

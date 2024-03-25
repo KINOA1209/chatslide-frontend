@@ -79,7 +79,7 @@ export default function Dashboard() {
 		if (!surveyFinished) {
 			setShowSurvey(true);
 		} else if (rendered && projects.length === 0) {
-			router.push('/workflow-type-choice');
+			router.push('/type-choice');
 		}
 	};
 
@@ -88,7 +88,7 @@ export default function Dashboard() {
 		console.log('back to choices');
 		// console.log('rendered', rendered)
 		if (rendered && projects.length === 0) {
-			router.push('/workflow-type-choice');
+			router.push('/type-choice');
 		}
 	};
 
@@ -126,7 +126,7 @@ export default function Dashboard() {
 	// function to handle click start new project, clear sessionstorage
 	const handleStartNewProject = () => {
 		sessionStorage.clear();
-		router.push('/workflow-type-choice');
+		router.push('/type-choice');
 	};
 
 	return (

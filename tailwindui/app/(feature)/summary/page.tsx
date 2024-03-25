@@ -275,7 +275,7 @@ export default function Topic() {
 
 				// Redirect to a new page with the data, and id in the query string
 				router.push(
-					addIdToRedir('workflow-edit-outlines', outlinesJson.data.id),
+					addIdToRedir('outlines', outlinesJson.data.id),
 				);
 			} else if (response.status == 402) {
 				setShowPaymentModal(true);

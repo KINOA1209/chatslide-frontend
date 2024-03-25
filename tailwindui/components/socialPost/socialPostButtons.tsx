@@ -4,7 +4,7 @@ import {
 	LeftSlideNavIcon,
 	RightSlideNavIcon,
 	ShareSlidesIcon,
-} from '@/app/(feature)/workflow-review-slides/icons';
+} from '@/app/(feature)/slides/icons';
 import {
 	PresentationModeIcon,
 	ChangeLayoutIcon,

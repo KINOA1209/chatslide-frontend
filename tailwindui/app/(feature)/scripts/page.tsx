@@ -48,7 +48,7 @@ export default function WorkflowStep5() {
 				console.log('project_id:', project_id);
 				updateProject('video_url', '');
 				VideoService.generateVideo(project_id, foldername, voice, token);
-				router.push(addIdToRedir('workflow-review-video'));
+				router.push(addIdToRedir('/video'));
 			} catch (error) {
 				console.error('Error in fetchData:', error);
 				setIsSubmitting(false);

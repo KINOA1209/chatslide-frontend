@@ -179,16 +179,16 @@ const ProgressBox: React.FC<ProgressBoxProps> = ({
 const SOCIAL_POSTS_STEPS = ['Summary', 'Post'];
 const PRESENTATION_STEPS = ['Summary', 'Outlines', 'Design', 'Slides', 'Scripts', 'Video'];
 const SOCIAL_POSTS_REDIRECTS = [
-	'/workflow-generate-socialpost',
-	'/workflow-review-socialpost',
+	'/summary-socialpost',
+	'/socialpost',
 ];
 const PRESENTATION_REDIRECTS = [
-	'/workflow-generate-outlines',
-	'/workflow-edit-outlines',
-	'/workflow-edit-design',
-	'/workflow-review-slides',
-	'/workflow-edit-scripts',
-	'/workflow-review-video',
+	'/summary',
+	'/outlines',
+	'/design',
+	'/slides',
+	'/scripts',
+	'/video',
 ];
 
 export const projectFinishedSteps = (project: Project | null) => {

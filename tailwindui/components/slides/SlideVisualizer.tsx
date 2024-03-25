@@ -96,7 +96,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 				const resp = await response.json();
 				const transcripts = resp.data.res;
 				setTranscripts(transcripts); // and auto-save
-				router.push(addIdToRedir('workflow-edit-scripts'));
+				router.push(addIdToRedir('/scripts'));
 			} else {
 				console.error('Error when generating scripts:', response.status);
 				toast.error(

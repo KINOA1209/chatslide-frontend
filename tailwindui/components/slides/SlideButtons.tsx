@@ -4,12 +4,12 @@ import React, { useState } from 'react';
 import {
 	LeftSlideNavIcon,
 	RightSlideNavIcon,
-} from '@/app/(feature)/workflow-review-slides/icons';
+} from '@/app/(feature)/slides/icons';
 import { GoPlus, GoShare } from 'react-icons/go';
 import { LuTrash2, LuPalette } from 'react-icons/lu';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import Modal from '../ui/Modal';
-import TemplateSelector from '@/app/(feature)/workflow-edit-design/TemplateSelector';
+import TemplateSelector from '@/app/(feature)/design/TemplateSelector';
 import { FiPlay } from 'react-icons/fi';
 import { FaRegClone } from 'react-icons/fa';
 import {
