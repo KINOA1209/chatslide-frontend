@@ -769,6 +769,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							updateSlidePage={updateSlidePage}
 							currentSlideIndex={slideIndex}
 							scale={nonPresentScale}
+							tight={true}
 						/>
 					)}
 
