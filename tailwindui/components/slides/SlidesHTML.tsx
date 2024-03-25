@@ -213,8 +213,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			setPresentScale(scale);
 			setNonPresentScale(
 				calculateNonPresentScale(
-					window.outerWidth,
-					window.outerHeight,
+					window.innerWidth,
+					window.innerHeight,
 					isChatWindowOpen,
 					showScript,
 				),
@@ -586,7 +586,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	}
 
 	return (
-		<div className='w-full h-full flex flex-col items-start justify-between py-4 gap-4 relative'>
+		<div className='w-full h-full flex flex-col items-start justify-between py-2 gap-2 relative'>
 			<div className='w-full flex flex-row items-center justify-center'>
 				<ActionsToolBar
 					undo={undoChange}
@@ -788,7 +788,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					)}
 
 					{/* Slide pages indicator */}
-					<div className='pt-2 flex flex-row items-center'>
+					<div className='flex-row items-center'>
 						<div className='block sm:hidden'>
 							<SlideLeftNavigator
 								currentSlideIndex={slideIndex}
