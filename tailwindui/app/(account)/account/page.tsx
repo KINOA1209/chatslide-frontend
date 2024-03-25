@@ -147,6 +147,18 @@ const Profile = () => {
 					</div>
 				</div>
 			</div>
+			<div className='w-full'>
+				<Instruction>
+					🔐 Change Password
+				</Instruction>
+				<div className='items-center justify-center flex flex-row'>
+					<BigBlueButton onClick={() => {
+						window.location.href = '/reset-password';
+					}}>
+						Change Password
+					</BigBlueButton>
+				</div>
+			</div>
 			<form onSubmit={handleSubmitUsername}>
 				<div className='w-full'>
 					<Instruction>
@@ -316,7 +328,7 @@ const ApplyPromo = () => {
 	return (
 		<div className='w-full'>
 			<div className='text-green-600 text-md py-1'>
-					🌟 Apply Promo Code or License Key
+				🌟 Apply Promo Code or License Key
 			</div>
 			<div className='w-full justify-center flex flex-row'>
 				<div className='flex grow max-w-[60rem] flex-row gap-4 justify-center mt-2'>
