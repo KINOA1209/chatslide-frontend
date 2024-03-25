@@ -78,7 +78,7 @@ const TemplateSelector: React.FC<{
 				className={`transition-opacity duration-300 ease-in-out gap-1 flex flex-col justify-start`}
 			>
 				<div
-					className={`templateAndPaletteChoice flex flex-row justify-between items-center`}
+					className={`templateAndPaletteChoice flex flex-col sm:flex-row justify-between items-start sm:items-center`}
 				>
 					<div className={`templateChoice flex flex-col `}>
 						<span className='text-md font-bold'>Select your template:</span>
