@@ -104,21 +104,6 @@ export const useLocalImgs = (
 
 export type PaletteKeys = 'Original' | 'Blue' | 'Red' | 'Yellow' | '';
 
-export const paletteDisplayNames = (key: PaletteKeys) => {
-	switch (key) {
-		case 'Original':
-			return '⬜️ Original';
-		case 'Blue':
-			return '🟦 Blue';
-		case 'Red':
-			return '🟥 Red';
-		case 'Yellow':
-			return '🟨 Yellow';
-		default:
-			return '⬜️ Original';
-	}
-}
-
 // add template keys here
 export const availableTemplates = {
 	Stanford: Stanford_school_template,

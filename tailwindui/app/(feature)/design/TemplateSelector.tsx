@@ -2,7 +2,6 @@ import { DropDown } from '@/components/button/DrlambdaButton';
 import {
 	PaletteKeys,
 	TemplateKeys,
-	paletteDisplayNames,
 } from '@/components/slides/slideTemplates';
 import availablePalettes from '@/components/slides/palette';
 import dynamic from 'next/dynamic';
@@ -12,6 +11,21 @@ const SlideDesignPreview = dynamic(
 	() => import('@/components/slides/SlideDesignPreview'),
 	{ ssr: false },
 );
+
+export const paletteDisplayNames = (key: PaletteKeys) => {
+	switch (key) {
+		case 'Original':
+			return '⬜️ Original';
+		case 'Blue':
+			return '🟦 Blue';
+		case 'Red':
+			return '🟥 Red';
+		case 'Yellow':
+			return '🟨 Yellow';
+		default:
+			return '⬜️ Original';
+	}
+}
 
 const TemplateSelector: React.FC<{
 	template: TemplateKeys | string;
