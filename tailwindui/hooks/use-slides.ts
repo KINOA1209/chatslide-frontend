@@ -29,19 +29,22 @@ const useIsShowingLogo = createBearStore<boolean>()(
 	false,
 );
 
-export enum SlidesStatus {
-	NotInited,
-	Initing,
-	Inited,
-}
 
 export enum SaveStatus {
 	UpToDate,
 	Saving,
 }
 
+const useSaveStatus = createBearStore<SaveStatus>()('saveStatus', SaveStatus.UpToDate, false);
+
+export enum SlidesStatus {
+	NotInited,
+	Initing,
+	Inited,
+}
+
+
 let slidesStatus: SlidesStatus = SlidesStatus.NotInited;
-let saveStatus: SaveStatus = SaveStatus.UpToDate;
 
 export const useSlides = () => {
 	const { slides, setSlides } = useSlidesBear();
@@ -54,7 +57,7 @@ export const useSlides = () => {
 	const { isPresenting, setIsPresenting } = usePresenting();
 	const { isShowingLogo, setIsShowingLogo } = useIsShowingLogo();
 	const { updateProject } = useProject();
-
+	const { saveStatus, setSaveStatus } = useSaveStatus();
 	const { clearChatHistory } = useChatHistory();
 
 	// to control show or not show logo
@@ -342,7 +345,7 @@ export const useSlides = () => {
 		is_cover_page: boolean = false,
 		new_page_count: number = 0,
 	) => {
-		saveStatus = SaveStatus.Saving;
+		setSaveStatus(SaveStatus.Saving);
 
 		const foldername = sessionStorage.getItem('foldername');
 		const project_id = project?.id;
@@ -375,7 +378,7 @@ export const useSlides = () => {
 		})
 			.then((response) => {
 				if (response.ok) {
-					saveStatus = SaveStatus.UpToDate;
+					setSaveStatus(SaveStatus.UpToDate);
 					console.log('Auto-save successful.');
 				} else {
 					// Handle save error
@@ -409,6 +412,8 @@ export const useSlides = () => {
 		version,
 		updateVersion,
 		saveStatus,
+		SaveStatus,
+		syncSlides,
 		setTranscripts,
 		isShowingLogo,
 		setIsShowingLogo,

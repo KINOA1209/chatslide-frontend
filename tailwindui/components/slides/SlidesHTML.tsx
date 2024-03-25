@@ -57,6 +57,7 @@ import { ScrollBar } from '../ui/ScrollBar';
 import Image from 'next/image';
 import showLogo from 'public/icons/button/show_logo.svg';
 import hideLogo from 'public/icons/button/hide_logo.svg';
+import { Explanation } from '../ui/Text';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -143,6 +144,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		gotoPage,
 		version,
 		saveStatus,
+		SaveStatus,
 		isShowingLogo,
 		toggleIsShowingLogo,
 	} = useSlides();
@@ -227,7 +229,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	}, [isChatWindowOpen]);
 
 	useEffect(() => {
-		if(showScript) {
+		if (showScript) {
 			setNonPresentScale(
 				calculateNonPresentScale(
 					window.outerWidth,
@@ -271,7 +273,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		document.addEventListener('wheel', handleScroll);
 		return () => {
 			document.removeEventListener('keydown', handleKeyDown);
-			document.removeEventListener('click', handleClick);	
+			document.removeEventListener('click', handleClick);
 			document.removeEventListener('wheel', handleScroll);
 		};
 	});
@@ -511,10 +513,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			false, // canEdit
 			exportToPdfMode, //exportToPdfMode
 			false, //editMathMode
-			() => {}, //setIsEditMode
-			() => {}, // handleSlideEdit
-			() => () => {}, // updateImgUrlArray,
-			() => {}, // toggleEditMode,
+			() => { }, //setIsEditMode
+			() => { }, // handleSlideEdit
+			() => () => { }, // updateImgUrlArray,
+			() => { }, // toggleEditMode,
 			// slide.palette,
 			index === 0, // isCoverPage
 			slide.layout, // layoutOptionNonCover
@@ -736,7 +738,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							/>
 						</div>
 
-						<div className='flex flex-col items-end SlidesStep-3 SlidesStep-4 gap-2'>
+						<div className='flex flex-col items-end SlidesStep-3 SlidesStep-4 gap-0'>
+							<div className='mr-2'>
+								<Explanation>
+									{saveStatus === SaveStatus.Saving ? 'Saving...' : 'Saved'}
+								</Explanation>
+							</div>
 							{/* main container for viewing and editing */}
 							<SlideContainer
 								slide={slides[slideIndex]}
