@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { ResourceItem } from '@/components/ui/ResourceItem';
 import Project from '@/models/Project';
