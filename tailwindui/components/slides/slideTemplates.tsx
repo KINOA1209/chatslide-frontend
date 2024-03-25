@@ -150,6 +150,24 @@ export const templateDisplayNames = {
 	UPenn: '🏛️ University of Pennsylvania',
 };
 
+export const getTemplateFromAudicence = (audience: string): string => {
+	switch (audience) {
+		case 'Business Clients':
+			return 'Business_Dark_005';
+		case 'Video Viewers':
+			return 'Fun_Vibrant_007';
+		case 'Students':
+			return 'Fun_Education_004';
+		case 'Researchers':
+			return 'Fun_Education_004';
+		case 'Office Colleagues':
+			return 'Business_Light_006';
+		case 'Myself':
+			return 'Clean_Lifestyle_003';
+	}
+	return 'Clean_Lifestyle_003';
+}
+
 // Define a type for template keys
 type AvailableTemplateKeys = keyof typeof availableTemplates;
 // Define a type for additional template keys

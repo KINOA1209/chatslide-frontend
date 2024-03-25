@@ -25,16 +25,17 @@ import TemplateSelector from './TemplateSelector';
 import useTourStore from '@/components/user_onboarding/TourStore';
 
 import availablePalettes from '@/components/slides/palette';
+import { TemplateKeys, getTemplateFromAudicence } from '@/components/slides/slideTemplates';
 // const { changeTemplate } = useSlides();
 
 export default function DesignPage() {
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
-	const [template, setTemplate] = useState('Clean_Lifestyle_003' as string);
+
 	const [colorPalette, setColorPalette] = useState('Original' as string);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [isGpt35, setIsGpt35] = useState(true);
-	const { outlines } = useProject();
-
+	const { outlines, project } = useProject();
+	const [template, setTemplate] = useState<string>(getTemplateFromAudicence(project?.audience || ''));
 	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
 		typeof window !== 'undefined' && sessionStorage.selectedLogo != undefined
 			? JSON.parse(sessionStorage.selectedLogo)
