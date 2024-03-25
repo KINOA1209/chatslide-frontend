@@ -246,26 +246,62 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	};
 
 	const openPresent = () => {
-		toast.success(
-			'Use ESC to exit presentation mode, use arrow keys to navigate slides.',
-		);
 		setIsPresenting(true);
 		if (showScript) openScriptPage();
 	};
 
 	useEffect(() => {
 		document.addEventListener('keydown', handleKeyDown);
+		// click to go to next page
+		document.addEventListener('click', handleClick);
+		document.addEventListener('wheel', handleScroll);
 		return () => {
 			document.removeEventListener('keydown', handleKeyDown);
+			document.removeEventListener('click', handleClick);	
+			document.removeEventListener('wheel', handleScroll);
 		};
 	});
+
+	function handleClick(event: MouseEvent) {
+		if (isPresenting) {
+			if (slideIndex < slides.length - 1) {
+				gotoPage(slideIndex + 1);
+			} else {
+				setIsPresenting(false);
+			}
+		}
+	}
+
+	let scrollTimeout: NodeJS.Timeout;
+
+	function handleScroll(event: WheelEvent) {
+		if (isPresenting) {
+			clearTimeout(scrollTimeout);
+			scrollTimeout = setTimeout(() => {
+				if (event.deltaY > 0) {
+					if (slideIndex < slides.length - 1) {
+						gotoPage(slideIndex + 1);
+					} else {
+						setIsPresenting(false);
+						// Optionally, trigger an animation or sound to indicate the end of the presentation
+					}
+				} else if (event.deltaY < 0 && slideIndex > 0) {
+					gotoPage(slideIndex - 1);
+				}
+			}, 100); // Debounce time of 100ms
+		}
+	}
 
 	function handleKeyDown(event: KeyboardEvent) {
 		if (isViewing || isPresenting) {
 			console.log('key pressed', event.key);
 			// todo: update iseditmode
-			if (event.key === 'ArrowRight' && slideIndex < slides.length - 1) {
-				gotoPage(slideIndex + 1);
+			if (event.key === 'ArrowRight') {
+				if (slideIndex < slides.length - 1) {
+					gotoPage(slideIndex + 1);
+				} else {
+					setIsPresenting(false);
+				}
 			} else if (event.key === 'ArrowLeft' && slideIndex > 0) {
 				gotoPage(slideIndex - 1);
 			} else if (event.key === 'Escape') {
