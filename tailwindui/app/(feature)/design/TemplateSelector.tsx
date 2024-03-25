@@ -2,6 +2,7 @@ import { DropDown } from '@/components/button/DrlambdaButton';
 import {
 	ColorThemeKeys,
 	TemplateKeys,
+	paletteDisplayNames,
 } from '@/components/slides/slideTemplates';
 import availablePalettes from '@/components/slides/palette';
 import dynamic from 'next/dynamic';
@@ -98,18 +99,17 @@ const TemplateSelector: React.FC<{
 								UPenn: 'University of Pennsylvania',
 							}).map(([key, value]) => (
 								<option key={key} value={key}>
-									{`${value} (${
-										availablePalettes[key as TemplateKeys]?.length ?? 0
-									} color theme(s))`}
+									{`${value} 
+									${(availablePalettes[key as TemplateKeys]?.length ?? 0) > 1 ? '(🎨 available)' : ''}`}
 								</option>
 							))}
 						</DropDown>
 					</div>
 					{/* Render color theme options only if there are more than one */}
-					{colorThemeOptions && (
+					{colorThemeOptions.length > 1 && (
 						<div className={`colorThemeChoice flex flex-col `}>
 							<span className='text-md font-bold'>
-								Select your Color Theme:
+								Select your palette color:
 							</span>
 							<DropDown
 								width='15rem'
@@ -125,7 +125,7 @@ const TemplateSelector: React.FC<{
 								{/* Map over colorThemeOptions to generate option elements */}
 								{colorThemeOptions.map((colorThemeOption, index) => (
 									<option key={index} value={colorThemeOption}>
-										{colorThemeOption}
+										{paletteDisplayNames(colorThemeOption as ColorThemeKeys)}
 									</option>
 								))}
 							</DropDown>
