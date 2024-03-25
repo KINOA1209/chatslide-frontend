@@ -8,6 +8,7 @@ import {
 import { useUser } from './use-user';
 import { useChatHistory } from './use-chat-history';
 import { useProject } from './use-project';
+import { debounce } from '@/utils/sleep';
 
 const useSlidesBear = createBearStore<Slide[]>()('slides', [], true);
 const useSlideIndex = createBearStore<number>()('slideIndex', 0, true);
@@ -149,7 +150,7 @@ export const useSlides = () => {
 
 		if (rerender) updateVersion();
 		updateSlideHistory(newSlides);
-		syncSlides(newSlides, index === 0);
+		debouncedSyncSlides(newSlides, index === 0);
 	};
 
 	const gotoPage = (index: number) => {
@@ -390,6 +391,8 @@ export const useSlides = () => {
 				console.error('Auto-save failed:', error);
 			});
 	};
+
+	const debouncedSyncSlides = debounce(syncSlides, 500);
 
 	return {
 		slides,
