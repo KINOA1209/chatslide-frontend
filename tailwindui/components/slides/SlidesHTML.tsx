@@ -1,7 +1,6 @@
 import React, { use, useEffect, useRef, useState } from 'react';
 import { useUser } from '@/hooks/use-user';
 import PaywallModal from '../paywallModal';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ExportToPdfButton from './ExportButton';
 import { DuplicateSlidePageButton } from '@/components/slides/SlideButtons';
@@ -52,7 +51,6 @@ import Chart from '@/models/Chart';
 import ImagesPosition from '@/models/ImagesPosition';
 import { Panel } from '../layout/Panel';
 import { useProject } from '@/hooks/use-project';
-import { GoEye, GoEyeClosed } from 'react-icons/go';
 import ScriptWindow from '../script/ScriptWindow';
 import ReactDOM from 'react-dom';
 import { ScrollBar } from '../ui/ScrollBar';
@@ -101,15 +99,17 @@ export const calculateNonPresentScale = (
 	width: number,
 	height: number,
 	isChatWindowOpen = false,
+	showScript = false,
 ) => {
 	if (width < 640) {
 		// mobile, layout vertically
 		return Math.min(1, Math.min(width / 960, (height - 200) / 540) * 0.8);
 	} else {
 		const chatWindowWidth = width > 1280 && isChatWindowOpen ? 250 : 0;
+		const scriptEditorHeight = showScript ? 200 : 0;
 		return Math.min(
 			1,
-			Math.min((width - 400 - chatWindowWidth) / 960, (height - 300) / 540),
+			Math.min((width - 400 - chatWindowWidth) / 960, (height - 300 - scriptEditorHeight) / 540),
 		);
 	}
 };
@@ -216,6 +216,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					window.outerWidth,
 					window.outerHeight,
 					isChatWindowOpen,
+					showScript,
 				),
 			);
 		};
@@ -224,6 +225,19 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 		return () => window.removeEventListener('resize', handleResize);
 	}, [isChatWindowOpen]);
+
+	useEffect(() => {
+		if(showScript) {
+			setNonPresentScale(
+				calculateNonPresentScale(
+					window.outerWidth,
+					window.outerHeight,
+					isChatWindowOpen,
+					showScript,
+				),
+			);
+		}
+	}, [showScript]);
 
 	const selectTemplateAndColorPalette = (
 		newTemplate: string | TemplateKeys, // Accepts string or TemplateKeys
