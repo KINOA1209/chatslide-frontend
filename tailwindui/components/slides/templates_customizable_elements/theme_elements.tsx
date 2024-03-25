@@ -1,6 +1,6 @@
 // YourConfig.tsx
 import {
-	ColorThemeKeys,
+	PaletteKeys,
 	TemplateKeys,
 } from '../slideTemplates';
 
@@ -51,16 +51,16 @@ export type ThemeElements = {
 
 export type ThemeConfig = {
 	[templateName in TemplateKeys]?: {
-		[key in ColorThemeKeys]?: ThemeElements;
+		[key in PaletteKeys]?: ThemeElements;
 	};
 };
 
-// type TemplateColorThemes<T extends TemplateKeys> =
-// 	keyof availableColorThemesObject[T];
+// type TemplatePalettes<T extends TemplateKeys> =
+// 	keyof availablePalettesObject[T];
 
 // export type ThemeConfig = {
 // 	[templateName in TemplateKeys]?: {
-// 		[colorTheme: string]: ThemeElements; // Use conditional type to ensure colorTheme matches available color options for the current template
+// 		[palette: string]: ThemeElements; // Use conditional type to ensure palette matches available color options for the current template
 // 	};
 // };
 

@@ -1,8 +1,8 @@
-import { ColorThemeKeys } from '../../slideTemplates';
+import { PaletteKeys } from '../../slideTemplates';
 import { ThemeElements } from '../theme_elements';
 
 export const Business_Dark_005_TemplateThemeConfig: {
-	[key in ColorThemeKeys]?: ThemeElements;
+	[key in PaletteKeys]?: ThemeElements;
 } = {
 	Original: {
 		backgroundUrlCoverImg1:

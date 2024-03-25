@@ -1,6 +1,6 @@
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import {
-	ColorThemeKeys,
+	PaletteKeys,
 	TemplateKeys,
 } from '@/components/slides/slideTemplates';
 import Chart, { Group } from '@/models/Chart';
@@ -67,7 +67,7 @@ export default class Slide {
 	background_url?: string;
 	transcript?: string;
 	additional_images?: string[];
-	palette: ColorThemeKeys;
+	palette: PaletteKeys;
 
 	constructor() {
 		const emptyGroup: Group = {

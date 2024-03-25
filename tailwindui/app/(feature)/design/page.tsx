@@ -125,13 +125,13 @@ export default function DesignPage() {
 						<TemplateSelector
 							template={template}
 							setTemplate={setTemplate}
-							setColorTheme={setColorPalette}
-							colorThemeOptions={
+							setPalette={setColorPalette}
+							paletteOptions={
 								availablePalettes[
 								template as keyof typeof availablePalettes
 								] || ['Original']
 							}
-							colorTheme={colorPalette}
+							palette={colorPalette}
 						/>
 
 						{/* images */}

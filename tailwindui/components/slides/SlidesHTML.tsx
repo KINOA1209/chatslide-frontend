@@ -8,7 +8,7 @@ import { DuplicateSlidePageButton } from '@/components/slides/SlideButtons';
 import ShareButton from '@/components/button/ShareButton';
 import './slidesHTML.css';
 import {
-	ColorThemeKeys,
+	PaletteKeys,
 	availableTemplates,
 } from '@/components/slides/slideTemplates';
 import { LayoutKeys } from '@/components/slides/slideLayout';
@@ -71,7 +71,7 @@ type SlidesHTMLProps = {
 
 export const loadCustomizableElements = (
 	templateName: string,
-	colorThemeName: string = 'Original',
+	paletteName: string = 'Original',
 ) => {
 	// return (
 	// 	themeConfigData[templateName as keyof ThemeConfig] ||
@@ -81,7 +81,7 @@ export const loadCustomizableElements = (
 		themeConfigData[templateName as keyof ThemeConfig] ||
 		Default_TemplateThemeConfig;
 	const selectedThemeElements =
-		themeElements[colorThemeName as ColorThemeKeys] ||
+		themeElements[paletteName as PaletteKeys] ||
 		(Default_TemplateThemeConfig['Original'] as ThemeElements);
 	return selectedThemeElements;
 };
@@ -132,7 +132,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		duplicatePage,
 		deleteSlidePage,
 		changeTemplate,
-		changeColorTheme,
+		changePalette,
 		chageTemplateAndColorPalette,
 		undoChange,
 		redoChange,
@@ -227,11 +227,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	const selectTemplateAndColorPalette = (
 		newTemplate: string | TemplateKeys, // Accepts string or TemplateKeys
-		newColorPalette: string | ColorThemeKeys,
+		newColorPalette: string | PaletteKeys,
 	) => {
 		chageTemplateAndColorPalette(
 			newTemplate as TemplateKeys,
-			newColorPalette as ColorThemeKeys,
+			newColorPalette as PaletteKeys,
 		);
 	};
 	// Function to change the template of slides starting from the second one
@@ -240,9 +240,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		changeTemplate(newTemplate as TemplateKeys);
 	};
 
-	const selectColorTheme = (newColorTheme: string) => {
-		console.log('Changing template color theme to:', newColorTheme);
-		changeColorTheme(newColorTheme as ColorThemeKeys);
+	const selectPalette = (newPalette: string) => {
+		console.log('Changing template color theme to:', newPalette);
+		changePalette(newPalette as PaletteKeys);
 	};
 
 	const openPresent = () => {
@@ -309,7 +309,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			} else if (className === 'logo') {
 				currentSlide.logo = content as string;
 			} else if (className === 'palette') {
-				currentSlide.palette = content as ColorThemeKeys;
+				currentSlide.palette = content as PaletteKeys;
 			} else if (className === 'images') {
 				currentSlide.images = [...(content as string[])]; // deep copy
 			} else if (className === 'content') {
@@ -566,10 +566,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 							<ChangeTemplateOptions
 								currentTemplate={slides[slideIndex].template}
-								currentColorTheme={slides[slideIndex].palette}
+								currentPalette={slides[slideIndex].palette}
 								templateOptions={Object.keys(availableTemplates)}
 								onChangeTemplate={selectTemplate}
-								onChangeColorTheme={selectColorTheme}
+								onChangePalette={selectPalette}
 								onChangeTemplateAndColorPalette={selectTemplateAndColorPalette}
 							/>
 							<LayoutChanger
