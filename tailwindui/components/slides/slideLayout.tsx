@@ -224,15 +224,27 @@ export const Cover_img_1_layout = ({
 		};
 
 	return (
-		<div style={layoutElements.canvaCSS}>
-			<div style={layoutElements.columnCSS}>
-				<div style={{ ...layoutElements.userNameCSS, zIndex: 60 }}>
+		<div className={`SlideCanvas`} style={layoutElements.canvaCSS}>
+			<div
+				className={`SlideUserNameAndHeadColumn`}
+				style={layoutElements.columnCSS}
+			>
+				<div
+					className={`SlideUserName`}
+					style={{ ...layoutElements.userNameCSS, zIndex: 60 }}
+				>
 					{user_name}
 				</div>
-				<div style={{ ...layoutElements.titleCSS, zIndex: 50 }}>{title}</div>
+				<div
+					className={`SlideUserNameHead`}
+					style={{ ...layoutElements.titleCSS, zIndex: 50 }}
+				>
+					{title}
+				</div>
 			</div>
 
 			<div
+				className={`SlideImageContainer`}
 				style={{
 					...layoutElements.imageContainerCSS,
 					zIndex: 20,
@@ -249,11 +261,15 @@ export const Cover_img_1_layout = ({
 					canEdit={canEdit}
 					images_position={images_position}
 					layoutElements={layoutElements}
+					customImageStyle={layoutElements.imageCSS}
 					additional_images={imgs.slice(3)}
 				/>
 			</div>
 
-			<div style={layoutElements.visualElementsCSS}>
+			<div
+				className={`SlideVisualElement`}
+				style={layoutElements.visualElementsCSS}
+			>
 				{themeElements.backgroundUrlCoverImg1 && (
 					<Image
 						width={960}
@@ -266,6 +282,7 @@ export const Cover_img_1_layout = ({
 				)}
 			</div>
 			<div
+				className={`SlideLogo`}
 				style={{
 					...layoutElements.logoCSS,
 					display: `${isShowingLogo ? 'contents' : 'none'}`,

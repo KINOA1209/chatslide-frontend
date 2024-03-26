@@ -171,3 +171,13 @@ export type TemplateKeys = AvailableTemplateKeys | AdditionalTemplateKeys;
 // export const TemplateKeys: TemplateKeys[] = Object.keys(
 // 	availableTemplates,
 // ) as TemplateKeys[];
+
+export const uploadedBackgroundImgStyle = {
+	zIndex: 0,
+	width: '100%',
+	height: '100%',
+	position: 'absolute' as const, // Specify 'absolute' as a valid value for position
+	pointerEvents: 'none' as const,
+	top: '0%',
+	opacity: '0.5',
+};

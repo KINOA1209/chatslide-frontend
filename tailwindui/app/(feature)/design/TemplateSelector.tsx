@@ -21,10 +21,10 @@ const colorPreviews: Record<PaletteKeys, string> = {
 	Blue: '#7E96F7',
 	Red: '#FF0000',
 	Yellow: '#FFFF00',
-	'Dynamic Purple': '#000000',
-	'Light Cyan': '#FFFFFF',
-	'Royal Blue': '#FFFFFF',
-	'Bees Wax': '#FFFFFF',
+	'Dynamic Purple': '#A388F7',
+	'Light Cyan': '#ECF4F9',
+	'Royal Blue': '#5A55F4',
+	'Bees Wax': '#FDF1C4',
 	// Add more color previews for other palette keys if needed
 };
 
