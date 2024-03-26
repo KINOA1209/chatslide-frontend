@@ -478,7 +478,6 @@ export const Col_2_img_0_layout = ({
 
 	const handleAddColumn = () => {
 		// Store the previous number of items
-		// const prevItemCount = slides[slideIndex].content.length;
 
 		// Call function to add new content item
 		console.log('add a new content item column:');
@@ -500,7 +499,7 @@ export const Col_2_img_0_layout = ({
 					}
 					style={{
 						...themeElements.contentFontCSS_non_vertical_content,
-						fontSize: '24pt',
+						fontSize: '16pt',
 					}}
 					isVerticalContent={false}
 					templateKey={slides[slideIndex].template}
@@ -527,7 +526,7 @@ export const Col_2_img_0_layout = ({
 			</div>
 
 			<div
-				className={`w-full felx SlideContentContainer`}
+				className={`w-full flex SlideContentContainer`}
 				style={{ ...layoutElements.contentContainerCSS, zIndex: 40 }}
 			>
 				<div className='Column1' style={layoutElements.contentCSS}>
