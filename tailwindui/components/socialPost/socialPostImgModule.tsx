@@ -8,6 +8,7 @@ import PaywallModal from '@/components/paywallModal';
 import ResourceService from '@/services/ResourceService';
 import Image from 'next/image';
 import { useUser } from '@/hooks/use-user';
+import { useProject } from '@/hooks/use-project';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -51,6 +52,7 @@ export const ImgModule = ({
 	const [selectedQueryMode, setSelectedQueryMode] = useState<ImgQueryMode>(
 		ImgQueryMode.RESOURCE,
 	);
+	const { project } = useProject();
 
 	useEffect(() => {
 		//console.log(selectedQueryMode)
@@ -188,18 +190,6 @@ export const ImgModule = ({
 				}
 				return resource.thumbnail_url;
 			});
-
-			// extend the array to include images from pdf_images inside sessionStorage
-			const pdf_images = JSON.parse(
-				sessionStorage.getItem('pdf_images') || '[]',
-			);
-			const pdfImageResources = pdf_images.map((pdf_image: string) => {
-				return {
-					thumbnail_url: pdf_image,
-				};
-			});
-			resourceTemps.push(...pdfImageResources);
-			setResources(pdfImageResources);
 		});
 	};
 

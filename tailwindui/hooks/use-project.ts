@@ -75,6 +75,14 @@ export const useProject = () => {
 		});
 	};
 
+	const bulkUpdateProject = (dict: Project) => {
+		console.log('-- bulkUpdateProject', dict);
+		setProject((currentProject) => {
+			// 'currentProject' is the most up-to-date state of 'project'
+			return { ...currentProject, ...dict } as Project;
+		});
+	}
+
 	const updateIsShared = (is_shared: boolean, is_public: boolean=false) => {
 		if(!project) return;
 		setIsShared(is_shared);
@@ -101,6 +109,7 @@ export const useProject = () => {
 		projectStatus,
 		initProject,
 		updateProject,
+		bulkUpdateProject,
 		clearProject,
 		resources,
 		setResources,

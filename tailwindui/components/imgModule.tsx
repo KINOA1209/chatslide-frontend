@@ -254,10 +254,8 @@ export const ImgModule = ({
 				return { thumbnail_url: resource.thumbnail_url };
 			});
 
-			// extend the array to include images from pdf_images inside sessionStorage
-			const pdf_images = JSON.parse(
-				sessionStorage.getItem('pdf_images') || '[]',
-			);
+			// extend the array to include images from pdf_images
+			const pdf_images = project?.pdf_images || [];
 			const pdfImageResources = pdf_images.map((pdf_image: string) => {
 				return {
 					thumbnail_url: pdf_image,

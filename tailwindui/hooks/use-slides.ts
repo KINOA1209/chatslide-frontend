@@ -348,7 +348,7 @@ export const useSlides = () => {
 	) => {
 		setSaveStatus(SaveStatus.Saving);
 
-		const foldername = sessionStorage.getItem('foldername');
+		const foldername = project?.foldername;
 		const project_id = project?.id;
 
 		if (!foldername || !project_id || !token) {

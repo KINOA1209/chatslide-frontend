@@ -1,3 +1,6 @@
+'use client';
+
+
 import { DropDown } from '@/components/button/DrlambdaButton';
 import {
 	PaletteKeys,

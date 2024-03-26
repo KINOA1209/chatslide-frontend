@@ -8,6 +8,7 @@ import SocialPostContainer from '@/components/socialPost/socialPostContainer';
 import { templateDispatch as defaultTemplateDispatch } from '@/components/socialPost/socialPostTemplateDispatch';
 import { templateDispatch as defaultTemplateDispatch2 } from '@/components/socialPost//socialPostTemplate2Dispatch';
 import { templateDispatch as defaultTemplateDispatch3 } from '@/components/socialPost/socialPostTemplate3Dispatch';
+import SessionStorage from '@/utils/SessionStorage';
 
 type SocialPostPostButtonProps = {
 	socialPostSlides: SocialPostSlide[];
@@ -16,10 +17,7 @@ type SocialPostPostButtonProps = {
 const SocialPostPostButton: React.FC<SocialPostPostButtonProps> = ({
 	socialPostSlides,
 }) => {
-	const res_scenario =
-		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('scenarioType')
-			: '';
+	const res_scenario = SessionStorage.getItem('scenarioType');
 	const [isProcessing, setIsProcessing] = useState(false);
 	const [slideRef, setSlideRef] = useState(React.createRef<HTMLDivElement>());
 	const [slideIndex, setSlideIndex] = useState(0);

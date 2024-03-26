@@ -1,3 +1,6 @@
+'use client';
+
+
 import React, { useState, useRef, useEffect, Fragment } from 'react';
 import { useRouter } from 'next/navigation';
 import 'react-toastify/dist/ReactToastify.css';
@@ -9,6 +12,7 @@ import { toast } from 'react-toastify';
 import { useUser } from '@/hooks/use-user';
 import { useProject } from '@/hooks/use-project';
 import { addIdToRedir } from '../../utils/redirWithId';
+import Project from '@/models/Project';
 
 // this class has no UI, it is used to submit the outline to the backend when isSubmitting is true
 const GenerateSlidesSubmit = ({
@@ -37,7 +41,7 @@ const GenerateSlidesSubmit = ({
 	const router = useRouter();
 	const { token } = useUser();
 	const { initSlides } = useSlides();
-	const { project, updateProject } = useProject();
+	const { project, updateProject, bulkUpdateProject } = useProject();
 
 	useEffect(() => {
 		if (isSubmitting) {
@@ -45,7 +49,7 @@ const GenerateSlidesSubmit = ({
 		}
 	}, [isSubmitting]);
 
-	async function generateSlidesPreview(formData: any, token: string) {
+	async function generateSlides(formData: any, token: string) {
 		const response = await fetch('/api/generate_slides', {
 			method: 'POST',
 			headers: {
@@ -58,22 +62,19 @@ const GenerateSlidesSubmit = ({
 		if (response.ok) {
 			const resp = await response.json();
 			const presentation_slides = JSON.stringify(resp.data.res);
-			sessionStorage.setItem(
-				'presentation_slides',
-				JSON.stringify(resp.data.res),
-			);
 			initSlides(ProjectService.parseSlides(presentation_slides));
-			updateProject('presentation_slides', presentation_slides);
-			updateProject('description', resp.data.description);
-			updateProject('keywords', resp.data.keywords);
-			updateProject('additional_images', resp.data.additional_images);
+			bulkUpdateProject({
+				description: resp.data.description,
+				keywords: resp.data.keywords,
+				additional_images: resp.data.additional_images,
+			} as Project);
 			router.push(addIdToRedir('/slides'));
 		} else {
 			setIsSubmitting(false);
 			console.error('Error when generating slides:', response.status);
 			toast.error(
 				'Server is busy now. Please try again later. Reference code: ' +
-					project?.id,
+				project?.id,
 			);
 		}
 	}
@@ -81,49 +82,25 @@ const GenerateSlidesSubmit = ({
 	const handleSubmit = async () => {
 		let formData: any = {};
 
-		sessionStorage.removeItem('extraKnowledge');
-		sessionStorage.removeItem('outline_item_counts');
+		if (!project) {
+			console.error('Project not found');
+			return;
+		}
 
-		const audience =
-			typeof window !== 'undefined' ? sessionStorage.getItem('audience') : null;
-		const foldername =
-			typeof window !== 'undefined'
-				? sessionStorage.getItem('foldername')
-				: null;
-		const topic =
-			typeof window !== 'undefined' ? sessionStorage.getItem('topic') : null;
-		const project_id = project?.id || '';
-		const selectedResources =
-			typeof window !== 'undefined'
-				? JSON.parse(sessionStorage.getItem('selectedResources') || '')
-				: null;
-		const addEquations =
-			typeof window !== 'undefined'
-				? sessionStorage.getItem('addEquations')
-				: null;
-		const extraKnowledge = project?.extra_knowledge || null;
-		const outline_item_counts = project?.outline_item_counts || null;
-		const scenarioType =
-			typeof window !== 'undefined'
-				? sessionStorage.getItem('scenarioType')
-				: null;
-		const searchOnline =
-			typeof window !== 'undefined'
-				? sessionStorage.getItem('search_online')
-				: null;
+		const project_id = project.id;
+		const selectedResources = project.resources || [];
 
 		formData = {
 			outlines: JSON.stringify({ ...outlines }),
-			audience: audience,
-			foldername: foldername,
-			topic: topic,
-			language: project?.language,
-			project_id: project_id,
-			addEquations: addEquations,
-			extraKnowledge: extraKnowledge,
-			outline_item_counts: outline_item_counts,
-			model_name: isGPT35 ? 'gpt-3.5-turbo' : 'gpt-4',
-			scenario_type: scenarioType,
+			audience: project.audience,
+			foldername: project.foldername,
+			topic: project.topic,
+			language: project.language,
+			project_id: project.id,
+			extraKnowledge: project.extra_knowledge,
+			outline_item_counts: project.outline_item_counts,
+			// model_name: isGPT35 ? 'gpt-3.5-turbo' : 'gpt-4',
+			scenario_type: project.scenario_type,
 			// endIndex: 2,  // generate first 2 sections only
 			template: template,
 			palette: palette,
@@ -131,27 +108,18 @@ const GenerateSlidesSubmit = ({
 			logo_ids: logo_ids,
 			background_ids: background_ids,
 		};
-		if (
-			(selectedResources && selectedResources.length > 0 && !extraKnowledge) ||
-			(!extraKnowledge && searchOnline !== null)
-		) {
+
+		// if we have resources, but no extra knowledge, we need to query the vector database
+		if (!project.extra_knowledge && (selectedResources.length > 0 || project.search_online)) {
 			try {
 				console.log('resources', selectedResources);
 				console.log('querying vector database');
 				const extraKnowledge = await ResourceService.queryResource(
-					project_id || '',
+					project_id,
 					selectedResources.map((r: Resource) => r.id),
 					outlines,
-					searchOnline || '',
+					project.search_online || '',
 					token,
-				);
-				sessionStorage.setItem(
-					'extraKnowledge',
-					JSON.stringify(extraKnowledge.data.res),
-				);
-				sessionStorage.setItem(
-					'outline_item_counts',
-					JSON.stringify(extraKnowledge.data.outline_item_counts),
 				);
 				formData.extraKnowledge = extraKnowledge.data.res;
 				formData.outline_item_counts = extraKnowledge.data.outline_item_counts;
@@ -161,19 +129,19 @@ const GenerateSlidesSubmit = ({
 				);
 				updateProject(
 					'outline_item_counts',
-					JSON.stringify(extraKnowledge.data.outline_item_counts),
+					extraKnowledge.data.outline_item_counts,
 				);
 				console.log('formData', formData);
 			} catch (error) {
 				console.error('Error querying vector database', error);
-				// return;
+				// continue without extra knowledge
 			}
 		} else {
 			console.log('no need to query vector database');
 		}
 
 		try {
-			await generateSlidesPreview(formData, token);
+			await generateSlides(formData, token);
 		} catch (error) {
 			console.error('Error:', error);
 		}

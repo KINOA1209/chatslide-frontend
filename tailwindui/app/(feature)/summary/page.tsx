@@ -37,6 +37,7 @@ import { addIdToRedir } from '@/utils/redirWithId';
 import TopicSuggestions from '@/components/language/TopicSuggestions';
 import { getUserCountryCode, getUserLanguage } from '@/utils/userLocation';
 import { Session } from 'inspector';
+import Project from '@/models/Project';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 3;
@@ -53,11 +54,11 @@ const audienceDict = {
 const getAudienceFromSceario = (scenarioType: string) => {
 	switch (scenarioType) {
 		case 'business':
-			return 'Business Clients';
+			return 'Business_Clients';
 		case 'academic':
 			return 'Students';
 		case 'life_style':
-			return 'Video Viewers';
+			return 'Video_Viewers';
 		default:
 			return 'unselected';
 	}
@@ -72,38 +73,24 @@ export default function Topic() {
 		setIsNextEnabled,
 	} = useTourStore();
 	const router = useRouter();
-	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [showFileModal, setShowFileModal] = useState(false);
-	const { token } = useUser();
-	const [topicError, setTopicError] = useState('');
-	const [isGpt35, setIsGpt35] = useState(true);
-	const [showPaymentModal, setShowPaymentModal] = useState(false);
-	const { isPaidUser } = useUser();
-	const { project, updateOutlines, updateProject, initProject } = useProject();
+	const { token, isPaidUser } = useUser();
+	const { project, updateOutlines, updateProject, bulkUpdateProject, initProject } = useProject();
+
+	const scenarioType = SessionStorage.getItem('scenarioType', 'business');
+	const generationMode = SessionStorage.getItem('generation_mode', 'from_topic');
+
+	const [topic, setTopic] = useState(project?.topic || '');
+	const [audience, setAudience] = useState(project?.audience || getAudienceFromSceario(scenarioType));
+	const [language, setLanguage] = useState(project?.language || '');  // will be updated later depending on user's location
+	const [selectedResources, setSelectedResources] = useState<Resource[]>(project?.resources || []);
 	const [searchOnlineScope, setSearchOnlineScope] = useState('');
 
-	// bind form data between input and sessionStorage
-	const [topic, setTopic] = useState(
-		typeof window !== 'undefined' && sessionStorage.topic != undefined
-			? sessionStorage.topic
-			: '',
-	);
-	const [audience, setAudience] = useState(
-		project?.audience ||
-		SessionStorage.getItem('audience') ||
-		getAudienceFromSceario(SessionStorage.getItem('scenarioType')),
-	);
-	const [language, setLanguage] = useState(project?.language || SessionStorage.getItem('language'));
-	const [selectedResources, setSelectedResources] = useState<Resource[]>(
-		typeof window !== 'undefined' &&
-			sessionStorage.selectedResources != undefined
-			? JSON.parse(sessionStorage.selectedResources)
-			: [],
-	);
-	const generationMode = SessionStorage.getItem(
-		'generation_mode',
-		'from_topic',
-	);
+	const [isGpt35, setIsGpt35] = useState(true);
+
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [showFileModal, setShowFileModal] = useState(false);
+	const [topicError, setTopicError] = useState('');
+	const [showPaymentModal, setShowPaymentModal] = useState(false);
 
 	const tourSteps: Step[] = [
 		{
@@ -177,15 +164,7 @@ export default function Topic() {
 		}
 
 		const project_id = project?.id || '';
-
-		const scenarioType = SessionStorage.getItem('scenarioType', 'business');
-
-		const knowledge_summary =
-			typeof window !== 'undefined' &&
-				sessionStorage.knowledge_summary != undefined
-				? JSON.parse(sessionStorage.knowledge_summary)
-				: '';
-
+		const knowledge_summary = project?.knowledge_summary || '';
 		setIsSubmitting(true);
 
 		const formData = {
@@ -202,23 +181,21 @@ export default function Topic() {
 			knowledge_summary: knowledge_summary,
 		};
 
-		sessionStorage.setItem('topic', formData.topic);
-		sessionStorage.setItem('audience', formData.audience);
-		updateProject('language', language);
-		sessionStorage.setItem(
-			'selectedResources',
-			JSON.stringify(selectedResources),
-		);
-		sessionStorage.setItem('search_online', searchOnlineScope);
-		//sessionStorage.setItem('schoolTemplate', schoolTemplate);
+		bulkUpdateProject({
+			topic: topic,
+			audience: audience,
+			language: language,
+			resources: selectedResources,
+			scenario_type: scenarioType,
+			search_online: searchOnlineScope,
+			knowledge_summary: knowledge_summary,
+		} as Project);
 
-		if (
-			(selectedResources && selectedResources.length > 0) ||
-			(searchOnlineScope && searchOnlineScope !== '')
-		) {
+		// if needs to query vector database
+		if (selectedResources?.length > 0 || searchOnlineScope) {
 			try {
 				console.log('resources', selectedResources);
-				console.log('summarize resources');
+				console.log('summarizing resources');
 				const response = await ResourceService.summarizeResource(
 					project_id,
 					selectedResources.map((r: Resource) => r.id),
@@ -228,18 +205,13 @@ export default function Topic() {
 					searchOnlineScope,
 					token,
 				);
-				sessionStorage.setItem(
-					'knowledge_summary',
-					JSON.stringify(response.data.knowledge_summary),
-				);
-				sessionStorage.setItem(
-					'project_id',
-					JSON.stringify(response.data.project_id),
-				);
 				formData.knowledge_summary = response.data.knowledge_summary;
 				formData.project_id = response.data.project_id;
-				updateProject('knowledge_summary', response.data.knowledge_summary);
-				updateProject('id', response.data.project_id);
+
+				bulkUpdateProject({
+					knowledge_summary: response.data.knowledge_summary,
+					id: response.data.project_id,
+				} as Project);
 
 				console.log('knowledge_summary', response.data.knowledge_summary);
 			} catch (error) {
@@ -265,23 +237,14 @@ export default function Topic() {
 				// Handle the response data here
 				console.log(outlinesJson);
 
-				// cookies doesn't work because it needs 'use server'
-				// cookies().set("topic", outlinesJson.data.audience);
-
-				// Store the data in session storage
-				sessionStorage.setItem('topic', outlinesJson.data.topic);
-				updateProject('topic', outlinesJson.data.topic);
 				updateOutlines(Object.values(JSON.parse(outlinesJson.data.outlines)));
-				sessionStorage.setItem('foldername', outlinesJson.data.foldername);
-				updateProject('id', outlinesJson.data.id);
-				updateProject('foldername', outlinesJson.data.foldername);
-				updateProject('pdf_images', outlinesJson.data.pdf_images);
-				updateProject('outlines', outlinesJson.data.outlines);
-				// initProject(outlinesJson.data);
-				sessionStorage.setItem(
-					'pdf_images',
-					JSON.stringify(outlinesJson.data.pdf_images),
-				);
+				bulkUpdateProject({
+					topic: outlinesJson.data.topic,
+					id: outlinesJson.data.id,
+					foldername: outlinesJson.data.foldername,
+					pdf_images: outlinesJson.data.pdf_images,
+					outlines: outlinesJson.data.outlines,
+				} as Project);
 
 				// Redirect to a new page with the data, and id in the query string
 				router.push(
