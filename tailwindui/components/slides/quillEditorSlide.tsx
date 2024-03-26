@@ -174,6 +174,32 @@ function wrapListItem(item: string, level: number): string {
 
 // Quill.register('themes/bubble', ExtendBubbleTheme);
 
+const BlockPrototype: any = Quill.import('blots/block');
+
+class DefaultSytleBlock extends BlockPrototype {
+  constructor(domNode: HTMLElement, value: string) {
+    super(domNode, value);
+    this.format("size", "16pt");
+	this.format("font", 'Arimo')
+  }
+
+  static tagName = "P";
+
+  format(name:string, value:string) {
+	if (name === "size") {
+		this.domNode.style.fontSize = value;
+    } 
+	else if (name === "font"){
+		this.domNode.style.fontFamily = value;
+	}
+	else {
+		super.format(name, value);
+    }
+  }
+}
+
+Quill.register(DefaultSytleBlock, true);
+
 const QuillEditable: React.FC<QuillEditableProps> = ({
 	content,
 	handleBlur,
@@ -348,6 +374,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			let combinedDelta = new QuillDelta();
 
 			const insertContent = (item: string) => {
+				let itemDelta = new QuillDelta();
 				if (isHTML(item)) {
 					// Convert HTML string to Delta format
 					const convertedDelta = quillInstanceRef.current?.clipboard.convert({ html: item });
@@ -357,23 +384,24 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 					if (!convertedDelta || convertedDelta.ops.length === 0 ||
 						(convertedDelta.ops.length === 1 && typeof convertedDelta.ops[0].insert === 'string' && !convertedDelta.ops[0].insert.trim())) {
 						// Ensure a new line is inserted correctly if the converted content is empty
-						return new QuillDelta().insert('\n');
+						itemDelta.insert('\n');
 					} else {
 						// Return the converted Delta as is, assuming it has the necessary content and formatting
 						// make sure <p> has new line between, while list dont require it.
 						// this is for the case like two or more consecutive <p> element will merge into one delta if we dont set \n
+						itemDelta = itemDelta.concat(convertedDelta);
 						if (item.includes('<p>')) {
 							convertedDelta.insert('\n');
 						} 
-						return new QuillDelta(convertedDelta);
 					}
 				} else if (item.trim() === '') {
 					// Handle case where item is meant to represent an empty line (like pressing Enter)
-					return new QuillDelta().insert('\n');
+					itemDelta.insert('\n');
 				} else {
 					// For plain text, insert it with the defined formatting options
-					return new QuillDelta().insert(`${item}\n`, quillFormats);
+					itemDelta.insert(`${item}\n`, quillFormats);
 				}
+				return itemDelta
 			};
 
 			if (Array.isArray(content)) {
