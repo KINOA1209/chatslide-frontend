@@ -102,6 +102,7 @@ export const calculateNonPresentScale = (
 	isChatWindowOpen = false,
 	showScript = false,
 ) => {
+	console.log("width", width, "height", height, "isChatWindowOpen", isChatWindowOpen, "showScript", showScript);
 	if (width < 640) {
 		// mobile, layout vertically
 		return Math.min(1, Math.min(width / 960, (height - 200) / 540) * 0.8);
@@ -588,7 +589,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	}
 
 	return (
-		<div className='w-full h-full flex flex-col items-start justify-around py-2 gap-2 relative'>
+		<div className='w-full h-full flex flex-col items-start justify-around py-2 relative'>
 			<div className='w-full flex flex-row items-center justify-center'>
 				<ActionsToolBar
 					undo={undoChange}
