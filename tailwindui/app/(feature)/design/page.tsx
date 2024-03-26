@@ -65,6 +65,7 @@ export default function DesignPage() {
 	const [template, setTemplate] = useState<string>(
 		getTemplateFromAudicence(project?.audience || ''),
 	);
+
 	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
 		project?.selected_logo || [],
 	);

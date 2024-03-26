@@ -138,6 +138,7 @@ export const availableTemplates = {
 };
 
 export const templateDisplayNames = {
+	Simplistic_008: '🖼️ General Pitch',
 	Default: '📌 Default',
 	Business_002: '📎 Business',
 	Business_Dark_005: '💼 Business Dark',
@@ -145,7 +146,6 @@ export const templateDisplayNames = {
 	Clean_Lifestyle_003: '☀️ Clean Lifestyle',
 	Fun_Education_004: '🍿 Fun',
 	Fun_Vibrant_007: '🎨 Fun Vibrant',
-	Simplistic_008: '🖼️ Simplistic',
 	Fun_Education_001: '📚 Education',
 	Stanford: '🏛️ Stanford University',
 	Berkeley: '🏛️ UC Berkeley',
@@ -175,7 +175,7 @@ export const getTemplateFromAudicence = (audience: string): string => {
 			return 'Clean_Lifestyle_003';
 	}
 	return 'Clean_Lifestyle_003';
-}
+};
 
 // Define a type for template keys
 type AvailableTemplateKeys = keyof typeof availableTemplates;
