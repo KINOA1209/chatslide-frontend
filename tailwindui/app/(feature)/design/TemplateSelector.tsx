@@ -32,11 +32,11 @@ export const paletteDisplayNames = (key: PaletteKeys) => {
 }
 
 const TemplateSelector: React.FC<{
-	template: TemplateKeys | string;
-	setTemplate: (template: string | TemplateKeys) => void;
+	template: TemplateKeys;
+	setTemplate: (template: TemplateKeys) => void;
 	paletteOptions: string[];
-	palette: PaletteKeys | string;
-	setPalette: (palette: string | PaletteKeys) => void;
+	palette: PaletteKeys;
+	setPalette: (palette: PaletteKeys) => void;
 }> = ({
 	template,
 	setTemplate,
@@ -55,7 +55,7 @@ const TemplateSelector: React.FC<{
 		);
 	}, [template]);
 	const handleTemplateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		const selectedValue = e.target.value;
+		const selectedValue = e.target.value as TemplateKeys;
 		setSelectedTemplate(selectedValue);
 		setTemplate(selectedValue);
 		console.log(
@@ -71,7 +71,7 @@ const TemplateSelector: React.FC<{
 	const handlePaletteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const selectedValue = e.target.value;
 		// setSelectedPalette(selectedValue);
-		setPalette(selectedValue);
+		setPalette(selectedValue as PaletteKeys);
 	};
 	useEffect(() => {
 		console.log('Color theme changed:', template, palette);

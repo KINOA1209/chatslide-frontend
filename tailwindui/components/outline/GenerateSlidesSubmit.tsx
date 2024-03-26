@@ -13,6 +13,7 @@ import { useUser } from '@/hooks/use-user';
 import { useProject } from '@/hooks/use-project';
 import { addIdToRedir } from '../../utils/redirWithId';
 import Project from '@/models/Project';
+import { PaletteKeys, TemplateKeys } from '../slides/slideTemplates';
 
 // this class has no UI, it is used to submit the outline to the backend when isSubmitting is true
 const GenerateSlidesSubmit = ({
@@ -31,8 +32,8 @@ const GenerateSlidesSubmit = ({
 	isGPT35: boolean;
 	isSubmitting: boolean;
 	setIsSubmitting: (submitting: boolean) => void;
-	template: string;
-	palette: string;
+	template: TemplateKeys;
+	palette: PaletteKeys;
 	imageAmount: string;
 	imageLicense: string;
 	logo_ids: string[];

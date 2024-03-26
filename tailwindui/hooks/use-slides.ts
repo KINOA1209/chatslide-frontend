@@ -258,8 +258,8 @@ export const useSlides = () => {
 			};
 		});
 		//set into session storage to update
-		sessionStorage.setItem('schoolTemplate', newTemplate);
-		sessionStorage.setItem('templatePalette', newPalette);
+		updateProject('template', newTemplate);
+		updateProject('palette', newPalette);
 		setSlides(newSlides);
 
 		updateSlideHistory(newSlides);
@@ -284,12 +284,13 @@ export const useSlides = () => {
 			};
 		});
 		//set into session storage to update
-		sessionStorage.setItem('templatePalette', newPalette);
+		updateProject('palette', newPalette);
 		setSlides(newSlides);
 
 		updateSlideHistory(newSlides);
 		syncSlides(newSlides, true);
 	};
+
 	const changeTemplate = (newTemplate: TemplateKeys) => {
 		console.log('Changing template to:', newTemplate);
 		let newSlides = slides.map((slide, index) => {
@@ -305,7 +306,7 @@ export const useSlides = () => {
 			};
 		});
 		//set into session storage to update
-		sessionStorage.setItem('schoolTemplate', newTemplate);
+		updateProject('template', newTemplate);
 		setSlides(newSlides);
 
 		updateSlideHistory(newSlides);
