@@ -51,7 +51,7 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			display: 'flex',
 			width: '100%',
 			height: '100%',
-			// position: 'relative',
+			position: 'relative',
 		},
 		userNameCSS: {
 			position: 'absolute',
@@ -83,12 +83,15 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 		imageContainerCSS: {
 			width: '50%', // Equivalent to w-1/2
 			height: '100%', // Equivalent to h-full
-			borderRadius: '0.375rem', // Equivalent to rounded-md (approximation)
+			borderRadius: '48px', // Equivalent to rounded-md (approximation)
 			//overflow: 'hidden',
 			display: 'flex',
 			alignItems: 'center',
 			zIndex: 20,
 			padding: '30px 30px 30px 30px', // top right bottom left
+			// position: 'absolute',
+			// top: '0px',
+			// left: '0px',
 		},
 		imageCSS: {
 			borderRadius: '48px', // border radius 1.25rem for image
