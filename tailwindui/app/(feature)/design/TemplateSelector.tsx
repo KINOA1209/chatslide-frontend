@@ -1,5 +1,9 @@
 import { DropDown } from '@/components/button/DrlambdaButton';
-import { PaletteKeys, TemplateKeys } from '@/components/slides/slideTemplates';
+import {
+	PaletteKeys,
+	TemplateKeys,
+	templateDisplayNames,
+} from '@/components/slides/slideTemplates';
 import availablePalettes from '@/components/slides/palette';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
@@ -83,27 +87,7 @@ const TemplateSelector: React.FC<{
 							style='input'
 						>
 							{/* Map over the template options */}
-							{Object.entries({
-								Default: 'Default',
-								Fun_Education_001: 'Education',
-								Business_002: 'Business',
-								Clean_Lifestyle_003: 'Clean Lifestyle',
-								Fun_Education_004: 'Fun',
-								Business_Dark_005: 'Business Dark',
-								Business_Light_006: 'Business Light',
-								Fun_Vibrant_007: 'Fun Vibrant',
-								Simplistic_008: 'Sales Pitch',
-								Stanford: 'Stanford University',
-								Berkeley: 'UC Berkeley',
-								Harvard: 'Harvard University',
-								MIT: 'Massachusetts Institute of Technology',
-								Princeton: 'Princeton University',
-								Caltech: 'California Institute of Technology',
-								Columbia: 'Columbia University',
-								JHU: 'Johns Hopkins University',
-								Yale: 'Yale University',
-								UPenn: 'University of Pennsylvania',
-							}).map(([key, value]) => (
+							{Object.entries(templateDisplayNames).map(([key, value]) => (
 								<option key={key} value={key}>
 									{`${value} ${
 										(availablePalettes[key as TemplateKeys]?.length ?? 0) > 1

@@ -90,7 +90,7 @@ export default async function Page({ params }: Props) {
 						</Card>
 					</div>}
 
-				<div className='w-full h-screen'>
+				<div className='w-full h-[80vh] overflow-y-scroll'>
 					<SharePage project_id={project_id} />
 				</div>
 
