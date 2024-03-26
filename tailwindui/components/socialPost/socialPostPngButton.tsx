@@ -13,6 +13,8 @@ import { downloadImage } from '../utils/DownloadImage';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import { SpinIcon } from '@/app/(feature)/icons';
 import { GoDownload } from 'react-icons/go';
+import { useProject } from '@/hooks/use-project';
+import SessionStorage from '@/utils/SessionStorage';
 
 interface ExportToPdfProps {
 	socialPostSlide: SocialPostSlide[];
@@ -22,15 +24,11 @@ const ExportToPngButton: React.FC<ExportToPdfProps> = ({
 	socialPostSlide,
 	currentSlideIndex,
 }) => {
-	const topic =
-		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('topic')
-			: '';
 
-	const res_scenario =
-		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('scenarioType')
-			: '';
+	const { project } = useProject();
+	const topic = project?.topic;
+
+	const res_scenario = SessionStorage.getItem('scenarioType');
 	const [downloading, setDownloading] = useState(false);
 	const exportSlidesRef = useRef<HTMLDivElement>(null);
 	const [slideRef, setSlideRef] = useState(React.createRef<HTMLDivElement>());

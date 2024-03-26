@@ -34,19 +34,23 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 	exportSlidesRef,
 	hasScript,
 }) => {
-	const topic =
-		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('topic')
-			: '';
 	const [downloading, setDownloading] = useState(false);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const { isPaidUser, token } = useUser();
 	const { project } = useProject();
+	const topic = project?.topic;
 	const [showModal, setShowModal] = useState(false);
-	const { slides } = useSlides();
+	const { slides, saveStatus, SaveStatus } = useSlides();
 
 	async function exportToPdfFrontend() {
 		const file = await generatePdf(topic || '', exportSlidesRef, slides.length);
+
+		// wait until saveStatus = 'saved'
+		while (saveStatus !== SaveStatus.UpToDate) {
+			console.log('Waiting for saveStatus to be UpToDate');
+			await sleep(200);
+		}
+
 		if (file) {
 			//save file to session storage
 			const fileUrl = URL.createObjectURL(file);
@@ -93,6 +97,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 		if (frontend) {
 			await exportToPdfFrontend();
 		} else {
+			
 			ProjectService.exportToFileBackend(token, project.id, type);
 
 			// wait for 10s for prev file to be deleted

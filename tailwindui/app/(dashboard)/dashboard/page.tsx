@@ -15,6 +15,7 @@ import OnboardingSurvey from '@/components/slides/onboardingSurvey/OnboardingSur
 import UserService from '@/services/UserService';
 import { Loading, Blank } from '@/components/ui/Loading';
 import SessionStorage from '@/utils/SessionStorage';
+import { useProject } from '@/hooks/use-project';
 
 export default function Dashboard() {
 	const [projects, setProjects] = useState<Project[]>([]);
@@ -23,6 +24,7 @@ export default function Dashboard() {
 	const contentRef = useRef<HTMLDivElement>(null);
 	const [rendered, setRendered] = useState<boolean>(false);
 	const { token, userStatus } = useUser();
+	const { initProject } = useProject();
 
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [showSurvey, setShowSurvey] = useState(false);

@@ -8,6 +8,7 @@ import { useUser } from '@/hooks/use-user';
 import { toast } from 'react-toastify';
 import { useProject } from '@/hooks/use-project';
 import { addIdToRedir } from '../../utils/redirWithId';
+import { sleep } from '@/utils/sleep';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -28,12 +29,11 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 }) => {
 	const [host, setHost] = useState('https://drlambda.ai');
 
-	const { slides, setTranscripts } = useSlides();
+	const { slides, setTranscripts, saveStatus, SaveStatus } = useSlides();
 	const { token } = useUser();
 	const { isShared, updateIsShared, project } = useProject();
 	const [showShareLink, setShowShareLink] = useState(true);
 	const router = useRouter();
-
 	const exportSlidesRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -59,24 +59,17 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 			return;
 		}
 
+		while (saveStatus != SaveStatus.UpToDate) {
+			console.log('Waiting for saveStatus to be UpToDate');
+			await sleep(200);
+		}
+
 		console.log('submitting');
 
-		const html_filename = 'html_init.html';
-		const foldername =
-			typeof sessionStorage !== 'undefined'
-				? sessionStorage.getItem('foldername')
-				: null;
-		const topic =
-			typeof sessionStorage !== 'undefined'
-				? sessionStorage.getItem('topic')
-				: null;
-
-		const project_id = project.id;
 		const formData = {
-			html_filename: html_filename,
-			foldername: foldername,
-			topic: topic,
-			project_id: project_id,
+			foldername: project.foldername,
+			topic: project.topic,
+			project_id: project.id,
 			language: project.language,
 			json_list: slides,
 			model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
@@ -101,7 +94,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 				console.error('Error when generating scripts:', response.status);
 				toast.error(
 					'Server is busy now. Please try again later. Reference code: ' +
-					project_id,
+					project.id,
 				);
 				console.log(response);
 			}

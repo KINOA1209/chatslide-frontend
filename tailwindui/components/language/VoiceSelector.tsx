@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import VOICE_OPTIONS from './voiceData';
+import VOICE_OPTIONS, { TONE_DISPLAY_NAMES } from './voiceData';
 import LANGUAGES from './languageData';
 import { ErrorMessage, Instruction, WarningMessage } from '../ui/Text';
 import { DropDown } from '../button/DrlambdaButton';
@@ -43,6 +43,8 @@ const VoiceSelector: React.FC<{
         if (formattedName.includes('Multilingual')) {
           return formattedName.replace('Multilingual', '-Multilingual');
         }
+
+				formattedName = TONE_DISPLAY_NAMES[formattedName] ?? formattedName;
         return formattedName;
       }
 
@@ -68,15 +70,14 @@ const VoiceSelector: React.FC<{
           {selectedLanguage != 'None' && <>
             <div>
               <Instruction>Gender: </Instruction>
-              <DropDown value={selectedGender} onChange={(e) => setSelectedGender(e.target.value as 'female' | 'male')}>
-                {genderOptions.map((gender) => (
-                  <option key={gender} value={gender}>{gender.charAt(0).toUpperCase() + gender.slice(1)}</option>
-                ))}
+              <DropDown value={selectedGender} onChange={(e) => setSelectedGender(e.target.value as 'female' | 'male')} width='8rem'>
+								<option key='female' value='female'>👩 Female</option>
+								<option key='male' value='male'>👨 Male</option>
               </DropDown>
             </div>
 
             <div>
-              <Instruction>Voice: </Instruction>
+              <Instruction>Tone: </Instruction>
               <DropDown value={selectedVoice} onChange={(e) => setSelectedVoice(e.target.value)}>
                 {voiceOptions.map((voice) => (
                   <option key={voice} value={voice}>{formatVoiceName(voice)}</option>

@@ -154,4 +154,53 @@ const VOICE_OPTIONS: VoiceOption = {
 	}
 };
 
+export const TONE_DISPLAY_NAMES: { [key: string]: string } = {
+	'Xiaoxiao': '潇潇',
+	'Xiaoyi': '晓怡',
+	'Xiaochen': '晓晨',
+	'Xiaohan': '晓涵',
+	'Xiaomeng': '晓梦',
+	'Xiaomo': '晓莫',
+	'Xiaoqiu': '晓秋',
+	'Xiaorui': '晓蕊',
+	'Xiaoshuang': '晓霜',
+	'Xiaoyan': '晓燕',
+	'Xiaoyou': '晓友',
+	'Xiaozhen': '晓珍',
+	'Xiaoxuan': '晓萱',
+	'Yunxi': '云熙',
+	'Yunjian': '云健',
+	'Yunyang': '云扬',
+	'Yunfeng': '云峰',
+	'Yunhao': '云浩',
+	'Yunxia': '云霞',
+	'Yunye': '云业',
+	'Yunze': '云泽',
+	'HsiaoChen': '小辰',
+	'HsiaoYu': '小宇',
+	'YunJhe': '云哲',
+	'Nanami': '七海',
+	'Aoi': '葵',
+	'Mayu': '真由',
+	'Shiori': '詩織',
+	'Keita': '圭太',
+	'Daichi': '大地',
+	'Naoki': '直樹',
+	'SunHi': '선희',
+	'JiMin': '지민',
+	'SeoHyeon': '서현',
+	'SoonBok': '순복',
+	'YuJin': '유진',
+	'InJoon': '인준',
+	'BongJin': '봉진',
+	'GookMin': '국민',
+	'Hyunsu': '현수',
+	'Alvaro': 'Álvaro',
+	'Dario': 'Darío',
+	'Elias': 'Elías',
+	'Saul': 'Saúl',
+};
+
+
+
 export default VOICE_OPTIONS;

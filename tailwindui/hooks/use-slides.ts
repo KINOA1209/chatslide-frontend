@@ -8,6 +8,7 @@ import {
 import { useUser } from './use-user';
 import { useChatHistory } from './use-chat-history';
 import { useProject } from './use-project';
+import { debounce } from '@/utils/sleep';
 
 const useSlidesBear = createBearStore<Slide[]>()('slides', [], true);
 const useSlideIndex = createBearStore<number>()('slideIndex', 0, true);
@@ -29,19 +30,22 @@ const useIsShowingLogo = createBearStore<boolean>()(
 	false,
 );
 
-export enum SlidesStatus {
-	NotInited,
-	Initing,
-	Inited,
-}
 
 export enum SaveStatus {
 	UpToDate,
 	Saving,
 }
 
+const useSaveStatus = createBearStore<SaveStatus>()('saveStatus', SaveStatus.UpToDate, false);
+
+export enum SlidesStatus {
+	NotInited,
+	Initing,
+	Inited,
+}
+
+
 let slidesStatus: SlidesStatus = SlidesStatus.NotInited;
-let saveStatus: SaveStatus = SaveStatus.UpToDate;
 
 export const useSlides = () => {
 	const { slides, setSlides } = useSlidesBear();
@@ -54,7 +58,7 @@ export const useSlides = () => {
 	const { isPresenting, setIsPresenting } = usePresenting();
 	const { isShowingLogo, setIsShowingLogo } = useIsShowingLogo();
 	const { updateProject } = useProject();
-
+	const { saveStatus, setSaveStatus } = useSaveStatus();
 	const { clearChatHistory } = useChatHistory();
 
 	// to control show or not show logo
@@ -90,7 +94,9 @@ export const useSlides = () => {
 		console.log('-- add empty page: ', { index });
 		let newSlide = new Slide();
 		newSlide.template = slides[index].template;
+		newSlide.palette = slides[index].palette;
 		newSlide.logo = slides[index].logo;
+		newSlide.logo_url = slides[index].logo_url;
 		newSlide.background_url = slides[index].background_url;
 		const newSlides = [...slides];
 		newSlides.splice(index + 1, 0, newSlide);
@@ -144,7 +150,7 @@ export const useSlides = () => {
 
 		if (rerender) updateVersion();
 		updateSlideHistory(newSlides);
-		syncSlides(newSlides, index === 0);
+		debouncedSyncSlides(newSlides, index === 0);
 	};
 
 	const gotoPage = (index: number) => {
@@ -340,9 +346,9 @@ export const useSlides = () => {
 		is_cover_page: boolean = false,
 		new_page_count: number = 0,
 	) => {
-		saveStatus = SaveStatus.Saving;
+		setSaveStatus(SaveStatus.Saving);
 
-		const foldername = sessionStorage.getItem('foldername');
+		const foldername = project?.foldername;
 		const project_id = project?.id;
 
 		if (!foldername || !project_id || !token) {
@@ -373,7 +379,7 @@ export const useSlides = () => {
 		})
 			.then((response) => {
 				if (response.ok) {
-					saveStatus = SaveStatus.UpToDate;
+					setSaveStatus(SaveStatus.UpToDate);
 					console.log('Auto-save successful.');
 				} else {
 					// Handle save error
@@ -385,6 +391,8 @@ export const useSlides = () => {
 				console.error('Auto-save failed:', error);
 			});
 	};
+
+	const debouncedSyncSlides = debounce(syncSlides, 500);
 
 	return {
 		slides,
@@ -407,6 +415,8 @@ export const useSlides = () => {
 		version,
 		updateVersion,
 		saveStatus,
+		SaveStatus,
+		syncSlides,
 		setTranscripts,
 		isShowingLogo,
 		setIsShowingLogo,

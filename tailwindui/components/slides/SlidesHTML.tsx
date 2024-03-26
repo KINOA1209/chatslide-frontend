@@ -1,7 +1,6 @@
 import React, { use, useEffect, useRef, useState } from 'react';
 import { useUser } from '@/hooks/use-user';
 import PaywallModal from '../paywallModal';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ExportToPdfButton from './ExportButton';
 import { DuplicateSlidePageButton } from '@/components/slides/SlideButtons';
@@ -52,13 +51,13 @@ import Chart from '@/models/Chart';
 import ImagesPosition from '@/models/ImagesPosition';
 import { Panel } from '../layout/Panel';
 import { useProject } from '@/hooks/use-project';
-import { GoEye, GoEyeClosed } from 'react-icons/go';
 import ScriptWindow from '../script/ScriptWindow';
 import ReactDOM from 'react-dom';
 import { ScrollBar } from '../ui/ScrollBar';
 import Image from 'next/image';
 import showLogo from 'public/icons/button/show_logo.svg';
 import hideLogo from 'public/icons/button/hide_logo.svg';
+import { Explanation } from '../ui/Text';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -101,15 +100,17 @@ export const calculateNonPresentScale = (
 	width: number,
 	height: number,
 	isChatWindowOpen = false,
+	showScript = false,
 ) => {
 	if (width < 640) {
 		// mobile, layout vertically
 		return Math.min(1, Math.min(width / 960, (height - 200) / 540) * 0.8);
 	} else {
 		const chatWindowWidth = width > 1280 && isChatWindowOpen ? 250 : 0;
+		const scriptEditorHeight = showScript ? 200 : 0;
 		return Math.min(
 			1,
-			Math.min((width - 400 - chatWindowWidth) / 960, (height - 300) / 540),
+			Math.min((width - 400 - chatWindowWidth) / 960, (height - 300 - scriptEditorHeight) / 540),
 		);
 	}
 };
@@ -143,6 +144,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		gotoPage,
 		version,
 		saveStatus,
+		SaveStatus,
 		isShowingLogo,
 		toggleIsShowingLogo,
 	} = useSlides();
@@ -213,9 +215,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			setPresentScale(scale);
 			setNonPresentScale(
 				calculateNonPresentScale(
-					window.outerWidth,
-					window.outerHeight,
+					window.innerWidth,
+					window.innerHeight,
 					isChatWindowOpen,
+					showScript,
 				),
 			);
 		};
@@ -224,6 +227,19 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 		return () => window.removeEventListener('resize', handleResize);
 	}, [isChatWindowOpen]);
+
+	useEffect(() => {
+		if (showScript) {
+			setNonPresentScale(
+				calculateNonPresentScale(
+					window.outerWidth,
+					window.outerHeight,
+					isChatWindowOpen,
+					showScript,
+				),
+			);
+		}
+	}, [showScript]);
 
 	const selectTemplateAndColorPalette = (
 		newTemplate: string | TemplateKeys, // Accepts string or TemplateKeys
@@ -246,26 +262,62 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	};
 
 	const openPresent = () => {
-		toast.success(
-			'Use ESC to exit presentation mode, use arrow keys to navigate slides.',
-		);
 		setIsPresenting(true);
 		if (showScript) openScriptPage();
 	};
 
 	useEffect(() => {
 		document.addEventListener('keydown', handleKeyDown);
+		// click to go to next page
+		document.addEventListener('click', handleClick);
+		document.addEventListener('wheel', handleScroll);
 		return () => {
 			document.removeEventListener('keydown', handleKeyDown);
+			document.removeEventListener('click', handleClick);
+			document.removeEventListener('wheel', handleScroll);
 		};
 	});
+
+	function handleClick(event: MouseEvent) {
+		if (isPresenting) {
+			if (slideIndex < slides.length - 1) {
+				gotoPage(slideIndex + 1);
+			} else {
+				setIsPresenting(false);
+			}
+		}
+	}
+
+	let scrollTimeout: NodeJS.Timeout;
+
+	function handleScroll(event: WheelEvent) {
+		if (isPresenting) {
+			clearTimeout(scrollTimeout);
+			scrollTimeout = setTimeout(() => {
+				if (event.deltaY > 0) {
+					if (slideIndex < slides.length - 1) {
+						gotoPage(slideIndex + 1);
+					} else {
+						setIsPresenting(false);
+						// Optionally, trigger an animation or sound to indicate the end of the presentation
+					}
+				} else if (event.deltaY < 0 && slideIndex > 0) {
+					gotoPage(slideIndex - 1);
+				}
+			}, 100); // Debounce time of 100ms
+		}
+	}
 
 	function handleKeyDown(event: KeyboardEvent) {
 		if (isViewing || isPresenting) {
 			console.log('key pressed', event.key);
 			// todo: update iseditmode
-			if (event.key === 'ArrowRight' && slideIndex < slides.length - 1) {
-				gotoPage(slideIndex + 1);
+			if (event.key === 'ArrowRight') {
+				if (slideIndex < slides.length - 1) {
+					gotoPage(slideIndex + 1);
+				} else {
+					setIsPresenting(false);
+				}
 			} else if (event.key === 'ArrowLeft' && slideIndex > 0) {
 				gotoPage(slideIndex - 1);
 			} else if (event.key === 'Escape') {
@@ -461,10 +513,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			false, // canEdit
 			exportToPdfMode, //exportToPdfMode
 			false, //editMathMode
-			() => {}, //setIsEditMode
-			() => {}, // handleSlideEdit
-			() => () => {}, // updateImgUrlArray,
-			() => {}, // toggleEditMode,
+			() => { }, //setIsEditMode
+			() => { }, // handleSlideEdit
+			() => () => { }, // updateImgUrlArray,
+			() => { }, // toggleEditMode,
 			// slide.palette,
 			index === 0, // isCoverPage
 			slide.layout, // layoutOptionNonCover
@@ -536,7 +588,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	}
 
 	return (
-		<div className='w-full h-full flex flex-col items-start justify-between py-4 gap-4 relative'>
+		<div className='w-full h-full flex flex-col items-start justify-around py-2 gap-2 relative'>
 			<div className='w-full flex flex-row items-center justify-center'>
 				<ActionsToolBar
 					undo={undoChange}
@@ -639,7 +691,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				showReferralLink={true}
 			/>
 
-			<div className='w-full flex flex-row grow items-start justify-center sm:justify-between gap-2 overflow-auto'>
+			<div className='w-full flex flex-row grow items-start justify-center sm:justify-around gap-2 overflow-auto'>
 				{/* vertical bar */}
 
 				<Panel>
@@ -686,7 +738,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							/>
 						</div>
 
-						<div className='flex flex-col items-end SlidesStep-3 SlidesStep-4 gap-2'>
+						<div className='flex flex-col items-end SlidesStep-3 SlidesStep-4 gap-0'>
+							<div className='mr-2'>
+								<Explanation>
+									{saveStatus === SaveStatus.Saving ? 'Saving...' : 'Saved'}
+								</Explanation>
+							</div>
 							{/* main container for viewing and editing */}
 							<SlideContainer
 								slide={slides[slideIndex]}
@@ -733,11 +790,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							updateSlidePage={updateSlidePage}
 							currentSlideIndex={slideIndex}
 							scale={nonPresentScale}
+							tight={true}
 						/>
 					)}
 
 					{/* Slide pages indicator */}
-					<div className='pt-2 flex flex-row items-center'>
+					<div className='flex-row items-center'>
 						<div className='block sm:hidden'>
 							<SlideLeftNavigator
 								currentSlideIndex={slideIndex}
@@ -759,7 +817,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					</div>
 
 					{/* horizontal  */}
-					<div className='block sm:hidden max-w-xl sm:max-w-4xl mx-auto py-4 justify-center items-center'>
+					<div className='block sm:hidden max-w-screen sm:max-w-4xl mx-auto py-4 justify-center items-center'>
 						<ScrollBar
 							currentElementRef={horizontalCurrentSlideRef}
 							index={slideIndex}

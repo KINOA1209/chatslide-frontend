@@ -103,7 +103,6 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			//overflow: 'hidden',
 			display: 'flex',
 			alignItems: 'center',
-			padding: '4rem 2rem 4rem 4rem', // top right bottom left
 			zIndex: 20,
 		},
 
@@ -414,13 +413,12 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			paddingLeft: '2rem',
 		},
 		imageContainerCSS: {
-			height: '10rem',
+			height: '12rem',
 			flexGrow: 1,
 			borderRadius: '0.375rem', // Assuming a typical rounded-md value
 			//overflow: 'hidden',
 			gridRow: 3,
 			zIndex: 30,
-			paddingRight: '6rem',
 		},
 		imageCSS: {
 			// borderRadius: '1.25rem',
