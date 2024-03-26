@@ -57,6 +57,8 @@ const ProjectLoading = () => {
 					if (project.parsed_slides?.some((slide) => slide.transcript)){
 						updateProject('has_scripts', true);
 					}
+					updateProject('template', project.parsed_slides[0].template);
+					updateProject('palette', project.parsed_slides[0].palette);
 				}
 				// setSessionStorage(project);
 				handleRedirect(project, project_id);
