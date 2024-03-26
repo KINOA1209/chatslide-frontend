@@ -67,6 +67,7 @@ const GenerateSlidesSubmit = ({
 				description: resp.data.description,
 				keywords: resp.data.keywords,
 				additional_images: resp.data.additional_images,
+				presentation_slides: presentation_slides,
 			} as Project);
 			router.push(addIdToRedir('/slides'));
 		} else {
