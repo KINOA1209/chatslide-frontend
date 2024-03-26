@@ -35,6 +35,16 @@ import {
 	onMouseLeave,
 } from './drag_resize/dragAndResizeFunction';
 import { useSlides } from '@/hooks/use-slides';
+import ResizeSlider from './drag_resize/resize_slider';
+import '@/components/slides/drag_resize/dragAndResizeCSS.css';
+import dynamic from 'next/dynamic';
+import { isArray } from 'chart.js/dist/helpers/helpers.core';
+const QuillEditable = dynamic(
+	() => import('@/components/slides/quillEditorSlide'),
+	{ ssr: false },
+);
+// Extend the interface with new fields
+
 export type LayoutKeys =
 	| ''
 	| 'Cover_img_0_layout'
@@ -46,15 +56,31 @@ export type LayoutKeys =
 	| 'Col_1_img_1_layout'
 	| 'Col_2_img_2_layout'
 	| 'Col_3_img_3_layout';
-import ResizeSlider from './drag_resize/resize_slider';
-import '@/components/slides/drag_resize/dragAndResizeCSS.css';
-import dynamic from 'next/dynamic';
-import { isArray } from 'chart.js/dist/helpers/helpers.core';
-const QuillEditable = dynamic(
-	() => import('@/components/slides/quillEditorSlide'),
-	{ ssr: false },
-);
-// Extend the interface with new fields
+// for add column of text button style
+const addButtonStyle = `
+flex items-center justify-center
+w-auto h-12
+bg-gray-100 border-2 border-gray-300
+text-gray-600 font-medium
+px-6 py-2
+text-base
+cursor-pointer
+rounded-md
+shadow-md
+transition duration-300 ease-in-out
+`;
+
+const addButtonHoverStyle = `
+hover:bg-gray-200
+hover:text-gray-800
+hover:border-gray-400
+hover:shadow-lg
+`;
+
+const addIconStyle = `
+mr-2
+`;
+
 interface MainSlideProps extends BaseMainSlideProps {
 	brandingColor?: string;
 	themeElements: ThemeElements;
@@ -446,29 +472,6 @@ export const Col_2_img_0_layout = ({
 		console.log('updatedContent on page', slideIndex, updatedContent);
 	}, [updatedContent]);
 
-	const addButtonStyle = `
-    flex items-center justify-center
-    w-auto h-12
-    bg-gray-100 border-2 border-gray-300
-    text-gray-600 font-medium
-    px-6 py-2
-    text-base
-    cursor-pointer
-    rounded-md
-    shadow-md
-    transition duration-300 ease-in-out
-`;
-
-	const addButtonHoverStyle = `
-    hover:bg-gray-200
-    hover:text-gray-800
-    hover:border-gray-400
-    hover:shadow-lg
-`;
-
-	const addIconStyle = `
-    mr-2
-`;
 	const [showAddButton, setShowAddButton] = useState(
 		// slides[slideIndex].content.length <= 1,
 		updatedContent.length <= 1,
@@ -550,7 +553,7 @@ export const Col_2_img_0_layout = ({
 						</div>
 					)}
 					{updatedContent.slice(0, 1).map((item, index) => (
-						<>
+						<React.Fragment key={`contentText_${index}_${Date.now()}`}>
 							<ul
 								key={`contentText_${index}_${Date.now()}`}
 								className={`SlideContentText`}
@@ -558,7 +561,7 @@ export const Col_2_img_0_layout = ({
 							>
 								<li style={{ width: '100%' }}>{item}</li>
 							</ul>
-						</>
+						</React.Fragment>
 					))}
 				</div>
 
@@ -588,7 +591,7 @@ export const Col_2_img_0_layout = ({
 							</div>
 						)}
 						{updatedContent.slice(1, 2).map((item, index) => (
-							<>
+							<React.Fragment key={`contentText_${index + 1}_${Date.now()}`}>
 								<ul
 									key={`contentText_${index}_${Date.now()}`}
 									className={`SlideContentText`}
@@ -596,7 +599,7 @@ export const Col_2_img_0_layout = ({
 								>
 									<li style={{ width: '100%' }}>{item}</li>
 								</ul>
-							</>
+							</React.Fragment>
 						))}
 					</div>
 				}
@@ -645,6 +648,7 @@ export const Col_3_img_0_layout = ({
 	layoutElements,
 	templateLogo,
 	isShowingLogo,
+	handleSlideEdit,
 }: MainSlideProps) => {
 	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
 
