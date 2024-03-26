@@ -34,14 +34,11 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 	exportSlidesRef,
 	hasScript,
 }) => {
-	const topic =
-		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('topic')
-			: '';
 	const [downloading, setDownloading] = useState(false);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const { isPaidUser, token } = useUser();
 	const { project } = useProject();
+	const topic = project?.topic;
 	const [showModal, setShowModal] = useState(false);
 	const { slides, saveStatus, SaveStatus } = useSlides();
 

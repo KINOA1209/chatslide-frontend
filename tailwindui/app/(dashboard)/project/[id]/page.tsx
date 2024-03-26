@@ -34,73 +34,6 @@ const ProjectLoading = () => {
 		loadProject();
 	}, []);
 
-	const setSessionStorage = (project: Project) => {
-		// Store values in sessionStorage if they exist, will be deprecated in favor of bear storage
-		if (project.topic) {
-			sessionStorage.setItem('topic', project.topic);
-		}
-		if (project.foldername) {
-			sessionStorage.setItem('foldername', project.foldername);
-		}
-		if (project.project_name) {
-			sessionStorage.setItem('project_name', project.project_name);
-		}
-		if (project.resources) {
-			sessionStorage.setItem(
-				'selectedResources',
-				JSON.stringify(project.resources),
-			);
-			sessionStorage.setItem(
-				'selectedResourceId',
-				JSON.stringify(project.resources.map((r) => r.id)),
-			);
-		}
-		const content_type = project.content_type ?? 'presentation';
-		sessionStorage.setItem('content_type', content_type);
-		if (content_type == 'presentation') {
-			if (project.scenario_type) {
-				sessionStorage.setItem('scenarioType', project.scenario_type);
-			}
-			if (project.audience) {
-				sessionStorage.setItem('audience', project.audience);
-			}
-			if (project.presentation_slides) {
-				sessionStorage.setItem(
-					'presentation_slides',
-					JSON.stringify(project.presentation_slides),
-				);
-			}
-			if (project.pdf_images) {
-				sessionStorage.setItem(
-					'pdf_images',
-					JSON.stringify(project.pdf_images),
-				);
-			}
-			if (project.video_url) {
-				sessionStorage.setItem('video_url', project.video_url);
-			}
-			if (project.extra_knowledge) {
-				sessionStorage.setItem('extraKnowledge', project.extra_knowledge);
-			}
-			if (project.outline_item_counts) {
-				sessionStorage.setItem(
-					'outline_item_counts',
-					JSON.stringify(project.outline_item_counts),
-				);
-			}
-		} else if (content_type == 'social_posts') {
-			if (project.post_type) {
-				sessionStorage.setItem('scenarioType', project.post_type);
-			}
-			if (project.social_platform) {
-				sessionStorage.setItem('social_platform', project.social_platform);
-			}
-			if (project.social_posts) {
-				sessionStorage.setItem('socialPost', project.social_posts);
-			}
-		}
-	};
-
 	const fetchProjectDetails = async (token: string) => {
 		console.log(`Fetching project details.`);
 		const headers = new Headers();
@@ -125,7 +58,7 @@ const ProjectLoading = () => {
 						updateProject('has_scripts', true);
 					}
 				}
-				setSessionStorage(project);
+				// setSessionStorage(project);
 				handleRedirect(project, project_id);
 			}
 		} catch (error) {

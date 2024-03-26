@@ -13,11 +13,7 @@ import { useProject } from '@/hooks/use-project';
 export default function WorkflowStep3() {
 	const { isPaidUser } = useUser();
 	const { project } = useProject();
-	const [isGpt35, setIsGpt35] = useState(
-		typeof sessionStorage !== 'undefined'
-			? JSON.parse(sessionStorage.getItem('isGpt35') || 'true')
-			: true,
-	);
+	const [isGpt35, setIsGpt35] = useState(true);
 
 	const [isSubmitting, setIsSubmitting] = useState(false);
 

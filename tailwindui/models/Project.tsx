@@ -19,19 +19,22 @@ type Project = {
 	is_shared: boolean;
 	is_public: boolean;
 	additional_images: string[];
+	
+	selected_logo: Resource[];
 
 	// Presentation-specific fields
 	audience: string;
 	outlines: string; // will be parsed into Outlines type: todo: use outlines type in backend as well
 	knowledge_summary: string;
 	extra_knowledge: string;
-	outline_item_counts: string;
+	outline_item_counts: number[];
 	video_url: string;
-	pdf_images: string;
+	pdf_images: string[];
 	presentation_slides: string; // JSONified slide object
 	parsed_slides: Slide[];
 	scenario_type: string;
 	has_scripts: boolean;
+	search_online: string;
 
 	// Social Post-specific fields
 	post_type: string;

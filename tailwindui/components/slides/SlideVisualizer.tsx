@@ -66,22 +66,10 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 
 		console.log('submitting');
 
-		const html_filename = 'html_init.html';
-		const foldername =
-			typeof sessionStorage !== 'undefined'
-				? sessionStorage.getItem('foldername')
-				: null;
-		const topic =
-			typeof sessionStorage !== 'undefined'
-				? sessionStorage.getItem('topic')
-				: null;
-
-		const project_id = project.id;
 		const formData = {
-			html_filename: html_filename,
-			foldername: foldername,
-			topic: topic,
-			project_id: project_id,
+			foldername: project.foldername,
+			topic: project.topic,
+			project_id: project.id,
 			language: project.language,
 			json_list: slides,
 			model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
@@ -106,7 +94,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 				console.error('Error when generating scripts:', response.status);
 				toast.error(
 					'Server is busy now. Please try again later. Reference code: ' +
-					project_id,
+					project.id,
 				);
 				console.log(response);
 			}

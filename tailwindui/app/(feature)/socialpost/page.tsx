@@ -10,6 +10,7 @@ import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
 import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
 import useHydrated from '@/hooks/use-hydrated';
+import SessionStorage from '@/utils/SessionStorage';
 
 export default function SocialMediaTemplate() {
 	const router = useRouter();
@@ -80,10 +81,7 @@ export default function SocialMediaTemplate() {
 	const [socialPostSlides, setSocialPostSlides] = useState<SocialPostSlide[]>(
 		[],
 	);
-	const res_scenario =
-		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('scenarioType')
-			: '';
+	const res_scenario = SessionStorage.getItem('scenarioType');
 
 	function getCover(scenario: string | null): ThemeObject {
 		switch (scenario) {

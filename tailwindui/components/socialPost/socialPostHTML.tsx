@@ -129,28 +129,11 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 }) => {
 	const { token } = useUser();
 	const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
-	const { project } = useProject();
-	const foldername =
-		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('foldername')
-			: '';
-
+	const { project, updateProject } = useProject();
+	const foldername = project?.foldername || '';
 	const project_id = project?.id || '';
-
-	const res_slide =
-		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('socialPost')
-			: '';
-
-	const cover_title =
-		typeof sessionStorage !== 'undefined'
-			? sessionStorage.getItem('topic')
-			: '';
-
-	// const res_scenario =
-	// 	typeof sessionStorage !== 'undefined'
-	// 		? sessionStorage.getItem('scenarioType')
-	// 		: '';
+	const res_slide = project?.social_posts;
+	const cover_title = project?.topic || 'Your topic here';
 
 	const [showLayout, setShowLayout] = useState(false);
 	const [present, setPresent] = useState(false);
@@ -241,6 +224,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 					return slide;
 				},
 			);
+			updateProject('social_posts', 'true');
 			setSocialPostSlides(slidesArray);
 		}
 	}, []);
@@ -411,7 +395,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		} else {
 			console.error(`Unknown tag: ${tag}`);
 		}
-		sessionStorage.setItem('socialPost', JSON.stringify(newSlides));
 		setSocialPostSlides(newSlides);
 	}
 

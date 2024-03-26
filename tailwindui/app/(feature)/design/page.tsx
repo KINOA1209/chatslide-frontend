@@ -1,32 +1,57 @@
 'use client';
 
+// React related imports
 import React, { useState, useRef, useEffect, Fragment } from 'react';
+import dynamic from 'next/dynamic';
+
+// Third-party library imports
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+// Stylesheets
+import '@/app/css/workflow-edit-topic-css/topic_style.css';
+
+// Your project's global imports
 import ContentWithImageImg from '@/public/images/summary/content_with_image.png';
 import ContentOnlyImg from '@/public/images/summary/content_only.png';
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
-import '@/app/css/workflow-edit-topic-css/topic_style.css';
 import Resource from '@/models/Resource';
+import useHydrated from '@/hooks/use-hydrated';
+import { useProject } from '@/hooks/use-project';
+import useTourStore from '@/components/user_onboarding/TourStore';
+import availablePalettes from '@/components/slides/palette';
+// import { TemplateKeys, getTemplateFromAudicence } from '@/components/slides/slideTemplates';
+
+// UI Components and Layouts
 import Card from '@/components/ui/Card';
 import RadioButton, { RadioButtonOption } from '@/components/ui/RadioButton';
 import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
 import { BigTitle, Explanation, Title } from '@/components/ui/Text';
-
 import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
 import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
 
-import useHydrated from '@/hooks/use-hydrated';
-import { useProject } from '@/hooks/use-project';
-
+// Local component imports
 import ImageSelector from './ImageSelector';
-import TemplateSelector from './TemplateSelector';
 
-import useTourStore from '@/components/user_onboarding/TourStore';
+const TemplateSelector = dynamic(() => import('./TemplateSelector'), {ssr: false});
 
-import availablePalettes from '@/components/slides/palette';
-import { TemplateKeys, getTemplateFromAudicence } from '@/components/slides/slideTemplates';
-// const { changeTemplate } = useSlides();
+const getTemplateFromAudicence = (audience: string): string => {
+	switch (audience) {
+		case 'Business Clients':
+			return 'Business_Dark_005';
+		case 'Video Viewers':
+			return 'Fun_Vibrant_007';
+		case 'Students':
+			return 'Fun_Education_004';
+		case 'Researchers':
+			return 'Fun_Education_004';
+		case 'Office Colleagues':
+			return 'Business_Light_006';
+		case 'Myself':
+			return 'Clean_Lifestyle_003';
+	}
+	return 'Clean_Lifestyle_003';
+}
 
 export default function DesignPage() {
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
@@ -36,11 +61,7 @@ export default function DesignPage() {
 	const [isGpt35, setIsGpt35] = useState(true);
 	const { outlines, project } = useProject();
 	const [template, setTemplate] = useState<string>(getTemplateFromAudicence(project?.audience || ''));
-	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
-		typeof window !== 'undefined' && sessionStorage.selectedLogo != undefined
-			? JSON.parse(sessionStorage.selectedLogo)
-			: [],
-	);
+	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(project?.selected_logo || []);
 	const [selectedBackground, setSelectedBackground] = useState<Resource[]>([]);
 
 	const [imageAmount, setImageAmount] = useState('content_with_image');

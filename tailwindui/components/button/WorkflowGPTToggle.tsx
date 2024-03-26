@@ -12,23 +12,7 @@ interface GPTToggleProps {
 const GPTToggle: React.FC<GPTToggleProps> = ({ setIsGpt35 }) => {
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const { isPaidUser } = useUser();
-	const [isGpt35, setIsGpt35Locally] = useState(() => {
-		// Load the value from sessionStorage, defaulting to true if it's not set
-		const storedValue =
-			typeof sessionStorage !== 'undefined'
-				? sessionStorage.getItem('isGpt35')
-				: null;
-		return storedValue ? JSON.parse(storedValue) : true;
-	});
-
-	useEffect(() => {
-		// Update sessionStorage whenever isGpt35 changes
-		sessionStorage.setItem('isGpt35', JSON.stringify(isGpt35));
-		console.log(
-			'sessionStorage isGpt35 updated',
-			sessionStorage.getItem('isGpt35'),
-		);
-	}, [isGpt35]);
+	const [isGpt35, setIsGpt35Locally] = useState(true);
 
 	const handleToggle = (value: boolean) => {
 		if (!value && !isPaidUser) {
