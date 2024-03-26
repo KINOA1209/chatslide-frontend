@@ -1,6 +1,5 @@
 'use client';
 
-
 import { DropDown } from '@/components/button/DrlambdaButton';
 import {
 	PaletteKeys,
@@ -44,13 +43,11 @@ const TemplateSelector: React.FC<{
 
 	type OptionType = { value: string; label: JSX.Element };
 
-	// Define the type for action meta
-	// type ActionMetaType = ActionMeta<OptionType>;
 	useEffect(() => {
-		// when mounted make sure the color palette is correctly set default
+		// when mounted make sure the color palette is correctly set default, and everytime change template make sure default to first color option to prevent error
 		setSelectedPalette(paletteOptions[0]);
 		setPalette(paletteOptions[0]);
-	}, []);
+	}, [selectedTemplate]);
 
 	const handleTemplateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const selectedValue = e.target.value;

@@ -245,7 +245,7 @@ export const YaleTemplateLogo: React.FC<TemplateLogoType> = (
 		...props,
 		coverLogo: YaleLogo,
 		nonCoverLogo: YaleLogo,
-		logoWidth: 4, // Adjust the width as needed
+		logoWidth: 3, // Adjust the width as needed
 	});
 
 export const JHUTemplateLogo: React.FC<TemplateLogoType> = (

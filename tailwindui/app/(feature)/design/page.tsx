@@ -33,7 +33,9 @@ import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
 // Local component imports
 import ImageSelector from './ImageSelector';
 
-const TemplateSelector = dynamic(() => import('./TemplateSelector'), {ssr: false});
+const TemplateSelector = dynamic(() => import('./TemplateSelector'), {
+	ssr: false,
+});
 
 const getTemplateFromAudicence = (audience: string): string => {
 	switch (audience) {
@@ -51,7 +53,7 @@ const getTemplateFromAudicence = (audience: string): string => {
 			return 'Clean_Lifestyle_003';
 	}
 	return 'Clean_Lifestyle_003';
-}
+};
 
 export default function DesignPage() {
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
@@ -60,8 +62,12 @@ export default function DesignPage() {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [isGpt35, setIsGpt35] = useState(true);
 	const { outlines, project } = useProject();
-	const [template, setTemplate] = useState<string>(getTemplateFromAudicence(project?.audience || ''));
-	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(project?.selected_logo || []);
+	const [template, setTemplate] = useState<string>(
+		getTemplateFromAudicence(project?.audience || ''),
+	);
+	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
+		project?.selected_logo || [],
+	);
 	const [selectedBackground, setSelectedBackground] = useState<Resource[]>([]);
 
 	const [imageAmount, setImageAmount] = useState('content_with_image');
@@ -151,7 +157,7 @@ export default function DesignPage() {
 							paletteOptions={
 								availablePalettes[
 									template as keyof typeof availablePalettes
-								] || ['Origisssnal']
+								] || ['Original']
 							}
 							palette={colorPalette}
 						/>
