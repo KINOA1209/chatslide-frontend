@@ -98,6 +98,7 @@ export type TemplateLogoType = {
 	custom_logo: string;
 	template_name: string | undefined;
 	logoWidth?: number;
+	logoHeight?: number;
 	coverLogo?: StaticImageData;
 	nonCoverLogo?: StaticImageData;
 	lightBGLogo?: StaticImageData;
@@ -109,11 +110,12 @@ export const generateTemplateLogo = ({
 	custom_logo,
 	template_name,
 	logoWidth,
-	isLightBackground = true,
-	coverLogo = drlambdaLogo,
-	nonCoverLogo = drlambdaLogo,
-	lightBGLogo = drlambdaLogo,
-	darkBGLogo = drlambdaLogo,
+	logoHeight = 2,
+	isLightBackground,
+	coverLogo,
+	nonCoverLogo,
+	lightBGLogo,
+	darkBGLogo,
 }: TemplateLogoType) => {
 	return (
 		<div
@@ -121,9 +123,21 @@ export const generateTemplateLogo = ({
 		>
 			{custom_logo === template_name ? (
 				// use original template logo
+
 				<Image
 					unoptimized={true}
-					src={isLightBackground ? lightBGLogo : darkBGLogo}
+					// src={isCoverPage ? coverLogo : nonCoverLogo}
+					width={logoWidth}
+					height={logoHeight}
+					src={
+						coverLogo && nonCoverLogo
+							? isCoverPage
+								? coverLogo.src // Assuming coverLogo is of type StaticImageData
+								: nonCoverLogo.src // Assuming nonCoverLogo is of type StaticImageData
+							: isLightBackground
+							? lightBGLogo!.src // Assuming lightBGLogo is of type StaticImageData
+							: darkBGLogo!.src // Assuming darkBGLogo is of type StaticImageData
+					}
 					alt='Template Logo'
 					className={`w-[${logoWidth}rem] h-auto opacity-40`}
 				/>
@@ -153,7 +167,7 @@ export const BerkeleyTemplateLogo: React.FC<TemplateLogoType> = (
 		...props,
 		coverLogo: BerkeleyLogoWhite,
 		nonCoverLogo: BerkeleyLogo,
-		logoWidth: 3, // Adjust the width as needed
+		logoWidth: 6, // Adjust the width as needed
 	});
 
 export const StanfordTemplateLogo: React.FC<TemplateLogoType> = (
@@ -231,7 +245,7 @@ export const YaleTemplateLogo: React.FC<TemplateLogoType> = (
 		...props,
 		coverLogo: YaleLogo,
 		nonCoverLogo: YaleLogo,
-		logoWidth: 3, // Adjust the width as needed
+		logoWidth: 4, // Adjust the width as needed
 	});
 
 export const JHUTemplateLogo: React.FC<TemplateLogoType> = (
@@ -250,7 +264,7 @@ export const ColumbiaTemplateLogo: React.FC<TemplateLogoType> = (
 		...props,
 		coverLogo: ColumbiaLogo,
 		nonCoverLogo: ColumbiaLogo,
-		logoWidth: 8, // Adjust the width as needed
+		logoWidth: 10, // Adjust the width as needed
 	});
 
 export const Fun_Education_004_TemplateLogo: React.FC<TemplateLogoType> = (
@@ -343,6 +357,7 @@ export const Simplistic_008_TemplateLogo: React.FC<TemplateLogoType> = (
 		lightBGLogo: drlambdaLogoBadgeWhiteBG,
 		darkBGLogo: drlambdaLogoBadgeBlackBG,
 		logoWidth: 8, // Adjust the width as needed
+		logoHeight: 1.5,
 	});
 
 // Define the type for template logo information
