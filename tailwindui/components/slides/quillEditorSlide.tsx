@@ -174,32 +174,6 @@ function wrapListItem(item: string, level: number): string {
 
 // Quill.register('themes/bubble', ExtendBubbleTheme);
 
-const BlockPrototype: any = Quill.import('blots/block');
-
-class DefaultSytleBlock extends BlockPrototype {
-	constructor(domNode: HTMLElement, value: string) {
-		super(domNode, value);
-		this.format("size", "16pt");
-		this.format("font", 'Arimo')
-	}
-
-	static tagName = "P";
-
-	format(name: string, value: string) {
-		if (name === "size") {
-			this.domNode.style.fontSize = value;
-		}
-		else if (name === "font") {
-			this.domNode.style.fontFamily = value;
-		}
-		else {
-			super.format(name, value);
-		}
-	}
-}
-
-Quill.register(DefaultSytleBlock, true);
-
 const QuillEditable: React.FC<QuillEditableProps> = ({
 	content,
 	handleBlur,
@@ -234,6 +208,31 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 
 	useEffect(() => {
 		if (editorRef.current && !quillInstanceRef.current) {
+			const BlockPrototype: any = Quill.import('blots/block');
+
+			class DefaultSytleBlock extends BlockPrototype {
+				constructor(domNode: HTMLElement, value: string) {
+					super(domNode, value);
+					this.format("size", style?.fontSize as string || "16pt");
+					this.format("font", style?.fontFamily || 'Arimo')
+				}
+
+				static tagName = "P";
+
+				format(name: string, value: string) {
+					if (name === "size") {
+						this.domNode.style.fontSize = value;
+					}
+					else if (name === "font") {
+						this.domNode.style.fontFamily = value;
+					}
+					else {
+						super.format(name, value);
+					}
+				}
+			}
+			Quill.register(DefaultSytleBlock, true);
+			
 			//create deep copy of toolbaroptions
 			let customizedToolbarOptions = JSON.parse(JSON.stringify(toolbarOptions));
 
