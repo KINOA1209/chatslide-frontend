@@ -1006,7 +1006,7 @@ export const ImgModule = ({
 						<DynamicChart
 							chartType={selectedChartType}
 							chartData={chartData}
-							isPrview={false}
+							isPrview={!canEdit}
 						/>
 					</div>
 				) : selectedImg === '' || imgLoadError ? ( // updload icon
