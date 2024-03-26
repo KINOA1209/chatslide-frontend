@@ -739,11 +739,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						</div>
 
 						<div className='flex flex-col items-end SlidesStep-3 SlidesStep-4 gap-0'>
+							{!isPresenting && !isViewing && 
 							<div className='mr-2'>
 								<Explanation>
 									{saveStatus === SaveStatus.Saving ? 'Saving...' : 'Saved'}
 								</Explanation>
-							</div>
+							</div>}
 							{/* main container for viewing and editing */}
 							<SlideContainer
 								slide={slides[slideIndex]}
