@@ -438,7 +438,7 @@ export const Col_2_img_0_layout = ({
 }: MainSlideProps) => {
 	// Ensure content is always an array
 	const items = Array.isArray(content) ? content : [content];
-	const { slides, slideIndex, updateSlidePage } = useSlides();
+	const { slides, slideIndex, updateSlidePage, updateVersion } = useSlides();
 	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
 	const [updatedContent, setUpdatedContent] = useState(items);
 

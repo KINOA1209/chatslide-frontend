@@ -165,13 +165,7 @@ export const templateDispatch = (
 					<QuillEditable
 						content={content}
 						handleBlur={(newContent) =>
-							handleSlideEdit(
-								newContent,
-								index,
-								contentTag,
-								contentIndex,
-								false,
-							)
+							handleSlideEdit(newContent, index, contentTag, contentIndex, true)
 						}
 						style={style}
 						isVerticalContent={isVerticalContent}
@@ -183,7 +177,7 @@ export const templateDispatch = (
 					<QuillEditable
 						content={content}
 						handleBlur={(newContent) =>
-							handleSlideEdit(newContent, index, contentTag, undefined, false)
+							handleSlideEdit(newContent, index, contentTag, undefined, true)
 						}
 						style={style}
 						isVerticalContent={isVerticalContent}
