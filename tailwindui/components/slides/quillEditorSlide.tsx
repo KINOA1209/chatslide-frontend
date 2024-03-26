@@ -177,25 +177,25 @@ function wrapListItem(item: string, level: number): string {
 const BlockPrototype: any = Quill.import('blots/block');
 
 class DefaultSytleBlock extends BlockPrototype {
-  constructor(domNode: HTMLElement, value: string) {
-    super(domNode, value);
-    this.format("size", "16pt");
-	this.format("font", 'Arimo')
-  }
-
-  static tagName = "P";
-
-  format(name:string, value:string) {
-	if (name === "size") {
-		this.domNode.style.fontSize = value;
-    } 
-	else if (name === "font"){
-		this.domNode.style.fontFamily = value;
+	constructor(domNode: HTMLElement, value: string) {
+		super(domNode, value);
+		this.format("size", "16pt");
+		this.format("font", 'Arimo')
 	}
-	else {
-		super.format(name, value);
-    }
-  }
+
+	static tagName = "P";
+
+	format(name: string, value: string) {
+		if (name === "size") {
+			this.domNode.style.fontSize = value;
+		}
+		else if (name === "font") {
+			this.domNode.style.fontFamily = value;
+		}
+		else {
+			super.format(name, value);
+		}
+	}
 }
 
 Quill.register(DefaultSytleBlock, true);
@@ -392,7 +392,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 						itemDelta = itemDelta.concat(convertedDelta);
 						if (item.includes('<p>')) {
 							convertedDelta.insert('\n');
-						} 
+						}
 					}
 				} else if (item.trim() === '') {
 					// Handle case where item is meant to represent an empty line (like pressing Enter)
