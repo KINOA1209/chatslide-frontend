@@ -110,7 +110,7 @@ export const calculateNonPresentScale = (
 		const scriptEditorHeight = showScript ? 200 : 0;
 		return Math.min(
 			1,
-			Math.min((width - 400 - chatWindowWidth) / 960, (height - 300 - scriptEditorHeight) / 540),
+			Math.min((width - 400 - chatWindowWidth) / 960, (height - 150 - scriptEditorHeight) / 540),
 		);
 	}
 };
@@ -173,7 +173,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	);
 
 	const [nonPresentScale, setNonPresentScale] = useState(
-		calculateNonPresentScale(dimensions.width, dimensions.height),
+		calculateNonPresentScale(dimensions.width, dimensions.height, showScript),
 	);
 
 	const [isChatWindowOpen, setIsChatWindowOpen] = useState(false);
@@ -691,7 +691,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				showReferralLink={true}
 			/>
 
-			<div className='w-full flex flex-row grow items-start justify-center sm:justify-around gap-2 overflow-auto'>
+			<div className='w-full flex flex-row items-start justify-center sm:justify-around gap-2 overflow-auto'>
 				{/* vertical bar */}
 
 				<Panel>
@@ -796,7 +796,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					)}
 
 					{/* Slide pages indicator */}
-					<div className='flex-row items-center'>
+					<div className='flex flex-row items-center'>
 						<div className='block sm:hidden'>
 							<SlideLeftNavigator
 								currentSlideIndex={slideIndex}
@@ -818,7 +818,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					</div>
 
 					{/* horizontal  */}
-					<div className='block sm:hidden max-w-screen sm:max-w-4xl mx-auto py-4 justify-center items-center'>
+					<div className='block sm:hidden w-[90vw] sm:w-4xl py-4 justify-center items-center'>
 						<ScrollBar
 							currentElementRef={horizontalCurrentSlideRef}
 							index={slideIndex}
