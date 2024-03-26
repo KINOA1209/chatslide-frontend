@@ -153,6 +153,10 @@ const DynamicChart: React.FC<DynamicChartProps> = ({
 					enabled: false,
 				},
 			},
+			hover: {
+				mode: null,
+				intersect: false
+			},
 		};
 	}
 
