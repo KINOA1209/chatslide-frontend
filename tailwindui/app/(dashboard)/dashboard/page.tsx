@@ -23,7 +23,7 @@ export default function Dashboard() {
 	const router = useRouter();
 	const contentRef = useRef<HTMLDivElement>(null);
 	const [rendered, setRendered] = useState<boolean>(false);
-	const { token, userStatus } = useUser();
+	const { token, userStatus, updateCreditsAndTier } = useUser();
 	const { initProject } = useProject();
 
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -73,6 +73,7 @@ export default function Dashboard() {
 					theme: 'light',
 				});
 				SessionStorage.removeItem('promo');
+				updateCreditsAndTier();
 			}
 		}
 
