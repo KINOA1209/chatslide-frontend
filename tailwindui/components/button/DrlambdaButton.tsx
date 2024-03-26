@@ -5,6 +5,7 @@ import {
 	RightTurnArrowIcon,
 	SpinIcon,
 } from '@/app/(feature)/icons';
+import Select from 'react-select';
 import React, {
 	MouseEventHandler,
 	ReactNode,
@@ -152,7 +153,11 @@ export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({
 			onClick={() => router.push(href)}
 		>
 			<FaChevronLeft style={{ color: dark ? '#222222' : '#FFFFFF' }} />
-			<div className={`text-center self-center ${dark ? 'text-neural-800' : 'text-white'} font-medium font-creato-medium leading-normal tracking-[0.035rem] whitespace-nowrap hidden sm:block`}>
+			<div
+				className={`text-center self-center ${
+					dark ? 'text-neural-800' : 'text-white'
+				} font-medium font-creato-medium leading-normal tracking-[0.035rem] whitespace-nowrap hidden sm:block`}
+			>
 				{text}
 			</div>
 		</div>
@@ -169,8 +174,9 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 }) => {
 	return (
 		<button
-			className={`btn h-[36px] sm:h-[36px] sm:gap-x-2 text-white sm:font-semibold bg-Blue ${isSubmitting && 'animate-pulse'
-				} disabled:bg-gray-600 whitespace-nowrap rounded-xl`}
+			className={`btn h-[36px] sm:h-[36px] sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
+				isSubmitting && 'animate-pulse'
+			} disabled:bg-gray-600 whitespace-nowrap rounded-xl`}
 			onClick={onClick}
 			disabled={isSubmitting || disabled}
 		>

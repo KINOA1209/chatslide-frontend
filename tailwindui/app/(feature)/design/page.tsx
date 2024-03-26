@@ -128,8 +128,8 @@ export default function DesignPage() {
 							setPalette={setColorPalette}
 							paletteOptions={
 								availablePalettes[
-								template as keyof typeof availablePalettes
-								] || ['Original']
+									template as keyof typeof availablePalettes
+								] || ['Origisssnal']
 							}
 							palette={colorPalette}
 						/>

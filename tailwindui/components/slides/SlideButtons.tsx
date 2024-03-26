@@ -12,10 +12,7 @@ import Modal from '../ui/Modal';
 import TemplateSelector from '@/app/(feature)/design/TemplateSelector';
 import { FiPlay } from 'react-icons/fi';
 import { FaRegClone } from 'react-icons/fa';
-import {
-	PaletteKeys,
-	TemplateKeys,
-} from './slideTemplates';
+import { PaletteKeys, TemplateKeys } from './slideTemplates';
 import availablePalettes from './palette';
 
 type SaveButtonProps = {
@@ -296,7 +293,7 @@ export const ChangeTemplateOptions: React.FC<{
 						// paletteOptions={paletteOption}
 						paletteOptions={
 							availablePalettes[
-							selectedTemplate as keyof typeof availablePalettes
+								selectedTemplate as keyof typeof availablePalettes
 							] || ['Original']
 						}
 						template={selectedTemplate}
