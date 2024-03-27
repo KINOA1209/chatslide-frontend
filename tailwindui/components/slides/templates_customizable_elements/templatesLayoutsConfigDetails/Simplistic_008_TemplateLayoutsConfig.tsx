@@ -274,40 +274,47 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			alignItems: 'flex-start',
 		},
 		titleAndSubtopicBoxCSS: {
-			backgroundColor: '#F1F1F1',
-			paddingTop: '2rem',
-			paddingBottom: '2rem',
-			paddingLeft: '4rem',
-			paddingRight: '4rem',
+			// backgroundColor: '#F1F1F1',
+			paddingTop: '50px',
+			paddingBottom: '30px',
+			paddingLeft: '50px',
+			paddingRight: '0px',
 			display: 'flex',
 			flexDirection: 'column', // Equivalent to flex
-			width: '100%',
 		},
 		topicCSS: {
-			order: '2',
-			paddingTop: '1rem',
+			order: '0',
+			paddingBottom: '12px',
+			textTransform: 'uppercase',
 		},
 		subtopicCSS: {
 			order: '1',
-			borderBottom: '1px solid #C2C2C2',
-			paddingBottom: '0.5rem',
+			// borderBottom: '1px solid #C2C2C2',
+			// paddingBottom: '0.5rem',
+		},
+		titlesAndContentDividerCSS: {
+			display: 'none',
 		},
 		imageContainerCSS: {
 			width: '50%', // equivalent to w-1/2
 			height: '100%', // equivalent to h-[90%]
-			borderRadius: '0.375rem', // equivalent to rounded-md
-			//overflow: 'hidden',
 			display: 'flex',
 			alignItems: 'center', // equivalent to items-center
+			padding: '30px 30px 30px 30px',
+		},
+		imageCSS: {
+			borderRadius: '48px', // border radius 1.25rem for image
 		},
 		contentContainerCSS: {
-			paddingTop: '1rem',
-			paddingLeft: '2rem',
-			paddingRight: '2rem',
+			width: '100%', // Equivalent to w-full
+			paddingLeft: '50px',
+			paddingRight: '00px',
+			paddingTop: '0px',
+			paddingBottom: '0px',
 		},
 		contentCSS: {
-			borderLeft: '1px solid #C2C2C2',
-			paddingLeft: '0.5rem',
+			// borderLeft: '1px solid #C2C2C2',
+			// paddingLeft: '0.5rem',
 		},
 		rndContainerCSS: {
 			width: '100%',
@@ -324,49 +331,52 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			height: '100%',
 			display: 'grid',
 			gridTemplateColumns: '1fr',
-			gridAutoRows: '30% auto 30%',
+			gridAutoRows: '25% 25% auto',
+			gap: '30px',
+			// overflow: 'hidden',
 		},
 		titleAndSubtopicBoxCSS: {
-			backgroundColor: '#F1F1F1',
-			paddingTop: '2rem',
-			paddingBottom: '2rem',
-			paddingLeft: '4rem',
-			paddingRight: '4rem',
+			// backgroundColor: '#F1F1F1',
+			paddingTop: '50px',
+			paddingBottom: '50px',
+			paddingLeft: '50px',
+			paddingRight: '50px',
 			display: 'flex',
 			flexDirection: 'column', // Equivalent to flex
-			width: '100%',
+			gridRow: 1,
 		},
 		topicCSS: {
-			order: '2',
-			paddingTop: '1rem',
+			order: '0',
+			paddingBottom: '12px',
+			textTransform: 'uppercase',
 		},
 		subtopicCSS: {
-			order: '1',
-			borderBottom: '1px solid #C2C2C2',
-			paddingBottom: '0.5rem',
+			// borderBottom: '1px solid #C2C2C2',
+			// paddingBottom: '0.5rem',
+		},
+		titlesAndContentDividerCSS: {
+			display: 'none',
 		},
 		imageContainerCSS: {
 			height: '100%',
 			flexGrow: 1,
-			borderRadius: '0.375rem', // Assuming a typical rounded-md value
-			//overflow: 'hidden',
 			gridRow: 3,
 			zIndex: 10,
+			padding: '0px 50px 0px 50px',
+		},
+		imageCSS: {
+			borderRadius: '48px 48px 0px 0px', // border radius 1.25rem for image
 		},
 		contentContainerCSS: {
-			paddingTop: '0.5rem',
-			paddingBottom: '0.5rem',
-			paddingLeft: '4rem',
-			paddingRight: '4rem',
-			height: '100%',
-			width: '100%',
-			display: 'flex',
-			flexDirection: 'column',
-			gap: '0.5rem',
+			width: '100%', // Equivalent to w-full
+			paddingLeft: '50px',
+			paddingRight: '50px',
+			paddingTop: '0px',
+			paddingBottom: '0px',
 			gridRow: 2,
-			zIndex: 20,
 		},
-		contentCSS: { borderLeft: '1px solid #C2C2C2', paddingLeft: '0.5rem' },
+
+		// contentCSS: { borderLeft: '1px solid #C2C2C2', paddingLeft: '0.5rem' },
 		contentTextCSS: {
 			display: 'flex',
 			flexDirection: 'row',

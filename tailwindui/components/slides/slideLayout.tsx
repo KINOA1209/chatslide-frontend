@@ -39,6 +39,7 @@ import ResizeSlider from './drag_resize/resize_slider';
 import '@/components/slides/drag_resize/dragAndResizeCSS.css';
 import dynamic from 'next/dynamic';
 import { isArray } from 'chart.js/dist/helpers/helpers.core';
+import Slide, { SlideKeys } from '@/models/Slide';
 const QuillEditable = dynamic(
 	() => import('@/components/slides/quillEditorSlide'),
 	{ ssr: false },
@@ -80,6 +81,65 @@ hover:shadow-lg
 const addIconStyle = `
 mr-2
 `;
+
+type HandleAddColumnProps = {
+	// handleSlideEdit: (
+	// 	content: string | string[],
+	// 	index: number,
+	// 	tag: SlideKeys,
+	// 	contentIndex?: number,
+	// 	rerender?: boolean,
+	// ) => void;
+	handleSlideEdit: Function;
+	isVerticalContent: boolean;
+	themeElements: ThemeElements; // Update the type accordingly
+	fontSize: string;
+	contentIndex: number;
+	slideIndex: number;
+	slides: Slide[];
+	setUpdatedContent: React.Dispatch<React.SetStateAction<JSX.Element[]>>;
+	setShowAddButton: React.Dispatch<React.SetStateAction<boolean>>;
+	shouldShowAddButton: boolean;
+};
+
+export const handleAddTextColumn = ({
+	handleSlideEdit,
+	isVerticalContent,
+	themeElements,
+	fontSize,
+	contentIndex,
+	slideIndex,
+	slides,
+	setUpdatedContent,
+	setShowAddButton,
+	shouldShowAddButton,
+}: HandleAddColumnProps) => {
+	console.log('add a new content item column:');
+	const newContentItem = (
+		<div
+			key={`content_${Date.now()}`}
+			className={`${slideIndex === 0 ? 'hidden' : ''}`}
+		>
+			<QuillEditable
+				content={''}
+				handleBlur={(newContent: string | string[]) =>
+					handleSlideEdit(newContent, slideIndex, 'content', contentIndex, true)
+				}
+				style={{
+					...themeElements.contentFontCSS_non_vertical_content,
+					fontSize: fontSize,
+				}}
+				isVerticalContent={isVerticalContent}
+				templateKey={slides[slideIndex].template}
+			/>
+		</div>
+	);
+	setUpdatedContent((prevContent: JSX.Element[]) => [
+		...prevContent,
+		newContentItem,
+	]);
+	setShowAddButton(shouldShowAddButton);
+};
 
 interface MainSlideProps extends BaseMainSlideProps {
 	brandingColor?: string;
@@ -479,41 +539,41 @@ export const Col_2_img_0_layout = ({
 
 	// let updatedContent = [...items];
 
-	const handleAddColumn = () => {
-		// Store the previous number of items
+	// const handleAddColumn = () => {
+	// 	// Store the previous number of items
 
-		// Call function to add new content item
-		console.log('add a new content item column:');
-		const newContentItem = (
-			<div
-				key={`content_${Date.now()}`}
-				className={`${slideIndex === 0 ? 'hidden' : ''}`}
-			>
-				<QuillEditable
-					content={''}
-					handleBlur={(newContent) =>
-						handleSlideEdit(
-							newContent,
-							slideIndex,
-							'content',
-							slides[slideIndex].content.length === 0 ? 0 : 1,
-							true,
-						)
-					}
-					style={{
-						...themeElements.contentFontCSS_non_vertical_content,
-						fontSize: '16pt',
-					}}
-					isVerticalContent={false}
-					templateKey={slides[slideIndex].template}
-				/>
-			</div>
-		);
-		setUpdatedContent((prevContent) => [...prevContent, newContentItem]);
-		// Update showAddButton based on the updated content array
-		setShowAddButton(updatedContent.length <= 1);
-		// updateSlidePage(slideIndex, slides[slideIndex], false);
-	};
+	// 	// Call function to add new content item
+	// 	console.log('add a new content item column:');
+	// 	const newContentItem = (
+	// 		<div
+	// 			key={`content_${Date.now()}`}
+	// 			className={`${slideIndex === 0 ? 'hidden' : ''}`}
+	// 		>
+	// 			<QuillEditable
+	// 				content={''}
+	// 				handleBlur={(newContent) =>
+	// 					handleSlideEdit(
+	// 						newContent,
+	// 						slideIndex,
+	// 						'content',
+	// 						slides[slideIndex].content.length === 0 ? 0 : 1,
+	// 						true,
+	// 					)
+	// 				}
+	// 				style={{
+	// 					...themeElements.contentFontCSS_non_vertical_content,
+	// 					fontSize: '16pt',
+	// 				}}
+	// 				isVerticalContent={false}
+	// 				templateKey={slides[slideIndex].template}
+	// 			/>
+	// 		</div>
+	// 	);
+	// 	setUpdatedContent((prevContent) => [...prevContent, newContentItem]);
+	// 	// Update showAddButton based on the updated content array
+	// 	setShowAddButton(updatedContent.length <= 1);
+	// 	// updateSlidePage(slideIndex, slides[slideIndex], false);
+	// };
 	return (
 		<div className={`SlideLayoutCanvas`} style={layoutElements.canvaCSS}>
 			<div
@@ -543,10 +603,25 @@ export const Col_2_img_0_layout = ({
 						className={`SlideContentIndexTextDivider`}
 						style={layoutElements.contentIndexTextDividerCSS}
 					></div>
+
 					{updatedContent.length === 0 && showAddButton && (
 						<div
 							className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
-							onClick={handleAddColumn}
+							// onClick={handleAddTextColumn}
+							onClick={() =>
+								handleAddTextColumn({
+									handleSlideEdit: handleSlideEdit,
+									isVerticalContent: false,
+									themeElements: themeElements,
+									fontSize: '16pt',
+									contentIndex: 0,
+									slideIndex: slideIndex,
+									slides: slides,
+									setUpdatedContent: setUpdatedContent,
+									setShowAddButton: setShowAddButton,
+									shouldShowAddButton: updatedContent.length <= 1,
+								})
+							}
 						>
 							<RiAddLine className={addIconStyle} />
 							Add One Column of text
@@ -580,7 +655,21 @@ export const Col_2_img_0_layout = ({
 						{updatedContent.length === 1 && showAddButton && (
 							<div
 								className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
-								onClick={handleAddColumn}
+								// onClick={handleAddColumn}
+								onClick={() =>
+									handleAddTextColumn({
+										handleSlideEdit: handleSlideEdit,
+										isVerticalContent: false,
+										themeElements: themeElements,
+										fontSize: '16pt',
+										contentIndex: 1,
+										slideIndex: slideIndex,
+										slides: slides,
+										setUpdatedContent: setUpdatedContent,
+										setShowAddButton: setShowAddButton,
+										shouldShowAddButton: updatedContent.length <= 1,
+									})
+								}
 							>
 								<div
 									className={`SlideContentIndexTextDivider`}
@@ -651,6 +740,21 @@ export const Col_3_img_0_layout = ({
 	handleSlideEdit,
 }: MainSlideProps) => {
 	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
+
+	// Ensure content is always an array
+	const items = Array.isArray(content) ? content : [content];
+	const { slides, slideIndex, updateSlidePage, updateVersion } = useSlides();
+	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
+	const [updatedContent, setUpdatedContent] = useState(items);
+
+	useEffect(() => {
+		console.log('updatedContent on page', slideIndex, updatedContent);
+	}, [updatedContent]);
+
+	const [showAddButton, setShowAddButton] = useState(
+		// slides[slideIndex].content.length <= 1,
+		updatedContent.length <= 1,
+	);
 
 	return (
 		<div style={layoutElements.canvaCSS}>
