@@ -316,10 +316,7 @@ export const templateDispatch = (
 					? generateContentElement(
 							slide.content,
 							'content',
-							// slide.layout === 'Col_2_img_1_layout' ||
-							// 	slide.layout === 'Col_1_img_1_layout'
-							// 	? { ...themeElements.contentFontCSS, fontSize: '14pt' }
-							// 	: themeElements.contentFontCSS,
+
 							{
 								...themeElements.contentFontCSS,
 								fontSize: dynamicCalculateContentFontSize(
@@ -340,25 +337,7 @@ export const templateDispatch = (
 								{generateContentElement(
 									item,
 									'content',
-									// themeElements.contentFontCSS_non_vertical_content,
-									// slide.layout === 'Col_2_img_0_layout' ||
-									// 	slide.layout === 'Col_3_img_0_layout'
-									// 	? {
-									// 			...themeElements.contentFontCSS_non_vertical_content,
-									// 			fontSize: dynamicCalculateContentFontSize(
-									// 				slide.layout,
-									// 				maxContentLength,
-									// 				totalContentLength,
-									// 			),
-									// 	  }
-									// 	: {
-									// 			...themeElements.contentFontCSS_non_vertical_content,
-									// 			fontSize: dynamicCalculateContentFontSize(
-									// 				slide.layout,
-									// 				maxContentLength,
-									// 				totalContentLength,
-									// 			),
-									// 	  },
+
 									{
 										...themeElements.contentFontCSS_non_vertical_content,
 										fontSize: dynamicCalculateContentFontSize(

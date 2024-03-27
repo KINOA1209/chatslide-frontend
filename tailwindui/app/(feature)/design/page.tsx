@@ -26,7 +26,12 @@ import Card from '@/components/ui/Card';
 import RadioButton, { RadioButtonOption } from '@/components/ui/RadioButton';
 import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
-import { BigTitle, Explanation, Instruction, Title } from '@/components/ui/Text';
+import {
+	BigTitle,
+	Explanation,
+	Instruction,
+	Title,
+} from '@/components/ui/Text';
 import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
 import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
 
@@ -34,7 +39,9 @@ import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
 import { PaletteKeys, TemplateKeys } from '@/components/slides/slideTemplates';
 import BrandingSelector from './BrandingSelector';
 
-const TemplateSelector = dynamic(() => import('./TemplateSelector'), { ssr: false });
+const TemplateSelector = dynamic(() => import('./TemplateSelector'), {
+	ssr: false,
+});
 
 const getTemplateFromAudicence = (audience: string): TemplateKeys => {
 	switch (audience) {
@@ -65,13 +72,24 @@ export default function DesignPage() {
 		project?.template || getTemplateFromAudicence(project?.audience || ''),
 	);
 
-	const [colorPalette, setColorPalette] = useState<PaletteKeys>(project?.palette || 'Original');
+	const [colorPalette, setColorPalette] = useState<PaletteKeys>(
+		project?.palette || 'Original',
+	);
 	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
 		project?.selected_logo || [],
 	);
 	const [selectedBackground, setSelectedBackground] = useState<Resource[]>(
 		project?.selected_background || [],
 	);
+	// Initialize the palette state with the first available palette for the current template
+	useEffect(() => {
+		if (template && availablePalettes) {
+			const paletteForTemplate = availablePalettes[template];
+			if (paletteForTemplate && paletteForTemplate.length > 0) {
+				setColorPalette(paletteForTemplate[0]);
+			}
+		}
+	}, [template]);
 
 	const [imageAmount, setImageAmount] = useState('content_with_image');
 	const imageAmountOptions: RadioButtonOption[] = [
@@ -201,7 +219,7 @@ export default function DesignPage() {
 
 					<Card>
 						<BigTitle>Branding</BigTitle>
-						<BrandingSelector 
+						<BrandingSelector
 							branding={branding}
 							setBranding={setBranding}
 							selectedLogo={selectedLogo}
