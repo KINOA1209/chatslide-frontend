@@ -64,7 +64,7 @@ interface ImgModuleProp {
 	images_position: ImagesPosition[];
 	layoutElements?: LayoutElements;
 	customImageStyle?: React.CSSProperties;
-	additional_images?: string[];
+	setImgHigherZIndex?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 enum ImgQueryMode {
@@ -90,7 +90,7 @@ export const ImgModule = ({
 	images_position,
 	layoutElements,
 	customImageStyle,
-	additional_images = [],
+	setImgHigherZIndex,
 }: ImgModuleProp) => {
 	const sourceImage = useImageStore((state) => state.sourceImage);
 	const { project } = useProject();
@@ -719,6 +719,7 @@ export const ImgModule = ({
 		// prevent enlarge image on preview section
 		if (canEdit) {
 			setIsImgEditMode(!isImgEditMode);
+			setImgHigherZIndex && setImgHigherZIndex(!isImgEditMode);
 		}
 	};
 

@@ -309,6 +309,8 @@ export const Cover_img_1_layout = ({
 			update_callback(newImgs, newIsCharts, newImagesPosition);
 		};
 
+	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
+
 	return (
 		<div className={`SlideCanvas`} style={layoutElements.canvaCSS}>
 			<div
@@ -333,7 +335,7 @@ export const Cover_img_1_layout = ({
 				className={`SlideImageContainer`}
 				style={{
 					...layoutElements.imageContainerCSS,
-					zIndex: 20,
+					zIndex: { imgHigherZIndex } ? 100 : 20,
 				}}
 			>
 				<ImgModule
@@ -348,7 +350,8 @@ export const Cover_img_1_layout = ({
 					images_position={images_position}
 					layoutElements={layoutElements}
 					customImageStyle={layoutElements.imageCSS}
-					additional_images={imgs.slice(3)}
+					// additional_images={imgs.slice(3)}
+					setImgHigherZIndex={setImgHigherZIndex}
 				/>
 			</div>
 
@@ -898,6 +901,7 @@ export const Col_2_img_1_layout = ({
 	const containerRef = useRef<HTMLDivElement>(null);
 	const topicRef = useRef<HTMLDivElement>(null);
 	const subtopicRef = useRef<HTMLDivElement>(null);
+	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
 
 	useEffect(() => {
 		const calculateMaxHeight = () => {
@@ -975,7 +979,7 @@ export const Col_2_img_1_layout = ({
 			{/* column 2 for img container */}
 			<div
 				// className={`w-1/2 h-[90%] rounded-md overflow-hidden items-center`}
-				style={{ ...layoutElements.imageContainerCSS, zIndex: 20 }}
+				style={{ ...layoutElements.imageContainerCSS, zIndex: { imgHigherZIndex } ? 100 : 20 }}
 			>
 				<ImgModule
 					imgsrc={imgs[0]}
@@ -989,7 +993,7 @@ export const Col_2_img_1_layout = ({
 					images_position={images_position}
 					layoutElements={layoutElements}
 					customImageStyle={layoutElements.imageCSS}
-					additional_images={imgs.slice(3)}
+					setImgHigherZIndex={setImgHigherZIndex}
 				/>
 			</div>
 			{/* logo section */}
@@ -1065,6 +1069,7 @@ export const Col_1_img_1_layout = ({
 	const topicAndSubtopicRef = useRef<HTMLDivElement>(null);
 	// const subtopicRef = useRef<HTMLDivElement>(null);
 	const imgContainerRef = useRef<HTMLDivElement>(null);
+	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
 
 	useEffect(() => {
 		const calculateMaxHeight = () => {
@@ -1127,7 +1132,7 @@ export const Col_1_img_1_layout = ({
 				{/* image section */}
 				<div
 					// className='h-[15rem] grow rounded-md overflow-hidden'
-					style={{ ...layoutElements.imageContainerCSS, zIndex: 20 }}
+					style={{ ...layoutElements.imageContainerCSS, zIndex: { imgHigherZIndex } ? 100 : 20 }}
 					ref={imgContainerRef}
 				>
 					<ImgModule
@@ -1142,7 +1147,7 @@ export const Col_1_img_1_layout = ({
 						images_position={images_position}
 						layoutElements={layoutElements}
 						customImageStyle={layoutElements.imageCSS}
-						additional_images={imgs.slice(3)}
+						setImgHigherZIndex={setImgHigherZIndex}
 					/>
 				</div>
 				{/* row3 for contents */}
@@ -1257,6 +1262,7 @@ export const Col_2_img_2_layout = ({
 	const containerRef = useRef<HTMLDivElement>(null);
 	const topicAndSubtopicRef = useRef<HTMLDivElement>(null);
 	const imgContainerRef = useRef<HTMLDivElement>(null);
+	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
 
 	useEffect(() => {
 		const calculateMaxHeight = () => {
@@ -1314,7 +1320,7 @@ export const Col_2_img_2_layout = ({
 				{/* two columns of images */}
 				<div
 					// className='w-full grid grid-cols-2 gap-[2rem]'
-					style={{ ...layoutElements.imageContainerCSS, zIndex: 20 }}
+					style={{ ...layoutElements.imageContainerCSS, zIndex: { imgHigherZIndex } ? 100 : 20 }}
 					ref={imgContainerRef}
 				>
 					<div
@@ -1342,7 +1348,7 @@ export const Col_2_img_2_layout = ({
 							images_position={images_position}
 							layoutElements={layoutElements}
 							customImageStyle={layoutElements.imageCSS}
-							additional_images={imgs.slice(3)}
+							setImgHigherZIndex={setImgHigherZIndex}
 						/>
 					</div>
 					<div
@@ -1370,7 +1376,7 @@ export const Col_2_img_2_layout = ({
 							images_position={images_position}
 							layoutElements={layoutElements}
 							customImageStyle={layoutElements.imageCSS}
-							additional_images={imgs.slice(3)}
+							setImgHigherZIndex={setImgHigherZIndex}
 						/>
 					</div>
 				</div>
@@ -1483,6 +1489,8 @@ export const Col_3_img_3_layout = ({
 			update_callback(newImgs, newIsCharts, newImagesPosition);
 		};
 
+	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
+
 	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
 	return (
 		<div style={layoutElements.canvaCSS}>
@@ -1504,7 +1512,7 @@ export const Col_3_img_3_layout = ({
 				{/* three columns of images */}
 				<div
 					// className='w-full grid grid-cols-3 gap-[2rem] '
-					style={{ ...layoutElements.imageContainerCSS, zIndex: 20 }}
+					style={{ ...layoutElements.imageContainerCSS, zIndex: imgHigherZIndex ? 100 : 20 }}
 				>
 					<div
 						// className='h-[11rem] grow rounded-md overflow-hidden'
@@ -1522,7 +1530,7 @@ export const Col_3_img_3_layout = ({
 							images_position={images_position}
 							layoutElements={layoutElements}
 							customImageStyle={layoutElements.imageCSS}
-							additional_images={imgs.slice(3)}
+							setImgHigherZIndex={setImgHigherZIndex}
 						/>
 					</div>
 					<div
@@ -1541,7 +1549,7 @@ export const Col_3_img_3_layout = ({
 							images_position={images_position}
 							layoutElements={layoutElements}
 							customImageStyle={layoutElements.imageCSS}
-							additional_images={imgs.slice(3)}
+							setImgHigherZIndex={setImgHigherZIndex}
 						/>
 					</div>
 					<div
@@ -1560,7 +1568,7 @@ export const Col_3_img_3_layout = ({
 							images_position={images_position}
 							layoutElements={layoutElements}
 							customImageStyle={layoutElements.imageCSS}
-							additional_images={imgs.slice(3)}
+							setImgHigherZIndex={setImgHigherZIndex}
 						/>
 					</div>
 				</div>
