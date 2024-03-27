@@ -55,11 +55,51 @@ export const templateDispatch = (
 	// brandingColor?: string,
 	isShowingLogo: boolean = true,
 ): JSX.Element => {
-	// useEffect(() => {
-	// 	console.log('chosen template string:', slide.template);
-	// 	console.log('template config:', themeElements);
-	// }, []);
+	useEffect(() => {
+		console.log(
+			'current slide layout and content text',
+			index,
+			slide.layout,
+			slide.content,
+		);
+	}, []);
 	const { isPaidUser, token } = useUser();
+
+	const dynamicCalculateContentFontSize = (
+		layout: LayoutKeys,
+		maxContentLength: number,
+		totalContentLength: number,
+	) => {
+		switch (layout) {
+			case 'Col_2_img_1_layout':
+				return maxContentLength > 85 ? '13pt' : '14pt';
+			case 'Col_1_img_1_layout':
+				return maxContentLength > 95 ? '13pt' : '14pt';
+			case 'Col_1_img_0_layout':
+				return maxContentLength > 95 || totalContentLength > 350
+					? '14pt'
+					: '16pt';
+			case 'Col_2_img_0_layout':
+				return maxContentLength > 180 ? '14pt' : '16pt';
+			case 'Col_3_img_0_layout':
+				return maxContentLength > 140 ? '14pt' : '16pt';
+			case 'Col_2_img_2_layout':
+				return maxContentLength > 120 ? '13pt' : '14pt';
+			case 'Col_3_img_3_layout':
+				return maxContentLength > 110 ? '13pt' : '14pt';
+			default:
+				return '14pt'; // Default font size
+		}
+	};
+	let totalContentLength = 0;
+	let maxContentLength = 0;
+	slide.content.forEach((sentence) => {
+		totalContentLength += sentence.length;
+		if (sentence.length > maxContentLength) {
+			maxContentLength = sentence.length;
+		}
+	});
+
 	let keyPrefix = '';
 	if (exportToPdfMode) {
 		keyPrefix = 'exportToPdf';
@@ -210,12 +250,19 @@ export const templateDispatch = (
 	}));
 
 	useEffect(() => {
-		console.log(
-			'content[0] length:',
-			slide.content[0].length,
-			slide.content[0],
-		);
-	});
+		let totalLength = 0;
+		let maxLength = 0;
+		slide.content.forEach((sentence) => {
+			totalLength += sentence.length;
+			if (sentence.length > maxLength) {
+				maxLength = sentence.length;
+			}
+		});
+		console.log('Current page content text', index, slide.content);
+		console.log('Total length of all sentences:', totalLength);
+		console.log('Length of the longest sentence:', maxLength);
+	}, []);
+
 	return (
 		<Template
 			canEdit={canEdit}
@@ -269,10 +316,18 @@ export const templateDispatch = (
 					? generateContentElement(
 							slide.content,
 							'content',
-							slide.layout === 'Col_2_img_1_layout' ||
-								slide.layout === 'Col_1_img_1_layout'
-								? { ...themeElements.contentFontCSS, fontSize: '14pt' }
-								: themeElements.contentFontCSS,
+							// slide.layout === 'Col_2_img_1_layout' ||
+							// 	slide.layout === 'Col_1_img_1_layout'
+							// 	? { ...themeElements.contentFontCSS, fontSize: '14pt' }
+							// 	: themeElements.contentFontCSS,
+							{
+								...themeElements.contentFontCSS,
+								fontSize: dynamicCalculateContentFontSize(
+									slide.layout,
+									maxContentLength,
+									totalContentLength,
+								),
+							},
 							true,
 					  )
 					: slide.content.map((item, contentIndex) => (
@@ -286,13 +341,32 @@ export const templateDispatch = (
 									item,
 									'content',
 									// themeElements.contentFontCSS_non_vertical_content,
-									slide.layout === 'Col_2_img_0_layout' ||
-										slide.layout === 'Col_3_img_0_layout'
-										? {
-												...themeElements.contentFontCSS_non_vertical_content,
-												fontSize: '16pt',
-										  }
-										: themeElements.contentFontCSS_non_vertical_content,
+									// slide.layout === 'Col_2_img_0_layout' ||
+									// 	slide.layout === 'Col_3_img_0_layout'
+									// 	? {
+									// 			...themeElements.contentFontCSS_non_vertical_content,
+									// 			fontSize: dynamicCalculateContentFontSize(
+									// 				slide.layout,
+									// 				maxContentLength,
+									// 				totalContentLength,
+									// 			),
+									// 	  }
+									// 	: {
+									// 			...themeElements.contentFontCSS_non_vertical_content,
+									// 			fontSize: dynamicCalculateContentFontSize(
+									// 				slide.layout,
+									// 				maxContentLength,
+									// 				totalContentLength,
+									// 			),
+									// 	  },
+									{
+										...themeElements.contentFontCSS_non_vertical_content,
+										fontSize: dynamicCalculateContentFontSize(
+											slide.layout,
+											maxContentLength,
+											totalContentLength,
+										),
+									},
 									false,
 									contentIndex,
 								)}
