@@ -16,7 +16,6 @@ import { useProject } from '@/hooks/use-project';
 import { useImageStore } from '@/hooks/use-img-store';
 import ChatSuggestions from '../language/ChatSuggestions';
 
-
 export const DrLambdaAIAssistantIcon: React.FC<{
 	onClick: () => void;
 }> = ({ onClick }) => {
@@ -24,7 +23,7 @@ export const DrLambdaAIAssistantIcon: React.FC<{
 		<div
 			className='w-14 h-14 bg-neutral-50 rounded-[50%] shadow border border-black border-opacity-20 z-40 flex items-center justify-center relative'
 			onClick={onClick}
-		// style={{ animation: 'pulse 0.5s infinite' }}
+			// style={{ animation: 'pulse 0.5s infinite' }}
 		>
 			<div className='absolute inset-0 bg-gradient-to-b from-[#0B84FF] via-[#0B84FF] to-transparent rounded-[50%] opacity-0 animate-pulse'></div>
 			<Image
@@ -227,6 +226,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 
 	const makeApiCall = async (
 		prompt: string,
+		prev_prompts: ChatHistory[],
 		token: string,
 	): Promise<Response> => {
 		try {
@@ -240,6 +240,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					slide: slides[currentSlideIndex],
 					project_id: project?.id || '',
 					prompt: prompt,
+					prev_prompts: prev_prompts,
 				}),
 			});
 		} catch (error) {
@@ -272,10 +273,15 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		// Clear user input after sending
 		setUserInput('');
 
+		// Get up to 3 previous chat messages, only keep role and content
+		const lastChatMessages = chatHistory
+			.slice(-3)
+			.map((chat) => ({ role: chat.role, content: chat.content }));
+
 		try {
 			setLoading(true);
 
-			const response = await makeApiCall(inputToSend, token);
+			const response = await makeApiCall(inputToSend, lastChatMessages, token);
 
 			setLoading(false);
 
@@ -295,11 +301,11 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					updateSlidePage(currentSlideIndex, responseData.data.slide);
 					updateVersion(); // force rerender when version changes and index does not change
 
-					// Add success message to chat history
-					const successMessage = addSuccessMessage(
-						'✅ I updated the current slide for you.',
-					);
-					addChatHistory(successMessage);
+					// // Add success message to chat history
+					// const successMessage = addSuccessMessage(
+					// 	'✅ I updated the current slide for you.',
+					// );
+					// addChatHistory(successMessage);
 				}
 
 				// Update chat history with AI's response
@@ -400,16 +406,16 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			{/* suggestions */}
 			{/* input area */}
 			<div className='w-full border-t border-gray-200 border-t-2'>
-				{!userInput &&
+				{!userInput && (
 					<ChatSuggestions
 						isCover={currentSlideIndex === 0}
 						sendChat={handleSend}
 					/>
-				}
+				)}
 				<div className='flex flex-row justify-between p-2 items-center gap-4'>
 					<textarea
 						value={userInput}
-						className="w-full border-0 focus:outline-none focus:ring-0 resize-none overflow-y-scroll"
+						className='w-full border-0 focus:outline-none focus:ring-0 resize-none overflow-y-scroll'
 						onChange={handleInputChange}
 						onKeyDown={handleKeyDown}
 						style={{ minHeight: '32px' }} // Set minimum height to resemble input field
