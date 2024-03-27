@@ -32,46 +32,49 @@ import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
 
 // Local component imports
 import ImageSelector from './ImageSelector';
-import { TemplateKeys } from '@/components/slides/slideTemplates';
-// import { getTemplateFromAudicence } from '@/components/slides/slideTemplates';
+import { PaletteKeys, TemplateKeys } from '@/components/slides/slideTemplates';
+
 const TemplateSelector = dynamic(() => import('./TemplateSelector'), {
 	ssr: false,
 });
 
-const getTemplateFromAudicence = (audience: string): string => {
+const getTemplateFromAudicence = (audience: string): TemplateKeys => {
 	switch (audience) {
-		case 'Business Clients' as TemplateKeys:
+		case 'Business Clients':
 			return 'Business_Dark_005';
+		case 'Video Viewers':
+			return 'Fun_Vibrant_007';
+		case 'Students':
+			return 'Fun_Education_004';
+		case 'Researchers':
+			return 'Fun_Education_004';
 		case 'Office Colleagues':
 			return 'Business_Light_006';
 		case 'Myself':
 			return 'Clean_Lifestyle_003';
-		case 'Video Viewers':
-		// return 'Fun_Vibrant_007';
-		case 'Students':
-		// return 'Fun_Education_004';
-		case 'Researchers':
-			// return 'Fun_Education_004';
-			return 'Simplistic_008';
 	}
-	return 'Simplistic_008';
+	return 'Clean_Lifestyle_003';
 };
 
 export default function DesignPage() {
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 
-	const [colorPalette, setColorPalette] = useState('Original' as string);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [isGpt35, setIsGpt35] = useState(true);
 	const { outlines, project } = useProject();
-	const [template, setTemplate] = useState<string>(
-		getTemplateFromAudicence(project?.audience || ''),
+	const [template, setTemplate] = useState<TemplateKeys>(
+		project?.template || getTemplateFromAudicence(project?.audience || ''),
 	);
 
+	const [colorPalette, setColorPalette] = useState<PaletteKeys | string>(
+		project?.palette || 'Original',
+	);
 	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
 		project?.selected_logo || [],
 	);
-	const [selectedBackground, setSelectedBackground] = useState<Resource[]>([]);
+	const [selectedBackground, setSelectedBackground] = useState<Resource[]>(
+		project?.selected_background || [],
+	);
 
 	const [imageAmount, setImageAmount] = useState('content_with_image');
 	const imageAmountOptions: RadioButtonOption[] = [

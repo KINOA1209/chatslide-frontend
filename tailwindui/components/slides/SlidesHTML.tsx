@@ -102,6 +102,7 @@ export const calculateNonPresentScale = (
 	isChatWindowOpen = false,
 	showScript = false,
 ) => {
+	console.log("width", width, "height", height, "isChatWindowOpen", isChatWindowOpen, "showScript", showScript);
 	if (width < 640) {
 		// mobile, layout vertically
 		return Math.min(1, Math.min(width / 960, (height - 200) / 540) * 0.8);
@@ -110,7 +111,7 @@ export const calculateNonPresentScale = (
 		const scriptEditorHeight = showScript ? 200 : 0;
 		return Math.min(
 			1,
-			Math.min((width - 400 - chatWindowWidth) / 960, (height - 300 - scriptEditorHeight) / 540),
+			Math.min((width - 400 - chatWindowWidth) / 960, (height - 150 - scriptEditorHeight) / 540),
 		);
 	}
 };
@@ -173,7 +174,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	);
 
 	const [nonPresentScale, setNonPresentScale] = useState(
-		calculateNonPresentScale(dimensions.width, dimensions.height),
+		calculateNonPresentScale(dimensions.width, dimensions.height, showScript),
 	);
 
 	const [isChatWindowOpen, setIsChatWindowOpen] = useState(false);
@@ -588,7 +589,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	}
 
 	return (
-		<div className='w-full h-full flex flex-col items-start justify-around py-2 gap-2 relative'>
+		<div className='w-full h-full flex flex-col items-start justify-around py-2 relative'>
 			<div className='w-full flex flex-row items-center justify-center'>
 				<ActionsToolBar
 					undo={undoChange}
@@ -691,7 +692,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				showReferralLink={true}
 			/>
 
-			<div className='w-full flex flex-row grow items-start justify-center sm:justify-around gap-2 overflow-auto'>
+			<div className='w-full flex flex-row items-start justify-center sm:justify-around gap-2 overflow-auto'>
 				{/* vertical bar */}
 
 				<Panel>
@@ -739,11 +740,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						</div>
 
 						<div className='flex flex-col items-end SlidesStep-3 SlidesStep-4 gap-0'>
+							{!isPresenting && !isViewing && 
 							<div className='mr-2'>
 								<Explanation>
 									{saveStatus === SaveStatus.Saving ? 'Saving...' : 'Saved'}
 								</Explanation>
-							</div>
+							</div>}
 							{/* main container for viewing and editing */}
 							<SlideContainer
 								slide={slides[slideIndex]}
@@ -795,7 +797,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					)}
 
 					{/* Slide pages indicator */}
-					<div className='flex-row items-center'>
+					<div className='flex flex-row items-center'>
 						<div className='block sm:hidden'>
 							<SlideLeftNavigator
 								currentSlideIndex={slideIndex}
@@ -817,7 +819,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					</div>
 
 					{/* horizontal  */}
-					<div className='block sm:hidden max-w-screen sm:max-w-4xl mx-auto py-4 justify-center items-center'>
+					<div className='block sm:hidden w-[90vw] sm:w-4xl py-4 justify-center items-center'>
 						<ScrollBar
 							currentElementRef={horizontalCurrentSlideRef}
 							index={slideIndex}

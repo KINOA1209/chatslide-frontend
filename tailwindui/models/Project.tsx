@@ -1,3 +1,4 @@
+import { PaletteKeys, TemplateKeys } from '@/components/slides/slideTemplates';
 import Resource from './Resource';
 import Slide from './Slide';
 import SocialPostSlide from './SocialPost';
@@ -21,6 +22,9 @@ type Project = {
 	additional_images: string[];
 	
 	selected_logo: Resource[];
+	selected_background: Resource[];
+	template: TemplateKeys;
+	palette: PaletteKeys;
 
 	// Presentation-specific fields
 	audience: string;

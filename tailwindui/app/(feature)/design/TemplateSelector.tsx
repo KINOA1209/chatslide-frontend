@@ -31,8 +31,8 @@ const colorPreviews: Record<PaletteKeys, string> = {
 };
 
 const TemplateSelector: React.FC<{
-	template: TemplateKeys | string;
-	setTemplate: (template: string | TemplateKeys) => void;
+	template: TemplateKeys;
+	setTemplate: (template: TemplateKeys) => void;
 	paletteOptions: string[];
 	palette: PaletteKeys | string;
 	setPalette: (palette: string | PaletteKeys) => void;
@@ -50,7 +50,7 @@ const TemplateSelector: React.FC<{
 	}, [selectedTemplate]);
 
 	const handleTemplateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		const selectedValue = e.target.value;
+		const selectedValue = e.target.value as TemplateKeys;
 		setSelectedTemplate(selectedValue);
 		setTemplate(selectedValue);
 	};

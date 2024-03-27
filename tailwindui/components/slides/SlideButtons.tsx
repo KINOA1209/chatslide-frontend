@@ -245,8 +245,8 @@ export const DeleteSlideButton: React.FC<{
 //   )
 // }
 export const ChangeTemplateOptions: React.FC<{
-	currentTemplate: TemplateKeys | string;
-	currentPalette: PaletteKeys | string;
+	currentTemplate: TemplateKeys;
+	currentPalette: PaletteKeys;
 	templateOptions: string[] | undefined;
 	onChangeTemplate: (newTemplate: string) => void;
 	onChangePalette: (newPalette: string) => void;
@@ -263,7 +263,7 @@ export const ChangeTemplateOptions: React.FC<{
 	onChangeTemplateAndColorPalette,
 }) => {
 	const [selectedTemplate, setSelectedTemplate] =
-		useState<string>(currentTemplate);
+		useState<TemplateKeys>(currentTemplate);
 	const [showModal, setShowModal] = useState(false);
 	// Assert the type of selectedTemplate as TemplateKeys
 	// const paletteOption =
@@ -272,7 +272,7 @@ export const ChangeTemplateOptions: React.FC<{
 	// 	] || [];
 	// layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
 	const [selectedPaletteOption, SetSelectedPaletteOption] = useState<
-		string | PaletteKeys
+		PaletteKeys | string
 	>(currentPalette);
 
 	const handleConfirm = () => {
