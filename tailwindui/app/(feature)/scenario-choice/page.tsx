@@ -9,16 +9,18 @@ import slides_scenarios from './slides_scenarios.json';
 import SessionStorage from '@/utils/SessionStorage';
 import { DrLambdaBackButton } from '@/components/button/DrlambdaButton';
 import useHydrated from '@/hooks/use-hydrated';
+import { useProject } from '@/hooks/use-project';
 
 const ScenarioChoicePage = () => {
 	const router = useRouter();
 	const workflowType = SessionStorage.getItem('workflowType', 'presentation');
 	const scenarios =
 		workflowType == 'presentation' ? slides_scenarios : socialpost_scenarios;
-
+	const { project, initProject, updateProject } = useProject();
 	// Function to navigate to the "scenario-choice" page
 	const navigateToSummary = (scenarioType: string) => {
-		sessionStorage.setItem('scenarioType', scenarioType);
+		//sessionStorage.setItem('scenarioType', scenarioType);
+		updateProject('post_type', scenarioType);
 		if (workflowType == 'presentation')
 			router.push('/genmode');
 		else router.push('/summary-socialpost');
