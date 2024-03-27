@@ -335,7 +335,7 @@ export const Cover_img_1_layout = ({
 				className={`SlideImageContainer`}
 				style={{
 					...layoutElements.imageContainerCSS,
-					zIndex: { imgHigherZIndex } ? 100 : 20,
+					zIndex: imgHigherZIndex ? 100 : 20,
 				}}
 			>
 				<ImgModule
@@ -979,7 +979,7 @@ export const Col_2_img_1_layout = ({
 			{/* column 2 for img container */}
 			<div
 				// className={`w-1/2 h-[90%] rounded-md overflow-hidden items-center`}
-				style={{ ...layoutElements.imageContainerCSS, zIndex: { imgHigherZIndex } ? 100 : 20 }}
+				style={{ ...layoutElements.imageContainerCSS, zIndex: imgHigherZIndex ? 100 : 20 }}
 			>
 				<ImgModule
 					imgsrc={imgs[0]}
@@ -1132,7 +1132,7 @@ export const Col_1_img_1_layout = ({
 				{/* image section */}
 				<div
 					// className='h-[15rem] grow rounded-md overflow-hidden'
-					style={{ ...layoutElements.imageContainerCSS, zIndex: { imgHigherZIndex } ? 100 : 20 }}
+					style={{ ...layoutElements.imageContainerCSS, zIndex: imgHigherZIndex ? 100 : 20 }}
 					ref={imgContainerRef}
 				>
 					<ImgModule
@@ -1320,7 +1320,7 @@ export const Col_2_img_2_layout = ({
 				{/* two columns of images */}
 				<div
 					// className='w-full grid grid-cols-2 gap-[2rem]'
-					style={{ ...layoutElements.imageContainerCSS, zIndex: { imgHigherZIndex } ? 100 : 20 }}
+					style={{ ...layoutElements.imageContainerCSS, zIndex: imgHigherZIndex ? 100 : 20 }}
 					ref={imgContainerRef}
 				>
 					<div

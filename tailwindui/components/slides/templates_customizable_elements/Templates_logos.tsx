@@ -47,7 +47,7 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 						alt='CustomLogo'
 						width={45}
 						height={40}
-						// className='h-auto'
+					// className='h-auto'
 					/>
 				</div>
 			);
@@ -77,7 +77,7 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 						alt='custom logo'
 						width={45}
 						height={40}
-						className='mr-4'
+						className='mr-4 opacity-50'
 					/>
 					<div
 						className={`grow basis-0 opacity-50 border border-black border-opacity-40`}
@@ -135,8 +135,8 @@ export const generateTemplateLogo = ({
 								? coverLogo.src // Assuming coverLogo is of type StaticImageData
 								: nonCoverLogo.src // Assuming nonCoverLogo is of type StaticImageData
 							: isLightBackground
-							? lightBGLogo!.src // Assuming lightBGLogo is of type StaticImageData
-							: darkBGLogo!.src // Assuming darkBGLogo is of type StaticImageData
+								? lightBGLogo!.src // Assuming lightBGLogo is of type StaticImageData
+								: darkBGLogo!.src // Assuming darkBGLogo is of type StaticImageData
 					}
 					alt='Template Logo'
 					className={`w-[${logoWidth}rem] h-auto opacity-40`}
@@ -154,6 +154,7 @@ export const generateTemplateLogo = ({
 					height={40} // Adjust the multiplier as needed
 					src={custom_logo}
 					alt='Template Logo'
+					className={!isCoverPage ? 'opacity-50' : ''}
 				/>
 			)}
 		</div>
@@ -476,9 +477,9 @@ export const TemplatesLogos = Object.fromEntries(
 
 /*
 const TemplatesLogos = {
-  Default: DefaultTemplateLogo, // Assuming DefaultTemplateLogo is a React component
-  Berkeley: BerkeleyTemplateLogo, // Assuming BerkeleyTemplateLogo is a React component
-  // ... other template entries
+	Default: DefaultTemplateLogo, // Assuming DefaultTemplateLogo is a React component
+	Berkeley: BerkeleyTemplateLogo, // Assuming BerkeleyTemplateLogo is a React component
+	// ... other template entries
 } as Record<TemplateKeys, React.ComponentType<{ isCoverPage: boolean }>>;
 
 */
