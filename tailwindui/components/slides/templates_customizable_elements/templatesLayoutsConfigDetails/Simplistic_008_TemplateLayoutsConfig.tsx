@@ -361,7 +361,6 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			height: '100%',
 			flexGrow: 1,
 			gridRow: 3,
-			zIndex: 10,
 			padding: '0px 50px 0px 50px',
 		},
 		imageCSS: {
@@ -396,45 +395,66 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 	},
 	Col_2_img_2_layout: {
 		canvaCSS: {
-			padding: '28px',
+			width: '100%',
+			height: '100%',
+			display: 'flex',
 		},
 		columnCSS: {
-			display: 'flex',
-			flexDirection: 'column',
-			gap: '0.5rem',
+			width: '100%',
+			height: '100%',
+			display: 'grid',
+			gridTemplateColumns: '1fr',
+			gridAutoRows: '25% 25% auto',
+			gap: '30px',
 		},
 		titleAndSubtopicBoxCSS: {
+			// backgroundColor: '#F1F1F1',
+			paddingTop: '50px',
+			paddingBottom: '50px',
+			paddingLeft: '50px',
+			paddingRight: '50px',
 			display: 'flex',
-			flexDirection: 'column',
-			justifyContent: 'center',
-			alignItems: 'center',
-			paddingBottom: '2rem',
+			flexDirection: 'column', // Equivalent to flex
+			gridRow: 1,
 		},
 		topicCSS: {
-			borderBottom: '1px solid #C2C2C2',
+			order: '0',
+			paddingBottom: '12px',
+			textTransform: 'uppercase',
 		},
 		subtopicCSS: {
-			paddingTop: '0.5rem',
+			// borderBottom: '1px solid #C2C2C2',
+			// paddingBottom: '0.5rem',
+		},
+		titlesAndContentDividerCSS: {
+			display: 'none',
 		},
 		imageContainerCSS: {
 			width: '100%', // equivalent to w-full
 			display: 'grid',
-			gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
-			gap: '2rem', // equivalent to gap-[2rem]
+			gridTemplateColumns: 'repeat(2, 1fr)', //
+			order: 2,
+			zIndex: 20,
+			gap: '50px',
+			padding: '0px 50px 0px 50px',
 		},
 		imageCSS: {
-			height: '11rem', // equivalent to h-[11rem]
-			flexGrow: 1, // equivalent to grow
-			borderRadius: '0.375rem', // equivalent to rounded-md
-			//overflow: 'hidden', // equivalent to overflow-hidden
-			position: 'relative', // equivalent to relative
+			// height: '11rem', // equivalent to h-[11rem]
+			// flexGrow: 1, // equivalent to grow
+			borderRadius: '48px 48px 0px 0px',
+			// position: 'relative', // equivalent to relative
+			// zIndex: 20,
 		},
 		contentCSS: {
-			width: '100%', // equivalent to w-full
+			zIndex: 30,
+			padding: '0px 50px 0px 50px',
+			width: '100%',
 			display: 'grid',
-			gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2
-			gap: '2rem', // equivalent to gap-[2rem]
+			gridTemplateColumns: 'repeat(2, 1fr)', //
+			gap: '50px',
+			order: 1,
 		},
+
 		rndContainerCSS: {
 			width: '100%',
 			height: '100%',
@@ -446,41 +466,66 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 	},
 	Col_3_img_3_layout: {
 		canvaCSS: {
-			padding: '28px',
-		},
-		columnCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
-		titleAndSubtopicBoxCSS: {
+			width: '100%',
+			height: '100%',
 			display: 'flex',
-			flexDirection: 'column',
-			justifyContent: 'center',
-			alignItems: 'center',
-			paddingBottom: '2rem',
+		},
+		columnCSS: {
+			width: '100%',
+			height: '100%',
+			display: 'grid',
+			gridTemplateColumns: '1fr',
+			gridAutoRows: '25% 25% auto',
+			gap: '30px',
+		},
+		titleAndSubtopicBoxCSS: {
+			// backgroundColor: '#F1F1F1',
+			paddingTop: '50px',
+			paddingBottom: '50px',
+			paddingLeft: '50px',
+			paddingRight: '50px',
+			display: 'flex',
+			flexDirection: 'column', // Equivalent to flex
+			gridRow: 1,
 		},
 		topicCSS: {
-			borderBottom: '1px solid #C2C2C2',
+			order: '0',
+			paddingBottom: '12px',
+			textTransform: 'uppercase',
 		},
 		subtopicCSS: {
-			paddingTop: '0.5rem',
+			// borderBottom: '1px solid #C2C2C2',
+			// paddingBottom: '0.5rem',
+		},
+		titlesAndContentDividerCSS: {
+			display: 'none',
 		},
 		imageContainerCSS: {
 			width: '100%', // equivalent to w-full
 			display: 'grid',
-			gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
-			gap: '2rem', // equivalent to gap-[2rem]
+			gridTemplateColumns: 'repeat(3, 1fr)', //
+			order: 1,
+			zIndex: 20,
+			gap: '50px',
+			padding: '0px 50px 0px 50px',
 		},
 		imageCSS: {
-			height: '11rem', // equivalent to h-[11rem]
-			flexGrow: 1, // equivalent to grow
-			borderRadius: '0.375rem', // equivalent to rounded-md
-			//overflow: 'hidden', // equivalent to overflow-hidden
-			position: 'relative',
+			// height: '11rem', // equivalent to h-[11rem]
+			// flexGrow: 1, // equivalent to grow
+			borderRadius: '24px',
+			// position: 'relative', // equivalent to relative
+			// zIndex: 20,
 		},
 		contentCSS: {
-			width: '100%', // equivalent to w-full
+			zIndex: 30,
+			padding: '0px 50px 0px 50px',
+			width: '100%',
 			display: 'grid',
-			gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3
-			gap: '2rem', // equivalent to gap-[2rem]
+			gridTemplateColumns: 'repeat(3, 1fr)', //
+			gap: '50px',
+			order: 2,
 		},
+
 		rndContainerCSS: {
 			width: '100%',
 			height: '100%',
