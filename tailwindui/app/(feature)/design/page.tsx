@@ -31,10 +31,7 @@ import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
 import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
 
 // Local component imports
-import ImageSelector from './ImageSelector';
 import { PaletteKeys, TemplateKeys } from '@/components/slides/slideTemplates';
-import { PlusLabel } from '@/components/ui/GrayLabel';
-import { useUser } from '@/hooks/use-user';
 import BrandingSelector from './BrandingSelector';
 
 const TemplateSelector = dynamic(() => import('./TemplateSelector'), { ssr: false });
@@ -144,8 +141,8 @@ export default function DesignPage() {
 				palette={colorPalette}
 				imageAmount={imageAmount}
 				imageLicense={imageLicense}
-				logo_ids={selectedLogo.map((resource) => resource.id)}
-				background_ids={selectedBackground.map((resource) => resource.id)}
+				selectedLogo={selectedLogo}
+				selectedBackground={selectedBackground}
 			/>
 
 			<Column>

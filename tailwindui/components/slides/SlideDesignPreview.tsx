@@ -75,15 +75,15 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 	}, [selectedTemplate, selectedPalette]);
 
 	const layoutNameArray = [
-		'Cover Page without image',
-		'Cover Page with image',
+		'Cover page without image',
+		'Cover page with image',
 		'1 column without image',
 		'2 columns without image',
 		'3 columns without image',
 		'1 column with 1 image',
 		'2 column with 1 image',
-		'2 columns with 2 image',
-		'3 columns with 3 image',
+		'2 columns with 2 images',
+		'3 columns with 3 images',
 	];
 
 	const editableTemplateDispatch = (

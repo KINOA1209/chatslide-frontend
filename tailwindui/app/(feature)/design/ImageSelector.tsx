@@ -41,7 +41,7 @@ const ImageSelector: React.FC<Props> = ({
 			/>
 			<div className='gap-1 flex flex-col justify-start'>
 				<Instruction>
-					<div>Do you want to use your {type} for slides?</div> {!isPaidUser && <PlusLabel />}
+					<div>Do you want to use your own {type} for slides?</div> {!isPaidUser && <PlusLabel />}
 				</Instruction>
 
 				<RadioButton 

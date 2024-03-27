@@ -24,8 +24,8 @@ const GenerateSlidesSubmit = ({
 	palette,
 	imageAmount,
 	imageLicense,
-	logo_ids,
-	background_ids,
+	selectedLogo,
+	selectedBackground,
 }: {
 	outlines: Outlines;
 	isGPT35: boolean;
@@ -35,8 +35,8 @@ const GenerateSlidesSubmit = ({
 	palette: PaletteKeys | string;
 	imageAmount: string;
 	imageLicense: string;
-	logo_ids: string[];
-	background_ids: string[];
+		selectedLogo: Resource[];
+		selectedBackground: Resource[];
 }) => {
 	const router = useRouter();
 	const { token } = useUser();
@@ -106,9 +106,16 @@ const GenerateSlidesSubmit = ({
 			template: template,
 			palette: palette,
 			imageLicense: imageLicense,
-			logo_ids: logo_ids,
-			background_ids: background_ids,
+			logo_ids: selectedLogo.map((r: Resource) => r.id),
+			background_ids: selectedBackground.map((r: Resource) => r.id),
 		};
+
+		bulkUpdateProject({
+			selected_background: selectedBackground,
+			selected_logo: selectedLogo,
+			template: template,
+			palette: palette,
+		} as Project);
 
 		// if we have resources, but no extra knowledge, we need to query the vector database
 		if (
