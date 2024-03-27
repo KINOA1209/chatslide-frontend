@@ -32,28 +32,12 @@ import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
 
 // Local component imports
 import ImageSelector from './ImageSelector';
+import { TemplateKeys } from '@/components/slides/slideTemplates';
+import { getTemplateFromAudicence } from '@/components/slides/slideTemplates';
 
 const TemplateSelector = dynamic(() => import('./TemplateSelector'), {
 	ssr: false,
 });
-
-const getTemplateFromAudicence = (audience: string): string => {
-	switch (audience) {
-		case 'Business Clients':
-			return 'Business_Dark_005';
-		case 'Video Viewers':
-			return 'Fun_Vibrant_007';
-		case 'Students':
-			return 'Fun_Education_004';
-		case 'Researchers':
-			return 'Fun_Education_004';
-		case 'Office Colleagues':
-			return 'Business_Light_006';
-		case 'Myself':
-			return 'Clean_Lifestyle_003';
-	}
-	return 'Clean_Lifestyle_003';
-};
 
 export default function DesignPage() {
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
