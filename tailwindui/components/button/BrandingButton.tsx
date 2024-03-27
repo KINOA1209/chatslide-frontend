@@ -31,7 +31,7 @@ export const BrandingButton: React.FC<{
 		<Modal
 			showModal={showModal}
 			setShowModal={setShowModal}
-			title='Bradning'
+			title='Branding'
 			description='Select customized logo and background for your slides.'
 			onConfirm={() => setShowModal(false)}
 		>

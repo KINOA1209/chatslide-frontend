@@ -321,117 +321,115 @@ export default function Topic() {
 
 			{/* main content */}
 			<Column>
-				<Panel>
-					<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
+				<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
 
-					{/* Project Summary section */}
-					{generationMode === 'from_files' && (
-						<AddResourcesSection
-							setShowFileModal={setShowFileModal}
-							selectedResources={selectedResources}
-							setSelectedResources={setSelectedResources}
-							removeResourceAtIndex={removeResourceAtIndex}
-						/>
-					)}
+				{/* Project Summary section */}
+				{generationMode === 'from_files' && (
+					<AddResourcesSection
+						setShowFileModal={setShowFileModal}
+						selectedResources={selectedResources}
+						setSelectedResources={setSelectedResources}
+						removeResourceAtIndex={removeResourceAtIndex}
+					/>
+				)}
 
-					{/* text area section */}
+				{/* text area section */}
 
-					<Card>
-						{/* for tutorial step 1, the summary #SummaryStep-2 */}
-						<div id='SummaryStep-2'>
-							{/* title */}
-							<div className='title1'>
-								<BigTitle>Summary</BigTitle>
-								{/* <p id='after1'>
+				<Card>
+					{/* for tutorial step 1, the summary #SummaryStep-2 */}
+					<div id='SummaryStep-2'>
+						{/* title */}
+						<div className='title1'>
+							<BigTitle>Summary</BigTitle>
+							{/* <p id='after1'>
 								{' '}
 								{generationMode === 'from_topic' ? '(Required)' : '(Optional)'}
 							</p> */}
-								<Explanation>
-									To get started, give us some high-level intro about your
-									project.
-								</Explanation>
-							</div>
-							{generationMode === 'from_topic' && (
-								<div>
-									<div className='flex items-center gap-1'>
-										<Instruction>Project Topic</Instruction>
-										<ExplanationPopup>
-											The main subject or theme of your project. It will set the
-											direction and focus of the contents.
-										</ExplanationPopup>
-									</div>
-									<div className='border border-2 border-gray-200 rounded-md py-2'>
-										<textarea
-											onChange={(e) => updateTopic(e.target.value)}
-											className='focus:ring-0 text-l md:text-xl'
-											id='topic'
-											value={topic}
-											maxLength={MAX_TOPIC_LENGTH}
-											required
-											placeholder='What do you have in mind?'
-										></textarea>
-										{!topic &&
-											<TopicSuggestions
-												language={language}
-												setTopic={setTopic}
-											/>
-										}
-									</div>
-									<Explanation>
-										{MAX_TOPIC_LENGTH - topic.length} characters left
-									</Explanation>
-									<ErrorMessage>{topicError}</ErrorMessage>
-								</div>
-							)}
-
-							{/* DropDown menu section */}
-							<div className='w-full gap-2 flex flex-col sm:grid sm:grid-cols-2'>
-								<div className='flex flex-col'>
-									<div className='flex flex-row gap-1 items-center'>
-										<Instruction>Your Audience</Instruction>
-										<ExplanationPopup>
-											Specify the intended viewers of your projects, tailoring
-											to your audience ensures the content resonates
-											effectively.
-										</ExplanationPopup>
-									</div>
-									<DropDown
-										onChange={(e) => setAudience(e.target.value)}
-										style='input'
-										width='80%'
-										value={audience}
-									>
-										<option key='unselected' value='unselected' disabled>
-											Choose your audience
-										</option>
-										{Object.entries(audienceDict).map(([key, displayname]) => (
-											<option key={key} value={key}>
-												{displayname}
-											</option>
-										))}
-									</DropDown>
-								</div>
-								<LanguageSelector
-									language={language}
-									setLanguage={setLanguage}
-								/>
-							</div>
+							<Explanation>
+								To get started, give us some high-level intro about your
+								project.
+							</Explanation>
 						</div>
-					</Card>
+						{generationMode === 'from_topic' && (
+							<div>
+								<div className='flex items-center gap-1'>
+									<Instruction>Project Topic</Instruction>
+									<ExplanationPopup>
+										The main subject or theme of your project. It will set the
+										direction and focus of the contents.
+									</ExplanationPopup>
+								</div>
+								<div className='border border-2 border-gray-200 rounded-md py-2'>
+									<textarea
+										onChange={(e) => updateTopic(e.target.value)}
+										className='focus:ring-0 text-l md:text-xl'
+										id='topic'
+										value={topic}
+										maxLength={MAX_TOPIC_LENGTH}
+										required
+										placeholder='What do you have in mind?'
+									></textarea>
+									{!topic &&
+										<TopicSuggestions
+											language={language}
+											setTopic={setTopic}
+										/>
+									}
+								</div>
+								<Explanation>
+									{MAX_TOPIC_LENGTH - topic.length} characters left
+								</Explanation>
+								<ErrorMessage>{topicError}</ErrorMessage>
+							</div>
+						)}
 
-					{/* supporting docs  section */}
+						{/* DropDown menu section */}
+						<div className='w-full gap-2 flex flex-col sm:grid sm:grid-cols-2'>
+							<div className='flex flex-col'>
+								<div className='flex flex-row gap-1 items-center'>
+									<Instruction>Your Audience</Instruction>
+									<ExplanationPopup>
+										Specify the intended viewers of your projects, tailoring
+										to your audience ensures the content resonates
+										effectively.
+									</ExplanationPopup>
+								</div>
+								<DropDown
+									onChange={(e) => setAudience(e.target.value)}
+									style='input'
+									width='80%'
+									value={audience}
+								>
+									<option key='unselected' value='unselected' disabled>
+										Choose your audience
+									</option>
+									{Object.entries(audienceDict).map(([key, displayname]) => (
+										<option key={key} value={key}>
+											{displayname}
+										</option>
+									))}
+								</DropDown>
+							</div>
+							<LanguageSelector
+								language={language}
+								setLanguage={setLanguage}
+							/>
+						</div>
+					</div>
+				</Card>
 
-					{generationMode === 'from_topic' && (
-						<AddResourcesSection
-							searchOnlineScope={searchOnlineScope}
-							setSearchOnlineScope={setSearchOnlineScope}
-							setShowFileModal={setShowFileModal}
-							selectedResources={selectedResources}
-							setSelectedResources={setSelectedResources}
-							removeResourceAtIndex={removeResourceAtIndex}
-						/>
-					)}
-				</Panel>
+				{/* supporting docs  section */}
+
+				{generationMode === 'from_topic' && (
+					<AddResourcesSection
+						searchOnlineScope={searchOnlineScope}
+						setSearchOnlineScope={setSearchOnlineScope}
+						setShowFileModal={setShowFileModal}
+						selectedResources={selectedResources}
+						setSelectedResources={setSelectedResources}
+						removeResourceAtIndex={removeResourceAtIndex}
+					/>
+				)}
 			</Column>
 		</div>
 	);
