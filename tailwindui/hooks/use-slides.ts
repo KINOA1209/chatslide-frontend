@@ -268,7 +268,7 @@ export const useSlides = () => {
 		}
 	};
 
-	const chageTemplateAndColorPalette = (
+	const chageTemplateAndPalette = (
 		newTemplate: TemplateKeys,
 		newPalette: PaletteKeys,
 	) => {
@@ -443,7 +443,7 @@ export const useSlides = () => {
 		// updateBranding,
 		changeTemplate,
 		changePalette,
-		chageTemplateAndColorPalette,
+		chageTemplateAndPalette,
 		initSlides,
 		slidesHistory,
 		slidesHistoryIndex,

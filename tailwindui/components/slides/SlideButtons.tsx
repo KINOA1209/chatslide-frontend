@@ -14,6 +14,8 @@ import { FiPlay } from 'react-icons/fi';
 import { FaRegClone } from 'react-icons/fa';
 import { PaletteKeys, TemplateKeys } from './slideTemplates';
 import availablePalettes from './palette';
+import { useProject } from '@/hooks/use-project';
+import { useSlides } from '@/hooks/use-slides';
 
 type SaveButtonProps = {
 	saveSlides: () => void;
@@ -245,25 +247,11 @@ export const DeleteSlideButton: React.FC<{
 //   )
 // }
 export const ChangeTemplateOptions: React.FC<{
-	currentTemplate: TemplateKeys;
-	currentPalette: PaletteKeys;
-	templateOptions: string[] | undefined;
-	onChangeTemplate: (newTemplate: string) => void;
-	onChangePalette: (newPalette: string) => void;
-	onChangeTemplateAndColorPalette: (
-		newTemplate: TemplateKeys | string,
-		newPalette: PaletteKeys | string,
-	) => void;
 }> = ({
-	currentTemplate,
-	templateOptions,
-	onChangeTemplate,
-	currentPalette,
-	onChangePalette,
-	onChangeTemplateAndColorPalette,
 }) => {
-	const [selectedTemplate, setSelectedTemplate] =
-		useState<TemplateKeys>(currentTemplate);
+	const { project } = useProject();
+	const { chageTemplateAndPalette } = useSlides();
+	const [selectedTemplate, setSelectedTemplate] = useState<TemplateKeys>(project?.template || 'Default');
 	const [showModal, setShowModal] = useState(false);
 	// Assert the type of selectedTemplate as TemplateKeys
 	// const paletteOption =
@@ -271,12 +259,11 @@ export const ChangeTemplateOptions: React.FC<{
 	// 		selectedTemplate as keyof typeof availablePalettes
 	// 	] || [];
 	// layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
-	const [selectedPaletteOption, SetSelectedPaletteOption] = useState<
-		PaletteKeys | string
-	>(currentPalette);
+	const [selectedPaletteOption, setSelectedPaletteOption] = useState<PaletteKeys>(project?.palette || 'Original');
 
 	const handleConfirm = () => {
-		onChangeTemplateAndColorPalette(selectedTemplate, selectedPaletteOption);
+		console.log('selectedTemplate:', selectedPaletteOption);
+		chageTemplateAndPalette(selectedTemplate, selectedPaletteOption);
 		setShowModal(false);
 	};
 	return (
@@ -299,7 +286,7 @@ export const ChangeTemplateOptions: React.FC<{
 						template={selectedTemplate}
 						palette={selectedPaletteOption}
 						setTemplate={setSelectedTemplate}
-						setPalette={SetSelectedPaletteOption}
+						setPalette={setSelectedPaletteOption}
 					/>
 				</div>
 			</Modal>

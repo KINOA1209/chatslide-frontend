@@ -34,25 +34,14 @@ const colorPreviews: Record<PaletteKeys, string> = {
 const TemplateSelector: React.FC<{
 	template: TemplateKeys;
 	setTemplate: (template: TemplateKeys) => void;
-	paletteOptions: string[];
-	palette: PaletteKeys | string;
-	setPalette: (palette: string | PaletteKeys) => void;
+	paletteOptions: PaletteKeys[];
+	palette: PaletteKeys;
+	setPalette: (palette: PaletteKeys) => void;
 }> = ({ template, setTemplate, paletteOptions, setPalette, palette }) => {
-	const [selectedTemplate, setSelectedTemplate] = useState<string>(template);
-
-	const [selectedPalette, setSelectedPalette] = useState<string>(palette);
-
-	type OptionType = { value: string; label: JSX.Element };
-
-	useEffect(() => {
-		// when mounted make sure the color palette is correctly set default, and everytime change template make sure default to first color option to prevent error
-		setSelectedPalette(paletteOptions[0]);
-		setPalette(paletteOptions[0]);
-	}, [selectedTemplate]);
+	type OptionType = { value: PaletteKeys; label: JSX.Element };
 
 	const handleTemplateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const selectedValue = e.target.value as TemplateKeys;
-		setSelectedTemplate(selectedValue);
 		setTemplate(selectedValue);
 	};
 
@@ -62,11 +51,9 @@ const TemplateSelector: React.FC<{
 	// };
 	const handlePaletteChange = (selectedOption: OptionType | null) => {
 		if (selectedOption !== null) {
-			setSelectedPalette(selectedOption.value);
 			setPalette(selectedOption.value);
 		} else {
 			// Handle the case where no option is selected, for example, clear the palette
-			setSelectedPalette(paletteOptions[0]);
 			setPalette(paletteOptions[0]);
 		}
 	};
@@ -80,11 +67,11 @@ const TemplateSelector: React.FC<{
 					className={`templateAndPaletteChoice flex flex-col sm:flex-row justify-between items-start sm:items-center`}
 				>
 					<div className={`templateChoice flex flex-col `}>
-						<span className='text-md font-bold'>Select your template:</span>
+						<Instruction>Select your template:</Instruction>
 						<DropDown
 							width='15rem'
 							onChange={handleTemplateChange}
-							value={selectedTemplate}
+							value={template}
 							style='input'
 						>
 							{/* Map over the template options */}
@@ -102,9 +89,9 @@ const TemplateSelector: React.FC<{
 					{/* Render color palette options only if there are more than one */}
 					{paletteOptions.length > 1 && (
 						<div className={`paletteChoice flex flex-col `}>
-							<span className='text-md font-bold'>
+							<Instruction>
 								Select your palette color:
-							</span>
+							</Instruction>
 							{/* <DropDown
 								width='15rem'
 								onChange={handlePaletteChange}
@@ -145,14 +132,14 @@ const TemplateSelector: React.FC<{
 								}
 								// defaultInputValue={paletteOptions[0]}
 								value={{
-									value: selectedPalette,
+									value: palette,
 									label: (
 										<div className='flex items-center'>
 											<div
 												className='w-4 h-4 mr-2'
 												style={{
 													backgroundColor:
-														colorPreviews[selectedPalette as PaletteKeys],
+														colorPreviews[palette as PaletteKeys],
 												}}
 											/>
 											{palette}
@@ -190,7 +177,7 @@ const TemplateSelector: React.FC<{
 				</div>
 			</div>
 			<div className='w-full mt-4 flex flex-col'>
-				<span className='text-md font-bold'>Template preview</span>
+				<Instruction>Template preview</Instruction>
 				<SlideDesignPreview
 					selectedTemplate={template}
 					selectedPalette={palette}
