@@ -9,6 +9,7 @@ import {
 import availablePalettes from '@/components/slides/palette';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
+import { Instruction } from '@/components/ui/Text';
 import Select from 'react-select';
 
 const SlideDesignPreview = dynamic(

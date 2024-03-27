@@ -26,17 +26,18 @@ import Card from '@/components/ui/Card';
 import RadioButton, { RadioButtonOption } from '@/components/ui/RadioButton';
 import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
-import { BigTitle, Explanation, Title } from '@/components/ui/Text';
+import { BigTitle, Explanation, Instruction, Title } from '@/components/ui/Text';
 import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
 import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
 
 // Local component imports
 import ImageSelector from './ImageSelector';
 import { PaletteKeys, TemplateKeys } from '@/components/slides/slideTemplates';
+import { PlusLabel } from '@/components/ui/GrayLabel';
+import { useUser } from '@/hooks/use-user';
+import BrandingSelector from './BrandingSelector';
 
-const TemplateSelector = dynamic(() => import('./TemplateSelector'), {
-	ssr: false,
-});
+const TemplateSelector = dynamic(() => import('./TemplateSelector'), { ssr: false });
 
 const getTemplateFromAudicence = (audience: string): TemplateKeys => {
 	switch (audience) {
@@ -107,6 +108,8 @@ export default function DesignPage() {
 		},
 	];
 
+	const [branding, setBranding] = useState('yes');
+
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
 	console.log('Template:', template);
@@ -171,9 +174,9 @@ export default function DesignPage() {
 
 						{/* images */}
 						<div>
-							<span className='text-md font-bold'>
+							<Instruction>
 								How many images do you want to generate?
-							</span>
+							</Instruction>
 							<RadioButton
 								options={imageAmountOptions}
 								selectedValue={imageAmount}
@@ -182,10 +185,10 @@ export default function DesignPage() {
 							/>
 						</div>
 						<div>
-							<span className='text-md font-bold'>
+							<Instruction>
 								For images on your slides, what image license do you want to
 								use?
-							</span>
+							</Instruction>
 							<Explanation>
 								An image license is a set of rules that tell you how you can use
 								a picture. <br />
@@ -199,17 +202,17 @@ export default function DesignPage() {
 								name='imageLicense'
 							/>
 						</div>
-						{/* logo */}
-						<ImageSelector
-							type='logo'
-							selectedImage={selectedLogo}
-							setSelectedImage={setSelectedLogo}
-						/>
-						{/* background */}
-						<ImageSelector
-							type='background'
-							selectedImage={selectedBackground}
-							setSelectedImage={setSelectedBackground}
+					</Card>
+
+					<Card>
+						<BigTitle>Branding</BigTitle>
+						<BrandingSelector 
+							branding={branding}
+							setBranding={setBranding}
+							selectedLogo={selectedLogo}
+							setSelectedLogo={setSelectedLogo}
+							selectedBackground={selectedBackground}
+							setSelectedBackground={setSelectedBackground}
 						/>
 					</Card>
 				</Panel>

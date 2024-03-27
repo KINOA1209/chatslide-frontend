@@ -6,6 +6,8 @@ import { useUser } from '@/hooks/use-user';
 import Resource from '@/models/Resource';
 import { useState } from 'react';
 import { PlusLabel } from '@/components/ui/GrayLabel';
+import { Instruction } from '@/components/ui/Text';
+import RadioButton from '@/components/ui/RadioButton';
 
 interface Props {
 	type: string;
@@ -38,36 +40,32 @@ const ImageSelector: React.FC<Props> = ({
 				setShowModal={setShowPaywall}
 			/>
 			<div className='gap-1 flex flex-col justify-start'>
-				<span className='text-md font-bold flex flex-row gap-2'>
+				<Instruction>
 					<div>Do you want to use your {type} for slides?</div> {!isPaidUser && <PlusLabel />}
-				</span>
-				<form className='flex flex-row gap-x-4 mt-2 items-center'>
-					<label>
-						<div className='flex flex-row items-center gap-x-1'>
-							<input
-								type='radio'
-								value='yes'
-								checked={useImage}
-								onChange={(e) => {
-									if (!isPaidUser) setShowPaywall(true);
-									else setUseImage(true);
-								}}
-							/>
-							<span>Yes</span>
-						</div>
-					</label>
-					<label>
-						<div className='flex flex-row items-center gap-x-1'>
-							<input
-								type='radio'
-								value='no'
-								checked={!useImage}
-								onChange={(e) => setUseImage(false)}
-							/>
-							<span>No</span>
-						</div>
-					</label>
-				</form>
+				</Instruction>
+
+				<RadioButton 
+					name={type}
+					options={[
+						{
+							value: 'yes',
+							text: 'Yes',
+						},
+						{
+							value: 'no',
+							text: 'No',
+						},
+					]}
+					selectedValue={useImage ? 'yes' : 'no'}
+					setSelectedValue={(value) => {
+						if (value === 'yes') {
+							if (!isPaidUser) setShowPaywall(true);
+							else setUseImage(true);
+						} else {
+							setUseImage(false);
+						}
+					}}
+				/>
 			</div>
 
 			{useImage && (
