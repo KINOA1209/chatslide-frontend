@@ -75,15 +75,54 @@ export const useSlides = () => {
 		slidesStatus = SlidesStatus.Inited;
 	};
 
-	const toggleIsShowingLogo = () => {
-		setIsShowingLogo(!isShowingLogo);
+	// const changeIsShowingLogo = (newIsShowingLogo: boolean) => {
+	// 	setIsShowingLogo(newIsShowingLogo);
+	// 	const newSlides = slides.map((slide, index) => {
+	// 		return { ...slide, show_logo: !isShowingLogo };
+	// 	});
+	// 	setSlides(newSlides);
+	// 	updateSlideHistory(newSlides);
+	// 	syncSlides(newSlides, true);
+	// };
+
+	const showDrLambdaLogo = () => {
 		const newSlides = slides.map((slide, index) => {
-			return { ...slide, show_logo: !isShowingLogo };
+			return { ...slide, logo_url: '', logo: 'Default'};
 		});
+		setIsShowingLogo(true);
 		setSlides(newSlides);
 		updateSlideHistory(newSlides);
 		syncSlides(newSlides, true);
 	};
+
+	const updateLogoUrl = (logo_url: string) => {
+		const newSlides = slides.map((slide, index) => {
+			return { ...slide, logo_url: logo_url};
+		});
+		setIsShowingLogo(true);
+		setSlides(newSlides);
+		updateSlideHistory(newSlides);
+		syncSlides(newSlides, true);
+	}
+
+	const hideLogo = () => {
+		const newSlides = slides.map((slide, index) => {
+			return { ...slide, logo_url: '', logo: '' };
+		});
+		setIsShowingLogo(false);
+		setSlides(newSlides);
+		updateSlideHistory(newSlides);
+		syncSlides(newSlides, true);
+	};
+
+	const updateBackgroundUrl = (background_url: string) => {
+		const newSlides = slides.map((slide, index) => {
+			return { ...slide, background_url: background_url };
+		});
+		setSlides(newSlides);
+		updateSlideHistory(newSlides);
+		syncSlides(newSlides, true);
+	}
 
 	useEffect(() => {
 		void init();
@@ -316,7 +355,7 @@ export const useSlides = () => {
 	const initSlides = (slides: Slide[]) => {
 		console.log('-- init slides: ', { slides });
 		setSlides(slides);
-		setIsShowingLogo(slides?.some((slide) => slide.show_logo));
+		setIsShowingLogo(slides?.some((slide) => slide.logo || slide.logo_url));
 		setSlideIndex(0);
 		setSlidesHistory([slides]);
 		setSlidesHistoryIndex(0);
@@ -401,6 +440,7 @@ export const useSlides = () => {
 		duplicatePage,
 		deleteSlidePage,
 		updateSlidePage,
+		// updateBranding,
 		changeTemplate,
 		changePalette,
 		chageTemplateAndColorPalette,
@@ -420,8 +460,12 @@ export const useSlides = () => {
 		syncSlides,
 		setTranscripts,
 		isShowingLogo,
-		setIsShowingLogo,
-		toggleIsShowingLogo,
+		// setIsShowingLogo,
+		// changeIsShowingLogo,
+		showDrLambdaLogo,
+		hideLogo,
+		updateLogoUrl,
+		updateBackgroundUrl,
 		isPresenting,
 		setIsPresenting,
 	};

@@ -55,9 +55,8 @@ import ScriptWindow from '../script/ScriptWindow';
 import ReactDOM from 'react-dom';
 import { ScrollBar } from '../ui/ScrollBar';
 import Image from 'next/image';
-import showLogo from 'public/icons/button/show_logo.svg';
-import hideLogo from 'public/icons/button/hide_logo.svg';
 import { Explanation } from '../ui/Text';
+import { BrandingButton } from '../button/BrandingButton';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -147,7 +146,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		saveStatus,
 		SaveStatus,
 		isShowingLogo,
-		toggleIsShowingLogo,
 	} = useSlides();
 
 	useEffect(() => {
@@ -632,30 +630,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 								handleSlideEdit={handleSlideEdit}
 								availableLayouts={availableLayouts}
 							/>
-							{isPaidUser && (
-								<ButtonWithExplanation
-									button={
-										<button onClick={() => toggleIsShowingLogo()}>
-											{isShowingLogo ? (
-												<Image
-													src={hideLogo}
-													alt='Hide Logo'
-													width={24}
-													height={24}
-												/>
-											) : (
-												<Image
-													src={showLogo}
-													alt='Show Logo'
-													width={24}
-													height={24}
-												/>
-											)}
-										</button>
-									}
-									explanation={isShowingLogo ? 'Remove Logo' : 'Show Logo'}
-								></ButtonWithExplanation>
-							)}
+							<BrandingButton />
 
 							<div className='h-8 w-0.5 bg-gray-200'></div>
 						</>

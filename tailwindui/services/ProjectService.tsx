@@ -234,9 +234,9 @@ class ProjectService {
 			slide.transcript = slideData.transcript || '';
 			slide.logo_url = slideData.logo_url || '';
 			slide.background_url = slideData.background_url || '';
-			slide.show_logo = slideData.hasOwnProperty('show_logo')
-				? slideData.show_logo
-				: true;
+			// slide.show_logo = slideData.hasOwnProperty('show_logo')
+			// 	? slideData.show_logo
+			// 	: true;
 
 			console.log('slide.images', slide.images);
 			if (index === 0) {

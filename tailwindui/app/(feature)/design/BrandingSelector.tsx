@@ -38,7 +38,7 @@ const BrandingSelector: React.FC<{
 			<div>
 				<div>
 					<Instruction>
-						Do you want to use DrLambda branding for your slides? {!isPaidUser && <PlusLabel />}
+						Do you want to show logo on your slides? {!isPaidUser && <PlusLabel />}
 					</Instruction>
 					<RadioButton
 						options={brandingOptions}
@@ -48,12 +48,13 @@ const BrandingSelector: React.FC<{
 					/>
 				</div>
 
-				{/* logo */}
-				<ImageSelector
-					type='logo'
-					selectedImage={selectedLogo}
-					setSelectedImage={setSelectedLogo}
-				/>
+				{/* customized logo */}
+				{branding === 'yes' &&
+					<ImageSelector
+						type='logo'
+						selectedImage={selectedLogo}
+						setSelectedImage={setSelectedLogo}
+					/>}
 				{/* background */}
 				<ImageSelector
 					type='background'

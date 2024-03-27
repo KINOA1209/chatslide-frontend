@@ -20,7 +20,7 @@ const ImageSelector: React.FC<Props> = ({
 	selectedImage,
 	setSelectedImage,
 }) => {
-	const [useImage, setUseImage] = useState(false);
+	const [useImage, setUseImage] = useState(selectedImage.length > 0);
 	const [showFileModal, setShowFileModal] = useState(false);
 	const { isPaidUser } = useUser();
 	const [showPaywall, setShowPaywall] = useState(false);
@@ -63,6 +63,7 @@ const ImageSelector: React.FC<Props> = ({
 							else setUseImage(true);
 						} else {
 							setUseImage(false);
+							setSelectedImage([]);
 						}
 					}}
 				/>
