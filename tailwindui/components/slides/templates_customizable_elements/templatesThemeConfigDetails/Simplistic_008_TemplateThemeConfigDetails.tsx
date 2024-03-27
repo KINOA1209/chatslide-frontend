@@ -26,7 +26,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 		subtopicFontCSS: {
 			fontWeight: 'Bold',
 			fontFamily: 'DM Sans Bold',
-			fontSize: '30pt',
+			fontSize: '24pt',
 			lineHeight: 1,
 			color: '#FFFFFF',
 		},
@@ -47,7 +47,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 			opacity: '0.5',
 		},
 		headFontCSS: {
-			fontSize: '48pt',
+			fontSize: '30pt',
 			fontWeight: 'bold',
 			fontFamily: 'DM Sans Bold',
 			lineHeight: 1.2,
@@ -74,7 +74,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 		subtopicFontCSS: {
 			fontWeight: 'Bold',
 			fontFamily: 'DM Sans Regular',
-			fontSize: '30pt',
+			fontSize: '24pt',
 			lineHeight: 1,
 			color: '#0D0451',
 		},
@@ -95,7 +95,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 			opacity: '0.5',
 		},
 		headFontCSS: {
-			fontSize: '48pt',
+			fontSize: '30pt',
 			fontWeight: 'bold',
 			fontFamily: 'DM Sans Bold',
 			lineHeight: 1.2,
@@ -122,7 +122,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 		subtopicFontCSS: {
 			fontWeight: 'normal',
 			fontFamily: 'DM Sans Bold',
-			fontSize: '30pt',
+			fontSize: '24pt',
 			lineHeight: 1,
 			color: '#EDFDCA',
 		},
@@ -143,7 +143,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 			opacity: '0.5',
 		},
 		headFontCSS: {
-			fontSize: '48pt',
+			fontSize: '30pt',
 			fontWeight: 'bold',
 			fontFamily: 'DM Sans Bold',
 			lineHeight: 1.2,
@@ -170,7 +170,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 		subtopicFontCSS: {
 			fontWeight: 'Bold',
 			fontFamily: 'DM Sans Bold',
-			fontSize: '30pt',
+			fontSize: '24pt',
 			lineHeight: 1,
 			color: '#F44737',
 		},
@@ -191,7 +191,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 			opacity: '0.5',
 		},
 		headFontCSS: {
-			fontSize: '48pt',
+			fontSize: '30pt',
 			fontWeight: 'bold',
 			fontFamily: 'DM Sans Bold',
 			lineHeight: 1.2,
