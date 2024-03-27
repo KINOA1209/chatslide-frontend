@@ -250,7 +250,7 @@ export const ChangeTemplateOptions: React.FC<{
 }> = ({
 }) => {
 	const { project } = useProject();
-	const { chageTemplateAndPalette } = useSlides();
+	const { changeTemplateAndPalette } = useSlides();
 	const [selectedTemplate, setSelectedTemplate] = useState<TemplateKeys>(project?.template || 'Default');
 	const [showModal, setShowModal] = useState(false);
 	// Assert the type of selectedTemplate as TemplateKeys
@@ -263,7 +263,7 @@ export const ChangeTemplateOptions: React.FC<{
 
 	const handleConfirm = () => {
 		console.log('selectedTemplate:', selectedPaletteOption);
-		chageTemplateAndPalette(selectedTemplate, selectedPaletteOption);
+		changeTemplateAndPalette(selectedTemplate, selectedPaletteOption);
 		setShowModal(false);
 	};
 	return (

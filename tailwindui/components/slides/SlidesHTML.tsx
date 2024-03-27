@@ -134,7 +134,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		deleteSlidePage,
 		changeTemplate,
 		changePalette,
-		chageTemplateAndColorPalette,
+		changeTemplateAndPalette,
 		undoChange,
 		redoChange,
 		slidesHistoryIndex,
@@ -244,7 +244,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		newTemplate: string | TemplateKeys, // Accepts string or TemplateKeys
 		newColorPalette: string | PaletteKeys,
 	) => {
-		chageTemplateAndColorPalette(
+		changeTemplateAndPalette(
 			newTemplate as TemplateKeys,
 			newColorPalette as PaletteKeys,
 		);
@@ -615,14 +615,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 							<div className='h-8 w-0.5 bg-gray-200'></div>
 
-							<ChangeTemplateOptions
-								currentTemplate={slides[slideIndex].template}
-								currentPalette={slides[slideIndex].palette}
-								templateOptions={Object.keys(availableTemplates)}
-								onChangeTemplate={selectTemplate}
-								onChangePalette={selectPalette}
-								onChangeTemplateAndColorPalette={selectTemplateAndColorPalette}
-							/>
+							<ChangeTemplateOptions/>
 							<LayoutChanger
 								currentSlideIndex={slideIndex}
 								// templateSamples={templateSamples}

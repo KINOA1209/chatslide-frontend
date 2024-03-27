@@ -68,9 +68,7 @@ export default function DesignPage() {
 		project?.template || getTemplateFromAudicence(project?.audience || ''),
 	);
 
-	const [colorPalette, setColorPalette] = useState<PaletteKeys | string>(
-		project?.palette || 'Original',
-	);
+	const [colorPalette, setColorPalette] = useState<PaletteKeys>(project?.palette || 'Original');
 	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
 		project?.selected_logo || [],
 	);

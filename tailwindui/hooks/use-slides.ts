@@ -6,6 +6,7 @@ import { useUser } from './use-user';
 import { useChatHistory } from './use-chat-history';
 import { useProject } from './use-project';
 import { debounce } from '@/utils/sleep';
+import Project from '@/models/Project';
 
 const useSlidesBear = createBearStore<Slide[]>()('slides', [], true);
 const useSlideIndex = createBearStore<number>()('slideIndex', 0, true);
@@ -56,7 +57,7 @@ export const useSlides = () => {
 	const { project } = useProject();
 	const { isPresenting, setIsPresenting } = usePresenting();
 	const { isShowingLogo, setIsShowingLogo } = useIsShowingLogo();
-	const { updateProject } = useProject();
+	const { updateProject, bulkUpdateProject } = useProject();
 	const { saveStatus, setSaveStatus } = useSaveStatus();
 	const { clearChatHistory } = useChatHistory();
 
@@ -268,42 +269,6 @@ export const useSlides = () => {
 		}
 	};
 
-	const chageTemplateAndPalette = (
-		newTemplate: TemplateKeys,
-		newPalette: PaletteKeys,
-	) => {
-		console.log(
-			'Changing template and color theme to:',
-			newTemplate,
-			newPalette,
-		);
-
-		let newSlides = slides.map((slide, index) => {
-			return {
-				...slide,
-				template: newTemplate,
-				palette: newPalette,
-				images_position: [{}, {}, {}],
-			};
-		});
-		newSlides = newSlides.map((slide, index) => {
-			return {
-				...slide,
-				content: removeTags(slide.content) as string[],
-				head: removeTags(slide.head) as string,
-				title: removeTags(slide.title) as string,
-				subtopic: removeTags(slide.subtopic) as string,
-			};
-		});
-		//set into session storage to update
-		updateProject('template', newTemplate);
-		updateProject('palette', newPalette);
-		setSlides(newSlides);
-
-		updateVersion();
-		updateSlideHistory(newSlides);
-		syncSlides(newSlides, true);
-	};
 	const changePalette = (newPalette: PaletteKeys) => {
 		console.log('Changing color theme to:', newPalette);
 		let newSlides = slides.map((slide, index) => {
@@ -351,6 +316,45 @@ export const useSlides = () => {
 		updateSlideHistory(newSlides);
 		syncSlides(newSlides, true);
 	};
+
+	const changeTemplateAndPalette = (
+		newTemplate: TemplateKeys,
+		newPalette: PaletteKeys,
+	) => {
+		console.log(
+			'-- changeTemplateAndPalette:',
+			newTemplate,
+			newPalette,
+		);
+
+		let newSlides = slides.map((slide, index) => {
+			return {
+				...slide,
+				template: newTemplate,
+				palette: newPalette,
+				images_position: [{}, {}, {}],
+			};
+		});
+		newSlides = newSlides.map((slide, index) => {
+			return {
+				...slide,
+				content: removeTags(slide.content) as string[],
+				head: removeTags(slide.head) as string,
+				title: removeTags(slide.title) as string,
+				subtopic: removeTags(slide.subtopic) as string,
+			};
+		});
+		//set into session storage to update
+		bulkUpdateProject({
+			template: newTemplate,
+			palette: newPalette,
+		} as Project);
+		setSlides(newSlides);
+
+		updateVersion();
+		updateSlideHistory(newSlides);
+		syncSlides(newSlides, true);
+	}
 
 	const initSlides = (slides: Slide[]) => {
 		console.log('-- init slides: ', { slides });
@@ -443,7 +447,7 @@ export const useSlides = () => {
 		// updateBranding,
 		changeTemplate,
 		changePalette,
-		chageTemplateAndPalette,
+		changeTemplateAndPalette,
 		initSlides,
 		slidesHistory,
 		slidesHistoryIndex,
