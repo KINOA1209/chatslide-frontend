@@ -44,6 +44,9 @@ Font.whitelist = [
 	'Creato Display Medium',
 	'Creato Display Regular',
 	'Creato Display Thin',
+	'DM Sans Regular',
+	'DM Sans Medium',
+	'DM Sans Bold',
 	'Georgia',
 	'Helvetica Neue',
 	'Lemonada',
@@ -376,12 +379,19 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				let itemDelta = new QuillDelta();
 				if (isHTML(item)) {
 					// Convert HTML string to Delta format
-					const convertedDelta = quillInstanceRef.current?.clipboard.convert({ html: item });
+					const convertedDelta = quillInstanceRef.current?.clipboard.convert({
+						html: item,
+					});
 					//console.log("Converted Delta:", convertedDelta);
 
 					// Check if the converted Delta is empty or not properly formatted
-					if (!convertedDelta || convertedDelta.ops.length === 0 ||
-						(convertedDelta.ops.length === 1 && typeof convertedDelta.ops[0].insert === 'string' && !convertedDelta.ops[0].insert.trim())) {
+					if (
+						!convertedDelta ||
+						convertedDelta.ops.length === 0 ||
+						(convertedDelta.ops.length === 1 &&
+							typeof convertedDelta.ops[0].insert === 'string' &&
+							!convertedDelta.ops[0].insert.trim())
+					) {
 						// Ensure a new line is inserted correctly if the converted content is empty
 						itemDelta.insert('\n');
 					} else {
@@ -404,7 +414,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			};
 
 			if (Array.isArray(content)) {
-				content.forEach(item => {
+				content.forEach((item) => {
 					const itemDelta = insertContent(item);
 					combinedDelta = combinedDelta.concat(itemDelta);
 				});
@@ -414,7 +424,6 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			//console.log(combinedDelta)
 			quillInstanceRef.current.setContents(combinedDelta);
 
-
 			// const Delta = Quill.import('delta');
 			// let initialDelta = new Delta();
 
@@ -423,25 +432,25 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			// 		console.log(isHTML(item),item)
 			// 		const convertedDelta = quillInstanceRef?.current?.clipboard.convert({'html': item});
 			// 		console.log(convertedDelta)
-			// 		if (convertedDelta && convertedDelta?.ops?.length === 0 || 
+			// 		if (convertedDelta && convertedDelta?.ops?.length === 0 ||
 			// 		   (convertedDelta?.ops?.length === 1 && typeof convertedDelta.ops[0].insert === 'string' && !convertedDelta.ops[0].insert.trim())) {
 			// 			// If it's empty, we might want to ensure a new line is inserted correctly
 			// 			initialDelta.insert('\n');
-			// 		} 
+			// 		}
 			// 		else {
 			// 			initialDelta = initialDelta.concat(convertedDelta as any);
 			// 			if (item.includes('<p>')) {
 			// 				initialDelta.insert('\n');
-			// 			} 
+			// 			}
 			// 			else{
 			// 				initialDelta.insert(item)
 			// 			}
 			// 		}
-			// 	} 
+			// 	}
 			// 	else if (item.trim() === '') {
 			// 		// For items meant to represent an empty line (like pressing Enter), insert a paragraph break
 			// 		initialDelta.insert('\n');
-			// 	} 
+			// 	}
 			// 	else {
 			// 		initialDelta.insert(`${item}\n`, quillFormats);
 			// 	}
@@ -457,7 +466,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			// 		// 		const indentLevel = item.match(/ql-indent-(\d+)/);
 			// 		// 		const level = indentLevel ? parseInt(indentLevel[1], 10) : 0;
 			// 		// 		item = wrapListItem(item, level);
-			// 		// 	} 
+			// 		// 	}
 			// 		// 	else if (item.trim().startsWith('<li') && item.trim().endsWith('</li>')) {
 			// 		// 		item = `<ul>${item}</ul>`;
 			// 		// 	}
@@ -489,7 +498,11 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 
 							const formats = quill.getFormat(startIndex, urlLength);
 							if (!formats.link) {
-								quill.formatText({ index: startIndex, length: urlLength }, 'link', url);
+								quill.formatText(
+									{ index: startIndex, length: urlLength },
+									'link',
+									url,
+								);
 								lastMatchEndIndex = startIndex + urlLength;
 							}
 						}

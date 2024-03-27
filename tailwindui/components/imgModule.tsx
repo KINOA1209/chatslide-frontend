@@ -460,7 +460,9 @@ export const ImgModule = ({
 						placeholder='Search from internet'
 						required
 						ref={searchRef}
-						onClick={(e) => { (e.target as HTMLInputElement)?.select(); }}
+						onClick={(e) => {
+							(e.target as HTMLInputElement)?.select();
+						}}
 						onChange={(e) => {
 							setKeyword(e.target.value);
 						}}
@@ -516,7 +518,9 @@ export const ImgModule = ({
 						placeholder='Generate from AI (10⭐️)'
 						required
 						ref={searchRef}
-						onClick={(e) => { (e.target as HTMLInputElement)?.select(); }}
+						onClick={(e) => {
+							(e.target as HTMLInputElement)?.select();
+						}}
 						onChange={(e) => {
 							setKeyword(e.target.value);
 						}}
@@ -864,36 +868,36 @@ export const ImgModule = ({
 
 	//resize indicator
 	const circle_indicator: CSSProperties = {
-		width: '15px', 
-		height: '15px', 
-		backgroundColor: 'white', 
-		border: '1px solid magenta', 
-		borderRadius: '50%', 
+		width: '15px',
+		height: '15px',
+		backgroundColor: 'white',
+		border: '1px solid magenta',
+		borderRadius: '50%',
 		zIndex: 53,
 		position: 'absolute',
-	}
+	};
 
 	const rectangular_indicator: CSSProperties = {
 		borderRadius: '35%',
-		backgroundColor: 'white', 
+		backgroundColor: 'white',
 		border: '1px solid magenta',
 		zIndex: 53,
 		position: 'absolute',
-	}
+	};
 
 	const rectangular_horizontal: CSSProperties = {
 		width: '25px',
 		height: '10px',
 		left: '50%',
 		transform: 'translateX(-50%)',
-	}
+	};
 
 	const rectangular_vertical: CSSProperties = {
 		width: '10px',
 		height: '25px',
 		top: '50%',
-		transform: 'translateY(-50%)'
-	}
+		transform: 'translateY(-50%)',
+	};
 
 	return (
 		<>
@@ -1022,19 +1026,21 @@ export const ImgModule = ({
 				onDrop={handleImageDrop}
 				onDragOver={(e) => e.preventDefault()}
 				// onClick={openModal}
-				className={`w-full h-full transition ease-in-out duration-150 relative ${selectedImg === ''
-					? 'bg-[#E7E9EB]'
-					: canEdit
+				className={`w-full h-full transition ease-in-out duration-150 relative ${
+					selectedImg === ''
+						? 'bg-[#E7E9EB]'
+						: canEdit
 						? 'hover:bg-[#CAD0D3]'
 						: ''
-					} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
+				} flex flex-col items-center justify-center overflow-hidden`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
+				style={{ borderRadius: customImageStyle?.borderRadius }}
 			>
 				{ischartArr &&
-					ischartArr[currentContentIndex] &&
-					selectedChartType &&
-					chartData.length > 0 ? ( // chart
+				ischartArr[currentContentIndex] &&
+				selectedChartType &&
+				chartData.length > 0 ? ( // chart
 					<div
-						className='w-full h-full flex items-center justify-center'
+						className='w-full h-full flex items-center justify-center '
 						onClick={openModal}
 					>
 						<DynamicChart
@@ -1099,14 +1105,14 @@ export const ImgModule = ({
 							onResizeStart={handleResizeStart}
 							onResizeStop={handleResizeStop(currentContentIndex)}
 							resizeHandleStyles={{
-								topLeft: {...circle_indicator, left: '-7px'},
-								topRight: {...circle_indicator, right: '-7px'},
-								bottomLeft: {...circle_indicator, left: '-7px'},
-								bottomRight: {...circle_indicator, right: '-7px'},
-								top: {...rectangular_indicator, ...rectangular_horizontal},
-								bottom: {...rectangular_indicator, ...rectangular_horizontal},
-								left: {...rectangular_indicator, ...rectangular_vertical},
-								right: {...rectangular_indicator, ...rectangular_vertical},
+								topLeft: { ...circle_indicator, left: '-7px' },
+								topRight: { ...circle_indicator, right: '-7px' },
+								bottomLeft: { ...circle_indicator, left: '-7px' },
+								bottomRight: { ...circle_indicator, right: '-7px' },
+								top: { ...rectangular_indicator, ...rectangular_horizontal },
+								bottom: { ...rectangular_indicator, ...rectangular_horizontal },
+								left: { ...rectangular_indicator, ...rectangular_vertical },
+								right: { ...rectangular_indicator, ...rectangular_vertical },
 							}}
 						>
 							<Image
@@ -1116,7 +1122,7 @@ export const ImgModule = ({
 									height: '100%',
 									//width: 'auto',
 									width: '100%',
-									borderRadius: customImageStyle?.borderRadius,
+									// borderRadius: customImageStyle?.borderRadius,
 									//transform: `scale(${zoomLevel / 100})`,
 									//transformOrigin: 'center center',
 								}}
@@ -1126,12 +1132,13 @@ export const ImgModule = ({
 								width={960}
 								height={540}
 								//objectFit='contain'
-								className={`transition ease-in-out duration-150 ${canEdit
-									? isImgEditMode
-										? 'brightness-100'
-										: 'hover:brightness-90'
-									: 'cursor-pointer'
-									}`}
+								className={`transition ease-in-out duration-150 ${
+									canEdit
+										? isImgEditMode
+											? 'brightness-100'
+											: 'hover:brightness-90'
+										: 'cursor-pointer'
+								}`}
 								onError={(e) => {
 									console.log('failed to load image', imgsrc);
 									setImgLoadError(true);

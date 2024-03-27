@@ -1,6 +1,5 @@
 'use client';
 
-
 import React, { useState, useRef, useEffect, Fragment } from 'react';
 import { useRouter } from 'next/navigation';
 import 'react-toastify/dist/ReactToastify.css';
@@ -33,7 +32,7 @@ const GenerateSlidesSubmit = ({
 	isSubmitting: boolean;
 	setIsSubmitting: (submitting: boolean) => void;
 	template: TemplateKeys;
-	palette: PaletteKeys;
+	palette: PaletteKeys | string;
 	imageAmount: string;
 	imageLicense: string;
 	logo_ids: string[];
@@ -76,7 +75,7 @@ const GenerateSlidesSubmit = ({
 			console.error('Error when generating slides:', response.status);
 			toast.error(
 				'Server is busy now. Please try again later. Reference code: ' +
-				project?.id,
+					project?.id,
 			);
 		}
 	}
@@ -112,7 +111,10 @@ const GenerateSlidesSubmit = ({
 		};
 
 		// if we have resources, but no extra knowledge, we need to query the vector database
-		if (!project.extra_knowledge && (selectedResources.length > 0 || project.search_online)) {
+		if (
+			!project.extra_knowledge &&
+			(selectedResources.length > 0 || project.search_online)
+		) {
 			try {
 				console.log('resources', selectedResources);
 				console.log('querying vector database');

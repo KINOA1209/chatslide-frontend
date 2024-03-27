@@ -1,5 +1,9 @@
 import Image, { StaticImageData } from 'next/image';
-import { MainSlideProps, TemplateKeys } from '../slideTemplates';
+import {
+	MainSlideProps,
+	TemplateKeys,
+	uploadedBackgroundImgStyle,
+} from '../slideTemplates';
 import ColumbiaLogo from '@/public/images/template/Columbia/ColumbiaLogo.png';
 
 import { LayoutKeys } from '@/components/slides/slideLayout';
@@ -56,19 +60,7 @@ export const Columbia_school_template = ({
 				{/* <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr> */}
 				{/* background picture when user uploaded this  */}
 				{uploadedBackgroundImageUrl && (
-					<div
-						style={{
-							zIndex: 0,
-							width: '100%',
-							height: '100%',
-							position: 'absolute',
-							// display: 'none',
-							pointerEvents:
-								'none' /* Make the layer transparent to pointer events */,
-							top: '0%',
-							// display: 'none',
-						}}
-					>
+					<div style={{ ...uploadedBackgroundImgStyle }}>
 						<Image
 							style={{ objectFit: 'cover', height: '100%' }}
 							width={960}

@@ -138,3 +138,20 @@
 	src: url('/fonts/Yrsa-Medium.ttf') format('truetype');
 	/* Add more src declarations for different font weights or styles if needed */
 }
+
+/* DM Sans */
+@font-face {
+	font-family: 'DM Sans Bold';
+	src: url('/fonts/sales_pitch/DMSans-Bold.ttf') format('truetype');
+	/* Add more src declarations for different font weights or styles if needed */
+}
+@font-face {
+	font-family: 'DM Sans Medium';
+	src: url('/fonts/sales_pitch/DMSans-Medium.ttf') format('truetype');
+	/* Add more src declarations for different font weights or styles if needed */
+}
+@font-face {
+	font-family: 'DM Sans Regular';
+	src: url('/fonts/sales_pitch/DMSans-Regular.ttf') format('truetype');
+	/* Add more src declarations for different font weights or styles if needed */
+}

@@ -1,10 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createBearStore } from '@/utils/create-bear-store';
 import Slide from '@/models/Slide';
-import {
-	PaletteKeys,
-	TemplateKeys,
-} from '@/components/slides/slideTemplates';
+import { PaletteKeys, TemplateKeys } from '@/components/slides/slideTemplates';
 import { useUser } from './use-user';
 import { useChatHistory } from './use-chat-history';
 import { useProject } from './use-project';
@@ -30,20 +27,22 @@ const useIsShowingLogo = createBearStore<boolean>()(
 	false,
 );
 
-
 export enum SaveStatus {
 	UpToDate,
 	Saving,
 }
 
-const useSaveStatus = createBearStore<SaveStatus>()('saveStatus', SaveStatus.UpToDate, false);
+const useSaveStatus = createBearStore<SaveStatus>()(
+	'saveStatus',
+	SaveStatus.UpToDate,
+	false,
+);
 
 export enum SlidesStatus {
 	NotInited,
 	Initing,
 	Inited,
 }
-
 
 let slidesStatus: SlidesStatus = SlidesStatus.NotInited;
 
@@ -262,6 +261,7 @@ export const useSlides = () => {
 		updateProject('palette', newPalette);
 		setSlides(newSlides);
 
+		updateVersion();
 		updateSlideHistory(newSlides);
 		syncSlides(newSlides, true);
 	};

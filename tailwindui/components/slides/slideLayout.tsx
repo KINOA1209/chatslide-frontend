@@ -35,6 +35,17 @@ import {
 	onMouseLeave,
 } from './drag_resize/dragAndResizeFunction';
 import { useSlides } from '@/hooks/use-slides';
+import ResizeSlider from './drag_resize/resize_slider';
+import '@/components/slides/drag_resize/dragAndResizeCSS.css';
+import dynamic from 'next/dynamic';
+import { isArray } from 'chart.js/dist/helpers/helpers.core';
+import Slide, { SlideKeys } from '@/models/Slide';
+const QuillEditable = dynamic(
+	() => import('@/components/slides/quillEditorSlide'),
+	{ ssr: false },
+);
+// Extend the interface with new fields
+
 export type LayoutKeys =
 	| ''
 	| 'Cover_img_0_layout'
@@ -46,15 +57,90 @@ export type LayoutKeys =
 	| 'Col_1_img_1_layout'
 	| 'Col_2_img_2_layout'
 	| 'Col_3_img_3_layout';
-import ResizeSlider from './drag_resize/resize_slider';
-import '@/components/slides/drag_resize/dragAndResizeCSS.css';
-import dynamic from 'next/dynamic';
-import { isArray } from 'chart.js/dist/helpers/helpers.core';
-const QuillEditable = dynamic(
-	() => import('@/components/slides/quillEditorSlide'),
-	{ ssr: false },
-);
-// Extend the interface with new fields
+// for add column of text button style
+const addButtonStyle = `
+flex items-center justify-center
+w-auto h-12
+bg-gray-100 border-2 border-gray-300
+text-gray-600 font-medium
+px-6 py-2
+text-base
+cursor-pointer
+rounded-md
+shadow-md
+transition duration-300 ease-in-out
+`;
+
+const addButtonHoverStyle = `
+hover:bg-gray-200
+hover:text-gray-800
+hover:border-gray-400
+hover:shadow-lg
+`;
+
+const addIconStyle = `
+mr-2
+`;
+
+type HandleAddColumnProps = {
+	// handleSlideEdit: (
+	// 	content: string | string[],
+	// 	index: number,
+	// 	tag: SlideKeys,
+	// 	contentIndex?: number,
+	// 	rerender?: boolean,
+	// ) => void;
+	handleSlideEdit: Function;
+	isVerticalContent: boolean;
+	themeElements: ThemeElements; // Update the type accordingly
+	fontSize: string;
+	contentIndex: number;
+	slideIndex: number;
+	slides: Slide[];
+	setUpdatedContent: React.Dispatch<React.SetStateAction<JSX.Element[]>>;
+	setShowAddButton: React.Dispatch<React.SetStateAction<boolean>>;
+	shouldShowAddButton: boolean;
+};
+
+export const handleAddTextColumn = ({
+	handleSlideEdit,
+	isVerticalContent,
+	themeElements,
+	fontSize,
+	contentIndex,
+	slideIndex,
+	slides,
+	setUpdatedContent,
+	setShowAddButton,
+	shouldShowAddButton,
+}: HandleAddColumnProps) => {
+	console.log('add a new content item column:');
+	const newContentItem = (
+		<div
+			key={`content_${Date.now()}`}
+			className={`${slideIndex === 0 ? 'hidden' : ''}`}
+		>
+			<QuillEditable
+				content={''}
+				handleBlur={(newContent: string | string[]) =>
+					handleSlideEdit(newContent, slideIndex, 'content', contentIndex, true)
+				}
+				style={{
+					...themeElements.contentFontCSS_non_vertical_content,
+					fontSize: fontSize,
+				}}
+				isVerticalContent={isVerticalContent}
+				templateKey={slides[slideIndex].template}
+			/>
+		</div>
+	);
+	setUpdatedContent((prevContent: JSX.Element[]) => [
+		...prevContent,
+		newContentItem,
+	]);
+	setShowAddButton(shouldShowAddButton);
+};
+
 interface MainSlideProps extends BaseMainSlideProps {
 	brandingColor?: string;
 	themeElements: ThemeElements;
@@ -224,15 +310,27 @@ export const Cover_img_1_layout = ({
 		};
 
 	return (
-		<div style={layoutElements.canvaCSS}>
-			<div style={layoutElements.columnCSS}>
-				<div style={{ ...layoutElements.userNameCSS, zIndex: 60 }}>
+		<div className={`SlideCanvas`} style={layoutElements.canvaCSS}>
+			<div
+				className={`SlideUserNameAndHeadColumn`}
+				style={layoutElements.columnCSS}
+			>
+				<div
+					className={`SlideUserName`}
+					style={{ ...layoutElements.userNameCSS, zIndex: 60 }}
+				>
 					{user_name}
 				</div>
-				<div style={{ ...layoutElements.titleCSS, zIndex: 50 }}>{title}</div>
+				<div
+					className={`SlideUserNameHead`}
+					style={{ ...layoutElements.titleCSS, zIndex: 50 }}
+				>
+					{title}
+				</div>
 			</div>
 
 			<div
+				className={`SlideImageContainer`}
 				style={{
 					...layoutElements.imageContainerCSS,
 					zIndex: 20,
@@ -249,11 +347,15 @@ export const Cover_img_1_layout = ({
 					canEdit={canEdit}
 					images_position={images_position}
 					layoutElements={layoutElements}
+					customImageStyle={layoutElements.imageCSS}
 					additional_images={imgs.slice(3)}
 				/>
 			</div>
 
-			<div style={layoutElements.visualElementsCSS}>
+			<div
+				className={`SlideVisualElement`}
+				style={layoutElements.visualElementsCSS}
+			>
 				{themeElements.backgroundUrlCoverImg1 && (
 					<Image
 						width={960}
@@ -266,6 +368,7 @@ export const Cover_img_1_layout = ({
 				)}
 			</div>
 			<div
+				className={`SlideLogo`}
 				style={{
 					...layoutElements.logoCSS,
 					display: `${isShowingLogo ? 'contents' : 'none'}`,
@@ -421,7 +524,7 @@ export const Col_2_img_0_layout = ({
 }: MainSlideProps) => {
 	// Ensure content is always an array
 	const items = Array.isArray(content) ? content : [content];
-	const { slides, slideIndex, updateSlidePage } = useSlides();
+	const { slides, slideIndex, updateSlidePage, updateVersion } = useSlides();
 	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
 	const [updatedContent, setUpdatedContent] = useState(items);
 
@@ -429,29 +532,6 @@ export const Col_2_img_0_layout = ({
 		console.log('updatedContent on page', slideIndex, updatedContent);
 	}, [updatedContent]);
 
-	const addButtonStyle = `
-    flex items-center justify-center
-    w-auto h-12
-    bg-gray-100 border-2 border-gray-300
-    text-gray-600 font-medium
-    px-6 py-2
-    text-base
-    cursor-pointer
-    rounded-md
-    shadow-md
-    transition duration-300 ease-in-out
-`;
-
-	const addButtonHoverStyle = `
-    hover:bg-gray-200
-    hover:text-gray-800
-    hover:border-gray-400
-    hover:shadow-lg
-`;
-
-	const addIconStyle = `
-    mr-2
-`;
 	const [showAddButton, setShowAddButton] = useState(
 		// slides[slideIndex].content.length <= 1,
 		updatedContent.length <= 1,
@@ -459,42 +539,41 @@ export const Col_2_img_0_layout = ({
 
 	// let updatedContent = [...items];
 
-	const handleAddColumn = () => {
-		// Store the previous number of items
-		// const prevItemCount = slides[slideIndex].content.length;
+	// const handleAddColumn = () => {
+	// 	// Store the previous number of items
 
-		// Call function to add new content item
-		console.log('add a new content item column:');
-		const newContentItem = (
-			<div
-				key={`content_${Date.now()}`}
-				className={`${slideIndex === 0 ? 'hidden' : ''}`}
-			>
-				<QuillEditable
-					content={''}
-					handleBlur={(newContent) =>
-						handleSlideEdit(
-							newContent,
-							slideIndex,
-							'content',
-							slides[slideIndex].content.length === 0 ? 0 : 1,
-							true,
-						)
-					}
-					style={{
-						...themeElements.contentFontCSS_non_vertical_content,
-						fontSize: '24pt',
-					}}
-					isVerticalContent={false}
-					templateKey={slides[slideIndex].template}
-				/>
-			</div>
-		);
-		setUpdatedContent((prevContent) => [...prevContent, newContentItem]);
-		// Update showAddButton based on the updated content array
-		setShowAddButton(updatedContent.length <= 1);
-		// updateSlidePage(slideIndex, slides[slideIndex], false);
-	};
+	// 	// Call function to add new content item
+	// 	console.log('add a new content item column:');
+	// 	const newContentItem = (
+	// 		<div
+	// 			key={`content_${Date.now()}`}
+	// 			className={`${slideIndex === 0 ? 'hidden' : ''}`}
+	// 		>
+	// 			<QuillEditable
+	// 				content={''}
+	// 				handleBlur={(newContent) =>
+	// 					handleSlideEdit(
+	// 						newContent,
+	// 						slideIndex,
+	// 						'content',
+	// 						slides[slideIndex].content.length === 0 ? 0 : 1,
+	// 						true,
+	// 					)
+	// 				}
+	// 				style={{
+	// 					...themeElements.contentFontCSS_non_vertical_content,
+	// 					fontSize: '16pt',
+	// 				}}
+	// 				isVerticalContent={false}
+	// 				templateKey={slides[slideIndex].template}
+	// 			/>
+	// 		</div>
+	// 	);
+	// 	setUpdatedContent((prevContent) => [...prevContent, newContentItem]);
+	// 	// Update showAddButton based on the updated content array
+	// 	setShowAddButton(updatedContent.length <= 1);
+	// 	// updateSlidePage(slideIndex, slides[slideIndex], false);
+	// };
 	return (
 		<div className={`SlideLayoutCanvas`} style={layoutElements.canvaCSS}>
 			<div
@@ -510,7 +589,7 @@ export const Col_2_img_0_layout = ({
 			</div>
 
 			<div
-				className={`w-full felx SlideContentContainer`}
+				className={`w-full flex SlideContentContainer`}
 				style={{ ...layoutElements.contentContainerCSS, zIndex: 40 }}
 			>
 				<div className='Column1' style={layoutElements.contentCSS}>
@@ -524,17 +603,32 @@ export const Col_2_img_0_layout = ({
 						className={`SlideContentIndexTextDivider`}
 						style={layoutElements.contentIndexTextDividerCSS}
 					></div>
+
 					{updatedContent.length === 0 && showAddButton && (
 						<div
 							className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
-							onClick={handleAddColumn}
+							// onClick={handleAddTextColumn}
+							onClick={() =>
+								handleAddTextColumn({
+									handleSlideEdit: handleSlideEdit,
+									isVerticalContent: false,
+									themeElements: themeElements,
+									fontSize: '16pt',
+									contentIndex: 0,
+									slideIndex: slideIndex,
+									slides: slides,
+									setUpdatedContent: setUpdatedContent,
+									setShowAddButton: setShowAddButton,
+									shouldShowAddButton: updatedContent.length <= 1,
+								})
+							}
 						>
 							<RiAddLine className={addIconStyle} />
 							Add One Column of text
 						</div>
 					)}
 					{updatedContent.slice(0, 1).map((item, index) => (
-						<>
+						<React.Fragment key={`contentText_${index}_${Date.now()}`}>
 							<ul
 								key={`contentText_${index}_${Date.now()}`}
 								className={`SlideContentText`}
@@ -542,7 +636,7 @@ export const Col_2_img_0_layout = ({
 							>
 								<li style={{ width: '100%' }}>{item}</li>
 							</ul>
-						</>
+						</React.Fragment>
 					))}
 				</div>
 
@@ -561,7 +655,21 @@ export const Col_2_img_0_layout = ({
 						{updatedContent.length === 1 && showAddButton && (
 							<div
 								className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
-								onClick={handleAddColumn}
+								// onClick={handleAddColumn}
+								onClick={() =>
+									handleAddTextColumn({
+										handleSlideEdit: handleSlideEdit,
+										isVerticalContent: false,
+										themeElements: themeElements,
+										fontSize: '16pt',
+										contentIndex: 1,
+										slideIndex: slideIndex,
+										slides: slides,
+										setUpdatedContent: setUpdatedContent,
+										setShowAddButton: setShowAddButton,
+										shouldShowAddButton: updatedContent.length <= 1,
+									})
+								}
 							>
 								<div
 									className={`SlideContentIndexTextDivider`}
@@ -572,7 +680,7 @@ export const Col_2_img_0_layout = ({
 							</div>
 						)}
 						{updatedContent.slice(1, 2).map((item, index) => (
-							<>
+							<React.Fragment key={`contentText_${index + 1}_${Date.now()}`}>
 								<ul
 									key={`contentText_${index}_${Date.now()}`}
 									className={`SlideContentText`}
@@ -580,7 +688,7 @@ export const Col_2_img_0_layout = ({
 								>
 									<li style={{ width: '100%' }}>{item}</li>
 								</ul>
-							</>
+							</React.Fragment>
 						))}
 					</div>
 				}
@@ -629,8 +737,24 @@ export const Col_3_img_0_layout = ({
 	layoutElements,
 	templateLogo,
 	isShowingLogo,
+	handleSlideEdit,
 }: MainSlideProps) => {
 	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
+
+	// Ensure content is always an array
+	const items = Array.isArray(content) ? content : [content];
+	const { slides, slideIndex, updateSlidePage, updateVersion } = useSlides();
+	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
+	const [updatedContent, setUpdatedContent] = useState(items);
+
+	useEffect(() => {
+		console.log('updatedContent on page', slideIndex, updatedContent);
+	}, [updatedContent]);
+
+	const [showAddButton, setShowAddButton] = useState(
+		// slides[slideIndex].content.length <= 1,
+		updatedContent.length <= 1,
+	);
 
 	return (
 		<div style={layoutElements.canvaCSS}>

@@ -84,6 +84,7 @@ export const Business_002_template = ({
 							pointerEvents:
 								'none' /* Make the layer transparent to pointer events */,
 							top: '0%',
+							opacity: '0.5',
 							// display: 'none',
 						}}
 					>

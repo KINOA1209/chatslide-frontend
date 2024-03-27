@@ -12,10 +12,7 @@ import Modal from '../ui/Modal';
 import TemplateSelector from '@/app/(feature)/design/TemplateSelector';
 import { FiPlay } from 'react-icons/fi';
 import { FaRegClone } from 'react-icons/fa';
-import {
-	PaletteKeys,
-	TemplateKeys,
-} from './slideTemplates';
+import { PaletteKeys, TemplateKeys } from './slideTemplates';
 import availablePalettes from './palette';
 
 type SaveButtonProps = {
@@ -274,7 +271,9 @@ export const ChangeTemplateOptions: React.FC<{
 	// 		selectedTemplate as keyof typeof availablePalettes
 	// 	] || [];
 	// layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
-	const [selectedPaletteOption, SetSelectedPaletteOption] = useState<PaletteKeys>(currentPalette);
+	const [selectedPaletteOption, SetSelectedPaletteOption] = useState<
+		PaletteKeys | string
+	>(currentPalette);
 
 	const handleConfirm = () => {
 		onChangeTemplateAndColorPalette(selectedTemplate, selectedPaletteOption);
@@ -294,7 +293,7 @@ export const ChangeTemplateOptions: React.FC<{
 						// paletteOptions={paletteOption}
 						paletteOptions={
 							availablePalettes[
-							selectedTemplate as keyof typeof availablePalettes
+								selectedTemplate as keyof typeof availablePalettes
 							] || ['Original']
 						}
 						template={selectedTemplate}

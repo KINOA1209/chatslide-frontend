@@ -102,7 +102,16 @@ export const useLocalImgs = (
 	return { localImgs, updateImgAtIndex };
 };
 
-export type PaletteKeys = 'Original' | 'Blue' | 'Red' | 'Yellow' | '';
+export type PaletteKeys =
+	| 'Original'
+	| 'Blue'
+	| 'Red'
+	| 'Yellow'
+	| 'Dynamic Purple'
+	| 'Light Cyan'
+	| 'Royal Blue'
+	| 'Beeswax'
+	| '';
 
 // add template keys here
 export const availableTemplates = {
@@ -129,15 +138,15 @@ export const availableTemplates = {
 };
 
 export const templateDisplayNames = {
-	Default: '📌 Default',
+	Simplistic_008: '🖼️ General Pitch',
+	// Default: '📌 Default',
 	Business_002: '📎 Business',
 	Business_Dark_005: '💼 Business Dark',
 	Business_Light_006: '📄 Business Light',
 	Clean_Lifestyle_003: '☀️ Clean Lifestyle',
-	Fun_Education_004: '🍿 Fun',
-	Fun_Vibrant_007: '🎨 Fun Vibrant',
-	Simplistic_008: '🖼️ Simplistic',
-	Fun_Education_001: '📚 Education',
+	// Fun_Education_004: '🍿 Fun',
+	// Fun_Vibrant_007: '🎨 Fun Vibrant',
+	// Fun_Education_001: '📚 Education',
 	Stanford: '🏛️ Stanford University',
 	Berkeley: '🏛️ UC Berkeley',
 	Harvard: '🏛️ Harvard University',
@@ -149,24 +158,6 @@ export const templateDisplayNames = {
 	Yale: '🏛️ Yale University',
 	UPenn: '🏛️ University of Pennsylvania',
 };
-
-export const getTemplateFromAudicence = (audience: string): string => {
-	switch (audience) {
-		case 'Business Clients':
-			return 'Business_Dark_005';
-		case 'Video Viewers':
-			return 'Fun_Vibrant_007';
-		case 'Students':
-			return 'Fun_Education_004';
-		case 'Researchers':
-			return 'Fun_Education_004';
-		case 'Office Colleagues':
-			return 'Business_Light_006';
-		case 'Myself':
-			return 'Clean_Lifestyle_003';
-	}
-	return 'Clean_Lifestyle_003';
-}
 
 // Define a type for template keys
 type AvailableTemplateKeys = keyof typeof availableTemplates;
@@ -180,3 +171,13 @@ export type TemplateKeys = AvailableTemplateKeys | AdditionalTemplateKeys;
 // export const TemplateKeys: TemplateKeys[] = Object.keys(
 // 	availableTemplates,
 // ) as TemplateKeys[];
+
+export const uploadedBackgroundImgStyle = {
+	zIndex: 0,
+	width: '100%',
+	height: '100%',
+	position: 'absolute' as const, // Specify 'absolute' as a valid value for position
+	pointerEvents: 'none' as const,
+	top: '0%',
+	opacity: '0.5',
+};
