@@ -240,10 +240,10 @@ export const DropDown: React.FC<DrlambdaDropDownProps> = ({
 	const styleClassName =
 		style === 'button'
 			? 'bg-gray-300 border-none rounded-xl'
-			: 'border border-2 border-gray-200 bg-gray-100 rounded-lg';
+			: 'border border-2 border-gray-200 rounded-lg';
 	return (
 		<select
-			className={`shadow-lg h-[36px] flex ${styleClassName} text-sm py-0 overflow-visible disabled:text-gray-600 disabled:animate-pulse`}
+			className={`h-[36px] flex ${styleClassName} text-sm py-0 overflow-visible disabled:text-gray-600 disabled:animate-pulse`}
 			onChange={onChange}
 			value={value}
 			style={{ width: width }}

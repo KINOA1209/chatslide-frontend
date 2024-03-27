@@ -150,6 +150,11 @@ const TemplateSelector: React.FC<{
 									control: (provided) => ({
 										...provided,
 										width: '15rem',
+										height: '36px',
+										borderRadius: '8px',
+										borderColor: '#e5e7eb',
+										borderWidth: '2px',
+										fontSize: '14px',
 									}),
 
 									indicatorSeparator: () => ({ display: 'none' }), // Hides the indicator separator
