@@ -40,20 +40,21 @@ const TemplateSelector = dynamic(() => import('./TemplateSelector'), {
 
 const getTemplateFromAudicence = (audience: string): TemplateKeys => {
 	switch (audience) {
-		case 'Business Clients':
+		case 'Business Clients' as TemplateKeys:
 			return 'Business_Dark_005';
-		case 'Video Viewers':
-			return 'Fun_Vibrant_007';
-		case 'Students':
-			return 'Fun_Education_004';
-		case 'Researchers':
-			return 'Fun_Education_004';
 		case 'Office Colleagues':
 			return 'Business_Light_006';
 		case 'Myself':
 			return 'Clean_Lifestyle_003';
+		case 'Video Viewers':
+		// return 'Fun_Vibrant_007';
+		case 'Students':
+		// return 'Fun_Education_004';
+		case 'Researchers':
+			// return 'Fun_Education_004';
+			return 'Simplistic_008';
 	}
-	return 'Clean_Lifestyle_003';
+	return 'Simplistic_008';
 };
 
 export default function DesignPage() {
