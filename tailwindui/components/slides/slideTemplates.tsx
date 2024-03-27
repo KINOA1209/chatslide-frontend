@@ -62,6 +62,7 @@ export interface MainSlideProps {
 	isShowingLogo?: boolean;
 	images_position: ImagesPosition[];
 	palette?: PaletteKeys;
+	template?: TemplateKeys;
 }
 
 // deprecated

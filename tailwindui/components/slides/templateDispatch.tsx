@@ -208,6 +208,14 @@ export const templateDispatch = (
 		groups: [emptyGroup],
 		axis: { x: '', y: '' },
 	}));
+
+	useEffect(() => {
+		console.log(
+			'content[0] length:',
+			slide.content[0].length,
+			slide.content[0],
+		);
+	});
 	return (
 		<Template
 			canEdit={canEdit}
@@ -318,6 +326,7 @@ export const templateDispatch = (
 			isShowingLogo={isShowingLogo}
 			images_position={slide.images_position || [{}, {}, {}]}
 			palette={slide.palette}
+			template={slide.template}
 		/>
 	);
 	// }

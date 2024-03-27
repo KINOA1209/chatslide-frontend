@@ -136,17 +136,7 @@ export const Simplistic_008_template = ({
 				{/* background picture when user uploaded this  */}
 				{uploadedBackgroundImageUrl && (
 					<div
-						style={{
-							zIndex: 0,
-							width: '100%',
-							height: '100%',
-							position: 'absolute',
-							// display: 'none',
-							pointerEvents:
-								'none' /* Make the layer transparent to pointer events */,
-							top: '0%',
-							// display: 'none',
-						}}
+					style={{ ...uploadedBackgroundImgStyle }}
 					>
 						<Image
 							style={{ objectFit: 'cover', height: '100%' }}
