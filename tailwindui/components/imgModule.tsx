@@ -1032,7 +1032,7 @@ export const ImgModule = ({
 						: canEdit
 						? 'hover:bg-[#CAD0D3]'
 						: ''
-				} flex flex-col items-center justify-center overflow-hidden`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
+				} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
 				style={{ borderRadius: customImageStyle?.borderRadius }}
 			>
 				{ischartArr &&
