@@ -17,7 +17,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 		backgroundColorCover: 'bg-gradient-to-br from-[#7E96F7] to-[#A388F7]',
 		backgroundColor: 'bg-gradient-to-br from-[#7E96F7] to-[#A388F7]',
 		titleFontCSS: {
-			fontSize: '16pt',
+			fontSize: '14pt',
 			fontWeight: 'Bold',
 			fontFamily: 'DM Sans Bold',
 			lineHeight: 1.2,
@@ -65,7 +65,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 		backgroundColorCover: 'bg-[#ECF4F9]',
 		backgroundColor: 'bg-[#ECF4F9]',
 		titleFontCSS: {
-			fontSize: '16pt',
+			fontSize: '14pt',
 			fontWeight: 'Bold',
 			fontFamily: 'DM Sans Bold',
 			lineHeight: 1.2,
@@ -113,7 +113,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 		backgroundColorCover: 'bg-[#5A55F4]',
 		backgroundColor: 'bg-[#5A55F4]',
 		titleFontCSS: {
-			fontSize: '16pt',
+			fontSize: '14pt',
 			fontWeight: 'normal',
 			fontFamily: 'DM Sans Bold',
 			lineHeight: 1.2,
@@ -161,7 +161,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 		backgroundColorCover: 'bg-[#FDF1C4]',
 		backgroundColor: 'bg-[#FDF1C4]',
 		titleFontCSS: {
-			fontSize: '16pt',
+			fontSize: '14pt',
 			fontWeight: 'Bold',
 			fontFamily: 'DM Sans Bold',
 			lineHeight: 1.2,
