@@ -17,7 +17,7 @@ const SlideDesignPreview = dynamic(
 );
 
 const colorPreviews: Record<PaletteKeys, string> = {
-	// "Original" | "Blue" | "Red" | "Yellow" | "Dynamic Purple" | "Light Cyan" | "Royal Blue" | "Bees Wax
+	// "Original" | "Blue" | "Red" | "Yellow" | "Dynamic Purple" | "Light Cyan" | "Royal Blue" | "Beeswax
 	'': '',
 	Original: '#FFFFFF',
 	Blue: '#7E96F7',
@@ -26,7 +26,7 @@ const colorPreviews: Record<PaletteKeys, string> = {
 	'Dynamic Purple': '#A388F7',
 	'Light Cyan': '#ECF4F9',
 	'Royal Blue': '#5A55F4',
-	'Bees Wax': '#FDF1C4',
+	Beeswax: '#FDF1C4',
 	// Add more color previews for other palette keys if needed
 };
 

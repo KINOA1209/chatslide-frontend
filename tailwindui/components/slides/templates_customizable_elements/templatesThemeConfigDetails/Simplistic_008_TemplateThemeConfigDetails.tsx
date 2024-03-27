@@ -157,7 +157,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 			color: '#EDFDCA',
 		},
 	},
-	'Bees Wax': {
+	Beeswax: {
 		backgroundColorCover: 'bg-[#FDF1C4]',
 		backgroundColor: 'bg-[#FDF1C4]',
 		titleFontCSS: {

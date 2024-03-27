@@ -110,7 +110,7 @@ export type PaletteKeys =
 	| 'Dynamic Purple'
 	| 'Light Cyan'
 	| 'Royal Blue'
-	| 'Bees Wax'
+	| 'Beeswax'
 	| '';
 
 // add template keys here
