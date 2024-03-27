@@ -72,7 +72,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 				setShowModal={setShowModal}
 				onConfirm={() => { setShowModal(false) }}
 				title='Change Page Layout'>
-				<div className='grow flex flex-col overflow-hidden'>
+				<div className='flex-col overflow-hidden'>
 					<div className='mt-2 mb-5 grow overflow-hidden'>
 						<div className='w-full h-full flex flex-col'>
 							<div className='w-full h-full overflow-y-auto'>

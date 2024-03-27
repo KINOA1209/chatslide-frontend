@@ -80,7 +80,7 @@ const Modal: React.FC<ModalProps> = ({
 			ref={modalRef}
 		>
 			<Transition
-				className={`${position} bg-white rounded-lg shadow max-w-full sm:max-w-[80%] lg:max-w-[50%] max-h-[90%] overflow-y-hidden mx-2 p-2 sm:p-4`}
+				className={`${position} bg-white rounded-lg shadow max-w-full sm:max-w-[80%] lg:max-w-[50%] xl:max-w-[40%] max-h-[90%] overflow-y-hidden mx-2 p-2 sm:p-4`}
 				show={showModal}
 				enter='transition ease duration-500 transform delay-300'
 				enterFrom='opacity-0 translate-y-12'
@@ -121,7 +121,7 @@ const Modal: React.FC<ModalProps> = ({
 					{children}
 
 					{onConfirm && (
-						<div className='flex gap-x-2 justify-end'>
+						<div className='grid grid-cols-2 gap-x-2 justify-end'>
 							{canClose && (
 								<InversedBigBlueButton onClick={handleCloseModal}>
 									Cancel
