@@ -82,7 +82,9 @@ export default function DesignPage() {
 	);
 
 	const [colorPalette, setColorPalette] = useState<PaletteKeys>(
-		project?.palette || 'Original',
+		project?.palette ||
+			availablePalettes[template as keyof typeof availablePalettes]?.[0] ||
+			'Original',
 	);
 	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
 		project?.selected_logo || [],
@@ -153,7 +155,7 @@ export default function DesignPage() {
 			{showGenerationStatusModal && (
 				<GenerationStatusProgressModal
 					onClick={handleGenerationStatusModal}
-					waitingTime={20}
+					waitingTime={25}
 				></GenerationStatusProgressModal>
 			)}
 
@@ -236,6 +238,10 @@ export default function DesignPage() {
 
 					<Card>
 						<BigTitle>Branding</BigTitle>
+						<Explanation>
+							Select the branding for your slides, you can also change this on
+							the slides page, or talk with AI Chatbot
+						</Explanation>
 						<BrandingSelector
 							branding={branding}
 							setBranding={setBranding}

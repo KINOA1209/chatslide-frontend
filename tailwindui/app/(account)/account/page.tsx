@@ -2,55 +2,42 @@
 import AuthService from '@/services/AuthService';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect, useRef, RefObject, use } from 'react';
-import Pricing from '@/components/landing/pricing';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import UserService from '@/services/UserService';
-import Link from 'next/link';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import ReferralLink from '@/components/ReferralLink';
-import { FeedbackForm } from '@/components/ui/feedback';
 import { BigBlueButton } from '@/components/button/DrlambdaButton';
 import { InputBox } from '@/components/ui/InputBox';
 import {
 	FaInbox,
 	FaKey,
-	FaLock,
-	FaMailBulk,
 	FaUser,
-	FaVoicemail,
 } from 'react-icons/fa';
-import { useLocation } from 'react-router-dom';
 import { useUser } from '@/hooks/use-user';
 import useHydrated from '@/hooks/use-hydrated';
 import SessionStorage from '@/utils/SessionStorage';
 import Card from '@/components/ui/Card';
 import { BigTitle, Explanation, Instruction } from '@/components/ui/Text';
 import { Panel } from '@/components/layout/Panel';
-import { Title } from 'chart.js';
 import { Column } from '@/components/layout/Column';
 
 const Profile = () => {
 	const { username, email, token, setUsername } = useUser();
-	const [editUsername, setEditUsername] = useState('');
+	const [editUsername, setEditUsername] = useState(username);
+	const [editEmail, setEditEmail] = useState(email);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	function userFirstName(): string {
 		return username?.split(' ')[0];
 	}
 
-	useEffect(() => {
-		console.log('Username updated: ', username);
-		setEditUsername(username);
-	}, [username]);
-
 	const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setEditUsername(e.target.value);
 	};
 
-	const handleSubmitUsername = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
+	const handleSubmitUsernameAndEmail = async () => {
 		setIsSubmitting(true);
 
 		// Set the character limit for editUsername
@@ -70,54 +57,27 @@ const Profile = () => {
 		}
 
 		await AuthService.updateName(editUsername);
+		// await AuthService.updateEmail(editEmail);
 
-		await fetch(`/api/user/update_username`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${token}`,
-			},
-			body: JSON.stringify({ username: editUsername }),
-		})
-			.then((response) => {
-				if (response.ok) {
-					return response.json();
-				} else {
-					throw (response.status, response);
-				}
-			})
-			.then((data) => {
-				const status = data['status'];
-				const message = data['message'];
-				if (status === 'success') {
-					toast.success('Username successfully updated', {
-						position: 'top-center',
-						autoClose: 2000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-						theme: 'light',
-					});
-				}
-			})
-			.catch((error) => {
-				toast.error(error, {
-					position: 'top-center',
-					autoClose: 2000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-					theme: 'light',
-				});
+		const ok = await UserService.updateUsernameAndEmail(
+			editUsername,
+			editEmail,
+			token);
+		if (ok) {
+			toast.success('Successfully updated', {
+				position: 'top-center',
+				autoClose: 2000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: 'light',
 			});
-
+		}
 		setIsSubmitting(false);
 		setUsername(editUsername);
-	};
+	}
 
 	return (
 		<>
@@ -130,20 +90,24 @@ const Profile = () => {
 				<Instruction>
 					📭 Email
 				</Instruction>
-				<div className='w-full justify-center flex flex-row'>
-					<div className='w-full flex grow max-w-[60rem] justify-center'>
+				<Explanation>
+					Changing this will not affect your login email. This is only for us to reach you.
+				</Explanation>
+				<div className='w-full justify-center flex flex-row mt-2'>
+					<div className='w-full flex grow gap-4 max-w-[60rem] justify-center'>
 						<InputBox>
 							<FaInbox className='text-gray-600' />
 							<input
 								id='email'
 								type='text'
 								className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
-								// disabled
-								value={email}
-								readOnly
+								value={editEmail}
+								onChange={(e) => setEditEmail(e.target.value)}
 							/>
-							<FaLock className='text-gray-600' />
 						</InputBox>
+						<BigBlueButton onClick={handleSubmitUsernameAndEmail} isSubmitting={isSubmitting}>
+							Update
+						</BigBlueButton>
 					</div>
 				</div>
 			</div>
@@ -159,34 +123,33 @@ const Profile = () => {
 					</BigBlueButton>
 				</div>
 			</div>
-			<form onSubmit={handleSubmitUsername}>
-				<div className='w-full'>
-					<Instruction>
-						🏷️ Username
-					</Instruction>
+			<div className='w-full'>
+				<Instruction>
+					🏷️ Username
+				</Instruction>
 
-					<div className='w-full justify-center flex flex-row'>
-						<div className='flex w-full max-w-[60rem] flex-row gap-4 justify-center mt-2'>
-							<InputBox>
-								<FaUser className='text-gray-600' />
-								<input
-									id='username'
-									type='text'
-									className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
-									onChange={(e) => handleUsernameChange(e)}
-									value={editUsername}
-								/>
-							</InputBox>
-							<BigBlueButton onClick={() => { }} isSubmitting={isSubmitting}>
-								Update
-							</BigBlueButton>
-						</div>
+				<div className='w-full justify-center flex flex-row'>
+					<div className='flex w-full max-w-[60rem] flex-row gap-4 justify-center mt-2'>
+						<InputBox>
+							<FaUser className='text-gray-600' />
+							<input
+								id='username'
+								type='text'
+								className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+								onChange={(e) => handleUsernameChange(e)}
+								value={editUsername}
+							/>
+						</InputBox>
+						<BigBlueButton onClick={handleSubmitUsernameAndEmail} isSubmitting={isSubmitting}>
+							Update
+						</BigBlueButton>
 					</div>
 				</div>
-			</form>
+			</div>
 		</>
 	);
 };
+
 
 const Referral = () => {
 	return (
@@ -249,8 +212,7 @@ const OpenAIKey = () => {
 				🔑 Your OpenAI Key
 			</Instruction>
 			<Explanation>
-				Paste your own OpenAI key here so that generation does not cost
-				credits:
+				Paste your own OpenAI key here so you can still generate when you run out of credits (paid users only):
 			</Explanation>
 			<div className='w-full justify-center flex flex-row'>
 				<div className='flex grow max-w-[60rem] flex-row gap-4 justify-center mt-2'>

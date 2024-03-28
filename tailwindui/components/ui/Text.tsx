@@ -14,7 +14,7 @@ const BigTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
 
 const Instruction: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-	return <div className='text-neutral-800 text-md py-1'>{children}</div>;
+	return <div className='text-neutral-800 text-md py-1 flex flex-row gap-x-2 items-center justify-start'>{children}</div>;
 };
 
 const Explanation: React.FC<{ children: React.ReactNode }> = ({ children }) => {

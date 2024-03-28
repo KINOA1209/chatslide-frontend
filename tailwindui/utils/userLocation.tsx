@@ -36,6 +36,10 @@ export const getUserLanguage = async () => {
     return 'English';
   }
 
+	if (['IN'].includes(countryCode)) {
+		return 'British English';
+	}
+
 	// if country code is a Arabic speaking country, use Arabic
 	if (['AE', 'BH', 'DZ', 'EG', 'IQ', 'JO', 'KW', 'LB', 'LY', 'MA', 'OM', 'QA', 'SA', 'SD', 'SY', 'TN', 'YE'].includes(countryCode)) {
 		return 'Arabic';
