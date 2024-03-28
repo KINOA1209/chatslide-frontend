@@ -79,7 +79,7 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			maxHeight: '80%',
 		},
 		columnCSS: {
-			paddingTop: '10rem',
+			paddingTop: '4rem',
 			paddingLeft: '2rem',
 			paddingRight: '2rem',
 			width: '50%', // Equivalent to w-1/2
