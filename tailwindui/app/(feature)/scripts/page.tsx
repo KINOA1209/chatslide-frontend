@@ -95,10 +95,10 @@ export default function WorkflowStep5() {
 					<Instruction>
 						💡 Script to voice tips: <br/>
 						⏸️ Use <span className='text-green-600'>...</span> to denote pause <br/>
-						*️⃣ Use <span className='text-green-600'>*</span> to denote emphasis <br/>
-						🔤 Use <span className='text-green-600'>-</span> between each letter to spell it. <br />
+						*️⃣ Use <span className='text-green-600'>*word*</span> to denote emphasis <br/>
+						🔤 Use <span className='text-green-600'>[word]</span> to spell out the word. <br />
 						🌟 For example: {' '}
-						<span className='text-gray-600'>DrLambda also supports creating *slides* from... D-O-C files. </span>
+						<span className='text-gray-600'>DrLambda also supports creating *slides* from... [DOC] files. </span>
 					</Instruction>
 					<div className='flex flex-col gap-y-2'>
 						{slides.map((_, index) => (
