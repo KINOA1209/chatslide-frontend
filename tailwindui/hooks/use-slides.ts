@@ -180,6 +180,7 @@ export const useSlides = () => {
 		index: number,
 		slide: Slide,
 		rerender: boolean = true,
+		updateThumbnail: boolean = true,
 	) => {
 		console.log('-- update slide page: ', { index, slide });
 		const newSlides = [...slides];
@@ -189,7 +190,7 @@ export const useSlides = () => {
 
 		if (rerender) updateVersion();
 		updateSlideHistory(newSlides);
-		debouncedSyncSlides(newSlides, index === 0);
+		debouncedSyncSlides(newSlides, index === 0 && updateThumbnail);
 	};
 
 	const gotoPage = (index: number) => {

@@ -6,7 +6,7 @@ import useHydrated from '@/hooks/use-hydrated';
 
 interface TranscriptEditorProps {
 	slides: Slide[];
-	updateSlidePage: (index: number, slide: Slide, rerender: boolean) => void;
+	updateSlidePage: (index: number, slide: Slide, rerender: boolean, updateSlidePage: boolean) => void;
 	currentSlideIndex: number;
 	scale: number;
 	tight?: boolean;
@@ -28,7 +28,7 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 	const updateTranscriptList = (newValue: string) => {
 		const newSlide = { ...slides[currentSlideIndex] };
 		newSlide.transcript = newValue;
-		updateSlidePage(currentSlideIndex, newSlide, false);
+		updateSlidePage(currentSlideIndex, newSlide, false, false);
 	};
 
 	return (
