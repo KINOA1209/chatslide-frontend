@@ -110,10 +110,7 @@ export const calculateNonPresentScale = (
 		const scriptEditorHeight = showScript ? 200 : 0;
 		return Math.min(
 			1,
-			Math.min(
-				(width - 400 - chatWindowWidth) / 960,
-				(height - 150 - scriptEditorHeight) / 540,
-			),
+			Math.min((width - 400 - chatWindowWidth) / 960, (height - 200 - scriptEditorHeight) / 540),
 		);
 	}
 };

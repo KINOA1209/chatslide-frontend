@@ -249,8 +249,7 @@ const OpenAIKey = () => {
 				🔑 Your OpenAI Key
 			</Instruction>
 			<Explanation>
-				Paste your own OpenAI key here so that generation does not cost
-				credits:
+				Paste your own OpenAI key here so you can still generate when you run out of credits (paid users only):
 			</Explanation>
 			<div className='w-full justify-center flex flex-row'>
 				<div className='flex grow max-w-[60rem] flex-row gap-4 justify-center mt-2'>
