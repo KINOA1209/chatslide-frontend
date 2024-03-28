@@ -16,7 +16,6 @@ import { useProject } from '@/hooks/use-project';
 import { useImageStore } from '@/hooks/use-img-store';
 import ChatSuggestions from '../language/ChatSuggestions';
 
-
 export const DrLambdaAIAssistantIcon: React.FC<{
 	onClick: () => void;
 }> = ({ onClick }) => {
@@ -24,7 +23,7 @@ export const DrLambdaAIAssistantIcon: React.FC<{
 		<div
 			className='w-14 h-14 bg-neutral-50 rounded-[50%] shadow border border-black border-opacity-20 z-40 flex items-center justify-center relative'
 			onClick={onClick}
-		// style={{ animation: 'pulse 0.5s infinite' }}
+			// style={{ animation: 'pulse 0.5s infinite' }}
 		>
 			<div className='absolute inset-0 bg-gradient-to-b from-[#0B84FF] via-[#0B84FF] to-transparent rounded-[50%] opacity-0 animate-pulse'></div>
 			<Image
@@ -147,12 +146,52 @@ export const Chats: React.FC<ChatsProps> = ({
 										<img
 											src={imageUrl}
 											alt={`Image ${i + 1}`}
-											style={{ width: '100%', height: 'auto' }}
+											style={{
+												width: '100%',
+												height: '100%',
+												objectFit: 'contain',
+											}}
 										/>
 									</div>
 								))}
 							</div>
 						)}
+
+						{/* Check if there are imageUrls and render image previews */}
+						{/* {chat.imageUrls && chat.imageUrls.length > 0 && (
+							<div
+								className='flex flex-wrap gap-2 mt-2'
+								style={{ width: '100%' }}
+							>
+								{chat.imageUrls.map((imageUrl, i) => (
+									<div
+										key={i}
+										className='image-preview-container'
+										style={{
+											width: 'calc(50% - 4px)',
+											marginBottom: '4px',
+											position: 'relative', // Set position to relative
+											paddingTop: '100%', // Set aspect ratio (1:1 for square)
+										}}
+										draggable // Make the image container draggable
+										onDragStart={() => handleImageDragStart(imageUrl)} // Call handleImageDragStart with imageUrl
+									>
+										<img
+											src={imageUrl}
+											alt={`Image ${i + 1}`}
+											style={{
+												position: 'absolute', // Set position to absolute
+												top: 0,
+												left: 0,
+												width: '100%',
+												height: '100%',
+												objectFit: 'cover', // Cover the container without distortion
+											}}
+										/>
+									</div>
+								))}
+							</div>
+						)} */}
 					</div>
 				</div>
 			))}
@@ -400,16 +439,16 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			{/* suggestions */}
 			{/* input area */}
 			<div className='w-full border-t border-gray-200 border-t-2'>
-				{!userInput &&
+				{!userInput && (
 					<ChatSuggestions
 						isCover={currentSlideIndex === 0}
 						sendChat={handleSend}
 					/>
-				}
+				)}
 				<div className='flex flex-row justify-between p-2 items-center gap-4'>
 					<textarea
 						value={userInput}
-						className="w-full border-0 focus:outline-none focus:ring-0 resize-none overflow-y-scroll"
+						className='w-full border-0 focus:outline-none focus:ring-0 resize-none overflow-y-scroll'
 						onChange={handleInputChange}
 						onKeyDown={handleKeyDown}
 						style={{ minHeight: '32px' }} // Set minimum height to resemble input field
