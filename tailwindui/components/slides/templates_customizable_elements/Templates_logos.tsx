@@ -47,7 +47,7 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 						alt='CustomLogo'
 						width={45}
 						height={40}
-					// className='h-auto'
+						// className='h-auto'
 					/>
 				</div>
 			);
@@ -135,11 +135,11 @@ export const generateTemplateLogo = ({
 								? coverLogo.src // Assuming coverLogo is of type StaticImageData
 								: nonCoverLogo.src // Assuming nonCoverLogo is of type StaticImageData
 							: isLightBackground
-								? lightBGLogo!.src // Assuming lightBGLogo is of type StaticImageData
-								: darkBGLogo!.src // Assuming darkBGLogo is of type StaticImageData
+							? lightBGLogo!.src // Assuming lightBGLogo is of type StaticImageData
+							: darkBGLogo!.src // Assuming darkBGLogo is of type StaticImageData
 					}
 					alt='Template Logo'
-					className={`w-[${logoWidth}rem] h-auto opacity-40`}
+					className={`w-[${logoWidth}rem] h-auto`}
 				/>
 			) : (
 				// 			<div
