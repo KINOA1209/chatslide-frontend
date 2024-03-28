@@ -5,8 +5,9 @@ import { PaletteKeys, TemplateKeys } from '@/components/slides/slideTemplates';
 import { useUser } from './use-user';
 import { useChatHistory } from './use-chat-history';
 import { useProject } from './use-project';
-import { debounce } from '@/utils/sleep';
 import Project from '@/models/Project';
+import debounce from 'lodash.debounce';
+
 
 const useSlidesBear = createBearStore<Slide[]>()('slides', [], true);
 const useSlideIndex = createBearStore<number>()('slideIndex', 0, true);
@@ -93,7 +94,7 @@ export const useSlides = () => {
 		setIsShowingLogo(true);
 		setSlides(newSlides);
 		updateSlideHistory(newSlides);
-		syncSlides(newSlides, true);
+		debouncedSyncSlides(newSlides, true);
 	};
 
 	const updateLogoUrl = (logo_url: string) => {
@@ -103,7 +104,7 @@ export const useSlides = () => {
 		setIsShowingLogo(true);
 		setSlides(newSlides);
 		updateSlideHistory(newSlides);
-		syncSlides(newSlides, true);
+		debouncedSyncSlides(newSlides, true);
 	}
 
 	const hideLogo = () => {
@@ -113,7 +114,7 @@ export const useSlides = () => {
 		setIsShowingLogo(false);
 		setSlides(newSlides);
 		updateSlideHistory(newSlides);
-		syncSlides(newSlides, true);
+		debouncedSyncSlides(newSlides, true);
 	};
 
 	const updateBackgroundUrl = (background_url: string) => {
@@ -122,7 +123,7 @@ export const useSlides = () => {
 		});
 		setSlides(newSlides);
 		updateSlideHistory(newSlides);
-		syncSlides(newSlides, true);
+		debouncedSyncSlides(newSlides, true);
 	}
 
 	useEffect(() => {
@@ -144,7 +145,7 @@ export const useSlides = () => {
 
 		updateVersion();
 		updateSlideHistory(newSlides);
-		syncSlides(newSlides, false, newSlides.length);
+		debouncedSyncSlides(newSlides, false, newSlides.length);
 	};
 
 	const duplicatePage = (index: number) => {
@@ -158,7 +159,7 @@ export const useSlides = () => {
 
 		updateVersion();
 		updateSlideHistory(newSlides);
-		syncSlides(newSlides, false, newSlides.length);
+		debouncedSyncSlides(newSlides, false, newSlides.length);
 	};
 
 	const deleteSlidePage = (index: number) => {
@@ -173,13 +174,14 @@ export const useSlides = () => {
 
 		updateVersion();
 		updateSlideHistory(newSlides);
-		syncSlides(newSlides, false, newSlides.length);
+		debouncedSyncSlides(newSlides, false, newSlides.length);
 	};
 
 	const updateSlidePage = (
 		index: number,
 		slide: Slide,
 		rerender: boolean = true,
+		updateThumbnail: boolean = true,
 	) => {
 		console.log('-- update slide page: ', { index, slide });
 		const newSlides = [...slides];
@@ -189,7 +191,7 @@ export const useSlides = () => {
 
 		if (rerender) updateVersion();
 		updateSlideHistory(newSlides);
-		debouncedSyncSlides(newSlides, index === 0);
+		debouncedSyncSlides(newSlides, index === 0 && updateThumbnail);
 	};
 
 	const gotoPage = (index: number) => {
@@ -236,7 +238,7 @@ export const useSlides = () => {
 		// document.execCommand('undo', false, undefined); // Change null to undefined
 
 		// TODO: check if the cover page is changed
-		syncSlides(
+		debouncedSyncSlides(
 			slidesHistory[slidesHistoryIndex - 1],
 			false,
 			slidesHistory[slidesHistoryIndex - 1].length,
@@ -254,7 +256,7 @@ export const useSlides = () => {
 		// document.execCommand('redo', false, undefined); // Change null to undefined
 
 		// TODO: check if the cover page is changed
-		syncSlides(
+		debouncedSyncSlides(
 			slidesHistory[slidesHistoryIndex + 1],
 			false,
 			slidesHistory[slidesHistoryIndex + 1].length,
@@ -292,7 +294,7 @@ export const useSlides = () => {
 		setSlides(newSlides);
 
 		updateSlideHistory(newSlides);
-		syncSlides(newSlides, true);
+		debouncedSyncSlides(newSlides, true);
 	};
 
 	const changeTemplate = (newTemplate: TemplateKeys) => {
@@ -314,7 +316,7 @@ export const useSlides = () => {
 		setSlides(newSlides);
 
 		updateSlideHistory(newSlides);
-		syncSlides(newSlides, true);
+		debouncedSyncSlides(newSlides, true);
 	};
 
 	const changeTemplateAndPalette = (
@@ -353,7 +355,7 @@ export const useSlides = () => {
 
 		updateVersion();
 		updateSlideHistory(newSlides);
-		syncSlides(newSlides, true);
+		debouncedSyncSlides(newSlides, true);
 	}
 
 	const initSlides = (slides: Slide[]) => {
@@ -381,7 +383,7 @@ export const useSlides = () => {
 				newSlides[i] = { ...slides[i], transcript: transcripts[i] };
 		}
 		setSlides(newSlides);
-		syncSlides(newSlides);
+		debouncedSyncSlides(newSlides);
 		updateProject('has_scripts', true);
 	};
 
@@ -436,7 +438,7 @@ export const useSlides = () => {
 			});
 	};
 
-	const debouncedSyncSlides = debounce(syncSlides, 500);
+	const debouncedSyncSlides = debounce(syncSlides, 1000);
 
 	return {
 		slides,

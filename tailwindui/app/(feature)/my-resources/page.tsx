@@ -8,7 +8,7 @@ export default function FileManagementServer() {
 	return (
 		<section className='grow flex flex-col'>
 			<MyResourcePageHeader />
-			<MyFiles selectable={false} />
+			<MyFiles selectable={false} pageInvoked='resources'/>
 		</section>
 	);
 }

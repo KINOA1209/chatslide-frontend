@@ -266,6 +266,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 
 	const makeApiCall = async (
 		prompt: string,
+		prev_prompts: ChatHistory[],
 		token: string,
 	): Promise<Response> => {
 		try {
@@ -279,6 +280,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					slide: slides[currentSlideIndex],
 					project_id: project?.id || '',
 					prompt: prompt,
+					prev_prompts: prev_prompts,
 				}),
 			});
 		} catch (error) {
@@ -311,10 +313,15 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		// Clear user input after sending
 		setUserInput('');
 
+		// Get up to 3 previous chat messages, only keep role and content
+		const lastChatMessages = chatHistory
+			.slice(-3)
+			.map((chat) => ({ role: chat.role, content: chat.content }));
+
 		try {
 			setLoading(true);
 
-			const response = await makeApiCall(inputToSend, token);
+			const response = await makeApiCall(inputToSend, lastChatMessages, token);
 
 			setLoading(false);
 
@@ -333,12 +340,12 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					// Update state with the new slides
 					updateSlidePage(currentSlideIndex, responseData.data.slide);
 					updateVersion(); // force rerender when version changes and index does not change
+				}
 
-					// Add success message to chat history
-					const successMessage = addSuccessMessage(
-						'✅ I updated the current slide for you.',
-					);
-					addChatHistory(successMessage);
+				if (responseData.data.action) {
+					// send this as a document signal
+					console.log('action:', responseData.data.action);
+					document.dispatchEvent(new Event(responseData.data.action));
 				}
 
 				// Update chat history with AI's response
@@ -439,7 +446,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			{/* suggestions */}
 			{/* input area */}
 			<div className='w-full border-t border-gray-200 border-t-2'>
-				{!userInput && (
+				{!userInput && !loading && (
 					<ChatSuggestions
 						isCover={currentSlideIndex === 0}
 						sendChat={handleSend}
@@ -455,8 +462,11 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					/>
 
 					{/* send text, call api to get response */}
-					<button onClick={() => handleSend()}>
-						<IoSend fill='#2943E9' className='w-7 h-7' />
+					<button onClick={() => handleSend()} disabled={loading}>
+						<IoSend
+							fill={!loading ? '#2943E9' : '#E5E7EB'}
+							className='w-7 h-7'
+						/>
 					</button>
 				</div>
 			</div>

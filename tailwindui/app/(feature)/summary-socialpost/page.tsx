@@ -57,7 +57,7 @@ export default function Topic_SocialPost() {
 	const { project, initProject, updateProject, bulkUpdateProject } = useProject();
 
 	const [topic, setTopic] = useState(project?.topic || '');
-	const [scenarioType, setscenarioType] = useState(project?.scenario_type || '');
+	const [scenarioType, setscenarioType] = useState(project?.post_type || '');
 	const [language, setLanguage] = useState(project?.language || 'English');
 	const [selectedResources, setSelectedResources] = useState<Resource[]>(project?.resources || []);
 

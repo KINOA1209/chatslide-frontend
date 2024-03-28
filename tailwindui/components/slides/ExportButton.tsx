@@ -42,6 +42,16 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 	const [showModal, setShowModal] = useState(false);
 	const { slides, saveStatus, SaveStatus } = useSlides();
 
+	useEffect(() => {
+		document.addEventListener('download_slide', (e) => {
+			setShowModal(true);
+		});
+
+		return () => document.removeEventListener('download_slide', (e) => {
+			setShowModal(true);
+		});
+	}, []);
+
 	async function exportToPdfFrontend() {
 		const file = await generatePdf(topic || '', exportSlidesRef, slides.length);
 

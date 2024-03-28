@@ -7,7 +7,7 @@ import VideoService from '@/services/VideoService';
 import { useUser } from '@/hooks/use-user';
 import { Column } from '@/components/layout/Column';
 import { useSlides } from '@/hooks/use-slides';
-import { Instruction, BigTitle } from '@/components/ui/Text';
+import { Instruction, BigTitle, Explanation } from '@/components/ui/Text';
 import Card from '@/components/ui/Card';
 import { useProject } from '@/hooks/use-project';
 import VoiceSelector from '@/components/language/VoiceSelector';
@@ -93,8 +93,12 @@ export default function WorkflowStep5() {
 				<Card>
 					<BigTitle>Scripts</BigTitle>
 					<Instruction>
-						You can edit your scripts here:
-						If you want to edit slides, you can go back to the previous step.
+						💡 Script to voice tips: <br/>
+						⏸️ Use <span className='text-green-600'>...</span> to denote pause <br/>
+						*️⃣ Use <span className='text-green-600'>*word*</span> to denote emphasis <br/>
+						🔤 Use <span className='text-green-600'>[word]</span> to spell out the word. <br />
+						🌟 For example: {' '}
+						<span className='text-gray-600'>DrLambda also supports creating *slides* from... [doc] files. </span>
 					</Instruction>
 					<div className='flex flex-col gap-y-2'>
 						{slides.map((_, index) => (

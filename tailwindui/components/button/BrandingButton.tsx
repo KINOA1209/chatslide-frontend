@@ -3,7 +3,7 @@
 import ButtonWithExplanation from "./ButtonWithExplanation";
 import Modal from "../ui/Modal";
 import { useUser } from "@/hooks/use-user";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from 'next/image';
 import brandingIcon from 'public/icons/button/show_logo.svg';
 import BrandingSelector from "@/app/(feature)/design/BrandingSelector";
@@ -21,6 +21,26 @@ export const BrandingButton: React.FC<{
 
 	const [showModal, setShowModal] = useState(false);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
+
+	useEffect(() => {
+		document.addEventListener('change_logo', (e) => {
+			setShowModal(true);
+		});
+
+		return () => document.removeEventListener('change_logo', (e) => {
+			setShowModal(true);
+		});
+	}, []);
+
+	useEffect(() => {
+		document.addEventListener('change_background', (e) => {
+			setShowModal(true);
+		});
+
+		return () => document.removeEventListener('change_background', (e) => {
+			setShowModal(true);
+		});
+	}, []);
 
 	return <>
 		<PaywallModal

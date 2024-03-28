@@ -47,6 +47,7 @@ import { LuTrash2 } from 'react-icons/lu';
 import { HiOutlineRefresh } from 'react-icons/hi';
 import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';
+import { MEDIA_EXTENSIONS } from './file/FileUploadButton';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -312,7 +313,7 @@ export const ImgModule = ({
 	// }, [])
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const extensions = ['png', 'jpg', 'jpeg', 'gif', 'webp']; // For checking logic
+		const extensions = MEDIA_EXTENSIONS; // For checking logic
 		const sizeLimit = 10 * 1024 * 1024; // 16mb
 		const file = e.target.files ? e.target.files[0] : null;
 		if (file?.size && file?.size > sizeLimit) {

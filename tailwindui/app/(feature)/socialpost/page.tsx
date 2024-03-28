@@ -11,6 +11,7 @@ import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
 import useHydrated from '@/hooks/use-hydrated';
 import SessionStorage from '@/utils/SessionStorage';
+import { useProject } from '@/hooks/use-project';
 
 export default function SocialMediaTemplate() {
 	const router = useRouter();
@@ -81,7 +82,8 @@ export default function SocialMediaTemplate() {
 	const [socialPostSlides, setSocialPostSlides] = useState<SocialPostSlide[]>(
 		[],
 	);
-	const res_scenario = SessionStorage.getItem('scenarioType');
+	const { project, initProject, updateProject } = useProject()
+	const res_scenario = project?.post_type || 'casual_topic';
 
 	function getCover(scenario: string | null): ThemeObject {
 		switch (scenario) {
