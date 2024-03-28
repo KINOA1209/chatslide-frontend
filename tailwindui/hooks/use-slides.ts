@@ -5,7 +5,6 @@ import { PaletteKeys, TemplateKeys } from '@/components/slides/slideTemplates';
 import { useUser } from './use-user';
 import { useChatHistory } from './use-chat-history';
 import { useProject } from './use-project';
-import { useDebounce } from "@uidotdev/usehooks";
 import Project from '@/models/Project';
 import debounce from 'lodash.debounce';
 
@@ -439,7 +438,7 @@ export const useSlides = () => {
 			});
 	};
 
-	const debouncedSyncSlides = debounce(syncSlides, 1000);  
+	const debouncedSyncSlides = debounce(syncSlides, 1000);
 
 	return {
 		slides,

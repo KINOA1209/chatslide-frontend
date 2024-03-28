@@ -1,6 +1,7 @@
 import Slide from '@/models/Slide';
-import React, { useEffect, useState } from 'react';
-import { useDebounce } from "@uidotdev/usehooks";
+import React, { useState } from 'react';
+import SaveScriptsButton from './SaveScriptsButton';
+import { Explanation, Instruction } from '@/components/ui/Text';
 import useHydrated from '@/hooks/use-hydrated';
 
 interface TranscriptEditorProps {
@@ -19,23 +20,16 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 	tight=false
 }) => {
 
-	const maxWidth = 960 * scale + 12;
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
 
-	const [script, setScript] = useState<string>(slides[currentSlideIndex]?.transcript || '');
-	const debouncedScript = useDebounce(script, 500);
+	const maxWidth = 960 * scale + 12;
 	
 	const updateTranscriptList = (newValue: string) => {
 		const newSlide = { ...slides[currentSlideIndex] };
 		newSlide.transcript = newValue;
 		updateSlidePage(currentSlideIndex, newSlide, false, false);
 	};
-
-	useEffect(() => {
-		updateTranscriptList(debouncedScript);
-	}, [debouncedScript]);
-
-	// avoid hydration error during development caused by persistence
-	if (!useHydrated()) return <></>;
 
 	return (
 		<div
@@ -44,10 +38,10 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 		>
 			<textarea
 				className={`grow px-4 py-2 w-full h-full border-none text-gray-700 text-xs font-normal focus:ring-0 ${tight && 'leading-tight'}`}
-				value={script}
-				onChange={(e) => setScript(e.target.value)}
+				value={slides[currentSlideIndex].transcript}
+				onChange={(e) => updateTranscriptList(e.target.value)}
 			>
-				{script}
+				{slides[currentSlideIndex].transcript}
 			</textarea>
 		</div>
 	);
