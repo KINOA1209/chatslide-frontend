@@ -540,43 +540,6 @@ export const Col_2_img_0_layout = ({
 		updatedContent.length <= 1,
 	);
 
-	// let updatedContent = [...items];
-
-	// const handleAddColumn = () => {
-	// 	// Store the previous number of items
-
-	// 	// Call function to add new content item
-	// 	console.log('add a new content item column:');
-	// 	const newContentItem = (
-	// 		<div
-	// 			key={`content_${Date.now()}`}
-	// 			className={`${slideIndex === 0 ? 'hidden' : ''}`}
-	// 		>
-	// 			<QuillEditable
-	// 				content={''}
-	// 				handleBlur={(newContent) =>
-	// 					handleSlideEdit(
-	// 						newContent,
-	// 						slideIndex,
-	// 						'content',
-	// 						slides[slideIndex].content.length === 0 ? 0 : 1,
-	// 						true,
-	// 					)
-	// 				}
-	// 				style={{
-	// 					...themeElements.contentFontCSS_non_vertical_content,
-	// 					fontSize: '16pt',
-	// 				}}
-	// 				isVerticalContent={false}
-	// 				templateKey={slides[slideIndex].template}
-	// 			/>
-	// 		</div>
-	// 	);
-	// 	setUpdatedContent((prevContent) => [...prevContent, newContentItem]);
-	// 	// Update showAddButton based on the updated content array
-	// 	setShowAddButton(updatedContent.length <= 1);
-	// 	// updateSlidePage(slideIndex, slides[slideIndex], false);
-	// };
 	return (
 		<div className={`SlideLayoutCanvas`} style={layoutElements.canvaCSS}>
 			<div
@@ -643,58 +606,56 @@ export const Col_2_img_0_layout = ({
 					))}
 				</div>
 
-				{
-					<div className='Column2' style={layoutElements.contentCSS}>
-						<div
-							className={`SlideContentIndex`}
-							style={layoutElements.contentIndexCSS}
-						>
-							{2}
-						</div>
-						<div
-							className={`SlideContentIndexTextDivider`}
-							style={layoutElements.contentIndexTextDividerCSS}
-						></div>
-						{updatedContent.length === 1 && showAddButton && (
-							<div
-								className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
-								// onClick={handleAddColumn}
-								onClick={() =>
-									handleAddTextColumn({
-										handleSlideEdit: handleSlideEdit,
-										isVerticalContent: false,
-										themeElements: themeElements,
-										fontSize: '16pt',
-										contentIndex: 1,
-										slideIndex: slideIndex,
-										slides: slides,
-										setUpdatedContent: setUpdatedContent,
-										setShowAddButton: setShowAddButton,
-										shouldShowAddButton: updatedContent.length <= 1,
-									})
-								}
-							>
-								<div
-									className={`SlideContentIndexTextDivider`}
-									style={layoutElements.contentIndexTextDividerCSS}
-								></div>
-								<RiAddLine className={addIconStyle} />
-								Add One Column of text
-							</div>
-						)}
-						{updatedContent.slice(1, 2).map((item, index) => (
-							<React.Fragment key={`contentText_${index + 1}_${Date.now()}`}>
-								<ul
-									key={`contentText_${index}_${Date.now()}`}
-									className={`SlideContentText`}
-									style={layoutElements.contentTextCSS}
-								>
-									<li style={{ width: '100%' }}>{item}</li>
-								</ul>
-							</React.Fragment>
-						))}
+				<div className='Column2' style={layoutElements.contentCSS}>
+					<div
+						className={`SlideContentIndex`}
+						style={layoutElements.contentIndexCSS}
+					>
+						{2}
 					</div>
-				}
+					<div
+						className={`SlideContentIndexTextDivider`}
+						style={layoutElements.contentIndexTextDividerCSS}
+					></div>
+					{updatedContent.length === 1 && showAddButton && (
+						<div
+							className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
+							// onClick={handleAddColumn}
+							onClick={() =>
+								handleAddTextColumn({
+									handleSlideEdit: handleSlideEdit,
+									isVerticalContent: false,
+									themeElements: themeElements,
+									fontSize: '16pt',
+									contentIndex: 1,
+									slideIndex: slideIndex,
+									slides: slides,
+									setUpdatedContent: setUpdatedContent,
+									setShowAddButton: setShowAddButton,
+									shouldShowAddButton: updatedContent.length <= 1,
+								})
+							}
+						>
+							<div
+								className={`SlideContentIndexTextDivider`}
+								style={layoutElements.contentIndexTextDividerCSS}
+							></div>
+							<RiAddLine className={addIconStyle} />
+							Add One Column of text
+						</div>
+					)}
+					{updatedContent.slice(1, 2).map((item, index) => (
+						<React.Fragment key={`contentText_${index + 1}_${Date.now()}`}>
+							<ul
+								key={`contentText_${index}_${Date.now()}`}
+								className={`SlideContentText`}
+								style={layoutElements.contentTextCSS}
+							>
+								<li style={{ width: '100%' }}>{item}</li>
+							</ul>
+						</React.Fragment>
+					))}
+				</div>
 			</div>
 			<div
 				className={`SlideLogo`}
@@ -755,8 +716,8 @@ export const Col_3_img_0_layout = ({
 	}, [updatedContent]);
 
 	const [showAddButton, setShowAddButton] = useState(
-		// slides[slideIndex].content.length <= 1,
-		updatedContent.length <= 1,
+		// slides[slideIndex].content.length <= 2, for three columns
+		updatedContent.length <= 2,
 	);
 
 	return (
@@ -766,8 +727,11 @@ export const Col_3_img_0_layout = ({
 				<div style={layoutElements.subtopicCSS}>{subtopic}</div>
 			</div>
 
-			<div style={{ ...layoutElements.contentContainerCSS, zIndex: 40 }}>
-				{Array.isArray(content) &&
+			<div
+				className={`w-full flex SlideContentContainer`}
+				style={{ ...layoutElements.contentContainerCSS, zIndex: 40 }}
+			>
+				{/* {Array.isArray(content) &&
 					content.map((item, index) => (
 						<div
 							// className='flex flex-col gap-[0.5rem]'
@@ -792,44 +756,157 @@ export const Col_3_img_0_layout = ({
 								</li>
 							</ul>
 						</div>
-					))}
-			</div>
+					))} */}
+				<div className='Column1' style={layoutElements.contentCSS}>
+					<div
+						className={`SlideContentIndex`}
+						style={layoutElements.contentIndexCSS}
+					>
+						{1}
+					</div>
+					<div
+						className={`SlideContentIndexTextDivider`}
+						style={layoutElements.contentIndexTextDividerCSS}
+					></div>
 
-			{/* <div style={layoutElements.contentContainerCSS}>
-				{Array.isArray(content) &&
-					content
-						.filter((item) => React.isValidElement(item))
-						.filter((item) => {
-							const spanText = React.Children.toArray(item.props.children)
-								.filter((child) => {
-									if (React.isValidElement(child) && child.type === 'span') {
-										return typeof child.props.children === 'string';
-									}
-									return typeof child === 'string';
+					{updatedContent.length === 0 && showAddButton && (
+						<div
+							className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
+							// onClick={handleAddTextColumn}
+							onClick={() =>
+								handleAddTextColumn({
+									handleSlideEdit: handleSlideEdit,
+									isVerticalContent: false,
+									themeElements: themeElements,
+									fontSize: '16pt',
+									contentIndex: 0,
+									slideIndex: slideIndex,
+									slides: slides,
+									setUpdatedContent: setUpdatedContent,
+									setShowAddButton: setShowAddButton,
+									shouldShowAddButton: updatedContent.length <= 2,
 								})
-								.map((child) =>
-									React.isValidElement(child) ? child.props.children : child,
-								)
-								.join('');
-
-							return spanText.trim() !== '';
-						})
-						.map((item, index) => (
-							<div
-								key={index}
-								style={{
-									...layoutElements.contentCSS,
-									display: item === null || index > 2 ? 'none' : 'flex',
-								}}
+							}
+						>
+							<RiAddLine className={addIconStyle} />
+							Add One Column of text
+						</div>
+					)}
+					{updatedContent.slice(0, 1).map((item, index) => (
+						<React.Fragment key={`contentText_${index}_${Date.now()}`}>
+							<ul
+								key={`contentText_${index}_${Date.now()}`}
+								className={`SlideContentText`}
+								style={layoutElements.contentTextCSS}
 							>
-								<div style={layoutElements.contentIndexCSS}>{index + 1}</div>
-								<div style={layoutElements.contentIndexTextDividerCSS}></div>
-								<ul style={layoutElements.contentTextCSS}>
-									<li style={{ width: '100%' }}>{item}</li>
-								</ul>
-							</div>
-						))}
-			</div> */}
+								<li style={{ width: '100%' }}>{item}</li>
+							</ul>
+						</React.Fragment>
+					))}
+				</div>
+
+				<div className='Column2' style={layoutElements.contentCSS}>
+					<div
+						className={`SlideContentIndex`}
+						style={layoutElements.contentIndexCSS}
+					>
+						{2}
+					</div>
+					<div
+						className={`SlideContentIndexTextDivider`}
+						style={layoutElements.contentIndexTextDividerCSS}
+					></div>
+					{updatedContent.length === 1 && showAddButton && (
+						<div
+							className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
+							// onClick={handleAddColumn}
+							onClick={() =>
+								handleAddTextColumn({
+									handleSlideEdit: handleSlideEdit,
+									isVerticalContent: false,
+									themeElements: themeElements,
+									fontSize: '16pt',
+									contentIndex: 1,
+									slideIndex: slideIndex,
+									slides: slides,
+									setUpdatedContent: setUpdatedContent,
+									setShowAddButton: setShowAddButton,
+									shouldShowAddButton: updatedContent.length <= 2,
+								})
+							}
+						>
+							<div
+								className={`SlideContentIndexTextDivider`}
+								style={layoutElements.contentIndexTextDividerCSS}
+							></div>
+							<RiAddLine className={addIconStyle} />
+							Add One Column of text
+						</div>
+					)}
+					{updatedContent.slice(1, 2).map((item, index) => (
+						<React.Fragment key={`contentText_${index + 1}_${Date.now()}`}>
+							<ul
+								key={`contentText_${index}_${Date.now()}`}
+								className={`SlideContentText`}
+								style={layoutElements.contentTextCSS}
+							>
+								<li style={{ width: '100%' }}>{item}</li>
+							</ul>
+						</React.Fragment>
+					))}
+				</div>
+
+				<div className='Column3' style={layoutElements.contentCSS}>
+					<div
+						className={`SlideContentIndex`}
+						style={layoutElements.contentIndexCSS}
+					>
+						{3}
+					</div>
+					<div
+						className={`SlideContentIndexTextDivider`}
+						style={layoutElements.contentIndexTextDividerCSS}
+					></div>
+					{updatedContent.length === 2 && showAddButton && (
+						<div
+							className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
+							// onClick={handleAddColumn}
+							onClick={() =>
+								handleAddTextColumn({
+									handleSlideEdit: handleSlideEdit,
+									isVerticalContent: false,
+									themeElements: themeElements,
+									fontSize: '16pt',
+									contentIndex: 2,
+									slideIndex: slideIndex,
+									slides: slides,
+									setUpdatedContent: setUpdatedContent,
+									setShowAddButton: setShowAddButton,
+									shouldShowAddButton: updatedContent.length <= 2,
+								})
+							}
+						>
+							<div
+								className={`SlideContentIndexTextDivider`}
+								style={layoutElements.contentIndexTextDividerCSS}
+							></div>
+							<RiAddLine className={addIconStyle} />
+							Add One Column of text
+						</div>
+					)}
+					{updatedContent.slice(2, 3).map((item, index) => (
+						<React.Fragment key={`contentText_${index + 2}_${Date.now()}`}>
+							<ul
+								key={`contentText_${index}_${Date.now()}`}
+								className={`SlideContentText`}
+								style={layoutElements.contentTextCSS}
+							>
+								<li style={{ width: '100%' }}>{item}</li>
+							</ul>
+						</React.Fragment>
+					))}
+				</div>
+			</div>
 
 			<div
 				style={{
@@ -979,7 +1056,10 @@ export const Col_2_img_1_layout = ({
 			{/* column 2 for img container */}
 			<div
 				// className={`w-1/2 h-[90%] rounded-md overflow-hidden items-center`}
-				style={{ ...layoutElements.imageContainerCSS, zIndex: imgHigherZIndex ? 100 : 20 }}
+				style={{
+					...layoutElements.imageContainerCSS,
+					zIndex: imgHigherZIndex ? 100 : 20,
+				}}
 			>
 				<ImgModule
 					imgsrc={imgs[0]}
@@ -1132,7 +1212,10 @@ export const Col_1_img_1_layout = ({
 				{/* image section */}
 				<div
 					// className='h-[15rem] grow rounded-md overflow-hidden'
-					style={{ ...layoutElements.imageContainerCSS, zIndex: imgHigherZIndex ? 100 : 20 }}
+					style={{
+						...layoutElements.imageContainerCSS,
+						zIndex: imgHigherZIndex ? 100 : 20,
+					}}
 					ref={imgContainerRef}
 				>
 					<ImgModule
@@ -1320,7 +1403,10 @@ export const Col_2_img_2_layout = ({
 				{/* two columns of images */}
 				<div
 					// className='w-full grid grid-cols-2 gap-[2rem]'
-					style={{ ...layoutElements.imageContainerCSS, zIndex: imgHigherZIndex ? 100 : 20 }}
+					style={{
+						...layoutElements.imageContainerCSS,
+						zIndex: imgHigherZIndex ? 100 : 20,
+					}}
 					ref={imgContainerRef}
 				>
 					<div
@@ -1512,7 +1598,10 @@ export const Col_3_img_3_layout = ({
 				{/* three columns of images */}
 				<div
 					// className='w-full grid grid-cols-3 gap-[2rem] '
-					style={{ ...layoutElements.imageContainerCSS, zIndex: imgHigherZIndex ? 100 : 20 }}
+					style={{
+						...layoutElements.imageContainerCSS,
+						zIndex: imgHigherZIndex ? 100 : 20,
+					}}
 				>
 					<div
 						// className='h-[11rem] grow rounded-md overflow-hidden'

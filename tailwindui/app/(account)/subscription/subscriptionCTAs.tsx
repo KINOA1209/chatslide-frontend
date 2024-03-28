@@ -105,7 +105,7 @@ const UserResearchWindow: FC<UserResearchWindowProps> = ({ onClick }) => {
 					>
 						{' '}
 						<div
-							className='w-40 sm:w-80 relativeflex flex-col justify-between items-center transition duration-300 ease-in-out hover:shadow-lg'
+							className='w-40 sm:w-80 relative flex flex-col justify-between items-center transition duration-300 ease-in-out hover:shadow-lg'
 							style={{
 								borderRadius: '0.4375rem',
 								border: '1px solid var(--Blue-Blue_200, #B4C5FA)',
