@@ -5,7 +5,7 @@ import { PaletteKeys, TemplateKeys } from '@/components/slides/slideTemplates';
 import { useUser } from './use-user';
 import { useChatHistory } from './use-chat-history';
 import { useProject } from './use-project';
-import { debounce } from '@/utils/sleep';
+import { useDebounce } from "@uidotdev/usehooks";
 import Project from '@/models/Project';
 
 const useSlidesBear = createBearStore<Slide[]>()('slides', [], true);
@@ -190,7 +190,7 @@ export const useSlides = () => {
 
 		if (rerender) updateVersion();
 		updateSlideHistory(newSlides);
-		debouncedSyncSlides(newSlides, index === 0 && updateThumbnail);
+		syncSlides(newSlides, index === 0 && updateThumbnail);
 	};
 
 	const gotoPage = (index: number) => {
@@ -436,8 +436,6 @@ export const useSlides = () => {
 				console.error('Auto-save failed:', error);
 			});
 	};
-
-	const debouncedSyncSlides = debounce(syncSlides, 500);
 
 	return {
 		slides,
