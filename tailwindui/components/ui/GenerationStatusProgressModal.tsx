@@ -22,7 +22,7 @@ export const GenerationStatusProgressModal: FC<
 				id='generationStatus'
 				className='w-full px-4 py-2 flex flex-col items-start gap-[0.5rem]'
 			>
-				<div className='w-full px-4 py-2 flex flex-row items-center justify-between'>
+				<div className='w-full flex flex-row items-center justify-between'>
 					{/* status prompt text */}
 					<div className='text-center text-neutral-800 text-xl font-bold leading-normal font-creato-medium'>
 						AI is generating your slides...
@@ -56,18 +56,18 @@ export const GenerationStatusProgressModal: FC<
 						className='py-2 px-2 rounded-md hover:bg-gray-300 transition duration-300 ease-in-out'
 						role='menuitem'
 					>
-						<div className='w-40 sm:w-80 relative bg-white rounded-md shadow-md border border-indigo-300 flex flex-col justify-between items-center transition duration-300 ease-in-out hover:shadow-lg'>
-							<div className='h-[5rem] w-[5rem] sm:h-[10rem] sm:w-[10rem] lg:w-[15rem] lg:h-[15rem]'>
+						<div className='w-40 sm:w-80 relative bg-white rounded-md shadow-md border border-indigo-300 flex flex-row justify-evenly items-center transition duration-300 ease-in-out hover:shadow-lg'>
+							<div className='h-[4rem] w-[4rem] sm:h-[5rem] sm:w-[5rem] lg:w-[7rem] lg:h-[7rem]'>
 								<img
 									src={BookASessionImg.src}
 									alt='Book a session'
-									className='h-[5rem] w-[5rem] sm:h-[10rem] sm:w-[10rem] lg:w-[15rem] lg:h-[15rem] object-contain'
+									className='h-[4rem] w-[4rem] sm:h-[5rem] sm:w-[5rem] lg:w-[7rem] lg:h-[7rem] object-contain'
 								/>
 							</div>
 
 							<div className='text-center'>
-								<span className='text-black text-base font-bold font-creato-medium leading-snug tracking-tight'>
-									Book a session +1000⭐
+								<span className='text-black text-xs sm:text-base font-bold font-creato-medium leading-snug tracking-tight'>
+									Book a session <br></br>+1000⭐
 									<br />
 								</span>
 								<span className='text-black text-sm font-normal font-creato-medium leading-snug tracking-tight'>
@@ -85,18 +85,18 @@ export const GenerationStatusProgressModal: FC<
 						role='menuitem'
 					>
 						{' '}
-						<div className='w-40 sm:w-80 relative bg-white rounded-md shadow border border-indigo-300 flex flex-col justify-between items-center transition duration-300 ease-in-out hover:shadow-lg'>
-							<div className='h-[5rem] w-[5rem] sm:h-[10rem] sm:w-[10rem] lg:w-[15rem] lg:h-[15rem]'>
+						<div className='w-40 sm:w-80 relative bg-white rounded-md shadow-md border border-indigo-300 flex flex-row justify-evenly items-center transition duration-300 ease-in-out hover:shadow-lg'>
+							<div className='h-[4rem] w-[4rem] sm:h-[5rem] sm:w-[5rem] lg:w-[7rem] lg:h-[7rem]'>
 								<img
 									src={FillOutFormImg.src}
-									alt='Fill out form'
-									className='object-contain h-[5rem] w-[5rem] sm:h-[10rem] sm:w-[10rem] lg:w-[15rem] lg:h-[15rem]'
+									alt='Book a session'
+									className='h-[4rem] w-[4rem] sm:h-[5rem] sm:w-[5rem] lg:w-[7rem] lg:h-[7rem] object-contain'
 								/>
 							</div>
 
 							<div className='text-center'>
 								<span className='text-black text-base font-bold font-creato-medium leading-snug tracking-tight'>
-									Fill out form +100⭐
+									Fill out form <br></br>+100⭐
 									<br />
 								</span>
 								<span className='text-black text-sm font-normal font-creato-medium leading-snug tracking-tight'>

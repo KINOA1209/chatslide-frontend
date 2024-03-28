@@ -65,7 +65,7 @@ const getTemplateFromAudicence = (audience: string): TemplateKeys => {
 
 export default function DesignPage() {
 	const [showGenerationStatusModal, setShowGenerationStatusModal] =
-		useState(false);
+		useState(true);
 
 	const handleGenerationStatusModal = () => {
 		// console.log('user Research Modal toggled');

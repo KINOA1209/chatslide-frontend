@@ -8,7 +8,7 @@ module.exports = {
 	theme: {
 		extend: {
 			screens: {
-				'iPhone SE': '375px',
+				'iPhoneSE': '375px',
 			},
 			backgroundImage: {
 				// 'template-default-cover': "url('https://via.placeholder.com/1200x800')",
