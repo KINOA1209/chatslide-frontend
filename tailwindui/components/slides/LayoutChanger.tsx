@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SlideKeys } from '@/models/Slide';
 import { LayoutKeys } from './slideLayout';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
@@ -46,6 +46,16 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 		});
 		handleSlideEdit([layoutName, filteredContent], slideIndex, ['layout', 'content']);
 	};
+
+	useEffect(() => {
+		document.addEventListener('change_layout', (e) => {
+			setShowModal(true);
+		});
+
+		return () => document.removeEventListener('change_layout', (e) => {
+			setShowModal(true);
+		});
+	}, []);
 
 	return (
 		<>

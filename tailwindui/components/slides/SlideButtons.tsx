@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	LeftSlideNavIcon,
 	RightSlideNavIcon,
@@ -266,6 +266,17 @@ export const ChangeTemplateOptions: React.FC<{
 		changeTemplateAndPalette(selectedTemplate, selectedPaletteOption);
 		setShowModal(false);
 	};
+
+	useEffect(() => {
+		document.addEventListener('change_template', (e) => {
+			setShowModal(true);
+		});
+
+		return () => document.removeEventListener('change_template', (e) => {
+			setShowModal(true);
+		});
+	}, []);
+
 	return (
 		<>
 			<Modal

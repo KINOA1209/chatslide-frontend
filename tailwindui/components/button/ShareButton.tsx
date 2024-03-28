@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BigGrayButton } from '../button/DrlambdaButton';
 import { GoPlus, GoShare } from 'react-icons/go';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
@@ -70,6 +70,16 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 			console.error('Failed to process Twitter post:', error);
 		}
 	};
+
+	useEffect(() => {
+		document.addEventListener('share_slide', (e) => {
+			setShowModal(true);
+		});
+
+		return () => document.removeEventListener('share_slide', (e) => {
+			setShowModal(true);
+		});
+	}, []);
 
 	return (
 		<div>

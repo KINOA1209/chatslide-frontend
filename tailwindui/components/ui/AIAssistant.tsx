@@ -300,12 +300,12 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					// Update state with the new slides
 					updateSlidePage(currentSlideIndex, responseData.data.slide);
 					updateVersion(); // force rerender when version changes and index does not change
+				}
 
-					// // Add success message to chat history
-					// const successMessage = addSuccessMessage(
-					// 	'✅ I updated the current slide for you.',
-					// );
-					// addChatHistory(successMessage);
+				if (responseData.data.action) {
+					// send this as a document signal
+					console.log('action:', responseData.data.action);
+					document.dispatchEvent(new Event(responseData.data.action));
 				}
 
 				// Update chat history with AI's response
