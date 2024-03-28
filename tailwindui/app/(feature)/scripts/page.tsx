@@ -98,7 +98,7 @@ export default function WorkflowStep5() {
 						*️⃣ Use <span className='text-green-600'>*word*</span> to denote emphasis <br/>
 						🔤 Use <span className='text-green-600'>[word]</span> to spell out the word. <br />
 						🌟 For example: {' '}
-						<span className='text-gray-600'>DrLambda also supports creating *slides* from... [DOC] files. </span>
+						<span className='text-gray-600'>DrLambda also supports creating *slides* from... [doc] files. </span>
 					</Instruction>
 					<div className='flex flex-col gap-y-2'>
 						{slides.map((_, index) => (
