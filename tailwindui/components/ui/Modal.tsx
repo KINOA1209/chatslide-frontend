@@ -28,7 +28,7 @@ const Modal: React.FC<ModalProps> = ({
 	description,
 	clickOutsideToClose = true,
 	canClose = true,
-	width
+	width,
 }) => {
 	const modalRef = React.useRef<HTMLDivElement>(null);
 	const modalContentRef = React.useRef<HTMLDivElement>(null);
@@ -48,7 +48,7 @@ const Modal: React.FC<ModalProps> = ({
 		console.log('onConfirm resolved');
 		setIsSubmitting(false);
 		setShowModal(false);
-	}
+	};
 
 	// press esc to close modal
 	React.useEffect(() => {
@@ -80,7 +80,7 @@ const Modal: React.FC<ModalProps> = ({
 			ref={modalRef}
 		>
 			<Transition
-				className={`${position} bg-white rounded-lg shadow max-w-full sm:max-w-[80%] lg:max-w-[50%] xl:max-w-[40%] max-h-[90%] overflow-y-hidden mx-2 p-2 sm:p-4`}
+				className={`${position} bg-white rounded-lg shadow max-w-[60%] max-h-full sm:max-w-[60%] md:max-w-[80%] overflow-y-hidden mx-2 p-2 sm:p-4`}
 				show={showModal}
 				enter='transition ease duration-500 transform delay-300'
 				enterFrom='opacity-0 translate-y-12'
@@ -107,15 +107,11 @@ const Modal: React.FC<ModalProps> = ({
 
 					{title && (
 						<div className='w-full felx flex-col items-center justify-center'>
-							<Title>
-								{title}
-							</Title>
+							<Title>{title}</Title>
 						</div>
 					)}
 
-					{description && (
-						<Explanation>{description}</Explanation>
-					)}
+					{description && <Explanation>{description}</Explanation>}
 
 					{/* Modal body */}
 					{children}
@@ -127,17 +123,14 @@ const Modal: React.FC<ModalProps> = ({
 									Cancel
 								</InversedBigBlueButton>
 							)}
-							<BigBlueButton
-								isSubmitting={isSubmitting}
-								onClick={onClick}
-							>
+							<BigBlueButton isSubmitting={isSubmitting} onClick={onClick}>
 								Confirm
 							</BigBlueButton>
 						</div>
 					)}
 				</div>
 			</Transition>
-		</Transition >
+		</Transition>
 	);
 };
 

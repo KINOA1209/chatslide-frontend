@@ -59,7 +59,7 @@ const UserResearchWindow: FC<UserResearchWindowProps> = ({ onClick }) => {
 					We want to learn more about what you think of DrLambda, and how you
 					use DrLambda.
 				</div>
-				<div className='flex flex-col sm:flex-row gap-[1.5rem]'>
+				<div className='flex flex-col lg:flex-row gap-[1.5rem] self-center'>
 					{/* book a session */}
 					<a
 						href='https://calendar.app.google/2uGV3B6h9UdYBHPB8'
@@ -67,12 +67,12 @@ const UserResearchWindow: FC<UserResearchWindowProps> = ({ onClick }) => {
 						className='py-2 px-2 rounded-md hover:bg-gray-300 transition duration-300 ease-in-out'
 						role='menuitem'
 					>
-						<div className='w-80 relative bg-white rounded-md shadow-md border border-indigo-300 flex flex-col justify-between items-center transition duration-300 ease-in-out hover:shadow-lg'>
-							<div className='h-[15rem] w-[15rem]'>
+						<div className='w-40 sm:w-80 relative bg-white rounded-md shadow-md border border-indigo-300 flex flex-col justify-between items-center transition duration-300 ease-in-out hover:shadow-lg'>
+							<div className='h-[5rem] w-[5rem] sm:h-[10rem] sm:w-[10rem] lg:w-[15rem] lg:h-[15rem]'>
 								<img
 									src={BookASessionImg.src}
 									alt='Book a session'
-									className='object-contain'
+									className='h-[5rem] w-[5rem] sm:h-[10rem] sm:w-[10rem] lg:w-[15rem] lg:h-[15rem] object-contain'
 								/>
 							</div>
 
@@ -96,12 +96,12 @@ const UserResearchWindow: FC<UserResearchWindowProps> = ({ onClick }) => {
 						role='menuitem'
 					>
 						{' '}
-						<div className='w-80 relative bg-white rounded-md shadow border border-indigo-300 flex flex-col justify-between items-center transition duration-300 ease-in-out hover:shadow-lg'>
-							<div className='w-[15rem] h-[15rem]'>
+						<div className='w-40 sm:w-80 relative bg-white rounded-md shadow border border-indigo-300 flex flex-col justify-between items-center transition duration-300 ease-in-out hover:shadow-lg'>
+							<div className='h-[5rem] w-[5rem] sm:h-[10rem] sm:w-[10rem] lg:w-[15rem] lg:h-[15rem]'>
 								<img
 									src={FillOutFormImg.src}
 									alt='Fill out form'
-									className='object-contain w-[15rem] h-[15rem]'
+									className='object-contain h-[5rem] w-[5rem] sm:h-[10rem] sm:w-[10rem] lg:w-[15rem] lg:h-[15rem]'
 								/>
 							</div>
 
