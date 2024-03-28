@@ -57,6 +57,16 @@ const nextConfig = {
 				destination: '/genmode',
 				permanent: true,
 			},
+			{
+				source: '/meet',
+				destination: 'https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3Ly0YZMnlcouxHwvv7cUsVLziVxNPfqNBoDl8H9D9ob6sn9-WMDg7Uu0ZTPzUlKjXFjmMBeJGS',
+				permanent: true,
+			},
+			{
+				source: '/discord',
+				destination: 'https://discord.com/invite/GypUrQ4X',
+				permanent: true,
+			}
 		]
 	},
 
