@@ -1,14 +1,32 @@
 import Modal from './Modal';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import FillOutFormImg from '@/public/images/user_onboarding/FillOutForms.png';
 import BookASessionImg from '@/public/images/user_onboarding/BookASession.png';
 interface GenerationStatusProgressModalProps {
 	onClick: () => void;
+	waitingTime?: number; // Default waiting time in seconds
 }
 
 export const GenerationStatusProgressModal: FC<
 	GenerationStatusProgressModalProps
-> = ({ onClick }) => {
+> = ({ onClick, waitingTime }) => {
+	const [percentage, setPercentage] = useState(0);
+	useEffect(() => {
+		const interval = setInterval(() => {
+			// Update percentage every second until it reaches 100%
+			setPercentage((prevPercentage) => {
+				if (prevPercentage < 100) {
+					return prevPercentage + 100 / (waitingTime || 1); // Use the waitingTime prop or fallback to 1 if it's undefined
+				} else {
+					clearInterval(interval); // Clear interval when percentage reaches 100%
+					onClick(); // Close modal when generation is complete
+					return 100;
+				}
+			});
+		}, 1000);
+
+		return () => clearInterval(interval); // Clean up interval on unmount
+	}, [onClick, waitingTime]);
 	return (
 		<Modal
 			showModal={true}
@@ -30,13 +48,21 @@ export const GenerationStatusProgressModal: FC<
 
 					{/* progress status number percentage */}
 					<div className='flex flex-col lg:flex-row gap-[1.5rem] self-center'>
-						22%
+						<span className='text-center text-neutral-800 text-xl font-bold leading-normal font-creato-medium'>
+							{percentage.toFixed(0)}%
+						</span>
 					</div>
 				</div>
 				{/* progress bar */}
-				<div className='w-full'>purple bar here</div>
+				<div className='w-full bg-[#F4F4F4] relative'>
+					<div
+						className='absolute top-0 left-0 h-[0.375rem] bg-[#5168F6]'
+						style={{ width: `${percentage}%` }}
+					/>
+				</div>
 			</section>
 			{/* explaining text for filling out form */}
+			<hr className='border-t-[1px] border-[#E0E0E0]' />
 			<section
 				id='userResearch'
 				className='w-full px-4 py-2 flex flex-col items-start gap-[0.5rem]'

@@ -153,6 +153,7 @@ export default function DesignPage() {
 			{showGenerationStatusModal && (
 				<GenerationStatusProgressModal
 					onClick={handleGenerationStatusModal}
+					waitingTime={20}
 				></GenerationStatusProgressModal>
 			)}
 
