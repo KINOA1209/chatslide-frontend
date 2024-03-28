@@ -93,12 +93,12 @@ export default function WorkflowStep5() {
 				<Card>
 					<BigTitle>Scripts</BigTitle>
 					<Instruction>
-						💡 Script to voice tips: <br/>
-						⏸️ Use <span className='text-green-600'>...</span> to denote pause <br/>
-						*️⃣ Use <span className='text-green-600'>*word*</span> to denote emphasis <br/>
-						🔤 Use <span className='text-green-600'>[word]</span> to spell out the word. <br />
-						🌟 For example: {' '}
-						<span className='text-gray-600'>DrLambda also supports creating *slides* from... [doc] files. </span>
+						<p>💡 Script to voice tips: </p>
+						<p>⏸️ Use <span className='text-green-600'>...</span> to denote pause </p>
+						<p>*️⃣ Use <span className='text-green-600'>*word*</span> to denote emphasis </p>
+						<p>🔤 Use <span className='text-green-600'>[word]</span> to spell out the word. </p>
+						<p>🌟 For example: {' '}
+						<span className='text-gray-600'>DrLambda also supports creating *slides* from... [doc] files. </span></p>
 					</Instruction>
 					<div className='flex flex-col gap-y-2'>
 						{slides.map((_, index) => (
