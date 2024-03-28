@@ -82,7 +82,15 @@ export const GenerationStatusProgressModal: FC<
 						className='py-2 px-2 rounded-md hover:bg-gray-300 transition duration-300 ease-in-out'
 						role='menuitem'
 					>
-						<div className='w-40 sm:w-80 relative bg-white rounded-md shadow-md border border-indigo-300 flex flex-row justify-evenly items-center transition duration-300 ease-in-out hover:shadow-lg'>
+						<div
+							className='w-40 sm:w-80 relative flex flex-row justify-evenly items-center transition duration-300 ease-in-out hover:shadow-lg'
+							style={{
+								borderRadius: '0.4375rem',
+								border: '1px solid var(--Blue-Blue_200, #B4C5FA)',
+								background: '#FFF',
+								boxShadow: '0px 12px 28.8px 0px rgba(74, 153, 246, 0.25)',
+							}}
+						>
 							<div className='h-[4rem] w-[4rem] sm:h-[5rem] sm:w-[5rem] lg:w-[7rem] lg:h-[7rem]'>
 								<img
 									src={BookASessionImg.src}
@@ -111,7 +119,15 @@ export const GenerationStatusProgressModal: FC<
 						role='menuitem'
 					>
 						{' '}
-						<div className='w-40 sm:w-80 relative bg-white rounded-md shadow-md border border-indigo-300 flex flex-row justify-evenly items-center transition duration-300 ease-in-out hover:shadow-lg'>
+						<div
+							className='w-40 sm:w-80 relative flex flex-row justify-evenly items-center transition duration-300 ease-in-out hover:shadow-lg'
+							style={{
+								borderRadius: '0.4375rem',
+								border: '1px solid var(--Blue-Blue_200, #B4C5FA)',
+								background: '#FFF',
+								boxShadow: '0px 12px 28.8px 0px rgba(74, 153, 246, 0.25)',
+							}}
+						>
 							<div className='h-[4rem] w-[4rem] sm:h-[5rem] sm:w-[5rem] lg:w-[7rem] lg:h-[7rem]'>
 								<img
 									src={FillOutFormImg.src}
