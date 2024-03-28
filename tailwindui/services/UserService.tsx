@@ -112,9 +112,39 @@ class UserService {
 		}
 	}
 
+	static async updateUsernameAndEmail(
+		username: string,
+		email: string,
+		token: string,
+	): Promise<boolean> {
+		try {
+			const resp = await fetch(`/api/user/update_username`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({
+					username: username,
+					email: email,
+				}),
+			})
+			if (resp.ok) {
+				return true;
+			} else {
+				console.error(`Error updating username and email: ${resp.status}`);
+				return false;
+			}
+		}
+		catch (error) {
+			console.error('Error in updateUsernameAndEmail:', error);
+			return false;
+		}
+	}
+
 	static async getUserCreditsAndTier(
 		idToken: string,
-	): Promise<{ credits: string; tier: string; expirationDate: string }> {
+	): Promise<{ credits: string; tier: string; expirationDate: string, username: string | null, email: string | null }> {
 		if (!idToken) throw new Error('No idToken provided');
 
 		try {
@@ -125,7 +155,7 @@ class UserService {
 				},
 			});
 
-			if (!response.ok) {
+			if (!response.ok) {  // user not found in db
 				const { email, idToken } =
 					await AuthService.getCurrentUserTokenAndEmail();
 				console.error(
@@ -140,18 +170,20 @@ class UserService {
 			const creditNum: number = data.credits;
 			let credits = creditNum.toString();
 			if (creditNum > 10000) {
-				credits = 'Infinite';
+				credits = 'Unlimited';
 			}
 			const tier: string = data['tier'] || 'FREE';
 			const expirationDate: string = data['expiration_date'] || '';
+			const username: string = data['username'] || null;
+			const email: string = data['email'] || null;
 
 			console.log(`User credits: ${credits}`);
 
-			return { credits, tier, expirationDate };
+			return { credits, tier, expirationDate, username, email };
 		} catch (error) {
 			const { email, idToken } = await AuthService.getCurrentUserTokenAndEmail();
 			console.error(`Failed to fetch user credits: ${email}`, error);
-			return { credits: '0', tier: 'FREE', expirationDate: '' };
+			return { credits: '0', tier: 'FREE', expirationDate: '', username: null, email: null };
 		}
 	}
 

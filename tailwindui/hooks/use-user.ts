@@ -63,15 +63,24 @@ export const useUser = () => {
 					return;
 				}
 				let username = await AuthService.getCurrentUserDisplayName();
-				username = username?.split('@')[0] || 'User';
-				const { credits, tier } =
+
+				const { credits, tier, username: usernameInDB, email: emailInDB } =
 					await UserService.getUserCreditsAndTier(idToken);
+
+				if (usernameInDB && emailInDB) {
+					if (usernameInDB !== username || !emailInDB.includes('@')) { // db info is not up to date, due to bad initing
+						UserService.updateUsernameAndEmail(username, email, idToken);  // async but dont await
+					}
+				}
+
 				const isPaidUser = [
 					'PRO_MONTHLY',
 					'PLUS_MONTHLY',
 					'PRO_YEARLY',
 					'PLUS_YEARLY',
 				].includes(tier);
+
+				username = username?.split('@')[0] || 'User';
 
 				console.log('-- initUser: ', {
 					username: username,
