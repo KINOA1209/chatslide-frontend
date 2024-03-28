@@ -37,7 +37,10 @@ const Modal: React.FC<ModalProps> = ({
 	const handleCloseModal = () => {
 		// console.log('handleCloseModal');
 		if (!canClose) return;
-		setShowModal(false);
+		else if (!clickOutsideToClose) return;
+		else {
+			setShowModal(false);
+		}
 	};
 
 	const onClick = async () => {
@@ -70,7 +73,11 @@ const Modal: React.FC<ModalProps> = ({
 		<Transition
 			className='h-[100vh] w-[100vw] z-40 bg-slate-200/80 fixed top-0 left-0 flex flex-col items-center justify-center'
 			show={showModal}
-			onClick={() => setShowModal(false)}
+			onClick={() => {
+				if (clickOutsideToClose) {
+					setShowModal(false);
+				}
+			}}
 			enter='transition ease duration-300 transform'
 			enterFrom='opacity-0 translate-y-12'
 			enterTo='opacity-100 translate-y-0'

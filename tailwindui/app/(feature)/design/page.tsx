@@ -20,6 +20,7 @@ import { useProject } from '@/hooks/use-project';
 import useTourStore from '@/components/user_onboarding/TourStore';
 import availablePalettes from '@/components/slides/palette';
 // import { TemplateKeys, getTemplateFromAudicence } from '@/components/slides/slideTemplates';
+import { GenerationStatusProgressModal } from '@/components/ui/GenerationStatusProgressModal';
 
 // UI Components and Layouts
 import Card from '@/components/ui/Card';
@@ -63,6 +64,14 @@ const getTemplateFromAudicence = (audience: string): TemplateKeys => {
 };
 
 export default function DesignPage() {
+	const [showGenerationStatusModal, setShowGenerationStatusModal] =
+		useState(false);
+
+	const handleGenerationStatusModal = () => {
+		// console.log('user Research Modal toggled');
+		setShowGenerationStatusModal(!showGenerationStatusModal);
+	};
+
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -140,6 +149,12 @@ export default function DesignPage() {
 				<ActionsToolBar startTour={startTour} onlyShowTutorial={true} />
 			</div> */}
 			<ToastContainer />
+			{/* user research modal */}
+			{showGenerationStatusModal && (
+				<GenerationStatusProgressModal
+					onClick={handleGenerationStatusModal}
+				></GenerationStatusProgressModal>
+			)}
 
 			<WorkflowStepsBanner
 				currentIndex={2}
@@ -148,6 +163,7 @@ export default function DesignPage() {
 				isPaidUser={true}
 				nextIsPaidFeature={false}
 				nextText={!isSubmitting ? 'Create Slides' : 'Creating Slides'}
+				handleClickingGeneration={handleGenerationStatusModal}
 			/>
 
 			<GenerateSlidesSubmit

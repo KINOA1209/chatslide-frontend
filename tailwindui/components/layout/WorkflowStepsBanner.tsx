@@ -13,6 +13,7 @@ interface YourComponentProps {
 	nextIsPaidFeature?: boolean;
 	lastStep?: boolean;
 	nextText?: string;
+	handleClickingGeneration?: () => void;
 }
 
 const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
@@ -23,13 +24,12 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 	nextIsPaidFeature = false,
 	lastStep = false,
 	nextText = 'Next',
+	handleClickingGeneration,
 }) => {
 	const [showPing, setShowPing] = useState(false);
 
 	useEffect(() => {
-		sleep(10 * 1000).then(() =>
-			setShowPing(true)
-		);
+		sleep(10 * 1000).then(() => setShowPing(true));
 	}, []);
 
 	useEffect(() => {
@@ -47,24 +47,40 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 				</div>
 				{!lastStep ? (
 					<div className='user-onboarding-generate relative'>
-						<DrlambdaButton
-							isSubmitting={isSubmitting}
-							isPaidUser={isPaidUser}
-							isPaidFeature={nextIsPaidFeature}
-							onClick={(e) => setIsSubmitting(true)}
-						>
-							{nextText}
-						</DrlambdaButton>
-						{showPing && <span className="flex h-3 w-3 absolute -top-1 -right-1">
-							<span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-							{/* <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span> */}
-						</span>}
+						{isSubmitting && (
+							<div
+								style={{
+									position: 'fixed',
+									top: 0,
+									left: 0,
+									width: '100%',
+									height: '100%',
+									zIndex: 9999,
+								}}
+							></div>
+						)}
+						<div onClick={handleClickingGeneration}>
+							<DrlambdaButton
+								isSubmitting={isSubmitting}
+								isPaidUser={isPaidUser}
+								isPaidFeature={nextIsPaidFeature}
+								onClick={(e) => setIsSubmitting(true)}
+							>
+								{nextText}
+							</DrlambdaButton>
+						</div>
+
+						{showPing && (
+							<span className='flex h-3 w-3 absolute -top-1 -right-1'>
+								<span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75'></span>
+								{/* <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span> */}
+							</span>
+						)}
 					</div>
 				) : (
 					// empty div to keep the layout consistent
-						<div className='min-w-[10rem] sm:min-w-[12rem]'></div>
-				)
-			}
+					<div className='min-w-[10rem] sm:min-w-[12rem]'></div>
+				)}
 			</div>
 
 			{/* <div className='relative w-full h-[0px] flex items-center w-full bg-transparent'>
