@@ -9,6 +9,7 @@ import ResourceService from '@/services/ResourceService';
 import Image from 'next/image';
 import { useUser } from '@/hooks/use-user';
 import { useProject } from '@/hooks/use-project';
+import { MEDIA_EXTENSIONS } from '../file/FileUploadButton';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -247,7 +248,7 @@ export const ImgModule = ({
 	}, []);
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const extensions = ['png', 'jpg', 'jpeg', 'gif', 'webp']; // For checking logic
+		const extensions = MEDIA_EXTENSIONS; // For checking logic
 		const sizeLimit = 10 * 1024 * 1024; // 16mb
 		const file = e.target.files ? e.target.files[0] : null;
 		if (file?.size && file?.size > sizeLimit) {

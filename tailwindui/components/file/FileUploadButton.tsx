@@ -5,13 +5,21 @@ import DrlambdaButton, {
 	BigBlueButton,
 } from '../button/DrlambdaButton';
 
+export const MEDIA_EXTENSIONS = ['png', 'jpg', 'jpeg', 'svg', 'webp', 'gif', 'avif'];
+export const DOCUMENT_EXTENSIONS = ['pdf', 'txt', 'docx', 'pptx', 'doc', 'docx'];
+export const ALL_EXTENSIONS = [
+	...MEDIA_EXTENSIONS,
+	...DOCUMENT_EXTENSIONS,
+];
+
 const determineSupportedFormats = (pageInvoked: string) => {
 	if (pageInvoked === 'theme') {
-		return ['png', 'jpg', 'jpeg'];
+		return MEDIA_EXTENSIONS;
 	} else if (pageInvoked === 'summary') {
-		return ['pdf', 'txt', 'doc', 'docx', 'ppt', 'pptx'];
+		return DOCUMENT_EXTENSIONS;
 	}
-	return ['pdf', 'txt', 'docx', 'png', 'jpg', 'jpeg', 'pptx'];
+	// resources
+	return ALL_EXTENSIONS;
 };
 
 const sizeLimit = 10 * 1024 * 1024; // 10mb
@@ -29,7 +37,7 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 	//formats = supportedFormats,
 	//extensions = supportedExtensions,
 	isSubmitting = false,
-	pageInvoked = 'summary',
+	pageInvoked = 'resources',
 }) => {
 	const [fileName, setFileName] = useState<string | null>(null);
 	const inputFileRef = useRef<HTMLInputElement>(null);
@@ -105,7 +113,7 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 			>
 				{!isSubmitting ? 'Upload from Local 💻' : 'Uploading File...'}
 			</BigBlueButton>
-			<div className='text-sm text-gray-400'>
+			{/* <div className='text-sm text-gray-400'>
 				Supported file formats:{' '}
 				{formats.map((f, index) => {
 					if (index !== formats.length - 1) {
@@ -114,7 +122,7 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 						return f;
 					}
 				})}
-			</div>
+			</div> */}
 			<div className='text-sm text-gray-400'>Max file size: 10 MB</div>
 			{/* <div className='text-sm text-gray-400'>
         Subscribed users can select multiple files
