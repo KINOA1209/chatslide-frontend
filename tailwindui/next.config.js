@@ -1,5 +1,65 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	async redirects(){
+		return [
+			{
+				source: '/workflow-generate-outlines',
+				destination: '/summary',
+				permanent: true,
+			},
+			{
+				source: '/workflow-generate-socialpost',
+				destination: '/summary-socialpost',
+				permanent: true,
+			},
+			{
+				source: '/workflow-edit-outlines',
+				destination: '/outlines',
+				permanent: true,
+			},
+			{
+				source: '/workflow-edit-design',
+				destination: '/design',
+				permanent: true,
+			},
+			{
+				source: '/workflow-review-slides',
+				destination: '/slides',
+				permanent: true,
+			},
+			{
+				source: '/workflow-review-socialpost',
+				destination: '/socialpost',
+				permanent: true,
+			},
+			{
+				source: '/workflow-edit-scripts',
+				destination: '/scripts',
+				permanent: true,
+			},
+			{
+				source: '/workflow-review-video',
+				destination: '/video',
+				permanent: true,
+			},
+			{
+				source: '/workflow-type-choice',
+				destination: '/type-choice',
+				permanent: true,
+			},
+			{
+				source: '/workflow-scenario-choice',
+				destination: '/scenario-choice',
+				permanent: true,
+			},
+			{
+				source: '/workflow-generationMode-choice',
+				destination: '/genmode',
+				permanent: true,
+			},
+		]
+	},
+
 	// output: 'export',
 	webpack(config) {
 		// Grab the existing rule that handles SVG imports
