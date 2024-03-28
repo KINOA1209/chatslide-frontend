@@ -62,6 +62,7 @@ export interface MainSlideProps {
 	isShowingLogo?: boolean;
 	images_position: ImagesPosition[];
 	palette?: PaletteKeys;
+	template?: TemplateKeys;
 }
 
 // deprecated
@@ -144,9 +145,9 @@ export const templateDisplayNames = {
 	Business_Dark_005: '💼 Business Dark',
 	Business_Light_006: '📄 Business Light',
 	Clean_Lifestyle_003: '☀️ Clean Lifestyle',
-	// Fun_Education_004: '🍿 Fun',
-	// Fun_Vibrant_007: '🎨 Fun Vibrant',
-	// Fun_Education_001: '📚 Education',
+	Fun_Education_004: '🍿 Fun',
+	Fun_Vibrant_007: '🎨 Fun Vibrant',
+	Fun_Education_001: '📚 Education',
 	Stanford: '🏛️ Stanford University',
 	Berkeley: '🏛️ UC Berkeley',
 	Harvard: '🏛️ Harvard University',

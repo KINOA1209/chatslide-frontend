@@ -146,12 +146,52 @@ export const Chats: React.FC<ChatsProps> = ({
 										<img
 											src={imageUrl}
 											alt={`Image ${i + 1}`}
-											style={{ width: '100%', height: 'auto' }}
+											style={{
+												width: '100%',
+												height: '100%',
+												objectFit: 'contain',
+											}}
 										/>
 									</div>
 								))}
 							</div>
 						)}
+
+						{/* Check if there are imageUrls and render image previews */}
+						{/* {chat.imageUrls && chat.imageUrls.length > 0 && (
+							<div
+								className='flex flex-wrap gap-2 mt-2'
+								style={{ width: '100%' }}
+							>
+								{chat.imageUrls.map((imageUrl, i) => (
+									<div
+										key={i}
+										className='image-preview-container'
+										style={{
+											width: 'calc(50% - 4px)',
+											marginBottom: '4px',
+											position: 'relative', // Set position to relative
+											paddingTop: '100%', // Set aspect ratio (1:1 for square)
+										}}
+										draggable // Make the image container draggable
+										onDragStart={() => handleImageDragStart(imageUrl)} // Call handleImageDragStart with imageUrl
+									>
+										<img
+											src={imageUrl}
+											alt={`Image ${i + 1}`}
+											style={{
+												position: 'absolute', // Set position to absolute
+												top: 0,
+												left: 0,
+												width: '100%',
+												height: '100%',
+												objectFit: 'cover', // Cover the container without distortion
+											}}
+										/>
+									</div>
+								))}
+							</div>
+						)} */}
 					</div>
 				</div>
 			))}
@@ -423,7 +463,10 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 
 					{/* send text, call api to get response */}
 					<button onClick={() => handleSend()} disabled={loading}>
-						<IoSend fill={!loading ? '#2943E9' : '#E5E7EB'} className='w-7 h-7' />
+						<IoSend
+							fill={!loading ? '#2943E9' : '#E5E7EB'}
+							className='w-7 h-7'
+						/>
 					</button>
 				</div>
 			</div>

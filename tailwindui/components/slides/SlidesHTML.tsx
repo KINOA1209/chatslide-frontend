@@ -110,7 +110,10 @@ export const calculateNonPresentScale = (
 		const scriptEditorHeight = showScript ? 200 : 0;
 		return Math.min(
 			1,
-			Math.min((width - 400 - chatWindowWidth) / 960, (height - 150 - scriptEditorHeight) / 540),
+			Math.min(
+				(width - 400 - chatWindowWidth) / 960,
+				(height - 150 - scriptEditorHeight) / 540,
+			),
 		);
 	}
 };
@@ -147,14 +150,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		SaveStatus,
 		isShowingLogo,
 	} = useSlides();
-
-	useEffect(() => {
-		console.log(
-			'slides template and color palette',
-			slides[slideIndex].template,
-			slides[slideIndex].palette,
-		);
-	}, [slides[slideIndex].template]);
 
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const { isPaidUser, token } = useUser();
@@ -512,10 +507,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			false, // canEdit
 			exportToPdfMode, //exportToPdfMode
 			false, //editMathMode
-			() => { }, //setIsEditMode
-			() => { }, // handleSlideEdit
-			() => () => { }, // updateImgUrlArray,
-			() => { }, // toggleEditMode,
+			() => {}, //setIsEditMode
+			() => {}, // handleSlideEdit
+			() => () => {}, // updateImgUrlArray,
+			() => {}, // toggleEditMode,
 			// slide.palette,
 			index === 0, // isCoverPage
 			slide.layout, // layoutOptionNonCover
@@ -615,7 +610,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 							<div className='h-8 w-0.5 bg-gray-200'></div>
 
-							<ChangeTemplateOptions/>
+							<ChangeTemplateOptions />
 							<LayoutChanger
 								currentSlideIndex={slideIndex}
 								// templateSamples={templateSamples}
@@ -708,12 +703,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						</div>
 
 						<div className='flex flex-col items-end SlidesStep-3 SlidesStep-4 gap-0'>
-							{!isPresenting && !isViewing && 
-							<div className='mr-2'>
-								<Explanation>
-									{saveStatus === SaveStatus.Saving ? 'Saving...' : 'Saved'}
-								</Explanation>
-							</div>}
+							{!isPresenting && !isViewing && (
+								<div className='mr-2'>
+									<Explanation>
+										{saveStatus === SaveStatus.Saving ? 'Saving...' : 'Saved'}
+									</Explanation>
+								</div>
+							)}
 							{/* main container for viewing and editing */}
 							<SlideContainer
 								slide={slides[slideIndex]}

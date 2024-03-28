@@ -122,19 +122,7 @@ export const Fun_Education_004_template = ({
 				</div> */}
 				{/* background picture when user uploaded this  */}
 				{uploadedBackgroundImageUrl && (
-					<div
-						style={{
-							zIndex: 0,
-							width: '100%',
-							height: '100%',
-							position: 'absolute',
-							// display: 'none',
-							pointerEvents:
-								'none' /* Make the layer transparent to pointer events */,
-							top: '0%',
-							// display: 'none',
-						}}
-					>
+					<div style={{ ...uploadedBackgroundImgStyle }}>
 						<Image
 							style={{ objectFit: 'cover', height: '100%' }}
 							width={960}
