@@ -406,7 +406,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			{/* suggestions */}
 			{/* input area */}
 			<div className='w-full border-t border-gray-200 border-t-2'>
-				{!userInput && (
+				{!userInput && !loading && (
 					<ChatSuggestions
 						isCover={currentSlideIndex === 0}
 						sendChat={handleSend}
@@ -422,8 +422,8 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					/>
 
 					{/* send text, call api to get response */}
-					<button onClick={() => handleSend()}>
-						<IoSend fill='#2943E9' className='w-7 h-7' />
+					<button onClick={() => handleSend()} disabled={loading}>
+						<IoSend fill={!loading ? '#2943E9' : '#E5E7EB'} className='w-7 h-7' />
 					</button>
 				</div>
 			</div>
