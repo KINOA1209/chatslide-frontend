@@ -101,7 +101,7 @@ export const calculateNonPresentScale = (
 	isChatWindowOpen = false,
 	showScript = false,
 ) => {
-	console.log("width", width, "height", height, "isChatWindowOpen", isChatWindowOpen, "showScript", showScript);
+	// console.log("width", width, "height", height, "isChatWindowOpen", isChatWindowOpen, "showScript", showScript);
 	if (width < 640) {
 		// mobile, layout vertically
 		return Math.min(1, Math.min(width / 960, (height - 200) / 540) * 0.8);

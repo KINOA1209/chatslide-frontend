@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "@uidotdev/usehooks": "^2.4.1",
+    "lodash": "^4.17.21",
+    "lodash.debounce": "^4.0.8",
     "react-select": "^5.8.0",
     "styled-components": "^6.1.6"
   }
