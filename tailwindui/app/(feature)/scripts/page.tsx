@@ -25,7 +25,7 @@ export default function WorkflowStep5() {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { slides, updateSlidePage } = useSlides();
 	const { project, updateProject } = useProject();
-	const { token } = useUser();
+	const { token, updateCreditsFE } = useUser();
 	const router = useRouter();
 	const [voice, setVoice] = useState('en-US-AvaNeural');
 
@@ -48,6 +48,7 @@ export default function WorkflowStep5() {
 				console.log('project_id:', project_id);
 				updateProject('video_url', '');
 				VideoService.generateVideo(project_id, foldername, voice, token);
+				updateCreditsFE(-20);
 				router.push(addIdToRedir('/video'));
 			} catch (error) {
 				console.error('Error in fetchData:', error);

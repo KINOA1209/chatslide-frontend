@@ -71,7 +71,7 @@ export default function Topic() {
 		setIsNextEnabled,
 	} = useTourStore();
 	const router = useRouter();
-	const { token, isPaidUser } = useUser();
+	const { token, isPaidUser, updateCreditsFE } = useUser();
 	const { project, updateOutlines, updateProject, bulkUpdateProject, initProject } = useProject();
 
 	const scenarioType = SessionStorage.getItem('scenarioType', 'business');
@@ -243,6 +243,8 @@ export default function Topic() {
 					pdf_images: outlinesJson.data.pdf_images,
 					outlines: outlinesJson.data.outlines,
 				} as Project);
+
+				updateCreditsFE(-20); 
 
 				// Redirect to a new page with the data, and id in the query string
 				router.push(

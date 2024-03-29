@@ -141,6 +141,13 @@ export const useUser = () => {
 		setExpirationDate(expirationDate);
 	};
 
+	const updateCreditsFE = async (delta: number) => {
+		console.log('updaing credits by ', delta)
+		if (credits === 'Unlimited') return;
+		const creditsNum = parseInt(credits);
+		setCredits((credits) => (creditsNum +delta).toString());
+	}
+
 	useEffect(() => {
 		void initUser();
 	}, []);
@@ -164,6 +171,7 @@ export const useUser = () => {
 		uid,
 		email,
 		credits,
+		updateCreditsFE,
 		tier,
 		expirationDate,
 		isPaidUser,

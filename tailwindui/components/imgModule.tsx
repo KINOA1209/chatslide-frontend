@@ -105,7 +105,7 @@ export const ImgModule = ({
 	const searchRef = useRef<HTMLInputElement>(null);
 	const inputFileRef = useRef<HTMLInputElement>(null);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
-	const { token } = useUser();
+	const { token, updateCreditsFE } = useUser();
 
 	const [hoverQueryMode, setHoverQueryMode] = useState<ImgQueryMode>(
 		ImgQueryMode.SEARCH,
@@ -203,6 +203,7 @@ export const ImgModule = ({
 		})
 			.then((response) => {
 				if (response.ok) {
+					updateCreditsFE(-10);
 					return response.json();
 				} else if (response.status === 402) {
 					setShowPaymentModal(true);
