@@ -82,63 +82,55 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 				setShowModal={setShowModal}
 				onConfirm={() => { setShowModal(false) }}
 				title='Change Page Layout'>
-				<div className='flex-col overflow-hidden'>
-					<div className='mt-2 mb-5 grow overflow-hidden'>
-						<div className='w-full h-full flex flex-col'>
-							<div className='w-full h-full overflow-y-auto'>
-								<div className='w-full h-fit grid grid-cols-3 gap-4 p-2'>
-									{layoutsToDisplay.map((currLayout, index) => {
-										// Check if slides[currentSlideIndex] is defined
-										if (
-											slides[currentSlideIndex] &&
-											currLayout.name !== slides[currentSlideIndex].layout
-										) {
-											return (
-												<div
-													key={`layout-${index}-${currLayout}`} // Use the name as the key
-													onClick={(e) =>
-														updateLayout(
-															e,
-															currLayout.name,
-															currentSlideIndex,
-														)
-													}
-													className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'
-												>
-													<img
-														src={currLayout.img}
-														className='w-full h-full object-contain'
-													/>
-												</div>
-											);
-										} else if (slides[currentSlideIndex]) {
-											return (
-												<div
-													key={`layout-${index}-${currLayout}`} // Use the name as the key
-													onClick={(e) =>
-														updateLayout(
-															e,
-															currLayout.name,
-															currentSlideIndex,
-														)
-													}
-													className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'
-												>
-													<img
-														src={currLayout.img}
-														className='w-full h-full object-contain'
-													/>
-												</div>
-											);
-										} else {
-											// Handle the case when slides[currentSlideIndex] is undefined
-											return <></>;
-										}
-									})}
+				<div className='max-w-[60rem] w-full h-fit grid grid-cols-3 gap-4 p-2'>
+					{layoutsToDisplay.map((currLayout, index) => {
+						// Check if slides[currentSlideIndex] is defined
+						if (
+							slides[currentSlideIndex] &&
+							currLayout.name !== slides[currentSlideIndex].layout
+						) {
+							return (
+								<div
+									key={`layout-${index}-${currLayout}`} // Use the name as the key
+									onClick={(e) =>
+										updateLayout(
+											e,
+											currLayout.name,
+											currentSlideIndex,
+										)
+									}
+									className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'
+								>
+									<img
+										src={currLayout.img}
+										className='w-full h-full object-contain'
+									/>
 								</div>
-							</div>
-						</div>
-					</div>
+							);
+						} else if (slides[currentSlideIndex]) {
+							return (
+								<div
+									key={`layout-${index}-${currLayout}`} // Use the name as the key
+									onClick={(e) =>
+										updateLayout(
+											e,
+											currLayout.name,
+											currentSlideIndex,
+										)
+									}
+									className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'
+								>
+									<img
+										src={currLayout.img}
+										className='w-full h-full object-contain'
+									/>
+								</div>
+							);
+						} else {
+							// Handle the case when slides[currentSlideIndex] is undefined
+							return <></>;
+						}
+					})}
 				</div>
 			</Modal >
 		</>
