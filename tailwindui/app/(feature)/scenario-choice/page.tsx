@@ -10,20 +10,28 @@ import SessionStorage from '@/utils/SessionStorage';
 import { DrLambdaBackButton } from '@/components/button/DrlambdaButton';
 import useHydrated from '@/hooks/use-hydrated';
 import { useProject } from '@/hooks/use-project';
+import Project from '@/models/Project';
 
 const ScenarioChoicePage = () => {
 	const router = useRouter();
 	const workflowType = SessionStorage.getItem('workflowType', 'presentation');
 	const scenarios =
 		workflowType == 'presentation' ? slides_scenarios : socialpost_scenarios;
-	const { project, initProject, updateProject } = useProject();
+	const { project, initProject, clearProject, updateProject } = useProject();
 	// Function to navigate to the "scenario-choice" page
 	const navigateToSummary = (scenarioType: string) => {
 		//sessionStorage.setItem('scenarioType', scenarioType);
+		clearProject();
 		updateProject('post_type', scenarioType);
 		if (workflowType == 'presentation')
 			router.push('/genmode');
-		else router.push('/summary-socialpost');
+		else {
+			initProject({
+				'post_type': scenarioType,
+				'content_type': 'social_posts'
+			} as Project)
+			router.push('/summary-socialpost');
+		}
 	};
 
 	// avoid hydration error during development caused by persistence

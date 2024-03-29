@@ -319,7 +319,9 @@ export default function Topic() {
 
 			{/* main content */}
 			<Column>
-				<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
+				<div className='flex flex-row justify-center'>
+					<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
+				</div>
 
 				{/* Project Summary section */}
 				{generationMode === 'from_files' && (

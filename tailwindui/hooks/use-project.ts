@@ -54,6 +54,7 @@ export const useProject = () => {
 	};
 
 	const clearProject = () => {
+		console.log('-- clearing project');
 		setProject(null);
 		setResources([]);
 		setSelectedResources([]);
