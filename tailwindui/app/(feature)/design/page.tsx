@@ -20,6 +20,7 @@ import { useProject } from '@/hooks/use-project';
 import useTourStore from '@/components/user_onboarding/TourStore';
 import availablePalettes from '@/components/slides/palette';
 // import { TemplateKeys, getTemplateFromAudicence } from '@/components/slides/slideTemplates';
+import { GenerationStatusProgressModal } from '@/components/ui/GenerationStatusProgressModal';
 
 // UI Components and Layouts
 import Card from '@/components/ui/Card';
@@ -63,6 +64,14 @@ const getTemplateFromAudicence = (audience: string): TemplateKeys => {
 };
 
 export default function DesignPage() {
+	const [showGenerationStatusModal, setShowGenerationStatusModal] =
+		useState(false);
+
+	const handleGenerationStatusModal = () => {
+		// console.log('user Research Modal toggled');
+		setShowGenerationStatusModal(!showGenerationStatusModal);
+	};
+
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -73,9 +82,9 @@ export default function DesignPage() {
 	);
 
 	const [colorPalette, setColorPalette] = useState<PaletteKeys>(
-		project?.palette || 
-		availablePalettes[template as keyof typeof availablePalettes]?.[0] ||
-		'Original'
+		project?.palette ||
+			availablePalettes[template as keyof typeof availablePalettes]?.[0] ||
+			'Original',
 	);
 	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
 		project?.selected_logo || [],
@@ -142,6 +151,13 @@ export default function DesignPage() {
 				<ActionsToolBar startTour={startTour} onlyShowTutorial={true} />
 			</div> */}
 			<ToastContainer />
+			{/* user research modal */}
+			{showGenerationStatusModal && (
+				<GenerationStatusProgressModal
+					onClick={handleGenerationStatusModal}
+					waitingTime={25}
+				></GenerationStatusProgressModal>
+			)}
 
 			<WorkflowStepsBanner
 				currentIndex={2}
@@ -150,6 +166,7 @@ export default function DesignPage() {
 				isPaidUser={true}
 				nextIsPaidFeature={false}
 				nextText={!isSubmitting ? 'Create Slides' : 'Creating Slides'}
+				handleClickingGeneration={handleGenerationStatusModal}
 			/>
 
 			<GenerateSlidesSubmit
@@ -222,9 +239,10 @@ export default function DesignPage() {
 					<Card>
 						<BigTitle>Branding</BigTitle>
 						<Explanation>
-							Select the branding for your slides, you can also change this on the slides page, or talk with AI Chatbot
+							Select the branding for your slides, you can also change this on
+							the slides page, or talk with AI Chatbot
 						</Explanation>
-						<BrandingSelector 
+						<BrandingSelector
 							branding={branding}
 							setBranding={setBranding}
 							selectedLogo={selectedLogo}

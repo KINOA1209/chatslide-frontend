@@ -28,7 +28,7 @@ const Modal: React.FC<ModalProps> = ({
 	description,
 	clickOutsideToClose = true,
 	canClose = true,
-	width
+	width,
 }) => {
 	const modalRef = React.useRef<HTMLDivElement>(null);
 	const modalContentRef = React.useRef<HTMLDivElement>(null);
@@ -37,7 +37,10 @@ const Modal: React.FC<ModalProps> = ({
 	const handleCloseModal = () => {
 		// console.log('handleCloseModal');
 		if (!canClose) return;
-		setShowModal(false);
+		else if (!clickOutsideToClose) return;
+		else {
+			setShowModal(false);
+		}
 	};
 
 	const onClick = async () => {
@@ -48,7 +51,7 @@ const Modal: React.FC<ModalProps> = ({
 		console.log('onConfirm resolved');
 		setIsSubmitting(false);
 		setShowModal(false);
-	}
+	};
 
 	// press esc to close modal
 	React.useEffect(() => {
@@ -70,7 +73,11 @@ const Modal: React.FC<ModalProps> = ({
 		<Transition
 			className='h-[100vh] w-[100vw] z-40 bg-slate-200/80 fixed top-0 left-0 flex flex-col items-center justify-center'
 			show={showModal}
-			onClick={() => setShowModal(false)}
+			onClick={() => {
+				if (clickOutsideToClose) {
+					setShowModal(false);
+				}
+			}}
 			enter='transition ease duration-300 transform'
 			enterFrom='opacity-0 translate-y-12'
 			enterTo='opacity-100 translate-y-0'
@@ -79,8 +86,9 @@ const Modal: React.FC<ModalProps> = ({
 			leaveTo='opacity-0 translate-y-12'
 			ref={modalRef}
 		>
+			{/* ${position} bg-white rounded-lg shadow max-w-full sm:max-w-[80%] lg:max-w-[60%] xl:max-w-[50%] max-h-[90%] overflow-y-hidden mx-2 p-2 sm:p-4 */}
 			<Transition
-				className={`${position} bg-white rounded-lg shadow max-w-full sm:max-w-[80%] lg:max-w-[60%] xl:max-w-[50%] max-h-[90%] overflow-y-hidden mx-2 p-2 sm:p-4`}
+				className={`${position} bg-white rounded-lg shadow max-w-[60%] max-h-full md:max-w-[80%] overflow-y-hidden mx-2 p-2 sm:p-4`}
 				show={showModal}
 				enter='transition ease duration-500 transform delay-300'
 				enterFrom='opacity-0 translate-y-12'
@@ -107,15 +115,11 @@ const Modal: React.FC<ModalProps> = ({
 
 					{title && (
 						<div className='w-full felx flex-col items-center justify-center'>
-							<Title>
-								{title}
-							</Title>
+							<Title>{title}</Title>
 						</div>
 					)}
 
-					{description && (
-						<Explanation>{description}</Explanation>
-					)}
+					{description && <Explanation>{description}</Explanation>}
 
 					{/* Modal body */}
 					{children}
@@ -127,17 +131,14 @@ const Modal: React.FC<ModalProps> = ({
 									Cancel
 								</InversedBigBlueButton>
 							)}
-							<BigBlueButton
-								isSubmitting={isSubmitting}
-								onClick={onClick}
-							>
+							<BigBlueButton isSubmitting={isSubmitting} onClick={onClick}>
 								Confirm
 							</BigBlueButton>
 						</div>
 					)}
 				</div>
 			</Transition>
-		</Transition >
+		</Transition>
 	);
 };
 
