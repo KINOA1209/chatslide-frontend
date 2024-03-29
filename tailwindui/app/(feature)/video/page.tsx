@@ -8,6 +8,11 @@ import { useUser } from '@/hooks/use-user';
 import { Loading, Blank } from '@/components/ui/Loading';
 import { useProject } from '@/hooks/use-project';
 import useHydrated from '@/hooks/use-hydrated';
+import { Column } from '@/components/layout/Column';
+import { ToolBar } from '@/components/ui/ToolBar';
+import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
+import { GoDownload } from 'react-icons/go';
+import { SpinIcon } from '../icons';
 
 const VideoVisualizer = ({
 	videoUrl,
@@ -17,13 +22,73 @@ const VideoVisualizer = ({
 	status: string;
 }) => {
 	const videoSource = videoUrl;
+	const [isDownloading, setIsDownloading] = useState(false);
+
+	async function downloadVideo() {
+		setIsDownloading(true);
+		try {
+			// Fetch the video data from the server
+			const response = await fetch(videoSource);
+			if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+			// Retrieve the video blob
+			const videoBlob = await response.blob();
+
+			// Create a URL for the blob
+			const videoUrl = URL.createObjectURL(videoBlob);
+
+			// Create an anchor tag and force download
+			const a = document.createElement('a');
+			a.href = videoUrl;
+			a.download = 'video.mp4'; // You can customize the filename
+			document.body.appendChild(a);
+			a.click();
+
+			// Clean up by revoking the Blob URL and removing the anchor tag
+			URL.revokeObjectURL(videoUrl);
+			document.body.removeChild(a);
+		} catch (error) {
+			console.error('Download failed:', error);
+		}
+		setIsDownloading(false);
+	}
+
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
 
 	return (
 		<>
 			{videoUrl !== '' ? (
-				<div className='w-full sm:w-3/4 mx-auto border rounded border-2 border-gray-200 p-4'>
+				<Column>
+					<div className='flex flex-row justify-center'>
+						<ToolBar>
+							<ButtonWithExplanation
+								button={
+									<button
+										onClick={downloadVideo}
+										disabled={isDownloading}
+									>
+										{!isDownloading ?
+										<GoDownload
+											style={{
+												strokeWidth: '1',
+												flex: '1',
+												width: '1.5rem',
+												height: '1.5rem',
+												fontWeight: 'bold',
+												color: '#344054',
+											}}
+										/> :
+										<SpinIcon />
+										}
+									</button>
+								}
+								explanation={'Download'}
+							/>
+						</ToolBar>
+					</div>
 					<Video videoUrl={videoSource} />
-				</div>
+				</Column >
 			) : status === 'failed' ? (
 				<Blank>
 					<div>
