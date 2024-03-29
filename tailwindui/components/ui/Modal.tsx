@@ -88,7 +88,7 @@ const Modal: React.FC<ModalProps> = ({
 		>
 			{/* ${position} bg-white rounded-lg shadow max-w-full sm:max-w-[80%] lg:max-w-[60%] xl:max-w-[50%] max-h-[90%] overflow-y-hidden mx-2 p-2 sm:p-4 */}
 			<Transition
-				className={`${position} bg-white rounded-lg shadow max-w-[60%] max-h-full md:max-w-[80%] overflow-y-hidden mx-2 p-2 sm:p-4`}
+				className={`${position} bg-white rounded-lg shadow max-w-[60%] max-h-full md:max-w-[80%] xl:max-w-[50%] overflow-y-hidden mx-2 p-2 sm:p-4`}
 				show={showModal}
 				enter='transition ease duration-500 transform delay-300'
 				enterFrom='opacity-0 translate-y-12'
