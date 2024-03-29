@@ -31,15 +31,13 @@ import {
 import { DropDown } from '@/components/button/DrlambdaButton';
 import ResourceService from '@/services/ResourceService';
 import LanguageSelector from '../../../components/language/LanguageSelector';
-import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
 import { addIdToRedir } from '@/utils/redirWithId';
 import TopicSuggestions from '@/components/language/TopicSuggestions';
 import { getUserCountryCode, getUserLanguage } from '@/utils/userLocation';
-import { Session } from 'inspector';
 import Project from '@/models/Project';
 
-const MAX_TOPIC_LENGTH = 128;
+const MAX_TOPIC_LENGTH = 500;
 const MIN_TOPIC_LENGTH = 3;
 
 const audienceDict = {
@@ -377,7 +375,10 @@ export default function Topic() {
 									}
 								</div>
 								<Explanation>
-									{MAX_TOPIC_LENGTH - topic.length} characters left
+									{/* if no char left, show red */}
+									<div className={MAX_TOPIC_LENGTH - topic.length === 0 ? 'text-red-600' : ''}>
+										{MAX_TOPIC_LENGTH - topic.length} characters left
+									</div>
 								</Explanation>
 								<ErrorMessage>{topicError}</ErrorMessage>
 							</div>
