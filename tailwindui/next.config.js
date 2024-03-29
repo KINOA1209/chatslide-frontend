@@ -64,7 +64,7 @@ const nextConfig = {
 			},
 			{
 				source: '/discord',
-				destination: 'https://discord.com/invite/GypUrQ4X',
+				destination: 'https://discord.gg/ZMRQMtqH5E',
 				permanent: true,
 			}
 		]

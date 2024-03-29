@@ -48,7 +48,7 @@ export const SideBarData: SideBarItem[] = [
 	{
 		title: 'Join Discord',
 		icon: <RiDiscordLine />,
-		path: 'https://discord.gg/jDR3xuRAE5',
+		path: 'https://drlambda.ai/discord',
 		target: '_blank',
 	},
 	{

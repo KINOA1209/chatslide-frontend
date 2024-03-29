@@ -201,7 +201,7 @@ const SideBar = ({ }: SideBarProps) => {
 								Get 100 ⭐️credits
 							</a>
 							<a
-								href='https://discord.gg/jDR3xuRAE5'
+								href='https://drlambda.ai/discord'
 								target='_blank'
 								className='block flew flex-row items-center gap-1 py-1 text-sm text-white px-2 rounded-lg hover:bg-gray-400'
 								role='menuitem'
