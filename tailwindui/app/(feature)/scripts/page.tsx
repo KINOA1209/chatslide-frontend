@@ -10,7 +10,7 @@ import { useSlides } from '@/hooks/use-slides';
 import { Instruction, BigTitle, Explanation } from '@/components/ui/Text';
 import Card from '@/components/ui/Card';
 import { useProject } from '@/hooks/use-project';
-import VoiceSelector from '@/components/language/VoiceSelector';
+import VoiceSelector, { previewVoice } from '@/components/language/VoiceSelector';
 import { useRouter } from 'next/navigation';
 import { addIdToRedir } from '@/utils/redirWithId';
 import dynamic from 'next/dynamic';
@@ -95,12 +95,13 @@ export default function WorkflowStep5() {
 					<BigTitle>Scripts</BigTitle>
 					<Instruction>
 						<div className='flex flex-col gap-y-1'>
-						<p>💡 Script to voice tips: </p>
-						<p>⏸️ Use <span className='text-green-600'>...</span> to denote pause </p>
-						<p>*️⃣ Use <span className='text-green-600'>*word*</span> to denote emphasis </p>
-						<p>🔤 Use <span className='text-green-600'>[word]</span> to spell out the word. </p>
-						<p>🌟 For example: {' '}
-						<span className='text-gray-600'>DrLambda also supports creating *slides* from... [doc] files. </span></p>
+							<p>💡 Script to voice tips: </p>
+							<p>⏸️ Use <span className='text-green-600'>...</span> to denote pause </p>
+							<p>*️⃣ Use <span className='text-green-600'>*word*</span> to denote emphasis </p>
+							<p>🔤 Use <span className='text-green-600'>[word]</span> to spell out the word. </p>
+							<p>🌟 For example: {' '}
+								<span className='text-blue-600 hover:cursor-pointer' onClick={() => previewVoice('denotation')}>🔈 DrLambda also supports creating *slides* from... [doc] files. </span>
+							</p>
 						</div>
 					</Instruction>
 					<div className='flex flex-col gap-y-2'>

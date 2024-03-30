@@ -6,8 +6,18 @@ import LANGUAGES from './languageData';
 import { ErrorMessage, Instruction, WarningMessage } from '../ui/Text';
 import { DropDown } from '../button/DrlambdaButton';
 import { useProject } from '@/hooks/use-project';
-import VideoService from '@/services/VideoService';
-import { useUser } from '@/hooks/use-user';
+
+export const previewVoice = async (voice: string) => {
+	const script = 'Hello, I am DrLambda.'
+	try {
+		const audio_url = `/voice/${voice}.mp3`;
+		const audioElement = new Audio(audio_url);
+		audioElement.play(); // Play the voice
+		console.log('playing audio:', audioElement);
+	} catch (error) {
+		console.error("Error playing script audio:", error);
+	}
+};
 
 const VoiceSelector: React.FC<{
 	selectedVoice: string;
@@ -20,12 +30,10 @@ const VoiceSelector: React.FC<{
 			const selectedLanguage = LANGUAGES.find((lang) => lang.englishName === language);
 			return selectedLanguage?.code ?? 'en-US';
 		}
-		const { token } = useUser();
 		const { project } = useProject();
 		const originalLanguageCode = getCodeFromLanguage(project?.language);
 		const [selectedLanguage, setSelectedLanguage] = useState<string>(originalLanguageCode);
 		const [selectedGender, setSelectedGender] = useState<'female' | 'male'>('female');
-		const genderOptions = ['female', 'male'];
 		const [voiceOptions, setVoiceOptions] = useState<string[]>([]);
 
 		// Update voice options based on selected language and gender
@@ -52,18 +60,6 @@ const VoiceSelector: React.FC<{
 
 			// If the name is not in the expected format, return it as is or handle accordingly
 			return voiceName;
-		};
-
-		const previewVoice = async (voice: string) => {
-			const script = 'Hello, I am DrLambda.'
-			try {
-				const audio_url = `/voice/${voice}.mp3`;
-				const audioElement = new Audio(audio_url); 
-				audioElement.play(); // Play the voice
-				console.log('playing audio:', audioElement);
-			} catch (error) {
-				console.error("Error playing script audio:", error);
-			}
 		};
 
 		return (
