@@ -26,7 +26,26 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 	nextText = 'Next',
 	handleClickingGeneration,
 }) => {
-	const [showPing, setShowPing] = useState(false);
+	const [showPing, setShowPing] = useState(true);
+
+	const [buttonBounce, setButtonBounce] = useState(false);
+
+	// when received a button bounce event from document listener, set the buttonBounce to true for 5 seconds
+	useEffect(() => {
+		const bounce = () => {
+			setButtonBounce(true);
+			setTimeout(() => {
+				setButtonBounce(false);
+			}, 5000);
+		};
+
+		document.addEventListener('buttonBounce', bounce);
+
+		return () => {
+			document.removeEventListener('buttonBounce', bounce);
+		};
+	}, []);
+
 
 	useEffect(() => {
 		sleep(10 * 1000).then(() => setShowPing(true));
@@ -59,7 +78,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 								}}
 							></div>
 						)}
-						<div onClick={handleClickingGeneration}>
+						<div className={buttonBounce ? 'animate-bounce' : ''} onClick={handleClickingGeneration}>
 							<DrlambdaButton
 								isSubmitting={isSubmitting}
 								isPaidUser={isPaidUser}
@@ -71,8 +90,8 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 						</div>
 
 						{showPing && (
-							<span className='flex h-3 w-3 absolute -top-1 -right-1'>
-								<span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75'></span>
+							<span className='flex h-4 w-4 absolute -top-2 -right-2'>
+								<span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-600 opacity-100'></span>
 								{/* <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span> */}
 							</span>
 						)}

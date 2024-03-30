@@ -40,6 +40,7 @@ const OneStep: React.FC<StepProps> = ({
 
 	const handleUnavailableClick = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault();
+		document.dispatchEvent(new Event('buttonBounce'));
 		toast.info('Please click the button on the right to generate.',
 			{ position: 'top-center', autoClose: 5000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, });
 

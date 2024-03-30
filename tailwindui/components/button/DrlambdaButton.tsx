@@ -1,8 +1,6 @@
 'use client';
 
 import {
-	LeftTurnArrowIcon,
-	RightTurnArrowIcon,
 	SpinIcon,
 } from '@/app/(feature)/icons';
 import Select from 'react-select';
@@ -16,6 +14,8 @@ import PaywallModal from '../paywallModal';
 import { useRouter } from 'next/navigation';
 import { GrayLabel, PlusLabel } from '../ui/GrayLabel';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+
+
 type DrlambdaButtonProps = {
 	children: ReactNode;
 	onClick?: MouseEventHandler<HTMLButtonElement>;
@@ -25,6 +25,7 @@ type DrlambdaButtonProps = {
 	showArrow?: boolean;
 	bgColor?: string;
 	disabled?: boolean;
+	isFlashing?: boolean;
 };
 
 const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
@@ -35,10 +36,14 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
 	isPaidFeature = false,
 	showArrow = true,
 	bgColor,
+	isFlashing = false,
 }) => {
 	const [showPaywallModal, setShowPaywallModal] = useState(false);
 
 	function getButtonBg() {
+		if (isFlashing) {
+			return 'flash-bg'
+		}
 		if (isSubmitting) {
 			// return 'bg-gray-600';
 			return 'bg-[#FFFFFF]';
