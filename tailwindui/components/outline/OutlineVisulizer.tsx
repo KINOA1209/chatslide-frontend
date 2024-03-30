@@ -7,6 +7,7 @@ import {
 	AddTopicIcon,
 	DeleteIcon,
 } from '@/app/(feature)/icons';
+import { sleep } from '@/utils/sleep';
 
 const minOutlineDetailCount = 1;
 const maxOutlineDetailCount = 6;
@@ -42,15 +43,60 @@ const OutlineVisualizer = ({
 	};
 
 	const handleAddDetail = (
-		e: React.MouseEvent<HTMLDivElement>,
+		e: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>,
 		sectionIndex: number,
 		detailIndex: number,
 	) => {
 		e.preventDefault();
 		let newOutlineData = [...outlineData];
 		newOutlineData[sectionIndex].content.splice(detailIndex, 0, 'Provide some details about this section');
+		// select the input field
+		setHoveredDetailIndex(detailIndex);
 		setOutlineData(newOutlineData);
+
+		sleep(0.1)
+
+		selectInputBox(sectionIndex, detailIndex);  // may not work if adding last detail in the section
 	};
+
+	function selectInputBox(sectionIndex: number, detailIndex: number) {
+		const inputBoxId = String(sectionIndex) + '-' + String(detailIndex)
+		const inputBox = document.querySelector(`input[id="${inputBoxId}"]`);
+		console.log(inputBoxId)
+		console.log(inputBox)
+		if (inputBox) {
+			(inputBox as HTMLInputElement).focus();
+			// console.log('focused');
+			(inputBox as HTMLInputElement).select();
+		}
+	}
+
+	useEffect(() => {
+		// use up and down keys to select the input box
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === 'ArrowDown') {
+				e.stopPropagation();
+				e.preventDefault();
+				if (hoveredDetailIndex < outlineData[hoveredSectionIndex]?.content.length - 1) {
+					selectInputBox(hoveredSectionIndex, hoveredDetailIndex + 1);
+					setHoveredDetailIndex(hoveredDetailIndex + 1);
+				}
+			} else if (e.key === 'ArrowUp') {
+				e.stopPropagation();
+				e.preventDefault();
+				if (hoveredDetailIndex > 0) {
+					selectInputBox(hoveredSectionIndex, hoveredDetailIndex - 1);
+					setHoveredDetailIndex(hoveredDetailIndex - 1);
+				}
+			}
+		};
+
+		document.addEventListener('keydown', handleKeyDown);
+
+		return () => {
+			document.removeEventListener('keydown', handleKeyDown);
+		};
+	});
 
 	const handleDeleteDetail = (
 		e: React.MouseEvent<HTMLDivElement>,
@@ -206,6 +252,7 @@ const OutlineVisualizer = ({
 											>
 												<input
 													key={detailIndex}
+													id={String(sectionIndex)+'-'+String(detailIndex)}
 													className={`form-input border-none w-full text-gray-800 grow overflow-ellipsis ${hoveredDetailIndex === detailIndex &&
 														sectionIndex === hoveredSectionIndex
 														? 'bg-gray-200'
@@ -223,6 +270,11 @@ const OutlineVisualizer = ({
 															'content',
 														)
 													}
+													onKeyDown={(e) => {
+														if (e.key === 'Enter') {
+															handleAddDetail(e, sectionIndex, detailIndex + 1);
+														}
+													}}
 													placeholder={`Detail ${detailIndex + 1}`}
 												/>
 												{hoveredDetailIndex === detailIndex &&
