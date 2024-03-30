@@ -6,96 +6,112 @@ import LANGUAGES from './languageData';
 import { ErrorMessage, Instruction, WarningMessage } from '../ui/Text';
 import { DropDown } from '../button/DrlambdaButton';
 import { useProject } from '@/hooks/use-project';
+import VideoService from '@/services/VideoService';
+import { useUser } from '@/hooks/use-user';
 
 const VoiceSelector: React.FC<{
-  selectedVoice: string;
-  setSelectedVoice: (language: string) => void;
+	selectedVoice: string;
+	setSelectedVoice: (language: string) => void;
 }> = ({
-  selectedVoice,
-  setSelectedVoice,
+	selectedVoice,
+	setSelectedVoice,
 }) => {
-    const getCodeFromLanguage = (language: string | undefined): string => {
-      const selectedLanguage = LANGUAGES.find((lang) => lang.englishName === language);
-      return selectedLanguage?.code ?? 'en-US';
-    }
+		const getCodeFromLanguage = (language: string | undefined): string => {
+			const selectedLanguage = LANGUAGES.find((lang) => lang.englishName === language);
+			return selectedLanguage?.code ?? 'en-US';
+		}
+		const { token } = useUser();
+		const { project } = useProject();
+		const originalLanguageCode = getCodeFromLanguage(project?.language);
+		const [selectedLanguage, setSelectedLanguage] = useState<string>(originalLanguageCode);
+		const [selectedGender, setSelectedGender] = useState<'female' | 'male'>('female');
+		const genderOptions = ['female', 'male'];
+		const [voiceOptions, setVoiceOptions] = useState<string[]>([]);
 
-    const { project } = useProject();
-    const originalLanguageCode = getCodeFromLanguage(project?.language);
-    const [selectedLanguage, setSelectedLanguage] = useState<string>(originalLanguageCode);
-    const [selectedGender, setSelectedGender] = useState<'female' | 'male'>('female');
-    const genderOptions = ['female', 'male'];
-    const [voiceOptions, setVoiceOptions] = useState<string[]>([]);
+		// Update voice options based on selected language and gender
+		useEffect(() => {
+			const voices = VOICE_OPTIONS[selectedLanguage]?.[selectedGender] ?? ['Default'];
+			setVoiceOptions(voices);
+			setSelectedVoice(voices[0]);
+		}, [selectedLanguage, selectedGender]);
 
-    // Update voice options based on selected language and gender
-    useEffect(() => {
-      const voices = VOICE_OPTIONS[selectedLanguage]?.[selectedGender] ?? ['Default'];
-      setVoiceOptions(voices);
-      setSelectedVoice(voices[0]);
-    }, [selectedLanguage, selectedGender]);
-
-    const formatVoiceName = (voiceName: string): string => {
-      // Ensure the string is long enough to avoid negative substring indices
-      if (voiceName.length > 12) {
-        let formattedName = voiceName.substring(6, voiceName.length - 6);
-        // Capitalize the first letter and return
-        formattedName = formattedName.charAt(0).toUpperCase() + formattedName.slice(1);
-        // replace Multilingual with `-Mulilingual`
-        if (formattedName.includes('Multilingual')) {
-          return formattedName.replace('Multilingual', '-Multilingual');
-        }
+		const formatVoiceName = (voiceName: string): string => {
+			// Ensure the string is long enough to avoid negative substring indices
+			if (voiceName.length > 12) {
+				let formattedName = voiceName.substring(6, voiceName.length - 6);
+				// Capitalize the first letter and return
+				formattedName = formattedName.charAt(0).toUpperCase() + formattedName.slice(1);
+				// replace Multilingual with `-Mulilingual`
+				if (formattedName.includes('Multilingual')) {
+					return formattedName.replace('Multilingual', '-Multilingual');
+				}
 
 				formattedName = TONE_DISPLAY_NAMES[formattedName] ?? formattedName;
-        return formattedName;
-      }
+				return formattedName;
+			}
 
-      // If the name is not in the expected format, return it as is or handle accordingly
-      return voiceName;
-    };
+			// If the name is not in the expected format, return it as is or handle accordingly
+			return voiceName;
+		};
 
+		const previewVoice = async (voice: string) => {
+			const script = 'Hello, I am DrLambda.'
+			try {
+				const audio_url = `/voice/${voice}.mp3`;
+				const audioElement = new Audio(audio_url); 
+				audioElement.play(); // Play the voice
+				console.log('playing audio:', audioElement);
+			} catch (error) {
+				console.error("Error playing script audio:", error);
+			}
+		};
 
-    return (
-      <>
-        <div className='flex flex-row flex-wrap justify-between'>
-          <div>
-            <Instruction>Language: </Instruction>
-            <DropDown value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)} width='16rem'>
-              {LANGUAGES.map((option) => (
-                <option key={option.code} value={option.code}>{option.displayName}</option>
-              ))}
-              <option key={'None'} value={'None'}>❌ None</option>
-            </DropDown>
+		return (
+			<>
+				<div className='flex flex-row flex-wrap justify-between'>
+					<div>
+						<Instruction>Language: </Instruction>
+						<DropDown value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)} width='16rem'>
+							{LANGUAGES.map((option) => (
+								<option key={option.code} value={option.code}>{option.displayName}</option>
+							))}
+							<option key={'None'} value={'None'}>❌ None</option>
+						</DropDown>
 
-          </div>
+					</div>
 
-          {selectedLanguage != 'None' && <>
-            <div>
-              <Instruction>Gender: </Instruction>
-              <DropDown value={selectedGender} onChange={(e) => setSelectedGender(e.target.value as 'female' | 'male')} width='8rem'>
+					{selectedLanguage != 'None' && <>
+						<div>
+							<Instruction>Gender: </Instruction>
+							<DropDown value={selectedGender} onChange={(e) => setSelectedGender(e.target.value as 'female' | 'male')} width='8rem'>
 								<option key='female' value='female'>👩 Female</option>
 								<option key='male' value='male'>👨 Male</option>
-              </DropDown>
-            </div>
+							</DropDown>
+						</div>
 
-            <div>
-              <Instruction>Tone: </Instruction>
-              <DropDown value={selectedVoice} onChange={(e) => setSelectedVoice(e.target.value)}>
-                {voiceOptions.map((voice) => (
-                  <option key={voice} value={voice}>{formatVoiceName(voice)}</option>
-                ))}
-              </DropDown>
-            </div>
-          </>}
-        </div>
-        {
-          selectedLanguage !== originalLanguageCode && selectedLanguage !== 'None' &&
-          <WarningMessage>If your scripts and voice are in different languages, you may get suboptimal results.</WarningMessage>
-        }
-        {
-          selectedLanguage === 'None' &&
-          <WarningMessage>Your video will not have any voiceover, each slide will play for 5 seconds silently.</WarningMessage>
-        }
-      </>
-    );
-  };
+						<div>
+							<Instruction>Tone: </Instruction>
+							<DropDown value={selectedVoice} onChange={(e) => {
+								previewVoice(e.target.value)
+								setSelectedVoice(e.target.value)
+							}}>
+								{voiceOptions.map((voice) => (
+									<option key={voice} value={voice}>{formatVoiceName(voice)}</option>
+								))}
+							</DropDown>
+						</div>
+					</>}
+				</div>
+				{
+					selectedLanguage !== originalLanguageCode && selectedLanguage !== 'None' &&
+					<WarningMessage>If your scripts and voice are in different languages, you may get suboptimal results.</WarningMessage>
+				}
+				{
+					selectedLanguage === 'None' &&
+					<WarningMessage>Your video will not have any voiceover, each slide will play for 5 seconds silently.</WarningMessage>
+				}
+			</>
+		);
+	};
 
 export default VoiceSelector;
