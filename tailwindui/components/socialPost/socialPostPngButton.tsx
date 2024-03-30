@@ -75,7 +75,7 @@ const ExportToPngButton: React.FC<ExportToPdfProps> = ({
 								<SpinIcon />}
 						</button>
 					}
-					explanation={'Save this Page'}
+					explanation={'Download (1 page)'}
 				/>
 		
 				{/* hidden div for export to pdf */}
