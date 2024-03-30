@@ -39,6 +39,9 @@ import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
 // Local component imports
 import { PaletteKeys, TemplateKeys } from '@/components/slides/slideTemplates';
 import BrandingSelector from './BrandingSelector';
+import { useSlides } from '@/hooks/use-slides';
+import { useUser } from '@/hooks/use-user';
+import PaywallModal from '@/components/paywallModal';
 
 const TemplateSelector = dynamic(() => import('./TemplateSelector'), {
 	ssr: false,
@@ -73,18 +76,19 @@ export default function DesignPage() {
 	};
 
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
-
+	const { isPaidUser } = useUser();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [isGpt35, setIsGpt35] = useState(true);
-	const { outlines, project } = useProject();
+	const { outlines, project, updateProject } = useProject();
+	const { showDrLambdaLogo, hideLogo } = useSlides();
 	const [template, setTemplate] = useState<TemplateKeys>(
 		project?.template || getTemplateFromAudicence(project?.audience || ''),
 	);
 
 	const [colorPalette, setColorPalette] = useState<PaletteKeys>(
 		project?.palette ||
-			availablePalettes[template as keyof typeof availablePalettes]?.[0] ||
-			'Original',
+		availablePalettes[template as keyof typeof availablePalettes]?.[0] ||
+		'Original',
 	);
 	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
 		project?.selected_logo || [],
@@ -92,6 +96,8 @@ export default function DesignPage() {
 	const [selectedBackground, setSelectedBackground] = useState<Resource[]>(
 		project?.selected_background || [],
 	);
+	const [showPaymentModal, setShowPaymentModal] = useState(false);
+
 	// Initialize the palette state with the first available palette for the current template
 	useEffect(() => {
 		if (template && availablePalettes) {
@@ -182,6 +188,12 @@ export default function DesignPage() {
 				selectedBackground={selectedBackground}
 			/>
 
+			<PaywallModal
+				showModal={showPaymentModal}
+				message='Upgrade for this 🌟premium feature!'
+				setShowModal={setShowPaymentModal}
+			/>
+
 			<Column>
 				<Panel>
 					{/* design */}
@@ -198,7 +210,7 @@ export default function DesignPage() {
 							setPalette={setColorPalette}
 							paletteOptions={
 								availablePalettes[
-									template as keyof typeof availablePalettes
+								template as keyof typeof availablePalettes
 								] || ['Original']
 							}
 							palette={colorPalette}
@@ -244,7 +256,20 @@ export default function DesignPage() {
 						</Explanation>
 						<BrandingSelector
 							branding={branding}
-							setBranding={setBranding}
+							setBranding={(e) => {
+								if (!isPaidUser) {
+									setShowPaymentModal(true);
+									return;
+								}
+								if (e === 'yes') {
+									showDrLambdaLogo();
+								}
+								else {
+									hideLogo();
+									updateProject('selected_logo', []);
+								}
+								setBranding(e);
+							}}
 							selectedLogo={selectedLogo}
 							setSelectedLogo={setSelectedLogo}
 							selectedBackground={selectedBackground}
