@@ -60,12 +60,21 @@ const Modal: React.FC<ModalProps> = ({
 		const handleEsc = (e: KeyboardEvent) => {
 			if (e.key === 'Escape') {
 				handleCloseModal();
+				e.stopPropagation();
 			}
 		};
 
+		const handleArrowKeys = (e: KeyboardEvent) => {
+			if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+				e.stopPropagation();
+			}
+		}
+
 		window.addEventListener('keydown', handleEsc);
+		modalRef.current?.addEventListener('keydown', handleArrowKeys);
 		return () => {
 			window.removeEventListener('keydown', handleEsc);
+			modalRef.current?.removeEventListener('keydown', handleArrowKeys);
 		};
 	}, []);
 

@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
+import React, { useEffect, useRef, useState, useMemo, use } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.bubble.css';
 import '@/components/socialPost/quillEditor.scss';
 import themeColorConfigData from './templates_customizable_elements/theme_color_options';
 import '@/app/css/style.css';
+import { stopArrowKeyPropagation  } from '@/utils/editing';
 
 type QuillEditableProps = {
 	content: string | string[];
@@ -187,6 +188,20 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 	const editorRef = useRef<HTMLDivElement>(null);
 	const quillInstanceRef = useRef<Quill | null>(null);
 	const isTextChangeRef = useRef(false);
+
+	useEffect(() => {
+		// stop arrow key and esc key propagation 
+		const editor = editorRef.current;
+		if (editor) {
+			editor.addEventListener('keydown', stopArrowKeyPropagation);
+		}
+
+		return () => {
+			if (editor) {
+				editor.removeEventListener('keydown', stopArrowKeyPropagation);
+			}
+		};
+	}, []);
 
 	// const showColorPicker = (value: string) => {
 	//     if (value === 'color-picker') {

@@ -7,7 +7,6 @@ import Slide from '@/models/Slide';
 import DrlambdaCartoonImage from '@/public/images/AIAssistant/DrLambdaCartoon.png';
 import Image from 'next/image';
 import { useEffect, useState, useRef, use, ChangeEvent } from 'react';
-import { InputBox } from './InputBox';
 import { IoSend, IoSendOutline } from 'react-icons/io5';
 import { DeleteIcon } from '@/app/(feature)/icons';
 import { FaTimes } from 'react-icons/fa';
@@ -15,6 +14,7 @@ import { ScrollBar } from './ScrollBar';
 import { useProject } from '@/hooks/use-project';
 import { useImageStore } from '@/hooks/use-img-store';
 import ChatSuggestions from '../language/ChatSuggestions';
+import { stopArrowKeyPropagation } from '@/utils/editing';
 
 export const DrLambdaAIAssistantIcon: React.FC<{
 	onClick: () => void;
@@ -227,13 +227,21 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	const { token } = useUser();
 	const lastMessageRef = useRef<HTMLDivElement>(null); // Ensure you have a ref for the last message
 	const { project } = useProject();
+	const chatWindowRef = useRef<HTMLDivElement>(null);
 
-	const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+	const handleEnter = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
 		if (event.key === 'Enter') {
 			event.preventDefault(); // Prevents the newline character in the input field
 			handleSend();
 		}
 	};
+
+	useEffect(() => {
+		chatWindowRef.current?.addEventListener('keydown', stopArrowKeyPropagation);
+		return () => {
+			chatWindowRef.current?.removeEventListener('keydown', stopArrowKeyPropagation);
+		};
+	}, []);
 
 	const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
 		const textarea = e.target;
@@ -375,6 +383,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	return (
 		<section
 			className={`hidden sm:flex sm:flex-col sm:fixed xl:relative sm:bottom-0 sm:right-0 sm:w-[20rem] sm:h-[30rem] xl:h-full bg-white rounded-lg sm:items-center border border-2 border-gray-200`}
+			ref={chatWindowRef}
 		>
 			{/* title and exit button */}
 			<div className='flex flex-row w-full justify-between items-center h-[5rem] p-2'>
@@ -457,7 +466,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						value={userInput}
 						className='w-full border-0 focus:outline-none focus:ring-0 resize-none overflow-y-scroll'
 						onChange={handleInputChange}
-						onKeyDown={handleKeyDown}
+						onKeyDown={handleEnter}
 						style={{ minHeight: '32px' }} // Set minimum height to resemble input field
 					/>
 

@@ -300,20 +300,19 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	}
 
 	function handleKeyDown(event: KeyboardEvent) {
-		if (isViewing || isPresenting) {
-			console.log('key pressed', event.key);
-			// todo: update iseditmode
-			if (event.key === 'ArrowRight') {
-				if (slideIndex < slides.length - 1) {
-					gotoPage(slideIndex + 1);
-				} else {
-					setIsPresenting(false);
-				}
-			} else if (event.key === 'ArrowLeft' && slideIndex > 0) {
-				gotoPage(slideIndex - 1);
-			} else if (event.key === 'Escape') {
-				setIsPresenting(false); // Exit presentation mode
+		// console.log('key pressed', event.key);
+		// todo: update iseditmode
+		if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+			if (slideIndex < slides.length - 1) {
+				gotoPage(slideIndex + 1);
+			} else {
+				setIsPresenting(false);
 			}
+		} else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+			if (slideIndex > 0)
+				gotoPage(slideIndex - 1);
+		} else if (event.key === 'Escape') {
+			setIsPresenting(false); // Exit presentation mode
 		}
 	}
 
@@ -504,10 +503,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			false, // canEdit
 			exportToPdfMode, //exportToPdfMode
 			false, //editMathMode
-			() => {}, //setIsEditMode
-			() => {}, // handleSlideEdit
-			() => () => {}, // updateImgUrlArray,
-			() => {}, // toggleEditMode,
+			() => { }, //setIsEditMode
+			() => { }, // handleSlideEdit
+			() => () => { }, // updateImgUrlArray,
+			() => { }, // toggleEditMode,
 			// slide.palette,
 			index === 0, // isCoverPage
 			slide.layout, // layoutOptionNonCover
