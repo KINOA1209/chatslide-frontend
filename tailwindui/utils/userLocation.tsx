@@ -26,8 +26,8 @@ export const getUserLanguage = async () => {
 		return 'German';
 	}
 
-	// if country code is a French speaking country, including African ones, use French
-	if (['BE', 'FR', 'BJ', 'BF', 'BI', 'CM', 'CD', 'CF', 'CG', 'CI', 'DJ', 'GA', 'GN', 'GW', 'ML', 'NE', 'RW', 'SN', 'TG'].includes(countryCode)) {
+	// if country code is a French speaking country, including African ones and Morocco, use French
+	if (['BE', 'FR', 'BJ', 'BF', 'BI', 'CM', 'CD', 'CF', 'CG', 'CI', 'DJ', 'GA', 'GN', 'GW', 'ML', 'NE', 'RW', 'SN', 'TG', 'MA'].includes(countryCode)) {
 		return 'French';
 	}
 
