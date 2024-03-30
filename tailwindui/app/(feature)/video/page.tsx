@@ -13,6 +13,10 @@ import { ToolBar } from '@/components/ui/ToolBar';
 import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
 import { GoDownload } from 'react-icons/go';
 import { SpinIcon } from '../icons';
+import Modal from '@/components/ui/Modal';
+import { Explanation } from '@/components/ui/Text';
+import { SiQuicktime } from 'react-icons/si';
+
 
 const VideoVisualizer = ({
 	videoUrl,
@@ -23,9 +27,44 @@ const VideoVisualizer = ({
 }) => {
 	const videoSource = videoUrl;
 	const [isDownloading, setIsDownloading] = useState(false);
+	const [showQuickTimeModal, setShowQuickTimeModal] = useState(false);
+
+	const QuickTimeModal = () => {
+		return (
+			<Modal
+				showModal={showQuickTimeModal}
+				setShowModal={setShowQuickTimeModal}
+				title='Sorry, QuickTime users'
+				width='40rem'
+				canClose={true}
+			>
+				<div className='flex flex-col items-center gap-y-4'>
+					<SiQuicktime
+						style={{
+							flex: '1',
+							width: '3rem',
+							height: '3rem',
+							color: '#344054',
+						}}
+						/>
+					<Explanation>
+						If you're using QuickTime on Mac to play the video, you might experience an issue where the audio is missing 😕. We recommend playing the video in VLC player 🎥. If you upload the video to social media, the audio will be fine 🎶👍.
+					</Explanation>
+				</div>
+			</Modal>
+		);
+	}
+
 
 	async function downloadVideo() {
 		setIsDownloading(true);
+
+		// if user is using mac, tell users not use QuickTime Player to play the video
+		const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+		if (isMac) {
+			setShowQuickTimeModal(true);
+		}
+
 		try {
 			// Fetch the video data from the server
 			const response = await fetch(videoSource);
@@ -60,6 +99,7 @@ const VideoVisualizer = ({
 		<>
 			{videoUrl !== '' ? (
 				<Column>
+					<QuickTimeModal />
 					<div className='flex flex-row justify-center'>
 						<ToolBar>
 							<ButtonWithExplanation
@@ -69,17 +109,17 @@ const VideoVisualizer = ({
 										disabled={isDownloading}
 									>
 										{!isDownloading ?
-										<GoDownload
-											style={{
-												strokeWidth: '1',
-												flex: '1',
-												width: '1.5rem',
-												height: '1.5rem',
-												fontWeight: 'bold',
-												color: '#344054',
-											}}
-										/> :
-										<SpinIcon />
+											<GoDownload
+												style={{
+													strokeWidth: '1',
+													flex: '1',
+													width: '1.5rem',
+													height: '1.5rem',
+													fontWeight: 'bold',
+													color: '#344054',
+												}}
+											/> :
+											<SpinIcon />
 										}
 									</button>
 								}
