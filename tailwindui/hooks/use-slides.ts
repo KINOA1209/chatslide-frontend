@@ -92,6 +92,7 @@ export const useSlides = () => {
 			return { ...slide, logo_url: '', logo: 'Default'};
 		});
 		setIsShowingLogo(true);
+		updateProject('logo', 'Default');
 		setSlides(newSlides);
 		updateSlideHistory(newSlides);
 		debouncedSyncSlides(newSlides, true);
@@ -112,6 +113,7 @@ export const useSlides = () => {
 			return { ...slide, logo_url: '', logo: '' };
 		});
 		setIsShowingLogo(false);
+		updateProject('logo', '')
 		setSlides(newSlides);
 		updateSlideHistory(newSlides);
 		debouncedSyncSlides(newSlides, true);

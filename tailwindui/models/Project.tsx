@@ -21,6 +21,7 @@ type Project = {
 	is_public: boolean;
 	additional_images: string[];
 	
+	logo: string; // overwriten by selected_logo, '' means no logo
 	selected_logo: Resource[];
 	selected_background: Resource[];
 	template: TemplateKeys;

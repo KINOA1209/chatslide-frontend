@@ -103,6 +103,7 @@ const GenerateSlidesSubmit = ({
 			// model_name: isGPT35 ? 'gpt-3.5-turbo' : 'gpt-4',
 			scenario_type: project.scenario_type,
 			// endIndex: 2,  // generate first 2 sections only
+			logo: project.logo,
 			template: template,
 			palette: palette,
 			imageLicense: imageLicense,
