@@ -206,8 +206,8 @@ const MyFiles: React.FC<filesInterface> = ({
 			pageInvoked === 'summary'
 				? ['doc', 'url', 'webpage', 'youtube']
 				: pageInvoked === 'theme'
-					? [fileType]
-					: [];
+				? [fileType]
+				: [];
 
 		ResourceService.fetchResources(resource_type, token).then((resources) => {
 			setResources(resources);
@@ -529,8 +529,14 @@ const MyFiles: React.FC<filesInterface> = ({
 										overlapSize: 20,
 										skipEmbeddingGeneration: true,
 									},
+									// {
+									// 	id: IntegrationName.NOTION,
+									// 	chunkSize: 1500,
+									// 	overlapSize: 20,
+									// 	skipEmbeddingGeneration: true,
+									// },
 									{
-										id: IntegrationName.NOTION,
+										id: IntegrationName.GOOGLE_DRIVE,
 										chunkSize: 1500,
 										overlapSize: 20,
 										skipEmbeddingGeneration: true,
@@ -546,10 +552,10 @@ const MyFiles: React.FC<filesInterface> = ({
 								open={false}
 								chunkSize={1500}
 								overlapSize={20}
-							// entryPoint="LOCAL_FILES"
+								// entryPoint="LOCAL_FILES"
 							>
 								<BigBlueButton
-									onClick={() => { }}
+									onClick={() => {}}
 									isSubmitting={false}
 									showArrow={false}
 								>
@@ -565,7 +571,9 @@ const MyFiles: React.FC<filesInterface> = ({
 					<Blank text='You have no uploaded file' />
 				) : (
 					<div
-						className={`w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto border border-gray-200 ${isDragging ? 'bg-blue-100 border-blue-500' : ''}`}
+						className={`w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto border border-gray-200 ${
+							isDragging ? 'bg-blue-100 border-blue-500' : ''
+						}`}
 						onDragEnter={handleDragEnter}
 						onDragOver={handleDragOver}
 						onDragLeave={handleDragLeave}
