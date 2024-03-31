@@ -230,7 +230,7 @@ class ProjectService {
 			// console.log(
 			//     'slideData.content.length',
 			//     slideData.content.length        // );
-			slide.logo = slideData.logo || 'Default';
+			slide.logo = slideData.logo === undefined ? 'Default' : slideData.logo  // '' means no logo
 			slide.transcript = slideData.transcript || '';
 			slide.logo_url = slideData.logo_url || '';
 			slide.background_url = slideData.background_url || '';

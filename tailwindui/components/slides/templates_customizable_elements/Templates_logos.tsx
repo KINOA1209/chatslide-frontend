@@ -25,7 +25,8 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 	custom_logo,
 	template_name,
 }) => {
-	//console.log('custom_logo:', custom_logo);
+	// console.log('custom_logo:', custom_logo);
+	// console.log('isCoverPage:', isCoverPage);
 	if (isCoverPage) {
 		if (custom_logo === 'Default') {
 			return (
@@ -117,11 +118,16 @@ export const generateTemplateLogo = ({
 	lightBGLogo,
 	darkBGLogo,
 }: TemplateLogoType) => {
+	// console.log('custom_logo:', custom_logo);
+	if (!custom_logo) {
+		return <></>
+	}
+
 	return (
 		<div
 			className={`absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-40`}
 		>
-			{custom_logo === template_name ? (
+			{custom_logo === template_name || custom_logo === 'Default' ? (
 				// use original template logo
 
 				<Image

@@ -228,8 +228,8 @@ export const templateDispatch = (
 		}
 	};
 
-	let custom_logo = 'Default';
-	if (slide.template && slide.template.length > 0) {
+	let custom_logo = slide.logo;
+	if (slide.template && slide.template.length > 0 && custom_logo === 'Default') {
 		custom_logo = slide.template;
 	}
 	if (slide.logo_url && slide.logo_url.length > 0) {
