@@ -48,7 +48,9 @@ const VideoVisualizer = ({
 						}}
 						/>
 					<Explanation>
-						If you're using QuickTime on Mac to play the video, you might experience an issue where the audio is missing 😕. We recommend playing the video in VLC player 🎥. If you upload the video to social media, the audio will be fine 🎶👍.
+						If you're using QuickTime on Mac to play the video, you might experience an issue where the audio is missing 😕. 
+						We recommend playing the video in the free <a href='https://www.videolan.org/vlc/'>VLC player</a>. 
+						If you upload the video to social media, the audio will be fine 👍.
 					</Explanation>
 				</div>
 			</Modal>
