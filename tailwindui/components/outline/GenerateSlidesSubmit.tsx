@@ -116,6 +116,7 @@ const GenerateSlidesSubmit = ({
 			selected_logo: selectedLogo,
 			template: template,
 			palette: palette,
+			has_scripts: false,  // in case it is re-generated
 		} as Project);
 
 		// if we have resources, but no extra knowledge, we need to query the vector database
