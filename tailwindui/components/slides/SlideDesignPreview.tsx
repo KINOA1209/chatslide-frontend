@@ -13,6 +13,7 @@ import themeConfigData from './templates_customizable_elements/theme_elements';
 import layoutConfigData from './templates_customizable_elements/layout_elements';
 import { Explanation } from '../ui/Text';
 import { ScrollBar } from '../ui/ScrollBar';
+import { useProject } from '@/hooks/use-project';
 type SlideDesignPreviewProps = {
 	selectedTemplate: string;
 	selectedPalette: string;
@@ -23,6 +24,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 	selectedPalette,
 }) => {
 	const [slides, setSlides] = useState<Slide[]>([]);
+	const { project } = useProject();
 	// const template = isValidTemplateKey(selectedTemplate) ? selectedTemplate : 'Default';
 	// const slides = Object.keys(layoutOptions).map((layoutKey) => {
 	//     const newSlide = new Slide();
@@ -52,6 +54,9 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 
 		const newSlides = Object.keys(layoutOptions).map((layoutKey) => {
 			const newSlide = new Slide();
+			newSlide.head = project?.topic || 'New Slide';
+			newSlide.title = project?.topic || 'New Slide';
+			newSlide.subtopic = project?.topic || 'New Slide';
 			newSlide.template = template;
 			newSlide.palette = color_theme;
 			newSlide.layout = layoutKey as keyof typeof layoutOptions;
@@ -98,10 +103,10 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			canEdit,
 			exportToPdfMode,
 			false,
-			() => {},
-			() => {},
-			() => () => {},
-			() => {},
+			() => { },
+			() => { },
+			() => () => { },
+			() => { },
 			// slide.palette,
 			index === 0 || index === 1,
 			slide.layout,
