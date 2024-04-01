@@ -49,6 +49,8 @@ export type SlideKeys =
 	| 'images_position'
 	| 'palette';
 
+export type Media = 'image' | 'chart' | 'youtube';
+
 export default class Slide {
 	head: string;
 	title: string;
@@ -56,7 +58,8 @@ export default class Slide {
 	userName: string;
 	template: TemplateKeys;
 	content: string[];
-	is_chart: boolean[]; // if is_chart[i] is false, then use image[i] for visualization, else use chart[i]
+	is_chart: boolean[]; // deprecated, if is_chart[i] is false, then use image[i] for visualization, else use chart[i]
+	media_types: Media[]; // use this instead of is_chart
 	images: string[]; // urls of images
 	images_position: ImagesPosition[];
 	chart: Chart[]; // data of charts
@@ -89,6 +92,7 @@ export default class Slide {
 		];
 		this.is_chart = [false, false, false];
 		this.images = ['', '', ''];
+		this.media_types = ['image', 'image', 'image'];
 		this.chart = Array.from({ length: 3 }, () => ({
 			type: '',
 			title: '',
