@@ -24,8 +24,10 @@ const LANGUAGES: Language[] = [
 	{ displayName: "🇸🇦 العربية", englishName: "Arabic", code: "ar-SA" },
 	{ displayName: "🇮🇱 עברית", englishName: "Hebrew", code: "he-IL" },
 	{ displayName: "🇳🇱 Nederlands", englishName: "Dutch", code: "nl-NL" },
-	{ displayName: "🇳🇴 Norsk", englishName: "Norwegian", code: "no-NO" },
+	// { displayName: "🇳🇴 Norsk", englishName: "Norwegian", code: "no-NO" },
 	{ displayName: "🇭🇷 Hrvatski", englishName: "Croatian", code: "hr-HR" },
+	{ displayName: "🇹🇭 ไทย", englishName: "Thai", code: "th-TH" },
+	{ displayName: "🇻🇳 Tiếng Việt", englishName: "Vietnamese", code: "vi-VN" },
 	// Add more languages as needed...
 ];
 

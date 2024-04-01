@@ -152,7 +152,9 @@ const VOICE_OPTIONS: VoiceOption = {
 	'hr-HR': {
 		'female': ['hr-HR-GabrijelaNeural'],
 		'male': ['hr-HR-SreckoNeural']
-	}
+	},
+	'vi-VN': { 'female': ['vi-VN-HoaiMyNeural'], 'male': ['vi-VN-NamMinhNeural'] },
+	'th-TH': { 'female': ['th-TH-PremwadeeNeural', 'th-TH-AcharaNeural'], 'male': ['th-TH-NiwatNeural'] }
 };
 
 export const TONE_DISPLAY_NAMES: { [key: string]: string } = {
