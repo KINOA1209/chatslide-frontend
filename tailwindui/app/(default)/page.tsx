@@ -30,7 +30,7 @@ export const metadata = generateMetadata();
 function App() {
 	return (
 		<>
-		{/* redirs to either /dashboard or welcome.html, the remaining is for SEO only */}
+		{/* redirs to either /dashboard or index.html, the remaining is for SEO only */}
 			<AutoRedir />  
 
 			<Header loginRequired={false} isLanding={true} />

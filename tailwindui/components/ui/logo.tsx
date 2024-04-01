@@ -1,6 +1,6 @@
 export function Logo() {
 	return (
-		<a href='/' className='block' aria-label='Cruip'>
+		<a href='/index.html' className='block' aria-label='Cruip'>
 			<img
 				src='/new_landing/svgs/drlambda-logo.svg'
 				alt='DrLambda'
@@ -12,7 +12,7 @@ export function Logo() {
 
 export function Home() {
 	return (
-		<a href='/' className='block' aria-label='Cruip'>
+		<a href='/index.html' className='block' aria-label='Cruip'>
 			<svg
 				width='16'
 				height='16'
@@ -36,7 +36,7 @@ export function Home() {
 export function BlackLogo() {
 	return (
 		<a
-			href='/'
+			href='/index.html'
 			className='block'
 			aria-label='Cruip'
 			style={{ backgroundColor: 'black' }}
@@ -52,7 +52,7 @@ export function BlackLogo() {
 
 export function ColorLogo() {
 	return (
-		<a href='/' className='block' aria-label='Cruip'>
+		<a href='/index.html' className='block' aria-label='Cruip'>
 			<img src='/images/Logo_Color.png' alt='DrLambda' className='w-16 h-16' />
 		</a>
 	);
