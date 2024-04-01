@@ -48,6 +48,8 @@ import { HiOutlineRefresh } from 'react-icons/hi';
 import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';
 import { MEDIA_EXTENSIONS } from './file/FileUploadButton';
+import RadioButton, { RadioButtonOption } from './ui/RadioButton';
+import { Explanation } from './ui/Text';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -115,6 +117,26 @@ export const ImgModule = ({
 	);
 
 	const [uploading, setUploading] = useState(false);
+	const [imageLicense, setImageLicense] = useState('all');
+	const imageLicenseOptions: RadioButtonOption[] = [
+		{
+			value: 'stock',
+			text: 'Stock',
+		},
+		{
+			value: 'creative',
+			text: 'Creative',
+		},
+		{
+			value: 'all',
+			text: 'All',
+		},
+		{
+			value: 'giphy',
+			text: 'Gif',
+		}
+	];
+
 
 	// useEffect(() => {
 	//     console.log(selectedQueryMode);
@@ -164,6 +186,7 @@ export const ImgModule = ({
 			},
 			body: JSON.stringify({
 				search_keyword: (e.target as HTMLFormElement).search_keyword.value,
+				license: imageLicense,
 			}),
 		})
 			.then((response) => {
@@ -453,7 +476,7 @@ export const ImgModule = ({
 
 	const imgSearchDiv = (
 		<div className='w-full h-full flex flex-col'>
-			<form onSubmit={handleImageSearchSubmit} className='w-full'>
+			<form onSubmit={handleImageSearchSubmit} className='w-full flex flex-col'>
 				<InputBox>
 					<input
 						id='search_keyword'
@@ -478,6 +501,21 @@ export const ImgModule = ({
 						</button>
 					)}
 				</InputBox>
+
+				<RadioButton
+					options={imageLicenseOptions}
+					selectedValue={imageLicense}
+					setSelectedValue={setImageLicense}
+					name='imageLicense'
+					cols={4}
+				/>
+
+				{
+					imageLicense === 'giphy' &&
+					<Explanation>
+						Powered by Giphy
+					</Explanation>
+				}
 			</form>
 			<div className='w-full h-full overflow-y-auto p-1'>
 				<div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-2'>
@@ -1029,19 +1067,18 @@ export const ImgModule = ({
 				onDrop={handleImageDrop}
 				onDragOver={(e) => e.preventDefault()}
 				// onClick={openModal}
-				className={`w-full h-full transition ease-in-out duration-150 relative ${
-					selectedImg === ''
+				className={`w-full h-full transition ease-in-out duration-150 relative ${selectedImg === ''
 						? 'bg-[#E7E9EB]'
 						: canEdit
-						? 'hover:bg-[#CAD0D3]'
-						: ''
-				} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
+							? 'hover:bg-[#CAD0D3]'
+							: ''
+					} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
 				style={{ borderRadius: customImageStyle?.borderRadius }}
 			>
 				{ischartArr &&
-				ischartArr[currentContentIndex] &&
-				selectedChartType &&
-				chartData.length > 0 ? ( // chart
+					ischartArr[currentContentIndex] &&
+					selectedChartType &&
+					chartData.length > 0 ? ( // chart
 					<div
 						className='w-full h-full flex items-center justify-center '
 						onClick={openModal}
@@ -1135,13 +1172,12 @@ export const ImgModule = ({
 								width={960}
 								height={540}
 								//objectFit='contain'
-								className={`transition ease-in-out duration-150 ${
-									canEdit
+								className={`transition ease-in-out duration-150 ${canEdit
 										? isImgEditMode
 											? 'brightness-100'
 											: 'hover:brightness-90'
 										: 'cursor-pointer'
-								}`}
+									}`}
 								onError={(e) => {
 									console.log('failed to load image', imgsrc);
 									setImgLoadError(true);
