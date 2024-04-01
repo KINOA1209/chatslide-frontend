@@ -6732,7 +6732,7 @@ blockquote {
 }
 
 .div-block-3 {
-  width: 1200px;
+  width: 100%;
 }
 
 @media screen and (min-width: 1440px) {
