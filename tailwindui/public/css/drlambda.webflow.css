@@ -5393,7 +5393,7 @@ blockquote {
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
-  min-height: 240px;
+  min-height: 239px;
   padding: 56px 24px 48px 0;
   display: flex;
   position: -webkit-sticky;
