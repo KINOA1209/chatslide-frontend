@@ -5275,9 +5275,9 @@ blockquote {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 94px;
-  padding-top: 32px;
-  padding-bottom: 32px;
+  min-height: 60px;
+  padding-top: 15px;
+  padding-bottom: 15px;
   display: flex;
 }
 
@@ -5375,9 +5375,9 @@ blockquote {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  min-height: 94px;
-  padding-top: 32px;
-  padding-bottom: 32px;
+  min-height: 60px;
+  padding-top: 15px;
+  padding-bottom: 15px;
   display: flex;
 }
 
@@ -7258,8 +7258,8 @@ blockquote {
   }
 
   .brix---footer-top-border-bottom {
-    padding-top: 94px;
-    padding-bottom: 94px;
+    padding-top: 50px;
+    padding-bottom: 50px;
   }
 
   .brix---heading-h3-size {
