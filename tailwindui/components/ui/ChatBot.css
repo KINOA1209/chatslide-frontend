@@ -1,0 +1,6 @@
+.blue-links a {
+	color: #2563EB;
+	/* Tailwind's blue-600 */
+	text-decoration: none;
+	/* Optional: removes underline */
+}
