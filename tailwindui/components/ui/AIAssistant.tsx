@@ -124,10 +124,10 @@ export const Chats: React.FC<ChatsProps> = ({
 						className={
 							chat.role === 'user'
 								? 'grow shrink basis-0 text-gray-100 text-base font-normal   text-wrap'
-								: 'text-neutral-800 text-base font-normal   text-wrap'
+								: 'text-neutral-800 text-base font-normal text-wrap'
 						}
 					>
-						{chat.content}
+						<span>{chat.content}</span>
 						{/* Check if there are imageUrls and render image previews */}
 
 						{chat.imageUrls && chat.imageUrls.length > 0 && (
