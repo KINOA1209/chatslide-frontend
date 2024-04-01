@@ -15,6 +15,7 @@ import { useProject } from '@/hooks/use-project';
 import { useImageStore } from '@/hooks/use-img-store';
 import ChatSuggestions from '../language/ChatSuggestions';
 import { stopArrowKeyPropagation } from '@/utils/editing';
+import './ChatBot.css';
 
 export const DrLambdaAIAssistantIcon: React.FC<{
 	onClick: () => void;
@@ -23,7 +24,7 @@ export const DrLambdaAIAssistantIcon: React.FC<{
 		<div
 			className='w-14 h-14 bg-neutral-50 rounded-[50%] shadow border border-black border-opacity-20 z-40 flex items-center justify-center relative'
 			onClick={onClick}
-			// style={{ animation: 'pulse 0.5s infinite' }}
+		// style={{ animation: 'pulse 0.5s infinite' }}
 		>
 			<div className='absolute inset-0 bg-gradient-to-b from-[#0B84FF] via-[#0B84FF] to-transparent rounded-[50%] opacity-0 animate-pulse'></div>
 			<Image
@@ -127,7 +128,9 @@ export const Chats: React.FC<ChatsProps> = ({
 								: 'text-neutral-800 text-base font-normal text-wrap'
 						}
 					>
-						<span>{chat.content}</span>
+						<div className='blue-links'>
+							<span dangerouslySetInnerHTML={{ __html: chat.content }}></span>
+						</div>
 						{/* Check if there are imageUrls and render image previews */}
 
 						{chat.imageUrls && chat.imageUrls.length > 0 && (
