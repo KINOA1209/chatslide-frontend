@@ -2,6 +2,11 @@
 const nextConfig = {
 	async redirects(){
 		return [
+			// {
+			// 	source: '/',
+			// 	destination: '/welcome',
+			// 	permanent: true,
+			// },
 			{
 				source: '/workflow-generate-outlines',
 				destination: '/summary',

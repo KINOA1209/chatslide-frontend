@@ -3,16 +3,15 @@ import MyProjectsImg from '@/public/new_landing/imgs/my-projects-mask.png';
 import Footer from '../../components/layout/footer';
 import FeatureCards from '../../components/new_landing/FeatureCards';
 import Header from '@/components/layout/header';
-import PricingSection from '@/components/new_landing/PricingPlans';
 import LandingButton from '@/components/new_landing/LandingButton';
 import HolidayBanner from '@/components/new_landing/HolidayBanner';
 import HeroText from '@/components/landing/HeroText';
-import Testimonails from '@/components/landing/testimonials';
 import {
 	DiscordButton,
 	ProductHuntButton,
 } from '@/components/new_landing/Buttons';
 import { generateMetadata } from '../layout';
+import AutoRedir from './AutoRedir';
 
 const fileTypes = [
 	'pdf-file-icon',
@@ -31,6 +30,9 @@ export const metadata = generateMetadata();
 function App() {
 	return (
 		<>
+		{/* redirs to either /dashboard or welcome.html, the remaining is for SEO only */}
+			<AutoRedir />  
+
 			<Header loginRequired={false} isLanding={true} />
 
 			<HolidayBanner />
@@ -65,14 +67,6 @@ function App() {
 					</div>
 
 					<div className='transition-transform duration-150 transform w-full h-[56vw] lg:w-[70rem] lg:h-[39.3rem] mx-auto max-w-7xl'>
-						<iframe
-							width='100%'
-							height='100%'
-							src='https://www.youtube.com/embed/qxHT5GYe_aQ?autoplay=1&mute=1&loop=1&rel=0'
-							title='DrLambda - One-click presentation AI tool through multiple sources'
-							allow='autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-							allowFullScreen
-						></iframe>
 					</div>
 					{/* <GenerationPreview /> */}
 				</div>
@@ -83,7 +77,6 @@ function App() {
 				>
 					<h2 className='w-[90%] h-full text-center text-neutral-900 text-3xl lg:text-5xl font-creato-medium leading-[4rem] lg:leading-[7.5rem]'>
 						Wall of love 💙
-						<Testimonails />
 					</h2>
 				</div>
 
@@ -198,15 +191,6 @@ function App() {
 						))}
 					</div>
 				</div>
-
-				<div className='py-4 lg:py-6 w-full items-center flex flex-col'>
-					<LandingButton />
-				</div>
-
-				<div id='pricing' className='pt-[2rem]'>
-					<PricingSection />
-				</div>
-
 				<Footer />
 			</div>
 		</>
