@@ -133,7 +133,6 @@ export const AddSlideButton: React.FC<{
 	currentSlideIndex: number;
 	addPage: () => void;
 }> = ({ currentSlideIndex, addPage }) => {
-
 	return (
 		<ButtonWithExplanation
 			button={
@@ -159,7 +158,6 @@ export const DuplicateSlidePageButton: React.FC<{
 	currentSlideIndex: number;
 	duplicatePage: () => void;
 }> = ({ currentSlideIndex, duplicatePage }) => {
-
 	return (
 		<ButtonWithExplanation
 			button={
@@ -185,7 +183,6 @@ export const DeleteSlideButton: React.FC<{
 	currentSlideIndex: number;
 	deletePage: () => void;
 }> = ({ currentSlideIndex, deletePage }) => {
-
 	return (
 		<ButtonWithExplanation
 			button={
@@ -249,12 +246,13 @@ export const DeleteSlideButton: React.FC<{
 //     </div>
 //   )
 // }
-export const ChangeTemplateOptions: React.FC<{
-}> = ({
-}) => {
-	const { project } = useProject();
+export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
+	// const { project } = useProject();
+	const { slides } = useSlides();
 	const { changeTemplateAndPalette } = useSlides();
-	const [selectedTemplate, setSelectedTemplate] = useState<TemplateKeys>(project?.template || 'Default');
+	const [selectedTemplate, setSelectedTemplate] = useState<TemplateKeys>(
+		slides[0].template || 'Default',
+	);
 	const [showModal, setShowModal] = useState(false);
 	// Assert the type of selectedTemplate as TemplateKeys
 	// const paletteOption =
@@ -262,22 +260,31 @@ export const ChangeTemplateOptions: React.FC<{
 	// 		selectedTemplate as keyof typeof availablePalettes
 	// 	] || [];
 	// layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
-	const [selectedPaletteOption, setSelectedPaletteOption] = useState<PaletteKeys>(project?.palette || 'Original');
+	const [selectedPaletteOption, setSelectedPaletteOption] =
+		useState<PaletteKeys>(slides[0]?.palette || 'Original');
 
 	const handleConfirm = () => {
 		console.log('selectedTemplate:', selectedPaletteOption);
 		changeTemplateAndPalette(selectedTemplate, selectedPaletteOption);
 		setShowModal(false);
 	};
+	useEffect(() => {
+		console.log(
+			'selcetedTemplate, selectedPalette',
+			slides[0].template,
+			slides[0]?.palette,
+		);
+	}, []);
 
 	useEffect(() => {
 		document.addEventListener('change_template', (e) => {
 			setShowModal(true);
 		});
 
-		return () => document.removeEventListener('change_template', (e) => {
-			setShowModal(true);
-		});
+		return () =>
+			document.removeEventListener('change_template', (e) => {
+				setShowModal(true);
+			});
 	}, []);
 
 	return (

@@ -57,7 +57,7 @@ export const Business_Dark_005_TemplateThemeConfig: {
 			fontFamily: 'Creato Display Regular',
 			lineHeight: '140%', // Equivalent to leading-[140%]
 			letterSpacing: '0.026rem', // Equivalent to tracking-[0.026rem]
-			color: '#8891AB', // Equivalent to text-[#3D3D3D]
+			color: '#FFFFFF', // Equivalent to text-[#3D3D3D]
 		},
 		headFontCSS: {
 			fontSize: '30pt',

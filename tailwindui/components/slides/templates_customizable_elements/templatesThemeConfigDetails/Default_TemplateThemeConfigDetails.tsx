@@ -41,7 +41,7 @@ export const Default_TemplateThemeConfig: {
 			fontFamily: 'Creato Display Regular',
 			lineHeight: '140%', // Equivalent to leading-[140%]
 			letterSpacing: '0.026rem', // Equivalent to tracking-[0.026rem]
-			color: 'red', // Equivalent to text-[#3D3D3D]
+			color: '#3D3D3D', // Equivalent to text-[#3D3D3D]
 		},
 
 		// userNameFont: {

@@ -56,12 +56,7 @@ export const templateDispatch = (
 	isShowingLogo: boolean = true,
 ): JSX.Element => {
 	useEffect(() => {
-		console.log(
-			'current slide layout and content text',
-			index,
-			slide.layout,
-			slide.content,
-		);
+		console.log('current slide palette', index, slide.palette);
 	}, []);
 	const { isPaidUser, token } = useUser();
 
