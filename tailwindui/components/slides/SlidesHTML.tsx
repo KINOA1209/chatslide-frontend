@@ -220,6 +220,22 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	}, [isChatWindowOpen]);
 
 	useEffect(() => {
+		document.addEventListener('add_page', handleAddPage);
+		document.addEventListener('duplicate_page', handleDuplicatePage);
+		document.addEventListener('delete_page', handleDeletePage);
+		document.addEventListener('undo_change', undoChange);
+		document.addEventListener('redo_change', redoChange);
+
+		return () => {
+			document.removeEventListener('add_page', handleAddPage);
+			document.removeEventListener('duplicate_page', handleDuplicatePage);
+			document.removeEventListener('delete_page', handleDeletePage);
+			document.removeEventListener('undo_change', undoChange);
+			document.removeEventListener('redo_change', redoChange);
+		}
+	}, [slideIndex, slidesHistoryIndex]);
+
+	useEffect(() => {
 		if (showScript) {
 			setNonPresentScale(
 				calculateNonPresentScale(

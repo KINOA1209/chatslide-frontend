@@ -134,16 +134,6 @@ export const AddSlideButton: React.FC<{
 	addPage: () => void;
 }> = ({ currentSlideIndex, addPage }) => {
 
-	useEffect(() => {
-		document.addEventListener('add_page', (e) => {
-			addPage();
-		});
-
-		return () => document.removeEventListener('add_page', (e) => {
-			addPage();
-		});
-	}, []);
-
 	return (
 		<ButtonWithExplanation
 			button={
@@ -170,16 +160,6 @@ export const DuplicateSlidePageButton: React.FC<{
 	duplicatePage: () => void;
 }> = ({ currentSlideIndex, duplicatePage }) => {
 
-	useEffect(() => {
-		document.addEventListener('duplicate_page', (e) => {
-			duplicatePage();
-		});
-
-		return () => document.removeEventListener('duplicate_page', (e) => {
-			duplicatePage();
-		});
-	}, []);
-
 	return (
 		<ButtonWithExplanation
 			button={
@@ -205,16 +185,6 @@ export const DeleteSlideButton: React.FC<{
 	currentSlideIndex: number;
 	deletePage: () => void;
 }> = ({ currentSlideIndex, deletePage }) => {
-
-	useEffect(() => {
-		document.addEventListener('delete_page', (e) => {
-			deletePage();
-		});
-
-		return () => document.removeEventListener('delete_page', (e) => {
-			deletePage();
-		});
-	}, []);
 
 	return (
 		<ButtonWithExplanation
