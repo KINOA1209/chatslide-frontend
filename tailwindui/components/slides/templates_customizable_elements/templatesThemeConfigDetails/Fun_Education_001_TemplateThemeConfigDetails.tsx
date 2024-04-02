@@ -5,8 +5,8 @@ export const Fun_Education_001_TemplateThemeConfig: {
 	[key in PaletteKeys]?: ThemeElements;
 } = {
 	Original: {
-		backgroundUrlCoverImg1:
-			'/images/template/Fun_Education_001/BackgroundElementsCover_img_1.png',
+		// backgroundUrlCoverImg1:
+		// 	'/images/template/Fun_Education_001/BackgroundElementsCover_img_1.png',
 		backgroundUrlCoverImg0:
 			'/images/template/Fun_Education_001/BackgroundElementsCover_img_0.png',
 		backgroundUrlCol_1_img_0:
