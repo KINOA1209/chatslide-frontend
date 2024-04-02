@@ -163,6 +163,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 							options={searchOnlineOptions}
 							selectedValue={searchOnlineScope}
 							setSelectedValue={setSearchOnlineScope}
+							cols={4}
 						/>
 					</div>
 				)}
