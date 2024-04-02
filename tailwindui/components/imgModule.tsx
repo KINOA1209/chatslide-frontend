@@ -49,7 +49,8 @@ import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';
 import { MEDIA_EXTENSIONS } from './file/FileUploadButton';
 import RadioButton, { RadioButtonOption } from './ui/RadioButton';
-import { Explanation } from './ui/Text';
+import { Explanation, Instruction } from './ui/Text';
+import { WordSelector } from './slides/WordSelector';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -68,6 +69,7 @@ interface ImgModuleProp {
 	layoutElements?: LayoutElements;
 	customImageStyle?: React.CSSProperties;
 	setImgHigherZIndex?: React.Dispatch<React.SetStateAction<boolean>>;
+	columnIndex?: number;
 }
 
 enum ImgQueryMode {
@@ -94,12 +96,13 @@ export const ImgModule = ({
 	layoutElements,
 	customImageStyle,
 	setImgHigherZIndex,
+	columnIndex = 0,
 }: ImgModuleProp) => {
 	const sourceImage = useImageStore((state) => state.sourceImage);
 	const { project } = useProject();
 	const { slideIndex, slides } = useSlides();
 	const [showModal, setShowModal] = useState(false);
-	const [keyword, setKeyword] = useState(project?.topic || '');
+	const [keyword, setKeyword] = useState('');
 	const [searchResult, setSearchResult] = useState<string[]>([]);
 	const [resources, setResources] = useState<Resource[]>([]);
 	const [searching, setSearching] = useState(false);
@@ -136,6 +139,23 @@ export const ImgModule = ({
 			text: 'Gif',
 		}
 	];
+
+	function getSearchText() {
+		const slide = slides[slideIndex];
+		switch (slide.layout) {
+			case 'Cover_img_1_layout':
+				return slide.head;
+			case 'Col_2_img_1_layout':
+				return slide.subtopic;
+			case 'Col_1_img_1_layout':
+				return slide.subtopic;
+			case 'Col_2_img_2_layout':
+				return slide.content[columnIndex];
+			case 'Col_3_img_3_layout':
+				return slide.content[columnIndex];
+		}
+		return '';
+	}
 
 
 	// useEffect(() => {
@@ -477,6 +497,16 @@ export const ImgModule = ({
 	const imgSearchDiv = (
 		<div className='w-full h-full flex flex-col'>
 			<form onSubmit={handleImageSearchSubmit} className='w-full flex flex-col'>
+				<Explanation>
+					Highlight the keywords you want to use for search:
+				</Explanation>
+				<WordSelector
+					text={getSearchText()}
+					setQuery={setKeyword}
+				/>
+				<Explanation>
+					Or directly enter the keywords below:
+				</Explanation>
 				<InputBox>
 					<input
 						id='search_keyword'
@@ -513,7 +543,7 @@ export const ImgModule = ({
 				{
 					imageLicense === 'giphy' &&
 					<Explanation>
-						Powered by Giphy. <br/>
+						Powered by Giphy. <br />
 						Gif may not be animated if you export to PDF / PPTX, or create video.
 					</Explanation>
 				}
@@ -551,6 +581,16 @@ export const ImgModule = ({
 	const imgGenerationDiv = (
 		<div className='w-full h-full flex flex-col'>
 			<form onSubmit={handleImageGenerationSubmit} className='w-full'>
+				<Explanation>
+					Highlight the keywords you want to use for search:
+				</Explanation>
+				<WordSelector
+					text={getSearchText()}
+					setQuery={setKeyword}
+				/>
+				<Explanation>
+					Or directly enter the keywords below:
+				</Explanation>
 				<InputBox>
 					<input
 						id='search_keyword'
@@ -1069,10 +1109,10 @@ export const ImgModule = ({
 				onDragOver={(e) => e.preventDefault()}
 				// onClick={openModal}
 				className={`w-full h-full transition ease-in-out duration-150 relative ${selectedImg === ''
-						? 'bg-[#E7E9EB]'
-						: canEdit
-							? 'hover:bg-[#CAD0D3]'
-							: ''
+					? 'bg-[#E7E9EB]'
+					: canEdit
+						? 'hover:bg-[#CAD0D3]'
+						: ''
 					} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
 				style={{ borderRadius: customImageStyle?.borderRadius }}
 			>
@@ -1174,10 +1214,10 @@ export const ImgModule = ({
 								height={540}
 								//objectFit='contain'
 								className={`transition ease-in-out duration-150 ${canEdit
-										? isImgEditMode
-											? 'brightness-100'
-											: 'hover:brightness-90'
-										: 'cursor-pointer'
+									? isImgEditMode
+										? 'brightness-100'
+										: 'hover:brightness-90'
+									: 'cursor-pointer'
 									}`}
 								onError={(e) => {
 									console.log('failed to load image', imgsrc);

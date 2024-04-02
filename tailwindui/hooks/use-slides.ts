@@ -48,6 +48,14 @@ export enum SlidesStatus {
 
 let slidesStatus: SlidesStatus = SlidesStatus.NotInited;
 
+export const removeTags = (text: string | string[]) => {
+	if (Array.isArray(text)) {
+		return text.map((t) => t.replace(/<[^>]*>?/gm, ''));
+	} else {
+		return text.replace(/<[^>]*>?/gm, '');
+	}
+};
+
 export const useSlides = () => {
 	const { slides, setSlides } = useSlidesBear();
 	const { slideIndex, setSlideIndex } = useSlideIndex();
@@ -271,14 +279,6 @@ export const useSlides = () => {
 			false,
 			slidesHistory[slidesHistoryIndex + 1].length,
 		);
-	};
-
-	const removeTags = (text: string | string[]) => {
-		if (Array.isArray(text)) {
-			return text.map((t) => t.replace(/<[^>]*>?/gm, ''));
-		} else {
-			return text.replace(/<[^>]*>?/gm, '');
-		}
 	};
 
 	const changePalette = (newPalette: PaletteKeys) => {

@@ -1435,6 +1435,7 @@ export const Col_2_img_2_layout = ({
 							layoutElements={layoutElements}
 							customImageStyle={layoutElements.imageCSS}
 							setImgHigherZIndex={setImgHigherZIndex}
+							columnIndex={0}
 						/>
 					</div>
 					<div
@@ -1463,6 +1464,7 @@ export const Col_2_img_2_layout = ({
 							layoutElements={layoutElements}
 							customImageStyle={layoutElements.imageCSS}
 							setImgHigherZIndex={setImgHigherZIndex}
+							columnIndex={1}
 						/>
 					</div>
 				</div>
@@ -1620,6 +1622,7 @@ export const Col_3_img_3_layout = ({
 							layoutElements={layoutElements}
 							customImageStyle={layoutElements.imageCSS}
 							setImgHigherZIndex={setImgHigherZIndex}
+							columnIndex={0}
 						/>
 					</div>
 					<div
@@ -1639,6 +1642,7 @@ export const Col_3_img_3_layout = ({
 							layoutElements={layoutElements}
 							customImageStyle={layoutElements.imageCSS}
 							setImgHigherZIndex={setImgHigherZIndex}
+							columnIndex={1}
 						/>
 					</div>
 					<div
@@ -1658,6 +1662,7 @@ export const Col_3_img_3_layout = ({
 							layoutElements={layoutElements}
 							customImageStyle={layoutElements.imageCSS}
 							setImgHigherZIndex={setImgHigherZIndex}
+							columnIndex={2}
 						/>
 					</div>
 				</div>
