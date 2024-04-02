@@ -133,6 +133,7 @@ export const AddSlideButton: React.FC<{
 	currentSlideIndex: number;
 	addPage: () => void;
 }> = ({ currentSlideIndex, addPage }) => {
+
 	return (
 		<ButtonWithExplanation
 			button={
@@ -158,6 +159,7 @@ export const DuplicateSlidePageButton: React.FC<{
 	currentSlideIndex: number;
 	duplicatePage: () => void;
 }> = ({ currentSlideIndex, duplicatePage }) => {
+
 	return (
 		<ButtonWithExplanation
 			button={
@@ -183,6 +185,7 @@ export const DeleteSlideButton: React.FC<{
 	currentSlideIndex: number;
 	deletePage: () => void;
 }> = ({ currentSlideIndex, deletePage }) => {
+
 	return (
 		<ButtonWithExplanation
 			button={

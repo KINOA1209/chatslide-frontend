@@ -92,6 +92,17 @@ export const useUser = () => {
 					isPaidUser: isPaidUser,
 				});
 
+
+				window.steyAIRecord?.identify({
+					uid: uid,
+					info: {
+						email: email,
+						username: username,
+					},
+				});
+
+				console.log('-- Identified user in steyAIRecord')
+
 				setCredits(credits);
 				setTier(tier);
 				setUid(uid);
@@ -116,14 +127,6 @@ export const useUser = () => {
 				await new Promise((resolve) => setTimeout(resolve, 500));
 			}
 		}
-
-		window.steyAIRecord?.identify({
-			uid: uid,
-			info: {
-				email: email,
-				username: username,
-			},
-		});
 	};
 
 	const updateCreditsAndTier = async () => {

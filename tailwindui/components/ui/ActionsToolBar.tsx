@@ -40,6 +40,16 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 		startTour();
 		setShowTutorialPrompt(false);
 	};
+
+	useEffect(() => {
+		document.addEventListener('redo_change', () => redo && redo());
+		document.addEventListener('undo_change', () => undo && undo());
+		return () => {
+			document.removeEventListener('redo_change', () => redo && redo());
+			document.removeEventListener('undo_change', () => undo && undo());
+		};
+	}, []);
+
 	return onlyShowTutorial ? (
 		<ToolBar>
 			{/* user tutorial control */}

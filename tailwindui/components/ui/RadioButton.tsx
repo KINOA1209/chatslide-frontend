@@ -13,6 +13,7 @@ interface RadioButtonProps {
 	options: RadioButtonOption[];
 	selectedValue: string;
 	setSelectedValue: (value: string) => void;
+	cols?: number;
 }
 
 const RadioButton: React.FC<RadioButtonProps> = ({
@@ -20,9 +21,10 @@ const RadioButton: React.FC<RadioButtonProps> = ({
 	options,
 	selectedValue,
 	setSelectedValue,
+	cols = 3,
 }) => {
 	return (
-		<div className='grid grid-cols-3 gap-x-4'>
+		<div className={`grid grid-cols-${cols} gap-x-4`}>
 			{options.map(({ img, value, text, icon }) => (
 				<div
 					key={value}

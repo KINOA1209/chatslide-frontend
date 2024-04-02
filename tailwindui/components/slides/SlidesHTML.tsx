@@ -138,14 +138,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		undoChange,
 		redoChange,
 		slidesHistoryIndex,
-		slidesStatus,
-		initSlides,
+		setSlides,
 		updateSlidePage,
 		gotoPage,
 		version,
 		saveStatus,
 		SaveStatus,
 		isShowingLogo,
+		debouncedSyncSlides,
 	} = useSlides();
 
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -175,6 +175,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const horizontalCurrentSlideRef = useRef<HTMLDivElement>(null);
 	const verticalCurrentSlideRef = useRef<HTMLDivElement>(null);
 	const { isShared, updateIsShared, project } = useProject();
+
+	const [draggedSlideIndex, setDraggedSlideIndex] = useState(-1);
 
 	const [host, setHost] = useState('https://drlambda.ai');
 
@@ -218,6 +220,22 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 		return () => window.removeEventListener('resize', handleResize);
 	}, [isChatWindowOpen]);
+
+	useEffect(() => {
+		document.addEventListener('add_page', handleAddPage);
+		document.addEventListener('duplicate_page', handleDuplicatePage);
+		document.addEventListener('delete_page', handleDeletePage);
+		document.addEventListener('undo_change', undoChange);
+		document.addEventListener('redo_change', redoChange);
+
+		return () => {
+			document.removeEventListener('add_page', handleAddPage);
+			document.removeEventListener('duplicate_page', handleDuplicatePage);
+			document.removeEventListener('delete_page', handleDeletePage);
+			document.removeEventListener('undo_change', undoChange);
+			document.removeEventListener('redo_change', redoChange);
+		}
+	}, [slideIndex, slidesHistoryIndex]);
 
 	useEffect(() => {
 		if (showScript) {
@@ -671,6 +689,19 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 									className={`w-[6rem] h-[4.5rem] lg:w-[8rem] lg:h-[6rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
 									onClick={() => gotoPage(index)}
 									ref={index === slideIndex ? verticalCurrentSlideRef : null}
+									draggable={index !== 0}
+									onDragStart = {() => {setDraggedSlideIndex(index);}}
+									onDragOver={(e) => e.preventDefault()} 
+									onDrop={() => {
+										if (draggedSlideIndex !== -1 && index != 0) {
+											const newSlides = [...slides];
+											const draggedSlide = newSlides[draggedSlideIndex];
+											newSlides.splice(draggedSlideIndex, 1);
+											newSlides.splice(index, 0, draggedSlide);
+											setSlides(newSlides);
+											debouncedSyncSlides(newSlides);
+										}
+									}}
 								>
 									{/* {index + 1} */}
 									<SlideContainer

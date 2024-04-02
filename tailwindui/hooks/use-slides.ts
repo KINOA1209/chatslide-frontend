@@ -48,6 +48,14 @@ export enum SlidesStatus {
 
 let slidesStatus: SlidesStatus = SlidesStatus.NotInited;
 
+export const removeTags = (text: string | string[]) => {
+	if (Array.isArray(text)) {
+		return text.map((t) => t.replace(/<[^>]*>?/gm, ''));
+	} else {
+		return text.replace(/<[^>]*>?/gm, '');
+	}
+};
+
 export const useSlides = () => {
 	const { slides, setSlides } = useSlidesBear();
 	const { slideIndex, setSlideIndex } = useSlideIndex();
@@ -89,7 +97,7 @@ export const useSlides = () => {
 
 	const showDrLambdaLogo = () => {
 		const newSlides = slides.map((slide, index) => {
-			return { ...slide, logo_url: '', logo: 'Default'};
+			return { ...slide, logo_url: '', logo: 'Default' };
 		});
 		setIsShowingLogo(true);
 		updateProject('logo', 'Default');
@@ -100,7 +108,7 @@ export const useSlides = () => {
 
 	const updateLogoUrl = (logo_url: string) => {
 		const newSlides = slides.map((slide, index) => {
-			return { ...slide, logo_url: logo_url};
+			return { ...slide, logo_url: logo_url };
 		});
 		setIsShowingLogo(true);
 		setSlides(newSlides);
@@ -231,11 +239,19 @@ export const useSlides = () => {
 	};
 
 	const undoChange = () => {
-		if (slidesHistoryIndex > 0) {
-			setSlides(slidesHistory[slidesHistoryIndex - 1]);
-			setSlidesHistoryIndex(slidesHistoryIndex - 1);
-			updateVersion();
+		if (slidesHistoryIndex <= 0)
+			return;
+
+		if (slidesHistory[slidesHistoryIndex - 1].length === 0) {
+			return;
 		}
+		setSlides(slidesHistory[slidesHistoryIndex - 1]);
+		const maxSlideIndex = slidesHistory[slidesHistoryIndex - 1].length - 1;
+		if (slideIndex > maxSlideIndex) {
+			setSlideIndex(maxSlideIndex);
+		}
+		setSlidesHistoryIndex(slidesHistoryIndex - 1);
+		updateVersion();
 		console.log('Performing undo...');
 		// document.execCommand('undo', false, undefined); // Change null to undefined
 
@@ -248,11 +264,11 @@ export const useSlides = () => {
 	};
 
 	const redoChange = () => {
-		if (slidesHistoryIndex < slidesHistory.length - 1) {
-			setSlides(slidesHistory[slidesHistoryIndex + 1]);
-			setSlidesHistoryIndex(slidesHistoryIndex + 1);
-			updateVersion();
-		}
+		if (slidesHistoryIndex >= slidesHistory.length - 1)
+			return;
+		setSlides(slidesHistory[slidesHistoryIndex + 1]);
+		setSlidesHistoryIndex(slidesHistoryIndex + 1);
+		updateVersion();
 		// Add your redo logic here
 		console.log('Performing redo...');
 		// document.execCommand('redo', false, undefined); // Change null to undefined
@@ -263,14 +279,6 @@ export const useSlides = () => {
 			false,
 			slidesHistory[slidesHistoryIndex + 1].length,
 		);
-	};
-
-	const removeTags = (text: string | string[]) => {
-		if (Array.isArray(text)) {
-			return text.map((t) => t.replace(/<[^>]*>?/gm, ''));
-		} else {
-			return text.replace(/<[^>]*>?/gm, '');
-		}
 	};
 
 	const changePalette = (newPalette: PaletteKeys) => {
@@ -476,5 +484,7 @@ export const useSlides = () => {
 		updateBackgroundUrl,
 		isPresenting,
 		setIsPresenting,
+		setSlides,
+		debouncedSyncSlides,
 	};
 };
