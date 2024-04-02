@@ -176,6 +176,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const verticalCurrentSlideRef = useRef<HTMLDivElement>(null);
 	const { isShared, updateIsShared, project } = useProject();
 
+	const [draggedSlideIndex, setDraggedSlideIndex] = useState(-1);
+
 	const [host, setHost] = useState('https://drlambda.ai');
 
 	useEffect(() => {
@@ -684,9 +686,21 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 										index.toString() +
 										slides.length.toString()
 									} // force update when slide length changes
-									className={`w-[6rem] h-[4.5rem] lg:w-[8rem] lg:h-[6rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
+									className={`w-[6rem] h-[4.5rem] lg:w-[8rem] lg:h-[6rem] rounded-md flex-shrink-0 cursor-pointer px-2 ${draggedSlideIndex === index ? 'hidden' : ''}`}
 									onClick={() => gotoPage(index)}
 									ref={index === slideIndex ? verticalCurrentSlideRef : null}
+									draggable
+									onDragStart = {() => {setDraggedSlideIndex(index);}}
+									onDragOver={(e) => e.preventDefault()} 
+									onDrop={() => {
+										if (draggedSlideIndex !== -1) {
+											const newSlides = [...slides];
+											const draggedSlide = newSlides[draggedSlideIndex];
+											newSlides.splice(draggedSlideIndex, 1);
+											newSlides.splice(index, 0, draggedSlide);
+											initSlides(newSlides);
+										}
+									}}
 								>
 									{/* {index + 1} */}
 									<SlideContainer
