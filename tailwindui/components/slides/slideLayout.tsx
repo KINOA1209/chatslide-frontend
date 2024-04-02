@@ -1241,6 +1241,7 @@ export const Col_1_img_1_layout = ({
 				> */}
 				<div
 					// className='py-[0.5rem] h-full w-full flex flex-col gap-[0.5rem]'
+					className={`SlideContentContainer`}
 					style={{
 						...layoutElements.contentContainerCSS,
 						maxHeight:
