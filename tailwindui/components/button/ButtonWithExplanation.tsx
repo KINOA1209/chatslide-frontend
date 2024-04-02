@@ -5,9 +5,11 @@ import { useState } from 'react';
 function ButtonWithExplanation({
 	button,
 	explanation,
+	id,
 }: {
 	button: JSX.Element;
 	explanation: string;
+	id? : string;
 }) {
 	const [showExplanation, setShowExplanation] = useState(false);
 
@@ -16,6 +18,7 @@ function ButtonWithExplanation({
 			className='relative cursor-pointer'
 			onMouseEnter={() => setShowExplanation(true)}
 			onMouseLeave={() => setShowExplanation(false)}
+			id={id ? id : 'toolbar-' + explanation.replace(/[^A-Za-z0-9]/g, '_')}
 		>
 			<div className='flex items-center justify-center'>{button}</div>
 			{showExplanation  && <div

@@ -105,7 +105,9 @@ const Profile = () => {
 								onChange={(e) => setEditEmail(e.target.value)}
 							/>
 						</InputBox>
-						<BigBlueButton onClick={handleSubmitUsernameAndEmail} isSubmitting={isSubmitting}>
+						<BigBlueButton
+							id='update-email'
+							onClick={handleSubmitUsernameAndEmail} isSubmitting={isSubmitting}>
 							Update
 						</BigBlueButton>
 					</div>
@@ -116,9 +118,11 @@ const Profile = () => {
 					🔐 Change Password
 				</Instruction>
 				<div className='items-center justify-center flex flex-row'>
-					<BigBlueButton onClick={() => {
-						window.location.href = '/reset-password';
-					}}>
+					<BigBlueButton
+						id='change-password'
+						onClick={() => {
+							window.location.href = '/reset-password';
+						}}>
 						Change Password
 					</BigBlueButton>
 				</div>
@@ -140,7 +144,9 @@ const Profile = () => {
 								value={editUsername}
 							/>
 						</InputBox>
-						<BigBlueButton onClick={handleSubmitUsernameAndEmail} isSubmitting={isSubmitting}>
+						<BigBlueButton
+							id='update-username'
+							onClick={handleSubmitUsernameAndEmail} isSubmitting={isSubmitting}>
 							Update
 						</BigBlueButton>
 					</div>
@@ -228,7 +234,10 @@ const OpenAIKey = () => {
 						/>
 					</InputBox>
 
-					<BigBlueButton onClick={updateKey} isSubmitting={isSubmitting}>
+					<BigBlueButton
+						id='update-oai-key'
+						onClick={updateKey}
+						isSubmitting={isSubmitting}>
 						Update
 					</BigBlueButton>
 				</div>
@@ -305,7 +314,10 @@ const ApplyPromo = () => {
 						/>
 					</InputBox>
 
-					<BigBlueButton onClick={applyPromo} isSubmitting={isSubmitting}>
+					<BigBlueButton
+						id='apply-promo'
+						onClick={applyPromo}
+						isSubmitting={isSubmitting}>
 						Apply
 					</BigBlueButton>
 				</div>

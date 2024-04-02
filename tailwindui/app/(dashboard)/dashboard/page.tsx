@@ -150,6 +150,7 @@ export default function Dashboard() {
 							<DrlambdaButton
 								isPaidFeature={false}
 								onClick={handleStartNewProject}
+								id='start_new_project'
 							>
 								Start
 							</DrlambdaButton>

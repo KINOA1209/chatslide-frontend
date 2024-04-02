@@ -139,6 +139,7 @@ const SideBar = ({ }: SideBarProps) => {
 						onSignOut={onSignOut}
 						isSidebarOpen={isSidebarOpen}
 						setIsSidebarOpen={setIsSidebarOpen}
+						id={`sidebar-item-${item.title}`}
 					/>
 				))}
 				{/* sign out */}
@@ -189,6 +190,7 @@ const SideBar = ({ }: SideBarProps) => {
 								target='_blank'
 								className='block flew flex-row items-center gap-1 py-1 text-sm text-white px-2 rounded-lg hover:bg-gray-400'
 								role='menuitem'
+								id='user-study-1000-credits'
 							>
 								Get 1000 ⭐️credits
 							</a>
@@ -197,6 +199,7 @@ const SideBar = ({ }: SideBarProps) => {
 								target='_blank'
 								className='block flew flex-row items-center gap-1 py-1 text-sm text-white px-2 rounded-lg hover:bg-gray-400'
 								role='menuitem'
+								id='user-study-100-credits'
 							>
 								Get 100 ⭐️credits
 							</a>
@@ -205,6 +208,7 @@ const SideBar = ({ }: SideBarProps) => {
 								target='_blank'
 								className='block flew flex-row items-center gap-1 py-1 text-sm text-white px-2 rounded-lg hover:bg-gray-400'
 								role='menuitem'
+								id='discord-50-credits'
 							>
 								Get 50 ⭐️credits
 							</a>

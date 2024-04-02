@@ -93,7 +93,7 @@ export const SlideLeftNavigator: React.FC<{
 	goToSlide: (index: number) => void;
 }> = ({ currentSlideIndex, slides, goToSlide }) => {
 	return (
-		<div className='col-span-1'>
+		<div className='col-span-1' id='slide-left-navigator'>
 			<div className='w-fit h-fit flex flex-row items-center justify-center mx-auto rounded-full'>
 				<button
 					disabled={currentSlideIndex === 0}
@@ -114,7 +114,7 @@ export const SlideRightNavigator: React.FC<{
 	goToSlide: (index: number) => void;
 }> = ({ currentSlideIndex, slides, goToSlide }) => {
 	return (
-		<div className='col-span-1'>
+		<div className='col-span-1' id='slide-right-navigator'>
 			<div className='w-fit h-fit flex flex-row items-center justify-center mx-auto rounded-full'>
 				<button
 					disabled={currentSlideIndex === slides.length - 1}

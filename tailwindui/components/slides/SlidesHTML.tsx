@@ -54,7 +54,6 @@ import { useProject } from '@/hooks/use-project';
 import ScriptWindow from '../script/ScriptWindow';
 import ReactDOM from 'react-dom';
 import { ScrollBar } from '../ui/ScrollBar';
-import Image from 'next/image';
 import { Explanation } from '../ui/Text';
 import { BrandingButton } from '../button/BrandingButton';
 

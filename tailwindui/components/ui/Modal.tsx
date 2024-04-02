@@ -115,6 +115,7 @@ const Modal: React.FC<ModalProps> = ({
 					{/* Close button */}
 					{canClose && (
 						<button
+							id='close-modal'
 							className='absolute top-0 right-0 text-xl focus:outline-none'
 							onClick={handleCloseModal}
 						>
@@ -136,11 +137,16 @@ const Modal: React.FC<ModalProps> = ({
 					{onConfirm && (
 						<div className='grid grid-cols-2 gap-x-2 justify-end'>
 							{canClose && (
-								<InversedBigBlueButton onClick={handleCloseModal}>
+								<InversedBigBlueButton
+									id='modal-cancel'
+									onClick={handleCloseModal}>
 									Cancel
 								</InversedBigBlueButton>
 							)}
-							<BigBlueButton isSubmitting={isSubmitting} onClick={onClick}>
+							<BigBlueButton
+								id='modal-confirm'
+								isSubmitting={isSubmitting}
+								onClick={onClick}>
 								Confirm
 							</BigBlueButton>
 						</div>
