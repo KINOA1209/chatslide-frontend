@@ -1036,14 +1036,17 @@ export const ImgModule = ({
 						? 'hover:bg-[#CAD0D3]'
 						: ''
 				} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
-				style={{ borderRadius: customImageStyle?.borderRadius }}
+				style={{
+					overflow: isImgEditMode ? 'visible' : 'hidden',
+					borderRadius: customImageStyle?.borderRadius,
+				}}
 			>
 				{ischartArr &&
 				ischartArr[currentContentIndex] &&
 				selectedChartType &&
 				chartData.length > 0 ? ( // chart
 					<div
-						className='w-full h-full flex items-center justify-center '
+						className='w-full h-full flex items-center justify-center overflow-hidden '
 						onClick={openModal}
 					>
 						<DynamicChart
@@ -1077,7 +1080,6 @@ export const ImgModule = ({
 						className={`${isImgEditMode ? 'rndContainerWithOutBorder' : ''}`}
 						style={{
 							...layoutElements?.rndContainerCSS,
-							overflow: isImgEditMode ? 'visible' : 'hidden',
 						}}
 						ref={imageRefs[currentContentIndex]}
 						onMouseEnter={() => setShowImgButton(true)}
