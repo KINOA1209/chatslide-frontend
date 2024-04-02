@@ -84,6 +84,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 								isPaidUser={isPaidUser}
 								isPaidFeature={nextIsPaidFeature}
 								onClick={(e) => setIsSubmitting(true)}
+								id={nextText.replace(/[^A-Za-z0-9]/g, '_')}
 							>
 								{nextText}
 							</DrlambdaButton>

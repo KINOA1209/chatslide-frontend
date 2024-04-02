@@ -32,6 +32,7 @@ export default async function Discover() {
 					<div className='absolute right-5 pb-1'>
 						<DrlambdaButton
 							isPaidFeature={false}
+							id='start_your_project'
 						>
 							<Link href='/scenario-choice'>Start Yours</Link>
 						</DrlambdaButton>

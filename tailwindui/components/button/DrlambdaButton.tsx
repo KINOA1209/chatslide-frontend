@@ -26,6 +26,7 @@ type DrlambdaButtonProps = {
 	bgColor?: string;
 	disabled?: boolean;
 	isFlashing?: boolean;
+	id?: string;
 };
 
 const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
@@ -37,6 +38,7 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
 	showArrow = true,
 	bgColor,
 	isFlashing = false,
+	id = '',
 }) => {
 	const [showPaywallModal, setShowPaywallModal] = useState(false);
 
@@ -76,6 +78,7 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
 				message='Upgrade to unlock more features. 🚀'
 			/>
 			<button
+				id={'primary-' + id}
 				disabled={isSubmitting}
 				onClick={checkPaidUser}
 				className={`sm:min-w-[10rem] lg:min-w-[12rem] px-2 h-[36px] sm:h-[36px] ${getButtonBg()} disabled:animate-pulse rounded-[0.4375rem] flex justify-center items-center gap-4 cursor-pointer }`}
@@ -125,6 +128,7 @@ export const DrlambdaLink: React.FC<DrlambdaLinkProps> = ({
 
 	return (
 		<a
+			id={text.replace(/[^A-Za-z0-9]/g, '_')}
 			href={link}
 			target={newWindow ? '_blank' : '_self'}
 			rel={newWindow ? 'noopener noreferrer' : undefined} // Important for security reasons
@@ -153,7 +157,8 @@ export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({
 }) => {
 	const router = useRouter();
 	return (
-		<div
+		<div 
+			id={text.replace(/[^A-Za-z0-9]/g, '_')}
 			className='h-[36px] sm:h-[36px] sm:min-w-[10rem] lg:min-w-[12rem] flex-row justify-center items-center gap-4 cursor-pointer flex rounded-3xl bg-white bg-opacity-0'
 			onClick={() => router.push(href)}
 		>
@@ -176,9 +181,11 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 	disabled = false,
 	isPaidUser,
 	isPaidFeature = false,
+	id,
 }) => {
 	return (
-		<button
+		<button 
+			id={id}
 			className={`btn h-[36px] sm:h-[36px] sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
 				isSubmitting && 'animate-pulse'
 			} disabled:bg-gray-600 whitespace-nowrap rounded-xl`}
@@ -196,11 +203,12 @@ export const BigGrayButton: React.FC<DrlambdaButtonProps> = ({
 	isSubmitting = false,
 	isPaidUser,
 	isPaidFeature,
+	id,
 }) => {
 	const [paywallModal, setShowPaywallModal] = useState(false);
 
 	return (
-		<div>
+		<div id={id}>
 			<PaywallModal
 				showModal={paywallModal}
 				setShowModal={setShowPaywallModal}
@@ -315,7 +323,7 @@ export const UserOnboardingButton: React.FC<UserOnboardingButtonProps> = ({
 }) => {
 	return (
 		<div className='hidden sm:fixed bottom-[6rem] right-4 z-50'>
-			<DrlambdaButton onClick={onClick} showArrow={false}>
+			<DrlambdaButton onClick={onClick} showArrow={false} id='user_guide'>
 				📍 User Guide
 			</DrlambdaButton>
 		</div>

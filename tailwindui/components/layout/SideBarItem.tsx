@@ -15,6 +15,7 @@ interface SidebarItemProps {
 	isSidebarOpen: boolean;
 	setIsSidebarOpen: (isSidebarOpen: boolean) => void;
 	onSignOut?: () => void;
+	id: string;
 }
 
 const SideBarItem: React.FC<SidebarItemProps> = ({
@@ -27,6 +28,7 @@ const SideBarItem: React.FC<SidebarItemProps> = ({
 	isSidebarOpen,
 	setIsSidebarOpen,
 	onSignOut,
+	id,
 }) => {
 	const router = useRouter();
 	const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
@@ -59,7 +61,7 @@ const SideBarItem: React.FC<SidebarItemProps> = ({
 	};
 
 	return (
-		<div>
+		<div id={id}>
 			<div onClick={handleSubMenuToggle} role='menuitem'>
 				<a
 					href={path}
@@ -84,6 +86,7 @@ const SideBarItem: React.FC<SidebarItemProps> = ({
 							onClick={() => handleSubMenuClick(subMenu)}
 							className='block flex flex-row items-center gap-2 py-2 text-white px-4 rounded-lg hover:bg-gray-400 cursor-pointer'
 							role='menuitem'
+							id={'submenu-item-' + subMenu.title}
 						>
 							{subMenu.title}
 						</div>

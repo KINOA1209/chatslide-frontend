@@ -280,11 +280,17 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 							.
 						</Instruction>
 						<div className='mt-4 flex justify-end gap-x-4'>
-							<InversedBigBlueButton onClick={onClose}>
+							<InversedBigBlueButton
+								id='close-feedback'
+								onClick={onClose}>
 								Close
 							</InversedBigBlueButton>
 
-							<BigBlueButton onClick={() => { }}>Submit</BigBlueButton>
+							<BigBlueButton
+								id='submit-feedback'
+								onClick={() => { }}>
+								Submit
+							</BigBlueButton>
 						</div>
 					</form>
 				)}

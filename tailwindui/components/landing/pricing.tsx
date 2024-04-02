@@ -259,6 +259,7 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 														<DrlambdaButton
 															onClick={() => handleClick('free')}
 															showArrow={false}
+															id='free'
 														>
 															Sign up to Start
 														</DrlambdaButton>
@@ -325,6 +326,7 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 													<DrlambdaButton
 														onClick={() => handleClick('plus')}
 														showArrow={false}
+														id='plus'
 													>
 														{getCta()}
 													</DrlambdaButton>
@@ -395,6 +397,7 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 													<DrlambdaButton
 														onClick={() => handleClick('pro')}
 														showArrow={false}
+														id='pro'
 													>
 														{getCta()}
 													</DrlambdaButton>
