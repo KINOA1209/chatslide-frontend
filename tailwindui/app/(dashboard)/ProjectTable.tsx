@@ -72,14 +72,12 @@ const ProjectItem: React.FC<{
 
 			{/* resources */}
 			{!isDiscover &&
-				<div className='col-span-2 p-[2rem] border-b-2 hidden md:flex items-center text-gray-600 text-[17px] font-normal font-creato-medium leading-normal tracking-wide'>
-					<div className='flex flex-col items-start'>
+				<div className='col-span-2 border-b-2 hidden md:block items-center text-gray-600'>
 						{/* <FileIcon fileType='pdf' /> */}
 						{project.resources &&
 							project.resources.map((resource, resourceIndex) => (
 								<ResourceItem key={resourceIndex} {...resource} />
 							))}
-					</div>
 				</div>}
 
 			{/* buttons */}
