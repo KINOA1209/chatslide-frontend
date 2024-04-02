@@ -56,14 +56,31 @@ export const templateDispatch = (
 	isShowingLogo: boolean = true,
 ): JSX.Element => {
 	useEffect(() => {
-		console.log(
-			'current slide layout and content text',
-			index,
-			slide.layout,
-			slide.content,
-		);
+		console.log('current slide palette', index, slide.palette);
 	}, []);
 	const { isPaidUser, token } = useUser();
+
+	// for col1img1 layout, maxHeight would be 160px, for col2img2 140px; for col2img1 it's 280px, for col3img3 it's 130px; for col1img0 280px; for col2img0 280px; for col3img0 280px
+	const maxContentTextAreaHeight = (layout: LayoutKeys) => {
+		switch (layout) {
+			case 'Col_2_img_1_layout':
+				return '280px';
+			case 'Col_1_img_1_layout':
+				return '160px';
+			case 'Col_1_img_0_layout':
+				return '280px';
+			case 'Col_2_img_0_layout':
+				return '280px';
+			case 'Col_3_img_0_layout':
+				return '280px';
+			case 'Col_2_img_2_layout':
+				return '140px';
+			case 'Col_3_img_3_layout':
+				return '130px';
+			default:
+				return '160px'; // Default maxHeight
+		}
+	};
 
 	const dynamicCalculateContentFontSize = (
 		layout: LayoutKeys,
@@ -229,7 +246,11 @@ export const templateDispatch = (
 	};
 
 	let custom_logo = slide.logo;
-	if (slide.template && slide.template.length > 0 && custom_logo === 'Default') {
+	if (
+		slide.template &&
+		slide.template.length > 0 &&
+		custom_logo === 'Default'
+	) {
 		custom_logo = slide.template;
 	}
 	if (slide.logo_url && slide.logo_url.length > 0) {
@@ -324,6 +345,7 @@ export const templateDispatch = (
 									maxContentLength,
 									totalContentLength,
 								),
+								maxHeight: maxContentTextAreaHeight(slide.layout),
 							},
 							true,
 					  )
@@ -345,6 +367,7 @@ export const templateDispatch = (
 											maxContentLength,
 											totalContentLength,
 										),
+										maxHeight: maxContentTextAreaHeight(slide.layout),
 									},
 									false,
 									contentIndex,

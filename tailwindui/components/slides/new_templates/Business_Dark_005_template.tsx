@@ -44,28 +44,21 @@ export const Business_Dark_005_template = ({
 	// Load customizable elements for the current template
 	const themeElements = loadCustomizableElements(
 		'Business_Dark_005' as TemplateKeys,
-		palette,
 	);
 	const layoutConfigElements = loadLayoutConfigElements(
 		'Business_Dark_005' as TemplateKeys,
 		layoutOptionCover as keyof typeof layoutOptions,
 	);
 
-	// useEffect(() => {
-	// 	console.log('Business_002_template themeElements:', themeElements);
-	// }, []);
-	// useEffect(() => {
-	// 	console.log(
-	// 		'Business_002_template layoutConfigElements for current slide page:',
-	// 		layoutConfigElements,
-	// 	);
-	// }, []);
-	// useEffect(() => {
-	// 	console.log(
-	// 		'Business_002_template layoutConfigElements for cover img 0 bg color',
-	// 		layoutConfigElements.canvaCSS?.backgroundColor,
-	// 	);
-	// }, []);
+	useEffect(() => {
+		console.log('Business dark template themeElements:', themeElements);
+	}, []);
+	useEffect(() => {
+		console.log(
+			'Business dark template layoutConfigElements for current slide page:',
+			layoutConfigElements,
+		);
+	}, []);
 	return (
 		<>
 			{/* for not-cover page slides */}

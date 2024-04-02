@@ -40,6 +40,17 @@ const TemplateSelector: React.FC<{
 }> = ({ template, setTemplate, paletteOptions, setPalette, palette }) => {
 	type OptionType = { value: PaletteKeys; label: JSX.Element };
 
+	const [currentSelectedPalette, setCurrentSelectedPalette] = useState(palette); // Initialize currentPalette with palette
+
+	useEffect(() => {
+		// Whenever template changes, reset currentPalette to the first value of paletteOptions
+		// Whenever template changes, reset currentPalette to the first value of paletteOptions
+		if (paletteOptions.length === 1) {
+			setPalette(paletteOptions[0]); // If only one option, set it as default
+		} else if (!paletteOptions.includes(currentSelectedPalette)) {
+			setPalette(paletteOptions[0]); // If current palette is not in options, set first option as default
+		}
+	}, [template, paletteOptions]);
 	const handleTemplateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const selectedValue = e.target.value as TemplateKeys;
 		setTemplate(selectedValue);
@@ -51,9 +62,11 @@ const TemplateSelector: React.FC<{
 	// };
 	const handlePaletteChange = (selectedOption: OptionType | null) => {
 		if (selectedOption !== null) {
+			setCurrentSelectedPalette(selectedOption.value);
 			setPalette(selectedOption.value);
 		} else {
 			// Handle the case where no option is selected, for example, clear the palette
+			// setCurrentPalette(paletteOptions[0])
 			setPalette(paletteOptions[0]);
 		}
 	};
@@ -89,9 +102,7 @@ const TemplateSelector: React.FC<{
 					{/* Render color palette options only if there are more than one */}
 					{paletteOptions.length > 1 && (
 						<div className={`paletteChoice flex flex-col `}>
-							<Instruction>
-								Select your palette color:
-							</Instruction>
+							<Instruction>Select your palette color:</Instruction>
 							{/* <DropDown
 								width='15rem'
 								onChange={handlePaletteChange}
@@ -146,6 +157,21 @@ const TemplateSelector: React.FC<{
 										</div>
 									),
 								}}
+								// defaultValue={{
+								// 	value: paletteOptions[0], // Set the default value to the currently selected palette
+								// 	label: (
+								// 		<div className='flex items-center'>
+								// 			<div
+								// 				className='w-4 h-4 mr-2'
+								// 				style={{
+								// 					backgroundColor:
+								// 						colorPreviews[paletteOptions[0] as PaletteKeys],
+								// 				}}
+								// 			/>
+								// 			{palette}
+								// 		</div>
+								// 	),
+								// }}
 								styles={{
 									control: (provided) => ({
 										...provided,

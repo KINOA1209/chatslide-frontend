@@ -524,7 +524,7 @@ export const Business_Dark_005_TemplateLayoutsConfig: {
 			// order: 3,
 			zIndex: 20,
 		},
-		contentCSS: {
+		contentContainerCSS: {
 			zIndex: 30,
 			padding: '1rem 2rem 2rem 2rem',
 			width: '100%',

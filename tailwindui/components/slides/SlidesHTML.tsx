@@ -80,6 +80,7 @@ export const loadCustomizableElements = (
 	const selectedThemeElements =
 		themeElements[paletteName as PaletteKeys] ||
 		(Default_TemplateThemeConfig['Original'] as ThemeElements);
+	console.log('loaded theme configurations is:', selectedThemeElements);
 	return selectedThemeElements;
 };
 
@@ -109,7 +110,10 @@ export const calculateNonPresentScale = (
 		const scriptEditorHeight = showScript ? 200 : 0;
 		return Math.min(
 			1,
-			Math.min((width - 400 - chatWindowWidth) / 960, (height - 250 - scriptEditorHeight) / 540),
+			Math.min(
+				(width - 400 - chatWindowWidth) / 960,
+				(height - 250 - scriptEditorHeight) / 540,
+			),
 		);
 	}
 };
@@ -233,7 +237,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			document.removeEventListener('delete_page', handleDeletePage);
 			document.removeEventListener('undo_change', undoChange);
 			document.removeEventListener('redo_change', redoChange);
-		}
+		};
 	}, [slideIndex, slidesHistoryIndex]);
 
 	useEffect(() => {
@@ -326,8 +330,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				setIsPresenting(false);
 			}
 		} else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
-			if (slideIndex > 0)
-				gotoPage(slideIndex - 1);
+			if (slideIndex > 0) gotoPage(slideIndex - 1);
 		} else if (event.key === 'Escape') {
 			setIsPresenting(false); // Exit presentation mode
 		}
@@ -520,10 +523,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			false, // canEdit
 			exportToPdfMode, //exportToPdfMode
 			false, //editMathMode
-			() => { }, //setIsEditMode
-			() => { }, // handleSlideEdit
-			() => () => { }, // updateImgUrlArray,
-			() => { }, // toggleEditMode,
+			() => {}, //setIsEditMode
+			() => {}, // handleSlideEdit
+			() => () => {}, // updateImgUrlArray,
+			() => {}, // toggleEditMode,
 			// slide.palette,
 			index === 0, // isCoverPage
 			slide.layout, // layoutOptionNonCover
@@ -689,8 +692,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 									onClick={() => gotoPage(index)}
 									ref={index === slideIndex ? verticalCurrentSlideRef : null}
 									draggable={index !== 0}
-									onDragStart = {() => {setDraggedSlideIndex(index);}}
-									onDragOver={(e) => e.preventDefault()} 
+									onDragStart={() => {
+										setDraggedSlideIndex(index);
+									}}
+									onDragOver={(e) => e.preventDefault()}
 									onDrop={() => {
 										if (draggedSlideIndex !== -1 && index != 0) {
 											const newSlides = [...slides];
