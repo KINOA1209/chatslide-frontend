@@ -120,16 +120,16 @@ export const ImgModule = ({
 	const [imageLicense, setImageLicense] = useState('all');
 	const imageLicenseOptions: RadioButtonOption[] = [
 		{
+			value: 'all',
+			text: 'All',
+		},
+		{
 			value: 'stock',
 			text: 'Stock',
 		},
 		{
 			value: 'creative',
 			text: 'Creative',
-		},
-		{
-			value: 'all',
-			text: 'All',
 		},
 		{
 			value: 'giphy',
@@ -513,7 +513,8 @@ export const ImgModule = ({
 				{
 					imageLicense === 'giphy' &&
 					<Explanation>
-						Powered by Giphy
+						Powered by Giphy. <br/>
+						Gif may not be animated if you export to PDF / PPTX, or create video.
 					</Explanation>
 				}
 			</form>
