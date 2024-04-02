@@ -471,6 +471,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						onChange={handleInputChange}
 						onKeyDown={handleEnter}
 						style={{ minHeight: '32px' }} // Set minimum height to resemble input field
+						placeholder='Start here...'
 					/>
 
 					{/* send text, call api to get response */}
