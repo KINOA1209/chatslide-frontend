@@ -451,7 +451,7 @@ export const Business_Light_006_TemplateLayoutsConfig: {
 			//overflow: 'hidden', // equivalent to overflow-hidden
 			position: 'relative', // equivalent to relative
 		},
-		contentCSS: {
+		contentContainerCSS: {
 			width: '100%', // equivalent to w-full
 			display: 'grid',
 			gridTemplateColumns: 'repeat(2, 1fr)', // equivalent to grid-cols-2

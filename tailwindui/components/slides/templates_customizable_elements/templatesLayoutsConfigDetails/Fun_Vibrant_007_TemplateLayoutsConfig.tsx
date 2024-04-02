@@ -542,7 +542,7 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			//overflow: 'hidden', // equivalent to overflow-hidden
 			position: 'relative', // equivalent to relative
 		},
-		contentCSS: {
+		contentContainerCSS: {
 			zIndex: 30,
 			width: '100%', // equivalent to w-full
 			display: 'grid',
