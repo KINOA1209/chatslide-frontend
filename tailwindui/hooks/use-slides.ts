@@ -484,5 +484,7 @@ export const useSlides = () => {
 		updateBackgroundUrl,
 		isPresenting,
 		setIsPresenting,
+		setSlides,
+		debouncedSyncSlides,
 	};
 };

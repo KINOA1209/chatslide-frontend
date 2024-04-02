@@ -138,14 +138,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		undoChange,
 		redoChange,
 		slidesHistoryIndex,
-		slidesStatus,
-		initSlides,
+		setSlides,
 		updateSlidePage,
 		gotoPage,
 		version,
 		saveStatus,
 		SaveStatus,
 		isShowingLogo,
+		debouncedSyncSlides,
 	} = useSlides();
 
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -686,19 +686,20 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 										index.toString() +
 										slides.length.toString()
 									} // force update when slide length changes
-									className={`w-[6rem] h-[4.5rem] lg:w-[8rem] lg:h-[6rem] rounded-md flex-shrink-0 cursor-pointer px-2 ${draggedSlideIndex === index ? 'hidden' : ''}`}
+									className={`w-[6rem] h-[4.5rem] lg:w-[8rem] lg:h-[6rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
 									onClick={() => gotoPage(index)}
 									ref={index === slideIndex ? verticalCurrentSlideRef : null}
-									draggable
+									draggable={index !== 0}
 									onDragStart = {() => {setDraggedSlideIndex(index);}}
 									onDragOver={(e) => e.preventDefault()} 
 									onDrop={() => {
-										if (draggedSlideIndex !== -1) {
+										if (draggedSlideIndex !== -1 && index != 0) {
 											const newSlides = [...slides];
 											const draggedSlide = newSlides[draggedSlideIndex];
 											newSlides.splice(draggedSlideIndex, 1);
 											newSlides.splice(index, 0, draggedSlide);
-											initSlides(newSlides);
+											setSlides(newSlides);
+											debouncedSyncSlides(newSlides);
 										}
 									}}
 								>
