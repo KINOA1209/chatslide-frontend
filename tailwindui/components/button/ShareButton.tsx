@@ -31,9 +31,10 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 }) => {
 	const [showModal, setShowModal] = useState(false);
 	const project_id = project?.id || '';
+	const [isPublic, setIsPublic] = useState(project.is_public);
 
 	const toggleShare = async () => {
-		setShare && setShare(true); // updates db as well
+		setShare && setShare(true, isPublic); // updates db as well
 		setShowModal(true);
 	};
 
@@ -55,7 +56,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 
 	const handlePost = async (platform: string) => {
 		try {
-			setShare && setShare(true);
+			setShare && setShare(true, isPublic);
 			const shareLink = `${host}/shared/${project_id}`;
 			const hashTags = limitedKeywords
 				.map((keyword) => `#${keyword}`)
@@ -102,7 +103,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 							]}
 							selectedValue={share ? 'yes' : 'no'}
 							setSelectedValue={(value) => {
-								setShare(value === 'yes');
+								setShare(value === 'yes', isPublic);
 							}}
 						/>
 					)}
@@ -157,8 +158,9 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 								{ text: 'Yes', value: 'yes' },
 								{ text: 'No', value: 'no' },
 							]}
-							selectedValue={project.is_public ? 'yes' : 'no'}
+							selectedValue={isPublic ? 'yes' : 'no'}
 							setSelectedValue={(value) => {
+								setIsPublic(value === 'yes');
 								setShare(true, value === 'yes');
 							}}
 						/>

@@ -84,11 +84,17 @@ export const useProject = () => {
 		});
 	}
 
-	const updateIsShared = (is_shared: boolean, is_public: boolean=false) => {
-		if(!project) return;
+	const updateIsShared = (is_shared: boolean, is_public: boolean | undefined) => {
+		if (!project) return;
+		console.log('-- updateIsShared', is_shared, is_public);
 		setIsShared(is_shared);
-		setProject({ ...project, is_shared: is_shared, is_public: is_public } as Project);
-		ProjectService.SlideShareLink(token, project.id, is_shared, is_public);
+		if (is_public === undefined) {
+			setProject({ ...project, is_shared: is_shared } as Project);
+			ProjectService.SlideShareLink(token, project.id, is_shared);
+		} else {
+			setProject({ ...project, is_shared: is_shared, is_public: is_public } as Project);
+			ProjectService.SlideShareLink(token, project.id, is_shared, is_public);
+		}
 	};
 
 	const updateOutlines = (outlines: Outlines) => {
