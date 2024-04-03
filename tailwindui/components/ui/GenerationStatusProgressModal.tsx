@@ -12,21 +12,21 @@ export const GenerationStatusProgressModal: FC<
 > = ({ onClick, waitingTime }) => {
 	const [percentage, setPercentage] = useState(0);
 	useEffect(() => {
+		const targetPercentage = 99;
+		let currentPercentage = 0;
+
 		const interval = setInterval(() => {
-			// Update percentage every second until it reaches 100%
-			setPercentage((prevPercentage) => {
-				if (prevPercentage < 100) {
-					return prevPercentage + 100 / (waitingTime || 1); // Use the waitingTime prop or fallback to 1 if it's undefined
-				} else {
-					clearInterval(interval); // Clear interval when percentage reaches 100%
-					onClick(); // Close modal when generation is complete
-					return 100;
-				}
-			});
-		}, 1000);
+			// Increment the progress until it reaches the target percentage
+			if (currentPercentage < targetPercentage) {
+				currentPercentage++;
+				setPercentage(currentPercentage);
+			} else {
+				clearInterval(interval); // Stop the interval when target percentage is reached
+			}
+		}, (waitingTime || 1) * 10); // Adjust the interval duration based on waitingTime
 
 		return () => clearInterval(interval); // Clean up interval on unmount
-	}, [onClick, waitingTime]);
+	}, [waitingTime]);
 	return (
 		<Modal
 			showModal={true}

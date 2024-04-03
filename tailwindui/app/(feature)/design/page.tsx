@@ -87,8 +87,8 @@ export default function DesignPage() {
 
 	const [colorPalette, setColorPalette] = useState<PaletteKeys>(
 		project?.palette ||
-		availablePalettes[template as keyof typeof availablePalettes]?.[0] ||
-		'Original',
+			availablePalettes[template as keyof typeof availablePalettes]?.[0] ||
+			'Original',
 	);
 	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
 		project?.selected_logo || [],
@@ -138,7 +138,7 @@ export default function DesignPage() {
 		},
 	];
 
-	const [branding, setBranding] = useState(project?.logo === "" ? 'no' : 'yes');
+	const [branding, setBranding] = useState(project?.logo === '' ? 'no' : 'yes');
 
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
@@ -161,7 +161,7 @@ export default function DesignPage() {
 			{showGenerationStatusModal && (
 				<GenerationStatusProgressModal
 					onClick={handleGenerationStatusModal}
-					waitingTime={25}
+					waitingTime={20}
 				></GenerationStatusProgressModal>
 			)}
 
@@ -210,7 +210,7 @@ export default function DesignPage() {
 							setPalette={setColorPalette}
 							paletteOptions={
 								availablePalettes[
-								template as keyof typeof availablePalettes
+									template as keyof typeof availablePalettes
 								] || ['Original']
 							}
 							palette={colorPalette}
@@ -263,8 +263,7 @@ export default function DesignPage() {
 								}
 								if (e === 'yes') {
 									showDrLambdaLogo();
-								}
-								else {
+								} else {
 									hideLogo();
 									updateProject('selected_logo', []);
 								}
