@@ -473,7 +473,7 @@ export const useSlides = () => {
 		updateVersion,
 		saveStatus,
 		SaveStatus,
-		syncSlides,
+		// syncSlides,
 		setTranscripts,
 		isShowingLogo,
 		// setIsShowingLogo,
