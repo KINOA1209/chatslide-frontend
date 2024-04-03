@@ -81,11 +81,6 @@ const SideBar = ({ }: SideBarProps) => {
 	if (userStatus == UserStatus.Failed || !uid) {
 		if (path.includes('/discover'))
 			return <></>  // do not show sidebar if user is a visitor
-		if (path.includes('/dashboard')) {
-			console.log('No uid yet');
-			console.log('userStatus', userStatus);
-			return <></>  // do not show sidebar if user just logged in
-		}
 		else
 			return (
 				<Modal
@@ -93,7 +88,7 @@ const SideBar = ({ }: SideBarProps) => {
 					canClose={false} // cannot close modal
 					setShowModal={() => { }} // cannot close modal
 					title='Sign in to continue'
-					description='You need to sign in to continue'
+					description='Session expired, you need to sign in again to continue'
 					onConfirm={() => router.push('/signup')}
 				/>
 			);

@@ -80,7 +80,7 @@ export const loadCustomizableElements = (
 	const selectedThemeElements =
 		themeElements[paletteName as PaletteKeys] ||
 		(Default_TemplateThemeConfig['Original'] as ThemeElements);
-	console.log('loaded theme configurations is:', selectedThemeElements);
+	// console.log('loaded theme configurations is:', selectedThemeElements);
 	return selectedThemeElements;
 };
 
