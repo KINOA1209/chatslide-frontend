@@ -210,9 +210,9 @@ const SideBar = ({ }: SideBarProps) => {
 						</>
 					)}
 
-					<div className='relative'>
+					{/* <div className='relative'>
 						<FeedbackButton timeout={path.includes('/slides') ? 30 * 1000 : 0} />
-					</div>
+					</div> */}
 				</div>
 			</div>
 
