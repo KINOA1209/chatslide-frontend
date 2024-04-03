@@ -4,7 +4,7 @@ import 'quill/dist/quill.bubble.css';
 import '@/components/socialPost/quillEditor.scss';
 import themeColorConfigData from './templates_customizable_elements/theme_color_options';
 import '@/app/css/style.css';
-import { stopArrowKeyPropagation  } from '@/utils/editing';
+import { stopArrowKeyPropagation } from '@/utils/editing';
 
 type QuillEditableProps = {
 	content: string | string[];
@@ -190,7 +190,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 	const isTextChangeRef = useRef(false);
 
 	useEffect(() => {
-		// stop arrow key and esc key propagation 
+		// stop arrow key and esc key propagation
 		const editor = editorRef.current;
 		if (editor) {
 			editor.addEventListener('keydown', stopArrowKeyPropagation);
@@ -231,26 +231,24 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			class DefaultSytleBlock extends BlockPrototype {
 				constructor(domNode: HTMLElement, value: string) {
 					super(domNode, value);
-					this.format("size", style?.fontSize as string || "16pt");
-					this.format("font", style?.fontFamily || 'Arimo')
+					this.format('size', (style?.fontSize as string) || '16pt');
+					this.format('font', style?.fontFamily || 'Arimo');
 				}
 
-				static tagName = "P";
+				static tagName = 'P';
 
 				format(name: string, value: string) {
-					if (name === "size") {
+					if (name === 'size') {
 						this.domNode.style.fontSize = value;
-					}
-					else if (name === "font") {
+					} else if (name === 'font') {
 						this.domNode.style.fontFamily = value;
-					}
-					else {
+					} else {
 						super.format(name, value);
 					}
 				}
 			}
 			Quill.register(DefaultSytleBlock, true);
-			
+
 			//create deep copy of toolbaroptions
 			let customizedToolbarOptions = JSON.parse(JSON.stringify(toolbarOptions));
 
@@ -274,7 +272,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			quillInstanceRef.current = new Quill(editorRef.current, {
 				modules: { toolbar: customizedToolbarOptions },
 				theme: 'bubble',
-				placeholder: 'add some text here...',
+				placeholder: 'Add Text...',
 				//bounds: editorRef.current,
 			});
 
@@ -425,7 +423,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 					// For plain text, insert it with the defined formatting options
 					itemDelta.insert(`${item}\n`, quillFormats);
 				}
-				return itemDelta
+				return itemDelta;
 			};
 
 			if (Array.isArray(content)) {

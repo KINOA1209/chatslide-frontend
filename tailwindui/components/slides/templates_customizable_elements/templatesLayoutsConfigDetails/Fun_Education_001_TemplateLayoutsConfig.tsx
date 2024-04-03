@@ -227,7 +227,7 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			letterSpacing: '0.15rem',
 			paddingTop: '2rem',
 			zIndex: 20,
-			top: '-50%',
+			top: '-30%',
 			left: '0%',
 		},
 		contentIndexTextDividerCSS: {
@@ -303,7 +303,7 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			letterSpacing: '0.15rem',
 			paddingTop: '2rem',
 			zIndex: 20,
-			top: '-50%',
+			top: '-30%',
 			left: '0%',
 		},
 		contentIndexTextDividerCSS: {
