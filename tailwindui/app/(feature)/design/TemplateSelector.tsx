@@ -76,9 +76,7 @@ const TemplateSelector: React.FC<{
 			<div
 				className={`transition-opacity duration-300 ease-in-out gap-1 flex flex-col justify-start`}
 			>
-				<div
-					className={`templateAndPaletteChoice flex flex-col sm:flex-row justify-between items-start sm:items-center`}
-				>
+				<div className={`templateAndPaletteChoice flex flex-col  items-start`}>
 					<div className={`templateChoice flex flex-col `}>
 						<Instruction>Select your template:</Instruction>
 						<DropDown
