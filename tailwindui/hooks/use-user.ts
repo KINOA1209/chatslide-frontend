@@ -3,15 +3,12 @@ import { Auth as AmplifyAuth } from '@aws-amplify/auth';
 import { createBearStore } from '@/utils/create-bear-store';
 import UserService from '@/services/UserService';
 import AuthService from '@/services/AuthService';
-import mixpanel from 'mixpanel-browser'
-
 
 const useTokenBear = createBearStore<string>()('token', '', true, false);
 const useUidBear = createBearStore<string>()('uid', '', true, false);
 const useUsernameBear = createBearStore<string>()('username', '', true, false);
 const useEmailBear = createBearStore<string>()('email', '', true, false);
 const useIsPaidUserBear = createBearStore<boolean>()(
-
 	'isPaidUser',
 	false,
 	true,
@@ -103,15 +100,6 @@ export const useUser = () => {
 						username: username,
 					},
 				});
-
-				mixpanel.init('22044147cd36f20bf805d416e1235329', {
-					debug: false,
-					track_pageview: true,
-					persistence: 'localStorage',
-					ignore_dnt: true,
-				});
-
-				mixpanel.identify(uid);
 
 				console.log('-- Identified user in steyAIRecord')
 
