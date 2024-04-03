@@ -557,7 +557,7 @@ export const Clean_Lifestyle_003_TemplateLayoutsConfig: {
 			borderRadius: '0.375rem', // equivalent to rounded-md
 			//overflow: 'hidden', // equivalent to overflow-hidden
 		},
-		contentCSS: {
+		contentContainerCSS: {
 			zIndex: 30,
 			paddingTop: '1rem',
 			width: '100%', // equivalent to w-full

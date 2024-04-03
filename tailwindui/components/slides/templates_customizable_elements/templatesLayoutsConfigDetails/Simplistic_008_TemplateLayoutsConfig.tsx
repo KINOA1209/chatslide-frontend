@@ -410,7 +410,7 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 		titleAndSubtopicBoxCSS: {
 			// backgroundColor: '#F1F1F1',
 			paddingTop: '50px',
-			paddingBottom: '50px',
+			paddingBottom: '30px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
 			display: 'flex',
@@ -447,7 +447,7 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 		},
 		contentContainerCSS: {
 			zIndex: 30,
-			padding: '0px 50px 0px 50px',
+			padding: '30px 50px 0px 50px',
 			width: '100%',
 			display: 'grid',
 			gridTemplateColumns: 'repeat(2, 1fr)', //
@@ -516,7 +516,7 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			// position: 'relative', // equivalent to relative
 			// zIndex: 20,
 		},
-		contentCSS: {
+		contentContainerCSS: {
 			zIndex: 30,
 			padding: '0px 50px 0px 50px',
 			width: '100%',

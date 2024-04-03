@@ -4,29 +4,60 @@ import FillOutFormImg from '@/public/images/user_onboarding/FillOutForms.png';
 import BookASessionImg from '@/public/images/user_onboarding/BookASession.png';
 interface GenerationStatusProgressModalProps {
 	onClick: () => void;
-	waitingTime?: number; // Default waiting time in seconds
+	prompts: [string, number][]; // Array of prompt text and waiting time pairs
 }
 
 export const GenerationStatusProgressModal: FC<
 	GenerationStatusProgressModalProps
-> = ({ onClick, waitingTime }) => {
+> = ({ onClick, prompts }) => {
+	const [currentIndex, setCurrentIndex] = useState(0);
 	const [percentage, setPercentage] = useState(0);
+	const [stepsCompleted, setStepsCompleted] = useState(false); // Flag to track whether steps are completed
 	useEffect(() => {
-		const interval = setInterval(() => {
-			// Update percentage every second until it reaches 100%
-			setPercentage((prevPercentage) => {
-				if (prevPercentage < 100) {
-					return prevPercentage + 100 / (waitingTime || 1); // Use the waitingTime prop or fallback to 1 if it's undefined
-				} else {
-					clearInterval(interval); // Clear interval when percentage reaches 100%
-					onClick(); // Close modal when generation is complete
-					return 100;
-				}
-			});
-		}, 1000);
+		const targetPercentage = 99;
+		let currentPercentage = 0;
 
-		return () => clearInterval(interval); // Clean up interval on unmount
-	}, [onClick, waitingTime]);
+		if (prompts[currentIndex] && !stepsCompleted) {
+			const interval = setInterval(() => {
+				// Increment the progress until it reaches the target percentage
+				if (currentPercentage < targetPercentage) {
+					currentPercentage++;
+					setPercentage(currentPercentage);
+				} else {
+					clearInterval(interval); // Stop the interval when target percentage is reached
+					if (currentIndex < prompts.length - 1) {
+						setCurrentIndex((prevIndex) => prevIndex + 1); // Move to the next prompt
+						setPercentage(0); // Reset percentage for the next prompt
+					} else {
+						setStepsCompleted(true); // Set flag to true when all steps are completed
+					}
+				}
+			}, (prompts[currentIndex][1] || 1) * 10); // Adjust the interval duration based on waitingTime
+
+			return () => clearInterval(interval); // Clean up interval on unmount
+		}
+	}, [currentIndex, prompts]);
+
+	// useEffect(() => {
+	// 	const targetPercentage = 99;
+	// 	let currentPercentage = 0;
+
+	// 	if (prompts[currentIndex]) {
+	// 		const interval = setInterval(() => {
+	// 			// Increment the progress until it reaches the target percentage
+	// 			if (currentPercentage < targetPercentage) {
+	// 				currentPercentage++;
+	// 				setPercentage(currentPercentage);
+	// 			} else {
+	// 				clearInterval(interval); // Stop the interval when target percentage is reached
+	// 				setCurrentIndex((prevIndex) => prevIndex + 1); // Move to the next prompt
+	// 				setPercentage(0); // Reset percentage for the next prompt
+	// 			}
+	// 		}, (prompts[currentIndex][1] || 1) * 10); // Adjust the interval duration based on waitingTime
+
+	// 		return () => clearInterval(interval); // Clean up interval on unmount
+	// 	}
+	// }, [currentIndex, prompts]);
 	return (
 		<Modal
 			showModal={true}
@@ -43,7 +74,7 @@ export const GenerationStatusProgressModal: FC<
 				<div className='w-full flex flex-row items-center justify-between'>
 					{/* status prompt text */}
 					<div className='text-center text-neutral-800 text-xl font-bold leading-normal font-creato-medium'>
-						AI is generating your slides...
+						{prompts[currentIndex] && prompts[currentIndex][0]}
 					</div>
 
 					{/* progress status number percentage */}
