@@ -606,7 +606,7 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 			//overflow: 'hidden', // equivalent to overflow-hidden
 			zIndex: 20,
 		},
-		contentCSS: {
+		contentContainerCSS: {
 			zIndex: 30,
 			padding: '1rem 2rem 2rem 2rem',
 			width: '100%', // equivalent to w-full

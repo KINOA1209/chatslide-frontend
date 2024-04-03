@@ -516,7 +516,7 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			// position: 'relative', // equivalent to relative
 			// zIndex: 20,
 		},
-		contentCSS: {
+		contentContainerCSS: {
 			zIndex: 30,
 			padding: '0px 50px 0px 50px',
 			width: '100%',

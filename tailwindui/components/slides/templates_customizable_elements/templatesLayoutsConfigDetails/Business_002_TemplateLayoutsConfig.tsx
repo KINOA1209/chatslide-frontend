@@ -405,7 +405,7 @@ export const Business_002_TemplateLayoutsConfig: {
 			borderRadius: '0.375rem', // equivalent to rounded-md
 			//overflow: 'hidden', // equivalent to overflow-hidden
 		},
-		contentCSS: {
+		contentContainerCSS: {
 			width: '100%', // equivalent to w-full
 			display: 'grid',
 			gridTemplateColumns: 'repeat(3, 1fr)', // equivalent to grid-cols-3

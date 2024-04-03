@@ -557,7 +557,7 @@ export const Fun_Education_001_TemplateLayoutsConfig: {
 			// borderRadius: '0.375rem', // equivalent to rounded-md
 			//overflow: 'hidden', // equivalent to overflow-hidden
 		},
-		contentCSS: {
+		contentContainerCSS: {
 			zIndex: 30,
 			padding: '1rem 2rem 2rem 2rem',
 			width: '100%', // equivalent to w-full

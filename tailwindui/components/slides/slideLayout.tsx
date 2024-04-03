@@ -1706,7 +1706,20 @@ export const Col_3_img_3_layout = ({
 
 	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
 
+	// Ensure content is always an array
+	const items = Array.isArray(content) ? content : [content];
+	const { slides, slideIndex, updateSlidePage, updateVersion } = useSlides();
 	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
+	const [updatedContent, setUpdatedContent] = useState(items);
+
+	useEffect(() => {
+		console.log('updatedContent on page', slideIndex, updatedContent);
+	}, [updatedContent]);
+
+	const [showAddButton, setShowAddButton] = useState(
+		// slides[slideIndex].content.length <= 2, for three columns
+		updatedContent.length <= 2,
+	);
 	return (
 		<div style={layoutElements.canvaCSS}>
 			<div
@@ -1794,7 +1807,7 @@ export const Col_3_img_3_layout = ({
 					</div>
 				</div>
 				{/* three columns of text */}
-				<div
+				{/* <div
 					// className='w-full grid grid-cols-3 gap-[2rem]'
 					style={{ ...layoutElements.contentCSS, zIndex: 40 }}
 				>
@@ -1825,6 +1838,198 @@ export const Col_3_img_3_layout = ({
 								</ul>
 							</div>
 						))}
+				</div> */}
+				<div
+					className={`w-full flex SlideContentContainer`}
+					style={{ ...layoutElements.contentContainerCSS, zIndex: 40 }}
+				>
+					{/* {Array.isArray(content) &&
+					content.map((item, index) => (
+						<div
+							// className='flex flex-col gap-[0.5rem]'
+							key={index}
+							style={{
+								...layoutElements.contentCSS,
+								display: item === null || index > 2 ? 'none' : 'flex', // or 'flex' based on your layout
+							}}
+						>
+							<div style={layoutElements.contentIndexCSS}>{index + 1}</div>
+							<div
+								// className='opacity-50 border border-neutral-900 border-opacity-40'
+								style={layoutElements.contentIndexTextDividerCSS}
+							></div>
+							<ul
+								key={index}
+								// className={`flex flex-row w-full h-full grow `}
+								style={layoutElements.contentTextCSS}
+							>
+								<li className='contentBulletPoint' style={{ width: '100%' }}>
+									{item}
+								</li>
+							</ul>
+						</div>
+					))} */}
+					<div className='Column1' style={layoutElements.contentCSS}>
+						<div
+							className={`SlideContentIndex`}
+							style={
+								layoutElements.contentIndexCSS !== undefined
+									? { ...layoutElements.contentIndexCSS }
+									: { display: 'none' }
+							}
+						>
+							{1}
+						</div>
+						<div
+							className={`SlideContentIndexTextDivider`}
+							style={layoutElements.contentIndexTextDividerCSS}
+						></div>
+
+						{updatedContent.length === 0 && showAddButton && (
+							<div
+								className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
+								// onClick={handleAddTextColumn}
+								onClick={() =>
+									handleAddTextColumn({
+										handleSlideEdit: handleSlideEdit,
+										isVerticalContent: false,
+										themeElements: themeElements,
+										fontSize: '16pt',
+										contentIndex: 0,
+										slideIndex: slideIndex,
+										slides: slides,
+										setUpdatedContent: setUpdatedContent,
+										setShowAddButton: setShowAddButton,
+										shouldShowAddButton: updatedContent.length <= 2,
+									})
+								}
+							>
+								<RiAddLine className={addIconStyle} />
+								Add One Column of text
+							</div>
+						)}
+						{updatedContent.slice(0, 1).map((item, index) => (
+							<React.Fragment key={`contentText_${index}_${Date.now()}`}>
+								<ul
+									key={`contentText_${index}_${Date.now()}`}
+									className={`SlideContentText`}
+									style={layoutElements.contentTextCSS}
+								>
+									<li style={{ width: '100%' }}>{item}</li>
+								</ul>
+							</React.Fragment>
+						))}
+					</div>
+
+					<div className='Column2' style={layoutElements.contentCSS}>
+						<div
+							className={`SlideContentIndex`}
+							style={
+								layoutElements.contentIndexCSS !== undefined
+									? { ...layoutElements.contentIndexCSS }
+									: { display: 'none' }
+							}
+						>
+							{2}
+						</div>
+						<div
+							className={`SlideContentIndexTextDivider`}
+							style={layoutElements.contentIndexTextDividerCSS}
+						></div>
+						{updatedContent.length === 1 && showAddButton && (
+							<div
+								className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
+								// onClick={handleAddColumn}
+								onClick={() =>
+									handleAddTextColumn({
+										handleSlideEdit: handleSlideEdit,
+										isVerticalContent: false,
+										themeElements: themeElements,
+										fontSize: '16pt',
+										contentIndex: 1,
+										slideIndex: slideIndex,
+										slides: slides,
+										setUpdatedContent: setUpdatedContent,
+										setShowAddButton: setShowAddButton,
+										shouldShowAddButton: updatedContent.length <= 2,
+									})
+								}
+							>
+								<div
+									className={`SlideContentIndexTextDivider`}
+									style={layoutElements.contentIndexTextDividerCSS}
+								></div>
+								<RiAddLine className={addIconStyle} />
+								Add One Column of text
+							</div>
+						)}
+						{updatedContent.slice(1, 2).map((item, index) => (
+							<React.Fragment key={`contentText_${index + 1}_${Date.now()}`}>
+								<ul
+									key={`contentText_${index}_${Date.now()}`}
+									className={`SlideContentText`}
+									style={layoutElements.contentTextCSS}
+								>
+									<li style={{ width: '100%' }}>{item}</li>
+								</ul>
+							</React.Fragment>
+						))}
+					</div>
+
+					<div className='Column3' style={layoutElements.contentCSS}>
+						<div
+							className={`SlideContentIndex`}
+							style={
+								layoutElements.contentIndexCSS !== undefined
+									? { ...layoutElements.contentIndexCSS }
+									: { display: 'none' }
+							}
+						>
+							{3}
+						</div>
+						<div
+							className={`SlideContentIndexTextDivider`}
+							style={layoutElements.contentIndexTextDividerCSS}
+						></div>
+						{updatedContent.length === 2 && showAddButton && (
+							<div
+								className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
+								// onClick={handleAddColumn}
+								onClick={() =>
+									handleAddTextColumn({
+										handleSlideEdit: handleSlideEdit,
+										isVerticalContent: false,
+										themeElements: themeElements,
+										fontSize: '16pt',
+										contentIndex: 2,
+										slideIndex: slideIndex,
+										slides: slides,
+										setUpdatedContent: setUpdatedContent,
+										setShowAddButton: setShowAddButton,
+										shouldShowAddButton: updatedContent.length <= 2,
+									})
+								}
+							>
+								<div
+									className={`SlideContentIndexTextDivider`}
+									style={layoutElements.contentIndexTextDividerCSS}
+								></div>
+								<RiAddLine className={addIconStyle} />
+								Add One Column of text
+							</div>
+						)}
+						{updatedContent.slice(2, 3).map((item, index) => (
+							<React.Fragment key={`contentText_${index + 2}_${Date.now()}`}>
+								<ul
+									key={`contentText_${index}_${Date.now()}`}
+									className={`SlideContentText`}
+									style={layoutElements.contentTextCSS}
+								>
+									<li style={{ width: '100%' }}>{item}</li>
+								</ul>
+							</React.Fragment>
+						))}
+					</div>
 				</div>
 			</div>
 			<div
