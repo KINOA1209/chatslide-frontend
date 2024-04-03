@@ -10,6 +10,7 @@ import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
 import StepsSlidesPage from '@/components/user_onboarding/StepsSlidesPage';
 import useHydrated from '@/hooks/use-hydrated';
 import { useProject } from '@/hooks/use-project';
+import { GenerationStatusProgressModal } from '@/components/ui/GenerationStatusProgressModal';
 export default function WorkflowStep3() {
 	const { isPaidUser } = useUser();
 	const { project } = useProject();
@@ -17,6 +18,13 @@ export default function WorkflowStep3() {
 
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
+	const [showGenerationStatusModal, setShowGenerationStatusModal] =
+		useState(false);
+
+	const handleGenerationStatusModal = () => {
+		// console.log('user Research Modal toggled');
+		setShowGenerationStatusModal(!showGenerationStatusModal);
+	};
 	// set current page to local storage
 	useEffect(() => {
 		if (typeof window !== 'undefined' && localStorage) {
@@ -38,10 +46,16 @@ export default function WorkflowStep3() {
 				isPaidUser={isPaidUser}
 				nextIsPaidFeature={true}
 				nextText={!isSubmitting ? 'Write Scripts' : 'Writing Scripts'}
+				handleClickingGeneration={handleGenerationStatusModal}
 			/>
 
 			<ToastContainer enableMultiContainer containerId={'slides'} />
-
+			{showGenerationStatusModal && (
+				<GenerationStatusProgressModal
+					onClick={handleGenerationStatusModal}
+					prompts={[['We are writing your scripts...', 5]]}
+				></GenerationStatusProgressModal>
+			)}
 			{/* slides */}
 			<SlideVisualizer
 				isGpt35={isGpt35}

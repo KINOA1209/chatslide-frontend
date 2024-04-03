@@ -12,11 +12,12 @@ export const GenerationStatusProgressModal: FC<
 > = ({ onClick, prompts }) => {
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [percentage, setPercentage] = useState(0);
+	const [stepsCompleted, setStepsCompleted] = useState(false); // Flag to track whether steps are completed
 	useEffect(() => {
 		const targetPercentage = 99;
 		let currentPercentage = 0;
 
-		if (prompts[currentIndex]) {
+		if (prompts[currentIndex] && !stepsCompleted) {
 			const interval = setInterval(() => {
 				// Increment the progress until it reaches the target percentage
 				if (currentPercentage < targetPercentage) {
@@ -27,6 +28,8 @@ export const GenerationStatusProgressModal: FC<
 					if (currentIndex < prompts.length - 1) {
 						setCurrentIndex((prevIndex) => prevIndex + 1); // Move to the next prompt
 						setPercentage(0); // Reset percentage for the next prompt
+					} else {
+						setStepsCompleted(true); // Set flag to true when all steps are completed
 					}
 				}
 			}, (prompts[currentIndex][1] || 1) * 10); // Adjust the interval duration based on waitingTime
