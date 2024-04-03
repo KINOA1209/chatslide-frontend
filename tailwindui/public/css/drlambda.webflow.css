@@ -5969,7 +5969,7 @@ blockquote {
 
 .brix---footer-top-border-bottom {
   border-bottom: 1px solid var(--elements-webflow-library--neutral--300);
-  padding-top: 100px;
+  padding-top: 20px;
   padding-bottom: 20px;
 }
 
