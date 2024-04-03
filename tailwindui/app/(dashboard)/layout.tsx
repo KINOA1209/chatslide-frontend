@@ -27,7 +27,7 @@ export default function DashBoardLayout({
 					{/* Content */}
 					{children}
 				</main>
-				<WorkflowFooter />
+				{/* <WorkflowFooter /> */}
 			</div>
 		</div>
 	);

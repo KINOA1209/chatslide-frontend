@@ -28,7 +28,7 @@ export default function AccountLayout({
 						{children}
 					</div>
 				</main>
-				<WorkflowFooter />
+				{/* <WorkflowFooter /> */}
 			</div>
 		</div>
 	);
