@@ -11,7 +11,6 @@ import {
 	listStyle,
 } from '@/components/socialPost/Styles';
 import {
-	SocialPostSlide,
 	SlideKeys,
 } from '@/components/socialPost/socialPostHTML';
 import templates, {
@@ -23,6 +22,9 @@ import React, { CSSProperties, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import 'quill/dist/quill.bubble.css';
 import '@/components/socialPost/quillEditor.scss';
+import SocialPostSlide from '@/models/SocialPost';
+import Chart, { Group } from '@/models/Chart';
+import ImagesPosition from '@/models/ImagesPosition';
 
 const QuillEditable = dynamic(() => import('./quillEditor'), { ssr: false });
 
@@ -32,7 +34,7 @@ export const templateDispatch = (
 	canEdit: boolean = true,
 	exportToPdfMode: boolean = false,
 	editMathMode: boolean = false,
-	saveSlides: (slides: SocialPostSlide[]) => void = () => {}, // Replace with your default function if you have one
+	//saveSlides: (slides: SocialPostSlide[]) => void = () => {}, // Replace with your default function if you have one
 	setIsEditMode: (isEditMode: boolean) => void = () => {}, // Replace with your default function if you have one
 	handleSlideEdit: (
 		content: string | string[],
@@ -97,10 +99,23 @@ export const templateDispatch = (
 		}
 	};
 
+	const emptyGroup: Group = {
+		values: [],
+		color: '',
+		keys: [],
+		legend: '',
+	};
+	const defaultChartArr = Array.from({ length: 3 }, () => ({
+		type: '',
+		title: '',
+		groups: [emptyGroup],
+		axis: { x: '', y: '' },
+	}));
+
 	if (index === 0) {
 		return (
 			<Template
-				autoSave={saveSlides}
+				//autoSave={saveSlides}
 				key={keyPrefix + index.toString()}
 				icon={<CompanyIconWhite />}
 				update_callback={updateImgUrlArray(index)}
@@ -128,12 +143,16 @@ export const templateDispatch = (
 				title={<></>}
 				quote={<></>}
 				source={<></>}
+				charts={slide.chart || defaultChartArr}
+				ischarts={slide.is_chart}
+				images_position={slide.images_position || [{}, {}, {}]}
+				handleSlideEdit={handleSlideEdit}
 			/>
 		);
 	} else {
 		return (
 			<Template
-				autoSave={saveSlides}
+				//autoSave={saveSlides}
 				canEdit={canEdit}
 				key={keyPrefix + index.toString()}
 				icon={<CompanyIconWhite />}
@@ -142,58 +161,6 @@ export const templateDispatch = (
 				subtopic={generateContentElement(slide.subtopic, 'subtopic', h2Style)}
 				keywords={generateContentElement(slide.keywords, 'keywords', h1Style)}
 				content={slide.content.map((content: string, contentIndex: number) => {
-					if (content.includes('$$') || content.includes('\\(')) {
-						if (editMathMode) {
-							return (
-								<div
-									key={
-										keyPrefix + index.toString() + '_' + contentIndex.toString()
-									}
-									className={`${!exportToPdfMode && 'overflow-hidden'} ${
-										canEdit
-											? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline'
-											: ''
-									}`}
-									contentEditable={canEdit}
-									style={listStyle}
-									onFocus={() => {
-										if (canEdit) {
-											setIsEditMode(true);
-										}
-									}}
-									onBlur={(e) => {
-										const modifiedContent = [...slide.content];
-										modifiedContent[contentIndex] = e.target.innerText;
-										handleSlideEdit(modifiedContent, index, 'content');
-									}}
-								>
-									{content}
-								</div>
-							);
-						} else {
-							return (
-								<MathJaxContext
-									key={
-										keyPrefix + index.toString() + '_' + contentIndex.toString()
-									}
-								>
-									<MathJax>
-										<div
-											onClick={toggleEditMathMode}
-											className={`${!exportToPdfMode && 'overflow-hidden'} ${
-												canEdit
-													? 'hover:outline-[#CAD0D3] focus:hover:outline-black hover:outline'
-													: ''
-											}`}
-											style={listStyle}
-										>
-											{content}
-										</div>
-									</MathJax>
-								</MathJaxContext>
-							);
-						}
-					}
 					return (
 						<div
 							key={keyPrefix + index.toString() + '_' + contentIndex.toString()}
@@ -221,6 +188,10 @@ export const templateDispatch = (
 				source={<></>}
 				English_title={<></>}
 				topic={<></>}
+				charts={slide.chart || defaultChartArr}
+				ischarts={slide.is_chart}
+				images_position={slide.images_position || [{}, {}, {}]}
+				handleSlideEdit={handleSlideEdit}
 			/>
 		);
 	}

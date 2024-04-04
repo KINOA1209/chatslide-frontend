@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
+import SocialPostSlide from '@/models/SocialPost';
 import dynamic from 'next/dynamic';
 import ExportToPngButton from '@/components/socialPost/socialPostPngButton';
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
@@ -10,6 +10,7 @@ import { TextLabel } from '../ui/GrayLabel';
 import ClickableLink from '@/components/ui/ClickableLink';
 import { useProject } from '@/hooks/use-project';
 import { ToolBar } from '../ui/ToolBar';
+import { useSocialPosts } from '@/hooks/use-socialpost';
 
 const SocialPostHTML = dynamic(
 	() => import('@/components/socialPost/socialPostHTML'),
@@ -17,14 +18,14 @@ const SocialPostHTML = dynamic(
 );
 
 type SocialPostVisualizerProps = {
-	socialPostSlides: SocialPostSlide[];
-	setSocialPostSlides: Function;
+	//socialPostSlides: SocialPostSlide[];
+	//setSocialPostSlides: Function;
 	borderColorOptions: ThemeObject[];
 	res_scenario: string;
 };
 const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
-	socialPostSlides,
-	setSocialPostSlides,
+	//socialPostSlides,
+	//setSocialPostSlides,
 	borderColorOptions,
 	res_scenario,
 }) => {
@@ -32,6 +33,7 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
 	const { isShared, updateIsShared } = useProject();
 	const [finalSlideIndex, setFinalSlideIndex] = useState<number>(0);
 	const { project } = useProject();
+	const { socialPosts, socialPostsIndex } = useSocialPosts()
 
 	useEffect(() => {
 		if (
@@ -49,8 +51,8 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
 				<ToolBar >
 					{/* slides contents */}
 					<ExportToPngButton
-						socialPostSlide={socialPostSlides}
-						currentSlideIndex={finalSlideIndex}
+						socialPostSlide={socialPosts}
+						currentSlideIndex={socialPostsIndex}
 					/>
 					{project &&
 						<ShareButton
@@ -63,10 +65,10 @@ const SocialPostVisualizer: React.FC<SocialPostVisualizerProps> = ({
 				</ToolBar>
 
 				<SocialPostHTML
-					socialPostSlides={socialPostSlides}
-					setSocialPostSlides={setSocialPostSlides}
-					finalSlideIndex={finalSlideIndex}
-					setFinalSlideIndex={setFinalSlideIndex}
+					//socialPostSlides={socialPostSlides}
+					//setSocialPostSlides={setSocialPostSlides}
+					//finalSlideIndex={finalSlideIndex}
+					//setFinalSlideIndex={setFinalSlideIndex}
 					borderColorOptions={borderColorOptions}
 					res_scenario={res_scenario}
 				/>

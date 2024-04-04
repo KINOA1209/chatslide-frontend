@@ -7,11 +7,12 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { useRouter } from 'next/navigation';
 import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
-import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
+import SocialPostSlide from '@/models/SocialPost';
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
 import useHydrated from '@/hooks/use-hydrated';
 import SessionStorage from '@/utils/SessionStorage';
 import { useProject } from '@/hooks/use-project';
+import { useSocialPosts } from '@/hooks/use-socialpost';
 
 export default function SocialMediaTemplate() {
 	const router = useRouter();
@@ -79,9 +80,8 @@ export default function SocialMediaTemplate() {
 		},
 	];
 
-	const [socialPostSlides, setSocialPostSlides] = useState<SocialPostSlide[]>(
-		[],
-	);
+	//const [socialPostSlides, setSocialPostSlides] = useState<SocialPostSlide[]>([],);
+	const { socialPosts, setSocialPosts } = useSocialPosts()
 	const { project, initProject, updateProject } = useProject()
 	const res_scenario = project?.post_type || 'casual_topic';
 
@@ -106,11 +106,11 @@ export default function SocialMediaTemplate() {
 			<div
 				style={{
 					backgroundImage:
-						socialPostSlides.length === 0
+						socialPosts.length === 0
 							? `linear-gradient(180deg, ${
 									getCover(res_scenario).cover_start
 								}, ${getCover(res_scenario).cover_end} 50%)`
-							: `linear-gradient(180deg, ${socialPostSlides[0]?.theme?.cover_start}, ${socialPostSlides[0]?.theme?.cover_end} 50%)`,
+							: `linear-gradient(180deg, ${socialPosts[0]?.theme?.cover_start}, ${socialPosts[0]?.theme?.cover_end} 50%)`,
 				}}
 			>
 				{/* flex col container for steps, title, etc */}
@@ -128,8 +128,8 @@ export default function SocialMediaTemplate() {
 
 				<div className='mt-[1rem] max-w-4xl mx-auto px-6' ref={contentRef}>
 					<SocialPostVisualizer
-						socialPostSlides={socialPostSlides}
-						setSocialPostSlides={setSocialPostSlides}
+						//socialPostSlides={socialPosts}
+						//setSocialPostSlides={setSocialPosts}
 						borderColorOptions={borderColorOptions}
 						res_scenario={res_scenario || 'casual_topic'}
 					/>

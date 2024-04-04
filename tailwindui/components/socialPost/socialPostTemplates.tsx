@@ -1,5 +1,5 @@
-import { ImgModule } from '@/components/socialPost/socialPostIllustrationModule';
-import { ImgModule as ImgModuleSlide } from '@/components/socialPost/socialPostImgModule';
+//import { ImgModule } from '@/components/socialPost/socialPostIllustrationModule';
+import { ImgModule } from '@/components/imgModule';
 import { useEffect, useMemo, useState } from 'react';
 import cover_png from '@/public/images/template/layout/cover.png';
 import withimg_png from '@/public/images/template/socialpost_t1_img.png';
@@ -9,6 +9,9 @@ import AuthService from '@/services/AuthService';
 import { h5Style } from './Styles';
 import 'quill/dist/quill.bubble.css';
 import '@/components/socialPost/quillEditor.scss';
+import Chart from '@/models/Chart';
+import ImagesPosition from '@/models/ImagesPosition';
+import { useSocialPosts } from '@/hooks/use-socialpost';
 
 interface MainSlideProps {
 	subtopic: JSX.Element;
@@ -26,12 +29,16 @@ interface MainSlideProps {
 	source: JSX.Element;
 	update_callback: (imgs: string[]) => void;
 	canEdit: boolean;
-	autoSave: Function;
+	//autoSave: Function;
 	border_start?: string;
 	border_end?: string;
 	cover_start?: string;
 	cover_end?: string;
 	topic: JSX.Element;
+	charts: Chart[];
+	ischarts: boolean[];
+	images_position: ImagesPosition[];
+	handleSlideEdit: Function;
 }
 
 const useLocalImgs = (
@@ -84,15 +91,18 @@ export const First_page_img_1 = ({
 	cover_start,
 	cover_end,
 	update_callback,
-	autoSave,
 	canEdit,
+	charts,
+	ischarts,
+	images_position,
+	handleSlideEdit,
 }: MainSlideProps) => {
 	const { localImgs, updateImgAtIndex } = useLocalImgs(
 		imgs,
 		1,
 		update_callback,
 	);
-
+	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts()
 	return (
 		<div
 			className='relative gap-[32px] flex justify-center items-center'
@@ -112,14 +122,22 @@ export const First_page_img_1 = ({
 					backgroundClip: 'content-box, border-box',
 				}}
 			>
-				<ImgModuleSlide
-					imgsrc={localImgs[0]}
+				<ImgModule
+					imgsrc={imgs[0]}
 					updateSingleCallback={updateImgAtIndex(0)}
+					chartArr={charts}
+					ischartArr={ischarts}
+					handleSlideEdit={handleSlideEdit}
 					canEdit={canEdit}
-					autoSave={autoSave}
-					isTemp1Cover={true}
-					cover_start={cover_start}
-					cover_end={cover_end}
+					currentSlideIndex={socialPostsIndex}
+					images_position={images_position}
+					isSlide={false}
+					isSocialPostTemp1Cover={true}
+					//autoSave={autoSave}
+					//isTemp1Cover={true}
+					//cover_start={cover_start}
+					//cover_end={cover_end}
+					currentContentIndex={0}
 				/>
 			</div>
 			<div className='w-full h-full mx-[3%] flex flex-col justify-between'>
@@ -149,7 +167,6 @@ export const Col_1_img_0 = ({
 	border_start,
 	border_end,
 	canEdit,
-	autoSave,
 }: MainSlideProps) => {
 	return (
 		<div
@@ -194,6 +211,7 @@ export const Col_1_img_0 = ({
 	);
 };
 
+//casual topic temp1 img layout
 export const Col_2_img_1 = ({
 	subtopic,
 	content,
@@ -204,7 +222,10 @@ export const Col_2_img_1 = ({
 	border_end,
 	update_callback,
 	canEdit,
-	autoSave,
+	charts,
+	ischarts,
+	images_position,
+	handleSlideEdit,
 }: MainSlideProps) => {
 	const { localImgs, updateImgAtIndex } = useLocalImgs(
 		imgs,
@@ -212,6 +233,7 @@ export const Col_2_img_1 = ({
 		update_callback,
 	);
 
+	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts()
 	return (
 		<div
 			style={{
@@ -251,12 +273,17 @@ export const Col_2_img_1 = ({
 							borderBottomRightRadius: '26px',
 						}}
 					>
-						<ImgModuleSlide
-							imgsrc={localImgs[0]}
+						<ImgModule
+							imgsrc={imgs[0]}
 							updateSingleCallback={updateImgAtIndex(0)}
+							chartArr={charts}
+							ischartArr={ischarts}
+							handleSlideEdit={handleSlideEdit}
 							canEdit={canEdit}
-							autoSave={autoSave}
-							isTemp1Cover={false}
+							currentSlideIndex={socialPostsIndex}
+							images_position={images_position}
+							isSlide={false}
+							currentContentIndex={0}
 						/>
 					</div>
 				</div>
@@ -276,7 +303,10 @@ export const First_page_img_1_template2 = ({
 	icon,
 	update_callback,
 	canEdit,
-	autoSave,
+	charts,
+	ischarts,
+	images_position,
+	handleSlideEdit,
 }: MainSlideProps) => {
 	const { localImgs, updateImgAtIndex } = useLocalImgs(
 		imgs,
@@ -284,7 +314,7 @@ export const First_page_img_1_template2 = ({
 		update_callback,
 	);
 	const [username, setUsername] = useState(null);
-
+	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts()
 	useEffect(() => {
 		const fetchUser = async () => {
 			try {
@@ -313,20 +343,25 @@ export const First_page_img_1_template2 = ({
 			<div className='w-full h-full flex flex-col justify-between'>
 				<div className='w-full flex flex-col'>
 					<div
-						className='mx-[3%] px-[2%] mr-[auto] flex items-end'
+						className='mx-[1%] px-[2%] mr-[auto] flex items-end'
 						style={h5Style}
 					>
 						<div className='flex justify-start'>by {username}</div>
 					</div>
 					<div className=''>{original_title}</div>
 				</div>
-				<div className='w-full h-[auto] flex rounded-md overflow-hidden'>
-					<ImgModuleSlide
-						imgsrc={localImgs[0]}
+				<div className='w-full h-1/2 flex rounded-md'>
+					<ImgModule
+						imgsrc={imgs[0]}
 						updateSingleCallback={updateImgAtIndex(0)}
+						chartArr={charts}
+						ischartArr={ischarts}
+						handleSlideEdit={handleSlideEdit}
 						canEdit={canEdit}
-						autoSave={autoSave}
-						isTemp1Cover={false}
+						currentSlideIndex={socialPostsIndex}
+						images_position={images_position}
+						isSlide={false}
+						currentContentIndex={0}
 					/>
 				</div>
 			</div>
@@ -342,7 +377,6 @@ export const img_0_template2 = ({
 	icon,
 	update_callback,
 	canEdit,
-	autoSave,
 }: MainSlideProps) => {
 	return (
 		<div
@@ -434,13 +468,17 @@ export const First_page_img_1_template3 = ({
 	border_end,
 	update_callback,
 	canEdit,
-	autoSave,
+	charts,
+	ischarts,
+	images_position,
+	handleSlideEdit,
 }: MainSlideProps) => {
 	const { localImgs, updateImgAtIndex } = useLocalImgs(
 		illustration,
 		1,
 		update_callback,
 	);
+	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts()
 	return (
 		<div
 			style={{
@@ -474,10 +512,16 @@ export const First_page_img_1_template3 = ({
 					}}
 				>
 					<ImgModule
-						imgsrc={localImgs[0]}
+						imgsrc={illustration[0]}
 						updateSingleCallback={updateImgAtIndex(0)}
+						chartArr={charts}
+						ischartArr={ischarts}
+						handleSlideEdit={handleSlideEdit}
 						canEdit={canEdit}
-						autoSave={autoSave}
+						currentSlideIndex={socialPostsIndex}
+						images_position={images_position}
+						isSlide={false}
+						currentContentIndex={0}
 					/>
 				</div>
 			</div>
@@ -493,13 +537,17 @@ export const img_1_template3 = ({
 	border_end,
 	update_callback,
 	canEdit,
-	autoSave,
+	charts,
+	ischarts,
+	images_position,
+	handleSlideEdit,
 }: MainSlideProps) => {
 	const { localImgs, updateImgAtIndex } = useLocalImgs(
 		illustration,
 		1,
 		update_callback,
 	);
+	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts()
 	return (
 		<div
 			style={{
@@ -534,10 +582,16 @@ export const img_1_template3 = ({
 					}}
 				>
 					<ImgModule
-						imgsrc={localImgs[0]}
+						imgsrc={illustration[0]}
 						updateSingleCallback={updateImgAtIndex(0)}
+						chartArr={charts}
+						ischartArr={ischarts}
+						handleSlideEdit={handleSlideEdit}
 						canEdit={canEdit}
-						autoSave={autoSave}
+						currentSlideIndex={socialPostsIndex}
+						images_position={images_position}
+						isSlide={false}
+						currentContentIndex={0}
 					/>
 				</div>
 				<div id='asterisk_section' className='mx-[auto] text-center'>

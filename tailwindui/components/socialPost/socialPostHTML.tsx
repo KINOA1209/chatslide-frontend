@@ -26,27 +26,31 @@ import templates, {
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
 import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';
+import SocialPostSlide from '@/models/SocialPost';
+import { useSocialPosts } from '@/hooks/use-socialpost';
+import ImagesPosition from '@/models/ImagesPosition';
+import Chart from '@/models/Chart';
 
-export interface SlideElement {
-	type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
-	className:
-		| 'topic'
-		| 'subtopic'
-		| 'keywords'
-		| 'content'
-		| 'template'
-		| 'images'
-		| 'section_title'
-		| 'brief'
-		| 'original_title'
-		| 'English_title'
-		| 'title'
-		| 'illustration'
-		| 'quote'
-		| 'source'
-		| 'theme';
-	content: string | string[];
-}
+// export interface SlideElement {
+// 	type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
+// 	className:
+// 		| 'topic'
+// 		| 'subtopic'
+// 		| 'keywords'
+// 		| 'content'
+// 		| 'template'
+// 		| 'images'
+// 		| 'section_title'
+// 		| 'brief'
+// 		| 'original_title'
+// 		| 'English_title'
+// 		| 'title'
+// 		| 'illustration'
+// 		| 'quote'
+// 		| 'source'
+// 		| 'theme';
+// 	content: string | string[];
+// }
 
 export type SlideKeys =
 	| 'topic'
@@ -65,65 +69,65 @@ export type SlideKeys =
 	| 'source'
 	| 'theme';
 
-export class SocialPostSlide {
-	topic: string;
-	subtopic: string;
-	keywords: string;
-	content: string[];
-	template: string;
-	images: string[];
-	section_title: string;
-	brief: string;
-	original_title: string;
-	English_title: string;
-	title: string;
-	illustration: string[];
-	quote: string;
-	source: string;
-	theme: ThemeObject;
+// export class SocialPostSlide {
+// 	topic: string;
+// 	subtopic: string;
+// 	keywords: string;
+// 	content: string[];
+// 	template: string;
+// 	images: string[];
+// 	section_title: string;
+// 	brief: string;
+// 	original_title: string;
+// 	English_title: string;
+// 	title: string;
+// 	illustration: string[];
+// 	quote: string;
+// 	source: string;
+// 	theme: ThemeObject;
 
-	constructor() {
-		this.topic = 'Your topic';
-		this.subtopic = 'Your subtopic';
-		this.keywords = 'Your keywords';
-		this.content = ['Your content'];
-		this.template = 'Col_1_img_0';
-		this.images = [''];
-		this.section_title = 'Your section title';
-		this.brief = 'Your brief';
-		this.original_title = 'Your Topic';
-		this.English_title = '';
-		this.title = '';
-		this.illustration = [
-			'https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png',
-		];
-		this.quote = 'Your quote';
-		this.source = 'Your source';
-		this.theme = {
-			border_start: '',
-			border_end: '',
-			cover_start: '',
-			cover_end: '',
-		};
-	}
-}
+// 	constructor() {
+// 		this.topic = 'Your topic';
+// 		this.subtopic = 'Your subtopic';
+// 		this.keywords = 'Your keywords';
+// 		this.content = ['Your content'];
+// 		this.template = 'Col_1_img_0';
+// 		this.images = [''];
+// 		this.section_title = 'Your section title';
+// 		this.brief = 'Your brief';
+// 		this.original_title = 'Your Topic';
+// 		this.English_title = '';
+// 		this.title = '';
+// 		this.illustration = [
+// 			'https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png',
+// 		];
+// 		this.quote = 'Your quote';
+// 		this.source = 'Your source';
+// 		this.theme = {
+// 			border_start: '',
+// 			border_end: '',
+// 			cover_start: '',
+// 			cover_end: '',
+// 		};
+// 	}
+// }
 
 type SlidesHTMLProps = {
-	socialPostSlides: SocialPostSlide[];
-	setSocialPostSlides: Function;
+	//socialPostSlides: SocialPostSlide[];
+	//setSocialPostSlides: Function;
 	isViewing?: boolean; // viewing another's shared project
-	finalSlideIndex?: number;
-	setFinalSlideIndex?: Function;
+	//finalSlideIndex?: number;
+	//setFinalSlideIndex?: Function;
 	borderColorOptions: ThemeObject[];
 	res_scenario: string;
 };
 
 const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
-	socialPostSlides,
-	setSocialPostSlides,
+	//socialPostSlides,
+	//setSocialPostSlides,
 	isViewing = false,
-	finalSlideIndex,
-	setFinalSlideIndex,
+	//finalSlideIndex,
+	//setFinalSlideIndex,
 	borderColorOptions,
 	res_scenario,
 }) => {
@@ -139,7 +143,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 	const [present, setPresent] = useState(false);
 	const slideRef = useRef<HTMLDivElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
-	const [saveStatus, setSaveStatus] = useState('Up to date');
+	//const [saveStatus, setSaveStatus] = useState('Up to date');
 	const [dimensions, setDimensions] = useState({
 		width: typeof window !== 'undefined' ? window.innerWidth : 960,
 		height: typeof window !== 'undefined' ? window.innerHeight : 540,
@@ -153,129 +157,150 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 	);
 	const nonPresentScale = Math.min(1, presentScale * 0.6);
 	const [showTheme, setShowTheme] = useState(false);
-
-	useEffect(() => {
-		if (unsavedChanges) {
-			setSaveStatus('Unsaved changes');
-		}
-	});
+	const {
+		socialPosts,
+		setSocialPosts,
+		addEmptyPage,
+		duplicatePage,
+		deleteSlidePage,
+		updateSlidePage,
+		initSocialPosts,
+		socialPostsIndex,
+		setSocialPostsIndex,
+		gotoPage,
+		socialPostsStatus,
+		socialPostVersion,
+		updateVersion,
+		saveStatus,
+		SaveStatus,
+		syncSocialPosts,
+	} = useSocialPosts();
+	console.log(socialPosts)
+	// useEffect(() => {
+	// 	if (unsavedChanges) {
+	// 		setSaveStatus('Unsaved changes');
+	// 	}
+	// });
 
 	// Watch for changes in finalSlides
-	useEffect(() => {
-		// if (isFirstRender.current) {
-		//     isFirstRender.current = false;
-		//     console.log('First render, skip saving')
-		//     return;
-		// }
+	// useEffect(() => {
+	// 	// if (isFirstRender.current) {
+	// 	//     isFirstRender.current = false;
+	// 	//     console.log('First render, skip saving')
+	// 	//     return;
+	// 	// }
 
-		console.log('finalSlides changed');
-		setUnsavedChanges(true);
-		saveSlides();
-	}, [socialPostSlides]);
+	// 	console.log('finalSlides changed');
+	// 	setUnsavedChanges(true);
+	// 	saveSlides();
+	// }, [socialPostSlides]);
 
-	useEffect(() => {
-		if (res_slide) {
-			const parse_slide = JSON.parse(res_slide);
-			const slidesArray: SocialPostSlide[] = Object.keys(parse_slide).map(
-				(key, index) => {
-					const slideData = parse_slide[key];
-					const slide = new SocialPostSlide();
-					if (index === 0) {
-						if (res_scenario === 'casual_topic') {
-							slide.template = slideData.template || 'First_page_img_1';
-						} else if (res_scenario === 'serious_subject') {
-							slide.English_title = slideData.English_title;
-							slide.template =
-								slideData.template || 'First_page_img_1_template2';
-						} else if (res_scenario === 'reading_notes') {
-							slide.template =
-								slideData.template || 'First_page_img_1_template3';
-						}
-					} else {
-						if (res_scenario === 'casual_topic') {
-							slide.template = slideData.template || 'Col_1_img_0';
-						} else if (res_scenario === 'serious_subject') {
-							slide.template = slideData.template || 'img_0_template2';
-						} else if (res_scenario === 'reading_notes') {
-							slide.template = slideData.template || 'img_1_template3';
-						}
-					}
-					slide.keywords = slideData.keywords || '';
-					slide.topic = slideData.topic || 'Your topic here';
-					slide.subtopic = slideData.subtopic;
-					slide.images = slideData.images;
-					slide.theme = slideData.theme;
-					slide.content = slideData.content || ['Your content here'];
-					slide.section_title = slideData.section_title || [
-						'Your section title here',
-					];
-					slide.brief = slideData.brief || ['Your brief here'];
-					slide.original_title = slideData.original_title || cover_title;
-					slide.title = slideData.title || '';
-					slide.illustration =
-						slideData.illustration !== null
-							? slideData.illustration
-							: [
-									'https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png',
-								];
-					slide.quote = slideData.quote || 'Your quote here';
-					slide.source = slideData.source || '';
+	// useEffect(() => {
+	// 	if (res_slide) {
+	// 		const parse_slide = JSON.parse(res_slide);
+	// 		const slidesArray: SocialPostSlide[] = Object.keys(parse_slide).map(
+	// 			(key, index) => {
+	// 				const slideData = parse_slide[key];
+	// 				const slide = new SocialPostSlide();
+	// 				if (index === 0) {
+	// 					if (res_scenario === 'casual_topic') {
+	// 						slide.template = slideData.template || 'First_page_img_1';
+	// 					} else if (res_scenario === 'serious_subject') {
+	// 						slide.English_title = slideData.English_title;
+	// 						slide.template =
+	// 							slideData.template || 'First_page_img_1_template2';
+	// 					} else if (res_scenario === 'reading_notes') {
+	// 						slide.template =
+	// 							slideData.template || 'First_page_img_1_template3';
+	// 					}
+	// 				} else {
+	// 					if (res_scenario === 'casual_topic') {
+	// 						slide.template = slideData.template || 'Col_1_img_0';
+	// 					} else if (res_scenario === 'serious_subject') {
+	// 						slide.template = slideData.template || 'img_0_template2';
+	// 					} else if (res_scenario === 'reading_notes') {
+	// 						slide.template = slideData.template || 'img_1_template3';
+	// 					}
+	// 				}
+	// 				slide.keywords = slideData.keywords || '';
+	// 				slide.topic = slideData.topic || 'Your topic here';
+	// 				slide.subtopic = slideData.subtopic;
+	// 				slide.images = slideData.images;
+	// 				slide.theme = slideData.theme;
+	// 				slide.content = slideData.content || ['Your content here'];
+	// 				slide.section_title = slideData.section_title || [
+	// 					'Your section title here',
+	// 				];
+	// 				slide.brief = slideData.brief || ['Your brief here'];
+	// 				slide.original_title = slideData.original_title || cover_title;
+	// 				slide.title = slideData.title || '';
+	// 				slide.illustration =
+	// 					slideData.illustration !== null
+	// 						? slideData.illustration
+	// 						: [
+	// 								'https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png',
+	// 							];
+	// 				slide.quote = slideData.quote || 'Your quote here';
+	// 				slide.source = slideData.source || '';
+	// 				slide.chart = slideData.chart;
+	// 				slide.is_chart = slideData.is_chart || [false, false, false];
+	// 				slide.images_position = slideData.images_position || [{}, {}, {}];
 
-					return slide;
-				},
-			);
-			updateProject('social_posts', 'true');
-			setSocialPostSlides(slidesArray);
-		}
-	}, []);
+	// 				return slide;
+	// 			},
+	// 		);
+	// 		updateProject('social_posts', 'true');
+	// 		setSocialPostSlides(slidesArray);
+	// 	}
+	// }, []);
 	// Function to send a request to auto-save finalSlides
-	const saveSlides = async () => {
-		if (isViewing) {
-			console.log("Viewing another's shared project, skip saving");
-			return;
-		}
+	// const saveSlides = async () => {
+	// 	if (isViewing) {
+	// 		console.log("Viewing another's shared project, skip saving");
+	// 		return;
+	// 	}
 
-		if (socialPostSlides.length === 0) {
-			console.log('Final slides not yet loaded, skip saving');
-			return;
-		}
+	// 	if (socialPostSlides.length === 0) {
+	// 		console.log('Final slides not yet loaded, skip saving');
+	// 		return;
+	// 	}
 
-		if (!foldername) {
-			console.log('Foldername not found, skip saving');
-			return;
-		}
-		setSaveStatus('Saving...');
-		//console.log(finalSlides)
+	// 	if (!foldername) {
+	// 		console.log('Foldername not found, skip saving');
+	// 		return;
+	// 	}
+	// 	setSaveStatus('Saving...');
+	// 	//console.log(finalSlides)
 
-		const formData = {
-			foldername: foldername,
-			final_posts: socialPostSlides,
-			project_id: project_id,
-		};
-		// Send a POST request to the backend to save finalSlides
-		fetch('/api/save_social_posts', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${token}`,
-			},
-			body: JSON.stringify(formData),
-		})
-			.then((response) => {
-				if (response.ok) {
-					setUnsavedChanges(false);
-					console.log('Auto-save successful.');
-					setSaveStatus('Up to date');
-				} else {
-					// Handle save error
-					console.error('Auto-save failed.');
-				}
-			})
-			.catch((error) => {
-				// Handle network error
-				console.error('Auto-save failed:', error);
-			});
-	};
+	// 	const formData = {
+	// 		foldername: foldername,
+	// 		final_posts: socialPostSlides,
+	// 		project_id: project_id,
+	// 	};
+	// 	// Send a POST request to the backend to save finalSlides
+	// 	fetch('/api/save_social_posts', {
+	// 		method: 'POST',
+	// 		headers: {
+	// 			'Content-Type': 'application/json',
+	// 			Authorization: `Bearer ${token}`,
+	// 		},
+	// 		body: JSON.stringify(formData),
+	// 	})
+	// 		.then((response) => {
+	// 			if (response.ok) {
+	// 				setUnsavedChanges(false);
+	// 				console.log('Auto-save successful.');
+	// 				setSaveStatus('Up to date');
+	// 			} else {
+	// 				// Handle save error
+	// 				console.error('Auto-save failed.');
+	// 			}
+	// 		})
+	// 		.catch((error) => {
+	// 			// Handle network error
+	// 			console.error('Auto-save failed:', error);
+	// 		});
+	// };
 
 	const openModal = () => {
 		setShowLayout(true);
@@ -334,7 +359,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		if (!isEditMode) {
 			if (
 				event.key === 'ArrowRight' &&
-				currentSlideIndex < socialPostSlides.length - 1
+				currentSlideIndex < socialPosts.length - 1
 			) {
 				goToSlide(currentSlideIndex + 1);
 			} else if (event.key === 'ArrowLeft' && currentSlideIndex > 0) {
@@ -344,65 +369,113 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 	}
 
 	function handleSlideEdit(
-		content: string | string[] | ThemeObject,
+		content:
+			| string
+			| string[]
+			| ThemeObject
+			| Array<string | string[] | Chart[] | boolean[] | ImagesPosition[]> | ThemeObject,
 		slideIndex: number,
-		tag: SlideKeys | null,
+		tag: SlideKeys | SlideKeys[],
 		contentIndex?: number,
+		rerender: boolean = true,
 	) {
 		setIsEditMode(false);
-		const newSlides = [...socialPostSlides];
+		const newSlides = [...socialPosts];
 
 		const currentSlide = newSlides[slideIndex];
 		const className = tag;
 
-		if (className === 'subtopic') {
-			currentSlide.subtopic = content as string;
-		} else if (className === 'keywords') {
-			currentSlide.keywords = content as string;
-		} else if (className === 'topic') {
-			currentSlide.topic = content as string;
-		} else if (className === 'content') {
-			if (typeof contentIndex === 'number' && contentIndex >= 0) {
-				currentSlide.content[contentIndex] = content as string;
+		const applyUpdate = (
+			content: string | string[] | Chart[] | boolean[] | ImagesPosition[] | ThemeObject,
+			className: string,
+		) => {
+			if (className === 'subtopic') {
+				currentSlide.subtopic = content as string;
+			} else if (className === 'keywords') {
+				currentSlide.keywords = content as string;
+			} else if (className === 'topic') {
+				currentSlide.topic = content as string;
+			} else if (className === 'content') {
+				if (typeof contentIndex === 'number' && contentIndex >= 0) {
+					currentSlide.content[contentIndex] = content as string;
+				} else {
+					console.error(`Invalid contentIndex: ${contentIndex}`);
+				}
+			} else if (className === 'template') {
+				currentSlide.template = content as string;
+			} else if (className === 'images') {
+				currentSlide.images = content as string[];
+			} else if (className == 'section_title') {
+				currentSlide.section_title = content as string;
+			} else if (className == 'brief') {
+				currentSlide.brief = content as string;
+			} else if (className == 'original_title') {
+				currentSlide.original_title = content as string;
+			} else if (className == 'English_title') {
+				currentSlide.English_title = content as string;
+			} else if (className == 'title') {
+				currentSlide.title = content as string;
+			} else if (className == 'illustration') {
+				currentSlide.illustration = content as string[];
+			} else if (className == 'quote') {
+				currentSlide.quote = content as string;
+			} else if (className == 'source') {
+				currentSlide.source = content as string;
+			} else if (className === 'theme') {
+				// Update theme for all slides
+				newSlides.forEach((slide) => {
+					slide.theme = content as ThemeObject;
+				});
+			} else if (className === 'chart') {
+				currentSlide.chart = content as Chart[];
+			} else if (className === 'is_chart') {
+				currentSlide.is_chart = content as boolean[];
+			} else if (className === 'images_position') {
+				currentSlide.images_position = content as ImagesPosition[];
 			} else {
-				console.error(`Invalid contentIndex: ${contentIndex}`);
+				console.error(`Unknown tag: ${tag}`);
 			}
-		} else if (className === 'template') {
-			currentSlide.template = content as string;
-		} else if (className === 'images') {
-			currentSlide.images = content as string[];
-		} else if (className == 'section_title') {
-			currentSlide.section_title = content as string;
-		} else if (className == 'brief') {
-			currentSlide.brief = content as string;
-		} else if (className == 'original_title') {
-			currentSlide.original_title = content as string;
-		} else if (className == 'English_title') {
-			currentSlide.English_title = content as string;
-		} else if (className == 'title') {
-			currentSlide.title = content as string;
-		} else if (className == 'illustration') {
-			currentSlide.illustration = content as string[];
-		} else if (className == 'quote') {
-			currentSlide.quote = content as string;
-		} else if (className == 'source') {
-			currentSlide.source = content as string;
-		} else if (className === 'theme') {
-			// Update theme for all slides
-			newSlides.forEach((slide) => {
-				slide.theme = content as ThemeObject;
+		}
+		if (Array.isArray(className)) {
+			className.forEach((current_tag: SlideKeys, idx: number) => {
+				let updateContent:
+					| string
+					| string[]
+					| Chart[]
+					| boolean[]
+					| ImagesPosition[];
+				if (Array.isArray(content)) {
+					if (idx < content.length) {
+						updateContent = content[idx];
+					} else {
+						console.error(
+							`Content index ${idx} out of range for content array`,
+						);
+						return;
+					}
+				} else {
+					console.error(`Expected content to be an array when tag is an array`);
+					return;
+				}
+				applyUpdate(updateContent, current_tag);
 			});
 		} else {
-			console.error(`Unknown tag: ${tag}`);
+			applyUpdate(
+				content as string | string[] | Chart[] | boolean[] | ImagesPosition[],
+				className,
+			);
 		}
-		setSocialPostSlides(newSlides);
+		console.log('updating slide page', slideIndex);
+		console.log(currentSlide);
+		updateSlidePage(slideIndex, currentSlide, rerender);
+		//setSocialPosts(newSlides);
 	}
 
 	function goToSlide(index: number) {
 		console.log('Goinng to slide', index);
 		isFirstRender.current = true;
 		setCurrentSlideIndex(index);
-		setFinalSlideIndex?.(index);
+		//setFinalSlideIndex?.(index);
 	}
 
 	function toggleEditMode() {
@@ -410,7 +483,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 	}
 
 	function handleAddPage() {
-		const newSlides = [...socialPostSlides];
+		const newSlides = [...socialPosts];
 		const newSlide = new SocialPostSlide();
 		if (currentSlideIndex != 0) {
 			newSlides.splice(currentSlideIndex, 0, newSlide);
@@ -420,20 +493,20 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		} else if (res_scenario === 'reading_notes') {
 			newSlide.template = 'img_1_template3';
 		}
-		setSocialPostSlides(newSlides);
+		setSocialPosts(newSlides);
 	}
 
 	function handleDeletePage() {
-		const newSlides = [...socialPostSlides];
+		const newSlides = [...socialPosts];
 		if (currentSlideIndex != 0) {
 			newSlides.splice(currentSlideIndex, 1);
 
 			if (currentSlideIndex >= newSlides.length) {
 				setCurrentSlideIndex(newSlides.length - 1);
-				setFinalSlideIndex?.(newSlides.length - 1);
+				//setFinalSlideIndex?.(newSlides.length - 1);
 			}
 		}
-		setSocialPostSlides(newSlides);
+		setSocialPosts(newSlides);
 	}
 
 	const updateImgUrlArray = (slideIndex: number) => {
@@ -461,7 +534,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 				canEdit,
 				false,
 				isEditMode,
-				saveSlides,
 				setIsEditMode,
 				handleSlideEdit,
 				updateImgUrlArray,
@@ -475,7 +547,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 				canEdit,
 				false,
 				isEditMode,
-				saveSlides,
 				setIsEditMode,
 				handleSlideEdit,
 				updateImgUrlArray,
@@ -489,7 +560,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 				canEdit,
 				false,
 				isEditMode,
-				saveSlides,
 				setIsEditMode,
 				handleSlideEdit,
 				updateImgUrlArray,
@@ -508,13 +578,13 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 
 					<SlideLeftNavigator
 						currentSlideIndex={currentSlideIndex}
-						slides={socialPostSlides}
+						slides={socialPosts}
 						goToSlide={goToSlide}
 					/>
 
 					<SocialPostContainer
 						isPresenting={present}
-						slides={socialPostSlides}
+						slides={socialPosts}
 						currentSlideIndex={currentSlideIndex}
 						isViewing={isViewing}
 						scale={present ? presentScale : nonPresentScale}
@@ -525,7 +595,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 
 					<SlideRightNavigator
 						currentSlideIndex={currentSlideIndex}
-						slides={socialPostSlides}
+						slides={socialPosts}
 						goToSlide={goToSlide}
 					/>
 
@@ -563,7 +633,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 											closeModal={closeModal}
 											currentSlideIndex={currentSlideIndex}
 											templateSamples={templateSamples}
-											slides={socialPostSlides}
+											slides={socialPosts}
 											handleSlideEdit={handleSlideEdit}
 										/>
 									}
@@ -613,7 +683,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 				</div>
 				<SlidePagesIndicator
 					currentSlideIndex={currentSlideIndex}
-					slides={socialPostSlides}
+					slides={socialPosts}
 					goToSlide={goToSlide}
 				/>
 
@@ -621,7 +691,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 
 				<div className='max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
 					<div className='w-full py-6 flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
-						{Array(socialPostSlides.length)
+						{Array(socialPosts.length)
 							.fill(0)
 							.map((_, index) => (
 								<div
@@ -629,12 +699,12 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 									className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
 									onClick={() => {
 										setCurrentSlideIndex(index); // Added onClick handler
-										setFinalSlideIndex?.(index);
+										//setFinalSlideIndex?.(index);
 									}}
 								>
 									{/* {index + 1} */}
 									<SocialPostContainer
-										slides={socialPostSlides}
+										slides={socialPosts}
 										currentSlideIndex={index}
 										scale={0.1}
 										isViewing={true}

@@ -11,7 +11,6 @@ import {
 	listStyle,
 } from '@/components/socialPost/Styles';
 import {
-	SocialPostSlide,
 	SlideKeys,
 } from '@/components/socialPost/socialPostHTML';
 import templates, {
@@ -23,6 +22,9 @@ import {
 } from '@/components/socialPost/socialPostIcons';
 import dynamic from 'next/dynamic';
 import React, { CSSProperties, useEffect, useRef } from 'react';
+import SocialPostSlide from '@/models/SocialPost';
+import Chart, { Group } from '@/models/Chart';
+import ImagesPosition from '@/models/ImagesPosition';
 
 const QuillEditable = dynamic(() => import('./quillEditor'), { ssr: false });
 
@@ -32,7 +34,7 @@ export const templateDispatch = (
 	canEdit: boolean = true,
 	exportToPdfMode: boolean = false,
 	editMathMode: boolean = false,
-	saveSlides: (slides: SocialPostSlide[]) => void = () => {}, // Replace with your default function if you have one
+	//saveSlides: (slides: SocialPostSlide[]) => void = () => {}, // Replace with your default function if you have one
 	setIsEditMode: (isEditMode: boolean) => void = () => {}, // Replace with your default function if you have one
 	handleSlideEdit: (
 		content: string | string[],
@@ -94,10 +96,23 @@ export const templateDispatch = (
 		}
 	};
 
+	const emptyGroup: Group = {
+		values: [],
+		color: '',
+		keys: [],
+		legend: '',
+	};
+	const defaultChartArr = Array.from({ length: 3 }, () => ({
+		type: '',
+		title: '',
+		groups: [emptyGroup],
+		axis: { x: '', y: '' },
+	}));
+
 	if (index === 0) {
 		return (
 			<Template
-				autoSave={saveSlides}
+				//autoSave={saveSlides}
 				key={keyPrefix + index.toString()}
 				update_callback={updateIllustrationUrlArray(index)}
 				canEdit={canEdit}
@@ -122,12 +137,16 @@ export const templateDispatch = (
 				brief={<></>}
 				section_title={<></>}
 				topic={<></>}
+				charts={slide.chart || defaultChartArr}
+				ischarts={slide.is_chart}
+				images_position={slide.images_position || [{}, {}, {}]}
+				handleSlideEdit={handleSlideEdit}
 			/>
 		);
 	} else {
 		return (
 			<Template
-				autoSave={saveSlides}
+				//autoSave={saveSlides}
 				canEdit={canEdit}
 				key={keyPrefix + index.toString()}
 				imgs={[]}
@@ -155,6 +174,10 @@ export const templateDispatch = (
 				brief={<></>}
 				title={<></>}
 				topic={<></>}
+				charts={slide.chart || defaultChartArr}
+				ischarts={slide.is_chart}
+				images_position={slide.images_position || [{}, {}, {}]}
+				handleSlideEdit={handleSlideEdit}
 			/>
 		);
 	}
