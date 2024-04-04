@@ -18,7 +18,7 @@ function Landing() {
 				property="og:description"
 			/>
 			<meta
-				content="https://ph-files.imgix.net/f4af0032-2a70-4206-b300-5caa5f85bbef.jpeg"
+				content="https://drlambda.ai/images/ogimage.png"
 				property="og:image"
 			/>
 			<meta
@@ -30,7 +30,7 @@ function Landing() {
 				property="twitter:description"
 			/>
 			<meta
-				content="https://ph-files.imgix.net/f4af0032-2a70-4206-b300-5caa5f85bbef.jpeg"
+				content="https://drlambda.ai/images/ogimage.png"
 				property="twitter:image"
 			/>
 			<meta property="og:type" content="website" />
