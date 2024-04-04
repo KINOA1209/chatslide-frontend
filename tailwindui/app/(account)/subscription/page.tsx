@@ -8,7 +8,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { FeedbackForm } from '@/components/ui/feedback';
 import { PrimaryButton, UserResearchWindow } from './subscriptionCTAs';
-import { Explanation, Instruction, Title } from '@/components/ui/Text';
+import { BigTitle, Explanation, Instruction, Title } from '@/components/ui/Text';
 import Card from '@/components/ui/Card';
 import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
@@ -49,9 +49,9 @@ const Subscription = () => {
 
 				<PricingComparison />
 
-				<Instruction>
+				<Title>
 					Looking to redeem your code? Click <Link className='text-blue-600' href='/account'>here</Link>!
-				</Instruction>
+				</Title>
 
 				{portalURL && (
 					<button
@@ -111,10 +111,6 @@ export default function SubscriptionAndUserResearch() {
 					<Title>
 						Earn free credits⭐ by joining our user study
 					</Title>
-					<Instruction>
-						We want to learn more about what you think of DrLambda, and how you
-						use DrLambda.
-					</Instruction>
 					<SmallBlueButton
 						onClick={handleUserResearchModal}
 					>{'Join today!'}</SmallBlueButton>
