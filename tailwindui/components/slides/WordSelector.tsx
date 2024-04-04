@@ -9,8 +9,15 @@ type WordSelectorProps = {
 
 export const WordSelector: React.FC<WordSelectorProps> = ({ text, setQuery }) => {
 	if (!text) return null;
-	text = removeTags(text) as string;
+	// text = removeTags(text) as string;
 	let words = text.split(' ');
+	// dedup 
+	words = words.filter((word, index) => words.indexOf(word) === index);
+	// remove lowercase words with less than 3 characters
+	words = words.filter(word => word.length > 3);
+	// remove ',' and '.' from words
+	words = words.map(word => word.replace(/[,\.]/g, ''));
+
 	if (!text.includes(' ')) // split by character if there is no space
 	  words = text.split('');
 	const [selectedWords, setSelectedWords] = useState<string[]>([]);
