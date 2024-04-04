@@ -51,7 +51,8 @@ const ProjectLoading = () => {
 					project_id,
 				);
 				await initProject(project); // will also init outlines
-				if (project?.parsed_slides) {
+				if (project?.parsed_slides?.length > 0) {
+					console.log('initing slides');
 					initSlides(project.parsed_slides);
 
 					if (project.parsed_slides?.some((slide) => slide.transcript)){
@@ -61,6 +62,7 @@ const ProjectLoading = () => {
 					updateProject('palette', project.parsed_slides[0].palette);
 				}
 				// setSessionStorage(project);
+				console.log('project loaded', project);
 				handleRedirect(project, project_id);
 			}
 		} catch (error) {

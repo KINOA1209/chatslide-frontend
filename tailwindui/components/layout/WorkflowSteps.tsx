@@ -204,7 +204,8 @@ export const projectFinishedSteps = (project: Project | null) => {
 			finishedStepsArray.push(1);
 			finishedStepsArray.push(2);
 		}
-		if (project.presentation_slides) {
+		if (project.parsed_slides?.length > 0) {
+			// console.log('parsed_slides', project.parsed_slides);
 			finishedStepsArray.push(3);
 		}
 		if (project.has_scripts) finishedStepsArray.push(4);
