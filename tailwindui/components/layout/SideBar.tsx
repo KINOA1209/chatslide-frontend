@@ -118,7 +118,7 @@ const SideBar = ({ }: SideBarProps) => {
 					role='menuitem'
 				>
 					<img
-						src='/new_landing/svgs/drlambda-logo.svg'
+						src='/images/drlambda-logo.svg'
 						alt='DrLambda'
 						className='w-[16px] h-[16px]'
 					/>

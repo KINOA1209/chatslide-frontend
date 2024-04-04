@@ -36,7 +36,7 @@ export const generateMetadata = (options: MetadataOptions = {}): any => {
 			type: 'website',
 			images: [
 				{
-					url: 'https://drlambda.ai/new_landing/imgs/ogimage.png',
+					url: 'https://drlambda.ai/images/ogimage.png',
 					width: 800,
 					height: 440,
 					alt: 'DrLambda',
@@ -50,7 +50,7 @@ export const generateMetadata = (options: MetadataOptions = {}): any => {
 			creator: '@drlambda_ai',
 			title,
 			description,
-			image: 'https://drlambda.ai/new_landing/imgs/ogimage.png',
+			image: 'https://drlambda.ai/images/ogimage.png',
 		},
 	};
 };

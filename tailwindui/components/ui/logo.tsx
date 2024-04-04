@@ -2,7 +2,7 @@ export function Logo() {
 	return (
 		<a href="/landing" className='block' aria-label='Cruip'>
 			<img
-				src='/new_landing/svgs/drlambda-logo.svg'
+				src='/images/drlambda-logo.svg'
 				alt='DrLambda'
 				className='w-full h-full'
 			/>
@@ -42,7 +42,7 @@ export function BlackLogo() {
 			style={{ backgroundColor: 'black' }}
 		>
 			<img
-				src='/new_landing/svgs/drlambda-logo.svg'
+				src='/images/drlambda-logo.svg'
 				alt='DrLambda'
 				className='w-16 h-16'
 			/>

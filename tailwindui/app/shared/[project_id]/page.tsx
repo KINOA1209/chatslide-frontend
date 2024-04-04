@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	let topic = 'drlambda';
 	let description = 'drlambda';
 	let author = 'drlambda';
-	let publicImageUrl = 'https://drlambda.ai/new_landing/imgs/ogimage.png';
+	let publicImageUrl = 'https://drlambda.ai/images/ogimage.png';
 	let keywords = ['DrLambda', 'presentation', 'slides', 'ai_agent'];
 	try {
 		const project = await ProjectService.getSharedProjectDetails(

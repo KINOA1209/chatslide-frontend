@@ -88,7 +88,7 @@ function Landing() {
 					}}
 				>
 					<img
-						src="new_landing/imgs/discord-icon.png"
+						src="images/discord-icon.png"
 						alt="Discord icon"
 						style={{ width: 32, height: 24, marginLeft: 16 }}
 					/>
