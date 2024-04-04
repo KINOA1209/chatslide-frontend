@@ -14,6 +14,7 @@ import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
 import useHydrated from '@/hooks/use-hydrated';
 import { BigBlueButton, SmallBlueButton } from '@/components/button/DrlambdaButton';
+import { PricingComparison } from '@/app/(default)/landing/Pricing';
 
 const Subscription = () => {
 	const [portalURL, setPortalURL] = useState('');
@@ -46,7 +47,7 @@ const Subscription = () => {
 					Find tailored plans for you
 				</Title>
 
-				<Pricing />
+				<PricingComparison />
 
 				<Instruction>
 					Looking to redeem your code? Click <Link className='text-blue-600' href='/account'>here</Link>!

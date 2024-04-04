@@ -5344,7 +5344,7 @@ blockquote {
   justify-content: flex-end;
   align-items: center;
   min-height: 230px;
-  padding: 76px 24px 28px;
+  padding: 24px 24px 24px;
   display: flex;
   position: -webkit-sticky;
   position: sticky;
@@ -5358,7 +5358,7 @@ blockquote {
   justify-content: flex-end;
   align-items: center;
   min-height: 230px;
-  padding: 76px 24px 28px;
+  padding: 24px 24px 24px;
   display: flex;
   position: -webkit-sticky;
   position: sticky;
@@ -5393,8 +5393,8 @@ blockquote {
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
-  min-height: 283px;
-  padding: 56px 24px 48px 0;
+  min-height: 230px;
+  padding: 24px 24px 24px 0;
   display: flex;
   position: -webkit-sticky;
   position: sticky;
