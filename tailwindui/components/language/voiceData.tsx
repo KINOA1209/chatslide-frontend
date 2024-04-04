@@ -208,5 +208,42 @@ export const TONE_DISPLAY_NAMES: { [key: string]: string } = {
 	'Sichuan-Yunxi': '云熙 (四川)',
 };
 
+export const STYLE_DISPLAY_NAMES: { [key: string]: string } = {
+	"advertisement_upbeat": "💼 Advertisement (upbeat)",
+	"affectionate": "❤️ Affectionate",
+	"angry": "😡 Angry",
+	"assistant": "🤖 Assistant",
+	"calm": "🧘 Calm",
+	"chat": "💬 Chat",
+	"cheerful": "😊 Cheerful",
+	"customerservice": "👩‍💼 Customerservice",
+	"depressed": "😢 Depressed",
+	"disgruntled": "😒 Disgruntled",
+	"documentary-narration": "🎥 Documentary narration",
+	"embarrassed": "😳 Embarrassed",
+	"empathetic": "🤲 Empathetic",
+	"envious": "😤 Envious",
+	"excited": "🎉 Excited",
+	"fearful": "😨 Fearful",
+	"friendly": "😃 Friendly",
+	"gentle": "🕊️ Gentle",
+	"hopeful": "🌟 Hopeful",
+	"lyrical": "🎶 Lyrical",
+	"narration-professional": "📖 Narration (professional)",
+	"narration-relaxed": "🛋️ Narration (relaxed)",
+	"newscast": "📰 Newscast",
+	"newscast-casual": "🗞️ Newscast (casual)",
+	"newscast-formal": "🎙️ Newscast (formal)",
+	"poetry-reading": "📜 Poetry reading",
+	"sad": "😔 Sad",
+	"serious": "🧐 Serious",
+	"shouting": "📢 Shouting",
+	"sports_commentary": "🏀 Sports commentary",
+	"sports_commentary_excited": "⚽️ Sports commentary (excited)",
+	"whispering": "🤫 Whispering",
+	"terrified": "😱 Terrified",
+	"unfriendly": "🚫 Unfriendly"
+}
+
 
 export default VOICE_OPTIONS;

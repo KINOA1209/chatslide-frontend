@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import VOICE_OPTIONS, { TONE_DISPLAY_NAMES } from './voiceData';
+import VOICE_OPTIONS, { STYLE_DISPLAY_NAMES, TONE_DISPLAY_NAMES } from './voiceData';
 import LANGUAGES from './languageData';
 import { ErrorMessage, Instruction, WarningMessage } from '../ui/Text';
 import { DropDown } from '../button/DrlambdaButton';
@@ -35,6 +35,7 @@ const VoiceSelector: React.FC<{
 		const [selectedLanguage, setSelectedLanguage] = useState<string>(originalLanguageCode);
 		const [selectedGender, setSelectedGender] = useState<'female' | 'male'>('female');
 		const [voiceOptions, setVoiceOptions] = useState<string[]>([]);
+		const [style, setStyle] = useState<string>('');
 
 		// Update voice options based on selected language and gender
 		useEffect(() => {
@@ -64,7 +65,7 @@ const VoiceSelector: React.FC<{
 
 		return (
 			<>
-				<div className='flex flex-row flex-wrap justify-between'>
+				<div className='flex flex-row flex-wrap justify-between gap-2'>
 					<div>
 						<Instruction>Language: </Instruction>
 						<DropDown value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)} width='16rem'>
@@ -93,6 +94,15 @@ const VoiceSelector: React.FC<{
 							}}>
 								{voiceOptions.map((voice) => (
 									<option key={voice} value={voice}>{formatVoiceName(voice)}</option>
+								))}
+							</DropDown>
+						</div>
+
+						<div>
+							<Instruction>Style: </Instruction>
+							<DropDown value={style} onChange={(e) => setStyle(e.target.value)} width='16rem'>
+								{Object.entries(STYLE_DISPLAY_NAMES).map(([key, displayName], index) => (
+									<option key={index} value={key}>{displayName}</option>
 								))}
 							</DropDown>
 						</div>
