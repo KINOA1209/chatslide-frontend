@@ -142,6 +142,7 @@ export const ImgModule = ({
 
 	function getSearchText() {
 		const slide = slides[slideIndex];
+		if (!slide) return ''; 
 		switch (slide?.layout) {
 			case 'Cover_img_1_layout':
 				return slide.head;
