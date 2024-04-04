@@ -183,14 +183,15 @@ function Landing() {
 							<a href="/signin" className="nav-link w-nav-link">
 								Sign In
 							</a>
-							<button
+							<a
 								className="button-primary"
 								data-wf-user-logout="Sign Up"
 								data-wf-user-login="Sign Up"
 								type="button"
+								href="/signup"
 							>
 								Sign Up
-							</button>
+							</a>
 						</div>
 						<div className="menu-button w-nav-button">
 							<div className="w-icon-nav-menu" />
