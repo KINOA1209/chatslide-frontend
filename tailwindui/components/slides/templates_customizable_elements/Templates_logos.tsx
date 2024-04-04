@@ -120,7 +120,7 @@ export const generateTemplateLogo = ({
 }: TemplateLogoType) => {
 	// console.log('custom_logo:', custom_logo);
 	if (!custom_logo) {
-		return <></>
+		return <></>;
 	}
 
 	return (
@@ -367,6 +367,19 @@ export const Simplistic_008_TemplateLogo: React.FC<TemplateLogoType> = (
 		logoHeight: 1.5,
 	});
 
+export const New_Education_009_TemplateLogo: React.FC<TemplateLogoType> = (
+	props: TemplateLogoType,
+) =>
+	generateTemplateLogo({
+		...props,
+		// coverLogo: drlambdaLogo,
+		// nonCoverLogo: drlambdaLogo,
+		lightBGLogo: drlambdaLogoBadgeWhiteBG,
+		darkBGLogo: drlambdaLogoBadgeBlackBG,
+		logoWidth: 8, // Adjust the width as needed
+		logoHeight: 1.5,
+	});
+
 // Define the type for template logo information
 type TemplateLogoInfo = {
 	templateName: TemplateKeys;
@@ -387,6 +400,10 @@ const templatesInfo: TemplateLogoInfo[] = [
 	// 	templateName: 'Simplistic_008_dark' as TemplateKeys,
 	// 	templateLogo: Simplistic_008_TemplateLogoDark,
 	// },
+	{
+		templateName: 'New_Education_009' as TemplateKeys,
+		templateLogo: New_Education_009_TemplateLogo,
+	},
 	{
 		templateName: 'Simplistic_008' as TemplateKeys,
 		templateLogo: Simplistic_008_TemplateLogo,

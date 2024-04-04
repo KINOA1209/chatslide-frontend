@@ -1,8 +1,5 @@
 // YourConfig.tsx
-import {
-	PaletteKeys,
-	TemplateKeys,
-} from '../slideTemplates';
+import { PaletteKeys, TemplateKeys } from '../slideTemplates';
 
 import { StanfordTemplateThemeConfig } from './templatesThemeConfigDetails/StanfordTemplateThemeConfig';
 import { Clean_Lifestyle_003_TemplateThemeConfig } from './templatesThemeConfigDetails/Clean_Lifestyle_003_TemplateThemeConfigDetails';
@@ -24,6 +21,7 @@ import { YaleTemplateThemeConfig } from './templatesThemeConfigDetails/YaleTempl
 import { UPennTemplateThemeConfig } from './templatesThemeConfigDetails/UPennTemplateThemeConfig';
 import { JHUTemplateThemeConfig } from './templatesThemeConfigDetails/JHUTemplateThemeConfig';
 import { Simplistic_008_TemplateThemeConfig } from './templatesThemeConfigDetails/Simplistic_008_TemplateThemeConfigDetails';
+import { New_Education_009_TemplateThemeConfig } from './templatesThemeConfigDetails/New_Education_009_TemplateThemeConfigDetails';
 
 export type ThemeElements = {
 	backgroundColorCover?: string;
@@ -85,6 +83,7 @@ const themeConfigData: ThemeConfig = {
 	Business_Light_006: Business_Light_006_TemplateThemeConfig,
 	Fun_Vibrant_007: Fun_Vibrant_007_TemplateThemeConfig,
 	Simplistic_008: Simplistic_008_TemplateThemeConfig,
+	New_Education_009: New_Education_009_TemplateThemeConfig,
 };
 
 export default themeConfigData;

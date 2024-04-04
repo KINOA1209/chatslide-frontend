@@ -28,6 +28,10 @@ const colorPreviews: Record<PaletteKeys, string> = {
 	'Light Cyan': '#ECF4F9',
 	'Royal Blue': '#5A55F4',
 	Beeswax: '#FDF1C4',
+	'Ecru White': '#F5F1E2',
+	'Shark Black': '#272A2D',
+	'Moon Mist': '#DDDFD2',
+	'Regent St Blue': '#ACC9E0',
 	// Add more color previews for other palette keys if needed
 };
 
