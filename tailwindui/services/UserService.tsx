@@ -81,6 +81,9 @@ class UserService {
 		token: string,
 		promoOnly: boolean = false,
 	): Promise<{ status: number; message: string }> {
+		if (!promo || !token) {
+			return { status: 400, message: 'Invalid promo code or token.' };
+		}
 		try {
 			const response = await fetch(`/api/user/apply_code`, {
 				method: 'POST',
