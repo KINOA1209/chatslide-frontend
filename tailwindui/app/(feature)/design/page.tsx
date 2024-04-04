@@ -138,7 +138,9 @@ export default function DesignPage() {
 		},
 	];
 
-	const [branding, setBranding] = useState(project?.logo === '' ? 'no' : 'yes');
+	const [branding, setBranding] = useState(
+		project?.logo === '' ? 'no' : 
+		isPaidUser ? 'no' : 'yes');
 
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
