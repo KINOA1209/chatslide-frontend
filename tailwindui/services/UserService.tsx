@@ -283,6 +283,35 @@ class UserService {
 			throw error; // Rethrow the error so that it can be handled by the caller
 		}
 	}
+
+	static async submitFeedback(rating: number, text: string, project_id: string, token: string): Promise<boolean> {
+		const headers = new Headers();
+		if (token) {
+			headers.append('Authorization', `Bearer ${token}`);
+		}
+		headers.append('Content-Type', 'application/json');
+
+		const feedbackData = {
+			rating: rating,
+			feedbackText: text,
+			project_id: project_id,
+		};
+
+		const response = await fetch('/api/feedback', {
+			method: 'POST',
+			headers: headers,
+			body: JSON.stringify(feedbackData), // Sending the data as JSON string in the request body
+		});
+
+		if (response.ok) {
+			return true;
+		} else {
+			// Handle error cases
+			const data = await response.json();
+			console.error('Fail to submit ', data.message);
+			return false;
+		}
+	}
 }
 
 export default UserService;
