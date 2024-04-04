@@ -1,6 +1,127 @@
+'use client';
+
+
+import { useUser } from "@/hooks/use-user";
+import UserService from "@/services/UserService";
+import { userInEU } from "@/utils/userLocation";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+
+
 const PricingComparison: React.FC<{
 	extraPadding?: boolean
-}> = ({extraPadding}) => {
+}> = ({ extraPadding }) => {
+	const { token, email, tier: userTier } = useUser();
+	const [currency, setCurrency] = useState<string>('$');
+	const router = useRouter();
+
+	const getCta = (tier: 'FREE' | 'PLUS' | 'PRO'): string => {
+		if (!token) {
+			return 'Sign up to Start';
+		}
+		if (userTier.includes('CANCELLED') || userTier === 'FREE') {
+			return '🌟 Claim Offer';
+		}
+		if (userTier.includes('PLUS')) {
+			if (tier === 'FREE') {
+				return '✅ Included';
+			} else if (tier === 'PLUS') {
+				return '✅ Current Plan';
+			} else {
+				return '🌟 Claim Offer';
+			}
+		}
+		if (userTier.includes('PRO')) {
+			if (tier === 'FREE' || tier === 'PLUS') {
+				return '✅ Included';
+			} else {
+				return '✅ Current Plan';
+			}
+		}
+		return ''
+	}
+
+	useEffect(() => {
+		userInEU().then((res) => {
+			setCurrency(
+				res ? '€' : '$'
+			);
+		});
+	}, []);
+
+	const handleClick = async (tier: 'FREE' | 'PLUS' | 'PRO') => {
+		if (!token) {
+			router.push('/signup');
+		}
+		if (tier === 'FREE') {
+			toast.success('Your plan already includes this feature');
+		}
+		else if (userTier.includes('CANCELLED') || userTier === 'FREE') {
+			return handleSubscription(tier, token);
+		}
+		else if (userTier.includes('PLUS')) {
+			if (tier === 'PLUS') {
+				return handleManageSubscription(token);
+			} else {
+				return handleSubscription(tier, token);
+			}
+		}
+		else if (userTier.includes('PRO')) {
+			if (tier === 'PLUS') {
+				toast.success('Your plan already includes this feature');
+			} else {
+				return handleManageSubscription(token);
+			}
+		}
+	}
+
+	const handleManageSubscription = async (token: string) => {
+		try {
+			const url = await UserService.createStripePortalSession(token);
+			router.push(url);
+		}
+		catch (error) {
+			toast.error('We cannot find your purchase information from Stripe, did you purchase through 3rd party?');
+		}
+	}
+
+	const handleSubscription = async (tier: 'PLUS' | 'PRO', token: string) => {
+		try {
+			// Determine the tier based on isYearly
+
+			const plan = tier + "_MONTHLY";
+
+			// Create a request object
+			const requestData = {
+				tier: plan,
+				email: email,
+				currency: currency === '$' ? 'usd' : 'eur',
+			};
+
+			// Make the API request to create a checkout session
+			const response = await fetch('/api/create-checkout-session', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					authorization: token,
+				},
+				body: JSON.stringify(requestData),
+			});
+
+			if (response.ok) {
+				const url = await response.text();
+				console.log(url);
+				// Redirect to the checkout page
+				window.open(url, '_blank');
+			} else {
+				console.error('Error creating checkout session:', response.statusText);
+			}
+		} catch (error) {
+			console.error('An error occurred:', error);
+		}
+	};
+
 	return (
 		<div
 			data-w-id="a8590735-7e8f-bd41-a09e-37f58b801ed3"
@@ -8,7 +129,7 @@ const PricingComparison: React.FC<{
 		>
 			<link href="css/webflow.css" rel="stylesheet" type="text/css" />
 			<link href="css/drlambda.webflow.css" rel="stylesheet" type="text/css" />
-		
+
 			<div className="brix---pricing-column-first">
 				<div className="brix---pricing-table-top-first">
 					<div className="brix---color-neutral-800">
@@ -79,12 +200,12 @@ const PricingComparison: React.FC<{
 							<div className="brix---text-300-medium opacity-0">{'$0'}</div>
 						</div>
 					</div>
-					<a
-						href="/signup"
+					<button
+						onClick={() => handleClick('FREE')}
 						className="brix---btn-primary-small-full-width w-button"
 					>
-						Try for free
-					</a>
+						{getCta('FREE')}
+					</button>
 				</div>
 				<div className="brix---pricing-content-wrapper">
 					<div className="brix---pricing-v8-title-table">
@@ -129,12 +250,12 @@ const PricingComparison: React.FC<{
 							<div className="brix---text-300-medium">$9.99</div>
 						</div>
 					</div>
-					<a
-						href="/signup"
+					<button
+						onClick={() => handleClick('PLUS')}
 						className="brix---btn-primary-small-full-width w-button"
 					>
-						Upgrade
-					</a>
+						{getCta('PLUS')}
+					</button>
 				</div>
 				<div className="brix---pricing-content-wrapper">
 					<div className="brix---pricing-v8-title-table">
@@ -233,12 +354,12 @@ const PricingComparison: React.FC<{
 							<div className="brix---text-300-medium">$39.99</div>
 						</div>
 					</div>
-					<a
-						href="/signup"
+					<button
+						onClick={() => handleClick('PRO')}
 						className="brix---btn-primary-small-full-width w-button"
 					>
-						Upgrade{" "}
-					</a>
+						{getCta('PRO')}
+					</button>
 				</div>
 				<div className="brix---pricing-content-wrapper">
 					<div className="brix---pricing-v8-title-table">
@@ -380,7 +501,7 @@ export function Pricing() {
 						</div>
 					</div>
 				</div>
-				<PricingComparison 
+				<PricingComparison
 					extraPadding={true}
 				/>
 			</div>
