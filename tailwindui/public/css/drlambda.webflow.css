@@ -371,7 +371,7 @@ blockquote {
   z-index: 999;
   border-bottom: 1px solid var(--neutral--200);
   background-color: #fff;
-  padding: 20px 3%;
+  padding: 10px 3%;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
@@ -5344,7 +5344,7 @@ blockquote {
   justify-content: flex-end;
   align-items: center;
   min-height: 230px;
-  padding: 56px 24px 48px;
+  padding: 76px 24px 28px;
   display: flex;
   position: -webkit-sticky;
   position: sticky;
@@ -5358,7 +5358,7 @@ blockquote {
   justify-content: flex-end;
   align-items: center;
   min-height: 230px;
-  padding: 56px 24px 48px;
+  padding: 76px 24px 28px;
   display: flex;
   position: -webkit-sticky;
   position: sticky;
@@ -5393,7 +5393,7 @@ blockquote {
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
-  min-height: 239px;
+  min-height: 283px;
   padding: 56px 24px 48px 0;
   display: flex;
   position: -webkit-sticky;

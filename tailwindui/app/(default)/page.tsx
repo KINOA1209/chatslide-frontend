@@ -202,17 +202,6 @@ function App() {
 				<div className="container-regular">
 					<div
 						data-w-id="c593af83-0153-34dd-3bb8-a7e76c1f1fc5"
-						style={{
-							WebkitTransform:
-								"translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-							MozTransform:
-								"translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-							msTransform:
-								"translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-							transform:
-								"translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-							opacity: 100
-						}}
 						className="div-block"
 					>
 						<div className="margin-bottom-12">
@@ -264,17 +253,6 @@ function App() {
 					/>
 					<div
 						data-w-id="9164251f-98e6-3275-7807-8f4e29fd6650"
-						style={{
-							WebkitTransform:
-								"translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-							MozTransform:
-								"translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-							msTransform:
-								"translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-							transform:
-								"translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-							opacity: 100
-						}}
 						className=""
 					>
 						<div className="margin-bottom-24">
@@ -300,17 +278,6 @@ function App() {
 				<div className="container-regular">
 					<div
 						data-w-id="a2697700-dc6d-ec1a-8d20-73c8e8991cbb"
-						style={{
-							WebkitTransform:
-								"translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-							MozTransform:
-								"translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-							msTransform:
-								"translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-							transform:
-								"translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-							opacity: 100
-						}}
 						className="div-block"
 					>
 						<div className="margin-bottom-24">
@@ -359,17 +326,6 @@ function App() {
 					</div>
 					<div
 						data-w-id="5ae35090-a2e4-c5af-2f6b-a7214510c554"
-						style={{
-							WebkitTransform:
-								"translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-							MozTransform:
-								"translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-							msTransform:
-								"translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-							transform:
-								"translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-							opacity: 100
-						}}
 						className="div-block"
 					>
 						<div className="margin-bottom-24">
@@ -1529,17 +1485,6 @@ function App() {
 					<div className="brix---mg-bottom-48px">
 						<div
 							data-w-id="a8590735-7e8f-bd41-a09e-37f58b801ec9"
-							style={{
-								WebkitTransform:
-									"translate3d(0, 10%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-								MozTransform:
-									"translate3d(0, 10%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-								msTransform:
-									"translate3d(0, 10%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-								transform:
-									"translate3d(0, 10%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-								opacity: 100
-							}}
 							className="brix---inner-container-700px-center"
 						>
 							<div className="brix---text-center">
@@ -1553,17 +1498,6 @@ function App() {
 					</div>
 					<div
 						data-w-id="a8590735-7e8f-bd41-a09e-37f58b801ed3"
-						style={{
-							WebkitTransform:
-								"translate3d(0, 10%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-							MozTransform:
-								"translate3d(0, 10%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-							msTransform:
-								"translate3d(0, 10%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-							transform:
-								"translate3d(0, 10%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-							opacity: 100
-						}}
 						className="w-layout-grid brix---grid-4-columns-pricing-tablet"
 					>
 						<div className="brix---pricing-column-first">
@@ -1579,6 +1513,9 @@ function App() {
 								<div className="brix---text-300-medium">📄 Upload documents</div>
 							</div>
 							<div className="brix---pricing-content-wrapper-left">
+									<div className="brix---text-300-medium">📑 Generate slides / posts</div>
+							</div>
+							<div className="brix---pricing-content-wrapper-left">
 								<div className="brix---text-300-medium">🚀 GPT-4</div>
 							</div>
 							<div className="brix---pricing-content-wrapper-left">
@@ -1591,11 +1528,14 @@ function App() {
 							</div>
 							<div className="brix---pricing-content-wrapper-left">
 								<div className="brix---text-300-medium">
-									🔈 Generate slides scripts / voiceover
+									🔈 Generate scripts / voiceover
 								</div>
 							</div>
 							<div className="brix---pricing-content-wrapper-left">
 								<div className="brix---text-300-medium">📱 Generate video</div>
+							</div>
+							<div className="brix---pricing-content-wrapper-left">
+									<div className="brix---text-300-medium">🦹‍♂️ Attach avatar (coming)</div>
 							</div>
 							<div className="brix---pricing-content-wrapper-left">
 								<div className="brix---text-300-medium">🤩 Unlimited credits</div>
@@ -1603,6 +1543,16 @@ function App() {
 							<div className="brix---pricing-content-wrapper-left">
 								<div className="brix---text-300-medium">
 									☎️ Direct customer support
+								</div>
+							</div>
+							<div className="brix---pricing-content-wrapper-left">
+								<div className="brix---text-300-medium">
+									🎙️ Voice cloning (coming)
+								</div>
+							</div>
+							<div className="brix---pricing-content-wrapper-left">
+								<div className="brix---text-300-medium">
+									🦹🏽‍♂️ Avatar cloning (coming)
 								</div>
 							</div>
 						</div>
@@ -1614,8 +1564,10 @@ function App() {
 									</div>
 								</div>
 								<div className="brix---mg-bottom-16px">
-									<div className="brix---color-neutral-800">
+									<div className="brix---color-neutral-800 flex flex-col items-center">
+										<div className="brix---text-300-medium opacity-0">{'$0'}</div>
 										<div className="brix---text-400-bold">$0</div>
+										<div className="brix---text-300-medium opacity-0">{'$0'}</div>
 									</div>
 								</div>
 								<a
@@ -1637,6 +1589,15 @@ function App() {
 								</div>
 								<img src="images/check-icon-white-brix-templates.svg" alt="" />
 							</div>
+							<div className="brix---pricing-content-wrapper">
+								<div className="brix---pricing-v8-title-table">
+									<div className="brix---text-300-medium">📑 Generate slides / posts</div>
+								</div>
+								<img src="images/check-icon-white-brix-templates.svg" alt="" />
+							</div>
+							<div className="brix---pricing-content-wrapper-empty" />
+							<div className="brix---pricing-content-wrapper-empty" />
+							<div className="brix---pricing-content-wrapper-empty" />
 							<div className="brix---pricing-content-wrapper-empty" />
 							<div className="brix---pricing-content-wrapper-empty" />
 							<div className="brix---pricing-content-wrapper-empty" />
@@ -1653,8 +1614,10 @@ function App() {
 									</div>
 								</div>
 								<div className="brix---mg-bottom-16px">
-									<div className="brix---color-neutral-800">
-										<div className="brix---text-400-bold">$9.99</div>
+									<div className="brix---color-neutral-800 flex flex-col items-center">
+										<div className="brix---text-400-bold">$3.96</div>
+										<div className="brix---text-300-medium">1st month, then</div>
+										<div className="brix---text-300-medium">$9.99</div>
 									</div>
 								</div>
 								<a
@@ -1678,6 +1641,12 @@ function App() {
 							</div>
 							<div className="brix---pricing-content-wrapper">
 								<div className="brix---pricing-v8-title-table">
+									<div className="brix---text-300-medium">📑 Generate slides / posts</div>
+								</div>
+								<img src="images/check-icon-white-brix-templates.svg" alt="" />
+							</div>
+							<div className="brix---pricing-content-wrapper">
+								<div className="brix---pricing-v8-title-table">
 									<div className="brix---text-300-medium">🚀 GPT-4</div>
 								</div>
 								<img
@@ -1710,7 +1679,7 @@ function App() {
 							<div className="brix---pricing-content-wrapper">
 								<div className="brix---pricing-v8-title-table">
 									<div className="brix---text-300-medium">
-										🔈 Generate slides scripts / voiceover
+										🔈 Generate scripts / voiceover
 									</div>
 								</div>
 								<img
@@ -1727,6 +1696,19 @@ function App() {
 									alt="Check - Elements Webflow Library - BRIX Templates"
 								/>
 							</div>
+							<div className="brix---pricing-content-wrapper">
+								<div className="brix---pricing-v8-title-table">
+									<div className="brix---text-300-medium">🦹‍♂️ Attach Avatar (coming)</div>
+								</div>
+								<img
+									src="images/check-icon-brix-templates.svg"
+									alt="Check - Elements Webflow Library - BRIX Templates"
+								/>
+							</div>
+							<div className="brix---pricing-content-wrapper-empty" />
+							<div className="brix---pricing-content-wrapper-empty" />
+							<div className="brix---pricing-content-wrapper-empty" />
+							<div className="brix---pricing-content-wrapper-empty" />
 						</div>
 						<div className="brix---pricing-column">
 							<div className="brix---pricing-table-top">
@@ -1736,8 +1718,10 @@ function App() {
 									</div>
 								</div>
 								<div className="brix---mg-bottom-16px">
-									<div className="brix---color-neutral-800">
-										<div className="brix---text-400-bold">$39.99</div>
+									<div className="brix---color-neutral-800 flex flex-col items-center">
+										<div className="brix---text-400-bold">$15.96</div>
+										<div className="brix---text-300-medium">1st month, then</div>
+										<div className="brix---text-300-medium">$39.99</div>
 									</div>
 								</div>
 								<a
@@ -1761,6 +1745,12 @@ function App() {
 							</div>
 							<div className="brix---pricing-content-wrapper">
 								<div className="brix---pricing-v8-title-table">
+									<div className="brix---text-300-medium">📑 Generate slides / posts</div>
+								</div>
+								<img src="images/check-icon-white-brix-templates.svg" alt="" />
+							</div>
+							<div className="brix---pricing-content-wrapper">
+								<div className="brix---pricing-v8-title-table">
 									<div className="brix---text-300-medium">🚀 GPT-4</div>
 								</div>
 								<img
@@ -1793,7 +1783,7 @@ function App() {
 							<div className="brix---pricing-content-wrapper">
 								<div className="brix---pricing-v8-title-table">
 									<div className="brix---text-300-medium">
-										🔈 Generate slides scripts / voiceover
+										🔈 Generate scripts / voiceover
 									</div>
 								</div>
 								<img
@@ -1812,7 +1802,34 @@ function App() {
 							</div>
 							<div className="brix---pricing-content-wrapper">
 								<div className="brix---pricing-v8-title-table">
+									<div className="brix---text-300-medium">🦹‍♂️ Attach Avatar (coming)</div>
+								</div>
+								<img
+									src="images/check-icon-brix-templates.svg"
+									alt="Check - Elements Webflow Library - BRIX Templates"
+								/>
+							</div>
+							<div className="brix---pricing-content-wrapper">
+								<div className="brix---pricing-v8-title-table">
 									<div className="brix---text-300-medium">🤩 Unlimited credits</div>
+								</div>
+								<img
+									src="images/check-icon-brix-templates.svg"
+									alt="Check - Elements Webflow Library - BRIX Templates"
+								/>
+							</div>
+							<div className="brix---pricing-content-wrapper">
+								<div className="brix---pricing-v8-title-table">
+									<div className="brix---text-300-medium">🎙️ Voice cloning (coming)</div>
+								</div>
+								<img
+									src="images/check-icon-brix-templates.svg"
+									alt="Check - Elements Webflow Library - BRIX Templates"
+								/>
+							</div>
+							<div className="brix---pricing-content-wrapper">
+								<div className="brix---pricing-v8-title-table">
+									<div className="brix---text-300-medium">🦹🏽‍♂️ Avatar cloning (coming)</div>
 								</div>
 								<img
 									src="images/check-icon-brix-templates.svg"
