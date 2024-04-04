@@ -4,13 +4,13 @@ function Landing() {
 	return (
 		<>
 			<meta charSet="utf-8" />
-			<title>DrLambda | Create slides from documents and chat with it</title>
+			<title>DrLambda | Build your Slides and Videos from Documents in one click</title>
 			<meta
 				content="Your AI assistant to create professional slides and posts. Convert your documents, webpages, videos, and tweets into professional slides and documents."
 				name="description"
 			/>
 			<meta
-				content="DrLambda | Create slides from documents and chat with it"
+				content="DrLambda | Build your Slides and Videos from Documents in one click"
 				property="og:title"
 			/>
 			<meta
@@ -22,7 +22,7 @@ function Landing() {
 				property="og:image"
 			/>
 			<meta
-				content="DrLambda | Create slides from documents and chat with it"
+				content="DrLambda | Build your Slides and Videos from Documents in one click"
 				property="twitter:title"
 			/>
 			<meta
@@ -218,12 +218,12 @@ function Landing() {
 						/>
 						<div className="margin-bottom-24">
 							<h3 className="heading">
-								Build your <span className="text-span">Slides</span> in one click.
+								Build your <span className="text-span">Slides</span> and <span className="text-span">Video</span> in one click
 							</h3>
 						</div>
 						<p className="paragraph-regular">
 							📁 Drag, 🖲️ click, and 💬 chat! <br />
-							Convert to video when you need. <br />
+							Add voiceover and convert to video when you need. <br />
 							🚀 Get an instant productivity boost for your knowledge sharing
 							workflow!
 						</p>
@@ -259,8 +259,8 @@ function Landing() {
 					>
 						<div className="margin-bottom-24">
 							<h3 className="heading">
-								Extract information from{" "}
-								<span className="text-span">any source.</span>
+								📚 Extract information from{" "}
+								<span className="text-span">any document</span>
 								<br />
 							</h3>
 							<img
@@ -284,8 +284,8 @@ function Landing() {
 					>
 						<div className="margin-bottom-24">
 							<h3 className="heading">
-								Turn your knowledge into slides and video with
-								<span className="text-span"> one click.</span>
+								🧠 Turn your knowledge into slides and video with
+								<span className="text-span"> one click</span>
 								<br />
 							</h3>
 							<img
@@ -343,8 +343,8 @@ function Landing() {
 					>
 						<div className="margin-bottom-24">
 							<h3 className="heading">
-								Let the<span className="text-span"> chatbot </span>take over the
-								chore.
+								🤖 Let the<span className="text-span"> chatbot </span>take over the
+								chore
 								<br />
 							</h3>
 							<img
@@ -639,7 +639,7 @@ function Landing() {
 										</div>
 									</div>
 									<div className="uui-heading-xxsmall text-weight-medium">
-										"DrLambda – rede neural que transforma páginas da web, arquivos
+										🇧🇷 "DrLambda – rede neural que transforma páginas da web, arquivos
 										PDF e vídeos em uma apresentação com slides interativos. E é
 										grátis."
 									</div>
@@ -955,7 +955,7 @@ function Landing() {
 										</div>
 									</div>
 									<div className="uui-heading-xxsmall text-weight-medium">
-										"DrLambda ist so gestaltet, dass jeder, unabhängig vom
+										🇩🇪 "DrLambda ist so gestaltet, dass jeder, unabhängig vom
 										Fachwissen, beeindruckende Präsentationen erstellen kann."
 									</div>
 									<div className="uui-testimonial13_client">
@@ -1165,7 +1165,7 @@ function Landing() {
 										</div>
 									</div>
 									<div className="uui-heading-xxsmall text-weight-medium">
-										"Презентация из любых файлов: DrLambda соберет PDF, сайты и
+										🇷🇺 "Презентация из любых файлов: DrLambda соберет PDF, сайты и
 										видеоролики в готовые слайды"
 									</div>
 									<div className="uui-testimonial13_client">
@@ -1391,6 +1391,315 @@ function Landing() {
 											<div className="uui-testimonial13_client-heading">YYYJ</div>
 											<div className="uui-text-size-small">
 												Serial entrepreneur | Growth hacker
+											</div>
+										</div>
+									</div>
+								</section>
+								<section className="uui-testimonial13_content">
+									<div className="uui-testimonial13_rating-wrapper">
+										<div className="uui-testimonial13_rating-icon w-embed">
+											<svg
+												width={20}
+												height={20}
+												viewBox="0 0 20 20"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<g clipPath="url(#clip0_28_8746)">
+													<path
+														d="M9.53834 1.60996C9.70914 1.19932 10.2909 1.19932 10.4617 1.60996L12.5278 6.57744C12.5998 6.75056 12.7626 6.86885 12.9495 6.88383L18.3123 7.31376C18.7556 7.3493 18.9354 7.90256 18.5976 8.19189L14.5117 11.6919C14.3693 11.8139 14.3071 12.0053 14.3506 12.1876L15.5989 17.4208C15.7021 17.8534 15.2315 18.1954 14.8519 17.9635L10.2606 15.1592C10.1006 15.0615 9.89938 15.0615 9.73937 15.1592L5.14806 17.9635C4.76851 18.1954 4.29788 17.8534 4.40108 17.4208L5.64939 12.1876C5.69289 12.0053 5.6307 11.8139 5.48831 11.6919L1.40241 8.19189C1.06464 7.90256 1.24441 7.3493 1.68773 7.31376L7.05054 6.88383C7.23744 6.86885 7.40024 6.75056 7.47225 6.57744L9.53834 1.60996Z"
+														fill="currentColor"
+													/>
+												</g>
+											</svg>
+										</div>
+										<div className="uui-testimonial13_rating-icon w-embed">
+											<svg
+												width={20}
+												height={20}
+												viewBox="0 0 20 20"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<g clipPath="url(#clip0_28_8746)">
+													<path
+														d="M9.53834 1.60996C9.70914 1.19932 10.2909 1.19932 10.4617 1.60996L12.5278 6.57744C12.5998 6.75056 12.7626 6.86885 12.9495 6.88383L18.3123 7.31376C18.7556 7.3493 18.9354 7.90256 18.5976 8.19189L14.5117 11.6919C14.3693 11.8139 14.3071 12.0053 14.3506 12.1876L15.5989 17.4208C15.7021 17.8534 15.2315 18.1954 14.8519 17.9635L10.2606 15.1592C10.1006 15.0615 9.89938 15.0615 9.73937 15.1592L5.14806 17.9635C4.76851 18.1954 4.29788 17.8534 4.40108 17.4208L5.64939 12.1876C5.69289 12.0053 5.6307 11.8139 5.48831 11.6919L1.40241 8.19189C1.06464 7.90256 1.24441 7.3493 1.68773 7.31376L7.05054 6.88383C7.23744 6.86885 7.40024 6.75056 7.47225 6.57744L9.53834 1.60996Z"
+														fill="currentColor"
+													/>
+												</g>
+											</svg>
+										</div>
+										<div className="uui-testimonial13_rating-icon w-embed">
+											<svg
+												width={20}
+												height={20}
+												viewBox="0 0 20 20"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<g clipPath="url(#clip0_28_8746)">
+													<path
+														d="M9.53834 1.60996C9.70914 1.19932 10.2909 1.19932 10.4617 1.60996L12.5278 6.57744C12.5998 6.75056 12.7626 6.86885 12.9495 6.88383L18.3123 7.31376C18.7556 7.3493 18.9354 7.90256 18.5976 8.19189L14.5117 11.6919C14.3693 11.8139 14.3071 12.0053 14.3506 12.1876L15.5989 17.4208C15.7021 17.8534 15.2315 18.1954 14.8519 17.9635L10.2606 15.1592C10.1006 15.0615 9.89938 15.0615 9.73937 15.1592L5.14806 17.9635C4.76851 18.1954 4.29788 17.8534 4.40108 17.4208L5.64939 12.1876C5.69289 12.0053 5.6307 11.8139 5.48831 11.6919L1.40241 8.19189C1.06464 7.90256 1.24441 7.3493 1.68773 7.31376L7.05054 6.88383C7.23744 6.86885 7.40024 6.75056 7.47225 6.57744L9.53834 1.60996Z"
+														fill="currentColor"
+													/>
+												</g>
+											</svg>
+										</div>
+										<div className="uui-testimonial13_rating-icon w-embed">
+											<svg
+												width={20}
+												height={20}
+												viewBox="0 0 20 20"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<g clipPath="url(#clip0_28_8746)">
+													<path
+														d="M9.53834 1.60996C9.70914 1.19932 10.2909 1.19932 10.4617 1.60996L12.5278 6.57744C12.5998 6.75056 12.7626 6.86885 12.9495 6.88383L18.3123 7.31376C18.7556 7.3493 18.9354 7.90256 18.5976 8.19189L14.5117 11.6919C14.3693 11.8139 14.3071 12.0053 14.3506 12.1876L15.5989 17.4208C15.7021 17.8534 15.2315 18.1954 14.8519 17.9635L10.2606 15.1592C10.1006 15.0615 9.89938 15.0615 9.73937 15.1592L5.14806 17.9635C4.76851 18.1954 4.29788 17.8534 4.40108 17.4208L5.64939 12.1876C5.69289 12.0053 5.6307 11.8139 5.48831 11.6919L1.40241 8.19189C1.06464 7.90256 1.24441 7.3493 1.68773 7.31376L7.05054 6.88383C7.23744 6.86885 7.40024 6.75056 7.47225 6.57744L9.53834 1.60996Z"
+														fill="currentColor"
+													/>
+												</g>
+											</svg>
+										</div>
+										<div className="uui-testimonial13_rating-icon w-embed">
+											<svg
+												width={20}
+												height={20}
+												viewBox="0 0 20 20"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<g clipPath="url(#clip0_28_8746)">
+													<path
+														d="M9.53834 1.60996C9.70914 1.19932 10.2909 1.19932 10.4617 1.60996L12.5278 6.57744C12.5998 6.75056 12.7626 6.86885 12.9495 6.88383L18.3123 7.31376C18.7556 7.3493 18.9354 7.90256 18.5976 8.19189L14.5117 11.6919C14.3693 11.8139 14.3071 12.0053 14.3506 12.1876L15.5989 17.4208C15.7021 17.8534 15.2315 18.1954 14.8519 17.9635L10.2606 15.1592C10.1006 15.0615 9.89938 15.0615 9.73937 15.1592L5.14806 17.9635C4.76851 18.1954 4.29788 17.8534 4.40108 17.4208L5.64939 12.1876C5.69289 12.0053 5.6307 11.8139 5.48831 11.6919L1.40241 8.19189C1.06464 7.90256 1.24441 7.3493 1.68773 7.31376L7.05054 6.88383C7.23744 6.86885 7.40024 6.75056 7.47225 6.57744L9.53834 1.60996Z"
+														fill="currentColor"
+													/>
+												</g>
+											</svg>
+										</div>
+									</div>
+									<div className="uui-heading-xxsmall text-weight-medium">
+										🇨🇳 "是一个强大的内容整理和组织工具，可以大幅度提高你的工作效率。适合研究人员、教师、学生、顾问和办公室工作人员。"
+									</div>
+									<div className="uui-testimonial13_client">
+										<div className="uui-testimonial13_client-image-wrapper">
+											<img
+												src="images/xiaohu.jpeg"
+												loading="lazy"
+												alt=""
+												className="uui-testimonial13_customer-image"
+											/>
+										</div>
+										<div className="uui-testimonial13_client-info">
+											<div className="uui-testimonial13_client-heading">小互</div>
+											<div className="uui-text-size-small">
+												财经博主
+											</div>
+										</div>
+									</div>
+								</section>
+								<section className="uui-testimonial13_content">
+									<div className="uui-testimonial13_rating-wrapper">
+										<div className="uui-testimonial13_rating-icon w-embed">
+											<svg
+												width={20}
+												height={20}
+												viewBox="0 0 20 20"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<g clipPath="url(#clip0_28_8746)">
+													<path
+														d="M9.53834 1.60996C9.70914 1.19932 10.2909 1.19932 10.4617 1.60996L12.5278 6.57744C12.5998 6.75056 12.7626 6.86885 12.9495 6.88383L18.3123 7.31376C18.7556 7.3493 18.9354 7.90256 18.5976 8.19189L14.5117 11.6919C14.3693 11.8139 14.3071 12.0053 14.3506 12.1876L15.5989 17.4208C15.7021 17.8534 15.2315 18.1954 14.8519 17.9635L10.2606 15.1592C10.1006 15.0615 9.89938 15.0615 9.73937 15.1592L5.14806 17.9635C4.76851 18.1954 4.29788 17.8534 4.40108 17.4208L5.64939 12.1876C5.69289 12.0053 5.6307 11.8139 5.48831 11.6919L1.40241 8.19189C1.06464 7.90256 1.24441 7.3493 1.68773 7.31376L7.05054 6.88383C7.23744 6.86885 7.40024 6.75056 7.47225 6.57744L9.53834 1.60996Z"
+														fill="currentColor"
+													/>
+												</g>
+											</svg>
+										</div>
+										<div className="uui-testimonial13_rating-icon w-embed">
+											<svg
+												width={20}
+												height={20}
+												viewBox="0 0 20 20"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<g clipPath="url(#clip0_28_8746)">
+													<path
+														d="M9.53834 1.60996C9.70914 1.19932 10.2909 1.19932 10.4617 1.60996L12.5278 6.57744C12.5998 6.75056 12.7626 6.86885 12.9495 6.88383L18.3123 7.31376C18.7556 7.3493 18.9354 7.90256 18.5976 8.19189L14.5117 11.6919C14.3693 11.8139 14.3071 12.0053 14.3506 12.1876L15.5989 17.4208C15.7021 17.8534 15.2315 18.1954 14.8519 17.9635L10.2606 15.1592C10.1006 15.0615 9.89938 15.0615 9.73937 15.1592L5.14806 17.9635C4.76851 18.1954 4.29788 17.8534 4.40108 17.4208L5.64939 12.1876C5.69289 12.0053 5.6307 11.8139 5.48831 11.6919L1.40241 8.19189C1.06464 7.90256 1.24441 7.3493 1.68773 7.31376L7.05054 6.88383C7.23744 6.86885 7.40024 6.75056 7.47225 6.57744L9.53834 1.60996Z"
+														fill="currentColor"
+													/>
+												</g>
+											</svg>
+										</div>
+										<div className="uui-testimonial13_rating-icon w-embed">
+											<svg
+												width={20}
+												height={20}
+												viewBox="0 0 20 20"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<g clipPath="url(#clip0_28_8746)">
+													<path
+														d="M9.53834 1.60996C9.70914 1.19932 10.2909 1.19932 10.4617 1.60996L12.5278 6.57744C12.5998 6.75056 12.7626 6.86885 12.9495 6.88383L18.3123 7.31376C18.7556 7.3493 18.9354 7.90256 18.5976 8.19189L14.5117 11.6919C14.3693 11.8139 14.3071 12.0053 14.3506 12.1876L15.5989 17.4208C15.7021 17.8534 15.2315 18.1954 14.8519 17.9635L10.2606 15.1592C10.1006 15.0615 9.89938 15.0615 9.73937 15.1592L5.14806 17.9635C4.76851 18.1954 4.29788 17.8534 4.40108 17.4208L5.64939 12.1876C5.69289 12.0053 5.6307 11.8139 5.48831 11.6919L1.40241 8.19189C1.06464 7.90256 1.24441 7.3493 1.68773 7.31376L7.05054 6.88383C7.23744 6.86885 7.40024 6.75056 7.47225 6.57744L9.53834 1.60996Z"
+														fill="currentColor"
+													/>
+												</g>
+											</svg>
+										</div>
+										<div className="uui-testimonial13_rating-icon w-embed">
+											<svg
+												width={20}
+												height={20}
+												viewBox="0 0 20 20"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<g clipPath="url(#clip0_28_8746)">
+													<path
+														d="M9.53834 1.60996C9.70914 1.19932 10.2909 1.19932 10.4617 1.60996L12.5278 6.57744C12.5998 6.75056 12.7626 6.86885 12.9495 6.88383L18.3123 7.31376C18.7556 7.3493 18.9354 7.90256 18.5976 8.19189L14.5117 11.6919C14.3693 11.8139 14.3071 12.0053 14.3506 12.1876L15.5989 17.4208C15.7021 17.8534 15.2315 18.1954 14.8519 17.9635L10.2606 15.1592C10.1006 15.0615 9.89938 15.0615 9.73937 15.1592L5.14806 17.9635C4.76851 18.1954 4.29788 17.8534 4.40108 17.4208L5.64939 12.1876C5.69289 12.0053 5.6307 11.8139 5.48831 11.6919L1.40241 8.19189C1.06464 7.90256 1.24441 7.3493 1.68773 7.31376L7.05054 6.88383C7.23744 6.86885 7.40024 6.75056 7.47225 6.57744L9.53834 1.60996Z"
+														fill="currentColor"
+													/>
+												</g>
+											</svg>
+										</div>
+										<div className="uui-testimonial13_rating-icon w-embed">
+											<svg
+												width={20}
+												height={20}
+												viewBox="0 0 20 20"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<g clipPath="url(#clip0_28_8746)">
+													<path
+														d="M9.53834 1.60996C9.70914 1.19932 10.2909 1.19932 10.4617 1.60996L12.5278 6.57744C12.5998 6.75056 12.7626 6.86885 12.9495 6.88383L18.3123 7.31376C18.7556 7.3493 18.9354 7.90256 18.5976 8.19189L14.5117 11.6919C14.3693 11.8139 14.3071 12.0053 14.3506 12.1876L15.5989 17.4208C15.7021 17.8534 15.2315 18.1954 14.8519 17.9635L10.2606 15.1592C10.1006 15.0615 9.89938 15.0615 9.73937 15.1592L5.14806 17.9635C4.76851 18.1954 4.29788 17.8534 4.40108 17.4208L5.64939 12.1876C5.69289 12.0053 5.6307 11.8139 5.48831 11.6919L1.40241 8.19189C1.06464 7.90256 1.24441 7.3493 1.68773 7.31376L7.05054 6.88383C7.23744 6.86885 7.40024 6.75056 7.47225 6.57744L9.53834 1.60996Z"
+														fill="currentColor"
+													/>
+												</g>
+											</svg>
+										</div>
+									</div>
+									<div className="uui-heading-xxsmall text-weight-medium">
+										"I love how easy it is to use and the cool features it offers. I give DrLambda 5 tacos, it's that good! 🌮🌮🌮🌮🌮"
+									</div>
+									<div className="uui-testimonial13_client">
+										<div className="uui-testimonial13_client-image-wrapper">
+											<img
+												src="images/andrew.webp"
+												loading="lazy"
+												alt=""
+												className="uui-testimonial13_customer-image"
+											/>
+										</div>
+										<div className="uui-testimonial13_client-info">
+											<div className="uui-testimonial13_client-heading">Andrew</div>
+											<div className="uui-text-size-small">
+												{/* Serial entrepreneur | Growth hacker */}
+											</div>
+										</div>
+									</div>
+								</section>
+								<section className="uui-testimonial13_content">
+									<div className="uui-testimonial13_rating-wrapper">
+										<div className="uui-testimonial13_rating-icon w-embed">
+											<svg
+												width={20}
+												height={20}
+												viewBox="0 0 20 20"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<g clipPath="url(#clip0_28_8746)">
+													<path
+														d="M9.53834 1.60996C9.70914 1.19932 10.2909 1.19932 10.4617 1.60996L12.5278 6.57744C12.5998 6.75056 12.7626 6.86885 12.9495 6.88383L18.3123 7.31376C18.7556 7.3493 18.9354 7.90256 18.5976 8.19189L14.5117 11.6919C14.3693 11.8139 14.3071 12.0053 14.3506 12.1876L15.5989 17.4208C15.7021 17.8534 15.2315 18.1954 14.8519 17.9635L10.2606 15.1592C10.1006 15.0615 9.89938 15.0615 9.73937 15.1592L5.14806 17.9635C4.76851 18.1954 4.29788 17.8534 4.40108 17.4208L5.64939 12.1876C5.69289 12.0053 5.6307 11.8139 5.48831 11.6919L1.40241 8.19189C1.06464 7.90256 1.24441 7.3493 1.68773 7.31376L7.05054 6.88383C7.23744 6.86885 7.40024 6.75056 7.47225 6.57744L9.53834 1.60996Z"
+														fill="currentColor"
+													/>
+												</g>
+											</svg>
+										</div>
+										<div className="uui-testimonial13_rating-icon w-embed">
+											<svg
+												width={20}
+												height={20}
+												viewBox="0 0 20 20"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<g clipPath="url(#clip0_28_8746)">
+													<path
+														d="M9.53834 1.60996C9.70914 1.19932 10.2909 1.19932 10.4617 1.60996L12.5278 6.57744C12.5998 6.75056 12.7626 6.86885 12.9495 6.88383L18.3123 7.31376C18.7556 7.3493 18.9354 7.90256 18.5976 8.19189L14.5117 11.6919C14.3693 11.8139 14.3071 12.0053 14.3506 12.1876L15.5989 17.4208C15.7021 17.8534 15.2315 18.1954 14.8519 17.9635L10.2606 15.1592C10.1006 15.0615 9.89938 15.0615 9.73937 15.1592L5.14806 17.9635C4.76851 18.1954 4.29788 17.8534 4.40108 17.4208L5.64939 12.1876C5.69289 12.0053 5.6307 11.8139 5.48831 11.6919L1.40241 8.19189C1.06464 7.90256 1.24441 7.3493 1.68773 7.31376L7.05054 6.88383C7.23744 6.86885 7.40024 6.75056 7.47225 6.57744L9.53834 1.60996Z"
+														fill="currentColor"
+													/>
+												</g>
+											</svg>
+										</div>
+										<div className="uui-testimonial13_rating-icon w-embed">
+											<svg
+												width={20}
+												height={20}
+												viewBox="0 0 20 20"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<g clipPath="url(#clip0_28_8746)">
+													<path
+														d="M9.53834 1.60996C9.70914 1.19932 10.2909 1.19932 10.4617 1.60996L12.5278 6.57744C12.5998 6.75056 12.7626 6.86885 12.9495 6.88383L18.3123 7.31376C18.7556 7.3493 18.9354 7.90256 18.5976 8.19189L14.5117 11.6919C14.3693 11.8139 14.3071 12.0053 14.3506 12.1876L15.5989 17.4208C15.7021 17.8534 15.2315 18.1954 14.8519 17.9635L10.2606 15.1592C10.1006 15.0615 9.89938 15.0615 9.73937 15.1592L5.14806 17.9635C4.76851 18.1954 4.29788 17.8534 4.40108 17.4208L5.64939 12.1876C5.69289 12.0053 5.6307 11.8139 5.48831 11.6919L1.40241 8.19189C1.06464 7.90256 1.24441 7.3493 1.68773 7.31376L7.05054 6.88383C7.23744 6.86885 7.40024 6.75056 7.47225 6.57744L9.53834 1.60996Z"
+														fill="currentColor"
+													/>
+												</g>
+											</svg>
+										</div>
+										<div className="uui-testimonial13_rating-icon w-embed">
+											<svg
+												width={20}
+												height={20}
+												viewBox="0 0 20 20"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<g clipPath="url(#clip0_28_8746)">
+													<path
+														d="M9.53834 1.60996C9.70914 1.19932 10.2909 1.19932 10.4617 1.60996L12.5278 6.57744C12.5998 6.75056 12.7626 6.86885 12.9495 6.88383L18.3123 7.31376C18.7556 7.3493 18.9354 7.90256 18.5976 8.19189L14.5117 11.6919C14.3693 11.8139 14.3071 12.0053 14.3506 12.1876L15.5989 17.4208C15.7021 17.8534 15.2315 18.1954 14.8519 17.9635L10.2606 15.1592C10.1006 15.0615 9.89938 15.0615 9.73937 15.1592L5.14806 17.9635C4.76851 18.1954 4.29788 17.8534 4.40108 17.4208L5.64939 12.1876C5.69289 12.0053 5.6307 11.8139 5.48831 11.6919L1.40241 8.19189C1.06464 7.90256 1.24441 7.3493 1.68773 7.31376L7.05054 6.88383C7.23744 6.86885 7.40024 6.75056 7.47225 6.57744L9.53834 1.60996Z"
+														fill="currentColor"
+													/>
+												</g>
+											</svg>
+										</div>
+										<div className="uui-testimonial13_rating-icon w-embed">
+											<svg
+												width={20}
+												height={20}
+												viewBox="0 0 20 20"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<g clipPath="url(#clip0_28_8746)">
+													<path
+														d="M9.53834 1.60996C9.70914 1.19932 10.2909 1.19932 10.4617 1.60996L12.5278 6.57744C12.5998 6.75056 12.7626 6.86885 12.9495 6.88383L18.3123 7.31376C18.7556 7.3493 18.9354 7.90256 18.5976 8.19189L14.5117 11.6919C14.3693 11.8139 14.3071 12.0053 14.3506 12.1876L15.5989 17.4208C15.7021 17.8534 15.2315 18.1954 14.8519 17.9635L10.2606 15.1592C10.1006 15.0615 9.89938 15.0615 9.73937 15.1592L5.14806 17.9635C4.76851 18.1954 4.29788 17.8534 4.40108 17.4208L5.64939 12.1876C5.69289 12.0053 5.6307 11.8139 5.48831 11.6919L1.40241 8.19189C1.06464 7.90256 1.24441 7.3493 1.68773 7.31376L7.05054 6.88383C7.23744 6.86885 7.40024 6.75056 7.47225 6.57744L9.53834 1.60996Z"
+														fill="currentColor"
+													/>
+												</g>
+											</svg>
+										</div>
+									</div>
+									<div className="uui-heading-xxsmall text-weight-medium">
+										"I fully recomend this incredible tool for creators of courses or education persons. You will be able to download your presentation created in minutes and you can create a video for your socialmedia."
+									</div>
+									<div className="uui-testimonial13_client">
+										<div className="uui-testimonial13_client-image-wrapper">
+											<img
+												src="images/mucio.png"
+												loading="lazy"
+												alt=""
+												className="uui-testimonial13_customer-image"
+											/>
+										</div>
+										<div className="uui-testimonial13_client-info">
+											<div className="uui-testimonial13_client-heading">Mucio</div>
+											<div className="uui-text-size-small">
+												{/* Serial entrepreneur | Growth hacker */}
 											</div>
 										</div>
 									</div>
