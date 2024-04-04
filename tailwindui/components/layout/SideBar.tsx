@@ -113,7 +113,7 @@ const SideBar = ({ }: SideBarProps) => {
 				{/* drlambda home */}
 
 				<a
-					href='/index.html'
+					href="/landing"
 					className='block flex flex-row items-center gap-2 py-2 text-white px-2 rounded-lg hover:bg-gray-400 cursor-pointer'
 					role='menuitem'
 				>
