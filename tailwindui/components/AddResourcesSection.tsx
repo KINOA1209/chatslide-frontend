@@ -143,9 +143,9 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 			<div id='SummaryStep-3'>
 				<div>
 					{isRequired ? (
-						<BigTitle>Import Sources</BigTitle>
+						<BigTitle>📚 Import Sources</BigTitle>
 					) : (
-						<BigTitle>Supporting Sources</BigTitle>
+						<BigTitle>📚 Supporting Sources</BigTitle>
 					)}
 					<Explanation>
 						{isRequired
