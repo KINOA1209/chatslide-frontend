@@ -238,7 +238,6 @@ function Landing() {
 						src="images/demo.png"
 						loading="lazy"
 						sizes="(max-width: 479px) 90vw, (max-width: 767px) 59vw, (max-width: 1439px) 60vw, 771.015625px"
-						srcSet="images/demo-p-500.png 500w, images/demo-p-800.png 800w, images/demo-p-1080.png 1080w, images/demo.png 1392w"
 						alt=""
 						className="image"
 					/>
