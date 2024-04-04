@@ -161,7 +161,7 @@ class UserService {
 			if (!response.ok) {  // user not found in db
 				const { email, idToken } =
 					await AuthService.getCurrentUserTokenAndEmail();
-				console.error(
+				console.warn(
 					`Failed to fetch user credits: ${email}, initializing user...`,
 					response.status,
 				);
