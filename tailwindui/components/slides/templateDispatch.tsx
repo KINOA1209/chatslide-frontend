@@ -369,7 +369,7 @@ export const templateDispatch = (
 										),
 										maxHeight: maxContentTextAreaHeight(slide.layout),
 									},
-									true,
+									false,
 									contentIndex,
 								)}
 							</div>
