@@ -23,16 +23,7 @@ type QuillEditableProps = {
 // };
 
 // const fontSizes = generateFontSizes();
-
-function isKeyOfThemeColorConfig(
-	key: string,
-): key is keyof typeof themeColorConfigData {
-	return key in themeColorConfigData;
-}
-
-//use attributors instead of formats to avoid requirement of hyphens
-const Font = Quill.import('attributors/style/font') as any;
-Font.whitelist = [
+export const fontWhiteList = [
 	'Arimo',
 	'Arial',
 	'Assistant Medium',
@@ -54,6 +45,8 @@ Font.whitelist = [
 	'Libre Baskerville Regular',
 	'Libre Baskerville Bold',
 	'Nimbus Sans Regular',
+	'Open Sans Regular',
+	'Open Sans Medium',
 	'Playfair Display Bold',
 	'Playfair Display Medium',
 	'Rubik',
@@ -61,6 +54,16 @@ Font.whitelist = [
 	'Sansita Swashed Medium',
 	'Yrsa Medium',
 ];
+
+function isKeyOfThemeColorConfig(
+	key: string,
+): key is keyof typeof themeColorConfigData {
+	return key in themeColorConfigData;
+}
+
+//use attributors instead of formats to avoid requirement of hyphens
+const Font = Quill.import('attributors/style/font') as any;
+Font.whitelist = fontWhiteList;
 Quill.register(Font, true);
 
 let Size = Quill.import('attributors/style/size') as any;
@@ -272,7 +275,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			quillInstanceRef.current = new Quill(editorRef.current, {
 				modules: { toolbar: customizedToolbarOptions },
 				theme: 'bubble',
-				placeholder: 'Add Text...',
+				placeholder: 'Add some text here...',
 				//bounds: editorRef.current,
 			});
 
@@ -416,7 +419,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 							convertedDelta.insert('\n');
 						}
 					}
-				} else if (item.trim() === '') {
+				} else if (item && typeof item === 'string' && item.trim() === '') {
 					// Handle case where item is meant to represent an empty line (like pressing Enter)
 					itemDelta.insert('\n');
 				} else {

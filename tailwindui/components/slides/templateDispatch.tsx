@@ -110,12 +110,23 @@ export const templateDispatch = (
 	};
 	let totalContentLength = 0;
 	let maxContentLength = 0;
-	slide.content.forEach((sentence) => {
-		totalContentLength += sentence.length;
-		if (sentence.length > maxContentLength) {
-			maxContentLength = sentence.length;
-		}
-	});
+	if (slide.content) {
+		slide.content.forEach((sentence) => {
+			if (sentence) {
+				totalContentLength += sentence.length;
+				if (sentence.length > maxContentLength) {
+					maxContentLength = sentence.length;
+				}
+			}
+		});
+	}
+
+	// slide.content.forEach((sentence) => {
+	// 	totalContentLength += sentence.length;
+	// 	if (sentence.length > maxContentLength) {
+	// 		maxContentLength = sentence.length;
+	// 	}
+	// });
 
 	let keyPrefix = '';
 	if (exportToPdfMode) {
@@ -270,20 +281,6 @@ export const templateDispatch = (
 		axis: { x: '', y: '' },
 	}));
 
-	useEffect(() => {
-		let totalLength = 0;
-		let maxLength = 0;
-		slide.content.forEach((sentence) => {
-			totalLength += sentence.length;
-			if (sentence.length > maxLength) {
-				maxLength = sentence.length;
-			}
-		});
-		console.log('Current page content text', index, slide.content);
-		console.log('Total length of all sentences:', totalLength);
-		console.log('Length of the longest sentence:', maxLength);
-	}, []);
-
 	return (
 		<Template
 			canEdit={canEdit}
@@ -345,7 +342,7 @@ export const templateDispatch = (
 									maxContentLength,
 									totalContentLength,
 								),
-								maxHeight: maxContentTextAreaHeight(slide.layout),
+								// maxHeight: maxContentTextAreaHeight(slide.layout),
 							},
 							true,
 					  )
@@ -367,7 +364,7 @@ export const templateDispatch = (
 											maxContentLength,
 											totalContentLength,
 										),
-										maxHeight: maxContentTextAreaHeight(slide.layout),
+										// maxHeight: maxContentTextAreaHeight(slide.layout),
 									},
 									false,
 									contentIndex,

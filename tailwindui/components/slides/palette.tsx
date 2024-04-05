@@ -25,10 +25,26 @@ const availablePalettes: availablePalettesObject = {
 	Business_Light_006: ['Original'],
 	Fun_Vibrant_007: ['Original'],
 	Simplistic_008: ['Dynamic Purple', 'Light Cyan', 'Royal Blue', 'Beeswax'],
+	New_Education_009: [
+		'Ecru White',
+		'Moon Mist',
+		'Regent St Blue',
+		'Shark Black',
+	],
 };
 
-export const lightColorPalette = ['Light Cyan', 'Beeswax'];
+export const lightColorPalette: PaletteKeys[] = [
+	'Light Cyan',
+	'Beeswax',
+	'Moon Mist',
+	'Ecru White',
+	'Regent St Blue',
+];
 
-export const darkColorPalette = ['Dynamic Purple', 'Royal Blue'];
+export const darkColorPalette: PaletteKeys[] = [
+	'Dynamic Purple',
+	'Royal Blue',
+	'Shark Black',
+];
 
 export default availablePalettes;

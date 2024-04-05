@@ -8,7 +8,6 @@ import { useProject } from './use-project';
 import Project from '@/models/Project';
 import debounce from 'lodash.debounce';
 
-
 const useSlidesBear = createBearStore<Slide[]>()('slides', [], true);
 const useSlideIndex = createBearStore<number>()('slideIndex', 0, true);
 const useSlidesHistoryBear = createBearStore<Slide[][]>()(
@@ -50,9 +49,14 @@ let slidesStatus: SlidesStatus = SlidesStatus.NotInited;
 
 export const removeTags = (text: string | string[]) => {
 	if (Array.isArray(text)) {
-		return text.map((t) => t.replace(/<[^>]*>?/gm, ''));
-	} else {
+		return text.map((t) =>
+			typeof t === 'string' ? t.replace(/<[^>]*>?/gm, '') : '',
+		);
+	} else if (typeof text === 'string') {
 		return text.replace(/<[^>]*>?/gm, '');
+	} else {
+		// Handle the case when text is neither a string nor an array
+		return text;
 	}
 };
 
@@ -114,14 +118,14 @@ export const useSlides = () => {
 		setSlides(newSlides);
 		updateSlideHistory(newSlides);
 		debouncedSyncSlides(newSlides, true);
-	}
+	};
 
 	const hideLogo = () => {
 		const newSlides = slides.map((slide, index) => {
 			return { ...slide, logo_url: '', logo: '' };
 		});
 		setIsShowingLogo(false);
-		updateProject('logo', '')
+		updateProject('logo', '');
 		setSlides(newSlides);
 		updateSlideHistory(newSlides);
 		debouncedSyncSlides(newSlides, true);
@@ -134,7 +138,7 @@ export const useSlides = () => {
 		setSlides(newSlides);
 		updateSlideHistory(newSlides);
 		debouncedSyncSlides(newSlides, true);
-	}
+	};
 
 	useEffect(() => {
 		void init();
@@ -239,8 +243,7 @@ export const useSlides = () => {
 	};
 
 	const undoChange = () => {
-		if (slidesHistoryIndex <= 0)
-			return;
+		if (slidesHistoryIndex <= 0) return;
 
 		if (slidesHistory[slidesHistoryIndex - 1].length === 0) {
 			return;
@@ -264,8 +267,7 @@ export const useSlides = () => {
 	};
 
 	const redoChange = () => {
-		if (slidesHistoryIndex >= slidesHistory.length - 1)
-			return;
+		if (slidesHistoryIndex >= slidesHistory.length - 1) return;
 		setSlides(slidesHistory[slidesHistoryIndex + 1]);
 		setSlidesHistoryIndex(slidesHistoryIndex + 1);
 		updateVersion();
@@ -333,11 +335,7 @@ export const useSlides = () => {
 		newTemplate: TemplateKeys,
 		newPalette: PaletteKeys,
 	) => {
-		console.log(
-			'-- changeTemplateAndPalette:',
-			newTemplate,
-			newPalette,
-		);
+		console.log('-- changeTemplateAndPalette:', newTemplate, newPalette);
 
 		let newSlides = slides.map((slide, index) => {
 			return {
@@ -366,7 +364,7 @@ export const useSlides = () => {
 		updateVersion();
 		updateSlideHistory(newSlides);
 		debouncedSyncSlides(newSlides, true);
-	}
+	};
 
 	const initSlides = (slides: Slide[]) => {
 		console.log('-- init slides: ', { slides });

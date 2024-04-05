@@ -33,6 +33,7 @@ import { SlideKeys } from '@/models/Slide';
 import Chart from '@/models/Chart';
 import ImagesPosition from '@/models/ImagesPosition';
 import { Business_Dark_005_template } from './new_templates/Business_Dark_005_template';
+import { New_Education_009_template } from './new_templates/New_Education_009_template';
 
 export interface MainSlideProps {
 	user_name: JSX.Element;
@@ -112,6 +113,10 @@ export type PaletteKeys =
 	| 'Light Cyan'
 	| 'Royal Blue'
 	| 'Beeswax'
+	| 'Ecru White'
+	| 'Shark Black'
+	| 'Moon Mist'
+	| 'Regent St Blue'
 	| '';
 
 // add template keys here
@@ -136,18 +141,20 @@ export const availableTemplates = {
 	Business_Light_006: Business_Light_006_template,
 	Fun_Vibrant_007: Fun_Vibrant_007_template,
 	Simplistic_008: Simplistic_008_template,
+	New_Education_009: New_Education_009_template,
 };
 
 export const templateDisplayNames = {
 	Simplistic_008: '🖼️ General Pitch',
+	New_Education_009: '📚 Education',
 	// Default: '📌 Default',
 	Business_002: '📎 Business',
 	Business_Dark_005: '💼 Business Dark',
 	Business_Light_006: '📄 Business Light',
 	Clean_Lifestyle_003: '☀️ Clean Lifestyle',
 	Fun_Education_004: '🍿 Fun',
-	Fun_Vibrant_007: '🎨 Fun Vibrant',
-	Fun_Education_001: '📚 Education',
+	Fun_Vibrant_007: '🎨 Vibrant',
+	Fun_Education_001: '📚 Bright',
 	Stanford: '🏛️ Stanford University',
 	Berkeley: '🏛️ UC Berkeley',
 	Harvard: '🏛️ Harvard University',
