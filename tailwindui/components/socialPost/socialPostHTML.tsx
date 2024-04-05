@@ -6,6 +6,14 @@ import AuthService from '@/services/AuthService';
 import '@/components/slides/slidesHTML.css';
 import LayoutChanger from '@/components/socialPost/socialPostLayoutChanger';
 import ThemeChanger from '@/components/socialPost/socialPostThemeChanger';
+// import {
+// 	PresentButton,
+// 	SlideLeftNavigator,
+// 	SlideRightNavigator,
+// 	SlidePagesIndicator,
+// 	AddSlideButton,
+// 	DeleteSlideButton,
+// } from '@/components/socialPost/socialPostButtons';
 import {
 	PresentButton,
 	SlideLeftNavigator,
@@ -13,7 +21,10 @@ import {
 	SlidePagesIndicator,
 	AddSlideButton,
 	DeleteSlideButton,
-} from '@/components/socialPost/socialPostButtons';
+	ChangeTemplateOptions,
+	DuplicateSlidePageButton,
+} from '@/components/slides/SlideButtons';
+
 import SocialPostContainer from '@/components/socialPost/socialPostContainer';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import { templateDispatch } from '@/components/socialPost/socialPostTemplateDispatch';
@@ -43,15 +54,9 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 	res_scenario,
 }) => {
 	const { token } = useUser();
-	const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
 	const { project, updateProject } = useProject();
 	const [host, setHost] = useState('https://drlambda.ai');
 	const { isShared, updateIsShared } = useProject();
-	const foldername = project?.foldername || '';
-	const project_id = project?.id || '';
-	const res_slide = project?.social_posts;
-	const cover_title = project?.topic || 'Your topic here';
-
 	const [showLayout, setShowLayout] = useState(false);
 	const [present, setPresent] = useState(false);
 	const slideRef = useRef<HTMLDivElement>(null);
@@ -156,11 +161,11 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		if (!isEditMode) {
 			if (
 				event.key === 'ArrowRight' &&
-				currentSlideIndex < socialPosts.length - 1
+				socialPostsIndex < socialPosts.length - 1
 			) {
-				goToSlide(currentSlideIndex + 1);
-			} else if (event.key === 'ArrowLeft' && currentSlideIndex > 0) {
-				goToSlide(currentSlideIndex - 1);
+				gotoPage(socialPostsIndex + 1);
+			} else if (event.key === 'ArrowLeft' && socialPostsIndex > 0) {
+				gotoPage(socialPostsIndex - 1);
 			}
 		}
 	}
@@ -268,41 +273,20 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		updateSlidePage(slideIndex, currentSlide, rerender);
 	}
 
-	function goToSlide(index: number) {
-		console.log('Goinng to slide', index);
-		isFirstRender.current = true;
-		setCurrentSlideIndex(index);
-	}
-
 	function toggleEditMode() {
 		setIsEditMode(!isEditMode);
 	}
 
 	function handleAddPage() {
-		const newSlides = [...socialPosts];
-		const newSlide = new SocialPostSlide();
-		if (currentSlideIndex != 0) {
-			newSlides.splice(currentSlideIndex, 0, newSlide);
-		}
-		if (res_scenario === 'serious_subject') {
-			newSlide.template = 'img_0_template2';
-		} else if (res_scenario === 'reading_notes') {
-			newSlide.template = 'img_1_template3';
-		}
-		setSocialPosts(newSlides);
+		addEmptyPage(socialPostsIndex)
+	}
+
+	function handleDuplicatePage() {
+		duplicatePage(socialPostsIndex)
 	}
 
 	function handleDeletePage() {
-		const newSlides = [...socialPosts];
-		if (currentSlideIndex != 0) {
-			newSlides.splice(currentSlideIndex, 1);
-
-			if (currentSlideIndex >= newSlides.length) {
-				setCurrentSlideIndex(newSlides.length - 1);
-				//setFinalSlideIndex?.(newSlides.length - 1);
-			}
-		}
-		setSocialPosts(newSlides);
+		deleteSlidePage(socialPostsIndex)
 	}
 
 	const updateImgUrlArray = (slideIndex: number) => {
@@ -399,7 +383,56 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		<div>
 			<div className='flex flex-col items-center justify-center gap-4'>
 				<ToolBar >
-					{/* slides contents */}
+					{!isViewing && socialPostsIndex != 0 && (
+						<>
+							<AddSlideButton
+								addPage={handleAddPage}
+								currentSlideIndex={socialPostsIndex}
+							/>
+							<DuplicateSlidePageButton
+								duplicatePage={handleDuplicatePage}
+								currentSlideIndex={socialPostsIndex}
+							/>
+							<DeleteSlideButton
+								deletePage={handleDeletePage}
+								currentSlideIndex={socialPostsIndex}
+							/>
+							<div className='h-8 w-0.5 bg-gray-200'></div>
+						</>
+					)}
+
+					{res_scenario !== 'serious_subject' && !isViewing && (
+						<ThemeChanger
+							openTheme={openTheme}
+							showTheme={showTheme}
+							closeTheme={closeTheme}
+							currentSlideIndex={socialPostsIndex}
+							borderColorOptions={borderColorOptions}
+							handleSlideEdit={handleSlideEdit}
+						/>
+					)}
+
+					{/* {res_scenario === 'casual_topic' && !isViewing && socialPostsIndex != 0 && (
+						<LayoutChanger
+							openModal={openModal}
+							showLayout={showLayout}
+							closeModal={closeModal}
+							currentSlideIndex={socialPostsIndex}
+							templateSamples={templateSamples}
+							slides={socialPosts}
+							handleSlideEdit={handleSlideEdit}
+						/>
+					)} */}
+
+					{/* {res_scenario !== 'casual_topic' && !isViewing && (
+						<div className='h-8 w-0.5 bg-gray-200'></div>
+					)} */}
+
+					<ButtonWithExplanation
+						button={<PresentButton openPresent={openPresent} />}
+						explanation='Present'
+					/>
+					<div className='h-8 w-0.5 bg-gray-200'></div>
 					<ExportToPngButton
 						socialPostSlide={socialPosts}
 						currentSlideIndex={socialPostsIndex}
@@ -411,22 +444,25 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 							project={project}
 							host={host}
 							isSocialPost={true}
-						/>}
+						/>
+					}
+
+
 				</ToolBar>
 				{/* buttons and contents */}
 				<div className='max-w-4xl relative flex flex-row items-center justify-center gap-4'>
 					<ToastContainer />
 
 					<SlideLeftNavigator
-						currentSlideIndex={currentSlideIndex}
+						currentSlideIndex={socialPostsIndex}
 						slides={socialPosts}
-						goToSlide={goToSlide}
+						goToSlide={gotoPage}
 					/>
 
 					<SocialPostContainer
 						isPresenting={present}
 						slides={socialPosts}
-						currentSlideIndex={currentSlideIndex}
+						currentSlideIndex={socialPostsIndex}
 						isViewing={isViewing}
 						scale={present ? presentScale : nonPresentScale}
 						templateDispatch={editableTemplateDispatch}
@@ -435,77 +471,10 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 					/>
 
 					<SlideRightNavigator
-						currentSlideIndex={currentSlideIndex}
+						currentSlideIndex={socialPostsIndex}
 						slides={socialPosts}
-						goToSlide={goToSlide}
+						goToSlide={gotoPage}
 					/>
-
-					{/* 4 buttons for change layout, present, add and add / delete slide */}
-					<div className='absolute -right-[10rem] top-[7rem] flex flex-col justify-between items-center mb-6 gap-[1.25rem] ml-[6rem]'>
-						<ButtonWithExplanation
-							button={<PresentButton openPresent={openPresent} />}
-							explanation='Present'
-						/>
-
-						{res_scenario !== 'serious_subject' && !isViewing && (
-							<ButtonWithExplanation
-								button={
-									<ThemeChanger
-										openTheme={openTheme}
-										showTheme={showTheme}
-										closeTheme={closeTheme}
-										currentSlideIndex={socialPostsIndex}
-										borderColorOptions={borderColorOptions}
-										handleSlideEdit={handleSlideEdit}
-									/>
-								}
-								explanation='Change Theme'
-							/>
-						)}
-
-						{res_scenario === 'casual_topic' &&
-							!isViewing &&
-							currentSlideIndex != 0 && (
-								<ButtonWithExplanation
-									button={
-										<LayoutChanger
-											openModal={openModal}
-											showLayout={showLayout}
-											closeModal={closeModal}
-											currentSlideIndex={currentSlideIndex}
-											templateSamples={templateSamples}
-											slides={socialPosts}
-											handleSlideEdit={handleSlideEdit}
-										/>
-									}
-									explanation='Change Layout'
-								/>
-							)}
-
-						{!isViewing && currentSlideIndex != 0 && (
-							<ButtonWithExplanation
-								button={
-									<AddSlideButton
-										addPage={handleAddPage}
-										currentSlideIndex={currentSlideIndex}
-									/>
-								}
-								explanation='Add Page'
-							/>
-						)}
-
-						{!isViewing && currentSlideIndex != 0 && (
-							<ButtonWithExplanation
-								button={
-									<DeleteSlideButton
-										deletePage={handleDeletePage}
-										currentSlideIndex={currentSlideIndex}
-									/>
-								}
-								explanation='Delete Page'
-							/>
-						)}
-					</div>
 
 					{/* White modal for presentation mode */}
 					{present && (
@@ -523,9 +492,8 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 					)}
 				</div>
 				<SlidePagesIndicator
-					currentSlideIndex={currentSlideIndex}
+					currentSlideIndex={socialPostsIndex}
 					slides={socialPosts}
-					goToSlide={goToSlide}
 				/>
 
 				{/* preview little image */}
@@ -539,8 +507,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 									key={`previewContainer` + index.toString()}
 									className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
 									onClick={() => {
-										setCurrentSlideIndex(index); // Added onClick handler
-										//setFinalSlideIndex?.(index);
+										setSocialPostsIndex(index); // Added onClick handler
 									}}
 								>
 									{/* {index + 1} */}

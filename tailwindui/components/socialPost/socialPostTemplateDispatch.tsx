@@ -69,6 +69,7 @@ export const templateDispatch = (
 		contentTag: SlideKeys,
 		style: CSSProperties,
 		contentIndex?: number,
+		need_placeholder: boolean = true,
 	) => {
 		if (!canEdit) {
 			return (
@@ -88,6 +89,7 @@ export const templateDispatch = (
 						}
 						style={style}
 						isVerticalContent={false}
+						need_placeholder={need_placeholder}
 					/>
 				);
 			} else {
@@ -99,6 +101,7 @@ export const templateDispatch = (
 						}
 						style={style}
 						isVerticalContent={false}
+						need_placeholder={need_placeholder}
 					/>
 				);
 			}
@@ -156,7 +159,7 @@ export const templateDispatch = (
 				title={generateContentElement(
 					slide.title,
 					'title',
-					themeElements.titleCSS || {}
+					themeElements.readingtitleCSS || {}
 				)}
 				subtopic={<></>}
 				quote={<></>}
@@ -192,7 +195,9 @@ export const templateDispatch = (
 				keywords={generateContentElement(
 					slide.keywords,
 					'keywords',
-					themeElements.keywordCSS || {}
+					themeElements.keywordCSS || {},
+					undefined,
+					false
 				)}
 				section_title={generateContentElement(
 					slide.section_title,

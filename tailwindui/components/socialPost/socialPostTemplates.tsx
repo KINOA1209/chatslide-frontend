@@ -12,6 +12,7 @@ import '@/components/socialPost/quillEditor.scss';
 import Chart from '@/models/Chart';
 import ImagesPosition from '@/models/ImagesPosition';
 import { useSocialPosts } from '@/hooks/use-socialpost';
+import '@/components/socialPost/socialPostCustomFonts.css';
 
 interface MainSlideProps {
 	subtopic: JSX.Element;
@@ -121,6 +122,7 @@ export const First_page_img_1 = ({
 	};
 
 	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts()
+	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
 	return (
 		<div
 			className='relative gap-[32px] flex justify-center items-center'
@@ -138,6 +140,7 @@ export const First_page_img_1 = ({
 					backgroundImage: `linear-gradient(white, white), radial-gradient(circle at top left, ${border_start}, ${border_end})`,
 					backgroundOrigin: 'border-box',
 					backgroundClip: 'content-box, border-box',
+					zIndex: imgHigherZIndex ? 999 : 2,
 				}}
 			>
 				<ImgModule
@@ -151,20 +154,17 @@ export const First_page_img_1 = ({
 					images_position={images_position}
 					isSlide={false}
 					isSocialPostTemp1Cover={true}
-					//autoSave={autoSave}
-					//isTemp1Cover={true}
-					//cover_start={cover_start}
-					//cover_end={cover_end}
 					currentContentIndex={0}
+					setImgHigherZIndex={setImgHigherZIndex}
 				/>
 			</div>
 			<div className='w-full h-full mx-[3%] flex flex-col justify-between'>
-				<div className='max-h-[60%] mt-[10%] px-[4%] z-[10]'>
+				<div className='min-h-[50%] max-h-[70%] mt-[8%] px-[3%] z-[10]'>
 					{topic}
 				</div>
 
 				<div
-					className='mb-[6%] mx-[auto]'
+					className='mb-[6%] mx-[auto] z-[9]'
 					style={{
 						border: '3px solid #FFF',
 						borderRadius: '5px',

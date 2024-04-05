@@ -53,6 +53,7 @@ export const useSocialPosts = () => {
     const addEmptyPage = (index: number) => {
         console.log('-- add empty page: ', { index });
         let newSlide = new SocialPostSlide();
+        newSlide.template = socialPosts[index].template;
         const newSlides = [...socialPosts];
         newSlides.splice(index + 1, 0, newSlide);
         setSocialPosts(newSlides);

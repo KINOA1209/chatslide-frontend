@@ -3,11 +3,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { BigGrayButton } from '../button/DrlambdaButton';
 import { getImageDataUrl } from '../utils/DownloadImage';
-import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
+import SocialPostSlide from '@/models/SocialPost';
 import SocialPostContainer from '@/components/socialPost/socialPostContainer';
-import { templateDispatch as defaultTemplateDispatch } from '@/components/socialPost/socialPostTemplateDispatch';
-import { templateDispatch as defaultTemplateDispatch2 } from '@/components/socialPost//socialPostTemplate2Dispatch';
-import { templateDispatch as defaultTemplateDispatch3 } from '@/components/socialPost/socialPostTemplate3Dispatch';
+import { templateDispatch } from '@/components/socialPost/socialPostTemplateDispatch';
 import SessionStorage from '@/utils/SessionStorage';
 
 type SocialPostPostButtonProps = {
@@ -81,20 +79,6 @@ const SocialPostPostButton: React.FC<SocialPostPostButtonProps> = ({
 		setIsProcessing(false);
 	};
 
-	function selectTemplateDispatch() {
-		switch (res_scenario) {
-			case 'casual_topic':
-				return defaultTemplateDispatch;
-			case 'serious_subject':
-				return defaultTemplateDispatch2;
-			case 'reading_notes':
-				return defaultTemplateDispatch3;
-			default:
-				return defaultTemplateDispatch;
-		}
-	}
-	console.log(socialPostSlides);
-
 	return (
 		<div>
 			<BigGrayButton onClick={handlePostToTwitter} isSubmitting={isProcessing}>
@@ -108,7 +92,7 @@ const SocialPostPostButton: React.FC<SocialPostPostButtonProps> = ({
 						slides={socialPostSlides}
 						currentSlideIndex={slideIndex}
 						exportToPdfMode={true}
-						templateDispatch={selectTemplateDispatch()}
+						templateDispatch={templateDispatch}
 						slideRef={slideRef}
 						onSlideRefUpdate={setSlideRef}
 					/>

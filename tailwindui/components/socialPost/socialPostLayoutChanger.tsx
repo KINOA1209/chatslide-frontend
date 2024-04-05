@@ -2,6 +2,10 @@ import React from 'react';
 import { Transition } from '@headlessui/react'; // Assuming you're using Headless UI for Transitions
 import { SlideKeys } from '@/models/SocialPost';
 import { ChangeLayoutIcon } from '@/app/(feature)/icons';
+import { FiLayout } from 'react-icons/fi';
+import ButtonWithExplanation from '../button/ButtonWithExplanation';
+import { useSocialPosts } from '@/hooks/use-socialpost';
+
 type LayoutProps = {
 	openModal: () => void;
 	showLayout: boolean;
@@ -12,11 +16,7 @@ type LayoutProps = {
 		main: { name: string; img: string }[];
 	};
 	slides: { template: string }[];
-	handleSlideEdit: (
-		content: string | string[],
-		slideIndex: number,
-		tag: SlideKeys,
-	) => void;
+	handleSlideEdit: Function;
 };
 
 const LayoutChanger: React.FC<LayoutProps> = ({
@@ -34,18 +34,30 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 		slideIndex: number,
 	) => {
 		e.preventDefault();
-		handleSlideEdit(templateName, slideIndex, 'template');
+		console.log('updateLayout', templateName, slideIndex);
+		handleSlideEdit(templateName, slideIndex, 'template', undefined, true);
 	};
 
 	return (
-		<div className='col-span-1 flex flex-row-reverse hidden sm:block'>
-			<div
-				className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300  hover:bg-Lavender flex justify-center items-center cursor-pointer'
-				onClick={openModal}
-			>
-				<ChangeLayoutIcon />
-			</div>
-
+		<div className='col-span-1 flex flex-row-reverse hidden sm:block z-20'>
+			<ButtonWithExplanation
+				explanation='Change Page Layout'
+				button={
+					<button
+						onClick={openModal}>
+						<FiLayout
+							style={{
+								strokeWidth: '2',
+								flex: '1',
+								width: '1.5rem',
+								height: '1.5rem',
+								fontWeight: 'bold',
+								color: '#344054',
+							}}
+						/>
+					</button>
+				}
+			/>
 			<Transition
 				className='h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
 				show={showLayout}
@@ -85,94 +97,94 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 										<div className='w-full h-fit grid grid-cols-2 gap-4 p-2'>
 											{currentSlideIndex === 0
 												? templateSamples.cover.map((temp, index) => {
-														if (!slides[currentSlideIndex]) {
-															return <></>;
-														}
-														if (
-															temp.name !== slides[currentSlideIndex].template
-														) {
-															return (
-																<div
-																	key={'layout1' + index}
-																	onClick={(e) =>
-																		updateTemplate(
-																			e,
-																			temp.name,
-																			currentSlideIndex,
-																		)
-																	}
-																	className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'
-																>
-																	<img
-																		src={temp.img}
-																		className='w-full h-full object-contain'
-																	/>
-																</div>
-															);
-														} else {
-															return (
-																<div
-																	key={'layout2' + index}
-																	onClick={(e) =>
-																		updateTemplate(
-																			e,
-																			temp.name,
-																			currentSlideIndex,
-																		)
-																	}
-																	className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'
-																>
-																	<img
-																		src={temp.img}
-																		className='w-full h-full object-contain'
-																	/>
-																</div>
-															);
-														}
-													})
+													if (!slides[currentSlideIndex]) {
+														return <></>;
+													}
+													if (
+														temp.name !== slides[currentSlideIndex].template
+													) {
+														return (
+															<div
+																key={'layout1' + index}
+																onClick={(e) =>
+																	updateTemplate(
+																		e,
+																		temp.name,
+																		currentSlideIndex,
+																	)
+																}
+																className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'
+															>
+																<img
+																	src={temp.img}
+																	className='w-full h-full object-contain'
+																/>
+															</div>
+														);
+													} else {
+														return (
+															<div
+																key={'layout2' + index}
+																onClick={(e) =>
+																	updateTemplate(
+																		e,
+																		temp.name,
+																		currentSlideIndex,
+																	)
+																}
+																className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'
+															>
+																<img
+																	src={temp.img}
+																	className='w-full h-full object-contain'
+																/>
+															</div>
+														);
+													}
+												})
 												: templateSamples.main.map((temp, index) => {
-														if (
-															temp.name !== slides[currentSlideIndex].template
-														) {
-															return (
-																<div
-																	key={'layout3' + index}
-																	onClick={(e) =>
-																		updateTemplate(
-																			e,
-																			temp.name,
-																			currentSlideIndex,
-																		)
-																	}
-																	className='w-full aspect-[0.75/1] bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'
-																>
-																	<img
-																		src={temp.img}
-																		className='w-full h-full object-contain'
-																	/>
-																</div>
-															);
-														} else {
-															return (
-																<div
-																	key={'layout4' + index}
-																	onClick={(e) =>
-																		updateTemplate(
-																			e,
-																			temp.name,
-																			currentSlideIndex,
-																		)
-																	}
-																	className='w-full aspect-[0.75/1] bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'
-																>
-																	<img
-																		src={temp.img}
-																		className='w-full h-full object-contain'
-																	/>
-																</div>
-															);
-														}
-													})}
+													if (
+														temp.name !== slides[currentSlideIndex].template
+													) {
+														return (
+															<div
+																key={'layout3' + index}
+																onClick={(e) =>
+																	updateTemplate(
+																		e,
+																		temp.name,
+																		currentSlideIndex,
+																	)
+																}
+																className='w-full aspect-[0.75/1] bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'
+															>
+																<img
+																	src={temp.img}
+																	className='w-full h-full object-contain'
+																/>
+															</div>
+														);
+													} else {
+														return (
+															<div
+																key={'layout4' + index}
+																onClick={(e) =>
+																	updateTemplate(
+																		e,
+																		temp.name,
+																		currentSlideIndex,
+																	)
+																}
+																className='w-full aspect-[0.75/1] bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'
+															>
+																<img
+																	src={temp.img}
+																	className='w-full h-full object-contain'
+																/>
+															</div>
+														);
+													}
+												})}
 										</div>
 									</div>
 								</div>

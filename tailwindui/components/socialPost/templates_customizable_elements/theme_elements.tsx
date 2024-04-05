@@ -13,7 +13,7 @@ export type ThemeElements = {
     sectionTitleCSS?: React.CSSProperties;
     userNameCSS?: React.CSSProperties;
     contentCSS?: React.CSSProperties;
-    titleCSS?: React.CSSProperties;
+    readingtitleCSS?: React.CSSProperties;
     quoteCSS?: React.CSSProperties;
     sourceCSS?: React.CSSProperties;
 };
