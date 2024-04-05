@@ -22,7 +22,7 @@ export const New_Education_009_TemplateLayoutsConfig: {
 			position: 'absolute',
 			top: '0%',
 			left: '0%',
-			// transform: 'translate(-50%, -50%)', // Centering trick
+			textAlign: 'center',
 		},
 		userNameTextDividerCSS: {
 			display: 'none',
@@ -30,20 +30,22 @@ export const New_Education_009_TemplateLayoutsConfig: {
 		userNameCSS: {
 			position: 'absolute',
 			top: '400px',
-			left: '0%',
-			width: '80%',
-			paddingLeft: '80px',
+			left: '25%',
+			width: '50%',
+			// paddingLeft: '80px',
+			// transform: 'translate(-50%, -50%)', // Centering trick
+			textAlign: 'center',
 		},
 		columnCSS: {
 			// paddingTop: '1rem', // Equivalent to pt-[1rem]
-			paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
-			paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
-			width: '50%', // Equivalent to w-1/2
-			display: 'flex', // Equivalent to flex
-			flexDirection: 'column', // Equivalent to flex-col
-			justifyContent: 'flex-start', // Equivalent to justify-start
-			height: '100%', // Equivalent to h-full
-			gap: '2rem',
+			// paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
+			// paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
+			// width: '50%', // Equivalent to w-1/2
+			// display: 'flex', // Equivalent to flex
+			// flexDirection: 'column', // Equivalent to flex-col
+			// justifyContent: 'flex-start', // Equivalent to justify-start
+			// height: '100%', // Equivalent to h-full
+			// gap: '2rem',
 		},
 	},
 	Cover_img_1_layout: {
@@ -59,20 +61,22 @@ export const New_Education_009_TemplateLayoutsConfig: {
 			left: '0%',
 			width: '50%',
 			paddingLeft: '80px',
+			textAlign: 'left',
 		},
 		titleCSS: {
-			padding: '130px 0px 0px 80px',
+			padding: '80px 0px 0px 80px',
 			maxHeight: '80%',
 			width: '50%',
 			height: '70%',
 			position: 'absolute',
 			top: '0%',
 			left: '0%',
+			textAlign: 'center',
 		},
 		columnCSS: {
-			paddingTop: '4rem', // Equivalent to pt-[1rem]
-			paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
-			paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
+			// paddingTop: '4rem', // Equivalent to pt-[1rem]
+			// paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
+			// paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
 			width: '50%', // Equivalent to w-1/2
 			display: 'flex', // Equivalent to flex
 			flexDirection: 'column', // Equivalent to flex-col
@@ -83,18 +87,17 @@ export const New_Education_009_TemplateLayoutsConfig: {
 		imageContainerCSS: {
 			width: '50%', // Equivalent to w-1/2
 			height: '100%', // Equivalent to h-full
-			borderRadius: '48px', // Equivalent to rounded-md (approximation)
 			//overflow: 'hidden',
 			display: 'flex',
 			alignItems: 'center',
 			zIndex: 20,
-			padding: '30px 30px 30px 30px', // top right bottom left
+			padding: '50px 30px 50px 30px', // top right bottom left
 			// position: 'absolute',
 			// top: '0px',
 			// left: '0px',
 		},
 		imageCSS: {
-			borderRadius: '48px', // border radius 1.25rem for image
+			borderRadius: '16px', // border radius 1.25rem for image
 		},
 
 		visualElementsCSS: {
@@ -300,10 +303,10 @@ export const New_Education_009_TemplateLayoutsConfig: {
 			height: '100%', // equivalent to h-[90%]
 			display: 'flex',
 			alignItems: 'center', // equivalent to items-center
-			padding: '30px 30px 30px 30px',
+			padding: '50px 50px 50px 30px',
 		},
 		imageCSS: {
-			borderRadius: '48px', // border radius 1.25rem for image
+			borderRadius: '16px', // border radius 1.25rem for image
 		},
 		contentContainerCSS: {
 			width: '100%', // Equivalent to w-full
@@ -361,10 +364,10 @@ export const New_Education_009_TemplateLayoutsConfig: {
 			height: '100%',
 			flexGrow: 1,
 			gridRow: 3,
-			padding: '0px 50px 0px 50px',
+			padding: '0px 50px 50px 50px',
 		},
 		imageCSS: {
-			borderRadius: '48px 48px 0px 0px', // border radius 1.25rem for image
+			borderRadius: '16px', // border radius 1.25rem for image
 		},
 		contentContainerCSS: {
 			width: '100%', // Equivalent to w-full
@@ -436,12 +439,12 @@ export const New_Education_009_TemplateLayoutsConfig: {
 			order: 2,
 			zIndex: 20,
 			gap: '50px',
-			padding: '0px 50px 0px 50px',
+			padding: '0px 50px 50px 50px',
 		},
 		imageCSS: {
 			// height: '11rem', // equivalent to h-[11rem]
 			// flexGrow: 1, // equivalent to grow
-			borderRadius: '48px 48px 0px 0px',
+			borderRadius: '16px',
 			// position: 'relative', // equivalent to relative
 			// zIndex: 20,
 		},
@@ -512,7 +515,7 @@ export const New_Education_009_TemplateLayoutsConfig: {
 		imageCSS: {
 			// height: '11rem', // equivalent to h-[11rem]
 			// flexGrow: 1, // equivalent to grow
-			borderRadius: '24px',
+			borderRadius: '16px',
 			// position: 'relative', // equivalent to relative
 			// zIndex: 20,
 		},

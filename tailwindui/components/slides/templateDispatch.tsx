@@ -342,7 +342,7 @@ export const templateDispatch = (
 									maxContentLength,
 									totalContentLength,
 								),
-								maxHeight: maxContentTextAreaHeight(slide.layout),
+								// maxHeight: maxContentTextAreaHeight(slide.layout),
 							},
 							true,
 					  )
@@ -364,7 +364,7 @@ export const templateDispatch = (
 											maxContentLength,
 											totalContentLength,
 										),
-										maxHeight: maxContentTextAreaHeight(slide.layout),
+										// maxHeight: maxContentTextAreaHeight(slide.layout),
 									},
 									false,
 									contentIndex,

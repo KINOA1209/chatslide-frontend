@@ -30,7 +30,7 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 	if (isCoverPage) {
 		if (custom_logo === 'Default') {
 			return (
-				<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[1rem] pb-[1rem] z-50'>
+				<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'>
 					<Image
 						src={drlambdaLogo}
 						alt='drlambdaLogo'
@@ -41,7 +41,7 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 			);
 		} else {
 			return (
-				<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[1rem] pb-[1rem] z-50'>
+				<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'>
 					<Image
 						unoptimized={true}
 						src={custom_logo}
@@ -56,7 +56,7 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 	} else {
 		if (custom_logo === 'Default') {
 			return (
-				<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[1rem] pb-[1rem] z-50'>
+				<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'>
 					<Image
 						unoptimized={true}
 						src={drlambdaLogoSingle}
@@ -71,7 +71,7 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 			);
 		} else {
 			return (
-				<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[1rem] pb-[1rem] z-50'>
+				<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'>
 					<Image
 						unoptimized={true}
 						src={custom_logo}
@@ -125,7 +125,7 @@ export const generateTemplateLogo = ({
 
 	return (
 		<div
-			className={`absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[2rem] pb-[2rem] z-40`}
+			className={`absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-40`}
 		>
 			{custom_logo === template_name || custom_logo === 'Default' ? (
 				// use original template logo
