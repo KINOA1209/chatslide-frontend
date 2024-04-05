@@ -138,19 +138,24 @@ export default function DesignPage() {
 		},
 	];
 
+	// if project does not have logo property, update depending on isPaidUser
+	if (project?.logo === undefined) {
+		updateProject('logo', isPaidUser ? '' : 'Default');
+	}
+
 	const [branding, setBranding] = useState(
 		project?.logo === '' ? 'no' : 
 		isPaidUser ? 'no' : 'yes');
 
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
-	console.log('Template:', template);
-	console.log('Color Palette:', colorPalette);
-	console.log(
-		'current template color options:',
-		template,
-		availablePalettes[template as keyof typeof availablePalettes],
-	);
+	// console.log('Template:', template);
+	// console.log('Color Palette:', colorPalette);
+	// console.log(
+	// 	'current template color options:',
+	// 	template,
+	// 	availablePalettes[template as keyof typeof availablePalettes],
+	// );
 
 	return (
 		<section className='relative'>
