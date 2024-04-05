@@ -275,7 +275,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			quillInstanceRef.current = new Quill(editorRef.current, {
 				modules: { toolbar: customizedToolbarOptions },
 				theme: 'bubble',
-				placeholder: 'Add Text...',
+				placeholder: 'Add some text here...',
 				//bounds: editorRef.current,
 			});
 
@@ -419,7 +419,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 							convertedDelta.insert('\n');
 						}
 					}
-				} else if (item.trim() === '') {
+				} else if (item && typeof item === 'string' && item.trim() === '') {
 					// Handle case where item is meant to represent an empty line (like pressing Enter)
 					itemDelta.insert('\n');
 				} else {
