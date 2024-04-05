@@ -30,6 +30,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 			fontSize: '24pt',
 			lineHeight: 1,
 			color: '#FFFFFF',
+			overflowY: 'hidden',
 		},
 		contentFontCSS: {
 			fontSize: '16pt',
@@ -79,6 +80,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 			fontSize: '24pt',
 			lineHeight: 1,
 			color: '#0D0451',
+			overflowY: 'hidden',
 		},
 		contentFontCSS: {
 			fontSize: '16pt',
@@ -128,6 +130,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 			fontSize: '24pt',
 			lineHeight: 1,
 			color: '#EDFDCA',
+			overflowY: 'hidden',
 		},
 		contentFontCSS: {
 			fontSize: '16pt',
@@ -177,6 +180,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 			fontSize: '24pt',
 			lineHeight: 1,
 			color: '#F44737',
+			overflowY: 'hidden',
 		},
 		contentFontCSS: {
 			fontSize: '16pt',
