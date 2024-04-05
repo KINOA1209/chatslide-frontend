@@ -51,7 +51,7 @@ const ProjectLoading = () => {
 					project_id,
 				);
 				await initProject(project); // will also init outlines
-				if (project?.parsed_slides) {
+				if (project?.parsed_slides?.length > 0) {
 					initSlides(project.parsed_slides);
 
 					if (project.parsed_slides?.some((slide) => slide.transcript)){
