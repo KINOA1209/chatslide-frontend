@@ -80,7 +80,6 @@ export default function SocialMediaTemplate() {
 		},
 	];
 
-	//const [socialPostSlides, setSocialPostSlides] = useState<SocialPostSlide[]>([],);
 	const { socialPosts, setSocialPosts } = useSocialPosts()
 	const { project, initProject, updateProject } = useProject()
 	const res_scenario = project?.post_type || 'casual_topic';
@@ -128,8 +127,6 @@ export default function SocialMediaTemplate() {
 
 				<div className='mt-[1rem] max-w-4xl mx-auto px-6' ref={contentRef}>
 					<SocialPostVisualizer
-						//socialPostSlides={socialPosts}
-						//setSocialPostSlides={setSocialPosts}
 						borderColorOptions={borderColorOptions}
 						res_scenario={res_scenario || 'casual_topic'}
 					/>

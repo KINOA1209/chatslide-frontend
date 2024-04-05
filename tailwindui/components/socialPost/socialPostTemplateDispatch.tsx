@@ -1,18 +1,4 @@
-import {
-	h1Style,
-	h2Style,
-	h3Style,
-	h4Style,
-	h5Style,
-	h6Style,
-	h7Style,
-	h8Style,
-	h9Style,
-	listStyle,
-} from '@/components/socialPost/Styles';
-import templates, {
-	templateSamples,
-} from '@/components/socialPost/socialPostTemplates';
+import templates from '@/components/socialPost/socialPostTemplates';
 import { CompanyIconWhite, CompanyIconBlack } from '@/components/socialPost/socialPostIcons';
 import React, { CSSProperties, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
@@ -24,8 +10,9 @@ import ImagesPosition from '@/models/ImagesPosition';
 import { useProject } from '@/hooks/use-project';
 import themeConfigData from './templates_customizable_elements/theme_elements';
 import { PostTypeKeys } from './templates_customizable_elements/theme_elements';
+import processContent from '@/components/slides/quillEditorSlide'
 
-const QuillEditable = dynamic(() => import('./quillEditor'), { ssr: false });
+const QuillEditable = dynamic(() => import('@/components/slides/quillEditorSlide'), { ssr: false });
 
 export const templateDispatch = (
 	slide: SocialPostSlide,
@@ -33,29 +20,29 @@ export const templateDispatch = (
 	canEdit: boolean = true,
 	exportToPdfMode: boolean = false,
 	editMathMode: boolean = false,
-	setIsEditMode: (isEditMode: boolean) => void = () => {}, // Replace with your default function if you have one
+	setIsEditMode: (isEditMode: boolean) => void = () => { }, // Replace with your default function if you have one
 	handleSlideEdit: (
 		content: string | string[],
 		index: number,
 		tag: SlideKeys,
 		contentIndex?: number,
 		rerender?: boolean,
-	) => void = () => {}, // Replace with your default function if you have one
+	) => void = () => { }, // Replace with your default function if you have one
 	updateImgUrlArray: (
 		slideIndex: number
 	) => (
 		urls: string[],
 		ischart: boolean[],
 		images_position: ImagesPosition[],
-	) => void = () => () => {}, // Replace with your default function if you have one
+	) => void = () => () => { }, // Replace with your default function if you have one
 	updateIllustrationUrlArray: (
 		slideIndex: number,
 	) => (
 		urls: string[],
 		ischart: boolean[],
 		images_position: ImagesPosition[],
-	) => void = () => () => {},
-	toggleEditMathMode: () => void = () => {}, // Replace with your default function if you have one
+	) => void = () => () => { },
+	toggleEditMathMode: () => void = () => { }, // Replace with your default function if you have one
 ): JSX.Element => {
 	let keyPrefix = '';
 	if (exportToPdfMode) {
@@ -70,7 +57,7 @@ export const templateDispatch = (
 	const { project } = useProject()
 	const post_type: PostTypeKeys = project?.post_type as PostTypeKeys || 'casual_topic';
 	const themeElements = themeConfigData[post_type]
-	
+
 	const getUpdateCallback = (post_type: string, slideIndex: number) => {
 		return post_type === 'reading_notes'
 			? updateIllustrationUrlArray(slideIndex)
@@ -97,9 +84,10 @@ export const templateDispatch = (
 					<QuillEditable
 						content={content}
 						handleBlur={(newContent) =>
-							handleSlideEdit(newContent, index, contentTag, contentIndex)
+							handleSlideEdit(newContent, index, contentTag, contentIndex, true)
 						}
 						style={style}
+						isVerticalContent={false}
 					/>
 				);
 			} else {
@@ -107,9 +95,10 @@ export const templateDispatch = (
 					<QuillEditable
 						content={content}
 						handleBlur={(newContent) =>
-							handleSlideEdit(newContent, index, contentTag)
+							handleSlideEdit(newContent, index, contentTag, undefined, true)
 						}
 						style={style}
+						isVerticalContent={false}
 					/>
 				);
 			}
@@ -134,36 +123,41 @@ export const templateDispatch = (
 			<Template
 				//autoSave={saveSlides}
 				key={keyPrefix + index.toString()}
-				icon={post_type === 'casual_topic' ? <CompanyIconWhite /> : <CompanyIconBlack />}
-				update_callback={getUpdateCallback(project?.post_type || 'casual_topic', index)}
+				handleSlideEdit={handleSlideEdit}
+				illustration={slide.illustration as string[]}
+				charts={slide.chart || defaultChartArr}
+				ischarts={slide.is_chart}
+				images_position={slide.images_position || [{}, {}, {}]}
 				canEdit={canEdit}
 				imgs={slide.images}
-				topic={generateContentElement(slide.topic, 'topic', h3Style)}
+				border_start={slide.theme?.border_start || '#937C67'}
+				border_end={slide.theme?.border_end || '#4F361F'}
+				cover_start={slide.theme?.cover_start || '#725947 0%'}
+				cover_end={slide.theme?.cover_end || 'rgba(0, 0, 0, 0.00) 100%'}
+				icon={post_type === 'casual_topic' ? <CompanyIconWhite /> : <CompanyIconBlack />}
+				update_callback={getUpdateCallback(project?.post_type || 'casual_topic', index)}
+				topic={generateContentElement(
+					slide.topic,
+					'topic',
+					themeElements.topicCSS || {}
+				)}
 				keywords={generateContentElement(
 					Array.isArray(slide.keywords)
 						? arrayToHtml(slide.keywords)
 						: slide.keywords,
 					'keywords',
-					h4Style,
+					themeElements.keywordCoverCSS || {}
 				)}
-				border_start={slide.theme?.border_start || '#937C67'}
-				border_end={slide.theme?.border_end || '#4F361F'}
-				cover_start={slide.theme?.cover_start || '#725947 0%'}
-				cover_end={slide.theme?.cover_end || 'rgba(0, 0, 0, 0.00) 100%'}
 				original_title={generateContentElement(
 					slide.original_title,
 					'original_title',
-					h6Style,
+					themeElements.originalTitleCoverCSS || {},
 				)}
-				illustration={slide.illustration as string[]}
-				title={generateContentElement(slide.title, 'title', {
-					color: '#121212',
-					fontFamily: 'Cormorant, sans-serif',
-				})}
-				charts={slide.chart || defaultChartArr}
-				ischarts={slide.is_chart}
-				images_position={slide.images_position || [{}, {}, {}]}
-				handleSlideEdit={handleSlideEdit}
+				title={generateContentElement(
+					slide.title,
+					'title',
+					themeElements.titleCSS || {}
+				)}
 				subtopic={<></>}
 				quote={<></>}
 				source={<></>}
@@ -178,11 +172,53 @@ export const templateDispatch = (
 			<Template
 				canEdit={canEdit}
 				key={keyPrefix + index.toString()}
-				icon={<CompanyIconWhite />}
+				icon={post_type === 'casual_topic' ? <CompanyIconWhite /> : <CompanyIconBlack />}
 				imgs={slide.images as string[]}
+				illustration={slide.illustration as string[]}
+				charts={slide.chart || defaultChartArr}
+				ischarts={slide.is_chart}
+				images_position={slide.images_position || [{}, {}, {}]}
+				handleSlideEdit={handleSlideEdit}
 				update_callback={getUpdateCallback(project?.post_type || 'casual_topic', index)}
-				subtopic={generateContentElement(slide.subtopic, 'subtopic', h2Style)}
-				keywords={generateContentElement(slide.keywords, 'keywords', h1Style)}
+				border_start={slide.theme?.border_start || '#937C67'}
+				border_end={slide.theme?.border_end || '#4F361F'}
+				cover_start={slide.theme?.cover_start || '#725947 0%'}
+				cover_end={slide.theme?.cover_end || 'rgba(0, 0, 0, 0.00) 100%'}
+				subtopic={generateContentElement(
+					slide.subtopic,
+					'subtopic',
+					themeElements.subtopicCSS || {}
+				)}
+				keywords={generateContentElement(
+					slide.keywords,
+					'keywords',
+					themeElements.keywordCSS || {}
+				)}
+				section_title={generateContentElement(
+					slide.section_title,
+					'section_title',
+					themeElements.sectionTitleCSS || {}
+				)}
+				original_title={generateContentElement(
+					slide.original_title,
+					'original_title',
+					themeElements.originalTitleCSS || {}
+				)}
+				brief={generateContentElement(
+					slide.brief,
+					'brief', 
+					themeElements.briefCSS || {}
+				)}
+				quote={generateContentElement(
+					slide.quote,
+					'quote',
+					themeElements.quoteCSS || {}
+				)}
+				source={generateContentElement(
+					slide.source, 
+					'source',
+					themeElements.sourceCSS || {}
+				)}
 				content={slide.content.map((content: string, contentIndex: number) => {
 					return (
 						<div
@@ -191,41 +227,13 @@ export const templateDispatch = (
 							{generateContentElement(
 								content,
 								'content',
-								listStyle,
+								themeElements.contentCSS || {},
 								contentIndex,
 							)}
-							<hr className='my-[15px]'></hr>
+							{post_type === 'casual_topic' && (<hr className='my-[15px]'></hr>)}
 						</div>
 					);
 				})}
-				border_start={slide.theme?.border_start || '#937C67'}
-				border_end={slide.theme?.border_end || '#4F361F'}
-				cover_start={slide.theme?.cover_start || '#725947 0%'}
-				cover_end={slide.theme?.cover_end || 'rgba(0, 0, 0, 0.00) 100%'}
-				section_title={generateContentElement(
-					slide.section_title,
-					'section_title',
-					h8Style,
-				)}
-				original_title={generateContentElement(
-					slide.original_title,
-					'original_title',
-					h7Style,
-				)}
-				illustration={slide.illustration as string[]}
-				brief={generateContentElement(slide.brief, 'brief', h9Style)}
-				quote={generateContentElement(slide.quote, 'quote', {
-					color: '#1D222A',
-					fontFamily: 'Cormorant, sans-serif',
-				})}
-				source={generateContentElement(slide.source, 'source', {
-					color: '#3A3A3A',
-					fontFamily: 'Cormorant, sans-serif',
-				})}
-				charts={slide.chart || defaultChartArr}
-				ischarts={slide.is_chart}
-				images_position={slide.images_position || [{}, {}, {}]}
-				handleSlideEdit={handleSlideEdit}
 				title={<></>}
 				English_title={<></>}
 				topic={<></>}

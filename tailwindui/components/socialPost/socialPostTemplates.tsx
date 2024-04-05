@@ -159,7 +159,10 @@ export const First_page_img_1 = ({
 				/>
 			</div>
 			<div className='w-full h-full mx-[3%] flex flex-col justify-between'>
-				<div className='mt-[10%] px-[4%] z-[10]'>{topic}</div>
+				<div className='max-h-[60%] mt-[10%] px-[4%] z-[10]'>
+					{topic}
+				</div>
+
 				<div
 					className='mb-[6%] mx-[auto]'
 					style={{

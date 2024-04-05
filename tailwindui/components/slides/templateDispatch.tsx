@@ -24,6 +24,18 @@ const QuillEditable = dynamic(
 	{ ssr: false },
 );
 
+const processContent = (item: string) => {
+	if (isHTML(item)) {
+		if (item.trim().startsWith('<li') && item.trim().endsWith('</li>')) {
+			return `<ol>${item}</ol>`;
+		} else {
+			return item;
+		}
+	} else {
+		return `<ol><li>${item}</li></ol>\n`;
+	}
+};
+
 export const templateDispatch = (
 	slide: Slide,
 	index: number,
@@ -180,17 +192,6 @@ export const templateDispatch = (
 		templateKey as TemplateKeys,
 		slide.palette as PaletteKeys,
 	);
-	const processContent = (item: string) => {
-		if (isHTML(item)) {
-			if (item.trim().startsWith('<li') && item.trim().endsWith('</li>')) {
-				return `<ol>${item}</ol>`;
-			} else {
-				return item;
-			}
-		} else {
-			return `<ol><li>${item}</li></ol>\n`;
-		}
-	};
 	const generateContentElement = (
 		content: string | string[],
 		contentTag: SlideKeys,

@@ -4,13 +4,14 @@ import 'quill/dist/quill.bubble.css';
 import '@/components/socialPost/quillEditor.scss';
 import themeColorConfigData from './templates_customizable_elements/theme_color_options';
 import '@/app/css/style.css';
-import { stopArrowKeyPropagation  } from '@/utils/editing';
+import { stopArrowKeyPropagation } from '@/utils/editing';
+import '@/components/socialPost/socialPostCustomFonts.css';
 
 type QuillEditableProps = {
 	content: string | string[];
 	handleBlur: (newContent: string | string[]) => void;
 	isVerticalContent: boolean;
-	templateKey: string;
+	templateKey?: string;
 	style?: React.CSSProperties;
 };
 
@@ -25,8 +26,11 @@ type QuillEditableProps = {
 // const fontSizes = generateFontSizes();
 
 function isKeyOfThemeColorConfig(
-	key: string,
+	key: string | null | undefined,
 ): key is keyof typeof themeColorConfigData {
+	if (key == null) {
+		return false;
+	}
 	return key in themeColorConfigData;
 }
 
@@ -42,6 +46,7 @@ Font.whitelist = [
 	'Caveat',
 	'Caveat Medium',
 	'Caveat Regular',
+	'Cormorant',
 	'Creato Display Medium',
 	'Creato Display Regular',
 	'Creato Display Thin',
@@ -54,6 +59,7 @@ Font.whitelist = [
 	'Libre Baskerville Regular',
 	'Libre Baskerville Bold',
 	'Nimbus Sans Regular',
+	'Nunito',
 	'Playfair Display Bold',
 	'Playfair Display Medium',
 	'Rubik',
@@ -65,18 +71,24 @@ Quill.register(Font, true);
 
 let Size = Quill.import('attributors/style/size') as any;
 Size.whitelist = [
+	'8pt',
+	'9pt',
+	'10pt',
 	'12pt',
 	'13pt',
 	'14pt',
 	'16pt',
 	'18pt',
 	'20pt',
+	'22pt',
 	'24pt',
 	'26pt',
 	'28pt',
 	'30pt',
 	'32pt',
 	'40pt',
+	'44pt',
+	'45pt',
 	'48pt',
 	'64pt',
 ];
@@ -250,7 +262,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				}
 			}
 			Quill.register(DefaultSytleBlock, true);
-			
+
 			//create deep copy of toolbaroptions
 			let customizedToolbarOptions = JSON.parse(JSON.stringify(toolbarOptions));
 

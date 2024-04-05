@@ -14,12 +14,9 @@ import {
 	AddSlideButton,
 	DeleteSlideButton,
 } from '@/components/socialPost/socialPostButtons';
-
 import SocialPostContainer from '@/components/socialPost/socialPostContainer';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import { templateDispatch } from '@/components/socialPost/socialPostTemplateDispatch';
-import { templateDispatch as templateDispatch2 } from '@/components/socialPost//socialPostTemplate2Dispatch';
-import { templateDispatch as templateDispatch3 } from '@/components/socialPost/socialPostTemplate3Dispatch';
 import templates, {
 	templateSamples,
 } from '@/components/socialPost/socialPostTemplates';
@@ -385,46 +382,18 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		index: number,
 		canEdit: boolean,
 	) => {
-		// if (res_scenario === 'serious_subject') {
-		// 	return templateDispatch2(
-		// 		slide,
-		// 		index,
-		// 		canEdit,
-		// 		false,
-		// 		isEditMode,
-		// 		setIsEditMode,
-		// 		handleSlideEdit,
-		// 		updateImgUrlArray,
-		// 		updateIllustrationUrlArray,
-		// 		toggleEditMode,
-		// 	);
-		// } else if (res_scenario === 'reading_notes') {
-		// 	return templateDispatch3(
-		// 		slide,
-		// 		index,
-		// 		canEdit,
-		// 		false,
-		// 		isEditMode,
-		// 		setIsEditMode,
-		// 		handleSlideEdit,
-		// 		updateImgUrlArray,
-		// 		updateIllustrationUrlArray,
-		// 		toggleEditMode,
-		// 	);
-		// } else {
-			return templateDispatch(
-				slide,
-				index,
-				canEdit,
-				false,
-				isEditMode,
-				setIsEditMode,
-				handleSlideEdit,
-				updateImgUrlArray,
-				updateIllustrationUrlArray,
-				toggleEditMode,
-			);
-		//}
+		return templateDispatch(
+			slide,
+			index,
+			canEdit,
+			false,
+			isEditMode,
+			setIsEditMode,
+			handleSlideEdit,
+			updateImgUrlArray,
+			updateIllustrationUrlArray,
+			toggleEditMode,
+		);
 	};
 	return (
 		<div>

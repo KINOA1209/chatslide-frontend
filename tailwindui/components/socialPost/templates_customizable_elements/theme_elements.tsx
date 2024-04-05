@@ -3,6 +3,16 @@ import { seriousDefault } from "./serious_subject/serious_default_template";
 import { readingDefault } from "./reading_notes/reading_default_template";
 
 export type ThemeElements = {
+    topicCSS?:React.CSSProperties;
+    keywordCoverCSS?:React.CSSProperties;
+    keywordCSS?:React.CSSProperties;
+    subtopicCSS?:React.CSSProperties;
+    originalTitleCoverCSS?: React.CSSProperties;
+    originalTitleCSS?: React.CSSProperties;
+    briefCSS?: React.CSSProperties;
+    sectionTitleCSS?: React.CSSProperties;
+    userNameCSS?: React.CSSProperties;
+    contentCSS?: React.CSSProperties;
     titleCSS?: React.CSSProperties;
     quoteCSS?: React.CSSProperties;
     sourceCSS?: React.CSSProperties;
