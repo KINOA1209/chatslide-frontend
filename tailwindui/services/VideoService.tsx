@@ -7,6 +7,7 @@ export default class VideoService {
 		foldername: string | null,
 		voice: string | null,
 		userToken: string,
+		style: string,
 	): Promise<void>{
 		fetch('/api/generate_video', {
 			method: 'POST',
@@ -18,6 +19,7 @@ export default class VideoService {
 				project_id: project_id,
 				foldername: foldername,
 				voice: voice,
+				style: style,
 			}),
 		});
 	}
@@ -48,7 +50,12 @@ export default class VideoService {
 		};
 	}
 
-	static async getTTS(text: string, voice: string, foldername: string, token: string): Promise<string> {
+	static async getTTS(
+		text: string, 
+		voice: string, 
+		style: string,
+		foldername: string, 
+		token: string): Promise<string> {
 		const response = await fetch('/api/generate_audio_single_slide', {
 			method: 'POST',
 			headers: {
@@ -58,6 +65,7 @@ export default class VideoService {
 			body: JSON.stringify({
 				text: text,
 				voice: voice,
+				style: style,
 				foldername: foldername,
 			}),
 		});

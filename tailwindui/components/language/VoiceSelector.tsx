@@ -22,9 +22,13 @@ export const previewVoice = async (voice: string) => {
 const VoiceSelector: React.FC<{
 	selectedVoice: string;
 	setSelectedVoice: (language: string) => void;
+	style: string;
+	setStyle: (style: string) => void;
 }> = ({
 	selectedVoice,
 	setSelectedVoice,
+	style,
+	setStyle,
 }) => {
 		const getCodeFromLanguage = (language: string | undefined): string => {
 			const selectedLanguage = LANGUAGES.find((lang) => lang.englishName === language);
@@ -35,7 +39,6 @@ const VoiceSelector: React.FC<{
 		const [selectedLanguage, setSelectedLanguage] = useState<string>(originalLanguageCode);
 		const [selectedGender, setSelectedGender] = useState<'female' | 'male'>('female');
 		const [voiceOptions, setVoiceOptions] = useState<string[]>([]);
-		const [style, setStyle] = useState<string>('');
 
 		// Update voice options based on selected language and gender
 		useEffect(() => {

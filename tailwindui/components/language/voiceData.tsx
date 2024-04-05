@@ -209,6 +209,7 @@ export const TONE_DISPLAY_NAMES: { [key: string]: string } = {
 };
 
 export const STYLE_DISPLAY_NAMES: { [key: string]: string } = {
+	"": "🙂 Default",
 	"advertisement_upbeat": "💼 Advertisement (upbeat)",
 	"affectionate": "❤️ Affectionate",
 	"angry": "😡 Angry",

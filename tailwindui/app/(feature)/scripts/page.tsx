@@ -30,6 +30,7 @@ export default function WorkflowStep5() {
 	const { username, token, updateCreditsFE } = useUser();
 	const router = useRouter();
 	const [voice, setVoice] = useState('en-US-AvaNeural');
+	const [style, setStyle] = useState('');
 
 	async function handleSubmitVideo() {
 		console.log('handleSubmitVideo');
@@ -49,7 +50,7 @@ export default function WorkflowStep5() {
 			try {
 				console.log('project_id:', project_id);
 				updateProject('video_url', '');
-				VideoService.generateVideo(project_id, foldername, voice, token);
+				VideoService.generateVideo(project_id, foldername, voice, token, style);
 				updateCreditsFE(-20);
 				router.push(addIdToRedir('/video'));
 			} catch (error) {
@@ -91,7 +92,12 @@ export default function WorkflowStep5() {
 					<Instruction>
 						Select the voice you want to use for your video.
 					</Instruction>
-					<VoiceSelector selectedVoice={voice} setSelectedVoice={setVoice} />
+					<VoiceSelector 
+					selectedVoice={voice} 
+					setSelectedVoice={setVoice}
+					style={style}
+					setStyle={setStyle} 
+					/>
 				</Card>
 				<Card>
 					<BigTitle>🦹‍♂️ Avatar</BigTitle>
@@ -127,6 +133,7 @@ export default function WorkflowStep5() {
 								slides={slides}
 								index={index}
 								voice={voice}
+								voiceStyle={style}
 								updateSlidePage={updateSlidePage}
 							/>
 						))}
