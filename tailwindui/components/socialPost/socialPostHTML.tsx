@@ -26,114 +26,30 @@ import templates, {
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
 import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';
-import SocialPostSlide from '@/models/SocialPost';
+import SocialPostSlide, { SlideKeys } from '@/models/SocialPost';
 import { useSocialPosts } from '@/hooks/use-socialpost';
 import ImagesPosition from '@/models/ImagesPosition';
 import Chart from '@/models/Chart';
-
-// export interface SlideElement {
-// 	type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
-// 	className:
-// 		| 'topic'
-// 		| 'subtopic'
-// 		| 'keywords'
-// 		| 'content'
-// 		| 'template'
-// 		| 'images'
-// 		| 'section_title'
-// 		| 'brief'
-// 		| 'original_title'
-// 		| 'English_title'
-// 		| 'title'
-// 		| 'illustration'
-// 		| 'quote'
-// 		| 'source'
-// 		| 'theme';
-// 	content: string | string[];
-// }
-
-export type SlideKeys =
-	| 'topic'
-	| 'subtopic'
-	| 'keywords'
-	| 'content'
-	| 'template'
-	| 'images'
-	| 'section_title'
-	| 'brief'
-	| 'original_title'
-	| 'English_title'
-	| 'title'
-	| 'illustration'
-	| 'quote'
-	| 'source'
-	| 'theme';
-
-// export class SocialPostSlide {
-// 	topic: string;
-// 	subtopic: string;
-// 	keywords: string;
-// 	content: string[];
-// 	template: string;
-// 	images: string[];
-// 	section_title: string;
-// 	brief: string;
-// 	original_title: string;
-// 	English_title: string;
-// 	title: string;
-// 	illustration: string[];
-// 	quote: string;
-// 	source: string;
-// 	theme: ThemeObject;
-
-// 	constructor() {
-// 		this.topic = 'Your topic';
-// 		this.subtopic = 'Your subtopic';
-// 		this.keywords = 'Your keywords';
-// 		this.content = ['Your content'];
-// 		this.template = 'Col_1_img_0';
-// 		this.images = [''];
-// 		this.section_title = 'Your section title';
-// 		this.brief = 'Your brief';
-// 		this.original_title = 'Your Topic';
-// 		this.English_title = '';
-// 		this.title = '';
-// 		this.illustration = [
-// 			'https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png',
-// 		];
-// 		this.quote = 'Your quote';
-// 		this.source = 'Your source';
-// 		this.theme = {
-// 			border_start: '',
-// 			border_end: '',
-// 			cover_start: '',
-// 			cover_end: '',
-// 		};
-// 	}
-// }
+import { ToolBar } from '../ui/ToolBar';
+import ShareButton from '@/components/button/ShareButton';
+import ExportToPngButton from '@/components/socialPost/socialPostPngButton';
 
 type SlidesHTMLProps = {
-	//socialPostSlides: SocialPostSlide[];
-	//setSocialPostSlides: Function;
 	isViewing?: boolean; // viewing another's shared project
-	//finalSlideIndex?: number;
-	//setFinalSlideIndex?: Function;
 	borderColorOptions: ThemeObject[];
 	res_scenario: string;
 };
 
 const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
-	//socialPostSlides,
-	//setSocialPostSlides,
 	isViewing = false,
-	//finalSlideIndex,
-	//setFinalSlideIndex,
 	borderColorOptions,
 	res_scenario,
 }) => {
 	const { token } = useUser();
 	const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(0);
 	const { project, updateProject } = useProject();
+	const [host, setHost] = useState('https://drlambda.ai');
+	const { isShared, updateIsShared } = useProject();
 	const foldername = project?.foldername || '';
 	const project_id = project?.id || '';
 	const res_slide = project?.social_posts;
@@ -143,7 +59,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 	const [present, setPresent] = useState(false);
 	const slideRef = useRef<HTMLDivElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
-	//const [saveStatus, setSaveStatus] = useState('Up to date');
 	const [dimensions, setDimensions] = useState({
 		width: typeof window !== 'undefined' ? window.innerWidth : 960,
 		height: typeof window !== 'undefined' ? window.innerHeight : 540,
@@ -175,132 +90,17 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		SaveStatus,
 		syncSocialPosts,
 	} = useSocialPosts();
-	console.log(socialPosts)
-	// useEffect(() => {
-	// 	if (unsavedChanges) {
-	// 		setSaveStatus('Unsaved changes');
-	// 	}
-	// });
 
-	// Watch for changes in finalSlides
-	// useEffect(() => {
-	// 	// if (isFirstRender.current) {
-	// 	//     isFirstRender.current = false;
-	// 	//     console.log('First render, skip saving')
-	// 	//     return;
-	// 	// }
-
-	// 	console.log('finalSlides changed');
-	// 	setUnsavedChanges(true);
-	// 	saveSlides();
-	// }, [socialPostSlides]);
-
-	// useEffect(() => {
-	// 	if (res_slide) {
-	// 		const parse_slide = JSON.parse(res_slide);
-	// 		const slidesArray: SocialPostSlide[] = Object.keys(parse_slide).map(
-	// 			(key, index) => {
-	// 				const slideData = parse_slide[key];
-	// 				const slide = new SocialPostSlide();
-	// 				if (index === 0) {
-	// 					if (res_scenario === 'casual_topic') {
-	// 						slide.template = slideData.template || 'First_page_img_1';
-	// 					} else if (res_scenario === 'serious_subject') {
-	// 						slide.English_title = slideData.English_title;
-	// 						slide.template =
-	// 							slideData.template || 'First_page_img_1_template2';
-	// 					} else if (res_scenario === 'reading_notes') {
-	// 						slide.template =
-	// 							slideData.template || 'First_page_img_1_template3';
-	// 					}
-	// 				} else {
-	// 					if (res_scenario === 'casual_topic') {
-	// 						slide.template = slideData.template || 'Col_1_img_0';
-	// 					} else if (res_scenario === 'serious_subject') {
-	// 						slide.template = slideData.template || 'img_0_template2';
-	// 					} else if (res_scenario === 'reading_notes') {
-	// 						slide.template = slideData.template || 'img_1_template3';
-	// 					}
-	// 				}
-	// 				slide.keywords = slideData.keywords || '';
-	// 				slide.topic = slideData.topic || 'Your topic here';
-	// 				slide.subtopic = slideData.subtopic;
-	// 				slide.images = slideData.images;
-	// 				slide.theme = slideData.theme;
-	// 				slide.content = slideData.content || ['Your content here'];
-	// 				slide.section_title = slideData.section_title || [
-	// 					'Your section title here',
-	// 				];
-	// 				slide.brief = slideData.brief || ['Your brief here'];
-	// 				slide.original_title = slideData.original_title || cover_title;
-	// 				slide.title = slideData.title || '';
-	// 				slide.illustration =
-	// 					slideData.illustration !== null
-	// 						? slideData.illustration
-	// 						: [
-	// 								'https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png',
-	// 							];
-	// 				slide.quote = slideData.quote || 'Your quote here';
-	// 				slide.source = slideData.source || '';
-	// 				slide.chart = slideData.chart;
-	// 				slide.is_chart = slideData.is_chart || [false, false, false];
-	// 				slide.images_position = slideData.images_position || [{}, {}, {}];
-
-	// 				return slide;
-	// 			},
-	// 		);
-	// 		updateProject('social_posts', 'true');
-	// 		setSocialPostSlides(slidesArray);
-	// 	}
-	// }, []);
-	// Function to send a request to auto-save finalSlides
-	// const saveSlides = async () => {
-	// 	if (isViewing) {
-	// 		console.log("Viewing another's shared project, skip saving");
-	// 		return;
-	// 	}
-
-	// 	if (socialPostSlides.length === 0) {
-	// 		console.log('Final slides not yet loaded, skip saving');
-	// 		return;
-	// 	}
-
-	// 	if (!foldername) {
-	// 		console.log('Foldername not found, skip saving');
-	// 		return;
-	// 	}
-	// 	setSaveStatus('Saving...');
-	// 	//console.log(finalSlides)
-
-	// 	const formData = {
-	// 		foldername: foldername,
-	// 		final_posts: socialPostSlides,
-	// 		project_id: project_id,
-	// 	};
-	// 	// Send a POST request to the backend to save finalSlides
-	// 	fetch('/api/save_social_posts', {
-	// 		method: 'POST',
-	// 		headers: {
-	// 			'Content-Type': 'application/json',
-	// 			Authorization: `Bearer ${token}`,
-	// 		},
-	// 		body: JSON.stringify(formData),
-	// 	})
-	// 		.then((response) => {
-	// 			if (response.ok) {
-	// 				setUnsavedChanges(false);
-	// 				console.log('Auto-save successful.');
-	// 				setSaveStatus('Up to date');
-	// 			} else {
-	// 				// Handle save error
-	// 				console.error('Auto-save failed.');
-	// 			}
-	// 		})
-	// 		.catch((error) => {
-	// 			// Handle network error
-	// 			console.error('Auto-save failed:', error);
-	// 		});
-	// };
+	useEffect(() => {
+		if (
+			window.location.hostname !== 'localhost' &&
+			window.location.hostname !== '127.0.0.1'
+		) {
+			setHost('https://' + window.location.hostname);
+		} else {
+			setHost(window.location.hostname);
+		}
+	}, []);
 
 	const openModal = () => {
 		setShowLayout(true);
@@ -443,7 +243,8 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 					| string[]
 					| Chart[]
 					| boolean[]
-					| ImagesPosition[];
+					| ImagesPosition[]
+					| ThemeObject
 				if (Array.isArray(content)) {
 					if (idx < content.length) {
 						updateContent = content[idx];
@@ -468,14 +269,12 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		console.log('updating slide page', slideIndex);
 		console.log(currentSlide);
 		updateSlidePage(slideIndex, currentSlide, rerender);
-		//setSocialPosts(newSlides);
 	}
 
 	function goToSlide(index: number) {
 		console.log('Goinng to slide', index);
 		isFirstRender.current = true;
 		setCurrentSlideIndex(index);
-		//setFinalSlideIndex?.(index);
 	}
 
 	function toggleEditMode() {
@@ -510,50 +309,109 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 	}
 
 	const updateImgUrlArray = (slideIndex: number) => {
-		const updateImgUrl = (urls: string[]) => {
-			handleSlideEdit(urls, slideIndex, 'images');
+		const updateImgUrl = (
+			urls: string[],
+			ischart: boolean[],
+			images_position: ImagesPosition[],
+		) => {
+			urls = urls.map((url) => (url === null ? '' : url));
+			const shuffleIndex = urls.indexOf('shuffle');
+			if (shuffleIndex !== -1) {
+				const additional_images = project?.additional_images || [];
+				if (additional_images.length === 0) {
+					return;
+				}
+				console.log('random url', additional_images);
+				const randomIndex = Math.floor(
+					Math.random() * additional_images.length,
+				);
+				urls[shuffleIndex] = additional_images[randomIndex];
+			}
+
+			const prevUrls = socialPosts[slideIndex].images;
+			if (JSON.stringify(prevUrls) === JSON.stringify(urls)) {
+				return;
+			}
+			console.log('updateImgUrlArray called');
+			console.log('urls', urls);
+			console.log('prevUrls', prevUrls);
+			handleSlideEdit([urls, ischart, images_position], slideIndex, [
+				'images',
+				'is_chart',
+				'images_position',
+			]);
 		};
 		return updateImgUrl;
 	};
 
 	const updateIllustrationUrlArray = (slideIndex: number) => {
-		const updateIllustrationUrl = (urls: string[]) => {
-			handleSlideEdit(urls, slideIndex, 'illustration');
+		const updateIllustrationUrl = (
+			urls: string[],
+			ischart: boolean[],
+			images_position: ImagesPosition[],
+		) => {
+			urls = urls.map((url) => (url === null ? '' : url));
+			const shuffleIndex = urls.indexOf('shuffle');
+			if (shuffleIndex !== -1) {
+				const additional_images = project?.additional_images || [];
+				if (additional_images.length === 0) {
+					return;
+				}
+				console.log('random url', additional_images);
+				const randomIndex = Math.floor(
+					Math.random() * additional_images.length,
+				);
+				urls[shuffleIndex] = additional_images[randomIndex];
+			}
+
+			const prevUrls = socialPosts[slideIndex].images;
+			if (JSON.stringify(prevUrls) === JSON.stringify(urls)) {
+				return;
+			}
+			console.log('updateIllustrationUrlArray called');
+			console.log('urls', urls);
+			console.log('prevUrls', prevUrls);
+			handleSlideEdit([urls, ischart, images_position], slideIndex, [
+				'illustration',
+				'is_chart',
+				'images_position',
+			]);
 		};
 		return updateIllustrationUrl;
 	};
+
 	const editableTemplateDispatch = (
 		slide: SocialPostSlide,
 		index: number,
 		canEdit: boolean,
 	) => {
-		if (res_scenario === 'serious_subject') {
-			return templateDispatch2(
-				slide,
-				index,
-				canEdit,
-				false,
-				isEditMode,
-				setIsEditMode,
-				handleSlideEdit,
-				updateImgUrlArray,
-				updateIllustrationUrlArray,
-				toggleEditMode,
-			);
-		} else if (res_scenario === 'reading_notes') {
-			return templateDispatch3(
-				slide,
-				index,
-				canEdit,
-				false,
-				isEditMode,
-				setIsEditMode,
-				handleSlideEdit,
-				updateImgUrlArray,
-				updateIllustrationUrlArray,
-				toggleEditMode,
-			);
-		} else {
+		// if (res_scenario === 'serious_subject') {
+		// 	return templateDispatch2(
+		// 		slide,
+		// 		index,
+		// 		canEdit,
+		// 		false,
+		// 		isEditMode,
+		// 		setIsEditMode,
+		// 		handleSlideEdit,
+		// 		updateImgUrlArray,
+		// 		updateIllustrationUrlArray,
+		// 		toggleEditMode,
+		// 	);
+		// } else if (res_scenario === 'reading_notes') {
+		// 	return templateDispatch3(
+		// 		slide,
+		// 		index,
+		// 		canEdit,
+		// 		false,
+		// 		isEditMode,
+		// 		setIsEditMode,
+		// 		handleSlideEdit,
+		// 		updateImgUrlArray,
+		// 		updateIllustrationUrlArray,
+		// 		toggleEditMode,
+		// 	);
+		// } else {
 			return templateDispatch(
 				slide,
 				index,
@@ -566,12 +424,26 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 				updateIllustrationUrlArray,
 				toggleEditMode,
 			);
-		}
+		//}
 	};
-	//console.log(socialPostSlides)
 	return (
 		<div>
 			<div className='flex flex-col items-center justify-center gap-4'>
+				<ToolBar >
+					{/* slides contents */}
+					<ExportToPngButton
+						socialPostSlide={socialPosts}
+						currentSlideIndex={socialPostsIndex}
+					/>
+					{project &&
+						<ShareButton
+							setShare={updateIsShared}
+							share={isShared}
+							project={project}
+							host={host}
+							isSocialPost={true}
+						/>}
+				</ToolBar>
 				{/* buttons and contents */}
 				<div className='max-w-4xl relative flex flex-row items-center justify-center gap-4'>
 					<ToastContainer />
@@ -613,7 +485,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 										openTheme={openTheme}
 										showTheme={showTheme}
 										closeTheme={closeTheme}
-										currentSlideIndex={currentSlideIndex}
+										currentSlideIndex={socialPostsIndex}
 										borderColorOptions={borderColorOptions}
 										handleSlideEdit={handleSlideEdit}
 									/>

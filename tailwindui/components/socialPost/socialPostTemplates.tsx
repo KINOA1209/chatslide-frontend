@@ -27,7 +27,11 @@ interface MainSlideProps {
 	title: JSX.Element;
 	quote: JSX.Element;
 	source: JSX.Element;
-	update_callback: (imgs: string[]) => void;
+	update_callback: (
+		imgs: string[],
+		ischart: boolean[],
+		images_position: ImagesPosition[],
+	) => void;
 	canEdit: boolean;
 	//autoSave: Function;
 	border_start?: string;
@@ -41,46 +45,46 @@ interface MainSlideProps {
 	handleSlideEdit: Function;
 }
 
-const useLocalImgs = (
-	imgs: string[],
-	imgCount: number,
-	update_callback: (imgs: string[]) => void,
-) => {
-	if (imgs === undefined) {
-		imgs = [];
-	}
+// const useLocalImgs = (
+// 	imgs: string[],
+// 	imgCount: number,
+// 	update_callback: (imgs: string[]) => void,
+// ) => {
+// 	if (imgs === undefined) {
+// 		imgs = [];
+// 	}
 
-	const initialImgs = useMemo(() => {
-		let cleanedImgs = imgs.filter((url) => url !== '');
-		if (cleanedImgs.length > imgCount) {
-			cleanedImgs = cleanedImgs.slice(0, imgCount);
-		} else if (cleanedImgs.length < imgCount) {
-			cleanedImgs = [
-				...cleanedImgs,
-				...new Array(imgCount - cleanedImgs.length).fill(''),
-			];
-		}
-		return cleanedImgs;
-	}, [imgs, imgCount]);
+// 	const initialImgs = useMemo(() => {
+// 		let cleanedImgs = imgs.filter((url) => url !== '');
+// 		if (cleanedImgs.length > imgCount) {
+// 			cleanedImgs = cleanedImgs.slice(0, imgCount);
+// 		} else if (cleanedImgs.length < imgCount) {
+// 			cleanedImgs = [
+// 				...cleanedImgs,
+// 				...new Array(imgCount - cleanedImgs.length).fill(''),
+// 			];
+// 		}
+// 		return cleanedImgs;
+// 	}, [imgs, imgCount]);
 
-	const [localImgs, setLocalImgs] = useState<string[]>(initialImgs);
+// 	const [localImgs, setLocalImgs] = useState<string[]>(initialImgs);
 
-	useEffect(() => {
-		update_callback(localImgs);
-	}, [localImgs]);
+// 	useEffect(() => {
+// 		update_callback(localImgs);
+// 	}, [localImgs]);
 
-	const updateImgAtIndex = (index: number) => {
-		const updateLocalImgs = (url: string) => {
-			const newLocalImgs = [...localImgs];
-			newLocalImgs[index] = url;
-			setLocalImgs(newLocalImgs);
-			//console.log('updateLocalImgs', newLocalImgs)
-		};
-		return updateLocalImgs;
-	};
+// 	const updateImgAtIndex = (index: number) => {
+// 		const updateLocalImgs = (url: string) => {
+// 			const newLocalImgs = [...localImgs];
+// 			newLocalImgs[index] = url;
+// 			setLocalImgs(newLocalImgs);
+// 			//console.log('updateLocalImgs', newLocalImgs)
+// 		};
+// 		return updateLocalImgs;
+// 	};
 
-	return { localImgs, updateImgAtIndex };
-};
+// 	return { localImgs, updateImgAtIndex };
+// };
 
 export const First_page_img_1 = ({
 	topic,
@@ -97,11 +101,25 @@ export const First_page_img_1 = ({
 	images_position,
 	handleSlideEdit,
 }: MainSlideProps) => {
-	const { localImgs, updateImgAtIndex } = useLocalImgs(
-		imgs,
-		1,
-		update_callback,
-	);
+	const updateImgAtIndex =
+		(index: number) =>
+		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+			const newImgs = [...imgs];
+			if (index >= newImgs.length) newImgs.push(imgSrc);
+			else newImgs[index] = imgSrc;
+
+			const newIsCharts = [...ischarts];
+			if (index >= newIsCharts.length) newIsCharts.push(ischart);
+			else newIsCharts[index] = ischart;
+
+			const newImagesPosition = [...images_position];
+			if (index >= newImagesPosition.length)
+				newImagesPosition.push(image_position);
+			else newImagesPosition[index] = image_position;
+
+			update_callback(newImgs, newIsCharts, newImagesPosition);
+	};
+
 	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts()
 	return (
 		<div
@@ -227,11 +245,24 @@ export const Col_2_img_1 = ({
 	images_position,
 	handleSlideEdit,
 }: MainSlideProps) => {
-	const { localImgs, updateImgAtIndex } = useLocalImgs(
-		imgs,
-		1,
-		update_callback,
-	);
+	const updateImgAtIndex =
+		(index: number) =>
+		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+			const newImgs = [...imgs];
+			if (index >= newImgs.length) newImgs.push(imgSrc);
+			else newImgs[index] = imgSrc;
+
+			const newIsCharts = [...ischarts];
+			if (index >= newIsCharts.length) newIsCharts.push(ischart);
+			else newIsCharts[index] = ischart;
+
+			const newImagesPosition = [...images_position];
+			if (index >= newImagesPosition.length)
+				newImagesPosition.push(image_position);
+			else newImagesPosition[index] = image_position;
+
+			update_callback(newImgs, newIsCharts, newImagesPosition);
+	};
 
 	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts()
 	return (
@@ -308,11 +339,25 @@ export const First_page_img_1_template2 = ({
 	images_position,
 	handleSlideEdit,
 }: MainSlideProps) => {
-	const { localImgs, updateImgAtIndex } = useLocalImgs(
-		imgs,
-		1,
-		update_callback,
-	);
+	const updateImgAtIndex =
+		(index: number) =>
+		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+			const newImgs = [...imgs];
+			if (index >= newImgs.length) newImgs.push(imgSrc);
+			else newImgs[index] = imgSrc;
+
+			const newIsCharts = [...ischarts];
+			if (index >= newIsCharts.length) newIsCharts.push(ischart);
+			else newIsCharts[index] = ischart;
+
+			const newImagesPosition = [...images_position];
+			if (index >= newImagesPosition.length)
+				newImagesPosition.push(image_position);
+			else newImagesPosition[index] = image_position;
+
+			update_callback(newImgs, newIsCharts, newImagesPosition);
+	};
+
 	const [username, setUsername] = useState(null);
 	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts()
 	useEffect(() => {
@@ -473,11 +518,24 @@ export const First_page_img_1_template3 = ({
 	images_position,
 	handleSlideEdit,
 }: MainSlideProps) => {
-	const { localImgs, updateImgAtIndex } = useLocalImgs(
-		illustration,
-		1,
-		update_callback,
-	);
+	const updateImgAtIndex =
+		(index: number) =>
+		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+			const newImgs = [...illustration];
+			if (index >= newImgs.length) newImgs.push(imgSrc);
+			else newImgs[index] = imgSrc;
+
+			const newIsCharts = [...ischarts];
+			if (index >= newIsCharts.length) newIsCharts.push(ischart);
+			else newIsCharts[index] = ischart;
+
+			const newImagesPosition = [...images_position];
+			if (index >= newImagesPosition.length)
+				newImagesPosition.push(image_position);
+			else newImagesPosition[index] = image_position;
+
+			update_callback(newImgs, newIsCharts, newImagesPosition);
+	};
 	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts()
 	return (
 		<div
@@ -522,6 +580,7 @@ export const First_page_img_1_template3 = ({
 						images_position={images_position}
 						isSlide={false}
 						currentContentIndex={0}
+						search_illustration={true}
 					/>
 				</div>
 			</div>
@@ -542,11 +601,24 @@ export const img_1_template3 = ({
 	images_position,
 	handleSlideEdit,
 }: MainSlideProps) => {
-	const { localImgs, updateImgAtIndex } = useLocalImgs(
-		illustration,
-		1,
-		update_callback,
-	);
+	const updateImgAtIndex =
+		(index: number) =>
+		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+			const newImgs = [...illustration];
+			if (index >= newImgs.length) newImgs.push(imgSrc);
+			else newImgs[index] = imgSrc;
+
+			const newIsCharts = [...ischarts];
+			if (index >= newIsCharts.length) newIsCharts.push(ischart);
+			else newIsCharts[index] = ischart;
+
+			const newImagesPosition = [...images_position];
+			if (index >= newImagesPosition.length)
+				newImagesPosition.push(image_position);
+			else newImagesPosition[index] = image_position;
+
+			update_callback(newImgs, newIsCharts, newImagesPosition);
+	};
 	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts()
 	return (
 		<div
@@ -592,6 +664,7 @@ export const img_1_template3 = ({
 						images_position={images_position}
 						isSlide={false}
 						currentContentIndex={0}
+						search_illustration={true}
 					/>
 				</div>
 				<div id='asterisk_section' className='mx-[auto] text-center'>

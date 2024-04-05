@@ -73,6 +73,7 @@ interface ImgModuleProp {
 	columnIndex?: number;
 	isSlide?: boolean;
 	isSocialPostTemp1Cover?: boolean;
+	search_illustration?: boolean;
 }
 
 enum ImgQueryMode {
@@ -102,6 +103,7 @@ export const ImgModule = ({
 	columnIndex = 0,
 	isSlide = true,
 	isSocialPostTemp1Cover = false,
+	search_illustration = false,
 }: ImgModuleProp) => {
 	const sourceImage = useImageStore((state) => state.sourceImage);
 	const { project } = useProject();
@@ -229,6 +231,41 @@ export const ImgModule = ({
 			.catch((e) => {
 				console.error(e);
 			});
+		setSearching(false);
+	};
+
+	const handleIllustrationSearchSubmit = async (
+		e: React.FormEvent<HTMLFormElement>,
+	) => {
+		e.preventDefault();
+		setSelectedQueryMode(ImgQueryMode.SEARCH);
+		setSearchResult([]);
+		setSearching(true);
+		const dummyParam = `dummy=${Math.random()}`;
+		const response = await fetch(
+			`/api/search_illustration_images?keyword=${encodeURIComponent(
+				keyword,
+			)}&${dummyParam}`,
+			{
+				mode: 'cors',
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
+				},
+			},
+		);
+		if (response.ok) {
+			try {
+				const parsedResponse = await response.json();
+				setSearchResult(parsedResponse.data.images);
+			} catch (error) {
+				console.error(error);
+			}
+		} else {
+			const error = response.status;
+			console.error(error, response);
+		}
 		setSearching(false);
 	};
 
@@ -502,7 +539,17 @@ export const ImgModule = ({
 
 	const imgSearchDiv = (
 		<div className='w-full h-full flex flex-col'>
-			<form onSubmit={handleImageSearchSubmit} className='w-full flex flex-col'>
+			<form
+				onSubmit={async (e) => {
+					e.preventDefault();
+					if (search_illustration) {
+						await handleIllustrationSearchSubmit(e);
+					} else {
+						await handleImageSearchSubmit(e);
+					}
+				}}
+				className='w-full flex flex-col'
+			>
 				<Explanation>
 					Highlight the keywords you want to use for search:
 				</Explanation>
@@ -952,7 +999,7 @@ export const ImgModule = ({
 				setIsParentDimension(false);
 			}
 		}
-	}, [currentContentIndex, imageRefs]); 
+	}, [currentContentIndex, imageRefs]);
 
 	//detect the mouse click event is outside the image container or not, if it's, trigger autosave
 	useEffect(() => {
@@ -1137,7 +1184,7 @@ export const ImgModule = ({
 					: canEdit
 						? 'hover:bg-[#CAD0D3]'
 						: ''
-				} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
+					} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
 				style={{
 					overflow: isImgEditMode ? 'visible' : 'hidden',
 					borderRadius: customImageStyle?.borderRadius,
@@ -1192,12 +1239,12 @@ export const ImgModule = ({
 					>
 						{!isSlide && isSocialPostTemp1Cover && (
 							<div
-							className='absolute inset-0'
-							style={{
-								backgroundImage: `linear-gradient(180deg, ${socialPosts[socialPostsIndex].theme.cover_start}, ${socialPosts[socialPostsIndex].theme.cover_end} 40%)`,
-								zIndex: 2,
-							}}
-						/>
+								className='absolute inset-0'
+								style={{
+									backgroundImage: `linear-gradient(180deg, ${socialPosts[socialPostsIndex].theme.cover_start}, ${socialPosts[socialPostsIndex].theme.cover_end} 40%)`,
+									zIndex: 2,
+								}}
+							/>
 						)}
 						<Rnd
 							className={`${isImgEditMode ? 'rndContainerWithBorder' : ''}`}

@@ -22,6 +22,7 @@ export interface SlideElement {
 		| 'theme'
 		| 'chart'
 		| 'is_chart'
+		| 'images_position'
 	content: string | string[];
 }
 
@@ -43,6 +44,7 @@ export type SlideKeys =
 	| 'theme'
 	| 'chart'
 	| 'is_chart'
+	| 'images_position'
 
 export default class SocialPostSlide {
 	topic: string;

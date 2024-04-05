@@ -52,7 +52,6 @@ class ProjectService {
 				project.parsed_socialPosts = this.parseSocialPosts(
 					project.social_posts,
 					project.post_type,
-					project.project_name,
 				);
 			}
 
@@ -111,7 +110,6 @@ class ProjectService {
 				project.parsed_socialPosts = this.parseSocialPosts(
 					project.social_posts,
 					project.post_type,
-					project.project_name,
 				);
 			}
 
@@ -281,7 +279,6 @@ class ProjectService {
 	static parseSocialPosts(
 		social_posts: string,
 		post_type: string,
-		project_name: string,
 	): SocialPostSlide[] {
 		const parse_slide = JSON.parse(social_posts);
 		const slidesArray: SocialPostSlide[] = Object.keys(parse_slide).map(

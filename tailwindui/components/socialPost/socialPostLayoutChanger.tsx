@@ -1,6 +1,6 @@
 import React from 'react';
 import { Transition } from '@headlessui/react'; // Assuming you're using Headless UI for Transitions
-import { SlideKeys } from '@/components/socialPost/socialPostHTML';
+import { SlideKeys } from '@/models/SocialPost';
 import { ChangeLayoutIcon } from '@/app/(feature)/icons';
 type LayoutProps = {
 	openModal: () => void;
