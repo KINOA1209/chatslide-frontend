@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import VOICE_OPTIONS, { STYLE_DISPLAY_NAMES, TONE_DISPLAY_NAMES } from './voiceData';
+import VOICE_OPTIONS, { STYLE_DISPLAY_NAMES, TONE_DISPLAY_NAMES, VOICE_STYLES } from './voiceData';
 import LANGUAGES from './languageData';
 import { ErrorMessage, Instruction, WarningMessage } from '../ui/Text';
 import { DropDown } from '../button/DrlambdaButton';
@@ -18,6 +18,11 @@ export const previewVoice = async (voice: string) => {
 		console.error("Error playing script audio:", error);
 	}
 };
+
+export const getVoiceStyles = (voice: string): string[] => {
+	const styles = VOICE_STYLES[voice] ?? [];
+	return ['', ...styles];
+}
 
 const VoiceSelector: React.FC<{
 	selectedVoice: string;
@@ -48,6 +53,8 @@ const VoiceSelector: React.FC<{
 		}, [selectedLanguage, selectedGender]);
 
 		const formatVoiceName = (voiceName: string): string => {
+			const styleAvailableText = VOICE_STYLES[voiceName] ? ' (styles ✅)' : '';
+
 			// Ensure the string is long enough to avoid negative substring indices
 			if (voiceName.length > 12) {
 				let formattedName = voiceName.substring(6, voiceName.length - 6);
@@ -55,11 +62,11 @@ const VoiceSelector: React.FC<{
 				formattedName = formattedName.charAt(0).toUpperCase() + formattedName.slice(1);
 				// replace Multilingual with `-Mulilingual`
 				if (formattedName.includes('Multilingual')) {
-					return formattedName.replace('Multilingual', '-Multilingual');
+					return formattedName.replace('Multilingual', '-Multilingual') + styleAvailableText;
 				}
 
 				formattedName = TONE_DISPLAY_NAMES[formattedName] ?? formattedName;
-				return formattedName;
+				return formattedName + styleAvailableText;
 			}
 
 			// If the name is not in the expected format, return it as is or handle accordingly
@@ -104,8 +111,8 @@ const VoiceSelector: React.FC<{
 						<div>
 							<Instruction>Style: </Instruction>
 							<DropDown value={style} onChange={(e) => setStyle(e.target.value)} width='16rem'>
-								{Object.entries(STYLE_DISPLAY_NAMES).map(([key, displayName], index) => (
-									<option key={index} value={key}>{displayName}</option>
+								{getVoiceStyles(selectedVoice).map((style) => (
+									<option key={style} value={style}>{STYLE_DISPLAY_NAMES[style]}</option>
 								))}
 							</DropDown>
 						</div>
