@@ -371,7 +371,7 @@ export default function Topic() {
 					<div id='SummaryStep-2'>
 						{/* title */}
 						<div className='title1'>
-							<BigTitle>Summary</BigTitle>
+							<BigTitle>💡 Summary</BigTitle>
 							{/* <p id='after1'>
 								{' '}
 								{generationMode === 'from_topic' ? '(Required)' : '(Optional)'}

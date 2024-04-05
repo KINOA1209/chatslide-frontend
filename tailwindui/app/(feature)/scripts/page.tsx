@@ -15,6 +15,8 @@ import { useRouter } from 'next/navigation';
 import { addIdToRedir } from '@/utils/redirWithId';
 import dynamic from 'next/dynamic';
 import useHydrated from '@/hooks/use-hydrated';
+import { BigBlueButton } from '@/components/button/DrlambdaButton';
+import UserService from '@/services/UserService';
 
 const ScriptSection = dynamic(
 	() => import('@/components/script/ScriptSection'),
@@ -25,9 +27,10 @@ export default function WorkflowStep5() {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { slides, updateSlidePage } = useSlides();
 	const { project, updateProject } = useProject();
-	const { token, updateCreditsFE } = useUser();
+	const { username, token, updateCreditsFE } = useUser();
 	const router = useRouter();
 	const [voice, setVoice] = useState('en-US-AvaNeural');
+	const [style, setStyle] = useState('');
 
 	async function handleSubmitVideo() {
 		console.log('handleSubmitVideo');
@@ -47,7 +50,7 @@ export default function WorkflowStep5() {
 			try {
 				console.log('project_id:', project_id);
 				updateProject('video_url', '');
-				VideoService.generateVideo(project_id, foldername, voice, token);
+				VideoService.generateVideo(project_id, foldername, voice, token, style);
 				updateCreditsFE(-20);
 				router.push(addIdToRedir('/video'));
 			} catch (error) {
@@ -85,14 +88,33 @@ export default function WorkflowStep5() {
 
 			<Column>
 				<Card>
-					<BigTitle>Voice</BigTitle>
+					<BigTitle>🎙️ Voice</BigTitle>
 					<Instruction>
 						Select the voice you want to use for your video.
 					</Instruction>
-					<VoiceSelector selectedVoice={voice} setSelectedVoice={setVoice} />
+					<VoiceSelector 
+					selectedVoice={voice} 
+					setSelectedVoice={setVoice}
+					style={style}
+					setStyle={setStyle} 
+					/>
 				</Card>
 				<Card>
-					<BigTitle>Scripts</BigTitle>
+					<BigTitle>🦹‍♂️ Avatar</BigTitle>
+					<div className='flex flex-row gap-x-4 items-end'>
+					<Instruction>
+						This is coming soon... We are finding some pilot users to test this feature. 
+					</Instruction>
+					<BigBlueButton onClick={()=> {
+							UserService.submitFeedback(5, username + ' wants to join the pilot program for Avatar feature', project?.id || '', token);
+							toast.success('You are added to the waitlist, thank you!');
+					}} >
+						Join the pilot program
+					</BigBlueButton>
+					</div>
+				</Card>
+				<Card>
+					<BigTitle>📝 Scripts</BigTitle>
 					<Instruction>
 						<div className='flex flex-col gap-y-1'>
 							<p>💡 Script to voice tips: </p>
@@ -111,6 +133,7 @@ export default function WorkflowStep5() {
 								slides={slides}
 								index={index}
 								voice={voice}
+								voiceStyle={style}
 								updateSlidePage={updateSlidePage}
 							/>
 						))}

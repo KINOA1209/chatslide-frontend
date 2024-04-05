@@ -8,7 +8,7 @@ export const getUserCountryCode = async () => {
 			return data.country_code; // This returns the country code
 		})
 		.catch((error) => {
-			console.error('Error fetching IP data:', error);
+			console.warn('Error fetching IP data:', error);
 			return 'US'; // Make sure to resolve the promise with 'US' in case of error
 		});
 }

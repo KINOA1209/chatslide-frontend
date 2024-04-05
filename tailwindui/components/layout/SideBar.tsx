@@ -113,12 +113,12 @@ const SideBar = ({ }: SideBarProps) => {
 				{/* drlambda home */}
 
 				<a
-					href='/index.html'
+					href="/landing"
 					className='block flex flex-row items-center gap-2 py-2 text-white px-2 rounded-lg hover:bg-gray-400 cursor-pointer'
 					role='menuitem'
 				>
 					<img
-						src='/new_landing/svgs/drlambda-logo.svg'
+						src='/images/drlambda-logo.svg'
 						alt='DrLambda'
 						className='w-[16px] h-[16px]'
 					/>
@@ -210,9 +210,9 @@ const SideBar = ({ }: SideBarProps) => {
 						</>
 					)}
 
-					<div className='relative'>
+					{/* <div className='relative'>
 						<FeedbackButton timeout={path.includes('/slides') ? 30 * 1000 : 0} />
-					</div>
+					</div> */}
 				</div>
 			</div>
 

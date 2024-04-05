@@ -94,7 +94,7 @@ const TemplateSelector: React.FC<{
 								<option key={key} value={key}>
 									{`${value} ${
 										(availablePalettes[key as TemplateKeys]?.length ?? 0) > 1
-											? '(🎨 available)'
+											? '(palette ✅)'
 											: ''
 									}`}
 								</option>

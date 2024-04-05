@@ -138,7 +138,9 @@ export default function DesignPage() {
 		},
 	];
 
-	const [branding, setBranding] = useState(project?.logo === '' ? 'no' : 'yes');
+	const [branding, setBranding] = useState(
+		project?.logo === '' ? 'no' : 
+		isPaidUser ? 'no' : 'yes');
 
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
@@ -198,7 +200,7 @@ export default function DesignPage() {
 				<Panel>
 					{/* design */}
 					<Card>
-						<BigTitle>Design</BigTitle>
+						<BigTitle>✍️ Design</BigTitle>
 						<Explanation>
 							Customize the design for your slide, you can also skip this step
 							and use the default
@@ -249,7 +251,7 @@ export default function DesignPage() {
 					</Card>
 
 					<Card>
-						<BigTitle>Branding</BigTitle>
+						<BigTitle>🏷️ Branding</BigTitle>
 						<Explanation>
 							Select the branding for your slides, you can also change this on
 							the slides page, or talk with AI Chatbot

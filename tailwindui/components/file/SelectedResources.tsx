@@ -56,7 +56,7 @@ const ResourceEntry: React.FC<ResourceEntryProps> = ({
 				<div className='flex-wrap'>{resource.name.replace('.txt', '')}</div>
 			</div>
 			<div className='flex items-center gap-4'>
-				{resource.type === 'doc' && (
+				{resource.type === 'doc' && resource.name.endsWith('pdf') && (
 					<button onClick={handleOCR} disabled={runningOCR}>
 						<span className='flex flex-row whitespace-nowrap items-center gap-1'>
 							{doneOCR && <FaCheckCircle className='text-green-500' />}
