@@ -51,9 +51,6 @@ export const templateDispatch = (
 		keyPrefix = 'preview';
 	}
 	const Template = templates[slide.template as keyof typeof templates];
-	const arrayToHtml = (contentArray: Array<string>) => {
-		return contentArray.map((item) => `<p>${item}</p>`).join('');
-	};
 	const { project } = useProject()
 	const post_type: PostTypeKeys = project?.post_type as PostTypeKeys || 'casual_topic';
 	const themeElements = themeConfigData[post_type]
@@ -120,6 +117,7 @@ export const templateDispatch = (
 		groups: [emptyGroup],
 		axis: { x: '', y: '' },
 	}));
+	console.log(slide.keywords)
 
 	if (index === 0) {
 		return (
@@ -146,7 +144,7 @@ export const templateDispatch = (
 				)}
 				keywords={generateContentElement(
 					Array.isArray(slide.keywords)
-						? arrayToHtml(slide.keywords)
+						? slide.keywords.join(' | ')
 						: slide.keywords,
 					'keywords',
 					themeElements.keywordCoverCSS || {}
