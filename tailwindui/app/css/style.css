@@ -158,6 +158,17 @@
 	src: url('/fonts/sales_pitch/DMSans-Regular.ttf') format('truetype');
 	/* Add more src declarations for different font weights or styles if needed */
 }
+/* open sans font family */
+@font-face {
+	font-family: 'Open Sans Regular';
+	src: url('/fonts/OpenSans-Regular.ttf') format('truetype');
+	/* Add more src declarations for different font weights or styles if needed */
+}
+@font-face {
+	font-family: 'Open Sans Medium';
+	src: url('/fonts/OpenSans-Medium.ttf') format('truetype');
+	/* Add more src declarations for different font weights or styles if needed */
+}
 
 @font-face {
 	font-family: 'Nunito';

@@ -20,11 +20,13 @@ const ScriptSection: React.FC<{
 	slides: Array<Slide>;
 	index: number;
 	voice: string;
+	voiceStyle: string;
 	updateSlidePage: (index: number, slide: Slide) => void;
 }> = ({
 	slides,
 	index,
 	voice,
+	voiceStyle,
 	updateSlidePage,
 }) => {
 		const [scale, setScale] = useState(calculateNonPresentScale(window.innerWidth, window.innerHeight) * 0.5);
@@ -52,7 +54,12 @@ const ScriptSection: React.FC<{
 
 			// Assuming VideoService.playScript returns a Promise that resolves to an audio URL or blob
 			try {
-				const audio = await VideoService.getTTS(script, voice, project?.foldername as string, token); // Fetch voice from backend
+				const audio = await VideoService.getTTS(
+					script, 
+					voice, 
+					voiceStyle,
+					project?.foldername as string, 
+					token); // Fetch voice from backend
 				const audioElement = new Audio(audio); // Create an audio element with the fetched voice
 				setIsLoading(false);
 				setIsPlaying(true);

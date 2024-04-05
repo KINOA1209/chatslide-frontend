@@ -217,7 +217,7 @@ const MobileMenu = ({ refList = [] }: HeaderProps) => {
 								<li>
 									<div onClick={signOut}>
 										<Link
-											href='/index.html'
+											href="/landing"
 											className='flex font-medium w-full text-red-500 hover:text-red-600 py-2 justify-center'
 											onClick={() => setMobileNavOpen(false)}
 										>

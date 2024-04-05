@@ -81,7 +81,6 @@ class AuthService {
 			const user = await AmplifyAuth.signIn(email, password);
 			return user;
 		} catch (error) {
-			console.error('Error signing in: ', error);
 			throw error;
 		}
 	}

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import VOICE_OPTIONS, { TONE_DISPLAY_NAMES } from './voiceData';
+import VOICE_OPTIONS, { STYLE_DISPLAY_NAMES, TONE_DISPLAY_NAMES, VOICE_STYLES } from './voiceData';
 import LANGUAGES from './languageData';
 import { ErrorMessage, Instruction, WarningMessage } from '../ui/Text';
 import { DropDown } from '../button/DrlambdaButton';
@@ -19,12 +19,21 @@ export const previewVoice = async (voice: string) => {
 	}
 };
 
+export const getVoiceStyles = (voice: string): string[] => {
+	const styles = VOICE_STYLES[voice] ?? [];
+	return ['', ...styles];
+}
+
 const VoiceSelector: React.FC<{
 	selectedVoice: string;
 	setSelectedVoice: (language: string) => void;
+	style: string;
+	setStyle: (style: string) => void;
 }> = ({
 	selectedVoice,
 	setSelectedVoice,
+	style,
+	setStyle,
 }) => {
 		const getCodeFromLanguage = (language: string | undefined): string => {
 			const selectedLanguage = LANGUAGES.find((lang) => lang.englishName === language);
@@ -44,6 +53,8 @@ const VoiceSelector: React.FC<{
 		}, [selectedLanguage, selectedGender]);
 
 		const formatVoiceName = (voiceName: string): string => {
+			const styleAvailableText = VOICE_STYLES[voiceName] ? ' (styles ✅)' : '';
+
 			// Ensure the string is long enough to avoid negative substring indices
 			if (voiceName.length > 12) {
 				let formattedName = voiceName.substring(6, voiceName.length - 6);
@@ -51,11 +62,11 @@ const VoiceSelector: React.FC<{
 				formattedName = formattedName.charAt(0).toUpperCase() + formattedName.slice(1);
 				// replace Multilingual with `-Mulilingual`
 				if (formattedName.includes('Multilingual')) {
-					return formattedName.replace('Multilingual', '-Multilingual');
+					return formattedName.replace('Multilingual', '-Multilingual') + styleAvailableText;
 				}
 
 				formattedName = TONE_DISPLAY_NAMES[formattedName] ?? formattedName;
-				return formattedName;
+				return formattedName + styleAvailableText;
 			}
 
 			// If the name is not in the expected format, return it as is or handle accordingly
@@ -64,7 +75,7 @@ const VoiceSelector: React.FC<{
 
 		return (
 			<>
-				<div className='flex flex-row flex-wrap justify-between'>
+				<div className='flex flex-row flex-wrap justify-between gap-2'>
 					<div>
 						<Instruction>Language: </Instruction>
 						<DropDown value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)} width='16rem'>
@@ -93,6 +104,15 @@ const VoiceSelector: React.FC<{
 							}}>
 								{voiceOptions.map((voice) => (
 									<option key={voice} value={voice}>{formatVoiceName(voice)}</option>
+								))}
+							</DropDown>
+						</div>
+
+						<div>
+							<Instruction>Style: </Instruction>
+							<DropDown value={style} onChange={(e) => setStyle(e.target.value)} width='16rem'>
+								{getVoiceStyles(selectedVoice).map((style) => (
+									<option key={style} value={style}>{STYLE_DISPLAY_NAMES[style]}</option>
 								))}
 							</DropDown>
 						</div>

@@ -29,7 +29,7 @@ import {
 	onMouseLeave,
 } from '@/components/slides/drag_resize/dragAndResizeFunction';
 import '@/components/slides/drag_resize/dragAndResizeCSS.css';
-import { useSlides } from '@/hooks/use-slides';
+import { removeTags, useSlides } from '@/hooks/use-slides';
 import { LayoutElements } from './slides/templates_customizable_elements/layout_elements';
 import Modal from './ui/Modal';
 import { InputBox } from './ui/InputBox';
@@ -109,7 +109,7 @@ export const ImgModule = ({
 	const { project } = useProject();
 	const { slideIndex, slides } = useSlides();
 	const [showModal, setShowModal] = useState(false);
-	const [keyword, setKeyword] = useState('');
+	const [keyword, setKeyword] = useState(getSearchText());
 	const [searchResult, setSearchResult] = useState<string[]>([]);
 	const [resources, setResources] = useState<Resource[]>([]);
 	const [searching, setSearching] = useState(false);
@@ -150,17 +150,18 @@ export const ImgModule = ({
 
 	function getSearchText() {
 		const slide = slides[slideIndex];
+		if (!slide) return ''; 
 		switch (slide?.layout) {
 			case 'Cover_img_1_layout':
-				return slide.head;
+				return removeTags(slide.head) as string;
 			case 'Col_2_img_1_layout':
-				return slide.subtopic;
+				return removeTags(slide.subtopic) as string;
 			case 'Col_1_img_1_layout':
-				return slide.subtopic;
+				return removeTags(slide.subtopic) as string;
 			case 'Col_2_img_2_layout':
-				return slide.content[columnIndex];
+				return removeTags(slide.content[columnIndex]) as string;
 			case 'Col_3_img_3_layout':
-				return slide.content[columnIndex];
+				return removeTags(slide.content[columnIndex]) as string;
 		}
 		return '';
 	}
@@ -314,7 +315,7 @@ export const ImgModule = ({
 				}
 			})
 			.then((parsedResponse) => {
-				setSearchResult(parsedResponse.data.images);
+				setSearchResult(parsedResponse?.data?.images || []);
 			})
 			.catch((e) => {
 				console.error(e);

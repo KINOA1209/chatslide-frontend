@@ -7,6 +7,7 @@ import { useUser } from '@/hooks/use-user';
 import Laura from '@/public/images/laura.jpeg'
 import Image from 'next/image';
 import { Instruction } from './Text';
+import UserService from '@/services/UserService';
 
 interface FeedbackFormProps {
 	onClose: () => void;
@@ -150,34 +151,16 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 			setRatingError('Please leave your feedback.');
 		} else {
 			try {
-				const headers = new Headers();
-				if (token) {
-					headers.append('Authorization', `Bearer ${token}`);
-				}
-				headers.append('Content-Type', 'application/json');
-
-				const feedbackData = {
-					rating: rating,
-					feedbackText: feedbackText,
-					project_id: project?.id,
-				};
-
-				const response = await fetch('/api/feedback', {
-					method: 'POST',
-					headers: headers,
-					body: JSON.stringify(feedbackData), // Sending the data as JSON string in the request body
-				});
-
-				if (response.ok) {
-					// Show the success message and reset the form fields
+				const ok = await UserService.submitFeedback(
+					rating,
+					feedbackText,
+					project?.id || '',
+					token,
+				);
+				if (ok) {
 					setSubmitSuccessful(true);
 					setFeedbackText('');
-					// Clear the rating error after successful submission.
 					setRatingError(null);
-				} else {
-					// Handle error cases
-					const data = await response.json();
-					console.error('Fail to submit ', data.message);
 				}
 			} catch (error) {
 				console.error('Error submitting feedbacks:', error);

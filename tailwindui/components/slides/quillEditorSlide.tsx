@@ -26,18 +26,8 @@ type QuillEditableProps = {
 
 // const fontSizes = generateFontSizes();
 
-function isKeyOfThemeColorConfig(
-	key: string | null | undefined,
-): key is keyof typeof themeColorConfigData {
-	if (key == null) {
-		return false;
-	}
-	return key in themeColorConfigData;
-}
-
 //use attributors instead of formats to avoid requirement of hyphens
-const Font = Quill.import('attributors/style/font') as any;
-Font.whitelist = [
+export const fontWhiteList = [
 	'Arimo',
 	'Arial',
 	'Assistant Medium',
@@ -61,6 +51,8 @@ Font.whitelist = [
 	'Libre Baskerville Bold',
 	'Nimbus Sans Regular',
 	'Nunito',
+	'Open Sans Regular',
+	'Open Sans Medium',
 	'Playfair Display Bold',
 	'Playfair Display Medium',
 	'Rubik',
@@ -68,6 +60,19 @@ Font.whitelist = [
 	'Sansita Swashed Medium',
 	'Yrsa Medium',
 ];
+
+function isKeyOfThemeColorConfig(
+	key: string | null | undefined,
+): key is keyof typeof themeColorConfigData {
+	if (key == null) {
+		return false;
+	}
+	return key in themeColorConfigData;
+}
+
+//use attributors instead of formats to avoid requirement of hyphens
+const Font = Quill.import('attributors/style/font') as any;
+Font.whitelist = fontWhiteList;
 Quill.register(Font, true);
 
 let Size = Quill.import('attributors/style/size') as any;
@@ -201,7 +206,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 	const isTextChangeRef = useRef(false);
 
 	useEffect(() => {
-		// stop arrow key and esc key propagation 
+		// stop arrow key and esc key propagation
 		const editor = editorRef.current;
 		if (editor) {
 			editor.addEventListener('keydown', stopArrowKeyPropagation);
@@ -249,7 +254,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 					this.format("align", style?.textAlign || 'left');
 				}
 
-				static tagName = "P";
+				static tagName = 'P';
 
 				format(name: string, value: string) {
 					switch (name) {
@@ -300,7 +305,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			}
 
 			if (need_placeholder){
-				quillOptions.placeholder = 'add some text here...'
+				quillOptions.placeholder = 'Add some text here...'
 			}
 
 			quillInstanceRef.current = new Quill(editorRef.current, quillOptions);
@@ -446,14 +451,14 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 							convertedDelta.insert('\n');
 						}
 					}
-				} else if (item.trim() === '') {
+				} else if (item && typeof item === 'string' && item.trim() === '') {
 					// Handle case where item is meant to represent an empty line (like pressing Enter)
 					itemDelta.insert('\n');
 				} else {
 					// For plain text, insert it with the defined formatting options
 					itemDelta.insert(`${item}\n`, quillFormats);
 				}
-				return itemDelta
+				return itemDelta;
 			};
 
 			if (Array.isArray(content)) {

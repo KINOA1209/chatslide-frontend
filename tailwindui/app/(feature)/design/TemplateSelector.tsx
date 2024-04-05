@@ -28,6 +28,10 @@ const colorPreviews: Record<PaletteKeys, string> = {
 	'Light Cyan': '#ECF4F9',
 	'Royal Blue': '#5A55F4',
 	Beeswax: '#FDF1C4',
+	'Ecru White': '#F5F1E2',
+	'Shark Black': '#272A2D',
+	'Moon Mist': '#DDDFD2',
+	'Regent St Blue': '#ACC9E0',
 	// Add more color previews for other palette keys if needed
 };
 
@@ -76,9 +80,7 @@ const TemplateSelector: React.FC<{
 			<div
 				className={`transition-opacity duration-300 ease-in-out gap-1 flex flex-col justify-start`}
 			>
-				<div
-					className={`templateAndPaletteChoice flex flex-col sm:flex-row justify-between items-start sm:items-center`}
-				>
+				<div className={`templateAndPaletteChoice flex flex-col  items-start`}>
 					<div className={`templateChoice flex flex-col `}>
 						<Instruction>Select your template:</Instruction>
 						<DropDown
@@ -92,7 +94,7 @@ const TemplateSelector: React.FC<{
 								<option key={key} value={key}>
 									{`${value} ${
 										(availablePalettes[key as TemplateKeys]?.length ?? 0) > 1
-											? '(🎨 available)'
+											? '(palette ✅)'
 											: ''
 									}`}
 								</option>

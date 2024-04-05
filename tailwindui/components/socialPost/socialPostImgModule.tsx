@@ -159,7 +159,7 @@ export const ImgModule = ({
 				}
 			})
 			.then((parsedResponse) => {
-				setSearchResult(parsedResponse.data.images);
+				setSearchResult(parsedResponse?.data?.images || []);
 			})
 			.catch((e) => {
 				console.error(e);

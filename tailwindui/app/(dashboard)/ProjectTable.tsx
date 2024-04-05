@@ -14,8 +14,7 @@ import ProjectService from '@/services/ProjectService';
 import { useUser } from '@/hooks/use-user';
 
 
-const DEFAULT_THUMBNAIL =
-	'https://ph-files.imgix.net/76b477f1-bc1b-4432-b52b-68674658d62b.png';
+const DEFAULT_THUMBNAIL =	'/images/ogimage.png';
 
 const ProjectItem: React.FC<{
 	project: Project;

@@ -82,14 +82,21 @@ const addIconStyle = `
 mr-2
 `;
 
+type AddANewEditorBoxProps = {
+	handleSlideEdit: Function;
+	isVerticalContent: boolean;
+	themeElements: ThemeElements; // Update the type accordingly
+	fontSize: string;
+	contentIndex: number;
+	slideIndex: number;
+	slides: Slide[];
+	// contentText: string;
+	// setUpdatedContent: React.Dispatch<React.SetStateAction<JSX.Element[]>>;
+	// setShowEditorBox: React.Dispatch<React.SetStateAction<boolean>>;
+	// shouldShowEditorBox: boolean;
+};
+
 type HandleAddColumnProps = {
-	// handleSlideEdit: (
-	// 	content: string | string[],
-	// 	index: number,
-	// 	tag: SlideKeys,
-	// 	contentIndex?: number,
-	// 	rerender?: boolean,
-	// ) => void;
 	handleSlideEdit: Function;
 	isVerticalContent: boolean;
 	themeElements: ThemeElements; // Update the type accordingly
@@ -100,6 +107,47 @@ type HandleAddColumnProps = {
 	setUpdatedContent: React.Dispatch<React.SetStateAction<JSX.Element[]>>;
 	setShowAddButton: React.Dispatch<React.SetStateAction<boolean>>;
 	shouldShowAddButton: boolean;
+};
+
+export const addANewEditorBox = ({
+	handleSlideEdit,
+	isVerticalContent,
+	themeElements,
+	fontSize,
+	contentIndex,
+	slideIndex,
+	slides,
+}: // setShowEditorBox,
+// shouldShowEditorBox,
+// contentText,
+AddANewEditorBoxProps) => {
+	console.log('add a new content item column:');
+	// const newContentItem = (
+	return (
+		<div
+			key={`content_${Date.now()}`}
+			className={`${slideIndex === 0 ? 'hidden' : ''}`}
+		>
+			<QuillEditable
+				content={''}
+				handleBlur={(newContent: string | string[]) =>
+					handleSlideEdit(newContent, slideIndex, 'content', contentIndex, true)
+				}
+				style={{
+					...themeElements.contentFontCSS_non_vertical_content,
+					fontSize: fontSize,
+				}}
+				isVerticalContent={isVerticalContent}
+				templateKey={slides[slideIndex].template}
+			/>
+		</div>
+	);
+
+	// setUpdatedContent((prevContent: JSX.Element[]) => [
+	// 	...prevContent,
+	// 	newContentItem,
+	// ]);
+	// setShowAddButton(shouldShowAddButton);
 };
 
 export const handleAddTextColumn = ({
@@ -134,6 +182,7 @@ export const handleAddTextColumn = ({
 			/>
 		</div>
 	);
+
 	setUpdatedContent((prevContent: JSX.Element[]) => [
 		...prevContent,
 		newContentItem,
@@ -540,6 +589,16 @@ export const Col_2_img_0_layout = ({
 		updatedContent.length <= 1,
 	);
 
+	const [showEditorBoxCol1, setShowEditorBoxCol1] = useState(
+		updatedContent.length === 0,
+	);
+	const [showEditorBoxCol2, setShowEditorBoxCol2] = useState(
+		updatedContent.length === 1,
+	);
+	// const [showEditorBoxCol3, setShowEditorBoxCol3] = useState(
+	// 	updatedContent.length === 2,
+	// );
+
 	return (
 		<div className={`SlideLayoutCanvas`} style={layoutElements.canvaCSS}>
 			<div
@@ -570,7 +629,24 @@ export const Col_2_img_0_layout = ({
 						style={layoutElements.contentIndexTextDividerCSS}
 					></div>
 
-					{updatedContent.length === 0 && showAddButton && (
+					{showEditorBoxCol1 && (
+						<>
+							{setUpdatedContent((prevContent: JSX.Element[]) => [
+								addANewEditorBox({
+									handleSlideEdit: handleSlideEdit,
+									isVerticalContent: false,
+									themeElements: themeElements,
+									fontSize: '16pt',
+									contentIndex: 0,
+									slideIndex: slideIndex,
+									slides: slides,
+								}),
+								...prevContent.slice(1),
+							])}
+							{setShowEditorBoxCol1(false)}
+						</>
+					)}
+					{/* {updatedContent.length === 0 && showAddButton && (
 						<div
 							className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
 							// onClick={handleAddTextColumn}
@@ -592,7 +668,7 @@ export const Col_2_img_0_layout = ({
 							<RiAddLine className={addIconStyle} />
 							Add One Column of text
 						</div>
-					)}
+					)} */}
 					{updatedContent.slice(0, 1).map((item, index) => (
 						<React.Fragment key={`contentText_${index}_${Date.now()}`}>
 							<ul
@@ -617,7 +693,7 @@ export const Col_2_img_0_layout = ({
 						className={`SlideContentIndexTextDivider`}
 						style={layoutElements.contentIndexTextDividerCSS}
 					></div>
-					{updatedContent.length === 1 && showAddButton && (
+					{/* {updatedContent.length === 1 && showAddButton && (
 						<div
 							className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
 							// onClick={handleAddColumn}
@@ -643,6 +719,24 @@ export const Col_2_img_0_layout = ({
 							<RiAddLine className={addIconStyle} />
 							Add One Column of text
 						</div>
+					)} */}
+					{showEditorBoxCol2 && (
+						<>
+							{setUpdatedContent((prevContent: JSX.Element[]) => [
+								...prevContent.slice(0, 1),
+								addANewEditorBox({
+									handleSlideEdit: handleSlideEdit,
+									isVerticalContent: false,
+									themeElements: themeElements,
+									fontSize: '16pt',
+									contentIndex: 1,
+									slideIndex: slideIndex,
+									slides: slides,
+								}),
+								...prevContent.slice(2),
+							])}
+							{setShowEditorBoxCol2(false)}
+						</>
 					)}
 					{updatedContent.slice(1, 2).map((item, index) => (
 						<React.Fragment key={`contentText_${index + 1}_${Date.now()}`}>
@@ -720,6 +814,27 @@ export const Col_3_img_0_layout = ({
 		updatedContent.length <= 2,
 	);
 
+	const [showEditorBoxCol1, setShowEditorBoxCol1] = useState(
+		updatedContent.length === 0,
+	);
+	const [showEditorBoxCol2, setShowEditorBoxCol2] = useState(
+		updatedContent.length === 1,
+	);
+	const [showEditorBoxCol3, setShowEditorBoxCol3] = useState(
+		updatedContent.length === 2,
+	);
+	const [showEditorBox, setShowEditorBox] = useState(
+		// slides[slideIndex].content.length <= 2, for three columns
+		updatedContent.length < 3,
+	);
+	// Determine if the editor box should be shown
+	// const shouldShowEditorBox = updatedContent.length < 3; // Assuming there are three columns
+
+	// Update the showEditorBox state
+	// useEffect(() => {
+	// 	setShowEditorBox(shouldShowEditorBox);
+	// }, [shouldShowEditorBox]);
+
 	return (
 		<div style={layoutElements.canvaCSS}>
 			<div style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 50 }}>
@@ -769,12 +884,10 @@ export const Col_3_img_0_layout = ({
 						style={layoutElements.contentIndexTextDividerCSS}
 					></div>
 
-					{updatedContent.length === 0 && showAddButton && (
-						<div
-							className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
-							// onClick={handleAddTextColumn}
-							onClick={() =>
-								handleAddTextColumn({
+					{showEditorBoxCol1 && (
+						<>
+							{setUpdatedContent((prevContent: JSX.Element[]) => [
+								addANewEditorBox({
 									handleSlideEdit: handleSlideEdit,
 									isVerticalContent: false,
 									themeElements: themeElements,
@@ -782,15 +895,11 @@ export const Col_3_img_0_layout = ({
 									contentIndex: 0,
 									slideIndex: slideIndex,
 									slides: slides,
-									setUpdatedContent: setUpdatedContent,
-									setShowAddButton: setShowAddButton,
-									shouldShowAddButton: updatedContent.length <= 2,
-								})
-							}
-						>
-							<RiAddLine className={addIconStyle} />
-							Add One Column of text
-						</div>
+								}),
+								...prevContent.slice(1),
+							])}
+							{setShowEditorBoxCol1(false)}
+						</>
 					)}
 					{updatedContent.slice(0, 1).map((item, index) => (
 						<React.Fragment key={`contentText_${index}_${Date.now()}`}>
@@ -816,7 +925,7 @@ export const Col_3_img_0_layout = ({
 						className={`SlideContentIndexTextDivider`}
 						style={layoutElements.contentIndexTextDividerCSS}
 					></div>
-					{updatedContent.length === 1 && showAddButton && (
+					{/* {updatedContent.length === 1 && showAddButton && (
 						<div
 							className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
 							// onClick={handleAddColumn}
@@ -842,7 +951,57 @@ export const Col_3_img_0_layout = ({
 							<RiAddLine className={addIconStyle} />
 							Add One Column of text
 						</div>
+					)} */}
+					{/* {updatedContent.length === 1 && (
+						// Update the state and show/hide button
+						<>
+							{setUpdatedContent((prevContent: JSX.Element[]) => [
+								...prevContent,
+								<div
+									key={`content_${Date.now()}`}
+									className={`${slideIndex === 0 ? 'hidden' : ''}`}
+								>
+									<QuillEditable
+										content={''}
+										handleBlur={(newContent: string | string[]) =>
+											handleSlideEdit(
+												newContent,
+												slideIndex,
+												'content',
+												1,
+												true,
+											)
+										}
+										style={{
+											...themeElements.contentFontCSS_non_vertical_content,
+											fontSize: '16pt',
+										}}
+										isVerticalContent={false}
+										templateKey={slides[slideIndex].template}
+									/>
+								</div>,
+							])}
+						</>
+					)} */}
+					{showEditorBoxCol2 && (
+						<>
+							{setUpdatedContent((prevContent: JSX.Element[]) => [
+								...prevContent.slice(0, 1),
+								addANewEditorBox({
+									handleSlideEdit: handleSlideEdit,
+									isVerticalContent: false,
+									themeElements: themeElements,
+									fontSize: '16pt',
+									contentIndex: 1,
+									slideIndex: slideIndex,
+									slides: slides,
+								}),
+								...prevContent.slice(2),
+							])}
+							{setShowEditorBoxCol2(false)}
+						</>
 					)}
+
 					{updatedContent.slice(1, 2).map((item, index) => (
 						<React.Fragment key={`contentText_${index + 1}_${Date.now()}`}>
 							<ul
@@ -867,7 +1026,7 @@ export const Col_3_img_0_layout = ({
 						className={`SlideContentIndexTextDivider`}
 						style={layoutElements.contentIndexTextDividerCSS}
 					></div>
-					{updatedContent.length === 2 && showAddButton && (
+					{/* {updatedContent.length === 2 && showAddButton && (
 						<div
 							className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
 							// onClick={handleAddColumn}
@@ -893,6 +1052,25 @@ export const Col_3_img_0_layout = ({
 							<RiAddLine className={addIconStyle} />
 							Add One Column of text
 						</div>
+					)} */}
+					{/* Editor Box for Column 3 */}
+					{showEditorBoxCol3 && (
+						<>
+							{setUpdatedContent((prevContent: JSX.Element[]) => [
+								...prevContent.slice(0, 2),
+								addANewEditorBox({
+									handleSlideEdit: handleSlideEdit,
+									isVerticalContent: false,
+									themeElements: themeElements,
+									fontSize: '16pt',
+									contentIndex: 2,
+									slideIndex: slideIndex,
+									slides: slides,
+								}),
+								...prevContent.slice(3),
+							])}
+							{setShowEditorBoxCol3(false)}
+						</>
 					)}
 					{updatedContent.slice(2, 3).map((item, index) => (
 						<React.Fragment key={`contentText_${index + 2}_${Date.now()}`}>
@@ -1354,6 +1532,16 @@ export const Col_2_img_2_layout = ({
 	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
 	const [updatedContent, setUpdatedContent] = useState(items);
 
+	const [showEditorBoxCol1, setShowEditorBoxCol1] = useState(
+		updatedContent.length === 0,
+	);
+	const [showEditorBoxCol2, setShowEditorBoxCol2] = useState(
+		updatedContent.length === 1,
+	);
+	// const [showEditorBoxCol3, setShowEditorBoxCol3] = useState(
+	// 	updatedContent.length === 2,
+	// );
+
 	useEffect(() => {
 		console.log('updatedContent on page', slideIndex, updatedContent);
 	}, [updatedContent]);
@@ -1485,47 +1673,7 @@ export const Col_2_img_2_layout = ({
 					</div>
 				</div>
 				{/* two columns of text */}
-				{/* <div
-					// className='w-full grid grid-cols-2 gap-[2rem]'
-					// style={layoutElements.contentCSS}
-					style={{
-						...layoutElements.contentCSS,
-						maxHeight:
-							maxContentHeight !== null ? `${maxContentHeight}px` : 'none',
-						zIndex: 40,
-					}}
-				>
-					{Array.isArray(content) &&
-						content.map((item, index) => (
-							<div
-								// className='flex flex-col gap-[0.5rem]'
-								key={index}
-								style={{
-									display: item === null || index > 1 ? 'none' : 'block', // or 'flex' based on your layout
-								}}
-							>
-								<div
-									style={
-										layoutElements.contentIndexCSS !== undefined
-											? { ...layoutElements.contentIndexCSS }
-											: { display: 'none' }
-									}
-								>
-									{index + 1}
-								</div>
-								<div
-									// className='opacity-50 border border-neutral-900 border-opacity-40'
-									style={layoutElements.contentIndexTextDividerCSS}
-								></div>
-								<ul
-									key={index}
-									// className={`flex flex-row w-full h-full grow `}
-								>
-									<li style={{ width: '100%' }}>{item}</li>
-								</ul>
-							</div>
-						))}
-				</div> */}
+
 				<div
 					className={`w-full flex SlideContentContainer`}
 					style={{ ...layoutElements.contentContainerCSS, zIndex: 40 }}
@@ -1546,12 +1694,10 @@ export const Col_2_img_2_layout = ({
 							style={layoutElements.contentIndexTextDividerCSS}
 						></div>
 
-						{updatedContent.length === 0 && showAddButton && (
-							<div
-								className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
-								// onClick={handleAddTextColumn}
-								onClick={() =>
-									handleAddTextColumn({
+						{showEditorBoxCol1 && (
+							<>
+								{setUpdatedContent((prevContent: JSX.Element[]) => [
+									addANewEditorBox({
 										handleSlideEdit: handleSlideEdit,
 										isVerticalContent: false,
 										themeElements: themeElements,
@@ -1559,15 +1705,11 @@ export const Col_2_img_2_layout = ({
 										contentIndex: 0,
 										slideIndex: slideIndex,
 										slides: slides,
-										setUpdatedContent: setUpdatedContent,
-										setShowAddButton: setShowAddButton,
-										shouldShowAddButton: updatedContent.length <= 1,
-									})
-								}
-							>
-								<RiAddLine className={addIconStyle} />
-								Add One Column of text
-							</div>
+									}),
+									...prevContent.slice(1),
+								])}
+								{setShowEditorBoxCol1(false)}
+							</>
 						)}
 						{updatedContent.slice(0, 1).map((item, index) => (
 							<React.Fragment key={`contentText_${index}_${Date.now()}`}>
@@ -1597,12 +1739,11 @@ export const Col_2_img_2_layout = ({
 							className={`SlideContentIndexTextDivider`}
 							style={layoutElements.contentIndexTextDividerCSS}
 						></div>
-						{updatedContent.length === 1 && showAddButton && (
-							<div
-								className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
-								// onClick={handleAddColumn}
-								onClick={() =>
-									handleAddTextColumn({
+						{showEditorBoxCol2 && (
+							<>
+								{setUpdatedContent((prevContent: JSX.Element[]) => [
+									...prevContent.slice(0, 1),
+									addANewEditorBox({
 										handleSlideEdit: handleSlideEdit,
 										isVerticalContent: false,
 										themeElements: themeElements,
@@ -1610,19 +1751,11 @@ export const Col_2_img_2_layout = ({
 										contentIndex: 1,
 										slideIndex: slideIndex,
 										slides: slides,
-										setUpdatedContent: setUpdatedContent,
-										setShowAddButton: setShowAddButton,
-										shouldShowAddButton: updatedContent.length <= 1,
-									})
-								}
-							>
-								<div
-									className={`SlideContentIndexTextDivider`}
-									style={layoutElements.contentIndexTextDividerCSS}
-								></div>
-								<RiAddLine className={addIconStyle} />
-								Add One Column of text
-							</div>
+									}),
+									...prevContent.slice(2),
+								])}
+								{setShowEditorBoxCol2(false)}
+							</>
 						)}
 						{updatedContent.slice(1, 2).map((item, index) => (
 							<React.Fragment key={`contentText_${index + 1}_${Date.now()}`}>
@@ -1706,7 +1839,29 @@ export const Col_3_img_3_layout = ({
 
 	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
 
+	// Ensure content is always an array
+	const items = Array.isArray(content) ? content : [content];
+	const { slides, slideIndex, updateSlidePage, updateVersion } = useSlides();
 	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
+	const [updatedContent, setUpdatedContent] = useState(items);
+
+	const [showEditorBoxCol1, setShowEditorBoxCol1] = useState(
+		updatedContent.length === 0,
+	);
+	const [showEditorBoxCol2, setShowEditorBoxCol2] = useState(
+		updatedContent.length === 1,
+	);
+	const [showEditorBoxCol3, setShowEditorBoxCol3] = useState(
+		updatedContent.length === 2,
+	);
+	useEffect(() => {
+		console.log('updatedContent on page', slideIndex, updatedContent);
+	}, [updatedContent]);
+
+	const [showAddButton, setShowAddButton] = useState(
+		// slides[slideIndex].content.length <= 2, for three columns
+		updatedContent.length <= 2,
+	);
 	return (
 		<div style={layoutElements.canvaCSS}>
 			<div
@@ -1794,7 +1949,7 @@ export const Col_3_img_3_layout = ({
 					</div>
 				</div>
 				{/* three columns of text */}
-				<div
+				{/* <div
 					// className='w-full grid grid-cols-3 gap-[2rem]'
 					style={{ ...layoutElements.contentCSS, zIndex: 40 }}
 				>
@@ -1825,6 +1980,175 @@ export const Col_3_img_3_layout = ({
 								</ul>
 							</div>
 						))}
+				</div> */}
+				<div
+					className={`w-full flex SlideContentContainer`}
+					style={{ ...layoutElements.contentContainerCSS, zIndex: 40 }}
+				>
+					{/* {Array.isArray(content) &&
+					content.map((item, index) => (
+						<div
+							// className='flex flex-col gap-[0.5rem]'
+							key={index}
+							style={{
+								...layoutElements.contentCSS,
+								display: item === null || index > 2 ? 'none' : 'flex', // or 'flex' based on your layout
+							}}
+						>
+							<div style={layoutElements.contentIndexCSS}>{index + 1}</div>
+							<div
+								// className='opacity-50 border border-neutral-900 border-opacity-40'
+								style={layoutElements.contentIndexTextDividerCSS}
+							></div>
+							<ul
+								key={index}
+								// className={`flex flex-row w-full h-full grow `}
+								style={layoutElements.contentTextCSS}
+							>
+								<li className='contentBulletPoint' style={{ width: '100%' }}>
+									{item}
+								</li>
+							</ul>
+						</div>
+					))} */}
+					<div className='Column1' style={layoutElements.contentCSS}>
+						<div
+							className={`SlideContentIndex`}
+							style={
+								layoutElements.contentIndexCSS !== undefined
+									? { ...layoutElements.contentIndexCSS }
+									: { display: 'none' }
+							}
+						>
+							{1}
+						</div>
+						<div
+							className={`SlideContentIndexTextDivider`}
+							style={layoutElements.contentIndexTextDividerCSS}
+						></div>
+
+						{showEditorBoxCol1 && (
+							<>
+								{setUpdatedContent((prevContent: JSX.Element[]) => [
+									addANewEditorBox({
+										handleSlideEdit: handleSlideEdit,
+										isVerticalContent: false,
+										themeElements: themeElements,
+										fontSize: '16pt',
+										contentIndex: 0,
+										slideIndex: slideIndex,
+										slides: slides,
+									}),
+									...prevContent.slice(1),
+								])}
+								{setShowEditorBoxCol1(false)}
+							</>
+						)}
+						{updatedContent.slice(0, 1).map((item, index) => (
+							<React.Fragment key={`contentText_${index}_${Date.now()}`}>
+								<ul
+									key={`contentText_${index}_${Date.now()}`}
+									className={`SlideContentText`}
+									style={layoutElements.contentTextCSS}
+								>
+									<li style={{ width: '100%' }}>{item}</li>
+								</ul>
+							</React.Fragment>
+						))}
+					</div>
+
+					<div className='Column2' style={layoutElements.contentCSS}>
+						<div
+							className={`SlideContentIndex`}
+							style={
+								layoutElements.contentIndexCSS !== undefined
+									? { ...layoutElements.contentIndexCSS }
+									: { display: 'none' }
+							}
+						>
+							{2}
+						</div>
+						<div
+							className={`SlideContentIndexTextDivider`}
+							style={layoutElements.contentIndexTextDividerCSS}
+						></div>
+						{showEditorBoxCol2 && (
+							<>
+								{setUpdatedContent((prevContent: JSX.Element[]) => [
+									...prevContent.slice(0, 1),
+									addANewEditorBox({
+										handleSlideEdit: handleSlideEdit,
+										isVerticalContent: false,
+										themeElements: themeElements,
+										fontSize: '16pt',
+										contentIndex: 1,
+										slideIndex: slideIndex,
+										slides: slides,
+									}),
+									...prevContent.slice(2),
+								])}
+								{setShowEditorBoxCol2(false)}
+							</>
+						)}
+						{updatedContent.slice(1, 2).map((item, index) => (
+							<React.Fragment key={`contentText_${index + 1}_${Date.now()}`}>
+								<ul
+									key={`contentText_${index}_${Date.now()}`}
+									className={`SlideContentText`}
+									style={layoutElements.contentTextCSS}
+								>
+									<li style={{ width: '100%' }}>{item}</li>
+								</ul>
+							</React.Fragment>
+						))}
+					</div>
+
+					<div className='Column3' style={layoutElements.contentCSS}>
+						<div
+							className={`SlideContentIndex`}
+							style={
+								layoutElements.contentIndexCSS !== undefined
+									? { ...layoutElements.contentIndexCSS }
+									: { display: 'none' }
+							}
+						>
+							{3}
+						</div>
+						<div
+							className={`SlideContentIndexTextDivider`}
+							style={layoutElements.contentIndexTextDividerCSS}
+						></div>
+						{/* Editor Box for Column 3 */}
+						{showEditorBoxCol3 && (
+							<>
+								{setUpdatedContent((prevContent: JSX.Element[]) => [
+									...prevContent.slice(0, 2),
+									addANewEditorBox({
+										handleSlideEdit: handleSlideEdit,
+										isVerticalContent: false,
+										themeElements: themeElements,
+										fontSize: '16pt',
+										contentIndex: 2,
+										slideIndex: slideIndex,
+										slides: slides,
+									}),
+									...prevContent.slice(3),
+								])}
+								{setShowEditorBoxCol3(false)}
+							</>
+						)}
+						{updatedContent.slice(2, 3).map((item, index) => (
+							<React.Fragment key={`contentText_${index + 2}_${Date.now()}`}>
+								<ul
+									key={`contentText_${index}_${Date.now()}`}
+									className={`SlideContentText`}
+									style={layoutElements.contentTextCSS}
+								>
+									<li style={{ width: '100%' }}>{item}</li>
+								</ul>
+							</React.Fragment>
+						))}
+					</div>
 				</div>
 			</div>
 			<div

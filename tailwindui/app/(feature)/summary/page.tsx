@@ -36,6 +36,7 @@ import { addIdToRedir } from '@/utils/redirWithId';
 import TopicSuggestions from '@/components/language/TopicSuggestions';
 import { getUserCountryCode, getUserLanguage } from '@/utils/userLocation';
 import Project from '@/models/Project';
+import { GenerationStatusProgressModal } from '@/components/ui/GenerationStatusProgressModal';
 
 const MAX_TOPIC_LENGTH = 500;
 const MIN_TOPIC_LENGTH = 3;
@@ -60,7 +61,7 @@ const getAudienceFromSceario = (scenarioType: string) => {
 		default:
 			return 'unselected';
 	}
-}
+};
 
 export default function Topic() {
 	const {
@@ -72,15 +73,28 @@ export default function Topic() {
 	} = useTourStore();
 	const router = useRouter();
 	const { token, isPaidUser, updateCreditsFE } = useUser();
-	const { project, updateOutlines, updateProject, bulkUpdateProject, initProject } = useProject();
+	const {
+		project,
+		updateOutlines,
+		updateProject,
+		bulkUpdateProject,
+		initProject,
+	} = useProject();
 
 	const scenarioType = SessionStorage.getItem('scenarioType', 'business');
-	const generationMode = SessionStorage.getItem('generation_mode', 'from_topic');
+	const generationMode = SessionStorage.getItem(
+		'generation_mode',
+		'from_topic',
+	);
 
 	const [topic, setTopic] = useState(project?.topic || '');
-	const [audience, setAudience] = useState(project?.audience || getAudienceFromSceario(scenarioType));
-	const [language, setLanguage] = useState(project?.language || '');  // will be updated later depending on user's location
-	const [selectedResources, setSelectedResources] = useState<Resource[]>(project?.resources || []);
+	const [audience, setAudience] = useState(
+		project?.audience || getAudienceFromSceario(scenarioType),
+	);
+	const [language, setLanguage] = useState(project?.language || ''); // will be updated later depending on user's location
+	const [selectedResources, setSelectedResources] = useState<Resource[]>(
+		project?.resources || [],
+	);
 	const [searchOnlineScope, setSearchOnlineScope] = useState('');
 
 	const [isGpt35, setIsGpt35] = useState(true);
@@ -90,6 +104,13 @@ export default function Topic() {
 	const [topicError, setTopicError] = useState('');
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 
+	const [showGenerationStatusModal, setShowGenerationStatusModal] =
+		useState(false);
+
+	const handleGenerationStatusModal = () => {
+		// console.log('user Research Modal toggled');
+		setShowGenerationStatusModal(!showGenerationStatusModal);
+	};
 	const tourSteps: Step[] = [
 		{
 			target: '.first-element',
@@ -244,12 +265,10 @@ export default function Topic() {
 					outlines: outlinesJson.data.outlines,
 				} as Project);
 
-				updateCreditsFE(-20); 
+				updateCreditsFE(-20);
 
 				// Redirect to a new page with the data, and id in the query string
-				router.push(
-					addIdToRedir('outlines', outlinesJson.data.id),
-				);
+				router.push(addIdToRedir('outlines', outlinesJson.data.id));
 			} else if (response.status == 402) {
 				setShowPaymentModal(true);
 				setIsSubmitting(false);
@@ -257,7 +276,7 @@ export default function Topic() {
 				console.error('Error when generating outlines:', response.status);
 				toast.error(
 					'Server is busy now. Please try again later. Reference code: ' +
-					project?.id,
+						project?.id,
 				);
 				setIsSubmitting(false);
 			}
@@ -298,6 +317,15 @@ export default function Topic() {
 			/>
 
 			<ToastContainer />
+			{showGenerationStatusModal && (
+				<GenerationStatusProgressModal
+					onClick={handleGenerationStatusModal}
+					prompts={[
+						['We are summarizing your resources...', 5],
+						['We are writing your outlines...', 8],
+					]}
+				></GenerationStatusProgressModal>
+			)}
 
 			<FileUploadModal
 				selectedResources={selectedResources}
@@ -317,6 +345,7 @@ export default function Topic() {
 				nextText={
 					!isSubmitting ? 'Write Outline (20⭐️)' : 'Writing Outline...'
 				}
+				handleClickingGeneration={handleGenerationStatusModal}
 			/>
 
 			{/* main content */}
@@ -342,7 +371,7 @@ export default function Topic() {
 					<div id='SummaryStep-2'>
 						{/* title */}
 						<div className='title1'>
-							<BigTitle>Summary</BigTitle>
+							<BigTitle>💡 Summary</BigTitle>
 							{/* <p id='after1'>
 								{' '}
 								{generationMode === 'from_topic' ? '(Required)' : '(Optional)'}
@@ -371,16 +400,19 @@ export default function Topic() {
 										required
 										placeholder='What do you have in mind?'
 									></textarea>
-									{!topic &&
-										<TopicSuggestions
-											language={language}
-											setTopic={setTopic}
-										/>
-									}
+									{!topic && (
+										<TopicSuggestions language={language} setTopic={setTopic} />
+									)}
 								</div>
 								<Explanation>
 									{/* if no char left, show red */}
-									<div className={MAX_TOPIC_LENGTH - topic.length === 0 ? 'text-red-600' : ''}>
+									<div
+										className={
+											MAX_TOPIC_LENGTH - topic.length === 0
+												? 'text-red-600'
+												: ''
+										}
+									>
 										{MAX_TOPIC_LENGTH - topic.length} characters left
 									</div>
 								</Explanation>
@@ -394,9 +426,8 @@ export default function Topic() {
 								<div className='flex flex-row gap-1 items-center'>
 									<Instruction>Your Audience</Instruction>
 									<ExplanationPopup>
-										Specify the intended viewers of your projects, tailoring
-										to your audience ensures the content resonates
-										effectively.
+										Specify the intended viewers of your projects, tailoring to
+										your audience ensures the content resonates effectively.
 									</ExplanationPopup>
 								</div>
 								<DropDown
@@ -415,10 +446,7 @@ export default function Topic() {
 									))}
 								</DropDown>
 							</div>
-							<LanguageSelector
-								language={language}
-								setLanguage={setLanguage}
-							/>
+							<LanguageSelector language={language} setLanguage={setLanguage} />
 						</div>
 					</div>
 				</Card>

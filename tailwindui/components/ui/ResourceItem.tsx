@@ -76,7 +76,7 @@ export const ResourceItem: React.FC<Resource> = ({
 	return (
 		<div
 			key={id}
-			className='h-full flex items-center justify-left w-full p-2 overflow-hidden'
+			className='flex items-center justify-left w-full p-2 overflow-hidden'
 		>
 			<ResourceIcon resource={{ id, name, type, thumbnail_url }} />
 			<div className='mx-4 text-sm tracking-tight overflow text-clip'>

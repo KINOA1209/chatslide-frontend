@@ -35,10 +35,11 @@
 	padding-bottom: 10px;
 }
 
-.ql-editor a, .ql-editor li a {
-    color: #0047b2 !important;
-    text-decoration: underline;
-    cursor: pointer;
+.ql-editor a,
+.ql-editor li a {
+	color: #0047b2 !important;
+	text-decoration: underline;
+	cursor: pointer;
 	white-space: normal !important;
 }
 
@@ -108,6 +109,8 @@ $font-families: (
 	'Libre Baskerville Regular',
 	'Libre Baskerville Bold',
 	'Nimbus Sans Regular',
+	'Open Sans Regular',
+	'Open Sans Medium',
 	'Nunito',
 	'Playfair Display Bold',
 	'Playfair Display Medium',

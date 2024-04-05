@@ -12,7 +12,7 @@ export default function AutoRedir(){
 		if (uid) {
 			router.push('/dashboard');
 		} else {
-			router.push('/index.html');
+			router.push('/landing');
 		}
 	}
 	), [uid];

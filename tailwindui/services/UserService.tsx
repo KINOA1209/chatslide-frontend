@@ -81,6 +81,9 @@ class UserService {
 		token: string,
 		promoOnly: boolean = false,
 	): Promise<{ status: number; message: string }> {
+		if (!promo || !token) {
+			return { status: 400, message: 'Invalid promo code or token.' };
+		}
 		try {
 			const response = await fetch(`/api/user/apply_code`, {
 				method: 'POST',
@@ -158,7 +161,7 @@ class UserService {
 			if (!response.ok) {  // user not found in db
 				const { email, idToken } =
 					await AuthService.getCurrentUserTokenAndEmail();
-				console.error(
+				console.warn(
 					`Failed to fetch user credits: ${email}, initializing user...`,
 					response.status,
 				);
@@ -278,6 +281,35 @@ class UserService {
 		} catch (error) {
 			console.error('Error in getOpenaiApiKey:', error);
 			throw error; // Rethrow the error so that it can be handled by the caller
+		}
+	}
+
+	static async submitFeedback(rating: number, text: string, project_id: string, token: string): Promise<boolean> {
+		const headers = new Headers();
+		if (token) {
+			headers.append('Authorization', `Bearer ${token}`);
+		}
+		headers.append('Content-Type', 'application/json');
+
+		const feedbackData = {
+			rating: rating,
+			feedbackText: text,
+			project_id: project_id,
+		};
+
+		const response = await fetch('/api/feedback', {
+			method: 'POST',
+			headers: headers,
+			body: JSON.stringify(feedbackData), // Sending the data as JSON string in the request body
+		});
+
+		if (response.ok) {
+			return true;
+		} else {
+			// Handle error cases
+			const data = await response.json();
+			console.error('Fail to submit ', data.message);
+			return false;
 		}
 	}
 }

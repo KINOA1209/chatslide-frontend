@@ -87,8 +87,8 @@ export default function DesignPage() {
 
 	const [colorPalette, setColorPalette] = useState<PaletteKeys>(
 		project?.palette ||
-		availablePalettes[template as keyof typeof availablePalettes]?.[0] ||
-		'Original',
+			availablePalettes[template as keyof typeof availablePalettes]?.[0] ||
+			'Original',
 	);
 	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
 		project?.selected_logo || [],
@@ -138,17 +138,24 @@ export default function DesignPage() {
 		},
 	];
 
-	const [branding, setBranding] = useState(project?.logo === "" ? 'no' : 'yes');
+	// if project does not have logo property, update depending on isPaidUser
+	if (project?.logo === undefined) {
+		updateProject('logo', isPaidUser ? '' : 'Default');
+	}
+
+	const [branding, setBranding] = useState(
+		project?.logo === '' ? 'no' : 
+		isPaidUser ? 'no' : 'yes');
 
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
-	console.log('Template:', template);
-	console.log('Color Palette:', colorPalette);
-	console.log(
-		'current template color options:',
-		template,
-		availablePalettes[template as keyof typeof availablePalettes],
-	);
+	// console.log('Template:', template);
+	// console.log('Color Palette:', colorPalette);
+	// console.log(
+	// 	'current template color options:',
+	// 	template,
+	// 	availablePalettes[template as keyof typeof availablePalettes],
+	// );
 
 	return (
 		<section className='relative'>
@@ -161,7 +168,7 @@ export default function DesignPage() {
 			{showGenerationStatusModal && (
 				<GenerationStatusProgressModal
 					onClick={handleGenerationStatusModal}
-					waitingTime={25}
+					prompts={[['We are generating your slides...', 15]]}
 				></GenerationStatusProgressModal>
 			)}
 
@@ -198,7 +205,7 @@ export default function DesignPage() {
 				<Panel>
 					{/* design */}
 					<Card>
-						<BigTitle>Design</BigTitle>
+						<BigTitle>✍️ Design</BigTitle>
 						<Explanation>
 							Customize the design for your slide, you can also skip this step
 							and use the default
@@ -210,7 +217,7 @@ export default function DesignPage() {
 							setPalette={setColorPalette}
 							paletteOptions={
 								availablePalettes[
-								template as keyof typeof availablePalettes
+									template as keyof typeof availablePalettes
 								] || ['Original']
 							}
 							palette={colorPalette}
@@ -249,7 +256,7 @@ export default function DesignPage() {
 					</Card>
 
 					<Card>
-						<BigTitle>Branding</BigTitle>
+						<BigTitle>🏷️ Branding</BigTitle>
 						<Explanation>
 							Select the branding for your slides, you can also change this on
 							the slides page, or talk with AI Chatbot
@@ -263,8 +270,7 @@ export default function DesignPage() {
 								}
 								if (e === 'yes') {
 									showDrLambdaLogo();
-								}
-								else {
+								} else {
 									hideLogo();
 									updateProject('selected_logo', []);
 								}

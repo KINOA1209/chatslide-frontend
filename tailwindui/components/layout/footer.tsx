@@ -216,12 +216,9 @@ export function WorkflowFooter() {
 	return (
 		<footer>
 			<div className='w-full border-t border-gray-200 bg-[#F4F4F4]'>
-				{/* Bottom area */}
-				<div className='max-w-6xl mx-auto px-4 sm:px-6 md:grid md:grid-cols-2 py-4 md:py-2'>
 					{/* Social as */}
 					{socialMediaBlock}
 
-				</div>
 			</div>
 		</footer>
 	);

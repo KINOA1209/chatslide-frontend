@@ -24,7 +24,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 	selectedTemplate,
 	selectedPalette,
 }) => {
-	const { slides } = useSlides();
+	const { slides, version } = useSlides();
 	const [previewSlides, setPreviewSlides] = useState<Slide[]>([]);
 	const { project } = useProject();
 	// const template = isValidTemplateKey(selectedTemplate) ? selectedTemplate : 'Default';
@@ -61,11 +61,12 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 		const newSlides = Object.keys(layoutOptions).map((layoutKey) => {
 			const newSlide = new Slide();
 			newSlide.head = project?.topic || 'New Slide';
-			newSlide.title = project?.topic || 'New Slide';
-			newSlide.subtopic = project?.topic || 'New Slide';
+			newSlide.title = slides[1].title || 'New Slide';
+			newSlide.subtopic = slides[1].subtopic || 'New Slide';
 			newSlide.template = template;
 			newSlide.palette = color_theme;
 			newSlide.layout = layoutKey as keyof typeof layoutOptions;
+			newSlide.images_position = slides[0]?.images_position;
 
 			if (
 				layoutKey === 'Col_2_img_0_layout' ||
@@ -132,7 +133,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 		'3 columns with 3 images',
 	];
 
-	const editableTemplateDispatch = (
+	const unEditableTemplateDispatch = (
 		slide: Slide,
 		index: number,
 		canEdit: boolean,
@@ -141,7 +142,8 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 		templateDispatch(
 			slide,
 			index,
-			canEdit,
+			// canEdit,
+			false, // canEdit
 			exportToPdfMode,
 			false,
 			() => {},
@@ -149,9 +151,10 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			() => () => {},
 			() => {},
 			// slide.palette,
-			index === 0 || index === 1,
+			index === 0,
 			slide.layout,
 			slide.layout,
+			true,
 			true,
 		);
 	return (
@@ -167,7 +170,8 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 						index={index}
 						scale={0.2}
 						isViewing={true}
-						templateDispatch={editableTemplateDispatch}
+						templateDispatch={unEditableTemplateDispatch}
+						key={version}
 					/>
 					<Explanation>{layoutNameArray[index]}</Explanation>
 				</div>
