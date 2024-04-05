@@ -158,11 +158,11 @@ const VOICE_OPTIONS: VoiceOption = {
 };
 
 export const TONE_DISPLAY_NAMES: { [key: string]: string } = {
-	'Xiaoxiao': '潇潇',
+	'Xiaoxiao': '晓晓',
 	'Xiaoyi': '晓怡',
 	'Xiaochen': '晓晨',
 	'Xiaohan': '晓涵',
-	'Xiaomeng': '晓梦',
+	'Xiaomeng': '晓萌',
 	'Xiaomo': '晓莫',
 	'Xiaoqiu': '晓秋',
 	'Xiaorui': '晓蕊',
@@ -208,6 +208,7 @@ export const TONE_DISPLAY_NAMES: { [key: string]: string } = {
 	'Sichuan-Yunxi': '云熙 (四川)',
 };
 
+// doc: https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/ai-services/speech-service/includes/language-support/voice-styles-and-roles.md
 export const VOICE_STYLES: { [key: string]: string[] } = {
 	"de-DE-ConradNeural1": ["cheerful"],
 	"en-GB-SoniaNeural": ["cheerful", "sad"],
@@ -244,6 +245,7 @@ export const VOICE_STYLES: { [key: string]: string[] } = {
 	"zh-CN-YunzeNeural": ["angry", "calm", "cheerful", "depressed", "disgruntled", "documentary-narration", "fearful", "sad", "serious"],
 };
 
+// doc: https://learn.microsoft.com/en-us/azure/ai-services/speech-service/speech-synthesis-markup-voice 
 export const STYLE_DISPLAY_NAMES: { [key: string]: string } = {
 	"": "🙂 Default",
 	"advertisement_upbeat": "💼 Advertisement (upbeat)",
@@ -252,6 +254,7 @@ export const STYLE_DISPLAY_NAMES: { [key: string]: string } = {
 	"assistant": "🤖 Assistant",
 	"calm": "🧘 Calm",
 	"chat": "💬 Chat",
+	"chat-casual": "💬 Chat (casual)",
 	"cheerful": "😊 Cheerful",
 	"customerservice": "👩‍💼 Customerservice",
 	"depressed": "😢 Depressed",
@@ -277,7 +280,9 @@ export const STYLE_DISPLAY_NAMES: { [key: string]: string } = {
 	"shouting": "📢 Shouting",
 	"sports_commentary": "🏀 Sports commentary",
 	"sports_commentary_excited": "⚽️ Sports commentary (excited)",
+	"sorry": "🙏 Sorry",
 	"whispering": "🤫 Whispering",
+	"whisper": "🤫 Whispering",
 	"terrified": "😱 Terrified",
 	"unfriendly": "🚫 Unfriendly"
 }
