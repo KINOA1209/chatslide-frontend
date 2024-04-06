@@ -1317,7 +1317,7 @@ export const ImgModule = ({
 							}}
 						>
 							<Image
-								unoptimized={imgsrc.includes('unsplash.com') ? true : false}
+								unoptimized={imgsrc?.includes('unsplash.com') ? true : false}
 								style={{
 									objectFit: 'fill',
 									height: '100%',
