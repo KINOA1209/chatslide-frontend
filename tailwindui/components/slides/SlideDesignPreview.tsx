@@ -61,8 +61,8 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 		const newSlides = Object.keys(layoutOptions).map((layoutKey) => {
 			const newSlide = new Slide();
 			newSlide.head = project?.topic || 'New Slide';
-			newSlide.title = slides[1].title || 'New Slide';
-			newSlide.subtopic = slides[1].subtopic || 'New Slide';
+			newSlide.title = slides[1]?.title || 'New Slide';
+			newSlide.subtopic = slides[1]?.subtopic || 'New Slide';
 			newSlide.template = template;
 			newSlide.palette = color_theme;
 			newSlide.layout = layoutKey as keyof typeof layoutOptions;
