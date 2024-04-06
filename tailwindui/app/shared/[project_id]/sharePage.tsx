@@ -13,6 +13,7 @@ import { useProject } from '@/hooks/use-project';
 import { JoinUsBanner } from '@/components/layout/JoinUsBanner';
 import useHydrated from '@/hooks/use-hydrated';
 import { useSearchParams } from 'next/navigation';
+import { useSocialPosts } from '@/hooks/use-socialpost';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -35,7 +36,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, embed = false }) => {
 	const [loading, setLoading] = useState(true);
 	const [loadingFailed, setLoadingFailed] = useState(false);
 	const { initSlides } = useSlides();
-	const [socialPosts, setSocialPosts] = useState<SocialPostSlide[]>([]);
+	const { initSocialPosts } = useSocialPosts()
 	const [postType, setPostType] = useState<string>('casual_topic');
 	const params = useSearchParams();
 	const initSlideIndex = parseInt(params.get('page') || '1') - 1 ;
@@ -123,7 +124,8 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, embed = false }) => {
 				setLoading(false);
 			} else if (project.content_type === 'social_posts') {
 				setPostType(project.post_type);
-				setSocialPosts(project.parsed_socialPosts);
+				const socialposts = ProjectService.parseSocialPosts(project.social_posts, project.post_type)
+				initSocialPosts(socialposts)
 				setLoading(false);
 			}
 		};
