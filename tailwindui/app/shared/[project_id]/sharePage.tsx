@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Header from '@/components/layout/header';
 import dynamic from 'next/dynamic';
 import ProjectService from '@/services/ProjectService';
-import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
+import SocialPostSlide from '@/models/SocialPost';
 import { useSlides } from '@/hooks/use-slides';
 import { Blank, Loading } from '@/components/ui/Loading';
 import { useProject } from '@/hooks/use-project';
@@ -168,8 +168,6 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, embed = false }) => {
 				{project?.content_type === 'social_posts' && (
 					<div>
 						<SocialPostHTML
-							socialPostSlides={socialPosts}
-							setSocialPostSlides={setSocialPosts}
 							isViewing={true}
 							borderColorOptions={borderColorOptions}
 							res_scenario={postType}

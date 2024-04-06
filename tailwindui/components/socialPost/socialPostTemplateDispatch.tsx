@@ -117,7 +117,6 @@ export const templateDispatch = (
 		groups: [emptyGroup],
 		axis: { x: '', y: '' },
 	}));
-	console.log(slide.keywords)
 
 	if (index === 0) {
 		return (
