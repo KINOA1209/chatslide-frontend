@@ -628,7 +628,16 @@ export const ImgModule = ({
 									key={index}
 									className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-[3px]`}
 								>
-									<img className='w-full h-full object-contain' src={url} />
+									<Image
+										src={url} // URL of the image
+										unoptimized={ url.includes('unsplash') ? true : false}
+										alt="searched image"
+										layout="responsive"
+										objectFit="contain" // This will keep the aspect ratio and make sure the image fits within the container
+										className="w-full h-full" // Additional CSS classes if needed
+										width={100}
+										height={100}
+									/>
 								</div>
 							);
 						} else {
@@ -638,7 +647,16 @@ export const ImgModule = ({
 									key={index}
 									className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-[3px]`}
 								>
-									<img className='w-full h-full object-contain' src={url} />
+									<Image
+										src={url} // URL of the image
+										unoptimized={url.includes('unsplash') ? true : false}
+										alt="selected image"
+										layout="responsive"
+										objectFit="contain" // This will keep the aspect ratio and make sure the image fits within the container
+										className="w-full h-full" // Additional CSS classes if needed
+										width={100}
+										height={100}
+									/>
 								</div>
 							);
 						}
