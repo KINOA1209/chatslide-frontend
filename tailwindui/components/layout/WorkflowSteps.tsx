@@ -220,9 +220,9 @@ export const getLastStepReidrect = (project: Project) => {
 	console.log('project', project.content_type);
 	let url = '';
 	if (project.content_type == 'social_posts') {
-		url = SOCIAL_POSTS_REDIRECTS[finishedSteps.length - 1];
+		url = SOCIAL_POSTS_REDIRECTS[finishedSteps[finishedSteps.length - 1]];
 	} else {
-		url = PRESENTATION_REDIRECTS[finishedSteps.length - 1];
+		url = PRESENTATION_REDIRECTS[finishedSteps[finishedSteps.length - 1]];
 	}
 	return url;
 };
