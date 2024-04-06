@@ -134,7 +134,7 @@ export default function DesignPage() {
 		},
 	];
 
-	const [imageLicense, setImageLicense] = useState('stock');
+	const [imageLicense, setImageLicense] = useState('all');
 	const imageLicenseOptions: RadioButtonOption[] = [
 		{
 			value: 'stock',
