@@ -3,7 +3,7 @@ import { useSlides } from "@/hooks/use-slides"
 import { useState } from "react"
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa"
 
-const EmbededSlide: React.FC<{
+const EmbeddedSlide: React.FC<{
 	initSlideIndex: number
 }> = ({
 	initSlideIndex
@@ -48,4 +48,4 @@ const EmbededSlide: React.FC<{
 		)
 	}
 
-export default EmbededSlide;
+export default EmbeddedSlide;

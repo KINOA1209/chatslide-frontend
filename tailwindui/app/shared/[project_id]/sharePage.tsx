@@ -11,7 +11,7 @@ import { useProject } from '@/hooks/use-project';
 import useHydrated from '@/hooks/use-hydrated';
 import { useSearchParams } from 'next/navigation';
 import { useSocialPosts } from '@/hooks/use-socialpost';
-import EmbededSlide from './EmbededSlide';
+import EmbeddedSlide from './EmbeddedSlide';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -145,7 +145,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, embed = false }) => {
 		</Blank>
 
   if (embed) 
-		return <EmbededSlide initSlideIndex={initSlideIndex}/>
+		return <EmbeddedSlide initSlideIndex={initSlideIndex}/>
 
 	return (
 		<>
