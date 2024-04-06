@@ -1317,7 +1317,7 @@ export const ImgModule = ({
 							}}
 						>
 							<Image
-								unoptimized={true}
+								unoptimized={imgsrc?.includes('freepik') ? false : true}
 								style={{
 									objectFit: 'fill',
 									height: '100%',
