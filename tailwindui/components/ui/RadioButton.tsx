@@ -28,7 +28,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
 			{options.map(({ img, value, text, icon }) => (
 				<div
 					key={value}
-					className={`rounded-lg py-2`}
+					className={`rounded-lg`}
 					onClick={() => setSelectedValue(value)}
 				>
 					<label>

@@ -83,6 +83,46 @@ enum ImgQueryMode {
 	CHART_SELECTION,
 }
 
+const imageLicenseOptions: RadioButtonOption[] = [
+	{
+		value: 'all',
+		text: 'All',
+	},
+	{
+		value: 'creative',
+		text: 'Creative',
+	},
+	{
+		value: 'stock',
+		text: 'Stock',
+	},
+	{
+		value: 'illustration',
+		text: 'Illustration',
+	},
+	{
+		value: 'giphy',
+		text: 'Gif',
+	}
+];
+
+const getImageLicenseExplanation = (license: string) => {
+	switch (license) {
+		case 'all':
+			return 'Images from all websites, some may require licenses';
+		case 'illustration':
+			return 'Cartoon style illustration images from Freepik';
+		case 'stock':
+			return 'High quality stock photos from Unsplash';
+		case 'creative':
+			return 'Images from all websites, free to use';
+		case 'giphy':
+			return 	'Funny animations from Giphy.	Gif may not be animated if you export to PDF / PPTX, or create video.';
+		default:
+			return '';
+	}
+};
+
 export const ImgModule = ({
 	imgsrc,
 	updateSingleCallback,
@@ -128,32 +168,10 @@ export const ImgModule = ({
 
 	const [uploading, setUploading] = useState(false);
 	const [imageLicense, setImageLicense] = useState('all');
-	const imageLicenseOptions: RadioButtonOption[] = [
-		{
-			value: 'all',
-			text: 'All',
-		},
-		{
-			value: 'illustration',
-			text: 'Illustration',
-		},
-		{
-			value: 'stock',
-			text: 'Stock',
-		},
-		{
-			value: 'creative',
-			text: 'Creative',
-		},
-		{
-			value: 'giphy',
-			text: 'Gif',
-		}
-	];
 
 	function getSearchText() {
 		const slide = slides[slideIndex];
-		if (!slide) return ''; 
+		if (!slide) return '';
 		switch (slide?.layout) {
 			case 'Cover_img_1_layout':
 				return removeTags(slide.head) as string;
@@ -552,18 +570,22 @@ export const ImgModule = ({
 						await handleImageSearchSubmit(e);
 					}
 				}}
-				className='w-full flex flex-col'
+				className='w-full flex flex-col gap-y-2'
 			>
-				<Explanation>
-					Highlight the keywords you want to use for search:
-				</Explanation>
-				<WordSelector
-					text={getSearchText()}
-					setQuery={setKeyword}
+				<div>
+				<RadioButton
+					options={imageLicenseOptions}
+					selectedValue={imageLicense}
+					setSelectedValue={setImageLicense}
+					name='imageLicense'
+					cols={5}
 				/>
+
 				<Explanation>
-					Or directly enter the keywords below:
+					{getImageLicenseExplanation(imageLicense)}
 				</Explanation>
+				</div>
+				<div>
 				<InputBox>
 					<input
 						id='search_keyword'
@@ -588,22 +610,13 @@ export const ImgModule = ({
 						</button>
 					)}
 				</InputBox>
-
-				<RadioButton
-					options={imageLicenseOptions}
-					selectedValue={imageLicense}
-					setSelectedValue={setImageLicense}
-					name='imageLicense'
-					cols={5}
+				
+				<WordSelector
+					text={getSearchText()}
+					setQuery={setKeyword}
 				/>
+				</div>
 
-				{
-					imageLicense === 'giphy' &&
-					<Explanation>
-						Powered by Giphy. <br />
-						Gif may not be animated if you export to PDF / PPTX, or create video.
-					</Explanation>
-				}
 			</form>
 			<div className='w-full h-full overflow-y-auto p-1'>
 				<div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-2'>
