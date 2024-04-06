@@ -3,17 +3,15 @@
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Header from '@/components/layout/header';
 import dynamic from 'next/dynamic';
 import ProjectService from '@/services/ProjectService';
-import SocialPostSlide from '@/models/SocialPost';
 import { useSlides } from '@/hooks/use-slides';
 import { Blank, Loading } from '@/components/ui/Loading';
 import { useProject } from '@/hooks/use-project';
-import { JoinUsBanner } from '@/components/layout/JoinUsBanner';
 import useHydrated from '@/hooks/use-hydrated';
 import { useSearchParams } from 'next/navigation';
 import { useSocialPosts } from '@/hooks/use-socialpost';
+import EmbededSlide from './EmbededSlide';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -147,15 +145,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, embed = false }) => {
 		</Blank>
 
   if (embed) 
-    return (
-      <main className='grow'>
-        <SlidesHTML
-          isViewing={true}
-          embed={true}
-					initSlideIndex={initSlideIndex}
-        />
-      </main>
-    );
+		return <EmbededSlide initSlideIndex={initSlideIndex}/>
 
 	return (
 		<>
