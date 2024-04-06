@@ -103,7 +103,6 @@ export const ImgModule = ({
 	columnIndex = 0,
 	isSlide = true,
 	isSocialPostTemp1Cover = false,
-	search_illustration = false,
 }: ImgModuleProp) => {
 	const sourceImage = useImageStore((state) => state.sourceImage);
 	const { project } = useProject();
@@ -133,6 +132,10 @@ export const ImgModule = ({
 		{
 			value: 'all',
 			text: 'All',
+		},
+		{
+			value: 'illustration',
+			text: 'Illustration',
 		},
 		{
 			value: 'stock',
@@ -543,7 +546,7 @@ export const ImgModule = ({
 			<form
 				onSubmit={async (e) => {
 					e.preventDefault();
-					if (search_illustration) {
+					if (imageLicense == 'illustration') {
 						await handleIllustrationSearchSubmit(e);
 					} else {
 						await handleImageSearchSubmit(e);
@@ -591,7 +594,7 @@ export const ImgModule = ({
 					selectedValue={imageLicense}
 					setSelectedValue={setImageLicense}
 					name='imageLicense'
-					cols={4}
+					cols={5}
 				/>
 
 				{
