@@ -8,6 +8,9 @@
 @import 'additional-styles/theme.css';
 @import 'additional-styles/font.css';
 
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@500&family=Oooh+Baby&display=swap');
+
 @import 'tailwindcss/utilities';
 /* Caveat font family for fun education template 004 */
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;700&display=swap');
@@ -166,3 +169,67 @@
 	src: url('/fonts/OpenSans-Medium.ttf') format('truetype');
 	/* Add more src declarations for different font weights or styles if needed */
 }
+
+@font-face {
+	font-family: 'Nunito';
+	src: url('/fonts/casual_topic_fonts/Nunito-Regular_Content.ttf')
+		format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Nunito';
+	src: url('/fonts/casual_topic_fonts/Nunito-BoldItalic_Headings.ttf')
+		format('truetype');
+	font-weight: bold;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'Nunito';
+	src: url('/fonts/casual_topic_fonts/Nunito-Italic-VariableFont_wght.ttf')
+		format('truetype');
+	font-weight: normal;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'Nunito';
+	src: url('/fonts/casual_topic_fonts/Nunito-Bold_Subtitle.ttf')
+		format('truetype');
+	font-weight: bold;
+	font-style: normal;
+}
+/* 
+@font-face {
+	font-family: 'Cormorant';
+	src: url('/fonts/reading_notes_fonts/Cormorant-Medium.ttf')
+		format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Cormorant';
+	src: url('/fonts/reading_notes_fonts/Cormorant-BoldItalic.ttf')
+		format('truetype');
+	font-weight: bold;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'Cormorant';
+	src: url('/fonts/reading_notes_fonts/Cormorant-Italic.ttf')
+		format('truetype');
+	font-weight: normal;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: 'Cormorant';
+	src: url('/fonts/reading_notes_fonts/Cormorant-Bold.ttf')
+		format('truetype');
+	font-weight: bold;
+	font-style: normal;
+} */

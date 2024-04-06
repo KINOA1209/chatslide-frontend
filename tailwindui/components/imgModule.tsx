@@ -51,6 +51,7 @@ import { MEDIA_EXTENSIONS } from './file/FileUploadButton';
 import RadioButton, { RadioButtonOption } from './ui/RadioButton';
 import { Explanation, Instruction } from './ui/Text';
 import { WordSelector } from './slides/WordSelector';
+import { useSocialPosts } from '@/hooks/use-socialpost';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -70,6 +71,9 @@ interface ImgModuleProp {
 	customImageStyle?: React.CSSProperties;
 	setImgHigherZIndex?: React.Dispatch<React.SetStateAction<boolean>>;
 	columnIndex?: number;
+	isSlide?: boolean;
+	isSocialPostTemp1Cover?: boolean;
+	search_illustration?: boolean;
 }
 
 enum ImgQueryMode {
@@ -97,6 +101,9 @@ export const ImgModule = ({
 	customImageStyle,
 	setImgHigherZIndex,
 	columnIndex = 0,
+	isSlide = true,
+	isSocialPostTemp1Cover = false,
+	search_illustration = false,
 }: ImgModuleProp) => {
 	const sourceImage = useImageStore((state) => state.sourceImage);
 	const { project } = useProject();
@@ -111,6 +118,7 @@ export const ImgModule = ({
 	const inputFileRef = useRef<HTMLInputElement>(null);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const { token, updateCreditsFE } = useUser();
+	const { socialPosts, socialPostsIndex } = useSocialPosts();
 
 	const [hoverQueryMode, setHoverQueryMode] = useState<ImgQueryMode>(
 		ImgQueryMode.SEARCH,
@@ -224,6 +232,41 @@ export const ImgModule = ({
 			.catch((e) => {
 				console.error(e);
 			});
+		setSearching(false);
+	};
+
+	const handleIllustrationSearchSubmit = async (
+		e: React.FormEvent<HTMLFormElement>,
+	) => {
+		e.preventDefault();
+		setSelectedQueryMode(ImgQueryMode.SEARCH);
+		setSearchResult([]);
+		setSearching(true);
+		const dummyParam = `dummy=${Math.random()}`;
+		const response = await fetch(
+			`/api/search_illustration_images?keyword=${encodeURIComponent(
+				keyword,
+			)}&${dummyParam}`,
+			{
+				mode: 'cors',
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
+				},
+			},
+		);
+		if (response.ok) {
+			try {
+				const parsedResponse = await response.json();
+				setSearchResult(parsedResponse.data.images);
+			} catch (error) {
+				console.error(error);
+			}
+		} else {
+			const error = response.status;
+			console.error(error, response);
+		}
 		setSearching(false);
 	};
 
@@ -497,7 +540,17 @@ export const ImgModule = ({
 
 	const imgSearchDiv = (
 		<div className='w-full h-full flex flex-col'>
-			<form onSubmit={handleImageSearchSubmit} className='w-full flex flex-col'>
+			<form
+				onSubmit={async (e) => {
+					e.preventDefault();
+					if (search_illustration) {
+						await handleIllustrationSearchSubmit(e);
+					} else {
+						await handleImageSearchSubmit(e);
+					}
+				}}
+				className='w-full flex flex-col'
+			>
 				<Explanation>
 					Highlight the keywords you want to use for search:
 				</Explanation>
@@ -654,7 +707,6 @@ export const ImgModule = ({
 	const [chartData, setChartData] = useState<
 		ValueDataPoint[] | ScatterDataPoint[]
 	>([]);
-	const [updatedIsChart, setUpdatedIsChart] = useState<Boolean>(false);
 	const imgmoduleRef = useRef<HTMLDivElement | null>(null);
 	const titleRef = useRef<HTMLDivElement | null>(null);
 	const typeRef = useRef<HTMLDivElement | null>(null);
@@ -761,6 +813,7 @@ export const ImgModule = ({
 	});
 	const [isParentDimension, setIsParentDimension] = useState(false);
 	const [imgLoadError, setImgLoadError] = useState(false);
+	const prevDimensionRef = useRef(parentDimension);
 
 	//handler for drag and resize also autosave
 	const handleSave = onMouseLeave(
@@ -908,28 +961,46 @@ export const ImgModule = ({
 		setImagesDimensions(initializedData);
 	}, [images_position]);
 
+	// useEffect(() => {
+	// 	const currentElement = imageRefs[currentContentIndex]?.current;
+	// 	if (
+	// 		currentElement &&
+	// 		currentElement.clientHeight > 0 &&
+	// 		currentElement.clientWidth > 0
+	// 	) {
+	// 		const newDimensions = {
+	// 			height: currentElement.clientHeight,
+	// 			width: currentElement.clientWidth,
+	// 		};
+	// 		if (
+	// 			newDimensions.height !== parentDimension.height ||
+	// 			newDimensions.width !== parentDimension.width
+	// 		) {
+	// 			setParentDimension(newDimensions);
+	// 			setIsParentDimension(true);
+	// 		}
+	// 	} else {
+	// 		setIsParentDimension(false);
+	// 	}
+	// }, [currentContentIndex, imageRefs, parentDimension]);
+
+	// new version to get parent container's dimension, reduce unnecessary state updates
+	// prevent infinite loop bugs
 	useEffect(() => {
 		const currentElement = imageRefs[currentContentIndex]?.current;
-		if (
-			currentElement &&
-			currentElement.clientHeight > 0 &&
-			currentElement.clientWidth > 0
-		) {
-			const newDimensions = {
-				height: currentElement.clientHeight,
-				width: currentElement.clientWidth,
-			};
-			if (
-				newDimensions.height !== parentDimension.height ||
-				newDimensions.width !== parentDimension.width
-			) {
-				setParentDimension(newDimensions);
-				setIsParentDimension(true);
+		if (currentElement) {
+			const { clientHeight, clientWidth } = currentElement;
+			// Only update if there's a real change in dimensions
+			if (clientHeight !== parentDimension.height || clientWidth !== parentDimension.width) {
+				setParentDimension({ height: clientHeight, width: clientWidth });
+				setIsParentDimension(clientHeight > 0 && clientWidth > 0);
 			}
 		} else {
-			setIsParentDimension(false);
+			if (isParentDimension) {
+				setIsParentDimension(false);
+			}
 		}
-	}, [currentContentIndex, imageRefs, parentDimension]);
+	}, [currentContentIndex, imageRefs]);
 
 	//detect the mouse click event is outside the image container or not, if it's, trigger autosave
 	useEffect(() => {
@@ -1114,7 +1185,7 @@ export const ImgModule = ({
 					: canEdit
 						? 'hover:bg-[#CAD0D3]'
 						: ''
-				} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
+					} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
 				style={{
 					overflow: isImgEditMode ? 'visible' : 'hidden',
 					borderRadius: customImageStyle?.borderRadius,
@@ -1156,7 +1227,10 @@ export const ImgModule = ({
 				) : (
 					// image
 					<div
-						className={`${isImgEditMode ? 'rndContainerWithOutBorder' : ''}`}
+						className={`
+							${isImgEditMode ? 'rndContainerWithOutBorder' : ''}
+							${!isSlide ? 'absolute top-0 left-0 w-full h-full' : ''}
+						`}
 						style={{
 							...layoutElements?.rndContainerCSS,
 						}}
@@ -1164,6 +1238,15 @@ export const ImgModule = ({
 						onMouseEnter={() => setShowImgButton(true)}
 						onMouseLeave={() => setShowImgButton(false)}
 					>
+						{!isSlide && isSocialPostTemp1Cover && (
+							<div
+								className='absolute inset-0'
+								style={{
+									backgroundImage: `linear-gradient(180deg, ${socialPosts[socialPostsIndex].theme.cover_start}, ${socialPosts[socialPostsIndex].theme.cover_end} 40%)`,
+									zIndex: 2,
+								}}
+							/>
+						)}
 						<Rnd
 							className={`${isImgEditMode ? 'rndContainerWithBorder' : ''}`}
 							style={{ ...layoutElements?.rndCSS }}

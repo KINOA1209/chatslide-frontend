@@ -44,20 +44,26 @@
 }
 
 $font-sizes: (
+	'8pt',
+	'9pt',
+	'10pt',
 	'12pt',
 	'13pt',
 	'14pt',
 	'16pt',
 	'18pt',
 	'20pt',
+	'22pt',
 	'24pt',
 	'26pt',
 	'28pt',
 	'30pt',
 	'32pt',
 	'40pt',
+	'44pt',
+	'45pt',
 	'48pt',
-	'64pt'
+	'64pt',
 );
 @each $size in $font-sizes {
 	.ql-bubble
@@ -90,6 +96,7 @@ $font-families: (
 	'Caveat',
 	'Caveat Medium',
 	'Caveat Regular',
+	'Cormorant',
 	'Creato Display Medium',
 	'Creato Display Regular',
 	'Creato Display Thin',
@@ -104,12 +111,13 @@ $font-families: (
 	'Nimbus Sans Regular',
 	'Open Sans Regular',
 	'Open Sans Medium',
+	'Nunito',
 	'Playfair Display Bold',
 	'Playfair Display Medium',
 	'Rubik',
 	'Sansita Swashed Regular',
 	'Sansita Swashed Medium',
-	'Yrsa Medium'
+	'Yrsa Medium',
 );
 
 @each $font-family in $font-families {

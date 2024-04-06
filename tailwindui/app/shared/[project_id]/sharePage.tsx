@@ -6,13 +6,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import Header from '@/components/layout/header';
 import dynamic from 'next/dynamic';
 import ProjectService from '@/services/ProjectService';
-import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
+import SocialPostSlide from '@/models/SocialPost';
 import { useSlides } from '@/hooks/use-slides';
 import { Blank, Loading } from '@/components/ui/Loading';
 import { useProject } from '@/hooks/use-project';
 import { JoinUsBanner } from '@/components/layout/JoinUsBanner';
 import useHydrated from '@/hooks/use-hydrated';
 import { useSearchParams } from 'next/navigation';
+import { useSocialPosts } from '@/hooks/use-socialpost';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -35,7 +36,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, embed = false }) => {
 	const [loading, setLoading] = useState(true);
 	const [loadingFailed, setLoadingFailed] = useState(false);
 	const { initSlides } = useSlides();
-	const [socialPosts, setSocialPosts] = useState<SocialPostSlide[]>([]);
+	const { initSocialPosts } = useSocialPosts()
 	const [postType, setPostType] = useState<string>('casual_topic');
 	const params = useSearchParams();
 	const initSlideIndex = parseInt(params.get('page') || '1') - 1 ;
@@ -123,7 +124,8 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, embed = false }) => {
 				setLoading(false);
 			} else if (project.content_type === 'social_posts') {
 				setPostType(project.post_type);
-				setSocialPosts(project.parsed_socialPosts);
+				const socialposts = ProjectService.parseSocialPosts(project.social_posts, project.post_type)
+				initSocialPosts(socialposts)
 				setLoading(false);
 			}
 		};
@@ -168,8 +170,6 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, embed = false }) => {
 				{project?.content_type === 'social_posts' && (
 					<div>
 						<SocialPostHTML
-							socialPostSlides={socialPosts}
-							setSocialPostSlides={setSocialPosts}
 							isViewing={true}
 							borderColorOptions={borderColorOptions}
 							res_scenario={postType}

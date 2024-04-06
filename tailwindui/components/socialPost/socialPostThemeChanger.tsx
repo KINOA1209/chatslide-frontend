@@ -1,8 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
 import { Transition } from '@headlessui/react'; // Assuming you're using Headless UI for Transitions
-import { SlideKeys } from '@/components/socialPost/socialPostHTML';
+import { SlideKeys } from '@/models/SocialPost';
 import { ThemeIcon } from '@/app/(feature)/icons';
+import { LuTrash2, LuPalette } from 'react-icons/lu';
+import ButtonWithExplanation from '../button/ButtonWithExplanation';
 
 type ThemeProps = {
 	openTheme: () => void;
@@ -37,14 +39,25 @@ const ThemeChanger: React.FC<ThemeProps> = ({
 		handleSlideEdit(option, currentSlideIndex, 'theme');
 	};
 	return (
-		<div className='col-span-1 flex flex-row-reverse hidden sm:block'>
-			<div
-				className='w-14 h-14 bg-indigo-50 rounded-full shadow border-2 border-indigo-300  hover:bg-Lavender flex justify-center items-center cursor-pointer'
-				onClick={openTheme}
-			>
-				<ThemeIcon />
-			</div>
-
+		<div className='col-span-1 flex flex-row-reverse hidden sm:block z-20'>
+			<ButtonWithExplanation
+				explanation='Change Page Layout'
+				button={
+					<button
+						onClick={openTheme}>
+						<LuPalette
+							style={{
+								strokeWidth: '2',
+								flex: '1',
+								width: '1.5rem',
+								height: '1.5rem',
+								fontWeight: 'bold',
+								color: '#344054',
+							}}
+						/>
+					</button>
+				}
+			/>
 			<Transition
 				className='h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
 				show={showTheme}

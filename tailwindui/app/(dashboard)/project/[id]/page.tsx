@@ -12,6 +12,7 @@ import { useUser } from '@/hooks/use-user';
 import { getLastStepReidrect } from '@/components/layout/WorkflowSteps';
 import { Loading } from '@/components/ui/Loading';
 import { addIdToRedir } from '@/utils/redirWithId';
+import { useSocialPosts } from '@/hooks/use-socialpost';
 
 const ProjectLoading = () => {
 	const pathname = usePathname();
@@ -19,6 +20,7 @@ const ProjectLoading = () => {
 	const { initSlides } = useSlides();
 	const { project, initProject, updateProject } = useProject();
 	const { token } = useUser();
+	const { initSocialPosts } = useSocialPosts()
 
 	useEffect(() => {
 		sessionStorage.clear();
@@ -59,6 +61,9 @@ const ProjectLoading = () => {
 					}
 					updateProject('template', project.parsed_slides[0].template);
 					updateProject('palette', project.parsed_slides[0].palette);
+				}
+				if (project?.parsed_socialPosts) {
+					initSocialPosts(project.parsed_socialPosts)
 				}
 				// setSessionStorage(project);
 				handleRedirect(project, project_id);
