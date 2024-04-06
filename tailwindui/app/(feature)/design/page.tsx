@@ -42,6 +42,8 @@ import BrandingSelector from './BrandingSelector';
 import { useSlides } from '@/hooks/use-slides';
 import { useUser } from '@/hooks/use-user';
 import PaywallModal from '@/components/paywallModal';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Blank } from '@/components/ui/Loading';
 
 const TemplateSelector = dynamic(() => import('./TemplateSelector'), {
 	ssr: false,
@@ -97,6 +99,16 @@ export default function DesignPage() {
 		project?.selected_background || [],
 	);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
+
+	const params = useSearchParams();
+	const router = useRouter();
+
+	if (!project) {
+		if (params.get('id')) {
+			router.push(`/project/${params.get('id')}`);
+		}
+		return <Blank>Project not found</Blank>;
+	}
 
 	// Initialize the palette state with the first available palette for the current template
 	useEffect(() => {

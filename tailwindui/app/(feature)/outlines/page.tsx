@@ -13,13 +13,23 @@ import ActionsToolBar from '@/components/ui/ActionsToolBar';
 import useTourStore from '@/components/user_onboarding/TourStore';
 import useHydrated from '@/hooks/use-hydrated';
 import { addIdToRedir } from '@/utils/redirWithId';
+import { Blank } from '@/components/ui/Loading';
 
 export default function WorkflowStep2() {
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 	const [isGpt35, setIsGpt35] = useState(true);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const router = useRouter();
-	const { outlines, updateOutlines } = useProject();
+	const { project, outlines, updateOutlines } = useProject();
+
+	const params = useSearchParams();
+
+	if (!project) {
+		if (params.get('id')) {
+			router.push(`/project/${params.get('id')}`);
+		}
+		return <Blank>Project not found</Blank>;
+	}
 
 	// set current page to local storage
 	useEffect(() => {

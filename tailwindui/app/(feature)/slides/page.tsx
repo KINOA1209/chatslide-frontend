@@ -11,6 +11,8 @@ import StepsSlidesPage from '@/components/user_onboarding/StepsSlidesPage';
 import useHydrated from '@/hooks/use-hydrated';
 import { useProject } from '@/hooks/use-project';
 import { GenerationStatusProgressModal } from '@/components/ui/GenerationStatusProgressModal';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Blank } from '@/components/ui/Loading';
 export default function WorkflowStep3() {
 	const { isPaidUser } = useUser();
 	const { project } = useProject();
@@ -20,6 +22,16 @@ export default function WorkflowStep3() {
 
 	const [showGenerationStatusModal, setShowGenerationStatusModal] =
 		useState(false);
+
+	const params = useSearchParams();
+	const router = useRouter();
+
+	if (!project) {
+		if (params.get('id')) {
+			router.push(`/project/${params.get('id')}`);
+		}
+		return <Blank>Project not found</Blank>;
+	}
 
 	const handleGenerationStatusModal = () => {
 		// console.log('user Research Modal toggled');
