@@ -136,7 +136,7 @@ export default function Topic_SocialPost() {
 		updateProject('social_posts', response.data.res);
 		bulkUpdateProject(response.data);
 
-		router.push(addIdToRedir('/socialpost', project?.id));
+		router.push(addIdToRedir('/socialpost', response.data.project_id));
 	} catch (error) {
 		console.error('Error:', error);
 		setIsSubmitting(false);

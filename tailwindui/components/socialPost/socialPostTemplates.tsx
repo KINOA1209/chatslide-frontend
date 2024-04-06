@@ -159,7 +159,7 @@ export const First_page_img_1 = ({
 				/>
 			</div>
 			<div className='w-full h-full mx-[3%] flex flex-col justify-between'>
-				<div className='min-h-[50%] max-h-[70%] mt-[8%] px-[3%] z-[10]'>
+				<div className='min-h-[50%] max-h-[67%] mt-[20%] px-[3%] z-[10]'>
 					{topic}
 				</div>
 
@@ -667,7 +667,6 @@ export const img_1_template3 = ({
 						images_position={images_position}
 						isSlide={false}
 						currentContentIndex={0}
-						search_illustration={true}
 					/>
 				</div>
 				<div id='asterisk_section' className='mx-[auto] text-center'>
