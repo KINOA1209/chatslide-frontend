@@ -100,6 +100,7 @@ export default function Topic() {
 	const [isGpt35, setIsGpt35] = useState(true);
 
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [summarizing, setSummarizing] = useState(false);
 	const [showFileModal, setShowFileModal] = useState(false);
 	const [topicError, setTopicError] = useState('');
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -212,6 +213,7 @@ export default function Topic() {
 
 		// if needs to query vector database
 		if (selectedResources?.length > 0 || searchOnlineScope) {
+			setSummarizing(true);
 			try {
 				console.log('resources', selectedResources);
 				console.log('summarizing resources');
@@ -236,6 +238,7 @@ export default function Topic() {
 			} catch (error) {
 				console.error('Error summarizing resources', error);
 			}
+			setSummarizing(false);
 		} else {
 			console.log('no need to summarize resources');
 		}
@@ -317,15 +320,21 @@ export default function Topic() {
 			/>
 
 			<ToastContainer />
-			{showGenerationStatusModal && (
+			{showGenerationStatusModal && (summarizing ? (
 				<GenerationStatusProgressModal
 					onClick={handleGenerationStatusModal}
 					prompts={[
-						['We are summarizing your resources...', 5],
-						['We are writing your outlines...', 8],
+						['📚 Reading your resources...', 28],
 					]}
 				></GenerationStatusProgressModal>
-			)}
+			) : (
+					<GenerationStatusProgressModal
+						onClick={handleGenerationStatusModal}
+						prompts={[
+							['📝 Writing outlines for your slides...', 10],
+						]}
+					></GenerationStatusProgressModal>
+			))}
 
 			<FileUploadModal
 				selectedResources={selectedResources}

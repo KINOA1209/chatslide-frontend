@@ -65,7 +65,7 @@ export default function WorkflowStep3() {
 			{showGenerationStatusModal && (
 				<GenerationStatusProgressModal
 					onClick={handleGenerationStatusModal}
-					prompts={[['We are writing your scripts...', 5]]}
+					prompts={[['✍️ Writing the scripts based on your slides...', 5]]}
 				></GenerationStatusProgressModal>
 			)}
 			{/* slides */}

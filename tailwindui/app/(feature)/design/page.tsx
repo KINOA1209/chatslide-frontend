@@ -180,7 +180,7 @@ export default function DesignPage() {
 			{showGenerationStatusModal && (
 				<GenerationStatusProgressModal
 					onClick={handleGenerationStatusModal}
-					prompts={[['We are generating your slides...', 15]]}
+					prompts={[['📊 Finding the right images, data, and creating your slides...', 15]]}
 				></GenerationStatusProgressModal>
 			)}
 
