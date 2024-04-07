@@ -59,9 +59,15 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 			return;
 		}
 
+		let counter = 0 as number;
 		while (saveStatus != SaveStatus.UpToDate) {
 			console.log('Waiting for saveStatus to be UpToDate');
 			await sleep(200);
+			counter++;
+			if (counter == 25) {
+				console.error('SlideVisualizer: saveStatus not UpToDate after 5 seconds');
+				break;
+			}
 		}
 
 		console.log('submitting');
