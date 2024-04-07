@@ -630,7 +630,7 @@ export const ImgModule = ({
 								>
 									<Image
 										src={url} // URL of the image
-										unoptimized={ url.includes('freepik') ? false : true}
+										unoptimized={ url?.includes('freepik') ? false : true}
 										alt="searched image"
 										layout="responsive"
 										objectFit="contain" // This will keep the aspect ratio and make sure the image fits within the container
@@ -649,7 +649,7 @@ export const ImgModule = ({
 								>
 									<Image
 										src={url} // URL of the image
-										unoptimized={url.includes('freepik') ? false : true}
+										unoptimized={url?.includes('freepik') ? false : true}
 										alt="selected image"
 										layout="responsive"
 										objectFit="contain" // This will keep the aspect ratio and make sure the image fits within the container
