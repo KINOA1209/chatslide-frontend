@@ -20,15 +20,15 @@ const brandingOptions = [
 ];
 
 const BrandingSelector: React.FC<{
-	branding: string;
-	setBranding: (branding: string) => void;
+	showLogo: boolean;
+	setShowLogo: (showLogo: boolean) => void;
 	selectedLogo: Resource[];
 	setSelectedLogo: (selectedLogo: Resource[]) => void;
 	selectedBackground: Resource[];
 	setSelectedBackground: (selectedBackground: Resource[]) => void;
 }> = ({
-	branding,
-	setBranding,
+	showLogo,
+	setShowLogo,
 	selectedLogo,
 	setSelectedLogo,
 	selectedBackground,
@@ -50,20 +50,20 @@ const BrandingSelector: React.FC<{
 					</Instruction>
 					<RadioButton
 						options={brandingOptions}
-						selectedValue={branding}
+						selectedValue={showLogo ? 'yes' : 'no'}
 						setSelectedValue={(e) =>{
 							if (e === 'no' && !isPaidUser) {
 								setShowPaywall(true);
 								return;
 							}
-							setBranding(e);
+							setShowLogo(e === 'yes' ? true : false);
 						}}
 						name='branding'
 					/>
 				</div>
 
 				{/* customized logo */}
-				{branding === 'yes' &&
+				{showLogo &&
 					<ImageSelector
 						type='logo'
 						selectedImage={selectedLogo}
