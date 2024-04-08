@@ -25,6 +25,13 @@ const ScriptSection = dynamic(
 	{ ssr: false },
 );
 
+const AVATAR_USER_ALLOWLIST = [
+	'Quanlai Li',
+	'Laura Lin',
+	'Rex',
+	'Jackson'
+]
+
 export default function WorkflowStep5() {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { slides, updateSlidePage } = useSlides();
@@ -86,7 +93,7 @@ export default function WorkflowStep5() {
 				isPaidUser={true}
 				nextIsPaidFeature={true}
 				// todo: change credits
-				nextText={avatar ? 'Create Video (20 ⭐️)' : 'Create Video (20 ⭐️)'}  
+				nextText={avatar ? 'Create Video (20 ⭐️)' : 'Create Video (20 ⭐️)'}
 			/>
 
 			<ToastContainer enableMultiContainer containerId={'script'} />
@@ -97,30 +104,45 @@ export default function WorkflowStep5() {
 					<Instruction>
 						Select the voice you want to use for your video.
 					</Instruction>
-					<VoiceSelector 
-					selectedVoice={voice} 
-					setSelectedVoice={setVoice}
-					style={style}
-					setStyle={setStyle} 
+					<VoiceSelector
+						selectedVoice={voice}
+						setSelectedVoice={setVoice}
+						style={style}
+						setStyle={setStyle}
 					/>
 				</Card>
-				<Card>
-					<BigTitle>🦹‍♂️ Avatar</BigTitle> 
-					<Instruction>
-						Select the avatar you want to use for your video.<GrayLabel>Beta</GrayLabel>
-					</Instruction>
-					<Explanation>
-						Due to the limitation of our resources, we can only provide a limited number of video generations with avatars. <br />
-						The credit cost for using an avatar is may change in the future.
-					</Explanation>
-					<AvatarSelector
-						avatar={avatar}
-						setAvatar={setAvatar}
-						posture={posture}
-						setPosture={setPosture}
+				{AVATAR_USER_ALLOWLIST.includes(username) ?
+					<Card>
+						<BigTitle>🦹‍♂️ Avatar</BigTitle>
+						<Instruction>
+							Select the avatar you want to use for your video.<GrayLabel>Beta</GrayLabel>
+						</Instruction>
+						<Explanation>
+							Due to the limitation of our resources, we can only provide a limited number of video generations with avatars. <br />
+							The credit cost for using an avatar is may change in the future.
+						</Explanation>
+						<AvatarSelector
+							avatar={avatar}
+							setAvatar={setAvatar}
+							posture={posture}
+							setPosture={setPosture}
 						/>
-	
-				</Card>
+					</Card> :
+					<Card>
+						<BigTitle>🦹‍♂️ Avatar</BigTitle>
+						<div className='flex flex-row gap-x-4 items-end'>
+							<Instruction>
+								This is coming soon... We are finding some pilot users to test this feature.
+							</Instruction>
+							<BigBlueButton onClick={() => {
+								UserService.submitFeedback(5, username + ' wants to join the pilot program for Avatar feature', project?.id || '', token);
+								toast.success('You are added to the waitlist, thank you!');
+							}} >
+								Join the pilot program
+							</BigBlueButton>
+						</div>
+					</Card>
+				}
 				<Card>
 					<BigTitle>📝 Scripts</BigTitle>
 					<Instruction>
