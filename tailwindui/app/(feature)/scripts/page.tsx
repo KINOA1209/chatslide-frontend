@@ -85,7 +85,8 @@ export default function WorkflowStep5() {
 				setIsSubmitting={setIsSubmitting}
 				isPaidUser={true}
 				nextIsPaidFeature={true}
-				nextText='Create Video'
+				// todo: change credits
+				nextText={avatar ? 'Create Video (20 ⭐️)' : 'Create Video (20 ⭐️)'}  
 			/>
 
 			<ToastContainer enableMultiContainer containerId={'script'} />

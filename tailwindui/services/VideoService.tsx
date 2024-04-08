@@ -22,8 +22,9 @@ export default class VideoService {
 				foldername: foldername,
 				voice: voice,
 				style: style,
+				has_avatar: avatar !== '',
 				avatar: avatar,
-				avatarStyle: avatarStyle,
+				avatar_style: avatarStyle,
 			}),
 		});
 	}
