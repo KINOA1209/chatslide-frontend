@@ -130,7 +130,7 @@ export default function WorkflowStep5() {
 						</Instruction>
 						<Explanation>
 							Due to the limitation of our resources, we can only provide a limited number of video generations with avatars. <br />
-							The credit cost for using an avatar is may change in the future.
+							The credit cost for using an avatar may change in the future.
 						</Explanation>
 						<AvatarSelector
 							avatar={avatar}
