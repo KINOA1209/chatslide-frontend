@@ -14,6 +14,7 @@ import useTourStore from '@/components/user_onboarding/TourStore';
 import useHydrated from '@/hooks/use-hydrated';
 import { addIdToRedir } from '@/utils/redirWithId';
 import { Blank } from '@/components/ui/Loading';
+import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
 
 export default function WorkflowStep2() {
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
@@ -77,6 +78,13 @@ export default function WorkflowStep2() {
 			<MyCustomJoyride steps={StepsOutlinePage()} />
 			{/* flex col container for steps, title, generate slides button etc */}
 			<ToastContainer />
+
+			<GenerateSlidesSubmit
+				outlines={outlines}
+				isGPT35={isGpt35}
+				isSubmitting={isSubmitting}
+				setIsSubmitting={setIsSubmitting}
+			/>
 
 			<WorkflowStepsBanner
 				currentIndex={1}

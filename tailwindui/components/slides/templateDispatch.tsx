@@ -67,9 +67,9 @@ export const templateDispatch = (
 	// brandingColor?: string,
 	isShowingLogo: boolean = true,
 ): JSX.Element => {
-	useEffect(() => {
-		console.log('current slide palette', index, slide.palette);
-	}, []);
+	// useEffect(() => {
+	// 	console.log('current slide palette', index, slide.palette);
+	// }, []);
 	const { isPaidUser, token } = useUser();
 
 	// for col1img1 layout, maxHeight would be 160px, for col2img2 140px; for col2img1 it's 280px, for col3img3 it's 130px; for col1img0 280px; for col2img0 280px; for col3img0 280px

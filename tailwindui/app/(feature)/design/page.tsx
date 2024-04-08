@@ -5,7 +5,7 @@ import React, { useState, useRef, useEffect, Fragment } from 'react';
 import dynamic from 'next/dynamic';
 
 // Third-party library imports
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // Stylesheets
@@ -44,6 +44,10 @@ import { useUser } from '@/hooks/use-user';
 import PaywallModal from '@/components/paywallModal';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Blank } from '@/components/ui/Loading';
+import Project from '@/models/Project';
+import { addIdToRedir } from '@/utils/redirWithId';
+import SlidesService from '@/services/SlidesService';
+import { set } from 'lodash';
 
 const TemplateSelector = dynamic(() => import('./TemplateSelector'), {
 	ssr: false,
@@ -78,19 +82,18 @@ export default function DesignPage() {
 	};
 
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
-	const { isPaidUser } = useUser();
+	const { token, isPaidUser } = useUser();
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [isGpt35, setIsGpt35] = useState(true);
-	const { outlines, project, updateProject } = useProject();
-	const { showDrLambdaLogo, hideLogo } = useSlides();
+	const { outlines, project, updateProject, bulkUpdateProject } = useProject();
+	const { slides, showDrLambdaLogo, hideLogo, setSlides, debouncedSyncSlides } = useSlides();
 	const [template, setTemplate] = useState<TemplateKeys>(
 		project?.template || getTemplateFromAudicence(project?.audience || ''),
 	);
 
 	const [colorPalette, setColorPalette] = useState<PaletteKeys>(
 		project?.palette ||
-			availablePalettes[template as keyof typeof availablePalettes]?.[0] ||
-			'Original',
+		availablePalettes[template as keyof typeof availablePalettes]?.[0] ||
+		'Original',
 	);
 	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
 		project?.selected_logo || [],
@@ -155,9 +158,71 @@ export default function DesignPage() {
 		updateProject('logo', isPaidUser ? '' : 'Default');
 	}
 
-	const [branding, setBranding] = useState(
-		project?.logo === '' ? 'no' : 
-		isPaidUser ? 'no' : 'yes');
+	const [showLogo, setShowLogo] = useState<boolean>(
+		project?.logo === '' ? false :
+			project?.logo === 'Default' ? true :
+				isPaidUser ? false : true);
+
+
+	async function viewSlidesSubmit(){
+		if (!project) {
+			console.error('Project not found');
+			setIsSubmitting(false);
+			return;
+		}
+		try {
+			const { slides, additional_images } = await SlidesService.initImages(
+				project.id,
+				project.topic,
+				imageLicense,
+				token
+			);
+
+			bulkUpdateProject({
+				logo: showLogo ? 'Default' : '',
+				selected_background: selectedBackground,
+				selected_logo: selectedLogo,
+				template: template,
+				palette: colorPalette,
+				additional_images: additional_images,
+			} as Project);
+
+			const newSlides = slides.map((slide) => {
+				return {
+					...slide,
+					template: template,
+					palette: colorPalette,
+					logo: showLogo ? 'Default' : '',
+					logo_url: selectedLogo?.[0]?.thumbnail_url || '',
+					background_url: selectedBackground?.[0]?.thumbnail_url || '',
+					images_position: [{}, {}, {}],
+					media_type: ['image', 'image', 'image'],
+					transcript: '',
+				};
+			});
+
+			setSlides(newSlides);
+			debouncedSyncSlides(newSlides);
+
+			router.push(addIdToRedir('/slides'));
+		}
+		catch (e) {
+			setIsSubmitting(false);
+			console.error(e);
+			toast.error(
+				'Server is busy now. Please try again later. Reference code: ' +
+				project?.id,
+			);
+		}
+	}
+
+	useEffect(() => {
+		if (isSubmitting) {
+			if (project?.presentation_slides && slides?.length > 0) {
+				viewSlidesSubmit();
+			}
+		}
+	}, [isSubmitting]);
 
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
@@ -177,12 +242,12 @@ export default function DesignPage() {
 			</div> */}
 			<ToastContainer />
 			{/* user research modal */}
-			{showGenerationStatusModal && (
+			{/* {showGenerationStatusModal && (
 				<GenerationStatusProgressModal
 					onClick={handleGenerationStatusModal}
 					prompts={[['📊 Finding the right images, data, and creating your slides...', 15]]}
 				></GenerationStatusProgressModal>
-			)}
+			)} */}
 
 			<WorkflowStepsBanner
 				currentIndex={2}
@@ -190,21 +255,8 @@ export default function DesignPage() {
 				setIsSubmitting={setIsSubmitting}
 				isPaidUser={true}
 				nextIsPaidFeature={false}
-				nextText={!isSubmitting ? 'Create Slides' : 'Creating Slides'}
+				nextText={!project?.presentation_slides ? 'Creating Slides' : 'View Slides'}
 				handleClickingGeneration={handleGenerationStatusModal}
-			/>
-
-			<GenerateSlidesSubmit
-				outlines={outlines}
-				isGPT35={isGpt35}
-				isSubmitting={isSubmitting}
-				setIsSubmitting={setIsSubmitting}
-				template={template}
-				palette={colorPalette}
-				imageAmount={imageAmount}
-				imageLicense={imageLicense}
-				selectedLogo={selectedLogo}
-				selectedBackground={selectedBackground}
 			/>
 
 			<PaywallModal
@@ -229,7 +281,7 @@ export default function DesignPage() {
 							setPalette={setColorPalette}
 							paletteOptions={
 								availablePalettes[
-									template as keyof typeof availablePalettes
+								template as keyof typeof availablePalettes
 								] || ['Original']
 							}
 							palette={colorPalette}
@@ -274,20 +326,8 @@ export default function DesignPage() {
 							the slides page, or talk with AI Chatbot
 						</Explanation>
 						<BrandingSelector
-							branding={branding}
-							setBranding={(e) => {
-								if (!isPaidUser) {
-									setShowPaymentModal(true);
-									return;
-								}
-								if (e === 'yes') {
-									showDrLambdaLogo();
-								} else {
-									hideLogo();
-									updateProject('selected_logo', []);
-								}
-								setBranding(e);
-							}}
+							showLogo={showLogo}
+							setShowLogo={setShowLogo}
 							selectedLogo={selectedLogo}
 							setSelectedLogo={setSelectedLogo}
 							selectedBackground={selectedBackground}

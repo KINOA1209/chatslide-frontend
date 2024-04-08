@@ -7,6 +7,7 @@ import { useChatHistory } from './use-chat-history';
 import { useProject } from './use-project';
 import Project from '@/models/Project';
 import debounce from 'lodash.debounce';
+import SlidesService from '@/services/SlidesService';
 
 const useSlidesBear = createBearStore<Slide[]>()('slides', [], true);
 const useSlideIndex = createBearStore<number>()('slideIndex', 0, true);
@@ -423,27 +424,19 @@ export const useSlides = () => {
 		console.log('Saving slides:', formData);
 
 		// Send a POST request to the backend to save finalSlides
-		fetch('/api/save_slides', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json; charset=utf-8',
-				Authorization: `Bearer ${token}`,
-			},
-			body: JSON.stringify(formData),
-		})
-			.then((response) => {
-				if (response.ok) {
-					setSaveStatus(SaveStatus.UpToDate);
-					console.log('Auto-save successful.');
-				} else {
-					// Handle save error
-					console.error('Auto-save failed.');
-				}
-			})
-			.catch((error) => {
-				// Handle network error
-				console.error('Auto-save failed:', error);
-			});
+		try {
+			const ok = await SlidesService.saveSlides(formData, token);
+			if (ok) {
+				setSaveStatus(SaveStatus.UpToDate);
+				console.log('Auto-save successful.');
+			} else {
+				// Handle save error
+				console.error('Auto-save failed.');
+			}
+		}
+		catch (error) {
+			console.error('Auto-save failed:', error);
+		};
 	};
 
 	const debouncedSyncSlides = debounce(syncSlides, 1000);
