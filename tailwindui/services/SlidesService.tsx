@@ -1,3 +1,5 @@
+import Slide from "@/models/Slide";
+
 class SlidesService {
 	static async generateSlides(formData: any, token: string){
 		const response = await fetch('/api/generate_slides', {
@@ -51,9 +53,10 @@ class SlidesService {
 			})
 		});
 		const data = await resp.json();
+		console.log(data);
 		return {
-			slides: data.slides,
-			addition_images: data.addition_images,
+			slides: Object.values(data.data.slides) as Slide[],
+			additional_images: data.data.additional_images as string[],
 		}
 	}
 }

@@ -5,7 +5,7 @@ import React, { useState, useRef, useEffect, Fragment } from 'react';
 import dynamic from 'next/dynamic';
 
 // Third-party library imports
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // Stylesheets
@@ -46,6 +46,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Blank } from '@/components/ui/Loading';
 import Project from '@/models/Project';
 import { addIdToRedir } from '@/utils/redirWithId';
+import SlidesService from '@/services/SlidesService';
+import { set } from 'lodash';
 
 const TemplateSelector = dynamic(() => import('./TemplateSelector'), {
 	ssr: false,
@@ -80,7 +82,7 @@ export default function DesignPage() {
 	};
 
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
-	const { isPaidUser } = useUser();
+	const { token, isPaidUser } = useUser();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { outlines, project, updateProject, bulkUpdateProject } = useProject();
 	const { slides, showDrLambdaLogo, hideLogo, setSlides, debouncedSyncSlides } = useSlides();
@@ -162,33 +164,62 @@ export default function DesignPage() {
 				isPaidUser ? false : true);
 
 
+	async function viewSlidesSubmit(){
+		if (!project) {
+			console.error('Project not found');
+			setIsSubmitting(false);
+			return;
+		}
+		try {
+			const { slides, additional_images } = await SlidesService.initImages(
+				project.id,
+				project.topic,
+				imageLicense,
+				token
+			);
+
+			bulkUpdateProject({
+				logo: showLogo ? 'Default' : '',
+				selected_background: selectedBackground,
+				selected_logo: selectedLogo,
+				template: template,
+				palette: colorPalette,
+				additional_images: additional_images,
+			} as Project);
+
+			const newSlides = slides.map((slide) => {
+				return {
+					...slide,
+					template: template,
+					palette: colorPalette,
+					logo: showLogo ? 'Default' : '',
+					logo_url: selectedLogo?.[0]?.thumbnail_url || '',
+					background_url: selectedBackground?.[0]?.thumbnail_url || '',
+					images_position: [{}, {}, {}],
+					media_type: ['image', 'image', 'image'],
+					transcript: '',
+				};
+			});
+
+			setSlides(newSlides);
+			debouncedSyncSlides(newSlides);
+
+			router.push(addIdToRedir('/slides'));
+		}
+		catch (e) {
+			setIsSubmitting(false);
+			console.error(e);
+			toast.error(
+				'Server is busy now. Please try again later. Reference code: ' +
+				project?.id,
+			);
+		}
+	}
+
 	useEffect(() => {
 		if (isSubmitting) {
 			if (project?.presentation_slides && slides?.length > 0) {
-
-				bulkUpdateProject({
-					logo: showLogo ? 'Default' : '',
-					selected_background: selectedBackground,
-					selected_logo: selectedLogo,
-					template: template,
-					palette: colorPalette,
-				} as Project);
-
-				const newSlides = slides.map((slide) => {
-					return {
-						...slide,
-						template: template,
-						palette: colorPalette,
-						logo: showLogo ? 'Default' : '',
-						logo_url: selectedLogo?.[0]?.thumbnail_url || '',
-						background_url: selectedBackground?.[0]?.thumbnail_url || '',
-					};
-				});
-
-				setSlides(newSlides);
-				debouncedSyncSlides(newSlides);
-
-				router.push(addIdToRedir('/slides'));
+				viewSlidesSubmit();
 			}
 		}
 	}, [isSubmitting]);
