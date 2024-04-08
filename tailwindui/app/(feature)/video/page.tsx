@@ -16,6 +16,7 @@ import { SpinIcon } from '../icons';
 import Modal from '@/components/ui/Modal';
 import { Explanation } from '@/components/ui/Text';
 import { SiQuicktime } from 'react-icons/si';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 
 
 const VideoVisualizer = ({
@@ -163,8 +164,14 @@ export default function WorkflowStep6() {
 	const [jobStatus, setJobStatus] = useState<string>();
 	const [isLoading, setIsLoading] = useState(project?.video_url ? false : true);
 	const { token } = useUser();
+	
+	const params = useSearchParams();
+	const router = useRouter();
 
 	if (!project) {
+		if(params.get('id')) {
+			router.push(`/project/${params.get('id')}`);
+		}
 		return <Blank>Project not found</Blank>;
 	}
 

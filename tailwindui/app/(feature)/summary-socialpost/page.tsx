@@ -21,6 +21,8 @@ import { IoIosLink } from 'react-icons/io';
 import { useProject } from '@/hooks/use-project';
 import { addIdToRedir } from '@/utils/redirWithId';
 import Project from '@/models/Project';
+import { useSocialPosts } from '@/hooks/use-socialpost';
+import ProjectService from '@/services/ProjectService';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 3;
@@ -60,6 +62,7 @@ export default function Topic_SocialPost() {
 	const [scenarioType, setscenarioType] = useState(project?.post_type || '');
 	const [language, setLanguage] = useState(project?.language || 'English');
 	const [selectedResources, setSelectedResources] = useState<Resource[]>(project?.resources || []);
+	const { initSocialPosts } = useSocialPosts()
 
 	useEffect(() => {
 		if (selectedResources.length > 0) {
@@ -129,11 +132,11 @@ export default function Topic_SocialPost() {
 		//console.log(outlinesJson)
 		//const searchImagesResponse = await callSearchImages(JSON.stringify(formData.topic))
 		setIsSubmitting(false);
-
+		initSocialPosts(ProjectService.parseSocialPosts(response.data.res, scenarioType))
 		updateProject('social_posts', response.data.res);
 		bulkUpdateProject(response.data);
 
-		router.push(addIdToRedir('/socialpost', project?.id));
+		router.push(addIdToRedir('/socialpost', response.data.project_id));
 	} catch (error) {
 		console.error('Error:', error);
 		setIsSubmitting(false);

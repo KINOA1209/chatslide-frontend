@@ -51,6 +51,7 @@ import { MEDIA_EXTENSIONS } from './file/FileUploadButton';
 import RadioButton, { RadioButtonOption } from './ui/RadioButton';
 import { Explanation, Instruction } from './ui/Text';
 import { WordSelector } from './slides/WordSelector';
+import { useSocialPosts } from '@/hooks/use-socialpost';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -70,6 +71,9 @@ interface ImgModuleProp {
 	customImageStyle?: React.CSSProperties;
 	setImgHigherZIndex?: React.Dispatch<React.SetStateAction<boolean>>;
 	columnIndex?: number;
+	isSlide?: boolean;
+	isSocialPostTemp1Cover?: boolean;
+	search_illustration?: boolean;
 }
 
 enum ImgQueryMode {
@@ -78,6 +82,46 @@ enum ImgQueryMode {
 	GENERATION,
 	CHART_SELECTION,
 }
+
+const imageLicenseOptions: RadioButtonOption[] = [
+	{
+		value: 'all',
+		text: 'All',
+	},
+	{
+		value: 'creative',
+		text: 'Creative',
+	},
+	{
+		value: 'stock',
+		text: 'Stock',
+	},
+	{
+		value: 'illustration',
+		text: 'Illustration',
+	},
+	{
+		value: 'giphy',
+		text: 'Gif',
+	}
+];
+
+const getImageLicenseExplanation = (license: string) => {
+	switch (license) {
+		case 'all':
+			return 'Images from all websites, some may require licenses';
+		case 'illustration':
+			return 'Cartoon style illustration images from Freepik';
+		case 'stock':
+			return 'High quality stock photos from Unsplash';
+		case 'creative':
+			return 'Images from all websites, free to use';
+		case 'giphy':
+			return 	'Funny animations from Giphy.	Gif may not be animated if you export to PDF / PPTX, or create video.';
+		default:
+			return '';
+	}
+};
 
 export const ImgModule = ({
 	imgsrc,
@@ -97,6 +141,8 @@ export const ImgModule = ({
 	customImageStyle,
 	setImgHigherZIndex,
 	columnIndex = 0,
+	isSlide = true,
+	isSocialPostTemp1Cover = false,
 }: ImgModuleProp) => {
 	const sourceImage = useImageStore((state) => state.sourceImage);
 	const { project } = useProject();
@@ -111,6 +157,7 @@ export const ImgModule = ({
 	const inputFileRef = useRef<HTMLInputElement>(null);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const { token, updateCreditsFE } = useUser();
+	const { socialPosts, socialPostsIndex } = useSocialPosts();
 
 	const [hoverQueryMode, setHoverQueryMode] = useState<ImgQueryMode>(
 		ImgQueryMode.SEARCH,
@@ -121,28 +168,10 @@ export const ImgModule = ({
 
 	const [uploading, setUploading] = useState(false);
 	const [imageLicense, setImageLicense] = useState('all');
-	const imageLicenseOptions: RadioButtonOption[] = [
-		{
-			value: 'all',
-			text: 'All',
-		},
-		{
-			value: 'stock',
-			text: 'Stock',
-		},
-		{
-			value: 'creative',
-			text: 'Creative',
-		},
-		{
-			value: 'giphy',
-			text: 'Gif',
-		}
-	];
 
 	function getSearchText() {
 		const slide = slides[slideIndex];
-		if (!slide) return ''; 
+		if (!slide) return '';
 		switch (slide?.layout) {
 			case 'Cover_img_1_layout':
 				return removeTags(slide.head) as string;
@@ -224,6 +253,41 @@ export const ImgModule = ({
 			.catch((e) => {
 				console.error(e);
 			});
+		setSearching(false);
+	};
+
+	const handleIllustrationSearchSubmit = async (
+		e: React.FormEvent<HTMLFormElement>,
+	) => {
+		e.preventDefault();
+		setSelectedQueryMode(ImgQueryMode.SEARCH);
+		setSearchResult([]);
+		setSearching(true);
+		const dummyParam = `dummy=${Math.random()}`;
+		const response = await fetch(
+			`/api/search_illustration_images?keyword=${encodeURIComponent(
+				keyword,
+			)}&${dummyParam}`,
+			{
+				mode: 'cors',
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
+				},
+			},
+		);
+		if (response.ok) {
+			try {
+				const parsedResponse = await response.json();
+				setSearchResult(parsedResponse.data.images);
+			} catch (error) {
+				console.error(error);
+			}
+		} else {
+			const error = response.status;
+			console.error(error, response);
+		}
 		setSearching(false);
 	};
 
@@ -497,17 +561,31 @@ export const ImgModule = ({
 
 	const imgSearchDiv = (
 		<div className='w-full h-full flex flex-col'>
-			<form onSubmit={handleImageSearchSubmit} className='w-full flex flex-col'>
-				<Explanation>
-					Highlight the keywords you want to use for search:
-				</Explanation>
-				<WordSelector
-					text={getSearchText()}
-					setQuery={setKeyword}
+			<form
+				onSubmit={async (e) => {
+					e.preventDefault();
+					if (imageLicense == 'illustration') {
+						await handleIllustrationSearchSubmit(e);
+					} else {
+						await handleImageSearchSubmit(e);
+					}
+				}}
+				className='w-full flex flex-col gap-y-2'
+			>
+				<div>
+				<RadioButton
+					options={imageLicenseOptions}
+					selectedValue={imageLicense}
+					setSelectedValue={setImageLicense}
+					name='imageLicense'
+					cols={5}
 				/>
+
 				<Explanation>
-					Or directly enter the keywords below:
+					{getImageLicenseExplanation(imageLicense)}
 				</Explanation>
+				</div>
+				<div>
 				<InputBox>
 					<input
 						id='search_keyword'
@@ -532,22 +610,13 @@ export const ImgModule = ({
 						</button>
 					)}
 				</InputBox>
-
-				<RadioButton
-					options={imageLicenseOptions}
-					selectedValue={imageLicense}
-					setSelectedValue={setImageLicense}
-					name='imageLicense'
-					cols={4}
+				
+				<WordSelector
+					text={getSearchText()}
+					setQuery={setKeyword}
 				/>
+				</div>
 
-				{
-					imageLicense === 'giphy' &&
-					<Explanation>
-						Powered by Giphy. <br />
-						Gif may not be animated if you export to PDF / PPTX, or create video.
-					</Explanation>
-				}
 			</form>
 			<div className='w-full h-full overflow-y-auto p-1'>
 				<div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-2'>
@@ -559,7 +628,16 @@ export const ImgModule = ({
 									key={index}
 									className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-[3px]`}
 								>
-									<img className='w-full h-full object-contain' src={url} />
+									<Image
+										src={url} // URL of the image
+										unoptimized={ url?.includes('freepik') ? false : true}
+										alt="searched image"
+										layout="responsive"
+										objectFit="contain" // This will keep the aspect ratio and make sure the image fits within the container
+										className="w-full h-full" // Additional CSS classes if needed
+										width={100}
+										height={100}
+									/>
 								</div>
 							);
 						} else {
@@ -569,7 +647,16 @@ export const ImgModule = ({
 									key={index}
 									className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-[3px]`}
 								>
-									<img className='w-full h-full object-contain' src={url} />
+									<Image
+										src={url} // URL of the image
+										unoptimized={url?.includes('freepik') ? false : true}
+										alt="selected image"
+										layout="responsive"
+										objectFit="contain" // This will keep the aspect ratio and make sure the image fits within the container
+										className="w-full h-full" // Additional CSS classes if needed
+										width={100}
+										height={100}
+									/>
 								</div>
 							);
 						}
@@ -654,7 +741,6 @@ export const ImgModule = ({
 	const [chartData, setChartData] = useState<
 		ValueDataPoint[] | ScatterDataPoint[]
 	>([]);
-	const [updatedIsChart, setUpdatedIsChart] = useState<Boolean>(false);
 	const imgmoduleRef = useRef<HTMLDivElement | null>(null);
 	const titleRef = useRef<HTMLDivElement | null>(null);
 	const typeRef = useRef<HTMLDivElement | null>(null);
@@ -761,6 +847,7 @@ export const ImgModule = ({
 	});
 	const [isParentDimension, setIsParentDimension] = useState(false);
 	const [imgLoadError, setImgLoadError] = useState(false);
+	const prevDimensionRef = useRef(parentDimension);
 
 	//handler for drag and resize also autosave
 	const handleSave = onMouseLeave(
@@ -908,28 +995,46 @@ export const ImgModule = ({
 		setImagesDimensions(initializedData);
 	}, [images_position]);
 
+	// useEffect(() => {
+	// 	const currentElement = imageRefs[currentContentIndex]?.current;
+	// 	if (
+	// 		currentElement &&
+	// 		currentElement.clientHeight > 0 &&
+	// 		currentElement.clientWidth > 0
+	// 	) {
+	// 		const newDimensions = {
+	// 			height: currentElement.clientHeight,
+	// 			width: currentElement.clientWidth,
+	// 		};
+	// 		if (
+	// 			newDimensions.height !== parentDimension.height ||
+	// 			newDimensions.width !== parentDimension.width
+	// 		) {
+	// 			setParentDimension(newDimensions);
+	// 			setIsParentDimension(true);
+	// 		}
+	// 	} else {
+	// 		setIsParentDimension(false);
+	// 	}
+	// }, [currentContentIndex, imageRefs, parentDimension]);
+
+	// new version to get parent container's dimension, reduce unnecessary state updates
+	// prevent infinite loop bugs
 	useEffect(() => {
 		const currentElement = imageRefs[currentContentIndex]?.current;
-		if (
-			currentElement &&
-			currentElement.clientHeight > 0 &&
-			currentElement.clientWidth > 0
-		) {
-			const newDimensions = {
-				height: currentElement.clientHeight,
-				width: currentElement.clientWidth,
-			};
-			if (
-				newDimensions.height !== parentDimension.height ||
-				newDimensions.width !== parentDimension.width
-			) {
-				setParentDimension(newDimensions);
-				setIsParentDimension(true);
+		if (currentElement) {
+			const { clientHeight, clientWidth } = currentElement;
+			// Only update if there's a real change in dimensions
+			if (clientHeight !== parentDimension.height || clientWidth !== parentDimension.width) {
+				setParentDimension({ height: clientHeight, width: clientWidth });
+				setIsParentDimension(clientHeight > 0 && clientWidth > 0);
 			}
 		} else {
-			setIsParentDimension(false);
+			if (isParentDimension) {
+				setIsParentDimension(false);
+			}
 		}
-	}, [currentContentIndex, imageRefs, parentDimension]);
+	}, [currentContentIndex, imageRefs]);
 
 	//detect the mouse click event is outside the image container or not, if it's, trigger autosave
 	useEffect(() => {
@@ -1114,7 +1219,7 @@ export const ImgModule = ({
 					: canEdit
 						? 'hover:bg-[#CAD0D3]'
 						: ''
-				} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
+					} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
 				style={{
 					overflow: isImgEditMode ? 'visible' : 'hidden',
 					borderRadius: customImageStyle?.borderRadius,
@@ -1156,7 +1261,10 @@ export const ImgModule = ({
 				) : (
 					// image
 					<div
-						className={`${isImgEditMode ? 'rndContainerWithOutBorder' : ''}`}
+						className={`
+							${isImgEditMode ? 'rndContainerWithOutBorder' : ''}
+							${!isSlide ? 'absolute top-0 left-0 w-full h-full' : ''}
+						`}
 						style={{
 							...layoutElements?.rndContainerCSS,
 						}}
@@ -1164,6 +1272,15 @@ export const ImgModule = ({
 						onMouseEnter={() => setShowImgButton(true)}
 						onMouseLeave={() => setShowImgButton(false)}
 					>
+						{!isSlide && isSocialPostTemp1Cover && (
+							<div
+								className='absolute inset-0'
+								style={{
+									backgroundImage: `linear-gradient(180deg, ${socialPosts[socialPostsIndex].theme.cover_start}, ${socialPosts[socialPostsIndex].theme.cover_end} 40%)`,
+									zIndex: 2,
+								}}
+							/>
+						)}
 						<Rnd
 							className={`${isImgEditMode ? 'rndContainerWithBorder' : ''}`}
 							style={{ ...layoutElements?.rndCSS }}
@@ -1200,7 +1317,7 @@ export const ImgModule = ({
 							}}
 						>
 							<Image
-								unoptimized={true}
+								unoptimized={imgsrc?.includes('freepik') ? false : true}
 								style={{
 									objectFit: 'fill',
 									height: '100%',

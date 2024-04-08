@@ -5,13 +5,15 @@ import '@/components/socialPost/quillEditor.scss';
 import themeColorConfigData from './templates_customizable_elements/theme_color_options';
 import '@/app/css/style.css';
 import { stopArrowKeyPropagation } from '@/utils/editing';
+import '@/components/socialPost/socialPostCustomFonts.css';
 
 type QuillEditableProps = {
 	content: string | string[];
 	handleBlur: (newContent: string | string[]) => void;
 	isVerticalContent: boolean;
-	templateKey: string;
+	templateKey?: string;
 	style?: React.CSSProperties;
+	need_placeholder?:boolean
 };
 
 // const generateFontSizes = (): string[] => {
@@ -23,6 +25,8 @@ type QuillEditableProps = {
 // };
 
 // const fontSizes = generateFontSizes();
+
+//use attributors instead of formats to avoid requirement of hyphens
 export const fontWhiteList = [
 	'Arimo',
 	'Arial',
@@ -33,6 +37,7 @@ export const fontWhiteList = [
 	'Caveat',
 	'Caveat Medium',
 	'Caveat Regular',
+	'Cormorant',
 	'Creato Display Medium',
 	'Creato Display Regular',
 	'Creato Display Thin',
@@ -45,6 +50,7 @@ export const fontWhiteList = [
 	'Libre Baskerville Regular',
 	'Libre Baskerville Bold',
 	'Nimbus Sans Regular',
+	'Nunito',
 	'Open Sans Regular',
 	'Open Sans Medium',
 	'Playfair Display Bold',
@@ -56,8 +62,11 @@ export const fontWhiteList = [
 ];
 
 function isKeyOfThemeColorConfig(
-	key: string,
+	key: string | null | undefined,
 ): key is keyof typeof themeColorConfigData {
+	if (key == null) {
+		return false;
+	}
 	return key in themeColorConfigData;
 }
 
@@ -68,28 +77,32 @@ Quill.register(Font, true);
 
 let Size = Quill.import('attributors/style/size') as any;
 Size.whitelist = [
+	'8pt',
+	'9pt',
+	'10pt',
 	'12pt',
 	'13pt',
 	'14pt',
 	'16pt',
 	'18pt',
 	'20pt',
+	'22pt',
 	'24pt',
 	'26pt',
 	'28pt',
 	'30pt',
 	'32pt',
 	'40pt',
+	'44pt',
+	'45pt',
 	'48pt',
 	'64pt',
 ];
 Quill.register(Size, true);
 
 const toolbarOptions = [
-	[{ size: Size.whitelist }, { font: Font.whitelist }, 'bold', 'italic'],
-	['underline', 'strike', 'code-block'],
-	[{ list: 'bullet' }],
-	[{ script: 'sub' }, { script: 'super' }],
+	[{ size: Size.whitelist }, { font: Font.whitelist }, 'bold', 'italic', 'underline'],
+	['strike', 'code-block', { list: 'bullet' }, { script: 'sub' }, { script: 'super' }],
 	[
 		{
 			color: [
@@ -133,8 +146,7 @@ const toolbarOptions = [
 		},
 		{ background: [] },
 	],
-	[{ align: [] }],
-	['link', 'clean'],
+	[{ align: '' }, { align: 'center' }, { align: 'right' },'link', 'clean'],
 ];
 
 export const isHTML = (input: string): boolean => {
@@ -187,6 +199,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 	style,
 	isVerticalContent,
 	templateKey,
+	need_placeholder = true,
 }) => {
 	const editorRef = useRef<HTMLDivElement>(null);
 	const quillInstanceRef = useRef<Quill | null>(null);
@@ -234,19 +247,34 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			class DefaultSytleBlock extends BlockPrototype {
 				constructor(domNode: HTMLElement, value: string) {
 					super(domNode, value);
-					this.format('size', (style?.fontSize as string) || '16pt');
-					this.format('font', style?.fontFamily || 'Arimo');
+					this.format("size", style?.fontSize as string || "16pt");
+					this.format("font", style?.fontFamily || 'Arimo')
+					this.format("bold", style?.fontWeight === 'bold' ? 'bold' : 'normal');
+					this.format("italic", style?.fontStyle === 'italic' ? 'italic' : 'normal');
+					this.format("align", style?.textAlign || 'left');
 				}
 
 				static tagName = 'P';
 
 				format(name: string, value: string) {
-					if (name === 'size') {
-						this.domNode.style.fontSize = value;
-					} else if (name === 'font') {
-						this.domNode.style.fontFamily = value;
-					} else {
-						super.format(name, value);
+					switch (name) {
+						case "size":
+							this.domNode.style.fontSize = value;
+							break;
+						case "font":
+							this.domNode.style.fontFamily = value;
+							break;
+						case "bold":
+							this.domNode.style.fontWeight = value;
+							break;
+						case "italic":
+							this.domNode.style.fontStyle = value;
+							break;
+						case "align":
+							this.domNode.style.textAlign = value;
+							break;
+						default:
+							super.format(name, value);
 					}
 				}
 			}
@@ -271,24 +299,27 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 					}
 				});
 			}
-
-			quillInstanceRef.current = new Quill(editorRef.current, {
+			const quillOptions:any = {
 				modules: { toolbar: customizedToolbarOptions },
 				theme: 'bubble',
-				placeholder: 'Add some text here...',
-				//bounds: editorRef.current,
-			});
+			}
 
+			if (need_placeholder){
+				quillOptions.placeholder = 'Add some text here...'
+			}
+
+			quillInstanceRef.current = new Quill(editorRef.current, quillOptions);
+			//console.log(style?.textAlign)
 			// const toolbar = quillInstanceRef.current.getModule('toolbar');
 			// toolbar.addHandler('color', showColorPicker);
-
 			const quillFormats = {
 				size: style?.fontSize,
 				bold: style?.fontWeight !== 'normal',
 				italic: style?.fontStyle === 'italic',
 				color: style?.color,
-				list: isVerticalContent ? 'bullet' : undefined,
+				list: (isVerticalContent || style?.display === 'list-item') ? 'bullet' : undefined,
 				font: style?.fontFamily,
+				align: style?.textAlign || 'left'
 			};
 
 			const toolbar = quillInstanceRef.current.getModule('toolbar') as any;
@@ -307,6 +338,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 							bold: style?.fontWeight !== 'normal',
 							italic: style?.fontStyle === 'italic',
 							color: style?.color,
+							align: style?.textAlign || 'left'
 						};
 						const formats = quill.getFormat(range.index, range.length);
 						const originalListFormat = formats['list'];
@@ -437,7 +469,6 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			} else {
 				combinedDelta = insertContent(content);
 			}
-			//console.log(combinedDelta)
 			quillInstanceRef.current.setContents(combinedDelta);
 
 			// const Delta = Quill.import('delta');
@@ -582,6 +613,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				'fontStyle',
 				'display',
 				'fontFamily',
+				'textAlign'
 			];
 			const applyStyle: React.CSSProperties = {};
 

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect, Fragment } from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import 'react-toastify/dist/ReactToastify.css';
 import Resource from '@/models/Resource';
@@ -10,9 +10,9 @@ import ProjectService from '@/services/ProjectService';
 import { toast } from 'react-toastify';
 import { useUser } from '@/hooks/use-user';
 import { useProject } from '@/hooks/use-project';
-import { addIdToRedir } from '../../utils/redirWithId';
 import Project from '@/models/Project';
-import { PaletteKeys, TemplateKeys } from '../slides/slideTemplates';
+import SlidesService from '@/services/SlidesService';
+import Slide from '@/models/Slide';
 
 // this class has no UI, it is used to submit the outline to the backend when isSubmitting is true
 const GenerateSlidesSubmit = ({
@@ -20,23 +20,11 @@ const GenerateSlidesSubmit = ({
 	isGPT35,
 	isSubmitting,
 	setIsSubmitting,
-	template,
-	palette,
-	imageAmount,
-	imageLicense,
-	selectedLogo,
-	selectedBackground,
 }: {
 	outlines: Outlines;
 	isGPT35: boolean;
 	isSubmitting: boolean;
 	setIsSubmitting: (submitting: boolean) => void;
-	template: TemplateKeys;
-	palette: PaletteKeys | string;
-	imageAmount: string;
-	imageLicense: string;
-		selectedLogo: Resource[];
-		selectedBackground: Resource[];
 }) => {
 	const router = useRouter();
 	const { token } = useUser();
@@ -50,29 +38,26 @@ const GenerateSlidesSubmit = ({
 	}, [isSubmitting]);
 
 	async function generateSlides(formData: any, token: string) {
-		const response = await fetch('/api/generate_slides', {
-			method: 'POST',
-			headers: {
-				Authorization: `Bearer ${token}`,
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(formData),
-		});
-
-		if (response.ok) {
-			const resp = await response.json();
-			const presentation_slides = JSON.stringify(resp.data.res);
-			initSlides(ProjectService.parseSlides(presentation_slides));
+		try {
 			bulkUpdateProject({
-				description: resp.data.description,
-				keywords: resp.data.keywords,
-				additional_images: resp.data.additional_images,
+				has_scripts: false,  // in case it is re-generated
+				presentation_slides: '',
+				parsed_slides: [] as Slide[],
+			} as Project);
+			const {
+				presentation_slides,
+				description,
+				keywords,
+			} = await SlidesService.generateSlides(formData, token);
+			// initSlides(ProjectService.parseSlides(presentation_slides));  // do this when generating slides
+			bulkUpdateProject({
+				description: description,
+				keywords: keywords,
 				presentation_slides: presentation_slides,
 			} as Project);
-			router.push(addIdToRedir('/slides'));
-		} else {
+			// router.push(addIdToRedir('/slides'));
+		} catch (e) {
 			setIsSubmitting(false);
-			console.error('Error when generating slides:', response.status);
 			toast.error(
 				'Server is busy now. Please try again later. Reference code: ' +
 					project?.id,
@@ -104,18 +89,9 @@ const GenerateSlidesSubmit = ({
 			scenario_type: project.scenario_type,
 			// endIndex: 2,  // generate first 2 sections only
 			logo: project.logo,
-			template: template,
-			palette: palette,
-			imageLicense: imageLicense,
-			logo_ids: selectedLogo.map((r: Resource) => r.id),
-			background_ids: selectedBackground.map((r: Resource) => r.id),
 		};
 
 		bulkUpdateProject({
-			selected_background: selectedBackground,
-			selected_logo: selectedLogo,
-			template: template,
-			palette: palette,
 			has_scripts: false,  // in case it is re-generated
 		} as Project);
 

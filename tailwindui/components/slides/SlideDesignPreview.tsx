@@ -61,8 +61,8 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 		const newSlides = Object.keys(layoutOptions).map((layoutKey) => {
 			const newSlide = new Slide();
 			newSlide.head = project?.topic || 'New Slide';
-			newSlide.title = slides[1].title || 'New Slide';
-			newSlide.subtopic = slides[1].subtopic || 'New Slide';
+			newSlide.title = slides[1]?.title || 'New Slide';
+			newSlide.subtopic = slides[1]?.subtopic || 'New Slide';
 			newSlide.template = template;
 			newSlide.palette = color_theme;
 			newSlide.layout = layoutKey as keyof typeof layoutOptions;
@@ -92,7 +92,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 				let slideWithImages = Object.values(slides).find(
 					(slide) => slide.layout === layoutKey && slide.images.length > 0,
 				);
-				console.log('find images for', layoutKey, slideWithImages);
+				// console.log('find images for', layoutKey, slideWithImages);
 
 				if (!slideWithImages) {
 					// If no slide with images is found for the specified layout, search for a slide with 'col_3_img_3' layout

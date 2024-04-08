@@ -5,7 +5,7 @@ import React, { useState, useRef, useEffect, Fragment } from 'react';
 import dynamic from 'next/dynamic';
 
 // Third-party library imports
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // Stylesheets
@@ -42,6 +42,12 @@ import BrandingSelector from './BrandingSelector';
 import { useSlides } from '@/hooks/use-slides';
 import { useUser } from '@/hooks/use-user';
 import PaywallModal from '@/components/paywallModal';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Blank } from '@/components/ui/Loading';
+import Project from '@/models/Project';
+import { addIdToRedir } from '@/utils/redirWithId';
+import SlidesService from '@/services/SlidesService';
+import { set } from 'lodash';
 
 const TemplateSelector = dynamic(() => import('./TemplateSelector'), {
 	ssr: false,
@@ -76,11 +82,11 @@ export default function DesignPage() {
 	};
 
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
-	const { isPaidUser } = useUser();
+	const { token, isPaidUser } = useUser();
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [isGpt35, setIsGpt35] = useState(true);
-	const { outlines, project, updateProject } = useProject();
-	const { showDrLambdaLogo, hideLogo } = useSlides();
+	const { outlines, project, updateProject, bulkUpdateProject } = useProject();
+	const { slides, showDrLambdaLogo, hideLogo, setSlides, debouncedSyncSlides } =
+		useSlides();
 	const [template, setTemplate] = useState<TemplateKeys>(
 		project?.template || getTemplateFromAudicence(project?.audience || ''),
 	);
@@ -98,6 +104,16 @@ export default function DesignPage() {
 	);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 
+	const params = useSearchParams();
+	const router = useRouter();
+
+	if (!project) {
+		if (params.get('id')) {
+			router.push(`/project/${params.get('id')}`);
+		}
+		return <Blank>Project not found</Blank>;
+	}
+
 	// Initialize the palette state with the first available palette for the current template
 	useEffect(() => {
 		if (template && availablePalettes) {
@@ -108,21 +124,21 @@ export default function DesignPage() {
 		}
 	}, [template]);
 
-	const [imageAmount, setImageAmount] = useState('content_with_image');
+	const [imageAmount, setImageAmount] = useState('more_images');
 	const imageAmountOptions: RadioButtonOption[] = [
 		{
 			img: ContentWithImageImg,
-			value: 'content_with_image',
+			value: 'more_images',
 			text: 'More images (70% decks contain images)',
 		},
 		{
 			img: ContentOnlyImg,
-			value: 'content_only',
+			value: 'fewer_images',
 			text: 'Fewer images (30% decks contain images)',
 		},
 	];
 
-	const [imageLicense, setImageLicense] = useState('stock');
+	const [imageLicense, setImageLicense] = useState('all');
 	const imageLicenseOptions: RadioButtonOption[] = [
 		{
 			value: 'stock',
@@ -143,19 +159,79 @@ export default function DesignPage() {
 		updateProject('logo', isPaidUser ? '' : 'Default');
 	}
 
-	const [branding, setBranding] = useState(
-		project?.logo === '' ? 'no' : 
-		isPaidUser ? 'no' : 'yes');
+	const [showLogo, setShowLogo] = useState<boolean>(
+		project?.logo === ''
+			? false
+			: project?.logo === 'Default'
+			? true
+			: isPaidUser
+			? false
+			: true,
+	);
+
+	async function viewSlidesSubmit() {
+		if (!project) {
+			console.error('Project not found');
+			setIsSubmitting(false);
+			return;
+		}
+		try {
+			const { slides, additional_images } = await SlidesService.initImages(
+				project.id,
+				project.topic,
+				imageLicense,
+				imageAmount,
+				token,
+			);
+
+			bulkUpdateProject({
+				logo: showLogo ? 'Default' : '',
+				selected_background: selectedBackground,
+				selected_logo: selectedLogo,
+				template: template,
+				palette: colorPalette,
+				additional_images: additional_images,
+			} as Project);
+
+			const newSlides = slides.map((slide) => {
+				return {
+					...slide,
+					template: template,
+					palette: colorPalette,
+					logo: showLogo ? 'Default' : '',
+					logo_url: selectedLogo?.[0]?.thumbnail_url || '',
+					background_url: selectedBackground?.[0]?.thumbnail_url || '',
+					images_position: [{}, {}, {}],
+					media_type: ['image', 'image', 'image'],
+					transcript: '',
+				};
+			});
+
+			setSlides(newSlides);
+			debouncedSyncSlides(newSlides);
+
+			router.push(addIdToRedir('/slides'));
+		} catch (e) {
+			setIsSubmitting(false);
+			console.error(e);
+			toast.error(
+				'Server is busy now. Please try again later. Reference code: ' +
+					project?.id,
+			);
+		}
+	}
+
+	useEffect(() => {
+		if (isSubmitting) {
+			if (project?.presentation_slides) {
+				setShowGenerationStatusModal(true);
+				viewSlidesSubmit();
+			}
+		}
+	}, [isSubmitting, project]);
 
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
-	// console.log('Template:', template);
-	// console.log('Color Palette:', colorPalette);
-	// console.log(
-	// 	'current template color options:',
-	// 	template,
-	// 	availablePalettes[template as keyof typeof availablePalettes],
-	// );
 
 	return (
 		<section className='relative'>
@@ -168,7 +244,7 @@ export default function DesignPage() {
 			{showGenerationStatusModal && (
 				<GenerationStatusProgressModal
 					onClick={handleGenerationStatusModal}
-					prompts={[['We are generating your slides...', 15]]}
+					prompts={[['📊 Finding the right images for your slides...', 15]]}
 				></GenerationStatusProgressModal>
 			)}
 
@@ -178,21 +254,10 @@ export default function DesignPage() {
 				setIsSubmitting={setIsSubmitting}
 				isPaidUser={true}
 				nextIsPaidFeature={false}
-				nextText={!isSubmitting ? 'Create Slides' : 'Creating Slides'}
+				nextText={
+					!project?.presentation_slides ? 'Writing Slides' : 'Design Slides'
+				}
 				handleClickingGeneration={handleGenerationStatusModal}
-			/>
-
-			<GenerateSlidesSubmit
-				outlines={outlines}
-				isGPT35={isGpt35}
-				isSubmitting={isSubmitting}
-				setIsSubmitting={setIsSubmitting}
-				template={template}
-				palette={colorPalette}
-				imageAmount={imageAmount}
-				imageLicense={imageLicense}
-				selectedLogo={selectedLogo}
-				selectedBackground={selectedBackground}
 			/>
 
 			<PaywallModal
@@ -262,20 +327,8 @@ export default function DesignPage() {
 							the slides page, or talk with AI Chatbot
 						</Explanation>
 						<BrandingSelector
-							branding={branding}
-							setBranding={(e) => {
-								if (!isPaidUser) {
-									setShowPaymentModal(true);
-									return;
-								}
-								if (e === 'yes') {
-									showDrLambdaLogo();
-								} else {
-									hideLogo();
-									updateProject('selected_logo', []);
-								}
-								setBranding(e);
-							}}
+							showLogo={showLogo}
+							setShowLogo={setShowLogo}
 							selectedLogo={selectedLogo}
 							setSelectedLogo={setSelectedLogo}
 							selectedBackground={selectedBackground}

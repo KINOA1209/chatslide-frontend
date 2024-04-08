@@ -1,4 +1,6 @@
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
+import Chart, { Group } from '@/models/Chart';
+import ImagesPosition from './ImagesPosition';
 
 export interface SlideElement {
 	type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
@@ -17,7 +19,10 @@ export interface SlideElement {
 		| 'illustration'
 		| 'quote'
 		| 'source'
-		| 'theme';
+		| 'theme'
+		| 'chart'
+		| 'is_chart'
+		| 'images_position'
 	content: string | string[];
 }
 
@@ -36,7 +41,10 @@ export type SlideKeys =
 	| 'illustration'
 	| 'quote'
 	| 'source'
-	| 'theme';
+	| 'theme'
+	| 'chart'
+	| 'is_chart'
+	| 'images_position'
 
 export default class SocialPostSlide {
 	topic: string;
@@ -54,8 +62,18 @@ export default class SocialPostSlide {
 	quote: string;
 	source: string;
 	theme: ThemeObject;
+	images_position: ImagesPosition[];
+	chart: Chart[];
+	is_chart: boolean[]; 
 
 	constructor() {
+		const emptyGroup: Group = {
+			values: [],
+			color: '',
+			keys: [],
+			legend: '',
+		};
+		
 		this.topic = 'Your topic';
 		this.subtopic = 'Your subtopic';
 		this.keywords = 'Your keywords';
@@ -78,5 +96,13 @@ export default class SocialPostSlide {
 			cover_start: '',
 			cover_end: '',
 		};
+		this.is_chart = [false, false, false];
+		this.images_position = [{}, {}, {}];
+		this.chart = Array.from({ length: 3 }, () => ({
+			type: '',
+			title: '',
+			groups: [emptyGroup],
+			axis: { x: '', y: '' },
+		}));
 	}
 }

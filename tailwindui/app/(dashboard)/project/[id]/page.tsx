@@ -10,8 +10,9 @@ import { useSlides } from '@/hooks/use-slides';
 import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';
 import { getLastStepReidrect } from '@/components/layout/WorkflowSteps';
-import { Loading } from '@/components/ui/Loading';
+import { Blank, Loading } from '@/components/ui/Loading';
 import { addIdToRedir } from '@/utils/redirWithId';
+import { useSocialPosts } from '@/hooks/use-socialpost';
 
 const ProjectLoading = () => {
 	const pathname = usePathname();
@@ -19,6 +20,8 @@ const ProjectLoading = () => {
 	const { initSlides } = useSlides();
 	const { project, initProject, updateProject } = useProject();
 	const { token } = useUser();
+	const { initSocialPosts } = useSocialPosts();
+	const [failed, setFailed] = useState(false);
 
 	useEffect(() => {
 		sessionStorage.clear();
@@ -54,26 +57,20 @@ const ProjectLoading = () => {
 				if (project?.parsed_slides?.length > 0) {
 					initSlides(project.parsed_slides);
 
-					if (project.parsed_slides?.some((slide) => slide.transcript)){
+					if (project.parsed_slides?.some((slide) => slide.transcript)) {
 						updateProject('has_scripts', true);
 					}
 					updateProject('template', project.parsed_slides[0].template);
 					updateProject('palette', project.parsed_slides[0].palette);
 				}
+				if (project?.parsed_socialPosts) {
+					initSocialPosts(project.parsed_socialPosts)
+				}
 				// setSessionStorage(project);
 				handleRedirect(project, project_id);
 			}
 		} catch (error) {
-			toast.error('The project is not found or you do not have access to it.', {
-				position: 'top-center',
-				autoClose: 2000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: 'light',
-			});
+			setFailed(true);
 		}
 	};
 
@@ -81,6 +78,11 @@ const ProjectLoading = () => {
 		router.push(addIdToRedir(getLastStepReidrect(project), project_id));
 	};
 
+	if (failed) {
+		return <Blank>
+			❌ The project is not found or you do not have access to it.
+		</Blank>
+	}
 	return <Loading />;
 };
 

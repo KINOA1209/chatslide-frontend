@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
+import SocialPostSlide from '@/models/SocialPost';
 import { templateDispatch as defaultTemplateDispatch } from '@/components/socialPost/socialPostTemplateDispatch';
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
 

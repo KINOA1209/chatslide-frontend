@@ -11,7 +11,7 @@ import { Instruction, BigTitle, Explanation } from '@/components/ui/Text';
 import Card from '@/components/ui/Card';
 import { useProject } from '@/hooks/use-project';
 import VoiceSelector, { previewVoice } from '@/components/language/VoiceSelector';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { addIdToRedir } from '@/utils/redirWithId';
 import dynamic from 'next/dynamic';
 import useHydrated from '@/hooks/use-hydrated';
@@ -19,6 +19,8 @@ import { BigBlueButton } from '@/components/button/DrlambdaButton';
 import UserService from '@/services/UserService';
 import AvatarSelector from '@/components/language/AvatarSelector';
 import { GrayLabel } from '@/components/ui/GrayLabel';
+import { Blank } from '@/components/ui/Loading';
+
 
 const ScriptSection = dynamic(
 	() => import('@/components/script/ScriptSection'),
@@ -42,6 +44,15 @@ export default function WorkflowStep5() {
 	const [style, setStyle] = useState('');
 	const [avatar, setAvatar] = useState('');
 	const [posture, setPosture] = useState('');
+
+	const params = useSearchParams();
+
+	if (!project) {
+		if (params.get('id')) {
+			router.push(`/project/${params.get('id')}`);
+		}
+		return <Blank>Project not found</Blank>;
+	}
 
 	async function handleSubmitVideo() {
 		console.log('handleSubmitVideo');

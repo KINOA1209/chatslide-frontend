@@ -20,6 +20,9 @@ export const WordSelector: React.FC<WordSelectorProps> = ({ text, setQuery }) =>
 
 	if (!text.includes(' ')) // split by character if there is no space
 	  words = text.split('');
+
+	if (words.length == 0) return null;
+
 	const [selectedWords, setSelectedWords] = useState<string[]>([]);
 
 	const toggleWordSelection = (word: string) => {

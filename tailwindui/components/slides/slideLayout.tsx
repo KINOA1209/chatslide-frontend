@@ -580,9 +580,9 @@ export const Col_2_img_0_layout = ({
 	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
 	const [updatedContent, setUpdatedContent] = useState(items);
 
-	useEffect(() => {
-		console.log('updatedContent on page', slideIndex, updatedContent);
-	}, [updatedContent]);
+	// useEffect(() => {
+	// 	console.log('updatedContent on page', slideIndex, updatedContent);
+	// }, [updatedContent]);
 
 	const [showAddButton, setShowAddButton] = useState(
 		// slides[slideIndex].content.length <= 1,
@@ -805,9 +805,9 @@ export const Col_3_img_0_layout = ({
 	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
 	const [updatedContent, setUpdatedContent] = useState(items);
 
-	useEffect(() => {
-		console.log('updatedContent on page', slideIndex, updatedContent);
-	}, [updatedContent]);
+	// useEffect(() => {
+	// 	console.log('updatedContent on page', slideIndex, updatedContent);
+	// }, [updatedContent]);
 
 	const [showAddButton, setShowAddButton] = useState(
 		// slides[slideIndex].content.length <= 2, for three columns
@@ -1542,9 +1542,9 @@ export const Col_2_img_2_layout = ({
 	// 	updatedContent.length === 2,
 	// );
 
-	useEffect(() => {
-		console.log('updatedContent on page', slideIndex, updatedContent);
-	}, [updatedContent]);
+	// useEffect(() => {
+	// 	console.log('updatedContent on page', slideIndex, updatedContent);
+	// }, [updatedContent]);
 
 	const [showAddButton, setShowAddButton] = useState(
 		// slides[slideIndex].content.length <= 2, for three columns
@@ -1854,9 +1854,9 @@ export const Col_3_img_3_layout = ({
 	const [showEditorBoxCol3, setShowEditorBoxCol3] = useState(
 		updatedContent.length === 2,
 	);
-	useEffect(() => {
-		console.log('updatedContent on page', slideIndex, updatedContent);
-	}, [updatedContent]);
+	// useEffect(() => {
+	// 	console.log('updatedContent on page', slideIndex, updatedContent);
+	// }, [updatedContent]);
 
 	const [showAddButton, setShowAddButton] = useState(
 		// slides[slideIndex].content.length <= 2, for three columns

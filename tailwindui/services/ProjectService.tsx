@@ -1,6 +1,6 @@
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import { TemplateKeys } from '@/components/slides/slideTemplates';
-import { SocialPostSlide } from '@/components/socialPost/socialPostHTML';
+import SocialPostSlide from '@/models/SocialPost';
 import Project from '@/models/Project';
 import Slide from '@/models/Slide';
 import Chart, { Group } from '@/models/Chart';
@@ -52,7 +52,6 @@ class ProjectService {
 				project.parsed_socialPosts = this.parseSocialPosts(
 					project.social_posts,
 					project.post_type,
-					project.project_name,
 				);
 			}
 
@@ -106,6 +105,12 @@ class ProjectService {
 			if (project?.presentation_slides) {
 				project.content_type = 'presentation';
 				project.parsed_slides = this.parseSlides(project.presentation_slides);
+			}
+			if (project?.social_posts) {
+				project.parsed_socialPosts = this.parseSocialPosts(
+					project.social_posts,
+					project.post_type,
+				);
 			}
 
 			return project;
@@ -274,7 +279,6 @@ class ProjectService {
 	static parseSocialPosts(
 		social_posts: string,
 		post_type: string,
-		project_name: string,
 	): SocialPostSlide[] {
 		const parse_slide = JSON.parse(social_posts);
 		const slidesArray: SocialPostSlide[] = Object.keys(parse_slide).map(
@@ -320,6 +324,9 @@ class ProjectService {
 						  ];
 				slide.quote = slideData.quote || 'Your quote here';
 				slide.source = slideData.source || '';
+				slide.chart = slideData.chart;
+				slide.is_chart = slideData.is_chart || [false, false, false];
+				slide.images_position = slideData.images_position || [{}, {}, {}];
 
 				return slide;
 			},
