@@ -56,13 +56,9 @@ export const BrandingButton: React.FC<{
 			onConfirm={() => setShowModal(false)}
 		>
 			<BrandingSelector
-				branding={isShowingLogo ? 'yes' : 'no'}
-				setBranding={(e) => {
-					if (!isPaidUser) {
-						setShowPaymentModal(true);
-						return;
-					}
-					if (e === 'yes') {
+				showLogo={isShowingLogo}
+				setShowLogo={(e) => {
+					if (e) {
 						showDrLambdaLogo();
 					}
 					else {
