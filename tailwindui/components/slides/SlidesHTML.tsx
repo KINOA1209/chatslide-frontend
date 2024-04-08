@@ -501,8 +501,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				return;
 			}
 			console.log('updateImgUrlArray called');
-			console.log('urls', urls);
-			console.log('prevUrls', prevUrls);
+			// console.log('urls', urls);
+			// console.log('prevUrls', prevUrls);
 			handleSlideEdit([urls, ischart, images_position], slideIndex, [
 				'images',
 				'is_chart',
