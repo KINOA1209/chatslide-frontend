@@ -17,12 +17,22 @@ import dynamic from 'next/dynamic';
 import useHydrated from '@/hooks/use-hydrated';
 import { BigBlueButton } from '@/components/button/DrlambdaButton';
 import UserService from '@/services/UserService';
+import AvatarSelector from '@/components/language/AvatarSelector';
+import { GrayLabel } from '@/components/ui/GrayLabel';
 import { Blank } from '@/components/ui/Loading';
+
 
 const ScriptSection = dynamic(
 	() => import('@/components/script/ScriptSection'),
 	{ ssr: false },
 );
+
+const AVATAR_USER_ALLOWLIST = [
+	'Quanlai Li',
+	'Laura Lin',
+	'Rex',
+	'Jackson'
+]
 
 export default function WorkflowStep5() {
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,6 +42,8 @@ export default function WorkflowStep5() {
 	const router = useRouter();
 	const [voice, setVoice] = useState('en-US-AvaNeural');
 	const [style, setStyle] = useState('');
+	const [avatar, setAvatar] = useState('');
+	const [posture, setPosture] = useState('');
 
 	const params = useSearchParams();
 
@@ -60,7 +72,7 @@ export default function WorkflowStep5() {
 			try {
 				console.log('project_id:', project_id);
 				updateProject('video_url', '');
-				VideoService.generateVideo(project_id, foldername, voice, token, style);
+				VideoService.generateVideo(project_id, foldername, voice, token, style, avatar, posture);
 				updateCreditsFE(-20);
 				router.push(addIdToRedir('/video'));
 			} catch (error) {
@@ -91,7 +103,8 @@ export default function WorkflowStep5() {
 				setIsSubmitting={setIsSubmitting}
 				isPaidUser={true}
 				nextIsPaidFeature={true}
-				nextText='Create Video'
+				// todo: change credits
+				nextText={avatar ? 'Create Video (20 ⭐️)' : 'Create Video (20 ⭐️)'}
 			/>
 
 			<ToastContainer enableMultiContainer containerId={'script'} />
@@ -102,27 +115,45 @@ export default function WorkflowStep5() {
 					<Instruction>
 						Select the voice you want to use for your video.
 					</Instruction>
-					<VoiceSelector 
-					selectedVoice={voice} 
-					setSelectedVoice={setVoice}
-					style={style}
-					setStyle={setStyle} 
+					<VoiceSelector
+						selectedVoice={voice}
+						setSelectedVoice={setVoice}
+						style={style}
+						setStyle={setStyle}
 					/>
 				</Card>
-				<Card>
-					<BigTitle>🦹‍♂️ Avatar</BigTitle>
-					<div className='flex flex-row gap-x-4 items-end'>
-					<Instruction>
-						This is coming soon... We are finding some pilot users to test this feature. 
-					</Instruction>
-					<BigBlueButton onClick={()=> {
-							UserService.submitFeedback(5, username + ' wants to join the pilot program for Avatar feature', project?.id || '', token);
-							toast.success('You are added to the waitlist, thank you!');
-					}} >
-						Join the pilot program
-					</BigBlueButton>
-					</div>
-				</Card>
+				{AVATAR_USER_ALLOWLIST.includes(username) ?
+					<Card>
+						<BigTitle>🦹‍♂️ Avatar</BigTitle>
+						<Instruction>
+							Select the avatar you want to use for your video.<GrayLabel>Beta</GrayLabel>
+						</Instruction>
+						<Explanation>
+							Due to the limitation of our resources, we can only provide a limited number of video generations with avatars. <br />
+							The credit cost for using an avatar is may change in the future.
+						</Explanation>
+						<AvatarSelector
+							avatar={avatar}
+							setAvatar={setAvatar}
+							posture={posture}
+							setPosture={setPosture}
+						/>
+					</Card> :
+					<Card>
+						<BigTitle>🦹‍♂️ Avatar</BigTitle>
+						<div className='flex flex-row gap-x-4 items-end'>
+							<Instruction>
+								This is coming soon... We are finding some pilot users to test this feature.
+							</Instruction>
+							<BigBlueButton onClick={() => {
+								UserService.submitFeedback(5, username + ' wants to join the pilot program for Avatar feature', project?.id || '', token);
+								toast.success('You are added to the waitlist, thank you!');
+							}} >
+								Join the pilot program
+							</BigBlueButton>
+						</div>
+					</Card>
+				}
 				<Card>
 					<BigTitle>📝 Scripts</BigTitle>
 					<Instruction>

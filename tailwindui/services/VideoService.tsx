@@ -8,6 +8,8 @@ export default class VideoService {
 		voice: string | null,
 		userToken: string,
 		style: string,
+		avatar: string,
+		avatarStyle: string,
 	): Promise<void>{
 		fetch('/api/generate_video', {
 			method: 'POST',
@@ -20,6 +22,9 @@ export default class VideoService {
 				foldername: foldername,
 				voice: voice,
 				style: style,
+				has_avatar: avatar !== '',
+				avatar: avatar,
+				avatar_style: avatarStyle,
 			}),
 		});
 	}

@@ -87,7 +87,7 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
 				<span className='text-[#2044F2] font-semibold tracking-tight whitespace-nowrap flex flex-row gap-2'>
 					{children}
 					{isPaidFeature && !isPaidUser && <PlusLabel />}
-					{isPaidFeature && isPaidUser && '🚀 '}
+					{/* {isPaidFeature && isPaidUser && '🚀 '} */}
 				</span>
 				{/* Replace with the actual icon component or element */}
 				{/* {!isSubmitting && showArrow && <RightTurnArrowIcon />} */}
