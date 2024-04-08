@@ -12,6 +12,7 @@ import { useUser } from '@/hooks/use-user';
 import { useProject } from '@/hooks/use-project';
 import Project from '@/models/Project';
 import SlidesService from '@/services/SlidesService';
+import Slide from '@/models/Slide';
 
 // this class has no UI, it is used to submit the outline to the backend when isSubmitting is true
 const GenerateSlidesSubmit = ({
@@ -38,12 +39,17 @@ const GenerateSlidesSubmit = ({
 
 	async function generateSlides(formData: any, token: string) {
 		try {
+			bulkUpdateProject({
+				has_scripts: false,  // in case it is re-generated
+				presentation_slides: '',
+				parsed_slides: [] as Slide[],
+			} as Project);
 			const {
 				presentation_slides,
 				description,
 				keywords,
 			} = await SlidesService.generateSlides(formData, token);
-			initSlides(ProjectService.parseSlides(presentation_slides));
+			// initSlides(ProjectService.parseSlides(presentation_slides));  // do this when generating slides
 			bulkUpdateProject({
 				description: description,
 				keywords: keywords,

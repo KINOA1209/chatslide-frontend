@@ -218,21 +218,15 @@ export default function DesignPage() {
 
 	useEffect(() => {
 		if (isSubmitting) {
-			if (project?.presentation_slides && slides?.length > 0) {
+			if (project?.presentation_slides) {
+				setShowGenerationStatusModal(true);
 				viewSlidesSubmit();
 			}
 		}
-	}, [isSubmitting]);
+	}, [isSubmitting, project]);
 
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
-	// console.log('Template:', template);
-	// console.log('Color Palette:', colorPalette);
-	// console.log(
-	// 	'current template color options:',
-	// 	template,
-	// 	availablePalettes[template as keyof typeof availablePalettes],
-	// );
 
 	return (
 		<section className='relative'>
@@ -242,12 +236,12 @@ export default function DesignPage() {
 			</div> */}
 			<ToastContainer />
 			{/* user research modal */}
-			{/* {showGenerationStatusModal && (
+			{showGenerationStatusModal && (
 				<GenerationStatusProgressModal
 					onClick={handleGenerationStatusModal}
-					prompts={[['📊 Finding the right images, data, and creating your slides...', 15]]}
+					prompts={[['📊 Finding the right images for your slides...', 15]]}
 				></GenerationStatusProgressModal>
-			)} */}
+			)}
 
 			<WorkflowStepsBanner
 				currentIndex={2}
@@ -255,7 +249,7 @@ export default function DesignPage() {
 				setIsSubmitting={setIsSubmitting}
 				isPaidUser={true}
 				nextIsPaidFeature={false}
-				nextText={!project?.presentation_slides ? 'Creating Slides' : 'View Slides'}
+				nextText={!project?.presentation_slides ? 'Writing Slides' : 'Design Slides'}
 				handleClickingGeneration={handleGenerationStatusModal}
 			/>
 

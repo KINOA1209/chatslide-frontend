@@ -92,7 +92,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 				let slideWithImages = Object.values(slides).find(
 					(slide) => slide.layout === layoutKey && slide.images.length > 0,
 				);
-				console.log('find images for', layoutKey, slideWithImages);
+				// console.log('find images for', layoutKey, slideWithImages);
 
 				if (!slideWithImages) {
 					// If no slide with images is found for the specified layout, search for a slide with 'col_3_img_3' layout
