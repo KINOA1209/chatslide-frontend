@@ -85,15 +85,16 @@ export default function DesignPage() {
 	const { token, isPaidUser } = useUser();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { outlines, project, updateProject, bulkUpdateProject } = useProject();
-	const { slides, showDrLambdaLogo, hideLogo, setSlides, debouncedSyncSlides } = useSlides();
+	const { slides, showDrLambdaLogo, hideLogo, setSlides, debouncedSyncSlides } =
+		useSlides();
 	const [template, setTemplate] = useState<TemplateKeys>(
 		project?.template || getTemplateFromAudicence(project?.audience || ''),
 	);
 
 	const [colorPalette, setColorPalette] = useState<PaletteKeys>(
 		project?.palette ||
-		availablePalettes[template as keyof typeof availablePalettes]?.[0] ||
-		'Original',
+			availablePalettes[template as keyof typeof availablePalettes]?.[0] ||
+			'Original',
 	);
 	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
 		project?.selected_logo || [],
@@ -123,16 +124,16 @@ export default function DesignPage() {
 		}
 	}, [template]);
 
-	const [imageAmount, setImageAmount] = useState('content_with_image');
+	const [imageAmount, setImageAmount] = useState('more_images');
 	const imageAmountOptions: RadioButtonOption[] = [
 		{
 			img: ContentWithImageImg,
-			value: 'content_with_image',
+			value: 'more_images',
 			text: 'More images (70% decks contain images)',
 		},
 		{
 			img: ContentOnlyImg,
-			value: 'content_only',
+			value: 'fewer_images',
 			text: 'Fewer images (30% decks contain images)',
 		},
 	];
@@ -159,12 +160,16 @@ export default function DesignPage() {
 	}
 
 	const [showLogo, setShowLogo] = useState<boolean>(
-		project?.logo === '' ? false :
-			project?.logo === 'Default' ? true :
-				isPaidUser ? false : true);
+		project?.logo === ''
+			? false
+			: project?.logo === 'Default'
+			? true
+			: isPaidUser
+			? false
+			: true,
+	);
 
-
-	async function viewSlidesSubmit(){
+	async function viewSlidesSubmit() {
 		if (!project) {
 			console.error('Project not found');
 			setIsSubmitting(false);
@@ -175,7 +180,8 @@ export default function DesignPage() {
 				project.id,
 				project.topic,
 				imageLicense,
-				token
+				imageAmount,
+				token,
 			);
 
 			bulkUpdateProject({
@@ -205,13 +211,12 @@ export default function DesignPage() {
 			debouncedSyncSlides(newSlides);
 
 			router.push(addIdToRedir('/slides'));
-		}
-		catch (e) {
+		} catch (e) {
 			setIsSubmitting(false);
 			console.error(e);
 			toast.error(
 				'Server is busy now. Please try again later. Reference code: ' +
-				project?.id,
+					project?.id,
 			);
 		}
 	}
@@ -249,7 +254,9 @@ export default function DesignPage() {
 				setIsSubmitting={setIsSubmitting}
 				isPaidUser={true}
 				nextIsPaidFeature={false}
-				nextText={!project?.presentation_slides ? 'Writing Slides' : 'Design Slides'}
+				nextText={
+					!project?.presentation_slides ? 'Writing Slides' : 'Design Slides'
+				}
 				handleClickingGeneration={handleGenerationStatusModal}
 			/>
 
@@ -275,7 +282,7 @@ export default function DesignPage() {
 							setPalette={setColorPalette}
 							paletteOptions={
 								availablePalettes[
-								template as keyof typeof availablePalettes
+									template as keyof typeof availablePalettes
 								] || ['Original']
 							}
 							palette={colorPalette}

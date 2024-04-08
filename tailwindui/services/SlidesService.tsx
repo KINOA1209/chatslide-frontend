@@ -1,7 +1,7 @@
-import Slide from "@/models/Slide";
+import Slide from '@/models/Slide';
 
 class SlidesService {
-	static async generateSlides(formData: any, token: string){
+	static async generateSlides(formData: any, token: string) {
 		const response = await fetch('/api/generate_slides', {
 			method: 'POST',
 			headers: {
@@ -26,7 +26,7 @@ class SlidesService {
 		}
 	}
 
-	static async saveSlides(formData: any, token: string){
+	static async saveSlides(formData: any, token: string) {
 		const resp = await fetch('/api/save_slides', {
 			method: 'POST',
 			headers: {
@@ -39,7 +39,13 @@ class SlidesService {
 		return resp.ok;
 	}
 
-	static async initImages(project_id: string, topic: string, license: string, token: string) {
+	static async initImages(
+		project_id: string,
+		topic: string,
+		license: string,
+		image_amount: string,
+		token: string,
+	) {
 		const resp = await fetch('/api/init_slide_images', {
 			method: 'POST',
 			headers: {
@@ -49,15 +55,16 @@ class SlidesService {
 			body: JSON.stringify({
 				project_id: project_id,
 				topic: topic,
-				license: license
-			})
+				license: license,
+				image_amount: image_amount,
+			}),
 		});
 		const data = await resp.json();
 		console.log(data);
 		return {
 			slides: Object.values(data.data.slides) as Slide[],
 			additional_images: data.data.additional_images as string[],
-		}
+		};
 	}
 }
 
