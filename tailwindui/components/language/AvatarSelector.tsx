@@ -28,10 +28,10 @@ const AvatarSelector: React.FC<{
 		
 		return (
 			<>
-				<div className='grid grid-cols-3 flex-wrap justify-start gap-2'>
+				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 flex-wrap justify-start gap-2'>
 					<div>
 						<Instruction>Avatar: </Instruction>
-						<DropDown value={avatar} onChange={(e) => setAvatar(e.target.value)} width='16rem'>
+						<DropDown value={avatar} onChange={(e) => setAvatar(e.target.value)} width='8rem'>
 							<option key={''} value={''}>❌ None</option>
 							{Object.entries(AVATAR_OPTIONS).map(([key, value])=> (
 								<option key={key} value={key}>{AVATAR_NAMES[key]}</option>
@@ -43,7 +43,7 @@ const AvatarSelector: React.FC<{
 					{avatar != '' && <>
 						<div>
 							<Instruction>Posture: </Instruction>
-							<DropDown value={posture} onChange={(e) => setPosture(e.target.value as 'female' | 'male')} width='16rem'>
+							<DropDown value={posture} onChange={(e) => setPosture(e.target.value as 'female' | 'male')} width='12rem'>
 								{AVATAR_OPTIONS[avatar].map((posture) => (
 									<option key={posture} value={posture}>{POSTURE_NAMES[posture]}</option>
 								))}
