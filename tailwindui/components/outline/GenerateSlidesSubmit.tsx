@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import { useUser } from '@/hooks/use-user';
 import { useProject } from '@/hooks/use-project';
 import Project from '@/models/Project';
+import SlidesService from '@/services/SlidesService';
 
 // this class has no UI, it is used to submit the outline to the backend when isSubmitting is true
 const GenerateSlidesSubmit = ({
@@ -36,29 +37,21 @@ const GenerateSlidesSubmit = ({
 	}, [isSubmitting]);
 
 	async function generateSlides(formData: any, token: string) {
-		const response = await fetch('/api/generate_slides', {
-			method: 'POST',
-			headers: {
-				Authorization: `Bearer ${token}`,
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(formData),
-		});
-
-		if (response.ok) {
-			const resp = await response.json();
-			const presentation_slides = JSON.stringify(resp.data.res);
+		try {
+			const {
+				presentation_slides,
+				description,
+				keywords,
+			} = await SlidesService.generateSlides(formData, token);
 			initSlides(ProjectService.parseSlides(presentation_slides));
 			bulkUpdateProject({
-				description: resp.data.description,
-				keywords: resp.data.keywords,
-				additional_images: resp.data.additional_images,
+				description: description,
+				keywords: keywords,
 				presentation_slides: presentation_slides,
 			} as Project);
 			// router.push(addIdToRedir('/slides'));
-		} else {
+		} catch (e) {
 			setIsSubmitting(false);
-			console.error('Error when generating slides:', response.status);
 			toast.error(
 				'Server is busy now. Please try again later. Reference code: ' +
 					project?.id,
