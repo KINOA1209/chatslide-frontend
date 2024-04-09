@@ -31,7 +31,17 @@ const AVATAR_USER_ALLOWLIST = [
 	'Quanlai Li',
 	'Laura Lin',
 	'Rex',
-	'Jackson'
+	'Jackson',
+	'Joe Moore',
+	'Howard White',
+	'randy',
+	'marktohlson',
+	'mario guzman',
+	'manish_ace',
+	'muciocv',
+	'Guido Schmitter',
+	'Andrew Clayton',
+	'Sébastien Lalloué',
 ]
 
 export default function WorkflowStep5() {
