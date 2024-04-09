@@ -159,7 +159,7 @@ const PricingComparison: React.FC<{
 					</div>
 					<div className="brix---pricing-content-wrapper-left">
 						<div className="brix---text-300-medium">
-							🔈 Generate scripts / voiceover
+							🔈 Generate slides scripts
 						</div>
 					</div>
 					<div className="brix---pricing-content-wrapper-left">
@@ -312,7 +312,7 @@ const PricingComparison: React.FC<{
 					<div className="brix---pricing-content-wrapper">
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">
-								🔈 Generate scripts / voiceover
+								🔈 Generate slides scripts
 							</div>
 						</div>
 						<img
@@ -409,7 +409,7 @@ const PricingComparison: React.FC<{
 					<div className="brix---pricing-content-wrapper">
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">
-								🔈 Generate scripts / voiceover
+								🔈 Generate slides scripts
 							</div>
 						</div>
 						<img
