@@ -66,6 +66,23 @@ class SlidesService {
 			additional_images: data.data.additional_images as string[],
 		};
 	}
+
+	static async updateThumbnail(project_id: string, token: string) {
+		try {
+			const resp = await fetch('/api/update_thumbnail', {
+				method: 'POST',
+				headers: {
+					Authorization: `Bearer ${token}`,
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ project_id: project_id }),
+			});
+			return resp.ok;
+		} catch (error) {
+			console.error(error);
+			return false;
+		}
+	}
 }
 
 export default SlidesService;
