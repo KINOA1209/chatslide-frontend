@@ -19,3 +19,18 @@ export const POSTURE_NAMES: { [key: string]: string } = {
 	'technical-sitting': 'Technical Sitting',
 	'technical-standing': 'Technical Standing'
 };
+
+export const POSITION_NAMES: { [key: string]: string } = {
+	'bottom-right': 'Bottom Right',
+	'bottom-left': 'Bottom Left',
+	'top-right': 'Top Right',
+	'top-left': 'Top Left',
+	'bottom-middle': 'Bottom Middle',
+	'top-middle': 'Top Middle'
+};
+
+export const SIZE_NAMES: { [key: string]: string } = {
+	'small': 'Small',
+	'medium': 'Medium',
+	'large': 'Large'
+};

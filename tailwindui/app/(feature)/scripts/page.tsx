@@ -44,6 +44,8 @@ export default function WorkflowStep5() {
 	const [style, setStyle] = useState('');
 	const [avatar, setAvatar] = useState('');
 	const [posture, setPosture] = useState('');
+	const [size, setSize] = useState('');
+	const [position, setPosition] = useState('');
 
 	const params = useSearchParams();
 
@@ -72,7 +74,7 @@ export default function WorkflowStep5() {
 			try {
 				console.log('project_id:', project_id);
 				updateProject('video_url', '');
-				VideoService.generateVideo(project_id, foldername, voice, token, style, avatar, posture);
+				VideoService.generateVideo(project_id, foldername, voice, token, style, avatar, posture, size, position);
 				updateCreditsFE(-20);
 				router.push(addIdToRedir('/video'));
 			} catch (error) {
@@ -137,6 +139,10 @@ export default function WorkflowStep5() {
 							setAvatar={setAvatar}
 							posture={posture}
 							setPosture={setPosture}
+							size={size}
+							setSize={setSize}
+							position={position}
+							setPosition={setPosition}
 						/>
 					</Card> :
 					<Card>
