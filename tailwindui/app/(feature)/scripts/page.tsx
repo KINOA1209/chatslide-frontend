@@ -42,6 +42,8 @@ const AVATAR_USER_ALLOWLIST = [
 	'Guido Schmitter',
 	'Andrew Clayton',
 	'Sébastien Lalloué',
+	'Ze Yu',
+	'Jialiang Ye'
 ]
 
 export default function WorkflowStep5() {
