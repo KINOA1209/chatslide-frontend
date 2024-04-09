@@ -141,20 +141,17 @@ const PricingComparison: React.FC<{
 						<div className="brix---text-300-medium">⭐️ Credits</div>
 					</div>
 					<div className="brix---pricing-content-wrapper-left">
-						<div className="brix---text-300-medium">🌟 GPT-3.5</div>
+						<div className="brix---text-300-medium">🚀 GPT</div>
 					</div>
 					<div className="brix---pricing-content-wrapper-left">
-						<div className="brix---text-300-medium">📄 Upload documents</div>
+						<div className="brix---text-300-medium">📚 Upload documents</div>
 					</div>
 					<div className="brix---pricing-content-wrapper-left">
 						<div className="brix---text-300-medium">📑 Generate slides / posts</div>
 					</div>
 					<div className="brix---pricing-content-wrapper-left">
-						<div className="brix---text-300-medium">🚀 GPT-4</div>
-					</div>
-					<div className="brix---pricing-content-wrapper-left">
 						<div className="brix---text-300-medium">
-							📚 Upload multiple documents
+							⬇️ Export slides
 						</div>
 					</div>
 					<div className="brix---pricing-content-wrapper-left">
@@ -170,9 +167,6 @@ const PricingComparison: React.FC<{
 					</div>
 					<div className="brix---pricing-content-wrapper-left">
 						<div className="brix---text-300-medium">🦹‍♂️ Attach avatar (new)</div>
-					</div>
-					<div className="brix---pricing-content-wrapper-left">
-						<div className="brix---text-300-medium">🤩 Unlimited credits</div>
 					</div>
 					<div className="brix---pricing-content-wrapper-left">
 						<div className="brix---text-300-medium">
@@ -219,15 +213,15 @@ const PricingComparison: React.FC<{
 					</div>
 					<div className="brix---pricing-content-wrapper">
 						<div className="brix---pricing-v8-title-table">
-							<div className="brix---text-300-medium">🌟 GPT-3.5</div>
+							<div className="brix---text-300-medium">🌟 GPT</div>
 						</div>
-						<img src="images/check-icon-white-brix-templates.svg" alt="" />
+						<div className="brix---text-300-medium">3.5</div>
 					</div>
 					<div className="brix---pricing-content-wrapper">
 						<div className="brix---pricing-v8-title-table">
-							<div className="brix---text-300-medium">📄 Upload documents</div>
+							<div className="brix---text-300-medium">📚 Upload documents</div>
 						</div>
-						<img src="images/check-icon-white-brix-templates.svg" alt="" />
+						<div className="brix---text-300-medium">Single</div>
 					</div>
 					<div className="brix---pricing-content-wrapper">
 						<div className="brix---pricing-v8-title-table">
@@ -235,9 +229,14 @@ const PricingComparison: React.FC<{
 						</div>
 						<img src="images/check-icon-white-brix-templates.svg" alt="" />
 					</div>
-					<div className="brix---pricing-content-wrapper-empty" />
-					<div className="brix---pricing-content-wrapper-empty" />
-					<div className="brix---pricing-content-wrapper-empty" />
+					<div className="brix---pricing-content-wrapper">
+						<div className="brix---pricing-v8-title-table">
+							<div className="brix---text-300-medium">
+								⬇️ Export slides
+							</div>
+						</div>
+						<div className="brix---text-300-medium">PDF</div>
+					</div>
 					<div className="brix---pricing-content-wrapper-empty" />
 					<div className="brix---pricing-content-wrapper-empty" />
 					<div className="brix---pricing-content-wrapper-empty" />
@@ -246,8 +245,8 @@ const PricingComparison: React.FC<{
 					<div className="brix---pricing-content-wrapper-empty" />
 					<div className="brix---pricing-content-wrapper-empty" />
 				</div>
-				<div className="brix---pricing-column-featured">
-					<div className="brix---pricing-table-top-featured">
+				<div className="brix---pricing-column">
+					<div className="brix---pricing-table-top">
 						<div className="brix---mg-bottom-8px">
 							<div className="brix---color-neutral-600">
 								<div className="brix---text-200">PLUS</div>
@@ -275,15 +274,15 @@ const PricingComparison: React.FC<{
 					</div>
 					<div className="brix---pricing-content-wrapper">
 						<div className="brix---pricing-v8-title-table">
-							<div className="brix---text-300-medium">🌟 GPT-3.5</div>
+							<div className="brix---text-300-medium">🌟 GPT</div>
 						</div>
-						<img src="images/check-icon-white-brix-templates.svg" alt="" />
+						<div className="brix---text-300-medium">3.5 and <b>4</b></div>
 					</div>
 					<div className="brix---pricing-content-wrapper">
 						<div className="brix---pricing-v8-title-table">
-							<div className="brix---text-300-medium">📄 Upload documents</div>
+							<div className="brix---text-300-medium">📚 Upload documents</div>
 						</div>
-						<img src="images/check-icon-white-brix-templates.svg" alt="" />
+						<div className="brix---text-300-medium"><b>Multiple</b></div>
 					</div>
 					<div className="brix---pricing-content-wrapper">
 						<div className="brix---pricing-v8-title-table">
@@ -293,23 +292,11 @@ const PricingComparison: React.FC<{
 					</div>
 					<div className="brix---pricing-content-wrapper">
 						<div className="brix---pricing-v8-title-table">
-							<div className="brix---text-300-medium">🚀 GPT-4</div>
-						</div>
-						<img
-							src="images/check-icon-brix-templates.svg"
-							alt="Check - Elements Webflow Library - BRIX Templates"
-						/>
-					</div>
-					<div className="brix---pricing-content-wrapper">
-						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">
-								📚 Upload multiple documents
+								⬇️ Export slides
 							</div>
 						</div>
-						<img
-							src="images/check-icon-brix-templates.svg"
-							alt="Check - Elements Webflow Library - BRIX Templates"
-						/>
+						<div className="brix---text-300-medium">PDF and <b>PPTX</b></div>
 					</div>
 					<div className="brix---pricing-content-wrapper">
 						<div className="brix---pricing-v8-title-table">
@@ -354,10 +341,9 @@ const PricingComparison: React.FC<{
 					<div className="brix---pricing-content-wrapper-empty" />
 					<div className="brix---pricing-content-wrapper-empty" />
 					<div className="brix---pricing-content-wrapper-empty" />
-					<div className="brix---pricing-content-wrapper-empty" />
 				</div>
-				<div className="brix---pricing-column">
-					<div className="brix---pricing-table-top">
+				<div className="brix---pricing-column-featured">
+					<div className="brix---pricing-table-top-featured">
 						<div className="brix---mg-bottom-8px">
 							<div className="brix---color-neutral-600">
 								<div className="brix---text-200">PRO</div>
@@ -381,19 +367,19 @@ const PricingComparison: React.FC<{
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">⭐️ Credits</div>
 						</div>
-						<div className="brix---text-300-medium">5000 / month{userTier.includes('PRO') && ' *'}</div>
+						<div className="brix---text-300-medium"><b>5000</b> / month{userTier.includes('PRO') && ' *'}</div>
 					</div>
 					<div className="brix---pricing-content-wrapper">
 						<div className="brix---pricing-v8-title-table">
-							<div className="brix---text-300-medium">🌟 GPT-3.5</div>
+							<div className="brix---text-300-medium">🌟 GPT</div>
 						</div>
-						<img src="images/check-icon-white-brix-templates.svg" alt="" />
+						<div className="brix---text-300-medium">3.5 and <b>4</b></div>
 					</div>
 					<div className="brix---pricing-content-wrapper">
 						<div className="brix---pricing-v8-title-table">
-							<div className="brix---text-300-medium">📄 Upload documents</div>
+							<div className="brix---text-300-medium">📚 Upload documents</div>
 						</div>
-						<img src="images/check-icon-white-brix-templates.svg" alt="" />
+						<div className="brix---text-300-medium"><b>Multiple</b></div>
 					</div>
 					<div className="brix---pricing-content-wrapper">
 						<div className="brix---pricing-v8-title-table">
@@ -403,23 +389,11 @@ const PricingComparison: React.FC<{
 					</div>
 					<div className="brix---pricing-content-wrapper">
 						<div className="brix---pricing-v8-title-table">
-							<div className="brix---text-300-medium">🚀 GPT-4</div>
-						</div>
-						<img
-							src="images/check-icon-brix-templates.svg"
-							alt="Check - Elements Webflow Library - BRIX Templates"
-						/>
-					</div>
-					<div className="brix---pricing-content-wrapper">
-						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">
-								📚 Upload multiple documents
+								⬇️ Export slides
 							</div>
 						</div>
-						<img
-							src="images/check-icon-brix-templates.svg"
-							alt="Check - Elements Webflow Library - BRIX Templates"
-						/>
+						<div className="brix---text-300-medium">PDF and <b>PPTX</b></div>
 					</div>
 					<div className="brix---pricing-content-wrapper">
 						<div className="brix---pricing-v8-title-table">
@@ -455,15 +429,6 @@ const PricingComparison: React.FC<{
 					<div className="brix---pricing-content-wrapper">
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">🦹‍♂️ Attach avatar (new)</div>
-						</div>
-						<img
-							src="images/check-icon-brix-templates.svg"
-							alt="Check - Elements Webflow Library - BRIX Templates"
-						/>
-					</div>
-					<div className="brix---pricing-content-wrapper">
-						<div className="brix---pricing-v8-title-table">
-							<div className="brix---text-300-medium">🤩 Unlimited credits</div>
 						</div>
 						<img
 							src="images/check-icon-brix-templates.svg"
