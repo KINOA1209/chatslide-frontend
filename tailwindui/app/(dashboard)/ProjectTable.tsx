@@ -13,8 +13,7 @@ import ShareButton from '@/components/button/ShareButton';
 import ProjectService from '@/services/ProjectService';
 import { useUser } from '@/hooks/use-user';
 
-
-const DEFAULT_THUMBNAIL =	'/images/ogimage.png';
+const DEFAULT_THUMBNAIL = '/images/ogimage.png';
 
 const ProjectItem: React.FC<{
 	project: Project;
@@ -25,14 +24,16 @@ const ProjectItem: React.FC<{
 }> = ({ project, onDelete, index, setCurrentProjects, isDiscover = false }) => {
 	const isCloning = index === -1;
 	const { token } = useUser();
-	const [ isShared, setIsShared ] = React.useState(false);
+	const [isShared, setIsShared] = React.useState(false);
 
 	return (
 		<React.Fragment key={project.id}>
 			{/* thumbnail */}
 
 			<div
-				className={`hidden md:flex col-span-1 p-2 items-center justify-center border-b-2 ${!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'} font-creato-medium leading-normal`}
+				className={`hidden md:flex col-span-1 p-2 items-center justify-center border-b-2 ${
+					!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
+				} font-creato-medium leading-normal`}
 			>
 				<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
 					<div className=''>
@@ -44,9 +45,9 @@ const ProjectItem: React.FC<{
 								layout='responsive'
 								width={16}
 								height={9}
-							// onError={(e) => {
-							// 	e.currentTarget.src = DEFAULT_THUMBNAIL;
-							// }}
+								// onError={(e) => {
+								// 	e.currentTarget.src = DEFAULT_THUMBNAIL;
+								// }}
 							/>
 						) : (
 							<FaPhotoVideo className='text-gray-600 w-[40px] h-[40px]' />
@@ -55,11 +56,12 @@ const ProjectItem: React.FC<{
 				</Link>
 			</div>
 
-
 			{/* topic */}
 
 			<div
-				className={`col-span-2 p-2 flex items-center border-b-2 ${!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'} font-creato-medium leading-normal`}
+				className={`col-span-2 p-2 flex items-center border-b-2 ${
+					!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
+				} font-creato-medium leading-normal`}
 			>
 				<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
 					<div className='flex-wrap'>
@@ -68,16 +70,16 @@ const ProjectItem: React.FC<{
 				</Link>
 			</div>
 
-
 			{/* resources */}
-			{!isDiscover &&
+			{!isDiscover && (
 				<div className='col-span-2 border-b-2 hidden md:block items-center text-gray-600'>
-						{/* <FileIcon fileType='pdf' /> */}
-						{project.resources &&
-							project.resources.map((resource, resourceIndex) => (
-								<ResourceItem key={resourceIndex} {...resource} />
-							))}
-				</div>}
+					{/* <FileIcon fileType='pdf' /> */}
+					{project.resources &&
+						project.resources.map((resource, resourceIndex) => (
+							<ResourceItem key={resourceIndex} {...resource} />
+						))}
+				</div>
+			)}
 
 			{/* buttons */}
 			<div className='col-span-1 p-2 border-b-2 flex'>
@@ -90,23 +92,23 @@ const ProjectItem: React.FC<{
 						share={isShared}
 						setShare={(share: boolean) => {
 							setIsShared(share);
-							ProjectService.SlideShareLink(token, project.id, share)
+							ProjectService.SlideShareLink(token, project.id, share);
 						}}
-						project={project}/>
+						project={project}
+					/>
 
-					{!isDiscover && setCurrentProjects &&
+					{!isDiscover && setCurrentProjects && (
 						<CloneButton
 							project={project}
 							setCurrentProjects={setCurrentProjects}
-						/>}
+						/>
+					)}
 
 					{/* deletable if this is dashboard, not discover */}
 					{!isDiscover && onDelete && (
 						<ButtonWithExplanation
 							button={
-								<button
-									onClick={() => onDelete(project.id)}
-								>
+								<button onClick={() => onDelete(project.id)}>
 									<LuTrash2
 										style={{
 											strokeWidth: '2',
@@ -122,10 +124,9 @@ const ProjectItem: React.FC<{
 							explanation={'Delete'}
 						/>
 					)}
-
 				</div>
 			</div>
-		</React.Fragment >
+		</React.Fragment>
 	);
 };
 
@@ -142,26 +143,34 @@ const ProjectTable: React.FC<Props> = ({
 	onDelete,
 	isDiscover = false,
 }) => {
-
-	const grids = isDiscover ? 'grid-cols-3 md:grid-cols-4' : 'grid-cols-3 md:grid-cols-6';
+	const grids = isDiscover
+		? 'grid-cols-3 md:grid-cols-4'
+		: 'grid-cols-3 md:grid-cols-6';
 
 	return (
 		<>
 			<div className='w-full lg:w-2/3 mx-auto'>
-				<div className={`grid bg-[#ECF1FE] border border-gray-200 ${grids}`}>
-					<div className='hidden md:flex col-span-1 w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+				{/* the table header */}
+				{/* <div className={`grid bg-[#ECF1FE] border border-gray-200 ${grids}`}> */}
+				<div
+					className={`grid ${grids}`}
+					style={{
+						borderTop: '1px solid var(--Color-boarder, rgba(0, 0, 0, 0.15))',
+					}}
+				>
+					{/* <div className='hidden md:flex col-span-1 w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'> */}
+					<div className='hidden md:flex col-span-1 w-full ml-4 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
 						Type
 					</div>
-					<div className='col-span-2 flex w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+					<div className='col-span-2 flex w-full ml-4 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
 						Topic
 					</div>
-					{!isDiscover &&
-						<div className='hidden md:flex col-span-2 w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+					{!isDiscover && (
+						<div className='hidden md:flex col-span-2 w-full ml-4 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
 							Resources
-						</div>}
-					<div className='col-span-1 w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
-
-					</div>
+						</div>
+					)}
+					<div className='col-span-1 w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'></div>
 				</div>
 				<div className={`grid border bg-[white] border-gray-200 ${grids}`}>
 					{' '}
