@@ -78,7 +78,12 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 								}}
 							></div>
 						)}
-						<div className={buttonBounce ? 'animate-bounce' : ''} onClick={handleClickingGeneration}>
+						<div 
+						className={buttonBounce ? 'animate-bounce' : ''} 
+						onClick={(e) => {
+							if (isPaidUser || !nextIsPaidFeature)
+								handleClickingGeneration && handleClickingGeneration();
+						}}>
 							<DrlambdaButton
 								isSubmitting={isSubmitting}
 								isPaidUser={isPaidUser}
