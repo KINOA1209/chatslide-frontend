@@ -4437,6 +4437,10 @@ blockquote {
   margin-right: auto;
 }
 
+.uui-section_layout13 {
+	background-color: #ecf1fe;
+}
+
 .uui-page-padding {
   padding-left: 2rem;
   padding-right: 2rem;
@@ -6560,7 +6564,7 @@ blockquote {
 }
 
 .combine-section_feature6 {
-  background-color: var(--combine-library--white);
+  background-color: #ecf1fe
 }
 
 .uui-layout13_image-01 {
