@@ -225,7 +225,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	const [userInput, setUserInput] = useState('');
 	const { chatHistory, addChatHistory, clearChatHistory, chatHistoryStatus } =
 		useChatHistory();
-	const { updateVersion, slideIndex } = useSlides();
+	const { updateVersion, setSlides, setSlideIndex } = useSlides();
 	const [loading, setLoading] = useState(false);
 	const { token } = useUser();
 	const lastMessageRef = useRef<HTMLDivElement>(null); // Ensure you have a ref for the last message
@@ -348,12 +348,24 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						responseData.data.slide,
 					);
 
-					// Update state with the new slides
-					updateSlidePage(currentSlideIndex, responseData.data.slide);
-					updateVersion(); // force rerender when version changes and index does not change
+					if (responseData.data.action === 'add_page') {
+						const newSlide = { ...slides[currentSlideIndex], ...responseData.data.slide};
+
+						// insert the newSlide after the currentSlideIndex
+						setSlides((prevSlides) => {
+							const newSlides = [...prevSlides];
+							newSlides.splice(currentSlideIndex + 1, 0, newSlide);
+							return newSlides;
+						});
+						setSlideIndex(currentSlideIndex + 1);
+					} else {
+						// Update state with the new slides
+						updateSlidePage(currentSlideIndex, responseData.data.slide);
+						updateVersion(); // force rerender when version changes and index does not change
+					}
 				}
 
-				if (responseData.data.action) {
+				else if (responseData.data.action) {  // not add_page action with slide 
 					// send this as a document signal
 					console.log('action:', responseData.data.action);
 					document.dispatchEvent(new Event(responseData.data.action));
