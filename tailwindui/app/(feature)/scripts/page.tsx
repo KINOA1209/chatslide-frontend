@@ -43,9 +43,9 @@ export default function WorkflowStep5() {
 	const [voice, setVoice] = useState('en-US-AvaNeural');
 	const [style, setStyle] = useState('');
 	const [avatar, setAvatar] = useState('');
-	const [posture, setPosture] = useState('');
-	const [size, setSize] = useState('');
-	const [position, setPosition] = useState('');
+	const [posture, setPosture] = useState('casual-sitting');
+	const [size, setSize] = useState('medium');
+	const [position, setPosition] = useState('bottom-right');
 
 	const params = useSearchParams();
 

@@ -23,10 +23,10 @@ export const POSTURE_NAMES: { [key: string]: string } = {
 export const POSITION_NAMES: { [key: string]: string } = {
 	'bottom-right': 'Bottom Right',
 	'bottom-left': 'Bottom Left',
-	'top-right': 'Top Right',
-	'top-left': 'Top Left',
-	'bottom-middle': 'Bottom Middle',
-	'top-middle': 'Top Middle'
+	// 'top-right': 'Top Right',
+	// 'top-left': 'Top Left',
+	// 'bottom-middle': 'Bottom Middle',
+	// 'top-middle': 'Top Middle'
 };
 
 export const SIZE_NAMES: { [key: string]: string } = {
