@@ -55,7 +55,7 @@ export default function WorkflowStep5() {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { slides, updateSlidePage } = useSlides();
 	const { project, updateProject } = useProject();
-	const { username, token, updateCreditsFE } = useUser();
+	const { username, token, updateCreditsFE, isPaidUser } = useUser();
 	const router = useRouter();
 	const [voice, setVoice] = useState('en-US-AvaNeural');
 	const [style, setStyle] = useState('');
@@ -121,7 +121,7 @@ export default function WorkflowStep5() {
 				currentIndex={4}
 				isSubmitting={isSubmitting}
 				setIsSubmitting={setIsSubmitting}
-				isPaidUser={true}
+				isPaidUser={isPaidUser}
 				nextIsPaidFeature={true}
 				// todo: change credits
 				nextText={avatar ? 'Create Video (20 ⭐️)' : 'Create Video (20 ⭐️)'}
