@@ -83,6 +83,25 @@ class SlidesService {
 			return false;
 		}
 	}
+
+	static async generateScripts(formData: any, token: string): Promise<string[]> {
+		const response = await fetch('/api/generate_script', {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${token}`,
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(formData),
+		});
+
+		if (response.ok) {
+			const resp = await response.json();
+			const transcripts = resp.data.res;
+			return transcripts;
+		} else {
+			throw new Error('Error when generating scripts: ' + response.status);
+		}
+	}
 }
 
 export default SlidesService;
