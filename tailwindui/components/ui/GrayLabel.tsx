@@ -35,6 +35,12 @@ export const PlusLabel: React.FC = () => {
 	);
 };
 
+export const ProLabel: React.FC = () => {
+	return (
+		<BlueLabel>Pro</BlueLabel>
+	);
+}
+
 export const TextLabel: React.FC<InputBoxProps> = ({ children }) => {
 	return <div className={`text-sm text-gray-700`}>{children}</div>;
 };
