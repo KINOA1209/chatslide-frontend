@@ -200,7 +200,7 @@ const PricingComparison: React.FC<{
 						</div>
 						<button
 							onClick={() => handleClick('FREE')}
-							className="brix---btn-primary-small-full-width w-button"
+							className="brix---btn-primary-small-full-width w-button whitespace-nowrap"
 						>
 							{getCta('FREE')}
 						</button>
@@ -261,7 +261,7 @@ const PricingComparison: React.FC<{
 						</div>
 						<button
 							onClick={() => handleClick('PLUS')}
-							className="brix---btn-primary-small-full-width w-button"
+							className="brix---btn-primary-small-full-width w-button whitespace-nowrap"
 						>
 							{getCta('PLUS')}
 						</button>
@@ -358,7 +358,7 @@ const PricingComparison: React.FC<{
 						</div>
 						<button
 							onClick={() => handleClick('PRO')}
-							className="brix---btn-primary-small-full-width w-button"
+							className="brix---btn-primary-small-full-width w-button whitespace-nowrap"
 						>
 							{getCta('PRO')}
 						</button>
