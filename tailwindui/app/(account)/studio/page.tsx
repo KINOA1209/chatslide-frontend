@@ -21,7 +21,7 @@ export default function Studio() {
 
 	return (
 		<Column>
-			{isPlus && <Card>
+			{/* {isPlus && <Card>
 				<BigTitle>✅ Upgrade to Pro</BigTitle>
 				<Instruction>
 					🤫 Shhhh, snatch a lifetime deal now. Only available until May 11, 2024. <br />
@@ -40,7 +40,7 @@ export default function Studio() {
 						✅ Claim Now
 					</BigBlueButton>
 				</div>
-			</Card>}
+			</Card>} */}
 
 			<Card>
 				<BigTitle>🎙️ Voice Cloning</BigTitle>

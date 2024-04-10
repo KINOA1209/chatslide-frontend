@@ -270,7 +270,7 @@ const PricingComparison: React.FC<{
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">⭐️ Credits</div>
 						</div>
-						<div className="brix---text-300-medium">1000 / month</div>
+						<div className="brix---text-300-medium">1000 / month{userTier.includes('PLUS') && ' *'}</div>
 					</div>
 					<div className="brix---pricing-content-wrapper">
 						<div className="brix---pricing-v8-title-table">
@@ -471,6 +471,10 @@ const PricingComparison: React.FC<{
 			{userTier.includes('PRO') &&
 				<div className='text-gray-600 whitespace-nowrap mt-4'>
 					* Early users who purchased PRO plan before still has Unlimited credits under our <a href='terms'>fair usage</a> policy.
+				</div>}
+			{userTier.includes('PLUS') &&
+				<div className='text-gray-600 whitespace-nowrap mt-4'>
+					* If you purchased a lifetime deal, the monthly credits may be different from this retail plan.
 				</div>}
 		</div>
 	)
