@@ -147,7 +147,7 @@ const PricingComparison: React.FC<{
 						<div className="brix---text-300-medium">📚 Upload documents</div>
 					</div>
 					<div className="brix---pricing-content-wrapper-left">
-						<div className="brix---text-300-medium">📑 Generate slides / posts</div>
+						<div className="brix---text-300-medium">📑 Generate slides</div>
 					</div>
 					<div className="brix---pricing-content-wrapper-left">
 						<div className="brix---text-300-medium">
@@ -225,7 +225,7 @@ const PricingComparison: React.FC<{
 					</div>
 					<div className="brix---pricing-content-wrapper">
 						<div className="brix---pricing-v8-title-table">
-							<div className="brix---text-300-medium">📑 Generate slides / posts</div>
+							<div className="brix---text-300-medium">📑 Generate slides</div>
 						</div>
 						<img src="images/check-icon-white-brix-templates.svg" alt="" />
 					</div>
@@ -286,7 +286,7 @@ const PricingComparison: React.FC<{
 					</div>
 					<div className="brix---pricing-content-wrapper">
 						<div className="brix---pricing-v8-title-table">
-							<div className="brix---text-300-medium">📑 Generate slides / posts</div>
+							<div className="brix---text-300-medium">📑 Generate slides</div>
 						</div>
 						<img src="images/check-icon-white-brix-templates.svg" alt="" />
 					</div>
@@ -383,7 +383,7 @@ const PricingComparison: React.FC<{
 					</div>
 					<div className="brix---pricing-content-wrapper">
 						<div className="brix---pricing-v8-title-table">
-							<div className="brix---text-300-medium">📑 Generate slides / posts</div>
+							<div className="brix---text-300-medium">📑 Generate slides</div>
 						</div>
 						<img src="images/check-icon-white-brix-templates.svg" alt="" />
 					</div>
