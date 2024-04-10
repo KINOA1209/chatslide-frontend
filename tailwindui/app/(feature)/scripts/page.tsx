@@ -15,11 +15,15 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { addIdToRedir } from '@/utils/redirWithId';
 import dynamic from 'next/dynamic';
 import useHydrated from '@/hooks/use-hydrated';
-import { BigBlueButton, EarlyAccessButton } from '@/components/button/DrlambdaButton';
+import { BigBlueButton, DropDown, EarlyAccessButton } from '@/components/button/DrlambdaButton';
 import UserService from '@/services/UserService';
 import AvatarSelector from '@/components/language/AvatarSelector';
 import { GrayLabel } from '@/components/ui/GrayLabel';
 import { Blank } from '@/components/ui/Loading';
+import { bgmDisplayNames } from '@/components/language/bgmData';
+import { set } from 'lodash';
+import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
+import { FiPlay } from 'react-icons/fi';
 
 
 const ScriptSection = dynamic(
@@ -59,6 +63,7 @@ export default function WorkflowStep5() {
 	const [posture, setPosture] = useState('casual-sitting');
 	const [size, setSize] = useState('medium');
 	const [position, setPosition] = useState('bottom-right');
+	const [bgm, setBgm] = useState('');
 
 	const params = useSearchParams();
 
@@ -87,7 +92,7 @@ export default function WorkflowStep5() {
 			try {
 				console.log('project_id:', project_id);
 				updateProject('video_url', '');
-				VideoService.generateVideo(project_id, foldername, voice, token, style, avatar, posture, size, position);
+				VideoService.generateVideo(project_id, foldername, voice, token, style, avatar, posture, size, position, bgm);
 				updateCreditsFE(-20);
 				router.push(addIdToRedir('/video'));
 			} catch (error) {
@@ -137,6 +142,48 @@ export default function WorkflowStep5() {
 						setStyle={setStyle}
 					/>
 				</Card>
+
+				<Card>
+					<BigTitle>
+						🎵 Background Music
+					</BigTitle>
+					<Instruction>
+						Select the background music you want to use for your video.
+					</Instruction>
+					<div className='flex flex-row gap-4 items-center'>
+						<DropDown
+							width='15rem'
+							onChange={(e) => setBgm(e.target.value)}
+							value={bgm}
+							style='input'
+						>
+							{Object.entries(bgmDisplayNames).map(([key, value]) => (
+								<option key={key} value={key}>
+									{value}
+								</option>
+							))}
+						</DropDown>
+						{bgm &&
+							<ButtonWithExplanation
+								explanation='Preview'
+								button={
+									<a href={`/bgm/${bgm}.mp3`} target='_blank'>
+										<FiPlay
+											style={{
+												strokeWidth: '2',
+												flex: '1',
+												width: '1.5rem',
+												height: '1.5rem',
+												fontWeight: 'bold',
+												color: '#344054',
+											}}
+										/>
+									</a>
+								}
+							/>}
+					</div>
+				</Card>
+
 				{AVATAR_USER_ALLOWLIST.includes(username) ?
 					<Card>
 						<BigTitle>🦹‍♂️ Avatar</BigTitle>
