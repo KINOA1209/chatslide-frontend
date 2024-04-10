@@ -244,7 +244,7 @@ export default function DesignPage() {
 			{showGenerationStatusModal && (
 				<GenerationStatusProgressModal
 					onClick={handleGenerationStatusModal}
-					prompts={[['📊 Finding the right images for your slides...', 8]]}
+					prompts={[['📊 Finding the right images for your slides...', 10]]}
 				></GenerationStatusProgressModal>
 			)}
 
