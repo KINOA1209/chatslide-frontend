@@ -70,6 +70,17 @@ export const Chats: React.FC<ChatsProps> = ({
 	}, [chatHistory]);
 	// const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 	const [sourceImage, setSourceImage] = useState<string>('');
+	const [selectedRegenerateTone, setSelectedRegenerateTone] = useState<string>('');
+	const { slideIndex } = useSlides()
+	const { project } = useProject();
+	const [loading, setLoading] = useState(false);
+	const { token } = useUser();
+	const {
+		isChatWindowOpen,
+		setIsChatWindowOpen,
+		regenerateText,
+		setRegenerateText,
+	} = useChatHistory()
 
 	// const handleImageDragStart = (imageUrl: string) => {
 	const handleImageDragStart = (imageUrl: string) => {
@@ -109,6 +120,78 @@ export const Chats: React.FC<ChatsProps> = ({
 		}
 	};
 
+	const addErrorMessage = (content: string): ChatHistory => ({
+		role: 'assistant',
+		content,
+	});
+
+	const makeApiCall = async (
+		prompt: string,
+		prev_prompts: ChatHistory[],
+		token: string,
+		selected_text: string,
+	): Promise<Response> => {
+		try {
+			return await fetch('/api/ai_gen_slide', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + token,
+				},
+				body: JSON.stringify({
+					slide: slides[currentSlideIndex],
+					project_id: project?.id || '',
+					prompt: prompt,
+					prev_prompts: prev_prompts,
+					selected_text: selected_text,
+				}),
+			});
+		} catch (error) {
+			console.error('Error making API call:', error);
+			const errorMessage = addErrorMessage(
+				'😞 Sorry, I do not understand your request, can you try again?',
+			);
+			addChatHistory(errorMessage);
+			setLoading(false);
+			throw error; // Re-throw the error for the calling function to handle
+		}
+	};
+
+	const handleChoiceClick = async (choice: string) => {
+		setSelectedRegenerateTone(choice)
+		const regenerate_prompt = `Suggest a more ${choice.toLowerCase()} way to say this.`
+		addChatHistory({
+			role: 'user',
+			content: regenerate_prompt
+		})
+		addChatHistory({
+			role:'assistant',
+			content:`Sure, I'll start to adjust the tone...`
+		})
+		const lastChatMessages = chatHistory
+			.slice(-3)
+			.map((chat) => ({ role: chat.role, content: chat.content }));
+		try {
+			setLoading(true)
+			console.log(regenerateText)
+			const response = await makeApiCall(regenerate_prompt, lastChatMessages, token, regenerateText);
+			if (response.ok) {
+				const responseData = await response.json();
+
+				console.log('responseData structure:', responseData);
+			} 
+			else {
+				console.error('Failed to get AI response');
+				const errorMessage = addErrorMessage(
+					'😞 Sorry, I do not understand your request, can you try something else?',
+				);
+				addChatHistory(errorMessage);
+			}
+		} catch (error) {
+			// Error handling is now done in the makeApiCall function
+			// No need to duplicate it here
+		}
+	};
 	return (
 		<>
 			{chatHistory.map((chat, index) => (
@@ -131,6 +214,20 @@ export const Chats: React.FC<ChatsProps> = ({
 						<div className='blue-links'>
 							<span dangerouslySetInnerHTML={{ __html: chat.content }}></span>
 						</div>
+						{/* Check if there are choices and render choices */}
+						{chat.choices && chat.choices.length > 0 && (
+							<div className='w-full flex flex-wrap gap-2 mt-2'>
+								{chat.choices.map((choice, index) => (
+									<button
+										className="bg-blue-500 text-white text-sm px-3 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+										key={index} 
+										onClick={() => handleChoiceClick(choice)}>
+										{choice}
+									</button>
+								))}
+							</div>
+						)}
+
 						{/* Check if there are imageUrls and render image previews */}
 
 						{chat.imageUrls && chat.imageUrls.length > 0 && (
