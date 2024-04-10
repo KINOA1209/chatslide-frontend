@@ -74,6 +74,7 @@ interface ImgModuleProp {
 	isSlide?: boolean;
 	isSocialPostTemp1Cover?: boolean;
 	search_illustration?: boolean;
+	defaultObjectFit?: 'contain' | 'cover';
 }
 
 enum ImgQueryMode {
@@ -143,6 +144,7 @@ export const ImgModule = ({
 	columnIndex = 0,
 	isSlide = true,
 	isSocialPostTemp1Cover = false,
+	defaultObjectFit = 'contain',
 }: ImgModuleProp) => {
 	const sourceImage = useImageStore((state) => state.sourceImage);
 	const { project } = useProject();
@@ -158,6 +160,7 @@ export const ImgModule = ({
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const { token, updateCreditsFE } = useUser();
 	const { socialPosts, socialPostsIndex } = useSocialPosts();
+	const [objectFit, setObjectFit] = useState(defaultObjectFit);
 
 	const [hoverQueryMode, setHoverQueryMode] = useState<ImgQueryMode>(
 		ImgQueryMode.SEARCH,
@@ -248,6 +251,19 @@ export const ImgModule = ({
 				}
 			})
 			.then((parsedResponse) => {
+				if (parsedResponse.data.images.length === 0) {
+					toast.error('No images found, please try another keyword or engine', {
+						position: 'top-center',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: 'light',
+						containerId: 'slides',
+					});
+				}
 				setSearchResult(parsedResponse.data.images);
 			})
 			.catch((e) => {
@@ -280,6 +296,19 @@ export const ImgModule = ({
 		if (response.ok) {
 			try {
 				const parsedResponse = await response.json();
+				if (parsedResponse.data.images.length === 0) {
+					toast.error('No images found, please try another keyword or engine', {
+						position: 'top-center',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: 'light',
+						containerId: 'slides',
+					});
+				}
 				setSearchResult(parsedResponse.data.images);
 			} catch (error) {
 				console.error(error);
@@ -1319,7 +1348,7 @@ export const ImgModule = ({
 							<Image
 								unoptimized={imgsrc?.includes('freepik') ? false : true}
 								style={{
-									objectFit: 'fill',
+									objectFit: 'contain',
 									height: '100%',
 									//width: 'auto',
 									width: '100%',
@@ -1329,14 +1358,14 @@ export const ImgModule = ({
 								}}
 								src={imgsrc}
 								alt='Image'
-								//layout='fill'
+								// layout='contain'
 								width={960}
 								height={540}
-								//objectFit='contain'
+								// objectFit='contain'
 								className={`transition ease-in-out duration-150 ${canEdit
 									? isImgEditMode
 										? 'brightness-100'
-										: 'hover:brightness-90'
+										: 'hover:brightness-50'
 									: 'cursor-pointer'
 									}`}
 								onError={(e) => {
