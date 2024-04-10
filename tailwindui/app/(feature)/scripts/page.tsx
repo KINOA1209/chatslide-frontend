@@ -15,7 +15,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { addIdToRedir } from '@/utils/redirWithId';
 import dynamic from 'next/dynamic';
 import useHydrated from '@/hooks/use-hydrated';
-import { BigBlueButton } from '@/components/button/DrlambdaButton';
+import { BigBlueButton, EarlyAccessButton } from '@/components/button/DrlambdaButton';
 import UserService from '@/services/UserService';
 import AvatarSelector from '@/components/language/AvatarSelector';
 import { GrayLabel } from '@/components/ui/GrayLabel';
@@ -164,12 +164,12 @@ export default function WorkflowStep5() {
 							<Instruction>
 								This is coming soon... We are finding some pilot users to test this feature.
 							</Instruction>
-							<BigBlueButton onClick={() => {
-								UserService.submitFeedback(5, username + ' wants to join the pilot program for Avatar feature', project?.id || '', token);
-								toast.success('You are added to the waitlist, thank you!');
-							}} >
-								Join the pilot program
-							</BigBlueButton>
+							<EarlyAccessButton
+								username={username}
+								token={token}
+								feature='avatar'
+								project_id={project.id}
+							/>
 						</div>
 					</Card>
 				}

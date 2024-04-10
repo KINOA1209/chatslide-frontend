@@ -1,7 +1,7 @@
 'use client';
 
 
-import { BigBlueButton } from "@/components/button/DrlambdaButton";
+import { BigBlueButton, EarlyAccessButton } from "@/components/button/DrlambdaButton";
 import { Column } from "@/components/layout/Column";
 import Card from "@/components/ui/Card";
 import { ProLabel } from "@/components/ui/GrayLabel";
@@ -11,7 +11,7 @@ import { useUser } from "@/hooks/use-user";
 
 export default function Studio() {
 
-	const { tier } = useUser();
+	const { tier, username, token } = useUser();
 
 	const isPro = tier.includes('PRO');
 	const isPlus = tier.includes('PLUS');
@@ -53,6 +53,14 @@ export default function Studio() {
 					Learn more about our future plans at our <a href='https://blog.drlambda.ai/drlambda-product-roadmap/' className='text-blue-600'>roadmap</a>. <br />
 					Join our <a href='discord' className='text-blue-600'>discord</a> channel to get up to date information.
 				</Explanation>
+
+				<div>
+					<EarlyAccessButton
+						username={username}
+						token={token}
+						feature='voice cloning'
+					/>
+				</div>
 			</Card>
 
 			<Card>
@@ -69,6 +77,14 @@ export default function Studio() {
 					Learn more about our future plans at our <a href='https://blog.drlambda.ai/drlambda-product-roadmap/' className='text-blue-600'>roadmap</a>. <br />
 					Join our <a href='discord' className='text-blue-600'>discord</a> channel to get up to date information.
 				</Explanation>
+
+				<div>
+					<EarlyAccessButton
+						username={username}
+						token={token}
+						feature='avatar cloning'
+					/>
+				</div>
 			</Card>
 		</Column>
 
