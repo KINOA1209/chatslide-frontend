@@ -84,7 +84,7 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
 				id={'primary-' + id}
 				disabled={isSubmitting}
 				onClick={checkPaidUser}
-				className={`sm:min-w-[10rem] lg:min-w-[12rem] px-2 h-[36px] sm:h-[36px] ${getButtonBg()} disabled:animate-pulse rounded-[0.4375rem] flex justify-center items-center gap-4 cursor-pointer }`}
+				className={`sm:min-w-[8rem] lg:min-w-[12rem] px-2 h-[36px] sm:h-[36px] ${getButtonBg()} disabled:animate-pulse rounded-[0.4375rem] flex justify-center items-center gap-4 cursor-pointer }`}
 			>
 				{isSubmitting && <SpinIcon />}
 				<span className='text-[#2044F2] font-semibold tracking-tight whitespace-nowrap flex flex-row gap-2'>
@@ -135,7 +135,7 @@ export const DrlambdaLink: React.FC<DrlambdaLinkProps> = ({
 			href={link}
 			target={newWindow ? '_blank' : '_self'}
 			rel={newWindow ? 'noopener noreferrer' : undefined} // Important for security reasons
-			className={`sm:min-w-[10rem] lg:w-[12rem] h-[36px] sm:h-[36px] ${style} rounded-3xl flex justify-center items-center gap-2 cursor-pointer`}
+			className={`sm:min-w-[8rem] lg:w-[12rem] h-[36px] sm:h-[36px] ${style} rounded-3xl flex justify-center items-center gap-2 cursor-pointer`}
 		>
 			<div className='flex flex-row justify-center items-center'>
 				<span className='font-semibold tracking-tight whitespace-nowrap'>
@@ -162,7 +162,7 @@ export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({
 	return (
 		<div
 			id={text.replace(/[^A-Za-z0-9]/g, '_')}
-			className='h-[36px] sm:h-[36px] sm:min-w-[10rem] lg:min-w-[12rem] flex-row justify-center items-center gap-4 cursor-pointer flex rounded-3xl bg-white bg-opacity-0'
+			className='h-[36px] sm:h-[36px] sm:min-w-[6rem] lg:min-w-[12rem] flex-row justify-center items-center gap-4 cursor-pointer flex rounded-3xl bg-white bg-opacity-0'
 			onClick={() => router.push(href)}
 		>
 			<FaChevronLeft style={{ color: dark ? '#222222' : '#FFFFFF' }} />
