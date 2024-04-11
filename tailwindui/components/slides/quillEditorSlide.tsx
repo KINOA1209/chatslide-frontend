@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useMemo, use } from 'react';
+import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.bubble.css';
 import '@/components/socialPost/quillEditor.scss';
@@ -216,6 +216,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 	const quillInstanceRef = useRef<Quill | null>(null);
 	const isTextChangeRef = useRef(false);
 	const [hoveredSentence, setHoveredSentence] = useState({ text: '', start: 0, end: 0 });
+	const hoveredSentenceRef = useRef(hoveredSentence);
 	const {
 		chatHistory,
 		addChatHistory,
@@ -223,6 +224,8 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 		setIsChatWindowOpen,
 		regenerateText,
 		setRegenerateText,
+		isRegenerateSelected,
+		setIsRegenerateSelected,
 	} = useChatHistory()
 
 	function getSentenceAtPosition(startIndex: number, endIndex: number) {
@@ -230,20 +233,22 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 		if (quill) {
 			const text = quill.getText();
 			const sentenceBoundaryRegex = /[.?!]/;
-
 			let start = startIndex;
 			while (start > 0 && !sentenceBoundaryRegex.test(text[start - 1])) {
 				start--;
 			}
 
 			let end = endIndex;
-			while (end < text.length && !sentenceBoundaryRegex.test(text[end])) {
-				end++;
-			}
-
-			// Include the sentence delimiter in the block
-			if (end < text.length && sentenceBoundaryRegex.test(text[end])) {
-				end++;
+			// Check if the end index is already at the boundary; if not, extend to the next boundary.
+			if (!sentenceBoundaryRegex.test(text[end - 1])) {
+				while (end < text.length && !sentenceBoundaryRegex.test(text[end])) {
+					end++;
+				}
+	
+				// Include the sentence delimiter in the block
+				if (end < text.length && sentenceBoundaryRegex.test(text[end])) {
+					end++;
+				}
 			}
 
 			// get rid of \n
@@ -253,7 +258,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			return { text: sentenceText, start: trimmedStart, end: trimmedEnd };
 		}
 		else {
-			return { text: '', start: 0, end: 0 }
+			return hoveredSentence
 		}
 	}
 
@@ -395,7 +400,6 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 						handlers: {
 							'regenerate': () => {
 								setIsChatWindowOpen(true)
-								setRegenerateText(hoveredSentence.text)
 								addChatHistory({
 									role:'assistant',
 									content:'To proceed with regenerating your selected sentence, please select the desired tone:'
@@ -405,8 +409,6 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 									content:'',
 									choices:['Neutral', 'Engaging', 'Informative', 'Persuasive', 'Professional']
 								})
-
-								//console.log('regenerate button clicked') 
 							}
 						}
 					}
@@ -531,22 +533,6 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 					}
 				}
 			});
-
-			// const quill = quillInstanceRef.current
-			// if (quill) {
-			// 	quill.root.addEventListener('mousemove', (event) => {
-			// 		const range = quill.getSelection(true);
-			// 		if (range && range.index !== null) {
-			// 			const sentence = getSentenceAtPosition(range.index);
-			// 			console.log(sentence)
-			// 			setHoveredSentence(sentence);
-			// 			console.log(hoveredSentence)
-			// 		}
-			// 	});
-			// }
-			// toolbar.addHandler('regenerate', () => {
-
-			// })
 
 			const QuillDelta = Quill.import('delta');
 			let combinedDelta = new QuillDelta();
@@ -680,9 +666,11 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 		const quill = quillInstanceRef.current;
 		if (quill) {
 			const handleSelectionChange = (range: any) => {
-				if (range && range.index !== null) {
+				if (range && range.index !== null && range.length !== 0) {
 					const sentence = getSentenceAtPosition(range.index, range.index + range.length);
+					console.log(sentence)
 					setHoveredSentence(sentence);
+					setRegenerateText(sentence.text)
 				}
 			};
 
@@ -692,7 +680,24 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				quill.off('selection-change', handleSelectionChange);
 			};
 		}
-	}, []);
+	}, [quillInstanceRef]);
+
+	useEffect(() => {
+		const quill = quillInstanceRef.current;
+		if (quill && isRegenerateSelected && hoveredSentence.text) {
+			if (regenerateText && hoveredSentence.text !== regenerateText) {
+				// Delete the old text and insert the new one
+				quill.deleteText(hoveredSentence.start, hoveredSentence.end - hoveredSentence.start);
+				quill.insertText(hoveredSentence.start, regenerateText, 'user');
+
+				const newEndIndex = hoveredSentence.start + regenerateText.length;
+				setHoveredSentence({ text: regenerateText, start: hoveredSentence.start, end: newEndIndex });
+				// Update the selection to cover the new text
+				quill.setSelection(hoveredSentence.start, regenerateText.length);
+				setIsRegenerateSelected(false)
+			}
+		}
+	}, [isRegenerateSelected, hoveredSentence, regenerateText, quillInstanceRef]);
 
 	useEffect(() => {
 		if (quillInstanceRef.current && style) {

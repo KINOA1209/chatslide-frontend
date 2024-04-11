@@ -10,6 +10,7 @@ const useChatHistoryBear = createBearStore<ChatHistory[]>()(
 
 const useIsChatWindowOpenBear = createBearStore<boolean>()('isChatWindowOpen', false, true)
 const useRegenerateTextBear = createBearStore<string>()('regenerateText', '', true)
+const useIsRegenerateSelectedBear = createBearStore<boolean>()('isRegenerateSelected', false, true)
 
 export enum ChatHistoryStatus {
 	NotInited,
@@ -23,6 +24,7 @@ export const useChatHistory = () => {
 	const { chatHistory, setChatHistory } = useChatHistoryBear();
 	const { isChatWindowOpen, setIsChatWindowOpen } = useIsChatWindowOpenBear();
 	const { regenerateText, setRegenerateText } = useRegenerateTextBear();
+	const { isRegenerateSelected, setIsRegenerateSelected } = useIsRegenerateSelectedBear();
 
 	const init = async () => {
 		if (chatHistoryStatus !== ChatHistoryStatus.NotInited) return;
@@ -58,5 +60,7 @@ export const useChatHistory = () => {
 		setIsChatWindowOpen,
 		regenerateText,
 		setRegenerateText,
+		isRegenerateSelected,
+		setIsRegenerateSelected,
 	};
 };

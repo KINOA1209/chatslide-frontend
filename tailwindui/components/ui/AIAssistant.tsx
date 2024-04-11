@@ -16,6 +16,7 @@ import { useImageStore } from '@/hooks/use-img-store';
 import ChatSuggestions from '../language/ChatSuggestions';
 import { stopArrowKeyPropagation } from '@/utils/editing';
 import './ChatBot.css';
+import React from 'react';
 
 export const DrLambdaAIAssistantIcon: React.FC<{
 	onClick: () => void;
@@ -80,6 +81,8 @@ export const Chats: React.FC<ChatsProps> = ({
 		setIsChatWindowOpen,
 		regenerateText,
 		setRegenerateText,
+		isRegenerateSelected,
+		setIsRegenerateSelected,
 	} = useChatHistory()
 
 	// const handleImageDragStart = (imageUrl: string) => {
@@ -125,6 +128,50 @@ export const Chats: React.FC<ChatsProps> = ({
 		content,
 	});
 
+	const addChoicesMessage = (
+		chat: string,
+		suggestions: [string, string][],
+	): ChatHistory => ({
+		role: 'assistant',
+		content: regenerateResponseJSX(chat, suggestions)
+	})
+
+	const handleRegenerateTextClick = (suggestion: string) => {
+		setRegenerateText(suggestion)
+		setIsRegenerateSelected(true)
+	}
+
+	const regenerateResponseJSX = (
+		chat: string,
+		suggestions: [string, string][],
+	): JSX.Element => {
+		console.log(suggestions[0][0])
+		return (
+			<div>
+				<span>{chat}</span> {/* Display the chat content */}
+				<div className='gap-3 flex flex-col'>
+					{suggestions.map((suggestion, index) => (
+						<button
+							key={index}
+							onClick={() => handleRegenerateTextClick(suggestion[1])}
+							className='rounded-lg px-3 py-2 text-left text-xs flex bg-[#EFF4FF] flex flex-col hover:bg-white focus:ring-2 focus:ring-white focus:ring-opacity-50'
+						>
+							<span className='text-gray-700'>{index + 1}. {suggestion[0]}</span>
+							<span>{suggestion[1]}</span>
+						</button>
+					))}
+					<button
+						onClick={() => handleRegenerateTextClick(regenerateText)}
+						className='rounded-lg px-3 py-2 text-left text-xs flex bg-[#EFF4FF] flex flex-col hover:bg-white focus:ring-2 focus:ring-white focus:ring-opacity-50'
+					>
+						<span className='text-gray-700'>Original</span>
+						<span>{regenerateText}</span>
+					</button>
+				</div>
+			</div>
+		)
+	}
+
 	const makeApiCall = async (
 		prompt: string,
 		prev_prompts: ChatHistory[],
@@ -157,7 +204,7 @@ export const Chats: React.FC<ChatsProps> = ({
 		}
 	};
 
-	const handleChoiceClick = async (choice: string) => {
+	const handleToneClick = async (choice: string) => {
 		setSelectedRegenerateTone(choice)
 		const regenerate_prompt = `Suggest a more ${choice.toLowerCase()} way to say this.`
 		addChatHistory({
@@ -165,8 +212,8 @@ export const Chats: React.FC<ChatsProps> = ({
 			content: regenerate_prompt
 		})
 		addChatHistory({
-			role:'assistant',
-			content:`Sure, I'll start to adjust the tone...`
+			role: 'assistant',
+			content: `Sure, I'll start to adjust the tone...`
 		})
 		const lastChatMessages = chatHistory
 			.slice(-3)
@@ -174,12 +221,22 @@ export const Chats: React.FC<ChatsProps> = ({
 		try {
 			setLoading(true)
 			console.log(regenerateText)
+			console.log(regenerate_prompt)
 			const response = await makeApiCall(regenerate_prompt, lastChatMessages, token, regenerateText);
 			if (response.ok) {
 				const responseData = await response.json();
-
 				console.log('responseData structure:', responseData);
-			} 
+				if (!responseData.data.suggestion && responseData.data.chat){
+					//response is ok
+					const errorMessage = addErrorMessage(responseData.data.chat)
+					addChatHistory(errorMessage)
+				}
+				else{
+					const regenerate_choices = addChoicesMessage(responseData.data.chat, responseData.data.suggestions)
+					console.log('triggered', regenerate_choices)
+					addChatHistory(regenerate_choices)
+				}
+			}
 			else {
 				console.error('Failed to get AI response');
 				const errorMessage = addErrorMessage(
@@ -212,7 +269,9 @@ export const Chats: React.FC<ChatsProps> = ({
 						}
 					>
 						<div className='blue-links'>
-							<span dangerouslySetInnerHTML={{ __html: chat.content }}></span>
+							{/* Directly render chat.content if it's a React element */}
+							{React.isValidElement(chat.content) ? chat.content
+								: <span dangerouslySetInnerHTML={{ __html: chat.content }}></span>}
 						</div>
 						{/* Check if there are choices and render choices */}
 						{chat.choices && chat.choices.length > 0 && (
@@ -220,8 +279,8 @@ export const Chats: React.FC<ChatsProps> = ({
 								{chat.choices.map((choice, index) => (
 									<button
 										className="bg-blue-500 text-white text-sm px-3 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-										key={index} 
-										onClick={() => handleChoiceClick(choice)}>
+										key={index}
+										onClick={() => handleToneClick(choice)}>
 										{choice}
 									</button>
 								))}
