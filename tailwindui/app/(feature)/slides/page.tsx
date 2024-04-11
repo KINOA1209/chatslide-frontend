@@ -56,7 +56,7 @@ export default function WorkflowStep3() {
 				isSubmitting={isSubmitting}
 				setIsSubmitting={setIsSubmitting}
 				isPaidUser={isPaidUser}
-				nextIsPaidFeature={true}
+				nextIsPaidFeature={false}
 				nextText={!isSubmitting ? 'Write Scripts' : 'Writing Scripts'}
 				handleClickingGeneration={handleGenerationStatusModal}
 			/>

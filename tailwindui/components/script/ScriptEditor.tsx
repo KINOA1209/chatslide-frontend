@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import debounce from 'lodash/debounce';
 import useHydrated from '@/hooks/use-hydrated';
 import { stopArrowKeyPropagation } from '@/utils/editing';
+import { useUser } from '@/hooks/use-user';
+import { BigBlueButton } from '../button/DrlambdaButton';
 
 interface TranscriptEditorProps {
 	slides: Slide[];
@@ -23,6 +25,7 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 	const maxWidth = 960 * scale + 12;
 
 	const [script, setScript] = useState<string>(slides[currentSlideIndex]?.transcript || '');
+	const { isPaidUser } = useUser();
 	const editorRef = React.useRef<HTMLDivElement>(null);
 
 	const updateTranscriptList = (newValue: string) => {
@@ -51,16 +54,23 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 			style={{ maxWidth: `${maxWidth}px` }}
 			className={`w-full min-h-[4rem] border border-2 border-gray-200 rounded-lg flex flex-col overflow-y-auto my-1`} // shift left to align with slide
 		>
-			<textarea
-				className={`grow px-4 py-2 w-full h-full border-none text-gray-700 text-xs font-normal focus:ring-0 ${tight && 'leading-tight'}`}
-				value={script}
-				onChange={(e) => {
-					setScript(e.target.value);
-					debouncedUpdateTranscriptList(e.target.value);
-				}}
-			>
-				{script}
-			</textarea>
+			{(isPaidUser || currentSlideIndex < 5) ?
+				<textarea
+					className={`grow px-4 py-2 w-full h-full border-none text-gray-700 text-xs font-normal focus:ring-0 ${tight && 'leading-tight'}`}
+					value={script}
+					onChange={(e) => {
+						setScript(e.target.value);
+						debouncedUpdateTranscriptList(e.target.value);
+					}}
+				>
+					{script}
+				</textarea> :
+				<div className='flex flex-col items-center justify-center h-full text-gray-500 text-sm'>
+					<BigBlueButton onClick={() => { window.location.href = '/subscription' }}>
+						Upgrade to edit script
+					</BigBlueButton>
+				</div>
+			}
 		</div>
 	);
 };

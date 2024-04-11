@@ -59,7 +59,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 
 	return (
 		<section className='sticky top-0 z-10 flex flex-col'>
-			<div className='relative w-full h-[80px] flex flex-row items-center bg-[#2044F2] gap-x-4 px-4 sm:px-6 lg:px-8'>
+			<div className='relative w-full h-[80px] flex flex-row items-center bg-[#2044F2] gap-x-2 lg:gap-x-4 px-2 lg:px-4 xl:px-6'>
 				<DrLambdaBackButton href='/dashboard' />
 				<div className='flex-grow items-center justify-center flex py-2'>
 					<ProjectProgress currentInd={currentIndex} />
@@ -78,7 +78,12 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 								}}
 							></div>
 						)}
-						<div className={buttonBounce ? 'animate-bounce' : ''} onClick={handleClickingGeneration}>
+						<div 
+						className={buttonBounce ? 'animate-bounce' : ''} 
+						onClick={(e) => {
+							if (isPaidUser || !nextIsPaidFeature)
+								handleClickingGeneration && handleClickingGeneration();
+						}}>
 							<DrlambdaButton
 								isSubmitting={isSubmitting}
 								isPaidUser={isPaidUser}

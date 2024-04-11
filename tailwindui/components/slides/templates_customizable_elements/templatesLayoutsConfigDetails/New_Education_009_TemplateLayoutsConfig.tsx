@@ -408,12 +408,12 @@ export const New_Education_009_TemplateLayoutsConfig: {
 			display: 'grid',
 			gridTemplateColumns: '1fr',
 			gridAutoRows: '25% 25% auto',
-			gap: '30px',
+			gap: '10px',
 		},
 		titleAndSubtopicBoxCSS: {
 			// backgroundColor: '#F1F1F1',
 			paddingTop: '50px',
-			paddingBottom: '30px',
+			paddingBottom: '10px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
 			display: 'flex',
@@ -450,7 +450,7 @@ export const New_Education_009_TemplateLayoutsConfig: {
 		},
 		contentContainerCSS: {
 			zIndex: 30,
-			padding: '30px 50px 0px 50px',
+			padding: '20px 50px 0px 50px',
 			width: '100%',
 			display: 'grid',
 			gridTemplateColumns: 'repeat(2, 1fr)', //

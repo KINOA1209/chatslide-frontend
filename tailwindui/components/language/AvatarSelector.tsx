@@ -41,7 +41,7 @@ const AvatarSelector: React.FC<{
 						<div>
 							<Instruction>Avatar: </Instruction>
 							<DropDown value={avatar} onChange={(e) => setAvatar(e.target.value)} width='8rem'>
-								<option key={''} value={''}>❌ None</option>
+								<option key={''} value={''}>⏹️ None</option>
 								{Object.entries(AVATAR_OPTIONS).map(([key, value]) => (
 									<option key={key} value={key}>{AVATAR_NAMES[key]}</option>
 								))}
@@ -59,7 +59,7 @@ const AvatarSelector: React.FC<{
 								</DropDown>
 							</div>
 							<div>
-								<Instruction>Position: </Instruction>
+								<Instruction>Position on Slides: </Instruction>
 								<DropDown value={position} onChange={(e) => setPosition(e.target.value)} width='12rem'>
 									{Object.entries(POSITION_NAMES).map(([key, name]) => (
 										<option key={key} value={key}>{name}</option>

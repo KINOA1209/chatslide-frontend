@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import { useProject } from '@/hooks/use-project';
 import { addIdToRedir } from '../../utils/redirWithId';
 import { sleep } from '@/utils/sleep';
+import SlidesService from '@/services/SlidesService';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -30,7 +31,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 	const [host, setHost] = useState('https://drlambda.ai');
 
 	const { slides, setTranscripts, saveStatus, SaveStatus } = useSlides();
-	const { token } = useUser();
+	const { token, isPaidUser } = useUser();
 	const { isShared, updateIsShared, project } = useProject();
 	const [showShareLink, setShowShareLink] = useState(true);
 	const router = useRouter();
@@ -79,33 +80,21 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 			language: project.language,
 			json_list: slides,
 			model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
+			max_index: isPaidUser ? 0 : 5,
 		};
 
 		try {
-			const response = await fetch('/api/generate_script', {
-				method: 'POST',
-				headers: {
-					Authorization: `Bearer ${token}`,
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(formData),
-			});
+			const transcripts = await SlidesService.generateScripts(formData, token);
+			setTranscripts(transcripts); // and auto-save
+			router.push(addIdToRedir('/scripts'));
+		}
 
-			if (response.ok) {
-				const resp = await response.json();
-				const transcripts = resp.data.res;
-				setTranscripts(transcripts); // and auto-save
-				router.push(addIdToRedir('/scripts'));
-			} else {
-				console.error('Error when generating scripts:', response.status);
-				toast.error(
-					'Server is busy now. Please try again later. Reference code: ' +
-					project.id,
-				);
-				console.log(response);
-			}
-		} catch (error) {
-			console.error('Error:', error);
+		catch (error) {
+			toast.error(
+				'Server is busy now. Please try again later. Reference code: ' +
+				project.id,
+			);
+			console.log(error);
 		}
 		setIsSubmitting(false);
 	}

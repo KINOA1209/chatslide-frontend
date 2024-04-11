@@ -4437,6 +4437,10 @@ blockquote {
   margin-right: auto;
 }
 
+.uui-section_layout13 {
+	background-color: #ecf1fe;
+}
+
 .uui-page-padding {
   padding-left: 2rem;
   padding-right: 2rem;
@@ -5268,6 +5272,7 @@ blockquote {
   color: var(--elements-webflow-library--neutral--600);
   margin-bottom: 10px;
   display: none;
+	white-space: nowrap;
 }
 
 .brix---pricing-content-wrapper, .brix---pricing-content-wrapper-empty {
@@ -5379,6 +5384,7 @@ blockquote {
   padding-top: 15px;
   padding-bottom: 15px;
   display: flex;
+	white-space: nowrap;
 }
 
 .brix---text-300-bold {
@@ -6560,7 +6566,7 @@ blockquote {
 }
 
 .combine-section_feature6 {
-  background-color: var(--combine-library--white);
+  background-color: #ecf1fe
 }
 
 .uui-layout13_image-01 {

@@ -174,25 +174,6 @@ function wrapListItem(item: string, level: number): string {
 	return wrappedItem;
 }
 
-// const BubbleTheme = Quill.import('themes/bubble');
-
-// class ExtendBubbleTheme extends BubbleTheme {
-// 	constructor(quill: Quill, options: any) {
-// 		super(quill, options);
-
-// 		quill.on('selection-change', (range) => {
-// 			if (range) {
-// 				const bounds = quill.getBounds(range.index);
-// 				const quillAny = quill as any;
-// 				quillAny.theme.tooltip.show();
-// 				quillAny.theme.tooltip.position(bounds);
-// 			}
-// 		});
-// 	}
-// }
-
-// Quill.register('themes/bubble', ExtendBubbleTheme);
-
 const QuillEditable: React.FC<QuillEditableProps> = ({
 	content,
 	handleBlur,
@@ -219,26 +200,12 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 		};
 	}, []);
 
-	// const showColorPicker = (value: string) => {
-	//     if (value === 'color-picker') {
-	//         const picker = document.createElement('input');
-	//         picker.type = 'color';
-	//         picker.style.display = 'none';
-	//         picker.addEventListener('change', () => {
-	//             const quill = quillInstanceRef.current;
-	//             if (quill) {
-	//                 quill.format('color', picker.value);
-	//             }
-	//         }, false);
-	//         document.body.appendChild(picker);
-	//         picker.click();
-	//     } else {
-	//         const quill = quillInstanceRef.current;
-	//         if (quill) {
-	//             quill.format('color', value);
-	//         }
-	//     }
-	// };
+	useEffect(() => {
+		const quill = quillInstanceRef.current;
+		if (quill) {
+			quill.root.style.minWidth = '100%';
+		}
+	}, []);
 
 	useEffect(() => {
 		if (editorRef.current && !quillInstanceRef.current) {
@@ -305,7 +272,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			}
 
 			if (need_placeholder){
-				quillOptions.placeholder = 'Add some text here...'
+				quillOptions.placeholder = 'Text here...'
 			}
 
 			quillInstanceRef.current = new Quill(editorRef.current, quillOptions);
@@ -470,63 +437,6 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				combinedDelta = insertContent(content);
 			}
 			quillInstanceRef.current.setContents(combinedDelta);
-
-			// const Delta = Quill.import('delta');
-			// let initialDelta = new Delta();
-
-			// const insertContent = (item: string) => {
-			// 	if (isHTML(item)) {
-			// 		console.log(isHTML(item),item)
-			// 		const convertedDelta = quillInstanceRef?.current?.clipboard.convert({'html': item});
-			// 		console.log(convertedDelta)
-			// 		if (convertedDelta && convertedDelta?.ops?.length === 0 ||
-			// 		   (convertedDelta?.ops?.length === 1 && typeof convertedDelta.ops[0].insert === 'string' && !convertedDelta.ops[0].insert.trim())) {
-			// 			// If it's empty, we might want to ensure a new line is inserted correctly
-			// 			initialDelta.insert('\n');
-			// 		}
-			// 		else {
-			// 			initialDelta = initialDelta.concat(convertedDelta as any);
-			// 			if (item.includes('<p>')) {
-			// 				initialDelta.insert('\n');
-			// 			}
-			// 			else{
-			// 				initialDelta.insert(item)
-			// 			}
-			// 		}
-			// 	}
-			// 	else if (item.trim() === '') {
-			// 		// For items meant to represent an empty line (like pressing Enter), insert a paragraph break
-			// 		initialDelta.insert('\n');
-			// 	}
-			// 	else {
-			// 		initialDelta.insert(`${item}\n`, quillFormats);
-			// 	}
-			// };
-
-			//iterate throught the content array, if it's <li> tag, wrap into <ul> tag
-			//let combinedDelta = new Quill.import('delta')();
-			// if (Array.isArray(content)) {
-			// 	content.forEach((item) => {
-			// 		// if (isHTML(item)) {
-			// 		// 	if (item.trim().startsWith('<li') && item.includes('ql-indent-')) {
-			// 		// 		// Find the level of indentation from the class
-			// 		// 		const indentLevel = item.match(/ql-indent-(\d+)/);
-			// 		// 		const level = indentLevel ? parseInt(indentLevel[1], 10) : 0;
-			// 		// 		item = wrapListItem(item, level);
-			// 		// 	}
-			// 		// 	else if (item.trim().startsWith('<li') && item.trim().endsWith('</li>')) {
-			// 		// 		item = `<ul>${item}</ul>`;
-			// 		// 	}
-			// 		// 	insertContent(item);
-			// 		// } else {
-			// 		// 	insertContent(item);
-			// 		// }
-			// 		insertContent(item);
-			// 	});
-			// } else {
-			// 	insertContent(content);
-			// }
-			//quillInstanceRef.current.setContents(initialDelta);
 
 			quillInstanceRef.current.on('text-change', (delta, oldDelta, source) => {
 				if (source === 'user') {
