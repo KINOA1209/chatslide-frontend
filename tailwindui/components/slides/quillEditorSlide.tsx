@@ -104,6 +104,7 @@ Size.whitelist = [
 Quill.register(Size, true);
 
 const toolbarOptions = [
+	['regenerate'],
 	[{ size: Size.whitelist }, { font: Font.whitelist }, 'bold', 'italic', 'underline'],
 	['strike', 'code-block', { list: 'bullet' }, { script: 'sub' }, { script: 'super' }],
 	[
@@ -149,12 +150,12 @@ const toolbarOptions = [
 		},
 		{ background: [] },
 	],
-	[{ align: '' }, { align: 'center' }, { align: 'right' }, 'link', 'clean', 'regenerate'],
+	[{ align: '' }, { align: 'center' }, { align: 'right' }, 'link', 'clean'],
 ];
 
 const regenerateIconSVG = `
-	<svg fill="white" stroke-width="0" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-		<path d="M497.408 898.56c-.08-.193-.272-.323-.385-.483l-91.92-143.664c-6.528-10.72-20.688-14.527-31.728-8.512l-8.193 5.04c-11.007 6-10.767 21.537-4.255 32.256l58.927 91.409c-5.024-1.104-10.096-2-15.056-3.296-103.184-26.993-190.495-96.832-239.535-191.6-46.336-89.52-55.04-191.695-24.512-287.743 30.512-96.048 99.775-174.464 189.295-220.784 15.248-7.888 21.2-26.64 13.312-41.856-7.872-15.264-26.64-21.231-41.855-13.327-104.272 53.952-184.4 145.28-219.969 257.152C45.982 485.008 56.11 604.033 110.078 708.29c57.136 110.336 158.832 191.664 279.024 223.136 1.36.352 2.784.56 4.16.911l-81.311 41.233c-11.008 6.032-14.657 19.631-8.128 30.351l3.152 8.176c6.56 10.72 17.84 14.527 28.815 8.512L484.622 944.4c.193-.128.385-.096.578-.224l9.984-5.456c5.52-3.024 9.168-7.969 10.624-13.505 1.52-5.52.815-11.663-2.448-16.991zm416.496-577.747c-57.056-110.304-155.586-191.63-275.762-223.118-8.56-2.24-17.311-3.984-26.048-5.712l79.824-40.48c11.008-6.033 17.568-19.632 11.04-30.369l-3.153-8.16c-6.56-10.736-20.752-14.528-31.727-8.528L519.262 80.654c-.176.112-.384.08-.577.208l-9.967 5.472c-5.537 3.04-9.168 7.967-10.624 13.503-1.52 5.52-.816 11.648 2.464 16.976l5.92 9.712c.096.192.272.305.384.497l91.92 143.648c6.512 10.736 20.688 14.528 31.712 8.513l7.216-5.025c11.008-6 11.727-21.536 5.231-32.24l-59.2-91.856c13.008 2 25.968 4.416 38.624 7.76 103.232 27.04 187.393 96.864 236.4 191.568 46.32 89.519 55.024 191.695 24.48 287.728-30.511 96.047-96.655 174.448-186.174 220.816-15.233 7.887-21.168 26.607-13.28 41.87 5.519 10.64 16.335 16.768 27.599 16.768 4.8 0 9.664-1.12 14.272-3.488 104.272-53.936 181.248-145.279 216.816-257.119 35.536-111.904 25.393-230.929-28.574-335.152z"></path>
+	<svg fill="#ACA1F6" stroke-width="0" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+	<path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828l.645-1.937zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.734 1.734 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.734 1.734 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.734 1.734 0 0 0 3.407 2.31l.387-1.162zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L10.863.1z"></path>
 	</svg>`
 
 const icons = Quill.import('ui/icons') as any
@@ -216,7 +217,6 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 	const quillInstanceRef = useRef<Quill | null>(null);
 	const isTextChangeRef = useRef(false);
 	const [hoveredSentence, setHoveredSentence] = useState({ text: '', start: 0, end: 0 });
-	const hoveredSentenceRef = useRef(hoveredSentence);
 	const {
 		chatHistory,
 		addChatHistory,
@@ -228,7 +228,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 		setIsRegenerateSelected,
 	} = useChatHistory()
 
-	function getSentenceAtPosition(startIndex: number, endIndex: number) {
+	const getSentenceAtPosition = (startIndex: number, endIndex: number) => {
 		const quill = quillInstanceRef.current;
 		if (quill) {
 			const text = quill.getText();
@@ -437,7 +437,6 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			};
 
 			const toolbar = quillInstanceRef.current.getModule('toolbar') as any;
-
 			// clean logic redesign
 			// remove all the formatting except bullet point related style first
 			// then apply the corresponding default css style to it.
@@ -664,6 +663,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 
 	useEffect(() => {
 		const quill = quillInstanceRef.current;
+		console.log(quill)
 		if (quill) {
 			const handleSelectionChange = (range: any) => {
 				if (range && range.index !== null && range.length !== 0) {
@@ -680,7 +680,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				quill.off('selection-change', handleSelectionChange);
 			};
 		}
-	}, [quillInstanceRef]);
+	}, []);
 
 	useEffect(() => {
 		const quill = quillInstanceRef.current;
@@ -691,7 +691,8 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				quill.insertText(hoveredSentence.start, regenerateText, 'user');
 
 				const newEndIndex = hoveredSentence.start + regenerateText.length;
-				setHoveredSentence({ text: regenerateText, start: hoveredSentence.start, end: newEndIndex });
+				//setHoveredSentence({ text: regenerateText, start: hoveredSentence.start, end: newEndIndex });
+				setHoveredSentence({ text: '', start: 0, end: 0 });
 				// Update the selection to cover the new text
 				quill.setSelection(hoveredSentence.start, regenerateText.length);
 				setIsRegenerateSelected(false)

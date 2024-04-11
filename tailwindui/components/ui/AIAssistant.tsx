@@ -128,6 +128,15 @@ export const Chats: React.FC<ChatsProps> = ({
 		content,
 	});
 
+	const addSuccessMessage = (
+		content: string | JSX.Element,
+		imageUrls?: string[],
+	): ChatHistory => ({
+		role: 'assistant',
+		content,
+		imageUrls, // Include imageUrls in the chat history entry
+	});
+
 	const addChoicesMessage = (
 		chat: string,
 		suggestions: [string, string][],
@@ -139,13 +148,14 @@ export const Chats: React.FC<ChatsProps> = ({
 	const handleRegenerateTextClick = (suggestion: string) => {
 		setRegenerateText(suggestion)
 		setIsRegenerateSelected(true)
+		const successMessage = addSuccessMessage(`✅ Replace the text successfully.`)
+		addChatHistory(successMessage)
 	}
 
 	const regenerateResponseJSX = (
 		chat: string,
 		suggestions: [string, string][],
 	): JSX.Element => {
-		console.log(suggestions[0][0])
 		return (
 			<div>
 				<span>{chat}</span> {/* Display the chat content */}
@@ -226,14 +236,13 @@ export const Chats: React.FC<ChatsProps> = ({
 			if (response.ok) {
 				const responseData = await response.json();
 				console.log('responseData structure:', responseData);
-				if (!responseData.data.suggestions && responseData.data.chat){
-					//response is ok
+				if (!responseData.data.suggestions && responseData.data.chat) {
+					// handle case when response is ok but backend fails to parse suggestion or fails to get result from openai
 					const errorMessage = addErrorMessage(responseData.data.chat)
 					addChatHistory(errorMessage)
 				}
-				else{
+				else {
 					const regenerate_choices = addChoicesMessage(responseData.data.chat, responseData.data.suggestions)
-					console.log('triggered', regenerate_choices)
 					addChatHistory(regenerate_choices)
 				}
 			}
@@ -278,7 +287,9 @@ export const Chats: React.FC<ChatsProps> = ({
 							<div className='w-full flex flex-wrap gap-2 mt-2'>
 								{chat.choices.map((choice, index) => (
 									<button
-										className="bg-blue-500 text-white text-sm px-3 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+										className="bg-white text-[#5168F6] text-sm px-3 py-2 rounded-lg border border-solid border-[#5168F6]
+												   hover:bg-[#ECF1FE] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50
+												  "
 										key={index}
 										onClick={() => handleToneClick(choice)}>
 										{choice}
