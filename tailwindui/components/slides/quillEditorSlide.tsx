@@ -691,8 +691,8 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				quill.insertText(hoveredSentence.start, regenerateText, 'user');
 
 				const newEndIndex = hoveredSentence.start + regenerateText.length;
-				//setHoveredSentence({ text: regenerateText, start: hoveredSentence.start, end: newEndIndex });
-				setHoveredSentence({ text: '', start: 0, end: 0 });
+				setHoveredSentence({ text: regenerateText, start: hoveredSentence.start, end: newEndIndex });
+				//setHoveredSentence({ text: '', start: 0, end: 0 });
 				// Update the selection to cover the new text
 				quill.setSelection(hoveredSentence.start, regenerateText.length);
 				setIsRegenerateSelected(false)
