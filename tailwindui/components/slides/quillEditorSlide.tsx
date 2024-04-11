@@ -217,6 +217,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 	const quillInstanceRef = useRef<Quill | null>(null);
 	const isTextChangeRef = useRef(false);
 	const [hoveredSentence, setHoveredSentence] = useState({ text: '', start: 0, end: 0 });
+	const regenerateTextRef = useRef('');
 	const {
 		chatHistory,
 		addChatHistory,
@@ -399,6 +400,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 						container: toolbarOptions,
 						handlers: {
 							'regenerate': () => {
+								setRegenerateText(regenerateTextRef.current)
 								setIsChatWindowOpen(true)
 								addChatHistory({
 									role:'assistant',
@@ -664,13 +666,15 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 	useEffect(() => {
 		const quill = quillInstanceRef.current;
 		console.log(quill)
+		console.log(hoveredSentence)
 		if (quill) {
 			const handleSelectionChange = (range: any) => {
 				if (range && range.index !== null && range.length !== 0) {
 					const sentence = getSentenceAtPosition(range.index, range.index + range.length);
 					console.log(sentence)
 					setHoveredSentence(sentence);
-					setRegenerateText(sentence.text)
+					regenerateTextRef.current = sentence.text;
+					//setRegenerateText(sentence.text)
 				}
 			};
 
@@ -684,11 +688,19 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 
 	useEffect(() => {
 		const quill = quillInstanceRef.current;
+		const defaultFormats = {
+			size: style?.fontSize || '12pt',
+			font: style?.fontFamily || 'Arimo',
+			bold: style?.fontWeight !== 'normal',
+			italic: style?.fontStyle === 'italic',
+			color: style?.color,
+			align: style?.textAlign || 'left'
+		};
 		if (quill && isRegenerateSelected && hoveredSentence.text) {
 			if (regenerateText && hoveredSentence.text !== regenerateText) {
 				// Delete the old text and insert the new one
 				quill.deleteText(hoveredSentence.start, hoveredSentence.end - hoveredSentence.start);
-				quill.insertText(hoveredSentence.start, regenerateText, 'user');
+				quill.insertText(hoveredSentence.start, regenerateText, defaultFormats, 'user');
 
 				const newEndIndex = hoveredSentence.start + regenerateText.length;
 				setHoveredSentence({ text: regenerateText, start: hoveredSentence.start, end: newEndIndex });
