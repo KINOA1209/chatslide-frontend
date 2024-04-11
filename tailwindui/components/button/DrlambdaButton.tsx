@@ -216,7 +216,7 @@ export const EarlyAccessButton: React.FC<{
 					UserService.submitFeedback(5, `${username} wants to join the pilot program for ${feature} feature`, project_id, token);
 					toast.success(`You are added to the ${feature} waitlist, thank you!`);
 				}} >
-					Get Early Access
+					Join Waitlist
 				</BigBlueButton>
 			</>)
 	};
