@@ -2,7 +2,7 @@
 import { ChatHistoryStatus, useChatHistory } from '@/hooks/use-chat-history';
 import { useSlides } from '@/hooks/use-slides';
 import { useUser } from '@/hooks/use-user';
-import ChatHistory from '@/models/ChatHistory';
+import ChatHistory, { RegenerateSelection } from '@/models/ChatHistory';
 import Slide from '@/models/Slide';
 import DrlambdaCartoonImage from '@/public/images/AIAssistant/DrLambdaCartoon.png';
 import Image from 'next/image';
@@ -139,10 +139,10 @@ export const Chats: React.FC<ChatsProps> = ({
 
 	const addChoicesMessage = (
 		chat: string,
-		suggestions: [string, string][],
+		suggestions: string[][],
 	): ChatHistory => ({
 		role: 'assistant',
-		content: regenerateResponseJSX(chat, suggestions)
+		content: {chat: chat, suggestions: suggestions} as RegenerateSelection
 	})
 
 	const handleRegenerateTextClick = (suggestion: string) => {
@@ -154,7 +154,7 @@ export const Chats: React.FC<ChatsProps> = ({
 
 	const regenerateResponseJSX = (
 		chat: string,
-		suggestions: [string, string][],
+		suggestions: string[][],
 	): JSX.Element => {
 		return (
 			<div>
@@ -164,17 +164,17 @@ export const Chats: React.FC<ChatsProps> = ({
 						<button
 							key={index}
 							onClick={() => handleRegenerateTextClick(suggestion[1])}
-							className='rounded-lg px-3 py-2 text-left text-xs flex bg-[#EFF4FF] flex flex-col hover:bg-white focus:ring-2 focus:ring-white focus:ring-opacity-50'
+							className='gap-3 rounded-lg px-3 py-2 text-left text-xs flex bg-[#EFF4FF] flex flex-col border border-solid border-[#EFF4FF] hover:bg-white'
 						>
-							<span className='text-gray-700'>{index + 1}. {suggestion[0]}</span>
+							<span className='text-gray-700 font-bold'>{index + 1}. {suggestion[0]}</span>
 							<span>{suggestion[1]}</span>
 						</button>
 					))}
 					<button
 						onClick={() => handleRegenerateTextClick(regenerateText)}
-						className='rounded-lg px-3 py-2 text-left text-xs flex bg-[#EFF4FF] flex flex-col hover:bg-white focus:ring-2 focus:ring-white focus:ring-opacity-50'
+						className='gap-3 rounded-lg px-3 py-2 text-left text-xs flex bg-[#EFF4FF] flex flex-col border border-solid border-[#EFF4FF] hover:bg-white'
 					>
-						<span className='text-gray-700'>Original</span>
+						<span className='text-gray-700 font-bold'>Original</span>
 						<span>{regenerateText}</span>
 					</button>
 				</div>
@@ -230,8 +230,6 @@ export const Chats: React.FC<ChatsProps> = ({
 			.map((chat) => ({ role: chat.role, content: chat.content }));
 		try {
 			setLoading(true)
-			console.log(regenerateText)
-			console.log(regenerate_prompt)
 			const response = await makeApiCall(regenerate_prompt, lastChatMessages, token, regenerateText);
 			if (response.ok) {
 				const responseData = await response.json();
@@ -279,8 +277,12 @@ export const Chats: React.FC<ChatsProps> = ({
 					>
 						<div className='blue-links'>
 							{/* Directly render chat.content if it's a React element */}
-							{React.isValidElement(chat.content) ? chat.content
-								: <span dangerouslySetInnerHTML={{ __html: chat.content }}></span>}
+							{/* {React.isValidElement(chat.content) ? chat.content
+								: <span dangerouslySetInnerHTML={{ __html: chat.content }}></span>} */}
+							{typeof chat.content === 'object' && 'chat' in chat.content && 'suggestions' in chat.content ?
+								regenerateResponseJSX(chat.content.chat, chat.content.suggestions) :
+								<span dangerouslySetInnerHTML={{ __html: chat.content }}></span>
+							}
 						</div>
 						{/* Check if there are choices and render choices */}
 						{chat.choices && chat.choices.length > 0 && (

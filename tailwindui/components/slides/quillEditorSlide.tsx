@@ -665,13 +665,10 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 
 	useEffect(() => {
 		const quill = quillInstanceRef.current;
-		console.log(quill)
-		console.log(hoveredSentence)
 		if (quill) {
 			const handleSelectionChange = (range: any) => {
 				if (range && range.index !== null && range.length !== 0) {
 					const sentence = getSentenceAtPosition(range.index, range.index + range.length);
-					console.log(sentence)
 					setHoveredSentence(sentence);
 					regenerateTextRef.current = sentence.text;
 					//setRegenerateText(sentence.text)
@@ -701,10 +698,8 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				// Delete the old text and insert the new one
 				quill.deleteText(hoveredSentence.start, hoveredSentence.end - hoveredSentence.start);
 				quill.insertText(hoveredSentence.start, regenerateText, defaultFormats, 'user');
-
 				const newEndIndex = hoveredSentence.start + regenerateText.length;
 				setHoveredSentence({ text: regenerateText, start: hoveredSentence.start, end: newEndIndex });
-				//setHoveredSentence({ text: '', start: 0, end: 0 });
 				// Update the selection to cover the new text
 				quill.setSelection(hoveredSentence.start, regenerateText.length);
 				setIsRegenerateSelected(false)
