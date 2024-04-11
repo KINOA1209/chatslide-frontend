@@ -11,7 +11,6 @@ import Project from '@/models/Project';
 import { Explanation, Instruction } from '../ui/Text';
 import RadioButton from '../ui/RadioButton';
 
-
 type ShareButtonProps = {
 	share: boolean;
 	setShare: null | ((is_shared: boolean, is_public?: boolean) => void);
@@ -46,8 +45,9 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 	const limitedKeywords = keywords.slice(0, 3);
 	const truncatedDescription = truncateWithFullWords(description, 100);
 
-	const iframe = `<iframe src="${host}/embed/${project_id}?page=${currentSlideIndex + 1
-		}" width="100%" height="600px" frameborder="0"></iframe>`;
+	const iframe = `<iframe src="${host}/embed/${project_id}?page=${
+		currentSlideIndex + 1
+	}" width="100%" height="600px" frameborder="0"></iframe>`;
 
 	function truncateWithFullWords(str: string, maxLength: number) {
 		if (str.length <= maxLength) return str;
@@ -77,9 +77,10 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 			setShowModal(true);
 		});
 
-		return () => document.removeEventListener('share_slide', (e) => {
-			setShowModal(true);
-		});
+		return () =>
+			document.removeEventListener('share_slide', (e) => {
+				setShowModal(true);
+			});
 	}, []);
 
 	return (
@@ -88,7 +89,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 				showModal={showModal}
 				setShowModal={setShowModal}
 				title='Share / Publish'
-			// description='Share your slides with others or on social media'
+				// description='Share your slides with others or on social media'
 			>
 				<div className='flex flex-col gap-2'>
 					<Instruction>
@@ -174,8 +175,8 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 							style={{
 								strokeWidth: '0.8',
 								flex: '1',
-								width: '1.5rem',
-								height: '1.5rem',
+								width: '16px',
+								height: '16px',
 								// fontWeight: 'bold',
 								color: '#344054',
 							}}

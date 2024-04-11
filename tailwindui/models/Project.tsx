@@ -11,6 +11,7 @@ type Project = {
 	keywords: string[];
 	resources: Resource[];
 	created_datetime: string;
+	updated_datetime: string;
 	project_name: string;
 	topic: string;
 	content_type: 'social_posts' | 'presentation';
@@ -20,7 +21,7 @@ type Project = {
 	is_shared: boolean;
 	is_public: boolean;
 	additional_images: string[];
-	
+
 	logo: string; // overwriten by selected_logo, '' means no logo
 	selected_logo: Resource[];
 	selected_background: Resource[];
