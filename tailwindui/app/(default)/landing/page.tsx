@@ -311,7 +311,6 @@ function Landing() {
 								src='https://www.youtube.com/embed/qxHT5GYe_aQ?autoplay=1&mute=1&loop=1&rel=0'
 								title='DrLambda - One-click presentation AI tool through multiple sources'
 								allow='autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-								// allowFullScreen=""
 							/>
 						</div>
 					</div>
@@ -320,8 +319,6 @@ function Landing() {
 						style={{
 							WebkitTransform:
 								'translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
-							// MozTransform:
-							// 	"translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
 							msTransform:
 								'translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
 							transform:
@@ -346,6 +343,53 @@ function Landing() {
 						<a href='/signup' className='button w-button'>
 							Try for free
 						</a>
+					</div>
+				</div>
+			</div>
+			<div className='section-content-white'>
+				<div className='container-regular'>
+					<div
+						data-w-id='5ae35090-a2e4-c5af-2f6b-a7214510c554'
+						style={{
+							WebkitTransform:
+								'translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+							msTransform:
+								'translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+							transform:
+								'translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+							opacity: 100,
+						}}
+						className='div-block'
+					>
+						<div className='margin-bottom-24'>
+							<h3 className='heading'>
+								🦹‍♂️ Employ the <span className='text-span'> digital avatar </span> who speaks for you
+								<br />
+							</h3>
+							<img
+								src='images/Group-1707478903.png'
+								loading='lazy'
+								alt=''
+								className='image-left'
+							/>
+						</div>
+						<a href='/signup' className='button w-button'>
+							Try for free
+						</a>
+					</div>
+					<div className='div-block-3'>
+						<div
+							style={{ paddingTop: '56.17021276595745%' }}
+							className='video w-video w-embed'
+						>
+							<iframe
+								width='100%'
+								height='100%'
+								src='https://www.youtube.com/embed/cs1dtV3gRpA?si=cGBczLWZpBZANnyv&autoplay=1&mute=1&loop=1&rel=0'
+								title='How to safely photography the solar eclipse (DrLambda Avatar Demo)'
+								allow='autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+							/>
+						</div>
 					</div>
 				</div>
 			</div>

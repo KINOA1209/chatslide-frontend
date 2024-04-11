@@ -2,7 +2,7 @@
 import React from 'react';
 import { FaDiscord } from 'react-icons/fa';
 import { GoHome, GoFile, GoDiscussionOutdated, GoGear } from 'react-icons/go';
-import { IoExitOutline } from 'react-icons/io5';
+import { IoExitOutline, IoMicOutline } from 'react-icons/io5';
 import { RiDiscordLine } from 'react-icons/ri';
 
 export interface SubMenu {
@@ -39,6 +39,11 @@ export const SideBarData: SideBarItem[] = [
 		title: 'My Resources',
 		icon: <GoFile />,
 		path: '/my-resources',
+	},
+	{
+		title: 'Studio',
+		icon: <IoMicOutline />,
+		path: '/studio',
 	},
 	{
 		title: 'Discover',

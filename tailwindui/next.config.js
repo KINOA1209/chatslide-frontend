@@ -69,8 +69,8 @@ const nextConfig = {
 			},
 			{
 				source: '/discord',
-				destination: 'https://discord.gg/ZMRQMtqH5E',
-				permanent: true,
+        destination: 'https://discord.gg/Cae8Vy2kUB',
+				permanent: false,
 			}
 		]
 	},

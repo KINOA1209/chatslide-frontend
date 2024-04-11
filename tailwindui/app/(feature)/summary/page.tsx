@@ -38,7 +38,7 @@ import { getUserCountryCode, getUserLanguage } from '@/utils/userLocation';
 import Project from '@/models/Project';
 import { GenerationStatusProgressModal } from '@/components/ui/GenerationStatusProgressModal';
 
-const MAX_TOPIC_LENGTH = 500;
+const MAX_TOPIC_LENGTH = 2000;
 const MIN_TOPIC_LENGTH = 3;
 
 const audienceDict = {

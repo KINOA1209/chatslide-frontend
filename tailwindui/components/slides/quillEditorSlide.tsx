@@ -186,25 +186,6 @@ function wrapListItem(item: string, level: number): string {
 	return wrappedItem;
 }
 
-// const BubbleTheme = Quill.import('themes/bubble');
-
-// class ExtendBubbleTheme extends BubbleTheme {
-// 	constructor(quill: Quill, options: any) {
-// 		super(quill, options);
-
-// 		quill.on('selection-change', (range) => {
-// 			if (range) {
-// 				const bounds = quill.getBounds(range.index);
-// 				const quillAny = quill as any;
-// 				quillAny.theme.tooltip.show();
-// 				quillAny.theme.tooltip.position(bounds);
-// 			}
-// 		});
-// 	}
-// }
-
-// Quill.register('themes/bubble', ExtendBubbleTheme);
-
 const QuillEditable: React.FC<QuillEditableProps> = ({
 	content,
 	handleBlur,
@@ -314,26 +295,12 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 		};
 	}, []);
 
-	// const showColorPicker = (value: string) => {
-	//     if (value === 'color-picker') {
-	//         const picker = document.createElement('input');
-	//         picker.type = 'color';
-	//         picker.style.display = 'none';
-	//         picker.addEventListener('change', () => {
-	//             const quill = quillInstanceRef.current;
-	//             if (quill) {
-	//                 quill.format('color', picker.value);
-	//             }
-	//         }, false);
-	//         document.body.appendChild(picker);
-	//         picker.click();
-	//     } else {
-	//         const quill = quillInstanceRef.current;
-	//         if (quill) {
-	//             quill.format('color', value);
-	//         }
-	//     }
-	// };
+	useEffect(() => {
+		const quill = quillInstanceRef.current;
+		if (quill) {
+			quill.root.style.minWidth = '100%';
+		}
+	}, []);
 
 	useEffect(() => {
 		if (editorRef.current && !quillInstanceRef.current) {
@@ -418,8 +385,8 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				theme: 'bubble',
 			}
 
-			if (need_placeholder) {
-				quillOptions.placeholder = 'Add some text here...'
+			if (need_placeholder){
+				quillOptions.placeholder = 'Text here...'
 			}
 
 			const quill = new Quill(editorRef.current, quillOptions);

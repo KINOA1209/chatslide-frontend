@@ -388,7 +388,7 @@ export const Cover_img_1_layout = ({
 				}}
 			>
 				<ImgModule
-					imgsrc={imgs[0]}
+					imgsrc={imgs?.[0]}
 					updateSingleCallback={updateImgAtIndex(0)}
 					chartArr={charts}
 					ischartArr={ischarts}
@@ -1240,7 +1240,7 @@ export const Col_2_img_1_layout = ({
 				}}
 			>
 				<ImgModule
-					imgsrc={imgs[0]}
+					imgsrc={imgs?.[0]}
 					updateSingleCallback={updateImgAtIndex(0)}
 					chartArr={charts}
 					ischartArr={ischarts}
@@ -1397,7 +1397,7 @@ export const Col_1_img_1_layout = ({
 					ref={imgContainerRef}
 				>
 					<ImgModule
-						imgsrc={imgs[0]}
+						imgsrc={imgs?.[0]}
 						updateSingleCallback={updateImgAtIndex(0)}
 						chartArr={charts}
 						ischartArr={ischarts}
@@ -1627,7 +1627,7 @@ export const Col_2_img_2_layout = ({
 							}}
 						></div> */}
 						<ImgModule
-							imgsrc={imgs[0]}
+							imgsrc={imgs?.[0]}
 							updateSingleCallback={updateImgAtIndex(0)}
 							chartArr={charts}
 							ischartArr={ischarts}
@@ -1656,7 +1656,7 @@ export const Col_2_img_2_layout = ({
 							}}
 						></div> */}
 						<ImgModule
-							imgsrc={imgs[1]}
+							imgsrc={imgs?.[1]}
 							updateSingleCallback={updateImgAtIndex(1)}
 							chartArr={charts}
 							ischartArr={ischarts}
@@ -1892,7 +1892,7 @@ export const Col_3_img_3_layout = ({
 						style={layoutElements.imageCSS}
 					>
 						<ImgModule
-							imgsrc={imgs[0]}
+							imgsrc={imgs?.[0]}
 							updateSingleCallback={updateImgAtIndex(0)}
 							chartArr={charts}
 							ischartArr={ischarts}
@@ -1912,7 +1912,7 @@ export const Col_3_img_3_layout = ({
 						style={layoutElements.imageCSS}
 					>
 						<ImgModule
-							imgsrc={imgs[1]}
+							imgsrc={imgs?.[1]}
 							updateSingleCallback={updateImgAtIndex(1)}
 							chartArr={charts}
 							ischartArr={ischarts}
@@ -1932,7 +1932,7 @@ export const Col_3_img_3_layout = ({
 						style={layoutElements.imageCSS}
 					>
 						<ImgModule
-							imgsrc={imgs[2]}
+							imgsrc={imgs?.[2]}
 							updateSingleCallback={updateImgAtIndex(2)}
 							chartArr={charts}
 							ischartArr={ischarts}

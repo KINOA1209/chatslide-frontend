@@ -429,6 +429,11 @@ export const useSlides = () => {
 			if (ok) {
 				setSaveStatus(SaveStatus.UpToDate);
 				console.log('Auto-save successful.');
+
+				if (is_cover_page) {
+					// Update the thumbnail
+					SlidesService.updateThumbnail(project_id, token);
+				}
 			} else {
 				// Handle save error
 				console.error('Auto-save failed.');

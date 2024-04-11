@@ -144,7 +144,7 @@ export const First_page_img_1 = ({
 				}}
 			>
 				<ImgModule
-					imgsrc={imgs[0]}
+					imgsrc={imgs?.[0]}
 					updateSingleCallback={updateImgAtIndex(0)}
 					chartArr={charts}
 					ischartArr={ischarts}
@@ -308,7 +308,7 @@ export const Col_2_img_1 = ({
 						}}
 					>
 						<ImgModule
-							imgsrc={imgs[0]}
+							imgsrc={imgs?.[0]}
 							updateSingleCallback={updateImgAtIndex(0)}
 							chartArr={charts}
 							ischartArr={ischarts}
@@ -400,7 +400,7 @@ export const First_page_img_1_template2 = ({
 				</div>
 				<div className='w-full h-1/2 flex rounded-md'>
 					<ImgModule
-						imgsrc={imgs[0]}
+						imgsrc={imgs?.[0]}
 						updateSingleCallback={updateImgAtIndex(0)}
 						chartArr={charts}
 						ischartArr={ischarts}

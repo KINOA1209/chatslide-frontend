@@ -14,6 +14,9 @@ import PaywallModal from '../paywallModal';
 import { useRouter } from 'next/navigation';
 import { GrayLabel, PlusLabel } from '../ui/GrayLabel';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import UserService from '@/services/UserService';
+import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 
 type DrlambdaButtonProps = {
@@ -81,7 +84,7 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
 				id={'primary-' + id}
 				disabled={isSubmitting}
 				onClick={checkPaidUser}
-				className={`sm:min-w-[10rem] lg:min-w-[12rem] px-2 h-[36px] sm:h-[36px] ${getButtonBg()} disabled:animate-pulse rounded-[0.4375rem] flex justify-center items-center gap-4 cursor-pointer }`}
+				className={`sm:min-w-[8rem] lg:min-w-[12rem] px-2 h-[36px] sm:h-[36px] ${getButtonBg()} disabled:animate-pulse rounded-[0.4375rem] flex justify-center items-center gap-4 cursor-pointer }`}
 			>
 				{isSubmitting && <SpinIcon />}
 				<span className='text-[#2044F2] font-semibold tracking-tight whitespace-nowrap flex flex-row gap-2'>
@@ -132,7 +135,7 @@ export const DrlambdaLink: React.FC<DrlambdaLinkProps> = ({
 			href={link}
 			target={newWindow ? '_blank' : '_self'}
 			rel={newWindow ? 'noopener noreferrer' : undefined} // Important for security reasons
-			className={`sm:min-w-[10rem] lg:w-[12rem] h-[36px] sm:h-[36px] ${style} rounded-3xl flex justify-center items-center gap-2 cursor-pointer`}
+			className={`sm:min-w-[8rem] lg:w-[12rem] h-[36px] sm:h-[36px] ${style} rounded-3xl flex justify-center items-center gap-2 cursor-pointer`}
 		>
 			<div className='flex flex-row justify-center items-center'>
 				<span className='font-semibold tracking-tight whitespace-nowrap'>
@@ -157,16 +160,15 @@ export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({
 }) => {
 	const router = useRouter();
 	return (
-		<div 
+		<div
 			id={text.replace(/[^A-Za-z0-9]/g, '_')}
-			className='h-[36px] sm:h-[36px] sm:min-w-[10rem] lg:min-w-[12rem] flex-row justify-center items-center gap-4 cursor-pointer flex rounded-3xl bg-white bg-opacity-0'
+			className='h-[36px] sm:h-[36px] sm:min-w-[6rem] lg:min-w-[12rem] flex-row justify-center items-center gap-4 cursor-pointer flex rounded-3xl bg-white bg-opacity-0'
 			onClick={() => router.push(href)}
 		>
 			<FaChevronLeft style={{ color: dark ? '#222222' : '#FFFFFF' }} />
 			<div
-				className={`text-center self-center ${
-					dark ? 'text-neural-800' : 'text-white'
-				} font-medium font-creato-medium leading-normal tracking-[0.035rem] whitespace-nowrap hidden sm:block`}
+				className={`text-center self-center ${dark ? 'text-neural-800' : 'text-white'
+					} font-medium font-creato-medium leading-normal tracking-[0.035rem] whitespace-nowrap hidden sm:block`}
 			>
 				{text}
 			</div>
@@ -184,11 +186,10 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 	id,
 }) => {
 	return (
-		<button 
+		<button
 			id={id}
-			className={`btn h-[36px] sm:h-[36px] sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
-				isSubmitting && 'animate-pulse'
-			} disabled:bg-gray-600 whitespace-nowrap rounded-xl`}
+			className={`btn h-[36px] sm:h-[36px] sm:gap-x-2 text-white sm:font-semibold bg-Blue ${isSubmitting && 'animate-pulse'
+				} disabled:bg-gray-600 whitespace-nowrap rounded-xl`}
 			onClick={onClick}
 			disabled={isSubmitting || disabled}
 		>
@@ -196,6 +197,29 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 		</button>
 	);
 };
+
+export const EarlyAccessButton: React.FC<{
+	username: string;
+	project_id?: string;
+	token: string;
+	feature: string;
+}> = ({
+	username,
+	project_id = '',
+	token,
+	feature,
+}) => {
+		return (
+			<>
+				<ToastContainer />
+				<BigBlueButton onClick={() => {
+					UserService.submitFeedback(5, `${username} wants to join the pilot program for ${feature} feature`, project_id, token);
+					toast.success(`You are added to the ${feature} waitlist, thank you!`);
+				}} >
+					Join Waitlist
+				</BigBlueButton>
+			</>)
+	};
 
 export const BigGrayButton: React.FC<DrlambdaButtonProps> = ({
 	children,
