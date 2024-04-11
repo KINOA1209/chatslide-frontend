@@ -226,7 +226,7 @@ export const Chats: React.FC<ChatsProps> = ({
 			if (response.ok) {
 				const responseData = await response.json();
 				console.log('responseData structure:', responseData);
-				if (!responseData.data.suggestion && responseData.data.chat){
+				if (!responseData.data.suggestions && responseData.data.chat){
 					//response is ok
 					const errorMessage = addErrorMessage(responseData.data.chat)
 					addChatHistory(errorMessage)
