@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useMemo, use } from 'react';
+import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.bubble.css';
 import '@/components/socialPost/quillEditor.scss';
@@ -6,6 +6,9 @@ import themeColorConfigData from './templates_customizable_elements/theme_color_
 import '@/app/css/style.css';
 import { stopArrowKeyPropagation } from '@/utils/editing';
 import '@/components/socialPost/socialPostCustomFonts.css';
+import { SlRefresh } from "react-icons/sl";
+import ReactDOMServer from 'react-dom/server';
+import { useChatHistory } from '@/hooks/use-chat-history';
 
 type QuillEditableProps = {
 	content: string | string[];
@@ -13,7 +16,7 @@ type QuillEditableProps = {
 	isVerticalContent: boolean;
 	templateKey?: string;
 	style?: React.CSSProperties;
-	need_placeholder?:boolean
+	need_placeholder?: boolean
 };
 
 // const generateFontSizes = (): string[] => {
@@ -101,6 +104,7 @@ Size.whitelist = [
 Quill.register(Size, true);
 
 const toolbarOptions = [
+	['regenerate'],
 	[{ size: Size.whitelist }, { font: Font.whitelist }, 'bold', 'italic', 'underline'],
 	['strike', 'code-block', { list: 'bullet' }, { script: 'sub' }, { script: 'super' }],
 	[
@@ -146,8 +150,16 @@ const toolbarOptions = [
 		},
 		{ background: [] },
 	],
-	[{ align: '' }, { align: 'center' }, { align: 'right' },'link', 'clean'],
+	[{ align: '' }, { align: 'center' }, { align: 'right' }, 'link', 'clean'],
 ];
+
+const regenerateIconSVG = `
+	<svg fill="#ACA1F6" stroke-width="0" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+	<path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828l.645-1.937zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.734 1.734 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.734 1.734 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.734 1.734 0 0 0 3.407 2.31l.387-1.162zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L10.863.1z"></path>
+	</svg>`
+
+const icons = Quill.import('ui/icons') as any
+icons['regenerate'] = regenerateIconSVG
 
 export const isHTML = (input: string): boolean => {
 	const doc: Document = new DOMParser().parseFromString(input, 'text/html');
@@ -185,6 +197,89 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 	const editorRef = useRef<HTMLDivElement>(null);
 	const quillInstanceRef = useRef<Quill | null>(null);
 	const isTextChangeRef = useRef(false);
+	const [hoveredSentence, setHoveredSentence] = useState({ text: '', start: 0, end: 0 });
+	const regenerateTextRef = useRef('');
+	const {
+		chatHistory,
+		addChatHistory,
+		isChatWindowOpen,
+		setIsChatWindowOpen,
+		regenerateText,
+		setRegenerateText,
+		isRegenerateSelected,
+		setIsRegenerateSelected,
+	} = useChatHistory()
+
+	const getSentenceAtPosition = (startIndex: number, endIndex: number) => {
+		const quill = quillInstanceRef.current;
+		if (quill) {
+			const text = quill.getText();
+			const sentenceBoundaryRegex = /[.?!]/;
+			let start = startIndex;
+			while (start > 0 && !sentenceBoundaryRegex.test(text[start - 1])) {
+				start--;
+			}
+
+			let end = endIndex;
+			// Check if the end index is already at the boundary; if not, extend to the next boundary.
+			if (!sentenceBoundaryRegex.test(text[end - 1])) {
+				while (end < text.length && !sentenceBoundaryRegex.test(text[end])) {
+					end++;
+				}
+	
+				// Include the sentence delimiter in the block
+				if (end < text.length && sentenceBoundaryRegex.test(text[end])) {
+					end++;
+				}
+			}
+
+			// get rid of \n
+			let sentenceText = text.substring(start, end).trim();
+			let trimmedStart = text.indexOf(sentenceText, start);
+			let trimmedEnd = trimmedStart + sentenceText.length;
+			return { text: sentenceText, start: trimmedStart, end: trimmedEnd };
+		}
+		else {
+			return hoveredSentence
+		}
+	}
+
+	// const setupCustomButton = (quill: any) => {
+	// 	let toolbar = quill.getModule('toolbar');
+
+	// 	let button = document.querySelector('.ql-regenerate') as HTMLButtonElement;
+	// 	if (!button) {
+	// 		button = document.createElement('button');
+	// 		button.className = 'ql-regenerate';
+	// 		button.type = 'button';
+	// 		button.innerHTML = `
+	// 			<svg viewBox="0 0 1024 1024" width="18" height="18" fill="white">
+	// 				<path d="M512 0l149.333 301.867h317.867L678.4 492.8 806.4 806.4 512 658.133 217.6 806.4 345.6 492.8 44.8 301.867h317.867z"/>
+	// 			</svg>
+	// 		`;
+	// 		toolbar.container.appendChild(button);
+	// 	}
+	// 	// // Create the select element
+	// 	// let select = document.createElement("select");
+	// 	// select.className = "ql-regenerate";
+	// 	// select.innerHTML = `
+	// 	// 	<option value="Neutral">Neutral</option>
+	// 	// 	<option value="Engaging">Engaging</option>
+	// 	// 	<option value="Informative">Informative</option>
+	// 	// 	<option value="Persuasive">Persuasive</option>
+	// 	// 	<option value="Professional">Professional</option>
+	// 	// `;
+	// 	// toolbar.container.appendChild(select);
+
+	// 	// Add event listener for selection change
+	// 	// select.addEventListener('change', function () {
+	// 	// 	let value = select.value;
+	// 	// 	console.log(value); // Here you can call your function to regenerate text
+
+	// 	// 	// Example function call
+	// 	// 	// regenerateText(quill, value);
+	// 	// });
+	// };
 
 	useEffect(() => {
 		// stop arrow key and esc key propagation
@@ -266,8 +361,27 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 					}
 				});
 			}
-			const quillOptions:any = {
-				modules: { toolbar: customizedToolbarOptions },
+			const quillOptions: any = {
+				modules: {
+					toolbar: {
+						container: toolbarOptions,
+						handlers: {
+							'regenerate': () => {
+								setRegenerateText(regenerateTextRef.current)
+								setIsChatWindowOpen(true)
+								addChatHistory({
+									role:'assistant',
+									content:'To proceed with regenerating your selected sentence, please select the desired tone:'
+								})
+								addChatHistory({
+									role:'assistant',
+									content:'',
+									choices:['Neutral', 'Engaging', 'Informative', 'Persuasive', 'Professional']
+								})
+							}
+						}
+					}
+				},
 				theme: 'bubble',
 			}
 
@@ -275,7 +389,9 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				quillOptions.placeholder = 'Text here...'
 			}
 
-			quillInstanceRef.current = new Quill(editorRef.current, quillOptions);
+			const quill = new Quill(editorRef.current, quillOptions);
+			quillInstanceRef.current = quill
+			//setupCustomButton(quill)
 			//console.log(style?.textAlign)
 			// const toolbar = quillInstanceRef.current.getModule('toolbar');
 			// toolbar.addHandler('color', showColorPicker);
@@ -290,7 +406,6 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			};
 
 			const toolbar = quillInstanceRef.current.getModule('toolbar') as any;
-
 			// clean logic redesign
 			// remove all the formatting except bullet point related style first
 			// then apply the corresponding default css style to it.
@@ -516,6 +631,50 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 	}, [handleBlur, content, style]);
 
 	useEffect(() => {
+		const quill = quillInstanceRef.current;
+		if (quill) {
+			const handleSelectionChange = (range: any) => {
+				if (range && range.index !== null && range.length !== 0) {
+					const sentence = getSentenceAtPosition(range.index, range.index + range.length);
+					setHoveredSentence(sentence);
+					regenerateTextRef.current = sentence.text;
+					//setRegenerateText(sentence.text)
+				}
+			};
+
+			quill.on('selection-change', handleSelectionChange);
+
+			return () => {
+				quill.off('selection-change', handleSelectionChange);
+			};
+		}
+	}, []);
+
+	useEffect(() => {
+		const quill = quillInstanceRef.current;
+		const defaultFormats = {
+			size: style?.fontSize || '12pt',
+			font: style?.fontFamily || 'Arimo',
+			bold: style?.fontWeight !== 'normal',
+			italic: style?.fontStyle === 'italic',
+			color: style?.color,
+			align: style?.textAlign || 'left'
+		};
+		if (quill && isRegenerateSelected && hoveredSentence.text) {
+			if (regenerateText && hoveredSentence.text !== regenerateText) {
+				// Delete the old text and insert the new one
+				quill.deleteText(hoveredSentence.start, hoveredSentence.end - hoveredSentence.start);
+				quill.insertText(hoveredSentence.start, regenerateText, defaultFormats, 'user');
+				const newEndIndex = hoveredSentence.start + regenerateText.length;
+				setHoveredSentence({ text: regenerateText, start: hoveredSentence.start, end: newEndIndex });
+				// Update the selection to cover the new text
+				quill.setSelection(hoveredSentence.start, regenerateText.length);
+				setIsRegenerateSelected(false)
+			}
+		}
+	}, [isRegenerateSelected, hoveredSentence, regenerateText, quillInstanceRef]);
+
+	useEffect(() => {
 		if (quillInstanceRef.current && style) {
 			const excludeProperties = [
 				'fontSize',
@@ -538,8 +697,13 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			Object.assign(quillInstanceRef.current.root.style, applyStyle);
 		}
 	}, [style]);
+	//console.log(hoveredSentence)
 
-	return <div ref={editorRef}></div>;
+	return (
+		<div>
+			<div ref={editorRef}></div>
+		</div>
+	);
 };
 
 export default React.memo(QuillEditable);

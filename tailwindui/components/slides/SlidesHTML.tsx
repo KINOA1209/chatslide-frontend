@@ -56,6 +56,7 @@ import ReactDOM from 'react-dom';
 import { ScrollBar } from '../ui/ScrollBar';
 import { Explanation } from '../ui/Text';
 import { BrandingButton } from '../button/BrandingButton';
+import { useChatHistory } from '@/hooks/use-chat-history';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -170,7 +171,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		calculateNonPresentScale(dimensions.width, dimensions.height, showScript),
 	);
 
-	const [isChatWindowOpen, setIsChatWindowOpen] = useState(false);
+	//const [isChatWindowOpen, setIsChatWindowOpen] = useState(false);
+	const { isChatWindowOpen, setIsChatWindowOpen } = useChatHistory();
 
 	const canUndo = slidesHistoryIndex > 0;
 	const canRedo = slidesHistoryIndex < slidesHistory.length - 1;
