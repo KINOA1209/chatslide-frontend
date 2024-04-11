@@ -603,7 +603,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	return (
 		<div className='w-full h-full flex flex-col items-start justify-around py-2 relative'>
-			<div className='w-full flex flex-row items-center justify-center'>
+			<div className='w-full flex flex-row items-center justify-center gap-2'>
 				<ActionsToolBar
 					undo={undoChange}
 					redo={redoChange}
@@ -670,6 +670,19 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						/>
 					)}
 				</ActionsToolBar>
+					{!isViewing && !isPresenting && (
+						<div className='hidden sm:block cursor-pointer z-50'>
+							<ButtonWithExplanation
+								button={
+									<DrLambdaAIAssistantIcon
+										onClick={toggleChatWindow}
+									></DrLambdaAIAssistantIcon>
+								}
+								explanation='AI Assistant'
+							/>
+						</div>
+					)}
+					<div className='w-1'></div> {/* spacer */}
 			</div>
 
 			<PaywallModal
@@ -854,7 +867,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					</div>
 				</Panel>
 
-				{!isViewing && isChatWindowOpen ? (
+				{!isViewing && isChatWindowOpen && (
 					<Panel>
 						<AIAssistantChatWindow
 							onToggle={toggleChatWindow}
@@ -864,22 +877,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							updateImgUrlArray={updateImgUrlArray}
 						/>
 					</Panel>
-				) : (
-					<>
-						{!isViewing && !isPresenting && (
-							<div className='hidden sm:block fixed bottom-10 right-10 cursor-pointer z-50'>
-								<ButtonWithExplanation
-									button={
-										<DrLambdaAIAssistantIcon
-											onClick={toggleChatWindow}
-										></DrLambdaAIAssistantIcon>
-									}
-									explanation='AI Assistant'
-								/>
-							</div>
-						)}
-						<div className='w-1'></div> {/* spacer */}
-					</>
 				)}
 			</div>
 		</div>
