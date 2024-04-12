@@ -59,12 +59,10 @@ const SideBar = ({ }: SideBarProps) => {
 	};
 
 	useEffect(() => {
-		if (window.innerWidth < 1080) {
+		if (path.includes('/slides')) {
 			setIsSidebarOpen(false);
-		}
-
-		else if (window.innerWidth < 1600) {
-			if (path.includes('/slides')) {
+		} else {
+			if (window.innerWidth < 1080) {
 				setIsSidebarOpen(false);
 			} else {
 				setIsSidebarOpen(true);
