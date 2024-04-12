@@ -166,10 +166,26 @@ export const ResourceItem: React.FC<Resource> = ({
 	return (
 		<div
 			key={id}
-			className='flex items-center justify-left w-full p-2 overflow-hidden'
+			className='flex items-center justify-left w-full'
+			style={{
+				// width: '168px',
+				// textOverflow: 'ellipsis',
+				overflow: 'hidden',
+			}}
 		>
 			<ResourceIcon resource={{ id, name, type, thumbnail_url }} />
-			<div className='mx-4 text-sm tracking-tight overflow text-clip'>
+			<div
+				className='mx-1 text-sm tracking-tight'
+				style={{
+					// border: 'solid 2px blue',
+					whiteSpace: 'normal',
+					textOverflow: 'ellipsis',
+					display: 'block',
+					overflow: 'hidden',
+					fontSize: '14px',
+					color: 'var(--colors-text-text-tertiary-600, #475467)',
+				}}
+			>
 				{name}
 			</div>
 		</div>

@@ -102,7 +102,12 @@ export default async function Discover() {
 					{/* <div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-black text-base font-bold font-creato-medium leading-10 tracking-wide border-white border-b-2'>
 							My Projects
 						</div> */}
-					<div className='text-black text-[24px] font-bold font-creato-medium leading-10 tracking-wide'>
+					<div
+						className='text-[24px] font-bold font-creato-medium leading-[32px] tracking-wide'
+						style={{
+							color: 'var(--colors-text-text-secondary-700, #344054)',
+						}}
+					>
 						Discover Projects
 					</div>
 

@@ -92,6 +92,7 @@ const DesignSystemBadges: React.FC<DesignSystemBadgesProps> = ({
 		border: `1px solid ${borderColor}`,
 		background: `${bgColor}`,
 		boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
+		width: 'max-content',
 	};
 
 	const textStyles = {

@@ -178,7 +178,12 @@ export default function Dashboard() {
 						{/* <div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-black text-base font-bold font-creato-medium leading-10 tracking-wide border-white border-b-2'>
 							My Projects
 						</div> */}
-						<div className='text-black text-[24px] font-bold font-creato-medium leading-10 tracking-wide'>
+						<div
+							className='text-[24px] font-bold font-creato-medium leading-[32px] tracking-wide'
+							style={{
+								color: 'var(--colors-text-text-secondary-700, #344054)',
+							}}
+						>
 							My Projects
 						</div>
 
@@ -205,6 +210,12 @@ export default function Dashboard() {
 						</div>
 					</div>
 				</div>
+
+				{/* placeholder for card/list layout */}
+				{/* width: 69px;
+					height: 36px;
+					flex-shrink: 0; */}
+				{/* select sorting key: last update time, created time or title */}
 
 				{/* projects details area */}
 				<div

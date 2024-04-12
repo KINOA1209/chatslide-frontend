@@ -139,13 +139,19 @@ const ProjectItem: React.FC<{
 			</div>
 			{/* title */}
 			<div
-				className={`col-span-2 p-2 flex items-center ${
+				className={`col-span-3 md:col-span-2 p-2 flex items-center ${
 					!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
-				} font-creato-medium leading-normal`}
+				} font-creato-medium leading-[20px]`}
 				style={{ padding: `var(--spacing-xl, 16px) var(--spacing-3xl, 24px)` }}
 			>
 				<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
-					<div className='flex-wrap'>
+					<div
+						className='flex-wrap'
+						style={{
+							fontSize: '14px',
+							color: 'var(--colors-text-text-secondary-700, #344054)',
+						}}
+					>
 						{project.name} {isCloning && '(Cloning...⏳)'}
 					</div>
 				</Link>
@@ -158,7 +164,7 @@ const ProjectItem: React.FC<{
 						padding: `var(--spacing-xl, 16px) var(--spacing-3xl, 24px)`,
 					}}
 				>
-					<div className='flex flex-row gap-[2px]'>
+					<div className='flex flex-col gap-[4px]'>
 						{project.content_type === 'presentation' ? (
 							<DesignSystemBadges
 								size='sm'
@@ -204,24 +210,31 @@ const ProjectItem: React.FC<{
 			{/* resources */}
 			{!isDiscover && (
 				<div
-					className='col-span-3 hidden md:block items-center text-gray-600'
+					className='col-span-3 hidden md:flex md:flex-col md:gap-1 items-center'
 					style={{
 						padding: `var(--spacing-xl, 16px) var(--spacing-3xl, 24px)`,
 					}}
 				>
-					{/* <FileIcon fileType='pdf' /> */}
+					{/* <div className='flex-wrap'> */}
 					{project.resources &&
 						project.resources.map((resource, resourceIndex) => (
 							<ResourceItem key={resourceIndex} {...resource} />
 						))}
+					{/* </div> */}
 				</div>
 			)}
 			{/* laste edited time */}
 			{
 				<div
-					className='col-span-2 hidden md:block items-center text-gray-600'
+					className='col-span-2 hidden md:block items-center '
 					style={{
 						padding: `var(--spacing-xl, 16px) var(--spacing-3xl, 24px)`,
+						fontSize: '14px',
+						color: 'var(--colors-text-text-tertiary-600, #475467)',
+						fontFamily: 'Creato Display Medium',
+						lineHeight: '20px',
+						fontStyle: 'normal',
+						fontWeight: 'normal',
 					}}
 				>
 					{/* <FileIcon fileType='pdf' /> */}
@@ -479,8 +492,8 @@ const ProjectTable: React.FC<Props> = ({
 	isDiscover = false,
 }) => {
 	const grids = isDiscover
-		? 'grid-cols-3 md:grid-cols-8'
-		: 'grid-cols-3 md:grid-cols-11';
+		? 'grid-cols-4 md:grid-cols-8'
+		: 'grid-cols-4 md:grid-cols-11';
 
 	return (
 		<>
@@ -499,29 +512,47 @@ const ProjectTable: React.FC<Props> = ({
 				>
 					{/* <div className='hidden md:flex col-span-1 w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'> */}
 					<div
-						className='hidden md:flex col-span-3 w-full ml-4 text-[13px] font-bold font-creato-medium capitalize leading-normal tracking-wide'
+						className='flex col-span-3 w-full capitalize '
 						style={{
 							padding: `var(--spacing-xl, 16px) var(--spacing-3xl, 24px)`,
 							whiteSpace: 'nowrap',
+							color: 'var(--colors-text-text-tertiary-600, #475467)',
+							fontFamily: 'Creato Display Medium',
+							fontSize: '12px',
+							fontStyle: 'normal',
+							lineHeight: '18px',
+							fontWeight: 500,
 						}}
 					>
 						Title
 					</div>
 					<div
-						className='col-span-2 flex w-full ml-4 text-[13px] font-bold font-creato-medium capitalizeleading-normal tracking-wide'
+						className='hidden md:flex col-span-2 w-full capitalize '
 						style={{
 							padding: `var(--spacing-xl, 16px) var(--spacing-3xl, 24px)`,
 							whiteSpace: 'nowrap',
+							color: 'var(--colors-text-text-tertiary-600, #475467)',
+							fontFamily: 'Creato Display Medium',
+							fontSize: '12px',
+							fontStyle: 'normal',
+							lineHeight: '18px',
+							fontWeight: 500,
 						}}
 					>
 						Type
 					</div>
 					{!isDiscover && (
 						<div
-							className='hidden md:flex col-span-3 w-full ml-4 text-[13px] font-bold font-creato-medium capitalize leading-normal tracking-wide'
+							className='hidden md:flex col-span-3 w-full capitalize '
 							style={{
 								padding: `var(--spacing-xl, 16px) var(--spacing-3xl, 24px)`,
 								whiteSpace: 'nowrap',
+								color: 'var(--colors-text-text-tertiary-600, #475467)',
+								fontFamily: 'Creato Display Medium',
+								fontSize: '12px',
+								fontStyle: 'normal',
+								lineHeight: '18px',
+								fontWeight: 500,
 							}}
 						>
 							Resources
@@ -530,10 +561,16 @@ const ProjectTable: React.FC<Props> = ({
 					{/* last edited header */}
 					{
 						<div
-							className='hidden md:flex col-span-2 w-full ml-4 text-[13px] font-bold font-creato-medium capitalize leading-normal tracking-wide'
+							className='hidden md:flex col-span-2 w-full capitalize '
 							style={{
 								padding: `var(--spacing-xl, 16px) var(--spacing-3xl, 24px)`,
 								whiteSpace: 'nowrap',
+								color: 'var(--colors-text-text-tertiary-600, #475467)',
+								fontFamily: 'Creato Display Medium',
+								fontSize: '12px',
+								fontStyle: 'normal',
+								lineHeight: '18px',
+								fontWeight: 500,
 							}}
 						>
 							Last edited
@@ -542,7 +579,7 @@ const ProjectTable: React.FC<Props> = ({
 					{/* header: for pop up menu */}
 					{
 						<div
-							className='hidden md:flex col-span-1 w-full ml-4 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'
+							className='hidden md:flex col-span-1 w-full text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'
 							style={{
 								padding: `var(--spacing-xl, 16px) var(--spacing-3xl, 24px)`,
 							}}

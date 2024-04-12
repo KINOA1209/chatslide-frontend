@@ -52,32 +52,32 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 	const spacing = {
 		sm: {
 			paddingTop: '8px',
-			paddingBottom: '12px',
-			paddingLeft: '8px',
+			paddingBottom: '8px',
+			paddingLeft: '12px',
 			paddingRight: '12px',
 		},
 		md: {
 			paddingTop: '10px',
-			paddingBottom: '14px',
-			paddingLeft: '10px',
+			paddingBottom: '10px',
+			paddingLeft: '14px',
 			paddingRight: '14px',
 		},
 		lg: {
 			paddingTop: '10px',
-			paddingBottom: '16px',
-			paddingLeft: '10px',
+			paddingBottom: '10px',
+			paddingLeft: '16px',
 			paddingRight: '16px',
 		},
 		xl: {
 			paddingTop: '12px',
-			paddingBottom: '18px',
-			paddingLeft: '12px',
+			paddingBottom: '12px',
+			paddingLeft: '18px',
 			paddingRight: '18px',
 		},
 		'2xl': {
 			paddingTop: '16px',
-			paddingBottom: '22px',
-			paddingLeft: '16px',
+			paddingBottom: '16px',
+			paddingLeft: '22px',
 			paddingRight: '22px',
 		},
 	};
