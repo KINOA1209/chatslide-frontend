@@ -129,7 +129,7 @@ const DesignSystemBadges: React.FC<DesignSystemBadgesProps> = ({
 	};
 
 	return (
-		<button style={buttonStyles}>
+		<div style={buttonStyles}>
 			{iconLeading && (
 				<Icon
 					icon={iconLeading}
@@ -143,7 +143,7 @@ const DesignSystemBadges: React.FC<DesignSystemBadgesProps> = ({
 					style={{ ...iconStyles, marginLeft: '4px' }}
 				/>
 			)}
-		</button>
+		</div>
 	);
 };
 

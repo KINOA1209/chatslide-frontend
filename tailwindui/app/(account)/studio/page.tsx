@@ -3,6 +3,7 @@
 
 import { BigBlueButton, EarlyAccessButton } from "@/components/button/DrlambdaButton";
 import { Column } from "@/components/layout/Column";
+import { Panel } from "@/components/layout/Panel";
 import Card from "@/components/ui/Card";
 import { ProLabel } from "@/components/ui/GrayLabel";
 import { BigTitle, Explanation, Instruction } from "@/components/ui/Text";
@@ -21,7 +22,8 @@ export default function Studio() {
 
 	return (
 		<Column>
-			{/* {isPlus && <Card>
+			<Panel>
+				{/* {isPlus && <Card>
 				<BigTitle>✅ Upgrade to Pro</BigTitle>
 				<Instruction>
 					🤫 Shhhh, snatch a lifetime deal now. Only available until May 11, 2024. <br />
@@ -42,50 +44,51 @@ export default function Studio() {
 				</div>
 			</Card>} */}
 
-			<Card>
-				<BigTitle>🎙️ Voice Cloning</BigTitle>
-				<Instruction>
-					Record your voice, and use your voice clone in your videos. {!isPro && <ProLabel />}
-				</Instruction>
+				<Card>
+					<BigTitle>🎙️ Voice Cloning</BigTitle>
+					<Instruction>
+						Record your voice, and use your voice clone in your videos. {!isPro && <ProLabel />}
+					</Instruction>
 
-				<Explanation>
-					Coming soon, expected in May, 2024. <br />
-					Learn more about our future plans at our <a href='https://blog.drlambda.ai/drlambda-product-roadmap/' className='text-blue-600'>roadmap</a>. <br />
-					Join our <a href='discord' className='text-blue-600'>discord</a> channel to get up to date information.
-				</Explanation>
+					<Explanation>
+						Coming soon, expected in May, 2024. <br />
+						Learn more about our future plans at our <a href='https://blog.drlambda.ai/drlambda-product-roadmap/' className='text-blue-600'>roadmap</a>. <br />
+						Join our <a href='discord' className='text-blue-600'>discord</a> channel to get up to date information.
+					</Explanation>
 
-				<div>
-					<EarlyAccessButton
-						username={username}
-						token={token}
-						feature='voice cloning'
-					/>
-				</div>
-			</Card>
+					<div>
+						<EarlyAccessButton
+							username={username}
+							token={token}
+							feature='voice cloning'
+						/>
+					</div>
+				</Card>
 
-			<Card>
-				<BigTitle>🦹‍♂️ Avatar Cloning</BigTitle>
-				<Instruction>
-					Upload your photos, clone your avatar, and let your avatar speak for you. {!isPro && <ProLabel />}
-				</Instruction>
-				{isPlus && <Instruction>
-					Upgrade to our PRO plan at a discounted price! Availble until May 31, 2024.
-				</Instruction>
-				}
-				<Explanation>
-					Coming soon, expected in June, 2024. <br />
-					Learn more about our future plans at our <a href='https://blog.drlambda.ai/drlambda-product-roadmap/' className='text-blue-600'>roadmap</a>. <br />
-					Join our <a href='discord' className='text-blue-600'>discord</a> channel to get up to date information.
-				</Explanation>
+				<Card>
+					<BigTitle>🦹‍♂️ Avatar Cloning</BigTitle>
+					<Instruction>
+						Upload your photos, clone your avatar, and let your avatar speak for you. {!isPro && <ProLabel />}
+					</Instruction>
+					{isPlus && <Instruction>
+						Upgrade to our PRO plan at a discounted price! Availble until May 31, 2024.
+					</Instruction>
+					}
+					<Explanation>
+						Coming soon, expected in June, 2024. <br />
+						Learn more about our future plans at our <a href='https://blog.drlambda.ai/drlambda-product-roadmap/' className='text-blue-600'>roadmap</a>. <br />
+						Join our <a href='discord' className='text-blue-600'>discord</a> channel to get up to date information.
+					</Explanation>
 
-				<div>
-					<EarlyAccessButton
-						username={username}
-						token={token}
-						feature='avatar cloning'
-					/>
-				</div>
-			</Card>
+					<div>
+						<EarlyAccessButton
+							username={username}
+							token={token}
+							feature='avatar cloning'
+						/>
+					</div>
+				</Card>
+			</Panel>
 		</Column>
 
 
