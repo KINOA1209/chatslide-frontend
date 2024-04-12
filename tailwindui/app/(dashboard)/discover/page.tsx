@@ -21,60 +21,8 @@ export const metadata = {
 };
 
 export default async function Discover() {
-	// const { token, userStatus, updateCreditsAndTier } = useUser();
-	// const [rendered, setRendered] = useState<boolean>(false);
-	// const [projects, setProjects] = useState<Project[]>([]);
-	// const [showSurvey, setShowSurvey] = useState(false);
-	// const currentProjects = projects;
-	// const fetchProjects = async () => {
-	// 	try {
-	// 		ProjectService.getProjects(token).then((projects) => {
-	// 			console.log('projects', projects);
-	// 			setProjects(projects);
-	// 			setRendered(true);
-	// 		});
-	// 	} catch (error: any) {
-	// 		console.error(error);
-	// 	}
-	// };
-
-	// const init = async () => {
-	// 	if (!token) return; // sidebar will show a modal to ask user to login
-
-	// 	const promo = SessionStorage.getItem('promo');
-	// 	if (promo) {
-	// 		const { status, message } = await UserService.applyPromoCode(
-	// 			promo,
-	// 			token,
-	// 		);
-	// 		console.log(status, message);
-	// 		if (status == 200) {
-	// 			toast.success('Your code is successfully applied!', {
-	// 				position: 'top-center',
-	// 				autoClose: 2000,
-	// 				hideProgressBar: false,
-	// 				closeOnClick: true,
-	// 				pauseOnHover: true,
-	// 				draggable: true,
-	// 				progress: undefined,
-	// 				theme: 'light',
-	// 			});
-	// 			SessionStorage.removeItem('promo');
-	// 			updateCreditsAndTier();
-	// 		}
-	// 	}
-
-	// 	fetchProjects();
-	// 	const surveyFinished = await UserService.checkSurveyFinished(token);
-	// 	if (!surveyFinished) {
-	// 		setShowSurvey(true);
-	// 	} else if (rendered && projects.length === 0) {
-	// 		router.push('/type-choice');
-	// 	}
-	// };
-	// const projects = await ProjectService.getProjects('', true, true);
-	const projects = mockProjectsData;
-	// const projects = await ProjectService.getProjects('', false, false); // for test purposes only
+	const projects = await ProjectService.getProjects('', true, true);
+	// const projects = mockProjectsData; // for test purposes only
 
 	return (
 		<section className='grow flex flex-col'>
