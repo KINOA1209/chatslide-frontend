@@ -48,7 +48,7 @@ class ProjectService {
 			if (project?.presentation_slides) {
 				project.parsed_slides = this.parseSlides(project.presentation_slides);
 			}
-			if (project?.social_posts) {
+			if (project?.social_posts && project?.post_type) {
 				project.parsed_socialPosts = this.parseSocialPosts(
 					project.social_posts,
 					project.post_type,
@@ -106,7 +106,7 @@ class ProjectService {
 				project.content_type = 'presentation';
 				project.parsed_slides = this.parseSlides(project.presentation_slides);
 			}
-			if (project?.social_posts) {
+			if (project?.social_posts && project?.post_type) {
 				project.parsed_socialPosts = this.parseSocialPosts(
 					project.social_posts,
 					project.post_type,

@@ -10,32 +10,44 @@ import PostPlatformConfigs from '@/components/button/PostPlatformConfig';
 import Project from '@/models/Project';
 import { Explanation, Instruction } from '../ui/Text';
 import RadioButton from '../ui/RadioButton';
-
-
+import { MdOutlineShare } from 'react-icons/md';
 type ShareButtonProps = {
 	share: boolean;
 	setShare: null | ((is_shared: boolean, is_public?: boolean) => void);
+	showShareModal: boolean; // Accept showCloneModal as prop
+	setShowShareModal: React.Dispatch<React.SetStateAction<boolean>>; // Accept setShowCloneModal as prop
+	isDropdownVisible?: boolean;
+	setIsDropdownVisible?: React.Dispatch<React.SetStateAction<boolean>>;
 	project: Project;
 	host?: string;
 	isSocialPost?: boolean;
 	currentSlideIndex?: number;
+	width?: string;
+	height?: string;
 };
 
 const ShareButton: React.FC<ShareButtonProps> = ({
 	share,
 	setShare,
 	project,
+	showShareModal,
+	setShowShareModal,
+	isDropdownVisible,
+	setIsDropdownVisible,
 	host = 'https://drlambda.ai',
 	isSocialPost = false,
 	currentSlideIndex = 0,
+	width,
+	height,
 }) => {
-	const [showModal, setShowModal] = useState(false);
+	// const [showModal, setShowModal] = useState(false);
 	const project_id = project?.id || '';
 	const [isPublic, setIsPublic] = useState(project.is_public);
 
 	const toggleShare = async () => {
 		setShare && setShare(true, isPublic); // updates db as well
-		setShowModal(true);
+		setShowShareModal && setShowShareModal(true);
+		setIsDropdownVisible && setIsDropdownVisible(false);
 	};
 
 	const platforms = ['twitter', 'facebook', 'reddit', 'linkedin'];
@@ -46,8 +58,9 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 	const limitedKeywords = keywords.slice(0, 3);
 	const truncatedDescription = truncateWithFullWords(description, 100);
 
-	const iframe = `<iframe src="${host}/embed/${project_id}?page=${currentSlideIndex + 1
-		}" width="100%" height="600px" frameborder="0"></iframe>`;
+	const iframe = `<iframe src="${host}/embed/${project_id}?page=${
+		currentSlideIndex + 1
+	}" width="100%" height="600px" frameborder="0"></iframe>`;
 
 	function truncateWithFullWords(str: string, maxLength: number) {
 		if (str.length <= maxLength) return str;
@@ -74,21 +87,26 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 
 	useEffect(() => {
 		document.addEventListener('share_slide', (e) => {
-			setShowModal(true);
+			setShowShareModal && setShowShareModal(true);
 		});
 
-		return () => document.removeEventListener('share_slide', (e) => {
-			setShowModal(true);
-		});
+		return () =>
+			document.removeEventListener('share_slide', (e) => {
+				setShowShareModal && setShowShareModal(true);
+			});
 	}, []);
+
+	useEffect(() => {
+		console.log('isDropdownvisible:', isDropdownVisible);
+	}, [setIsDropdownVisible]);
 
 	return (
 		<div>
 			<Modal
-				showModal={showModal}
-				setShowModal={setShowModal}
+				showModal={showShareModal}
+				setShowModal={setShowShareModal}
 				title='Share / Publish'
-			// description='Share your slides with others or on social media'
+				// description='Share your slides with others or on social media'
 			>
 				<div className='flex flex-col gap-2'>
 					<Instruction>
@@ -170,16 +188,26 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 			<ButtonWithExplanation
 				button={
 					<button onClick={toggleShare}>
-						<GoShare
+						{/* <GoShare
 							style={{
 								strokeWidth: '0.8',
 								flex: '1',
-								width: '1.5rem',
-								height: '1.5rem',
+								width: `${width ? width : '24px'}`,
+								height: `${height ? height : '24px'}`,
 								// fontWeight: 'bold',
 								color: '#344054',
 							}}
-						/>
+						/> */}
+						<MdOutlineShare
+							style={{
+								// strokeWidth: '0.8',
+								// flex: '1',
+								width: `${width ? width : '24px'}`,
+								height: `${height ? height : '24px'}`,
+								// fontWeight: 'bold',
+								color: 'var(--colors-text-text-secondary-700, #344054)',
+							}}
+						></MdOutlineShare>
 					</button>
 				}
 				explanation={'Share / Publish'}

@@ -21,28 +21,38 @@ const PdfPage: React.FC<PdfPageProps> = ({ project_id, page = 1 }) => {
 	const { initSlides, setIsPresenting } = useSlides();
 
 	useEffect(() => {
-		const token = new URLSearchParams(window.location.search).get(
-			'token',
-		) as string;
-		const init = async () => {
-			const project = await ProjectService.getProjectDetails(token, project_id);
-			const slides = ProjectService.parseSlides(project.presentation_slides);
-			initSlides(slides);
-			setLoading(false);
-			setIsPresenting(true);
-		};
-		init();
+		const token = new URLSearchParams(window.location.search).get('token');
+
+		if (token) {
+			const init = async () => {
+				const project = await ProjectService.getProjectDetails(
+					token,
+					project_id,
+				);
+
+				// Check if presentation_slides is defined before parsing
+				if (project.presentation_slides) {
+					const slides = ProjectService.parseSlides(
+						project.presentation_slides,
+					);
+					initSlides(slides);
+					setLoading(false);
+					setIsPresenting(true);
+				} else {
+					console.error('presentation_slides is undefined.');
+				}
+			};
+			init();
+		} else {
+			console.error('Token is undefined.');
+		}
 	}, []);
 
-	if (loading)
-		return <Loading />;
+	if (loading) return <Loading />;
 
 	return (
 		<main className='grow'>
-			<SlidesHTML
-				isViewing={true}
-				toPdf={true}
-			/>
+			<SlidesHTML isViewing={true} toPdf={true} />
 		</main>
 	);
 };

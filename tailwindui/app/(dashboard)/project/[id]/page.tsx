@@ -54,17 +54,19 @@ const ProjectLoading = () => {
 					project_id,
 				);
 				await initProject(project); // will also init outlines
-				if (project?.parsed_slides?.length > 0) {
-					initSlides(project.parsed_slides);
+				const parsedSlides = project?.parsed_slides; // Assign to a variable to simplify null check
 
-					if (project.parsed_slides?.some((slide) => slide.transcript)) {
+				if (parsedSlides && parsedSlides.length > 0) {
+					initSlides(parsedSlides);
+
+					if (parsedSlides.some((slide) => slide.transcript)) {
 						updateProject('has_scripts', true);
 					}
-					updateProject('template', project.parsed_slides[0].template);
-					updateProject('palette', project.parsed_slides[0].palette);
+					updateProject('template', parsedSlides[0].template);
+					updateProject('palette', parsedSlides[0].palette);
 				}
 				if (project?.parsed_socialPosts) {
-					initSocialPosts(project.parsed_socialPosts)
+					initSocialPosts(project.parsed_socialPosts);
 				}
 				// setSessionStorage(project);
 				handleRedirect(project, project_id);
@@ -79,9 +81,11 @@ const ProjectLoading = () => {
 	};
 
 	if (failed) {
-		return <Blank>
-			❌ The project is not found or you do not have access to it.
-		</Blank>
+		return (
+			<Blank>
+				❌ The project is not found or you do not have access to it.
+			</Blank>
+		);
 	}
 	return <Loading />;
 };

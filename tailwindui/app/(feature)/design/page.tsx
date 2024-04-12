@@ -176,41 +176,46 @@ export default function DesignPage() {
 			return;
 		}
 		try {
-			const { slides, additional_images } = await SlidesService.initImages(
-				project.id,
-				project.topic,
-				imageLicense,
-				imageAmount,
-				token,
-			);
+			if (project.id && project.topic && token) {
+				const { slides, additional_images } = await SlidesService.initImages(
+					project.id,
+					project.topic,
+					imageLicense,
+					imageAmount,
+					token,
+				);
 
-			bulkUpdateProject({
-				logo: showLogo ? 'Default' : '',
-				selected_background: selectedBackground,
-				selected_logo: selectedLogo,
-				template: template,
-				palette: colorPalette,
-				additional_images: additional_images,
-			} as Project);
-
-			const newSlides = slides.map((slide) => {
-				return {
-					...slide,
+				bulkUpdateProject({
+					logo: showLogo ? 'Default' : '',
+					selected_background: selectedBackground,
+					selected_logo: selectedLogo,
 					template: template,
 					palette: colorPalette,
-					logo: showLogo ? 'Default' : '',
-					logo_url: selectedLogo?.[0]?.thumbnail_url || '',
-					background_url: selectedBackground?.[0]?.thumbnail_url || '',
-					images_position: [{}, {}, {}],
-					media_type: ['image', 'image', 'image'],
-					transcript: '',
-				};
-			});
+					additional_images: additional_images,
+				} as Project);
 
-			setSlides(newSlides);
-			debouncedSyncSlides(newSlides);
+				const newSlides = slides.map((slide) => {
+					return {
+						...slide,
+						template: template,
+						palette: colorPalette,
+						logo: showLogo ? 'Default' : '',
+						logo_url: selectedLogo?.[0]?.thumbnail_url || '',
+						background_url: selectedBackground?.[0]?.thumbnail_url || '',
+						images_position: [{}, {}, {}],
+						media_type: ['image', 'image', 'image'],
+						transcript: '',
+					};
+				});
 
-			router.push(addIdToRedir('/slides'));
+				setSlides(newSlides);
+				debouncedSyncSlides(newSlides);
+
+				router.push(addIdToRedir('/slides'));
+			} else {
+				// Handle the case where one of the variables is undefined
+				console.error('One or more required variables are undefined.');
+			}
 		} catch (e) {
 			setIsSubmitting(false);
 			console.error(e);

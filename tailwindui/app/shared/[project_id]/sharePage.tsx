@@ -26,7 +26,7 @@ const SocialPostHTML = dynamic(
 
 interface SharePageProps {
 	project_id: string;
-  embed?: boolean;
+	embed?: boolean;
 }
 
 const SharePage: React.FC<SharePageProps> = ({ project_id, embed = false }) => {
@@ -34,10 +34,10 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, embed = false }) => {
 	const [loading, setLoading] = useState(true);
 	const [loadingFailed, setLoadingFailed] = useState(false);
 	const { initSlides } = useSlides();
-	const { initSocialPosts } = useSocialPosts()
+	const { initSocialPosts } = useSocialPosts();
 	const [postType, setPostType] = useState<string>('casual_topic');
 	const params = useSearchParams();
-	const initSlideIndex = parseInt(params.get('page') || '1') - 1 ;
+	const initSlideIndex = parseInt(params.get('page') || '1') - 1;
 	const borderColorOptions = [
 		{
 			border_start: '#FF7A41',
@@ -114,44 +114,59 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, embed = false }) => {
 				setLoadingFailed(true);
 				return;
 			}
+
 			initProject(project);
 			console.log('project', project);
-			if (!project.content_type || project.content_type === 'presentation') {
-				const slides = ProjectService.parseSlides(project.presentation_slides);
-				initSlides(slides);
+
+			if (project) {
+				if (!project.content_type || project.content_type === 'presentation') {
+					const slides = ProjectService.parseSlides(
+						project.presentation_slides || '',
+					);
+					initSlides(slides);
+					setLoading(false);
+				} else if (project.content_type === 'social_posts') {
+					setPostType(project.post_type || ''); // Ensure project.post_type is not undefined
+					const socialposts = ProjectService.parseSocialPosts(
+						project.social_posts || '',
+						project.post_type || '',
+					); // Ensure project.social_posts and project.post_type are not undefined
+					initSocialPosts(socialposts);
+					setLoading(false);
+				}
+			} else {
+				console.error(`Project with ID ${project_id} not found.`);
 				setLoading(false);
-			} else if (project.content_type === 'social_posts') {
-				setPostType(project.post_type);
-				const socialposts = ProjectService.parseSocialPosts(project.social_posts, project.post_type)
-				initSocialPosts(socialposts)
-				setLoading(false);
+				setLoadingFailed(true);
 			}
 		};
+
 		init();
 	}, []);
 
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
 
-	if (loading)
-		return <Loading />
+	if (loading) return <Loading />;
 
 	if (loadingFailed || project?.topic === 'Project not found')
-		return <Blank>
-			<div>
-				❌ Oops! It looks like we couldn't find the project. <br />
-				🔍 Could you double-check the project ID and make sure it's shared?
-			</div>
-		</Blank>
+		return (
+			<Blank>
+				<div>
+					❌ Oops! It looks like we couldn't find the project. <br />
+					🔍 Could you double-check the project ID and make sure it's shared?
+				</div>
+			</Blank>
+		);
 
-  if (embed) 
-		return <EmbeddedSlide initSlideIndex={initSlideIndex}/>
+	if (embed) return <EmbeddedSlide initSlideIndex={initSlideIndex} />;
 
 	return (
 		<>
 			<ToastContainer />
 			<div className='flex flex-col h-full items-center justify-center overflow-hidden'>
-				{(!project?.content_type || project?.content_type === 'presentation') && (
+				{(!project?.content_type ||
+					project?.content_type === 'presentation') && (
 					<div className='w-full flex grow overflow-hidden'>
 						<SlidesHTML isViewing={true} />
 					</div>

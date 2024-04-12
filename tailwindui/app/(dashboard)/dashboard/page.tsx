@@ -16,6 +16,7 @@ import UserService from '@/services/UserService';
 import { Loading, Blank } from '@/components/ui/Loading';
 import SessionStorage from '@/utils/SessionStorage';
 import { useProject } from '@/hooks/use-project';
+import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
 
 export default function Dashboard() {
 	const [projects, setProjects] = useState<Project[]>([]);
@@ -62,7 +63,7 @@ export default function Dashboard() {
 			);
 			console.log(status, message);
 			if (status == 200) {
-				toast.success("Your code is successfully applied!", {
+				toast.success('Your code is successfully applied!', {
 					position: 'top-center',
 					autoClose: 2000,
 					hideProgressBar: false,
@@ -95,9 +96,7 @@ export default function Dashboard() {
 		}
 	};
 
-	const handleDelete = (
-		projectId: string,
-	) => {
+	const handleDelete = (projectId: string) => {
 		setDeleteInd(projectId);
 		setShowDeleteModal(true);
 	};
@@ -132,31 +131,91 @@ export default function Dashboard() {
 		router.push('/type-choice');
 	};
 
+	const AIIcon = (
+		<div
+			className='Badge'
+			style={{
+				width: 24,
+				height: 22,
+				paddingLeft: 6,
+				paddingRight: 6,
+				paddingTop: 2,
+				paddingBottom: 2,
+				background: '#EFF4FF',
+				borderRadius: 6,
+				border: '1px #C7D7FE solid',
+				justifyContent: 'flex-start',
+				alignItems: 'center',
+				display: 'inline-flex',
+			}}
+		>
+			<div
+				className='Text'
+				style={{
+					textAlign: 'center',
+					color: '#3538CD',
+					fontSize: 12,
+					fontFamily: 'Creato Display',
+					fontWeight: '500',
+					lineHeight: 18,
+					wordWrap: 'break-word',
+				}}
+			>
+				AI
+			</div>
+		</div>
+	);
+
 	return (
 		<section className='grow flex flex-col'>
 			<ToastContainer />
 			{/* top background container of my projects title text and button */}
 			<div className='grow flex flex-col'>
-				<div className='flex items-end w-full z-10 pt-[4rem] bg-Blue border-b-2 px-[5rem]'>
+				<div className='flex flex-row items-end w-full z-10 pt-[2rem] px-[2rem]'>
 					{/* flex container controlling max width */}
-					<div className='w-full max-w-7xl flex flex-wrap items-end justify-center'>
+					<div className='w-full max-w-7xl flex flex-wrap items-center justify-between'>
 						{/* my project title text */}
-						<div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-white text-base font-bold font-creato-medium leading-10 tracking-wide border-white border-b-2'>
+						{/* <div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-black text-base font-bold font-creato-medium leading-10 tracking-wide border-white border-b-2'>
+							My Projects
+						</div> */}
+						<div
+							className='text-[24px] font-bold font-creato-medium leading-[32px] tracking-wide'
+							style={{
+								color: 'var(--colors-text-text-secondary-700, #344054)',
+							}}
+						>
 							My Projects
 						</div>
 
 						{/* create new project button */}
-						<div className='absolute right-5 pb-1'>
-							<DrlambdaButton
+						<div className=''>
+							{/* <DrlambdaButton
 								isPaidFeature={false}
 								onClick={handleStartNewProject}
 								id='start_new_project'
 							>
 								Start
-							</DrlambdaButton>
+							</DrlambdaButton> */}
+							<DesignSystemButton
+								isPaidFeature={false}
+								size='lg'
+								hierarchy='primary'
+								buttonStatus='enabled'
+								iconRight={AIIcon}
+								// text='Create New'
+								onClick={handleStartNewProject}
+							>
+								Create New
+							</DesignSystemButton>
 						</div>
 					</div>
 				</div>
+
+				{/* placeholder for card/list layout */}
+				{/* width: 69px;
+					height: 36px;
+					flex-shrink: 0; */}
+				{/* select sorting key: last update time, created time or title */}
 
 				{/* projects details area */}
 				<div

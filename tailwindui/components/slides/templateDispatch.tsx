@@ -146,8 +146,7 @@ export const templateDispatch = (
 	} else if (!canEdit) {
 		keyPrefix = 'preview';
 	}
-	// console.log('slide.template is :', slide.template);
-	// console.log('availableTemplates are:', availableTemplates);
+	
 
 	// prevent old projects still have 'Default_template' as template rather than new 'Default'
 	// const templateKey =
@@ -186,10 +185,7 @@ export const templateDispatch = (
 		? 'Cover_img_1_layout'
 		: 'Col_1_img_0_layout';
 
-	// console.log(
-	// 	`availableTemplates has template key ${slide.template}`,
-	// 	availableTemplates.hasOwnProperty(slide.template),
-	// );
+	
 	const Template =
 		availableTemplates[templateKey as keyof typeof availableTemplates];
 	const ChosenTemplateLogo =

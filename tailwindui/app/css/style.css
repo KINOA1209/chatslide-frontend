@@ -25,6 +25,8 @@
 /* Additional Tailwind directives: https://tailwindcss.com/docs/functions-and-directives/#responsive */
 
 @import url('https://fonts.googleapis.com/css2?family=Brygada+1918:wght@600&display=swap');
+
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap') */
 @layer utilities {
 	.rtl {
 		direction: rtl;
@@ -168,6 +170,24 @@
 	font-family: 'Open Sans Medium';
 	src: url('/fonts/OpenSans-Medium.ttf') format('truetype');
 	/* Add more src declarations for different font weights or styles if needed */
+}
+@font-face {
+	font-family: 'Inter Medium';
+	src: url('/fonts/Inter-Medium.ttf') format('truetype');
+	font-weight: bold;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Inter SemiBold';
+	src: url('/fonts/Inter-SemiBold.ttf') format('truetype');
+	font-weight: bold;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Inter Regular';
+	src: url('/fonts/Inter Regular.ttf') format('truetype');
+	font-weight: bold;
+	font-style: normal;
 }
 
 @font-face {
