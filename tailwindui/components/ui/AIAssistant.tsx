@@ -517,7 +517,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					);
 
 					if (responseData.data.action === 'add_page') {
-						const newSlide = { ...slides[currentSlideIndex], ...responseData.data.slide};
+						const newSlide = { ...slides[currentSlideIndex], ...responseData.data.slide, layout: 'Col_1_img_0_layout'};
 
 						// insert the newSlide after the currentSlideIndex
 						setSlides((prevSlides) => {
