@@ -2,7 +2,7 @@
 import { ChatHistoryStatus, useChatHistory } from '@/hooks/use-chat-history';
 import { useSlides } from '@/hooks/use-slides';
 import { useUser } from '@/hooks/use-user';
-import ChatHistory from '@/models/ChatHistory';
+import ChatHistory, { RegenerateSelection } from '@/models/ChatHistory';
 import Slide from '@/models/Slide';
 import DrlambdaCartoonImage from '@/public/images/AIAssistant/DrLambdaCartoon.png';
 import Image from 'next/image';
@@ -16,6 +16,7 @@ import { useImageStore } from '@/hooks/use-img-store';
 import ChatSuggestions from '../language/ChatSuggestions';
 import { stopArrowKeyPropagation } from '@/utils/editing';
 import './ChatBot.css';
+import React from 'react';
 
 export const DrLambdaAIAssistantIcon: React.FC<{
 	onClick: () => void;
@@ -70,6 +71,19 @@ export const Chats: React.FC<ChatsProps> = ({
 	}, [chatHistory]);
 	// const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 	const [sourceImage, setSourceImage] = useState<string>('');
+	const [selectedRegenerateTone, setSelectedRegenerateTone] = useState<string>('');
+	const { slideIndex } = useSlides()
+	const { project } = useProject();
+	const [loading, setLoading] = useState(false);
+	const { token } = useUser();
+	const {
+		isChatWindowOpen,
+		setIsChatWindowOpen,
+		regenerateText,
+		setRegenerateText,
+		isRegenerateSelected,
+		setIsRegenerateSelected,
+	} = useChatHistory()
 
 	// const handleImageDragStart = (imageUrl: string) => {
 	const handleImageDragStart = (imageUrl: string) => {
@@ -109,6 +123,139 @@ export const Chats: React.FC<ChatsProps> = ({
 		}
 	};
 
+	const addErrorMessage = (content: string): ChatHistory => ({
+		role: 'assistant',
+		content,
+	});
+
+	const addSuccessMessage = (
+		content: string | JSX.Element,
+		imageUrls?: string[],
+	): ChatHistory => ({
+		role: 'assistant',
+		content,
+		imageUrls, // Include imageUrls in the chat history entry
+	});
+
+	const addChoicesMessage = (
+		chat: string,
+		suggestions: string[][],
+	): ChatHistory => ({
+		role: 'assistant',
+		content: {chat: chat, suggestions: suggestions} as RegenerateSelection
+	})
+
+	const handleRegenerateTextClick = (suggestion: string) => {
+		setRegenerateText(suggestion)
+		setIsRegenerateSelected(true)
+		const successMessage = addSuccessMessage(`✅ Replace the text successfully.`)
+		addChatHistory(successMessage)
+	}
+
+	const regenerateResponseJSX = (
+		chat: string,
+		suggestions: string[][],
+	): JSX.Element => {
+		return (
+			<div>
+				<span>{chat}</span> {/* Display the chat content */}
+				<div className='gap-3 flex flex-col'>
+					{suggestions.map((suggestion, index) => (
+						<button
+							key={index}
+							onClick={() => handleRegenerateTextClick(suggestion[1])}
+							className='gap-3 rounded-lg px-3 py-2 text-left text-xs flex bg-[#EFF4FF] flex flex-col border border-solid border-[#EFF4FF] hover:bg-white'
+						>
+							<span className='text-gray-700 font-bold'>{index + 1}. {suggestion[0]}</span>
+							<span>{suggestion[1]}</span>
+						</button>
+					))}
+					<button
+						onClick={() => handleRegenerateTextClick(regenerateText)}
+						className='gap-3 rounded-lg px-3 py-2 text-left text-xs flex bg-[#EFF4FF] flex flex-col border border-solid border-[#EFF4FF] hover:bg-white'
+					>
+						<span className='text-gray-700 font-bold'>Original</span>
+						<span>{regenerateText}</span>
+					</button>
+				</div>
+			</div>
+		)
+	}
+
+	const makeApiCall = async (
+		prompt: string,
+		prev_prompts: ChatHistory[],
+		token: string,
+		selected_text: string,
+	): Promise<Response> => {
+		try {
+			return await fetch('/api/ai_gen_slide', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + token,
+				},
+				body: JSON.stringify({
+					slide: slides[currentSlideIndex],
+					project_id: project?.id || '',
+					prompt: prompt,
+					prev_prompts: prev_prompts,
+					selected_text: selected_text,
+				}),
+			});
+		} catch (error) {
+			console.error('Error making API call:', error);
+			const errorMessage = addErrorMessage(
+				'😞 Sorry, I do not understand your request, can you try again?',
+			);
+			addChatHistory(errorMessage);
+			setLoading(false);
+			throw error; // Re-throw the error for the calling function to handle
+		}
+	};
+
+	const handleToneClick = async (choice: string) => {
+		setSelectedRegenerateTone(choice)
+		const regenerate_prompt = `Suggest a more ${choice.toLowerCase()} way to say this.`
+		addChatHistory({
+			role: 'user',
+			content: regenerate_prompt
+		})
+		addChatHistory({
+			role: 'assistant',
+			content: `Sure, I'll start to adjust the tone...`
+		})
+		const lastChatMessages = chatHistory
+			.slice(-3)
+			.map((chat) => ({ role: chat.role, content: chat.content }));
+		try {
+			setLoading(true)
+			const response = await makeApiCall(regenerate_prompt, lastChatMessages, token, regenerateText);
+			if (response.ok) {
+				const responseData = await response.json();
+				console.log('responseData structure:', responseData);
+				if (!responseData.data.suggestions && responseData.data.chat) {
+					// handle case when response is ok but backend fails to parse suggestion or fails to get result from openai
+					const errorMessage = addErrorMessage(responseData.data.chat)
+					addChatHistory(errorMessage)
+				}
+				else {
+					const regenerate_choices = addChoicesMessage(responseData.data.chat, responseData.data.suggestions)
+					addChatHistory(regenerate_choices)
+				}
+			}
+			else {
+				console.error('Failed to get AI response');
+				const errorMessage = addErrorMessage(
+					'😞 Sorry, I do not understand your request, can you try something else?',
+				);
+				addChatHistory(errorMessage);
+			}
+		} catch (error) {
+			// Error handling is now done in the makeApiCall function
+			// No need to duplicate it here
+		}
+	};
 	return (
 		<>
 			{chatHistory.map((chat, index) => (
@@ -129,8 +276,30 @@ export const Chats: React.FC<ChatsProps> = ({
 						}
 					>
 						<div className='blue-links'>
-							<span dangerouslySetInnerHTML={{ __html: chat.content }}></span>
+							{/* Directly render chat.content if it's a React element */}
+							{/* {React.isValidElement(chat.content) ? chat.content
+								: <span dangerouslySetInnerHTML={{ __html: chat.content }}></span>} */}
+							{typeof chat.content === 'object' && 'chat' in chat.content && 'suggestions' in chat.content ?
+								regenerateResponseJSX(chat.content.chat, chat.content.suggestions) :
+								<span dangerouslySetInnerHTML={{ __html: chat.content }}></span>
+							}
 						</div>
+						{/* Check if there are choices and render choices */}
+						{chat.choices && chat.choices.length > 0 && (
+							<div className='w-full flex flex-wrap gap-2 mt-2'>
+								{chat.choices.map((choice, index) => (
+									<button
+										className="bg-white text-[#5168F6] text-sm px-3 py-2 rounded-lg border border-solid border-[#5168F6]
+												   hover:bg-[#ECF1FE] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50
+												  "
+										key={index}
+										onClick={() => handleToneClick(choice)}>
+										{choice}
+									</button>
+								))}
+							</div>
+						)}
+
 						{/* Check if there are imageUrls and render image previews */}
 
 						{chat.imageUrls && chat.imageUrls.length > 0 && (

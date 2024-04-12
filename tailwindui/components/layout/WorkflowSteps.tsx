@@ -202,11 +202,14 @@ export const projectFinishedSteps = (project: Project | null) => {
 		finishedStepsArray.push(0);
 		if (project.outlines) {
 			finishedStepsArray.push(1);
-			finishedStepsArray.push(2);
+			// finishedStepsArray.push(2);
 		}
 		if (project.presentation_slides) {
-			finishedStepsArray.push(3);
+			finishedStepsArray.push(2);
 		}
+    if (project?.parsed_slides?.[0]?.template !== 'Default') {
+      finishedStepsArray.push(3);
+    }
 		if (project.has_scripts) finishedStepsArray.push(4);
 		if (project.video_url) finishedStepsArray.push(5);
 	}

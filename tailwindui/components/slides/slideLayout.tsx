@@ -125,7 +125,7 @@ AddANewEditorBoxProps) => {
 	// const newContentItem = (
 	return (
 		<div
-			key={`content_${Date.now()}`}
+			key={`content_add`}
 			className={`${slideIndex === 0 ? 'hidden' : ''}`}
 		>
 			<QuillEditable
@@ -165,7 +165,7 @@ export const handleAddTextColumn = ({
 	console.log('add a new content item column:');
 	const newContentItem = (
 		<div
-			key={`content_${Date.now()}`}
+			key={`content_`}
 			className={`${slideIndex === 0 ? 'hidden' : ''}`}
 		>
 			<QuillEditable
@@ -670,9 +670,9 @@ export const Col_2_img_0_layout = ({
 						</div>
 					)} */}
 					{updatedContent.slice(0, 1).map((item, index) => (
-						<React.Fragment key={`contentText_${index}_${Date.now()}`}>
+						<React.Fragment key={`contentText_${index}`}>
 							<ul
-								key={`contentText_${index}_${Date.now()}`}
+								key={`contentText_${index}`}
 								className={`SlideContentText`}
 								style={layoutElements.contentTextCSS}
 							>
@@ -739,9 +739,9 @@ export const Col_2_img_0_layout = ({
 						</>
 					)}
 					{updatedContent.slice(1, 2).map((item, index) => (
-						<React.Fragment key={`contentText_${index + 1}_${Date.now()}`}>
+						<React.Fragment key={`contentText_${index + 1}`}>
 							<ul
-								key={`contentText_${index}_${Date.now()}`}
+								key={`contentText_${index}`}
 								className={`SlideContentText`}
 								style={layoutElements.contentTextCSS}
 							>
@@ -902,9 +902,9 @@ export const Col_3_img_0_layout = ({
 						</>
 					)}
 					{updatedContent.slice(0, 1).map((item, index) => (
-						<React.Fragment key={`contentText_${index}_${Date.now()}`}>
+						<React.Fragment key={`contentText_${index}`}>
 							<ul
-								key={`contentText_${index}_${Date.now()}`}
+								key={`contentText_${index}`}
 								className={`SlideContentText`}
 								style={layoutElements.contentTextCSS}
 							>
@@ -1003,9 +1003,9 @@ export const Col_3_img_0_layout = ({
 					)}
 
 					{updatedContent.slice(1, 2).map((item, index) => (
-						<React.Fragment key={`contentText_${index + 1}_${Date.now()}`}>
+						<React.Fragment key={`contentText_${index + 1} `}>
 							<ul
-								key={`contentText_${index}_${Date.now()}`}
+								key={`contentText_${index} `}
 								className={`SlideContentText`}
 								style={layoutElements.contentTextCSS}
 							>
@@ -1073,9 +1073,9 @@ export const Col_3_img_0_layout = ({
 						</>
 					)}
 					{updatedContent.slice(2, 3).map((item, index) => (
-						<React.Fragment key={`contentText_${index + 2}_${Date.now()}`}>
+						<React.Fragment key={`contentText_${index + 2} `}>
 							<ul
-								key={`contentText_${index}_${Date.now()}`}
+								key={`contentText_${index} `}
 								className={`SlideContentText`}
 								style={layoutElements.contentTextCSS}
 							>
@@ -1712,9 +1712,9 @@ export const Col_2_img_2_layout = ({
 							</>
 						)}
 						{updatedContent.slice(0, 1).map((item, index) => (
-							<React.Fragment key={`contentText_${index}_${Date.now()}`}>
+							<React.Fragment key={`contentText_${index} `}>
 								<ul
-									key={`contentText_${index}_${Date.now()}`}
+									key={`contentText_${index} `}
 									className={`SlideContentText`}
 									style={layoutElements.contentTextCSS}
 								>
@@ -1758,9 +1758,9 @@ export const Col_2_img_2_layout = ({
 							</>
 						)}
 						{updatedContent.slice(1, 2).map((item, index) => (
-							<React.Fragment key={`contentText_${index + 1}_${Date.now()}`}>
+							<React.Fragment key={`contentText_${index + 1} `}>
 								<ul
-									key={`contentText_${index}_${Date.now()}`}
+									key={`contentText_${index} `}
 									className={`SlideContentText`}
 									style={layoutElements.contentTextCSS}
 								>
@@ -2045,9 +2045,9 @@ export const Col_3_img_3_layout = ({
 							</>
 						)}
 						{updatedContent.slice(0, 1).map((item, index) => (
-							<React.Fragment key={`contentText_${index}_${Date.now()}`}>
+							<React.Fragment key={`contentText_${index} `}>
 								<ul
-									key={`contentText_${index}_${Date.now()}`}
+									key={`contentText_${index} `}
 									className={`SlideContentText`}
 									style={layoutElements.contentTextCSS}
 								>
@@ -2091,9 +2091,9 @@ export const Col_3_img_3_layout = ({
 							</>
 						)}
 						{updatedContent.slice(1, 2).map((item, index) => (
-							<React.Fragment key={`contentText_${index + 1}_${Date.now()}`}>
+							<React.Fragment key={`contentText_${index + 1}}`}>
 								<ul
-									key={`contentText_${index}_${Date.now()}`}
+									key={`contentText_${index}}`}
 									className={`SlideContentText`}
 									style={layoutElements.contentTextCSS}
 								>
@@ -2138,9 +2138,9 @@ export const Col_3_img_3_layout = ({
 							</>
 						)}
 						{updatedContent.slice(2, 3).map((item, index) => (
-							<React.Fragment key={`contentText_${index + 2}_${Date.now()}`}>
+							<React.Fragment key={`contentText_${index + 2} `}>
 								<ul
-									key={`contentText_${index}_${Date.now()}`}
+									key={`contentText_${index} `}
 									className={`SlideContentText`}
 									style={layoutElements.contentTextCSS}
 								>
