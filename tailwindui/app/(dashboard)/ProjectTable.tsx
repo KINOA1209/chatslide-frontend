@@ -267,7 +267,7 @@ const ProjectItem: React.FC<{
 						}}
 					>
 						<HiOutlineDotsVertical
-							style={{ color: '#667085', width: '12px', height: '12px' }}
+							style={{ color: '#667085', width: '1rem', height: '1rem' }}
 						></HiOutlineDotsVertical>
 					</div>
 
