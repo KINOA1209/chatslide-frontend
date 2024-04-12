@@ -6,12 +6,6 @@ import DrlambdaButton from '@/components/button/DrlambdaButton';
 import ProjectService from '@/services/ProjectService';
 import Link from 'next/link';
 import { JoinUsBanner } from '@/components/layout/JoinUsBanner';
-import Project from '@/models/Project';
-import { useUser } from '@/hooks/use-user';
-import SessionStorage from '@/utils/SessionStorage';
-import UserService from '@/services/UserService';
-import router, { useRouter } from 'next/navigation';
-import { mockProjectsData } from './mockProjectsData';
 import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
 
 export const metadata = {
@@ -45,7 +39,7 @@ export default async function Discover() {
 			</div> */}
 			<div className='flex flex-row items-end w-full z-10 pt-[2rem] px-[2rem]'>
 				{/* flex container controlling max width */}
-				<div className='w-full max-w-7xl flex flex-wrap items-center justify-between'>
+				<div className='w-full flex flex-wrap items-center justify-between'>
 					{/* my project title text */}
 					{/* <div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-black text-base font-bold font-creato-medium leading-10 tracking-wide border-white border-b-2'>
 							My Projects

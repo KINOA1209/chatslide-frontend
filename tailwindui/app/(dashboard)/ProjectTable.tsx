@@ -105,14 +105,13 @@ const ProjectItem: React.FC<{
 		<React.Fragment key={project.id}>
 			{/* thumbnail */}
 			<div
-				className={`hidden md:flex col-span-1 p-2 items-center justify-center ${
+				className={`h-full hidden lg:flex col-span-1 p-1 items-center justify-center ${
 					!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
 				} font-creato-medium leading-normal`}
-				style={{ padding: `var(--spacing-xl, 16px) var(--spacing-3xl, 24px)` }}
 			>
 				<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
 					<div
-						className='flex items-center justify-center w-[50px] h-[40px] lg:w-[72px]'
+						className='flex items-center justify-center w-full'
 						style={{
 							objectFit: 'contain' as 'contain',
 						}}
@@ -139,10 +138,10 @@ const ProjectItem: React.FC<{
 			</div>
 			{/* title */}
 			<div
-				className={`col-span-3 md:col-span-2 p-2 flex items-center ${
+				className={`col-span-3 lg:col-span-2 p-2 flex items-center ${
 					!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
 				} font-creato-medium leading-[20px]`}
-				style={{ padding: `var(--spacing-xl, 16px) var(--spacing-3xl, 24px)` }}
+				style={{ padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)` }}
 			>
 				<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
 					<div
@@ -159,9 +158,9 @@ const ProjectItem: React.FC<{
 			{/* type */}
 			{
 				<div
-					className='col-span-2 hidden md:block items-center '
+					className='col-span-1 hidden lg:block items-center '
 					style={{
-						padding: `var(--spacing-xl, 16px) var(--spacing-3xl, 24px)`,
+						padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
 					}}
 				>
 					<div className='flex flex-col gap-[4px]'>
@@ -210,9 +209,9 @@ const ProjectItem: React.FC<{
 			{/* resources */}
 			{!isDiscover && (
 				<div
-					className='col-span-3 hidden md:flex md:flex-col md:gap-1 items-center'
+					className='col-span-2 hidden lg:flex lg:flex-col lg:gap-1 items-center'
 					style={{
-						padding: `var(--spacing-xl, 16px) var(--spacing-3xl, 24px)`,
+						padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
 					}}
 				>
 					{/* <div className='flex-wrap'> */}
@@ -226,12 +225,11 @@ const ProjectItem: React.FC<{
 			{/* laste edited time */}
 			{
 				<div
-					className='col-span-2 hidden md:block items-center '
+					className='col-span-1 hidden lg:block items-center '
 					style={{
-						padding: `var(--spacing-xl, 16px) var(--spacing-3xl, 24px)`,
+						padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
 						fontSize: '14px',
 						color: 'var(--colors-text-text-tertiary-600, #475467)',
-						fontFamily: 'Creato Display Medium',
 						lineHeight: '20px',
 						fontStyle: 'normal',
 						fontWeight: 'normal',
@@ -244,10 +242,10 @@ const ProjectItem: React.FC<{
 			{/* buttons drop down */}
 			<div
 				className='col-span-1 p-2 flex'
-				style={{ padding: `var(--spacing-xl, 16px) var(--spacing-3xl, 24px)` }}
+				style={{ padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)` }}
 			>
 				<div className='h-full flex justify-end items-center w-full gap-4 relative'>
-					{/* <span className='hidden md:flex'>
+					{/* <span className='hidden lg:flex'>
 						{moment(project.created_datetime).format('L')}
 					</span> */}
 
@@ -276,7 +274,7 @@ const ProjectItem: React.FC<{
 					{/* dropdown menu items area */}
 					{isDropdownVisible && (
 						<div
-							className='absolute top-full right-0 bg-white shadow-md rounded-md mt-1 md:w-[180px]'
+							className='absolute top-full right-0 bg-white shadow-md rounded-md mt-1 lg:w-[180px]'
 							style={{
 								zIndex: 999,
 								display: 'flex',
@@ -492,8 +490,8 @@ const ProjectTable: React.FC<Props> = ({
 	isDiscover = false,
 }) => {
 	const grids = isDiscover
-		? 'grid-cols-4 md:grid-cols-8'
-		: 'grid-cols-4 md:grid-cols-11';
+		? 'grid-cols-4 lg:grid-cols-6'
+		: 'grid-cols-4 lg:grid-cols-8';
 
 	return (
 		<>
@@ -510,14 +508,14 @@ const ProjectTable: React.FC<Props> = ({
 						borderRadius: 'var(--radius-md) var(--radius-md) 0px 0px',
 					}}
 				>
-					{/* <div className='hidden md:flex col-span-1 w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'> */}
+					{/* <div className='hidden lg:flex col-span-1 w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'> */}
 					<div
 						className='flex col-span-3 w-full capitalize '
 						style={{
-							padding: `var(--spacing-xl, 16px) var(--spacing-3xl, 24px)`,
+							padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
 							whiteSpace: 'nowrap',
 							color: 'var(--colors-text-text-tertiary-600, #475467)',
-							fontFamily: 'Creato Display Medium',
+							
 							fontSize: '12px',
 							fontStyle: 'normal',
 							lineHeight: '18px',
@@ -527,12 +525,12 @@ const ProjectTable: React.FC<Props> = ({
 						Title
 					</div>
 					<div
-						className='hidden md:flex col-span-2 w-full capitalize '
+						className='hidden lg:flex col-span-1 w-full capitalize '
 						style={{
-							padding: `var(--spacing-xl, 16px) var(--spacing-3xl, 24px)`,
+							padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
 							whiteSpace: 'nowrap',
 							color: 'var(--colors-text-text-tertiary-600, #475467)',
-							fontFamily: 'Creato Display Medium',
+							
 							fontSize: '12px',
 							fontStyle: 'normal',
 							lineHeight: '18px',
@@ -543,12 +541,12 @@ const ProjectTable: React.FC<Props> = ({
 					</div>
 					{!isDiscover && (
 						<div
-							className='hidden md:flex col-span-3 w-full capitalize '
+							className='hidden lg:flex col-span-2 w-full capitalize '
 							style={{
-								padding: `var(--spacing-xl, 16px) var(--spacing-3xl, 24px)`,
+								padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
 								whiteSpace: 'nowrap',
 								color: 'var(--colors-text-text-tertiary-600, #475467)',
-								fontFamily: 'Creato Display Medium',
+								
 								fontSize: '12px',
 								fontStyle: 'normal',
 								lineHeight: '18px',
@@ -561,12 +559,12 @@ const ProjectTable: React.FC<Props> = ({
 					{/* last edited header */}
 					{
 						<div
-							className='hidden md:flex col-span-2 w-full capitalize '
+							className='hidden lg:flex col-span-1 w-full capitalize '
 							style={{
-								padding: `var(--spacing-xl, 16px) var(--spacing-3xl, 24px)`,
+								padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
 								whiteSpace: 'nowrap',
 								color: 'var(--colors-text-text-tertiary-600, #475467)',
-								fontFamily: 'Creato Display Medium',
+								
 								fontSize: '12px',
 								fontStyle: 'normal',
 								lineHeight: '18px',
@@ -579,9 +577,9 @@ const ProjectTable: React.FC<Props> = ({
 					{/* header: for pop up menu */}
 					{
 						<div
-							className='hidden md:flex col-span-1 w-full text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'
+							className='hidden lg:flex col-span-1 w-full text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'
 							style={{
-								padding: `var(--spacing-xl, 16px) var(--spacing-3xl, 24px)`,
+								padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
 							}}
 						></div>
 					}
