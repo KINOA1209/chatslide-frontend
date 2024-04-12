@@ -50,15 +50,15 @@ export const Business_Dark_005_template = ({
 		layoutOptionCover as keyof typeof layoutOptions,
 	);
 
-	useEffect(() => {
-		console.log('Business dark template themeElements:', themeElements);
-	}, []);
-	useEffect(() => {
-		console.log(
-			'Business dark template layoutConfigElements for current slide page:',
-			layoutConfigElements,
-		);
-	}, []);
+	// useEffect(() => {
+	// 	console.log('Business dark template themeElements:', themeElements);
+	// }, []);
+	// useEffect(() => {
+	// 	console.log(
+	// 		'Business dark template layoutConfigElements for current slide page:',
+	// 		layoutConfigElements,
+	// 	);
+	// }, []);
 	return (
 		<>
 			{/* for not-cover page slides */}

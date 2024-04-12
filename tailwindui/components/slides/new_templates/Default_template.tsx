@@ -43,16 +43,7 @@ MainSlideProps) => {
 		'Default' as TemplateKeys,
 		layoutOptionCover as keyof typeof layoutOptions,
 	);
-	// useEffect(() => {
-	// 	console.log('will show logo?', isShowingLogo);
-	// }, []);
 
-	// useEffect(() => {
-	// 	console.log(
-	// 		'Default layoutConfigElements for current page',
-	// 		layoutConfigElements,
-	// 	);
-	// }, []);
 	return (
 		<>
 			{/* for cover page slide */}

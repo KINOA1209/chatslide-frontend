@@ -98,7 +98,7 @@ const ProjectItem: React.FC<{
 	};
 
 	useEffect(() => {
-		console.log(project);
+		// console.log(project);
 	}, []);
 
 	return (

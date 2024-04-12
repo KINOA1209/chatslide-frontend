@@ -54,21 +54,6 @@ export const Simplistic_008_template = ({
 		layoutOptionCover as keyof typeof layoutOptions,
 	);
 
-	// useEffect(() => {
-	// 	console.log('Business_002_template themeElements:', themeElements);
-	// }, []);
-	// useEffect(() => {
-	// 	console.log(
-	// 		'Business_002_template layoutConfigElements for current slide page:',
-	// 		layoutConfigElements,
-	// 	);
-	// }, []);
-	// useEffect(() => {
-	// 	console.log(
-	// 		'Business_002_template layoutConfigElements for cover img 0 bg color',
-	// 		layoutConfigElements.canvaCSS?.backgroundColor,
-	// 	);
-	// }, []);
 	return (
 		<>
 			{/* for not-cover page slides */}
@@ -135,9 +120,7 @@ export const Simplistic_008_template = ({
 				</div> */}
 				{/* background picture when user uploaded this  */}
 				{uploadedBackgroundImageUrl && (
-					<div
-					style={{ ...uploadedBackgroundImgStyle }}
-					>
+					<div style={{ ...uploadedBackgroundImgStyle }}>
 						<Image
 							style={{ objectFit: 'cover', height: '100%' }}
 							width={960}
