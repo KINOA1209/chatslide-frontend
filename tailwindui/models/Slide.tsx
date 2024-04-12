@@ -99,7 +99,7 @@ export default class Slide {
 			groups: [emptyGroup],
 			axis: { x: '', y: '' },
 		}));
-		this.images_position = [{}, {}, {}];
+		this.images_position = [];
 		this.layout = 'Col_2_img_1_layout';
 		this.logo = 'Default';
 		this.additional_images = [];

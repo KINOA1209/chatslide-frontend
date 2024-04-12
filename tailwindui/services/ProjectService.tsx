@@ -231,7 +231,7 @@ class ProjectService {
 			);
 			slide.chart = slideData.chart;
 			slide.is_chart = slideData.is_chart || [false, false, false];
-			slide.images_position = slideData.images_position || [{}, {}, {}];
+			slide.images_position = slideData.images_position;
 			// console.log(
 			//     'slideData.content.length',
 			//     slideData.content.length        // );
@@ -326,7 +326,7 @@ class ProjectService {
 				slide.source = slideData.source || '';
 				slide.chart = slideData.chart;
 				slide.is_chart = slideData.is_chart || [false, false, false];
-				slide.images_position = slideData.images_position || [{}, {}, {}];
+				slide.images_position = slideData.images_position;
 
 				return slide;
 			},

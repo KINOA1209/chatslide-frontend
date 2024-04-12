@@ -97,7 +97,7 @@ export default class SocialPostSlide {
 			cover_end: '',
 		};
 		this.is_chart = [false, false, false];
-		this.images_position = [{}, {}, {}];
+		this.images_position = [];
 		this.chart = Array.from({ length: 3 }, () => ({
 			type: '',
 			title: '',
