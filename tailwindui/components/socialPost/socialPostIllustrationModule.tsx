@@ -133,7 +133,7 @@ export const ImgModule = ({
 					// violates content policy
 					const error = response.status;
 					toast.error(
-						'This query violates our content policy, please use another one',
+						'This query violates our content policy, please use another one. Your credit is refunded.',
 						{
 							position: 'top-center',
 							autoClose: 5000,
