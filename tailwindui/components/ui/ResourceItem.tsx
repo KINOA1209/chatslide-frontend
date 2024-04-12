@@ -11,7 +11,7 @@ import Image from 'next/image';
 import Resource from '@/models/Resource';
 import { FiFilePlus, FiGlobe, FiYoutube } from 'react-icons/fi';
 import PDFType from '@/public/icons/fileTypes/PDFType.png';
-import YoutubeType from '@/public/icons/fileTypes/youtube.png';
+import YoutubeType from '@/public/icons/fileTypes/Youtube.png';
 import ImageType from '@/public/icons/fileTypes/ImageType.png';
 import GeneralFileType from '@/public/icons/fileTypes/GeneralFileType.png';
 
