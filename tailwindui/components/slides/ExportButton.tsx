@@ -22,32 +22,40 @@ import SlideContainer from './SlideContainer';
 import { templateDispatch } from './templateDispatch';
 import { useSlides } from '@/hooks/use-slides';
 import { uneditableTemplateDispatch } from '@/components/slides/templateDispatch';
-
+import { FiDownload } from 'react-icons/fi';
 interface ExportToPdfProps {
 	exportSlidesRef: React.RefObject<HTMLDivElement>;
 	hasScript?: boolean;
+	showExportToPdfModal: boolean; // Accept showCloneModal as prop
+	setShowExportToPdfModal: React.Dispatch<React.SetStateAction<boolean>>;
+	width?: string;
+	height?: string;
 }
 
 const ExportToFile: React.FC<ExportToPdfProps> = ({
 	exportSlidesRef,
 	hasScript,
+	showExportToPdfModal,
+	setShowExportToPdfModal,
+	width,
+	height,
 }) => {
 	const [downloading, setDownloading] = useState(false);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const { isPaidUser, token } = useUser();
 	const { project } = useProject();
 	const topic = project?.topic;
-	const [showModal, setShowModal] = useState(false);
+	// const [showModal, setShowModal] = useState(false);
 	const { slides, saveStatus, SaveStatus } = useSlides();
 
 	useEffect(() => {
 		document.addEventListener('download_slide', (e) => {
-			setShowModal(true);
+			setShowExportToPdfModal(true);
 		});
 
 		return () =>
 			document.removeEventListener('download_slide', (e) => {
-				setShowModal(true);
+				setShowExportToPdfModal(true);
 			});
 	}, []);
 
@@ -79,7 +87,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 	const handleExport = async (type: string, frontend: boolean) => {
 		if (!project) return;
 
-		setShowModal(false);
+		setShowExportToPdfModal(false);
 
 		setDownloading(true);
 
@@ -155,16 +163,19 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 
 			<ButtonWithExplanation
 				button={
-					<button onClick={() => setShowModal(!showModal)}>
+					<button
+						onClick={() => setShowExportToPdfModal(!showExportToPdfModal)}
+					>
 						{!downloading ? (
 							<GoDownload
 								style={{
 									strokeWidth: '1',
 									flex: '1',
-									width: '1.5rem',
-									height: '1.5rem',
-									fontWeight: 'bold',
-									color: '#344054',
+									width: `${width ? width : '24px'}`,
+									height: `${height ? height : '24px'}`,
+									// fontWeight: 'bold',
+									color: 'var(--colors-text-text-secondary-700, #344054)',
+									// fontWeight: 'bold',
 								}}
 							/>
 						) : (
@@ -196,8 +207,8 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 			</div>
 
 			<Modal
-				showModal={showModal}
-				setShowModal={setShowModal}
+				showModal={showExportToPdfModal}
+				setShowModal={setShowExportToPdfModal}
 				title='Export to PDF / PPTX'
 				description='Choose the format and quality of the export.'
 			>

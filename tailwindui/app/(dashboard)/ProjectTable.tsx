@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ResourceItem } from '@/components/ui/ResourceItem';
 import Project from '@/models/Project';
 import { FaPhotoVideo, FaRegClone } from 'react-icons/fa';
@@ -19,6 +19,12 @@ import { MdOutlineShare } from 'react-icons/md';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { MdOutlineDelete } from 'react-icons/md';
 import '@/components/ui/design_systems/variables.css';
+import dynamic from 'next/dynamic';
+// import ExportToPdfButton from '@/components/slides/ExportButton';
+const ExportToPdfButton = dynamic(
+	() => import('@/components/slides/ExportButton'), // Path to your ExportToPdfButton component
+	{ ssr: false }, // Disable SSR
+);
 
 const DEFAULT_THUMBNAIL = '/images/ogimage.png';
 
@@ -59,7 +65,15 @@ const ProjectItem: React.FC<{
 	index: number;
 	setCurrentProjects?: React.Dispatch<React.SetStateAction<Project[]>>;
 	isDiscover?: boolean;
-}> = ({ project, onDelete, index, setCurrentProjects, isDiscover = false }) => {
+	exportSlidesRef?: React.RefObject<HTMLDivElement>;
+}> = ({
+	project,
+	onDelete,
+	index,
+	setCurrentProjects,
+	isDiscover = false,
+	exportSlidesRef = useRef<HTMLDivElement>(null),
+}) => {
 	const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 	const isCloning = index === -1;
 	const { token } = useUser();
@@ -67,6 +81,8 @@ const ProjectItem: React.FC<{
 	// Parent component
 	const [showCloneModal, setShowCloneModal] = useState(false); // Define state in the parent component
 	const [showShareModal, setShowShareModal] = useState(false);
+	const [showExportToPdfModal, setShowExportToPdfModal] = useState(false); // Define state in the export
+	// const exportSlidesRef = useRef<HTMLDivElement>(null);
 	const toggleDropdown = () => {
 		setIsDropdownVisible((prev) => !prev);
 	};
@@ -276,6 +292,37 @@ const ProjectItem: React.FC<{
 									Open
 								</Link>
 							</button>
+
+							{!isDiscover && setCurrentProjects && (
+								<button
+									className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'
+									onClick={() => {
+										setShowCloneModal(true);
+										// setIsDropdownVisible(false);
+									}} // Toggle showCloneModal in the parent component
+									style={{
+										display: 'flex',
+										flexDirection: 'row',
+										alignItems: 'center',
+										justifyContent: 'flex-start',
+										gap: 'var(--spacing-lg, 12px)',
+										borderRadius: 'var(--radius-xl, 12px)',
+										borderBottom:
+											'1px solid var(--Colors-Border-border-secondary, #EAECF0)',
+									}}
+								>
+									<CloneButton
+										project={project}
+										setCurrentProjects={setCurrentProjects}
+										showCloneModal={showCloneModal} // Pass showCloneModal as prop
+										setShowCloneModal={setShowCloneModal}
+										isDropdownVisible={isDropdownVisible}
+										setIsDropdownVisible={setIsDropdownVisible}
+									/>
+									Duplicate
+								</button>
+							)}
+
 							<button
 								className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'
 								onClick={() => {
@@ -311,8 +358,7 @@ const ProjectItem: React.FC<{
 								<button
 									className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'
 									onClick={() => {
-										setShowCloneModal(true);
-										// setIsDropdownVisible(false);
+										setShowExportToPdfModal(true);
 									}} // Toggle showCloneModal in the parent component
 									style={{
 										display: 'flex',
@@ -321,17 +367,18 @@ const ProjectItem: React.FC<{
 										justifyContent: 'flex-start',
 										gap: 'var(--spacing-lg, 12px)',
 										borderRadius: 'var(--radius-xl, 12px)',
+										borderBottom:
+											'1px solid var(--Colors-Border-border-secondary, #EAECF0)',
 									}}
 								>
-									<CloneButton
-										project={project}
-										setCurrentProjects={setCurrentProjects}
-										showCloneModal={showCloneModal} // Pass showCloneModal as prop
-										setShowCloneModal={setShowCloneModal}
-										isDropdownVisible={isDropdownVisible}
-										setIsDropdownVisible={setIsDropdownVisible}
-									/>
-									Duplicate
+									<ExportToPdfButton
+										exportSlidesRef={exportSlidesRef}
+										setShowExportToPdfModal={setShowExportToPdfModal}
+										showExportToPdfModal={showExportToPdfModal}
+										width='16px'
+										height='16px'
+									></ExportToPdfButton>
+									Download
 								</button>
 							)}
 

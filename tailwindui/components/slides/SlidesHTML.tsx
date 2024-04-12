@@ -151,6 +151,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		debouncedSyncSlides,
 	} = useSlides();
 
+	const [showExportToPdfModal, setShowExportToPdfModal] = useState(false); // Define state in the export
 	const [showShareModal, setShowShareModal] = useState(false);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const { isPaidUser, token } = useUser();
@@ -650,6 +651,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						<ExportToPdfButton
 							exportSlidesRef={exportSlidesRef}
 							hasScript={showScript}
+							setShowExportToPdfModal={setShowExportToPdfModal}
+							showExportToPdfModal={showExportToPdfModal}
 						/>
 					)}
 
