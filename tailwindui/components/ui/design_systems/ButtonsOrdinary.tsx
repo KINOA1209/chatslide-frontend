@@ -1,3 +1,4 @@
+'use client';
 import PaywallModal from '@/components/paywallModal';
 import { useRouter } from 'next/navigation';
 import React, {
@@ -10,12 +11,13 @@ import { GrayLabel, PlusLabel } from '../../ui/GrayLabel';
 import { SpinIcon } from '@/app/(feature)/icons';
 
 interface DesignSystemButtonProps {
+	children: ReactNode;
 	size: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 	hierarchy: 'primary' | 'secondary' | 'tertiary';
 	buttonStatus: 'enabled' | 'disabled';
 	iconLeft?: React.ReactNode;
 	iconRight?: React.ReactNode;
-	text: string;
+	// text: string;
 	onClick?: MouseEventHandler<HTMLButtonElement>;
 	isSubmitting?: boolean;
 	isPaidUser?: boolean;
@@ -24,12 +26,13 @@ interface DesignSystemButtonProps {
 }
 
 const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
+	children,
 	size,
 	hierarchy,
 	buttonStatus,
 	iconLeft,
 	iconRight,
-	text,
+	// text,
 	onClick,
 	isSubmitting,
 	isPaidUser,
@@ -190,7 +193,8 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 					<span style={{ ...iconStyles, marginRight: '6px' }}>{iconLeft}</span>
 				)}
 				<span style={textStyles[size]}>
-					{text}
+					{/* {text} */}
+					{children}
 					{isPaidFeature && !isPaidUser && <PlusLabel />}
 				</span>
 

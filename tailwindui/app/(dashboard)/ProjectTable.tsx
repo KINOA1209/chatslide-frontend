@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ResourceItem } from '@/components/ui/ResourceItem';
 import Project from '@/models/Project';
 import { FaPhotoVideo, FaRegClone } from 'react-icons/fa';
@@ -59,9 +59,16 @@ const ProjectItem: React.FC<{
 	setCurrentProjects?: React.Dispatch<React.SetStateAction<Project[]>>;
 	isDiscover?: boolean;
 }> = ({ project, onDelete, index, setCurrentProjects, isDiscover = false }) => {
+	const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 	const isCloning = index === -1;
 	const { token } = useUser();
 	const [isShared, setIsShared] = React.useState(false);
+	// Parent component
+	const [showCloneModal, setShowCloneModal] = useState(false); // Define state in the parent component
+	const [showShareModal, setShowShareModal] = useState(false);
+	const toggleDropdown = () => {
+		setIsDropdownVisible((prev) => !prev);
+	};
 
 	// for hovering effect change dropdown menu section color
 	const handleMouseEnter = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -193,7 +200,7 @@ const ProjectItem: React.FC<{
 				</div>
 			)}
 			{/* laste edited time */}
-			{!isDiscover && (
+			{
 				<div
 					className='col-span-2 hidden md:block items-center text-gray-600'
 					style={{
@@ -201,15 +208,15 @@ const ProjectItem: React.FC<{
 					}}
 				>
 					{/* <FileIcon fileType='pdf' /> */}
-					{formatDate(project.updated_datetime)}
+					{project.updated_datetime && formatDate(project.updated_datetime)}
 				</div>
-			)}
-			{/* buttons */}
+			}
+			{/* buttons drop down */}
 			<div
 				className='col-span-1 p-2 flex'
 				style={{ padding: `var(--spacing-xl, 16px) var(--spacing-3xl, 24px)` }}
 			>
-				<div className='h-full flex justify-end items-center w-full gap-4'>
+				<div className='h-full flex justify-end items-center w-full gap-4 relative'>
 					{/* <span className='hidden md:flex'>
 						{moment(project.created_datetime).format('L')}
 					</span> */}
@@ -226,11 +233,129 @@ const ProjectItem: React.FC<{
 						}}
 						onMouseEnter={handleMouseEnter}
 						onMouseLeave={handleMouseLeave}
+						onClick={() => {
+							toggleDropdown();
+							// Add functionality for the share button
+						}}
 					>
 						<HiOutlineDotsVertical
 							style={{ color: '#667085', width: '12px', height: '12px' }}
 						></HiOutlineDotsVertical>
 					</div>
+
+					{/* dropdown menu items area */}
+					{isDropdownVisible && (
+						<div
+							className='absolute top-full right-0 bg-white shadow-md rounded-md mt-1 md:w-[180px]'
+							style={{
+								zIndex: 999,
+								display: 'flex',
+								flexDirection: 'column',
+								borderRadius: 'var(--radius-xl, 12px)',
+							}}
+							onMouseLeave={() => {
+								setIsDropdownVisible(false);
+							}}
+						>
+							<button
+								className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'
+								onClick={() => {
+									setShowShareModal(true);
+								}}
+								style={{
+									display: 'flex',
+									flexDirection: 'row',
+									alignItems: 'center',
+									justifyContent: 'flex-start',
+									gap: 'var(--spacing-lg, 12px)',
+									borderRadius: 'var(--radius-xl, 12px)',
+								}}
+							>
+								<ShareButton
+									share={isShared}
+									setShare={(share: boolean) => {
+										setIsShared(share);
+										ProjectService.SlideShareLink(token, project.id, share);
+									}}
+									project={project}
+									showShareModal={showShareModal}
+									setShowShareModal={setShowShareModal}
+									isDropdownVisible={isDropdownVisible}
+									setIsDropdownVisible={setIsDropdownVisible}
+									width='16px'
+									height='16px'
+								/>
+								Share
+							</button>
+
+							{!isDiscover && setCurrentProjects && (
+								<button
+									className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'
+									onClick={() => {
+										setShowCloneModal(true);
+										// setIsDropdownVisible(false);
+									}} // Toggle showCloneModal in the parent component
+									style={{
+										display: 'flex',
+										flexDirection: 'row',
+										alignItems: 'center',
+										justifyContent: 'flex-start',
+										gap: 'var(--spacing-lg, 12px)',
+										borderRadius: 'var(--radius-xl, 12px)',
+									}}
+								>
+									<CloneButton
+										project={project}
+										setCurrentProjects={setCurrentProjects}
+										showCloneModal={showCloneModal} // Pass showCloneModal as prop
+										setShowCloneModal={setShowCloneModal}
+										isDropdownVisible={isDropdownVisible}
+										setIsDropdownVisible={setIsDropdownVisible}
+									/>
+									Duplicate
+								</button>
+							)}
+
+							{!isDiscover && onDelete && (
+								<button
+									className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'
+									onClick={() => {
+										setIsDropdownVisible(false);
+										onDelete(project.id);
+									}}
+									style={{
+										display: 'flex',
+										flexDirection: 'row',
+										alignItems: 'center',
+										justifyContent: 'flex-start',
+										gap: 'var(--spacing-lg, 12px)',
+										borderRadius: 'var(--radius-xl, 12px)',
+										color: 'var(--colors-text-text-error-primary-600, #D92D20)',
+									}}
+								>
+									<ButtonWithExplanation
+										button={
+											<button onClick={() => onDelete(project.id)}>
+												<LuTrash2
+													style={{
+														strokeWidth: '2',
+														flex: '1',
+														width: '16px',
+														height: '16px',
+														fontWeight: 'bold',
+														color:
+															'var(--colors-text-text-error-primary-600, #D92D20)',
+													}}
+												/>
+											</button>
+										}
+										explanation={'Delete'}
+									/>
+									Delete
+								</button>
+							)}
+						</div>
+					)}
 
 					{/* <ShareButton
 						share={isShared}
@@ -288,7 +413,7 @@ const ProjectTable: React.FC<Props> = ({
 	isDiscover = false,
 }) => {
 	const grids = isDiscover
-		? 'grid-cols-3 md:grid-cols-4'
+		? 'grid-cols-3 md:grid-cols-8'
 		: 'grid-cols-3 md:grid-cols-11';
 
 	return (
@@ -337,7 +462,7 @@ const ProjectTable: React.FC<Props> = ({
 						</div>
 					)}
 					{/* last edited header */}
-					{!isDiscover && (
+					{
 						<div
 							className='hidden md:flex col-span-2 w-full ml-4 text-[13px] font-bold font-creato-medium capitalize leading-normal tracking-wide'
 							style={{
@@ -347,16 +472,16 @@ const ProjectTable: React.FC<Props> = ({
 						>
 							Last edited
 						</div>
-					)}
+					}
 					{/* header: for pop up menu */}
-					{!isDiscover && (
+					{
 						<div
 							className='hidden md:flex col-span-1 w-full ml-4 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'
 							style={{
 								padding: `var(--spacing-xl, 16px) var(--spacing-3xl, 24px)`,
 							}}
 						></div>
-					)}
+					}
 					{/* */}
 					{/* <div className='col-span-1 w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'></div> */}
 				</div>

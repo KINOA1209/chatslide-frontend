@@ -14,27 +14,40 @@ import RadioButton from '../ui/RadioButton';
 type ShareButtonProps = {
 	share: boolean;
 	setShare: null | ((is_shared: boolean, is_public?: boolean) => void);
+	showShareModal: boolean; // Accept showCloneModal as prop
+	setShowShareModal: React.Dispatch<React.SetStateAction<boolean>>; // Accept setShowCloneModal as prop
+	isDropdownVisible?: boolean;
+	setIsDropdownVisible?: React.Dispatch<React.SetStateAction<boolean>>;
 	project: Project;
 	host?: string;
 	isSocialPost?: boolean;
 	currentSlideIndex?: number;
+	width?: string;
+	height?: string;
 };
 
 const ShareButton: React.FC<ShareButtonProps> = ({
 	share,
 	setShare,
 	project,
+	showShareModal,
+	setShowShareModal,
+	isDropdownVisible,
+	setIsDropdownVisible,
 	host = 'https://drlambda.ai',
 	isSocialPost = false,
 	currentSlideIndex = 0,
+	width,
+	height,
 }) => {
-	const [showModal, setShowModal] = useState(false);
+	// const [showModal, setShowModal] = useState(false);
 	const project_id = project?.id || '';
 	const [isPublic, setIsPublic] = useState(project.is_public);
 
 	const toggleShare = async () => {
 		setShare && setShare(true, isPublic); // updates db as well
-		setShowModal(true);
+		setShowShareModal && setShowShareModal(true);
+		setIsDropdownVisible && setIsDropdownVisible(false);
 	};
 
 	const platforms = ['twitter', 'facebook', 'reddit', 'linkedin'];
@@ -74,20 +87,24 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 
 	useEffect(() => {
 		document.addEventListener('share_slide', (e) => {
-			setShowModal(true);
+			setShowShareModal && setShowShareModal(true);
 		});
 
 		return () =>
 			document.removeEventListener('share_slide', (e) => {
-				setShowModal(true);
+				setShowShareModal && setShowShareModal(true);
 			});
 	}, []);
+
+	useEffect(() => {
+		console.log('isDropdownvisible:', isDropdownVisible);
+	}, [setIsDropdownVisible]);
 
 	return (
 		<div>
 			<Modal
-				showModal={showModal}
-				setShowModal={setShowModal}
+				showModal={showShareModal}
+				setShowModal={setShowShareModal}
 				title='Share / Publish'
 				// description='Share your slides with others or on social media'
 			>
@@ -175,8 +192,8 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 							style={{
 								strokeWidth: '0.8',
 								flex: '1',
-								width: '16px',
-								height: '16px',
+								width: `${width ? width : '24px'}`,
+								height: `${height ? height : '24px'}`,
 								// fontWeight: 'bold',
 								color: '#344054',
 							}}

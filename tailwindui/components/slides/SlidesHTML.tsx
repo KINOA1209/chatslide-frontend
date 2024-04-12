@@ -151,6 +151,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		debouncedSyncSlides,
 	} = useSlides();
 
+	const [showShareModal, setShowShareModal] = useState(false);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const { isPaidUser, token } = useUser();
 	const { isPresenting, setIsPresenting } = useSlides();
@@ -659,6 +660,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							project={project}
 							host={host}
 							currentSlideIndex={slideIndex}
+							showShareModal={showShareModal}
+							setShowShareModal={setShowShareModal}
 						/>
 					)}
 				</ActionsToolBar>

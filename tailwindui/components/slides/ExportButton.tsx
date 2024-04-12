@@ -4,9 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Slide from '../../models/Slide';
 import PaywallModal from '../paywallModal';
 import { BigGrayButton, DropDown } from '../button/DrlambdaButton';
-import {
-	FaRegFilePdf,
-} from 'react-icons/fa';
+import { FaRegFilePdf } from 'react-icons/fa';
 import { generatePdf } from '../utils/DownloadImage';
 import ProjectService from '@/services/ProjectService';
 import { useUser } from '@/hooks/use-user';
@@ -47,9 +45,10 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 			setShowModal(true);
 		});
 
-		return () => document.removeEventListener('download_slide', (e) => {
-			setShowModal(true);
-		});
+		return () =>
+			document.removeEventListener('download_slide', (e) => {
+				setShowModal(true);
+			});
 	}, []);
 
 	async function exportToPdfFrontend() {
@@ -83,7 +82,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 		setShowModal(false);
 
 		setDownloading(true);
-		
+
 		let waitTime = 10;
 		if (!frontend) {
 			waitTime += 10;
@@ -92,22 +91,23 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 			waitTime += 20;
 		}
 
-		const toastId = toast.info(`Exporting your file, please wait for about ${waitTime}s...`, {
-			position: 'top-center',
-			autoClose: waitTime * 1000,
-			hideProgressBar: false,
-			closeOnClick: true,
-			pauseOnHover: false,
-			pauseOnFocusLoss: false,
-			draggable: true,
-			progress: undefined,
-		});
-
+		const toastId = toast.info(
+			`Exporting your file, please wait for about ${waitTime}s...`,
+			{
+				position: 'top-center',
+				autoClose: waitTime * 1000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: false,
+				pauseOnFocusLoss: false,
+				draggable: true,
+				progress: undefined,
+			},
+		);
 
 		if (frontend) {
 			await exportToPdfFrontend();
 		} else {
-			
 			ProjectService.exportToFileBackend(token, project.id, type);
 
 			// wait for 10s for prev file to be deleted
@@ -119,7 +119,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 					console.log(`Attempt ${attempts}: Trying to download the file...`);
 
 					const ok = await ProjectService.downloadFile(
-						project.foldername,
+						project.foldername ?? '', // Use optional chaining and provide a default value if foldername is undefined
 						`slides.${type}`,
 						type,
 					);
@@ -137,7 +137,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 			}
 		}
 		setDownloading(false);
-		if(toastId) {
+		if (toastId) {
 			toast.dismiss(toastId);
 		}
 	};
@@ -155,44 +155,45 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 
 			<ButtonWithExplanation
 				button={
-					<button
-						onClick={() => setShowModal(!showModal)}
-					>
-						{!downloading ? <GoDownload
-							style={{
-								strokeWidth: '1',
-								flex: '1',
-								width: '1.5rem',
-								height: '1.5rem',
-								fontWeight: 'bold',
-								color: '#344054',
-							}}
-						/> :
-							<SpinIcon />}
+					<button onClick={() => setShowModal(!showModal)}>
+						{!downloading ? (
+							<GoDownload
+								style={{
+									strokeWidth: '1',
+									flex: '1',
+									width: '1.5rem',
+									height: '1.5rem',
+									fontWeight: 'bold',
+									color: '#344054',
+								}}
+							/>
+						) : (
+							<SpinIcon />
+						)}
 					</button>
 				}
 				explanation={'Export'}
 			/>
 
 			{/* hidden div for export to pdf */}
-				<div className='fixed left-[-9999px] top-[-9999px] -z-1'>
-					<div ref={exportSlidesRef}>
-						{/* Render all of your slides here. This can be a map of your slides array */}
-						{slides.map((slide, index) => (
-							<div
-								key={`exportToPdfContainer` + index.toString()}
-								style={{ pageBreakAfter: 'always' }}
-							>
-								<SlideContainer
-									slide={slide}
-									index={index}
-									templateDispatch={uneditableTemplateDispatch}
-									exportToPdfMode={true}
-								/>
-							</div>
-						))}
-					</div>
+			<div className='fixed left-[-9999px] top-[-9999px] -z-1'>
+				<div ref={exportSlidesRef}>
+					{/* Render all of your slides here. This can be a map of your slides array */}
+					{slides.map((slide, index) => (
+						<div
+							key={`exportToPdfContainer` + index.toString()}
+							style={{ pageBreakAfter: 'always' }}
+						>
+							<SlideContainer
+								slide={slide}
+								index={index}
+								templateDispatch={uneditableTemplateDispatch}
+								exportToPdfMode={true}
+							/>
+						</div>
+					))}
 				</div>
+			</div>
 
 			<Modal
 				showModal={showModal}
@@ -219,7 +220,9 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 						bgColor='bg-Gray'
 					>
 						<FaRegFilePdf />
-						<span className='flex flex-row gap-2 items-center'>PDF (high) {!isPaidUser && <PlusLabel />}</span>
+						<span className='flex flex-row gap-2 items-center'>
+							PDF (high) {!isPaidUser && <PlusLabel />}
+						</span>
 					</BigGrayButton>
 
 					<BigGrayButton
@@ -230,11 +233,12 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 						bgColor='bg-Gray'
 					>
 						<RiSlideshow2Fill />
-						<span className='flex flex-row gap-2 items-center'>PPTX {!isPaidUser && <PlusLabel />}</span>
+						<span className='flex flex-row gap-2 items-center'>
+							PPTX {!isPaidUser && <PlusLabel />}
+						</span>
 					</BigGrayButton>
 
-					{hasScript &&
-						<SaveScriptsButton slides={slides} />}
+					{hasScript && <SaveScriptsButton slides={slides} />}
 				</div>
 			</Modal>
 		</div>

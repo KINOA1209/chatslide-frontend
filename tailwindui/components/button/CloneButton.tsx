@@ -13,14 +13,26 @@ import { useState } from 'react';
 export const CloneButton: React.FC<{
 	project: Project;
 	setCurrentProjects: React.Dispatch<React.SetStateAction<Project[]>>;
-}> = ({ project, setCurrentProjects }) => {
+	showCloneModal: boolean; // Accept showCloneModal as prop
+	setShowCloneModal: React.Dispatch<React.SetStateAction<boolean>>; // Accept setShowCloneModal as prop
+	isDropdownVisible?: boolean;
+	setIsDropdownVisible?: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({
+	project,
+	setCurrentProjects,
+	showCloneModal,
+	setShowCloneModal,
+	isDropdownVisible,
+	setIsDropdownVisible,
+}) => {
 	const [targetCloneLanguage, setTargetCloneLanguage] =
 		useState<string>('English');
-	const [showCloneModal, setShowCloneModal] = useState(false);
+	// const [showCloneModal, setShowCloneModal] = useState(false);
 	const { token } = useUser();
 
 	async function onClone() {
 		console.log(`cloning project ${project.id} to ${'English'}`);
+
 		if (!project) return;
 		try {
 			const newProject = await ProjectService.clone(
@@ -29,6 +41,7 @@ export const CloneButton: React.FC<{
 				token,
 			);
 			setCurrentProjects((projects) => [newProject, ...projects]);
+			setIsDropdownVisible && setIsDropdownVisible(false);
 		} catch (e) {
 			console.error(e);
 		}

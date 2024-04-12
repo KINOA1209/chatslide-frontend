@@ -54,6 +54,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 	res_scenario,
 }) => {
 	const { token } = useUser();
+	const [showShareModal, setShowShareModal] = useState(false);
 	const { project, updateProject } = useProject();
 	const [host, setHost] = useState('https://drlambda.ai');
 	const { isShared, updateIsShared } = useProject();
@@ -175,7 +176,8 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 			| string
 			| string[]
 			| ThemeObject
-			| Array<string | string[] | Chart[] | boolean[] | ImagesPosition[]> | ThemeObject,
+			| Array<string | string[] | Chart[] | boolean[] | ImagesPosition[]>
+			| ThemeObject,
 		slideIndex: number,
 		tag: SlideKeys | SlideKeys[],
 		contentIndex?: number,
@@ -188,7 +190,13 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		const className = tag;
 
 		const applyUpdate = (
-			content: string | string[] | Chart[] | boolean[] | ImagesPosition[] | ThemeObject,
+			content:
+				| string
+				| string[]
+				| Chart[]
+				| boolean[]
+				| ImagesPosition[]
+				| ThemeObject,
 			className: string,
 		) => {
 			if (className === 'subtopic') {
@@ -237,7 +245,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 			} else {
 				console.error(`Unknown tag: ${tag}`);
 			}
-		}
+		};
 		if (Array.isArray(className)) {
 			className.forEach((current_tag: SlideKeys, idx: number) => {
 				let updateContent:
@@ -246,7 +254,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 					| Chart[]
 					| boolean[]
 					| ImagesPosition[]
-					| ThemeObject
+					| ThemeObject;
 				if (Array.isArray(content)) {
 					if (idx < content.length) {
 						updateContent = content[idx];
@@ -278,15 +286,15 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 	}
 
 	function handleAddPage() {
-		addEmptyPage(socialPostsIndex)
+		addEmptyPage(socialPostsIndex);
 	}
 
 	function handleDuplicatePage() {
-		duplicatePage(socialPostsIndex)
+		duplicatePage(socialPostsIndex);
 	}
 
 	function handleDeletePage() {
-		deleteSlidePage(socialPostsIndex)
+		deleteSlidePage(socialPostsIndex);
 	}
 
 	const updateImgUrlArray = (slideIndex: number) => {
@@ -382,7 +390,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 	return (
 		<div>
 			<div className='flex flex-col items-center justify-center gap-4'>
-				<ToolBar >
+				<ToolBar>
 					{!isViewing && socialPostsIndex != 0 && (
 						<>
 							<AddSlideButton
@@ -437,17 +445,17 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 						socialPostSlide={socialPosts}
 						currentSlideIndex={socialPostsIndex}
 					/>
-					{project &&
+					{project && (
 						<ShareButton
 							setShare={updateIsShared}
 							share={isShared}
 							project={project}
 							host={host}
 							isSocialPost={true}
+							showShareModal={showShareModal}
+							setShowShareModal={setShowShareModal}
 						/>
-					}
-
-
+					)}
 				</ToolBar>
 				{/* buttons and contents */}
 				<div className='max-w-4xl relative flex flex-row items-center justify-center gap-4'>

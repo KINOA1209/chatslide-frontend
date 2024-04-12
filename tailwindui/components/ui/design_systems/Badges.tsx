@@ -1,3 +1,4 @@
+'use client';
 import './variables.css';
 import PaywallModal from '@/components/paywallModal';
 import { useRouter } from 'next/navigation';

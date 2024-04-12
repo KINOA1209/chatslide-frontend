@@ -192,13 +192,16 @@ export default function Dashboard() {
 								Start
 							</DrlambdaButton> */}
 							<DesignSystemButton
+								isPaidFeature={false}
 								size='lg'
 								hierarchy='primary'
 								buttonStatus='enabled'
 								iconRight={AIIcon}
-								text='Create New'
+								// text='Create New'
 								onClick={handleStartNewProject}
-							/>
+							>
+								Create New
+							</DesignSystemButton>
 						</div>
 					</div>
 				</div>
