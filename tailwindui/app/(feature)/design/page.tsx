@@ -85,16 +85,15 @@ export default function DesignPage() {
 	const { token, isPaidUser } = useUser();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { outlines, project, updateProject, bulkUpdateProject } = useProject();
-	const { slides, showDrLambdaLogo, hideLogo, setSlides, debouncedSyncSlides } =
-		useSlides();
+	const { setSlides, setSlideIndex, debouncedSyncSlides } = useSlides();
 	const [template, setTemplate] = useState<TemplateKeys>(
 		project?.template || getTemplateFromAudicence(project?.audience || ''),
 	);
 
 	const [colorPalette, setColorPalette] = useState<PaletteKeys>(
 		project?.palette ||
-			availablePalettes[template as keyof typeof availablePalettes]?.[0] ||
-			'Original',
+		availablePalettes[template as keyof typeof availablePalettes]?.[0] ||
+		'Original',
 	);
 	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
 		project?.selected_logo || [],
@@ -163,10 +162,10 @@ export default function DesignPage() {
 		project?.logo === ''
 			? false
 			: project?.logo === 'Default'
-			? true
-			: isPaidUser
-			? false
-			: true,
+				? true
+				: isPaidUser
+					? false
+					: true,
 	);
 
 	async function viewSlidesSubmit() {
@@ -202,13 +201,13 @@ export default function DesignPage() {
 						logo: showLogo ? 'Default' : '',
 						logo_url: selectedLogo?.[0]?.thumbnail_url || '',
 						background_url: selectedBackground?.[0]?.thumbnail_url || '',
-						images_position: [{}, {}, {}],
 						media_type: ['image', 'image', 'image'],
 						transcript: '',
 					};
 				});
 
 				setSlides(newSlides);
+				setSlideIndex(0);
 				debouncedSyncSlides(newSlides);
 
 				router.push(addIdToRedir('/slides'));
@@ -221,7 +220,7 @@ export default function DesignPage() {
 			console.error(e);
 			toast.error(
 				'Server is busy now. Please try again later. Reference code: ' +
-					project?.id,
+				project?.id,
 			);
 		}
 	}
@@ -260,7 +259,8 @@ export default function DesignPage() {
 				isPaidUser={true}
 				nextIsPaidFeature={false}
 				nextText={
-					!project?.presentation_slides ? 'Writing Slides' : 'Design Slides'
+					!project?.presentation_slides ? 'Writing Slides' :
+						isSubmitting ? 'Designing Slides' : 'Design Slides'
 				}
 				handleClickingGeneration={handleGenerationStatusModal}
 			/>
@@ -287,7 +287,7 @@ export default function DesignPage() {
 							setPalette={setColorPalette}
 							paletteOptions={
 								availablePalettes[
-									template as keyof typeof availablePalettes
+								template as keyof typeof availablePalettes
 								] || ['Original']
 							}
 							palette={colorPalette}
