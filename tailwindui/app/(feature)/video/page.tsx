@@ -142,7 +142,7 @@ const VideoVisualizer = ({
 			) : (
 				<Loading>
 					<p>
-						Your video is being generated ⏳. It usually takes 5 minutes (15 minutes if with avatar) to
+						Your video is being generated ⏳. It usually takes 5 minutes (20 minutes if with avatar) to
 						finish.{' '}
 					</p>
 					<p>
