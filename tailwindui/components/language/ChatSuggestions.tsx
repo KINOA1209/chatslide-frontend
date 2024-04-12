@@ -9,7 +9,9 @@ const CHAT_SUGGESTIONS = {
 	],
 	noncover: [
 		'📊 Add data to the content',
-		'🖼️ Change the image on the slide',
+		'🧠 Add a summarizing page',
+		'🖼️ Change the layout of this page',
+		'🎨 Add a photo about nature',
 		'💡 Change subtopic to be more engaging',
 		'📝 Add an example to the content',
 	],
