@@ -23,7 +23,7 @@ export const DrLambdaAIAssistantIcon: React.FC<{
 }> = ({ onClick }) => {
 	return (
 		<div
-			className='rounded-md p-2 bg-white border border-gray-200 border-2 z-40 flex items-center justify-center relative'
+			className='rounded-md p-2 bg-white border border-gray-200 border-2 flex items-center justify-center relative'
 			onClick={onClick}
 		// style={{ animation: 'pulse 0.5s infinite' }}
 		>
