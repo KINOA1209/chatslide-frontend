@@ -207,7 +207,7 @@ export const projectFinishedSteps = (project: Project | null) => {
 		if (project.presentation_slides) {
 			finishedStepsArray.push(2);
 		}
-    if (project?.parsed_slides?.[0]?.template !== 'Default') {
+		if (project?.parsed_slides?.[0]?.template && project?.parsed_slides?.[0]?.template !== 'Default') {
       finishedStepsArray.push(3);
     }
 		if (project.has_scripts) finishedStepsArray.push(4);
