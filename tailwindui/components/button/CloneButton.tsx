@@ -9,6 +9,7 @@ import Project from '@/models/Project';
 import { useUser } from '@/hooks/use-user';
 import ProjectService from '@/services/ProjectService';
 import { useState } from 'react';
+import { MdOutlineContentCopy } from 'react-icons/md';
 
 export const CloneButton: React.FC<{
 	project: Project;
@@ -73,7 +74,7 @@ export const CloneButton: React.FC<{
 			<ButtonWithExplanation
 				button={
 					<button onClick={() => setShowCloneModal(true)}>
-						<FaRegClone
+						{/* <FaRegClone
 							style={{
 								strokeWidth: '1',
 								flex: '1',
@@ -82,7 +83,14 @@ export const CloneButton: React.FC<{
 								fontWeight: 'bold',
 								color: '#344054',
 							}}
-						/>
+						/> */}
+						<MdOutlineContentCopy
+							style={{
+								color: 'var(--colors-text-text-secondary-700, #344054)',
+								width: '16px',
+								height: '16px',
+							}}
+						></MdOutlineContentCopy>
 					</button>
 				}
 				explanation={'Clone / Translate'}

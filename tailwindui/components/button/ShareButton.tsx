@@ -10,7 +10,7 @@ import PostPlatformConfigs from '@/components/button/PostPlatformConfig';
 import Project from '@/models/Project';
 import { Explanation, Instruction } from '../ui/Text';
 import RadioButton from '../ui/RadioButton';
-
+import { MdOutlineShare } from 'react-icons/md';
 type ShareButtonProps = {
 	share: boolean;
 	setShare: null | ((is_shared: boolean, is_public?: boolean) => void);
@@ -188,7 +188,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 			<ButtonWithExplanation
 				button={
 					<button onClick={toggleShare}>
-						<GoShare
+						{/* <GoShare
 							style={{
 								strokeWidth: '0.8',
 								flex: '1',
@@ -197,7 +197,17 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 								// fontWeight: 'bold',
 								color: '#344054',
 							}}
-						/>
+						/> */}
+						<MdOutlineShare
+							style={{
+								// strokeWidth: '0.8',
+								// flex: '1',
+								width: `${width ? width : '24px'}`,
+								height: `${height ? height : '24px'}`,
+								// fontWeight: 'bold',
+								color: 'var(--colors-text-text-secondary-700, #344054)',
+							}}
+						></MdOutlineShare>
 					</button>
 				}
 				explanation={'Share / Publish'}

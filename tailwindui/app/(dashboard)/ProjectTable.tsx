@@ -14,9 +14,10 @@ import ProjectService from '@/services/ProjectService';
 import { useUser } from '@/hooks/use-user';
 import DesignSystemBadges from '@/components/ui/design_systems/Badges';
 import { PiSlideshow } from 'react-icons/pi';
-import { MdOndemandVideo } from 'react-icons/md';
+import { MdOndemandVideo, MdOutlineOpenInNew } from 'react-icons/md';
 import { MdOutlineShare } from 'react-icons/md';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
+import { MdOutlineDelete } from 'react-icons/md';
 import '@/components/ui/design_systems/variables.css';
 
 const DEFAULT_THUMBNAIL = '/images/ogimage.png';
@@ -257,6 +258,24 @@ const ProjectItem: React.FC<{
 								setIsDropdownVisible(false);
 							}}
 						>
+							<button className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'>
+								<Link
+									style={{
+										display: 'flex',
+										flexDirection: 'row',
+										alignItems: 'center',
+										justifyContent: 'flex-start',
+										gap: 'var(--spacing-lg, 12px)',
+										borderRadius: 'var(--radius-xl, 12px)',
+									}}
+									href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}
+								>
+									<MdOutlineOpenInNew
+										style={{ width: '16px', height: '16px' }}
+									></MdOutlineOpenInNew>
+									Open
+								</Link>
+							</button>
 							<button
 								className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'
 								onClick={() => {
@@ -336,13 +355,13 @@ const ProjectItem: React.FC<{
 									<ButtonWithExplanation
 										button={
 											<button onClick={() => onDelete(project.id)}>
-												<LuTrash2
+												<MdOutlineDelete
 													style={{
-														strokeWidth: '2',
-														flex: '1',
+														// strokeWidth: '2',
+														// flex: '1',
 														width: '16px',
 														height: '16px',
-														fontWeight: 'bold',
+														// fontWeight: 'bold',
 														color:
 															'var(--colors-text-text-error-primary-600, #D92D20)',
 													}}
