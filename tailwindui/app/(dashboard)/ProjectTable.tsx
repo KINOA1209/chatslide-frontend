@@ -224,8 +224,9 @@ const ProjectItem: React.FC<{
 			)}
 			{/* laste edited time */}
 			{
+				<div className='flex flex-row justify-between'>
 				<div
-					className='col-span-1 hidden lg:block items-center '
+					className='col-span-1 block items-center '
 					style={{
 						padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
 						fontSize: '14px',
@@ -238,8 +239,7 @@ const ProjectItem: React.FC<{
 					{/* <FileIcon fileType='pdf' /> */}
 					{project.updated_datetime && formatDate(project.updated_datetime)}
 				</div>
-			}
-			{/* buttons drop down */}
+							{/* buttons drop down */}
 			<div
 				className='col-span-1 p-2 flex'
 				style={{ padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)` }}
@@ -433,45 +433,11 @@ const ProjectItem: React.FC<{
 							)}
 						</div>
 					)}
-
-					{/* <ShareButton
-						share={isShared}
-						setShare={(share: boolean) => {
-							setIsShared(share);
-							ProjectService.SlideShareLink(token, project.id, share);
-						}}
-						project={project}
-					/>
-
-					{!isDiscover && setCurrentProjects && (
-						<CloneButton
-							project={project}
-							setCurrentProjects={setCurrentProjects}
-						/>
-					)}
-
-					
-					{!isDiscover && onDelete && (
-						<ButtonWithExplanation
-							button={
-								<button onClick={() => onDelete(project.id)}>
-									<LuTrash2
-										style={{
-											strokeWidth: '2',
-											flex: '1',
-											width: '16px',
-											height: '16px',
-											fontWeight: 'bold',
-											color: '#344054',
-										}}
-									/>
-								</button>
-							}
-							explanation={'Delete'}
-						/>
-					)} */}
 				</div>
 			</div>
+			</div>
+			}
+
 		</React.Fragment>
 	);
 };
@@ -490,8 +456,8 @@ const ProjectTable: React.FC<Props> = ({
 	isDiscover = false,
 }) => {
 	const grids = isDiscover
-		? 'grid-cols-4 lg:grid-cols-6'
-		: 'grid-cols-4 lg:grid-cols-8';
+		? 'grid-cols-4 lg:grid-cols-5'
+		: 'grid-cols-4 lg:grid-cols-7';
 
 	return (
 		<>
@@ -559,7 +525,7 @@ const ProjectTable: React.FC<Props> = ({
 					{/* last edited header */}
 					{
 						<div
-							className='hidden lg:flex col-span-1 w-full capitalize '
+							className='flex col-span-1 w-full capitalize '
 							style={{
 								padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
 								whiteSpace: 'nowrap',
@@ -574,17 +540,6 @@ const ProjectTable: React.FC<Props> = ({
 							Last edited
 						</div>
 					}
-					{/* header: for pop up menu */}
-					{
-						<div
-							className='hidden lg:flex col-span-1 w-full text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'
-							style={{
-								padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
-							}}
-						></div>
-					}
-					{/* */}
-					{/* <div className='col-span-1 w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'></div> */}
 				</div>
 				{/* projectItem container */}
 				<div
