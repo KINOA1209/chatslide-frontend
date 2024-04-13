@@ -150,19 +150,19 @@ export const Chats: React.FC<ChatsProps> = ({
 	const handleRegenerateTextClick = (
 		currentIndex: number,
 		suggestion_title: string,
-		suggestion: string, 
+		suggestion: string,
 		index: number | string,
 	) => {
 		setRegenerateText(suggestion)
 		setIsRegenerateSelected(true)
-		
+
 		//update the current chathistory
 		const currentEntry = chatHistory[currentIndex]
 
 		if (typeof currentEntry.content === 'object' && 'suggestions' in currentEntry.content && 'selectedSuggestion' in currentEntry.content) {
 			const newContent = {
 				...currentEntry.content,
-				suggestions: [[suggestion_title,suggestion]],
+				suggestions: [[suggestion_title, suggestion]],
 				selectedSuggestion: index === 'Original' ? index : 0,
 			}
 
@@ -173,7 +173,7 @@ export const Chats: React.FC<ChatsProps> = ({
 			};
 			setChatHistory(newChatHistories);
 		}
-		else{
+		else {
 			console.error('Attempted to update selectedSuggestions on an entry with invalid content type');
 		}
 		const successMessage = addSuccessMessage(`✅ Replace the text successfully.`)
@@ -195,7 +195,7 @@ export const Chats: React.FC<ChatsProps> = ({
 							<button
 								key={index}
 								disabled={selectedSuggestion !== null}
-								onClick={() => handleRegenerateTextClick(currentIndex,suggestion[0],suggestion[1], index)}
+								onClick={() => handleRegenerateTextClick(currentIndex, suggestion[0], suggestion[1], index)}
 								className={`
 									gap-3 rounded-lg px-3 py-2 text-left text-xs flex bg-[#EFF4FF] flex flex-col border border-solid border-[#EFF4FF] 
 									hover:bg-white
@@ -209,7 +209,7 @@ export const Chats: React.FC<ChatsProps> = ({
 					{selectedSuggestion === null || selectedSuggestion === 'Original' ? (
 						<button
 							disabled={selectedSuggestion !== null}
-							onClick={() => handleRegenerateTextClick(currentIndex,'Original', regenerateText, 'Original')}
+							onClick={() => handleRegenerateTextClick(currentIndex, 'Original', regenerateText, 'Original')}
 							className={`
 								gap-3 rounded-lg px-3 py-2 text-left text-xs flex bg-[#EFF4FF] flex flex-col border border-solid border-[#EFF4FF] 
 								hover:bg-white

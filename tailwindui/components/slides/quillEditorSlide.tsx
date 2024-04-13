@@ -197,7 +197,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 	const editorRef = useRef<HTMLDivElement>(null);
 	const quillInstanceRef = useRef<Quill | null>(null);
 	const isTextChangeRef = useRef(false);
-	const [hoveredSentence, setHoveredSentence] = useState({ text: '', start: 0, end: 0, hasLeadingSpace:false, hasTrailingSpace:false });
+	const [hoveredSentence, setHoveredSentence] = useState({ text: '', start: 0, end: 0, hasLeadingSpace: false, hasTrailingSpace: false });
 	const regenerateTextRef = useRef('');
 	const {
 		chatHistory,
@@ -299,9 +299,9 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 								setRegenerateText(regenerateTextRef.current)
 								setIsChatWindowOpen(true)
 								addChatHistory({
-									role:'assistant',
-									content:'To proceed with regenerating your selected sentence, please select the desired tone:',
-									choices:['Detailed', 'Simple', 'Engaging', 'Informative', 'Persuasive', 'Professional', 'Entertaining', 'Dramatic']
+									role: 'assistant',
+									content: 'To proceed with regenerating your selected sentence, please select the desired tone:',
+									choices: ['Detailed', 'Simple', 'Engaging', 'Informative', 'Persuasive', 'Professional', 'Entertaining', 'Dramatic']
 								})
 							}
 						}
@@ -310,7 +310,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				theme: 'bubble',
 			}
 
-			if (need_placeholder){
+			if (need_placeholder) {
 				quillOptions.placeholder = 'Text here...'
 			}
 
@@ -561,19 +561,19 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			const handleSelectionChange = (range: any) => {
 				if (range && range.index !== null && range.length !== 0) {
 					//const sentence = getSentenceAtPosition(range.index, range.index + range.length);
-                    const actualText = quill.getText(range.index, range.length)
+					const actualText = quill.getText(range.index, range.length)
 					const trimmedText = quill.getText(range.index, range.length).trim()
 
-                    // Determine if there are leading and trailing spaces
-                    const hasLeadingSpace = actualText.startsWith(' ')
-                    const hasTrailingSpace = actualText.endsWith(' ')
+					// Determine if there are leading and trailing spaces
+					const hasLeadingSpace = actualText.startsWith(' ')
+					const hasTrailingSpace = actualText.endsWith(' ')
 					setHoveredSentence({
-                        text: actualText,
-                        start: range.index,
-                        end: range.index + range.length,
-                        hasLeadingSpace: hasLeadingSpace,
-                        hasTrailingSpace: hasTrailingSpace
-                    });
+						text: actualText,
+						start: range.index,
+						end: range.index + range.length,
+						hasLeadingSpace: hasLeadingSpace,
+						hasTrailingSpace: hasTrailingSpace
+					});
 					regenerateTextRef.current = trimmedText;
 					//setRegenerateText(sentence.text)
 				}
@@ -600,14 +600,14 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 		if (quill && isRegenerateSelected && hoveredSentence.text) {
 			if (regenerateText && hoveredSentence.text !== regenerateText) {
 				// Delete the old text and insert the new one
-				const textToInsert = 
-					(hoveredSentence.hasLeadingSpace ? ' ' : '') + 
-					regenerateText + 
+				const textToInsert =
+					(hoveredSentence.hasLeadingSpace ? ' ' : '') +
+					regenerateText +
 					(hoveredSentence.hasTrailingSpace ? ' ' : '');
 				quill.deleteText(hoveredSentence.start, hoveredSentence.end - hoveredSentence.start);
 				quill.insertText(hoveredSentence.start, textToInsert, defaultFormats, 'user');
 				//const newEndIndex = hoveredSentence.start + regenerateText.length;
-				setHoveredSentence({ text: '', start: 0, end: 0, hasLeadingSpace:false, hasTrailingSpace:false });
+				setHoveredSentence({ text: '', start: 0, end: 0, hasLeadingSpace: false, hasTrailingSpace: false });
 				// Update the selection to cover the new text
 				quill.setSelection(hoveredSentence.start, textToInsert.length);
 				setIsRegenerateSelected(false)
