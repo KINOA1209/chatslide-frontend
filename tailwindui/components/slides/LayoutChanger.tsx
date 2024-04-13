@@ -82,7 +82,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 				setShowModal={setShowModal}
 				onConfirm={() => { setShowModal(false) }}
 				title='Change Page Layout'>
-				<div className='max-w-[60rem] w-full h-fit grid grid-cols-3 gap-4 p-2'>
+				<div className='max-w-[40rem] w-full h-full grid grid-cols-3 gap-4 p-2'>
 					{layoutsToDisplay.map((currLayout, index) => {
 						// Check if slides[currentSlideIndex] is defined
 						if (
