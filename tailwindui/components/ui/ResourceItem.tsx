@@ -19,7 +19,7 @@ export const ResourceIcon: React.FC<{
 	resource: Resource;
 	contain?: boolean;
 }> = ({ resource, contain = false }) => {
-	console.log('resource type is ', resource.type);
+	// console.log('resource type is ', resource.type);
 	if (!resource.thumbnail_url) {
 		return <FileIcon fileType={resource.type} />;
 	}
