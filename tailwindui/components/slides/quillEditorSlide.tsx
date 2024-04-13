@@ -9,6 +9,7 @@ import '@/components/socialPost/socialPostCustomFonts.css';
 import { SlRefresh } from "react-icons/sl";
 import ReactDOMServer from 'react-dom/server';
 import { useChatHistory } from '@/hooks/use-chat-history';
+import { Delta } from 'quill/core';
 
 type QuillEditableProps = {
 	content: string | string[];
@@ -228,6 +229,17 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 		const quill = quillInstanceRef.current;
 		if (quill) {
 			quill.root.style.minWidth = '100%';
+			quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
+				return delta.compose(new Delta().retain(delta.length(),
+					{
+						color: false,
+						background: false,
+						bold: false,
+						strike: false,
+						underline: false
+					}
+				));
+			});
 		}
 	}, []);
 
