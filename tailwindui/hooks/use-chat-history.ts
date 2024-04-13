@@ -53,6 +53,7 @@ export const useChatHistory = () => {
 
 	return {
 		chatHistory,
+		setChatHistory,
 		addChatHistory,
 		clearChatHistory,
 		chatHistoryStatus,

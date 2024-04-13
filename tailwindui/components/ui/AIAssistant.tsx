@@ -76,6 +76,7 @@ export const Chats: React.FC<ChatsProps> = ({
 	const [loading, setLoading] = useState(false);
 	const { token } = useUser();
 	const {
+		setChatHistory,
 		isChatWindowOpen,
 		setIsChatWindowOpen,
 		regenerateText,
@@ -83,6 +84,7 @@ export const Chats: React.FC<ChatsProps> = ({
 		isRegenerateSelected,
 		setIsRegenerateSelected,
 	} = useChatHistory()
+	//const [selectedSuggestion, setSelectedSuggestion] = useState<number | null>(null);
 
 	// const handleImageDragStart = (imageUrl: string) => {
 	const handleImageDragStart = (imageUrl: string) => {
@@ -139,43 +141,84 @@ export const Chats: React.FC<ChatsProps> = ({
 	const addChoicesMessage = (
 		chat: string,
 		suggestions: string[][],
+		selectedSuggestion: number | null
 	): ChatHistory => ({
 		role: 'assistant',
-		content: {chat: chat, suggestions: suggestions} as RegenerateSelection
+		content: { chat: chat, suggestions: suggestions, selectedSuggestion: selectedSuggestion } as RegenerateSelection
 	})
 
-	const handleRegenerateTextClick = (suggestion: string) => {
+	const handleRegenerateTextClick = (
+		currentIndex: number,
+		suggestion_title: string,
+		suggestion: string,
+		index: number | string,
+	) => {
 		setRegenerateText(suggestion)
 		setIsRegenerateSelected(true)
+
+		//update the current chathistory
+		const currentEntry = chatHistory[currentIndex]
+
+		if (typeof currentEntry.content === 'object' && 'suggestions' in currentEntry.content && 'selectedSuggestion' in currentEntry.content) {
+			const newContent = {
+				...currentEntry.content,
+				suggestions: [[suggestion_title, suggestion]],
+				selectedSuggestion: index === 'Original' ? index : 0,
+			}
+
+			const newChatHistories = [...chatHistory];
+			newChatHistories[currentIndex] = {
+				...currentEntry,
+				content: newContent
+			};
+			setChatHistory(newChatHistories);
+		}
+		else {
+			console.error('Attempted to update selectedSuggestions on an entry with invalid content type');
+		}
 		const successMessage = addSuccessMessage(`✅ Replace the text successfully.`)
 		addChatHistory(successMessage)
 	}
 
 	const regenerateResponseJSX = (
+		currentIndex: number,
 		chat: string,
 		suggestions: string[][],
+		selectedSuggestion: number | string | null,
 	): JSX.Element => {
 		return (
 			<div>
-				<span>{chat}</span> {/* Display the chat content */}
+				<span>{chat}</span>
 				<div className='gap-3 flex flex-col'>
 					{suggestions.map((suggestion, index) => (
-						<button
-							key={index}
-							onClick={() => handleRegenerateTextClick(suggestion[1])}
-							className='gap-3 rounded-lg px-3 py-2 text-left text-xs flex bg-[#EFF4FF] flex flex-col border border-solid border-[#EFF4FF] hover:bg-white'
-						>
-							<span className='text-gray-700 font-bold'>{index + 1}. {suggestion[0]}</span>
-							<span>{suggestion[1]}</span>
-						</button>
+						selectedSuggestion === null || selectedSuggestion === index ? (
+							<button
+								key={index}
+								disabled={selectedSuggestion !== null}
+								onClick={() => handleRegenerateTextClick(currentIndex, suggestion[0], suggestion[1], index)}
+								className={`
+									gap-3 rounded-lg px-3 py-2 text-left text-xs flex bg-[#EFF4FF] flex flex-col border border-solid border-[#EFF4FF] 
+									hover:bg-white
+								`}
+							>
+								<span className='text-gray-700 font-bold'>{index + 1}. {suggestion[0]}</span>
+								<span>{suggestion[1]}</span>
+							</button>
+						) : null
 					))}
-					<button
-						onClick={() => handleRegenerateTextClick(regenerateText)}
-						className='gap-3 rounded-lg px-3 py-2 text-left text-xs flex bg-[#EFF4FF] flex flex-col border border-solid border-[#EFF4FF] hover:bg-white'
-					>
-						<span className='text-gray-700 font-bold'>Original</span>
-						<span>{regenerateText}</span>
-					</button>
+					{selectedSuggestion === null || selectedSuggestion === 'Original' ? (
+						<button
+							disabled={selectedSuggestion !== null}
+							onClick={() => handleRegenerateTextClick(currentIndex, 'Original', regenerateText, 'Original')}
+							className={`
+								gap-3 rounded-lg px-3 py-2 text-left text-xs flex bg-[#EFF4FF] flex flex-col border border-solid border-[#EFF4FF] 
+								hover:bg-white
+							`}
+						>
+							<span className='text-gray-700 font-bold'>Original</span>
+							<span>{regenerateText}</span>
+						</button>
+					) : null}
 				</div>
 			</div>
 		)
@@ -239,7 +282,7 @@ export const Chats: React.FC<ChatsProps> = ({
 					addChatHistory(errorMessage)
 				}
 				else {
-					const regenerate_choices = addChoicesMessage(responseData.data.chat, responseData.data.suggestions)
+					const regenerate_choices = addChoicesMessage(responseData.data.chat, responseData.data.suggestions, null)
 					addChatHistory(regenerate_choices)
 				}
 			}
@@ -278,8 +321,8 @@ export const Chats: React.FC<ChatsProps> = ({
 							{/* Directly render chat.content if it's a React element */}
 							{/* {React.isValidElement(chat.content) ? chat.content
 								: <span dangerouslySetInnerHTML={{ __html: chat.content }}></span>} */}
-							{typeof chat.content === 'object' && 'chat' in chat.content && 'suggestions' in chat.content ?
-								regenerateResponseJSX(chat.content.chat, chat.content.suggestions) :
+							{typeof chat.content === 'object' && 'chat' in chat.content && 'suggestions' in chat.content && 'selectedSuggestion' in chat.content ?
+								regenerateResponseJSX(index, chat.content.chat, chat.content.suggestions, chat.content.selectedSuggestion) :
 								<span dangerouslySetInnerHTML={{ __html: chat.content }}></span>
 							}
 						</div>
@@ -517,7 +560,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					);
 
 					if (responseData.data.action === 'add_page') {
-						const newSlide = { ...slides[currentSlideIndex], ...responseData.data.slide, layout: 'Col_1_img_0_layout', images: []};
+						const newSlide = { ...slides[currentSlideIndex], ...responseData.data.slide, layout: 'Col_1_img_0_layout', images: [] };
 
 						// insert the newSlide after the currentSlideIndex
 						setSlides((prevSlides) => {
