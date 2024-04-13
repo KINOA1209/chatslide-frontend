@@ -291,6 +291,21 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	};
 
 	useEffect(() => {
+		if (isPresenting) {
+			if (window.Intercom && typeof window.Intercom === 'function') {
+				window.Intercom('update', {
+					"hide_default_launcher": true
+				});
+			}
+		} else {
+			if (window.Intercom && typeof window.Intercom === 'function')
+				window.Intercom('update', {
+					"hide_default_launcher": false
+				});
+		}
+	}, [isPresenting]);
+
+	useEffect(() => {
 		document.addEventListener('keydown', handleKeyDown);
 		// click to go to next page
 		document.addEventListener('click', handleClick);
@@ -535,10 +550,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			false, // canEdit
 			exportToPdfMode, //exportToPdfMode
 			false, //editMathMode
-			() => {}, //setIsEditMode
-			() => {}, // handleSlideEdit
-			() => () => {}, // updateImgUrlArray,
-			() => {}, // toggleEditMode,
+			() => { }, //setIsEditMode
+			() => { }, // handleSlideEdit
+			() => () => { }, // updateImgUrlArray,
+			() => { }, // toggleEditMode,
 			// slide.palette,
 			index === 0, // isCoverPage
 			slide.layout, // layoutOptionNonCover
@@ -678,19 +693,19 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						/>
 					)}
 				</ActionsToolBar>
-					{!isViewing && !isPresenting && (
-						<div className='hidden sm:block cursor-pointer'>
-							<ButtonWithExplanation
-								button={
-									<DrLambdaAIAssistantIcon
-										onClick={toggleChatWindow}
-									></DrLambdaAIAssistantIcon>
-								}
-								explanation='AI Assistant'
-							/>
-						</div>
-					)}
-					<div className='w-1'></div> {/* spacer */}
+				{!isViewing && !isPresenting && (
+					<div className='hidden sm:block cursor-pointer'>
+						<ButtonWithExplanation
+							button={
+								<DrLambdaAIAssistantIcon
+									onClick={toggleChatWindow}
+								></DrLambdaAIAssistantIcon>
+							}
+							explanation='AI Assistant'
+						/>
+					</div>
+				)}
+				<div className='w-1'></div> {/* spacer */}
 			</div>
 
 			<PaywallModal
