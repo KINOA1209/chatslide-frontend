@@ -46,10 +46,8 @@ export function formatDate(dateString: string): string {
 	const yearsDiff = Math.floor(monthsDiff / 12);
 
 	// Determine the appropriate time unit and format the result
-	if (secondsDiff < 60) {
-		return `${secondsDiff} second${secondsDiff === 1 ? '' : 's'} ago`;
-	} else if (minutesDiff < 60) {
-		return `${minutesDiff} minute${minutesDiff === 1 ? '' : 's'} ago`;
+	if (minutesDiff < 60) {
+		return `${minutesDiff} min${minutesDiff === 1 ? '' : 's'} ago`;
 	} else if (hoursDiff < 24) {
 		return `${hoursDiff} hour${hoursDiff === 1 ? '' : 's'} ago`;
 	} else if (daysDiff < 30) {
