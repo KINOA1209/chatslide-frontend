@@ -20,13 +20,15 @@ import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { MdOutlineDelete } from 'react-icons/md';
 import '@/components/ui/design_systems/variables.css';
 import dynamic from 'next/dynamic';
+import defaultThumbnail from '@/public/images/ogimage.png';
+import causalTopicThumbnail from '@/public/images/socialpost/casual_topic.png';
+import readingNotesThumbnail from '@/public/images/socialpost/reading_notes.png';
+import seriousSubjectThumbnail from '@/public/images/socialpost/serious_subject.png';
 // import ExportToPdfButton from '@/components/slides/ExportButton';
 const ExportToPdfButton = dynamic(
 	() => import('@/components/slides/ExportButton'), // Path to your ExportToPdfButton component
 	{ ssr: false }, // Disable SSR
 );
-
-const DEFAULT_THUMBNAIL = '/images/ogimage.png';
 
 export function formatDate(dateString: string): string {
 	const date = new Date(dateString);
@@ -59,6 +61,24 @@ export function formatDate(dateString: string): string {
 	}
 }
 
+export function getThumbnailUrl(project: Project) {
+	if(!project)
+		return defaultThumbnail;
+	if (project.content_type === 'presentation') {
+		return project.thumbnail_url || defaultThumbnail;
+	}
+	if (project.post_type === 'casual_topic') {
+		return causalTopicThumbnail;
+	}
+	if (project.post_type === 'reading_notes') {
+		return readingNotesThumbnail;
+	}
+	if (project.post_type === 'serious_subject') {
+		return seriousSubjectThumbnail;
+	}
+	return causalTopicThumbnail;
+}
+
 const ProjectItem: React.FC<{
 	project: Project;
 	onDelete?: (projectId: string) => void;
@@ -74,373 +94,367 @@ const ProjectItem: React.FC<{
 	isDiscover = false,
 	exportSlidesRef = useRef<HTMLDivElement>(null),
 }) => {
-	const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-	const isCloning = index === -1;
-	const { token } = useUser();
-	const [isShared, setIsShared] = React.useState(false);
-	// Parent component
-	const [showCloneModal, setShowCloneModal] = useState(false); // Define state in the parent component
-	const [showShareModal, setShowShareModal] = useState(false);
-	const [showExportToPdfModal, setShowExportToPdfModal] = useState(false); // Define state in the export
-	// const exportSlidesRef = useRef<HTMLDivElement>(null);
-	const toggleDropdown = () => {
-		setIsDropdownVisible((prev) => !prev);
-	};
+		const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+		const isCloning = index === -1;
+		const { token } = useUser();
+		const [isShared, setIsShared] = React.useState(false);
+		// Parent component
+		const [showCloneModal, setShowCloneModal] = useState(false); // Define state in the parent component
+		const [showShareModal, setShowShareModal] = useState(false);
+		const [showExportToPdfModal, setShowExportToPdfModal] = useState(false); // Define state in the export
+		// const exportSlidesRef = useRef<HTMLDivElement>(null);
+		const toggleDropdown = () => {
+			setIsDropdownVisible((prev) => !prev);
+		};
 
-	// for hovering effect change dropdown menu section color
-	const handleMouseEnter = (event: React.MouseEvent<HTMLDivElement>) => {
-		event.currentTarget.style.background =
-			'var(--Colors-Background-bg-tertiary, #F2F4F7)';
-	};
+		// for hovering effect change dropdown menu section color
+		const handleMouseEnter = (event: React.MouseEvent<HTMLDivElement>) => {
+			event.currentTarget.style.background =
+				'var(--Colors-Background-bg-tertiary, #F2F4F7)';
+		};
 
-	const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
-		event.currentTarget.style.background = 'transparent';
-	};
+		const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
+			event.currentTarget.style.background = 'transparent';
+		};
 
-	useEffect(() => {
-		// console.log(project);
-	}, []);
+		useEffect(() => {
+			// console.log(project);
+		}, []);
 
-	return (
-		<React.Fragment key={project.id}>
-			{/* thumbnail */}
-			<div
-				className={`h-full hidden lg:flex col-span-1 p-1 items-center justify-center ${
-					!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
-				} font-creato-medium leading-normal`}
-			>
-				<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
-					<div
-						className='flex items-center justify-center w-full'
-						style={{
-							objectFit: 'contain' as 'contain',
-						}}
-					>
-						{project.content_type === 'presentation' ? (
+		return (
+			<React.Fragment key={project.id}>
+				{/* thumbnail */}
+				<div
+					className={`h-full hidden lg:flex col-span-1 p-1 items-center justify-center ${!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
+						} font-creato-medium leading-normal`}
+				>
+					<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
+						<div
+							className='flex items-center justify-center w-full'
+							style={{
+								objectFit: 'contain' as 'contain',
+							}}
+						>
 							<Image
 								className=''
 								unoptimized={true}
-								src={project.thumbnail_url || DEFAULT_THUMBNAIL}
+								src={getThumbnailUrl(project)}
 								alt='project thumbnail'
 								layout='responsive'
 								width={72}
 								height={40}
 								style={{ width: '72px', height: '40px' }}
-								// onError={(e) => {
-								// 	e.currentTarget.src = DEFAULT_THUMBNAIL;
-								// }}
+							// onError={(e) => {
+							// 	e.currentTarget.src = DEFAULT_THUMBNAIL;
+							// }}
 							/>
-						) : (
-							<FaPhotoVideo className='text-gray-600 w-[72px] h-[40px]' />
-						)}
-					</div>
-				</Link>
-			</div>
-			{/* title */}
-			<div
-				className={`col-span-3 lg:col-span-2 p-2 flex items-center ${
-					!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
-				} font-creato-medium leading-[20px]`}
-				style={{ padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)` }}
-			>
-				<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
+						</div>
+					</Link>
+				</div>
+				{/* title */}
+				<div
+					className={`col-span-3 lg:col-span-2 p-2 flex items-center ${!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
+						} font-creato-medium leading-[20px]`}
+					style={{ padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)` }}
+				>
+					<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
+						<div
+							className='flex-wrap'
+							style={{
+								fontSize: '14px',
+								color: 'var(--colors-text-text-secondary-700, #344054)',
+							}}
+						>
+							{project.name} {isCloning && '(Cloning...⏳)'}
+						</div>
+					</Link>
+				</div>
+				{/* type */}
+				{
 					<div
-						className='flex-wrap'
+						className='col-span-1 hidden lg:block items-center '
 						style={{
-							fontSize: '14px',
-							color: 'var(--colors-text-text-secondary-700, #344054)',
+							padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
 						}}
 					>
-						{project.name} {isCloning && '(Cloning...⏳)'}
-					</div>
-				</Link>
-			</div>
-			{/* type */}
-			{
-				<div
-					className='col-span-1 hidden lg:block items-center '
-					style={{
-						padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
-					}}
-				>
-					<div className='flex flex-col gap-[4px]'>
-						{project.content_type === 'presentation' ? (
-							<DesignSystemBadges
-								size='sm'
-								text={'Slide'}
-								iconLeading={PiSlideshow}
-								bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #EFF4FF)'
-								borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #C7D7FE)'
-								borderRadius='6px'
-								textColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
-								iconColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
-							></DesignSystemBadges>
-						) : (
-							<DesignSystemBadges
-								size='sm'
-								text={'Social Post'}
-								iconLeading={MdOutlineShare}
-								bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #F4F3FF)'
-								borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #D9D6FE)'
-								borderRadius='6px'
-								textColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
-								iconColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
-							></DesignSystemBadges>
-						)}{' '}
-						{project.video_url ? (
-							<DesignSystemBadges
-								size='sm'
-								text={'Video'}
-								iconLeading={MdOndemandVideo}
-								bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #EFF4FF)'
-								borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #C7D7FE)'
-								borderRadius='6px'
-								textColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
-								iconColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
-							></DesignSystemBadges>
-						) : (
-							<></>
-						)}
-					</div>
+						<div className='flex flex-col gap-[4px]'>
+							{project.content_type === 'presentation' ? (
+								<DesignSystemBadges
+									size='sm'
+									text={'Slide'}
+									iconLeading={PiSlideshow}
+									bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #EFF4FF)'
+									borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #C7D7FE)'
+									borderRadius='6px'
+									textColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
+									iconColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
+								></DesignSystemBadges>
+							) : (
+								<DesignSystemBadges
+									size='sm'
+									text={'Social Post'}
+									iconLeading={MdOutlineShare}
+									bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #F4F3FF)'
+									borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #D9D6FE)'
+									borderRadius='6px'
+									textColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
+									iconColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
+								></DesignSystemBadges>
+							)}{' '}
+							{project.video_url ? (
+								<DesignSystemBadges
+									size='sm'
+									text={'Video'}
+									iconLeading={MdOndemandVideo}
+									bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #EFF4FF)'
+									borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #C7D7FE)'
+									borderRadius='6px'
+									textColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
+									iconColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
+								></DesignSystemBadges>
+							) : (
+								<></>
+							)}
+						</div>
 
-					{/* {project.content_type} */}
-				</div>
-			}
-			{/* resources */}
-			{!isDiscover && (
-				<div
-					className='col-span-2 hidden lg:flex lg:flex-col lg:gap-1 items-center'
-					style={{
-						padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
-					}}
-				>
-					{/* <div className='flex-wrap'> */}
-					{project.resources &&
-						project.resources.map((resource, resourceIndex) => (
-							<ResourceItem key={resourceIndex} {...resource} />
-						))}
-					{/* </div> */}
-				</div>
-			)}
-			{/* laste edited time */}
-			{
-				<div className='flex flex-row justify-between'>
-				<div
-					className='col-span-1 block items-center '
-					style={{
-						padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
-						fontSize: '14px',
-						color: 'var(--colors-text-text-tertiary-600, #475467)',
-						lineHeight: '20px',
-						fontStyle: 'normal',
-						fontWeight: 'normal',
-					}}
-				>
-					{/* <FileIcon fileType='pdf' /> */}
-					{project.updated_datetime && formatDate(project.updated_datetime)}
-				</div>
-							{/* buttons drop down */}
-			<div
-				className='col-span-1 p-2 flex'
-				style={{ padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)` }}
-			>
-				<div className='h-full flex justify-end items-center w-full gap-4 relative'>
-					{/* <span className='hidden lg:flex'>
+						{/* {project.content_type} */}
+					</div>
+				}
+				{/* resources */}
+				{!isDiscover && (
+					<div
+						className='col-span-2 hidden lg:flex lg:flex-col lg:gap-1 items-center'
+						style={{
+							padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
+						}}
+					>
+						{/* <div className='flex-wrap'> */}
+						{project.resources &&
+							project.resources.map((resource, resourceIndex) => (
+								<ResourceItem key={resourceIndex} {...resource} />
+							))}
+						{/* </div> */}
+					</div>
+				)}
+				{/* laste edited time */}
+				{
+					<div className='flex flex-row justify-between'>
+						<div
+							className='col-span-1 block items-center '
+							style={{
+								padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
+								fontSize: '14px',
+								color: 'var(--colors-text-text-tertiary-600, #475467)',
+								lineHeight: '20px',
+								fontStyle: 'normal',
+								fontWeight: 'normal',
+							}}
+						>
+							{/* <FileIcon fileType='pdf' /> */}
+							{project.updated_datetime && formatDate(project.updated_datetime)}
+						</div>
+						{/* buttons drop down */}
+						<div
+							className='col-span-1 p-2 flex'
+							style={{ padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)` }}
+						>
+							<div className='h-full flex justify-end items-center w-full gap-4 relative'>
+								{/* <span className='hidden lg:flex'>
 						{moment(project.created_datetime).format('L')}
 					</span> */}
 
-					{/* drop down menu click icon */}
-					<div
-						style={{
-							display: 'flex',
-							cursor: 'pointer',
-							padding: '5px',
-							alignItems: 'center',
-							borderRadius: 'var(--radius-sm, 6px)',
-							transition: 'background-color 0.3s', // Smooth transition
-						}}
-						onMouseEnter={handleMouseEnter}
-						onMouseLeave={handleMouseLeave}
-						onClick={() => {
-							toggleDropdown();
-							// Add functionality for the share button
-						}}
-					>
-						<HiOutlineDotsVertical
-							style={{ color: '#667085', width: '1rem', height: '1rem' }}
-						></HiOutlineDotsVertical>
-					</div>
-
-					{/* dropdown menu items area */}
-					{isDropdownVisible && (
-						<div
-							className='absolute top-full right-0 bg-white shadow-md rounded-md mt-1 lg:w-[180px]'
-							style={{
-								zIndex: 999,
-								display: 'flex',
-								flexDirection: 'column',
-								borderRadius: 'var(--radius-xl, 12px)',
-							}}
-							onMouseLeave={() => {
-								setIsDropdownVisible(false);
-							}}
-						>
-							<button className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'>
-								<Link
+								{/* drop down menu click icon */}
+								<div
 									style={{
 										display: 'flex',
-										flexDirection: 'row',
+										cursor: 'pointer',
+										padding: '5px',
 										alignItems: 'center',
-										justifyContent: 'flex-start',
-										gap: 'var(--spacing-lg, 12px)',
-										borderRadius: 'var(--radius-xl, 12px)',
+										borderRadius: 'var(--radius-sm, 6px)',
+										transition: 'background-color 0.3s', // Smooth transition
 									}}
-									href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}
-								>
-									<MdOutlineOpenInNew
-										style={{ width: '16px', height: '16px' }}
-									></MdOutlineOpenInNew>
-									Open
-								</Link>
-							</button>
-
-							{!isDiscover && setCurrentProjects && (
-								<button
-									className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'
+									onMouseEnter={handleMouseEnter}
+									onMouseLeave={handleMouseLeave}
 									onClick={() => {
-										setShowCloneModal(true);
-										// setIsDropdownVisible(false);
-									}} // Toggle showCloneModal in the parent component
-									style={{
-										display: 'flex',
-										flexDirection: 'row',
-										alignItems: 'center',
-										justifyContent: 'flex-start',
-										gap: 'var(--spacing-lg, 12px)',
-										borderRadius: 'var(--radius-xl, 12px)',
-										borderBottom:
-											'1px solid var(--Colors-Border-border-secondary, #EAECF0)',
+										toggleDropdown();
+										// Add functionality for the share button
 									}}
 								>
-									<CloneButton
-										project={project}
-										setCurrentProjects={setCurrentProjects}
-										showCloneModal={showCloneModal} // Pass showCloneModal as prop
-										setShowCloneModal={setShowCloneModal}
-										isDropdownVisible={isDropdownVisible}
-										setIsDropdownVisible={setIsDropdownVisible}
-									/>
-									Duplicate
-								</button>
-							)}
+									<HiOutlineDotsVertical
+										style={{ color: '#667085', width: '1rem', height: '1rem' }}
+									></HiOutlineDotsVertical>
+								</div>
 
-							<button
-								className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'
-								onClick={() => {
-									setShowShareModal(true);
-								}}
-								style={{
-									display: 'flex',
-									flexDirection: 'row',
-									alignItems: 'center',
-									justifyContent: 'flex-start',
-									gap: 'var(--spacing-lg, 12px)',
-									borderRadius: 'var(--radius-xl, 12px)',
-								}}
-							>
-								<ShareButton
-									share={isShared}
-									setShare={(share: boolean) => {
-										setIsShared(share);
-										ProjectService.SlideShareLink(token, project.id, share);
-									}}
-									project={project}
-									showShareModal={showShareModal}
-									setShowShareModal={setShowShareModal}
-									isDropdownVisible={isDropdownVisible}
-									setIsDropdownVisible={setIsDropdownVisible}
-									width='16px'
-									height='16px'
-								/>
-								Share
-							</button>
+								{/* dropdown menu items area */}
+								{isDropdownVisible && (
+									<div
+										className='absolute top-full right-0 bg-white shadow-md rounded-md mt-1 lg:w-[180px]'
+										style={{
+											zIndex: 999,
+											display: 'flex',
+											flexDirection: 'column',
+											borderRadius: 'var(--radius-xl, 12px)',
+										}}
+										onMouseLeave={() => {
+											setIsDropdownVisible(false);
+										}}
+									>
+										<button className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'>
+											<Link
+												style={{
+													display: 'flex',
+													flexDirection: 'row',
+													alignItems: 'center',
+													justifyContent: 'flex-start',
+													gap: 'var(--spacing-lg, 12px)',
+													borderRadius: 'var(--radius-xl, 12px)',
+												}}
+												href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}
+											>
+												<MdOutlineOpenInNew
+													style={{ width: '16px', height: '16px' }}
+												></MdOutlineOpenInNew>
+												Open
+											</Link>
+										</button>
 
-							{!isDiscover && setCurrentProjects && (
-								<button
-									className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'
-									onClick={() => {
-										setShowExportToPdfModal(true);
-									}} // Toggle showCloneModal in the parent component
-									style={{
-										display: 'flex',
-										flexDirection: 'row',
-										alignItems: 'center',
-										justifyContent: 'flex-start',
-										gap: 'var(--spacing-lg, 12px)',
-										borderRadius: 'var(--radius-xl, 12px)',
-										borderBottom:
-											'1px solid var(--Colors-Border-border-secondary, #EAECF0)',
-									}}
-								>
-									<ExportToPdfButton
-										exportSlidesRef={exportSlidesRef}
-										setShowExportToPdfModal={setShowExportToPdfModal}
-										showExportToPdfModal={showExportToPdfModal}
-										width='16px'
-										height='16px'
-									></ExportToPdfButton>
-									Download
-								</button>
-							)}
-
-							{!isDiscover && onDelete && (
-								<button
-									className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'
-									onClick={() => {
-										setIsDropdownVisible(false);
-										onDelete(project.id);
-									}}
-									style={{
-										display: 'flex',
-										flexDirection: 'row',
-										alignItems: 'center',
-										justifyContent: 'flex-start',
-										gap: 'var(--spacing-lg, 12px)',
-										borderRadius: 'var(--radius-xl, 12px)',
-										color: 'var(--colors-text-text-error-primary-600, #D92D20)',
-									}}
-								>
-									<ButtonWithExplanation
-										button={
-											<button onClick={() => onDelete(project.id)}>
-												<MdOutlineDelete
-													style={{
-														// strokeWidth: '2',
-														// flex: '1',
-														width: '16px',
-														height: '16px',
-														// fontWeight: 'bold',
-														color:
-															'var(--colors-text-text-error-primary-600, #D92D20)',
-													}}
+										{!isDiscover && setCurrentProjects && (
+											<button
+												className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'
+												onClick={() => {
+													setShowCloneModal(true);
+													// setIsDropdownVisible(false);
+												}} // Toggle showCloneModal in the parent component
+												style={{
+													display: 'flex',
+													flexDirection: 'row',
+													alignItems: 'center',
+													justifyContent: 'flex-start',
+													gap: 'var(--spacing-lg, 12px)',
+													borderRadius: 'var(--radius-xl, 12px)',
+													borderBottom:
+														'1px solid var(--Colors-Border-border-secondary, #EAECF0)',
+												}}
+											>
+												<CloneButton
+													project={project}
+													setCurrentProjects={setCurrentProjects}
+													showCloneModal={showCloneModal} // Pass showCloneModal as prop
+													setShowCloneModal={setShowCloneModal}
+													isDropdownVisible={isDropdownVisible}
+													setIsDropdownVisible={setIsDropdownVisible}
 												/>
+												Duplicate
 											</button>
-										}
-										explanation={'Delete'}
-									/>
-									Delete
-								</button>
-							)}
-						</div>
-					)}
-				</div>
-			</div>
-			</div>
-			}
+										)}
 
-		</React.Fragment>
-	);
-};
+										<button
+											className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'
+											onClick={() => {
+												setShowShareModal(true);
+											}}
+											style={{
+												display: 'flex',
+												flexDirection: 'row',
+												alignItems: 'center',
+												justifyContent: 'flex-start',
+												gap: 'var(--spacing-lg, 12px)',
+												borderRadius: 'var(--radius-xl, 12px)',
+											}}
+										>
+											<ShareButton
+												share={isShared}
+												setShare={(share: boolean) => {
+													setIsShared(share);
+													ProjectService.SlideShareLink(token, project.id, share);
+												}}
+												project={project}
+												showShareModal={showShareModal}
+												setShowShareModal={setShowShareModal}
+												isDropdownVisible={isDropdownVisible}
+												setIsDropdownVisible={setIsDropdownVisible}
+												width='16px'
+												height='16px'
+											/>
+											Share
+										</button>
+
+										{!isDiscover && setCurrentProjects && (
+											<button
+												className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'
+												onClick={() => {
+													setShowExportToPdfModal(true);
+												}} // Toggle showCloneModal in the parent component
+												style={{
+													display: 'flex',
+													flexDirection: 'row',
+													alignItems: 'center',
+													justifyContent: 'flex-start',
+													gap: 'var(--spacing-lg, 12px)',
+													borderRadius: 'var(--radius-xl, 12px)',
+													borderBottom:
+														'1px solid var(--Colors-Border-border-secondary, #EAECF0)',
+												}}
+											>
+												<ExportToPdfButton
+													exportSlidesRef={exportSlidesRef}
+													setShowExportToPdfModal={setShowExportToPdfModal}
+													showExportToPdfModal={showExportToPdfModal}
+													width='16px'
+													height='16px'
+												></ExportToPdfButton>
+												Download
+											</button>
+										)}
+
+										{!isDiscover && onDelete && (
+											<button
+												className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'
+												onClick={() => {
+													setIsDropdownVisible(false);
+													onDelete(project.id);
+												}}
+												style={{
+													display: 'flex',
+													flexDirection: 'row',
+													alignItems: 'center',
+													justifyContent: 'flex-start',
+													gap: 'var(--spacing-lg, 12px)',
+													borderRadius: 'var(--radius-xl, 12px)',
+													color: 'var(--colors-text-text-error-primary-600, #D92D20)',
+												}}
+											>
+												<ButtonWithExplanation
+													button={
+														<button onClick={() => onDelete(project.id)}>
+															<MdOutlineDelete
+																style={{
+																	// strokeWidth: '2',
+																	// flex: '1',
+																	width: '16px',
+																	height: '16px',
+																	// fontWeight: 'bold',
+																	color:
+																		'var(--colors-text-text-error-primary-600, #D92D20)',
+																}}
+															/>
+														</button>
+													}
+													explanation={'Delete'}
+												/>
+												Delete
+											</button>
+										)}
+									</div>
+								)}
+							</div>
+						</div>
+					</div>
+				}
+
+			</React.Fragment>
+		);
+	};
 
 interface Props {
 	currentProjects: Project[];
@@ -481,7 +495,7 @@ const ProjectTable: React.FC<Props> = ({
 							padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
 							whiteSpace: 'nowrap',
 							color: 'var(--colors-text-text-tertiary-600, #475467)',
-							
+
 							fontSize: '12px',
 							fontStyle: 'normal',
 							lineHeight: '18px',
@@ -496,7 +510,7 @@ const ProjectTable: React.FC<Props> = ({
 							padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
 							whiteSpace: 'nowrap',
 							color: 'var(--colors-text-text-tertiary-600, #475467)',
-							
+
 							fontSize: '12px',
 							fontStyle: 'normal',
 							lineHeight: '18px',
@@ -512,7 +526,7 @@ const ProjectTable: React.FC<Props> = ({
 								padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
 								whiteSpace: 'nowrap',
 								color: 'var(--colors-text-text-tertiary-600, #475467)',
-								
+
 								fontSize: '12px',
 								fontStyle: 'normal',
 								lineHeight: '18px',
@@ -530,7 +544,7 @@ const ProjectTable: React.FC<Props> = ({
 								padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
 								whiteSpace: 'nowrap',
 								color: 'var(--colors-text-text-tertiary-600, #475467)',
-								
+
 								fontSize: '12px',
 								fontStyle: 'normal',
 								lineHeight: '18px',
