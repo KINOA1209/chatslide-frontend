@@ -105,6 +105,12 @@ class ProjectService {
 			if (project?.presentation_slides) {
 				project.content_type = 'presentation';
 				project.parsed_slides = this.parseSlides(project.presentation_slides);
+				if (project.parsed_slides && project.parsed_slides.length > 0) {
+					const slide = project.parsed_slides[0];
+					project.has_scripts = slide.transcript ? true : false;
+					project.template = slide.template;
+					project.palette = slide.palette;
+				}
 			}
 			if (project?.social_posts && project?.post_type) {
 				project.parsed_socialPosts = this.parseSocialPosts(
@@ -243,7 +249,7 @@ class ProjectService {
 			// 	? slideData.show_logo
 			// 	: true;
 
-			console.log('slide.images', slide.images);
+			// console.log('slide.images', slide.images);
 			if (index === 0) {
 				slide.layout = slideData.layout || ('Cover_img_1_layout' as LayoutKeys);
 			} else {

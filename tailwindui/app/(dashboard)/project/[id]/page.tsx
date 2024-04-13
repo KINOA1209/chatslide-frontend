@@ -18,7 +18,7 @@ const ProjectLoading = () => {
 	const pathname = usePathname();
 	const router = useRouter();
 	const { initSlides } = useSlides();
-	const { project, initProject, updateProject } = useProject();
+	const { project, initProject, updateProject, bulkUpdateProject } = useProject();
 	const { token } = useUser();
 	const { initSocialPosts } = useSocialPosts();
 	const [failed, setFailed] = useState(false);
@@ -58,12 +58,6 @@ const ProjectLoading = () => {
 
 				if (parsedSlides && parsedSlides.length > 0) {
 					initSlides(parsedSlides);
-
-					if (parsedSlides.some((slide) => slide.transcript)) {
-						updateProject('has_scripts', true);
-					}
-					updateProject('template', parsedSlides[0].template);
-					updateProject('palette', parsedSlides[0].palette);
 				}
 				if (project?.parsed_socialPosts) {
 					initSocialPosts(project.parsed_socialPosts);

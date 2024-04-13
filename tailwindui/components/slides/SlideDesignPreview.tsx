@@ -40,10 +40,10 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 	// });
 
 	useEffect(() => {
-		console.log(
-			'imported slides object layouts',
-			Object.values(slides).map((slide) => slide.layout),
-		);
+		// console.log(
+		// 	'imported slides object layouts',
+		// 	Object.values(slides).map((slide) => slide.layout),
+		// );
 		const isValidTemplateKey = (key: string): key is TemplateKeys => {
 			return key in availableTemplates;
 		};
