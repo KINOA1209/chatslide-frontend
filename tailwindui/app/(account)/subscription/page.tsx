@@ -103,7 +103,7 @@ export default function SubscriptionAndUserResearch() {
 					onClick={handleUserResearchModal}
 				></UserResearchWindow>
 			)}
-			<Column>
+			<Panel>
 				<section id='subscription' className='w-full'>
 					<Subscription />
 				</section>
@@ -115,7 +115,7 @@ export default function SubscriptionAndUserResearch() {
 						onClick={handleUserResearchModal}
 					>{'Join today!'}</SmallBlueButton>
 				</Card>
-			</Column>
+			</Panel>
 		</div>
 	);
 }
