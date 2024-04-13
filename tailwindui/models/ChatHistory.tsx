@@ -8,4 +8,5 @@ export default interface ChatHistory {
 export interface RegenerateSelection {
 	chat:string;
 	suggestions: string[][],
+	selectedSuggestion: number | string | null,
 }
