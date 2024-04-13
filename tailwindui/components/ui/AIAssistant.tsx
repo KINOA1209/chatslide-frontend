@@ -17,6 +17,8 @@ import ChatSuggestions from '../language/ChatSuggestions';
 import { stopArrowKeyPropagation } from '@/utils/editing';
 import './ChatBot.css';
 import React from 'react';
+import TextareaAutosize from 'react-textarea-autosize';
+
 
 export const DrLambdaAIAssistantIcon: React.FC<{
 	onClick: () => void;
@@ -457,16 +459,6 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		};
 	}, []);
 
-	const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-		const textarea = e.target;
-		setUserInput(textarea.value);
-
-		// Automatically adjust the height to fit the content
-		textarea.style.height = 'auto'; // Reset height to recalculate
-		const newHeight = Math.min(textarea.scrollHeight, 100);
-		textarea.style.height = `${newHeight}px`;
-	};
-
 	const updateUserMessage = (content: string): ChatHistory => ({
 		role: 'user',
 		content,
@@ -688,12 +680,11 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					/>
 				)}
 				<div className='flex flex-row justify-between p-2 items-center gap-4'>
-					<textarea
+					<TextareaAutosize
 						value={userInput}
-						className='w-full border-0 focus:outline-none focus:ring-0 resize-none overflow-y-scroll'
-						onChange={handleInputChange}
+						className='w-full max-h-[30rem] border-0 focus:outline-none focus:ring-0 resize-none overflow-y-scroll'
+						onChange={(e: any) => setUserInput(e.target.value)}
 						onKeyDown={handleEnter}
-						style={{ minHeight: '32px' }} // Set minimum height to resemble input field
 						placeholder='Start here...'
 					/>
 

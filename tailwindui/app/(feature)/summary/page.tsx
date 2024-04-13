@@ -37,6 +37,8 @@ import TopicSuggestions from '@/components/language/TopicSuggestions';
 import { getUserCountryCode, getUserLanguage } from '@/utils/userLocation';
 import Project from '@/models/Project';
 import { GenerationStatusProgressModal } from '@/components/ui/GenerationStatusProgressModal';
+import TextareaAutosize from 'react-textarea-autosize';
+
 
 const MAX_TOPIC_LENGTH = 2000;
 const MIN_TOPIC_LENGTH = 3;
@@ -279,7 +281,7 @@ export default function Topic() {
 				console.error('Error when generating outlines:', response.status);
 				toast.error(
 					'Server is busy now. Please try again later. Reference code: ' +
-						project?.id,
+					project?.id,
 				);
 				setIsSubmitting(false);
 			}
@@ -328,12 +330,12 @@ export default function Topic() {
 					]}
 				></GenerationStatusProgressModal>
 			) : (
-					<GenerationStatusProgressModal
-						onClick={handleGenerationStatusModal}
-						prompts={[
-							['📝 Writing outlines for your slides...', 10],
-						]}
-					></GenerationStatusProgressModal>
+				<GenerationStatusProgressModal
+					onClick={handleGenerationStatusModal}
+					prompts={[
+						['📝 Writing outlines for your slides...', 10],
+					]}
+				></GenerationStatusProgressModal>
 			))}
 
 			<FileUploadModal
@@ -399,18 +401,18 @@ export default function Topic() {
 										direction and focus of the contents.
 									</ExplanationPopup>
 								</div>
-								<div className='border border-2 border-gray-200 rounded-md py-2'>
-									<textarea
-										onChange={(e) => updateTopic(e.target.value)}
-										className='focus:ring-0 text-l md:text-xl'
+								<div className='border border-2 border-gray-200 rounded-md min-h-[10rem] flex flex-col justify-between'>
+									<TextareaAutosize
+										onChange={(e: any) => updateTopic(e.target.value)}
+										className='focus:ring-0 text-l md:text-l'
 										id='topic'
 										value={topic}
 										maxLength={MAX_TOPIC_LENGTH}
 										required
 										placeholder='What do you have in mind?'
-									></textarea>
+									></TextareaAutosize>
 									{!topic && (
-										<TopicSuggestions language={language} setTopic={setTopic} />
+											<TopicSuggestions language={language} setTopic={setTopic} />
 									)}
 								</div>
 								<Explanation>

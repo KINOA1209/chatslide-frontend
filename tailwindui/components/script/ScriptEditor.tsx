@@ -5,6 +5,7 @@ import useHydrated from '@/hooks/use-hydrated';
 import { stopArrowKeyPropagation } from '@/utils/editing';
 import { useUser } from '@/hooks/use-user';
 import { BigBlueButton } from '../button/DrlambdaButton';
+import TextareaAutosize from 'react-textarea-autosize';
 
 interface TranscriptEditorProps {
 	slides: Slide[];
@@ -55,16 +56,16 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 			className={`w-full min-h-[4rem] border border-2 border-gray-200 rounded-lg flex flex-col overflow-y-auto my-1`} // shift left to align with slide
 		>
 			{(isPaidUser || currentSlideIndex < 5) ?
-				<textarea
+				<TextareaAutosize
 					className={`grow px-4 py-2 w-full h-full border-none text-gray-700 text-xs font-normal focus:ring-0 ${tight && 'leading-tight'}`}
 					value={script}
-					onChange={(e) => {
+					onChange={(e: any) => {
 						setScript(e.target.value);
 						debouncedUpdateTranscriptList(e.target.value);
 					}}
 				>
 					{script}
-				</textarea> :
+				</TextareaAutosize> :
 				<div className='flex flex-col items-center justify-center h-full text-gray-500 text-sm'>
 					<BigBlueButton onClick={() => { window.location.href = '/subscription' }}>
 						Upgrade to edit script

@@ -23,6 +23,7 @@ import { addIdToRedir } from '@/utils/redirWithId';
 import Project from '@/models/Project';
 import { useSocialPosts } from '@/hooks/use-socialpost';
 import ProjectService from '@/services/ProjectService';
+import TextareaAutosize from 'react-textarea-autosize';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 3;
@@ -388,15 +389,15 @@ return (
 							</div>
 						</div>
 						<div className='textfield'>
-							<textarea
-								onChange={(e) => updateTopic(e.target.value)}
+							<TextareaAutosize
+								onChange={(e: any) => updateTopic(e.target.value)}
 								className='focus:ring-0 text-l md:text-xl bg-gray-100'
 								id='topic'
 								value={topic}
 								maxLength={MAX_TOPIC_LENGTH}
 								required
 								placeholder='What do you have in mind?'
-							></textarea>
+							></TextareaAutosize>
 							{
 								<div className='text-gray-500 text-sm mt-1'>
 									{MAX_TOPIC_LENGTH - topic.length} characters left
