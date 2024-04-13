@@ -215,14 +215,14 @@ export const Chats: React.FC<ChatsProps> = ({
 
 	const handleToneClick = async (choice: string) => {
 		setSelectedRegenerateTone(choice)
-		const regenerate_prompt = `Suggest a more ${choice.toLowerCase()} way to say this.`
+		const regenerate_prompt = `Rewrite this text to be more ${choice.toLowerCase()}.`
 		addChatHistory({
 			role: 'user',
 			content: regenerate_prompt
 		})
 		addChatHistory({
 			role: 'assistant',
-			content: `Sure, I'll start to adjust the tone...`
+			content: `Sure, I'll start to rewrite...`
 		})
 		const lastChatMessages = chatHistory
 			.slice(-3)

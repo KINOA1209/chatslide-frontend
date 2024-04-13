@@ -371,12 +371,8 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 								setIsChatWindowOpen(true)
 								addChatHistory({
 									role:'assistant',
-									content:'To proceed with regenerating your selected sentence, please select the desired tone:'
-								})
-								addChatHistory({
-									role:'assistant',
-									content:'',
-									choices:['Neutral', 'Engaging', 'Informative', 'Persuasive', 'Professional']
+									content:'To proceed with regenerating your selected sentence, please select the desired tone:',
+									choices:['Detailed', 'Simple', 'Engaging', 'Informative', 'Persuasive', 'Professional', 'Entertaining', 'Dramatic']
 								})
 							}
 						}

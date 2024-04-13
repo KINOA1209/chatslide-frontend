@@ -679,7 +679,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					)}
 				</ActionsToolBar>
 					{!isViewing && !isPresenting && (
-						<div className='hidden sm:block cursor-pointer z-50'>
+						<div className='hidden sm:block cursor-pointer'>
 							<ButtonWithExplanation
 								button={
 									<DrLambdaAIAssistantIcon
