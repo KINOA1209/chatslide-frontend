@@ -32,26 +32,6 @@ const ScriptSection = dynamic(
 	{ ssr: false },
 );
 
-const AVATAR_USER_ALLOWLIST = [
-	'Quanlai Li',
-	'Laura Lin',
-	'Rex',
-	'Jackson',
-	'Joe Moore',
-	'Howard White',
-	'randy',
-	'marktohlson',
-	'mario guzman',
-	'manish_ace',
-	'muciocv',
-	'Guido Schmitter',
-	'Andrew Clayton',
-	'Sébastien Lalloué',
-	'Ze Yu',
-	'Jialiang Ye',
-	'Abdellatif Abid'
-]
-
 
 export default function WorkflowStep5() {
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -101,7 +81,9 @@ export default function WorkflowStep5() {
 				<BigBlueButton
 					onClick={handleSubmitVideo}
 				>
-					Yes, Regenerate (20 ⭐️)
+					{ avatar ? 
+					'Yes, Regenerate Video (400 ⭐️)' : 
+					'Yes, Regenerate Video (20 ⭐️)'}
 				</BigBlueButton>
 				</div>
 			</Modal>
@@ -171,7 +153,7 @@ export default function WorkflowStep5() {
 				isPaidUser={isPaidUser}
 				nextIsPaidFeature={true}
 				// todo: change credits
-				nextText={avatar ? 'Create Video (20 ⭐️)' : 'Create Video (20 ⭐️)'}
+				nextText={avatar ? 'Create Video (400 ⭐️)' : 'Create Video (20 ⭐️)'}
 			/>
 
 			<ToastContainer enableMultiContainer containerId={'script'} />
@@ -233,42 +215,41 @@ export default function WorkflowStep5() {
 					</div>
 				</Card>
 
-				{AVATAR_USER_ALLOWLIST.includes(username) ?
-					<Card>
-						<BigTitle>🦹‍♂️ Avatar</BigTitle>
+				<Card>
+					<BigTitle>🦹‍♂️ Avatar</BigTitle>
+					<Instruction>
+						Select the avatar you want to use for your video.<GrayLabel>Beta</GrayLabel> 
+					</Instruction>
+					<Explanation>
+						Due to the limitation of our resources, we can only provide a limited number of video generations with avatars. <br />
+						This feature will cost more credits. <br />
+						The credit cost for using an avatar may change in the future.
+					</Explanation>
+					<AvatarSelector
+						avatar={avatar}
+						setAvatar={setAvatar}
+						posture={posture}
+						setPosture={setPosture}
+						size={size}
+						setSize={setSize}
+						position={position}
+						setPosition={setPosition}
+					/>
+				</Card> 
+				{/* <Card>
+					<BigTitle>🦹‍♂️ Avatar</BigTitle>
+					<div className='flex flex-row gap-x-4 items-end'>
 						<Instruction>
-							Select the avatar you want to use for your video.<GrayLabel>Beta</GrayLabel>
+							This is coming soon... We are finding some pilot users to test this feature.
 						</Instruction>
-						<Explanation>
-							Due to the limitation of our resources, we can only provide a limited number of video generations with avatars. <br />
-							The credit cost for using an avatar may change in the future.
-						</Explanation>
-						<AvatarSelector
-							avatar={avatar}
-							setAvatar={setAvatar}
-							posture={posture}
-							setPosture={setPosture}
-							size={size}
-							setSize={setSize}
-							position={position}
-							setPosition={setPosition}
+						<EarlyAccessButton
+							username={username}
+							token={token}
+							feature='avatar'
+							project_id={project.id}
 						/>
-					</Card> :
-					<Card>
-						<BigTitle>🦹‍♂️ Avatar</BigTitle>
-						<div className='flex flex-row gap-x-4 items-end'>
-							<Instruction>
-								This is coming soon... We are finding some pilot users to test this feature.
-							</Instruction>
-							<EarlyAccessButton
-								username={username}
-								token={token}
-								feature='avatar'
-								project_id={project.id}
-							/>
-						</div>
-					</Card>
-				}
+					</div>
+				</Card> */}
 				<Card>
 					<BigTitle>📝 Scripts</BigTitle>
 					<Instruction>
