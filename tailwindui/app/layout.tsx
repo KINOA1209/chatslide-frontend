@@ -1,7 +1,6 @@
 import './css/style.css';
 import React from 'react';
 import Script from 'next/script';
-import GoogleAnalytics from '@/components/integrations/GoogleAnalytics';
 
 interface MetadataOptions {
 	title?: string;
@@ -79,6 +78,19 @@ export default function RootLayout({
 					// We pre-filled your app ID in the widget URL: 'https://widget.intercom.io/widget/ozkjy22u'
 					(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/d0tz7e7z';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
 				`}
+				</Script>
+
+				<Script id='rewardful'>
+					{`
+	(function(w,r){w._rwq=r;w[r]=w[r]||function(){(w[r].q=w[r].q||[]).push(arguments)}})(window,'rewardful');
+
+  (function() {
+    var el = document.createElement('script');
+    el.setAttribute('src', 'https://r.wdfl.co/rw.js');
+    el.setAttribute('data-rewardful', '649c29');
+    document.body.appendChild(el);
+  })();
+					`}
 				</Script>
 
 				<Script id='datadog-rum'>

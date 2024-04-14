@@ -28,6 +28,17 @@ const Profile = () => {
 	const [editUsername, setEditUsername] = useState(username);
 	const [editEmail, setEditEmail] = useState(email);
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const params = useSearchParams();
+
+	useEffect(() => {
+		const paid = params.get('paid');
+		if (paid === 'true') {
+			toast.success('Payment successful!');
+			window.rewardful('convert', {email: email});
+		} else if (paid === 'false') {
+			toast.error('Payment cancelled.');
+		}
+	}, []);
 
 	function userFirstName(): string {
 		return username?.split(' ')[0];
