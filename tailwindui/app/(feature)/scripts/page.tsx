@@ -24,6 +24,7 @@ import { bgmDisplayNames } from '@/components/language/bgmData';
 import { set } from 'lodash';
 import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
 import { FiPlay } from 'react-icons/fi';
+import Modal from '@/components/ui/Modal';
 
 
 const ScriptSection = dynamic(
@@ -51,6 +52,7 @@ const AVATAR_USER_ALLOWLIST = [
 	'Abdellatif Abid'
 ]
 
+
 export default function WorkflowStep5() {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { slides, updateSlidePage } = useSlides();
@@ -64,6 +66,7 @@ export default function WorkflowStep5() {
 	const [size, setSize] = useState('medium');
 	const [position, setPosition] = useState('bottom-right');
 	const [bgm, setBgm] = useState('');
+	const [showConfirmRegenModal, setShowConfirmRegenModal] = useState(false);
 
 	const params = useSearchParams();
 
@@ -72,6 +75,49 @@ export default function WorkflowStep5() {
 			router.push(`/project/${params.get('id')}`);
 		}
 		return <Blank>Project not found</Blank>;
+	}
+
+	const ConfirmVideoRegenModal: React.FC<{}> = () => {
+		return (
+			<Modal
+				showModal={showConfirmRegenModal}
+				setShowModal={setShowConfirmRegenModal}
+				title='Confirm Video Regeneration'
+			>
+				<Instruction>
+					You have a video generation job running. Do you want to regenerate the video? <br/>
+					This will cancel the current job and start a new one.
+				</Instruction>
+				<div className='flex flex-col gap-2 items-center'>
+				<BigBlueButton
+					onClick={() => {
+						router.push(addIdToRedir('/video'))
+					}}
+				>
+					No, View Running Job
+				</BigBlueButton>
+
+
+				<BigBlueButton
+					onClick={handleSubmitVideo}
+				>
+					Yes, Regenerate (20 ⭐️)
+				</BigBlueButton>
+				</div>
+			</Modal>
+		)
+	}
+
+	async function confirmVideoJob() {
+		if (!project) {
+			console.error('No project found');
+			return;
+		}
+		const hasRunningVideoJob = await VideoService.hasRunningVideoJob(project.id, token);
+		if (hasRunningVideoJob)
+			setShowConfirmRegenModal(true);
+		else
+			handleSubmitVideo();
 	}
 
 	async function handleSubmitVideo() {
@@ -88,7 +134,7 @@ export default function WorkflowStep5() {
 			return;
 		}
 
-		const fetchData = async () => {
+		const generateVideo = async () => {
 			try {
 				console.log('project_id:', project_id);
 				updateProject('video_url', '');
@@ -100,13 +146,14 @@ export default function WorkflowStep5() {
 				setIsSubmitting(false);
 			}
 		};
-		fetchData();
+		generateVideo();
 	};
 
 
 	useEffect(() => {
-		if (isSubmitting) {
-			handleSubmitVideo();
+		if(isSubmitting) {
+			confirmVideoJob();
+			setIsSubmitting(false);
 		}
 	}, [isSubmitting]);
 
@@ -128,6 +175,8 @@ export default function WorkflowStep5() {
 			/>
 
 			<ToastContainer enableMultiContainer containerId={'script'} />
+
+			{showConfirmRegenModal && <ConfirmVideoRegenModal />}
 
 			<Column>
 				<Card>

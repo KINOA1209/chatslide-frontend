@@ -88,4 +88,21 @@ export default class VideoService {
 		const data = await response.json();
 		return `/api/audio?foldername=${foldername}&filename=${data.data.filename}`
 	}
+
+	static async hasRunningVideoJob(project_id: string, token: string): Promise<boolean> {
+		const response = await fetch(`/api/has_running_video_job?project_id=${project_id}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+		});
+
+		if (!response.ok) {
+			return false;
+		}
+
+		const json = await response.json();
+		return json.data.has_running_job;
+	}
 }
