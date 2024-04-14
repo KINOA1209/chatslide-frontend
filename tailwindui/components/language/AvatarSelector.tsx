@@ -43,7 +43,8 @@ const AvatarSelector: React.FC<{
 							<DropDown value={avatar} onChange={(e) => setAvatar(e.target.value)} width='8rem'>
 								<option key={''} value={''}>⏹️ None</option>
 								{Object.entries(AVATAR_OPTIONS).map(([key, value]) => (
-									<option key={key} value={key}>{AVATAR_NAMES[key]}</option>
+									<option key={key} value={key} disabled={AVATAR_NAMES[key].includes('coming')}
+									>{AVATAR_NAMES[key]}</option>
 								))}
 							</DropDown>
 

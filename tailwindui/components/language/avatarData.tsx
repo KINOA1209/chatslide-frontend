@@ -5,11 +5,27 @@ export const AVATAR_OPTIONS: { [key: string]: string[] } = {
 		'graceful-standing',
 		'technical-sitting',
 		'technical-standing'
+	],
+	'mark': [
+		'casual-sitting',
+		'graceful-sitting',
+		'graceful-standing',
+		'technical-sitting',
+		'technical-standing'
+	],
+	'your own': [
+		'casual-sitting',
+		'graceful-sitting',
+		'graceful-standing',
+		'technical-sitting',
+		'technical-standing'
 	]
 };
 
 export const AVATAR_NAMES: { [key: string]: string } = {
-	'lisa': '👩 Lisa'
+	'lisa': '👩 Lisa',
+	'mark': '👨 Mark (coming)',
+	'your own': '👤 Your Own (coming)'
 };
 
 export const POSTURE_NAMES: { [key: string]: string } = {
