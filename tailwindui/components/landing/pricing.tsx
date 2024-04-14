@@ -1,12 +1,13 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Toggle from '../button/Toggle';
 import { GrayLabel } from '../ui/GrayLabel';
 import DrlambdaButton from '../button/DrlambdaButton';
 import { useUser } from '@/hooks/use-user';
 import { userInEU } from '@/utils/userLocation';
+import UserService from '@/services/UserService';
 
 
 interface PricingProps {
@@ -24,6 +25,8 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 	const [showEnt, setShowEnt] = useState(false);
 	const [clickedSubscribe, setClickedSubscribe] = useState(false);
 	const [currency, setCurrency] = useState('$');
+
+	const pathname = usePathname();
 
 	const { token, tier, expirationDate, email } = useUser();
 
@@ -76,74 +79,23 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 		});
 	}, []);
 
-	const handleProSubscription = async (token: string) => {
+	const handleSubscription = async (
+		tier: 'PLUS' | 'PRO',
+		token: string,
+	) => {
+		const plan = tier + "_MONTHLY";
+
 		try {
-			// Determine the tier based on isYearly
-			const tier = !isMonthly ? 'PRO_YEARLY' : 'PRO_MONTHLY';
+			const url = await UserService.checkout(
+				plan,
+				email,
+				currency,
+				token,
+				pathname.includes('chatslide')
+			)
 
-			// Create a request object
-			const requestData = {
-				tier: tier,
-				email: email,
-				currency: currency === '$' ? 'usd' : 'eur',
-			};
-
-			console.log(requestData);
-
-			// Make the API request to create a checkout session
-			const response = await fetch('/api/create-checkout-session', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					authorization: token,
-				},
-				body: JSON.stringify(requestData),
-			});
-
-			if (response.ok) {
-				const url = await response.text();
-				// Redirect to the checkout page
-				window.open(url, '_blank');
-			} else {
-				console.error('Error creating checkout session:', response.statusText);
-			}
-		} catch (error) {
-			console.error('An error occurred:', error);
-		}
-	};
-
-	const handlePlusSubscription = async (token: string) => {
-		try {
-			// Determine the tier based on isYearly
-			const tier = !isMonthly ? 'PLUS_YEARLY' : 'PLUS_MONTHLY';
-
-			// Create a request object
-			const requestData = {
-				tier: tier,
-				email: email,
-				currency: currency === '$' ? 'usd' : 'eur',
-			};
-
-			console.log(requestData);
-
-			// Make the API request to create a checkout session
-			const response = await fetch('/api/create-checkout-session', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					authorization: token,
-				},
-				body: JSON.stringify(requestData),
-			});
-
-			if (response.ok) {
-				const url = await response.text();
-				console.log(url);
-				// Redirect to the checkout page
-				window.open(url, '_blank');
-			} else {
-				console.error('Error creating checkout session:', response.statusText);
-			}
+			// Redirect to the checkout page
+			window.open(url, '_blank');
 		} catch (error) {
 			console.error('An error occurred:', error);
 		}
@@ -156,9 +108,9 @@ export default function Pricing({ fewerCards = false }: PricingProps) {
 		}
 
 		if (tier == 'pro') {
-			handleProSubscription(token);
+			handleSubscription('PRO', token);
 		} else if (tier == 'plus') {
-			handlePlusSubscription(token);
+			handleSubscription('PLUS', token);
 		} else if (tier == 'free') {
 			router.push('/signup');
 		}

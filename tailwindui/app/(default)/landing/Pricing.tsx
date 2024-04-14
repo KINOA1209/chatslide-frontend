@@ -4,7 +4,7 @@
 import { useUser } from "@/hooks/use-user";
 import UserService from "@/services/UserService";
 import { userInEU } from "@/utils/userLocation";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -14,6 +14,7 @@ const PricingComparison: React.FC<{
 }> = ({ extraPadding }) => {
 	const { token, email, tier: userTier } = useUser();
 	const [currency, setCurrency] = useState<string>('$');
+	const pathname = usePathname();
 	const router = useRouter();
 
 	const getCta = (tier: 'FREE' | 'PLUS' | 'PRO'): string => {
@@ -86,37 +87,23 @@ const PricingComparison: React.FC<{
 		}
 	}
 
-	const handleSubscription = async (tier: 'PLUS' | 'PRO', token: string) => {
+	const handleSubscription = async (
+		tier: 'PLUS' | 'PRO',
+		token: string,
+	) => {
+		const plan = tier + "_MONTHLY";
+
 		try {
-			// Determine the tier based on isYearly
+			const url = await UserService.checkout(
+				plan,
+				email,
+				currency,
+				token,
+				pathname.includes('chatslide')
+			)
 
-			const plan = tier + "_MONTHLY";
-
-			// Create a request object
-			const requestData = {
-				tier: plan,
-				email: email,
-				currency: currency === '$' ? 'usd' : 'eur',
-			};
-
-			// Make the API request to create a checkout session
-			const response = await fetch('/api/create-checkout-session', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					authorization: token,
-				},
-				body: JSON.stringify(requestData),
-			});
-
-			if (response.ok) {
-				const url = await response.text();
-				console.log(url);
-				// Redirect to the checkout page
-				window.open(url, '_blank');
-			} else {
-				console.error('Error creating checkout session:', response.statusText);
-			}
+			// Redirect to the checkout page
+			window.open(url, '_blank');
 		} catch (error) {
 			console.error('An error occurred:', error);
 		}

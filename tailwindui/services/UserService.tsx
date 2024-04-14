@@ -235,6 +235,38 @@ class UserService {
 		}
 	}
 
+	// stripe checkout 
+	static async checkout(
+		plan: string,
+		email: string,
+		currency: string,
+		token: string,
+		isChatslide: boolean,
+	) {
+		const requestData = {
+			tier: plan,
+			email: email,
+			currency: currency === '$' ? 'usd' : 'eur',
+			is_chatslide: isChatslide
+		};
+
+		const response = await fetch('/api/create-checkout-session', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				authorization: token,
+			},
+			body: JSON.stringify(requestData),
+		});
+
+		if (response.ok) {
+			const url = await response.text()
+			return url;
+		} else {
+			throw new Error('Failed to create checkout session');
+		}
+	}
+
 	// update user's openai api key, send request to /api/user/update_openai_api_key endpoint
 	static async updateOpenaiApiKey(
 		idToken: string,
