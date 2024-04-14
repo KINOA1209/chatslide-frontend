@@ -213,7 +213,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 				description='Choose the format and quality of the export.'
 			>
 				<div className='flex flex-row flex-wrap gap-4'>
-					<BigGrayButton
+					{/* <BigGrayButton
 						onClick={() => handleExport('pdf', true)}
 						isSubmitting={downloading}
 						isPaidUser={isPaidUser}
@@ -221,7 +221,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 					>
 						<FaRegFilePdf />
 						<span>PDF (medium)</span>
-					</BigGrayButton>
+					</BigGrayButton> */}
 
 					<BigGrayButton
 						onClick={() => handleExport('pdf', false)}
@@ -232,7 +232,9 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 					>
 						<FaRegFilePdf />
 						<span className='flex flex-row gap-2 items-center'>
-							PDF (high) {!isPaidUser && <PlusLabel />}
+							PDF 
+							{/* (high) */}
+							 {!isPaidUser && <PlusLabel />}
 						</span>
 					</BigGrayButton>
 
