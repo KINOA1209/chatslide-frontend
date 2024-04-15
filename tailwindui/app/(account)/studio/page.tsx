@@ -22,14 +22,14 @@ export default function Studio() {
 	const isLifetime = tier.includes('LIFETIME');
 	const isPro = tier.includes('PRO');
 
-	// avoid hydration error during development caused by persistence
-	if (!useHydrated()) return <></>;
-
 	useEffect(() => {
 		userInEU().then((inEU) => {
 			setUseEuro(inEU);
 		});
 	}, []);
+
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
 
 	return (
 		<Column>
