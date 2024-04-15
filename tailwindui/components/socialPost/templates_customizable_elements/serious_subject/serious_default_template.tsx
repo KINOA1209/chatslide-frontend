@@ -15,7 +15,7 @@ export const seriousDefault:ThemeElements = {
         fontStyle: 'bold',
     },
     briefCSS:{
-        fontSize: '9pt',
+        fontSize: '10pt',
         color: '#1B1B1B',
         fontFamily: 'Nunito',
         letterSpacing: '0.48px',
@@ -28,7 +28,7 @@ export const seriousDefault:ThemeElements = {
         fontFamily: 'Nunito',
     },
     contentCSS:{
-        fontSize: '9pt',
+        fontSize: '10pt',
         color: '#1B1B1B',
         fontFamily: 'Nunito',
         letterSpacing: '0.48px',

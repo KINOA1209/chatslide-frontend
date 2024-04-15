@@ -350,6 +350,7 @@ return (
 				isPaidUser={isPaidUser}
 				nextIsPaidFeature={false}
 				nextText={!isSubmitting ? 'Create Post' : 'Creating Post...'}
+				workflow='socialPosts'
 			/>
 			{/* main content */}
 			<div className='gap-y-4 w-full flex flex-col items-center'>

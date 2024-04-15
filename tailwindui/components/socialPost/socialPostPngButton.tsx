@@ -65,7 +65,7 @@ const ExportToPngButton: React.FC<ExportToPdfProps> = ({
 					<div ref={exportSlidesRef}>
 						<div key={`exportToPdfContainer` + currentSlideIndex.toString()}>
 							<SocialPostContainer
-								slides={socialPostSlide}
+								slide={socialPostSlide[currentSlideIndex]}
 								currentSlideIndex={currentSlideIndex}
 								exportToPdfMode={true}
 								templateDispatch={templateDispatch}
