@@ -59,7 +59,16 @@ function Landing() {
 						'\n\t\t* {\n\t\t\t-webkit-font-smoothing: antialiased;\n\t\t\t-moz-osx-font-smoothing: grayscale;\n\t\t}\n\t',
 				}}
 			/>
-			<a href="https://www.producthunt.com/posts/chatslide-ai?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-chatslide&#0045;ai" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=451418&theme=light&period=daily" alt="ChatSlide&#0046;ai - AI&#0032;assistant&#0032;for&#0032;generating&#0032;slides&#0032;and&#0032;video | Product Hunt" width="250" height="54" /></a>
+			<a href="https://www.producthunt.com/posts/chatslide-ai?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-chatslide&#0045;ai" target="_blank"
+				style={{
+					position: 'fixed',
+					bottom: 5,
+					right: 5,
+					textDecoration: 'none',
+					zIndex: 50,
+				}}>
+				<img src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=451418&theme=light&period=daily" alt="ChatSlide&#0046;ai - AI&#0032;assistant&#0032;for&#0032;generating&#0032;slides&#0032;and&#0032;video | Product Hunt" width="250" height="54" />
+			</a>
 			<a
 				href='/discord'
 				style={{
@@ -1194,7 +1203,7 @@ function Landing() {
 										</div>
 									</div>
 									<div className='uui-heading-xxsmall text-weight-medium'>
-										"I tried different tools for making presentations with AI - also the famous one like Tome. 
+										"I tried different tools for making presentations with AI - also the famous one like Tome.
 										So i also tried {getBrand()} and was impressed - you get a great output with very little effort!"
 									</div>
 									<div className='uui-testimonial13_client'>

@@ -398,7 +398,7 @@ export default function Account() {
 					</div>
 				</Card>
 
-				{isPaidUser && <Card>
+				<Card>
 					<BigTitle>
 						💸 Earn Money with {getBrand()}
 					</BigTitle>
@@ -420,7 +420,7 @@ export default function Account() {
 						Start earning now
 					</BigBlueButton>
 					</div>
-				</Card>}
+				</Card>
 
 			</Panel>
 		</Column>
