@@ -201,7 +201,7 @@ export default function Dashboard() {
 								size='lg'
 								hierarchy='primary'
 								buttonStatus='enabled'
-								iconRight={AIIcon}
+								// iconRight={AIIcon}
 								// text='Create New'
 								onClick={handleStartNewProject}
 							>

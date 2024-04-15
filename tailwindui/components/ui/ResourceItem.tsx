@@ -22,7 +22,7 @@ export const ResourceIcon: React.FC<{
 }> = ({ resource, contain = false }) => {
 	// console.log('resource type is ', resource.type);
 	if (!resource.thumbnail_url) {
-		return <FileIcon fileType={resource.type} />;
+		return <div className='p-[10px]'><FileIcon fileType={resource.type} /></div>;
 	}
 	const style = contain
 		? { width: '100%', height: '100%', objectFit: 'contain' as 'contain' }
@@ -31,8 +31,8 @@ export const ResourceIcon: React.FC<{
 		<Image
 			src={resource.thumbnail_url}
 			alt={resource.name}
-			width={20}
-			height={20}
+			width={40}
+			height={40}
 			unoptimized={true}
 			style={style}
 			onError={(e) => {
