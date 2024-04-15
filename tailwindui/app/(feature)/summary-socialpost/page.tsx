@@ -205,7 +205,7 @@ export default function Topic_SocialPost() {
 				console.error('Error when generating social posts:', response.status);
 				toast.error(
 					`Server is busy now. Please try again later. Reference code: ` +
-						project?.id,
+					project?.id,
 				);
 				setIsSubmitting(false);
 			}
@@ -393,6 +393,7 @@ export default function Topic_SocialPost() {
 					isPaidUser={isPaidUser}
 					nextIsPaidFeature={false}
 					nextText={!isSubmitting ? 'Create Post' : 'Creating Post...'}
+					workflow='socialPosts'
 				/>
 				{/* main content */}
 				<div className='gap-y-4 w-full flex flex-col items-center'>

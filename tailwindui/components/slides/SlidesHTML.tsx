@@ -102,21 +102,40 @@ export const calculateNonPresentScale = (
 	height: number,
 	isChatWindowOpen = false,
 	showScript = false,
+	workflow = 'slides'
 ) => {
 	// console.log("width", width, "height", height, "isChatWindowOpen", isChatWindowOpen, "showScript", showScript);
 	if (width < 640) {
 		// mobile, layout vertically
-		return Math.min(1, Math.min(width / 960, (height - 200) / 540) * 0.8);
+		if (workflow === 'socialPosts') {
+			return Math.min(1, Math.min(width / 450, (height - 200) / 650) * 0.7);
+		}
+		else {
+			return Math.min(1, Math.min(width / 960, (height - 200) / 540) * 0.8);
+		}
 	} else {
 		const chatWindowWidth = width > 1280 && isChatWindowOpen ? 250 : 0;
 		const scriptEditorHeight = showScript ? 200 : 0;
-		return Math.min(
-			1,
-			Math.min(
-				(width - 400 - chatWindowWidth) / 960,
-				(height - 250 - scriptEditorHeight) / 540,
-			),
-		);
+		if (workflow === 'socialPosts') {
+			return Math.min(
+				1,
+				Math.min(
+					(width - 400 - chatWindowWidth) / 450,
+					(height - 250 - scriptEditorHeight) / 650,
+				),
+			);
+		}
+		else {
+			return Math.min(
+				1,
+				Math.min(
+					(width - 400 - chatWindowWidth) / 960,
+					(height - 250 - scriptEditorHeight) / 540,
+				),
+			);
+
+		}
+
 	}
 };
 

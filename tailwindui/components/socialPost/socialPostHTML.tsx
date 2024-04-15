@@ -42,6 +42,8 @@ import { ToolBar } from '../ui/ToolBar';
 import ShareButton from '@/components/button/ShareButton';
 import ExportToPngButton from '@/components/socialPost/socialPostPngButton';
 import { getOrigin } from '@/utils/getHost';
+import { RiArrowGoBackFill, RiArrowGoForwardFill } from 'react-icons/ri';
+import { calculateNonPresentScale } from '../slides/SlidesHTML';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -64,17 +66,19 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 	const slideRef = useRef<HTMLDivElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [dimensions, setDimensions] = useState({
-		width: typeof window !== 'undefined' ? window.innerWidth : 960,
-		height: typeof window !== 'undefined' ? window.innerHeight : 540,
+		width: typeof window !== 'undefined' ? window.innerWidth : 450,
+		height: typeof window !== 'undefined' ? window.innerHeight : 600,
 	});
 	const [unsavedChanges, setUnsavedChanges] = useState(false);
 	const isFirstRender = useRef(true);
 	const [isEditMode, setIsEditMode] = useState(false);
-	const presentScale = Math.min(
-		dimensions.width / 450,
-		dimensions.height / 600,
+	const [presentScale, setPresentScale] = useState(
+		Math.min(dimensions.width / 450, dimensions.height / 600),
 	);
-	const nonPresentScale = Math.min(1, presentScale * 0.6);
+	//const nonPresentScale = Math.min(1, presentScale * 0.6);
+	const [nonPresentScale, setNonPresentScale] = useState(
+		calculateNonPresentScale(dimensions.width, dimensions.height, undefined, undefined, 'socialPosts'),
+	);
 	const [showTheme, setShowTheme] = useState(false);
 	const {
 		socialPosts,
@@ -82,7 +86,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		addEmptyPage,
 		duplicatePage,
 		deleteSlidePage,
-		updateSlidePage,
+		updateSocialPostsPage,
 		initSocialPosts,
 		socialPostsIndex,
 		setSocialPostsIndex,
@@ -93,7 +97,49 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		saveStatus,
 		SaveStatus,
 		syncSocialPosts,
+		undoChange,
+		redoChange,
+		socialPostsHistory,
+		socialPostsHistoryIndex
 	} = useSocialPosts();
+	const canUndo = socialPostsHistoryIndex > 0;
+	const canRedo = socialPostsHistoryIndex < socialPostsHistory.length - 1;
+
+	useEffect(() => {
+		document.addEventListener('add_page', handleAddPage);
+		document.addEventListener('duplicate_page', handleDuplicatePage);
+		document.addEventListener('delete_page', handleDeletePage);
+		document.addEventListener('undo_change', undoChange);
+		document.addEventListener('redo_change', redoChange);
+
+		return () => {
+			document.removeEventListener('add_page', handleAddPage);
+			document.removeEventListener('duplicate_page', handleDuplicatePage);
+			document.removeEventListener('delete_page', handleDeletePage);
+			document.removeEventListener('undo_change', undoChange);
+			document.removeEventListener('redo_change', redoChange);
+		};
+	}, [socialPostsIndex, socialPostsHistoryIndex]);
+
+	useEffect(() => {
+		const handleResize = () => {
+			const scale = Math.min(window.innerWidth / 450, window.innerHeight / 600);
+			setPresentScale(scale);
+			setNonPresentScale(
+				calculateNonPresentScale(
+					window.innerWidth,
+					window.innerHeight,
+					undefined,
+					undefined,
+					'socialPosts'
+				),
+			);
+		};
+
+		window.addEventListener('resize', handleResize);
+
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
 
 	useEffect(() => {
 		if (
@@ -177,17 +223,17 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 			| string
 			| string[]
 			| ThemeObject
-			| Array<string | string[] | Chart[] | boolean[] | ImagesPosition[]>
-			| ThemeObject,
+			| Array<string | string[] | Chart[] | boolean[] | ImagesPosition[]> | ThemeObject,
 		slideIndex: number,
 		tag: SlideKeys | SlideKeys[],
 		contentIndex?: number,
 		rerender: boolean = true,
 	) {
+		console.log('handleSlideEdit', content, slideIndex, tag, contentIndex);
 		setIsEditMode(false);
-		const newSlides = [...socialPosts];
 
-		const currentSlide = newSlides[slideIndex];
+		//https://stackoverflow.com/questions/27519836/uncaught-typeerror-cannot-assign-to-read-only-property
+		const currentSlide = { ...socialPosts[slideIndex] };
 		const className = tag;
 
 		const applyUpdate = (
@@ -208,7 +254,9 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 				currentSlide.topic = content as string;
 			} else if (className === 'content') {
 				if (typeof contentIndex === 'number' && contentIndex >= 0) {
-					currentSlide.content[contentIndex] = content as string;
+					let newContent = [...currentSlide.content];
+					newContent[contentIndex] = content as string;
+					currentSlide.content = newContent;
 				} else {
 					console.error(`Invalid contentIndex: ${contentIndex}`);
 				}
@@ -234,7 +282,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 				currentSlide.source = content as string;
 			} else if (className === 'theme') {
 				// Update theme for all slides
-				newSlides.forEach((slide) => {
+				socialPosts.forEach((slide) => {
 					slide.theme = content as ThemeObject;
 				});
 			} else if (className === 'chart') {
@@ -277,9 +325,9 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 				className,
 			);
 		}
-		console.log('updating slide page', slideIndex);
+		console.log('updating social post page', slideIndex);
 		console.log(currentSlide);
-		updateSlidePage(slideIndex, currentSlide, rerender);
+		updateSocialPostsPage(slideIndex, currentSlide, rerender);
 	}
 
 	function toggleEditMode() {
@@ -392,6 +440,60 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		<div>
 			<div className='flex flex-col items-center justify-center gap-4'>
 				<ToolBar>
+					{!isViewing && <>
+						<ButtonWithExplanation
+							button={
+								<button
+									onClick={undoChange}
+									style={{
+										color: canUndo ? '#344054' : '#C6C6C6',
+										display: 'flex',
+										justifyContent: 'center',
+										alignItems: 'center',
+									}}
+									disabled={!canUndo}
+								>
+									<RiArrowGoBackFill
+										style={{
+											strokeWidth: '1',
+											flex: '1',
+											width: '1.5rem',
+											height: '1.5rem',
+											fontWeight: 'bold',
+										}}
+									/>
+								</button>
+							}
+							explanation={'Undo'}
+						/>
+
+						<ButtonWithExplanation
+							button={
+								<button
+									onClick={redoChange}
+									style={{
+										color: canRedo ? '#344054' : '#C6C6C6',
+										display: 'flex',
+										justifyContent: 'center',
+										alignItems: 'center',
+									}}
+									disabled={!canRedo}
+								>
+									<RiArrowGoForwardFill
+										style={{
+											strokeWidth: '1',
+											flex: '1',
+											width: '1.5rem',
+											height: '1.5rem',
+											fontWeight: 'bold',
+										}}
+									/>
+								</button>
+							}
+							explanation={'Redo'}
+						/>
+						<div className='h-8 w-0.5 bg-gray-200'></div>
+					</>}
 					{!isViewing && socialPostsIndex != 0 && (
 						<>
 							<AddSlideButton
@@ -470,13 +572,15 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 
 					<SocialPostContainer
 						isPresenting={present}
-						slides={socialPosts}
+						slide={socialPosts[socialPostsIndex]}
 						currentSlideIndex={socialPostsIndex}
 						isViewing={isViewing}
 						scale={present ? presentScale : nonPresentScale}
 						templateDispatch={editableTemplateDispatch}
 						slideRef={slideRef}
 						containerRef={containerRef}
+						length={socialPosts.length}
+						key={socialPostVersion}
 					/>
 
 					<SlideRightNavigator
@@ -509,21 +613,19 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 
 				<div className='max-w-xs sm:max-w-4xl mx-auto py-6 justify-center items-center'>
 					<div className='w-full py-6 flex flex-nowrap overflow-x-auto overflow-x-scroll overflow-y-hidden scrollbar scrollbar-thin scrollbar-thumb-gray-500'>
-						{Array(socialPosts.length)
-							.fill(0)
-							.map((_, index) => (
+						{socialPosts.map((socialPost, index) => (
 								<div
-									key={`previewContainer` + index.toString()}
+									key={`previewContainer` + index.toString() + socialPosts.length.toString()}
 									className={`w-[8rem] h-[5rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
 									onClick={() => {
-										setSocialPostsIndex(index); // Added onClick handler
+										gotoPage(index); // Added onClick handler
 									}}
 								>
 									{/* {index + 1} */}
 									<SocialPostContainer
-										slides={socialPosts}
+										slide={socialPost}
 										currentSlideIndex={index}
-										scale={0.1}
+										scale={0.1 * nonPresentScale}
 										isViewing={true}
 										templateDispatch={editableTemplateDispatch}
 									/>
