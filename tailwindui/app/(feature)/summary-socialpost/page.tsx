@@ -443,10 +443,10 @@ return (
 										required
 									>
 										<option key='English' value='English'>
-											🇺🇸 English (United States)
+											🇺🇸 English (US)
 										</option>
 										<option key='British English' value='British English'>
-											🇬🇧 English (British)
+											🇬🇧 English (UK)
 										</option>
 										<option key='Spanish' value='Spanish'>
 											🌎 Español (Latinoamérica)
