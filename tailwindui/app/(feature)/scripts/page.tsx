@@ -183,7 +183,7 @@ export default function WorkflowStep5() {
 					</Instruction>
 					<div className='flex flex-row gap-4 items-center'>
 						<DropDown
-							width='15rem'
+							width='12rem'
 							onChange={(e) => setBgm(e.target.value)}
 							value={bgm}
 							style='input'
