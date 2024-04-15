@@ -23,6 +23,7 @@ import { BigTitle, Explanation, Instruction } from '@/components/ui/Text';
 import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
 import { getBrand } from '@/utils/getHost';
+import { UnlimitedUpgrade } from '@/components/slides/card/UnlimitedUpgrade';
 
 const Profile = () => {
 	const { username, email, token, setUsername } = useUser();
@@ -398,6 +399,8 @@ export default function Account() {
 					</div>
 				</Card>
 
+				<UnlimitedUpgrade />
+
 				<Card>
 					<BigTitle>
 						💸 Earn Money with {getBrand()}
@@ -412,14 +415,12 @@ export default function Account() {
 					<Instruction>
 						<a href='/affiliate' className='text-blue-600'>Learn more about affiliate program. </a>
 					</Instruction>
-					<div className='flex flex-row justify-center'>
 					<BigBlueButton
 						onClick={() => {
 							router.push('https://drlambda-1.getrewardful.com/')
 						}}>
-						Start earning now
+						💸 Start Earning Now
 					</BigBlueButton>
-					</div>
 				</Card>
 
 			</Panel>

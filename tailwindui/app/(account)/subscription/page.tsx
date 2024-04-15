@@ -15,6 +15,7 @@ import { Column } from '@/components/layout/Column';
 import useHydrated from '@/hooks/use-hydrated';
 import { BigBlueButton, SmallBlueButton } from '@/components/button/DrlambdaButton';
 import { PricingComparison } from '@/app/(default)/landing/Pricing';
+import { UnlimitedUpgrade } from '@/components/slides/card/UnlimitedUpgrade';
 
 const Subscription = () => {
 	const [portalURL, setPortalURL] = useState('');
@@ -29,7 +30,7 @@ const Subscription = () => {
 	);
 
 	return (
-		<div className='w-full pb-4'>
+		<div className='w-full'>
 			{showModal && (
 				<FeedbackForm
 					onClose={() => setShowModal(false)}
@@ -104,9 +105,7 @@ export default function SubscriptionAndUserResearch() {
 				></UserResearchWindow>
 			)}
 			<Panel>
-				<section id='subscription' className='w-full'>
-					<Subscription />
-				</section>
+				<Subscription />
 				<Card>
 					<Title>
 						Earn free credits⭐ by joining our user study

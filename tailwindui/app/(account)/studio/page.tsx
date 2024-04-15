@@ -4,66 +4,25 @@
 import { BigBlueButton, EarlyAccessButton } from "@/components/button/DrlambdaButton";
 import { Column } from "@/components/layout/Column";
 import { Panel } from "@/components/layout/Panel";
+import { UnlimitedUpgrade } from "@/components/slides/card/UnlimitedUpgrade";
 import Card from "@/components/ui/Card";
 import { ProLabel } from "@/components/ui/GrayLabel";
 import { BigTitle, Explanation, Instruction } from "@/components/ui/Text";
 import useHydrated from "@/hooks/use-hydrated";
 import { useUser } from "@/hooks/use-user";
-import UserService from "@/services/UserService";
-import { isChatslide } from "@/utils/getHost";
-import { userInEU } from "@/utils/userLocation";
-import { use, useEffect, useState } from "react";
 
 export default function Studio() {
 
-	const { tier, username, email, token, credits } = useUser();
-	const [useEuro, setUseEuro] = useState(false);
-
-	const isLifetime = tier.includes('LIFETIME');
+	const { tier, username, token } = useUser();
 	const isPro = tier.includes('PRO');
-
-	useEffect(() => {
-		userInEU().then((inEU) => {
-			setUseEuro(inEU);
-		});
-	}, []);
 
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
 
-	async function upgradeToUnlimited() {
-		const url = await UserService.checkout(
-			'PRO_LIFETIME',
-			email,
-			!useEuro ? '$' : '€',
-			token,
-			isChatslide()
-		)
-		if (url) {
-			// open a new tab
-			window.open(url, '_blank');
-		}
-	}
-
 	return (
 		<Column>
 			<Panel>
-				{isLifetime && credits != 'Unlimited' &&
-					<Card>
-						<BigTitle>✅ Upgrade to Unlimited</BigTitle>
-						<Instruction>
-							🤫 Shhhh, snatch a lifetime deal now. Only available until May 11, 2024. <br />
-							Get a lifetime upgrade to our Unlimited credits plan at a discounted price.
-						</Instruction>
-						<div >
-							<BigBlueButton
-								onClick={upgradeToUnlimited}
-							>
-								✅ Claim Now
-							</BigBlueButton>
-						</div>
-					</Card>}
-
+				<UnlimitedUpgrade />
 				<Card>
 					<BigTitle>🎙️ Voice Cloning</BigTitle>
 					<Instruction>
@@ -76,13 +35,11 @@ export default function Studio() {
 						Join our <a href='discord' className='text-blue-600'>discord</a> channel to get up to date information.
 					</Explanation>
 
-					<div>
-						<EarlyAccessButton
-							username={username}
-							token={token}
-							feature='voice cloning'
-						/>
-					</div>
+					<EarlyAccessButton
+						username={username}
+						token={token}
+						feature='voice cloning'
+					/>
 				</Card>
 
 				<Card>
@@ -96,13 +53,11 @@ export default function Studio() {
 						Join our <a href='discord' className='text-blue-600'>discord</a> channel to get up to date information.
 					</Explanation>
 
-					<div>
-						<EarlyAccessButton
-							username={username}
-							token={token}
-							feature='avatar cloning'
-						/>
-					</div>
+					<EarlyAccessButton
+						username={username}
+						token={token}
+						feature='avatar cloning'
+					/>
 				</Card>
 			</Panel>
 		</Column>
