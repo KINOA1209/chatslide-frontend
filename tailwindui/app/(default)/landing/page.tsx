@@ -185,9 +185,6 @@ function Landing() {
 					</div>
 					<div className='navigation-right'>
 						<AuthButtons />
-						<div className='menu-button w-nav-button'>
-							<div className='w-icon-nav-menu' />
-						</div>
 					</div>
 				</div>
 			</div>

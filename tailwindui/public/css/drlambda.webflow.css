@@ -6866,10 +6866,6 @@ blockquote {
     display: flex;
   }
 
-  .navigation-button-wrap {
-    display: none;
-  }
-
   .collection-list-jobs, .regular-collection-list {
     grid-template-columns: 1fr 1fr;
   }
@@ -7469,10 +7465,6 @@ blockquote {
   .logo-grid {
     grid-template-rows: auto auto;
     grid-template-columns: 1fr 1fr 1fr;
-  }
-
-  .navigation-button-wrap {
-    display: none;
   }
 
   .collection-list-jobs, .regular-collection-list, .browse-grid, .search-result-list, .about-header {
