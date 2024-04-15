@@ -205,7 +205,7 @@ export default function Topic_SocialPost() {
 				console.error('Error when generating social posts:', response.status);
 				toast.error(
 					`Server is busy now. Please try again later. Reference code: ` +
-						project?.id,
+					project?.id,
 				);
 				setIsSubmitting(false);
 			}
@@ -385,19 +385,19 @@ export default function Topic_SocialPost() {
 				pageInvoked={'summary'}
 			/>
 
-		<form onSubmit={handleSubmit}>
-			<WorkflowStepsBanner
-				currentIndex={0}
-				isSubmitting={isSubmitting}
-				setIsSubmitting={setIsSubmitting}
-				isPaidUser={isPaidUser}
-				nextIsPaidFeature={false}
-				nextText={!isSubmitting ? 'Create Post' : 'Creating Post...'}
-				workflow='socialPosts'
-			/>
-			{/* main content */}
-			<div className='gap-y-4 w-full flex flex-col items-center'>
-				<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
+			<form onSubmit={handleSubmit}>
+				<WorkflowStepsBanner
+					currentIndex={0}
+					isSubmitting={isSubmitting}
+					setIsSubmitting={setIsSubmitting}
+					isPaidUser={isPaidUser}
+					nextIsPaidFeature={false}
+					nextText={!isSubmitting ? 'Create Post' : 'Creating Post...'}
+					workflow='socialPosts'
+				/>
+				{/* main content */}
+				<div className='gap-y-4 w-full flex flex-col items-center'>
+					<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
 
 					{/* Project Summary section */}
 					<div className='w-full lg:w-2/3  px-3 my-3 lg:my-1'>
