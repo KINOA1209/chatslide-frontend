@@ -22,7 +22,11 @@ export const ResourceIcon: React.FC<{
 }> = ({ resource, contain = false }) => {
 	// console.log('resource type is ', resource.type);
 	if (!resource.thumbnail_url) {
-		return <div className='p-[10px]'><FileIcon fileType={resource.type} /></div>;
+		return (
+			<div className='p-[10px]'>
+				<FileIcon fileType={resource.type} />
+			</div>
+		);
 	}
 	const style = contain
 		? { width: '100%', height: '100%', objectFit: 'contain' as 'contain' }
@@ -36,15 +40,21 @@ export const ResourceIcon: React.FC<{
 			unoptimized={true}
 			style={style}
 			onError={(e) => {
-				e.currentTarget.src = getLogoUrl()
+				e.currentTarget.src = getLogoUrl();
 			}}
 		/>
 	);
 };
 
+const FileIconStyle = {
+	width: '20px',
+	height: '20px',
+	// objectFit: 'contain' as 'contain',
+};
+
 const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
 	if (!fileType) {
-		return <FiFilePlus style={{ width: '20px', height: '20px' }} />;
+		return <FiFilePlus style={FileIconStyle} />;
 	}
 	fileType = fileType.toLowerCase();
 	switch (fileType) {
@@ -57,9 +67,9 @@ const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
 					width={20}
 					height={20}
 					unoptimized={true}
-					style={{ width: '20px', height: '20px' }}
+					style={FileIconStyle}
 					onError={(e) => {
-						e.currentTarget.src = getLogoUrl()
+						e.currentTarget.src = getLogoUrl();
 					}}
 				/>
 			);
@@ -71,9 +81,9 @@ const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
 					width={20}
 					height={20}
 					unoptimized={true}
-					style={{ width: '20px', height: '20px' }}
+					style={FileIconStyle}
 					onError={(e) => {
-						e.currentTarget.src = getLogoUrl()
+						e.currentTarget.src = getLogoUrl();
 					}}
 				/>
 			);
@@ -86,9 +96,9 @@ const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
 					width={20}
 					height={20}
 					unoptimized={true}
-					style={{ width: '20px', height: '20px' }}
+					style={FileIconStyle}
 					onError={(e) => {
-						e.currentTarget.src = getLogoUrl()
+						e.currentTarget.src = getLogoUrl();
 					}}
 				/>
 			);
@@ -104,19 +114,14 @@ const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
 					width={20}
 					height={20}
 					unoptimized={true}
-					style={{ width: '20px', height: '20px' }}
+					style={FileIconStyle}
 					onError={(e) => {
-						e.currentTarget.src = getLogoUrl()
+						e.currentTarget.src = getLogoUrl();
 					}}
 				/>
 			);
 		case 'docx': //unused
-			return (
-				<FaRegFileWord
-					style={{ width: '20px', height: '20px' }}
-					fill='#505050'
-				/>
-			);
+			return <FaRegFileWord style={FileIconStyle} fill='#505050' />;
 		case 'jpg': //unused
 		case 'jpeg': //unused
 		case 'png':
@@ -131,9 +136,9 @@ const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
 					width={20}
 					height={20}
 					unoptimized={true}
-					style={{ width: '20px', height: '20px' }}
+					style={FileIconStyle}
 					onError={(e) => {
-						e.currentTarget.src = getLogoUrl()
+						e.currentTarget.src = getLogoUrl();
 					}}
 				/>
 			);
@@ -146,9 +151,9 @@ const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
 					width={20}
 					height={20}
 					unoptimized={true}
-					style={{ width: '20px', height: '20px' }}
+					style={FileIconStyle}
 					onError={(e) => {
-						e.currentTarget.src = getLogoUrl()
+						e.currentTarget.src = getLogoUrl();
 					}}
 				/>
 			);
@@ -174,11 +179,17 @@ export const ResourceItem: React.FC<Resource> = ({
 				overflow: 'hidden',
 			}}
 		>
-			<ResourceIcon resource={{ id, name, type, thumbnail_url }} />
+			<div style={{ width: '40px', height: '40px' }}>
+				{/* Ensure consistent dimensions for the file icon */}
+				<ResourceIcon resource={{ id, name, type, thumbnail_url }} />
+			</div>
+			{/* <ResourceIcon resource={{ id, name, type, thumbnail_url }} /> */}
+
 			<div
 				className='mx-1 text-sm tracking-tight'
 				style={{
 					// border: 'solid 2px blue',
+					flex: 1, // Allow the filename to expand
 					whiteSpace: 'normal',
 					textOverflow: 'ellipsis',
 					display: 'block',
