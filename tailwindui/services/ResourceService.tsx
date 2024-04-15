@@ -83,11 +83,12 @@ class ResourceService {
 		audience: string,
 		language: string,
 		search_online: string,
-		toekn: string,
+		token: string,
+		scenario_type: string,
 	): Promise<any> {
 		const header = new Headers();
-		if (toekn) {
-			header.append('Authorization', `Bearer ${toekn}`);
+		if (token) {
+			header.append('Authorization', `Bearer ${token}`);
 		}
 
 		const response = await fetch('/api/summary', {
@@ -100,6 +101,7 @@ class ResourceService {
 				audience: audience,
 				language: language,
 				search_online: search_online,
+				scenario_type: scenario_type,
 			}),
 		});
 
