@@ -22,7 +22,10 @@ const PricingComparison: React.FC<{
 			return 'Sign up to Start';
 		}
 		if (userTier.includes('CANCELLED') || userTier === 'FREE') {
-			return '🌟 Claim Offer';
+			if (tier === 'FREE')
+				return '✅ Current Plan';
+			else
+				return '🌟 Claim Offer';
 		}
 		if (userTier.includes('PLUS')) {
 			if (tier === 'FREE') {
