@@ -82,33 +82,64 @@ class ResourceService {
 		topic: string,
 		audience: string,
 		language: string,
-		search_online: string,
 		token: string,
-		scenario_type: string,
+		search_online?: string,
+		scenario_type?: string,
+		post_style?: string,
 	): Promise<any> {
 		const header = new Headers();
 		if (token) {
 			header.append('Authorization', `Bearer ${token}`);
 		}
 
-		const response = await fetch('/api/summary', {
-			method: 'POST',
-			headers: header,
-			body: JSON.stringify({
-				project_id: project_id,
-				resources: resources,
-				topic: topic,
-				audience: audience,
-				language: language,
-				search_online: search_online,
-				scenario_type: scenario_type,
-			}),
-		});
+		// if scenario_type is provided, call the summarize endpoint with scenario_type
+		if (scenario_type) {
+			const response = await fetch('/api/summary', {
+				method: 'POST',
+				headers: header,
+				body: JSON.stringify({
+					project_id: project_id,
+					resources: resources,
+					topic: topic,
+					audience: audience,
+					language: language,
+					search_online: search_online,
+					scenario_type: scenario_type,
+				}),
+			});
 
-		if (response.ok) {
-			return await response.json();
+			if (response.ok) {
+				return await response.json();
+			} else {
+				throw new Error(
+					`Failed to summarize resources for slides: ${response.status}`,
+				);
+			}
+		} else if (post_style) {
+			const response = await fetch('/api/summary_social', {
+				method: 'POST',
+				headers: header,
+				body: JSON.stringify({
+					project_id: project_id,
+					resources: resources,
+					topic: topic,
+					audience: audience,
+					language: language,
+					search_online: search_online,
+					post_style: post_style,
+				}),
+			});
+
+			if (response.ok) {
+				return await response.json();
+			} else {
+				throw new Error(
+					`Failed to summarize resources for social post: ${response.status}`,
+				);
+			}
 		} else {
-			throw new Error(`Failed to summarize resources: ${response.status}`);
+			// if both not provided, throw error
+			throw new Error('Scenario type or post style not provided');
 		}
 	}
 
