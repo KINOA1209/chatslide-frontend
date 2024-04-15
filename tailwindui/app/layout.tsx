@@ -1,7 +1,7 @@
 import './css/style.css';
 import React from 'react';
 import Script from 'next/script';
-import { getBrand, getOrigin } from '@/utils/getHost';
+import { getBrand, getOrigin, isChatslide } from '@/utils/getHost';
 
 interface MetadataOptions {
 	title?: string;
@@ -63,7 +63,7 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<head>
-				<link rel='icon' href='/favicon.ico' />
+				<link rel='icon' href= {isChatslide() ? '/favicon_chatslide.ico' : '/favicon.ico'}/>
 
 				<Script id='intercom-settings'>
 					{`

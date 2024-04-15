@@ -1,9 +1,9 @@
 import { getBrand, getLogoUrl } from "@/utils/getHost";
 
-export function Logo() {
+export function Logo({color = true, size = 16}) {
 	return (
 		<a href="/landing" className='block' aria-label='Cruip'>
-			<img src={getLogoUrl()} alt={getBrand()} className='w-16 h-16' />
+			<img src={getLogoUrl(color)} alt={getBrand()} className={`w-${size} h-${size}`} />
 		</a>
 	);
 }

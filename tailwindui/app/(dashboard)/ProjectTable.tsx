@@ -65,7 +65,7 @@ export function getThumbnailUrl(project: Project) {
 	if(!project)
 		return isChatslide() ? defaultChatSlideThumbnail : defaultDrLambdaThumbnail;
 	if (project.content_type === 'presentation') {
-		return project.thumbnail_url || isChatslide() ? defaultChatSlideThumbnail : defaultDrLambdaThumbnail;
+		return project.thumbnail_url || (isChatslide() ? defaultChatSlideThumbnail : defaultDrLambdaThumbnail);
 	}
 	if (project.post_type === 'casual_topic') {
 		return causalTopicThumbnail;

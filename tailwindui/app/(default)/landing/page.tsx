@@ -1,4 +1,4 @@
-import { getBrand, getOrigin } from '@/utils/getHost';
+import { getBrand, getOrigin, isChatslide } from '@/utils/getHost';
 import AuthButtons from './AuthButtons';
 import { Pricing } from './Pricing';
 import Tutorial from './Tutorial';
@@ -51,8 +51,8 @@ function Landing() {
 				rel='preconnect'
 				crossOrigin='anonymous'
 			/>
-			<link href='/favicon.ico' rel='shortcut icon' type='image/x-icon' />
-			<link href='/favicon.ico' rel='apple-touch-icon' />
+			<link href={isChatslide() ? '/favicon_chatslide.ico' : '/favicon.ico'} rel='shortcut icon' type='image/x-icon' />
+			<link href={isChatslide() ? '/favicon_chatslide.ico' : '/favicon.ico'} rel='apple-touch-icon' />
 			<style
 				dangerouslySetInnerHTML={{
 					__html:

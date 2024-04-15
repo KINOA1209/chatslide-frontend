@@ -76,7 +76,10 @@ const Header = ({
 					{/* Site branding */}
 					<div className='flex flex-row items-center gap-x-2'>
 						<div className='min-w-[1.5rem]'>
-							<Logo />
+							<Logo 
+								color={false} 
+								size={8}
+							/>
 						</div>
 						<div className='grow flex flex-row justify-center item-center justify-start'>
 							<div className='w-fit h-[1.5rem] text-xl text-gray-200 bg-clip-text bg-gradient-to-r relative bottom-[3px] font-creato-medium'>
