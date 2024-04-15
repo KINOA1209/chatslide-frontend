@@ -400,10 +400,14 @@ export default function Account() {
 
 				{isPaidUser && <Card>
 					<BigTitle>
-						💸 Affiliate Program
+						💸 Earn Money with {getBrand()}
 					</BigTitle>
 					<Instruction>
-						Share your love for {getBrand()} and make real money by inviting your friends and connections to join! Keep track of your conversions and earnings real time and get paid monthly.
+						<div className='flex flex-col gap-y-1'>
+						<span>Share your love for {getBrand()} and make real money by inviting your friends and connections to join!</span>
+						<span>Your friends will get <strong>60%</strong> off on their first purchase and you will get <strong>30%</strong> commission on all their purchases. </span>
+						<span>Keep track of your conversions and earnings real time and get paid monthly. </span>
+						</div>
 					</Instruction>
 					<Instruction>
 						<a href='/affiliate' className='text-blue-600'>Learn more about affiliate program. </a>
@@ -413,7 +417,7 @@ export default function Account() {
 						onClick={() => {
 							router.push('https://drlambda-1.getrewardful.com/')
 						}}>
-						Join now and start earning
+						Start earning now
 					</BigBlueButton>
 					</div>
 				</Card>}

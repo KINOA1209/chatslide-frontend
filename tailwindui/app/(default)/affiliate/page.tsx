@@ -19,12 +19,12 @@ export default function Affiliate() {
 				<div className='pt-32 pb-12 md:pt-40 md:pb-20'>
 					{/* Page header */}
 					<div className='max-w-3xl mx-auto text-center pb-12 md:pb-16'>
-						<h1 className='h1'>Affiliates Program at {getBrand()} 🚀</h1>
+						<h1 className='h1'>Earn 30% Referral Commission 💸</h1>
 					</div>
 					<div className='max-w-3xl mx-auto pb-4'>
 						{/* Program Details */}
 						<div className='pb-8'>
-							<h2 className='h3 text-2xl'>🌟 Why Partner With {getBrand()}?</h2>
+							<h2 className='h3 text-xl'>🌟 Why Partner With {getBrand()}?</h2>
 							<ul className='text-base text-gray-600 list-disc list-inside mt-4'>
 								<li>
 									<strong>Innovative Technology:</strong> Be part of a
@@ -32,8 +32,7 @@ export default function Affiliate() {
 									slides.
 								</li>
 								<li>
-									<strong>Competitive Commissions:</strong> Earn attractive
-									rewards for every referral.
+									<strong>Trasparency:</strong> See your rewards with transparency. Track the clicks, leds, and conversions in real time. 
 								</li>
 								<li>
 									<strong>Support & Resources:</strong> Get access to
@@ -48,65 +47,31 @@ export default function Affiliate() {
 								<h3 className='h3 text-xl mb-2'>🤩 Affiliate Benefits</h3>
 								<ul className='text-base text-gray-600 list-disc list-inside mt-4'>
 									<li>
-										<strong>High Conversion Rate:</strong> Benefit from our
-										strong value proposition.
+										<strong>High Conversion Rate:</strong> Get noticed instantly when your referral converts.
 									</li>
 									<li>
-										<strong>30-day Cookie Window:</strong> Earn commissions on
-										purchases within 30 days.
+										<strong>Monthly Payouts:</strong> Easily calculate how much money you are gaining.
 									</li>
 									<li>
-										<strong>Monthly Payouts:</strong> Timely earnings straight
-										to your bank account.
+										<strong>Easy to Onboard:</strong> Get started by signing up, sharing your link, and see the money roll in.
+									</li>
+									<li>
+										<strong>Share your deal:</strong> Your friend also gets <strong>60%</strong> off on their first purchase.
 									</li>
 								</ul>
 							</div>
-						</div>
-
-						{/* Affiliate Support */}
-						<div className='flex flex-col md:flex-row items-center pb-8'>
-							<div>
-								<h3 className='h3 text-xl mb-2'>🚀 Affiliate Support</h3>
-								<ul className='text-base text-gray-600 list-disc list-inside mt-4'>
-									<li>
-										<strong>Dedicated Affiliate Manager:</strong> Personalized
-										support whenever needed.
-									</li>
-									<li>
-										<strong>Promotional Materials:</strong> Access to a variety
-										of marketing tools.
-									</li>
-									<li>
-										<strong>Regular Updates:</strong> Stay informed about the
-										latest strategies and updates.
-									</li>
-								</ul>
-							</div>
-						</div>
-
-						{/* Testimonials */}
-						<div className='pb-8'>
-							<h2 className='h3 text-2xl'>😁 Testimonials</h2>
-							<p className='text-base text-gray-600 mt-4'>
-								"Being an affiliate for {getBrand()} has been a highly rewarding
-								experience..." - Bill, Affiliate Partner
-							</p>
-							<p className='text-base text-gray-600 mt-4'>
-								"The commission structure and product quality are
-								unparalleled..." - Mark, Affiliate Partner
-							</p>
 						</div>
 
 						{/* CTA */}
 						<div className='text-center'>
-							<h2 className='h3 text-2xl'>Ready to Earn? 💰</h2>
+							<h2 className='h3 text-xl'>Ready to Earn? 💰</h2>
 							<p className='text-base text-gray-600 mt-4'>
-								Join the affiliate program and start earning today!
+								Join the affiliate program at Rewardful and start earning today!
 							</p>
-							<div className='w-full flex flex-col items-center my-2'>
+							<div className='w-full flex flex-col items-center my-4'>
 								<DrlambdaLink
 									link='https://drlambda-1.getrewardful.com/signup'
-									text='Join affliate program'
+									text='Start Earning Now'
 								/>
 							</div>
 						</div>
