@@ -22,6 +22,7 @@ import Card from '@/components/ui/Card';
 import { BigTitle, Explanation, Instruction } from '@/components/ui/Text';
 import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
+import { getBrand } from '@/utils/getHost';
 
 const Profile = () => {
 	const { username, email, token, setUsername } = useUser();
@@ -34,7 +35,7 @@ const Profile = () => {
 		const paid = params.get('paid');
 		if (paid === 'true') {
 			toast.success('Payment successful!');
-			window.rewardful('convert', {email: email});
+			window.rewardful('convert', { email: email });
 		} else if (paid === 'false') {
 			toast.error('Payment cancelled.');
 		}
@@ -357,6 +358,10 @@ export default function Account() {
 	// Add IntersectionObserver in function observeElements
 
 	const bar = <div className='w-full h-0 border-b-2 border-[#CAD0D3]'></div>;
+
+	const router = useRouter();
+	const { isPaidUser } = useUser();
+
 	useEffect(() => {
 		AOS.init({
 			once: true,
@@ -392,6 +397,27 @@ export default function Account() {
 						<ApplyPromo />
 					</div>
 				</Card>
+
+				{isPaidUser && <Card>
+					<BigTitle>
+						💸 Affiliate Program
+					</BigTitle>
+					<Instruction>
+						Share your love for {getBrand()} and make real money by inviting your friends and connections to join! Keep track of your conversions and earnings real time and get paid monthly.
+					</Instruction>
+					<Instruction>
+						<a href='/affiliate' className='text-blue-600'>Learn more about affiliate program. </a>
+					</Instruction>
+					<div className='flex flex-row justify-center'>
+					<BigBlueButton
+						onClick={() => {
+							router.push('https://drlambda-1.getrewardful.com/')
+						}}>
+						Join now and start earning
+					</BigBlueButton>
+					</div>
+				</Card>}
+
 			</Panel>
 		</Column>
 	);
