@@ -21,6 +21,8 @@ const MobileMenu = ({ refList = [] }: HeaderProps) => {
 	const [landingPage, setLandingPage] = useState(false);
 
 	function userFirstName() {
+		if (username.includes('@'))
+			return username.split('@')[0];
 		return username.split(' ')[0];
 	}
 
@@ -174,7 +176,7 @@ const MobileMenu = ({ refList = [] }: HeaderProps) => {
 						)}
 						{username ? (
 							<>
-								<div className='text-2xl py-4 text-blue-500'>
+								<div className='py-2 text-blue-600 whitespace-nowrap'>
 									Hi, {userFirstName()}
 								</div>
 								<li>
