@@ -40,7 +40,7 @@ const AvatarSelector: React.FC<{
 					<div className='flex flex-col gap-2'>
 						<div>
 							<Instruction>Avatar: </Instruction>
-							<DropDown value={avatar} onChange={(e) => setAvatar(e.target.value)} width='8rem'>
+							<DropDown value={avatar} onChange={(e) => setAvatar(e.target.value)}>
 								<option key={''} value={''}>⏹️ None</option>
 								{Object.entries(AVATAR_OPTIONS).map(([key, value]) => (
 									<option key={key} value={key} disabled={AVATAR_NAMES[key].includes('coming')}
@@ -53,7 +53,7 @@ const AvatarSelector: React.FC<{
 						{avatar != '' && <>
 							<div>
 								<Instruction>Posture: </Instruction>
-								<DropDown value={posture} onChange={(e) => setPosture(e.target.value)} width='12rem'>
+								<DropDown value={posture} onChange={(e) => setPosture(e.target.value)}>
 									{AVATAR_OPTIONS[avatar].map((posture) => (
 										<option key={posture} value={posture}>{POSTURE_NAMES[posture]}</option>
 									))}
@@ -61,7 +61,7 @@ const AvatarSelector: React.FC<{
 							</div>
 							<div>
 								<Instruction>Position on Slides: </Instruction>
-								<DropDown value={position} onChange={(e) => setPosition(e.target.value)} width='12rem'>
+								<DropDown value={position} onChange={(e) => setPosition(e.target.value)}>
 									{Object.entries(POSITION_NAMES).map(([key, name]) => (
 										<option key={key} value={key}>{name}</option>
 									))}
@@ -69,7 +69,7 @@ const AvatarSelector: React.FC<{
 							</div>
 							<div>
 								<Instruction>Size: </Instruction>
-								<DropDown value={size} onChange={(e) => setSize(e.target.value)} width='12rem'>
+								<DropDown value={size} onChange={(e) => setSize(e.target.value)}>
 									{Object.entries(SIZE_NAMES).map(([key, name]) => (
 										<option key={key} value={key}>{name}</option>
 									))}
