@@ -117,7 +117,7 @@ const SideBar = ({ }: SideBarProps) => {
 					className='block flex flex-row items-center gap-2 py-2 text-white px-2 rounded-lg hover:bg-gray-400 cursor-pointer'
 					role='menuitem'
 				>
-					<Logo color={false} size={6} />
+					<Logo color={false} size={'24px'} />
 					{isSidebarOpen ? getBrand() : '\u200B'}
 				</a>
 
