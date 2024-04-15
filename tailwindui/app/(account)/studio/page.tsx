@@ -31,6 +31,20 @@ export default function Studio() {
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
 
+	async function upgradeToUnlimited() {
+		const url = await UserService.checkout(
+			'PRO_LIFETIME',
+			email,
+			!useEuro ? '$' : '€',
+			token,
+			isChatslide()
+		)
+		if (url) {
+			// open a new tab
+			window.open(url, '_blank');
+		}
+	}
+
 	return (
 		<Column>
 			<Panel>
@@ -43,13 +57,7 @@ export default function Studio() {
 						</Instruction>
 						<div >
 							<BigBlueButton
-								onClick={() => UserService.checkout(
-									'PRO_LIFETIME',
-									email,
-									!useEuro ? '$' : '€',
-									token,
-									isChatslide()
-								)}
+								onClick={upgradeToUnlimited}
 							>
 								✅ Claim Now
 							</BigBlueButton>
