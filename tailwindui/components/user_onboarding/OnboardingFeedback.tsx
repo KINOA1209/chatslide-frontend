@@ -4,6 +4,7 @@ import Modal from '@/components/ui/Modal';
 import { PrimaryColorButton } from './UserOnboardingButtons';
 import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';
+import { getBrand } from '@/utils/getHost';
 
 interface FeedbackFormProps {
 	onClose: () => void;
@@ -203,7 +204,7 @@ export const OnboardingFeedbackForm: React.FC<FeedbackFormProps> = ({
 					Feedback submitted, thank you!
 					{rating === 5 && (
 						<div>
-							<span> Share your 💚 for DrLambda:</span>
+							<span> Share your 💚 for {getBrand()}:</span>
 							<div className='mt-4'>
 								<ReferralLink />
 							</div>

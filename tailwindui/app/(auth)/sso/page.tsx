@@ -3,6 +3,7 @@
 import { Blank } from '@/components/ui/Loading';
 import AuthService from '@/services/AuthService';
 import UserService from '@/services/UserService';
+import { getBrand } from '@/utils/getHost';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
@@ -52,7 +53,7 @@ export default function SSORedirect() {
 	}, []);
 
 	useEffect(() => {
-		toast.info('Welcome to DrLambda, we are preparing your workspace for you! 💪', {
+		toast.info(`Welcome to ${getBrand()}, we are preparing your workspace for you! 💪`, {
 			position: 'top-center',
 			autoClose: 4000,
 			hideProgressBar: false,

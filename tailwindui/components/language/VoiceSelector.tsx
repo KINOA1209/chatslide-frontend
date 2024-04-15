@@ -8,7 +8,6 @@ import { DropDown } from '../button/DrlambdaButton';
 import { useProject } from '@/hooks/use-project';
 
 export const previewVoice = async (voice: string) => {
-	const script = 'Hello, I am DrLambda.'
 	try {
 		const audio_url = `/voice/${voice}.mp3`;
 		const audioElement = new Audio(audio_url);

@@ -14,6 +14,7 @@ import PDFType from '@/public/icons/fileTypes/PDFType.png';
 import YoutubeType from '@/public/icons/fileTypes/Youtube.png';
 import ImageType from '@/public/icons/fileTypes/ImageType.png';
 import GeneralFileType from '@/public/icons/fileTypes/GeneralFileType.png';
+import { getLogoUrl } from '@/utils/getHost';
 
 export const ResourceIcon: React.FC<{
 	resource: Resource;
@@ -35,7 +36,7 @@ export const ResourceIcon: React.FC<{
 			unoptimized={true}
 			style={style}
 			onError={(e) => {
-				e.currentTarget.src = 'https://drlambda.ai/images/logo_no_text.png';
+				e.currentTarget.src = getLogoUrl()
 			}}
 		/>
 	);
@@ -58,7 +59,7 @@ const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
 					unoptimized={true}
 					style={{ width: '20px', height: '20px' }}
 					onError={(e) => {
-						e.currentTarget.src = 'https://drlambda.ai/images/logo_no_text.png';
+						e.currentTarget.src = getLogoUrl()
 					}}
 				/>
 			);
@@ -72,7 +73,7 @@ const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
 					unoptimized={true}
 					style={{ width: '20px', height: '20px' }}
 					onError={(e) => {
-						e.currentTarget.src = 'https://drlambda.ai/images/logo_no_text.png';
+						e.currentTarget.src = getLogoUrl()
 					}}
 				/>
 			);
@@ -87,7 +88,7 @@ const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
 					unoptimized={true}
 					style={{ width: '20px', height: '20px' }}
 					onError={(e) => {
-						e.currentTarget.src = 'https://drlambda.ai/images/logo_no_text.png';
+						e.currentTarget.src = getLogoUrl()
 					}}
 				/>
 			);
@@ -105,7 +106,7 @@ const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
 					unoptimized={true}
 					style={{ width: '20px', height: '20px' }}
 					onError={(e) => {
-						e.currentTarget.src = 'https://drlambda.ai/images/logo_no_text.png';
+						e.currentTarget.src = getLogoUrl()
 					}}
 				/>
 			);
@@ -132,7 +133,7 @@ const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
 					unoptimized={true}
 					style={{ width: '20px', height: '20px' }}
 					onError={(e) => {
-						e.currentTarget.src = 'https://drlambda.ai/images/logo_no_text.png';
+						e.currentTarget.src = getLogoUrl()
 					}}
 				/>
 			);
@@ -147,7 +148,7 @@ const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
 					unoptimized={true}
 					style={{ width: '20px', height: '20px' }}
 					onError={(e) => {
-						e.currentTarget.src = 'https://drlambda.ai/images/logo_no_text.png';
+						e.currentTarget.src = getLogoUrl()
 					}}
 				/>
 			);

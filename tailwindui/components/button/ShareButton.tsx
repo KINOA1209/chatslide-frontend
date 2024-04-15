@@ -11,6 +11,7 @@ import Project from '@/models/Project';
 import { Explanation, Instruction } from '../ui/Text';
 import RadioButton from '../ui/RadioButton';
 import { MdOutlineShare } from 'react-icons/md';
+import { getBrand, getOrigin } from '@/utils/getHost';
 type ShareButtonProps = {
 	share: boolean;
 	setShare: null | ((is_shared: boolean, is_public?: boolean) => void);
@@ -34,7 +35,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 	setShowShareModal,
 	isDropdownVisible,
 	setIsDropdownVisible,
-	host = 'https://drlambda.ai',
+	host = getOrigin(),
 	isSocialPost = false,
 	currentSlideIndex = 0,
 	width,
@@ -74,7 +75,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 			const hashTags = limitedKeywords
 				.map((keyword) => `#${keyword}`)
 				.join(' ');
-			const postText = `${truncatedDescription}. Learn more at drlambda.ai!\n${hashTags}\n`;
+			const postText = `${truncatedDescription}. Learn more at ${getOrigin()}!\n${hashTags}\n`;
 			const platformConfig =
 				PostPlatformConfigs[platform as keyof typeof PostPlatformConfigs];
 			const text = platformConfig.textTemplate(postText, shareLink);
@@ -167,7 +168,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 					<div>
 						<Instruction>Publish Slides</Instruction>
 						<Explanation>
-							Your slides will be published to DrLambda Discover, people can
+							Your slides will be published to {getBrand()} Discover, people can
 							also find the slides on search engine.
 						</Explanation>
 						<RadioButton

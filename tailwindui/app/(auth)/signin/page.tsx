@@ -4,10 +4,11 @@ import React from 'react';
 import GoogleSignIn from '@/components/button/GoogleSignIn';
 import CustomerServiceInfo from '@/components/signup/customerService';
 import { generateMetadata } from '@/app/layout';
+import { getBrand } from '@/utils/getHost';
 
-const title = 'Sign In | DrLambda';
+const title = `Sign In | ${getBrand()}`;
 const description =
-	'DrLambda is your AI assistant to create professional slides and posts. Join us to experience the power of AI in creating professional slides and posts.';
+	`${getBrand()} is your AI assistant to create professional slides and posts. Join us to experience the power of AI in creating professional slides and posts.`;
 export const metadata = generateMetadata({ title, description });
 
 export default function SignIn() {

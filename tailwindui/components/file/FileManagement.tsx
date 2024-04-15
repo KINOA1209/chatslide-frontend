@@ -15,6 +15,7 @@ import DrlambdaButton, { BigBlueButton } from '../button/DrlambdaButton';
 import { FaCheckCircle } from 'react-icons/fa';
 import { useUser } from '@/hooks/use-user';
 import { Blank, Loading } from '../ui/Loading';
+import { getBrand, getLogoUrl } from '@/utils/getHost';
 
 interface UserFileList {
 	selectable: boolean;
@@ -501,8 +502,8 @@ const MyFiles: React.FC<filesInterface> = ({
 					<div className='max-w-sm w-fit text-center pt-4 mx-4'>
 						<div className='w-full mx-auto'>
 							<CarbonConnect
-								orgName='DrLambda'
-								brandIcon='https://drlambda.ai/images/Logo_Color.png'
+								orgName={getBrand()}
+								brandIcon={getLogoUrl()}
 								tokenFetcher={carbonTokenFetcher}
 								tags={{
 									tag1: 'tag1_value',

@@ -8,6 +8,7 @@ import Laura from '@/public/images/laura.jpeg'
 import Image from 'next/image';
 import { Instruction } from './Text';
 import UserService from '@/services/UserService';
+import { getBrand } from '@/utils/getHost';
 
 interface FeedbackFormProps {
 	onClose: () => void;
@@ -189,7 +190,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 					Feedback submitted, thank you!
 					{rating === 5 && (
 						<div>
-							<span> Share your 💚 for DrLambda:</span>
+							<span> Share your 💚 for {getBrand()}:</span>
 							<div className='mt-4'>
 								<ReferralLink />
 							</div>
@@ -245,7 +246,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 						</div>
 						<div className='mt-4'>
 							<Instruction>
-								Tell us what you think about this slides or DrLambda:
+								Tell us what you think about this slides or {getBrand()}:
 							</Instruction>
 							{/* Increase the number of rows for the textarea to make it taller */}
 							<textarea

@@ -1,6 +1,7 @@
 import './css/style.css';
 import React from 'react';
 import Script from 'next/script';
+import { getBrand, getOrigin } from '@/utils/getHost';
 
 interface MetadataOptions {
 	title?: string;
@@ -11,10 +12,10 @@ interface MetadataOptions {
 
 export const generateMetadata = (options: MetadataOptions = {}): any => {
 	const {
-		title = 'DrLambda: Create Professional Slides with AI',
+		title = `${getBrand()}: Create Professional Slides with AI`,
 		description = 'Your AI assistant to create professional slides and posts. Convert your documents, webpages, videos, and tweets into professional slides and documents.',
-		keywords = 'DrLambda, AI-powered, documents_to_slides, tool, create, professional, slides, documents, sources, pdf, docx, notion, presentation, knowledge, goole_slides, powerpoint, keynote, canva, figma, design, content, marketing, social_media, twitter, linkedin, facebook, instagram, youtube, tiktok, pinterest, slideshare, medium',
-		name = 'DrLambda: AI Slides',
+		keywords = `${getBrand()}, AI-powered, documents_to_slides, tool, create, professional, slides, documents, sources, pdf, docx, notion, presentation, knowledge, goole_slides, powerpoint, keynote, canva, figma, design, content, marketing, social_media, twitter, linkedin, facebook, instagram, youtube, tiktok, pinterest, slideshare, medium`,
+		name = `${getBrand()}: AI Slides`,
 	} = options;
 
 	return {
@@ -31,14 +32,14 @@ export const generateMetadata = (options: MetadataOptions = {}): any => {
 		openGraph: {
 			title,
 			description,
-			url: 'https://drlambda.ai',
+			url: getOrigin(),
 			type: 'website',
 			images: [
 				{
-					url: 'https://drlambda.ai/images/ogimage.png',
+					url: `${getOrigin()}/images/ogimage_${getBrand()}.png`,
 					width: 800,
 					height: 440,
-					alt: 'DrLambda',
+					alt: getBrand(),
 				},
 			],
 		},
@@ -49,7 +50,7 @@ export const generateMetadata = (options: MetadataOptions = {}): any => {
 			creator: '@drlambda_ai',
 			title,
 			description,
-			image: 'https://drlambda.ai/images/ogimage.png',
+			image: `${getOrigin()}/images/ogimage_${getBrand()}.png`,
 		},
 	};
 };

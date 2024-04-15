@@ -10,6 +10,7 @@ import { useProject } from '@/hooks/use-project';
 import { addIdToRedir } from '../../utils/redirWithId';
 import { sleep } from '@/utils/sleep';
 import SlidesService from '@/services/SlidesService';
+import { getOrigin } from '@/utils/getHost';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -28,7 +29,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 	setIsSubmitting,
 	showScript = false,
 }) => {
-	const [host, setHost] = useState('https://drlambda.ai');
+	const [host, setHost] = useState(getOrigin());
 
 	const { slides, setTranscripts, saveStatus, SaveStatus } = useSlides();
 	const { token, isPaidUser } = useUser();

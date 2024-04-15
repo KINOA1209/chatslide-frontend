@@ -1,11 +1,9 @@
+import { getBrand, getLogoUrl } from "@/utils/getHost";
+
 export function Logo() {
 	return (
 		<a href="/landing" className='block' aria-label='Cruip'>
-			<img
-				src='/images/drlambda-logo.svg'
-				alt='DrLambda'
-				className='w-full h-full'
-			/>
+			<img src={getLogoUrl()} alt={getBrand()} className='w-16 h-16' />
 		</a>
 	);
 }
@@ -29,31 +27,6 @@ export function Home() {
 					strokeLinejoin='round'
 				/>
 			</svg>
-		</a>
-	);
-}
-
-export function BlackLogo() {
-	return (
-		<a
-			href="/landing"
-			className='block'
-			aria-label='Cruip'
-			style={{ backgroundColor: 'black' }}
-		>
-			<img
-				src='/images/drlambda-logo.svg'
-				alt='DrLambda'
-				className='w-16 h-16'
-			/>
-		</a>
-	);
-}
-
-export function ColorLogo() {
-	return (
-		<a href="/landing" className='block' aria-label='Cruip'>
-			<img src='/images/Logo_Color.png' alt='DrLambda' className='w-16 h-16' />
 		</a>
 	);
 }

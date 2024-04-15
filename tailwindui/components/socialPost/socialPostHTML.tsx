@@ -41,6 +41,7 @@ import Chart from '@/models/Chart';
 import { ToolBar } from '../ui/ToolBar';
 import ShareButton from '@/components/button/ShareButton';
 import ExportToPngButton from '@/components/socialPost/socialPostPngButton';
+import { getOrigin } from '@/utils/getHost';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -56,7 +57,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 	const { token } = useUser();
 	const [showShareModal, setShowShareModal] = useState(false);
 	const { project, updateProject } = useProject();
-	const [host, setHost] = useState('https://drlambda.ai');
+	const [host, setHost] = useState(getOrigin());
 	const { isShared, updateIsShared } = useProject();
 	const [showLayout, setShowLayout] = useState(false);
 	const [present, setPresent] = useState(false);

@@ -1,10 +1,11 @@
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
+import { getBrand } from '@/utils/getHost';
 
 export const metadata = {
-	title: 'Career - DrLambda',
+	title: `Career | ${getBrand()}`,
 	description:
-		'Join to work with us at DrLambda. Explore our remote-first open positions in engineering, design, product, and growth. Apply now!',
+		'Join to work with us at DrLambda (ChatSlide). Explore our remote-first open positions in engineering, design, product, and growth. Apply now!',
 };
 
 export default function Career() {
@@ -15,7 +16,7 @@ export default function Career() {
 				<div className='pt-32 pb-12 md:pt-40 md:pb-20'>
 					{/* Page header */}
 					<div className='max-w-3xl mx-auto text-center pb-12 md:pb-16'>
-						<h1 className='h1'>Careers at DrLambda</h1>
+						<h1 className='h1'>Careers at DrLambda (ChatSlide)</h1>
 					</div>
 
 					<div className='max-w-3xl mx-auto pb-4'>
@@ -34,7 +35,7 @@ export default function Career() {
 								<h3 className='h3 text-xl mb-2'>UX Design Intern</h3>
 								<p className='text-base text-gray-600'>
 									Seeking a driven UX enthusiast passionate about innovative
-									design and education? DrLambda invites you to reshape the
+									design and education? We invite you to reshape the
 									educational landscape as a UX Design Intern.
 									<br />
 									<br />

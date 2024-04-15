@@ -3,10 +3,11 @@ import DrlambdaButton, {
 } from '@/components/button/DrlambdaButton';
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
+import { getBrand } from '@/utils/getHost';
 import { MouseEventHandler } from 'react';
 
 export const metadata = {
-	title: 'Affiliate Program - DrLambda',
+	title: `Affiliate Program | ${getBrand()}`,
 	description: 'Join the revolution of knowledge transformation.',
 };
 
@@ -18,12 +19,12 @@ export default function Affiliate() {
 				<div className='pt-32 pb-12 md:pt-40 md:pb-20'>
 					{/* Page header */}
 					<div className='max-w-3xl mx-auto text-center pb-12 md:pb-16'>
-						<h1 className='h1'>Affiliates Program at DrLambda 🚀</h1>
+						<h1 className='h1'>Affiliates Program at {getBrand()} 🚀</h1>
 					</div>
 					<div className='max-w-3xl mx-auto pb-4'>
 						{/* Program Details */}
 						<div className='pb-8'>
-							<h2 className='h3 text-2xl'>🌟 Why Partner With DrLambda?</h2>
+							<h2 className='h3 text-2xl'>🌟 Why Partner With {getBrand()}?</h2>
 							<ul className='text-base text-gray-600 list-disc list-inside mt-4'>
 								<li>
 									<strong>Innovative Technology:</strong> Be part of a
@@ -87,7 +88,7 @@ export default function Affiliate() {
 						<div className='pb-8'>
 							<h2 className='h3 text-2xl'>😁 Testimonials</h2>
 							<p className='text-base text-gray-600 mt-4'>
-								"Being an affiliate for DrLambda has been a highly rewarding
+								"Being an affiliate for {getBrand()} has been a highly rewarding
 								experience..." - Bill, Affiliate Partner
 							</p>
 							<p className='text-base text-gray-600 mt-4'>
@@ -100,13 +101,12 @@ export default function Affiliate() {
 						<div className='text-center'>
 							<h2 className='h3 text-2xl'>Ready to Earn? 💰</h2>
 							<p className='text-base text-gray-600 mt-4'>
-								Book a call to meet with our partnership manager and start your
-								journey!
+								Join the affiliate program and start earning today!
 							</p>
 							<div className='w-full flex flex-col items-center my-2'>
 								<DrlambdaLink
-									link='https://calendly.com/drlambda/30min'
-									text='Book a call'
+									link='https://drlambda-1.getrewardful.com/signup'
+									text='Join affliate program'
 								/>
 							</div>
 						</div>

@@ -1,3 +1,4 @@
+import { getBrand, getOrigin } from '@/utils/getHost';
 import AuthButtons from './AuthButtons';
 import { Pricing } from './Pricing';
 import Tutorial from './Tutorial';
@@ -7,14 +8,14 @@ function Landing() {
 		<>
 			<meta charSet='utf-8' />
 			<title>
-				DrLambda | Build your Slides and Videos from Documents in one click
+				{`${getBrand()} | Build your Slides and Videos from Documents in one click`}
 			</title>
 			<meta
 				content='Your AI assistant to create professional slides and posts. Convert your documents, webpages, videos, and tweets into professional slides and documents.'
 				name='description'
 			/>
 			<meta
-				content='DrLambda | Build your Slides and Videos from Documents in one click'
+				content={`${getBrand()} | Build your Slides and Videos from Documents in one click`}
 				property='og:title'
 			/>
 			<meta
@@ -22,11 +23,11 @@ function Landing() {
 				property='og:description'
 			/>
 			<meta
-				content='https://drlambda.ai/images/ogimage.png'
+				content={`${getOrigin()}/images/ogimage_${getBrand()}.png`}
 				property='og:image'
 			/>
 			<meta
-				content='DrLambda | Build your Slides and Videos from Documents in one click'
+				content={`${getBrand()} | Build your Slides and Videos from Documents in one click`}
 				property='twitter:title'
 			/>
 			<meta
@@ -34,7 +35,7 @@ function Landing() {
 				property='twitter:description'
 			/>
 			<meta
-				content='https://drlambda.ai/images/ogimage.png'
+				content={`${getOrigin()}/images/ogimage_${getBrand()}.png`}
 				property='twitter:image'
 			/>
 			<meta property='og:type' content='website' />
@@ -58,20 +59,9 @@ function Landing() {
 						'\n\t\t* {\n\t\t\t-webkit-font-smoothing: antialiased;\n\t\t\t-moz-osx-font-smoothing: grayscale;\n\t\t}\n\t',
 				}}
 			/>
+			<a href="https://www.producthunt.com/posts/chatslide-ai?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-chatslide&#0045;ai" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=451418&theme=light&period=daily" alt="ChatSlide&#0046;ai - AI&#0032;assistant&#0032;for&#0032;generating&#0032;slides&#0032;and&#0032;video | Product Hunt" width="250" height="54" /></a>
 			<a
-				href='https://www.producthunt.com/posts/drlambda-social?utm_source=badge-top-post-topic-badge&utm_medium=badge&utm_souce=badge-drlambda-social'
-				target='_blank'
-				style={{ position: 'fixed', bottom: 5, right: 5, zIndex: 50 }}
-			>
-				<img
-					src='https://api.producthunt.com/widgets/embed-image/v1/top-post-topic-badge.svg?post_id=427030&theme=light&period=weekly&topic_id=44'
-					alt='DrLambda-Social - AI content generator for social media | Product Hunt'
-					width={250}
-					height={54}
-				/>
-			</a>
-			<a
-				href='https://drlambda.ai/discord'
+				href='/discord'
 				style={{
 					position: 'fixed',
 					bottom: 65,
@@ -309,7 +299,7 @@ function Landing() {
 								width='100%'
 								height='100%'
 								src='https://www.youtube.com/embed/qxHT5GYe_aQ?autoplay=1&mute=1&loop=1&rel=0'
-								title='DrLambda - One-click presentation AI tool through multiple sources'
+								title='ChatSlide - One-click presentation AI tool through multiple sources'
 								allow='autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
 							/>
 						</div>
@@ -386,7 +376,7 @@ function Landing() {
 								width='100%'
 								height='100%'
 								src='https://www.youtube.com/embed/cs1dtV3gRpA?si=cGBczLWZpBZANnyv&autoplay=1&mute=1&loop=1&rel=0'
-								title='How to safely photography the solar eclipse (DrLambda Avatar Demo)'
+								title='How to safely photography the solar eclipse (ChatSlide Avatar Demo)'
 								allow='autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
 							/>
 						</div>
@@ -419,7 +409,7 @@ function Landing() {
 									</div>
 									<h3 className='combine-heading-style-h5'>Slides</h3>
 									<div className='combine-text-size-regular-3'>
-										Say good-bye to 7 windows open and copy pasting, DrLambda is
+										Say good-bye to 7 windows open and copy pasting, {getBrand()} is
 										your one stop choice for slides creation workflow.
 									</div>
 									<div className='combine-button-icon' />
@@ -670,7 +660,7 @@ function Landing() {
 										</div>
 									</div>
 									<div className='uui-heading-xxsmall text-weight-medium'>
-										"There is an excellent AI service for this, 'DrLambda' it
+										"There is an excellent AI service for this, '{getBrand()}' it
 										can quickly and easily turn any website, video or document
 										into a presentation."
 									</div>
@@ -777,7 +767,7 @@ function Landing() {
 										</div>
 									</div>
 									<div className='uui-heading-xxsmall text-weight-medium'>
-										🇧🇷 "DrLambda – rede neural que transforma páginas da web,
+										🇧🇷 "{getBrand()} – rede neural que transforma páginas da web,
 										arquivos PDF e vídeos em uma apresentação com slides
 										interativos. E é grátis."
 									</div>
@@ -1098,7 +1088,7 @@ function Landing() {
 										</div>
 									</div>
 									<div className='uui-heading-xxsmall text-weight-medium'>
-										🇩🇪 "DrLambda ist so gestaltet, dass jeder, unabhängig vom
+										🇩🇪 "{getBrand()} ist so gestaltet, dass jeder, unabhängig vom
 										Fachwissen, beeindruckende Präsentationen erstellen kann."
 									</div>
 									<div className='uui-testimonial13_client'>
@@ -1205,7 +1195,7 @@ function Landing() {
 									</div>
 									<div className='uui-heading-xxsmall text-weight-medium'>
 										"I tried different tools for making presentations with AI - also the famous one like Tome. 
-										So i also tried DrLambda and was impressed - you get a great output with very little effort!"
+										So i also tried {getBrand()} and was impressed - you get a great output with very little effort!"
 									</div>
 									<div className='uui-testimonial13_client'>
 										<div className='uui-testimonial13_client-image-wrapper'>
@@ -1515,7 +1505,7 @@ function Landing() {
 										</div>
 									</div>
 									<div className='uui-heading-xxsmall text-weight-medium'>
-										🇷🇺 "Презентация из любых файлов: DrLambda соберет PDF, сайты
+										🇷🇺 "Презентация из любых файлов: {getBrand()} соберет PDF, сайты
 										и видеоролики в готовые слайды"
 									</div>
 									<div className='uui-testimonial13_client'>
@@ -1936,7 +1926,7 @@ function Landing() {
 									</div>
 									<div className='uui-heading-xxsmall text-weight-medium'>
 										"I love how easy it is to use and the cool features it
-										offers. I give DrLambda 5 tacos, it's that good! 🌮🌮🌮🌮🌮"
+										offers. I give {getBrand()} 5 tacos, it's that good! 🌮🌮🌮🌮🌮"
 									</div>
 									<div className='uui-testimonial13_client'>
 										<div className='uui-testimonial13_client-image-wrapper'>
@@ -2156,7 +2146,7 @@ function Landing() {
 					<div className='brix---footer-bottom-v5'>
 						<div className='w-layout-grid brix---grid-footer-bottom-v2'>
 							<p className='brix---mg-bottom-0'>
-								©️ drlambda.ai. All rights reserved.
+								©️ {getBrand(true)}.ai. All rights reserved.
 								<br />
 								Created with 💙 from San Francisco.
 							</p>
@@ -2172,7 +2162,7 @@ function Landing() {
 									/>
 								</a>
 								<a
-									href='https://www.instagram.com/drlambda_ai/'
+									href='https://www.instagram.com/chatslide_ai/'
 									className='brix---social-icon-square-30px w-inline-block'
 								>
 									<img

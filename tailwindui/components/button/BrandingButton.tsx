@@ -16,7 +16,7 @@ import PaywallModal from "../paywallModal";
 export const BrandingButton: React.FC<{
 }> = () => {
 	const { project, updateProject } = useProject();
-	const { isShowingLogo, updateLogoUrl, updateBackgroundUrl, hideLogo, showDrLambdaLogo } = useSlides();
+	const { isShowingLogo, updateLogoUrl, updateBackgroundUrl, hideLogo, showLogo } = useSlides();
 	const { isPaidUser } = useUser();
 
 	const [showModal, setShowModal] = useState(false);
@@ -59,7 +59,7 @@ export const BrandingButton: React.FC<{
 				showLogo={isShowingLogo}
 				setShowLogo={(e) => {
 					if (e) {
-						showDrLambdaLogo();
+						showLogo();
 					}
 					else {
 						hideLogo();

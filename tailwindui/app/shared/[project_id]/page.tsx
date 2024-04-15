@@ -5,6 +5,7 @@ import Header from '@/components/layout/header';
 import Card from '@/components/ui/Card';
 import { Explanation, Instruction, Title } from '@/components/ui/Text';
 import { JoinUsBanner } from '@/components/layout/JoinUsBanner';
+import { getBrand, getOrigin } from '@/utils/getHost';
 
 type Props = {
 	params: { project_id: string };
@@ -12,12 +13,11 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const project_id = params.project_id;
-	//const project = {topic: "drlambda", description: "drlambda"};
-	let topic = 'drlambda';
-	let description = 'drlambda';
-	let author = 'drlambda';
-	let publicImageUrl = 'https://drlambda.ai/images/ogimage.png';
-	let keywords = ['DrLambda', 'presentation', 'slides', 'ai_agent'];
+	let topic = getBrand();
+	let description = getBrand();
+	let author = getBrand();
+	let publicImageUrl = `${getOrigin()}/images/ogimage_${getBrand()}.png`;
+	let keywords = [getBrand(), 'presentation', 'slides', 'ai_agent'];
 	try {
 		const project = await ProjectService.getSharedProjectDetails(
 			project_id,
@@ -25,24 +25,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		);
 		// console.log(project)
 		publicImageUrl = project.thumbnail_url || publicImageUrl;
-		topic = project.topic || 'DrLambda';
-		description = project.description || 'Created using DrLambda';
-		author = project.author || 'DrLambda';
+		topic = project.topic || getBrand();
+		description = project.description || `Created using ${getBrand()}`;
+		author = project.author || getBrand();
 		keywords = project.keywords || keywords;
 	} catch (error) {
 		console.error(`Error fetching project ${project_id} details:`, error);
 	}
 	const metadata: Metadata = {
-		title: topic + ' | DrLambda',
+		title: topic + ' | ' + getBrand(),
 		description: description,
-		publisher: 'DrLambda',
+		publisher: getBrand(),
 		authors: [{ name: author }],
 		keywords: keywords,
 		openGraph: {
 			title: topic,
 			description: description,
-			url: `https://drlambda.ai/shared/${project_id}`,
-			siteName: 'Drlambda',
+			url: `${getOrigin()}/shared/${project_id}`,
+			siteName: getBrand(),
 			locale: 'en_US',
 			type: 'website',
 			images: [publicImageUrl],
@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 			site: '@drlambda_ai',
 			card: 'summary_large_image',
 			creator: '@drlambda_ai',
-			title: 'DrLambda',
+			title: getBrand(),
 			description: description,
 			images: [
 				{
@@ -83,7 +83,7 @@ export default async function Page({ params }: Props) {
 							<div className='flex flex-row items-end gap-x-4'>
 								<Title>{project.topic}</Title>
 								<Instruction>
-									Created using DrLambda
+									Created using {getBrand()}
 								</Instruction>
 							</div>
 							<Explanation>{project.description}</Explanation>

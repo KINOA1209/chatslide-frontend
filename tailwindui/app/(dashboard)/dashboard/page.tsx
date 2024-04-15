@@ -251,8 +251,6 @@ export default function Dashboard() {
 				<Modal
 					showModal={showSurvey}
 					setShowModal={handleCloseSurvey}
-					// title='Welcome to DrLambda!'
-					// description='We are excited to have you onboard. Please take a few minutes to complete the onboarding survey.'
 				>
 					<OnboardingSurvey handleBack={handleCloseSurvey} />
 				</Modal>

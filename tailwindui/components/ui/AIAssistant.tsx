@@ -18,9 +18,10 @@ import { stopArrowKeyPropagation } from '@/utils/editing';
 import './ChatBot.css';
 import React from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
+import { getBrand, getLogoUrl, isChatslide } from '@/utils/getHost';
 
 
-export const DrLambdaAIAssistantIcon: React.FC<{
+export const AIAssistantIcon: React.FC<{
 	onClick: () => void;
 }> = ({ onClick }) => {
 	return (
@@ -29,11 +30,18 @@ export const DrLambdaAIAssistantIcon: React.FC<{
 			onClick={onClick}
 		// style={{ animation: 'pulse 0.5s infinite' }}
 		>
-			<Image
-				src={DrlambdaCartoonImage}
-				alt={'DrLambdaAIAssistantImage'}
-				className='w-[1.75rem] h-[2rem] z-10'
-			></Image>
+			{isChatslide() ?
+				<Image
+					src={getLogoUrl()}
+					alt={'AIAssistantImage'}
+					className='w-[2rem] h-[2rem] z-10'
+				/> :
+				<Image
+					src={DrlambdaCartoonImage}
+					alt={'AIAssistantImage'}
+					className='w-[1.75rem] h-[2rem] z-10'
+				/>
+			}
 		</div>
 	);
 };
@@ -609,11 +617,11 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				<div className='flex flex-row items-center gap-4'>
 					<Image
 						src={DrlambdaCartoonImage}
-						alt={'DrLambdaAIAssistantImage'}
+						alt={'AIAssistantImage'}
 						className='w-[1.75rem] h-[2.15rem]'
 					></Image>
 					<div className='text-neutral-900 text-sm font-semibold font-inter'>
-						DrLambda
+						{getBrand()}
 					</div>
 					{/* Round dot */}
 					{/* <div className='w-2 h-2 bg-[#0B84FF] rounded-full'></div> */}
@@ -642,7 +650,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					{/* welcoming text */}
 					<div className='px-3.5 py-2.5 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-gray-200 justify-center items-center gap-2.5 inline-flex'>
 						<div className='max-w-[15rem] text-neutral-800 text-base font-normal tracking-tight'>
-							Welcome to DrLambda! I'm your AI assistant, ready to help with
+							Welcome to {getBrand()}! I'm your AI assistant, ready to help with
 							slide design 🎨, content ideas ✍️, data organization 📊,
 							proofreading, and updating. Just type your request here!
 						</div>

@@ -2,10 +2,11 @@ import Link from 'next/link';
 import SignupForm from '@/components/signup/signup-form';
 import CustomerServiceInfo from '@/components/signup/customerService';
 import { generateMetadata } from '@/app/layout';
+import { getBrand } from '@/utils/getHost';
 
-const title = 'Sign Up with Email | DrLambda';
+const title = `Sign Up with Email | ${getBrand()}`;
 const description =
-	'DrLambda is your AI assistant to create professional slides and posts. Join us to experience the power of AI in creating professional slides and posts.';
+	`${getBrand()} is your AI assistant to create professional slides and posts. Join us to experience the power of AI in creating professional slides and posts.`;
 export const metadata = generateMetadata({ title, description });
 
 export default function SignUp() {

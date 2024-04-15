@@ -1,9 +1,10 @@
 import SideBar from '@/components/layout/SideBar';
 import { WorkflowFooter } from '@/components/layout/footer';
 import Header from '@/components/layout/header';
+import { getBrand } from '@/utils/getHost';
 export const metadata = {
-	title: 'Workflow - DrLambda',
-	description: 'Convert your documents to slides',
+	title: `Workflow | ${getBrand()}`,
+	description: 'Convert your documents to slides and video',
 };
 
 export default function WorkflowLayout({

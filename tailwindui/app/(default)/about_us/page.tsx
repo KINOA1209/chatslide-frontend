@@ -1,9 +1,10 @@
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
+import { getBrand } from '@/utils/getHost';
 
 export const metadata = {
-	title: 'About Us - DrLambda',
-	description: 'Learn more about DrLambda.',
+	title: `About Us | ${getBrand()}`,
+	description: 'Learn more about us.',
 };
 
 export default function AboutUs() {
@@ -14,7 +15,7 @@ export default function AboutUs() {
 				<div className='pt-32 pb-12 md:pt-40 md:pb-20'>
 					{/* Page header */}
 					<div className='max-w-3xl mx-auto text-center pb-12 md:pb-16'>
-						<h1 className='h1'>About DrLambda</h1>
+						<h1 className='h1'>About Us</h1>
 					</div>
 					{/* Founders Section */}
 					<div className='max-w-3xl mx-auto pb-4'>

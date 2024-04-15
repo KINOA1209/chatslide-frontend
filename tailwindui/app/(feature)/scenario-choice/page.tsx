@@ -7,7 +7,7 @@ import Image from 'next/image';
 import socialpost_scenarios from './socialpost_scenarios.json';
 import slides_scenarios from './slides_scenarios.json';
 import SessionStorage from '@/utils/SessionStorage';
-import { DrLambdaBackButton } from '@/components/button/DrlambdaButton';
+import { BackButton } from '@/components/button/DrlambdaButton';
 import useHydrated from '@/hooks/use-hydrated';
 import { useProject } from '@/hooks/use-project';
 import Project from '@/models/Project';
@@ -40,7 +40,7 @@ const ScenarioChoicePage = () => {
 	return (
 		<div className='bg-zinc-100 flex flex-col flex-grow justify-center items-center relative'>
 			<div className='absolute hidden sm:block top-5 left-5'>
-				<DrLambdaBackButton href='/type-choice' dark={true} text='Type Choice' />
+				<BackButton href='/type-choice' dark={true} text='Type Choice' />
 			</div>
 			<div className='flex flex-col justify-center items-center gap-4 sm:gap-12 p-4 sm:p-8'>
 				{/* title */}

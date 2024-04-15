@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Modal from './Modal';
 import { DrlambdaLink } from '../button/DrlambdaButton';
 import { GrayLabel } from './GrayLabel';
+import { getBrand } from '@/utils/getHost';
 
 export const UserStudy: React.FC = () => {
 	const [show, setShow] = useState(true);
@@ -23,8 +24,8 @@ export const UserStudy: React.FC = () => {
 						Join our user study to earn 1000 ⭐️credits.
 					</h3>
 					<p className='text-sm text-gray-500 mt-2'>
-						We want to learn more about what you think of DrLambda, and how you
-						use DrLambda.
+						We want to learn more about what you think of {getBrand()}, and how you
+						use {getBrand()}.
 					</p>
 					<p className='text-sm text-gray-500 mt-2'>
 						Or you can fill out a form to earn 100 ⭐️credits.

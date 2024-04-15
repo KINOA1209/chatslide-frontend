@@ -10,6 +10,7 @@ import PostPlatformConfigs from '@/components/button/PostPlatformConfig';
 import { useUser } from '@/hooks/use-user';
 import { FaFacebook } from 'react-icons/fa';
 import { useProject } from '@/hooks/use-project';
+import { getOrigin } from '@/utils/getHost';
 
 type PostButtonProps = {
 	slides: Slide[] | SocialPostSlide[];
@@ -31,9 +32,9 @@ const PostDropDown: React.FC<PostButtonProps> = ({
 	platforms = ['twitter', 'facebook', 'reddit', 'linkedin'],
 	setShare,
 	description = 'Check out our latest content',
-	keywords = ['DrLambda', 'presentation', 'slides', 'ai_agent'],
+	keywords = ['slides', 'ai_agent'],
 }) => {
-	const [host, setHost] = useState('https://drlambda.ai');
+	const [host, setHost] = useState(getOrigin());
 	const { project } = useProject();
 	const limitedKeywords = keywords.slice(0, 3);
 	const truncatedDescription = truncateWithFullWords(description, 100);
@@ -66,7 +67,7 @@ const PostDropDown: React.FC<PostButtonProps> = ({
 			const hashTags = limitedKeywords
 				.map((keyword) => `#${keyword}`)
 				.join(' ');
-			const postText = `${truncatedDescription}. Learn more at drlambda.ai!\n${hashTags}\n`;
+			const postText = `${truncatedDescription}. Learn more at ${getOrigin()}!\n${hashTags}\n`;
 			const platformConfig =
 				PostPlatformConfigs[platform as keyof typeof PostPlatformConfigs];
 			const text = platformConfig.textTemplate(postText, shareLink);

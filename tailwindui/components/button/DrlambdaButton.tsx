@@ -147,13 +147,13 @@ export const DrlambdaLink: React.FC<DrlambdaLinkProps> = ({
 	);
 };
 
-type DrLambdaBackButtonProps = {
+type BackButtonProps = {
 	href: string;
 	dark?: boolean;
 	text?: string;
 };
 
-export const DrLambdaBackButton: React.FC<DrLambdaBackButtonProps> = ({
+export const BackButton: React.FC<BackButtonProps> = ({
 	href,
 	dark = false,
 	text = 'Dashboard',

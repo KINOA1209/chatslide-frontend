@@ -12,6 +12,7 @@ import Hotjar from '@/components/integrations/Hotjar';
 import { Auth, Hub } from 'aws-amplify';
 import AuthService from '../../services/AuthService';
 import { useUser } from '@/hooks/use-user';
+import { getBrand } from '@/utils/getHost';
 
 interface HeaderProps {
 	loginRequired: boolean;
@@ -79,7 +80,7 @@ const Header = ({
 						</div>
 						<div className='grow flex flex-row justify-center item-center justify-start'>
 							<div className='w-fit h-[1.5rem] text-xl text-gray-200 bg-clip-text bg-gradient-to-r relative bottom-[3px] font-creato-medium'>
-								<a href={loginRequired ? '/dashboard' : '/'}>DrLambda</a>
+								<a href={loginRequired ? '/dashboard' : '/'}>{getBrand()}</a>
 							</div>
 						</div>
 					</div>

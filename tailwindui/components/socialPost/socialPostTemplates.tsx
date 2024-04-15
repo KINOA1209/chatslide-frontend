@@ -13,6 +13,7 @@ import Chart from '@/models/Chart';
 import ImagesPosition from '@/models/ImagesPosition';
 import { useSocialPosts } from '@/hooks/use-socialpost';
 import '@/components/socialPost/socialPostCustomFonts.css';
+import { getBrand } from '@/utils/getHost';
 
 interface MainSlideProps {
 	subtopic: JSX.Element;
@@ -224,7 +225,7 @@ export const Col_1_img_0 = ({
 				</div>
 				<div className='w-full h-[7%] mt-[2%]'>
 					<div className='flex flex-row justify-center items-center font-creato-medium leading-normal tracking-wide text-[15px] text-[white]'>
-						{icon}DrLambda
+						{icon}{getBrand()}
 					</div>
 				</div>
 			</div>
@@ -323,7 +324,7 @@ export const Col_2_img_1 = ({
 				</div>
 				<div className='w-full h-[7%] mt-[2%]'>
 					<div className='flex flex-row justify-center items-center font-creato-medium leading-normal tracking-wide text-[15px] text-[white]'>
-						{icon}DrLambda
+						{icon}{getBrand()}
 					</div>
 				</div>
 			</div>
@@ -501,7 +502,7 @@ export const img_0_template2 = ({
 					}}
 				>
 					<div className='flex flex-row justify-center items-center font-creato-medium leading-normal tracking-wide text-[15px]'>
-						{icon}DrLambda
+						{icon}{getBrand()}
 					</div>
 				</div>
 			</div>

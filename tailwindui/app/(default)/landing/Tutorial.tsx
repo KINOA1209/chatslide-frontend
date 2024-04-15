@@ -43,9 +43,9 @@ const Tutorial: React.FC = () => {
 									>
 										<div className="uui-space-xxsmall" />
 										<h3 className="uui-heading-xsmall">
-											{tabName === 'Tab 1' && 'How to start your project with DrLambda'}
-											{tabName === 'Tab 2' && 'How to design your slides/posts by using DrLambda'}
-											{tabName === 'Tab 3' && 'How to create video at DrLambda'}
+											{tabName === 'Tab 1' && 'How to start your project'}
+											{tabName === 'Tab 2' && 'How to design your slides/posts'}
+											{tabName === 'Tab 3' && 'How to create video'}
 										</h3>
 									</a>
 								))}

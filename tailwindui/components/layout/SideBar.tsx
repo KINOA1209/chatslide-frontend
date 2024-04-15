@@ -14,6 +14,8 @@ import useHydrated from '@/hooks/use-hydrated';
 import Modal from '../ui/Modal';
 import FeedbackButton from '../ui/feedback';
 import { usePathname } from 'next/navigation';
+import { Logo } from '../ui/logo';
+import { getBrand } from '@/utils/getHost';
 
 interface SideBarProps { }
 const SideBar = ({ }: SideBarProps) => {
@@ -115,12 +117,8 @@ const SideBar = ({ }: SideBarProps) => {
 					className='block flex flex-row items-center gap-2 py-2 text-white px-2 rounded-lg hover:bg-gray-400 cursor-pointer'
 					role='menuitem'
 				>
-					<img
-						src='/images/drlambda-logo.svg'
-						alt='DrLambda'
-						className='w-[16px] h-[16px]'
-					/>
-					{isSidebarOpen ? 'DrLambda' : '\u200B'}
+					<Logo />
+					{isSidebarOpen ? getBrand() : '\u200B'}
 				</a>
 
 				<hr className='border-t-1 border-grey-400 mx-2 my-2' />

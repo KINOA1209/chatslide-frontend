@@ -19,17 +19,6 @@ export interface SideBarItem {
 }
 
 export const SideBarData: SideBarItem[] = [
-	// {
-	// 	title: 'DrLambda',
-	// 	icon: (
-	// 		<img
-	// 			src='/new_landing/svgs/drlambda-logo.svg'
-	// 			alt='DrLambda'
-	// 			className='w-[16px] h-[16px]'
-	// 		/>
-	// 	),
-	// 	path: '/',
-	// },
 	{
 		title: 'Dashboard',
 		icon: <GoHome />,

@@ -1,9 +1,10 @@
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
+import { getBrand } from '@/utils/getHost';
 
 export const metadata = {
-	title: 'Terms - DrLambda',
-	description: "DrLambda's Terms and Conditions",
+	title: `Terms | ${getBrand()}`,
+	description: `${getBrand()}'s Terms and Conditions`,
 };
 
 export default function Terms() {
@@ -20,7 +21,7 @@ export default function Terms() {
 						<div className='pb-16'>
 							<p className='text-base text-gray-600'>
 								Please read these terms and conditions carefully before using
-								our website and services provided by DrLambda. By accessing or
+								our website and services provided by {getBrand()}. By accessing or
 								using our Service, you agree to be bound by these Terms. If you
 								do not agree with any part of these Terms, you may not access
 								the Service.

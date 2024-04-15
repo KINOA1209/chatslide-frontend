@@ -6,7 +6,8 @@ import {
 	FaTwitter,
 	FaYoutube,
 } from 'react-icons/fa';
-import { BlackLogo, ColorLogo } from '../ui/logo';
+import { Logo } from '../ui/logo';
+import { getBrand, getHost } from '@/utils/getHost';
 
 const socialMediaBlock = (
 	<ul className='flex md:order-1 md:ml-4 justify-center items-center'>
@@ -100,10 +101,10 @@ export default function Footer() {
 					{/* 1st block */}
 					<div className='flex flex-col items-center justify-center'>
 						<div className='flex justify-center mb-2'>
-							<ColorLogo />
+							<Logo />
 						</div>
 						<div className='flex justify-center mb-2 text-sm text-gray-600'>
-							DrLambda
+							{getBrand()}
 							{/* <a
                 href="/terms"
                 className="text-gray-600 hover:text-gray-900 hover:underline transition duration-150 ease-in-out"
@@ -202,7 +203,7 @@ export default function Footer() {
 
 					{/* Copyrights note */}
 					<div className='text-sm text-gray-600 mr-4 text-center md:text-left'>
-						&copy; drlambda.ai. All rights reserved.
+						&copy; {getHost()} All rights reserved.
 						<br></br>
 						Created with 💙 from San Francisco.
 					</div>

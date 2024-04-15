@@ -20,10 +20,12 @@ import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { MdOutlineDelete } from 'react-icons/md';
 import '@/components/ui/design_systems/variables.css';
 import dynamic from 'next/dynamic';
-import defaultThumbnail from '@/public/images/ogimage.png';
+import defaultDrLambdaThumbnail from '@/public/images/ogimage_drlambda.png';
+import defaultChatSlideThumbnail from '@/public/images/ogimage_chatslide.png';
 import causalTopicThumbnail from '@/public/images/socialpost/casual_topic.png';
 import readingNotesThumbnail from '@/public/images/socialpost/reading_notes.png';
 import seriousSubjectThumbnail from '@/public/images/socialpost/serious_subject.png';
+import { isChatslide } from '@/utils/getHost';
 // import ExportToPdfButton from '@/components/slides/ExportButton';
 const ExportToPdfButton = dynamic(
 	() => import('@/components/slides/ExportButton'), // Path to your ExportToPdfButton component
@@ -61,9 +63,9 @@ export function formatDate(dateString: string): string {
 
 export function getThumbnailUrl(project: Project) {
 	if(!project)
-		return defaultThumbnail;
+		return isChatslide() ? defaultChatSlideThumbnail : defaultDrLambdaThumbnail;
 	if (project.content_type === 'presentation') {
-		return project.thumbnail_url || defaultThumbnail;
+		return project.thumbnail_url || isChatslide() ? defaultChatSlideThumbnail : defaultDrLambdaThumbnail;
 	}
 	if (project.post_type === 'casual_topic') {
 		return causalTopicThumbnail;

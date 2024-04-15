@@ -7,7 +7,7 @@ import Image from 'next/image';
 import scenarios from './choices.json';
 import SessionStorage from '@/utils/SessionStorage';
 import AuthService from '@/services/AuthService';
-import { DrLambdaBackButton } from '@/components/button/DrlambdaButton';
+import { BackButton } from '@/components/button/DrlambdaButton';
 
 const ScenarioChoicePage = () => {
 	const router = useRouter(); // Initialize the router
@@ -35,7 +35,7 @@ const ScenarioChoicePage = () => {
 	return (
 		<div className='bg-zinc-100 flex flex-col flex-grow justify-center items-center relative'>
 			<div className='absolute hidden sm:block top-5 left-5'>
-				<DrLambdaBackButton
+				<BackButton
 					href='/dashboard'
 					dark={true}
 					text='Dashboard'

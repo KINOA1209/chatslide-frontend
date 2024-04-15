@@ -7,11 +7,12 @@ import ProjectService from '@/services/ProjectService';
 import Link from 'next/link';
 import { JoinUsBanner } from '@/components/layout/JoinUsBanner';
 import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
+import { getBrand } from '@/utils/getHost';
 
 export const metadata = {
-	title: 'Discover - DrLambda',
+	title: `Discover | ${getBrand()}`,
 	description:
-		'Discover community projects on DrLambda. Start your own project.',
+		'Discover publicly shared community projects. Start your own project.',
 };
 
 export default async function Discover() {

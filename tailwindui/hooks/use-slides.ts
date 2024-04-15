@@ -100,7 +100,7 @@ export const useSlides = () => {
 	// 	syncSlides(newSlides, true);
 	// };
 
-	const showDrLambdaLogo = () => {
+	const showLogo = () => {
 		const newSlides = slides.map((slide, index) => {
 			return { ...slide, logo_url: '', logo: 'Default' };
 		});
@@ -474,7 +474,7 @@ export const useSlides = () => {
 		isShowingLogo,
 		// setIsShowingLogo,
 		// changeIsShowingLogo,
-		showDrLambdaLogo,
+		showLogo,
 		hideLogo,
 		updateLogoUrl,
 		updateBackgroundUrl,

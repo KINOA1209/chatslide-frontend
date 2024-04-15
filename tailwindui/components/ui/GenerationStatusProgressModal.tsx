@@ -2,6 +2,7 @@ import Modal from './Modal';
 import React, { FC, useEffect, useState } from 'react';
 import FillOutFormImg from '@/public/images/user_onboarding/FillOutForms.png';
 import BookASessionImg from '@/public/images/user_onboarding/BookASession.png';
+import { getBrand } from '@/utils/getHost';
 interface GenerationStatusProgressModalProps {
 	onClick: () => void;
 	prompts: [string, number][]; // Array of prompt text and waiting time pairs
@@ -102,8 +103,8 @@ export const GenerationStatusProgressModal: FC<
 					Earn free credits⭐ by joining our user study
 				</div>
 				<div className='text-gray-600 text-sm font-normal font-creato-medium leading-normal tracking-[0.0175rem]'>
-					We want to learn more about what you think of DrLambda, and how you
-					use DrLambda.
+					We want to learn more about what you think of {getBrand()}, and how you
+					use {getBrand()}.
 				</div>
 				<div className='flex flex-col lg:flex-row gap-[1.5rem] self-center'>
 					{/* book a session */}

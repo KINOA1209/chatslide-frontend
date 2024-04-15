@@ -17,7 +17,7 @@ export const JoinUsBanner: React.FC = () => {
 	return (
 		<Link href="/signup">
 			<div className="flex items-center justify-center bg-Blue text-white text-sm sm:text-lg font-creato-medium leading-10 tracking-wide">
-				Join 190k happy users to create professional slides! 🚀
+				Join 210k happy users to create professional slides! 🚀
 			</div>
 		</Link>
 	);

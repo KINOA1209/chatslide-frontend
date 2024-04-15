@@ -41,7 +41,7 @@ import layoutConfigData, {
 import ScriptEditor from '../script/ScriptEditor';
 import Slide, { SlideKeys } from '@/models/Slide';
 import {
-	DrLambdaAIAssistantIcon,
+	AIAssistantIcon,
 	AIAssistantChatWindow,
 } from '../ui/AIAssistant';
 import ActionsToolBar from '../ui/ActionsToolBar';
@@ -57,6 +57,7 @@ import { ScrollBar } from '../ui/ScrollBar';
 import { Explanation } from '../ui/Text';
 import { BrandingButton } from '../button/BrandingButton';
 import { useChatHistory } from '@/hooks/use-chat-history';
+import { getOrigin } from '@/utils/getHost';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -185,7 +186,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	const [draggedSlideIndex, setDraggedSlideIndex] = useState(-1);
 
-	const [host, setHost] = useState('https://drlambda.ai');
+	const [host, setHost] = useState(getOrigin());
 
 	useEffect(() => {
 		if (
@@ -697,9 +698,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					<div className='hidden sm:block cursor-pointer'>
 						<ButtonWithExplanation
 							button={
-								<DrLambdaAIAssistantIcon
+								<AIAssistantIcon
 									onClick={toggleChatWindow}
-								></DrLambdaAIAssistantIcon>
+								></AIAssistantIcon>
 							}
 							explanation='AI Assistant'
 						/>

@@ -259,7 +259,7 @@ export default function WorkflowStep5() {
 							<p>*️⃣ Use <span className='text-green-600'>*word*</span> to denote emphasis </p>
 							<p>🔤 Use <span className='text-green-600'>[word]</span> to spell out the word. </p>
 							<p>🌟 For example: {' '}
-								<span className='text-blue-600 hover:cursor-pointer' onClick={() => previewVoice('denotation')}>🔈 DrLambda also supports creating *slides* from... [doc] files. </span>
+								<span className='text-blue-600 hover:cursor-pointer' onClick={() => previewVoice('denotation')}>🔈 We also supports creating *slides* from... [doc] files. </span>
 							</p>
 						</div>
 					</Instruction>

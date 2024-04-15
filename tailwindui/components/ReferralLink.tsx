@@ -6,9 +6,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import ClickableLink from '@/components/ui/ClickableLink';
 import { useUser } from '@/hooks/use-user';
 import { Explanation } from './ui/Text';
+import { getOrigin } from '@/utils/getHost';
 
 const ReferralLink: React.FC = () => {
-	const [host, setHost] = useState('https://drlambda.ai');
+	const [host, setHost] = useState(getOrigin());
 	const [referralLink, setReferralLink] = useState('');
 	const { token, email } = useUser();
 

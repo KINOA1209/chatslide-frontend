@@ -8,7 +8,7 @@ import mode_choices from './mode_choices.json';
 import SessionStorage from '@/utils/SessionStorage';
 import AuthService from '@/services/AuthService';
 import { useProject } from '@/hooks/use-project';
-import { DrLambdaBackButton } from '@/components/button/DrlambdaButton';
+import { BackButton } from '@/components/button/DrlambdaButton';
 
 const GenerationModePage = () => {
 	const router = useRouter(); // Initialize the router
@@ -40,7 +40,7 @@ const GenerationModePage = () => {
 	return (
 		<div className='bg-zinc-100 flex flex-col flex-grow justify-center items-center relative'>
 			<div className='absolute hidden sm:block top-5 left-5'>
-				<DrLambdaBackButton href='/scenario-choice' dark={true} text='Scenario Choice' />
+				<BackButton href='/scenario-choice' dark={true} text='Scenario Choice' />
 			</div>
 			<div className='flex flex-col justify-center items-center gap-4 sm:gap-12 p-4 sm:p-8'>
 				{/* title */}

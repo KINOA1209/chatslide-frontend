@@ -1,9 +1,10 @@
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
+import { getBrand } from '@/utils/getHost';
 
 export const metadata = {
-	title: 'Privacy - DrLambda',
-	description: "DrLambda's Privacy Policy",
+	title: `Privacy | ${getBrand()}`,
+	description: `${getBrand()}'s Privacy Policy`,
 };
 
 export default function Privacy() {
@@ -19,7 +20,7 @@ export default function Privacy() {
 					<div className='max-w-3xl mx-auto'>
 						<div className='pb-16'>
 							<p className='text-base text-gray-600'>
-								This Privacy Policy explains how DrLambda collects, uses, and
+								This Privacy Policy explains how ${getBrand()} collects, uses, and
 								protects the personal information of individuals who access or
 								use our website and services. By accessing or using the Service,
 								you agree to the terms and practices described in this Policy.

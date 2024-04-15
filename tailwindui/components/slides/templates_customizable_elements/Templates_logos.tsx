@@ -5,6 +5,8 @@ import drlambdaLogo from '@/public/images/template/drlambdaLogo.png';
 import drlambdaLogoSingle from '@/public/images/template/drlambdaLogoSingle.png';
 import drlambdaLogoBadgeBlackBG from '@/public/images/template/drlambdaLogoBadgeBlackBG.png';
 import drlambdaLogoBadgeWhiteBG from '@/public/images/template/drlambdaLogoBadgeWhiteBG.png';
+import chatslideLogo from '@/public/images/template/chatslide_color_notext.svg';
+import chatslideLogoText from '@/public/images/template/chatslide_color.svg';
 import BerkeleyLogo from '@/public/images/template/Berkeley/Berkeley_logo.png';
 import BerkeleyLogoWhite from '@/public/images/template/Berkeley/Berkeley_logo_white.png';
 import StanfordLogo from '@/public/images/template/Stanford/StanfordLogo.png';
@@ -19,6 +21,7 @@ import YaleLogo from '@/public/images/template/Yale/Yale_logo.png';
 import JHULogo from '@/public/images/template/JHU/Johns_Hopkins_University-Logo.png';
 import ColumbiaLogo from '@/public/images/template/Columbia/ColumbiaLogo.png';
 import { useEffect } from 'react';
+import { isChatslide } from '@/utils/getHost';
 
 const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 	isCoverPage,
@@ -32,8 +35,8 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 			return (
 				<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'>
 					<Image
-						src={drlambdaLogo}
-						alt='drlambdaLogo'
+						src={isChatslide() ? chatslideLogo : drlambdaLogoSingle}
+						alt='Logo'
 						className='w-[8rem] h-auto'
 					/>
 					{/* logo cover */}
@@ -48,7 +51,7 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 						alt='CustomLogo'
 						width={45}
 						height={40}
-						// className='h-auto'
+					// className='h-auto'
 					/>
 				</div>
 			);
@@ -59,8 +62,8 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 				<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'>
 					<Image
 						unoptimized={true}
-						src={drlambdaLogoSingle}
-						alt='drlambda logo'
+						src={isChatslide() ? chatslideLogoText : drlambdaLogo}
+						alt='Logo'
 						className='w-[1.5rem] mr-4'
 					/>
 					<div
@@ -141,8 +144,8 @@ export const generateTemplateLogo = ({
 								? coverLogo.src // Assuming coverLogo is of type StaticImageData
 								: nonCoverLogo.src // Assuming nonCoverLogo is of type StaticImageData
 							: isLightBackground
-							? lightBGLogo!.src // Assuming lightBGLogo is of type StaticImageData
-							: darkBGLogo!.src // Assuming darkBGLogo is of type StaticImageData
+								? lightBGLogo!.src // Assuming lightBGLogo is of type StaticImageData
+								: darkBGLogo!.src // Assuming darkBGLogo is of type StaticImageData
 					}
 					alt='Template Logo'
 					className={`w-[${logoWidth}rem] h-auto`}
@@ -361,8 +364,8 @@ export const Simplistic_008_TemplateLogo: React.FC<TemplateLogoType> = (
 		...props,
 		// coverLogo: drlambdaLogo,
 		// nonCoverLogo: drlambdaLogo,
-		lightBGLogo: drlambdaLogoBadgeWhiteBG,
-		darkBGLogo: drlambdaLogoBadgeBlackBG,
+		lightBGLogo: isChatslide() ? chatslideLogoText : drlambdaLogoBadgeWhiteBG,
+		darkBGLogo: isChatslide() ? chatslideLogoText : drlambdaLogoBadgeBlackBG,
 		logoWidth: 8, // Adjust the width as needed
 		logoHeight: 1.5,
 	});
@@ -374,8 +377,8 @@ export const New_Education_009_TemplateLogo: React.FC<TemplateLogoType> = (
 		...props,
 		// coverLogo: drlambdaLogo,
 		// nonCoverLogo: drlambdaLogo,
-		lightBGLogo: drlambdaLogoBadgeWhiteBG,
-		darkBGLogo: drlambdaLogoBadgeBlackBG,
+		lightBGLogo: isChatslide() ? chatslideLogoText : drlambdaLogoBadgeWhiteBG,
+		darkBGLogo: isChatslide() ? chatslideLogoText : drlambdaLogoBadgeBlackBG,
 		logoWidth: 8, // Adjust the width as needed
 		logoHeight: 1.5,
 	});
