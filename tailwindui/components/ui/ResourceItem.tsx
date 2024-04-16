@@ -11,6 +11,7 @@ import Image from 'next/image';
 import Resource from '@/models/Resource';
 import { FiFilePlus, FiGlobe, FiYoutube } from 'react-icons/fi';
 import PDFType from '@/public/icons/fileTypes/PDFType.png';
+import PngType from '@/public/icons/fileTypes/PngType.png';
 import YoutubeType from '@/public/icons/fileTypes/Youtube.png';
 import ImageType from '@/public/icons/fileTypes/ImageType.png';
 import GeneralFileType from '@/public/icons/fileTypes/GeneralFileType.png';
@@ -20,11 +21,15 @@ export const ResourceIcon: React.FC<{
 	resource: Resource;
 	contain?: boolean;
 }> = ({ resource, contain = false }) => {
-	// console.log('resource type is ', resource.type);
+	console.log('resource.file_extension is', resource.file_extension);
 	if (!resource.thumbnail_url) {
 		return (
 			<div className='p-[10px]'>
-				<FileIcon fileType={resource.type} />
+				<FileIcon
+					fileType={
+						resource.file_extension ? resource.file_extension : resource.type
+					}
+				/>
 			</div>
 		);
 	}
@@ -57,6 +62,7 @@ const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
 		return <FiFilePlus style={FileIconStyle} />;
 	}
 	fileType = fileType.toLowerCase();
+	console.log('current file type: ', fileType);
 	switch (fileType) {
 		case 'doc':
 			// return <FiFilePlus style={{ width: '20px', height: '20px' }} />;
@@ -125,6 +131,23 @@ const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
 		case 'jpg': //unused
 		case 'jpeg': //unused
 		case 'png':
+			return (
+				// <FaRegFilePdf
+				// 	style={{ width: '20px', height: '20px' }}
+				// 	fill='#505050'
+				// />
+				<Image
+					src={PngType.src}
+					alt={'png_file'}
+					width={20}
+					height={20}
+					unoptimized={true}
+					style={FileIconStyle}
+					onError={(e) => {
+						e.currentTarget.src = getLogoUrl();
+					}}
+				/>
+			);
 		case 'gif':
 		case 'logo':
 		case 'background':
@@ -168,7 +191,12 @@ export const ResourceItem: React.FC<Resource> = ({
 }) => {
 	// remove text like `.txt` from the end of the file name
 	name = name.replace('.txt', '');
+	// Get file extension
+	const lastDotIndex = name.lastIndexOf('.');
+	const fileExtension =
+		lastDotIndex !== -1 ? name.slice(lastDotIndex + 1).toLowerCase() : '';
 
+	console.log('resource file extension: ', name, fileExtension);
 	return (
 		<div
 			key={id}
@@ -181,7 +209,15 @@ export const ResourceItem: React.FC<Resource> = ({
 		>
 			<div style={{ width: '40px', height: '40px' }}>
 				{/* Ensure consistent dimensions for the file icon */}
-				<ResourceIcon resource={{ id, name, type, thumbnail_url }} />
+				<ResourceIcon
+					resource={{
+						id,
+						name,
+						type,
+						thumbnail_url,
+						file_extension: fileExtension,
+					}}
+				/>
 			</div>
 			{/* <ResourceIcon resource={{ id, name, type, thumbnail_url }} /> */}
 
