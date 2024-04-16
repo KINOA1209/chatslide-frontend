@@ -1,8 +1,10 @@
 function getHost() {
 	if (typeof window === 'undefined') {
+		// console.log('getHost: window is undefined', process.env.HOST);
 		return process.env.HOST || 'chatslide.ai';
 	}
-	return window.location.host || 'chatlide.ai';
+	// console.log('getHost: window.location.host', window.location.host);
+	return window.location.host || 'chatslide.ai';
 }
 
 function getOrigin() {
@@ -15,9 +17,9 @@ function getOrigin() {
 
 function getBrand(lowercase = false) {
 	if (lowercase) {
-		return isChatslide() ? 'chatlide' : 'drlambda';
+		return isChatslide() ? 'chatslide' : 'drlambda';
 	}
-	return isChatslide() ? 'Chatlide' : 'DrLambda';
+	return isChatslide() ? 'ChatSlide' : 'DrLambda';
 }
 
 function getLogoUrl(color = true) {
@@ -33,7 +35,7 @@ function getLogoUrl(color = true) {
 }
 
 function isChatslide() {
-	return getHost().includes('chatlide.ai');
+	return !getHost().includes('drlambda.ai');
 }
 
 export { getHost, getOrigin, getBrand, getLogoUrl, isChatslide };
