@@ -35,7 +35,7 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 			return (
 				<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'>
 					<Image
-						src={isChatslide() ? chatslideLogo : drlambdaLogoSingle}
+						src={isChatslide() ? chatslideLogoText : drlambdaLogoSingle}
 						alt='Logo'
 						className='w-[8rem] h-auto'
 					/>
@@ -122,6 +122,8 @@ export const generateTemplateLogo = ({
 	darkBGLogo,
 }: TemplateLogoType) => {
 	// console.log('custom_logo:', custom_logo);
+	console.log('logo:', coverLogo);
+
 	if (!custom_logo) {
 		return <></>;
 	}
@@ -282,8 +284,8 @@ export const Fun_Education_004_TemplateLogo: React.FC<TemplateLogoType> = (
 ) =>
 	generateTemplateLogo({
 		...props,
-		coverLogo: drlambdaLogo,
-		nonCoverLogo: drlambdaLogo,
+		coverLogo: isChatslide() ? chatslideLogoText : drlambdaLogo,
+		nonCoverLogo: isChatslide() ? chatslideLogoText : drlambdaLogo,
 		logoWidth: 8, // Adjust the width as needed
 	});
 
@@ -292,8 +294,8 @@ export const Business_Dark_005_TemplateLogo: React.FC<TemplateLogoType> = (
 ) =>
 	generateTemplateLogo({
 		...props,
-		coverLogo: drlambdaLogo,
-		nonCoverLogo: drlambdaLogo,
+		coverLogo: isChatslide() ? chatslideLogoText : drlambdaLogo,
+		nonCoverLogo: isChatslide() ? chatslideLogoText : drlambdaLogo,
 		logoWidth: 8, // Adjust the width as needed
 	});
 
@@ -302,8 +304,8 @@ export const Business_002_TemplateLogo: React.FC<TemplateLogoType> = (
 ) =>
 	generateTemplateLogo({
 		...props,
-		coverLogo: drlambdaLogo,
-		nonCoverLogo: drlambdaLogo,
+		coverLogo: isChatslide() ? chatslideLogoText : drlambdaLogo,
+		nonCoverLogo: isChatslide() ? chatslideLogoText : drlambdaLogo,
 		logoWidth: 8, // Adjust the width as needed
 	});
 
@@ -312,8 +314,8 @@ export const Clean_Lifestyle_003_TemplateLogo: React.FC<TemplateLogoType> = (
 ) =>
 	generateTemplateLogo({
 		...props,
-		coverLogo: drlambdaLogo,
-		nonCoverLogo: drlambdaLogo,
+		coverLogo: isChatslide() ? chatslideLogoText : drlambdaLogo,
+		nonCoverLogo: isChatslide() ? chatslideLogoText : drlambdaLogo,
 		logoWidth: 8, // Adjust the width as needed
 	});
 
@@ -322,8 +324,8 @@ export const Fun_Education_001_TemplateLogo: React.FC<TemplateLogoType> = (
 ) =>
 	generateTemplateLogo({
 		...props,
-		coverLogo: drlambdaLogo,
-		nonCoverLogo: drlambdaLogo,
+		coverLogo: isChatslide() ? chatslideLogoText : drlambdaLogo,
+		nonCoverLogo: isChatslide() ? chatslideLogoText : drlambdaLogo,
 		logoWidth: 8, // Adjust the width as needed
 	});
 
@@ -332,8 +334,8 @@ export const Fun_Vibrant_007_TemplateLogo: React.FC<TemplateLogoType> = (
 ) =>
 	generateTemplateLogo({
 		...props,
-		coverLogo: drlambdaLogo,
-		nonCoverLogo: drlambdaLogo,
+		coverLogo: isChatslide() ? chatslideLogoText : drlambdaLogo,
+		nonCoverLogo: isChatslide() ? chatslideLogoText : drlambdaLogo,
 		logoWidth: 8, // Adjust the width as needed
 	});
 
@@ -342,8 +344,8 @@ export const Business_Light_006_TemplateLogo: React.FC<TemplateLogoType> = (
 ) =>
 	generateTemplateLogo({
 		...props,
-		coverLogo: drlambdaLogo,
-		nonCoverLogo: drlambdaLogo,
+		coverLogo: isChatslide() ? chatslideLogoText : drlambdaLogo,
+		nonCoverLogo: isChatslide() ? chatslideLogoText : drlambdaLogo,
 		logoWidth: 8, // Adjust the width as needed
 	});
 
@@ -352,8 +354,8 @@ export const Business_Light_006_TemplateLogo: React.FC<TemplateLogoType> = (
 // ) =>
 // 	generateTemplateLogo({
 // 		...props,
-// 		coverLogo: drlambdaLogoBadgeBlackBG,
-// 		nonCoverLogo: drlambdaLogoBadgeBlackBG,
+// 		coverLogo: isChatslide() ? chatslideLogoText : drlambdaLogoBadgeBlackBG,
+// 		nonCoverLogo: isChatslide() ? chatslideLogoText : drlambdaLogoBadgeBlackBG,
 // 		logoWidth: 8, // Adjust the width as needed
 // 	});
 
@@ -362,8 +364,8 @@ export const Simplistic_008_TemplateLogo: React.FC<TemplateLogoType> = (
 ) =>
 	generateTemplateLogo({
 		...props,
-		// coverLogo: drlambdaLogo,
-		// nonCoverLogo: drlambdaLogo,
+		// coverLogo: isChatslide() ? chatslideLogoText : drlambdaLogo,
+		// nonCoverLogo: isChatslide() ? chatslideLogoText : drlambdaLogo,
 		lightBGLogo: isChatslide() ? chatslideLogoText : drlambdaLogoBadgeWhiteBG,
 		darkBGLogo: isChatslide() ? chatslideLogoText : drlambdaLogoBadgeBlackBG,
 		logoWidth: 8, // Adjust the width as needed
