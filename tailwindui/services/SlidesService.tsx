@@ -69,7 +69,7 @@ class SlidesService {
 
 	static async updateThumbnail(project_id: string, token: string) {
 		try {
-			const resp = await fetch('/api/update_thumbnail', {
+			const resp = await fetch('/api/export/update_thumbnail', {
 				method: 'POST',
 				headers: {
 					Authorization: `Bearer ${token}`,

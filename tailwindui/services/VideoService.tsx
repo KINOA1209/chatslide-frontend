@@ -14,7 +14,7 @@ export default class VideoService {
 		avatarPosition: string,
 		bgm: string,
 	): Promise<void>{
-		fetch('/api/generate_video', {
+		fetch('/api/export/generate_video', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
