@@ -66,7 +66,7 @@ const SideBarItem: React.FC<SidebarItemProps> = ({
 				<a
 					href={path}
 					target={target}
-					className='block flex flex-row items-center gap-2 py-2 text-white px-2 rounded-lg hover:bg-gray-400 cursor-pointer'
+					className='block flex flex-row items-center gap-2 py-2 text-white px-4 rounded-lg hover:bg-gray-400 cursor-pointer'
 					role='menuitem'
 				>
 					{icon}
