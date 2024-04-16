@@ -733,7 +733,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				showReferralLink={true}
 			/>
 
-			<div className='w-full flex flex-row items-start justify-center sm:justify-around gap-2'>
+			<div className='w-full flex flex-row items-start justify-center sm:justify-around gap-2 overflow-auto'>
 				{/* vertical bar */}
 
 				<Panel>
