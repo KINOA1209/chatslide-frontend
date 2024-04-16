@@ -647,7 +647,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	return (
 		<div className='w-full h-full flex flex-col items-start justify-around py-2 relative'>
-			<div className='w-full flex flex-row items-center justify-center gap-2'>
+			<div className='w-full flex flex-row items-center justify-center'>
 				<ActionsToolBar
 					undo={undoChange}
 					redo={redoChange}
@@ -715,7 +715,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					)}
 				</ActionsToolBar>
 				{!isViewing && !isPresenting && (
-					<div className='hidden sm:block cursor-pointer'>
+					<div className='hidden ml-2 sm:block cursor-pointer'>
 						<ButtonWithExplanation
 							button={
 								<AIAssistantIcon onClick={toggleChatWindow}></AIAssistantIcon>
@@ -724,7 +724,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						/>
 					</div>
 				)}
-				<div className='w-1'></div> {/* spacer */}
 			</div>
 
 			<PaywallModal

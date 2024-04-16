@@ -35,11 +35,15 @@ export const AIAssistantIcon: React.FC<{
 					src={getLogoUrl()}
 					alt={'AIAssistantImage'}
 					className='w-[2rem] h-[2rem] z-10'
+					width={32}
+					height={32}
 				/> :
 				<Image
 					src={DrlambdaCartoonImage}
 					alt={'AIAssistantImage'}
 					className='w-[1.75rem] h-[2rem] z-10'
+					width={28}
+					height={32}
 				/>
 			}
 		</div>

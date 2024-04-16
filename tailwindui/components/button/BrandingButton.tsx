@@ -93,7 +93,7 @@ export const BrandingButton: React.FC<{
 		</Modal>
 		<ButtonWithExplanation
 			button={
-				<button onClick={() => setShowModal(true)}>
+				<button onClick={() => setShowModal(true)} className='w-[24px]'>
 					<Image
 						src={brandingIcon}
 						alt='Branding'
