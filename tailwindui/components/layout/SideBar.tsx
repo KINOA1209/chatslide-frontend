@@ -112,14 +112,13 @@ const SideBar = ({ }: SideBarProps) => {
 			<div className='py-4 flex flex-col items-top justify-between'>
 				{/* drlambda home */}
 
-				<a
-					href="/landing"
+				<div
 					className='block flex flex-row items-center gap-2 py-2 text-white px-2 rounded-lg hover:bg-gray-400 cursor-pointer'
 					role='menuitem'
 				>
-					<Logo color={false} size={6} />
+					<Logo color={false} size={'24px'} />
 					{isSidebarOpen ? getBrand() : '\u200B'}
-				</a>
+				</div>
 
 				<hr className='border-t-1 border-grey-400 mx-2 my-2' />
 				{/* menu items */}

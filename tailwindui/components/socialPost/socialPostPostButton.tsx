@@ -89,7 +89,7 @@ const SocialPostPostButton: React.FC<SocialPostPostButtonProps> = ({
 			<div className='absolute left-[-9999px] top-[-9999px] -z-1'>
 				<div key={`exportToPdfContainer` + slideIndex.toString()}>
 					<SocialPostContainer
-						slides={socialPostSlides}
+						slide={socialPostSlides[slideIndex]}
 						currentSlideIndex={slideIndex}
 						exportToPdfMode={true}
 						templateDispatch={templateDispatch}

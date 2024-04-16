@@ -120,7 +120,9 @@ export default function SocialMediaTemplate() {
 					isPaidUser={true}
 					nextIsPaidFeature={false}
 					lastStep={true}
+					nextStep={false}
 					nextText={'Next'}
+					workflow='socialPosts'
 				/>
 
 				<ToastContainer enableMultiContainer containerId={'slides'} />

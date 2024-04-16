@@ -11,18 +11,24 @@ import { toast } from "react-toastify";
 
 const PricingComparison: React.FC<{
 	extraPadding?: boolean
-}> = ({ extraPadding }) => {
+	small?: boolean
+}> = ({ extraPadding, small=false }) => {
 	const { token, email, tier: userTier } = useUser();
 	const [currency, setCurrency] = useState<string>('$');
 	const pathname = usePathname();
 	const router = useRouter();
+	const smallSuffix = small ? '-small' : '';
+	console.log('smallSuffix', smallSuffix);
 
 	const getCta = (tier: 'FREE' | 'PLUS' | 'PRO'): string => {
 		if (!token) {
 			return 'Sign up to Start';
 		}
 		if (userTier.includes('CANCELLED') || userTier === 'FREE') {
-			return '🌟 Claim Offer';
+			if (tier === 'FREE')
+				return '✅ Current Plan';
+			else
+				return '🌟 Claim Offer';
 		}
 		if (userTier.includes('PLUS')) {
 			if (tier === 'FREE') {
@@ -110,7 +116,7 @@ const PricingComparison: React.FC<{
 	};
 
 	return (
-		<div className='w-full flex flex-col items-center'>
+		<div className='w-full flex flex-col items-center overflow-y-scroll'>
 			<div
 				data-w-id="a8590735-7e8f-bd41-a09e-37f58b801ed3"
 				className="w-layout-grid brix---grid-4-columns-pricing-tablet"
@@ -124,48 +130,48 @@ const PricingComparison: React.FC<{
 							<div className="brix---text-400-bold">Features</div>
 						</div>
 					</div>
-					<div className="brix---pricing-content-wrapper-left">
+					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className="brix---text-300-medium">⭐️ Credits</div>
 					</div>
-					<div className="brix---pricing-content-wrapper-left">
+					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className="brix---text-300-medium">🚀 GPT</div>
 					</div>
-					<div className="brix---pricing-content-wrapper-left">
+					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className="brix---text-300-medium">📚 Upload documents</div>
 					</div>
-					<div className="brix---pricing-content-wrapper-left">
+					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className="brix---text-300-medium">📑 Generate slides</div>
 					</div>
-					<div className="brix---pricing-content-wrapper-left">
+					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className="brix---text-300-medium">
 							⬇️ Export slides
 						</div>
 					</div>
-					<div className="brix---pricing-content-wrapper-left">
+					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className="brix---text-300-medium">🏷️ Customized branding</div>
 					</div>
-					<div className="brix---pricing-content-wrapper-left">
+					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className="brix---text-300-medium">
 							🔈 Generate slides scripts
 						</div>
 					</div>
-					<div className="brix---pricing-content-wrapper-left">
+					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className="brix---text-300-medium">📱 Generate video</div>
 					</div>
-					<div className="brix---pricing-content-wrapper-left">
+					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className="brix---text-300-medium">🦹‍♂️ Attach avatar (new)</div>
 					</div>
-					<div className="brix---pricing-content-wrapper-left">
+					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className="brix---text-300-medium">
 							☎️ Direct customer support
 						</div>
 					</div>
-					<div className="brix---pricing-content-wrapper-left">
+					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className="brix---text-300-medium">
 							🎙️ Voice cloning (coming)
 						</div>
 					</div>
-					<div className="brix---pricing-content-wrapper-left">
+					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className="brix---text-300-medium">
 							🦹🏽‍♂️ Avatar cloning (coming)
 						</div>
@@ -192,31 +198,31 @@ const PricingComparison: React.FC<{
 							{getCta('FREE')}
 						</button>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">⭐️ credits</div>
 						</div>
 						<div className="brix---text-300-medium">100</div>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">🌟 GPT</div>
 						</div>
 						<div className="brix---text-300-medium">3.5</div>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">📚 Upload documents</div>
 						</div>
 						<div className="brix---text-300-medium">Single</div>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">📑 Generate slides</div>
 						</div>
 						<img src="images/check-icon-white-brix-templates.svg" alt="" />
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">
 								⬇️ Export slides
@@ -224,13 +230,13 @@ const PricingComparison: React.FC<{
 						</div>
 						<div className="brix---text-300-medium">PDF</div>
 					</div>
-					<div className="brix---pricing-content-wrapper-empty" />
-					<div className="brix---pricing-content-wrapper-empty" />
-					<div className="brix---pricing-content-wrapper-empty" />
-					<div className="brix---pricing-content-wrapper-empty" />
-					<div className="brix---pricing-content-wrapper-empty" />
-					<div className="brix---pricing-content-wrapper-empty" />
-					<div className="brix---pricing-content-wrapper-empty" />
+					<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
+					<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
+					<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
+					<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
+					<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
+					<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
+					<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
 				</div>
 				<div className="brix---pricing-column">
 					<div className="brix---pricing-table-top">
@@ -253,31 +259,31 @@ const PricingComparison: React.FC<{
 							{getCta('PLUS')}
 						</button>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">⭐️ Credits</div>
 						</div>
 						<div className="brix---text-300-medium">1000 / month{userTier.includes('PLUS') && ' *'}</div>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">🌟 GPT</div>
 						</div>
 						<div className="brix---text-300-medium">3.5 and <b>4</b></div>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">📚 Upload documents</div>
 						</div>
 						<div className="brix---text-300-medium"><b>Multiple</b></div>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">📑 Generate slides</div>
 						</div>
 						<img src="images/check-icon-white-brix-templates.svg" alt="" />
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">
 								⬇️ Export slides
@@ -285,7 +291,7 @@ const PricingComparison: React.FC<{
 						</div>
 						<div className="brix---text-300-medium">PDF and <b>PPTX</b></div>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">
 								🏷️ Customized branding
@@ -296,7 +302,7 @@ const PricingComparison: React.FC<{
 							alt="Check - Elements Webflow Library - BRIX Templates"
 						/>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">
 								🔈 Generate slides scripts
@@ -307,7 +313,7 @@ const PricingComparison: React.FC<{
 							alt="Check - Elements Webflow Library - BRIX Templates"
 						/>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">📱 Generate video</div>
 						</div>
@@ -316,7 +322,7 @@ const PricingComparison: React.FC<{
 							alt="Check - Elements Webflow Library - BRIX Templates"
 						/>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">🦹‍♂️ Attach avatar (new)</div>
 						</div>
@@ -325,9 +331,9 @@ const PricingComparison: React.FC<{
 							alt="Check - Elements Webflow Library - BRIX Templates"
 						/>
 					</div>
-					<div className="brix---pricing-content-wrapper-empty" />
-					<div className="brix---pricing-content-wrapper-empty" />
-					<div className="brix---pricing-content-wrapper-empty" />
+					<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
+					<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
+					<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
 				</div>
 				<div className="brix---pricing-column-featured">
 					<div className="brix---pricing-table-top-featured">
@@ -350,31 +356,31 @@ const PricingComparison: React.FC<{
 							{getCta('PRO')}
 						</button>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">⭐️ Credits</div>
 						</div>
 						<div className="brix---text-300-medium"><b>5000</b> / month{userTier.includes('PRO') && ' *'}</div>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">🌟 GPT</div>
 						</div>
 						<div className="brix---text-300-medium">3.5 and <b>4</b></div>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">📚 Upload documents</div>
 						</div>
 						<div className="brix---text-300-medium"><b>Multiple</b></div>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">📑 Generate slides</div>
 						</div>
 						<img src="images/check-icon-white-brix-templates.svg" alt="" />
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">
 								⬇️ Export slides
@@ -382,7 +388,7 @@ const PricingComparison: React.FC<{
 						</div>
 						<div className="brix---text-300-medium">PDF and <b>PPTX</b></div>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">
 								🏷️ Customized branding
@@ -393,7 +399,7 @@ const PricingComparison: React.FC<{
 							alt="Check - Elements Webflow Library - BRIX Templates"
 						/>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">
 								🔈 Generate slides scripts
@@ -404,7 +410,7 @@ const PricingComparison: React.FC<{
 							alt="Check - Elements Webflow Library - BRIX Templates"
 						/>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">📱 Generate video</div>
 						</div>
@@ -413,7 +419,7 @@ const PricingComparison: React.FC<{
 							alt="Check - Elements Webflow Library - BRIX Templates"
 						/>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">🦹‍♂️ Attach avatar (new)</div>
 						</div>
@@ -422,7 +428,7 @@ const PricingComparison: React.FC<{
 							alt="Check - Elements Webflow Library - BRIX Templates"
 						/>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">🎙️ Voice cloning (coming)</div>
 						</div>
@@ -431,7 +437,7 @@ const PricingComparison: React.FC<{
 							alt="Check - Elements Webflow Library - BRIX Templates"
 						/>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">🦹🏽‍♂️ Avatar cloning (coming)</div>
 						</div>
@@ -440,7 +446,7 @@ const PricingComparison: React.FC<{
 							alt="Check - Elements Webflow Library - BRIX Templates"
 						/>
 					</div>
-					<div className="brix---pricing-content-wrapper">
+					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">
 								☎️ Direct customer support

@@ -5,8 +5,8 @@ interface Language {
 }
 
 const LANGUAGES: Language[] = [
-	{ displayName: "🇺🇸 English (United States)", englishName: "English", code: "en-US" },
-	{ displayName: "🇬🇧 English (British)", englishName: "British English", code: "en-GB" },
+	{ displayName: "🇺🇸 English (US)", englishName: "English", code: "en-US" },
+	{ displayName: "🇬🇧 English (UK)", englishName: "British English", code: "en-GB" },
 	{ displayName: "🌎 Español (Latinoamérica)", englishName: "Spanish", code: "es-MX" },
 	{ displayName: "🇪🇸 Español (España)", englishName: "Continental Spanish", code: "es-ES" },
 	{ displayName: "🇨🇳 中文 (中国大陆)", englishName: "Chinese", code: "zh-CN" },

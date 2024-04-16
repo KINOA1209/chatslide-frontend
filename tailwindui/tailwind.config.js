@@ -9,6 +9,9 @@ module.exports = {
 		extend: {
 			screens: {
 				'iPhoneSE': '375px',
+				dpr: {
+					raw: 'screen and (min-device-pixel-ratio: 2)',
+				},
 			},
 			backgroundImage: {
 				// 'template-default-cover': "url('https://via.placeholder.com/1200x800')",

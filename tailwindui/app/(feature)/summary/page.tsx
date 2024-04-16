@@ -39,7 +39,6 @@ import Project from '@/models/Project';
 import { GenerationStatusProgressModal } from '@/components/ui/GenerationStatusProgressModal';
 import TextareaAutosize from 'react-textarea-autosize';
 
-
 const MAX_TOPIC_LENGTH = 2000;
 const MIN_TOPIC_LENGTH = 3;
 
@@ -213,7 +212,7 @@ export default function Topic() {
 			knowledge_summary: knowledge_summary,
 		} as Project);
 
-		// if needs to query vector database
+		// if needs to summarize resources
 		if (selectedResources?.length > 0 || searchOnlineScope) {
 			setSummarizing(true);
 			try {
@@ -225,8 +224,10 @@ export default function Topic() {
 					topic,
 					audience,
 					language,
-					searchOnlineScope,
 					token,
+					searchOnlineScope,
+					scenarioType,
+					undefined,
 				);
 				formData.knowledge_summary = response.data.knowledge_summary;
 				formData.project_id = response.data.project_id;
@@ -281,7 +282,7 @@ export default function Topic() {
 				console.error('Error when generating outlines:', response.status);
 				toast.error(
 					'Server is busy now. Please try again later. Reference code: ' +
-					project?.id,
+						project?.id,
 				);
 				setIsSubmitting(false);
 			}
@@ -322,21 +323,18 @@ export default function Topic() {
 			/>
 
 			<ToastContainer />
-			{showGenerationStatusModal && (summarizing ? (
-				<GenerationStatusProgressModal
-					onClick={handleGenerationStatusModal}
-					prompts={[
-						['📚 Reading your resources...', 28],
-					]}
-				></GenerationStatusProgressModal>
-			) : (
-				<GenerationStatusProgressModal
-					onClick={handleGenerationStatusModal}
-					prompts={[
-						['📝 Writing outlines for your slides...', 10],
-					]}
-				></GenerationStatusProgressModal>
-			))}
+			{showGenerationStatusModal &&
+				(summarizing ? (
+					<GenerationStatusProgressModal
+						onClick={handleGenerationStatusModal}
+						prompts={[['📚 Reading your resources...', 28]]}
+					></GenerationStatusProgressModal>
+				) : (
+					<GenerationStatusProgressModal
+						onClick={handleGenerationStatusModal}
+						prompts={[['📝 Writing outlines for your slides...', 10]]}
+					></GenerationStatusProgressModal>
+				))}
 
 			<FileUploadModal
 				selectedResources={selectedResources}
@@ -412,7 +410,7 @@ export default function Topic() {
 										placeholder='What do you have in mind?'
 									></TextareaAutosize>
 									{!topic && (
-											<TopicSuggestions language={language} setTopic={setTopic} />
+										<TopicSuggestions language={language} setTopic={setTopic} />
 									)}
 								</div>
 								<Explanation>

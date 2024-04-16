@@ -78,7 +78,7 @@ const Header = ({
 						<div className='min-w-[1.5rem]'>
 							<Logo 
 								color={false} 
-								size={8}
+								size={'32px'}
 							/>
 						</div>
 						<div className='grow flex flex-row justify-center item-center justify-start'>

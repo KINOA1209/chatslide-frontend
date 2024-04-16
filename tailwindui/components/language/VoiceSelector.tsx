@@ -74,10 +74,10 @@ const VoiceSelector: React.FC<{
 
 		return (
 			<>
-				<div className='flex flex-row flex-wrap justify-between gap-2'>
+				<div className='flex flex-row flex-wrap justify-start gap-4'>
 					<div>
 						<Instruction>Language: </Instruction>
-						<DropDown value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)} width='16rem'>
+						<DropDown value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)}>
 							{LANGUAGES.map((option) => (
 								<option key={option.code} value={option.code}>{option.displayName}</option>
 							))}
@@ -89,7 +89,7 @@ const VoiceSelector: React.FC<{
 					{selectedLanguage != 'None' && <>
 						<div>
 							<Instruction>Gender: </Instruction>
-							<DropDown value={selectedGender} onChange={(e) => setSelectedGender(e.target.value as 'female' | 'male')} width='8rem'>
+							<DropDown value={selectedGender} onChange={(e) => setSelectedGender(e.target.value as 'female' | 'male')}>
 								<option key='female' value='female'>👩 Female</option>
 								<option key='male' value='male'>👨 Male</option>
 							</DropDown>
@@ -109,7 +109,7 @@ const VoiceSelector: React.FC<{
 
 						<div>
 							<Instruction>Style: </Instruction>
-							<DropDown value={style} onChange={(e) => setStyle(e.target.value)} width='16rem'>
+							<DropDown value={style} onChange={(e) => setStyle(e.target.value)}>
 								{getVoiceStyles(selectedVoice).map((style) => (
 									<option key={style} value={style}>{STYLE_DISPLAY_NAMES[style]}</option>
 								))}
