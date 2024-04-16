@@ -478,92 +478,95 @@ export default function Topic_SocialPost() {
 										</div>
 									</div>
 
-									<div className='language_drop'>
-										<select
-											className='focus:ring-0 bg-gray-100 border border-2 border-gray-200'
-											id='language'
-											value={language}
-											onChange={(e) => setLanguage(e.target.value)}
-											required
+								<div className='language_drop'>
+									<select
+										className='focus:ring-0 bg-gray-100 border border-2 border-gray-200'
+										id='language'
+										value={language}
+										onChange={(e) => setLanguage(e.target.value)}
+										required
+									>
+										<option key='English' value='English'>
+											🇺🇸 English (US)
+										</option>
+										<option key='British English' value='British English'>
+											🇬🇧 English (UK)
+										</option>
+										<option key='Spanish' value='Spanish'>
+											🌎 Español (Latinoamérica)
+										</option>
+										<option
+											key='Continental Spanish'
+											value='Continental Spanish'
 										>
-											<option key='English' value='English'>
-												🇺🇸 English (United States)
-											</option>
-											<option key='British English' value='British English'>
-												🇬🇧 English (British)
-											</option>
-											<option key='Spanish' value='Spanish'>
-												🌎 Español (Latinoamérica)
-											</option>
-											<option
-												key='Continental Spanish'
-												value='Continental Spanish'
-											>
-												🇪🇸 Español (España)
-											</option>
-											<option key='Chinese' value='Chinese'>
-												🇨🇳 中文 (简体)
-											</option>
-											<option
-												key='Traditional Chinese'
-												value='Traditional Chinese'
-											>
-												🇹🇼 中文 (繁體)
-											</option>
-											<option key='Russian' value='Russian'>
-												🇷🇺 Русский
-											</option>
-											<option key='Ukrainian' value='Ukrainian'>
-												🇺🇦 Українська
-											</option>
-											<option key='French' value='French'>
-												🇫🇷 Français
-											</option>
-											<option key='German' value='German'>
-												🇩🇪 Deutsch
-											</option>
-											<option
-												key='Brazilian Portuguese'
-												value='Brazilian Portuguese'
-											>
-												🇧🇷 Português (Brasil)
-											</option>
-											<option key='Portuguese' value='Portuguese'>
-												🇵🇹 Português
-											</option>
-											<option key='Italian' value='Italian'>
-												🇮🇹 Italiano
-											</option>
-											<option key='Hindi' value='Hindi'>
-												🇮🇳 हिन्दी
-											</option>
-											<option key='Japanese' value='Japanese'>
-												🇯🇵 日本語
-											</option>
-											<option key='Korean' value='Korean'>
-												🇰🇷 한국어
-											</option>
-											<option key='Arabic' value='Arabic'>
-												🇸🇦 العربية
-											</option>
-											<option key='Hebrew' value='Hebrew'>
-												🇮🇱 עברית
-											</option>
-											<option key='Dutch' value='Dutch'>
-												🇳🇱 Nederlands
-											</option>
-											<option key='Norwegian' value='Norwegian'>
-												🇳🇴 Norsk
-											</option>
-											<option key='Croatian' value='Croatian'>
-												🇭🇷 Hrvatski
-											</option>
-										</select>
-									</div>
+											🇪🇸 Español (España)
+										</option>
+										<option key='Chinese' value='Chinese'>
+											🇨🇳 中文 (简体)
+										</option>
+										<option
+											key='Traditional Chinese'
+											value='Traditional Chinese'
+										>
+											🇹🇼 中文 (繁體)
+										</option>
+										<option key='Russian' value='Russian'>
+											🇷🇺 Русский
+										</option>
+										<option key='Ukrainian' value='Ukrainian'>
+											🇺🇦 Українська
+										</option>
+										<option key='French' value='French'>
+											🇫🇷 Français
+										</option>
+										<option key='German' value='German'>
+											🇩🇪 Deutsch
+										</option>
+										<option
+											key='Brazilian Portuguese'
+											value='Brazilian Portuguese'
+										>
+											🇧🇷 Português (Brasil)
+										</option>
+										<option key='Portuguese' value='Portuguese'>
+											🇵🇹 Português
+										</option>
+										<option
+											key='Italian'
+											value='Italian'
+										>
+											🇮🇹 Italiano
+										</option>
+										<option key='Hindi' value='Hindi'>
+											🇮🇳 हिन्दी
+										</option>
+										<option key='Japanese' value='Japanese'>
+											🇯🇵 日本語
+										</option>
+										<option key='Korean' value='Korean'>
+											🇰🇷 한국어
+										</option>
+										<option key='Arabic' value='Arabic'>
+											🇸🇦 العربية
+										</option>
+										<option key='Hebrew' value='Hebrew'>
+											🇮🇱 עברית
+										</option>
+										<option key='Dutch' value='Dutch'>
+											🇳🇱 Nederlands
+										</option>
+										<option key='Norwegian' value='Norwegian'>
+											🇳🇴 Norsk
+										</option>
+										<option key='Croatian' value='Croatian'>
+											🇭🇷 Hrvatski
+										</option>
+									</select>
 								</div>
 							</div>
 						</div>
 					</div>
+				</div>
 
 					{/* supplementary section */}
 					<div className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1'>
