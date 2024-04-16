@@ -1,8 +1,5 @@
 import { LayoutKeys } from '@/components/slides/slideLayout';
-import {
-	PaletteKeys,
-	TemplateKeys,
-} from '@/components/slides/slideTemplates';
+import { PaletteKeys, TemplateKeys } from '@/components/slides/slideTemplates';
 import Chart, { Group } from '@/models/Chart';
 import ImagesPosition from './ImagesPosition';
 
@@ -99,7 +96,7 @@ export default class Slide {
 			groups: [emptyGroup],
 			axis: { x: '', y: '' },
 		}));
-		this.images_position = [];
+		this.images_position = [{}, {}, {}];
 		this.layout = 'Col_2_img_1_layout';
 		this.logo = 'Default';
 		this.additional_images = [];

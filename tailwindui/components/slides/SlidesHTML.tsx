@@ -40,10 +40,7 @@ import layoutConfigData, {
 } from './templates_customizable_elements/layout_elements';
 import ScriptEditor from '../script/ScriptEditor';
 import Slide, { SlideKeys } from '@/models/Slide';
-import {
-	AIAssistantIcon,
-	AIAssistantChatWindow,
-} from '../ui/AIAssistant';
+import { AIAssistantIcon, AIAssistantChatWindow } from '../ui/AIAssistant';
 import ActionsToolBar from '../ui/ActionsToolBar';
 import { SlidesStatus, useSlides } from '@/hooks/use-slides';
 import useTourStore from '@/components/user_onboarding/TourStore';
@@ -229,7 +226,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		setIsChatWindowOpen(!isChatWindowOpen);
 	};
 
-	// show chatwindow if width > 1200 
+	// show chatwindow if width > 1200
 	useEffect(() => {
 		if (window.innerWidth > 1200) {
 			setIsChatWindowOpen(true);
@@ -314,13 +311,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		if (isPresenting) {
 			if (window.Intercom && typeof window.Intercom === 'function') {
 				window.Intercom('update', {
-					"hide_default_launcher": true
+					hide_default_launcher: true,
 				});
 			}
 		} else {
 			if (window.Intercom && typeof window.Intercom === 'function')
 				window.Intercom('update', {
-					"hide_default_launcher": false
+					hide_default_launcher: false,
 				});
 		}
 	}, [isPresenting]);
@@ -421,6 +418,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				currentSlide.palette = content as PaletteKeys;
 			} else if (className === 'images') {
 				currentSlide.images = [...(content as string[])]; // deep copy
+				// newSlide.images_position = slides[0]?.images_position;
+			} else if (className === 'images_position') {
+				currentSlide.images_position = content as ImagesPosition[]; // deep copy
+				// newSlide.images_position = slides[0]?.images_position;
 			} else if (className === 'content') {
 				if (Array.isArray(content)) {
 					currentSlide.content = content as string[];
@@ -570,10 +571,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			false, // canEdit
 			exportToPdfMode, //exportToPdfMode
 			false, //editMathMode
-			() => { }, //setIsEditMode
-			() => { }, // handleSlideEdit
-			() => () => { }, // updateImgUrlArray,
-			() => { }, // toggleEditMode,
+			() => {}, //setIsEditMode
+			() => {}, // handleSlideEdit
+			() => () => {}, // updateImgUrlArray,
+			() => {}, // toggleEditMode,
 			// slide.palette,
 			index === 0, // isCoverPage
 			slide.layout, // layoutOptionNonCover
@@ -717,9 +718,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					<div className='hidden sm:block cursor-pointer'>
 						<ButtonWithExplanation
 							button={
-								<AIAssistantIcon
-									onClick={toggleChatWindow}
-								></AIAssistantIcon>
+								<AIAssistantIcon onClick={toggleChatWindow}></AIAssistantIcon>
 							}
 							explanation='AI Assistant'
 						/>

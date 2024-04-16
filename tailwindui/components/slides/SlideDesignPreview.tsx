@@ -66,7 +66,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			newSlide.template = template;
 			newSlide.palette = color_theme;
 			newSlide.layout = layoutKey as keyof typeof layoutOptions;
-			// newSlide.images_position = slides[0]?.images_position;
+			newSlide.images_position = slides[0]?.images_position;
 
 			if (
 				layoutKey === 'Col_2_img_0_layout' ||
