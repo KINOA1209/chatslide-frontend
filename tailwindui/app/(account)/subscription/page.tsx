@@ -48,7 +48,7 @@ const Subscription = () => {
 					Find tailored plans for you
 				</Title>
 
-				<PricingComparison />
+				<PricingComparison small={true}/>
 
 				<Title>
 					Looking to redeem your code? Click <Link className='text-blue-600' href='/account'>here</Link>!

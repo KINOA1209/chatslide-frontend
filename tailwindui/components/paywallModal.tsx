@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Pricing from '@/components/landing/pricing';
 import ReferralLink from './ReferralLink';
 import Modal from './ui/Modal';
+import { Pricing, PricingComparison } from '@/app/(default)/landing/Pricing';
 
 interface PaywallModalProps {
 	showModal: boolean;
@@ -38,7 +38,7 @@ const PaywallModal: React.FC<PaywallModalProps> = ({
 			<div className='py-2 space-y-4'>
 				{' '}
 				{/* Reduced bottom padding */}
-				<Pricing fewerCards={true} />
+				<PricingComparison small={true}/>
 				{showReferralLink && (
 					<div className='space-y-4'>
 						<div className='text-center text-[#707C8A] text-[16px] font-bold'>
