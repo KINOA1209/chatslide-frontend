@@ -212,7 +212,7 @@ export default function Topic() {
 			knowledge_summary: knowledge_summary,
 		} as Project);
 
-		// if needs to query vector database
+		// if needs to summarize resources
 		if (selectedResources?.length > 0 || searchOnlineScope) {
 			setSummarizing(true);
 			try {
@@ -224,9 +224,11 @@ export default function Topic() {
 					topic,
 					audience,
 					language,
-					searchOnlineScope,
 					token,
 					scenarioType,
+					searchOnlineScope,
+					scenarioType,
+					undefined,
 				);
 				formData.knowledge_summary = response.data.knowledge_summary;
 				formData.project_id = response.data.project_id;

@@ -12,8 +12,10 @@ interface YourComponentProps {
 	isPaidUser?: boolean;
 	nextIsPaidFeature?: boolean;
 	lastStep?: boolean;
+	nextStep?: boolean;
 	nextText?: string;
 	handleClickingGeneration?: () => void;
+	workflow?: string;
 }
 
 const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
@@ -23,8 +25,10 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 	isPaidUser = false,
 	nextIsPaidFeature = false,
 	lastStep = false,
+	nextStep = true,
 	nextText = 'Next',
 	handleClickingGeneration,
+	workflow = 'slides',
 }) => {
 	const [showPing, setShowPing] = useState(true);
 
@@ -61,7 +65,9 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 		<section className='sticky top-0 z-10 flex flex-col'>
 			<div className='relative w-full h-[80px] flex flex-row items-center bg-[#2044F2] gap-x-2 lg:gap-x-4 px-2 lg:px-4 xl:px-6'>
 				<BackButton href='/dashboard' />
-				<div className='flex-grow items-center justify-center flex py-2'>
+				<div className={`flex-grow items-center justify-center flex py-2 
+								${workflow === 'socialPosts' && !nextStep ? 'absolute left-1/2 transform -translate-x-1/2' : ''}
+				`}>
 					<ProjectProgress currentInd={currentIndex} />
 				</div>
 				{!lastStep ? (
@@ -78,12 +84,12 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 								}}
 							></div>
 						)}
-						<div 
-						className={buttonBounce ? 'animate-bounce' : ''} 
-						onClick={(e) => {
-							if (isPaidUser || !nextIsPaidFeature)
-								handleClickingGeneration && handleClickingGeneration();
-						}}>
+						<div
+							className={buttonBounce ? 'animate-bounce' : ''}
+							onClick={(e) => {
+								if (isPaidUser || !nextIsPaidFeature)
+									handleClickingGeneration && handleClickingGeneration();
+							}}>
 							<DrlambdaButton
 								isSubmitting={isSubmitting}
 								isPaidUser={isPaidUser}

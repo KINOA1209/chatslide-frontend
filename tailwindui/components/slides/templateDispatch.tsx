@@ -146,7 +146,6 @@ export const templateDispatch = (
 	} else if (!canEdit) {
 		keyPrefix = 'preview';
 	}
-	
 
 	// prevent old projects still have 'Default_template' as template rather than new 'Default'
 	// const templateKey =
@@ -185,7 +184,6 @@ export const templateDispatch = (
 		? 'Cover_img_1_layout'
 		: 'Col_1_img_0_layout';
 
-	
 	const Template =
 		availableTemplates[templateKey as keyof typeof availableTemplates];
 	const ChosenTemplateLogo =
@@ -283,27 +281,23 @@ export const templateDispatch = (
 			canEdit={canEdit}
 			key={keyPrefix + index.toString()}
 			user_name={
-				isShowingLogo ? (
-					isPaidUser ? (
-						generateContentElement(
-							slide.userName,
-							'userName',
-							themeElements.userNameFontCSS,
-							false,
-						)
-					) : (
-						<div
-							key={0}
-							className={`rounded-md outline-2 ${!exportToPdfMode} ${
-								index !== 0 ? 'hidden' : ''
-							}`}
-							style={themeElements.userNameFontCSS}
-							contentEditable={false}
-							dangerouslySetInnerHTML={{ __html: slide.userName }}
-						/>
+				isPaidUser ? (
+					generateContentElement(
+						slide.userName,
+						'userName',
+						themeElements.userNameFontCSS,
+						false,
 					)
 				) : (
-					<></>
+					<div
+						key={0}
+						className={`rounded-md outline-2 ${!exportToPdfMode} ${
+							index !== 0 ? 'hidden' : ''
+						}`}
+						style={themeElements.userNameFontCSS}
+						contentEditable={false}
+						dangerouslySetInnerHTML={{ __html: slide.userName }}
+					/>
 				)
 			}
 			title={generateContentElement(

@@ -104,7 +104,7 @@ const imageLicenseOptions: RadioButtonOption[] = [
 	{
 		value: 'giphy',
 		text: 'Gif',
-	}
+	},
 ];
 
 const getImageLicenseExplanation = (license: string) => {
@@ -118,7 +118,7 @@ const getImageLicenseExplanation = (license: string) => {
 		case 'creative':
 			return 'Images from all websites, free to use';
 		case 'giphy':
-			return 	'Funny animations from Giphy.	Gif may not be animated if you export to PDF / PPTX, or create video.';
+			return 'Funny animations from Giphy.	Gif may not be animated if you export to PDF / PPTX, or create video.';
 		default:
 			return '';
 	}
@@ -189,7 +189,6 @@ export const ImgModule = ({
 		}
 		return '';
 	}
-
 
 	// useEffect(() => {
 	//     console.log(selectedQueryMode);
@@ -602,50 +601,44 @@ export const ImgModule = ({
 				className='w-full flex flex-col gap-y-2'
 			>
 				<div>
-				<RadioButton
-					options={imageLicenseOptions}
-					selectedValue={imageLicense}
-					setSelectedValue={setImageLicense}
-					name='imageLicense'
-					cols={5}
-				/>
+					<RadioButton
+						options={imageLicenseOptions}
+						selectedValue={imageLicense}
+						setSelectedValue={setImageLicense}
+						name='imageLicense'
+						cols={5}
+					/>
 
-				<Explanation>
-					{getImageLicenseExplanation(imageLicense)}
-				</Explanation>
+					<Explanation>{getImageLicenseExplanation(imageLicense)}</Explanation>
 				</div>
 				<div>
-				<InputBox>
-					<input
-						id='search_keyword'
-						type='text'
-						className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
-						placeholder='Search from internet'
-						required
-						ref={searchRef}
-						onClick={(e) => {
-							(e.target as HTMLInputElement)?.select();
-						}}
-						onChange={(e) => {
-							setKeyword(e.target.value);
-						}}
-						value={keyword}
-					/>
-					{searching ? (
-						<SpinIcon />
-					) : (
-						<button type='submit'>
-							<FaSearch className='h-[24px] w-[24px] text-gray-400' />
-						</button>
-					)}
-				</InputBox>
-				
-				<WordSelector
-					text={getSearchText()}
-					setQuery={setKeyword}
-				/>
-				</div>
+					<InputBox>
+						<input
+							id='search_keyword'
+							type='text'
+							className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+							placeholder='Search from internet'
+							required
+							ref={searchRef}
+							onClick={(e) => {
+								(e.target as HTMLInputElement)?.select();
+							}}
+							onChange={(e) => {
+								setKeyword(e.target.value);
+							}}
+							value={keyword}
+						/>
+						{searching ? (
+							<SpinIcon />
+						) : (
+							<button type='submit'>
+								<FaSearch className='h-[24px] w-[24px] text-gray-400' />
+							</button>
+						)}
+					</InputBox>
 
+					<WordSelector text={getSearchText()} setQuery={setKeyword} />
+				</div>
 			</form>
 			<div className='w-full h-full overflow-y-auto p-1'>
 				<div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-2'>
@@ -659,11 +652,11 @@ export const ImgModule = ({
 								>
 									<Image
 										src={url} // URL of the image
-										unoptimized={ url?.includes('freepik') ? false : true}
-										alt="searched image"
-										layout="responsive"
-										objectFit="contain" // This will keep the aspect ratio and make sure the image fits within the container
-										className="w-full h-full" // Additional CSS classes if needed
+										unoptimized={url?.includes('freepik') ? false : true}
+										alt='searched image'
+										layout='responsive'
+										objectFit='contain' // This will keep the aspect ratio and make sure the image fits within the container
+										className='w-full h-full' // Additional CSS classes if needed
 										width={100}
 										height={100}
 									/>
@@ -679,10 +672,10 @@ export const ImgModule = ({
 									<Image
 										src={url} // URL of the image
 										unoptimized={url?.includes('freepik') ? false : true}
-										alt="selected image"
-										layout="responsive"
-										objectFit="contain" // This will keep the aspect ratio and make sure the image fits within the container
-										className="w-full h-full" // Additional CSS classes if needed
+										alt='selected image'
+										layout='responsive'
+										objectFit='contain' // This will keep the aspect ratio and make sure the image fits within the container
+										className='w-full h-full' // Additional CSS classes if needed
 										width={100}
 										height={100}
 									/>
@@ -701,13 +694,8 @@ export const ImgModule = ({
 				<Explanation>
 					Highlight the keywords you want to use for search:
 				</Explanation>
-				<WordSelector
-					text={getSearchText()}
-					setQuery={setKeyword}
-				/>
-				<Explanation>
-					Or directly enter the keywords below:
-				</Explanation>
+				<WordSelector text={getSearchText()} setQuery={setKeyword} />
+				<Explanation>Or directly enter the keywords below:</Explanation>
 				<InputBox>
 					<input
 						id='search_keyword'
@@ -1054,7 +1042,10 @@ export const ImgModule = ({
 		if (currentElement) {
 			const { clientHeight, clientWidth } = currentElement;
 			// Only update if there's a real change in dimensions
-			if (clientHeight !== parentDimension.height || clientWidth !== parentDimension.width) {
+			if (
+				clientHeight !== parentDimension.height ||
+				clientWidth !== parentDimension.width
+			) {
 				setParentDimension({ height: clientHeight, width: clientWidth });
 				setIsParentDimension(clientHeight > 0 && clientWidth > 0);
 			}
@@ -1243,21 +1234,22 @@ export const ImgModule = ({
 				onDrop={handleImageDrop}
 				onDragOver={(e) => e.preventDefault()}
 				// onClick={openModal}
-				className={`w-full h-full transition ease-in-out duration-150 relative ${selectedImg === ''
-					? 'bg-[#E7E9EB]'
-					: canEdit
+				className={`w-full h-full transition ease-in-out duration-150 relative ${
+					selectedImg === ''
+						? 'bg-[#E7E9EB]'
+						: canEdit
 						? 'hover:bg-[#CAD0D3]'
 						: ''
-					} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
+				} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
 				style={{
 					overflow: isImgEditMode ? 'visible' : 'hidden',
 					borderRadius: customImageStyle?.borderRadius,
 				}}
 			>
 				{ischartArr &&
-					ischartArr[currentContentIndex] &&
-					selectedChartType &&
-					chartData.length > 0 ? ( // chart
+				ischartArr[currentContentIndex] &&
+				selectedChartType &&
+				chartData.length > 0 ? ( // chart
 					<div
 						className='w-full h-full flex items-center justify-center overflow-hidden '
 						onClick={openModal}
@@ -1314,7 +1306,8 @@ export const ImgModule = ({
 							className={`${isImgEditMode ? 'rndContainerWithBorder' : ''}`}
 							style={{ ...layoutElements?.rndCSS }}
 							size={{
-								width: imagesDimensions[currentContentIndex]?.width ?? 'auto',
+								width:
+									imagesDimensions[currentContentIndex]?.width ?? 'max-content',
 								//imageRefs[currentContentIndex]?.current?.clientWidth ??
 								//imageSize.width ? imageSize.width : ,
 								height: imagesDimensions[currentContentIndex]?.height ?? 'auto',
@@ -1362,12 +1355,13 @@ export const ImgModule = ({
 								width={960}
 								height={540}
 								// objectFit='contain'
-								className={`transition ease-in-out duration-150 ${canEdit
-									? isImgEditMode
-										? 'brightness-100'
-										: 'hover:brightness-50'
-									: 'cursor-pointer'
-									}`}
+								className={`transition ease-in-out duration-150 ${
+									canEdit
+										? isImgEditMode
+											? 'brightness-100'
+											: 'hover:brightness-50'
+										: 'cursor-pointer'
+								}`}
 								onError={(e) => {
 									console.log('failed to load image', imgsrc);
 									setImgLoadError(true);

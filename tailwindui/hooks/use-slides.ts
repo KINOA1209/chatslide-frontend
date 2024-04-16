@@ -153,6 +153,7 @@ export const useSlides = () => {
 		newSlide.logo = slides[index].logo;
 		newSlide.logo_url = slides[index].logo_url;
 		newSlide.background_url = slides[index].background_url;
+		newSlide.images_position = slides[index].images_position;
 		const newSlides = [...slides];
 		newSlides.splice(index + 1, 0, newSlide);
 		setSlides(newSlides);
@@ -343,7 +344,7 @@ export const useSlides = () => {
 				...slide,
 				template: newTemplate,
 				palette: newPalette,
-				images_position: [{}, {}, {}],
+				// images_position: [{}, {}, {}],// comment this line because it cause the image position to be wrong after changing template and palette
 			};
 		});
 		newSlides = newSlides.map((slide, index) => {
@@ -438,10 +439,9 @@ export const useSlides = () => {
 				// Handle save error
 				console.error('Auto-save failed.');
 			}
-		}
-		catch (error) {
+		} catch (error) {
 			console.error('Auto-save failed:', error);
-		};
+		}
 	};
 
 	const debouncedSyncSlides = debounce(syncSlides, 1000);

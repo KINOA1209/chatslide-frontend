@@ -1,9 +1,10 @@
 import SideBar from '@/components/layout/SideBar';
 import { WorkflowFooter } from '@/components/layout/footer';
 import Header from '@/components/layout/header';
+import { getBrand } from '@/utils/getHost';
 
 export const metadata = {
-	title: 'My Account - Dr. Lambda',
+	title: `My Account | ${getBrand()}`,
 	description: 'Manage your account settings and subscription',
 };
 

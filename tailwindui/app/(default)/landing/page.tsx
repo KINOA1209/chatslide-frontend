@@ -146,7 +146,7 @@ function Landing() {
 							className='brand w-nav-brand w--current'
 						>
 							<img
-								src='images/Frame-1707478931-1.png'
+								src={isChatslide() ? 'images/template/chatslide_color.svg' : 'images/Frame-1707478931-1.png'}
 								loading='lazy'
 								width={120}
 								alt=''
@@ -1720,7 +1720,7 @@ function Landing() {
 										</div>
 									</div>
 									<div className='uui-heading-xxsmall text-weight-medium'>
-										"In terms of design and build, Dr. Lambda has a robust and
+										"In terms of design and build, DrLambda has a robust and
 										sleek design. So far it performs well as what I expect of
 										PDF to slide transformation."
 									</div>
@@ -2074,13 +2074,13 @@ function Landing() {
 					<div className='brix---footer-top-border-bottom'>
 						<div className='w-layout-grid brix---grid-footer-v5'>
 							<div id='w-node-d59964e8-3442-2a41-7a53-b080d62796ce-a1504b34'>
-								<div className='brix---mg-bottom-24px'>
+								<div className='brix---mg-bottom-24px flex items-center justify-center'>
 									<a
 										href='#'
 										className='brix---footer-logo-wrapper w-inline-block'
 									>
 										<img
-											src='images/Frame-1707479106.svg'
+											src={isChatslide() ? 'images/template/chatslide_color.svg' : 'images/Frame-1707478931-1.png'}
 											alt=''
 											width={196}
 											className='brix---footer-logo'
