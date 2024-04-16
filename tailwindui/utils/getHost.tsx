@@ -33,7 +33,7 @@ function getLogoUrl(color = true) {
 }
 
 function isChatslide() {
-	return getHost() === 'chatlide.ai';
+	return getHost().includes('chatlide.ai');
 }
 
 export { getHost, getOrigin, getBrand, getLogoUrl, isChatslide };
