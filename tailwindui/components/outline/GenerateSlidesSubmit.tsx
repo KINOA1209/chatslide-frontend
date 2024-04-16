@@ -13,6 +13,7 @@ import { useProject } from '@/hooks/use-project';
 import Project from '@/models/Project';
 import SlidesService from '@/services/SlidesService';
 import Slide from '@/models/Slide';
+import { getBrand } from '@/utils/getHost';
 
 // this class has no UI, it is used to submit the outline to the backend when isSubmitting is true
 const GenerateSlidesSubmit = ({
@@ -89,6 +90,7 @@ const GenerateSlidesSubmit = ({
 			scenario_type: project.scenario_type,
 			// endIndex: 2,  // generate first 2 sections only
 			logo: project.logo,
+			brand: getBrand(),
 		};
 
 		bulkUpdateProject({
