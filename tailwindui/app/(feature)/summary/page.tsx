@@ -225,6 +225,7 @@ export default function Topic() {
 					audience,
 					language,
 					token,
+					scenarioType,
 					searchOnlineScope,
 					scenarioType,
 					undefined,
