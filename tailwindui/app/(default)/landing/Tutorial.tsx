@@ -61,7 +61,7 @@ const Tutorial: React.FC = () => {
 											height={560}
 											scrolling="no"
 											// allowFullScreen=""
-											title="How to Use Dr. Lambda to Create Your Own Projects"
+											title="How to Create Your Own Projects"
 										/>
 									</div>
 								)}
@@ -74,7 +74,7 @@ const Tutorial: React.FC = () => {
 											height={560}
 											scrolling="no"
 											// allowFullScreen=""
-											title="How to Create Engaging Slides with Dr. Lambda"
+											title="How to Create Engaging Slides with DrLambda"
 										/>
 									</div>
 								)}
