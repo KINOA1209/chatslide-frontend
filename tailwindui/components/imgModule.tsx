@@ -924,21 +924,30 @@ export const ImgModule = ({
 		const parentAspectRatio = parentWidth / parentHeight;
 		let newWidth, newHeight, newX, newY;
 
-		// Compare the aspect ratios to decide how to scale
-		if (aspectRatio > parentAspectRatio) {
-			// Image is wider than the container proportionally
-			newWidth = parentHeight * aspectRatio;
-			newHeight = parentHeight;
-			newX = (parentWidth - newWidth) / 2; // Center horizontally
-			newY = 0;
-		} else {
-			// Image is taller than the container proportionally
+		// vertical image initialization (perform as contain)
+		// vertical image: image is taller than its wide
+		if (aspectRatio <= 1) {
 			newWidth = parentWidth;
 			newHeight = parentWidth / aspectRatio;
-			newX = 0; // Align to left
-			newY = (parentHeight - newHeight) / 2; // Center vertically
+			newX = 0
+			newY = (parentHeight - newHeight) / 2
 		}
-
+		else {
+			// Compare the aspect ratios to decide how to scale
+			if (aspectRatio > parentAspectRatio) {
+				// Image is wider than the container proportionally
+				newWidth = parentHeight * aspectRatio;
+				newHeight = parentHeight;
+				newX = (parentWidth - newWidth) / 2; // Center horizontally
+				newY = 0;
+			} else {
+				// Image is taller than the container proportionally
+				newWidth = parentWidth;
+				newHeight = parentWidth / aspectRatio;
+				newX = 0; // Align to left
+				newY = (parentHeight - newHeight) / 2; // Center vertically
+			}
+		}
 		return { width: newWidth, height: newHeight, x: newX, y: newY };
 	};
 
@@ -1234,22 +1243,21 @@ export const ImgModule = ({
 				onDrop={handleImageDrop}
 				onDragOver={(e) => e.preventDefault()}
 				// onClick={openModal}
-				className={`w-full h-full transition ease-in-out duration-150 relative ${
-					selectedImg === ''
+				className={`w-full h-full transition ease-in-out duration-150 relative ${selectedImg === ''
 						? 'bg-[#E7E9EB]'
 						: canEdit
-						? 'hover:bg-[#CAD0D3]'
-						: ''
-				} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
+							? 'hover:bg-[#CAD0D3]'
+							: ''
+					} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
 				style={{
 					overflow: isImgEditMode ? 'visible' : 'hidden',
 					borderRadius: customImageStyle?.borderRadius,
 				}}
 			>
 				{ischartArr &&
-				ischartArr[currentContentIndex] &&
-				selectedChartType &&
-				chartData.length > 0 ? ( // chart
+					ischartArr[currentContentIndex] &&
+					selectedChartType &&
+					chartData.length > 0 ? ( // chart
 					<div
 						className='w-full h-full flex items-center justify-center overflow-hidden '
 						onClick={openModal}
@@ -1341,7 +1349,8 @@ export const ImgModule = ({
 							<Image
 								unoptimized={imgsrc?.includes('freepik') ? false : true}
 								style={{
-									objectFit: 'contain',
+									//dont use contain, it will make resize feature always resize based on aspect ratio
+									objectFit: 'fill',
 									height: '100%',
 									//width: 'auto',
 									width: '100%',
@@ -1355,13 +1364,12 @@ export const ImgModule = ({
 								width={960}
 								height={540}
 								// objectFit='contain'
-								className={`transition ease-in-out duration-150 ${
-									canEdit
+								className={`transition ease-in-out duration-150 ${canEdit
 										? isImgEditMode
 											? 'brightness-100'
 											: 'hover:brightness-50'
 										: 'cursor-pointer'
-								}`}
+									}`}
 								onError={(e) => {
 									console.log('failed to load image', imgsrc);
 									setImgLoadError(true);
