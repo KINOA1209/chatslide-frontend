@@ -114,7 +114,7 @@ export const changingTemplateContent = (content: string[], col_num: number) => {
 	return res
 }
 
-console.log(changingTemplateContent(['1','2','3','4','5','6','7','8','9','10','11'], 3))
+//console.log(changingTemplateContent(['1','2','3','4','5','6','7','8','9','10','11'], 3))
 
 export const addANewEditorBox = ({
 	handleSlideEdit,
