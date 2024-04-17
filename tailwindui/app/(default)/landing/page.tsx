@@ -1304,15 +1304,13 @@ function Landing() {
 											</svg>
 										</div>
 									</div>
-									<div className='uui-heading-xxsmall text-weight-medium'>
-										"On my first try, I have a slideshow and script that I can
-										download and clean up quickly. Can't wait to spend more time
-										playing with this!"
+									<div className='uui-heading-xxsmall text-weight-medium' style={{direction: 'rtl'}}>
+										🇸🇦 "عروض بثواني😎 لاتكتب اي عروض بعد اليوم، كل ما هو عليك فقط كتابة ماتريد للـAI وهو يكتب العرض كامل لك مع الصور والمعلومات من بحثك وملفاتك ويلخصها وكل شي، يعني كأنه كاتب "
 									</div>
 									<div className='uui-testimonial13_client'>
 										<div className='uui-testimonial13_client-image-wrapper'>
 											<img
-												src='images/t2.jpeg'
+												src='images/yaser.jpeg'
 												loading='lazy'
 												alt=''
 												className='uui-testimonial13_customer-image'
@@ -1320,7 +1318,10 @@ function Landing() {
 										</div>
 										<div className='uui-testimonial13_client-info'>
 											<div className='uui-testimonial13_client-heading'>
-												admin0656
+												Yaser Alosefer
+											</div>
+											<div className='uui-text-size-small'>
+												Entrepreneur, Investor
 											</div>
 										</div>
 									</div>
