@@ -12,7 +12,8 @@ import { toast } from "react-toastify";
 const PricingComparison: React.FC<{
 	extraPadding?: boolean
 	small?: boolean
-}> = ({ extraPadding, small=false }) => {
+	showFreeTier?: boolean
+}> = ({ extraPadding, small = false, showFreeTier = true }) => {
 	const { token, email, tier: userTier } = useUser();
 	const [currency, setCurrency] = useState<string>('$');
 	const pathname = usePathname();
@@ -179,67 +180,69 @@ const PricingComparison: React.FC<{
 						</div>
 					</div>
 				</div>
-				<div className="brix---pricing-column">
-					<div className="brix---pricing-table-top">
-						<div className="brix---mg-bottom-8px">
-							<div className="brix---color-neutral-600">
-								<div className="brix---text-200">FREE</div>
+				{showFreeTier &&
+					<div className="brix---pricing-column">
+						<div className="brix---pricing-table-top">
+							<div className="brix---mg-bottom-8px">
+								<div className="brix---color-neutral-600">
+									<div className="brix---text-200">FREE</div>
+								</div>
 							</div>
-						</div>
-						<div className="brix---mg-bottom-16px">
-							<div className="brix---color-neutral-800 flex flex-col items-center">
-								<div className="brix---text-300-medium opacity-0">{'$0'}</div>
-								<div className="brix---text-400-bold">$0</div>
-								<div className="brix---text-300-medium opacity-0">{'$0'}</div>
+							<div className="brix---mg-bottom-16px">
+								<div className="brix---color-neutral-800 flex flex-col items-center">
+									<div className="brix---text-300-medium opacity-0">{'$0'}</div>
+									<div className="brix---text-400-bold">$0</div>
+									<div className="brix---text-300-medium opacity-0">{'$0'}</div>
+								</div>
 							</div>
+							<button
+								onClick={() => handleClick('FREE')}
+								className="brix---btn-primary-small-full-width w-button whitespace-nowrap"
+							>
+								{getCta('FREE')}
+							</button>
 						</div>
-						<button
-							onClick={() => handleClick('FREE')}
-							className="brix---btn-primary-small-full-width w-button whitespace-nowrap"
-						>
-							{getCta('FREE')}
-						</button>
-					</div>
-					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
-						<div className="brix---pricing-v8-title-table">
-							<div className="brix---text-300-medium">⭐️ credits</div>
-						</div>
-						<div className="brix---text-300-medium">100</div>
-					</div>
-					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
-						<div className="brix---pricing-v8-title-table">
-							<div className="brix---text-300-medium">🌟 GPT</div>
-						</div>
-						<div className="brix---text-300-medium">3.5</div>
-					</div>
-					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
-						<div className="brix---pricing-v8-title-table">
-							<div className="brix---text-300-medium">📚 Upload documents</div>
-						</div>
-						<div className="brix---text-300-medium">Single</div>
-					</div>
-					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
-						<div className="brix---pricing-v8-title-table">
-							<div className="brix---text-300-medium">📑 Generate slides</div>
-						</div>
-						<img src="images/check-icon-white-brix-templates.svg" alt="" />
-					</div>
-					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
-						<div className="brix---pricing-v8-title-table">
-							<div className="brix---text-300-medium">
-								⬇️ Export slides
+						<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
+							<div className="brix---pricing-v8-title-table">
+								<div className="brix---text-300-medium">⭐️ credits</div>
 							</div>
+							<div className="brix---text-300-medium">100</div>
 						</div>
-						<div className="brix---text-300-medium">PDF</div>
+						<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
+							<div className="brix---pricing-v8-title-table">
+								<div className="brix---text-300-medium">🌟 GPT</div>
+							</div>
+							<div className="brix---text-300-medium">3.5</div>
+						</div>
+						<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
+							<div className="brix---pricing-v8-title-table">
+								<div className="brix---text-300-medium">📚 Upload documents</div>
+							</div>
+							<div className="brix---text-300-medium">Single</div>
+						</div>
+						<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
+							<div className="brix---pricing-v8-title-table">
+								<div className="brix---text-300-medium">📑 Generate slides</div>
+							</div>
+							<img src="images/check-icon-white-brix-templates.svg" alt="" />
+						</div>
+						<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
+							<div className="brix---pricing-v8-title-table">
+								<div className="brix---text-300-medium">
+									⬇️ Export slides
+								</div>
+							</div>
+							<div className="brix---text-300-medium">PDF</div>
+						</div>
+						<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
+						<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
+						<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
+						<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
+						<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
+						<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
+						<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
 					</div>
-					<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-					<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-					<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-					<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-					<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-					<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-					<div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-				</div>
+				}
 				<div className="brix---pricing-column">
 					<div className="brix---pricing-table-top">
 						<div className="brix---mg-bottom-8px">
