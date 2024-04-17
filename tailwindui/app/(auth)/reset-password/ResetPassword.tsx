@@ -41,9 +41,9 @@ export default function ResetPassword(): JSX.Element {
 		} catch (error) {
 			console.error('Error sending code: ', error);
 			if (typeof error === 'string') {
-				setErrorMessage(error);
+				setErrorMessage(error + 'Sign in with Google does not support resetting password yet.');
 			} else if (error instanceof Error && error.message) {
-				setErrorMessage(error.message);
+				setErrorMessage(error.message + 'Sign in with Google does not support resetting password yet.');
 			} else {
 				setErrorMessage(
 					'An error occurred while sending the code. Please try again.',
@@ -113,6 +113,9 @@ export default function ResetPassword(): JSX.Element {
 						</p>
 						<p className='text-xl text-gray-600'>
 							You might need to find your confirmation code in your spam folder.
+						</p>
+						<p className='text-xl text-gray-600'>
+							Sign in with Google does not support resetting password yet.
 						</p>
 					</div>
 
