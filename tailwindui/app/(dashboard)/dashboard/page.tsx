@@ -248,10 +248,7 @@ export default function Dashboard() {
 				/>
 			</div>
 			{showSurvey && (
-				<Modal
-					showModal={showSurvey}
-					setShowModal={handleCloseSurvey}
-				>
+				<Modal showModal={showSurvey} setShowModal={handleCloseSurvey}>
 					<OnboardingSurvey handleBack={handleCloseSurvey} />
 				</Modal>
 			)}

@@ -98,12 +98,30 @@ type HandleAddColumnProps = {
 	shouldShowAddButton: boolean;
 };
 
-export const changingTemplateContent = (content: string[], col_num: number) => {
+// export const changingTemplateContent = (content: string[], col_num: number) => {
+// 	const totalItems = content.length;
+// 	const minItemsPerCol = Math.floor(totalItems / col_num);
+// 	const extraItems = totalItems % col_num;
+
+// 	let res: string[][] = [];
+// 	let curr_idx = 0;
+// 	for (let i = 0; i < col_num; i++) {
+// 		// Calculate how many items this column should have
+// 		const itemsCount = minItemsPerCol + (i < extraItems ? 1 : 0);
+// 		res.push(content.slice(curr_idx, curr_idx + itemsCount));
+// 		curr_idx += itemsCount;
+// 	}
+// 	return res
+// }
+export const changingTemplateContent = <T extends string | JSX.Element>(
+	content: T[],
+	col_num: number,
+): T[][] => {
 	const totalItems = content.length;
 	const minItemsPerCol = Math.floor(totalItems / col_num);
 	const extraItems = totalItems % col_num;
 
-	let res: string[][] = [];
+	let res: T[][] = [];
 	let curr_idx = 0;
 	for (let i = 0; i < col_num; i++) {
 		// Calculate how many items this column should have
@@ -111,8 +129,8 @@ export const changingTemplateContent = (content: string[], col_num: number) => {
 		res.push(content.slice(curr_idx, curr_idx + itemsCount));
 		curr_idx += itemsCount;
 	}
-	return res
-}
+	return res;
+};
 
 //console.log(changingTemplateContent(['1','2','3','4','5','6','7','8','9','10','11'], 3))
 
@@ -125,16 +143,13 @@ export const addANewEditorBox = ({
 	slideIndex,
 	slides,
 }: // setShowEditorBox,
-	// shouldShowEditorBox,
-	// contentText,
-	AddANewEditorBoxProps) => {
+// shouldShowEditorBox,
+// contentText,
+AddANewEditorBoxProps) => {
 	console.log('add a new content item column:');
 	// const newContentItem = (
 	return (
-		<div
-			key={`content_add`}
-			className={`${slideIndex === 0 ? 'hidden' : ''}`}
-		>
+		<div key={`content_add`} className={`${slideIndex === 0 ? 'hidden' : ''}`}>
 			<QuillEditable
 				content={''}
 				handleBlur={(newContent: string | string[]) =>
@@ -171,10 +186,7 @@ export const handleAddTextColumn = ({
 }: HandleAddColumnProps) => {
 	console.log('add a new content item column:');
 	const newContentItem = (
-		<div
-			key={`content_`}
-			className={`${slideIndex === 0 ? 'hidden' : ''}`}
-		>
+		<div key={`content_`} className={`${slideIndex === 0 ? 'hidden' : ''}`}>
 			<QuillEditable
 				content={''}
 				handleBlur={(newContent: string | string[]) =>
@@ -348,22 +360,22 @@ export const Cover_img_1_layout = ({
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
-			(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
-				const newImgs = [...imgs];
-				if (index >= newImgs.length) newImgs.push(imgSrc);
-				else newImgs[index] = imgSrc;
+		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+			const newImgs = [...imgs];
+			if (index >= newImgs.length) newImgs.push(imgSrc);
+			else newImgs[index] = imgSrc;
 
-				const newIsCharts = [...ischarts];
-				if (index >= newIsCharts.length) newIsCharts.push(ischart);
-				else newIsCharts[index] = ischart;
+			const newIsCharts = [...ischarts];
+			if (index >= newIsCharts.length) newIsCharts.push(ischart);
+			else newIsCharts[index] = ischart;
 
-				const newImagesPosition = [...images_position];
-				if (index >= newImagesPosition.length)
-					newImagesPosition.push(image_position);
-				else newImagesPosition[index] = image_position;
+			const newImagesPosition = [...images_position];
+			if (index >= newImagesPosition.length)
+				newImagesPosition.push(image_position);
+			else newImagesPosition[index] = image_position;
 
-				update_callback(newImgs, newIsCharts, newImagesPosition);
-			};
+			update_callback(newImgs, newIsCharts, newImagesPosition);
+		};
 
 	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
 
@@ -583,24 +595,32 @@ export const Col_2_img_0_layout = ({
 }: MainSlideProps) => {
 	// Ensure content is always an array
 	const items = Array.isArray(content) ? content : [content];
+
 	const { slides, slideIndex, updateSlidePage, updateVersion } = useSlides();
 	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
-	const [updatedContent, setUpdatedContent] = useState(items);
+	// const [updatedContent, setUpdatedContent] = useState(items);
+	const contentItemsFor2Col = changingTemplateContent(items, 2);
+	const [updatedContentCol1, setUpdatedContentCol1] = useState(
+		contentItemsFor2Col[0],
+	);
+	const [updatedContentCol2, setUpdatedContentCol2] = useState(
+		contentItemsFor2Col[1],
+	);
 
 	// useEffect(() => {
-	// 	console.log('updatedContent on page', slideIndex, updatedContent);
+	// 	console.log('contentItemsFor2Col', contentItemsFor2Col);
 	// }, [updatedContent]);
 
-	const [showAddButton, setShowAddButton] = useState(
-		// slides[slideIndex].content.length <= 1,
-		updatedContent.length <= 1,
-	);
+	// const [showAddButton, setShowAddButton] = useState(
+	// 	// slides[slideIndex].content.length <= 1,
+	// 	updatedContent.length <= 1,
+	// );
 
 	const [showEditorBoxCol1, setShowEditorBoxCol1] = useState(
-		updatedContent.length === 0,
+		updatedContentCol1.length === 0,
 	);
 	const [showEditorBoxCol2, setShowEditorBoxCol2] = useState(
-		updatedContent.length === 1,
+		updatedContentCol2.length === 0,
 	);
 	// const [showEditorBoxCol3, setShowEditorBoxCol3] = useState(
 	// 	updatedContent.length === 2,
@@ -638,7 +658,7 @@ export const Col_2_img_0_layout = ({
 
 					{showEditorBoxCol1 && (
 						<>
-							{setUpdatedContent((prevContent: JSX.Element[]) => [
+							{setUpdatedContentCol1((prevContent: JSX.Element[]) => [
 								addANewEditorBox({
 									handleSlideEdit: handleSlideEdit,
 									isVerticalContent: false,
@@ -676,12 +696,16 @@ export const Col_2_img_0_layout = ({
 							Add One Column of text
 						</div>
 					)} */}
-					{updatedContent.slice(0, 1).map((item, index) => (
+					{/* {updatedContent.slice(0, 1).map((item, index) => ( */}
+					{updatedContentCol1.map((item, index) => (
 						<React.Fragment key={`contentText_${index}`}>
 							<ul
 								key={`contentText_${index}`}
 								className={`SlideContentText`}
-								style={layoutElements.contentTextCSS}
+								style={{
+									...layoutElements.contentTextCSS,
+									flex: index === updatedContentCol2.length - 1 ? 1 : 0,
+								}}
 							>
 								<li style={{ width: '100%' }}>{item}</li>
 							</ul>
@@ -729,8 +753,8 @@ export const Col_2_img_0_layout = ({
 					)} */}
 					{showEditorBoxCol2 && (
 						<>
-							{setUpdatedContent((prevContent: JSX.Element[]) => [
-								...prevContent.slice(0, 1),
+							{setUpdatedContentCol2((prevContent: JSX.Element[]) => [
+								// ...prevContent.slice(0, 1),
 								addANewEditorBox({
 									handleSlideEdit: handleSlideEdit,
 									isVerticalContent: false,
@@ -740,17 +764,22 @@ export const Col_2_img_0_layout = ({
 									slideIndex: slideIndex,
 									slides: slides,
 								}),
-								...prevContent.slice(2),
+								// ...prevContent.slice(2),
+								...prevContent.slice(1),
 							])}
 							{setShowEditorBoxCol2(false)}
 						</>
 					)}
-					{updatedContent.slice(1, 2).map((item, index) => (
+					{/* {updatedContent.slice(1, 2).map((item, index) => ( */}
+					{updatedContentCol2.map((item, index) => (
 						<React.Fragment key={`contentText_${index + 1}`}>
 							<ul
 								key={`contentText_${index}`}
 								className={`SlideContentText`}
-								style={layoutElements.contentTextCSS}
+								style={{
+									...layoutElements.contentTextCSS,
+									flex: index === updatedContentCol2.length - 1 ? 1 : 0,
+								}}
 							>
 								<li style={{ width: '100%' }}>{item}</li>
 							</ul>
@@ -1142,22 +1171,22 @@ export const Col_2_img_1_layout = ({
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
-			(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
-				const newImgs = [...imgs];
-				if (index >= newImgs.length) newImgs.push(imgSrc);
-				else newImgs[index] = imgSrc;
+		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+			const newImgs = [...imgs];
+			if (index >= newImgs.length) newImgs.push(imgSrc);
+			else newImgs[index] = imgSrc;
 
-				const newIsCharts = [...ischarts];
-				if (index >= newIsCharts.length) newIsCharts.push(ischart);
-				else newIsCharts[index] = ischart;
+			const newIsCharts = [...ischarts];
+			if (index >= newIsCharts.length) newIsCharts.push(ischart);
+			else newIsCharts[index] = ischart;
 
-				const newImagesPosition = [...images_position];
-				if (index >= newImagesPosition.length)
-					newImagesPosition.push(image_position);
-				else newImagesPosition[index] = image_position;
+			const newImagesPosition = [...images_position];
+			if (index >= newImagesPosition.length)
+				newImagesPosition.push(image_position);
+			else newImagesPosition[index] = image_position;
 
-				update_callback(newImgs, newIsCharts, newImagesPosition);
-			};
+			update_callback(newImgs, newIsCharts, newImagesPosition);
+		};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -1312,22 +1341,22 @@ export const Col_1_img_1_layout = ({
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
-			(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
-				const newImgs = [...imgs];
-				if (index >= newImgs.length) newImgs.push(imgSrc);
-				else newImgs[index] = imgSrc;
+		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+			const newImgs = [...imgs];
+			if (index >= newImgs.length) newImgs.push(imgSrc);
+			else newImgs[index] = imgSrc;
 
-				const newIsCharts = [...ischarts];
-				if (index >= newIsCharts.length) newIsCharts.push(ischart);
-				else newIsCharts[index] = ischart;
+			const newIsCharts = [...ischarts];
+			if (index >= newIsCharts.length) newIsCharts.push(ischart);
+			else newIsCharts[index] = ischart;
 
-				const newImagesPosition = [...images_position];
-				if (index >= newImagesPosition.length)
-					newImagesPosition.push(image_position);
-				else newImagesPosition[index] = image_position;
+			const newImagesPosition = [...images_position];
+			if (index >= newImagesPosition.length)
+				newImagesPosition.push(image_position);
+			else newImagesPosition[index] = image_position;
 
-				update_callback(newImgs, newIsCharts, newImagesPosition);
-			};
+			update_callback(newImgs, newIsCharts, newImagesPosition);
+		};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -1510,22 +1539,22 @@ export const Col_2_img_2_layout = ({
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
-			(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
-				const newImgs = [...imgs];
-				if (index >= newImgs.length) newImgs.push(imgSrc);
-				else newImgs[index] = imgSrc;
+		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+			const newImgs = [...imgs];
+			if (index >= newImgs.length) newImgs.push(imgSrc);
+			else newImgs[index] = imgSrc;
 
-				const newIsCharts = [...ischarts];
-				if (index >= newIsCharts.length) newIsCharts.push(ischart);
-				else newIsCharts[index] = ischart;
+			const newIsCharts = [...ischarts];
+			if (index >= newIsCharts.length) newIsCharts.push(ischart);
+			else newIsCharts[index] = ischart;
 
-				const newImagesPosition = [...images_position];
-				if (index >= newImagesPosition.length)
-					newImagesPosition.push(image_position);
-				else newImagesPosition[index] = image_position;
+			const newImagesPosition = [...images_position];
+			if (index >= newImagesPosition.length)
+				newImagesPosition.push(image_position);
+			else newImagesPosition[index] = image_position;
 
-				update_callback(newImgs, newIsCharts, newImagesPosition);
-			};
+			update_callback(newImgs, newIsCharts, newImagesPosition);
+		};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -1827,22 +1856,22 @@ export const Col_3_img_3_layout = ({
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
-			(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
-				const newImgs = [...imgs];
-				if (index >= newImgs.length) newImgs.push(imgSrc);
-				else newImgs[index] = imgSrc;
+		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+			const newImgs = [...imgs];
+			if (index >= newImgs.length) newImgs.push(imgSrc);
+			else newImgs[index] = imgSrc;
 
-				const newIsCharts = [...ischarts];
-				if (index >= newIsCharts.length) newIsCharts.push(ischart);
-				else newIsCharts[index] = ischart;
+			const newIsCharts = [...ischarts];
+			if (index >= newIsCharts.length) newIsCharts.push(ischart);
+			else newIsCharts[index] = ischart;
 
-				const newImagesPosition = [...images_position];
-				if (index >= newImagesPosition.length)
-					newImagesPosition.push(image_position);
-				else newImagesPosition[index] = image_position;
+			const newImagesPosition = [...images_position];
+			if (index >= newImagesPosition.length)
+				newImagesPosition.push(image_position);
+			else newImagesPosition[index] = image_position;
 
-				update_callback(newImgs, newIsCharts, newImagesPosition);
-			};
+			update_callback(newImgs, newIsCharts, newImagesPosition);
+		};
 
 	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
 
