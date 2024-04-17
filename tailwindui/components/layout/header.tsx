@@ -121,7 +121,7 @@ const Header = ({
 					)}
 
 					{/* Desktop navigation */}
-					<nav className='flex w-[272px]'>
+					<nav className='flex w-[200px]'>
 						{/* Desktop sign in links */}
 						{!loading && token ? (
 							!isAuth && (
