@@ -1898,24 +1898,43 @@ export const Col_3_img_3_layout = ({
 	const items = Array.isArray(content) ? content : [content];
 	const { slides, slideIndex, updateSlidePage, updateVersion } = useSlides();
 	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
-	const [updatedContent, setUpdatedContent] = useState(items);
+	// const [updatedContent, setUpdatedContent] = useState(items);
 
-	const [showEditorBoxCol1, setShowEditorBoxCol1] = useState(
-		updatedContent.length === 0,
-	);
-	const [showEditorBoxCol2, setShowEditorBoxCol2] = useState(
-		updatedContent.length === 1,
-	);
-	const [showEditorBoxCol3, setShowEditorBoxCol3] = useState(
-		updatedContent.length === 2,
-	);
+	// const [showEditorBoxCol1, setShowEditorBoxCol1] = useState(
+	// 	updatedContent.length === 0,
+	// );
+	// const [showEditorBoxCol2, setShowEditorBoxCol2] = useState(
+	// 	updatedContent.length === 1,
+	// );
+	// const [showEditorBoxCol3, setShowEditorBoxCol3] = useState(
+	// 	updatedContent.length === 2,
+	// );
 	// useEffect(() => {
 	// 	console.log('updatedContent on page', slideIndex, updatedContent);
 	// }, [updatedContent]);
 
-	const [showAddButton, setShowAddButton] = useState(
-		// slides[slideIndex].content.length <= 2, for three columns
-		updatedContent.length <= 2,
+	// const [showAddButton, setShowAddButton] = useState(
+	// 	// slides[slideIndex].content.length <= 2, for three columns
+	// 	updatedContent.length <= 2,
+	// );
+	const contentItemsFor3Col = changingTemplateContent(items, 3);
+	const [updatedContentCol1, setUpdatedContentCol1] = useState(
+		contentItemsFor3Col[0],
+	);
+	const [updatedContentCol2, setUpdatedContentCol2] = useState(
+		contentItemsFor3Col[1],
+	);
+	const [updatedContentCol3, setUpdatedContentCol3] = useState(
+		contentItemsFor3Col[2],
+	);
+	const [showEditorBoxCol1, setShowEditorBoxCol1] = useState(
+		updatedContentCol1.length === 0,
+	);
+	const [showEditorBoxCol2, setShowEditorBoxCol2] = useState(
+		updatedContentCol2.length === 0,
+	);
+	const [showEditorBoxCol3, setShowEditorBoxCol3] = useState(
+		updatedContentCol3.length === 0,
 	);
 	return (
 		<div style={layoutElements.canvaCSS}>
@@ -2084,7 +2103,7 @@ export const Col_3_img_3_layout = ({
 
 						{showEditorBoxCol1 && (
 							<>
-								{setUpdatedContent((prevContent: JSX.Element[]) => [
+								{setUpdatedContentCol1((prevContent: JSX.Element[]) => [
 									addANewEditorBox({
 										handleSlideEdit: handleSlideEdit,
 										isVerticalContent: false,
@@ -2099,12 +2118,15 @@ export const Col_3_img_3_layout = ({
 								{setShowEditorBoxCol1(false)}
 							</>
 						)}
-						{updatedContent.slice(0, 1).map((item, index) => (
+						{updatedContentCol1.map((item, index) => (
 							<React.Fragment key={`contentText_${index} `}>
 								<ul
 									key={`contentText_${index} `}
 									className={`SlideContentText`}
-									style={layoutElements.contentTextCSS}
+									style={{
+										...layoutElements.contentTextCSS,
+										flex: index === updatedContentCol1.length - 1 ? 1 : 0,
+									}}
 								>
 									<li style={{ width: '100%' }}>{item}</li>
 								</ul>
@@ -2129,8 +2151,8 @@ export const Col_3_img_3_layout = ({
 						></div>
 						{showEditorBoxCol2 && (
 							<>
-								{setUpdatedContent((prevContent: JSX.Element[]) => [
-									...prevContent.slice(0, 1),
+								{setUpdatedContentCol2((prevContent: JSX.Element[]) => [
+									// ...prevContent.slice(0, 1),
 									addANewEditorBox({
 										handleSlideEdit: handleSlideEdit,
 										isVerticalContent: false,
@@ -2140,17 +2162,20 @@ export const Col_3_img_3_layout = ({
 										slideIndex: slideIndex,
 										slides: slides,
 									}),
-									...prevContent.slice(2),
+									...prevContent.slice(1),
 								])}
 								{setShowEditorBoxCol2(false)}
 							</>
 						)}
-						{updatedContent.slice(1, 2).map((item, index) => (
+						{updatedContentCol2.map((item, index) => (
 							<React.Fragment key={`contentText_${index + 1}}`}>
 								<ul
 									key={`contentText_${index}}`}
 									className={`SlideContentText`}
-									style={layoutElements.contentTextCSS}
+									style={{
+										...layoutElements.contentTextCSS,
+										flex: index === updatedContentCol2.length - 1 ? 1 : 0,
+									}}
 								>
 									<li style={{ width: '100%' }}>{item}</li>
 								</ul>
@@ -2176,8 +2201,8 @@ export const Col_3_img_3_layout = ({
 						{/* Editor Box for Column 3 */}
 						{showEditorBoxCol3 && (
 							<>
-								{setUpdatedContent((prevContent: JSX.Element[]) => [
-									...prevContent.slice(0, 2),
+								{setUpdatedContentCol3((prevContent: JSX.Element[]) => [
+									// ...prevContent.slice(0, 2),
 									addANewEditorBox({
 										handleSlideEdit: handleSlideEdit,
 										isVerticalContent: false,
@@ -2187,17 +2212,20 @@ export const Col_3_img_3_layout = ({
 										slideIndex: slideIndex,
 										slides: slides,
 									}),
-									...prevContent.slice(3),
+									...prevContent.slice(1),
 								])}
 								{setShowEditorBoxCol3(false)}
 							</>
 						)}
-						{updatedContent.slice(2, 3).map((item, index) => (
+						{updatedContentCol3.map((item, index) => (
 							<React.Fragment key={`contentText_${index + 2} `}>
 								<ul
 									key={`contentText_${index} `}
 									className={`SlideContentText`}
-									style={layoutElements.contentTextCSS}
+									style={{
+										...layoutElements.contentTextCSS,
+										flex: index === updatedContentCol3.length - 1 ? 1 : 0,
+									}}
 								>
 									<li style={{ width: '100%' }}>{item}</li>
 								</ul>
