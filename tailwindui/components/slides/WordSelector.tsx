@@ -7,6 +7,10 @@ type WordSelectorProps = {
 	setQuery: (query: string) => void;
 };
 
+function textIsChineseJapaneseOrKorean(text: string): boolean {
+	return text.match(/[\u3400-\u9FBF]/) !== null;
+}
+
 export const WordSelector: React.FC<WordSelectorProps> = ({ text, setQuery }) => {
 	if (!text) return null;
 	// text = removeTags(text) as string;
@@ -18,7 +22,7 @@ export const WordSelector: React.FC<WordSelectorProps> = ({ text, setQuery }) =>
 	// remove ',' and '.' from words
 	words = words.map(word => word.replace(/[,\.]/g, ''));
 
-	if (!text.includes(' ')) // split by character if there is no space
+	if (textIsChineseJapaneseOrKorean(text))
 	  words = text.split('');
 
 	if (words.length == 0) return null;
