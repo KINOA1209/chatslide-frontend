@@ -62,6 +62,8 @@ const PricingComparison: React.FC<{
 			router.push('/signup');
 		}
 		if (tier === 'FREE') {
+			if (userTier === 'FREE')
+				toast.success('You are already on the free plan');
 			toast.success('Your plan already includes this feature');
 		}
 		else if (userTier.includes('CANCELLED') || userTier === 'FREE') {
