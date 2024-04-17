@@ -1720,7 +1720,7 @@ function Landing() {
 										</div>
 									</div>
 									<div className='uui-heading-xxsmall text-weight-medium'>
-										"In terms of design and build, DrLambda has a robust and
+										"In terms of design and build, {getBrand()} has a robust and
 										sleek design. So far it performs well as what I expect of
 										PDF to slide transformation."
 									</div>
