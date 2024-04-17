@@ -352,7 +352,7 @@ class ProjectService {
 		headers.append('Content-Type', 'application/json');
 
 		try {
-			fetch(`/api/export_to_${type}`, {
+			fetch(`/api/export/export_to_${type}`, {
 				method: 'POST',
 				headers: headers,
 				body: JSON.stringify({ project_id: project_id }),

@@ -227,7 +227,7 @@ export default function Topic() {
 					token,
 					searchOnlineScope,
 					scenarioType,
-					undefined,
+					undefined,  // post_style
 				);
 				formData.knowledge_summary = response.data.knowledge_summary;
 				formData.project_id = response.data.project_id;

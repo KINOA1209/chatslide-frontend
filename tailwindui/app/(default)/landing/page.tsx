@@ -306,7 +306,7 @@ function Landing() {
 								height='100%'
 								src='https://www.youtube.com/embed/qxHT5GYe_aQ?autoplay=1&mute=1&loop=1&rel=0'
 								title='ChatSlide - One-click presentation AI tool through multiple sources'
-								allow='autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+								allow='autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen'
 							/>
 						</div>
 					</div>
@@ -383,7 +383,7 @@ function Landing() {
 								height='100%'
 								src='https://www.youtube.com/embed/cs1dtV3gRpA?si=cGBczLWZpBZANnyv&autoplay=1&mute=1&loop=1&rel=0'
 								title='How to safely photography the solar eclipse (ChatSlide Avatar Demo)'
-								allow='autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+								allow='autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen'
 							/>
 						</div>
 					</div>

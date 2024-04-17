@@ -63,7 +63,7 @@ export default function Topic_SocialPost() {
 		useProject();
 
 	const [topic, setTopic] = useState(project?.topic || '');
-	const [scenarioType, setscenarioType] = useState(project?.post_type || '');
+	const postStyle= project?.post_type || '';
 	const [language, setLanguage] = useState(project?.language || 'English');
 	const [audience, setAudience] = useState(
 		project?.audience || 'social media audiences',
@@ -125,14 +125,14 @@ export default function Topic_SocialPost() {
 			project_id: project_id,
 			resources: selectedResources.map((resource: Resource) => resource.id),
 			model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
-			post_style: scenarioType,
+			post_style: postStyle,
 			knowledge_summary: knowledge_summary,
 		};
 		bulkUpdateProject({
 			topic: topic,
 			language: language,
 			resources: selectedResources,
-			scenario_type: scenarioType,
+			post_type: postStyle,
 		} as Project);
 
 		// if needs to summarize resources
@@ -148,9 +148,9 @@ export default function Topic_SocialPost() {
 					audience,
 					language,
 					token,
-					undefined,
-					undefined,
-					scenarioType,
+					undefined,  // search_online
+					undefined,  // scenario_type for slides
+					postStyle,  // post_style for social posts
 				);
 				formData.knowledge_summary = response.data.knowledge_summary;
 				formData.project_id = response.data.project_id;
@@ -175,7 +175,7 @@ export default function Topic_SocialPost() {
 			//const searchImagesResponse = await callSearchImages(JSON.stringify(formData.topic))
 			setIsSubmitting(false);
 			initSocialPosts(
-				ProjectService.parseSocialPosts(response.data.res, scenarioType),
+				ProjectService.parseSocialPosts(response.data.res, postStyle),
 			);
 			updateProject('social_posts', response.data.res);
 			bulkUpdateProject(response.data);
