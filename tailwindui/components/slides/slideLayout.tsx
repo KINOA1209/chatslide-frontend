@@ -23,22 +23,11 @@ import { useLocalImgs } from './slideTemplates';
 import { ThemeElements } from './templates_customizable_elements/theme_elements';
 // import { LayoutElements } from './templates_customizable_elements/layout_elements';
 import { LayoutElements } from '@/components/slides/templates_customizable_elements/layout_elements';
-import { Rnd } from 'react-rnd';
-import { DraggableEventHandler } from 'react-draggable';
 import ImagesPosition from '@/models/ImagesPosition';
-import {
-	initializeImageData,
-	onDragStart,
-	onDragStop,
-	onResizeStart,
-	onResizeStop,
-	onMouseLeave,
-} from './drag_resize/dragAndResizeFunction';
 import { useSlides } from '@/hooks/use-slides';
 import ResizeSlider from './drag_resize/resize_slider';
 import '@/components/slides/drag_resize/dragAndResizeCSS.css';
 import dynamic from 'next/dynamic';
-import { isArray } from 'chart.js/dist/helpers/helpers.core';
 import Slide, { SlideKeys } from '@/models/Slide';
 const QuillEditable = dynamic(
 	() => import('@/components/slides/quillEditorSlide'),
@@ -109,6 +98,24 @@ type HandleAddColumnProps = {
 	shouldShowAddButton: boolean;
 };
 
+export const changingTemplateContent = (content: string[], col_num: number) => {
+	const totalItems = content.length;
+	const minItemsPerCol = Math.floor(totalItems / col_num);
+	const extraItems = totalItems % col_num;
+
+	let res: string[][] = [];
+	let curr_idx = 0;
+	for (let i = 0; i < col_num; i++) {
+		// Calculate how many items this column should have
+		const itemsCount = minItemsPerCol + (i < extraItems ? 1 : 0);
+		res.push(content.slice(curr_idx, curr_idx + itemsCount));
+		curr_idx += itemsCount;
+	}
+	return res
+}
+
+//console.log(changingTemplateContent(['1','2','3','4','5','6','7','8','9','10','11'], 3))
+
 export const addANewEditorBox = ({
 	handleSlideEdit,
 	isVerticalContent,
@@ -118,9 +125,9 @@ export const addANewEditorBox = ({
 	slideIndex,
 	slides,
 }: // setShowEditorBox,
-// shouldShowEditorBox,
-// contentText,
-AddANewEditorBoxProps) => {
+	// shouldShowEditorBox,
+	// contentText,
+	AddANewEditorBoxProps) => {
 	console.log('add a new content item column:');
 	// const newContentItem = (
 	return (
@@ -341,22 +348,22 @@ export const Cover_img_1_layout = ({
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
-			const newImgs = [...imgs];
-			if (index >= newImgs.length) newImgs.push(imgSrc);
-			else newImgs[index] = imgSrc;
+			(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+				const newImgs = [...imgs];
+				if (index >= newImgs.length) newImgs.push(imgSrc);
+				else newImgs[index] = imgSrc;
 
-			const newIsCharts = [...ischarts];
-			if (index >= newIsCharts.length) newIsCharts.push(ischart);
-			else newIsCharts[index] = ischart;
+				const newIsCharts = [...ischarts];
+				if (index >= newIsCharts.length) newIsCharts.push(ischart);
+				else newIsCharts[index] = ischart;
 
-			const newImagesPosition = [...images_position];
-			if (index >= newImagesPosition.length)
-				newImagesPosition.push(image_position);
-			else newImagesPosition[index] = image_position;
+				const newImagesPosition = [...images_position];
+				if (index >= newImagesPosition.length)
+					newImagesPosition.push(image_position);
+				else newImagesPosition[index] = image_position;
 
-			update_callback(newImgs, newIsCharts, newImagesPosition);
-		};
+				update_callback(newImgs, newIsCharts, newImagesPosition);
+			};
 
 	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
 
@@ -1135,22 +1142,22 @@ export const Col_2_img_1_layout = ({
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
-			const newImgs = [...imgs];
-			if (index >= newImgs.length) newImgs.push(imgSrc);
-			else newImgs[index] = imgSrc;
+			(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+				const newImgs = [...imgs];
+				if (index >= newImgs.length) newImgs.push(imgSrc);
+				else newImgs[index] = imgSrc;
 
-			const newIsCharts = [...ischarts];
-			if (index >= newIsCharts.length) newIsCharts.push(ischart);
-			else newIsCharts[index] = ischart;
+				const newIsCharts = [...ischarts];
+				if (index >= newIsCharts.length) newIsCharts.push(ischart);
+				else newIsCharts[index] = ischart;
 
-			const newImagesPosition = [...images_position];
-			if (index >= newImagesPosition.length)
-				newImagesPosition.push(image_position);
-			else newImagesPosition[index] = image_position;
+				const newImagesPosition = [...images_position];
+				if (index >= newImagesPosition.length)
+					newImagesPosition.push(image_position);
+				else newImagesPosition[index] = image_position;
 
-			update_callback(newImgs, newIsCharts, newImagesPosition);
-		};
+				update_callback(newImgs, newIsCharts, newImagesPosition);
+			};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -1305,22 +1312,22 @@ export const Col_1_img_1_layout = ({
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
-			const newImgs = [...imgs];
-			if (index >= newImgs.length) newImgs.push(imgSrc);
-			else newImgs[index] = imgSrc;
+			(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+				const newImgs = [...imgs];
+				if (index >= newImgs.length) newImgs.push(imgSrc);
+				else newImgs[index] = imgSrc;
 
-			const newIsCharts = [...ischarts];
-			if (index >= newIsCharts.length) newIsCharts.push(ischart);
-			else newIsCharts[index] = ischart;
+				const newIsCharts = [...ischarts];
+				if (index >= newIsCharts.length) newIsCharts.push(ischart);
+				else newIsCharts[index] = ischart;
 
-			const newImagesPosition = [...images_position];
-			if (index >= newImagesPosition.length)
-				newImagesPosition.push(image_position);
-			else newImagesPosition[index] = image_position;
+				const newImagesPosition = [...images_position];
+				if (index >= newImagesPosition.length)
+					newImagesPosition.push(image_position);
+				else newImagesPosition[index] = image_position;
 
-			update_callback(newImgs, newIsCharts, newImagesPosition);
-		};
+				update_callback(newImgs, newIsCharts, newImagesPosition);
+			};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -1503,22 +1510,22 @@ export const Col_2_img_2_layout = ({
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
-			const newImgs = [...imgs];
-			if (index >= newImgs.length) newImgs.push(imgSrc);
-			else newImgs[index] = imgSrc;
+			(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+				const newImgs = [...imgs];
+				if (index >= newImgs.length) newImgs.push(imgSrc);
+				else newImgs[index] = imgSrc;
 
-			const newIsCharts = [...ischarts];
-			if (index >= newIsCharts.length) newIsCharts.push(ischart);
-			else newIsCharts[index] = ischart;
+				const newIsCharts = [...ischarts];
+				if (index >= newIsCharts.length) newIsCharts.push(ischart);
+				else newIsCharts[index] = ischart;
 
-			const newImagesPosition = [...images_position];
-			if (index >= newImagesPosition.length)
-				newImagesPosition.push(image_position);
-			else newImagesPosition[index] = image_position;
+				const newImagesPosition = [...images_position];
+				if (index >= newImagesPosition.length)
+					newImagesPosition.push(image_position);
+				else newImagesPosition[index] = image_position;
 
-			update_callback(newImgs, newIsCharts, newImagesPosition);
-		};
+				update_callback(newImgs, newIsCharts, newImagesPosition);
+			};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -1820,22 +1827,22 @@ export const Col_3_img_3_layout = ({
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
-			const newImgs = [...imgs];
-			if (index >= newImgs.length) newImgs.push(imgSrc);
-			else newImgs[index] = imgSrc;
+			(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+				const newImgs = [...imgs];
+				if (index >= newImgs.length) newImgs.push(imgSrc);
+				else newImgs[index] = imgSrc;
 
-			const newIsCharts = [...ischarts];
-			if (index >= newIsCharts.length) newIsCharts.push(ischart);
-			else newIsCharts[index] = ischart;
+				const newIsCharts = [...ischarts];
+				if (index >= newIsCharts.length) newIsCharts.push(ischart);
+				else newIsCharts[index] = ischart;
 
-			const newImagesPosition = [...images_position];
-			if (index >= newImagesPosition.length)
-				newImagesPosition.push(image_position);
-			else newImagesPosition[index] = image_position;
+				const newImagesPosition = [...images_position];
+				if (index >= newImagesPosition.length)
+					newImagesPosition.push(image_position);
+				else newImagesPosition[index] = image_position;
 
-			update_callback(newImgs, newIsCharts, newImagesPosition);
-		};
+				update_callback(newImgs, newIsCharts, newImagesPosition);
+			};
 
 	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
 
