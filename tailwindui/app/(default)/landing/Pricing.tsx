@@ -18,7 +18,7 @@ const PricingComparison: React.FC<{
 	const pathname = usePathname();
 	const router = useRouter();
 	const smallSuffix = small ? '-small' : '';
-	console.log('smallSuffix', smallSuffix);
+	// console.log('smallSuffix', smallSuffix);
 
 	const getCta = (tier: 'FREE' | 'PLUS' | 'PRO'): string => {
 		if (!token) {

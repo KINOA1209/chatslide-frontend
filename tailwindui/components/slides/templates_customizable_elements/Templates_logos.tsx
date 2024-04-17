@@ -123,7 +123,7 @@ export const generateTemplateLogo = ({
 	darkBGLogo,
 }: TemplateLogoType) => {
 	// console.log('custom_logo:', custom_logo);
-	console.log('logo:', coverLogo);
+	// console.log('logo:', coverLogo);
 
 	if (!custom_logo) {
 		return <></>;
