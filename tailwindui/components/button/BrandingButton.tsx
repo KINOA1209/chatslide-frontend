@@ -45,11 +45,6 @@ export const BrandingButton: React.FC<{
 	}, []);
 
 	return <>
-		<PaywallModal
-			showModal={showPaymentModal}
-			message='Upgrade for this 🌟premium feature!'
-			setShowModal={setShowPaymentModal}
-		/>
 		<Modal
 			showModal={showModal}
 			setShowModal={setShowModal}
@@ -106,6 +101,11 @@ export const BrandingButton: React.FC<{
 			</Instruction>
 
 		</Modal>
+		<PaywallModal
+			showModal={showPaymentModal}
+			message='Upgrade for this 🌟premium feature!'
+			setShowModal={setShowPaymentModal}
+		/>
 		<ButtonWithExplanation
 			button={
 				<button onClick={() => setShowModal(true)} className='w-[24px]'>
