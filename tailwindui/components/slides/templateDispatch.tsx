@@ -160,18 +160,24 @@ export const templateDispatch = (
 	// 	: 'Original';
 
 	// check for layout keys validity, make sure layoutKeys are valid
-	const layoutKeysArray: LayoutKeys[] = [
-		'',
-		'Cover_img_0_layout',
-		'Cover_img_1_layout',
-		'Col_1_img_0_layout',
-		'Col_2_img_0_layout',
-		'Col_3_img_0_layout',
-		'Col_2_img_1_layout',
-		'Col_1_img_1_layout',
-		'Col_2_img_2_layout',
-		'Col_3_img_3_layout',
-	];
+
+	const allLayoutKeys: Record<LayoutKeys, boolean> = {
+		'': true,
+		Cover_img_0_layout: true,
+		Cover_img_1_layout: true,
+		Col_1_img_0_layout: true,
+		Col_2_img_0_layout: true,
+		Col_3_img_0_layout: true,
+		Col_2_img_1_layout: true,
+		Col_1_img_1_layout: true,
+		Col_2_img_2_layout: true,
+		Col_3_img_3_layout: true,
+		Full_img_only_layout: true,
+	};
+
+	const layoutKeysArray: LayoutKeys[] = Object.keys(
+		allLayoutKeys,
+	) as LayoutKeys[];
 
 	const isLayoutOptionValid = layoutKeysArray.includes(layoutOptionCover);
 

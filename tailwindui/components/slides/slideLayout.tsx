@@ -19,6 +19,7 @@ import col2img1_png from '@/public/images/template/layout/col2img1.png';
 import col1img1_png from '@/public/images/template/layout/col1img1.png';
 import col3img3_png from '@/public/images/template/layout/col3img3.png';
 import col2img2_png from '@/public/images/template/layout/col2img2.png';
+import Full_img_only_png from '@/public/images/template/layout/Full_img_only.png';
 import { useLocalImgs } from './slideTemplates';
 import { ThemeElements } from './templates_customizable_elements/theme_elements';
 // import { LayoutElements } from './templates_customizable_elements/layout_elements';
@@ -45,7 +46,8 @@ export type LayoutKeys =
 	| 'Col_2_img_1_layout'
 	| 'Col_1_img_1_layout'
 	| 'Col_2_img_2_layout'
-	| 'Col_3_img_3_layout';
+	| 'Col_3_img_3_layout'
+	| 'Full_img_only_layout';
 // for add column of text button style
 const addButtonStyle = `
 flex items-center justify-center
@@ -2280,6 +2282,111 @@ export const Col_3_img_3_layout = ({
 	);
 };
 
+export const Full_img_only_layout = ({
+	user_name,
+	title,
+	topic,
+	subtopic,
+	content,
+	imgs,
+	update_callback,
+	canEdit,
+	isCoverPage,
+	layoutOptionNonCover,
+	layoutOptionCover,
+	themeElements,
+	layoutElements,
+	templateLogo,
+	charts,
+	ischarts,
+	handleSlideEdit,
+	currentSlideIndex,
+	isShowingLogo,
+	images_position,
+}: MainSlideProps) => {
+	const updateImgAtIndex =
+		(index: number) =>
+		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+			const newImgs = [...imgs];
+			if (index >= newImgs.length) newImgs.push(imgSrc);
+			else newImgs[index] = imgSrc;
+
+			const newIsCharts = [...ischarts];
+			if (index >= newIsCharts.length) newIsCharts.push(ischart);
+			else newIsCharts[index] = ischart;
+
+			const newImagesPosition = [...images_position];
+			if (index >= newImagesPosition.length)
+				newImagesPosition.push(image_position);
+			else newImagesPosition[index] = image_position;
+
+			update_callback(newImgs, newIsCharts, newImagesPosition);
+		};
+
+	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
+
+	// useEffect(() => {
+	// 	console.log('current layout is full img only');
+	// });
+
+	return (
+		<div style={layoutElements.canvaCSS}>
+			{/* three columns of images */}
+			<div
+				// className='w-full grid grid-cols-3 gap-[2rem] '
+				style={{
+					...layoutElements.imageContainerCSS,
+					zIndex: imgHigherZIndex ? 100 : 20,
+				}}
+			>
+				<div
+					style={{
+						...layoutElements.imageCSS,
+					}}
+				>
+					<ImgModule
+						imgsrc={imgs?.[0]}
+						updateSingleCallback={updateImgAtIndex(0)}
+						chartArr={charts}
+						ischartArr={ischarts}
+						handleSlideEdit={handleSlideEdit}
+						currentSlideIndex={currentSlideIndex}
+						currentContentIndex={0}
+						canEdit={canEdit}
+						images_position={images_position}
+						layoutElements={layoutElements}
+						customImageStyle={layoutElements.imageCSS}
+						setImgHigherZIndex={setImgHigherZIndex}
+						columnIndex={0}
+					/>
+				</div>
+			</div>
+			<div
+				style={{
+					...layoutElements.logoCSS,
+					display: `${isShowingLogo ? 'contents' : 'none'}`,
+					zIndex: 30,
+					pointerEvents: 'none',
+				}}
+			>
+				{templateLogo}
+			</div>
+			<div style={layoutElements.visualElementsCSS}>
+				{themeElements.backgroundUrlCol_3_img_3 && (
+					<Image
+						style={{ objectFit: 'cover', height: '100%' }}
+						width={960}
+						height={540}
+						src={themeElements.backgroundUrlCol_3_img_3}
+						alt='Background Image'
+						unoptimized={true}
+					/>
+				)}
+			</div>
+		</div>
+	);
+};
+
 export const layoutOptions = {
 	Cover_img_0_layout: Cover_img_0_layout,
 	Cover_img_1_layout: Cover_img_1_layout,
@@ -2290,6 +2397,7 @@ export const layoutOptions = {
 	Col_2_img_1_layout: Col_2_img_1_layout,
 	Col_2_img_2_layout: Col_2_img_2_layout,
 	Col_3_img_3_layout: Col_3_img_3_layout,
+	Full_img_only_layout: Full_img_only_layout,
 };
 
 export const availableLayouts = {
@@ -2331,6 +2439,10 @@ export const availableLayouts = {
 		{
 			name: 'Col_3_img_3_layout' as LayoutKeys,
 			img: col3img3_png.src,
+		},
+		{
+			name: 'Full_img_only_layout' as LayoutKeys,
+			img: Full_img_only_png.src,
 		},
 	],
 };
