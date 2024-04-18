@@ -291,7 +291,12 @@ export const templateDispatch = (
 					generateContentElement(
 						slide.userName,
 						'userName',
-						themeElements.userNameFontCSS,
+						{
+							...themeElements.userNameFontCSS,
+							textAlign: themeElements.userNameAlignment
+								? themeElements.userNameAlignment.textAlign
+								: 'left',
+						},
 						false,
 					)
 				) : (
@@ -309,7 +314,12 @@ export const templateDispatch = (
 			title={generateContentElement(
 				slide.head,
 				'head',
-				themeElements.headFontCSS,
+				{
+					...themeElements.headFontCSS,
+					textAlign: themeElements.headFontAlignment
+						? themeElements.headFontAlignment.textAlign
+						: 'left',
+				},
 				false,
 			)}
 			topic={generateContentElement(

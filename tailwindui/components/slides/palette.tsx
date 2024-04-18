@@ -31,6 +31,15 @@ const availablePalettes: availablePalettesObject = {
 		'Regent St Blue',
 		'Shark Black',
 	],
+	Event_Report_010: [
+		'Perfume',
+		'Jonquil',
+		'Morning Glory',
+		'Azalea',
+		'Saffron',
+		'Feta',
+		'Catskill White',
+	],
 };
 
 export const lightColorPalette: PaletteKeys[] = [
@@ -45,6 +54,13 @@ export const darkColorPalette: PaletteKeys[] = [
 	'Dynamic Purple',
 	'Royal Blue',
 	'Shark Black',
+	'Perfume',
+	'Jonquil',
+	'Morning Glory',
+	'Azalea',
+	'Saffron',
+	'Feta',
+	'Catskill White',
 ];
 
 export default availablePalettes;

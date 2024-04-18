@@ -22,6 +22,7 @@ import { Business_002_template } from './new_templates/Business_002_template';
 import { Fun_Vibrant_007_template } from './new_templates/Fun_Vibrant_007_template';
 import { Business_Light_006_template } from './new_templates/Business_Light_006_template';
 import { Simplistic_008_template } from './new_templates/Simplistic_008_template';
+import { Event_Report_010_template } from './new_templates/Event_Report_010_template';
 import { LayoutKeys } from './slideLayout';
 import { layoutOptions } from './slideLayout';
 import {
@@ -117,6 +118,13 @@ export type PaletteKeys =
 	| 'Shark Black'
 	| 'Moon Mist'
 	| 'Regent St Blue'
+	| 'Perfume'
+	| 'Jonquil'
+	| 'Morning Glory'
+	| 'Azalea'
+	| 'Saffron'
+	| 'Feta'
+	| 'Catskill White'
 	| '';
 
 // add template keys here
@@ -142,11 +150,13 @@ export const availableTemplates = {
 	Fun_Vibrant_007: Fun_Vibrant_007_template,
 	Simplistic_008: Simplistic_008_template,
 	New_Education_009: New_Education_009_template,
+	Event_Report_010: Event_Report_010_template,
 };
 
 export const templateDisplayNames = {
 	Simplistic_008: '🖼️ General Pitch',
 	New_Education_009: '📚 Education',
+	Event_Report_010: '📈 Event Report',
 	// Default: '📌 Default',
 	Business_002: '📎 Business',
 	Business_Dark_005: '💼 Business Dark',

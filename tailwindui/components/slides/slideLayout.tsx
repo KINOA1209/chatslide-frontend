@@ -509,7 +509,13 @@ export const Col_1_img_0_layout = ({
 		<div ref={containerRef} style={layoutElements.canvaCSS}>
 			<div
 				className={`titleAndSubtopicBox`}
-				style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 50 }}
+				style={{
+					...layoutElements.titleAndSubtopicBoxCSS,
+					zIndex: 50,
+					backgroundColor: themeElements.titleAndSubtopicBoxBackgroundColor
+						? themeElements.titleAndSubtopicBoxBackgroundColor
+						: '',
+				}}
 			>
 				<div
 					ref={topicRef}
@@ -632,7 +638,13 @@ export const Col_2_img_0_layout = ({
 		<div className={`SlideLayoutCanvas`} style={layoutElements.canvaCSS}>
 			<div
 				className={`SlideTopicAndSubtopicBox`}
-				style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 50 }}
+				style={{
+					...layoutElements.titleAndSubtopicBoxCSS,
+					zIndex: 50,
+					backgroundColor: themeElements.titleAndSubtopicBoxBackgroundColor
+						? themeElements.titleAndSubtopicBoxBackgroundColor
+						: '',
+				}}
 			>
 				<div className={`SlideTopic`} style={layoutElements.topicCSS}>
 					{topic}
@@ -885,7 +897,15 @@ export const Col_3_img_0_layout = ({
 
 	return (
 		<div style={layoutElements.canvaCSS}>
-			<div style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 50 }}>
+			<div
+				style={{
+					...layoutElements.titleAndSubtopicBoxCSS,
+					zIndex: 50,
+					backgroundColor: themeElements.titleAndSubtopicBoxBackgroundColor
+						? themeElements.titleAndSubtopicBoxBackgroundColor
+						: '',
+				}}
+			>
 				<div style={layoutElements.topicCSS}>{topic}</div>
 				<div style={layoutElements.subtopicCSS}>{subtopic}</div>
 			</div>
@@ -1258,7 +1278,13 @@ export const Col_2_img_1_layout = ({
 				<div
 					// className='flex flex-col'
 					// topic subtopic box zindex 40 prevent covering content text
-					style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 50 }}
+					style={{
+						...layoutElements.titleAndSubtopicBoxCSS,
+						zIndex: 50,
+						backgroundColor: themeElements.titleAndSubtopicBoxBackgroundColor
+							? themeElements.titleAndSubtopicBoxBackgroundColor
+							: '',
+					}}
 				>
 					<div className={``} ref={topicRef} style={layoutElements.topicCSS}>
 						{topic}
@@ -1432,7 +1458,13 @@ export const Col_1_img_1_layout = ({
 
 				<div
 					// className='flex flex-col'
-					style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: '50' }}
+					style={{
+						...layoutElements.titleAndSubtopicBoxCSS,
+						zIndex: '50',
+						backgroundColor: themeElements.titleAndSubtopicBoxBackgroundColor
+							? themeElements.titleAndSubtopicBoxBackgroundColor
+							: '',
+					}}
 					ref={topicAndSubtopicRef}
 				>
 					<div className={``} style={layoutElements.topicCSS}>
@@ -1664,7 +1696,13 @@ export const Col_2_img_2_layout = ({
 			>
 				<div
 					// className='flex flex-col justify-center items-center'
-					style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 50 }}
+					style={{
+						...layoutElements.titleAndSubtopicBoxCSS,
+						zIndex: 50,
+						backgroundColor: themeElements.titleAndSubtopicBoxBackgroundColor
+							? themeElements.titleAndSubtopicBoxBackgroundColor
+							: '',
+					}}
 					ref={topicAndSubtopicRef}
 				>
 					<div className={``} style={layoutElements.topicCSS}>
@@ -1966,7 +2004,13 @@ export const Col_3_img_3_layout = ({
 			>
 				<div
 					// className='flex flex-col justify-center items-center'
-					style={{ ...layoutElements.titleAndSubtopicBoxCSS, zIndex: 50 }}
+					style={{
+						...layoutElements.titleAndSubtopicBoxCSS,
+						zIndex: 50,
+						backgroundColor: themeElements.titleAndSubtopicBoxBackgroundColor
+							? themeElements.titleAndSubtopicBoxBackgroundColor
+							: '',
+					}}
 				>
 					<div className={``} style={layoutElements.topicCSS}>
 						{topic}

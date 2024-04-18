@@ -221,6 +221,28 @@
 	font-weight: bold;
 	font-style: normal;
 }
+/* poppins family */
+@font-face {
+	font-family: 'Poppins Regular';
+	src: url('/fonts/Poppins-Regular.ttf') format('truetype');
+	/* Add more src declarations for different font weights or styles if needed */
+}
+@font-face {
+	font-family: 'Poppins Medium';
+	src: url('/fonts/Poppins-Medium.ttf') format('truetype');
+	/* Add more src declarations for different font weights or styles if needed */
+}
+@font-face {
+	font-family: 'Poppins SemiBold';
+	src: url('/fonts/Poppins-SemiBold.ttf') format('truetype');
+	/* Add more src declarations for different font weights or styles if needed */
+}
+@font-face {
+	font-family: 'Poppins Bold';
+	src: url('/fonts/Poppins-Bold.ttf') format('truetype');
+	/* Add more src declarations for different font weights or styles if needed */
+}
+
 /* 
 @font-face {
 	font-family: 'Cormorant';
