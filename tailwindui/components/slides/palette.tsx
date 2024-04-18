@@ -48,6 +48,11 @@ export const lightColorPalette: PaletteKeys[] = [
 	'Moon Mist',
 	'Ecru White',
 	'Regent St Blue',
+	'Catskill White',
+	'Saffron',
+	'Feta',
+	'Morning Glory',
+	'Jonquil',
 ];
 
 export const darkColorPalette: PaletteKeys[] = [
@@ -55,12 +60,7 @@ export const darkColorPalette: PaletteKeys[] = [
 	'Royal Blue',
 	'Shark Black',
 	'Perfume',
-	'Jonquil',
-	'Morning Glory',
 	'Azalea',
-	'Saffron',
-	'Feta',
-	'Catskill White',
 ];
 
 export default availablePalettes;
