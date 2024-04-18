@@ -251,7 +251,7 @@ export const ImgModule = ({
 			})
 			.then((parsedResponse) => {
 				if (parsedResponse.data.images.length === 0) {
-					toast.error('No images found, please try another keyword or engine', {
+					toast.error('No images found, please try another keyword or search engine', {
 						position: 'top-center',
 						autoClose: 5000,
 						hideProgressBar: false,
@@ -296,7 +296,7 @@ export const ImgModule = ({
 			try {
 				const parsedResponse = await response.json();
 				if (parsedResponse.data.images.length === 0) {
-					toast.error('No images found, please try another keyword or engine', {
+					toast.error('No images found, please try another keyword or search engine', {
 						position: 'top-center',
 						autoClose: 5000,
 						hideProgressBar: false,
