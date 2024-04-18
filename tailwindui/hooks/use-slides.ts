@@ -116,6 +116,7 @@ export const useSlides = () => {
 			return { ...slide, userName: '' };
 		});
 		setSlides(newSlides);
+		updateVersion();
 		updateSlideHistory(newSlides);
 		debouncedSyncSlides(newSlides, true);
 	}

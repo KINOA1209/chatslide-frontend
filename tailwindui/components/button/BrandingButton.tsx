@@ -97,7 +97,7 @@ export const BrandingButton: React.FC<{
 						removeUserName();
 					}}
 				>Remove 'Created by DrLambda'.</div>
-				<PlusLabel />
+				{!isPaidUser && <PlusLabel />}
 			</Instruction>
 
 		</Modal>
