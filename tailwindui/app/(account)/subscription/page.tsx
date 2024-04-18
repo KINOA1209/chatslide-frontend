@@ -1,21 +1,18 @@
 'use client';
-import { useState, useEffect, useRef, RefObject } from 'react';
-import Pricing from '@/components/landing/pricing';
-import { ToastContainer, toast } from 'react-toastify';
+import { useState, useEffect } from 'react';
+import { ToastContainer, } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { FeedbackForm } from '@/components/ui/feedback';
-import { PrimaryButton, UserResearchWindow } from './subscriptionCTAs';
-import { BigTitle, Explanation, Instruction, Title } from '@/components/ui/Text';
+import { UserResearchWindow } from './subscriptionCTAs';
+import { Title } from '@/components/ui/Text';
 import Card from '@/components/ui/Card';
 import { Panel } from '@/components/layout/Panel';
-import { Column } from '@/components/layout/Column';
 import useHydrated from '@/hooks/use-hydrated';
-import { BigBlueButton, SmallBlueButton } from '@/components/button/DrlambdaButton';
+import { SmallBlueButton } from '@/components/button/DrlambdaButton';
 import { PricingComparison } from '@/app/(default)/landing/Pricing';
-import { UnlimitedUpgrade } from '@/components/slides/card/UnlimitedUpgrade';
 
 const Subscription = () => {
 	const [portalURL, setPortalURL] = useState('');
@@ -48,7 +45,7 @@ const Subscription = () => {
 					Find tailored plans for you
 				</Title>
 
-				<PricingComparison small={true}/>
+				<PricingComparison small={true} />
 
 				<Title>
 					Looking to redeem your code? Click <Link className='text-blue-600' href='/account'>here</Link>!

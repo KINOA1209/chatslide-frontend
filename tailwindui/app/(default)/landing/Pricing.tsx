@@ -1,6 +1,7 @@
 'use client';
 
 
+import Toggle from "@/components/button/Toggle";
 import { useUser } from "@/hooks/use-user";
 import UserService from "@/services/UserService";
 import { userInEU } from "@/utils/userLocation";
@@ -18,6 +19,7 @@ const PricingComparison: React.FC<{
 	const [currency, setCurrency] = useState<string>('$');
 	const pathname = usePathname();
 	const router = useRouter();
+	const [yearly, setYearly] = useState(true);
 	const smallSuffix = small ? '-small' : '';
 	// console.log('smallSuffix', smallSuffix);
 
@@ -48,6 +50,27 @@ const PricingComparison: React.FC<{
 			}
 		}
 		return ''
+	}
+
+	const getPrice = (tier: 'FREE' | 'PLUS' | 'PRO', firstTime: boolean = false): string => {
+		let amount = 0;
+		switch(tier) {
+			case 'FREE':
+				amount = 0;
+				break;
+			case 'PLUS':
+				amount = 9.9;
+				break;
+			case 'PRO':
+				amount = 39.9;
+		}
+
+		if (yearly)
+			amount = amount * 0.6;
+		else if (firstTime)  // only for monthly
+			amount = amount * 0.4;
+
+		return currency + amount.toFixed(2);
 	}
 
 	useEffect(() => {
@@ -100,7 +123,8 @@ const PricingComparison: React.FC<{
 		tier: 'PLUS' | 'PRO',
 		token: string,
 	) => {
-		const plan = tier + "_MONTHLY";
+		const suffix = yearly ? '_YEARLY' : '_MONTHLY';
+		const plan = tier + suffix
 
 		try {
 			const url = await UserService.checkout(
@@ -120,6 +144,12 @@ const PricingComparison: React.FC<{
 
 	return (
 		<div className='w-full flex flex-col items-center overflow-y-scroll'>
+			<Toggle
+				isLeft={!yearly}
+				setIsLeft={(value: boolean) => setYearly(!value)}
+				leftText='Monthly'
+				rightText='Yearly (40% off)'
+			/>
 			<div
 				data-w-id="a8590735-7e8f-bd41-a09e-37f58b801ed3"
 				className={`w-layout-grid ${showFreeTier ? 'brix---grid-4-columns-pricing-tablet' : 'brix---grid-3-columns'}`}
@@ -190,9 +220,9 @@ const PricingComparison: React.FC<{
 							</div>
 							<div className="brix---mg-bottom-16px">
 								<div className="brix---color-neutral-800 flex flex-col items-center">
-									<div className="brix---text-300-medium opacity-0">{'$0'}</div>
-									<div className="brix---text-400-bold">$0</div>
-									<div className="brix---text-300-medium opacity-0">{'$0'}</div>
+									<div className="brix---text-400-bold">{getPrice('FREE')}</div>
+									<div className="brix---text-300-medium">{'\u00A0'}</div>
+									<div className="brix---text-300-medium">{'\u00A0'}</div>
 								</div>
 							</div>
 							<button
@@ -252,9 +282,9 @@ const PricingComparison: React.FC<{
 						</div>
 						<div className="brix---mg-bottom-16px">
 							<div className="brix---color-neutral-800 flex flex-col items-center">
-								<div className="brix---text-400-bold">$3.96</div>
-								<div className="brix---text-300-medium">1st month, then</div>
-								<div className="brix---text-300-medium">$9.99</div>
+								<div className="brix---text-400-bold">{getPrice('PLUS', true)}</div>
+								<div className="brix---text-300-medium">{yearly ? 'per month' : '1st month, then'}</div>
+								<div className="brix---text-300-medium">{yearly ? '\u00A0' : getPrice('PLUS')}</div>
 							</div>
 						</div>
 						<button
@@ -349,9 +379,9 @@ const PricingComparison: React.FC<{
 						</div>
 						<div className="brix---mg-bottom-16px">
 							<div className="brix---color-neutral-800 flex flex-col items-center">
-								<div className="brix---text-400-bold">$15.96</div>
-								<div className="brix---text-300-medium">1st month, then</div>
-								<div className="brix---text-300-medium">$39.99</div>
+								<div className="brix---text-400-bold">{getPrice('PRO', true)}</div>
+								<div className="brix---text-300-medium">{yearly ? 'per month' : '1st month, then'}</div>
+								<div className="brix---text-300-medium">{yearly ? '\u00A0' : '$39.9'}</div>
 							</div>
 						</div>
 						<button
