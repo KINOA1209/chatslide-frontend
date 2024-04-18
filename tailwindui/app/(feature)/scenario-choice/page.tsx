@@ -22,9 +22,13 @@ const ScenarioChoicePage = () => {
 	const navigateToSummary = (scenarioType: string) => {
 		//sessionStorage.setItem('scenarioType', scenarioType);
 		clearProject();
-		updateProject('post_type', scenarioType);
-		if (workflowType == 'presentation')
+		if (workflowType == 'presentation') {
+			initProject({
+				'scenario_type': scenarioType,
+				'content_type': 'presentation'
+			} as Project);
 			router.push('/genmode');
+		}
 		else {
 			initProject({
 				'post_type': scenarioType,

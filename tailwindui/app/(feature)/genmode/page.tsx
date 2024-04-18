@@ -5,23 +5,16 @@ import { useRouter } from 'next/navigation';
 import '@/app/css/workflow-scenario-choice.css';
 import Image from 'next/image';
 import mode_choices from './mode_choices.json';
-import SessionStorage from '@/utils/SessionStorage';
 import AuthService from '@/services/AuthService';
-import { useProject } from '@/hooks/use-project';
 import { BackButton } from '@/components/button/DrlambdaButton';
 
 const GenerationModePage = () => {
 	const router = useRouter(); // Initialize the router
 	const [username, setUsername] = useState(''); // Initialize the username state
-	const workflowType = SessionStorage.getItem('workflowType', 'presentation');
-	const { clearProject } = useProject();
 
 	const navigate = (type: string) => {
 		sessionStorage.setItem('generation_mode', type);
-		clearProject();
-		if (workflowType == 'presentation')
-			router.push('/summary');
-		else router.push('/summary-socialpost');
+		router.push('/summary');
 	};
 
 	useEffect(() => {
@@ -45,7 +38,7 @@ const GenerationModePage = () => {
 			<div className='flex flex-col justify-center items-center gap-4 sm:gap-12 p-4 sm:p-8'>
 				{/* title */}
 				<div className='w-[80vh] text-center text-neutral-800 text-xl sm:text-2xl font-normal font-creato-medium leading-9 tracking-wide whitespace-normal break-words'>
-					Great! <br/>
+					Great! <br />
 					How would you like to get started?
 				</div>
 				<div className='flex flex-col gap-4 md:gap-6' id='choice_container'>
