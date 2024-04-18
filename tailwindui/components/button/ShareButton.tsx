@@ -158,7 +158,8 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 						<Instruction>Embed this Page</Instruction>
 						<Explanation>
 							Copy the code below and put it on your webpage, the content will
-							be updated as you update your slides.
+							be updated as you update your slides. 
+							<a className='text-blue-600' href='/embed_example'>Learn More.</a>
 						</Explanation>
 						<ClickableLink link={iframe} />
 					</div>

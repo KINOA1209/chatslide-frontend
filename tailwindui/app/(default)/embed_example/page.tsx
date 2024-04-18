@@ -30,8 +30,8 @@ export default function Terms() {
 						</ul>
 					</div>
 				</Instruction>
-				{/* <iframe src="https://drlambda.ai/embed/understanding-internal-family-system-in-bus-qfouUU?page=1" width="960px" height="540px"></iframe> */}
-				<iframe src="http://localhost/embed/analyzing-the-latest-lenovo-earnings-report-FyrVGx?page=1" width="960px" height="540px"></iframe>
+				<iframe src="https://drlambda.ai/embed/understanding-internal-family-system-in-bus-qfouUU?page=1" width="960px" height="540px"></iframe>
+				{/* <iframe src="http://localhost/embed/analyzing-the-latest-lenovo-earnings-report-FyrVGx?page=1" width="960px" height="540px"></iframe> */}
 			</Column>
 			<Footer />
 		</section>
