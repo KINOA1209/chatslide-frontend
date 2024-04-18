@@ -1242,7 +1242,7 @@ export const ImgModule = ({
 			<div
 				onDrop={handleImageDrop}
 				onDragOver={(e) => e.preventDefault()}
-				// onClick={openModal}
+				onClick={openModal}
 				className={`w-full h-full transition ease-in-out duration-150 relative ${selectedImg === ''
 						? 'bg-[#E7E9EB]'
 						: canEdit
@@ -1260,7 +1260,7 @@ export const ImgModule = ({
 					chartData.length > 0 ? ( // chart
 					<div
 						className='w-full h-full flex items-center justify-center overflow-hidden '
-						onClick={openModal}
+						// onClick={openModal}
 					>
 						<DynamicChart
 							chartType={selectedChartType}
@@ -1271,7 +1271,7 @@ export const ImgModule = ({
 				) : selectedImg === '' || imgLoadError ? ( // updload icon
 					<div
 						className='flex flex-col items-center justify-center cursor-pointer'
-						onClick={openModal}
+						// onClick={openModal}
 					>
 						<svg
 							className='w-20 h-20 opacity-50'
@@ -1300,6 +1300,7 @@ export const ImgModule = ({
 						ref={imageRefs[currentContentIndex]}
 						onMouseEnter={() => setShowImgButton(true)}
 						onMouseLeave={() => setShowImgButton(false)}
+						onClick={openModal}
 					>
 						{!isSlide && isSocialPostTemp1Cover && (
 							<div

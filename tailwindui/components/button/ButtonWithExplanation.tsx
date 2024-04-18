@@ -19,6 +19,7 @@ function ButtonWithExplanation({
 			onMouseEnter={() => setShowExplanation(true)}
 			onMouseLeave={() => setShowExplanation(false)}
 			id={id ? id : 'toolbar-' + explanation.replace(/[^A-Za-z0-9]/g, '_')}
+			onClick={(e) => {e.stopPropagation();}}
 		>
 			<div className='flex items-center justify-center'>{button}</div>
 			{showExplanation  && <div
