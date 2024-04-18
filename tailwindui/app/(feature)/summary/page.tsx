@@ -82,7 +82,7 @@ export default function Topic() {
 		initProject,
 	} = useProject();
 
-	const scenarioType = SessionStorage.getItem('scenarioType', 'business');
+	const scenarioType = project?.scenario_type || 'business';
 	const generationMode = SessionStorage.getItem(
 		'generation_mode',
 		'from_topic',
