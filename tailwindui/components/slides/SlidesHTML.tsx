@@ -571,10 +571,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			false, // canEdit
 			exportToPdfMode, //exportToPdfMode
 			false, //editMathMode
-			() => {}, //setIsEditMode
-			() => {}, // handleSlideEdit
-			() => () => {}, // updateImgUrlArray,
-			() => {}, // toggleEditMode,
+			() => { }, //setIsEditMode
+			() => { }, // handleSlideEdit
+			() => () => { }, // updateImgUrlArray,
+			() => { }, // toggleEditMode,
 			// slide.palette,
 			index === 0, // isCoverPage
 			slide.layout, // layoutOptionNonCover
@@ -908,7 +908,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					</div>
 				</Panel>
 
-				{!isViewing && isChatWindowOpen && (
+				{(!isViewing && isChatWindowOpen) ? (
 					<Panel>
 						<AIAssistantChatWindow
 							onToggle={toggleChatWindow}
@@ -918,7 +918,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							updateImgUrlArray={updateImgUrlArray}
 						/>
 					</Panel>
-				)}
+				) :
+					<div className='hidden sm:block w-0 h-0'></div>  // empty div for justify-around
+				}
 			</div>
 		</div>
 	);
