@@ -111,6 +111,15 @@ export const useSlides = () => {
 		debouncedSyncSlides(newSlides, true);
 	};
 
+	const removeUserName = () => {
+		const newSlides = slides.map((slide, index) => {
+			return { ...slide, userName: '' };
+		});
+		setSlides(newSlides);
+		updateSlideHistory(newSlides);
+		debouncedSyncSlides(newSlides, true);
+	}
+
 	const updateLogoUrl = (logo_url: string) => {
 		const newSlides = slides.map((slide, index) => {
 			return { ...slide, logo_url: logo_url };
@@ -475,6 +484,7 @@ export const useSlides = () => {
 		// setIsShowingLogo,
 		// changeIsShowingLogo,
 		showLogo,
+		removeUserName,
 		hideLogo,
 		updateLogoUrl,
 		updateBackgroundUrl,

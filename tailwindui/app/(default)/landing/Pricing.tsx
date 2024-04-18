@@ -122,7 +122,7 @@ const PricingComparison: React.FC<{
 		<div className='w-full flex flex-col items-center overflow-y-scroll'>
 			<div
 				data-w-id="a8590735-7e8f-bd41-a09e-37f58b801ed3"
-				className="w-layout-grid brix---grid-4-columns-pricing-tablet"
+				className={`w-layout-grid ${showFreeTier ? 'brix---grid-4-columns-pricing-tablet' : 'brix---grid-3-columns'}`}
 			>
 				<link href="css/webflow.css" rel="stylesheet" type="text/css" />
 				<link href="css/drlambda.webflow.css" rel="stylesheet" type="text/css" />

@@ -11,12 +11,14 @@ import Resource from "@/models/Resource";
 import { useProject } from "@/hooks/use-project";
 import { useSlides } from "@/hooks/use-slides";
 import PaywallModal from "../paywallModal";
+import { Instruction } from "../ui/Text";
+import { PlusLabel } from "../ui/GrayLabel";
 
 
 export const BrandingButton: React.FC<{
 }> = () => {
 	const { project, updateProject } = useProject();
-	const { isShowingLogo, updateLogoUrl, updateBackgroundUrl, hideLogo, showLogo } = useSlides();
+	const { isShowingLogo, updateLogoUrl, updateBackgroundUrl, hideLogo, showLogo, removeUserName } = useSlides();
 	const { isPaidUser } = useUser();
 
 	const [showModal, setShowModal] = useState(false);
@@ -71,7 +73,7 @@ export const BrandingButton: React.FC<{
 					(selectedLogo: Resource[]) => {
 						console.log('updating branding to ', selectedLogo[0]?.thumbnail_url)
 						updateProject('selected_logo', selectedLogo);
-						if(selectedLogo.length > 0){
+						if (selectedLogo.length > 0) {
 							updateLogoUrl(selectedLogo[0]?.thumbnail_url || '');
 						}
 						else {
@@ -82,14 +84,27 @@ export const BrandingButton: React.FC<{
 				setSelectedBackground={
 					(selectedBackground: Resource[]) => {
 						updateProject('selected_background', selectedBackground);
-						if (selectedBackground.length > 0){
+						if (selectedBackground.length > 0) {
 							updateBackgroundUrl(selectedBackground[0]?.thumbnail_url || '');
 						}
-						else{
+						else {
 							updateBackgroundUrl('');
 						}
 					}}
 			/>
+			<Instruction>
+				<div className='text-blue-600 cursor-pointer'
+					onClick={() => {
+						if(!isPaidUser){
+							setShowPaymentModal(true);
+							return;
+						}
+						removeUserName();
+					}}
+				>Remove 'Created by DrLambda'.</div>
+				<PlusLabel />
+			</Instruction>
+
 		</Modal>
 		<ButtonWithExplanation
 			button={
