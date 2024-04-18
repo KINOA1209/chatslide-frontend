@@ -15,7 +15,7 @@ export default function DashBoardLayout({
 }) {
 	return (
 		<div
-			className={`dashboard-layout flex flex-row min-h-[100vh] max-w-[1280px] mx-auto`}
+			className={`dashboard-layout flex flex-row min-h-[100vh] mx-auto`}
 		>
 			<div className='hidden sm:block'>
 				{/* only show SideBar on mid-large screen */}
