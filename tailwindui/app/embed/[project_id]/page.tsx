@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import SharePage from '../../shared/[project_id]/sharePage';
 
 type Props = {
