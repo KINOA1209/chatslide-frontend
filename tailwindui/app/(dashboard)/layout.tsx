@@ -14,7 +14,9 @@ export default function DashBoardLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<div className='flex flex-row min-h-[100vh]'>
+		<div
+			className={`dashboard-layout flex flex-row min-h-[100vh] max-w-[1280px] mx-auto`}
+		>
 			<div className='hidden sm:block'>
 				{/* only show SideBar on mid-large screen */}
 				<SideBar />

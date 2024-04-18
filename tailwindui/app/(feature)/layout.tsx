@@ -13,7 +13,7 @@ export default function WorkflowLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<div className='flex flex-row h-screen w-screen'>
+		<div className='Workflow-layout flex flex-row h-screen w-screen'>
 			<div className='hidden sm:flex'>
 				{/* only show SideBar on mid-large screen */}
 				<SideBar />

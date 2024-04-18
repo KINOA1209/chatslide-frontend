@@ -17,8 +17,8 @@ import { usePathname } from 'next/navigation';
 import { Logo } from '../ui/logo';
 import { getBrand } from '@/utils/getHost';
 
-interface SideBarProps { }
-const SideBar = ({ }: SideBarProps) => {
+interface SideBarProps {}
+const SideBar = ({}: SideBarProps) => {
 	const [top, setTop] = useState<boolean>(true);
 	const { uid, credits, tier, userStatus } = useUser();
 	const router = useRouter();
@@ -80,13 +80,13 @@ const SideBar = ({ }: SideBarProps) => {
 
 	if (userStatus == UserStatus.Failed || !uid) {
 		if (path.includes('/discover'))
-			return <></>  // do not show sidebar if user is a visitor
+			return <></>; // do not show sidebar if user is a visitor
 		else
 			return (
 				<Modal
 					showModal={true}
 					canClose={false} // cannot close modal
-					setShowModal={() => { }} // cannot close modal
+					setShowModal={() => {}} // cannot close modal
 					title='Sign in to continue'
 					description='Session expired, you need to sign in again to continue'
 					onConfirm={() => router.push('/signup')}
@@ -96,14 +96,17 @@ const SideBar = ({ }: SideBarProps) => {
 
 	return (
 		<header
-			className={`hidden sm:flex sticky left-0 top-0 ${isSidebarOpen ? 'w-[10rem]' : 'w-[3rem]'
-				} h-[100vh] flex flex-col items-center justify-between z-30 bg-gradient-to-b from-Dark to-[#121212] bg-opacity-90 transition duration-300 ease-in-out ${!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
-				}`}
+			className={`hidden sm:flex sticky left-0 top-0 ${
+				isSidebarOpen ? 'w-[10rem]' : 'w-[3rem]'
+			} h-[100vh] flex flex-col items-center justify-between z-30 bg-gradient-to-b from-Dark to-[#121212] bg-opacity-90 transition duration-300 ease-in-out ${
+				!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
+			}`}
 		>
 			{/* toggle sidebar button */}
 			<button
-				className={`rounded-full p-1.5 bg-Dark text-white fixed top-5 ${isSidebarOpen ? 'left-[9rem]' : 'left-[2rem]'
-					} focus:outline-none`}
+				className={`rounded-full p-1.5 bg-Dark text-white absolute top-5 ${
+					isSidebarOpen ? 'left-[9rem]' : 'left-[2rem]'
+				} focus:outline-none`}
 				onClick={toggleSidebar}
 			>
 				{isSidebarOpen ? <FaChevronLeft /> : <FaChevronRight />}
@@ -146,19 +149,23 @@ const SideBar = ({ }: SideBarProps) => {
 			{/* credits and user studies */}
 			<div className='flex flex-col items-left justify-between'>
 				<div className='block py-1 text-sm text-white'>
-					{parseInt(credits) < 1000 && <a
-						href='/account'
-						className={`block py-1 text-sm text-green-400 ${isSidebarOpen ? 'px-2' : 'px-0'
+					{parseInt(credits) < 1000 && (
+						<a
+							href='/account'
+							className={`block py-1 text-sm text-green-400 ${
+								isSidebarOpen ? 'px-2' : 'px-0'
 							} rounded-lg hover:bg-gray-400`}
-						role='menuitem'
-					>
-						{'Missing credits?'}
-					</a>}
+							role='menuitem'
+						>
+							{'Missing credits?'}
+						</a>
+					)}
 					{credits !== 'Infinite' && (
 						<a
 							href='/account'
-							className={`block  py-1 text-sm text-white ${isSidebarOpen ? 'px-2' : 'px-0'
-								} rounded-lg hover:bg-gray-400`}
+							className={`block  py-1 text-sm text-white ${
+								isSidebarOpen ? 'px-2' : 'px-0'
+							} rounded-lg hover:bg-gray-400`}
 							role='menuitem'
 						>
 							{credits} ⭐️ {isSidebarOpen && 'Credits'}
