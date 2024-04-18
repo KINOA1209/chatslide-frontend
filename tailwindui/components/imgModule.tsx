@@ -372,12 +372,30 @@ export const ImgModule = ({
 		setSearching(false);
 	};
 
+	const decodeImageUrl = (url: string | null): string => {
+		if (!url) return '';
+		if (url.includes('freepik')) {
+		  const urlMatch = url.match(/url=([^&]+)/);
+		  if (urlMatch && urlMatch[1]) {
+			const decodedUrl = decodeURIComponent(decodeURIComponent(urlMatch[1]));
+			//console.log('decodedurl', decodedUrl)
+			return decodedUrl;
+		  }
+		  //console.log('url parameter not found',url)
+		  // If 'url' parameter is not found, return the original url
+		  return url;
+		}
+		// If 'freepik' is not included in the url, return the original url
+		//console.log('freepik not found', url)
+		return url;
+	  };
+
 	const handleImageClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.preventDefault();
 		// update image here to template & source html
 		// reset images position after changing image
 		updateSingleCallback(
-			(e.target as HTMLImageElement).getAttribute('src'),
+			decodeImageUrl((e.target as HTMLImageElement).getAttribute('src')),
 			false,
 			{},
 		);
