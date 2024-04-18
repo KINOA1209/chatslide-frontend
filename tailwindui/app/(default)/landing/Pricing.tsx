@@ -154,8 +154,8 @@ const PricingComparison: React.FC<{
 				data-w-id="a8590735-7e8f-bd41-a09e-37f58b801ed3"
 				className={`w-layout-grid ${showFreeTier ? 'brix---grid-4-columns-pricing-tablet' : 'brix---grid-3-columns'}`}
 			>
-				<link href="css/webflow.css" rel="stylesheet" type="text/css" />
-				<link href="css/drlambda.webflow.css" rel="stylesheet" type="text/css" />
+				{/* <link href="css/webflow.css" rel="stylesheet" type="text/css" /> */}
+				<link href="css/pricing.webflow.css" rel="stylesheet" type="text/css" />
 
 				<div className="brix---pricing-column-first">
 					<div className="brix---pricing-table-top-first">

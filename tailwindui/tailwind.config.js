@@ -21,7 +21,7 @@ module.exports = {
 			},
 			backgroundColor: {
 				Sky: 'var(--Sky, #F4F6FE)',
-				Blue: 'var(--Blue, #2943E9)',
+				Blue: 'var(--Blue, #5168f6)',
 				Purple: 'var(--Purple, #6A7EF9)',
 				'Grey-50': 'var(--Grey-50, #F4F4F4)',
 				'Grey-100': 'var(--Grey-100, #E7E9EB)',
@@ -33,7 +33,7 @@ module.exports = {
 				'neutral-100': 'var(--neutral-100, #1E202C)',
 				'regal-blue': '#243c5a',
 				Sky: 'var(--Sky, #F4F6FE)',
-				Blue: 'var(--Blue, #2943E9)',
+				Blue: 'var(--Blue, #5168f6)',
 				Dark: 'var(--Dark, #2B2C2D)',
 				'Grey-600': 'var(--Grey-600, #525C6A)',
 				gray: {
