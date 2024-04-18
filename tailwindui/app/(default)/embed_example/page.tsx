@@ -21,8 +21,8 @@ export default function Terms() {
 					<div className='flex flex-col'><span>Embedding allows you to put the slides you created at {getBrand()} on your own website. You can follow these steps to do it:</span>
 						<ul>
 							<li>1. Create a slide deck using {getBrand()}.</li>
-							<li className='flex flex-row items-center gap-x-1'><span>2. Find the HTML code to embed by click share button </span><MdOutlineShare /><span>on your dashboard page or slide page.</span></li>
-							<li>3. Paste the HTML code on your own website to embed the slide. You can learn more in
+							<li className='flex flex-row items-center gap-x-1'><span>2. Find the HTML code to embed by clicking share button </span><MdOutlineShare /><span>on your dashboard page or slide page.</span></li>
+							<li >3. Paste the HTML code on your own website to embed the slide. You can learn more in &nbsp;
 								<a className='text-blue-600' href='https://www.youtube.com/watch?v=aRGdDy18qfY&ab_channel=BroCode'>this video</a>.
 								</li>
 							<li className='flex flex-row items-center gap-x-1'>
