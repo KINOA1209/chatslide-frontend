@@ -7,8 +7,8 @@ import { FaChevronCircleLeft, FaChevronCircleRight } from 'react-icons/fa';
 import { MdOutlineShare } from 'react-icons/md';
 
 export const metadata = {
-	title: `Terms | ${getBrand()}`,
-	description: `${getBrand()}'s Terms and Conditions`,
+	title: `How to use the embed feature | ${getBrand()}`,
+	description: `How to use the embed feature at ${getBrand()}.`,
 };
 
 export default function Terms() {
