@@ -630,7 +630,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			<SlideContainer
 				slide={slides[initSlideIndex]}
 				index={initSlideIndex}
-				isPresenting={isPresenting}
+				isPresenting={false}
 				isViewing={isViewing}
 				scale={presentScale}
 				templateDispatch={editableTemplateDispatch}
@@ -638,6 +638,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				containerRef={containerRef}
 				length={slides.length}
 				key={version}
+				isEmbedded={true}
 			/>
 		);
 

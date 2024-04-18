@@ -61,7 +61,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 
 	const iframe = `<iframe src="${host}/embed/${project_id}?page=${
 		currentSlideIndex + 1
-	}" width="100%" height="600px" frameborder="0"></iframe>`;
+	}" width="960px" height="540px"></iframe>`;
 
 	function truncateWithFullWords(str: string, maxLength: number) {
 		if (str.length <= maxLength) return str;
