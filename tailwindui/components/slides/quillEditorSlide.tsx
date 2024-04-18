@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
+import React, {
+	useEffect,
+	useRef,
+	useState,
+	useMemo,
+	useCallback,
+} from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.bubble.css';
 import '@/components/socialPost/quillEditor.scss';
@@ -6,7 +12,7 @@ import themeColorConfigData from './templates_customizable_elements/theme_color_
 import '@/app/css/style.css';
 import { stopArrowKeyPropagation } from '@/utils/editing';
 import '@/components/socialPost/socialPostCustomFonts.css';
-import { SlRefresh } from "react-icons/sl";
+import { SlRefresh } from 'react-icons/sl';
 import ReactDOMServer from 'react-dom/server';
 import { useChatHistory } from '@/hooks/use-chat-history';
 import { Delta } from 'quill/core';
@@ -17,7 +23,7 @@ type QuillEditableProps = {
 	isVerticalContent: boolean;
 	templateKey?: string;
 	style?: React.CSSProperties;
-	need_placeholder?: boolean
+	need_placeholder?: boolean;
 };
 
 // const generateFontSizes = (): string[] => {
@@ -59,6 +65,10 @@ export const fontWhiteList = [
 	'Open Sans Medium',
 	'Playfair Display Bold',
 	'Playfair Display Medium',
+	'Poppins Regular',
+	'Poppins Medium',
+	'Poppins SemiBold',
+	'Poppins Bold',
 	'Rubik',
 	'Sansita Swashed Regular',
 	'Sansita Swashed Medium',
@@ -106,8 +116,20 @@ Quill.register(Size, true);
 
 const toolbarOptions = [
 	['regenerate'],
-	[{ size: Size.whitelist }, { font: Font.whitelist }, 'bold', 'italic', 'underline'],
-	['strike', 'code-block', { list: 'bullet' }, { script: 'sub' }, { script: 'super' }],
+	[
+		{ size: Size.whitelist },
+		{ font: Font.whitelist },
+		'bold',
+		'italic',
+		'underline',
+	],
+	[
+		'strike',
+		'code-block',
+		{ list: 'bullet' },
+		{ script: 'sub' },
+		{ script: 'super' },
+	],
 	[
 		{
 			color: [
@@ -157,10 +179,10 @@ const toolbarOptions = [
 const regenerateIconSVG = `
 	<svg fill="#ACA1F6" stroke-width="0" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
 	<path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828l.645-1.937zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.734 1.734 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.734 1.734 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.734 1.734 0 0 0 3.407 2.31l.387-1.162zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L10.863.1z"></path>
-	</svg>`
+	</svg>`;
 
-const icons = Quill.import('ui/icons') as any
-icons['regenerate'] = regenerateIconSVG
+const icons = Quill.import('ui/icons') as any;
+icons['regenerate'] = regenerateIconSVG;
 
 export const isHTML = (input: string): boolean => {
 	const doc: Document = new DOMParser().parseFromString(input, 'text/html');
@@ -198,7 +220,13 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 	const editorRef = useRef<HTMLDivElement>(null);
 	const quillInstanceRef = useRef<Quill | null>(null);
 	const isTextChangeRef = useRef(false);
-	const [hoveredSentence, setHoveredSentence] = useState({ text: '', start: 0, end: 0, hasLeadingSpace: false, hasTrailingSpace: false });
+	const [hoveredSentence, setHoveredSentence] = useState({
+		text: '',
+		start: 0,
+		end: 0,
+		hasLeadingSpace: false,
+		hasTrailingSpace: false,
+	});
 	const regenerateTextRef = useRef('');
 	const {
 		chatHistory,
@@ -209,7 +237,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 		setRegenerateText,
 		isRegenerateSelected,
 		setIsRegenerateSelected,
-	} = useChatHistory()
+	} = useChatHistory();
 
 	useEffect(() => {
 		// stop arrow key and esc key propagation
@@ -230,15 +258,15 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 		if (quill) {
 			quill.root.style.minWidth = '100%';
 			quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
-				return delta.compose(new Delta().retain(delta.length(),
-					{
+				return delta.compose(
+					new Delta().retain(delta.length(), {
 						color: false,
 						background: false,
 						bold: false,
 						strike: false,
-						underline: false
-					}
-				));
+						underline: false,
+					}),
+				);
 			});
 		}
 	}, []);
@@ -250,30 +278,33 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			class DefaultSytleBlock extends BlockPrototype {
 				constructor(domNode: HTMLElement, value: string) {
 					super(domNode, value);
-					this.format("size", style?.fontSize as string || "16pt");
-					this.format("font", style?.fontFamily || 'Arimo')
-					this.format("bold", style?.fontWeight === 'bold' ? 'bold' : 'normal');
-					this.format("italic", style?.fontStyle === 'italic' ? 'italic' : 'normal');
-					this.format("align", style?.textAlign || 'left');
+					this.format('size', (style?.fontSize as string) || '16pt');
+					this.format('font', style?.fontFamily || 'Arimo');
+					this.format('bold', style?.fontWeight === 'bold' ? 'bold' : 'normal');
+					this.format(
+						'italic',
+						style?.fontStyle === 'italic' ? 'italic' : 'normal',
+					);
+					this.format('align', style?.textAlign || 'left');
 				}
 
 				static tagName = 'P';
 
 				format(name: string, value: string) {
 					switch (name) {
-						case "size":
+						case 'size':
 							this.domNode.style.fontSize = value;
 							break;
-						case "font":
+						case 'font':
 							this.domNode.style.fontFamily = value;
 							break;
-						case "bold":
+						case 'bold':
 							this.domNode.style.fontWeight = value;
 							break;
-						case "italic":
+						case 'italic':
 							this.domNode.style.fontStyle = value;
 							break;
-						case "align":
+						case 'align':
 							this.domNode.style.textAlign = value;
 							break;
 						default:
@@ -307,27 +338,37 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 					toolbar: {
 						container: toolbarOptions,
 						handlers: {
-							'regenerate': () => {
-								setRegenerateText(regenerateTextRef.current)
-								setIsChatWindowOpen(true)
+							regenerate: () => {
+								setRegenerateText(regenerateTextRef.current);
+								setIsChatWindowOpen(true);
 								addChatHistory({
 									role: 'assistant',
-									content: 'To proceed with regenerating your selected sentence, please select the desired tone:',
-									choices: ['Detailed', 'Simple', 'Engaging', 'Informative', 'Persuasive', 'Professional', 'Entertaining', 'Dramatic']
-								})
-							}
-						}
-					}
+									content:
+										'To proceed with regenerating your selected sentence, please select the desired tone:',
+									choices: [
+										'Detailed',
+										'Simple',
+										'Engaging',
+										'Informative',
+										'Persuasive',
+										'Professional',
+										'Entertaining',
+										'Dramatic',
+									],
+								});
+							},
+						},
+					},
 				},
 				theme: 'bubble',
-			}
+			};
 
 			if (need_placeholder) {
-				quillOptions.placeholder = 'Text here...'
+				quillOptions.placeholder = 'Text here...';
 			}
 
 			const quill = new Quill(editorRef.current, quillOptions);
-			quillInstanceRef.current = quill
+			quillInstanceRef.current = quill;
 			//setupCustomButton(quill)
 			//console.log(style?.textAlign)
 			// const toolbar = quillInstanceRef.current.getModule('toolbar');
@@ -337,9 +378,12 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				bold: style?.fontWeight !== 'normal',
 				italic: style?.fontStyle === 'italic',
 				color: style?.color,
-				list: (isVerticalContent || style?.display === 'list-item') ? 'bullet' : undefined,
+				list:
+					isVerticalContent || style?.display === 'list-item'
+						? 'bullet'
+						: undefined,
 				font: style?.fontFamily,
-				align: style?.textAlign || 'left'
+				align: style?.textAlign || 'left',
 			};
 
 			const toolbar = quillInstanceRef.current.getModule('toolbar') as any;
@@ -357,7 +401,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 							bold: style?.fontWeight !== 'normal',
 							italic: style?.fontStyle === 'italic',
 							color: style?.color,
-							align: style?.textAlign || 'left'
+							align: style?.textAlign || 'left',
 						};
 						const formats = quill.getFormat(range.index, range.length);
 						const originalListFormat = formats['list'];
@@ -573,18 +617,18 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			const handleSelectionChange = (range: any) => {
 				if (range && range.index !== null && range.length !== 0) {
 					//const sentence = getSentenceAtPosition(range.index, range.index + range.length);
-					const actualText = quill.getText(range.index, range.length)
-					const trimmedText = quill.getText(range.index, range.length).trim()
+					const actualText = quill.getText(range.index, range.length);
+					const trimmedText = quill.getText(range.index, range.length).trim();
 
 					// Determine if there are leading and trailing spaces
-					const hasLeadingSpace = actualText.startsWith(' ')
-					const hasTrailingSpace = actualText.endsWith(' ')
+					const hasLeadingSpace = actualText.startsWith(' ');
+					const hasTrailingSpace = actualText.endsWith(' ');
 					setHoveredSentence({
 						text: actualText,
 						start: range.index,
 						end: range.index + range.length,
 						hasLeadingSpace: hasLeadingSpace,
-						hasTrailingSpace: hasTrailingSpace
+						hasTrailingSpace: hasTrailingSpace,
 					});
 					regenerateTextRef.current = trimmedText;
 					//setRegenerateText(sentence.text)
@@ -607,7 +651,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			bold: style?.fontWeight !== 'normal',
 			italic: style?.fontStyle === 'italic',
 			color: style?.color,
-			align: style?.textAlign || 'left'
+			align: style?.textAlign || 'left',
 		};
 		if (quill && isRegenerateSelected && hoveredSentence.text) {
 			if (regenerateText && hoveredSentence.text !== regenerateText) {
@@ -616,13 +660,27 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 					(hoveredSentence.hasLeadingSpace ? ' ' : '') +
 					regenerateText +
 					(hoveredSentence.hasTrailingSpace ? ' ' : '');
-				quill.deleteText(hoveredSentence.start, hoveredSentence.end - hoveredSentence.start);
-				quill.insertText(hoveredSentence.start, textToInsert, defaultFormats, 'user');
+				quill.deleteText(
+					hoveredSentence.start,
+					hoveredSentence.end - hoveredSentence.start,
+				);
+				quill.insertText(
+					hoveredSentence.start,
+					textToInsert,
+					defaultFormats,
+					'user',
+				);
 				//const newEndIndex = hoveredSentence.start + regenerateText.length;
-				setHoveredSentence({ text: '', start: 0, end: 0, hasLeadingSpace: false, hasTrailingSpace: false });
+				setHoveredSentence({
+					text: '',
+					start: 0,
+					end: 0,
+					hasLeadingSpace: false,
+					hasTrailingSpace: false,
+				});
 				// Update the selection to cover the new text
 				quill.setSelection(hoveredSentence.start, textToInsert.length);
-				setIsRegenerateSelected(false)
+				setIsRegenerateSelected(false);
 			}
 		}
 	}, [isRegenerateSelected, hoveredSentence, regenerateText, quillInstanceRef]);
@@ -635,7 +693,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				'fontStyle',
 				'display',
 				'fontFamily',
-				'textAlign'
+				'textAlign',
 			];
 			const applyStyle: React.CSSProperties = {};
 

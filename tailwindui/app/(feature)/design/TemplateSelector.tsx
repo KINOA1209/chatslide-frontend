@@ -17,21 +17,31 @@ const SlideDesignPreview = dynamic(
 	{ ssr: false },
 );
 
-const colorPreviews: Record<PaletteKeys, string> = {
+export const colorPreviews: Record<PaletteKeys, string> = {
 	// "Original" | "Blue" | "Red" | "Yellow" | "Dynamic Purple" | "Light Cyan" | "Royal Blue" | "Beeswax
 	'': '',
 	Original: '#FFFFFF',
 	Blue: '#7E96F7',
 	Red: '#FF0000',
 	Yellow: '#FFFF00',
+	// general pitch
 	'Dynamic Purple': '#A388F7',
 	'Light Cyan': '#ECF4F9',
 	'Royal Blue': '#5A55F4',
 	Beeswax: '#FDF1C4',
+	// new education
 	'Ecru White': '#F5F1E2',
 	'Shark Black': '#272A2D',
 	'Moon Mist': '#DDDFD2',
 	'Regent St Blue': '#ACC9E0',
+	// event report
+	Perfume: '#ACA1F7',
+	Jonquil: '#E9FEA2',
+	'Morning Glory': '#94DCD8',
+	Azalea: '#F2BAD7',
+	Saffron: '#F6C343',
+	Feta: '#EFFDE9',
+	'Catskill White': '#EEF5F7',
 	// Add more color previews for other palette keys if needed
 };
 

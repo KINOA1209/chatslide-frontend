@@ -648,4 +648,30 @@ export const Business_Dark_005_TemplateLayoutsConfig: {
 			zIndex: '51',
 		},
 	},
+	Full_img_only_layout: {
+		canvaCSS: {
+			width: '100%',
+			height: '100%',
+			display: 'flex',
+		},
+
+		imageContainerCSS: {
+			width: '100%', // equivalent to w-full
+			padding: '50px 50px 50px 50px',
+		},
+		imageCSS: {
+			height: '100%', // equivalent to h-[11rem]
+			width: '100%',
+			borderRadius: '24px',
+		},
+
+		rndContainerCSS: {
+			width: '100%',
+			height: '100%',
+			position: 'relative',
+		},
+		rndCSS: {
+			zIndex: '51',
+		},
+	},
 };

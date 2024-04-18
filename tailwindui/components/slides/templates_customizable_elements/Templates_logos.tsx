@@ -52,7 +52,7 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 						alt='CustomLogo'
 						width={45}
 						height={40}
-					// className='h-auto'
+						// className='h-auto'
 					/>
 				</div>
 			);
@@ -147,8 +147,8 @@ export const generateTemplateLogo = ({
 								? coverLogo.src // Assuming coverLogo is of type StaticImageData
 								: nonCoverLogo.src // Assuming nonCoverLogo is of type StaticImageData
 							: isLightBackground
-								? lightBGLogo!.src // Assuming lightBGLogo is of type StaticImageData
-								: darkBGLogo!.src // Assuming darkBGLogo is of type StaticImageData
+							? lightBGLogo!.src // Assuming lightBGLogo is of type StaticImageData
+							: darkBGLogo!.src // Assuming darkBGLogo is of type StaticImageData
 					}
 					alt='Template Logo'
 					className={`w-[${logoWidth}rem] h-auto`}
@@ -367,8 +367,12 @@ export const Simplistic_008_TemplateLogo: React.FC<TemplateLogoType> = (
 		...props,
 		// coverLogo: isChatslide() ? chatslideLogoText : drlambdaLogo,
 		// nonCoverLogo: isChatslide() ? chatslideLogoText : drlambdaLogo,
-		lightBGLogo: isChatslide() ? chatslideLogoBlackText : drlambdaLogoBadgeWhiteBG,
-		darkBGLogo: isChatslide() ? chatslideLogoWhiteText : drlambdaLogoBadgeBlackBG,
+		lightBGLogo: isChatslide()
+			? chatslideLogoBlackText
+			: drlambdaLogoBadgeWhiteBG,
+		darkBGLogo: isChatslide()
+			? chatslideLogoWhiteText
+			: drlambdaLogoBadgeBlackBG,
 		logoWidth: 8, // Adjust the width as needed
 		logoHeight: 1.5,
 	});
@@ -380,8 +384,29 @@ export const New_Education_009_TemplateLogo: React.FC<TemplateLogoType> = (
 		...props,
 		// coverLogo: drlambdaLogo,
 		// nonCoverLogo: drlambdaLogo,
-		lightBGLogo: isChatslide() ? chatslideLogoBlackText : drlambdaLogoBadgeWhiteBG,
-		darkBGLogo: isChatslide() ? chatslideLogoWhiteText : drlambdaLogoBadgeBlackBG,
+		lightBGLogo: isChatslide()
+			? chatslideLogoBlackText
+			: drlambdaLogoBadgeWhiteBG,
+		darkBGLogo: isChatslide()
+			? chatslideLogoWhiteText
+			: drlambdaLogoBadgeBlackBG,
+		logoWidth: 8, // Adjust the width as needed
+		logoHeight: 1.5,
+	});
+
+export const Event_Report_010_TemplateLogo: React.FC<TemplateLogoType> = (
+	props: TemplateLogoType,
+) =>
+	generateTemplateLogo({
+		...props,
+		// coverLogo: drlambdaLogo,
+		// nonCoverLogo: drlambdaLogo,
+		lightBGLogo: isChatslide()
+			? chatslideLogoBlackText
+			: drlambdaLogoBadgeWhiteBG,
+		darkBGLogo: isChatslide()
+			? chatslideLogoWhiteText
+			: drlambdaLogoBadgeBlackBG,
 		logoWidth: 8, // Adjust the width as needed
 		logoHeight: 1.5,
 	});
@@ -406,6 +431,11 @@ const templatesInfo: TemplateLogoInfo[] = [
 	// 	templateName: 'Simplistic_008_dark' as TemplateKeys,
 	// 	templateLogo: Simplistic_008_TemplateLogoDark,
 	// },
+
+	{
+		templateName: 'Event_Report_010' as TemplateKeys,
+		templateLogo: Event_Report_010_TemplateLogo,
+	},
 	{
 		templateName: 'New_Education_009' as TemplateKeys,
 		templateLogo: New_Education_009_TemplateLogo,

@@ -16,6 +16,12 @@ export const New_Education_009_TemplateThemeConfig: {
 	'Ecru White': {
 		backgroundColorCover: 'bg-[#F5F1E2]',
 		backgroundColor: 'bg-[#F5F1E2]',
+		headFontAlignment: {
+			textAlign: 'center',
+		},
+		userNameAlignment: {
+			textAlign: 'center',
+		},
 		titleFontCSS: {
 			fontSize: '14pt',
 			fontWeight: 'bold',
@@ -66,6 +72,12 @@ export const New_Education_009_TemplateThemeConfig: {
 	'Shark Black': {
 		backgroundColorCover: 'bg-[#272A2D]',
 		backgroundColor: 'bg-[#272A2D]',
+		headFontAlignment: {
+			textAlign: 'center',
+		},
+		userNameAlignment: {
+			textAlign: 'center',
+		},
 		titleFontCSS: {
 			fontSize: '14pt',
 			fontWeight: 'bold',
@@ -116,6 +128,12 @@ export const New_Education_009_TemplateThemeConfig: {
 	'Moon Mist': {
 		backgroundColorCover: 'bg-[#DDDFD2]',
 		backgroundColor: 'bg-[#DDDFD2]',
+		headFontAlignment: {
+			textAlign: 'center',
+		},
+		userNameAlignment: {
+			textAlign: 'center',
+		},
 		titleFontCSS: {
 			fontSize: '14pt',
 			fontWeight: 'bold',
@@ -166,6 +184,12 @@ export const New_Education_009_TemplateThemeConfig: {
 	'Regent St Blue': {
 		backgroundColorCover: 'bg-[#ACC9E0]',
 		backgroundColor: 'bg-[#ACC9E0]',
+		headFontAlignment: {
+			textAlign: 'center',
+		},
+		userNameAlignment: {
+			textAlign: 'center',
+		},
 		titleFontCSS: {
 			fontSize: '14pt',
 			fontWeight: 'bold',
