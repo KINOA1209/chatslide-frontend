@@ -82,8 +82,8 @@ export default function WorkflowStep5() {
 					onClick={handleSubmitVideo}
 				>
 					{ avatar ? 
-					'Yes, Regenerate Video (400 ⭐️)' : 
-					'Yes, Regenerate Video (20 ⭐️)'}
+					'Yes, Regenerate (400 ⭐️)' : 
+					'Yes, Regenerate (20 ⭐️)'}
 				</BigBlueButton>
 				</div>
 			</Modal>
