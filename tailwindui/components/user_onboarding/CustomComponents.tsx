@@ -176,7 +176,7 @@ export const FeedbackWindow: FC<FeedbackWindowProps> = ({ onClose }) => {
 				<div className='pt-[3rem] flex flex-row items-center justify-end gap-[0.75rem]'>
 					<div
 						onClick={() => onClose()}
-						className='h-10 px-2 py-0.5 bg-[#2943E9] rounded justify-center items-center gap-1.5 inline-flex cursor-pointer'
+						className='h-10 px-2 py-0.5 bg-[#5168f6] rounded justify-center items-center gap-1.5 inline-flex cursor-pointer'
 					>
 						<span className='text-center text-zinc-100 text-base font-medium font-creato-medium leading-none tracking-wide'>
 							Next Section

@@ -709,7 +709,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					{/* send text, call api to get response */}
 					<button onClick={() => handleSend()} disabled={loading}>
 						<IoSend
-							fill={!loading ? '#2943E9' : '#E5E7EB'}
+							fill={!loading ? '#5168f6' : '#E5E7EB'}
 							className='w-7 h-7'
 						/>
 					</button>

@@ -26,7 +26,7 @@ module.exports = {
 				'Grey-50': 'var(--Grey-50, #F4F4F4)',
 				'Grey-100': 'var(--Grey-100, #E7E9EB)',
 				'Workflow-bg-color': 'var(--Workflow-bg-color, #6A7EF9)',
-				'button-color': 'var(--Blue-600, #2943E9)',
+				'button-color': 'var(--Blue-600, #5168f6)',
 				Lavender: 'var(--Lavender, #9AAEF9)',
 			},
 			colors: {

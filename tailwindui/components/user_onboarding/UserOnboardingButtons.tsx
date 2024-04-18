@@ -44,7 +44,7 @@ const PrimaryColorButton: FC<ButtonProps> = ({ onClick, label, disabled }) => {
 		<button
 			onClick={onClick}
 			className={`w-24 h-10 px-2 py-0.5 ${
-				disabled ? 'bg-[#919DAA]' : 'bg-[#2943E9]'
+				disabled ? 'bg-[#919DAA]' : 'bg-[#5168f6]'
 			} rounded justify-center items-center gap-1.5 inline-flex`}
 			disabled={disabled}
 		>
@@ -66,7 +66,7 @@ const SecondaryColorButton: FC<ButtonProps> = ({
 			className='w-24 h-10 px-2 py-0.5 rounded border border-[#FFFFFF] justify-center items-center gap-1.5 inline-flex'
 			disabled={disabled}
 		>
-			<span className='text-center text-[#2943E9] text-base font-medium font-creato-medium leading-none tracking-wide'>
+			<span className='text-center text-[#5168f6] text-base font-medium font-creato-medium leading-none tracking-wide'>
 				{label}
 			</span>
 		</button>

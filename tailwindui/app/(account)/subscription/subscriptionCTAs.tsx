@@ -13,9 +13,9 @@ const PrimaryButton: FC<ButtonProps> = ({ onClick, label }) => {
 	return (
 		<button
 			onClick={onClick}
-			className='h-10 py-2 bg-white rounded-md border border-[#2943E9] justify-center items-center inline-flex'
+			className='h-10 py-2 bg-white rounded-md border border-[#5168f6] justify-center items-center inline-flex'
 		>
-			<span className='w-[9rem] text-center text-[#2943E9] text-base font-creato-medium leading-none tracking-tight'>
+			<span className='w-[9rem] text-center text-[#5168f6] text-base font-creato-medium leading-none tracking-tight'>
 				{label}
 			</span>
 		</button>
@@ -29,7 +29,7 @@ const SecondaryButton: FC<ButtonProps> = ({ onClick, label }) => {
 			onClick={onClick}
 			className='w-24 h-10 px-2 py-0.5 rounded border border-[#FFFFFF] justify-center items-center gap-1.5 inline-flex'
 		>
-			<span className='text-center text-[#2943E9] text-base font-medium font-creato-medium leading-none tracking-wide'>
+			<span className='text-center text-[#5168f6] text-base font-medium font-creato-medium leading-none tracking-wide'>
 				{label}
 			</span>
 		</button>
