@@ -235,6 +235,7 @@ const OutlineVisualizer = ({
 											onClick={(e) => {
 												handleDeleteSection(e, sectionIndex);
 											}}
+											id='outline-delete-section'
 										>
 											<DeleteIcon shadow={true} />
 										</div>
@@ -291,6 +292,7 @@ const OutlineVisualizer = ({
 																					detailIndex,
 																				)
 																			}
+																			id='outline-delete-detail-upper'
 																		>
 																			<DeleteIcon shadow={true} />
 																		</div>
@@ -306,6 +308,7 @@ const OutlineVisualizer = ({
 																					detailIndex,
 																				)
 																			}
+																			id='outline-add-detail-upper'
 																		>
 																			<AddTopicIcon />
 																		</div>
@@ -322,6 +325,7 @@ const OutlineVisualizer = ({
 																					detailIndex + 1,
 																				)
 																			}
+																			id='outline-add-detail-lower'
 																		>
 																			<AddTopicIcon />
 																		</div>
@@ -353,6 +357,7 @@ const OutlineVisualizer = ({
 							}
 						}}
 						className='focus:outline-none'
+						id='outline-add-section'
 					>
 						<AddSectionIcon />
 					</button>

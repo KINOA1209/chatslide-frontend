@@ -61,7 +61,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 
 	const iframe = `<iframe src="${host}/embed/${project_id}?page=${
 		currentSlideIndex + 1
-	}" width="100%" height="600px" frameborder="0"></iframe>`;
+	}" width="960px" height="540px"></iframe>`;
 
 	function truncateWithFullWords(str: string, maxLength: number) {
 		if (str.length <= maxLength) return str;
@@ -158,7 +158,8 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 						<Instruction>Embed this Page</Instruction>
 						<Explanation>
 							Copy the code below and put it on your webpage, the content will
-							be updated as you update your slides.
+							be updated as you update your slides. 
+							<a className='text-blue-600' href='/embed_example'>Learn More.</a>
 						</Explanation>
 						<ClickableLink link={iframe} />
 					</div>

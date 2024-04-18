@@ -177,8 +177,11 @@ export default function Topic_SocialPost() {
 			initSocialPosts(
 				ProjectService.parseSocialPosts(response.data.res, postStyle),
 			);
-			updateProject('social_posts', response.data.res);
-			bulkUpdateProject(response.data);
+			bulkUpdateProject(
+				{...response.data, 
+				id: response.data.project_id,
+				social_posts: response.data.res,
+			} as Project);
 
 			router.push(addIdToRedir('/socialpost', response.data.project_id));
 		} catch (error) {

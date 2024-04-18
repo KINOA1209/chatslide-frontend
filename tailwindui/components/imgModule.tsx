@@ -670,11 +670,11 @@ export const ImgModule = ({
 								>
 									<Image
 										src={url} // URL of the image
-										unoptimized={url?.includes('freepik') ? false : true}
+										unoptimized={!url?.includes('freepik')}
 										alt='searched image'
 										layout='responsive'
 										objectFit='contain' // This will keep the aspect ratio and make sure the image fits within the container
-										className='w-full h-full' // Additional CSS classes if needed
+										className='w-full h-full flex items-center justify-center' // Additional CSS classes if needed
 										width={100}
 										height={100}
 									/>

@@ -15,11 +15,11 @@ const Toggle: React.FC<ToggleProps> = ({
 }) => {
 	return (
 		<div className='toggle items-center md:flex'>
-			<div className='flex items-center pb-2'>
+			<div className='flex items-center'>
 				<button
 					type='button'
 					onClick={() => setIsLeft(true)}
-					className={`py-2 px-4 rounded-l-full ${
+					className={`py-2 px-4 rounded-l-full text-lg font-bold ${
 						isLeft ? 'bg-Blue text-white' : 'bg-gray-200'
 					}`}
 				>
@@ -28,8 +28,8 @@ const Toggle: React.FC<ToggleProps> = ({
 				<button
 					type='button'
 					onClick={() => setIsLeft(false)}
-					className={`py-2 px-4 rounded-r-full ${
-						isLeft ? 'bg-gray-200' : 'bg-Purple text-white'
+					className={`py-2 px-4 rounded-r-full text-lg font-bold ${
+						isLeft ? 'bg-gray-200' : 'bg-Blue text-white'
 					}`}
 				>
 					{rightText || 'Yearly (17% off)'}

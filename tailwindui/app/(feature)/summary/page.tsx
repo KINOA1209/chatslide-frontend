@@ -82,7 +82,7 @@ export default function Topic() {
 		initProject,
 	} = useProject();
 
-	const scenarioType = SessionStorage.getItem('scenarioType', 'business');
+	const scenarioType = project?.scenario_type || 'business';
 	const generationMode = SessionStorage.getItem(
 		'generation_mode',
 		'from_topic',
@@ -277,6 +277,7 @@ export default function Topic() {
 				router.push(addIdToRedir('outlines', outlinesJson.data.id));
 			} else if (response.status == 402) {
 				setShowPaymentModal(true);
+				setShowGenerationStatusModal(false);
 				setIsSubmitting(false);
 			} else {
 				console.error('Error when generating outlines:', response.status);

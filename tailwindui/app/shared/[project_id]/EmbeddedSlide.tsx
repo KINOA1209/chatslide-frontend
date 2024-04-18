@@ -30,7 +30,7 @@ const EmbeddedSlide: React.FC<{
 				/>
 
 				{/* left and right buttons */}
-				<div className='absolute right-5 bottom-5 flex flex-row items-center gap-x-2'>
+				<div className='absolute right-5 bottom-5 flex flex-row items-center gap-x-2 z-50'>
 					<button className='flex items-center justify-center rounded-full w-8 h-8 bg-black bg-opacity-20 disabled:opacity-50'
 						disabled={!canClick(-1)}
 						onClick={() => changePage(-1)}
