@@ -39,7 +39,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 	};
 
 	return (
-		<div className='col-span-1 flex flex-row-reverse hidden sm:block z-20'>
+		<div className='col-span-1 flex flex-row-reverse hidden sm:block'>
 			<ButtonWithExplanation
 				explanation='Change Page Layout'
 				button={
@@ -59,7 +59,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 				}
 			/>
 			<Transition
-				className='h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center'
+				className='h-[100vh] w-[100vw] z-10 bg-slate-200/80 fixed top-0 left-0 flex flex-col md:items-center md:justify-center z-20'
 				show={showLayout}
 				onClick={closeModal}
 				enter='transition ease duration-300 transform'
