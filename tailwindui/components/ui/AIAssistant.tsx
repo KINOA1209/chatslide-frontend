@@ -672,12 +672,18 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 
 					{loading && (
 						<div className='px-3.5 py-2.5 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-gray-200  gap-2.5 max-w-[15rem] flex flex-wrap'>
-							<div
+							{/* <div
 								className='animate-pulse text-neutral-800 text-base font-normal   text-wrap'
 								ref={loading ? lastMessageRef : null}
 							>
 								🤔 I am thinking...
-							</div>
+							</div> */}
+							<Image
+								src='/images/drlambda-thinking.gif'
+								alt='thinking'
+								width={50}
+								height={50}
+							/>
 						</div>
 					)}
 				</ScrollBar>

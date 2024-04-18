@@ -28,7 +28,7 @@ const LoginForm: React.FC = () => {
 			let message = error.message || 'An error occurred';
 			console.log('message', message);
 			if (message == 'User does not exist.') {
-				message += ' Please sign up first.';
+				message += ' Please sign up first. Please also try Sign in with Google.';
 			}
 			toast.error(message, {
 				position: 'top-center',

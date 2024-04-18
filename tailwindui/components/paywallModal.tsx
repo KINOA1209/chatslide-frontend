@@ -38,7 +38,7 @@ const PaywallModal: React.FC<PaywallModalProps> = ({
 			<div className='py-2 space-y-4'>
 				{' '}
 				{/* Reduced bottom padding */}
-				<PricingComparison small={true}/>
+				<PricingComparison small={true} showFreeTier={false}/>
 				{showReferralLink && (
 					<div className='space-y-4'>
 						<div className='text-center text-[#707C8A] text-[16px] font-bold'>
