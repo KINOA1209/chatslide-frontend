@@ -3,19 +3,49 @@
 	"description": "We'll create contents tailored to your needs.",
 	"options": [
 		{
-			"id": "life_style",
-			"title": "Life Style",
-			"imageSrc": "/images/slides/life_style.png"
+			"id": "sales_pitch",
+			"title": "Sales Pitch",
+			"imageSrc": "/images/scenario/sales_pitch.jpg"
 		},
 		{
-			"id": "business",
-			"title": "Business",
-			"imageSrc": "/images/slides/business.png"
+			"id": "business_coaching",
+			"title": "Business Coaching",
+			"imageSrc": "/images/scenario/business_coaching.jpg"
 		},
 		{
-			"id": "academic",
-			"title": "Academic",
-			"imageSrc": "/images/slides/academic.png"
+			"id": "life_coaching",
+			"title": "Life Coaching",
+			"imageSrc": "/images/scenario/life_coaching.jpg"
+		},
+		{
+			"id": "policy_training",
+			"title": "Policy Training",
+			"imageSrc": "/images/scenario/policy_training.jpg"
+		},
+		{
+			"id": "storytelling",
+			"title": "Storytelling",
+			"imageSrc": "/images/scenario/storytelling.jpg"
+		},
+		{
+			"id": "scientific_teaching",
+			"title": "Scientific Teaching",
+			"imageSrc": "/images/scenario/scientific_teaching.jpg"
+		},
+		{
+			"id": "data_analysis",
+			"title": "Data Analysis",
+			"imageSrc": "/images/scenario/data_analysis.jpg"
+		},
+		{
+			"id": "news_report",
+			"title": "News Report",
+			"imageSrc": "/images/scenario/news_report.jpg"
+		},
+		{
+			"id": "product_spec",
+			"title": "Product Specification",
+			"imageSrc": "/images/scenario/product_spec.jpg"
 		}
 	]
 }
