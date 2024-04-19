@@ -55,7 +55,6 @@ import { Explanation } from '../ui/Text';
 import { BrandingButton } from '../button/BrandingButton';
 import { useChatHistory } from '@/hooks/use-chat-history';
 import { getOrigin } from '@/utils/getHost';
-import Draggable from 'react-draggable';
 import { DraggableSlidesPreview } from './DraggableSlidesPreview';
 
 type SlidesHTMLProps = {

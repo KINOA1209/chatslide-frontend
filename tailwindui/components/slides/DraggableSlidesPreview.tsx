@@ -45,6 +45,7 @@ export const DraggableSlidesPreview: React.FC<{
 						ref={index === slideIndex ? ref : null}
 						draggable={index !== 0}
 						onDragStart={() => {
+							setSlideIndex(index);
 							setDraggedSlideIndex(index);
 						}}
 						onDragOver={(e) => {
