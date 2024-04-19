@@ -293,9 +293,11 @@ export const templateDispatch = (
 						'userName',
 						{
 							...themeElements.userNameFontCSS,
-							textAlign: themeElements.userNameAlignment
-								? themeElements.userNameAlignment.textAlign
-								: 'left',
+							textAlign:
+								themeElements.userNameAlignment &&
+								slide.layout === 'Cover_img_0_layout'
+									? themeElements.userNameAlignment.textAlign
+									: 'left',
 						},
 						false,
 					)
@@ -316,9 +318,11 @@ export const templateDispatch = (
 				'head',
 				{
 					...themeElements.headFontCSS,
-					textAlign: themeElements.headFontAlignment
-						? themeElements.headFontAlignment.textAlign
-						: 'left',
+					textAlign:
+						themeElements.headFontAlignment &&
+						slide.layout === 'Cover_img_0_layout'
+							? themeElements.headFontAlignment.textAlign
+							: 'left',
 				},
 				false,
 			)}
