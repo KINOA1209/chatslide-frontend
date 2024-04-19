@@ -85,7 +85,7 @@ export const Chats: React.FC<ChatsProps> = ({
 	// const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 	const [sourceImage, setSourceImage] = useState<string>('');
 	const [selectedRegenerateTone, setSelectedRegenerateTone] = useState<string>('');
-	const { slideIndex } = useSlides()
+	const { slideIndex } = useSlides();
 	const { project } = useProject();
 	const [loading, setLoading] = useState(false);
 	const { token } = useUser();
@@ -451,7 +451,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	const [userInput, setUserInput] = useState('');
 	const { chatHistory, addChatHistory, clearChatHistory, chatHistoryStatus } =
 		useChatHistory();
-	const { updateVersion, setSlides, setSlideIndex } = useSlides();
+	const { updateVersion, setSlides, setSlideIndex, slideIndex } = useSlides();
 	const [loading, setLoading] = useState(false);
 	const { token } = useUser();
 	const lastMessageRef = useRef<HTMLDivElement>(null); // Ensure you have a ref for the last message
@@ -508,6 +508,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					project_id: project?.id || '',
 					prompt: prompt,
 					prev_prompts: prev_prompts,
+					page_index: slideIndex,
 				}),
 			});
 		} catch (error) {
