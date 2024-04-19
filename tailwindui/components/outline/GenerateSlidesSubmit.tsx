@@ -14,26 +14,32 @@ import Project from '@/models/Project';
 import SlidesService from '@/services/SlidesService';
 import Slide from '@/models/Slide';
 import { getBrand } from '@/utils/getHost';
+import { convertOutlineToPlainText, convertPlainTextToOutlines } from '@/components/outline/OutlineUtils';
 
 // this class has no UI, it is used to submit the outline to the backend when isSubmitting is true
 const GenerateSlidesSubmit = ({
 	outlines,
+	outlinesPlainText,
 	isGPT35,
 	isSubmitting,
 	setIsSubmitting,
+	viewMode,
 }: {
 	outlines: Outlines;
+	outlinesPlainText: string;
 	isGPT35: boolean;
 	isSubmitting: boolean;
 	setIsSubmitting: (submitting: boolean) => void;
+	viewMode: string;
 }) => {
 	const router = useRouter();
 	const { token } = useUser();
 	const { initSlides } = useSlides();
-	const { project, updateProject, bulkUpdateProject } = useProject();
+	const { project, updateProject, bulkUpdateProject, updateOutlines} = useProject();
 
 	useEffect(() => {
 		if (isSubmitting) {
+			//console.log(outlinesPlainText)
 			handleSubmit();
 		}
 	}, [isSubmitting]);
@@ -66,6 +72,27 @@ const GenerateSlidesSubmit = ({
 		}
 	}
 
+	const fetchData = async (
+		language: string,
+	) => {
+		try {
+			const convertedOutlineJSON = await convertPlainTextToOutlines(
+				token,
+				outlinesPlainText,
+				language,
+				isGPT35 ? 'gpt-3.5-turbo' : 'gpt-4',
+			);
+			updateOutlines(Object.values(JSON.parse(convertedOutlineJSON.data.outlines)));
+			bulkUpdateProject({
+				outlines: convertedOutlineJSON.data.outlines
+			} as Project)
+			return Object.values(JSON.parse(convertedOutlineJSON.data.outlines));
+		} catch (error) {
+			console.error('Failed to convert plain text to outlines:', error);
+			return null
+		}
+	}
+
 	const handleSubmit = async () => {
 		let formData: any = {};
 
@@ -76,9 +103,14 @@ const GenerateSlidesSubmit = ({
 
 		const project_id = project.id;
 		const selectedResources = project.resources || [];
-
+		let convertedOutlines = null
+		if (viewMode === 'page'){
+			convertedOutlines = await fetchData(project.language)
+		}
+		//console.log('before submitting', outlines)
+		//console.log('before submitting converted', convertedOutlines)
 		formData = {
-			outlines: JSON.stringify({ ...outlines }),
+			outlines: JSON.stringify(convertedOutlines ? { ...convertedOutlines } : { ...outlines }),
 			audience: project.audience,
 			foldername: project.foldername,
 			topic: project.topic,
@@ -92,7 +124,6 @@ const GenerateSlidesSubmit = ({
 			logo: project.logo,
 			brand: getBrand(),
 		};
-
 		bulkUpdateProject({
 			has_scripts: false,  // in case it is re-generated
 		} as Project);
@@ -108,7 +139,7 @@ const GenerateSlidesSubmit = ({
 				const extraKnowledge = await ResourceService.queryResource(
 					project_id,
 					selectedResources.map((r: Resource) => r.id),
-					outlines,
+					convertedOutlines || outlines,
 					project.search_online || '',
 					token,
 				);

@@ -6,15 +6,18 @@ const OutlinePageView = ({
     outlinesPlainText,
     setOutlinesPlainText,
     isGPT35,
+    setTextModified,
 }: {
     outlinesPlainText: string;
     setOutlinesPlainText: (outlinesPlainText: string) => void;
     isGPT35: boolean;
+    setTextModified: (modified: boolean) => void
 }) => {
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
     
     const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setOutlinesPlainText(event.target.value);
+        setTextModified(true);
     };
 
     //tab for inserting indent
@@ -40,7 +43,7 @@ const OutlinePageView = ({
     return (
         <textarea
             ref={textAreaRef}
-            className='border-[#707C8A] rounded-md h-[70vh] mx-[5rem] py-4 px-4'
+            className='border-[#707C8A] rounded-md h-[70vh] mx-[7rem] py-4 px-4 my-3'
             value={outlinesPlainText}
             onChange={handleTextChange}
             onKeyDown={handleKeyDown}
