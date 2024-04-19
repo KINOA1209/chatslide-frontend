@@ -1,5 +1,6 @@
 'use client';
 
+import { trackSignUpAbotify } from '@/components/integrations/Abotify';
 import { Blank } from '@/components/ui/Loading';
 import AuthService from '@/services/AuthService';
 import UserService from '@/services/UserService';
@@ -21,6 +22,7 @@ export default function SSORedirect() {
 			while (retries < maxRetries && !idToken) {
 				try {
 					const result = await AuthService.getCurrentUserTokenAndEmail();
+					trackSignUpAbotify();
 					idToken = result.idToken;
 				} catch (error) {
 					console.error('Error fetching token, retrying...', error);
