@@ -219,7 +219,7 @@ class ProjectService {
 					: jsonSlides[key];
 			//console.log('slideData:', slideData);
 			const slide = new Slide();
-			slide.head = slideData.head || 'New Slide';
+			slide.head = slideData.head || '';
 			slide.title = slideData.title || 'New Slide';
 			slide.subtopic = slideData.subtopic || 'New Slide';
 			slide.userName = slideData.userName || '';

@@ -77,7 +77,7 @@ export default class Slide {
 			legend: '',
 		};
 
-		this.head = 'New Slide';
+		this.head = '';
 		this.title = 'New Slide';
 		this.subtopic = 'New Slide';
 		this.userName = '';
