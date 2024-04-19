@@ -156,7 +156,7 @@ export const availableTemplates = {
 export const templateDisplayNames = {
 	Simplistic_008: '🖼️ General Pitch',
 	New_Education_009: '📚 Education',
-	Event_Report_010: '📈 Event Report',
+	Event_Report_010: '📈 Report',
 	// Default: '📌 Default',
 	Business_002: '📎 Business',
 	Business_Dark_005: '💼 Business Dark',
