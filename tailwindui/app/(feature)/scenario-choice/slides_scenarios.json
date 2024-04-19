@@ -1,7 +1,7 @@
 {
 	"message": "Great! Where are you going to use it?",
 	"description": "We'll create contents tailored to your needs.",
-	"options":[
+	"options": [
 		{
 			"id": "sales_pitch",
 			"title": "Sales Pitch",
@@ -31,6 +31,12 @@
 			"title": "Storytelling",
 			"imageSrc": "/images/scenario/storytelling.jpg",
 			"audience": "Video_Viewers"
+		},
+		{
+			"id": "tutorial",
+			"title": "Tutorial",
+			"imageSrc": "/images/scenario/tutorial.webp",
+			"audience": "Students"
 		},
 		{
 			"id": "scientific_teaching",
