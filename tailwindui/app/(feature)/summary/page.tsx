@@ -38,30 +38,27 @@ import { getUserCountryCode, getUserLanguage } from '@/utils/userLocation';
 import Project from '@/models/Project';
 import { GenerationStatusProgressModal } from '@/components/ui/GenerationStatusProgressModal';
 import TextareaAutosize from 'react-textarea-autosize';
+import slides_scenarios from './../scenario-choice/slides_scenarios.json';
+
 
 const MAX_TOPIC_LENGTH = 2000;
 const MIN_TOPIC_LENGTH = 3;
 
 const audienceDict = {
+	Business_Prospects: '🤝 Business Prospects',
+	Business_Clients: '💼 Business Clients',
+	Office_Colleagues: '👔 Coworkers',
 	Researchers: '🔬 Researchers',
 	Students: '📚 Students',
-	Business_Clients: '💼 Business Clients',
-	Office_Colleagues: '👔 Office Colleagues',
 	Video_Viewers: '📱 Video Viewers',
+	Community_Members: '🏘️ Community Members',
 	Myself: '🧑‍💻 Myself',
 };
 
 const getAudienceFromSceario = (scenarioType: string) => {
-	switch (scenarioType) {
-		case 'business':
-			return 'Business_Clients';
-		case 'academic':
-			return 'Students';
-		case 'life_style':
-			return 'Video_Viewers';
-		default:
-			return 'unselected';
-	}
+	return slides_scenarios.options.find(
+		(scenario) => scenario.id === scenarioType,
+	)?.audience || 'Business_Clients';
 };
 
 export default function Topic() {
