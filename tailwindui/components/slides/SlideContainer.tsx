@@ -20,6 +20,7 @@ type SlideContainerProps = {
 	slideRef?: React.RefObject<HTMLDivElement>;
 	exportToPdfMode?: boolean;
 	highlightBorder?: boolean;
+	subHighlightBorder?: boolean;
 	setIsPresenting?: React.Dispatch<React.SetStateAction<boolean>>;
 	length?: number; // force rerender when length changes and index does not change
 	version?: number; // force rerender when version changes
@@ -38,6 +39,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 	slideRef = useRef(null),
 	exportToPdfMode = false,
 	highlightBorder = false,
+	subHighlightBorder = false,
 	setIsPresenting,
 	length,
 	version,
@@ -55,7 +57,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 	return (
 		<div
 			id='slideContainer'
-			className={`${isPresenting ? 'fixed top-0 left-0 w-full h-full z-50' : 'relative rounded p-1' + (highlightBorder ? ' border-Blue' : ' border-gray-200') + (noBorder ? ' border-0' : ' border-2')}`}
+			className={`${isPresenting ? 'fixed top-0 left-0 w-full h-full z-50' : 'relative rounded p-1' + (highlightBorder ? ' border-Blue' : subHighlightBorder ? ' border-green-600' : ' border-gray-200') + (noBorder ? ' border-0' : ' border-2')}`}
 			ref={containerRef}
 			style={{
 				boxSizing: 'border-box',
