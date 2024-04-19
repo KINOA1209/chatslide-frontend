@@ -8,6 +8,8 @@ import scenarios from './choices.json';
 import SessionStorage from '@/utils/SessionStorage';
 import AuthService from '@/services/AuthService';
 import { BackButton } from '@/components/button/DrlambdaButton';
+import { BigTitle, Title } from '@/components/ui/Text';
+import { Column } from '@/components/layout/Column';
 
 const ScenarioChoicePage = () => {
 	const router = useRouter(); // Initialize the router
@@ -33,7 +35,7 @@ const ScenarioChoicePage = () => {
 	}, []);
 
 	return (
-		<div className='bg-zinc-100 flex flex-col flex-grow justify-center items-center relative'>
+		<div className='flex flex-col flex-grow justify-center items-center relative'>
 			<div className='absolute hidden sm:block top-5 left-5'>
 				<BackButton
 					href='/dashboard'
@@ -41,24 +43,24 @@ const ScenarioChoicePage = () => {
 					text='Dashboard'
 				/>
 			</div>
-			<div className='flex flex-col justify-center items-center gap-4 sm:gap-12 p-4 sm:p-8'>
+			<Column>
 				{/* title */}
-				<div className='w-[80vh] text-center text-neutral-800 text-xl sm:text-2xl font-normal font-creato-medium leading-9 tracking-wide whitespace-normal break-words'>
+				<Title>
 					Hey {username}, <br />
 					what are you planning to create today?
-				</div>
+				</Title>
 				{/* <div className='w-[80vh] h-8 text-center text-gray-600 text-base font-normal font-creato-medium leading-normal tracking-tight'>
           {scenarios.description}
         </div> */}
 				{/* three types of scenarios */}
-				<div className='flex flex-col gap-4 md:gap-6' id='choice_container'>
+				<div className='flex flex-wrap flex-row gap-4 md:gap-6 w-full mx-auto justify-center' id='choice_container'>
 					{scenarios.options.map((scenario) => (
 						<div
 							key={scenario.id}
-							className='flex flex-col w-full transition-transform transform-gpu hover:scale-110'
+							className='flex flex-col transition-transform transform-gpu hover:scale-110'
 						>
 							<div
-								className='w-full h-[250px] sm:h-[300px] bg-gray-300 rounded-lg shadow flex justify-center items-center cursor-pointer mb-4'
+								className='h-[250px] sm:h-[300px] bg-gray-300 rounded-lg shadow flex justify-center items-center cursor-pointer mb-4'
 								onClick={() => navigate(scenario.id)}
 							>
 								<Image
@@ -75,7 +77,7 @@ const ScenarioChoicePage = () => {
 						</div>
 					))}
 				</div>
-			</div>
+			</Column>
 		</div>
 	);
 };
