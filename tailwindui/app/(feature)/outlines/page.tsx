@@ -101,6 +101,25 @@ export default function WorkflowStep2() {
 	}, [isSubmitting]);
 
 	useEffect(() => {
+		async function fetchData() {
+			setDataFetched(false);
+			setLoading(true);
+			try {
+				const convertedOutlineJSON = await convertPlainTextToOutlines(
+					token,
+					outlinesPlainText,
+					language,
+					isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
+				);
+				console.log(convertedOutlineJSON);
+				updateOutlines(Object.values(JSON.parse(convertedOutlineJSON.data.outlines)));
+				setDataFetched(true);
+			} catch (error) {
+				console.error('Failed to convert plain text to outlines:', error);
+			} finally {
+				setLoading(false)
+			}
+		}
 		if (viewMode === 'page') {
 			const plainText = convertOutlineToPlainText(outlines);
 			setOutlinesPlainText(plainText);
@@ -108,25 +127,6 @@ export default function WorkflowStep2() {
 			setLoading(false);
 		}
 		else {
-			const fetchData = async () => {
-				setDataFetched(false);
-				setLoading(true);
-				try {
-					const convertedOutlineJSON = await convertPlainTextToOutlines(
-						token,
-						outlinesPlainText,
-						language,
-						isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
-					);
-					console.log(convertedOutlineJSON);
-					updateOutlines(Object.values(JSON.parse(convertedOutlineJSON.data.outlines)));
-					setDataFetched(true);
-				} catch (error) {
-					console.error('Failed to convert plain text to outlines:', error);
-				} finally {
-					setLoading(false)
-				}
-			}
 			fetchData();
 		}
 	}, [viewMode]);
