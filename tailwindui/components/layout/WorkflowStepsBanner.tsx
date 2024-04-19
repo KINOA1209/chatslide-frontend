@@ -64,7 +64,11 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 	return (
 		<section className='sticky top-0 z-10 flex flex-col'>
 			<div className='relative w-full h-[80px] flex flex-row items-center bg-[#2044F2] gap-x-2 lg:gap-x-4 px-2 lg:px-4 xl:px-6'>
-				<BackButton href='/dashboard' />
+				{
+					currentIndex === 0 ? 
+					<BackButton href='/genmode' text='Generation Mode'/> :
+					<BackButton href='/dashboard' />
+				}
 				<div className={`flex-grow items-center justify-center flex py-2 
 								${workflow === 'socialPosts' && !nextStep ? 'absolute left-1/2 transform -translate-x-1/2' : ''}
 				`}>
