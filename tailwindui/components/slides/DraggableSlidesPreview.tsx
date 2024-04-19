@@ -52,6 +52,14 @@ export const DraggableSlidesPreview: React.FC<{
 							setDraggedOverSlideIndex(index)
 							e.preventDefault();
 						}}
+						onDragEnd={() => {
+							setDraggedSlideIndex(-1);
+							setDraggedOverSlideIndex(-1);
+						}}
+						onDragLeave={() => {
+							setDraggedOverSlideIndex(-1);
+							setDraggedSlideIndex(-1);
+						}}
 						onDrop={() => {
 							setDraggedOverSlideIndex(-1);
 							if (draggedSlideIndex !== -1 && index != 0) {
