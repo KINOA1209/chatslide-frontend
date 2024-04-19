@@ -20,10 +20,12 @@ type SlideContainerProps = {
 	slideRef?: React.RefObject<HTMLDivElement>;
 	exportToPdfMode?: boolean;
 	highlightBorder?: boolean;
+	subHighlightBorder?: boolean;
 	setIsPresenting?: React.Dispatch<React.SetStateAction<boolean>>;
 	length?: number; // force rerender when length changes and index does not change
 	version?: number; // force rerender when version changes
 	pageNumber?: number;
+	isEmbedded?: boolean;
 };
 
 const SlideContainer: React.FC<SlideContainerProps> = ({
@@ -37,11 +39,15 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 	slideRef = useRef(null),
 	exportToPdfMode = false,
 	highlightBorder = false,
+	subHighlightBorder = false,
 	setIsPresenting,
 	length,
 	version,
 	pageNumber,
+	isEmbedded = false,
 }) => {
+
+	const noBorder = isPresenting || isEmbedded;
 
 	useEffect(() => {
 		if (length)
@@ -51,13 +57,13 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 	return (
 		<div
 			id='slideContainer'
-			className={`${isPresenting ? 'fixed top-0 left-0 w-full h-full z-50' : 'relative rounded border-2 p-1' + (highlightBorder ? ' border-Blue' : ' border-gray-200')}`}
+			className={`${isPresenting ? 'fixed top-0 left-0 w-full h-full z-50' : 'relative rounded p-1' + (highlightBorder ? ' border-Blue' : subHighlightBorder ? ' border-green-600' : ' border-gray-200') + (noBorder ? ' border-0' : ' border-2')}`}
 			ref={containerRef}
 			style={{
 				boxSizing: 'border-box',
 				boxShadow: 'none',
-				borderRadius: isPresenting ? '0' : '5px',
-				margin: isPresenting ? '0' : '5px',
+				borderRadius: noBorder ? '0' : '5px',
+				margin: noBorder ? '0' : '5px',
 				width: isPresenting ? '100vw' : `${960 * scale + 12}px`,
 				height: isPresenting ? '100vh' : `${540 * scale + 12}px`,
 			}}

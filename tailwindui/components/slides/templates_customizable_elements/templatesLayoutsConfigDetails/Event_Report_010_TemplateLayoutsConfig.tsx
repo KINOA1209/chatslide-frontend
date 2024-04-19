@@ -2,7 +2,7 @@ import { LayoutElements } from '../layout_elements';
 import { LayoutKeys } from '../../slideLayout';
 import { TemplateKeys } from '../../slideTemplates';
 
-export const Simplistic_008_TemplateLayoutsConfig: {
+export const Event_Report_010_TemplateLayoutsConfig: {
 	[key in LayoutKeys]?: LayoutElements;
 } = {
 	Cover_img_0_layout: {
@@ -15,14 +15,14 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 		},
 		titleCSS: {
 			// backgroundColor: '#F1F1F1',
-			padding: '130px 80px 0px 80px',
+			padding: '180px 80px 0px 80px',
 			width: '100%',
 			height: '70%',
 			zIndex: 20,
 			position: 'absolute',
 			top: '0%',
 			left: '0%',
-			// transform: 'translate(-50%, -50%)', // Centering trick
+			textAlign: 'center',
 		},
 		userNameTextDividerCSS: {
 			display: 'none',
@@ -30,20 +30,22 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 		userNameCSS: {
 			position: 'absolute',
 			top: '400px',
-			left: '0%',
-			width: '80%',
-			paddingLeft: '80px',
+			left: '25%',
+			width: '50%',
+			// paddingLeft: '80px',
+			// transform: 'translate(-50%, -50%)', // Centering trick
+			textAlign: 'center',
 		},
 		columnCSS: {
 			// paddingTop: '1rem', // Equivalent to pt-[1rem]
-			paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
-			paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
-			width: '50%', // Equivalent to w-1/2
-			display: 'flex', // Equivalent to flex
-			flexDirection: 'column', // Equivalent to flex-col
-			justifyContent: 'flex-start', // Equivalent to justify-start
-			height: '100%', // Equivalent to h-full
-			gap: '2rem',
+			// paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
+			// paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
+			// width: '50%', // Equivalent to w-1/2
+			// display: 'flex', // Equivalent to flex
+			// flexDirection: 'column', // Equivalent to flex-col
+			// justifyContent: 'flex-start', // Equivalent to justify-start
+			// height: '100%', // Equivalent to h-full
+			// gap: '2rem',
 		},
 	},
 	Cover_img_1_layout: {
@@ -59,20 +61,22 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			left: '0%',
 			width: '50%',
 			paddingLeft: '80px',
+			textAlign: 'left',
 		},
 		titleCSS: {
-			padding: '130px 0px 0px 80px',
+			padding: '80px 0px 0px 80px',
 			maxHeight: '80%',
 			width: '50%',
 			height: '70%',
 			position: 'absolute',
 			top: '0%',
 			left: '0%',
+			textAlign: 'center',
 		},
 		columnCSS: {
-			paddingTop: '4rem', // Equivalent to pt-[1rem]
-			paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
-			paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
+			// paddingTop: '4rem', // Equivalent to pt-[1rem]
+			// paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
+			// paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
 			width: '50%', // Equivalent to w-1/2
 			display: 'flex', // Equivalent to flex
 			flexDirection: 'column', // Equivalent to flex-col
@@ -83,18 +87,17 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 		imageContainerCSS: {
 			width: '50%', // Equivalent to w-1/2
 			height: '100%', // Equivalent to h-full
-			borderRadius: '48px', // Equivalent to rounded-md (approximation)
 			//overflow: 'hidden',
 			display: 'flex',
 			alignItems: 'center',
 			zIndex: 20,
-			padding: '30px 30px 30px 30px', // top right bottom left
+			// padding: '50px 30px 50px 30px', // top right bottom left
 			// position: 'absolute',
 			// top: '0px',
 			// left: '0px',
 		},
 		imageCSS: {
-			borderRadius: '48px', // border radius 1.25rem for image
+			// borderRadius: '16px', // border radius 1.25rem for image
 		},
 
 		visualElementsCSS: {
@@ -126,7 +129,7 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			width: '100%', // Equivalent to w-full
 			paddingLeft: '50px',
 			paddingRight: '50px',
-			paddingTop: '0px',
+			paddingTop: '30px',
 			paddingBottom: '0px',
 		},
 		columnCSS: {
@@ -159,7 +162,7 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 	Col_2_img_0_layout: {
 		titleAndSubtopicBoxCSS: {
 			paddingTop: '50px',
-			paddingBottom: '50px',
+			paddingBottom: '30px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
 			display: 'flex',
@@ -182,7 +185,7 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			gap: '50px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
-			paddingTop: '0px',
+			paddingTop: '30px',
 			paddingBottom: '0px',
 		},
 		contentCSS: {
@@ -209,7 +212,7 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 	Col_3_img_0_layout: {
 		titleAndSubtopicBoxCSS: {
 			paddingTop: '50px',
-			paddingBottom: '50px',
+			paddingBottom: '30px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
 			display: 'flex',
@@ -232,7 +235,7 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			gap: '50px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
-			paddingTop: '0px',
+			paddingTop: '30px',
 			paddingBottom: '0px',
 		},
 		contentCSS: {
@@ -276,11 +279,12 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 		titleAndSubtopicBoxCSS: {
 			// backgroundColor: '#F1F1F1',
 			paddingTop: '50px',
-			paddingBottom: '30px',
+			paddingBottom: '12px',
 			paddingLeft: '50px',
 			paddingRight: '0px',
 			display: 'flex',
 			flexDirection: 'column', // Equivalent to flex
+			height: 'fit-content',
 		},
 		topicCSS: {
 			order: '0',
@@ -300,15 +304,15 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			height: '100%', // equivalent to h-[90%]
 			display: 'flex',
 			alignItems: 'center', // equivalent to items-center
-			padding: '30px 30px 30px 30px',
+			// padding: '50px 50px 50px 30px',
 		},
 		imageCSS: {
-			borderRadius: '48px', // border radius 1.25rem for image
+			// borderRadius: '16px', // border radius 1.25rem for image
 		},
 		contentContainerCSS: {
 			width: '100%', // Equivalent to w-full
-			paddingLeft: '50px',
-			paddingRight: '00px',
+			paddingLeft: '30px',
+			paddingRight: '30px',
 			paddingTop: '0px',
 			paddingBottom: '0px',
 		},
@@ -331,19 +335,20 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			height: '100%',
 			display: 'grid',
 			gridTemplateColumns: '1fr',
-			gridAutoRows: '25% 25% auto',
-			gap: '30px',
+			gridAutoRows: '160px 160px 220px',
+			// gap: '30px',
 			// overflow: 'hidden',
 		},
 		titleAndSubtopicBoxCSS: {
 			// backgroundColor: '#F1F1F1',
 			paddingTop: '50px',
-			paddingBottom: '50px',
+			paddingBottom: '12px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
 			display: 'flex',
 			flexDirection: 'column', // Equivalent to flex
 			gridRow: 1,
+			height: 'fit-content',
 		},
 		topicCSS: {
 			order: '0',
@@ -361,16 +366,16 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			height: '100%',
 			flexGrow: 1,
 			gridRow: 3,
-			padding: '0px 50px 0px 50px',
+			// padding: '0px 50px 50px 50px',
 		},
 		imageCSS: {
-			borderRadius: '48px 48px 0px 0px', // border radius 1.25rem for image
+			// borderRadius: '16px', // border radius 1.25rem for image
 		},
 		contentContainerCSS: {
 			width: '100%', // Equivalent to w-full
 			paddingLeft: '50px',
 			paddingRight: '50px',
-			paddingTop: '0px',
+			paddingTop: '30px',
 			paddingBottom: '0px',
 			gridRow: 2,
 		},
@@ -404,23 +409,24 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			height: '100%',
 			display: 'grid',
 			gridTemplateColumns: '1fr',
-			gridAutoRows: '25% 25% auto',
-			gap: '30px',
+			gridAutoRows: '160px 160px 220px',
+			// gap: '10px',
 		},
 		titleAndSubtopicBoxCSS: {
 			// backgroundColor: '#F1F1F1',
 			paddingTop: '50px',
-			paddingBottom: '30px',
+			paddingBottom: '12px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
 			display: 'flex',
 			flexDirection: 'column', // Equivalent to flex
 			gridRow: 1,
+			height: 'fit-content',
 		},
 		topicCSS: {
 			order: '0',
 			paddingBottom: '12px',
-			textTransform: 'uppercase',
+			// textTransform: 'uppercase',
 		},
 		subtopicCSS: {
 			// borderBottom: '1px solid #C2C2C2',
@@ -433,15 +439,16 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			width: '100%', // equivalent to w-full
 			display: 'grid',
 			gridTemplateColumns: 'repeat(2, 1fr)', //
-			order: 2,
+			// order: 2,
 			zIndex: 20,
-			gap: '50px',
-			padding: '0px 50px 0px 50px',
+			gridRow: 3,
+			// gap: '50px',
+			// padding: '0px 50px 50px 50px',
 		},
 		imageCSS: {
 			// height: '11rem', // equivalent to h-[11rem]
 			// flexGrow: 1, // equivalent to grow
-			borderRadius: '48px 48px 0px 0px',
+			// borderRadius: '16px',
 			// position: 'relative', // equivalent to relative
 			// zIndex: 20,
 		},
@@ -452,7 +459,8 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			display: 'grid',
 			gridTemplateColumns: 'repeat(2, 1fr)', //
 			gap: '50px',
-			order: 1,
+			// order: 1,
+			gridRow: 2,
 		},
 
 		rndContainerCSS: {
@@ -475,18 +483,20 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			height: '100%',
 			display: 'grid',
 			gridTemplateColumns: '1fr',
-			gridAutoRows: '25% 25% auto',
-			gap: '30px',
+			// gridAutoRows: '25% 25% auto',
+			gridAutoRows: 'max-content',
+			// gap: '30px',
 		},
 		titleAndSubtopicBoxCSS: {
 			// backgroundColor: '#F1F1F1',
 			paddingTop: '50px',
-			paddingBottom: '50px',
+			paddingBottom: '12px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
 			display: 'flex',
 			flexDirection: 'column', // Equivalent to flex
 			gridRow: 1,
+			height: 'fit-content',
 		},
 		topicCSS: {
 			order: '0',
@@ -503,27 +513,30 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 		imageContainerCSS: {
 			width: '100%', // equivalent to w-full
 			display: 'grid',
+			height: '145px',
 			gridTemplateColumns: 'repeat(3, 1fr)', //
 			order: 1,
 			zIndex: 20,
-			gap: '50px',
-			padding: '0px 50px 0px 50px',
+			// gap: '50px',
+			// padding: '0px 50px 0px 50px',
+			gridRow: 2,
 		},
 		imageCSS: {
 			// height: '11rem', // equivalent to h-[11rem]
 			// flexGrow: 1, // equivalent to grow
-			borderRadius: '24px',
+			// borderRadius: '16px',
 			// position: 'relative', // equivalent to relative
 			// zIndex: 20,
 		},
 		contentContainerCSS: {
 			zIndex: 30,
-			padding: '0px 50px 0px 50px',
+			padding: '12px 50px 0px 50px',
 			width: '100%',
 			display: 'grid',
 			gridTemplateColumns: 'repeat(3, 1fr)', //
 			gap: '50px',
-			order: 2,
+			// order: 2,
+			gridRow: 3,
 		},
 
 		rndContainerCSS: {
@@ -544,12 +557,12 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 
 		imageContainerCSS: {
 			width: '100%', // equivalent to w-full
-			padding: '50px 50px 50px 50px',
+			// padding: '50px 50px 50px 50px',
 		},
 		imageCSS: {
 			height: '100%', // equivalent to h-[11rem]
 			width: '100%',
-			borderRadius: '24px',
+			// borderRadius: '16px',
 		},
 
 		rndContainerCSS: {

@@ -60,7 +60,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 
 		const newSlides = Object.keys(layoutOptions).map((layoutKey) => {
 			const newSlide = new Slide();
-			newSlide.head = project?.topic || 'New Slide';
+			newSlide.head = '';
 			newSlide.title = slides[1]?.title || 'New Slide';
 			newSlide.subtopic = slides[1]?.subtopic || 'New Slide';
 			newSlide.template = template;
@@ -86,7 +86,8 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 				layoutKey === 'Col_2_img_1_layout' ||
 				layoutKey === 'Col_2_img_2_layout' ||
 				layoutKey === 'Col_3_img_3_layout' ||
-				layoutKey === 'Cover_img_1_layout'
+				layoutKey === 'Cover_img_1_layout' ||
+				layoutKey === 'Full_img_only_layout'
 			) {
 				// corresponding layout key and also images array should not empty
 				let slideWithImages = Object.values(slides).find(
@@ -131,6 +132,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 		'2 columns with 1 image',
 		'2 columns with 2 images',
 		'3 columns with 3 images',
+		'1 Full image or chart only',
 	];
 
 	const unEditableTemplateDispatch = (

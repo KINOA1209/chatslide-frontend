@@ -6,6 +6,8 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 import useHydrated from '@/hooks/use-hydrated';
+import Script from 'next/script';
+import Intercom from '@/components/integrations/Intercom';
 
 export default function DefaultLayout({
 	children,
@@ -29,6 +31,8 @@ AOS.init({
 			<main className='grow'>
 				{children}
 			</main>
+
+			<Intercom />
 		</>
 	);
 }

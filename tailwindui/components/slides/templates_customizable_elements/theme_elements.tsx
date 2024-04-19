@@ -22,6 +22,7 @@ import { UPennTemplateThemeConfig } from './templatesThemeConfigDetails/UPennTem
 import { JHUTemplateThemeConfig } from './templatesThemeConfigDetails/JHUTemplateThemeConfig';
 import { Simplistic_008_TemplateThemeConfig } from './templatesThemeConfigDetails/Simplistic_008_TemplateThemeConfigDetails';
 import { New_Education_009_TemplateThemeConfig } from './templatesThemeConfigDetails/New_Education_009_TemplateThemeConfigDetails';
+import { Event_Report_010_TemplateThemeConfig } from './templatesThemeConfigDetails/Event_Report_010_TemplateThemeConfigDetails';
 
 export type ThemeElements = {
 	backgroundColorCover?: string;
@@ -45,6 +46,9 @@ export type ThemeElements = {
 	userNameFontColor?: React.CSSProperties | string;
 	headFontCSS: React.CSSProperties;
 	contentFontCSS_non_vertical_content: React.CSSProperties;
+	titleAndSubtopicBoxBackgroundColor?: string;
+	headFontAlignment?: React.CSSProperties;
+	userNameAlignment?: React.CSSProperties;
 };
 
 export type ThemeConfig = {
@@ -84,6 +88,7 @@ const themeConfigData: ThemeConfig = {
 	Fun_Vibrant_007: Fun_Vibrant_007_TemplateThemeConfig,
 	Simplistic_008: Simplistic_008_TemplateThemeConfig,
 	New_Education_009: New_Education_009_TemplateThemeConfig,
+	Event_Report_010: Event_Report_010_TemplateThemeConfig,
 };
 
 export default themeConfigData;

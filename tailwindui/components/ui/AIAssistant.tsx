@@ -85,7 +85,7 @@ export const Chats: React.FC<ChatsProps> = ({
 	// const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 	const [sourceImage, setSourceImage] = useState<string>('');
 	const [selectedRegenerateTone, setSelectedRegenerateTone] = useState<string>('');
-	const { slideIndex } = useSlides()
+	const { slideIndex } = useSlides();
 	const { project } = useProject();
 	const [loading, setLoading] = useState(false);
 	const { token } = useUser();
@@ -257,6 +257,7 @@ export const Chats: React.FC<ChatsProps> = ({
 					prompt: prompt,
 					prev_prompts: prev_prompts,
 					selected_text: selected_text,
+					page_index: slideIndex,
 				}),
 			});
 		} catch (error) {
@@ -450,7 +451,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	const [userInput, setUserInput] = useState('');
 	const { chatHistory, addChatHistory, clearChatHistory, chatHistoryStatus } =
 		useChatHistory();
-	const { updateVersion, setSlides, setSlideIndex } = useSlides();
+	const { updateVersion, setSlides, setSlideIndex, slideIndex } = useSlides();
 	const [loading, setLoading] = useState(false);
 	const { token } = useUser();
 	const lastMessageRef = useRef<HTMLDivElement>(null); // Ensure you have a ref for the last message
@@ -507,6 +508,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					project_id: project?.id || '',
 					prompt: prompt,
 					prev_prompts: prev_prompts,
+					page_index: slideIndex,
 				}),
 			});
 		} catch (error) {
@@ -709,7 +711,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					{/* send text, call api to get response */}
 					<button onClick={() => handleSend()} disabled={loading}>
 						<IoSend
-							fill={!loading ? '#2943E9' : '#E5E7EB'}
+							fill={!loading ? '#5168f6' : '#E5E7EB'}
 							className='w-7 h-7'
 						/>
 					</button>

@@ -74,7 +74,8 @@ const Header = ({
 			<div className='max-w-4/5 mx-auto px-5'>
 				<div className='flex items-center justify-between h-12'>
 					{/* Site branding */}
-					<div className='flex flex-row items-center gap-x-2'>
+					<div className='flex flex-row items-center gap-x-2'
+						onClick={() => router.push('/landing')}>
 						<div className='min-w-[1.5rem]'>
 							<Logo 
 								color={false} 
@@ -83,7 +84,7 @@ const Header = ({
 						</div>
 						<div className='grow flex flex-row justify-center item-center justify-start'>
 							<div className='w-fit h-[1rem] text-l text-gray-200 bg-clip-text bg-gradient-to-r relative bottom-[3px]'>
-								<a href={loginRequired ? '/dashboard' : '/'}>{getBrand()}</a>
+								{getBrand()}
 							</div>
 						</div>
 					</div>
@@ -125,9 +126,7 @@ const Header = ({
 						{/* Desktop sign in links */}
 						{!loading && token ? (
 							!isAuth && (
-								<ul className='flex grow justify-end flex-wrap items-center'>
 									<DropdownButton />
-								</ul>
 							)
 						) : (
 							<ul className='flex grow justify-end flex-nowrap items-center'>

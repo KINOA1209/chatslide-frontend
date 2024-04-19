@@ -55,6 +55,7 @@ import { Explanation } from '../ui/Text';
 import { BrandingButton } from '../button/BrandingButton';
 import { useChatHistory } from '@/hooks/use-chat-history';
 import { getOrigin } from '@/utils/getHost';
+import { DraggableSlidesPreview } from './DraggableSlidesPreview';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -630,7 +631,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			<SlideContainer
 				slide={slides[initSlideIndex]}
 				index={initSlideIndex}
-				isPresenting={isPresenting}
+				isPresenting={false}
 				isViewing={isViewing}
 				scale={presentScale}
 				templateDispatch={editableTemplateDispatch}
@@ -638,6 +639,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				containerRef={containerRef}
 				length={slides.length}
 				key={version}
+				isEmbedded={true}
 			/>
 		);
 
@@ -738,50 +740,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 				<Panel>
 					<div className='h-full hidden sm:flex md:w-[150px]'>
-						<ScrollBar
-							currentElementRef={verticalCurrentSlideRef}
-							index={slideIndex}
-							axial='y'
-						>
-							{slides.map((slide, index) => (
-								<div
-									key={
-										`previewContainer` +
-										index.toString() +
-										slides.length.toString()
-									} // force update when slide length changes
-									className={`w-[6rem] h-[4.5rem] lg:w-[8rem] lg:h-[6rem] rounded-md flex-shrink-0 cursor-pointer px-2`}
-									onClick={() => gotoPage(index)}
-									ref={index === slideIndex ? verticalCurrentSlideRef : null}
-									draggable={index !== 0}
-									onDragStart={() => {
-										setDraggedSlideIndex(index);
-									}}
-									onDragOver={(e) => e.preventDefault()}
-									onDrop={() => {
-										if (draggedSlideIndex !== -1 && index != 0) {
-											const newSlides = [...slides];
-											const draggedSlide = newSlides[draggedSlideIndex];
-											newSlides.splice(draggedSlideIndex, 1);
-											newSlides.splice(index, 0, draggedSlide);
-											setSlides(newSlides);
-											debouncedSyncSlides(newSlides);
-										}
-									}}
-								>
-									{/* {index + 1} */}
-									<SlideContainer
-										slide={slide}
-										index={index}
-										scale={0.12 * nonPresentScale}
-										isViewing={true}
-										templateDispatch={uneditableTemplateDispatch}
-										highlightBorder={slideIndex === index}
-										pageNumber={index + 1}
-									/>
-								</div>
-							))}
-						</ScrollBar>
+						<DraggableSlidesPreview
+							ref={verticalCurrentSlideRef}
+							slideIndex={slideIndex}
+							slides={slides}
+							gotoPage={gotoPage}
+							nonPresentScale={nonPresentScale}
+						/>
 					</div>
 				</Panel>
 

@@ -12,7 +12,7 @@ import {
 	loadLayoutConfigElements,
 } from '@/components/slides/SlidesHTML';
 import { TemplateKeys } from '../slideTemplates';
-export const Simplistic_008_template = ({
+export const Event_Report_010_template = ({
 	user_name,
 	title,
 	topic,
@@ -43,18 +43,16 @@ export const Simplistic_008_template = ({
 		layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
 	const ChosenLayoutCover =
 		layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
-	// console.log('choosing layout option', layoutOptionNonCover);
+	//   console.log('choosing layout option', ChosenLayout)
 	// Load customizable elements for the current template
 	const themeElements = loadCustomizableElements(
-		'Simplistic_008' as TemplateKeys,
+		'Event_Report_010' as TemplateKeys,
 		palette as PaletteKeys,
 	);
 	const layoutConfigElements = loadLayoutConfigElements(
-		'Simplistic_008' as TemplateKeys,
+		'Event_Report_010' as TemplateKeys,
 		layoutOptionCover as keyof typeof layoutOptions,
 	);
-
-	// console.log('choosing layout config elements', layoutConfigElements);
 
 	return (
 		<>

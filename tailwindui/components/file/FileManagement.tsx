@@ -545,7 +545,7 @@ const MyFiles: React.FC<filesInterface> = ({
 								]}
 								onSuccess={(data) => handleSuccess(data)}
 								onError={(error) => console.log('Data on Error: ', error)}
-								primaryBackgroundColor='#2943E9'
+								primaryBackgroundColor='#5168f6'
 								primaryTextColor='#fafafa'
 								secondaryBackgroundColor='#f2f2f2'
 								secondaryTextColor='#000000'

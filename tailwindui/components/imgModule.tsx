@@ -1387,7 +1387,7 @@ export const ImgModule = ({
 										? isImgEditMode
 											? 'brightness-100'
 											: 'hover:brightness-50'
-										: 'cursor-pointer'
+										: ''
 									}`}
 								onError={(e) => {
 									console.log('failed to load image', imgsrc);
