@@ -257,6 +257,7 @@ export const Chats: React.FC<ChatsProps> = ({
 					prompt: prompt,
 					prev_prompts: prev_prompts,
 					selected_text: selected_text,
+					page_index: slideIndex,
 				}),
 			});
 		} catch (error) {
