@@ -37,6 +37,7 @@ export const Event_Report_010_template = ({
 	images_position,
 	palette,
 	themeElements,
+	layoutElements,
 }: MainSlideProps) => {
 	const { customTemplateBgColor } = useSlides();
 	const ChosenLayoutNonCover =
@@ -44,16 +45,12 @@ export const Event_Report_010_template = ({
 	const ChosenLayoutCover =
 		layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
 
-	const layoutConfigElements = loadLayoutConfigElements(
-		'Event_Report_010' as TemplateKeys,
-		layoutOptionCover as keyof typeof layoutOptions,
-	);
-	useEffect(() => {
-		console.log(
-			'selected theme element backgroundColor is ',
-			themeElements.backgroundColor,
-		);
-	}, [customTemplateBgColor]);
+	// useEffect(() => {
+	// 	console.log(
+	// 		'selected theme element backgroundColor is ',
+	// 		themeElements.backgroundColor,
+	// 	);
+	// }, [customTemplateBgColor]);
 
 	return (
 		<>
@@ -66,7 +63,6 @@ export const Event_Report_010_template = ({
 				} `}
 				style={{ backgroundColor: themeElements.backgroundColor }}
 			>
-				{/* <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr> */}
 				{/* background picture when user uploaded this  */}
 				{uploadedBackgroundImageUrl && (
 					<div style={{ ...uploadedBackgroundImgStyle }}>
@@ -94,7 +90,7 @@ export const Event_Report_010_template = ({
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
 					themeElements={themeElements}
-					layoutElements={layoutConfigElements}
+					layoutElements={layoutElements}
 					templateLogo={templateLogo}
 					charts={charts}
 					ischarts={ischarts}
@@ -142,7 +138,7 @@ export const Event_Report_010_template = ({
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
 					themeElements={themeElements}
-					layoutElements={layoutConfigElements}
+					layoutElements={layoutElements}
 					templateLogo={templateLogo}
 					charts={charts}
 					ischarts={ischarts}

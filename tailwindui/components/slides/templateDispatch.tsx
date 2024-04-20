@@ -5,13 +5,17 @@ import {
 	PaletteKeys,
 } from '@/components/slides/slideTemplates';
 import { useUser } from '@/hooks/use-user';
+import { layoutOptions } from '@/components/slides/slideLayout';
 import {
 	Col_1_img_1_layout,
 	LayoutKeys,
 } from '@/components/slides/slideLayout';
 import dynamic from 'next/dynamic';
 import React, { CSSProperties, useEffect, useRef } from 'react';
-import { loadCustomizableElements } from './SlidesHTML';
+import {
+	loadCustomizableElements,
+	loadLayoutConfigElements,
+} from './SlidesHTML';
 import { TemplatesLogos } from './templates_customizable_elements/Templates_logos';
 import { isHTML } from '@/components/slides/quillEditorSlide';
 import { TemplateKeys } from '@/components/slides/slideTemplates';
@@ -210,6 +214,10 @@ export const templateDispatch = (
 		slide.palette as PaletteKeys,
 		customTemplateBgColor,
 		hasSelectedCustomTemplateBgColor,
+	);
+	const layoutElements = loadLayoutConfigElements(
+		templateKey as TemplateKeys,
+		slide.layout as keyof typeof layoutOptions,
 	);
 	const generateContentElement = (
 		content: string | string[],
@@ -424,6 +432,7 @@ export const templateDispatch = (
 			palette={slide.palette}
 			template={slide.template}
 			themeElements={themeElements}
+			layoutElements={layoutElements}
 		/>
 	);
 	// }

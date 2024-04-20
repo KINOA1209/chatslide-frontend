@@ -152,9 +152,10 @@ const TemplateSelector: React.FC<{
 					{/* Render color palette options only if there are more than one */}
 					{
 						<div className={`paletteChoice flex flex-col `}>
-							{!hasSelectedCustomTemplateBgColor && (
-								<Instruction>Select your palette color:</Instruction>
-							)}
+							{!hasSelectedCustomTemplateBgColor &&
+								paletteOptions.length > 1 && (
+									<Instruction>Select your palette color:</Instruction>
+								)}
 							{/* <DropDown
 								width='15rem'
 								onChange={handlePaletteChange}
@@ -173,90 +174,93 @@ const TemplateSelector: React.FC<{
 									</option>
 								))}
 							</DropDown> */}
-							{!hasSelectedCustomTemplateBgColor && (
-								<Select
-									isSearchable={false}
-									options={finalPaletteOptions.map((paletteOption) => ({
-										value: paletteOption,
-										label: (
-											<div className='flex items-center'>
-												<div
-													className='w-4 h-4 mr-2'
-													style={{
-														backgroundColor:
-															colorPreviews[paletteOption as PaletteKeys],
-													}}
-												/>
-												{paletteOption}
-											</div>
-										),
-									}))}
-									onChange={(selectedOption: OptionType | null) =>
-										handlePaletteChange(selectedOption)
-									}
-									// defaultInputValue={paletteOptions[0]}
-									value={{
-										value: palette,
-										label: (
-											<div className='flex items-center'>
-												<div
-													className='w-4 h-4 mr-2'
-													style={{
-														backgroundColor:
-															colorPreviews[palette as PaletteKeys],
-													}}
-												/>
-												{palette}
-											</div>
-										),
-									}}
-									// defaultValue={{
-									// 	value: paletteOptions[0], // Set the default value to the currently selected palette
-									// 	label: (
-									// 		<div className='flex items-center'>
-									// 			<div
-									// 				className='w-4 h-4 mr-2'
-									// 				style={{
-									// 					backgroundColor:
-									// 						colorPreviews[paletteOptions[0] as PaletteKeys],
-									// 				}}
-									// 			/>
-									// 			{palette}
-									// 		</div>
-									// 	),
-									// }}
-									styles={{
-										control: (provided) => ({
-											...provided,
-											width: '15rem',
-											height: '36px',
-											borderRadius: '8px',
-											borderColor: '#e5e7eb',
-											borderWidth: '2px',
-											fontSize: '14px',
-										}),
+							{!hasSelectedCustomTemplateBgColor &&
+								paletteOptions.length > 1 && (
+									<Select
+										isSearchable={false}
+										options={finalPaletteOptions.map((paletteOption) => ({
+											value: paletteOption,
+											label: (
+												<div className='flex items-center'>
+													<div
+														className='w-4 h-4 mr-2'
+														style={{
+															backgroundColor:
+																colorPreviews[paletteOption as PaletteKeys],
+														}}
+													/>
+													{paletteOption}
+												</div>
+											),
+										}))}
+										onChange={(selectedOption: OptionType | null) =>
+											handlePaletteChange(selectedOption)
+										}
+										// defaultInputValue={paletteOptions[0]}
+										value={{
+											value: palette,
+											label: (
+												<div className='flex items-center'>
+													<div
+														className='w-4 h-4 mr-2'
+														style={{
+															backgroundColor:
+																colorPreviews[palette as PaletteKeys],
+														}}
+													/>
+													{palette}
+												</div>
+											),
+										}}
+										// defaultValue={{
+										// 	value: paletteOptions[0], // Set the default value to the currently selected palette
+										// 	label: (
+										// 		<div className='flex items-center'>
+										// 			<div
+										// 				className='w-4 h-4 mr-2'
+										// 				style={{
+										// 					backgroundColor:
+										// 						colorPreviews[paletteOptions[0] as PaletteKeys],
+										// 				}}
+										// 			/>
+										// 			{palette}
+										// 		</div>
+										// 	),
+										// }}
+										styles={{
+											control: (provided) => ({
+												...provided,
+												width: '15rem',
+												height: '36px',
+												borderRadius: '8px',
+												borderColor: '#e5e7eb',
+												borderWidth: '2px',
+												fontSize: '14px',
+											}),
 
-										indicatorSeparator: () => ({ display: 'none' }), // Hides the indicator separator
-										menu: (provided) => ({ ...provided, zIndex: 999 }), // Ensure the menu appears above other elements
-										option: (provided, state) => ({
-											...provided,
-											backgroundColor: state.isSelected ? '#d1d5db' : '#ffffff',
-											color: state.isSelected ? '#4b5563' : '#000000',
-											':hover': {
-												backgroundColor: '#d1d5db',
-											},
-										}),
-										input: (provided) => ({
-											...provided,
-											blurInputOnSelect: true,
-											border: 'none', // Remove the border
-											outline: 'none', // Remove the outline when focused
-											height: '100%',
-											padding: '0',
-										}),
-									}}
-								></Select>
-							)}
+											indicatorSeparator: () => ({ display: 'none' }), // Hides the indicator separator
+											menu: (provided) => ({ ...provided, zIndex: 999 }), // Ensure the menu appears above other elements
+											option: (provided, state) => ({
+												...provided,
+												backgroundColor: state.isSelected
+													? '#d1d5db'
+													: '#ffffff',
+												color: state.isSelected ? '#4b5563' : '#000000',
+												':hover': {
+													backgroundColor: '#d1d5db',
+												},
+											}),
+											input: (provided) => ({
+												...provided,
+												blurInputOnSelect: true,
+												border: 'none', // Remove the border
+												outline: 'none', // Remove the outline when focused
+												height: '100%',
+												padding: '0',
+											}),
+										}}
+									></Select>
+								)}
 
 							<Instruction>Customize theme color:</Instruction>
 							<ColorPicker

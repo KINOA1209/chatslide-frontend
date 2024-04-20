@@ -102,7 +102,7 @@ export const Fun_Education_004_template = ({
 						: 'hidden'
 				}  `}
 				style={{
-					backgroundColor: themeElements?.backgroundColorCoverImg0,
+					backgroundColor: themeElements.backgroundColorCover,
 				}}
 			>
 				{/* <div

@@ -36,6 +36,7 @@ import ImagesPosition from '@/models/ImagesPosition';
 import { Business_Dark_005_template } from './new_templates/Business_Dark_005_template';
 import { New_Education_009_template } from './new_templates/New_Education_009_template';
 import { ThemeElements } from './templates_customizable_elements/theme_elements';
+import { LayoutElements } from './templates_customizable_elements/layout_elements';
 
 export interface MainSlideProps {
 	user_name: JSX.Element;
@@ -67,6 +68,7 @@ export interface MainSlideProps {
 	palette?: PaletteKeys;
 	template?: TemplateKeys;
 	themeElements: ThemeElements;
+	layoutElements: LayoutElements;
 }
 
 // deprecated
