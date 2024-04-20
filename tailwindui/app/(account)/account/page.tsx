@@ -399,7 +399,9 @@ export default function Account() {
 					</div>
 				</Card>
 
-				<UnlimitedUpgrade />
+				<div id='unlimited-upgrade'>
+					<UnlimitedUpgrade />
+				</div>
 
 				<Card>
 					<BigTitle>
@@ -407,9 +409,9 @@ export default function Account() {
 					</BigTitle>
 					<Instruction>
 						<div className='flex flex-col gap-y-1'>
-						<span>Share your love for {getBrand()} and make real money by inviting your friends and connections to join!</span>
-						<span>Your friends will get <strong>60%</strong> off on their first purchase and you will get <strong>30%</strong> commission on all their purchases. </span>
-						<span>Keep track of your conversions and earnings real time and get paid monthly. </span>
+							<span>Share your love for {getBrand()} and make real money by inviting your friends and connections to join!</span>
+							<span>Your friends will get <strong>60%</strong> off on their first purchase and you will get <strong>30%</strong> commission on all their purchases. </span>
+							<span>Keep track of your conversions and earnings real time and get paid monthly. </span>
 						</div>
 					</Instruction>
 					<Instruction>
