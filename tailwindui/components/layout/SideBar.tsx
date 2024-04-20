@@ -157,7 +157,7 @@ const SideBar = ({ }: SideBarProps) => {
 						</a>
 					)}
 					{
-						credits != 'Unlimited' && tier.includes('LIFETIME') && (
+						credits != 'Unlimited' && tier.includes('LIFETIME') && isSidebarOpen && (
 							<a
 								href='/account#unlimited-upgrade'
 								className={`block py-1 text-sm text-green-400 ${isSidebarOpen ? 'px-2' : 'px-0'

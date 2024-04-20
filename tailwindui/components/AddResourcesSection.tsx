@@ -157,7 +157,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 				{/* search online */}
 				{setSearchOnlineScope && (
 					<div>
-						<Instruction>Which online sources you want to include?</Instruction>
+						<Instruction>Which online sources do you want to include?</Instruction>
 						<RadioButton
 							name='search_online'
 							options={searchOnlineOptions}
