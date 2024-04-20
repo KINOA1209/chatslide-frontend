@@ -14,8 +14,10 @@ export const Simplistic_008_TemplateThemeConfig: {
 	[key in PaletteKeys]?: ThemeElements;
 } = {
 	'Dynamic Purple': {
-		backgroundColorCover: 'bg-gradient-to-br from-[#7E96F7] to-[#A388F7]',
-		backgroundColor: 'bg-gradient-to-br from-[#7E96F7] to-[#A388F7]',
+		// backgroundColorCover: 'bg-gradient-to-br from-[#7E96F7] to-[#A388F7]',
+		isGradientBackground: true,
+		backgroundColorCover: 'linear-gradient(to bottom right, #7E96F7, #A388F7)',
+		backgroundColor: 'linear-gradient(to bottom right, #7E96F7, #A388F7)',
 		titleFontCSS: {
 			fontSize: '14pt',
 			fontWeight: 'Bold',
@@ -64,8 +66,8 @@ export const Simplistic_008_TemplateThemeConfig: {
 		},
 	},
 	'Light Cyan': {
-		backgroundColorCover: 'bg-[#ECF4F9]',
-		backgroundColor: 'bg-[#ECF4F9]',
+		backgroundColorCover: '#ECF4F9',
+		backgroundColor: '#ECF4F9',
 		titleFontCSS: {
 			fontSize: '14pt',
 			fontWeight: 'Bold',
@@ -114,8 +116,8 @@ export const Simplistic_008_TemplateThemeConfig: {
 		},
 	},
 	'Royal Blue': {
-		backgroundColorCover: 'bg-[#5A55F4]',
-		backgroundColor: 'bg-[#5A55F4]',
+		backgroundColorCover: '#5A55F4',
+		backgroundColor: '#5A55F4',
 		titleFontCSS: {
 			fontSize: '14pt',
 			fontWeight: 'normal',
@@ -164,8 +166,8 @@ export const Simplistic_008_TemplateThemeConfig: {
 		},
 	},
 	Beeswax: {
-		backgroundColorCover: 'bg-[#FDF1C4]',
-		backgroundColor: 'bg-[#FDF1C4]',
+		backgroundColorCover: '#FDF1C4',
+		backgroundColor: '#FDF1C4',
 		titleFontCSS: {
 			fontSize: '14pt',
 			fontWeight: 'Bold',

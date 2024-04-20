@@ -89,7 +89,14 @@ export const generateTemplate = (templateName: string) => {
 							? 'rounded-md w-full h-full bg-cover box-border border-none relative'
 							: 'hidden '
 					} `}
-					style={{ backgroundColor: themeElements.backgroundColor }}
+					style={{
+						backgroundImage: themeElements.isGradientBackground
+							? themeElements.backgroundColor
+							: undefined,
+						backgroundColor: !themeElements.isGradientBackground
+							? themeElements.backgroundColor
+							: undefined,
+					}}
 				>
 					{/* background picture when user uploaded this  */}
 					{uploadedBackgroundImageUrl && (
@@ -136,7 +143,12 @@ export const generateTemplate = (templateName: string) => {
 							: 'hidden'
 					} `}
 					style={{
-						backgroundColor: themeElements.backgroundColorCover,
+						backgroundImage: themeElements.isGradientBackground
+							? themeElements.backgroundColorCover
+							: undefined,
+						backgroundColor: !themeElements.isGradientBackground
+							? themeElements.backgroundColorCover
+							: undefined,
 					}}
 				>
 					{/* background picture when user uploaded this  */}
