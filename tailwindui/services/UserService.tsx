@@ -3,7 +3,7 @@ import AuthService from './AuthService';
 class UserService {
 	static async initializeUser(token: string): Promise<boolean> {
 		const headers = new Headers();
-		console.log('Token: ', token);
+		// console.log('Token: ', token);
 		if (token) {
 			headers.append('Authorization', `Bearer ${token}`);
 		}
