@@ -215,7 +215,7 @@ function Landing() {
 							🚀 Get an instant productivity boost for your knowledge sharing
 							workflow!
 						</p>
-						<a href='/signup' className='button-primary w-button'>
+						<a href='/signup' className='button-primary w-button landing-sign-up' id='landing-sign-up-1'>
 							Try for free
 						</a>
 						<a href='#usecase' className='secondary-button w-button'>
@@ -255,7 +255,7 @@ function Landing() {
 								className='image-left'
 							/>
 						</div>
-						<a href='/signup' className='button w-button'>
+						<a href='/signup' className='button w-button landing-sign-up' id='landing-sign-up-2'>
 							Try for free
 						</a>
 					</div>
@@ -280,7 +280,7 @@ function Landing() {
 								className='image-left'
 							/>
 						</div>
-						<a href='/signup' className='button w-button'>
+						<a href='/signup' className='button w-button landing-sign-up' id='landing-sign-up-3'>
 							Try for free
 						</a>
 					</div>
@@ -336,7 +336,7 @@ function Landing() {
 								className='image-left'
 							/>
 						</div>
-						<a href='/signup' className='button w-button'>
+						<a href='/signup' className='button w-button landing-sign-up' id='landing-sign-up-4'>
 							Try for free
 						</a>
 					</div>
@@ -369,7 +369,7 @@ function Landing() {
 								className='image-left'
 							/>
 						</div>
-						<a href='/signup' className='button w-button'>
+						<a href='/signup' className='button w-button landing-sign-up' id='landing-sign-up-5'>
 							Try for free
 						</a>
 					</div>
