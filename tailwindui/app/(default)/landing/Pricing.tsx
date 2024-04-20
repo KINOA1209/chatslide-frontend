@@ -66,7 +66,7 @@ const PricingComparison: React.FC<{
 		}
 
 		if (yearly)
-			amount = amount * 0.6;
+			amount = amount * 0.4;
 		else if (firstTime)  // only for monthly
 			amount = amount * 0.4;
 
@@ -148,7 +148,7 @@ const PricingComparison: React.FC<{
 				isLeft={!yearly}
 				setIsLeft={(value: boolean) => setYearly(!value)}
 				leftText='Monthly'
-				rightText='Yearly (40% off)'
+				rightText='Yearly (60% off)'
 			/>
 			<div
 				data-w-id="a8590735-7e8f-bd41-a09e-37f58b801ed3"
