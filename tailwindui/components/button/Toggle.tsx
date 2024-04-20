@@ -5,6 +5,8 @@ interface ToggleProps {
 	setIsLeft: (value: boolean) => void;
 	leftText?: string;
 	rightText?: string;
+	leftElement?: React.ReactNode;
+	rightElement?: React.ReactNode;
 }
 
 const Toggle: React.FC<ToggleProps> = ({
@@ -12,30 +14,38 @@ const Toggle: React.FC<ToggleProps> = ({
 	setIsLeft,
 	leftText,
 	rightText,
+	leftElement,
+	rightElement,
 }) => {
 	return (
-		<div className='toggle items-center md:flex'>
-			<div className='flex items-center'>
-				<button
-					type='button'
+		<div className='toggle flex justify-center mt-4 items-center'>
+			<div className='flex items-center rounded-md border bg-gray-200 px-0.5 py-0.5 my-1'>
+				<div
+					className={`cursor-pointer w-[130px] h-[36px] px-2 py-1 flex justify-center items-center rounded-md ${isLeft ? 'bg-white text-[#5168F6]' : ''}`}
 					onClick={() => setIsLeft(true)}
-					className={`py-2 px-4 rounded-l-full text-lg font-bold ${
-						isLeft ? 'bg-Blue text-white' : 'bg-gray-200'
-					}`}
 				>
-					{leftText || 'Monthly'}
-				</button>
-				<button
-					type='button'
+					<div
+						className={`flex flex-row gap-2 text-[16px] font-medium break-words items-center justify-center
+										   ${isLeft ? 'text-[#5168F6]' : 'text-[#707C8A]'}
+										  `}
+					>
+						{ leftText || leftElement }
+					</div>
+				</div>
+				<div
+					className={`cursor-pointer w-[130px] h-[36px] px-2 py-1 flex justify-center items-center rounded-md ${!isLeft ? 'bg-white text-[#5168F6]' : ''}`}
 					onClick={() => setIsLeft(false)}
-					className={`py-2 px-4 rounded-r-full text-lg font-bold ${
-						isLeft ? 'bg-gray-200' : 'bg-Blue text-white'
-					}`}
 				>
-					{rightText || 'Yearly (17% off)'}
-				</button>
+					<div
+						className={`flex flex-row gap-2 text-[16px] font-medium break-words items-center justify-center
+								           ${!isLeft ? 'text-[#5168F6]' : 'text-[#707C8A]'}
+										  `}
+					>
+						{ rightText || rightElement }
+					</div>
+				</div>
 			</div>
-		</div>
+			</div>
 	);
 };
 

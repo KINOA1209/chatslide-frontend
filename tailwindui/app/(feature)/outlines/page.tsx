@@ -22,6 +22,7 @@ import { CardReviewIcon, PageReviewIcon } from '@/components/outline/OutlineIcon
 import { convertOutlineToPlainText, convertPlainTextToOutlines } from '@/components/outline/OutlineUtils';
 import { BigTitle, Instruction, Explanation } from '@/components/ui/Text';
 import { Column } from '@/components/layout/Column';
+import Toggle from '@/components/button/Toggle';
 
 export type OutlineViewMode = 'card' | 'page';
 
@@ -143,55 +144,12 @@ export default function WorkflowStep2() {
 				nextText={!isSubmitting ? 'Select Design' : 'Select Design'}
 			/>
 			<div className='flex flex-col mb-[3rem]'>
-				{/* overview nav section */}
-				{/* <div className='w-1/4 fixed top-[150px] overflow-y-auto flex justify-center'>
-					<div className='OutlineStep-4 w-2/3 bg-neutral-50 rounded-md border border-gray-200 hidden sm:block'>
-						<div className='h-5 text-neutral-900 text-xs font-bold font-creato-medium leading-tight tracking-wide px-4 py-3'>
-							OVERVIEW
-						</div>
-						<ol className='list-none px-4 py-4'>
-							{outlines?.map((section, index) => (
-								<li
-									className='pb-2 opacity-60 text-neutral-900 text-s tracking-wider font-medium font-creato-medium leading-normal tracking-tight cursor-pointer hover:text-black  hover:rounded-md hover:bg-gray-200'
-									key={index}
-									onClick={() => scrollToSection(index)}
-								>
-									<span className=''>
-										{index + 1}. {section.title}
-									</span>
-								</li>
-							))}
-						</ol>
-					</div>
-				</div> */}
-				<div className='toggle flex justify-center mt-4 items-center font-creato-medium'>
-					<div className='flex items-center rounded-md border bg-gray-200 px-0.5 py-0.5 my-1'>
-						<div
-							className={`cursor-pointer w-[130px] h-[36px] px-2 py-1 flex justify-center items-center rounded-md ${viewMode === 'card' ? 'bg-white text-[#5168F6]' : ''}`}
-							onClick={() => setViewMode('card')}
-						>
-							<div
-								className={`flex flex-row gap-2 text-[16px] font-medium break-words items-center justify-center
-										   ${viewMode === 'card' ? 'text-[#5168F6]' : 'text-[#707C8A]'}
-										  `}
-							>
-								<CardReviewIcon color={`${viewMode === 'card' ? '#5168F6' : '#707C8A'}`} />Card View
-							</div>
-						</div>
-						<div
-							className={`cursor-pointer w-[130px] h-[36px] px-2 py-1 flex justify-center items-center rounded-md ${viewMode === 'page' ? 'bg-white text-[#5168F6]' : ''}`}
-							onClick={() => setViewMode('page')}
-						>
-							<div
-								className={`flex flex-row gap-2 text-[16px] font-medium break-words items-center justify-center
-								           ${viewMode === 'page' ? 'text-[#5168F6]' : 'text-[#707C8A]'}
-										  `}
-							>
-								<PageReviewIcon color={`${viewMode === 'page' ? '#5168F6' : '#707C8A'}`} />Page View
-							</div>
-						</div>
-					</div>
-				</div>
+				<Toggle
+					isLeft={viewMode === 'card'}
+					setIsLeft={(value: boolean) => setViewMode(value ? 'card' : 'page')}
+					leftElement={<><CardReviewIcon color={`${viewMode === 'card' ? '#5168F6' : '#707C8A'}`} />Card View</>}
+					rightElement={<><PageReviewIcon color={`${viewMode === 'page' ? '#5168F6' : '#707C8A'}`} />Page View</>}
+				/>
 
 				<Column>
 				<div className='flex flex-col gap-2 w-2/3 mx-auto'>
