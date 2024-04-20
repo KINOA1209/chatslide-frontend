@@ -23,6 +23,7 @@ const ScenarioChoicePage = () => {
 	// Function to navigate to the "scenario-choice" page
 	const navigateToSummary = (scenarioType: string) => {
 		//sessionStorage.setItem('scenarioType', scenarioType);
+		console.log('scenarioType', scenarioType);
 		clearProject();
 		if (workflowType == 'presentation') {
 			initProject({

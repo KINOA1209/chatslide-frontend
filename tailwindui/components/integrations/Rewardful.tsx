@@ -28,3 +28,17 @@ export async function trackRewardfulConversion(email: string) {
 		console.error('Error tracking Rewardful conversion:', error);
 	}
 }
+
+export async function getRewardfulReferralId() {
+	try {
+		if (typeof window !== 'undefined' && typeof window.rewardful === 'function') {
+			console.log('Rewardful referral ID:', window.Rewardful.referral);
+			return window.Rewardful.referral;
+		} else {
+			return '';
+		}
+	} catch (error) {
+		console.error('Error getting Rewardful referral ID:', error);
+		return '';
+	}
+}
