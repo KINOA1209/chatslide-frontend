@@ -17,3 +17,14 @@ export default function Rewardful() {
 		</Script>
 	)
 }
+
+
+export async function trackRewardfulConversion(email: string) {
+	try {
+		if (typeof window !== 'undefined' && typeof window.rewardful === 'function') {
+			window.rewardful('convert', { email: email });
+		}
+	} catch (error) {
+		console.error('Error tracking Rewardful conversion:', error);
+	}
+}

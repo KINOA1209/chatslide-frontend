@@ -24,6 +24,7 @@ import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
 import { getBrand } from '@/utils/getHost';
 import { UnlimitedUpgrade } from '@/components/slides/card/UnlimitedUpgrade';
+import { trackRewardfulConversion } from '@/components/integrations/Rewardful';
 
 const Profile = () => {
 	const { username, email, token, setUsername } = useUser();
@@ -36,7 +37,7 @@ const Profile = () => {
 		const paid = params.get('paid');
 		if (paid === 'true') {
 			toast.success('Payment successful!');
-			window.rewardful('convert', { email: email });
+			trackRewardfulConversion(email);
 		} else if (paid === 'false') {
 			toast.error('Payment cancelled.');
 		}
