@@ -43,7 +43,7 @@ const OutlinePageView = ({
     return (
         <textarea
             ref={textAreaRef}
-            className='border-[#707C8A] rounded-md h-[70vh] mx-[7rem] py-4 px-4 my-3'
+            className='border border-gray-200 border-2 rounded-md h-[70vh] mx-[7rem] py-4 px-4 my-3'
             value={outlinesPlainText}
             onChange={handleTextChange}
             onKeyDown={handleKeyDown}

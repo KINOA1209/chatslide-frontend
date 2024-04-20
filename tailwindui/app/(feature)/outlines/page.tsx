@@ -13,13 +13,15 @@ import ActionsToolBar from '@/components/ui/ActionsToolBar';
 import useTourStore from '@/components/user_onboarding/TourStore';
 import useHydrated from '@/hooks/use-hydrated';
 import { addIdToRedir } from '@/utils/redirWithId';
-import { Blank } from '@/components/ui/Loading';
+import { Blank, Loading } from '@/components/ui/Loading';
 import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
 import OutlinePageView from '@/components/outline/OutlinePageView';
 import { useUser } from '@/hooks/use-user';
 import Project from '@/models/Project';
 import { CardReviewIcon, PageReviewIcon } from '@/components/outline/OutlineIcons';
 import { convertOutlineToPlainText, convertPlainTextToOutlines } from '@/components/outline/OutlineUtils';
+import { BigTitle, Instruction, Explanation } from '@/components/ui/Text';
+import { Column } from '@/components/layout/Column';
 
 export type OutlineViewMode = 'card' | 'page';
 
@@ -191,18 +193,16 @@ export default function WorkflowStep2() {
 					</div>
 				</div>
 
-				<div className='flex flex-col items-center justify-center'>
-					<div className='flex flex-col font-creato-medium items-center justify-start w-full sm:w-1/2 gap-3'>
-						<div className='w-full flex flex-row items-baseline justify-start'>
-							<span className='text-2xl font-bold'>Outline&nbsp;</span>
-							<span className='text-sm text-[#707C8A]'>(modify this outline until you're satisfied)</span>
-						</div>
-						<span className='w-full text-base'>{outlines.length} slides total</span>
+				<Column>
+				<div className='flex flex-col gap-2 w-2/3 mx-auto'>
+					<BigTitle>Outline</BigTitle>
+					<Instruction>Modify this outline until you're satisfied.</Instruction>
+					<Explanation>Around {outlines.length * 3} slide pages total.</Explanation>
 					</div>
 					{loading ? (
-						<div>Loading...</div>
+						<Loading />
 					) : (
-						<div className='w-full sm:w-2/3 gap-10 auto-rows-min'>
+						<div className='w-full gap-10 auto-rows-min'>
 							<div className='lg:col-span-2 flex flex-col'>
 								{/* only trigger re-render after data is fetched */}
 								{viewMode === 'card' ? (
@@ -223,7 +223,7 @@ export default function WorkflowStep2() {
 							</div>
 						</div>
 					)}
-				</div>
+				</Column>
 			</div>
 		</div>
 	);

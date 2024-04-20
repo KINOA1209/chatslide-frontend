@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect, Fragment, FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -8,7 +7,6 @@ import {
 	DeleteIcon,
 } from '@/app/(feature)/icons';
 import { sleep } from '@/utils/sleep';
-import { HiOutlineTrash } from "react-icons/hi";
 
 const minOutlineDetailCount = 1;
 const maxOutlineDetailCount = 6;
@@ -208,7 +206,7 @@ const OutlineVisualizer = ({
 							<div
 								id={String(sectionIndex)}
 								key={sectionIndex + 1}
-								className='OutlineStep-3 relative w-full sm:w-3/4 bg-[#F9FAFB] rounded-md shadow border border-gray-200 px-1 sm:px-4 py-2 font-creato-medium'
+								className='OutlineStep-3 relative w-full sm:w-3/4 bg-[#F9FAFB] rounded-md shadow border border-gray-200 px-1 sm:px-4 py-2'
 								onMouseEnter={() => setHoveredSectionIndex(sectionIndex)}
 								onMouseLeave={() => setHoveredSectionIndex(-1)}
 							>
@@ -221,7 +219,7 @@ const OutlineVisualizer = ({
 								>
 									<input
 										key={sectionIndex}
-										className='border-none rounded-md focus:border-[#A4BCFD] inline text-sm bg-[#F9FAFB] text-[#667085] grow overflow-ellipsis'
+										className='border-none rounded-md focus:border-[#A4BCFD] inline bg-[#F9FAFB] text-neutral-600 grow overflow-ellipsis'
 										value={section.title}
 										onClick={(e) => (e.target as HTMLInputElement).select()}
 										onChange={(e) => handleSectionChange(e, sectionIndex)}
@@ -243,7 +241,7 @@ const OutlineVisualizer = ({
 									{section.content.map((content: any, detailIndex: number) => (
 										<div
 											key={sectionIndex + detailIndex}
-											className={`flex flex-row w-full relative overflow-visiable mt-4 bg-[white] border-2 rounded-md
+											className={`flex flex-row w-full relative overflow-visiable mt-2 bg-[white] border-2 rounded-md
 														${hoveredDetailIndex === detailIndex &&
 													sectionIndex === hoveredSectionIndex
 													? 'border-[#A4BCFD]'
@@ -253,10 +251,8 @@ const OutlineVisualizer = ({
 											onMouseEnter={() => setHoveredDetailIndex(detailIndex)}
 											onMouseLeave={() => setHoveredDetailIndex(-1)}
 										>
-											<div className={`flex flex-row border-r-2 border-r-[#EAECF0] items-center justify-center w-[10%] text-gray-800 grow overflow-ellipsis`}>
-												<div>
-													<span>{detailIndex}</span>
-												</div>
+											<div className={`flex flex-row border-r-2 border-r-[#EAECF0] items-center justify-center w-[2rem] text-gray-800 overflow-ellipsis`}>
+													<span>{detailIndex + 1}</span>
 											</div>
 											<input
 												key={detailIndex}
