@@ -21,12 +21,6 @@
 			"audience": "Business_Clients"
 		},
 		{
-			"id": "policy_training",
-			"title": "Policy Training",
-			"imageSrc": "/images/scenario/policy_training.jpg",
-			"audience": "Office_Colleagues"
-		},
-		{
 			"id": "storytelling",
 			"title": "Storytelling",
 			"imageSrc": "/images/scenario/storytelling.jpg",
@@ -45,10 +39,28 @@
 			"audience": "Students"
 		},
 		{
+			"id": "financial_advising",
+			"title": "Financial Advising",
+			"imageSrc": "/images/scenario/financial_advising.webp",
+			"audience": "Business_Clients"
+		},
+		{
+			"id": "health_advising",
+			"title": "Health Advising",
+			"imageSrc": "/images/scenario/health_advising.webp",
+			"audience": "Business_Clients"
+		},
+		{
 			"id": "data_analysis",
 			"title": "Data Analysis",
 			"imageSrc": "/images/scenario/data_analysis.jpg",
 			"audience": "Researchers"
+		},
+		{
+			"id": "policy_training",
+			"title": "Policy Training",
+			"imageSrc": "/images/scenario/policy_training.jpg",
+			"audience": "Office_Colleagues"
 		},
 		{
 			"id": "news_report",
