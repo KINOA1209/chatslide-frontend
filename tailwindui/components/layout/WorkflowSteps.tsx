@@ -55,7 +55,7 @@ const OneStep: React.FC<StepProps> = ({
 	};
 
 	const renderLine = !isLastStep && (
-		<div className='hidden md:flex md:w-12 lg:w-20 overflow-x-hidden'>
+		<div className='hidden md:flex md:w-12 xl:w-20 overflow-x-hidden'>
 			{!isLastStep ? <ConnectedLine /> : null}
 		</div>
 	);
@@ -145,7 +145,7 @@ const ProgressBox: React.FC<ProgressBoxProps> = ({
 	return (
 		<div className='w-fit select-none grow-0'>
 			<ToastContainer />
-			<div className='flex flex-row items-start justify-center gap-x-7'>
+			<div className='flex flex-row items-start justify-center gap-x-4'>
 				<FaChevronCircleLeft
 					className={`h-[30px] ${stepAvailable(currentInd - 1) ? 'text-white cursor-pointer' : 'text-gray-400 cursor-not-allowed'}`}
 					onClick={() => goToStep(currentInd - 1)}
