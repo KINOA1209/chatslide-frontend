@@ -70,6 +70,8 @@ type SlidesHTMLProps = {
 export const loadCustomizableElements = (
 	templateName: string,
 	paletteName: string = 'Original',
+	customTemplateBgColor?: string,
+	hasSelectedCustomTemplateBgColor?: boolean,
 ) => {
 	// return (
 	// 	themeConfigData[templateName as keyof ThemeConfig] ||
@@ -78,10 +80,19 @@ export const loadCustomizableElements = (
 	const themeElements =
 		themeConfigData[templateName as keyof ThemeConfig] ||
 		Default_TemplateThemeConfig;
-	const selectedThemeElements =
+	let selectedThemeElements =
 		themeElements[paletteName as PaletteKeys] ||
 		(Default_TemplateThemeConfig['Original'] as ThemeElements);
 	// console.log('loaded theme configurations is:', selectedThemeElements);
+
+	// If customTemplateBgColor is provided, update the selectedThemeElements
+	if (customTemplateBgColor && hasSelectedCustomTemplateBgColor) {
+		selectedThemeElements = {
+			...selectedThemeElements,
+			backgroundColorCover: `${customTemplateBgColor}`,
+			backgroundColor: `${customTemplateBgColor}`,
+		};
+	}
 	return selectedThemeElements;
 };
 
@@ -101,15 +112,14 @@ export const calculateNonPresentScale = (
 	height: number,
 	isChatWindowOpen = false,
 	showScript = false,
-	workflow = 'slides'
+	workflow = 'slides',
 ) => {
 	// console.log("width", width, "height", height, "isChatWindowOpen", isChatWindowOpen, "showScript", showScript);
 	if (width < 640) {
 		// mobile, layout vertically
 		if (workflow === 'socialPosts') {
 			return Math.min(1, Math.min(width / 450, (height - 200) / 650) * 0.7);
-		}
-		else {
+		} else {
 			return Math.min(1, Math.min(width / 960, (height - 200) / 540) * 0.8);
 		}
 	} else {
@@ -123,8 +133,7 @@ export const calculateNonPresentScale = (
 					(height - 250 - scriptEditorHeight) / 650,
 				),
 			);
-		}
-		else {
+		} else {
 			return Math.min(
 				1,
 				Math.min(
@@ -132,9 +141,7 @@ export const calculateNonPresentScale = (
 					(height - 250 - scriptEditorHeight) / 540,
 				),
 			);
-
 		}
-
 	}
 };
 
@@ -573,10 +580,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			false, // canEdit
 			exportToPdfMode, //exportToPdfMode
 			false, //editMathMode
-			() => { }, //setIsEditMode
-			() => { }, // handleSlideEdit
-			() => () => { }, // updateImgUrlArray,
-			() => { }, // toggleEditMode,
+			() => {}, //setIsEditMode
+			() => {}, // handleSlideEdit
+			() => () => {}, // updateImgUrlArray,
+			() => {}, // toggleEditMode,
 			// slide.palette,
 			index === 0, // isCoverPage
 			slide.layout, // layoutOptionNonCover
@@ -874,18 +881,20 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					</div>
 				</Panel>
 
-				{(!isViewing && isChatWindowOpen) ? (
-					<Panel>
-						<AIAssistantChatWindow
-							onToggle={toggleChatWindow}
-							slides={slides}
-							currentSlideIndex={slideIndex}
-							updateSlidePage={updateSlidePage}
-							updateImgUrlArray={updateImgUrlArray}
-						/>
-					</Panel>
-				) :
-					<div className='hidden sm:block w-0 h-0'></div>  // empty div for justify-around
+				{
+					!isViewing && isChatWindowOpen ? (
+						<Panel>
+							<AIAssistantChatWindow
+								onToggle={toggleChatWindow}
+								slides={slides}
+								currentSlideIndex={slideIndex}
+								updateSlidePage={updateSlidePage}
+								updateImgUrlArray={updateImgUrlArray}
+							/>
+						</Panel>
+					) : (
+						<div className='hidden sm:block w-0 h-0'></div>
+					) // empty div for justify-around
 				}
 			</div>
 		</div>

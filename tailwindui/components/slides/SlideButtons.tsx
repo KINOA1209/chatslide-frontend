@@ -248,7 +248,12 @@ export const DeleteSlideButton: React.FC<{
 // }
 export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 	// const { project } = useProject();
-	const { slides } = useSlides();
+	const {
+		slides,
+		hasSelectedCustomTemplateBgColor,
+		setCustomBgColorForTemplate,
+		customTemplateBgColor,
+	} = useSlides();
 	const { changeTemplateAndPalette } = useSlides();
 	const [selectedTemplate, setSelectedTemplate] = useState<TemplateKeys>(
 		slides[0].template || 'Default',
@@ -265,7 +270,9 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 
 	const handleConfirm = () => {
 		console.log('selectedTemplate:', selectedPaletteOption);
+		// if (!hasSelectedCustomTemplateBgColor) {
 		changeTemplateAndPalette(selectedTemplate, selectedPaletteOption);
+		// }
 		setShowModal(false);
 	};
 	useEffect(() => {

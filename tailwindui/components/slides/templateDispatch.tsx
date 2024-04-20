@@ -18,6 +18,7 @@ import { TemplateKeys } from '@/components/slides/slideTemplates';
 import Chart, { Group } from '@/models/Chart';
 import ImagesPosition from '@/models/ImagesPosition';
 import { lightColorPalette, darkColorPalette } from './palette';
+import { useSlides } from '@/hooks/use-slides';
 
 const QuillEditable = dynamic(
 	() => import('@/components/slides/quillEditorSlide'),
@@ -70,6 +71,11 @@ export const templateDispatch = (
 	// useEffect(() => {
 	// 	console.log('current slide palette', index, slide.palette);
 	// }, []);
+	const {
+		customTemplateBgColor,
+		setCustomBgColorForTemplate,
+		hasSelectedCustomTemplateBgColor,
+	} = useSlides();
 	const { isPaidUser, token } = useUser();
 
 	// for col1img1 layout, maxHeight would be 160px, for col2img2 140px; for col2img1 it's 280px, for col3img3 it's 130px; for col1img0 280px; for col2img0 280px; for col3img0 280px
@@ -202,6 +208,8 @@ export const templateDispatch = (
 	const themeElements = loadCustomizableElements(
 		templateKey as TemplateKeys,
 		slide.palette as PaletteKeys,
+		customTemplateBgColor,
+		hasSelectedCustomTemplateBgColor,
 	);
 	const generateContentElement = (
 		content: string | string[],
@@ -281,6 +289,10 @@ export const templateDispatch = (
 		groups: [emptyGroup],
 		axis: { x: '', y: '' },
 	}));
+
+	useEffect(() => {
+		console.log('current theme element is', themeElements.backgroundColorCover);
+	});
 
 	return (
 		<Template
@@ -411,6 +423,7 @@ export const templateDispatch = (
 			images_position={slide.images_position || [{}, {}, {}]}
 			palette={slide.palette}
 			template={slide.template}
+			themeElements={themeElements}
 		/>
 	);
 	// }

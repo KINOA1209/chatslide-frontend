@@ -35,6 +35,7 @@ import Chart from '@/models/Chart';
 import ImagesPosition from '@/models/ImagesPosition';
 import { Business_Dark_005_template } from './new_templates/Business_Dark_005_template';
 import { New_Education_009_template } from './new_templates/New_Education_009_template';
+import { ThemeElements } from './templates_customizable_elements/theme_elements';
 
 export interface MainSlideProps {
 	user_name: JSX.Element;
@@ -65,6 +66,7 @@ export interface MainSlideProps {
 	images_position: ImagesPosition[];
 	palette?: PaletteKeys;
 	template?: TemplateKeys;
+	themeElements: ThemeElements;
 }
 
 // deprecated
@@ -125,6 +127,7 @@ export type PaletteKeys =
 	| 'Saffron'
 	| 'Feta'
 	| 'Catskill White'
+	| 'Customize'
 	| '';
 
 // add template keys here

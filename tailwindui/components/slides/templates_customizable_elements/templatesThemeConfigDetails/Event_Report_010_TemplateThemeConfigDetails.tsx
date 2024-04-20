@@ -14,8 +14,8 @@ export const Event_Report_010_TemplateThemeConfig: {
 	[key in PaletteKeys]?: ThemeElements;
 } = {
 	Perfume: {
-		backgroundColorCover: 'bg-[#ACA1F7]',
-		backgroundColor: 'bg-[#ACA1F7]',
+		backgroundColorCover: '#ACA1F7',
+		backgroundColor: '#ACA1F7',
 		titleAndSubtopicBoxBackgroundColor: '#2B2A34',
 		headFontAlignment: {
 			textAlign: 'center',
@@ -72,8 +72,8 @@ export const Event_Report_010_TemplateThemeConfig: {
 		},
 	},
 	Jonquil: {
-		backgroundColorCover: 'bg-[#E9FEA2]',
-		backgroundColor: 'bg-[#E9FEA2]',
+		backgroundColorCover: '#E9FEA2',
+		backgroundColor: '#E9FEA2',
 		titleAndSubtopicBoxBackgroundColor: '#2B2A34',
 		headFontAlignment: {
 			textAlign: 'center',
@@ -130,8 +130,8 @@ export const Event_Report_010_TemplateThemeConfig: {
 		},
 	},
 	'Morning Glory': {
-		backgroundColorCover: 'bg-[#94DCD8]',
-		backgroundColor: 'bg-[#94DCD8]',
+		backgroundColorCover: '#94DCD8',
+		backgroundColor: '#94DCD8',
 		titleAndSubtopicBoxBackgroundColor: '#2B2A34',
 		headFontAlignment: {
 			textAlign: 'center',
@@ -188,8 +188,8 @@ export const Event_Report_010_TemplateThemeConfig: {
 		},
 	},
 	Azalea: {
-		backgroundColorCover: 'bg-[#F2BAD7]',
-		backgroundColor: 'bg-[#F2BAD7]',
+		backgroundColorCover: '#F2BAD7',
+		backgroundColor: '#F2BAD7',
 		titleAndSubtopicBoxBackgroundColor: '#304A56',
 		headFontAlignment: {
 			textAlign: 'center',
@@ -246,8 +246,8 @@ export const Event_Report_010_TemplateThemeConfig: {
 		},
 	},
 	Saffron: {
-		backgroundColorCover: 'bg-[#F6C343]',
-		backgroundColor: 'bg-[#F6C343]',
+		backgroundColorCover: '#F6C343',
+		backgroundColor: '#F6C343',
 		titleAndSubtopicBoxBackgroundColor: '#250643',
 		headFontAlignment: {
 			textAlign: 'center',
@@ -304,8 +304,8 @@ export const Event_Report_010_TemplateThemeConfig: {
 		},
 	},
 	Feta: {
-		backgroundColorCover: 'bg-[#EFFDE9]',
-		backgroundColor: 'bg-[#EFFDE9]',
+		backgroundColorCover: '#EFFDE9',
+		backgroundColor: '#EFFDE9',
 		titleAndSubtopicBoxBackgroundColor: '#271921',
 		headFontAlignment: {
 			textAlign: 'center',
@@ -362,8 +362,8 @@ export const Event_Report_010_TemplateThemeConfig: {
 		},
 	},
 	'Catskill White': {
-		backgroundColorCover: 'bg-[#EEF5F7]',
-		backgroundColor: 'bg-[#EEF5F7]',
+		backgroundColorCover: '#EEF5F7',
+		backgroundColor: '#EEF5F7',
 		titleAndSubtopicBoxBackgroundColor: '#EF93B4',
 		headFontAlignment: {
 			textAlign: 'center',
