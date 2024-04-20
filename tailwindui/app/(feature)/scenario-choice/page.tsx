@@ -54,27 +54,27 @@ const ScenarioChoicePage = () => {
 					{scenarios.message}
 				</Title>
 				{/* three types of scenarios */}
-				<div className='flex flex-wrap flex-row gap-4 md:gap-6 w-full mx-auto justify-center' id='choice_container'>
+				<div className='flex flex-wrap flex-row gap-4 md:gap-6 w-full mx-auto justify-around' id='choice_container'>
 					{scenarios.options.map((scenario) => (
 						<div
 							key={scenario.id}
 							className='flex flex-col transition-transform transform-gpu hover:scale-110'
 						>
 							<div
-								className='h-[200px] sm:h-[300px] bg-gray-300 rounded-lg shadow flex justify-center items-center cursor-pointer mb-4'
+								className='h-[150px] md:h-[180px] xl:h-[250px] w-[150px] md:w-[180px] xl:w-[250px] bg-gray-300 rounded-lg shadow flex justify-center items-center cursor-pointer mb-4'
 								onClick={() => navigateToSummary(scenario.id)}
 							>
 								<Image
-									className='mx-[20px]'
+									className='w-[120px] md:w-[150px] xl:w-[200px]'
 									width={281}
 									height={174}
 									alt={scenario.id}
 									src={scenario.imageSrc}
 								/>
 							</div>
-							<div className='text-center my-2 font-creato-medium leading-snug tracking-tight whitespace-nowrap font-bold'>
+							<Instruction center={true}>
 								{scenario.title}
-							</div>
+							</Instruction>
 						</div>
 					))}
 				</div>

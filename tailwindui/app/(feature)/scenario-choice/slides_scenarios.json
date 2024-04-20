@@ -58,7 +58,7 @@
 		},
 		{
 			"id": "product_spec",
-			"title": "Product Specification",
+			"title": "Product Spec",
 			"imageSrc": "/images/scenario/product_spec.jpg",
 			"audience": "Business_Clients"
 		}
