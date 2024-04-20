@@ -40,7 +40,7 @@ import layoutConfigData, {
 } from './templates_customizable_elements/layout_elements';
 import ScriptEditor from '../script/ScriptEditor';
 import Slide, { SlideKeys } from '@/models/Slide';
-import { AIAssistantIcon, AIAssistantChatWindow } from '../ui/AIAssistant';
+import { AIAssistantIcon, AIAssistantChatWindow } from '../chatbot/AIAssistant';
 import ActionsToolBar from '../ui/ActionsToolBar';
 import { SlidesStatus, useSlides } from '@/hooks/use-slides';
 import useTourStore from '@/components/user_onboarding/TourStore';
