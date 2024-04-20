@@ -13,7 +13,7 @@ const BigTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 };
 
 
-const Instruction: React.FC<{ center?: boolean, children: React.ReactNode }> = ({ center = true, children }) => {
+const Instruction: React.FC<{ center?: boolean, children: React.ReactNode }> = ({ center = false, children }) => {
 	if (center)
 		return <div className='text-neutral-800 text-md py-1 text-center'>{children}</div>;
 	else
