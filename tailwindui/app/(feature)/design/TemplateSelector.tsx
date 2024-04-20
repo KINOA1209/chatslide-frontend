@@ -79,6 +79,9 @@ const TemplateSelector: React.FC<{
 	};
 	const [finalPaletteOptions, setFinalPaletteOptions] =
 		useState(paletteOptions); //
+	useEffect(() => {
+		setFinalPaletteOptions(paletteOptions); // Update finalPaletteOptions when paletteOptions changes
+	}, [paletteOptions]);
 
 	useEffect(() => {
 		// Whenever template changes, reset currentPalette to the first value of paletteOptions
