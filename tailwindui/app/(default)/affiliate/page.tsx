@@ -32,7 +32,7 @@ export default function Affiliate() {
 									slides.
 								</li>
 								<li>
-									<strong>Trasparency:</strong> See your rewards with transparency. Track the clicks, leds, and conversions in real time. 
+									<strong>Transparency:</strong> See your rewards with transparency. Track the visitors, leads, and conversions in real time. <a href='https://help.rewardful.com/en/articles/4202371-visitors-leads-conversions' target='_blank' rel='noreferrer' className='text-blue-600'>Learn more.</a>.
 								</li>
 								<li>
 									<strong>Support & Resources:</strong> Get access to
