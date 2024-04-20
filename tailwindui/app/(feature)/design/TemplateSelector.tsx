@@ -133,7 +133,7 @@ const TemplateSelector: React.FC<{
 			>
 				<div className={`templateAndPaletteChoice flex flex-col  items-start`}>
 					<div className={`templateChoice flex flex-col `}>
-						<Instruction>Select your template:</Instruction>
+						<Instruction>Theme template</Instruction>
 						<DropDown
 							width='15rem'
 							onChange={handleTemplateChange}
@@ -157,7 +157,7 @@ const TemplateSelector: React.FC<{
 						<div className={`paletteChoice flex flex-col `}>
 							{!hasSelectedCustomTemplateBgColor &&
 								paletteOptions.length > 1 && (
-									<Instruction>Select your palette color:</Instruction>
+									<Instruction>Theme color</Instruction>
 								)}
 							{/* <DropDown
 								width='15rem'
@@ -265,7 +265,7 @@ const TemplateSelector: React.FC<{
 									></Select>
 								)}
 
-							<Instruction>Customize theme color:</Instruction>
+							<Instruction>Customize theme color</Instruction>
 							<ColorPicker
 								onCustomColorChange={handleCustomTemplateBgColorChange}
 								initialColor={
@@ -296,7 +296,7 @@ const TemplateSelector: React.FC<{
 				</div>
 			</div>
 			<div className='w-full mt-4 flex flex-col'>
-				<Instruction>Template preview</Instruction>
+				<Instruction>Preview</Instruction>
 				<SlideDesignPreview
 					selectedTemplate={template}
 					selectedPalette={palette}

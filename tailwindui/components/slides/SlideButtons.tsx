@@ -299,8 +299,9 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 			<Modal
 				showModal={showModal}
 				setShowModal={setShowModal}
-				title='Change Template'
-				description='Select a template for your slides'
+				// title='Change Template'
+				title='Set Theme'
+				// description='Select a template for your slides'
 				onConfirm={handleConfirm}
 			>
 				<div className='max-w-[60rem]'>
