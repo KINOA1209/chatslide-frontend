@@ -23,11 +23,13 @@ const AuthButtons: React.FC = () => {
 				</div>
 			) : (
 				<div className='navigation-button-wrap'>
-					<a href='/signin' className='nav-link w-nav-link landing-sign-up' id='landing-sign-in'>
+					<a href='/signin'
+						className='nav-link w-nav-link landing-sign-up whitespace-nowrap'
+						id='landing-sign-in'>
 						Sign In
 					</a>
 					<a
-						className='button-primary landing-sign-up'
+						className='button-primary landing-sign-up whitespace-nowrap'
 						data-wf-user-logout='Sign Up'
 						data-wf-user-login='Sign Up'
 						type='button'
