@@ -198,9 +198,25 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						});
 						setSlideIndex(currentSlideIndex + 1);
 					} else {
-						// Update state with the new slides
-						updateSlidePage(currentSlideIndex, responseData.data.slide);
-						updateVersion(); // force rerender when version changes and index does not change
+						let content = responseData.data.slide.content;
+						if (content.length >= 6 && JSON.stringify(content).length > 600) {
+							// too much new content in one page, need to split into two pages
+							const mid = Math.floor(content.length / 2);
+							const slidePage1 = { ...slides[currentSlideIndex], ...responseData.data.slide, content: content.slice(0, mid) };
+							const slidePage2 = { ...slides[currentSlideIndex], ...responseData.data.slide, content: content.slice(mid) };
+							// replace the current slide with the 2 new slides 
+							setSlides((prevSlides) => {
+								const newSlides = [...prevSlides];
+								newSlides.splice(currentSlideIndex, 1, slidePage1, slidePage2);
+								return newSlides;
+							});
+							setSlideIndex(currentSlideIndex + 1);
+							addChatHistory(addSuccessMessage('📄 Because of too much content on one page, I have split the content into two pages.'));
+						} else {
+							// Update state with the new slides
+							updateSlidePage(currentSlideIndex, responseData.data.slide);
+							updateVersion(); // force rerender when version changes and index does not change
+						}
 					}
 				}
 
