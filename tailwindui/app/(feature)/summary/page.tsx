@@ -41,6 +41,9 @@ import TextareaAutosize from 'react-textarea-autosize';
 import slides_scenarios from './../scenario-choice/slides_scenarios.json';
 import RangeSlider from '@/components/ui/RangeSlider';
 import { set } from 'lodash';
+import Toggle from '@/components/button/Toggle';
+import { MdOutlineSpeaker, MdOutlineSpeakerNotes } from 'react-icons/md';
+import { FiFilePlus } from 'react-icons/fi';
 
 
 const MAX_TOPIC_LENGTH = 2000;
@@ -82,10 +85,7 @@ export default function Topic() {
 	} = useProject();
 
 	const scenarioType = project?.scenario_type || 'business';
-	const generationMode = SessionStorage.getItem(
-		'generation_mode',
-		'from_topic',
-	);
+	const [generationMode, setGenerationMode] = useState('from_topic');
 
 	const [topic, setTopic] = useState(project?.topic || '');
 	const [audience, setAudience] = useState(
@@ -383,6 +383,7 @@ export default function Topic() {
 						selectedResources={selectedResources}
 						setSelectedResources={setSelectedResources}
 						removeResourceAtIndex={removeResourceAtIndex}
+						isRequired
 					/>
 				)}
 
@@ -392,7 +393,27 @@ export default function Topic() {
 					{/* for tutorial step 1, the summary #SummaryStep-2 */}
 					{/* title */}
 					<div className='title1'>
-						<BigTitle>💡 Summary</BigTitle>
+						<div className='flex flex-col md:flex-row justify-between'>
+							<BigTitle>💡 Summary</BigTitle>
+							<Toggle
+								isLeft={generationMode === 'from_topic'}
+								setIsLeft={(isLeft: boolean) => setGenerationMode(isLeft ? 'from_topic' : 'from_files')}
+								// leftText='From Topic'
+								// rightText='From Files'
+								leftElement={
+									<div className='flex flex-row gap-2 items-center'>
+										<MdOutlineSpeakerNotes />
+										<div>Topic First</div>
+									</div>
+								}
+								rightElement={
+									<div className='flex flex-row gap-2 items-center'>
+										<FiFilePlus />
+										<div>Files First</div>
+									</div>
+								}
+							/>
+						</div>
 						{/* <p id='after1'>
 								{' '}
 								{generationMode === 'from_topic' ? '(Required)' : '(Optional)'}

@@ -30,7 +30,7 @@ const ScenarioChoicePage = () => {
 				'scenario_type': scenarioType,
 				'content_type': 'presentation'
 			} as Project);
-			router.push('/genmode');
+			router.push('/summary');
 		}
 		else {
 			initProject({

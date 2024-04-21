@@ -18,7 +18,7 @@ const Toggle: React.FC<ToggleProps> = ({
 	rightElement,
 }) => {
 	return (
-		<div className='toggle flex justify-center mt-4 items-center'>
+		<div className='toggle flex justify-center items-center'>
 			<div className='flex items-center rounded-md border bg-gray-200 px-0.5 py-0.5 my-1'>
 				<div
 					className={`cursor-pointer min-w-[130px] h-[36px] px-2 py-1 flex justify-center items-center rounded-md ${isLeft ? 'bg-white text-[#5168F6]' : ''}`}

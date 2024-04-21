@@ -66,9 +66,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 			<div className='relative w-full h-[80px] flex flex-row items-center bg-[#2044F2] gap-x-2 lg:gap-x-4 px-2 lg:px-4 xl:px-6'>
 				{
 					currentIndex === 0 ? 
-					workflow === 'slides' ?
-					<BackButton href='/genmode' text='Generation Mode'/> :
-					<BackButton href='/scenario-choice' text='Scenario Choice'/> :
+					<BackButton href='/scenario-choice' text='Scenario'/> :
 					<BackButton href='/dashboard' />
 				}
 				<div className={`flex-grow items-center justify-center flex py-2 
