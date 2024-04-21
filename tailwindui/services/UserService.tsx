@@ -1,9 +1,10 @@
+import { getRewardfulReferralId } from '@/components/integrations/Rewardful';
 import AuthService from './AuthService';
 
 class UserService {
 	static async initializeUser(token: string): Promise<boolean> {
 		const headers = new Headers();
-		console.log('Token: ', token);
+		// console.log('Token: ', token);
 		if (token) {
 			headers.append('Authorization', `Bearer ${token}`);
 		}
@@ -247,7 +248,8 @@ class UserService {
 			tier: plan,
 			email: email,
 			currency: currency === '$' ? 'usd' : 'eur',
-			is_chatslide: isChatslide
+			is_chatslide: isChatslide,
+			client_reference_id: await getRewardfulReferralId()
 		};
 
 		const response = await fetch('/api/create-checkout-session', {

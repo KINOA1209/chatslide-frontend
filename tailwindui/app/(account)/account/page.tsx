@@ -24,6 +24,7 @@ import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
 import { getBrand } from '@/utils/getHost';
 import { UnlimitedUpgrade } from '@/components/slides/card/UnlimitedUpgrade';
+import { trackRewardfulConversion } from '@/components/integrations/Rewardful';
 
 const Profile = () => {
 	const { username, email, token, setUsername } = useUser();
@@ -36,7 +37,7 @@ const Profile = () => {
 		const paid = params.get('paid');
 		if (paid === 'true') {
 			toast.success('Payment successful!');
-			window.rewardful('convert', { email: email });
+			trackRewardfulConversion(email);
 		} else if (paid === 'false') {
 			toast.error('Payment cancelled.');
 		}
@@ -407,9 +408,9 @@ export default function Account() {
 					</BigTitle>
 					<Instruction>
 						<div className='flex flex-col gap-y-1'>
-						<span>Share your love for {getBrand()} and make real money by inviting your friends and connections to join!</span>
-						<span>Your friends will get <strong>60%</strong> off on their first purchase and you will get <strong>30%</strong> commission on all their purchases. </span>
-						<span>Keep track of your conversions and earnings real time and get paid monthly. </span>
+							<span>Share your love for {getBrand()} and make real money by inviting your friends and connections to join!</span>
+							<span>Your friends will get <strong>60%</strong> off on their first purchase and you will get <strong>30%</strong> commission on all their purchases. </span>
+							<span>Keep track of your conversions and earnings real-time and get paid monthly. </span>
 						</div>
 					</Instruction>
 					<Instruction>

@@ -87,7 +87,7 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
 				className={`sm:min-w-[8rem] lg:min-w-[12rem] px-2 h-[36px] sm:h-[36px] ${getButtonBg()} disabled:animate-pulse rounded-[0.4375rem] flex justify-center items-center gap-4 cursor-pointer }`}
 			>
 				{isSubmitting && <SpinIcon />}
-				<span className='text-[#2044F2] font-semibold tracking-tight whitespace-nowrap flex flex-row gap-2'>
+				<span className='text-[#5168F6] font-semibold tracking-tight whitespace-nowrap flex flex-row gap-2'>
 					{children}
 					{isPaidFeature && !isPaidUser && <PlusLabel />}
 					{/* {isPaidFeature && isPaidUser && '🚀 '} */}
@@ -95,7 +95,7 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
 				{/* Replace with the actual icon component or element */}
 				{/* {!isSubmitting && showArrow && <RightTurnArrowIcon />} */}
 				{!isSubmitting && showArrow && (
-					<FaChevronRight style={{ color: '#2044F2' }} />
+					<FaChevronRight style={{ color: '#5168F6' }} />
 				)}
 			</button>
 		</>

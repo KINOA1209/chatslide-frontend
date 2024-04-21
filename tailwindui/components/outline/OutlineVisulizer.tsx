@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect, Fragment, FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -185,8 +184,8 @@ const OutlineVisualizer = ({
 				outlineData.map((section: OutlineSection, sectionIndex: number) => (
 					<div key={sectionIndex}>
 						<div
-							className={`OutlineStep-2 my-[1rem] ${outlineData.length >= maxOutlineSectionCount
-								? 'opacity-50 cursor-not-allowed'
+							className={`OutlineStep-2 flex my-3 items-center justify-center ${outlineData.length >= maxOutlineSectionCount
+								? 'opacity-50 cursor-not-allowed '
 								: ''
 								}`}
 						>
@@ -203,11 +202,11 @@ const OutlineVisualizer = ({
 							</button>
 						</div>
 
-						<div className='flex flex-row gap-4'>
+						<div className='flex flex-row gap-4 items-center justify-center'>
 							<div
 								id={String(sectionIndex)}
 								key={sectionIndex + 1}
-								className='OutlineStep-3 relative w-full sm:w-3/4 bg-neutral-50 rounded-md shadow border border-gray-200 px-1 sm:px-4 py-2'
+								className='OutlineStep-3 relative w-full sm:w-3/4 bg-[#F9FAFB] rounded-md shadow border border-gray-200 px-1 sm:px-4 py-2'
 								onMouseEnter={() => setHoveredSectionIndex(sectionIndex)}
 								onMouseLeave={() => setHoveredSectionIndex(-1)}
 							>
@@ -218,10 +217,9 @@ const OutlineVisualizer = ({
 										handleEnterEditSection(e, sectionIndex);
 									}}
 								>
-									<h3 className='text-lg'>Section {sectionIndex + 1}</h3>
 									<input
 										key={sectionIndex}
-										className='border-none outline-none focus:outline-slate-300 bg-neutral-50 rounded inline text-xl font-bold grow overflow-ellipsis'
+										className='border-none rounded-md focus:border-[#A4BCFD] inline bg-[#F9FAFB] text-neutral-600 grow overflow-ellipsis'
 										value={section.title}
 										onClick={(e) => (e.target as HTMLInputElement).select()}
 										onChange={(e) => handleSectionChange(e, sectionIndex)}
@@ -235,106 +233,103 @@ const OutlineVisualizer = ({
 											onClick={(e) => {
 												handleDeleteSection(e, sectionIndex);
 											}}
-											id='outline-delete-section'
 										>
 											<DeleteIcon shadow={true} />
 										</div>
 									)}
-								<div className='mt-4'>
+								<div>
 									{section.content.map((content: any, detailIndex: number) => (
-										<ul
-											key={detailIndex}
-											className='flex mb-1 sm:list-disc px-2 sm:px-8'
+										<div
+											key={sectionIndex + detailIndex}
+											className={`flex flex-row w-full relative overflow-visiable mt-2 bg-[white] border-2 rounded-md
+														${hoveredDetailIndex === detailIndex &&
+													sectionIndex === hoveredSectionIndex
+													? 'border-[#A4BCFD]'
+													: 'border-[#EAECF0]'
+												}
+													  `}
+											onMouseEnter={() => setHoveredDetailIndex(detailIndex)}
+											onMouseLeave={() => setHoveredDetailIndex(-1)}
 										>
-											<li
-												className='w-full relative overflow-visiable'
-												onMouseEnter={() => setHoveredDetailIndex(detailIndex)}
-												onMouseLeave={() => setHoveredDetailIndex(-1)}
-											>
-												<input
-													key={detailIndex}
-													id={String(sectionIndex)+'-'+String(detailIndex)}
-													className={`form-input border-none w-full text-gray-800 grow overflow-ellipsis ${hoveredDetailIndex === detailIndex &&
-														sectionIndex === hoveredSectionIndex
-														? 'bg-gray-200'
-														: 'bg-neutral-50 '
-														}`}
-													value={content}
-													onClick={(e) =>
-														(e.target as HTMLInputElement).select()
+											<div className={`flex flex-row border-r-2 border-r-[#EAECF0] items-center justify-center w-[2rem] text-gray-800 overflow-ellipsis`}>
+													<span>{detailIndex + 1}</span>
+											</div>
+											<input
+												key={detailIndex}
+												id={String(sectionIndex) + '-' + String(detailIndex)}
+												className={`form-input w-[90%] border-none`}
+												value={content}
+												onClick={(e) =>
+													(e.target as HTMLInputElement).select()
+												}
+												onChange={(e) =>
+													handleDetailChange(
+														e,
+														sectionIndex,
+														detailIndex,
+														'content',
+													)
+												}
+												onKeyDown={(e) => {
+													if (e.key === 'Enter') {
+														handleAddDetail(e, sectionIndex, detailIndex + 1);
 													}
-													onChange={(e) =>
-														handleDetailChange(
-															e,
-															sectionIndex,
-															detailIndex,
-															'content',
-														)
-													}
-													onKeyDown={(e) => {
-														if (e.key === 'Enter') {
-															handleAddDetail(e, sectionIndex, detailIndex + 1);
-														}
-													}}
-													placeholder={`Detail ${detailIndex + 1}`}
-												/>
-												{hoveredDetailIndex === detailIndex &&
-													sectionIndex === hoveredSectionIndex && (
-														<>
-															<div className='absolute flex flex-row gap-4 bottom-[70%] right-0 mt-1 mr-1'>
-																{outlineData[sectionIndex].content.length >
-																	minOutlineDetailCount && (
-																		<div
-																			onClick={(e) =>
-																				handleDeleteDetail(
-																					e,
-																					sectionIndex,
-																					detailIndex,
-																				)
-																			}
-																			id='outline-delete-detail-upper'
-																		>
-																			<DeleteIcon shadow={true} />
-																		</div>
-																	)}
-
-																{outlineData[sectionIndex].content.length <
-																	maxOutlineDetailCount && (
-																		<div
-																			onClick={(e) =>
-																				handleAddDetail(
-																					e,
-																					sectionIndex,
-																					detailIndex,
-																				)
-																			}
-																			id='outline-add-detail-upper'
-																		>
-																			<AddTopicIcon />
-																		</div>
-																	)}
-															</div>
-															<div className='absolute flex flex-row gap-4 top-[70%] right-0 mb-1 mr-1 z-10'>
-																{outlineData[sectionIndex].content.length <
-																	maxOutlineDetailCount && (
-																		<div
-																			onClick={(e) =>
-																				handleAddDetail(
-																					e,
-																					sectionIndex,
-																					detailIndex + 1,
-																				)
-																			}
-																			id='outline-add-detail-lower'
-																		>
-																			<AddTopicIcon />
-																		</div>
-																	)}
-															</div>
-														</>
-													)}
-											</li>
-										</ul>
+												}}
+												placeholder={`Detail ${detailIndex + 1}`}
+											/>
+											{hoveredDetailIndex === detailIndex &&
+												sectionIndex === hoveredSectionIndex && (
+													<>
+														<div className='absolute flex flex-row gap-4 bottom-[70%] right-0 mt-1 mr-1'>
+															{outlineData[sectionIndex].content.length >
+																minOutlineDetailCount && (
+																	<div
+																		onClick={(e) =>
+																			handleDeleteDetail(
+																				e,
+																				sectionIndex,
+																				detailIndex,
+																			)
+																		}
+																		id='outline-delete-detail-upper'
+																	>
+																		<DeleteIcon shadow={true} />
+																	</div>
+																)}
+															{outlineData[sectionIndex].content.length <
+																maxOutlineDetailCount && (
+																	<div
+																		onClick={(e) =>
+																			handleAddDetail(
+																				e,
+																				sectionIndex,
+																				detailIndex,
+																			)
+																		}
+																	>
+																		<AddTopicIcon />
+																	</div>
+																)}
+														</div>
+														<div className='absolute flex flex-row gap-4 top-[70%] right-0 mb-1 mr-1 z-10'>
+															{outlineData[sectionIndex].content.length <
+																maxOutlineDetailCount && (
+																	<div
+																		onClick={(e) =>
+																			handleAddDetail(
+																				e,
+																				sectionIndex,
+																				detailIndex + 1,
+																			)
+																		}
+																	>
+																		<AddTopicIcon />
+																	</div>
+																)}
+														</div>
+													</>
+												)}
+										</div>
 									))}
 								</div>
 							</div>
@@ -344,7 +339,7 @@ const OutlineVisualizer = ({
 
 			<div key={outlineData.length}>
 				<div
-					className={`OutlineStep-2 my-[1rem] ${outlineData.length >= maxOutlineSectionCount
+					className={`OutlineStep-2 flex my-3 items-center justify-center ${outlineData.length >= maxOutlineSectionCount
 						? 'opacity-50 cursor-not-allowed'
 						: ''
 						}`}
@@ -357,7 +352,6 @@ const OutlineVisualizer = ({
 							}
 						}}
 						className='focus:outline-none'
-						id='outline-add-section'
 					>
 						<AddSectionIcon />
 					</button>

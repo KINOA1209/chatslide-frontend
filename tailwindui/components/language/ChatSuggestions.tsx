@@ -5,14 +5,14 @@ const CHAT_SUGGESTIONS = {
 		'💬 Change topic to be more engaging',
 		'🔠 Capitalize the topic',
 		'🌐 Translate topic to Spanish',
-		'🖼️ Change the image on the slide',
+		'🌁 Change the image on the slide',
 	],
 	noncover: [
-		'📊 Add data to the content',
 		'🧠 Add a summarizing page',
-		'🖼️ Change the layout of this page',
+		'📊 Add a column to this page',
 		'🎨 Add a photo about nature',
-		'💡 Change subtopic to be more engaging',
+		'📈 Add data to the content',
+		'🌄 Change the background of this page',
 		'📝 Add an example to the content',
 	],
 };

@@ -148,6 +148,22 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 		if (toastId) {
 			toast.dismiss(toastId);
 		}
+		const url = `/api/${type}?foldername=${project.foldername}&filename=slides.${type}`;
+		const message = (
+			<div>
+				Download should start now. If you do not see it, click <a href={url} target="_blank" className='text-blue-600' >this</a>.
+			</div>
+		);
+		toast.success(message, {
+			position: 'top-center',
+			autoClose: waitTime * 1000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: false,
+			pauseOnFocusLoss: false,
+			draggable: true,
+			progress: undefined,
+		});
 	};
 
 	return (
@@ -232,9 +248,9 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 					>
 						<FaRegFilePdf />
 						<span className='flex flex-row gap-2 items-center'>
-							PDF 
+							PDF
 							{/* (high) */}
-							 {!isPaidUser && <PlusLabel />}
+							{!isPaidUser && <PlusLabel />}
 						</span>
 					</BigGrayButton>
 

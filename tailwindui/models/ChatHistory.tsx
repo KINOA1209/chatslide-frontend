@@ -3,6 +3,7 @@ export default interface ChatHistory {
 	content: string | JSX.Element | RegenerateSelection;
 	choices?: string[];
 	imageUrls?: string[]; // Include imageUrls in the chat history entry
+	emoji?: string; // Include emoji in the chat history entry
 }
 
 export interface RegenerateSelection {

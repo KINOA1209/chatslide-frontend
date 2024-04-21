@@ -2454,6 +2454,10 @@ export const availableLayouts = {
 			name: 'Cover_img_1_layout' as LayoutKeys,
 			img: coverimg1_png.src,
 		},
+		{
+			name: 'Full_img_only_layout' as LayoutKeys,
+			img: Full_img_only_png.src,
+		},
 	],
 	main: [
 		{

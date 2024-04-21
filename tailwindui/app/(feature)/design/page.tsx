@@ -230,6 +230,7 @@ export default function DesignPage() {
 			if (project?.presentation_slides) {
 				setShowGenerationStatusModal(true);
 				viewSlidesSubmit();
+				setIsSubmitting(false);
 			}
 		}
 	}, [isSubmitting, project]);

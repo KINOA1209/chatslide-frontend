@@ -13,17 +13,53 @@ import ActionsToolBar from '@/components/ui/ActionsToolBar';
 import useTourStore from '@/components/user_onboarding/TourStore';
 import useHydrated from '@/hooks/use-hydrated';
 import { addIdToRedir } from '@/utils/redirWithId';
-import { Blank } from '@/components/ui/Loading';
+import { Blank, Loading } from '@/components/ui/Loading';
 import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
+import OutlinePageView from '@/components/outline/OutlinePageView';
+import { useUser } from '@/hooks/use-user';
+import Project from '@/models/Project';
+import { CardReviewIcon, PageReviewIcon } from '@/components/outline/OutlineIcons';
+import { convertOutlineToPlainText, convertPlainTextToOutlines } from '@/components/outline/OutlineUtils';
+import { BigTitle, Instruction, Explanation } from '@/components/ui/Text';
+import { Column } from '@/components/layout/Column';
+import Toggle from '@/components/button/Toggle';
+
+export type OutlineViewMode = 'card' | 'page';
 
 export default function WorkflowStep2() {
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 	const [isGpt35, setIsGpt35] = useState(true);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const router = useRouter();
-	const { project, outlines, updateOutlines } = useProject();
+	const { project, outlines, updateOutlines, bulkUpdateProject } = useProject();
+	const [viewMode, setViewMode] = useState<OutlineViewMode>('card');
+	const [outlinesPlainText, setOutlinesPlainText] = useState<string>('');
+	const { token } = useUser();
+	const language = project?.language || 'English'
+	const [loading, setLoading] = useState(false);
+	//keep track of whether the text in the page view has been modified or not
+	const [textModified, setTextModified] = useState(false);
 
 	const params = useSearchParams();
+	const fetchData = async () => {
+		setLoading(true);
+		try {
+			const convertedOutlineJSON = await convertPlainTextToOutlines(
+				token,
+				outlinesPlainText,
+				language,
+				isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
+			);
+			updateOutlines(Object.values(JSON.parse(convertedOutlineJSON.data.outlines)));
+			bulkUpdateProject({
+				outlines: convertedOutlineJSON.data.outlines
+			} as Project)
+		} catch (error) {
+			console.error('Failed to convert plain text to outlines:', error);
+		} finally {
+			setLoading(false)
+		}
+	}
 
 	if (!project) {
 		if (params.get('id')) {
@@ -47,6 +83,18 @@ export default function WorkflowStep2() {
 		}
 	}, [isSubmitting]);
 
+	useEffect(() => {
+		if (viewMode === 'page') {
+			const plainText = convertOutlineToPlainText(outlines);
+			setOutlinesPlainText(plainText);
+			setLoading(false);
+		}
+		else if (viewMode === 'card' && outlinesPlainText !== '' && textModified) {
+			fetchData();
+			setTextModified(false);
+		}
+	}, [viewMode]);
+
 	// Function to scroll to a specific section
 	const scrollToSection = (sectionId: number) => {
 		const sectionElement = document.getElementById(String(sectionId));
@@ -68,7 +116,6 @@ export default function WorkflowStep2() {
 	if (!outlines || !outlines.length) {
 		return <></>;
 	}
-
 	return (
 		<div className='relative'>
 			{/* user tutorial */}
@@ -81,9 +128,11 @@ export default function WorkflowStep2() {
 
 			<GenerateSlidesSubmit
 				outlines={outlines}
+				outlinesPlainText={outlinesPlainText}
 				isGPT35={isGpt35}
 				isSubmitting={isSubmitting}
 				setIsSubmitting={setIsSubmitting}
+				viewMode={viewMode}
 			/>
 
 			<WorkflowStepsBanner
@@ -94,40 +143,45 @@ export default function WorkflowStep2() {
 				nextIsPaidFeature={false}
 				nextText={!isSubmitting ? 'Select Design' : 'Select Design'}
 			/>
+			<div className='flex flex-col mb-[3rem]'>
+				<Toggle
+					isLeft={viewMode === 'card'}
+					setIsLeft={(value: boolean) => setViewMode(value ? 'card' : 'page')}
+					leftElement={<><CardReviewIcon color={`${viewMode === 'card' ? '#5168F6' : '#707C8A'}`} />Card View</>}
+					rightElement={<><PageReviewIcon color={`${viewMode === 'page' ? '#5168F6' : '#707C8A'}`} />Page View</>}
+				/>
 
-			<div className='mb-[3rem]'>
-				{/* overview nav section */}
-				<div className='w-1/4 fixed top-[150px] overflow-y-auto flex justify-center'>
-					<div className='OutlineStep-4 w-2/3 bg-neutral-50 rounded-md border border-gray-200 hidden sm:block'>
-						<div className='h-5 text-neutral-900 text-xs font-bold font-creato-medium leading-tight tracking-wide px-4 py-3'>
-							OVERVIEW
-						</div>
-						<ol className='list-none px-4 py-4'>
-							{outlines?.map((section, index) => (
-								<li
-									className='pb-2 opacity-60 text-neutral-900 text-s tracking-wider font-medium font-creato-medium leading-normal tracking-tight cursor-pointer hover:text-black  hover:rounded-md hover:bg-gray-200'
-									key={index}
-									onClick={() => scrollToSection(index)}
-								>
-									<span className=''>
-										{index + 1}. {section.title}
-									</span>
-								</li>
-							))}
-						</ol>
+				<Column>
+				<div className='flex flex-col gap-2 w-2/3 mx-auto'>
+					<BigTitle>Outline</BigTitle>
+					<Instruction>Modify this outline until you're satisfied.</Instruction>
+					<Explanation>Around {outlines.length * 3} slide pages total.</Explanation>
 					</div>
-				</div>
-				<div className='flex justify-end'>
-					<div className='w-full sm:w-2/3 gap-10 auto-rows-min'>
-						<div className='lg:col-span-2 flex flex-col'>
-							<OutlineVisualizer
-								outlineData={outlines}
-								setOutlineData={updateOutlines}
-								isGPT35={isGpt35}
-							/>
+					{loading ? (
+						<Loading />
+					) : (
+						<div className='w-full gap-10 auto-rows-min'>
+							<div className='lg:col-span-2 flex flex-col'>
+								{/* only trigger re-render after data is fetched */}
+								{viewMode === 'card' ? (
+									<OutlineVisualizer
+										outlineData={outlines}
+										setOutlineData={updateOutlines}
+										isGPT35={isGpt35}
+									/>
+								) : (
+									<OutlinePageView
+										outlinesPlainText={outlinesPlainText}
+										setOutlinesPlainText={setOutlinesPlainText}
+										isGPT35={isGpt35}
+										setTextModified={setTextModified}
+									/>
+								)}
+
+							</div>
 						</div>
-					</div>
-				</div>
+					)}
+				</Column>
 			</div>
 		</div>
 	);

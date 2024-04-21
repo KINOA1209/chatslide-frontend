@@ -38,30 +38,32 @@ import { getUserCountryCode, getUserLanguage } from '@/utils/userLocation';
 import Project from '@/models/Project';
 import { GenerationStatusProgressModal } from '@/components/ui/GenerationStatusProgressModal';
 import TextareaAutosize from 'react-textarea-autosize';
+import slides_scenarios from './../scenario-choice/slides_scenarios.json';
+import RangeSlider from '@/components/ui/RangeSlider';
+import { set } from 'lodash';
+import Toggle from '@/components/button/Toggle';
+import { MdOutlineSpeaker, MdOutlineSpeakerNotes } from 'react-icons/md';
+import { FiFilePlus } from 'react-icons/fi';
+
 
 const MAX_TOPIC_LENGTH = 2000;
 const MIN_TOPIC_LENGTH = 3;
 
 const audienceDict = {
+	Business_Prospects: '🤝 Business Prospects',
+	Business_Clients: '💼 Business Clients',
+	Office_Colleagues: '👔 Coworkers',
 	Researchers: '🔬 Researchers',
 	Students: '📚 Students',
-	Business_Clients: '💼 Business Clients',
-	Office_Colleagues: '👔 Office Colleagues',
 	Video_Viewers: '📱 Video Viewers',
+	Community_Members: '🏘️ Community Members',
 	Myself: '🧑‍💻 Myself',
 };
 
 const getAudienceFromSceario = (scenarioType: string) => {
-	switch (scenarioType) {
-		case 'business':
-			return 'Business_Clients';
-		case 'academic':
-			return 'Students';
-		case 'life_style':
-			return 'Video_Viewers';
-		default:
-			return 'unselected';
-	}
+	return slides_scenarios.options.find(
+		(scenario) => scenario.id === scenarioType,
+	)?.audience || 'Business_Clients';
 };
 
 export default function Topic() {
@@ -83,10 +85,7 @@ export default function Topic() {
 	} = useProject();
 
 	const scenarioType = project?.scenario_type || 'business';
-	const generationMode = SessionStorage.getItem(
-		'generation_mode',
-		'from_topic',
-	);
+	const [generationMode, setGenerationMode] = useState('from_topic');
 
 	const [topic, setTopic] = useState(project?.topic || '');
 	const [audience, setAudience] = useState(
@@ -108,6 +107,8 @@ export default function Topic() {
 
 	const [showGenerationStatusModal, setShowGenerationStatusModal] =
 		useState(false);
+
+	const [pageCountEst, setPageCountEst] = useState(15);
 
 	const handleGenerationStatusModal = () => {
 		// console.log('user Research Modal toggled');
@@ -167,6 +168,13 @@ export default function Topic() {
 		}
 	};
 
+	function getCreditCost() {
+		if (pageCountEst > 20) {
+			return pageCountEst;
+		}
+		return 20;
+	}
+
 	useEffect(() => {
 		if (isSubmitting) {
 			handleSubmit();
@@ -181,6 +189,7 @@ export default function Topic() {
 				`Please enter at least ${MIN_TOPIC_LENGTH} characters for topic.`,
 			);
 			setIsSubmitting(false);
+			setShowGenerationStatusModal(false);
 			return;
 		}
 
@@ -200,6 +209,7 @@ export default function Topic() {
 			generation_mode: generationMode,
 			search_online: searchOnlineScope,
 			knowledge_summary: knowledge_summary,
+			section_count: Math.round(pageCountEst / 3),
 		};
 
 		bulkUpdateProject({
@@ -283,13 +293,15 @@ export default function Topic() {
 				console.error('Error when generating outlines:', response.status);
 				toast.error(
 					'Server is busy now. Please try again later. Reference code: ' +
-						project?.id,
+					project?.id,
 				);
 				setIsSubmitting(false);
+				setShowGenerationStatusModal(false);
 			}
 		} catch (error) {
 			console.error('Error:', error);
 			setIsSubmitting(false);
+			setShowGenerationStatusModal(false);
 		}
 	};
 
@@ -353,7 +365,7 @@ export default function Topic() {
 				isPaidUser={isPaidUser}
 				nextIsPaidFeature={false}
 				nextText={
-					!isSubmitting ? 'Write Outline (20⭐️)' : 'Writing Outline...'
+					!isSubmitting ? `Write Outline (${getCreditCost()}⭐️)` : 'Writing Outline...'
 				}
 				handleClickingGeneration={handleGenerationStatusModal}
 			/>
@@ -371,92 +383,137 @@ export default function Topic() {
 						selectedResources={selectedResources}
 						setSelectedResources={setSelectedResources}
 						removeResourceAtIndex={removeResourceAtIndex}
+						isRequired
 					/>
 				)}
 
 				{/* text area section */}
 
-				<Card>
+				<Card id='SummaryStep-2'>
 					{/* for tutorial step 1, the summary #SummaryStep-2 */}
-					<div id='SummaryStep-2'>
-						{/* title */}
-						<div className='title1'>
+					{/* title */}
+					<div className='title1'>
+						<div className='flex flex-col md:flex-row justify-between'>
 							<BigTitle>💡 Summary</BigTitle>
-							{/* <p id='after1'>
+							<Toggle
+								isLeft={generationMode === 'from_topic'}
+								setIsLeft={(isLeft: boolean) => setGenerationMode(isLeft ? 'from_topic' : 'from_files')}
+								// leftText='From Topic'
+								// rightText='From Files'
+								leftElement={
+									<div className='flex flex-row gap-2 items-center'>
+										<MdOutlineSpeakerNotes />
+										<div>Topic First</div>
+									</div>
+								}
+								rightElement={
+									<div className='flex flex-row gap-2 items-center'>
+										<FiFilePlus />
+										<div>Files First</div>
+									</div>
+								}
+							/>
+						</div>
+						{/* <p id='after1'>
 								{' '}
 								{generationMode === 'from_topic' ? '(Required)' : '(Optional)'}
 							</p> */}
+						<Explanation>
+							To get started, give us some high-level intro about your
+							project.
+						</Explanation>
+					</div>
+					{generationMode === 'from_topic' && (
+						<div>
+							<div className='flex items-center gap-1'>
+								<Instruction>Project Topic</Instruction>
+								<ExplanationPopup>
+									The main subject or theme of your project. It will set the
+									direction and focus of the contents.
+								</ExplanationPopup>
+							</div>
+							<div className='border border-2 border-gray-200 rounded-md min-h-[10rem] flex flex-col justify-between'>
+								<TextareaAutosize
+									onChange={(e: any) => updateTopic(e.target.value)}
+									className='focus:ring-0 text-l md:text-l'
+									id='topic'
+									value={topic}
+									maxLength={MAX_TOPIC_LENGTH}
+									required
+									placeholder='What do you have in mind?'
+								></TextareaAutosize>
+								{!topic && (
+									<TopicSuggestions language={language} setTopic={setTopic} />
+								)}
+							</div>
 							<Explanation>
-								To get started, give us some high-level intro about your
-								project.
-							</Explanation>
-						</div>
-						{generationMode === 'from_topic' && (
-							<div>
-								<div className='flex items-center gap-1'>
-									<Instruction>Project Topic</Instruction>
-									<ExplanationPopup>
-										The main subject or theme of your project. It will set the
-										direction and focus of the contents.
-									</ExplanationPopup>
-								</div>
-								<div className='border border-2 border-gray-200 rounded-md min-h-[10rem] flex flex-col justify-between'>
-									<TextareaAutosize
-										onChange={(e: any) => updateTopic(e.target.value)}
-										className='focus:ring-0 text-l md:text-l'
-										id='topic'
-										value={topic}
-										maxLength={MAX_TOPIC_LENGTH}
-										required
-										placeholder='What do you have in mind?'
-									></TextareaAutosize>
-									{!topic && (
-										<TopicSuggestions language={language} setTopic={setTopic} />
-									)}
-								</div>
-								<Explanation>
-									{/* if no char left, show red */}
-									<div
-										className={
-											MAX_TOPIC_LENGTH - topic.length === 0
-												? 'text-red-600'
-												: ''
-										}
-									>
-										{MAX_TOPIC_LENGTH - topic.length} characters left
-									</div>
-								</Explanation>
-								<ErrorMessage>{topicError}</ErrorMessage>
-							</div>
-						)}
-
-						{/* DropDown menu section */}
-						<div className='w-full gap-2 flex flex-col sm:grid sm:grid-cols-2'>
-							<div className='flex flex-col'>
-								<div className='flex flex-row gap-1 items-center'>
-									<Instruction>Your Audience</Instruction>
-									<ExplanationPopup>
-										Specify the intended viewers of your projects, tailoring to
-										your audience ensures the content resonates effectively.
-									</ExplanationPopup>
-								</div>
-								<DropDown
-									onChange={(e) => setAudience(e.target.value)}
-									style='input'
-									width='80%'
-									value={audience}
+								{/* if no char left, show red */}
+								<div
+									className={
+										MAX_TOPIC_LENGTH - topic.length === 0
+											? 'text-red-600'
+											: ''
+									}
 								>
-									<option key='unselected' value='unselected' disabled>
-										Choose your audience
-									</option>
-									{Object.entries(audienceDict).map(([key, displayname]) => (
-										<option key={key} value={key}>
-											{displayname}
-										</option>
-									))}
-								</DropDown>
+									{MAX_TOPIC_LENGTH - topic.length} characters left
+								</div>
+							</Explanation>
+							<ErrorMessage>{topicError}</ErrorMessage>
+						</div>
+					)}
+
+					{/* DropDown menu section */}
+					<div className='w-full gap-2 flex flex-col sm:grid sm:grid-cols-2'>
+						<div className='flex flex-col'>
+							<div className='flex flex-row gap-1 items-center'>
+								<Instruction>Your Audience</Instruction>
+								<ExplanationPopup>
+									Specify the intended viewers of your projects, tailoring to
+									your audience ensures the content resonates effectively.
+								</ExplanationPopup>
 							</div>
-							<LanguageSelector language={language} setLanguage={setLanguage} />
+							<DropDown
+								onChange={(e) => setAudience(e.target.value)}
+								style='input'
+								width='80%'
+								value={audience}
+							>
+								<option key='unselected' value='unselected' disabled>
+									Choose your audience
+								</option>
+								{Object.entries(audienceDict).map(([key, displayname]) => (
+									<option key={key} value={key}>
+										{displayname}
+									</option>
+								))}
+							</DropDown>
+						</div>
+						<LanguageSelector language={language} setLanguage={setLanguage} />
+					</div>
+
+
+					<div className='w-full gap-2 flex flex-col sm:grid sm:grid-cols-2'>
+						<div>
+							<Instruction>Number of Pages: {pageCountEst}</Instruction>
+							<Explanation>
+								A rough estimate of the number of slides you will need. <br />
+								{(pageCountEst > 20) && 'Decks with than 20 pages will cost more ⭐️credits.'}
+							</Explanation>
+							<div className='w-[80%]'>
+								<RangeSlider
+									onChange={(value: number) => {
+										if (value != 0)
+											setPageCountEst(value)
+									}
+									}
+									value={pageCountEst}
+									minValue={5}
+									choices={[0, 5, 10, 15, 20, 25, 30, 35, 40]}
+								/>
+							</div>
+							<Explanation>
+								Rougghly {Math.round(pageCountEst / 3)} sections, {pageCountEst} pages of slides, and {Math.round(pageCountEst / 3)} minutes if you generate video.
+							</Explanation>
 						</div>
 					</div>
 				</Card>

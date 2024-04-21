@@ -66,7 +66,7 @@ const PricingComparison: React.FC<{
 		}
 
 		if (yearly)
-			amount = amount * 0.6;
+			amount = amount * 0.4;
 		else if (firstTime)  // only for monthly
 			amount = amount * 0.4;
 
@@ -86,8 +86,10 @@ const PricingComparison: React.FC<{
 			router.push('/signup');
 		}
 		if (tier === 'FREE') {
-			if (userTier === 'FREE')
+			if (userTier === 'FREE') {
 				toast.success('You are already on the free plan');
+				return;
+			}
 			toast.success('Your plan already includes this feature');
 		}
 		else if (userTier.includes('CANCELLED') || userTier === 'FREE') {
@@ -148,7 +150,7 @@ const PricingComparison: React.FC<{
 				isLeft={!yearly}
 				setIsLeft={(value: boolean) => setYearly(!value)}
 				leftText='Monthly'
-				rightText='Yearly (40% off)'
+				rightText='Yearly (60% off)'
 			/>
 			<div
 				data-w-id="a8590735-7e8f-bd41-a09e-37f58b801ed3"
@@ -185,7 +187,7 @@ const PricingComparison: React.FC<{
 					</div>
 					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className="brix---text-300-medium">
-							🔈 Generate slides scripts
+							🔈 Generate slide scripts
 						</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
@@ -340,7 +342,7 @@ const PricingComparison: React.FC<{
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">
-								🔈 Generate slides scripts
+								🔈 Generate slide scripts
 							</div>
 						</div>
 						<img
@@ -437,7 +439,7 @@ const PricingComparison: React.FC<{
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">
-								🔈 Generate slides scripts
+								🔈 Generate slide scripts
 							</div>
 						</div>
 						<img
@@ -498,7 +500,7 @@ const PricingComparison: React.FC<{
 
 			{userTier.includes('PRO') &&
 				<div className='text-gray-600 whitespace-nowrap mt-4'>
-					* Early users who purchased PRO plan before still has Unlimited credits under our <a href='terms'>fair usage</a> policy.
+					* Early users who purchased PRO plan before still have Unlimited credits under our <a href='terms'>fair usage</a> policy.
 				</div>}
 			{userTier.includes('PLUS') &&
 				<div className='text-gray-600 whitespace-nowrap mt-4'>

@@ -40,18 +40,30 @@ export const DraggableSlidesPreview: React.FC<{
 							index.toString() +
 							slides.length.toString()
 						} // force update when slide length changes
-						className={`w-[6rem] h-[4.5rem] lg:w-[8rem] lg:h-[6rem] rounded-md flex-shrink-0 cursor-move px-2 ` + (index===draggedOverSlideIndex ? 'mt-[2rem]' : '')}
+						className={`w-[6rem] h-[4.5rem] lg:w-[8rem] lg:h-[6rem] rounded-md flex-shrink-0 cursor-move px-2`}
 						onClick={() => gotoPage(index)}
 						ref={index === slideIndex ? ref : null}
 						draggable={index !== 0}
 						onDragStart={() => {
+							setSlideIndex(index);
 							setDraggedSlideIndex(index);
 						}}
 						onDragOver={(e) => {
+							if(index === -1)
+								return;
 							setDraggedOverSlideIndex(index)
 							e.preventDefault();
 						}}
+						onDragEnd={(e) => {
+							setDraggedOverSlideIndex(-1);
+							e.preventDefault();
+						}}
+						onDragLeave={(e) => {
+							setDraggedOverSlideIndex(-1);
+							e.preventDefault();
+						}}
 						onDrop={() => {
+							console.log('onDrop', index);
 							setDraggedOverSlideIndex(-1);
 							if (draggedSlideIndex !== -1 && index != 0) {
 								const newSlides = [...slides];
@@ -72,6 +84,7 @@ export const DraggableSlidesPreview: React.FC<{
 							isViewing={true}
 							templateDispatch={uneditableTemplateDispatch}
 							highlightBorder={slideIndex === index}
+							subHighlightBorder={draggedOverSlideIndex === index}
 							pageNumber={index + 1}
 						/>
 					</div>

@@ -40,6 +40,14 @@ export const useChatHistory = () => {
 		setChatHistory((prevChatHistory) => [...prevChatHistory, chat]);
 	};
 
+	const addEmojiToChatHistory = (index: number, emoji: string) => {
+		console.log('-- add emoji to chat history: ', { index, emoji });
+		const newChatHistory = [...chatHistory];
+		const newChat = { ...newChatHistory[index], emoji: emoji};
+		newChatHistory[index] = newChat;
+		setChatHistory(newChatHistory);
+	}
+
 	const clearChatHistory = () => {
 		console.log('-- clear chat history: ', { chatHistory });
 		setChatHistory([]);
@@ -63,5 +71,6 @@ export const useChatHistory = () => {
 		setRegenerateText,
 		isRegenerateSelected,
 		setIsRegenerateSelected,
+		addEmojiToChatHistory,
 	};
 };

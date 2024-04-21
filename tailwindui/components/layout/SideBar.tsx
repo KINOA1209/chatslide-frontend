@@ -17,8 +17,8 @@ import { usePathname } from 'next/navigation';
 import { Logo } from '../ui/logo';
 import { getBrand } from '@/utils/getHost';
 
-interface SideBarProps {}
-const SideBar = ({}: SideBarProps) => {
+interface SideBarProps { }
+const SideBar = ({ }: SideBarProps) => {
 	const [top, setTop] = useState<boolean>(true);
 	const { uid, credits, tier, userStatus } = useUser();
 	const router = useRouter();
@@ -86,7 +86,7 @@ const SideBar = ({}: SideBarProps) => {
 				<Modal
 					showModal={true}
 					canClose={false} // cannot close modal
-					setShowModal={() => {}} // cannot close modal
+					setShowModal={() => { }} // cannot close modal
 					title='Sign in to continue'
 					description='Session expired, you need to sign in again to continue'
 					onConfirm={() => router.push('/signup')}
@@ -96,17 +96,14 @@ const SideBar = ({}: SideBarProps) => {
 
 	return (
 		<header
-			className={`hidden sm:flex sticky left-0 top-0 ${
-				isSidebarOpen ? 'w-[10rem]' : 'w-[3rem]'
-			} h-[100vh] flex flex-col items-center justify-between z-30 bg-gradient-to-b from-Dark to-[#121212] bg-opacity-90 transition duration-300 ease-in-out ${
-				!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
-			}`}
+			className={`hidden sm:flex sticky left-0 top-0 ${isSidebarOpen ? 'w-[10rem]' : 'w-[3rem]'
+				} h-[100vh] flex flex-col items-center justify-between z-30 bg-gradient-to-b from-Dark to-[#121212] bg-opacity-90 transition duration-300 ease-in-out ${!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
+				}`}
 		>
 			{/* toggle sidebar button */}
 			<button
-				className={`rounded-full p-1.5 bg-Dark text-white absolute top-5 ${
-					isSidebarOpen ? 'left-[9rem]' : 'left-[2rem]'
-				} focus:outline-none`}
+				className={`rounded-full p-1.5 bg-Dark text-white absolute top-5 ${isSidebarOpen ? 'left-[9rem]' : 'left-[2rem]'
+					} focus:outline-none`}
 				onClick={toggleSidebar}
 			>
 				{isSidebarOpen ? <FaChevronLeft /> : <FaChevronRight />}
@@ -149,28 +146,36 @@ const SideBar = ({}: SideBarProps) => {
 			{/* credits and user studies */}
 			<div className='flex flex-col items-left justify-between'>
 				<div className='block py-1 text-sm text-white'>
-					{parseInt(credits) < 1000 && (
+					{parseInt(credits) < 200 && (
 						<a
 							href='/account'
-							className={`block py-1 text-sm text-green-400 ${
-								isSidebarOpen ? 'px-2' : 'px-0'
-							} rounded-lg hover:bg-gray-400`}
+							className={`block py-1 text-sm text-green-400 ${isSidebarOpen ? 'px-2' : 'px-0'
+								} rounded-lg hover:bg-gray-400`}
 							role='menuitem'
 						>
 							{'Missing credits?'}
 						</a>
 					)}
-					{credits !== 'Infinite' && (
-						<a
-							href='/account'
-							className={`block  py-1 text-sm text-white ${
-								isSidebarOpen ? 'px-2' : 'px-0'
+					{
+						credits != 'Unlimited' && tier.includes('LIFETIME') && isSidebarOpen && (
+							<a
+								href='/account#unlimited-upgrade'
+								className={`block py-1 text-sm text-green-400 ${isSidebarOpen ? 'px-2' : 'px-0'
+									} rounded-lg hover:bg-gray-400`}
+								role='menuitem'
+							>
+								{'Get unlimited'}
+							</a>
+						)
+					}
+					<a
+						href='/account'
+						className={`block  py-1 text-sm text-white ${isSidebarOpen ? 'px-2' : 'px-0'
 							} rounded-lg hover:bg-gray-400`}
-							role='menuitem'
-						>
-							{credits} ⭐️ {isSidebarOpen && 'Credits'}
-						</a>
-					)}
+						role='menuitem'
+					>
+						{credits} ⭐️ {isSidebarOpen && 'Credits'}
+					</a>
 					<div className={`w-fit ${isSidebarOpen ? 'px-2' : 'px-0'} py-1`}>
 						<BlueLabel>
 							{tier.split('_')[0]} {isSidebarOpen && 'Tier'}

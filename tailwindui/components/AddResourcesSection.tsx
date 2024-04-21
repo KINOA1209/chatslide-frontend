@@ -139,91 +139,89 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 	}, [selectedResources]);
 
 	return (
-		<Card>
-			<div id='SummaryStep-3'>
-				<div>
-					{isRequired ? (
-						<BigTitle>📚 Import Sources</BigTitle>
-					) : (
-						<BigTitle>📚 Supporting Sources</BigTitle>
-					)}
-					<Explanation>
-						{isRequired
-							? 'Add any sources that would support your topic. This could be online sources, files, or links.'
-							: 'To get started, use any sources that would support your topic. This could be online sources, files, or links.'}
-					</Explanation>
-				</div>
-
-				{/* search online */}
-				{setSearchOnlineScope && (
-					<div>
-						<Instruction>Which online sources you want to include?</Instruction>
-						<RadioButton
-							name='search_online'
-							options={searchOnlineOptions}
-							selectedValue={searchOnlineScope}
-							setSelectedValue={setSearchOnlineScope}
-							cols={4}
-						/>
-					</div>
+		<Card id='SummaryStep-3'>
+			<div>
+				{isRequired ? (
+					<BigTitle>📚 Import Sources</BigTitle>
+				) : (
+					<BigTitle>📚 Supporting Sources</BigTitle>
 				)}
+				<Explanation>
+					{isRequired
+						? 'Add any sources that would support your topic. This could be online sources, files, or links.'
+						: 'To get started, use any sources that would support your topic. This could be online sources, files, or links.'}
+				</Explanation>
+			</div>
 
-				{/* files */}
+			{/* search online */}
+			{setSearchOnlineScope && (
 				<div>
-					<Instruction>
-						What additional files do you want to include?
-					</Instruction>
-					<div
-						className={`w-full h-[150px] flex flex-col items-center justify-center border rounded-md border-2 border-gray-200 cursor-pointer 
+					<Instruction>Which online sources do you want to include?</Instruction>
+					<RadioButton
+						name='search_online'
+						options={searchOnlineOptions}
+						selectedValue={searchOnlineScope}
+						setSelectedValue={setSearchOnlineScope}
+						cols={4}
+					/>
+				</div>
+			)}
+
+			{/* files */}
+			<div>
+				<Instruction>
+					What additional files do you want to include?
+				</Instruction>
+				<div
+					className={`w-full h-[150px] flex flex-col items-center justify-center border rounded-md border-2 border-gray-200 cursor-pointer 
 						${isDragging ? 'bg-blue-100 border-blue-500' : ''}
 						${isUploading ? 'bg-gray-500 animate-pulse' : ''}`}
-						onDragEnter={handleDragEnter}
-						onDragOver={handleDragOver}
-						onDragLeave={handleDragLeave}
-						onDrop={handleDrop}
-						onClick={(e) => {
-							e.preventDefault();
-							setShowFileModal(true);
-						}}
-					>
-						<div className='flex flex-rol items-center gap-2'>
-							<FiFilePlus size={40} color='gray' />
-							<div className='flex flex-col items-center'>
-								<Instruction>
-									Drag files here or{' '}
-									<span className='text-blue-600'>Browse File</span>
-								</Instruction>
-								<Explanation>
-									<div className='text-center'>
-										Supports PDF, TXT, DOC, DOCX, PPT, PPTX
-									</div>
-								</Explanation>
-							</div>
+					onDragEnter={handleDragEnter}
+					onDragOver={handleDragOver}
+					onDragLeave={handleDragLeave}
+					onDrop={handleDrop}
+					onClick={(e) => {
+						e.preventDefault();
+						setShowFileModal(true);
+					}}
+				>
+					<div className='flex flex-rol items-center gap-2'>
+						<FiFilePlus size={40} color='gray' />
+						<div className='flex flex-col items-center'>
+							<Instruction>
+								Drag files here or{' '}
+								<span className='text-blue-600'>Browse File</span>
+							</Instruction>
+							<Explanation>
+								<div className='text-center'>
+									Supports PDF, TXT, DOC, DOCX, PPT, PPTX
+								</div>
+							</Explanation>
 						</div>
 					</div>
 				</div>
+			</div>
 
-				{/* links */}
-				<div>
-					<Instruction>
-						What additional online links do you want to include?
-					</Instruction>
-					<LinkInput
+			{/* links */}
+			<div>
+				<Instruction>
+					What additional online links do you want to include?
+				</Instruction>
+				<LinkInput
+					selectedResources={selectedResources}
+					setSelectedResources={setSelectedResources}
+				/>
+			</div>
+
+			{selectedResources.length > 0 && (
+				<div ref={selectedResourcesRef}>
+					<Instruction>Your selected sources:</Instruction>
+					<SelectedResourcesList
 						selectedResources={selectedResources}
-						setSelectedResources={setSelectedResources}
+						removeResourceAtIndex={removeResourceAtIndex}
 					/>
 				</div>
-
-				{selectedResources.length > 0 && (
-					<div ref={selectedResourcesRef}>
-						<Instruction>Your selected sources:</Instruction>
-						<SelectedResourcesList
-							selectedResources={selectedResources}
-							removeResourceAtIndex={removeResourceAtIndex}
-						/>
-					</div>
-				)}
-			</div>
+			)}
 		</Card>
 	);
 };

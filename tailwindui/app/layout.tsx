@@ -2,6 +2,7 @@ import './css/style.css';
 import React from 'react';
 import Script from 'next/script';
 import { getBrand, getOrigin, isChatslide } from '@/utils/getHost';
+import Abotify from '@/components/integrations/Abotify';
 
 interface MetadataOptions {
 	title?: string;
@@ -304,9 +305,9 @@ export default function RootLayout({
 				<div className='Simpleflex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip'>
 					{children}
 				</div>
+
+				<Abotify	/>
 			</body>
-
-
 		</html>
 	);
 }
