@@ -178,6 +178,7 @@ export default function Topic() {
 				`Please enter at least ${MIN_TOPIC_LENGTH} characters for topic.`,
 			);
 			setIsSubmitting(false);
+			setShowGenerationStatusModal(false);
 			return;
 		}
 
@@ -283,10 +284,12 @@ export default function Topic() {
 						project?.id,
 				);
 				setIsSubmitting(false);
+				setShowGenerationStatusModal(false);
 			}
 		} catch (error) {
 			console.error('Error:', error);
 			setIsSubmitting(false);
+			setShowGenerationStatusModal(false);
 		}
 	};
 
