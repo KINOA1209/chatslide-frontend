@@ -1,6 +1,6 @@
 'use client';
 
-import { DropDown } from '@/components/button/DrlambdaButton';
+import { DropDown, SmallBlueButton } from '@/components/button/DrlambdaButton';
 import { MdOutlineResetTv } from 'react-icons/md';
 import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
 import {
@@ -274,24 +274,9 @@ const TemplateSelector: React.FC<{
 										  colorPreviews[palette as PaletteKeys]
 										: colorPreviews[palette as PaletteKeys]
 								} // Provide a default value if customTemplateBgColor is undefined
+								resetColorPicker={resetColorPicker}
 							/>
-							{/* Reset button */}
-							<button
-								style={{
-									marginTop: '4px',
-									alignSelf: 'self-start',
-									width: '15rem',
-									height: '36px',
-									padding: '4px 8px 4px 8px',
-									borderRadius: '8px',
-									borderColor: '#e5e7eb',
-									borderWidth: '2px',
-									fontSize: '14px',
-								}}
-								onClick={resetColorPicker}
-							>
-								Reset
-							</button>
+							
 						</div>
 					}
 				</div>

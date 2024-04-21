@@ -1,14 +1,17 @@
+import { SmallBlueButton } from '@/components/button/DrlambdaButton';
 import React, { useEffect, useRef, useState } from 'react';
 import { ChromePicker, ColorResult } from 'react-color';
 import rgbHex from 'rgb-hex';
 interface ColorPickerProps {
 	onCustomColorChange: (color: string) => void;
 	initialColor: string; // Accept initial color prop
+	resetColorPicker: () => void;
 }
 
 export const ColorPicker: React.FC<ColorPickerProps> = ({
 	onCustomColorChange,
 	initialColor, // Receive initial color prop
+	resetColorPicker,
 }) => {
 	const [displayColorPicker, setDisplayColorPicker] = useState<boolean>(false);
 	const [color, setColor] = useState<string>(initialColor); // Initialize color with initialColor
@@ -30,6 +33,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
 		setColor(newHexColor);
 		onCustomColorChange(newHexColor); // Pass the color to the parent component
 	};
+
 	// Update the color state when the initialColor prop changes
 	useEffect(() => {
 		setColor(initialColor);
@@ -57,7 +61,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
 		border: '1px solid #CCCCCC',
 		display: 'flex',
 		// justifyContent: 'space-between',
-		alignItems: 'start',
+		alignItems: 'center',
 		cursor: 'pointer',
 		width: '15rem',
 		height: '36px',
@@ -117,12 +121,26 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
 				<div style={colorPreviewStyle}></div>
 				<span>{color}</span>
 			</div>
-			{displayColorPicker ? (
-				<div style={popover}>
-					<div style={cover} onClick={handleClose} />
-					<ChromePicker color={color} onChange={handleChange} />
-				</div>
-			) : null}
+			{displayColorPicker && (
+				<>
+					<div className='my-2 mx-1'>
+						<ChromePicker color={color} onChange={handleChange} />
+					</div>
+					{/* Reset button */}
+					<div className='grid grid-cols-2 gap-2'>
+						<SmallBlueButton
+							onClick={resetColorPicker}
+						>
+							Reset
+						</SmallBlueButton>
+						<SmallBlueButton
+							onClick={() => {setDisplayColorPicker(false);}}
+						>
+							Confirm
+						</SmallBlueButton>
+					</div>
+				</>
+			)}
 		</div>
 	);
 };
