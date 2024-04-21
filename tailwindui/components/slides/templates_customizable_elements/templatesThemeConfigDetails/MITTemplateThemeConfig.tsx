@@ -5,8 +5,8 @@ export const MITTemplateThemeConfig: {
 	[key in PaletteKeys]?: ThemeElements;
 } = {
 	Original: {
-		backgroundColorCover: 'bg-[#750014]',
-		backgroundColor: 'bg-[#F0F0F2]',
+		backgroundColorCover: '#750014',
+		backgroundColor: '#F0F0F2',
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold

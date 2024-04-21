@@ -5,8 +5,8 @@ export const BerkeleyTemplateThemeConfig: {
 	[key in PaletteKeys]?: ThemeElements;
 } = {
 	Original: {
-		backgroundColorCover: 'bg-[#003262]',
-		backgroundColor: 'bg-[#F0F2F5]',
+		backgroundColorCover: '#003262',
+		backgroundColor: '#F0F2F5',
 		// titleFont: 'text-3xl leading-[120%] font-sans font-bold whitespace-nowrap',
 		// titleFontColor: 'text-[#003262]',
 		titleFontCSS: {

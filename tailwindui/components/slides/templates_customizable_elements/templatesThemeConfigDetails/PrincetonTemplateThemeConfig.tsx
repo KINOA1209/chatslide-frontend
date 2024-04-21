@@ -5,8 +5,8 @@ export const PrincetonTemplateThemeConfig: {
 	[key in PaletteKeys]?: ThemeElements;
 } = {
 	Original: {
-		backgroundColorCover: 'bg-[#FF671F]',
-		backgroundColor: 'bg-[#F0F0F2]',
+		backgroundColorCover: '#FF671F',
+		backgroundColor: '#F0F0F2',
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold

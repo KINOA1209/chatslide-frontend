@@ -5,8 +5,8 @@ export const UChicagoTemplateThemeConfig: {
 	[key in PaletteKeys]?: ThemeElements;
 } = {
 	Original: {
-		backgroundColorCover: 'bg-[#800]',
-		backgroundColor: 'bg-[#F0F0F2]',
+		backgroundColorCover: '#800',
+		backgroundColor: '#F0F0F2',
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold

@@ -9,8 +9,8 @@ export const StanfordTemplateThemeConfig: {
 	[key in PaletteKeys]?: ThemeElements;
 } = {
 	Original: {
-		backgroundColorCover: 'bg-[#8C1515]',
-		backgroundColor: 'bg-[#F0E9E9]',
+		backgroundColorCover: '#8C1515',
+		backgroundColor: '#F0E9E9',
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold

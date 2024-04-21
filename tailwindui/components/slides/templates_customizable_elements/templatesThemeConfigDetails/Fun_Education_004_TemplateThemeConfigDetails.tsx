@@ -25,7 +25,7 @@ export const Fun_Education_004_TemplateThemeConfig: {
 			'/images/template/Fun_Education_004/BackgroundElementsCol_3_img_3.png',
 
 		backgroundColorCover: '#ACEAE1', //Lin: with a background image and shapes of color #01B99F, #4747F3, #FFC8FF, #FF846C, #FECEB7
-		backgroundColor: 'bg-[#FFFFFF]', //Lin: Text box color #E4F9F6, shapes of color #01B99F, #4747F3, #FFC8FF, #FF846C, #FECEB7
+		backgroundColor: '#FFFFFF', //Lin: Text box color #E4F9F6, shapes of color #01B99F, #4747F3, #FFC8FF, #FF846C, #FECEB7
 		// backgroundColorCoverImg0: '#ACEAE1',
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points

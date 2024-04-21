@@ -278,8 +278,9 @@ const TemplateSelector: React.FC<{
 							{/* Reset button */}
 							<button
 								style={{
+									marginTop: '4px',
 									alignSelf: 'self-start',
-									// width: '15rem',
+									width: '15rem',
 									height: '36px',
 									padding: '4px 8px 4px 8px',
 									borderRadius: '8px',

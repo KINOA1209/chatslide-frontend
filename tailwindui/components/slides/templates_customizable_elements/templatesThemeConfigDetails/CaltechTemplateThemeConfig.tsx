@@ -5,8 +5,8 @@ export const CaltechTemplateThemeConfig: {
 	[key in PaletteKeys]?: ThemeElements;
 } = {
 	Original: {
-		backgroundColorCover: 'bg-[#F25422]',
-		backgroundColor: 'bg-[#F0F0F2]',
+		backgroundColorCover: '#F25422',
+		backgroundColor: '#F0F0F2',
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold

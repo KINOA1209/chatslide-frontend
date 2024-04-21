@@ -31,16 +31,29 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
 		setColor(initialColor);
 	}, [initialColor]);
 
+	// Function to determine the brightness of a color
+	const getBrightness = (color: string) => {
+		const hexColor = color.substring(1); // Remove the '#' from the hex color
+		const rgbColor = parseInt(hexColor, 16); // Convert hex to RGB
+		const r = (rgbColor >> 16) & 255;
+		const g = (rgbColor >> 8) & 255;
+		const b = rgbColor & 255;
+		return (r * 299 + g * 587 + b * 114) / 1000; // Calculate brightness according to W3C formula
+	};
+
+	// Determine whether to use white or black font color based on color brightness
+	const fontColor = getBrightness(color) > 128 ? '#000000' : '#FFFFFF';
+
 	const buttonStyle: React.CSSProperties = {
 		// width: '200px',
 		// height: '40px',
-		backgroundColor: color,
-		color: '#FFFFFF',
+		// backgroundColor: color,
+		// color: fontColor, // Use dynamically determined font color
 		padding: '8px',
 		border: '1px solid #CCCCCC',
 		display: 'flex',
-		justifyContent: 'space-between',
-		alignItems: 'center',
+		// justifyContent: 'space-between',
+		alignItems: 'start',
 		cursor: 'pointer',
 		width: '15rem',
 		height: '36px',
@@ -51,8 +64,8 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
 	};
 
 	const colorPreviewStyle: React.CSSProperties = {
-		width: '20px',
-		height: '20px',
+		width: '16px',
+		height: '16px',
 		backgroundColor: color,
 		marginRight: '8px',
 	};

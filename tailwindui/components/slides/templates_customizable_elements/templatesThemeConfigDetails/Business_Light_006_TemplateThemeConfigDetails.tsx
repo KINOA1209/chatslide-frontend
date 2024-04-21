@@ -5,8 +5,8 @@ export const Business_Light_006_TemplateThemeConfig: {
 	[key in PaletteKeys]?: ThemeElements;
 } = {
 	Original: {
-		backgroundColorCover: 'bg-[#FFFFFF]',
-		backgroundColor: 'bg-[#FFFFFF]',
+		backgroundColorCover: '#FFFFFF',
+		backgroundColor: '#FFFFFF',
 		titleFontCSS: {
 			fontSize: '24pt',
 			fontWeight: 'normal',

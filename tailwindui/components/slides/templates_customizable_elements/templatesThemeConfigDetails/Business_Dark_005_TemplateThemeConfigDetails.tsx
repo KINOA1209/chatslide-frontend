@@ -24,8 +24,8 @@ export const Business_Dark_005_TemplateThemeConfig: {
 		backgroundUrlCol_3_img_3:
 			'/images/template/Business_Dark_005/BackgroundVisualElement.png',
 
-		backgroundColorCover: 'bg-[#06163E]',
-		backgroundColor: 'bg-[#06163E]',
+		backgroundColorCover: '#06163E',
+		backgroundColor: '#06163E',
 		titleFontCSS: {
 			fontSize: '24pt',
 			fontWeight: 'normal',

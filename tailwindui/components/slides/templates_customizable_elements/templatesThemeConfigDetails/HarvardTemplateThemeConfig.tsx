@@ -5,8 +5,8 @@ export const HarvardTemplateThemeConfig: {
 	[key in PaletteKeys]?: ThemeElements;
 } = {
 	Original: {
-		backgroundColorCover: 'bg-[#F0F0F2]',
-		backgroundColor: 'bg-[#F0F0F2]',
+		backgroundColorCover: '#F0F0F2',
+		backgroundColor: '#F0F0F2',
 		// titleFont:
 		//   "text-3xl font-normal font-['Georgia'] leading-[120%] whitespace-nowrap",
 		// titleFontColor: 'text-neutral-800 ',
