@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ChromePicker, ColorResult } from 'react-color';
 import rgbHex from 'rgb-hex';
 interface ColorPickerProps {
@@ -12,6 +12,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
 }) => {
 	const [displayColorPicker, setDisplayColorPicker] = useState<boolean>(false);
 	const [color, setColor] = useState<string>(initialColor); // Initialize color with initialColor
+	const colorPickerRef = useRef<HTMLDivElement>(null); // Reference to the color picker div
 
 	const handleClick = () => {
 		setDisplayColorPicker(!displayColorPicker);
@@ -74,10 +75,15 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
 	};
 
 	const popover: React.CSSProperties = {
-		position: 'absolute',
+		// position: 'absolute',
+		// zIndex: 2,
+		// top: '30px', // Adjusted to be below the button
+		// right: '450px', // Adjusted to be aligned with the button
+		position: 'fixed',
 		zIndex: 2,
-		top: '30px', // Adjusted to be below the button
-		right: '450px', // Adjusted to be aligned with the button
+		top: '40%',
+		left: '50%',
+		transform: 'translate(-50%, -50%)',
 	};
 
 	const cover: React.CSSProperties = {
@@ -88,8 +94,25 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
 		left: '0px',
 	};
 
+	// Event listener to close color picker when clicking outside of it
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (
+				colorPickerRef.current &&
+				!colorPickerRef.current.contains(event.target as Node)
+			) {
+				setDisplayColorPicker(false);
+			}
+		};
+
+		window.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			window.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, []);
+
 	return (
-		<div>
+		<div ref={colorPickerRef}>
 			<div style={buttonStyle} onClick={handleClick}>
 				<div style={colorPreviewStyle}></div>
 				<span>{color}</span>
