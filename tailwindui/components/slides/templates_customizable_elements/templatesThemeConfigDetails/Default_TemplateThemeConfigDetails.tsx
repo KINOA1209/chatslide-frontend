@@ -5,8 +5,8 @@ export const Default_TemplateThemeConfig: {
 	[key in PaletteKeys]?: ThemeElements;
 } = {
 	Original: {
-		backgroundColorCover: 'bg-[#FFFFFF]',
-		backgroundColor: 'bg-[#FFFFFF]',
+		backgroundColorCover: '#FFFFFF',
+		backgroundColor: '#FFFFFF',
 		// backgroundUrlCover: 'https://via.placeholder.com/1200x800',
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points

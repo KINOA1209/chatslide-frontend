@@ -8,8 +8,8 @@ export const ColumbiaTemplateThemeConfig: {
 		// color: '#1f2937',
 		// fontWeight: 'bold',
 		// fontSize: '27pt',
-		backgroundColorCover: 'bg-[#B9D9EB]',
-		backgroundColor: 'bg-[#B9D9EB]',
+		backgroundColorCover: '#B9D9EB',
+		backgroundColor: '#B9D9EB',
 		// titleFont: 'text-3xl font-bold font-creato-medium leading-[100%] ',
 		// titleFontColor: 'text-black',
 		titleFontCSS: {

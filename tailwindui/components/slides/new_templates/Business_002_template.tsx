@@ -117,7 +117,7 @@ export const Business_002_template = ({
 						: 'hidden'
 				} `}
 				style={{
-					backgroundColor: themeElements?.backgroundColorCoverImg0,
+					backgroundColor: themeElements.backgroundColorCover,
 				}}
 			>
 				{/* <div

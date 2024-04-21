@@ -24,8 +24,8 @@ export const Fun_Education_001_TemplateThemeConfig: {
 		backgroundUrlCol_3_img_3:
 			'/images/template/Fun_Education_001/BackgroundElementsCol_3_img_3.png',
 
-		backgroundColorCover: 'bg-[#FFFFFF]',
-		backgroundColor: 'bg-[#FFFFFF]',
+		backgroundColorCover: '#FFFFFF',
+		backgroundColor: '#FFFFFF',
 		titleFontCSS: {
 			fontSize: '24pt',
 			fontWeight: 'bold',

@@ -12,6 +12,7 @@ import {
 	loadLayoutConfigElements,
 } from '@/components/slides/SlidesHTML';
 import { TemplateKeys } from '../slideTemplates';
+import { useSlides } from '@/hooks/use-slides';
 export const Event_Report_010_template = ({
 	user_name,
 	title,
@@ -35,24 +36,21 @@ export const Event_Report_010_template = ({
 	isShowingLogo,
 	images_position,
 	palette,
+	themeElements,
+	layoutElements,
 }: MainSlideProps) => {
-	// useEffect(() => {
-	// 	console.log('selected color theme is ', palette, themeElements);
-	// });
+	const { customTemplateBgColor } = useSlides();
 	const ChosenLayoutNonCover =
 		layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
 	const ChosenLayoutCover =
 		layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
-	//   console.log('choosing layout option', ChosenLayout)
-	// Load customizable elements for the current template
-	const themeElements = loadCustomizableElements(
-		'Event_Report_010' as TemplateKeys,
-		palette as PaletteKeys,
-	);
-	const layoutConfigElements = loadLayoutConfigElements(
-		'Event_Report_010' as TemplateKeys,
-		layoutOptionCover as keyof typeof layoutOptions,
-	);
+
+	// useEffect(() => {
+	// 	console.log(
+	// 		'selected theme element backgroundColor is ',
+	// 		themeElements.backgroundColor,
+	// 	);
+	// }, [customTemplateBgColor]);
 
 	return (
 		<>
@@ -62,9 +60,9 @@ export const Event_Report_010_template = ({
 					!isCoverPage
 						? 'rounded-md w-full h-full bg-cover box-border border-none relative'
 						: 'hidden '
-				} ${themeElements.backgroundColor}`}
+				} `}
+				style={{ backgroundColor: themeElements.backgroundColor }}
 			>
-				{/* <hr className='border border-[#E7E9EB] w-full mt-[20px] mb-[12px]'></hr> */}
 				{/* background picture when user uploaded this  */}
 				{uploadedBackgroundImageUrl && (
 					<div style={{ ...uploadedBackgroundImgStyle }}>
@@ -92,7 +90,7 @@ export const Event_Report_010_template = ({
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
 					themeElements={themeElements}
-					layoutElements={layoutConfigElements}
+					layoutElements={layoutElements}
 					templateLogo={templateLogo}
 					charts={charts}
 					ischarts={ischarts}
@@ -108,16 +106,11 @@ export const Event_Report_010_template = ({
 					isCoverPage
 						? 'rounded-md w-full h-full bg-cover flex flex-row justify-start items-start box-border border-none relative'
 						: 'hidden'
-				} ${themeElements.backgroundColorCover}`}
-				// style={{
-				// 	backgroundColor: themeElements?.backgroundColorCoverImg0,
-				// }}
+				} `}
+				style={{
+					backgroundColor: themeElements.backgroundColorCover,
+				}}
 			>
-				{/* <div
-					style={{ fontSize: '40pt', fontFamily: 'Caveat', fontWeight: 700 }}
-				>
-					This is Caveat font
-				</div> */}
 				{/* background picture when user uploaded this  */}
 				{uploadedBackgroundImageUrl && (
 					<div style={{ ...uploadedBackgroundImgStyle }}>
@@ -145,7 +138,7 @@ export const Event_Report_010_template = ({
 					layoutOptionNonCover={layoutOptionNonCover}
 					layoutOptionCover={layoutOptionCover}
 					themeElements={themeElements}
-					layoutElements={layoutConfigElements}
+					layoutElements={layoutElements}
 					templateLogo={templateLogo}
 					charts={charts}
 					ischarts={ischarts}

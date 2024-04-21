@@ -8,8 +8,8 @@ export const JHUTemplateThemeConfig: {
 		// color: '#1f2937',
 		// fontWeight: 'bold',
 		// fontSize: '27pt',
-		backgroundColorCover: 'bg-[#002D72]',
-		backgroundColor: 'bg-[#F0F0F2]',
+		backgroundColorCover: '#002D72',
+		backgroundColor: '#F0F0F2',
 		// titleFont: 'text-3xl font-bold font-creato-medium leading-[100%] ',
 		// titleFontColor: 'text-black',
 		titleFontCSS: {

@@ -24,8 +24,8 @@ export const Fun_Vibrant_007_TemplateThemeConfig: {
 		backgroundUrlCol_3_img_3:
 			'/images/template/Fun_Vibrant_007/BackgroundElementsCol_3_img_3.png',
 
-		backgroundColorCover: 'bg-[#FFFFFF]',
-		backgroundColor: 'bg-[#FFFFFF]',
+		backgroundColorCover: '#FFFFFF',
+		backgroundColor: '#FFFFFF',
 		titleFontCSS: {
 			fontSize: '24pt',
 			fontWeight: 'bold',

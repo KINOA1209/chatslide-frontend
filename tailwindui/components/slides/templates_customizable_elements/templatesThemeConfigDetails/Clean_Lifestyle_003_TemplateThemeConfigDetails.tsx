@@ -24,7 +24,7 @@ export const Clean_Lifestyle_003_TemplateThemeConfig: {
 		backgroundUrlCol_3_img_3:
 			'/images/template/Clean_Lifestyle_003/BackgroundImg.png',
 		backgroundColorCover: '#FFFFFF',
-		backgroundColor: 'bg-[#FFFFFF]',
+		backgroundColor: '#FFFFFF',
 		// backgroundColorCoverImg0: '#000000',
 		// backgroundUrlCover: 'https://via.placeholder.com/1200x800',
 		titleFontCSS: {

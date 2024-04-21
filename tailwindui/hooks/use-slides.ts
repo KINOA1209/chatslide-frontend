@@ -29,6 +29,18 @@ const useIsShowingLogo = createBearStore<boolean>()(
 	false,
 );
 
+const useCustomTemplateBgColor = createBearStore<string | undefined>()(
+	'customTemplateBgColor',
+	'',
+	true,
+);
+
+const useHasSelectedCustomTemplateBgColor = createBearStore<boolean>()(
+	'hasSelectedCustomTemplateBgColor',
+	false,
+	true,
+);
+
 export enum SaveStatus {
 	UpToDate,
 	Saving,
@@ -74,6 +86,21 @@ export const useSlides = () => {
 	const { updateProject, bulkUpdateProject } = useProject();
 	const { saveStatus, setSaveStatus } = useSaveStatus();
 	const { clearChatHistory } = useChatHistory();
+	const { customTemplateBgColor, setCustomTemplateBgColor } =
+		useCustomTemplateBgColor();
+	const {
+		hasSelectedCustomTemplateBgColor,
+		setHasSelectedCustomTemplateBgColor,
+	} = useHasSelectedCustomTemplateBgColor();
+
+	const setCustomBgColorForTemplate = (color: string) => {
+		setCustomTemplateBgColor(color);
+		// setHasSelectedCustomTemplateBgColor(true);
+	};
+
+	const toggleHasSelectedCustomTemplateBgColor = (selectedState: boolean) => {
+		setHasSelectedCustomTemplateBgColor(selectedState);
+	};
 
 	// to control show or not show logo
 
@@ -119,7 +146,7 @@ export const useSlides = () => {
 		updateVersion();
 		updateSlideHistory(newSlides);
 		debouncedSyncSlides(newSlides, true);
-	}
+	};
 
 	const updateLogoUrl = (logo_url: string) => {
 		const newSlides = slides.map((slide, index) => {
@@ -373,6 +400,8 @@ export const useSlides = () => {
 		} as Project);
 		setSlides(newSlides);
 
+		// setHasSelectedCustomTemplateBgColor; // if select a theme then erase custom color
+
 		updateVersion();
 		updateSlideHistory(newSlides);
 		debouncedSyncSlides(newSlides, true);
@@ -493,5 +522,9 @@ export const useSlides = () => {
 		setIsPresenting,
 		setSlides,
 		debouncedSyncSlides,
+		customTemplateBgColor,
+		hasSelectedCustomTemplateBgColor,
+		setCustomBgColorForTemplate,
+		toggleHasSelectedCustomTemplateBgColor,
 	};
 };

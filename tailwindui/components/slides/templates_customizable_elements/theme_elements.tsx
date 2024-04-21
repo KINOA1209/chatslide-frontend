@@ -49,6 +49,7 @@ export type ThemeElements = {
 	titleAndSubtopicBoxBackgroundColor?: string;
 	headFontAlignment?: React.CSSProperties;
 	userNameAlignment?: React.CSSProperties;
+	isGradientBackground?: boolean;
 };
 
 export type ThemeConfig = {

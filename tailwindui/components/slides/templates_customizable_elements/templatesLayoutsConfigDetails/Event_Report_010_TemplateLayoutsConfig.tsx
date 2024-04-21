@@ -71,7 +71,7 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 			position: 'absolute',
 			top: '0%',
 			left: '0%',
-			textAlign: 'center',
+			textAlign: 'left',
 		},
 		columnCSS: {
 			// paddingTop: '4rem', // Equivalent to pt-[1rem]

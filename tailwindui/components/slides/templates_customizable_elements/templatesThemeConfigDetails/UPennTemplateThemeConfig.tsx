@@ -5,8 +5,8 @@ export const UPennTemplateThemeConfig: {
 	[key in PaletteKeys]?: ThemeElements;
 } = {
 	Original: {
-		backgroundColorCover: 'bg-[#011F5B]',
-		backgroundColor: 'bg-[#F0F0F2]',
+		backgroundColorCover: '#011F5B',
+		backgroundColor: '#F0F0F2',
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
 			fontWeight: 'bold', // font-bold

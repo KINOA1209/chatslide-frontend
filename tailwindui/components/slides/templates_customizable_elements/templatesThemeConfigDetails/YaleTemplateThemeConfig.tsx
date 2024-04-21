@@ -5,8 +5,8 @@ export const YaleTemplateThemeConfig: {
 	[key in PaletteKeys]?: ThemeElements;
 } = {
 	Original: {
-		backgroundColorCover: 'bg-[#03346A]',
-		backgroundColor: 'bg-[#F0F0F2]',
+		backgroundColorCover: '#03346A',
+		backgroundColor: '#F0F0F2',
 
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points

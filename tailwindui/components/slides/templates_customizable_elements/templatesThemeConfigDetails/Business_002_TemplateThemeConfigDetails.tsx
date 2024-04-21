@@ -7,9 +7,10 @@ export const Business_002_TemplateThemeConfig: {
 	Original: {
 		backgroundUrlCoverImg0:
 			'/images/template/Business_002/cover_img_0_layout/BackgroundImg.png',
-		backgroundColorCover: '',
-		backgroundColor: 'bg-[#FFFFFF]',
-		backgroundColorCoverImg0: '#2E2E2E',
+		backgroundColorCover: '#2E2E2E',
+		backgroundColor: '#FFFFFF',
+		titleAndSubtopicBoxBackgroundColor: '#DEFF56',
+		// backgroundColorCoverImg0: '#2E2E2E',
 		titleFontCSS: {
 			fontSize: '24pt',
 			fontWeight: 'bold',

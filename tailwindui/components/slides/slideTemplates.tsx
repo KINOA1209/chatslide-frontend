@@ -2,27 +2,29 @@
 
 import { useEffect, useMemo, useState } from 'react';
 // import { TemplatesLogos } from './templates_customizable_elements/Templates_logos';
-import { Berkeley_school_template } from './school_templates/Berkeley_school_template';
-import { Harvard_school_template } from './school_templates/Harvard_school_template';
-import { Stanford_school_template } from './school_templates/Stanford_school_template';
-import { MIT_school_template } from './school_templates/MIT_school_template';
-import { Princeton_school_template } from './school_templates/Princeton_University_school_template';
-import { Caltech_school_template } from './school_templates/Caltech_school_template';
-import { Columbia_school_template } from './school_templates/Columbia_University_school_template';
-import { JHU_school_template } from './school_templates/Johns_Hopkins_University_school_template';
-import { University_of_Chicago_school_template } from './school_templates/University_of_Chicago_school_template';
-import { Yale_school_template } from './school_templates/Yale_school_template';
-import { UPenn_school_template } from './school_templates/University_of_Pennsylvania_school_template';
+// import { Berkeley_school_template } from './school_templates/Berkeley_school_template';
+// import { Harvard_school_template } from './school_templates/Harvard_school_template';
+// import { Stanford_school_template } from './school_templates/Stanford_school_template';
+// import { MIT_school_template } from './school_templates/MIT_school_template';
+// import { Princeton_school_template } from './school_templates/Princeton_University_school_template';
+// import { Caltech_school_template } from './school_templates/Caltech_school_template';
+// import { Columbia_school_template } from './school_templates/Columbia_University_school_template';
+// import { JHU_school_template } from './school_templates/Johns_Hopkins_University_school_template';
+// import { University_of_Chicago_school_template } from './school_templates/University_of_Chicago_school_template';
+// import { Yale_school_template } from './school_templates/Yale_school_template';
+// import { UPenn_school_template } from './school_templates/University_of_Pennsylvania_school_template';
 
-import { Default } from './new_templates/Default_template';
-import { Fun_Education_001_template } from './new_templates/Fun_Education_001_templates';
-import { Clean_Lifestyle_003_template } from './new_templates/Clean_Lifestyle_003_template';
-import { Fun_Education_004_template } from './new_templates/Fun_Education_004_template';
-import { Business_002_template } from './new_templates/Business_002_template';
-import { Fun_Vibrant_007_template } from './new_templates/Fun_Vibrant_007_template';
-import { Business_Light_006_template } from './new_templates/Business_Light_006_template';
-import { Simplistic_008_template } from './new_templates/Simplistic_008_template';
-import { Event_Report_010_template } from './new_templates/Event_Report_010_template';
+// import { Default } from './new_templates/Default_template';
+// import { Fun_Education_001_template } from './new_templates/Fun_Education_001_templates';
+// import { Clean_Lifestyle_003_template } from './new_templates/Clean_Lifestyle_003_template';
+// import { Fun_Education_004_template } from './new_templates/Fun_Education_004_template';
+// import { Business_002_template } from './new_templates/Business_002_template';
+// import { Fun_Vibrant_007_template } from './new_templates/Fun_Vibrant_007_template';
+// import { Business_Light_006_template } from './new_templates/Business_Light_006_template';
+// import { Simplistic_008_template } from './new_templates/Simplistic_008_template';
+// import { Event_Report_010_template } from './new_templates/Event_Report_010_template';
+// import { Business_Dark_005_template } from './new_templates/Business_Dark_005_template';
+// import { New_Education_009_template } from './new_templates/New_Education_009_template';
 import { LayoutKeys } from './slideLayout';
 import { layoutOptions } from './slideLayout';
 import {
@@ -33,9 +35,202 @@ import Image from 'next/image';
 import { SlideKeys } from '@/models/Slide';
 import Chart from '@/models/Chart';
 import ImagesPosition from '@/models/ImagesPosition';
-import { Business_Dark_005_template } from './new_templates/Business_Dark_005_template';
-import { New_Education_009_template } from './new_templates/New_Education_009_template';
 
+import { ThemeElements } from './templates_customizable_elements/theme_elements';
+import { LayoutElements } from './templates_customizable_elements/layout_elements';
+import { useSlides } from '@/hooks/use-slides';
+
+export const generateTemplate = (templateName: string) => {
+	return ({
+		user_name,
+		title,
+		topic,
+		subtopic,
+		content,
+		imgs,
+		update_callback,
+		canEdit,
+		// autoSave,
+		isCoverPage,
+		layoutOptionNonCover,
+		layoutOptionCover,
+		templateLogo,
+		uploadedLogoUrl,
+		uploadedBackgroundImageUrl,
+		charts,
+		ischarts,
+		handleSlideEdit,
+		currentSlideIndex,
+		isShowingLogo,
+		images_position,
+		palette,
+		themeElements,
+		layoutElements,
+	}: MainSlideProps) => {
+		const { customTemplateBgColor } = useSlides();
+		const ChosenLayoutNonCover =
+			layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
+		const ChosenLayoutCover =
+			layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
+
+		// useEffect(() => {
+		// 	console.log(
+		// 		'selected theme element backgroundColor is ',
+		// 		themeElements.backgroundColor,
+		// 	);
+		// }, [customTemplateBgColor]);
+
+		return (
+			<>
+				{/* for not-cover page slides */}
+				<div
+					className={`${
+						!isCoverPage
+							? 'rounded-md w-full h-full bg-cover box-border border-none relative'
+							: 'hidden '
+					} `}
+					style={{
+						backgroundImage: themeElements.isGradientBackground
+							? themeElements.backgroundColor
+							: undefined,
+						backgroundColor: !themeElements.isGradientBackground
+							? themeElements.backgroundColor
+							: undefined,
+					}}
+				>
+					{/* background picture when user uploaded this  */}
+					{uploadedBackgroundImageUrl && (
+						<div style={{ ...uploadedBackgroundImgStyle }}>
+							<Image
+								style={{ objectFit: 'cover', height: '100%' }}
+								width={960}
+								height={540}
+								src={`${uploadedBackgroundImageUrl}`}
+								alt='Background Image'
+								unoptimized={true}
+							/>
+						</div>
+					)}
+					<ChosenLayoutNonCover
+						content={content}
+						user_name={user_name}
+						title={title}
+						topic={topic}
+						subtopic={subtopic}
+						imgs={imgs}
+						update_callback={update_callback}
+						canEdit={canEdit}
+						// autoSave={autoSave}
+						isCoverPage={isCoverPage}
+						layoutOptionNonCover={layoutOptionNonCover}
+						layoutOptionCover={layoutOptionCover}
+						themeElements={themeElements}
+						layoutElements={layoutElements}
+						templateLogo={templateLogo}
+						charts={charts}
+						ischarts={ischarts}
+						handleSlideEdit={handleSlideEdit}
+						currentSlideIndex={currentSlideIndex}
+						isShowingLogo={isShowingLogo}
+						images_position={images_position}
+					></ChosenLayoutNonCover>
+				</div>
+				{/* for cover page */}
+				<div
+					className={`${
+						isCoverPage
+							? 'rounded-md w-full h-full bg-cover flex flex-row justify-start items-start box-border border-none relative'
+							: 'hidden'
+					} `}
+					style={{
+						backgroundImage: themeElements.isGradientBackground
+							? themeElements.backgroundColorCover
+							: undefined,
+						backgroundColor: !themeElements.isGradientBackground
+							? themeElements.backgroundColorCover
+							: undefined,
+					}}
+				>
+					{/* background picture when user uploaded this  */}
+					{uploadedBackgroundImageUrl && (
+						<div style={{ ...uploadedBackgroundImgStyle }}>
+							<Image
+								style={{ objectFit: 'cover', height: '100%' }}
+								width={960}
+								height={540}
+								src={`${uploadedBackgroundImageUrl}`}
+								alt='Background Image'
+								unoptimized={true}
+							/>
+						</div>
+					)}
+					<ChosenLayoutCover
+						content={content}
+						user_name={user_name}
+						title={title}
+						topic={topic}
+						subtopic={subtopic}
+						imgs={imgs}
+						update_callback={update_callback}
+						canEdit={canEdit}
+						// autoSave={autoSave}
+						isCoverPage={isCoverPage}
+						layoutOptionNonCover={layoutOptionNonCover}
+						layoutOptionCover={layoutOptionCover}
+						themeElements={themeElements}
+						layoutElements={layoutElements}
+						templateLogo={templateLogo}
+						charts={charts}
+						ischarts={ischarts}
+						handleSlideEdit={handleSlideEdit}
+						currentSlideIndex={currentSlideIndex}
+						isShowingLogo={isShowingLogo}
+						images_position={images_position}
+					></ChosenLayoutCover>
+				</div>
+			</>
+		);
+	};
+};
+
+// generate all templates
+
+const Stanford_school_template = generateTemplate('Stanford_school_template');
+const Berkeley_school_template = generateTemplate('Berkeley_school_template');
+const Harvard_school_template = generateTemplate('Harvard_school_template');
+const MIT_school_template = generateTemplate('MIT_school_template');
+const Princeton_school_template = generateTemplate('Princeton_school_template');
+const Caltech_school_template = generateTemplate('Caltech_school_template');
+const Columbia_school_template = generateTemplate('Columbia_school_template');
+const JHU_school_template = generateTemplate('JHU_school_template');
+const University_of_Chicago_school_template = generateTemplate(
+	'University_of_Chicago_school_template',
+);
+const Yale_school_template = generateTemplate('Yale_school_template');
+const UPenn_school_template = generateTemplate('UPenn_school_template');
+const Default = generateTemplate('Default');
+const Fun_Education_001_template = generateTemplate(
+	'Fun_Education_001_template',
+);
+const Business_002_template = generateTemplate('Business_002_template');
+const Clean_Lifestyle_003_template = generateTemplate(
+	'Clean_Lifestyle_003_template',
+);
+const Fun_Education_004_template = generateTemplate(
+	'Fun_Education_004_template',
+);
+const Business_Dark_005_template = generateTemplate(
+	'Business_Dark_005_template',
+);
+const Business_Light_006_template = generateTemplate(
+	'Business_Light_006_template',
+);
+const Fun_Vibrant_007_template = generateTemplate('Fun_Vibrant_007_template');
+const Simplistic_008_template = generateTemplate('Simplistic_008_template');
+const New_Education_009_template = generateTemplate(
+	'New_Education_009_template',
+);
+const Event_Report_010_template = generateTemplate('Event_Report_010_template');
 export interface MainSlideProps {
 	user_name: JSX.Element;
 	title: JSX.Element;
@@ -65,6 +260,8 @@ export interface MainSlideProps {
 	images_position: ImagesPosition[];
 	palette?: PaletteKeys;
 	template?: TemplateKeys;
+	themeElements: ThemeElements;
+	layoutElements: LayoutElements;
 }
 
 // deprecated
@@ -125,6 +322,7 @@ export type PaletteKeys =
 	| 'Saffron'
 	| 'Feta'
 	| 'Catskill White'
+	| 'Customize'
 	| '';
 
 // add template keys here

@@ -14,8 +14,8 @@ export const New_Education_009_TemplateThemeConfig: {
 	[key in PaletteKeys]?: ThemeElements;
 } = {
 	'Ecru White': {
-		backgroundColorCover: 'bg-[#F5F1E2]',
-		backgroundColor: 'bg-[#F5F1E2]',
+		backgroundColorCover: '#F5F1E2',
+		backgroundColor: '#F5F1E2',
 		headFontAlignment: {
 			textAlign: 'center',
 		},
@@ -70,8 +70,8 @@ export const New_Education_009_TemplateThemeConfig: {
 		},
 	},
 	'Shark Black': {
-		backgroundColorCover: 'bg-[#272A2D]',
-		backgroundColor: 'bg-[#272A2D]',
+		backgroundColorCover: '#272A2D',
+		backgroundColor: '#272A2D',
 		headFontAlignment: {
 			textAlign: 'center',
 		},
@@ -126,8 +126,8 @@ export const New_Education_009_TemplateThemeConfig: {
 		},
 	},
 	'Moon Mist': {
-		backgroundColorCover: 'bg-[#DDDFD2]',
-		backgroundColor: 'bg-[#DDDFD2]',
+		backgroundColorCover: '#DDDFD2',
+		backgroundColor: '#DDDFD2',
 		headFontAlignment: {
 			textAlign: 'center',
 		},
@@ -182,8 +182,8 @@ export const New_Education_009_TemplateThemeConfig: {
 		},
 	},
 	'Regent St Blue': {
-		backgroundColorCover: 'bg-[#ACC9E0]',
-		backgroundColor: 'bg-[#ACC9E0]',
+		backgroundColorCover: '#ACC9E0',
+		backgroundColor: '#ACC9E0',
 		headFontAlignment: {
 			textAlign: 'center',
 		},
