@@ -151,7 +151,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 		const url = `/api/${type}?foldername=${project.foldername}&filename=slides.${type}`;
 		const message = (
 			<div>
-				Download should start. If you do not see it, click <a href={url} target="_blank" >this</a>.
+				Download should start now. If you do not see it, click <a href={url} target="_blank" className='text-blue-600' >this</a>.
 			</div>
 		);
 		toast.success(message, {
