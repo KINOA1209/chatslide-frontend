@@ -88,6 +88,16 @@ export const BrandingButton: React.FC<{
 					}}
 			/>
 			<Instruction>
+				Change branding color on 
+				<div className='text-blue-600 cursor-pointer'
+					onClick={() => {
+						setShowModal(false);
+						document.dispatchEvent(new Event('change_template'));
+					}}
+				>template card.</div>
+			</Instruction>
+
+			<Instruction>
 				<div className='text-blue-600 cursor-pointer'
 					onClick={() => {
 						if(!isPaidUser){
