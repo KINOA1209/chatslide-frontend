@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ChromePicker, ColorResult } from 'react-color';
-
+import rgbHex from 'rgb-hex';
 interface ColorPickerProps {
 	onCustomColorChange: (color: string) => void;
 	initialColor: string; // Accept initial color prop
@@ -22,7 +22,10 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
 	};
 
 	const handleChange = (newColor: ColorResult) => {
-		const newHexColor = newColor.hex;
+		const newRgbColor = newColor.rgb;
+
+		const newHexColor =
+			'#' + rgbHex(newRgbColor.r, newRgbColor.g, newRgbColor.b, newRgbColor.a);
 		setColor(newHexColor);
 		onCustomColorChange(newHexColor); // Pass the color to the parent component
 	};
