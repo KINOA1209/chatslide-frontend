@@ -186,6 +186,9 @@ const Chats: React.FC<ChatsProps> = ({
 			const successMessage = addSuccessMessage(`✌️ Thank you for your feedback!`)
 			addChatHistory(successMessage)
 		} else if (emoji === '👎') {
+			const undoMessage = addSuccessMessage('↩ You can say "undo" to undo the last action. Or click the button in the tool bar.');
+			addChatHistory(undoMessage);
+
 			const errorMessage = addChoicesMessage('🤕 Sorry to hear that. May I know what went wrong?',
 				[
 					['Assistant did not understand my request'],
@@ -194,7 +197,7 @@ const Chats: React.FC<ChatsProps> = ({
 					['Others']
 				],
 				null)
-			addChatHistory(errorMessage)
+			addChatHistory(errorMessage);
 		}
 	}
 
