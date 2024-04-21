@@ -400,9 +400,7 @@ export default function Account() {
 					</div>
 				</Card>
 
-				<div id='unlimited-upgrade'>
-					<UnlimitedUpgrade />
-				</div>
+				<UnlimitedUpgrade />
 
 				<Card>
 					<BigTitle>
