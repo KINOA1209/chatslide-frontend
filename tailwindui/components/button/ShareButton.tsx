@@ -153,7 +153,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 					</div>
 				</div>
 
-				{!isSocialPost && (
+				{!isSocialPost && share && (
 					<div>
 						<Instruction>Embed this Page</Instruction>
 						<Explanation>
