@@ -62,7 +62,7 @@ const TemplateSelector: React.FC<{
 	const {
 		hasSelectedCustomTemplateBgColor,
 		customTemplateBgColor,
-		setCustomBgColorForTemplate,
+		updateCustomBgColorForTemplate,
 		toggleHasSelectedCustomTemplateBgColor,
 	} = useSlides();
 	type OptionType = { value: PaletteKeys; label: JSX.Element };
@@ -73,7 +73,7 @@ const TemplateSelector: React.FC<{
 	const [resettingColor, setResettingColor] = useState(false);
 	const handleCustomTemplateBgColorChange = (color: string) => {
 		// setSelectedCustomTemplateBgColor(color);
-		setCustomBgColorForTemplate(color);
+		updateCustomBgColorForTemplate(color);
 		toggleHasSelectedCustomTemplateBgColor(true);
 		console.log('SelectedCustomTemplateBgColor:', customTemplateBgColor);
 	};
@@ -121,7 +121,7 @@ const TemplateSelector: React.FC<{
 	};
 
 	const resetColorPicker = () => {
-		setCustomBgColorForTemplate(colorPreviews[palette as PaletteKeys]);
+		updateCustomBgColorForTemplate(colorPreviews[palette as PaletteKeys]);
 		// Reset hasSelectedCustomTemplateBgColor to false
 		toggleHasSelectedCustomTemplateBgColor(false);
 	};

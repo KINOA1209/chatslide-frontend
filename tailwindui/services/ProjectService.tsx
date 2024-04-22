@@ -245,6 +245,7 @@ class ProjectService {
 			slide.logo = slideData.logo;
 			slide.logo_url = slideData.logo_url || '';
 			slide.background_url = slideData.background_url || '';
+			slide.background_color = slideData.background_color || '';
 			// slide.show_logo = slideData.hasOwnProperty('show_logo')
 			// 	? slideData.show_logo
 			// 	: true;

@@ -251,7 +251,7 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 	const {
 		slides,
 		hasSelectedCustomTemplateBgColor,
-		setCustomBgColorForTemplate,
+		updateCustomBgColorForTemplate,
 		customTemplateBgColor,
 	} = useSlides();
 	const { changeTemplateAndPalette } = useSlides();

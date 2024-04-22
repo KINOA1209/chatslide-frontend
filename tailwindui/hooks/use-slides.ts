@@ -93,8 +93,17 @@ export const useSlides = () => {
 		setHasSelectedCustomTemplateBgColor,
 	} = useHasSelectedCustomTemplateBgColor();
 
-	const setCustomBgColorForTemplate = (color: string) => {
+	const updateCustomBgColorForTemplate = (color: string) => {
 		setCustomTemplateBgColor(color);
+
+		// update slide.background_color for all pages
+
+		const newSlides = slides.map((slide, index) => {
+			return { ...slide, background_color: color };
+		});
+		setSlides(newSlides);
+		updateSlideHistory(newSlides);
+		debouncedSyncSlides(newSlides, true);
 		// setHasSelectedCustomTemplateBgColor(true);
 	};
 
@@ -416,6 +425,9 @@ export const useSlides = () => {
 		setSlidesHistoryIndex(0);
 		clearChatHistory();
 		setIsPresenting(false);
+		setHasSelectedCustomTemplateBgColor(slides?.[0]?.background_color ? true : false);
+		setCustomTemplateBgColor(slides?.[0]?.background_color || '');
+		
 		slidesStatus = SlidesStatus.Inited;
 	};
 
@@ -524,7 +536,7 @@ export const useSlides = () => {
 		debouncedSyncSlides,
 		customTemplateBgColor,
 		hasSelectedCustomTemplateBgColor,
-		setCustomBgColorForTemplate,
+		updateCustomBgColorForTemplate,
 		toggleHasSelectedCustomTemplateBgColor,
 	};
 };

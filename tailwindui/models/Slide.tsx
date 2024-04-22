@@ -65,6 +65,7 @@ export default class Slide {
 	logo: string; // enum for school tempaltes, if user has custom logo, then use logo_url
 	logo_url?: string; // overwrites logo if present
 	background_url?: string;
+	background_color?: string;  // hex color with the #, 8 digit with transparency, will be rendered on top of the background_url
 	transcript?: string;
 	additional_images?: string[];
 	palette: PaletteKeys;

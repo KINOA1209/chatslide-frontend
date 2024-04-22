@@ -77,7 +77,7 @@ export const templateDispatch = (
 	// }, []);
 	const {
 		customTemplateBgColor,
-		setCustomBgColorForTemplate,
+		updateCustomBgColorForTemplate,
 		hasSelectedCustomTemplateBgColor,
 	} = useSlides();
 	const { isPaidUser, token } = useUser();
@@ -298,9 +298,9 @@ export const templateDispatch = (
 		axis: { x: '', y: '' },
 	}));
 
-	useEffect(() => {
-		console.log('current theme element is', themeElements.backgroundColorCover);
-	});
+	// useEffect(() => {
+	// 	console.log('current theme element is', themeElements.backgroundColorCover);
+	// });
 
 	return (
 		<Template
