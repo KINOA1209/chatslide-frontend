@@ -3,10 +3,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ResourceItem } from '@/components/ui/ResourceItem';
 import Project from '@/models/Project';
-import { FaPhotoVideo, FaRegClone } from 'react-icons/fa';
 import Image from 'next/image';
 import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
-import { LuTrash2 } from 'react-icons/lu';
 import { CloneButton } from '@/components/button/CloneButton';
 import Link from 'next/link';
 import ShareButton from '@/components/button/ShareButton';
@@ -26,6 +24,7 @@ import causalTopicThumbnail from '@/public/images/socialpost/casual_topic.png';
 import readingNotesThumbnail from '@/public/images/socialpost/reading_notes.png';
 import seriousSubjectThumbnail from '@/public/images/socialpost/serious_subject.png';
 import { isChatslide } from '@/utils/getHost';
+import { useRouter } from 'next/navigation';
 // import ExportToPdfButton from '@/components/slides/ExportButton';
 const ExportToPdfButton = dynamic(
 	() => import('@/components/slides/ExportButton'), // Path to your ExportToPdfButton component
@@ -102,6 +101,7 @@ const ProjectItem: React.FC<{
 		const [showCloneModal, setShowCloneModal] = useState(false); // Define state in the parent component
 		const [showShareModal, setShowShareModal] = useState(false);
 		const [showExportToPdfModal, setShowExportToPdfModal] = useState(false); // Define state in the export
+		const router = useRouter();
 		// const exportSlidesRef = useRef<HTMLDivElement>(null);
 		const toggleDropdown = () => {
 			setIsDropdownVisible((prev) => !prev);
@@ -116,10 +116,6 @@ const ProjectItem: React.FC<{
 		const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
 			event.currentTarget.style.background = 'transparent';
 		};
-
-		useEffect(() => {
-			// console.log(project);
-		}, []);
 
 		return (
 			<React.Fragment key={project.id}>
@@ -383,7 +379,10 @@ const ProjectItem: React.FC<{
 											<button
 												className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'
 												onClick={() => {
-													setShowExportToPdfModal(true);
+													if (project.content_type === 'presentation')
+														setShowExportToPdfModal(true);
+													else 
+														router.push(`/project/${project.id}`);
 												}} // Toggle showCloneModal in the parent component
 												style={{
 													display: 'flex',
