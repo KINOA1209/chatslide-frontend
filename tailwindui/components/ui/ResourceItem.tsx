@@ -21,7 +21,7 @@ export const ResourceIcon: React.FC<{
 	resource: Resource;
 	contain?: boolean;
 }> = ({ resource, contain = false }) => {
-	console.log('resource.file_extension is', resource.file_extension);
+	// console.log('resource.file_extension is', resource.file_extension);
 	if (!resource.thumbnail_url) {
 		return (
 			<div className='p-[10px]'>

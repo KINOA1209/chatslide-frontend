@@ -63,6 +63,17 @@ const getAudienceFromSceario = (scenarioType: string) => {
 	)?.audience || 'Business_Clients';
 };
 
+export function formatName(name: string, isUrl: boolean = false) {
+	// remove file extension
+	if (!isUrl)
+		name = name.replace(/\.[^/.]+$/, '');
+
+	if (name.length > MAX_TOPIC_LENGTH) {
+		return name.slice(0, MAX_TOPIC_LENGTH - 3) + '...';
+	}
+	return name;
+}
+
 export default function Topic() {
 	const {
 		isTourActive,
@@ -130,24 +141,14 @@ export default function Topic() {
 	useEffect(() => {
 		if (selectedResources.length > 0) {
 			if (topic.length == 0) {
-				setTopic(formatName(selectedResources[0].name));
+				console.log('setting topic for resource', selectedResources[0]);
+				setTopic(formatName(selectedResources[0].name,
+					['url', 'webpage', 'youtube'].includes(selectedResources[0].type)));
 			}
 		}
 
-		console.log('selectedResources', selectedResources);
+		// console.log('selectedResources', selectedResources);
 	}, [selectedResources]);
-
-	function formatName(name: string) {
-		// remove file extension
-		name = name.replace(/\.[^/.]+$/, '');
-
-		if (name.length > MAX_TOPIC_LENGTH) {
-			return name.slice(0, MAX_TOPIC_LENGTH - 3) + '...';
-		}
-		return name;
-	}
-
-
 
 	const updateTopic = (topic: string) => {
 		if (topic.length < MIN_TOPIC_LENGTH) {

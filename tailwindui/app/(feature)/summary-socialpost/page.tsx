@@ -25,6 +25,7 @@ import { useSocialPosts } from '@/hooks/use-socialpost';
 import ProjectService from '@/services/ProjectService';
 import TextareaAutosize from 'react-textarea-autosize';
 import ResourceService from '@/services/ResourceService';
+import { formatName } from '../summary/page';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 3;
@@ -76,7 +77,8 @@ export default function Topic_SocialPost() {
 	useEffect(() => {
 		if (selectedResources.length > 0) {
 			if (topic.length == 0) {
-				setTopic(formatName(selectedResources[0].name));
+				setTopic(formatName(selectedResources[0].name,
+					['url', 'webpage', 'youtube'].includes(selectedResources[0].type)));
 			}
 		}
 	}, [selectedResources]);
@@ -244,16 +246,6 @@ export default function Topic_SocialPost() {
 			return false;
 		}
 	};
-
-	function formatName(name: string) {
-		// remove file extension
-		name = name.replace(/\.[^/.]+$/, '');
-
-		if (name.length > MAX_TOPIC_LENGTH) {
-			return name.slice(0, MAX_TOPIC_LENGTH - 3) + '...';
-		}
-		return name;
-	}
 
 	async function addYoutubeLink(link: string) {
 		try {
