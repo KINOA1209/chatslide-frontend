@@ -19,6 +19,7 @@ import React from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { getBrand, getLogoUrl, isChatslide } from '@/utils/getHost';
 import Chats from './Chats';
+import ChatBotService from '@/services/ChatBotService';
 
 
 export const AIAssistantIcon: React.FC<{
@@ -113,37 +114,6 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		content,
 	});
 
-	const makeApiCall = async (
-		prompt: string,
-		prev_prompts: ChatHistory[],
-		token: string,
-	): Promise<Response> => {
-		try {
-			return await fetch('/api/ai_gen_slide', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: 'Bearer ' + token,
-				},
-				body: JSON.stringify({
-					slide: slides[currentSlideIndex],
-					project_id: project?.id || '',
-					prompt: prompt,
-					prev_prompts: prev_prompts,
-					page_index: slideIndex,
-				}),
-			});
-		} catch (error) {
-			console.error('Error making API call:', error);
-			const errorMessage = addErrorMessage(
-				'😞 Sorry, I do not understand your request, can you try again?',
-			);
-			addChatHistory(errorMessage);
-			setLoading(false);
-			throw error; // Re-throw the error for the calling function to handle
-		}
-	};
-
 	const handleSend = async (extraInput?: string) => {
 		console.log(
 			'Sending request with userInput:',
@@ -171,77 +141,74 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		try {
 			setLoading(true);
 
-			const response = await makeApiCall(inputToSend, lastChatMessages, token);
+			const response = await ChatBotService.chat(
+				inputToSend,
+				lastChatMessages,
+				token,
+				slides[currentSlideIndex],
+				project?.id || '',
+				slideIndex,
+			);
 
 			setLoading(false);
 
-			if (response.ok) {
-				const responseData = await response.json();
+			console.log('responseData structure:', response);
+			// If the slide is updated, add a success message
+			if (response.slide) {
+				// Update the slide at the current index with new data
+				console.log(
+					'updateSlide content after api call:',
+					response.slide,
+				);
 
-				console.log('responseData structure:', responseData);
-				// If the slide is updated, add a success message
-				if (responseData.data.slide) {
-					// Update the slide at the current index with new data
-					console.log(
-						'updateSlide content after api call:',
-						responseData.data.slide,
-					);
+				if (response.action === 'add_page') {
+					const newSlide = { ...slides[currentSlideIndex], ...response.slide, layout: 'Col_1_img_0_layout', images: [] } as Slide;
 
-					if (responseData.data.action === 'add_page') {
-						const newSlide = { ...slides[currentSlideIndex], ...responseData.data.slide, layout: 'Col_1_img_0_layout', images: [] };
-
-						// insert the newSlide after the currentSlideIndex
+					// insert the newSlide after the currentSlideIndex
+					setSlides((prevSlides) => {
+						const newSlides = [...prevSlides];
+						newSlides.splice(currentSlideIndex + 1, 0, newSlide);
+						return newSlides;
+					});
+					setSlideIndex(currentSlideIndex + 1);
+				} else {
+					let content = response.slide.content;
+					if (content.length >= 6 && JSON.stringify(content).length > 600) {
+						// too much new content in one page, need to split into two pages
+						const mid = Math.floor(content.length / 2);
+						const slidePage1 = { ...slides[currentSlideIndex], ...response.slide, content: content.slice(0, mid) };
+						const slidePage2 = { ...slides[currentSlideIndex], ...response.slide, content: content.slice(mid) };
+						// replace the current slide with the 2 new slides 
 						setSlides((prevSlides) => {
 							const newSlides = [...prevSlides];
-							newSlides.splice(currentSlideIndex + 1, 0, newSlide);
+							newSlides.splice(currentSlideIndex, 1, slidePage1, slidePage2);
 							return newSlides;
 						});
 						setSlideIndex(currentSlideIndex + 1);
+						addChatHistory(addSuccessMessage('📄 Because of too much content on one page, I have split the content into two pages.'));
 					} else {
-						let content = responseData.data.slide.content;
-						if (content.length >= 6 && JSON.stringify(content).length > 600) {
-							// too much new content in one page, need to split into two pages
-							const mid = Math.floor(content.length / 2);
-							const slidePage1 = { ...slides[currentSlideIndex], ...responseData.data.slide, content: content.slice(0, mid) };
-							const slidePage2 = { ...slides[currentSlideIndex], ...responseData.data.slide, content: content.slice(mid) };
-							// replace the current slide with the 2 new slides 
-							setSlides((prevSlides) => {
-								const newSlides = [...prevSlides];
-								newSlides.splice(currentSlideIndex, 1, slidePage1, slidePage2);
-								return newSlides;
-							});
-							setSlideIndex(currentSlideIndex + 1);
-							addChatHistory(addSuccessMessage('📄 Because of too much content on one page, I have split the content into two pages.'));
-						} else {
-							// Update state with the new slides
-							updateSlidePage(currentSlideIndex, responseData.data.slide);
-							updateVersion(); // force rerender when version changes and index does not change
-						}
+						// Update state with the new slides
+						updateSlidePage(currentSlideIndex, response.slide);
+						updateVersion(); // force rerender when version changes and index does not change
 					}
 				}
-
-				else if (responseData.data.action) {  // not add_page action with slide 
-					// send this as a document signal
-					console.log('action:', responseData.data.action);
-					document.dispatchEvent(new Event(responseData.data.action));
-				}
-
-				// Update chat history with AI's response
-				const newAIMessage = addSuccessMessage(
-					`${responseData.data.chat}`,
-					responseData.data.images, // Include imageUrls in the chat history entry
-				);
-				addChatHistory(newAIMessage);
-			} else {
-				console.error('Failed to get AI response');
-				const errorMessage = addErrorMessage(
-					'😞 Sorry, I do not understand your request, can you try something else?',
-				);
-				addChatHistory(errorMessage);
 			}
-		} catch (error) {
-			// Error handling is now done in the makeApiCall function
-			// No need to duplicate it here
+
+			else if (response.action) {  // not add_page action with slide 
+				// send this as a document signal
+				console.log('action:', response.action);
+				document.dispatchEvent(new Event(response.action));
+			}
+
+			addChatHistory(response);
+		}
+
+		catch (error) {
+			console.error('Failed to get AI response');
+			const errorMessage = addErrorMessage(
+				'😞 Sorry, I do not understand your request, can you try something else?',
+			);
+			addChatHistory(errorMessage);
 		}
 	};
 

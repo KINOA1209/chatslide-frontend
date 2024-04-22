@@ -10,6 +10,7 @@ import { useImageStore } from '@/hooks/use-img-store';
 import './ChatBot.css';
 import React from 'react';
 import UserService from '@/services/UserService';
+import ChatBotService from '@/services/ChatBotService';
 
 
 type ChatsProps = {
@@ -201,39 +202,6 @@ const Chats: React.FC<ChatsProps> = ({
 		}
 	}
 
-	const makeApiCall = async (
-		prompt: string,
-		prev_prompts: ChatHistory[],
-		token: string,
-		selected_text: string,
-	): Promise<Response> => {
-		try {
-			return await fetch('/api/ai_gen_slide', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: 'Bearer ' + token,
-				},
-				body: JSON.stringify({
-					slide: slides[currentSlideIndex],
-					project_id: project?.id || '',
-					prompt: prompt,
-					prev_prompts: prev_prompts,
-					selected_text: selected_text,
-					page_index: slideIndex,
-				}),
-			});
-		} catch (error) {
-			console.error('Error making API call:', error);
-			const errorMessage = addErrorMessage(
-				'😞 Sorry, I do not understand your request, can you try again?',
-			);
-			addChatHistory(errorMessage);
-			setLoading(false);
-			throw error; // Re-throw the error for the calling function to handle
-		}
-	};
-
 	const handleToneClick = async (choice: string) => {
 		setSelectedRegenerateTone(choice)
 		const regenerate_prompt = `Rewrite this text to be more ${choice.toLowerCase()}.`
@@ -248,34 +216,30 @@ const Chats: React.FC<ChatsProps> = ({
 		const lastChatMessages = chatHistory
 			.slice(-3)
 			.map((chat) => ({ role: chat.role, content: chat.content }));
-		try {
-			setLoading(true)
-			const response = await makeApiCall(regenerate_prompt, lastChatMessages, token, regenerateText);
-			if (response.ok) {
-				const responseData = await response.json();
-				console.log('responseData structure:', responseData);
-				if (!responseData.data.suggestions && responseData.data.chat) {
-					// handle case when response is ok but backend fails to parse suggestion or fails to get result from openai
-					const errorMessage = addErrorMessage(responseData.data.chat)
-					addChatHistory(errorMessage)
-				}
-				else {
-					const regenerate_choices = addChoicesMessage(responseData.data.chat, responseData.data.suggestions, null)
-					addChatHistory(regenerate_choices)
-				}
-			}
-			else {
-				console.error('Failed to get AI response');
-				const errorMessage = addErrorMessage(
-					'😞 Sorry, I do not understand your request, can you try something else?',
-				);
-				addChatHistory(errorMessage);
-			}
-		} catch (error) {
-			// Error handling is now done in the makeApiCall function
-			// No need to duplicate it here
+		setLoading(true);
+		const chatResponse = await ChatBotService.chat(
+			regenerate_prompt,
+			lastChatMessages,
+			token,
+			slides[currentSlideIndex],
+			project?.id || '',
+			slideIndex,
+			regenerateText,
+		);
+		console.log('responseData structure:', chatResponse);
+		if (!chatResponse.chat || chatResponse.suggestions) {
+			// network fails, backend fails
+			addChatHistory(chatResponse)
+		} else if (!chatResponse.suggestions) {
+			// ai does not understand
+			const errorMessage = addErrorMessage('😞 Sorry, I do not understand your request, can you try again?')
+			addChatHistory(errorMessage)
+		} else {
+			const regenerate_choices = addChoicesMessage(chatResponse.chat, chatResponse.suggestions, null)
+			addChatHistory(regenerate_choices)
 		}
-	};
+	}
+
 	return (
 		<>
 			{chatHistory.map((chat, index) => (
