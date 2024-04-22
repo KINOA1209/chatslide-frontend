@@ -14,6 +14,7 @@ import VideoService from '@/services/VideoService';
 import { Loading } from '../ui/Loading';
 import { SpinIcon } from '@/app/(feature)/icons';
 import { calculateNonPresentScale } from '../slides/SlidesHTML';
+import { WrappableRow } from '../layout/WrappableRow';
 
 
 const ScriptSection: React.FC<{
@@ -29,7 +30,7 @@ const ScriptSection: React.FC<{
 	voiceStyle,
 	updateSlidePage,
 }) => {
-		const [scale, setScale] = useState(calculateNonPresentScale(window.innerWidth, window.innerHeight) * 0.5);
+		const [scale, setScale] = useState(0.4);
 		const [isPlaying, setIsPlaying] = useState(false);
 		const [isLoading, setIsLoading] = useState(false);
 		// Add a state to store the audio element
@@ -37,15 +38,15 @@ const ScriptSection: React.FC<{
 		const { token } = useUser();
 		const { project } = useProject();
 
-		useEffect(() => {
-			const handleResize = () => {
-				setScale(calculateNonPresentScale(window.innerWidth, window.innerHeight) * 0.5);
-			};
+		// useEffect(() => {
+		// 	const handleResize = () => {
+		// 		setScale(calculateNonPresentScale(window.innerWidth, window.innerHeight) * 0.5);
+		// 	};
 
-			window.addEventListener('resize', handleResize);
+		// 	window.addEventListener('resize', handleResize);
 
-			return () => window.removeEventListener('resize', handleResize);
-		}, []);
+		// 	return () => window.removeEventListener('resize', handleResize);
+		// }, []);
 
 		const playScript = async () => {
 			const script = slides[index].transcript || '';
@@ -83,24 +84,8 @@ const ScriptSection: React.FC<{
 			setIsPlaying(false); // Update the state to reflect that playback has stopped
 		};
 
-		return (
-			<div key={index} className='flex flex-row justify-between gap-x-2'>
-
-				<SlideContainer
-					index={index}
-					slide={slides[index]}
-					scale={scale}
-					isViewing={true}
-					templateDispatch={uneditableTemplateDispatch}
-				/>
-				<ScriptEditor
-					slides={slides}
-					updateSlidePage={updateSlidePage}
-					currentSlideIndex={index}
-					scale={scale}
-				/>
-				{/* play and pause the script */}
-
+		const PlayButton = () => {
+			return (
 				<div className='mt-4'>
 					{isLoading ?
 						<SpinIcon /> :
@@ -140,7 +125,28 @@ const ScriptSection: React.FC<{
 								}
 							/>}
 				</div>
-			</div>
+			)
+		};
+
+		return (
+			<WrappableRow type='flex' key={index}>
+				<SlideContainer
+					index={index}
+					slide={slides[index]}
+					scale={scale}
+					isViewing={true}
+					templateDispatch={uneditableTemplateDispatch}
+				/>
+				<ScriptEditor
+					slides={slides}
+					updateSlidePage={updateSlidePage}
+					currentSlideIndex={index}
+					scale={scale}
+				/>
+				{/* play and pause the script */}
+				<PlayButton />
+
+			</WrappableRow>
 		)
 	};
 

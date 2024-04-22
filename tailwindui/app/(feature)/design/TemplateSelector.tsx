@@ -1,8 +1,6 @@
 'use client';
 
 import { DropDown, SmallBlueButton } from '@/components/button/DrlambdaButton';
-import { MdOutlineResetTv } from 'react-icons/md';
-import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
 import {
 	PaletteKeys,
 	TemplateKeys,
@@ -13,10 +11,9 @@ import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { Instruction } from '@/components/ui/Text';
 import Select from 'react-select';
-import { ChromePicker } from 'react-color';
 import { ColorPicker } from './ColorPicker';
 import { useSlides } from '@/hooks/use-slides';
-import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
+import { WrappableRow } from '@/components/layout/WrappableRow';
 
 const SlideDesignPreview = dynamic(
 	() => import('@/components/slides/SlideDesignPreview'),
@@ -126,6 +123,80 @@ const TemplateSelector: React.FC<{
 		toggleHasSelectedCustomTemplateBgColor(false);
 	};
 
+	const PaletteSelector = () => {
+		return (
+			<Select
+				isSearchable={false}
+				options={finalPaletteOptions.map((paletteOption) => ({
+					value: paletteOption,
+					label: (
+						<div className='flex items-center'>
+							<div
+								className='w-4 h-4 mr-2'
+								style={{
+									backgroundColor:
+										colorPreviews[paletteOption as PaletteKeys],
+								}}
+							/>
+							{paletteOption}
+						</div>
+					),
+				}))}
+				onChange={(selectedOption: OptionType | null) =>
+					handlePaletteChange(selectedOption)
+				}
+				// defaultInputValue={paletteOptions[0]}
+				value={{
+					value: palette,
+					label: (
+						<div className='flex items-center'>
+							<div
+								className='w-4 h-4 mr-2'
+								style={{
+									backgroundColor:
+										colorPreviews[palette as PaletteKeys],
+								}}
+							/>
+							{palette}
+						</div>
+					),
+				}}
+				styles={{
+					control: (provided) => ({
+						...provided,
+						width: '15rem',
+						height: '36px',
+						borderRadius: '8px',
+						borderColor: '#e5e7eb',
+						borderWidth: '2px',
+						fontSize: '14px',
+					}),
+
+					indicatorSeparator: () => ({ display: 'none' }), // Hides the indicator separator
+					menu: (provided) => ({ ...provided, zIndex: 999 }), // Ensure the menu appears above other elements
+					option: (provided, state) => ({
+						...provided,
+						backgroundColor: state.isSelected
+							? '#d1d5db'
+							: '#ffffff',
+						color: state.isSelected ? '#4b5563' : '#000000',
+						':hover': {
+							backgroundColor: '#d1d5db',
+						},
+					}),
+					input: (provided) => ({
+						...provided,
+						blurInputOnSelect: true,
+						border: 'none', // Remove the border
+						outline: 'none', // Remove the outline when focused
+						height: '100%',
+						padding: '0',
+					}),
+				}}
+			></Select>
+		);
+	}
+
 	return (
 		<div>
 			<div
@@ -143,140 +214,39 @@ const TemplateSelector: React.FC<{
 							{/* Map over the template options */}
 							{Object.entries(templateDisplayNames).map(([key, value]) => (
 								<option key={key} value={key}>
-									{`${value} ${
-										(availablePalettes[key as TemplateKeys]?.length ?? 0) > 1
-											? '(palette ✅)'
-											: ''
-									}`}
+									{`${value} ${(availablePalettes[key as TemplateKeys]?.length ?? 0) > 1
+										? '(palette ✅)'
+										: ''
+										}`}
 								</option>
 							))}
 						</DropDown>
 					</div>
 					{/* Render color palette options only if there are more than one */}
 					{
-						<div className={`paletteChoice flex flex-col `}>
-							{!hasSelectedCustomTemplateBgColor &&
-								paletteOptions.length > 1 && (
-									<Instruction>Theme color</Instruction>
-								)}
-							{/* <DropDown
-								width='15rem'
-								onChange={handlePaletteChange}
-								value={palette}
-								style='input'
-							>
-								{paletteOptions.map((paletteOption, index) => (
-									<option key={index} value={paletteOption}>
-										<div
-											style={{
-												backgroundColor:
-													colorPreviews[paletteOption as PaletteKeys],
-											}}
-										></div>
-										{paletteOption}
-									</option>
-								))}
-							</DropDown> */}
-							{!hasSelectedCustomTemplateBgColor &&
-								paletteOptions.length > 1 && (
-									<Select
-										isSearchable={false}
-										options={finalPaletteOptions.map((paletteOption) => ({
-											value: paletteOption,
-											label: (
-												<div className='flex items-center'>
-													<div
-														className='w-4 h-4 mr-2'
-														style={{
-															backgroundColor:
-																colorPreviews[paletteOption as PaletteKeys],
-														}}
-													/>
-													{paletteOption}
-												</div>
-											),
-										}))}
-										onChange={(selectedOption: OptionType | null) =>
-											handlePaletteChange(selectedOption)
-										}
-										// defaultInputValue={paletteOptions[0]}
-										value={{
-											value: palette,
-											label: (
-												<div className='flex items-center'>
-													<div
-														className='w-4 h-4 mr-2'
-														style={{
-															backgroundColor:
-																colorPreviews[palette as PaletteKeys],
-														}}
-													/>
-													{palette}
-												</div>
-											),
-										}}
-										// defaultValue={{
-										// 	value: paletteOptions[0], // Set the default value to the currently selected palette
-										// 	label: (
-										// 		<div className='flex items-center'>
-										// 			<div
-										// 				className='w-4 h-4 mr-2'
-										// 				style={{
-										// 					backgroundColor:
-										// 						colorPreviews[paletteOptions[0] as PaletteKeys],
-										// 				}}
-										// 			/>
-										// 			{palette}
-										// 		</div>
-										// 	),
-										// }}
-										styles={{
-											control: (provided) => ({
-												...provided,
-												width: '15rem',
-												height: '36px',
-												borderRadius: '8px',
-												borderColor: '#e5e7eb',
-												borderWidth: '2px',
-												fontSize: '14px',
-											}),
+						<div className='paletteChoice w-full'>
+							<WrappableRow type='grid'>
+								{!hasSelectedCustomTemplateBgColor &&
+									paletteOptions.length > 1 && (
+										<div>
+											<Instruction>Theme color</Instruction>
+											<PaletteSelector />
+										</div>)}
 
-											indicatorSeparator: () => ({ display: 'none' }), // Hides the indicator separator
-											menu: (provided) => ({ ...provided, zIndex: 999 }), // Ensure the menu appears above other elements
-											option: (provided, state) => ({
-												...provided,
-												backgroundColor: state.isSelected
-													? '#d1d5db'
-													: '#ffffff',
-												color: state.isSelected ? '#4b5563' : '#000000',
-												':hover': {
-													backgroundColor: '#d1d5db',
-												},
-											}),
-											input: (provided) => ({
-												...provided,
-												blurInputOnSelect: true,
-												border: 'none', // Remove the border
-												outline: 'none', // Remove the outline when focused
-												height: '100%',
-												padding: '0',
-											}),
-										}}
-									></Select>
-								)}
-
-							<Instruction>Customize theme color</Instruction>
-							<ColorPicker
-								onCustomColorChange={handleCustomTemplateBgColorChange}
-								initialColor={
-									hasSelectedCustomTemplateBgColor
-										? customTemplateBgColor ||
-										  colorPreviews[palette as PaletteKeys]
-										: colorPreviews[palette as PaletteKeys]
-								} // Provide a default value if customTemplateBgColor is undefined
-								resetColorPicker={resetColorPicker}
-							/>
-							
+								<div>
+									<Instruction>Customize theme color</Instruction>
+									<ColorPicker
+										onCustomColorChange={handleCustomTemplateBgColorChange}
+										initialColor={
+											hasSelectedCustomTemplateBgColor
+												? customTemplateBgColor ||
+												colorPreviews[palette as PaletteKeys]
+												: colorPreviews[palette as PaletteKeys]
+										} // Provide a default value if customTemplateBgColor is undefined
+										resetColorPicker={resetColorPicker}
+									/>
+								</div>
+							</WrappableRow>
 						</div>
 					}
 				</div>

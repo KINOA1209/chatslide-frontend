@@ -6,6 +6,7 @@ import LANGUAGES, { LANGUAGES_WITH_ACCENTS } from './languageData';
 import { ErrorMessage, Instruction, WarningMessage } from '../ui/Text';
 import { DropDown } from '../button/DrlambdaButton';
 import { useProject } from '@/hooks/use-project';
+import { WrappableRow } from '../layout/WrappableRow';
 
 export const previewVoice = async (voice: string) => {
 	try {
@@ -74,7 +75,7 @@ const VoiceSelector: React.FC<{
 
 		return (
 			<>
-				<div className='flex flex-row flex-wrap justify-start gap-4'>
+				<WrappableRow type='grid' cols={4}>
 					<div>
 						<Instruction>Language: </Instruction>
 						<DropDown value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)}>
@@ -116,7 +117,7 @@ const VoiceSelector: React.FC<{
 							</DropDown>
 						</div>
 					</>}
-				</div>
+				</WrappableRow>
 				{
 					selectedLanguage !== originalLanguageCode && selectedLanguage !== 'None' &&
 					<WarningMessage>If your scripts and voice are in different languages, you may get suboptimal results.</WarningMessage>

@@ -5,6 +5,7 @@ import { ErrorMessage, Instruction, WarningMessage } from '../ui/Text';
 import { DropDown } from '../button/DrlambdaButton';
 import { AVATAR_NAMES, AVATAR_OPTIONS, POSITION_NAMES, POSTURE_NAMES, SIZE_NAMES } from './avatarData';
 import Image from 'next/image';
+import { WrappableRow } from '../layout/WrappableRow';
 
 
 const AvatarSelector: React.FC<{
@@ -36,7 +37,7 @@ const AvatarSelector: React.FC<{
 
 		return (
 			<>
-				<div className='grid grid-cols-2'>
+			<WrappableRow type='grid'>
 					<div className='flex flex-col gap-2'>
 						<div>
 							<Instruction>Avatar: </Instruction>
@@ -87,7 +88,7 @@ const AvatarSelector: React.FC<{
 							height={256}
 						className='w-64 h-64' />
 					}
-				</div>
+			</WrappableRow>
 			</>
 		);
 	};

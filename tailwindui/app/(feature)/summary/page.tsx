@@ -449,7 +449,7 @@ export default function Topic() {
 					)}
 
 					{/* DropDown menu section */}
-					<div className='w-full gap-2 flex flex-col sm:grid sm:grid-cols-2'>
+					<WrappableRow type='grid' cols={2}>
 						<div className='flex flex-col'>
 							<div className='flex flex-row gap-1 items-center'>
 								<Instruction>Your Audience</Instruction>
@@ -475,7 +475,7 @@ export default function Topic() {
 							</DropDown>
 						</div>
 						<LanguageSelector language={language} setLanguage={setLanguage} />
-					</div>
+					</WrappableRow>
 
 
 					<div className='w-full gap-2 flex flex-col sm:grid sm:grid-cols-2'>
