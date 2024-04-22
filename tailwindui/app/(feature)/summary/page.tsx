@@ -14,8 +14,7 @@ import { Step } from 'react-joyride';
 import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
 import StepsSummaryPage from '@/components/user_onboarding/StepsSummaryPage';
 import { GPTToggleWithExplanation } from '@/components/button/WorkflowGPTToggle';
-import SessionStorage from '@/utils/SessionStorage';
-import AddResourcesSection from '@/components/AddResourcesSection';
+import AddResourcesSection from '@/components/summary/AddResourcesSection';
 import useHydrated from '@/hooks/use-hydrated';
 import { useProject } from '@/hooks/use-project';
 import ActionsToolBar from '@/components/ui/ActionsToolBar';
@@ -40,10 +39,8 @@ import { GenerationStatusProgressModal } from '@/components/ui/GenerationStatusP
 import TextareaAutosize from 'react-textarea-autosize';
 import slides_scenarios from './../scenario-choice/slides_scenarios.json';
 import RangeSlider from '@/components/ui/RangeSlider';
-import { set } from 'lodash';
-import Toggle from '@/components/button/Toggle';
-import { MdOutlineSpeaker, MdOutlineSpeakerNotes } from 'react-icons/md';
-import { FiFilePlus } from 'react-icons/fi';
+import GenModeToggle from '@/components/summary/GenModeToggle';
+import { WrappableRow } from '@/components/layout/WrappableRow';
 
 
 const MAX_TOPIC_LENGTH = 2000;
@@ -85,7 +82,7 @@ export default function Topic() {
 	} = useProject();
 
 	const scenarioType = project?.scenario_type || 'business';
-	const [generationMode, setGenerationMode] = useState('from_topic');
+	const [generationMode, setGenerationMode] = useState<'from_topic' | 'from_files'>('from_topic');
 
 	const [topic, setTopic] = useState(project?.topic || '');
 	const [audience, setAudience] = useState(
@@ -149,6 +146,8 @@ export default function Topic() {
 		}
 		return name;
 	}
+
+
 
 	const updateTopic = (topic: string) => {
 		if (topic.length < MIN_TOPIC_LENGTH) {
@@ -384,6 +383,8 @@ export default function Topic() {
 						setSelectedResources={setSelectedResources}
 						removeResourceAtIndex={removeResourceAtIndex}
 						isRequired
+						generationMode='from_files'
+						setGenerationMode={setGenerationMode}
 					/>
 				)}
 
@@ -393,27 +394,12 @@ export default function Topic() {
 					{/* for tutorial step 1, the summary #SummaryStep-2 */}
 					{/* title */}
 					<div className='title1'>
-						<div className='flex flex-col md:flex-row justify-between'>
+						<WrappableRow type='flex' justify='between'>
 							<BigTitle>💡 Summary</BigTitle>
-							<Toggle
-								isLeft={generationMode === 'from_topic'}
-								setIsLeft={(isLeft: boolean) => setGenerationMode(isLeft ? 'from_topic' : 'from_files')}
-								// leftText='From Topic'
-								// rightText='From Files'
-								leftElement={
-									<div className='flex flex-row gap-2 items-center'>
-										<MdOutlineSpeakerNotes />
-										<div>Topic First</div>
-									</div>
-								}
-								rightElement={
-									<div className='flex flex-row gap-2 items-center'>
-										<FiFilePlus />
-										<div>Files First</div>
-									</div>
-								}
-							/>
-						</div>
+							{generationMode === 'from_topic' &&
+								<GenModeToggle generationMode={generationMode} setGenerationMode={setGenerationMode} />
+							}
+						</WrappableRow>
 						{/* <p id='after1'>
 								{' '}
 								{generationMode === 'from_topic' ? '(Required)' : '(Optional)'}

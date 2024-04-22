@@ -10,14 +10,16 @@ import ResourceService from '@/services/ResourceService';
 import { toast, ToastContainer } from 'react-toastify';
 import AuthService from '@/services/AuthService';
 import Resource from '@/models/Resource';
-import LinkInput from './ui/LinkInput';
+import LinkInput from '../ui/LinkInput';
 import { useUser } from '@/hooks/use-user';
-import RadioButton, { RadioButtonOption } from './ui/RadioButton';
+import RadioButton, { RadioButtonOption } from '../ui/RadioButton';
 import { FaInternetExplorer, FaNewspaper, FaWikipediaW } from 'react-icons/fa';
 import { IoIosRemoveCircle, IoIosRemoveCircleOutline } from 'react-icons/io';
-import { Instruction, Explanation, BigTitle } from './ui/Text';
-import Card from './ui/Card';
-import { determineSupportedFormats } from './file/FileUploadButton';
+import { Instruction, Explanation, BigTitle } from '../ui/Text';
+import Card from '../ui/Card';
+import { determineSupportedFormats } from '../file/FileUploadButton';
+import GenModeToggle from './GenModeToggle';
+import { WrappableRow } from '../layout/WrappableRow';
 
 interface AddResourcesProps {
 	searchOnlineScope?: string;
@@ -27,6 +29,8 @@ interface AddResourcesProps {
 	setSelectedResources: React.Dispatch<React.SetStateAction<any[]>>;
 	removeResourceAtIndex: (index: number) => void;
 	isRequired?: boolean;
+	generationMode?: 'from_topic' | 'from_files';
+	setGenerationMode?: (mode: 'from_topic' | 'from_files') => void;
 }
 
 const AddResourcesSection: React.FC<AddResourcesProps> = ({
@@ -37,6 +41,8 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 	setSelectedResources,
 	removeResourceAtIndex,
 	isRequired = false,
+	generationMode,
+	setGenerationMode,
 }) => {
 	const [resources, setResources] = useState<Resource[]>([]);
 	const { token } = useUser();
@@ -142,7 +148,14 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 		<Card id='SummaryStep-3'>
 			<div>
 				{isRequired ? (
-					<BigTitle>📚 Import Sources</BigTitle>
+					<WrappableRow type='flex' justify='between'>
+						<BigTitle>📚 Import Sources</BigTitle>
+						{generationMode && setGenerationMode &&
+							<GenModeToggle
+								generationMode={generationMode}
+								setGenerationMode={setGenerationMode}
+							/>}
+					</WrappableRow>
 				) : (
 					<BigTitle>📚 Supporting Sources</BigTitle>
 				)}
