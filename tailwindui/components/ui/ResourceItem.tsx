@@ -196,7 +196,7 @@ export const ResourceItem: React.FC<Resource> = ({
 	const fileExtension =
 		lastDotIndex !== -1 ? name.slice(lastDotIndex + 1).toLowerCase() : '';
 
-	console.log('resource file extension: ', name, fileExtension);
+	// console.log('resource file extension: ', name, fileExtension);
 	return (
 		<div
 			key={id}
