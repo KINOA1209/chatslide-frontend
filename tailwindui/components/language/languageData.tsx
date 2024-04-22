@@ -29,6 +29,21 @@ const LANGUAGES: Language[] = [
 	{ displayName: "🇹🇭 ไทย", englishName: "Thai", code: "th-TH" },
 	{ displayName: "🇻🇳 Tiếng Việt", englishName: "Vietnamese", code: "vi-VN" },
 	// Add more languages as needed...
+	// danish
+	{ displayName: "🇩🇰 Dansk", englishName: "Danish", code: "da-DK" },
+	// indonesian
+	{ displayName: "🇮🇩 Bahasa Indonesia", englishName: "Indonesian", code: "id-ID" },
 ];
 
+const ACCENTS: Language[] = [
+	// english global
+	{ displayName: "🗺️ English (Global)", englishName: "English (Global)", code: "en-Global" },
+	// french global
+	{ displayName: "🌍 Français (Mondial)", englishName: "French (Global)", code: "fr-Global" },
+	{ displayName: "🇭🇰 粵語", englishName: "Catonese", code: "zh-HK" },
+];
+
+export const LANGUAGES_WITH_ACCENTS: Language[] = [...ACCENTS, ...LANGUAGES,];
+
 export default LANGUAGES;
+

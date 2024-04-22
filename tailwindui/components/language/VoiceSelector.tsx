@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import VOICE_OPTIONS, { STYLE_DISPLAY_NAMES, TONE_DISPLAY_NAMES, VOICE_STYLES } from './voiceData';
-import LANGUAGES from './languageData';
+import LANGUAGES, { LANGUAGES_WITH_ACCENTS } from './languageData';
 import { ErrorMessage, Instruction, WarningMessage } from '../ui/Text';
 import { DropDown } from '../button/DrlambdaButton';
 import { useProject } from '@/hooks/use-project';
@@ -78,7 +78,7 @@ const VoiceSelector: React.FC<{
 					<div>
 						<Instruction>Language: </Instruction>
 						<DropDown value={selectedLanguage} onChange={(e) => setSelectedLanguage(e.target.value)}>
-							{LANGUAGES.map((option) => (
+							{LANGUAGES_WITH_ACCENTS.map((option) => (
 								<option key={option.code} value={option.code}>{option.displayName}</option>
 							))}
 							<option key={'None'} value={'None'}>❌ None</option>

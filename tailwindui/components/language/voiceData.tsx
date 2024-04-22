@@ -30,6 +30,24 @@ const VOICE_OPTIONS: VoiceOption = {
 			'en-GB-OliverNeural', 'en-GB-ThomasNeural'
 		]
 	},
+	"en-Global": {
+		"female": [
+			"en-AU-NatashaNeural", "en-AU-AnnetteNeural", "en-AU-CarlyNeural", "en-AU-ElsieNeural", "en-AU-FreyaNeural",
+			"en-AU-JoanneNeural", "en-AU-KimNeural", "en-AU-TinaNeural",
+			"en-CA-ClaraNeural",
+			"en-IN-NeerjaNeural",
+			"en-SG-LunaNeural",
+			"en-IE-EmilyNeural"
+		],
+		"male": [
+			"en-AU-WilliamNeural", "en-AU-DarrenNeural", "en-AU-DuncanNeural", "en-AU-KenNeural", "en-AU-NeilNeural",
+			"en-AU-TimNeural",
+			"en-CA-LiamNeural",
+			"en-IN-PrabhatNeural",
+			"en-SG-WayneNeural",
+			"en-IE-ConnorNeural"
+		]
+	},
 	'es-ES': {
 		'female': [
 			'es-ES-ElviraNeural', 'es-ES-AbrilNeural', 'es-ES-EstrellaNeural', 'es-ES-IreneNeural', 'es-ES-LaiaNeural',
@@ -43,11 +61,13 @@ const VOICE_OPTIONS: VoiceOption = {
 	'es-MX': {
 		'female': [
 			'es-MX-DaliaNeural', 'es-MX-BeatrizNeural', 'es-MX-CandelaNeural', 'es-MX-CarlotaNeural', 'es-MX-LarissaNeural',
-			'es-MX-MarinaNeural', 'es-MX-NuriaNeural', 'es-MX-RenataNeural'
+			'es-MX-MarinaNeural', 'es-MX-NuriaNeural', 'es-MX-RenataNeural',
+			"es-VE-PaolaNeural"
 		],
 		'male': [
 			'es-MX-JorgeNeural', 'es-MX-CecilioNeural', 'es-MX-GerardoNeural', 'es-MX-LibertoNeural', 'es-MX-LucianoNeural',
-			'es-MX-PelayoNeural', 'es-MX-YagoNeural'
+			'es-MX-PelayoNeural', 'es-MX-YagoNeural',
+			"es-VE-SebastianNeural"
 		]
 	},
 	'zh-CN': {
@@ -65,20 +85,30 @@ const VOICE_OPTIONS: VoiceOption = {
 	},
 	'zh-TW': {
 		'female': [
-			'zh-TW-HsiaoChenNeural', 'zh-TW-HsiaoYuNeural'
+			'zh-TW-HsiaoChenNeural', 'zh-TW-HsiaoYuNeural',
 		],
 		'male': [
-			'zh-TW-YunJheNeural'
+			'zh-TW-YunJheNeural',
+		]
+	},
+	'zh-HK': {
+		'female': [
+			'zh-HK-HiuMaanNeural', 'zh-HK-HiuGaaiNeural'
+		],
+		'male': [
+			'zh-HK-WanLungNeural'
 		]
 	},
 	'de-DE': {
 		'female': [
 			'de-DE-KatjaNeural', 'de-DE-AmalaNeural', 'de-DE-ElkeNeural', 'de-DE-GiselaNeural',
-			'de-DE-KlarissaNeural', 'de-DE-LouisaNeural', 'de-DE-MajaNeural', 'de-DE-TanjaNeural'
+			'de-DE-KlarissaNeural', 'de-DE-LouisaNeural', 'de-DE-MajaNeural', 'de-DE-TanjaNeural',
+			"de-AT-IngridNeural", "de-CH-LeniNeural"
 		],
 		'male': [
 			'de-DE-ConradNeural', 'de-DE-BerndNeural', 'de-DE-ChristophNeural', 'de-DE-KasperNeural',
-			'de-DE-KillianNeural', 'de-DE-KlausNeural', 'de-DE-RalfNeural'
+			'de-DE-KillianNeural', 'de-DE-KlausNeural', 'de-DE-RalfNeural',
+			"de-AT-JonasNeural", "de-CH-JanNeural"
 		]
 	},
 	'fr-FR': {
@@ -89,6 +119,18 @@ const VOICE_OPTIONS: VoiceOption = {
 		'male': [
 			'fr-FR-HenriNeural', 'fr-FR-AlainNeural', 'fr-FR-ClaudeNeural', 'fr-FR-JeromeNeural', 'fr-FR-MauriceNeural',
 			'fr-FR-RemyMultilingualNeural', 'fr-FR-YvesNeural'
+		]
+	},
+	"fr-Global": {
+		"female": [
+			"fr-CH-ArianeNeural",
+			"fr-BE-CharlineNeural",
+			"fr-CA-SylvieNeural"
+		],
+		"male": [
+			"fr-CH-FabriceNeural",
+			"fr-BE-GerardNeural",
+			"fr-CA-JeanNeural", "fr-CA-AntoineNeural", "fr-CA-ThierryNeural"
 		]
 	},
 	'ru-RU': {
@@ -154,7 +196,15 @@ const VOICE_OPTIONS: VoiceOption = {
 		'male': ['hr-HR-SreckoNeural']
 	},
 	'vi-VN': { 'female': ['vi-VN-HoaiMyNeural'], 'male': ['vi-VN-NamMinhNeural'] },
-	'th-TH': { 'female': ['th-TH-PremwadeeNeural', 'th-TH-AcharaNeural'], 'male': ['th-TH-NiwatNeural'] }
+	'th-TH': { 'female': ['th-TH-PremwadeeNeural', 'th-TH-AcharaNeural'], 'male': ['th-TH-NiwatNeural'] },
+	"da-DK": {
+		"female": ["da-DK-ChristelNeural"],
+		"male": ["da-DK-JeppeNeural"]
+	},
+	"id-ID": {
+		"female": ["id-ID-GadisNeural"],
+		"male": ["id-ID-ArdiNeural"]
+	},
 };
 
 export const TONE_DISPLAY_NAMES: { [key: string]: string } = {
@@ -206,6 +256,45 @@ export const TONE_DISPLAY_NAMES: { [key: string]: string } = {
 	'Shaanxi-Xiaoni': '晓妮 (陕西)',
 	'Shandong-Yunxiang': '云祥 (山东)',
 	'Sichuan-Yunxi': '云熙 (四川)',
+	"Ingrid": "Ingrid (🇦🇹)",
+	"Jonas": "Jonas (🇦🇹)",
+	"Leni": "Leni (🇨🇭)",
+	"Jan": "Jan (🇨🇭)",
+	"Natasha": "Natasha (🇦🇺)",
+	"Annette": "Annette (🇦🇺)",
+	"Carly": "Carly (🇦🇺)",
+	"Elsie": "Elsie (🇦🇺)",
+	"Freya": "Freya (🇦🇺)",
+	"Joanne": "Joanne (🇦🇺)",
+	"Kim": "Kim (🇦🇺)",
+	"Tina": "Tina (🇦🇺)",
+	"William": "William (🇦🇺)",
+	"Darren": "Darren (🇦🇺)",
+	"Duncan": "Duncan (🇦🇺)",
+	"Ken": "Ken (🇦🇺)",
+	"Neil": "Neil (🇦🇺)",
+	"Tim": "Tim (🇦🇺)",
+	"Clara": "Clara (🇨🇦)",
+	"Liam": "Liam (🇨🇦)",
+	"Neerja": "Neerja (🇮🇳)",
+	"Prabhat": "Prabhat (🇮🇳)",
+	"Luna": "Luna (🇸🇬)",
+	"Wayne": "Wayne (🇸🇬)",
+	"Emily": "Emily (🇮🇪)",
+	"Connor": "Connor (🇮🇪)",
+	"Ariane": "Ariane (🇨🇭)",
+	"Fabrice": "Fabrice (🇨🇭)",
+	"Charline": "Charline (🇧🇪)",
+	"Gerard": "Gerard (🇧🇪)",
+	"Sylvie": "Sylvie (🇨🇦)",
+	"Jean": "Jean (🇨🇦)",
+	"Antoine": "Antoine (🇨🇦)",
+	"Thierry": "Thierry (🇨🇦)",
+	"Paola": "Paola (🇻🇪)",
+	"Sebastian": "Sebastian (🇻🇪)",
+	"HiuMaan": "曉曼 (🇭🇰)",
+	"HiuGaai": "曉佳 (🇭🇰)",
+	"WanLung": "雲龍 (🇭🇰)"
 };
 
 // doc: https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/ai-services/speech-service/includes/language-support/voice-styles-and-roles.md
