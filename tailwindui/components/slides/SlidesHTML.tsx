@@ -56,6 +56,9 @@ import { BrandingButton } from '../button/BrandingButton';
 import { useChatHistory } from '@/hooks/use-chat-history';
 import { getOrigin } from '@/utils/getHost';
 import { DraggableSlidesPreview } from './DraggableSlidesPreview';
+import { addIdToRedir } from '@/utils/redirWithId';
+import { useRouter } from 'next/navigation';
+import { Blank } from '../ui/Loading';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -211,6 +214,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const [draggedSlideIndex, setDraggedSlideIndex] = useState(-1);
 
 	const [host, setHost] = useState(getOrigin());
+
+	const router = useRouter();
 
 	useEffect(() => {
 		if (
@@ -579,10 +584,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			false, // canEdit
 			exportToPdfMode, //exportToPdfMode
 			false, //editMathMode
-			() => {}, //setIsEditMode
-			() => {}, // handleSlideEdit
-			() => () => {}, // updateImgUrlArray,
-			() => {}, // toggleEditMode,
+			() => { }, //setIsEditMode
+			() => { }, // handleSlideEdit
+			() => () => { }, // updateImgUrlArray,
+			() => { }, // toggleEditMode,
 			// slide.palette,
 			index === 0, // isCoverPage
 			slide.layout, // layoutOptionNonCover
@@ -651,7 +656,12 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		);
 
 	if (!slides || slides.length === 0) {
-		return <></>;
+		<Blank>
+			<div className='flex flex-col items-center justify-center'>
+				<div>Loading...</div>
+				<a href={`${addIdToRedir('/outlines')}`} className='text-blue-500'>Recreate this slide deck.</a>
+			</div>
+		</Blank>
 	}
 
 	return (
