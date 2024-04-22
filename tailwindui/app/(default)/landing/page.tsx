@@ -2159,7 +2159,7 @@ function Landing() {
 							</p>
 							<div className='w-layout-grid brix---social-media-grid-right---t-center'>
 								<a
-									href='https://twitter.com/drlambda_ai'
+									href={isChatslide() ? 'https://twitter.com/chatslide_ai' : 'https://twitter.com/drlambda_ai'}
 									className='brix---social-icon-square-30px w-inline-block'
 								>
 									<img

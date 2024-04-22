@@ -7,7 +7,7 @@ import {
 	FaYoutube,
 } from 'react-icons/fa';
 import { Logo } from '../ui/logo';
-import { getBrand, getHost } from '@/utils/getHost';
+import { getBrand, getHost, isChatslide } from '@/utils/getHost';
 
 const socialMediaBlock = (
 	<ul className='flex md:order-1 md:ml-4 justify-center items-center'>
@@ -40,7 +40,7 @@ const socialMediaBlock = (
 		{/* twitter */}
 		<li className='ml-4'>
 			<a
-				href='https://twitter.com/drlambda_ai'
+				href={isChatslide() ? 'https://twitter.com/chatslide_ai' : 'https://twitter.com/drlambda_ai'}
 				target='_blank'
 				className='flex justify-center items-center text-gray-600 hover:text-gray-900 bg-white hover:bg-white-100 rounded-full shadow transition duration-150 ease-in-out'
 				aria-label='Twitter'
