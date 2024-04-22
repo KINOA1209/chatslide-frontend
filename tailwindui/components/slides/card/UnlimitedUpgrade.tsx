@@ -27,7 +27,6 @@ export const UnlimitedUpgrade: React.FC<{
 			email,
 			!useEuro ? '$' : '€',
 			token,
-			isChatslide()
 		)
 		if (url) {
 			// open a new tab
