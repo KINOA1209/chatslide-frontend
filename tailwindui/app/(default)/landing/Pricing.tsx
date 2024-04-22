@@ -284,7 +284,7 @@ const PricingComparison: React.FC<{
 							<div className="brix---color-neutral-800 flex flex-col items-center">
 								<div className="brix---text-400-bold">{getPrice('PLUS', true)}</div>
 								<div className="brix---text-300-medium">{yearly ? 'per month' : '1st month, then'}</div>
-								<div className="brix---text-300-medium">{yearly ? '\u00A0' : getPrice('PLUS')}</div>
+								<div className="brix---text-300-medium">{yearly ? 'for 1st year' : getPrice('PLUS')}</div>
 							</div>
 						</div>
 						<button
@@ -381,7 +381,7 @@ const PricingComparison: React.FC<{
 							<div className="brix---color-neutral-800 flex flex-col items-center">
 								<div className="brix---text-400-bold">{getPrice('PRO', true)}</div>
 								<div className="brix---text-300-medium">{yearly ? 'per month' : '1st month, then'}</div>
-								<div className="brix---text-300-medium">{yearly ? '\u00A0' : '$39.9'}</div>
+								<div className="brix---text-300-medium">{yearly ? 'for 1st year' : '$39.9'}</div>
 							</div>
 						</div>
 						<button
