@@ -26,6 +26,7 @@ import ProjectService from '@/services/ProjectService';
 import TextareaAutosize from 'react-textarea-autosize';
 import ResourceService from '@/services/ResourceService';
 import { formatName } from '../summary/page';
+import LANGUAGES from '@/components/language/languageData';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 3;
@@ -64,7 +65,7 @@ export default function Topic_SocialPost() {
 		useProject();
 
 	const [topic, setTopic] = useState(project?.topic || '');
-	const postStyle= project?.post_type || '';
+	const postStyle = project?.post_type || '';
 	const [language, setLanguage] = useState(project?.language || 'English');
 	const [audience, setAudience] = useState(
 		project?.audience || 'social media audiences',
@@ -180,10 +181,11 @@ export default function Topic_SocialPost() {
 				ProjectService.parseSocialPosts(response.data.res, postStyle),
 			);
 			bulkUpdateProject(
-				{...response.data, 
-				id: response.data.project_id,
-				social_posts: response.data.res,
-			} as Project);
+				{
+					...response.data,
+					id: response.data.project_id,
+					social_posts: response.data.res,
+				} as Project);
 
 			router.push(addIdToRedir('/socialpost', response.data.project_id));
 		} catch (error) {
@@ -473,95 +475,29 @@ export default function Topic_SocialPost() {
 										</div>
 									</div>
 
-								<div className='language_drop'>
-									<select
-										className='focus:ring-0 bg-gray-100 border border-2 border-gray-200'
-										id='language'
-										value={language}
-										onChange={(e) => setLanguage(e.target.value)}
-										required
-									>
-										<option key='English' value='English'>
-											🇺🇸 English (US)
-										</option>
-										<option key='British English' value='British English'>
-											🇬🇧 English (UK)
-										</option>
-										<option key='Spanish' value='Spanish'>
-											🌎 Español (Latinoamérica)
-										</option>
-										<option
-											key='Continental Spanish'
-											value='Continental Spanish'
+									<div className='language_drop'>
+										<select
+											className='focus:ring-0 bg-gray-100 border border-2 border-gray-200'
+											id='language'
+											value={language}
+											onChange={(e) => setLanguage(e.target.value)}
+											required
 										>
-											🇪🇸 Español (España)
-										</option>
-										<option key='Chinese' value='Chinese'>
-											🇨🇳 中文 (简体)
-										</option>
-										<option
-											key='Traditional Chinese'
-											value='Traditional Chinese'
-										>
-											🇹🇼 中文 (繁體)
-										</option>
-										<option key='Russian' value='Russian'>
-											🇷🇺 Русский
-										</option>
-										<option key='Ukrainian' value='Ukrainian'>
-											🇺🇦 Українська
-										</option>
-										<option key='French' value='French'>
-											🇫🇷 Français
-										</option>
-										<option key='German' value='German'>
-											🇩🇪 Deutsch
-										</option>
-										<option
-											key='Brazilian Portuguese'
-											value='Brazilian Portuguese'
-										>
-											🇧🇷 Português (Brasil)
-										</option>
-										<option key='Portuguese' value='Portuguese'>
-											🇵🇹 Português
-										</option>
-										<option
-											key='Italian'
-											value='Italian'
-										>
-											🇮🇹 Italiano
-										</option>
-										<option key='Hindi' value='Hindi'>
-											🇮🇳 हिन्दी
-										</option>
-										<option key='Japanese' value='Japanese'>
-											🇯🇵 日本語
-										</option>
-										<option key='Korean' value='Korean'>
-											🇰🇷 한국어
-										</option>
-										<option key='Arabic' value='Arabic'>
-											🇸🇦 العربية
-										</option>
-										<option key='Hebrew' value='Hebrew'>
-											🇮🇱 עברית
-										</option>
-										<option key='Dutch' value='Dutch'>
-											🇳🇱 Nederlands
-										</option>
-										<option key='Norwegian' value='Norwegian'>
-											🇳🇴 Norsk
-										</option>
-										<option key='Croatian' value='Croatian'>
-											🇭🇷 Hrvatski
-										</option>
-									</select>
+											{LANGUAGES.map((lang) => (
+												<option
+													key={lang.englishName}
+													value={lang.englishName}
+													className={lang.rtl ? 'text-right' : ''}
+												>
+													{lang.displayName}
+												</option>
+											))}
+										</select>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
 					{/* supplementary section */}
 					<div className='supp_container w-full lg:w-2/3 px-3 my-3 lg:my-1'>

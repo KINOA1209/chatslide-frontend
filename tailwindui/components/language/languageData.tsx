@@ -2,6 +2,7 @@ interface Language {
 	displayName: string; // User-friendly name with flag emoji
 	englishName: string; // Name of the language in English
 	code: string; // Language code or identifier
+	rtl?: boolean; // Right-to-left language
 }
 
 const LANGUAGES: Language[] = [
@@ -21,8 +22,8 @@ const LANGUAGES: Language[] = [
 	{ displayName: "🇮🇳 हिन्दी", englishName: "Hindi", code: "hi-IN" },
 	{ displayName: "🇯🇵 日本語", englishName: "Japanese", code: "ja-JP" },
 	{ displayName: "🇰🇷 한국어", englishName: "Korean", code: "ko-KR" },
-	{ displayName: "🇸🇦 العربية", englishName: "Arabic", code: "ar-SA" },
-	{ displayName: "🇮🇱 עברית", englishName: "Hebrew", code: "he-IL" },
+	{ displayName: "العربية 🇸🇦", englishName: "Arabic", code: "ar-SA", rtl: true },
+	{ displayName: "עברית 🇮🇱", englishName: "Hebrew", code: "he-IL", rtl: true },
 	{ displayName: "🇳🇱 Nederlands", englishName: "Dutch", code: "nl-NL" },
 	// { displayName: "🇳🇴 Norsk", englishName: "Norwegian", code: "no-NO" },
 	{ displayName: "🇭🇷 Hrvatski", englishName: "Croatian", code: "hr-HR" },

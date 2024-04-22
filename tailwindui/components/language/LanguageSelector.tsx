@@ -31,7 +31,11 @@ const LanguageSelector: React.FC<{
 					value={language}
 				>
 					{LANGUAGES.map((lang) => (
-						<option key={lang.englishName} value={lang.englishName}>{lang.displayName}</option>
+						<option
+							key={lang.englishName}
+							value={lang.englishName}
+							className={lang.rtl ? 'text-right' : ''}
+							>{lang.displayName}</option>
 					))}
 				</DropDown>
 			</div>
