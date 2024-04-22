@@ -202,10 +202,11 @@ export const projectFinishedSteps = (project: Project | null) => {
 		finishedStepsArray.push(0);
 		if (project.outlines) {
 			finishedStepsArray.push(1);
-			// finishedStepsArray.push(2);
 		}
-		if (project.presentation_slides && Object.keys(project.presentation_slides).length > 0) {
+		if (project.parsed_slides && project.parsed_slides.length > 0) {
 			finishedStepsArray.push(2);
+		} else {
+			return finishedStepsArray;  // if no slides, return early with outlines	
 		}
 		if (project?.template) {
       finishedStepsArray.push(3);
