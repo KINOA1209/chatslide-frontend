@@ -41,6 +41,7 @@ import slides_scenarios from './../scenario-choice/slides_scenarios.json';
 import RangeSlider from '@/components/ui/RangeSlider';
 import GenModeToggle from '@/components/summary/GenModeToggle';
 import { WrappableRow } from '@/components/layout/WrappableRow';
+import { formatName } from './util';
 
 
 const MAX_TOPIC_LENGTH = 2000;
@@ -62,17 +63,6 @@ const getAudienceFromSceario = (scenarioType: string) => {
 		(scenario) => scenario.id === scenarioType,
 	)?.audience || 'Business_Clients';
 };
-
-export function formatName(name: string, isUrl: boolean = false) {
-	// remove file extension
-	if (!isUrl)
-		name = name.replace(/\.[^/.]+$/, '');
-
-	if (name.length > MAX_TOPIC_LENGTH) {
-		return name.slice(0, MAX_TOPIC_LENGTH - 3) + '...';
-	}
-	return name;
-}
 
 export default function Topic() {
 	const {
@@ -143,7 +133,10 @@ export default function Topic() {
 			if (topic.length == 0) {
 				console.log('setting topic for resource', selectedResources[0]);
 				setTopic(formatName(selectedResources[0].name,
-					['url', 'webpage', 'youtube'].includes(selectedResources[0].type)));
+					['url', 'webpage', 'youtube'].includes(selectedResources[0].type),
+					MAX_TOPIC_LENGTH
+				),
+				);
 			}
 		}
 

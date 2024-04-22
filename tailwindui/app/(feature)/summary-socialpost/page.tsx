@@ -25,7 +25,7 @@ import { useSocialPosts } from '@/hooks/use-socialpost';
 import ProjectService from '@/services/ProjectService';
 import TextareaAutosize from 'react-textarea-autosize';
 import ResourceService from '@/services/ResourceService';
-import { formatName } from '../summary/page';
+import { formatName } from '../summary/util';
 import LANGUAGES from '@/components/language/languageData';
 
 const MAX_TOPIC_LENGTH = 128;
@@ -79,7 +79,9 @@ export default function Topic_SocialPost() {
 		if (selectedResources.length > 0) {
 			if (topic.length == 0) {
 				setTopic(formatName(selectedResources[0].name,
-					['url', 'webpage', 'youtube'].includes(selectedResources[0].type)));
+					['url', 'webpage', 'youtube'].includes(selectedResources[0].type),
+					MAX_TOPIC_LENGTH),
+				);
 			}
 		}
 	}, [selectedResources]);
