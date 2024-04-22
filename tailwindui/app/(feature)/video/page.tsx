@@ -17,6 +17,7 @@ import Modal from '@/components/ui/Modal';
 import { Explanation } from '@/components/ui/Text';
 import { SiQuicktime } from 'react-icons/si';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { FaChrome } from 'react-icons/fa';
 
 
 const VideoVisualizer = ({
@@ -35,22 +36,31 @@ const VideoVisualizer = ({
 			<Modal
 				showModal={showQuickTimeModal}
 				setShowModal={setShowQuickTimeModal}
-				title='Sorry, QuickTime users'
+				title='Device Compatibility Notice'
 				width='40rem'
 				canClose={true}
 			>
 				<div className='flex flex-col items-center gap-y-4'>
-					<SiQuicktime
-						style={{
-							flex: '1',
-							width: '3rem',
-							height: '3rem',
-							color: '#344054',
-						}}
+					<div className='flex flex-row gap-x-2'>
+						<SiQuicktime
+							style={{
+								flex: '1',
+								width: '3rem',
+								height: '3rem',
+								color: '#344054',
+							}}
 						/>
+						<FaChrome
+							style={{
+								width: '3rem',
+								height: '3rem',
+								color: '#4285F4', // Google's blue color
+							}}
+						/>
+					</div>
 					<Explanation>
-						If you're using QuickTime on Mac to play the video, you might experience an issue where the audio is missing 😕. 
-						We recommend playing the video in the free <a href='https://www.videolan.org/vlc/'>VLC player</a>. 
+						If you're using QuickTime on Mac or certain apps on Chromebook to play the video, you might experience an issue where the audio is missing 😕.
+						We recommend playing the video in the free <a href='https://www.videolan.org/vlc/'>VLC player</a>.
 						If you upload the video to social media, the audio will be fine 👍.
 					</Explanation>
 				</div>
@@ -64,7 +74,8 @@ const VideoVisualizer = ({
 
 		// if user is using mac, tell users not use QuickTime Player to play the video
 		const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-		if (isMac) {
+		const isChromebook = navigator.userAgent.toLowerCase().includes('cros');
+		if (isMac || isChromebook) {
 			setShowQuickTimeModal(true);
 		}
 
@@ -164,12 +175,12 @@ export default function WorkflowStep6() {
 	const [jobStatus, setJobStatus] = useState<string>();
 	const [isLoading, setIsLoading] = useState(project?.video_url ? false : true);
 	const { token } = useUser();
-	
+
 	const params = useSearchParams();
 	const router = useRouter();
 
 	if (!project) {
-		if(params.get('id')) {
+		if (params.get('id')) {
 			router.push(`/project/${params.get('id')}`);
 		}
 		return <Blank>Project not found</Blank>;
