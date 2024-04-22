@@ -2,6 +2,7 @@ import { SmallBlueButton } from '@/components/button/DrlambdaButton';
 import React, { useEffect, useRef, useState } from 'react';
 import { ChromePicker, ColorResult } from 'react-color';
 import rgbHex from 'rgb-hex';
+
 interface ColorPickerProps {
 	onCustomColorChange: (color: string) => void;
 	initialColor: string; // Accept initial color prop
