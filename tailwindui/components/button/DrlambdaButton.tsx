@@ -1,8 +1,6 @@
 'use client';
 
-import {
-	SpinIcon,
-} from '@/app/(feature)/icons';
+import { SpinIcon } from '@/app/(feature)/icons';
 import Select from 'react-select';
 import React, {
 	MouseEventHandler,
@@ -18,7 +16,6 @@ import UserService from '@/services/UserService';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 
-
 type DrlambdaButtonProps = {
 	children: ReactNode;
 	onClick?: MouseEventHandler<HTMLButtonElement>;
@@ -30,6 +27,7 @@ type DrlambdaButtonProps = {
 	disabled?: boolean;
 	isFlashing?: boolean;
 	id?: string;
+	customizeStyle?: React.CSSProperties;
 };
 
 const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
@@ -47,7 +45,7 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
 
 	function getButtonBg() {
 		if (isFlashing) {
-			return 'flash-bg'
+			return 'flash-bg';
 		}
 		if (isSubmitting) {
 			// return 'bg-gray-600';
@@ -167,8 +165,9 @@ export const BackButton: React.FC<BackButtonProps> = ({
 		>
 			<FaChevronLeft style={{ color: dark ? '#222222' : '#FFFFFF' }} />
 			<div
-				className={`text-center self-center ${dark ? 'text-neural-800' : 'text-white'
-					} font-medium font-creato-medium leading-normal tracking-[0.035rem] whitespace-nowrap hidden sm:block`}
+				className={`text-center self-center ${
+					dark ? 'text-neural-800' : 'text-white'
+				} font-medium font-creato-medium leading-normal tracking-[0.035rem] whitespace-nowrap hidden sm:block`}
 			>
 				{text}
 			</div>
@@ -188,8 +187,9 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 	return (
 		<button
 			id={id}
-			className={`btn h-[36px] sm:h-[36px] w-[12rem] mx-auto sm:gap-x-2 text-white sm:font-semibold bg-Blue ${isSubmitting && 'animate-pulse'
-				} disabled:bg-gray-600 whitespace-nowrap rounded-xl`}
+			className={`btn h-[36px] sm:h-[36px] w-[12rem] mx-auto sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
+				isSubmitting && 'animate-pulse'
+			} disabled:bg-gray-600 whitespace-nowrap rounded-xl`}
 			onClick={onClick}
 			disabled={isSubmitting || disabled}
 		>
@@ -203,23 +203,26 @@ export const EarlyAccessButton: React.FC<{
 	project_id?: string;
 	token: string;
 	feature: string;
-}> = ({
-	username,
-	project_id = '',
-	token,
-	feature,
-}) => {
-		return (
-			<>
-				<ToastContainer />
-				<BigBlueButton onClick={() => {
-					UserService.submitFeedback(5, `${username} wants to join the pilot program for ${feature} feature`, project_id, token);
+}> = ({ username, project_id = '', token, feature }) => {
+	return (
+		<>
+			<ToastContainer />
+			<BigBlueButton
+				onClick={() => {
+					UserService.submitFeedback(
+						5,
+						`${username} wants to join the pilot program for ${feature} feature`,
+						project_id,
+						token,
+					);
 					toast.success(`You are added to the ${feature} waitlist, thank you!`);
-				}} >
-					Join Waitlist
-				</BigBlueButton>
-			</>)
-	};
+				}}
+			>
+				Join Waitlist
+			</BigBlueButton>
+		</>
+	);
+};
 
 export const BigGrayButton: React.FC<DrlambdaButtonProps> = ({
 	children,
@@ -321,6 +324,7 @@ export const SmallBlueButton: React.FC<DrlambdaButtonProps> = ({
 	isSubmitting = false,
 	isPaidUser,
 	isPaidFeature = false,
+	customizeStyle,
 }) => {
 	function getButtonStyle() {
 		if (isSubmitting || disabled) {
@@ -333,6 +337,7 @@ export const SmallBlueButton: React.FC<DrlambdaButtonProps> = ({
 			onClick={onClick}
 			className={`border border-1 ${getButtonStyle()} rounded text-Blue px-3 py-1`}
 			disabled={isSubmitting || disabled}
+			style={customizeStyle}
 		>
 			{children}
 		</button>

@@ -67,18 +67,19 @@ export const generateTemplate = (templateName: string) => {
 		themeElements,
 		layoutElements,
 	}: MainSlideProps) => {
-		const { customTemplateBgColor } = useSlides();
+		const { customTemplateBgColor, hasSelectedCustomTemplateBgColor } =
+			useSlides();
 		const ChosenLayoutNonCover =
 			layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
 		const ChosenLayoutCover =
 			layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
 
-		// useEffect(() => {
-		// 	console.log(
-		// 		'selected theme element backgroundColor is ',
-		// 		themeElements.backgroundColor,
-		// 	);
-		// }, [customTemplateBgColor]);
+		useEffect(() => {
+			console.log(
+				'selected theme element backgroundColor is gradient background',
+				themeElements.isGradientBackground,
+			);
+		}, [palette]);
 
 		return (
 			<>
@@ -90,12 +91,16 @@ export const generateTemplate = (templateName: string) => {
 							: 'hidden '
 					} `}
 					style={{
-						backgroundImage: themeElements.isGradientBackground
-							? themeElements.backgroundColor
-							: undefined,
-						backgroundColor: !themeElements.isGradientBackground
-							? themeElements.backgroundColor
-							: undefined,
+						backgroundImage:
+							themeElements?.isGradientBackground &&
+							!hasSelectedCustomTemplateBgColor
+								? themeElements.backgroundColor
+								: undefined,
+						backgroundColor:
+							!themeElements?.isGradientBackground ||
+							hasSelectedCustomTemplateBgColor
+								? themeElements.backgroundColor
+								: undefined,
 					}}
 				>
 					{/* background picture when user uploaded this  */}
@@ -143,12 +148,16 @@ export const generateTemplate = (templateName: string) => {
 							: 'hidden'
 					} `}
 					style={{
-						backgroundImage: themeElements.isGradientBackground
-							? themeElements.backgroundColorCover
-							: undefined,
-						backgroundColor: !themeElements.isGradientBackground
-							? themeElements.backgroundColorCover
-							: undefined,
+						backgroundImage:
+							themeElements?.isGradientBackground &&
+							!hasSelectedCustomTemplateBgColor
+								? themeElements.backgroundColor
+								: undefined,
+						backgroundColor:
+							!themeElements?.isGradientBackground ||
+							hasSelectedCustomTemplateBgColor
+								? themeElements.backgroundColor
+								: undefined,
 					}}
 				>
 					{/* background picture when user uploaded this  */}

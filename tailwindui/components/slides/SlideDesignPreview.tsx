@@ -60,7 +60,8 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 
 		const newSlides = Object.keys(layoutOptions).map((layoutKey) => {
 			const newSlide = new Slide();
-			newSlide.head = '';
+			newSlide.head = slides[0]?.head || 'Slide Deck Title';
+			newSlide.userName = slides[0]?.userName || 'Created with DrLambda';
 			newSlide.title = slides[1]?.title || 'New Slide';
 			newSlide.subtopic = slides[1]?.subtopic || 'New Slide';
 			newSlide.template = template;
