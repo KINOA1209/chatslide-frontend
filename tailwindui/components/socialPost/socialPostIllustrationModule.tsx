@@ -551,7 +551,7 @@ export const ImgModule = ({
 					<PaywallModal
 						showModal={showPaymentModal}
 						setShowModal={setShowPaymentModal}
-						message='Upgrade for more ⭐️credits.'
+						message='You need more ⭐️credits'
 					/>
 					<div className='grow md:grow-0'></div>
 					<Transition

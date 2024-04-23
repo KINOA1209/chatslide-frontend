@@ -748,7 +748,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			<PaywallModal
 				showModal={showPaymentModal}
 				setShowModal={setShowPaymentModal}
-				message='Upgrade for more ⭐️credits.'
+				message='You need more ⭐️credits'
 				showReferralLink={true}
 			/>
 
