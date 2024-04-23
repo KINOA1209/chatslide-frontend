@@ -21,7 +21,7 @@ type ShareButtonProps = {
 	setIsDropdownVisible?: React.Dispatch<React.SetStateAction<boolean>>;
 	project: Project;
 	host?: string;
-	isSocialPost?: boolean;
+	shareEntry?: string; // slides, socialPosts, video
 	currentSlideIndex?: number;
 	width?: string;
 	height?: string;
@@ -36,7 +36,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 	isDropdownVisible,
 	setIsDropdownVisible,
 	host = getOrigin(),
-	isSocialPost = false,
+	shareEntry = 'slides',
 	currentSlideIndex = 0,
 	width,
 	height,
@@ -59,19 +59,18 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 	const limitedKeywords = keywords.slice(0, 3);
 	const truncatedDescription = truncateWithFullWords(description, 100);
 
-	const iframe = `<iframe src="${host}/embed/${project_id}?page=${
-		currentSlideIndex + 1
-	}" width="960px" height="540px"></iframe>`;
+	const iframe = `<iframe src="${host}/embed/${project_id}?page=${currentSlideIndex + 1
+		}" width="960px" height="540px"></iframe>`;
 
 	function truncateWithFullWords(str: string, maxLength: number) {
 		if (str.length <= maxLength) return str;
 		return str.substring(0, str.lastIndexOf(' ', maxLength)) + '...';
 	}
 
-	const handlePost = async (platform: string) => {
+	const handlePost = async (platform: string, shareEntry: string) => {
 		try {
 			setShare && setShare(true, isPublic);
-			const shareLink = `${host}/shared/${project_id}`;
+			const shareLink = shareEntry === 'video' ? `${host}/shared_video/${project_id}` : `${host}/shared/${project_id}`;
 			const hashTags = limitedKeywords
 				.map((keyword) => `#${keyword}`)
 				.join(' ');
@@ -107,11 +106,11 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 				showModal={showShareModal}
 				setShowModal={setShowShareModal}
 				title='Share / Publish'
-				// description='Share your slides with others or on social media'
+			// description='Share your slides with others or on social media'
 			>
 				<div className='flex flex-col gap-2'>
 					<Instruction>
-						Share {isSocialPost ? ' Social Post' : ' Slides'}
+						Share {shareEntry === 'socialPosts' ? 'Social Post' : shareEntry === 'slides' ? 'Slides' : 'Video'}
 					</Instruction>
 					{setShare && (
 						<RadioButton
@@ -130,7 +129,10 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 					{share && (
 						<div>
 							<Explanation>View only link:</Explanation>
-							<ClickableLink link={`${host}/shared/${project_id || ''}`} />
+							{shareEntry === 'video' ? <ClickableLink link={`${host}/shared_video/${project_id || ''}`} /> :
+								<ClickableLink link={`${host}/shared/${project_id || ''}`} />
+							}
+
 						</div>
 					)}
 
@@ -139,7 +141,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 							<BigGrayButton
 								key={platform}
 								onClick={() => {
-									handlePost(platform);
+									handlePost(platform, shareEntry);
 								}}
 							>
 								Post to{' '}
@@ -153,7 +155,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 					</div>
 				</div>
 
-				{!isSocialPost && share && (
+				{shareEntry === 'slides' && share && (
 					<div>
 						<Instruction>Embed this Page</Instruction>
 						<Explanation>
@@ -165,7 +167,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 					</div>
 				)}
 
-				{project.is_shared && setShare && !isSocialPost && (
+				{project.is_shared && setShare && shareEntry === 'slides' && (
 					<div>
 						<Instruction>Publish Slides</Instruction>
 						<Explanation>
