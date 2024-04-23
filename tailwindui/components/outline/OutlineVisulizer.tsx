@@ -206,7 +206,7 @@ const OutlineVisualizer = ({
 							<div
 								id={String(sectionIndex)}
 								key={sectionIndex + 1}
-								className='OutlineStep-3 relative w-full sm:w-3/4 bg-[#F9FAFB] rounded-md shadow border border-gray-200 px-1 sm:px-4 py-2'
+								className='OutlineStep-3 relative w-full sm:w-3/4 bg-[#F9FAFB] rounded-md shadow border border-gray-200 mx-2 px-1 sm:px-4 py-2'
 								onMouseEnter={() => setHoveredSectionIndex(sectionIndex)}
 								onMouseLeave={() => setHoveredSectionIndex(-1)}
 							>

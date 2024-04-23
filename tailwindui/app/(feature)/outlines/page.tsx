@@ -23,6 +23,8 @@ import { convertOutlineToPlainText, convertPlainTextToOutlines } from '@/compone
 import { BigTitle, Instruction, Explanation } from '@/components/ui/Text';
 import { Column } from '@/components/layout/Column';
 import Toggle from '@/components/button/Toggle';
+import { WrappableRow } from '@/components/layout/WrappableRow';
+import Card from '@/components/ui/Card';
 
 export type OutlineViewMode = 'card' | 'page';
 
@@ -144,24 +146,26 @@ export default function WorkflowStep2() {
 				nextText={!isSubmitting ? 'Select Design' : 'Select Design'}
 			/>
 			<div className='flex flex-col mb-[3rem]'>
-				<Toggle
-					isLeft={viewMode === 'card'}
-					setIsLeft={(value: boolean) => setViewMode(value ? 'card' : 'page')}
-					leftElement={<><CardReviewIcon color={`${viewMode === 'card' ? '#5168F6' : '#707C8A'}`} />Card View</>}
-					rightElement={<><PageReviewIcon color={`${viewMode === 'page' ? '#5168F6' : '#707C8A'}`} />Page View</>}
-				/>
 
 				<Column>
-				<div className='flex flex-col gap-2 w-2/3 mx-auto'>
-					<BigTitle>Outline</BigTitle>
-					<Instruction>Modify this outline until you're satisfied.</Instruction>
-					<Explanation>Around {outlines.length * 3} slide pages total.</Explanation>
-					</div>
+						<WrappableRow type='flex' justify='around'>
+							<div className='flex flex-col gap-2'>
+								<BigTitle>🗒️ Outline</BigTitle>
+								{/* <Instruction>Modify this outline until you're satisfied.</Instruction> */}
+								<Explanation>Around {outlines.length * 3} slide pages total.</Explanation>
+							</div>
+							<Toggle
+								isLeft={viewMode === 'card'}
+								setIsLeft={(value: boolean) => setViewMode(value ? 'card' : 'page')}
+								leftElement={<><CardReviewIcon color={`${viewMode === 'card' ? '#5168F6' : '#707C8A'}`} />Card View</>}
+								rightElement={<><PageReviewIcon color={`${viewMode === 'page' ? '#5168F6' : '#707C8A'}`} />Page View</>}
+							/>
+						</WrappableRow>
 					{loading ? (
 						<Loading />
 					) : (
 						<div className='w-full gap-10 auto-rows-min'>
-							<div className='lg:col-span-2 flex flex-col'>
+							<div className='flex flex-col'>
 								{/* only trigger re-render after data is fetched */}
 								{viewMode === 'card' ? (
 									<OutlineVisualizer
@@ -183,6 +187,6 @@ export default function WorkflowStep2() {
 					)}
 				</Column>
 			</div>
-		</div>
+		</div >
 	);
 }
