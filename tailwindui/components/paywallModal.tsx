@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import ReferralLink from './ReferralLink';
 import Modal from './ui/Modal';
 import { Pricing, PricingComparison } from '@/app/(default)/landing/Pricing';
+import { BigTitle, Instruction } from './ui/Text';
+import Card from './ui/Card';
 
 interface PaywallModalProps {
 	showModal: boolean;
@@ -38,15 +40,19 @@ const PaywallModal: React.FC<PaywallModalProps> = ({
 			<div className='py-2 space-y-4'>
 				{' '}
 				{/* Reduced bottom padding */}
-				<PricingComparison small={true} showFreeTier={false}/>
 				{showReferralLink && (
-					<div className='space-y-4'>
-						<div className='text-center text-[#707C8A] text-[16px] font-bold'>
-							Or refer your friend for more ⭐️credits.
-						</div>
+					<Card>
+						<BigTitle>
+							Refer your friend for 50 ⭐️credits.
+						</BigTitle>
 						<ReferralLink />
-					</div>
+
+						<BigTitle>
+							Join our <a href='/discord' className='text-blue-600'>discord</a> community for 50 ⭐️credits.
+						</BigTitle>
+					</Card>
 				)}
+				<PricingComparison small={true} showFreeTier={false} />
 			</div>
 		</Modal>
 	);

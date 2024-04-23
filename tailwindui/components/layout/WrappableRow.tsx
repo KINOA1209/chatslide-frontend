@@ -15,7 +15,7 @@ export const WrappableRow: React.FC<{
 	}
 	
 	return (
-		<div className={`flex flex-col md:flex-row gap-2 justify-${justify} items-start`}>
+		<div className={`flex flex-col mx-auto md:mx-0 md:flex-row gap-2 justify-${justify} items-start`}>
 			{children}
 		</div>
 	);

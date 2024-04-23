@@ -5,7 +5,7 @@ import Toggle from "@/components/button/Toggle";
 import { useUser } from "@/hooks/use-user";
 import UserService from "@/services/UserService";
 import { userInEU } from "@/utils/userLocation";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -17,7 +17,6 @@ const PricingComparison: React.FC<{
 }> = ({ extraPadding, small = false, showFreeTier = true }) => {
 	const { token, email, tier: userTier } = useUser();
 	const [currency, setCurrency] = useState<string>('$');
-	const pathname = usePathname();
 	const router = useRouter();
 	const [yearly, setYearly] = useState(true);
 	const smallSuffix = small ? '-small' : '';
@@ -134,7 +133,6 @@ const PricingComparison: React.FC<{
 				email,
 				currency,
 				token,
-				pathname.includes('chatslide')
 			)
 
 			// Redirect to the checkout page
@@ -286,7 +284,7 @@ const PricingComparison: React.FC<{
 							<div className="brix---color-neutral-800 flex flex-col items-center">
 								<div className="brix---text-400-bold">{getPrice('PLUS', true)}</div>
 								<div className="brix---text-300-medium">{yearly ? 'per month' : '1st month, then'}</div>
-								<div className="brix---text-300-medium">{yearly ? '\u00A0' : getPrice('PLUS')}</div>
+								<div className="brix---text-300-medium">{yearly ? 'for 1st year' : getPrice('PLUS')}</div>
 							</div>
 						</div>
 						<button
@@ -383,7 +381,7 @@ const PricingComparison: React.FC<{
 							<div className="brix---color-neutral-800 flex flex-col items-center">
 								<div className="brix---text-400-bold">{getPrice('PRO', true)}</div>
 								<div className="brix---text-300-medium">{yearly ? 'per month' : '1st month, then'}</div>
-								<div className="brix---text-300-medium">{yearly ? '\u00A0' : '$39.9'}</div>
+								<div className="brix---text-300-medium">{yearly ? 'for 1st year' : '$39.9'}</div>
 							</div>
 						</div>
 						<button

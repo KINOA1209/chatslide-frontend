@@ -61,7 +61,7 @@ export function formatDate(dateString: string): string {
 }
 
 export function getThumbnailUrl(project: Project) {
-	if(!project)
+	if (!project)
 		return isChatslide() ? defaultChatSlideThumbnail : defaultDrLambdaThumbnail;
 	if (project.content_type === 'presentation') {
 		return project.thumbnail_url || (isChatslide() ? defaultChatSlideThumbnail : defaultDrLambdaThumbnail);
@@ -284,18 +284,14 @@ const ProjectItem: React.FC<{
 								{/* dropdown menu items area */}
 								{isDropdownVisible && (
 									<div
-										className='absolute top-full right-0 bg-white shadow-md rounded-md mt-1 lg:w-[180px]'
+										className='absolute top-full right-0 bg-white shadow-md rounded-md border border-2 border-gray-200 mt-1 lg:w-[180px]'
 										style={{
 											zIndex: 999,
 											display: 'flex',
 											flexDirection: 'column',
-											borderRadius: 'var(--radius-xl, 12px)',
-										}}
-										onMouseLeave={() => {
-											setIsDropdownVisible(false);
 										}}
 									>
-										<button className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'>
+										<button className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md hover:bg-zinc-100 w-full text-left'>
 											<Link
 												style={{
 													display: 'flex',
@@ -303,7 +299,6 @@ const ProjectItem: React.FC<{
 													alignItems: 'center',
 													justifyContent: 'flex-start',
 													gap: 'var(--spacing-lg, 12px)',
-													borderRadius: 'var(--radius-xl, 12px)',
 												}}
 												href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}
 											>
@@ -316,7 +311,7 @@ const ProjectItem: React.FC<{
 
 										{!isDiscover && setCurrentProjects && (
 											<button
-												className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'
+												className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md  hover:bg-zinc-100 w-full text-left'
 												onClick={() => {
 													setShowCloneModal(true);
 													// setIsDropdownVisible(false);
@@ -327,7 +322,6 @@ const ProjectItem: React.FC<{
 													alignItems: 'center',
 													justifyContent: 'flex-start',
 													gap: 'var(--spacing-lg, 12px)',
-													borderRadius: 'var(--radius-xl, 12px)',
 													borderBottom:
 														'1px solid var(--Colors-Border-border-secondary, #EAECF0)',
 												}}
@@ -344,44 +338,45 @@ const ProjectItem: React.FC<{
 											</button>
 										)}
 
-										<button
-											className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'
-											onClick={() => {
-												setShowShareModal(true);
-											}}
-											style={{
-												display: 'flex',
-												flexDirection: 'row',
-												alignItems: 'center',
-												justifyContent: 'flex-start',
-												gap: 'var(--spacing-lg, 12px)',
-												borderRadius: 'var(--radius-xl, 12px)',
-											}}
-										>
-											<ShareButton
-												share={isShared}
-												setShare={(share: boolean) => {
-													setIsShared(share);
-													ProjectService.SlideShareLink(token, project.id, share);
-												}}
-												project={project}
-												showShareModal={showShareModal}
-												setShowShareModal={setShowShareModal}
-												isDropdownVisible={isDropdownVisible}
-												setIsDropdownVisible={setIsDropdownVisible}
-												width='16px'
-												height='16px'
-											/>
-											Share
-										</button>
-
-										{!isDiscover && setCurrentProjects && (
+										{project.thumbnail_url && // if the slide is created, they have thumbnail, otherwise it might be at outline stage
 											<button
-												className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'
+												className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md hover:bg-zinc-100 w-full text-left'
+												onClick={() => {
+													setShowShareModal(true);
+												}}
+												style={{
+													display: 'flex',
+													flexDirection: 'row',
+													alignItems: 'center',
+													justifyContent: 'flex-start',
+													gap: 'var(--spacing-lg, 12px)',
+												}}
+											>
+												<ShareButton
+													share={isShared}
+													setShare={(share: boolean) => {
+														setIsShared(share);
+														ProjectService.SlideShareLink(token, project.id, share);
+													}}
+													project={project}
+													showShareModal={showShareModal}
+													setShowShareModal={setShowShareModal}
+													isDropdownVisible={isDropdownVisible}
+													setIsDropdownVisible={setIsDropdownVisible}
+													width='16px'
+													height='16px'
+												/>
+												Share
+											</button>
+										}
+
+										{!isDiscover && setCurrentProjects && project.thumbnail_url && (
+											<button
+												className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md  hover:bg-zinc-100 w-full text-left'
 												onClick={() => {
 													if (project.content_type === 'presentation')
 														setShowExportToPdfModal(true);
-													else 
+													else
 														router.push(`/project/${project.id}`);
 												}} // Toggle showCloneModal in the parent component
 												style={{
@@ -390,7 +385,6 @@ const ProjectItem: React.FC<{
 													alignItems: 'center',
 													justifyContent: 'flex-start',
 													gap: 'var(--spacing-lg, 12px)',
-													borderRadius: 'var(--radius-xl, 12px)',
 													borderBottom:
 														'1px solid var(--Colors-Border-border-secondary, #EAECF0)',
 												}}
@@ -408,7 +402,7 @@ const ProjectItem: React.FC<{
 
 										{!isDiscover && onDelete && (
 											<button
-												className='block px-[10px] py-[9px] text-sm text-[#182230] hover:bg-[#F2F4F7] w-full text-left'
+												className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md hover:bg-zinc-100 w-full text-left'
 												onClick={() => {
 													setIsDropdownVisible(false);
 													onDelete(project.id);
@@ -419,7 +413,6 @@ const ProjectItem: React.FC<{
 													alignItems: 'center',
 													justifyContent: 'flex-start',
 													gap: 'var(--spacing-lg, 12px)',
-													borderRadius: 'var(--radius-xl, 12px)',
 													color: 'var(--colors-text-text-error-primary-600, #D92D20)',
 												}}
 											>

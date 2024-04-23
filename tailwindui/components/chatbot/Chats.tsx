@@ -74,19 +74,23 @@ const Chats: React.FC<ChatsProps> = ({
 	const addSuccessMessage = (
 		content: string | JSX.Element,
 		imageUrls?: string[],
+		isFeeedback?: boolean
 	): ChatHistory => ({
 		role: 'assistant',
 		content,
 		imageUrls, // Include imageUrls in the chat history entry
+		isFeedback: isFeeedback,
 	});
 
 	const addChoicesMessage = (
 		chat: string,
 		suggestions: string[][],
-		selectedSuggestion: number | null
+		selectedSuggestion: number | null,
+		isFeedback?: boolean
 	): ChatHistory => ({
 		role: 'assistant',
-		content: { chat: chat, suggestions: suggestions, selectedSuggestion: selectedSuggestion } as RegenerateSelection
+		content: { chat: chat, suggestions: suggestions, selectedSuggestion: selectedSuggestion } as RegenerateSelection,
+		isFeedback: isFeedback,
 	})
 
 	const handleRegenerateTextClick = (
@@ -142,7 +146,7 @@ const Chats: React.FC<ChatsProps> = ({
 								disabled={selectedSuggestion !== null}
 								onClick={() => {
 									if (isThumbDownFollowUp) {
-										const message = addSuccessMessage(`😉 Thank you for your feedback, we will improve!`);
+										const message = addSuccessMessage(`😉 Thank you for your feedback, we will improve!`, undefined, true);
 										addChatHistory(message);
 										UserService.submitFeedback(1, username + ' said ' + suggestion[0], project?.id || '', token);
 									} else {
@@ -184,21 +188,23 @@ const Chats: React.FC<ChatsProps> = ({
 		addEmojiToChatHistory(index, emoji)
 		UserService.submitFeedback(emoji === '👍' ? 5 : 0, username + ' said ' + emoji, project?.id || '', token);
 		if (emoji === '👍') {
-			const successMessage = addSuccessMessage(`✌️ Thank you for your feedback!`)
+			const successMessage = addSuccessMessage(`✌️ Thank you for your feedback!`, undefined, true);
 			addChatHistory(successMessage)
 		} else if (emoji === '👎') {
-			const undoMessage = addSuccessMessage('↩ You can say "undo" to undo the last action. Or click the button in the tool bar.');
+			const undoMessage = addSuccessMessage('↩ You can say "undo" to undo the last action. Or click the button in the tool bar.', undefined, true);
 			addChatHistory(undoMessage);
 
-			const errorMessage = addChoicesMessage('🤕 Sorry to hear that. May I know what went wrong?',
+			const message = addChoicesMessage('🤕 Sorry to hear that. May I know what went wrong?',
 				[
 					['Assistant did not understand my request'],
 					['The content is not accurate'],
 					['Assistant is too slow'],
 					['Others']
 				],
-				null)
-			addChatHistory(errorMessage);
+				null,
+				true
+			)
+			addChatHistory(message);
 		}
 	}
 
@@ -227,9 +233,9 @@ const Chats: React.FC<ChatsProps> = ({
 			regenerateText,
 		);
 		console.log('responseData structure:', chatResponse);
-		if (!chatResponse.chat || chatResponse.suggestions) {
+		if (!chatResponse.chat || !chatResponse.suggestions) {
 			// network fails, backend fails
-			addChatHistory(chatResponse)
+			addChatHistory(addErrorMessage(chatResponse.chat));
 		} else if (!chatResponse.suggestions) {
 			// ai does not understand
 			const errorMessage = addErrorMessage('😞 Sorry, I do not understand your request, can you try again?')

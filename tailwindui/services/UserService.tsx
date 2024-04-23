@@ -1,5 +1,6 @@
 import { getRewardfulReferralId } from '@/components/integrations/Rewardful';
 import AuthService from './AuthService';
+import { isChatslide } from '@/utils/getHost';
 
 class UserService {
 	static async initializeUser(token: string): Promise<boolean> {
@@ -242,13 +243,12 @@ class UserService {
 		email: string,
 		currency: string,
 		token: string,
-		isChatslide: boolean,
 	) {
 		const requestData = {
 			tier: plan,
 			email: email,
 			currency: currency === '$' ? 'usd' : 'eur',
-			is_chatslide: isChatslide,
+			is_chatslide: isChatslide(),
 			client_reference_id: await getRewardfulReferralId()
 		};
 

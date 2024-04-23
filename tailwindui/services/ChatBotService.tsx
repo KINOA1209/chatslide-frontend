@@ -1,5 +1,27 @@
-import { Chat, ChatResponse } from '@/models/ChatHistory';
+import { Chat, ChatResponse, RegenerateSelection } from '@/models/ChatHistory';
 import Slide from '@/models/Slide';
+
+function formatPrevChat(prevPrompt: Chat): Chat | null{
+	if (prevPrompt?.isFeedback) 
+		return null;
+	
+	const content = prevPrompt.content;
+
+	switch(typeof content) {
+		case 'string':
+			return prevPrompt;
+		case 'object':
+			if ('chat' in content) {
+				return {
+					...prevPrompt,
+					content: content.chat,
+				};
+			}
+			return null;
+		default:
+			return null;
+	}
+}
 
 class ChatBotService {
 	static async chat(
@@ -22,7 +44,7 @@ class ChatBotService {
 					slide: slide,
 					project_id: projectId,
 					prompt: prompt,
-					prev_prompts: prevPrompts.filter((p) => p.role === 'user').map((p) => p.content).slice(-5),
+					prev_prompts: prevPrompts.map(formatPrevChat).filter((x) => x !== null).slice(-5),
 					page_index: pageIndex,
 					selected_text: selectedText,
 				}),
@@ -32,7 +54,7 @@ class ChatBotService {
 			console.error(error);
 			return {
 				role: 'assistant',
-				content: '😞 Sorry, I do not understand your request, can you try again?',
+				chat: '😞 Sorry, I do not understand your request, can you try again?',
 			}
 		}
 	}

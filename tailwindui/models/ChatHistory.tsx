@@ -6,14 +6,16 @@ type ChatHistory = {
 	choices?: string[];
 	imageUrls?: string[]; 
 	emoji?: string;   // only for assistant messages
+	isFeedback?: boolean;
 };
 
-export type ChatResponse = ChatHistory & {
+export type ChatResponse = {
 	role: 'assistant';
 	slide?: Slide;
 	action?: string;
 	suggestions?: string[][];  // used for regenerating the selection
-	chat?: string;  // used for regenerating the selection
+	chat: string;  // used for regenerating the selection
+	images?: string[];  // url 
 };
 
 export type Chat = ChatHistory;

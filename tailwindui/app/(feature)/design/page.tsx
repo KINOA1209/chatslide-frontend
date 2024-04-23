@@ -48,6 +48,7 @@ import Project from '@/models/Project';
 import { addIdToRedir } from '@/utils/redirWithId';
 import SlidesService from '@/services/SlidesService';
 import { set } from 'lodash';
+import Slide from '@/models/Slide';
 
 const TemplateSelector = dynamic(() => import('./TemplateSelector'), {
 	ssr: false,
@@ -184,15 +185,6 @@ export default function DesignPage() {
 					token,
 				);
 
-				bulkUpdateProject({
-					logo: showLogo ? 'Default' : '',
-					selected_background: selectedBackground,
-					selected_logo: selectedLogo,
-					template: template,
-					palette: colorPalette,
-					additional_images: additional_images,
-				} as Project);
-
 				const newSlides = slides.map((slide) => {
 					return {
 						...slide,
@@ -205,6 +197,17 @@ export default function DesignPage() {
 						transcript: '',
 					};
 				});
+
+
+				bulkUpdateProject({
+					logo: showLogo ? 'Default' : '',
+					selected_background: selectedBackground,
+					selected_logo: selectedLogo,
+					template: template,
+					palette: colorPalette,
+					additional_images: additional_images,
+					parsed_slides: newSlides as Slide[],
+				} as Project);
 
 				setSlides(newSlides);
 				setSlideIndex(0);
