@@ -44,7 +44,7 @@ import { WrappableRow } from '@/components/layout/WrappableRow';
 import { formatName } from './util';
 
 
-const MAX_TOPIC_LENGTH = 2000;
+const MAX_TOPIC_LENGTH = 4000;
 const MIN_TOPIC_LENGTH = 3;
 
 const audienceDict = {
@@ -128,25 +128,10 @@ export default function Topic() {
 		}
 	}, []);
 
-	useEffect(() => {
-		if (selectedResources.length > 0) {
-			if (topic.length == 0) {
-				console.log('setting topic for resource', selectedResources[0]);
-				setTopic(formatName(selectedResources[0].name,
-					['url', 'webpage', 'youtube'].includes(selectedResources[0].type),
-					MAX_TOPIC_LENGTH
-				),
-				);
-			}
-		}
-
-		// console.log('selectedResources', selectedResources);
-	}, [selectedResources]);
-
 	const updateTopic = (topic: string) => {
 		if (topic.length < MIN_TOPIC_LENGTH) {
 			setIsNextEnabled(false);
-			setTopicError(`Please enter at least ${MIN_TOPIC_LENGTH} characters.`);
+			setTopicError(`Please enter at least ${MIN_TOPIC_LENGTH} characters, or use "Files First" option.`);
 		}
 		if (topic.length >= MIN_TOPIC_LENGTH) {
 			setIsNextEnabled(true);
@@ -177,9 +162,9 @@ export default function Topic() {
 	const handleSubmit = async () => {
 		console.log('submitting');
 		if (generationMode === 'from_topic' && topic.length < MIN_TOPIC_LENGTH) {
-			setTopicError(`Please enter at least ${MIN_TOPIC_LENGTH} characters.`);
+			setTopicError(`Please enter at least ${MIN_TOPIC_LENGTH} characters, or use "Files First" option.`);
 			toast.error(
-				`Please enter at least ${MIN_TOPIC_LENGTH} characters for topic.`,
+				`Please enter at least ${MIN_TOPIC_LENGTH} characters for topic, or use "Files First" option.`,
 			);
 			setIsSubmitting(false);
 			setShowGenerationStatusModal(false);
