@@ -188,8 +188,9 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 		<button
 			id={id}
 			className={`btn h-[36px] sm:h-[36px] w-[12rem] mx-auto sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
-				isSubmitting && 'animate-pulse'
-			} disabled:bg-gray-600 whitespace-nowrap rounded-xl`}
+				isSubmitting && 'animate-pulse cursor-progress'
+			} disabled:bg-gray-600 disabled:cursor-not-allowed
+			whitespace-nowrap rounded-xl`}
 			onClick={onClick}
 			disabled={isSubmitting || disabled}
 		>
@@ -242,7 +243,8 @@ export const BigGrayButton: React.FC<DrlambdaButtonProps> = ({
 				message='Upgrade to unlock more features. 🚀'
 			/>
 			<button
-				className='btn min-w-[100px] sm:min-w-[120px] h-[36px] sm:h-[36px] sm:gap-x-2 text-gray-800 text-sm bg-gray-300 disabled:bg-gray-600 disabled:animate-pulse whitespace-nowrap rounded-xl'
+				className='btn min-w-[100px] sm:min-w-[120px] h-[36px] sm:gap-x-2 text-gray-800 text-sm bg-gray-300 whitespace-nowrap rounded-xl
+				disabled:bg-gray-600 disabled:animate-pulse disabled:cursor-not-allowed'
 				onClick={(e) => {
 					if (isPaidFeature && !isPaidUser) {
 						setShowPaywallModal(true);
@@ -308,7 +310,8 @@ export const InversedBigBlueButton: React.FC<DrlambdaButtonProps> = ({
 }) => {
 	return (
 		<button
-			className='btn h-[36px] sm:h-[36px] w-[12rem] mx-auto sm:gap-x-2 text-Blue sm:font-semibold bg-gray-200 disabled:text-gray-600 disabled:animate-pulse whitespace-nowrap rounded-xl'
+			className='btn h-[36px] sm:h-[36px] w-[12rem] mx-auto sm:gap-x-2 text-Blue sm:font-semibold bg-gray-200 whitespace-nowrap rounded-xl
+			disabled:text-gray-600 disabled:animate-pulse disabled:cursor-progress'
 			onClick={onClick}
 			disabled={isSubmitting}
 		>
@@ -328,7 +331,7 @@ export const SmallBlueButton: React.FC<DrlambdaButtonProps> = ({
 }) => {
 	function getButtonStyle() {
 		if (isSubmitting || disabled) {
-			return 'border-gray-200 text-gray-600';
+			return 'border-gray-200 text-gray-600 cursor-not-allowed';
 		}
 		return 'border-Blue text-Blue';
 	}
