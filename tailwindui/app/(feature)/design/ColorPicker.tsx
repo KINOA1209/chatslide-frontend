@@ -132,7 +132,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
 			</div>
 
 			{displayColorPicker && (
-				<>
+				<div className='w-[15rem]'>
 					<div className='my-2 mx-1'>
 						<ChromePicker color={color} onChange={handleChange} />
 					</div>
@@ -144,7 +144,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
 					>
 						Confirm
 					</SmallBlueButton>
-				</>
+				</div>
 			)}
 		</div>
 	);
