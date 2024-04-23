@@ -656,7 +656,11 @@ export const Col_2_img_0_layout = ({
 
 			<div
 				className={`w-full flex SlideContentContainer`}
-				style={{ ...layoutElements.contentContainerCSS, zIndex: 40 }}
+				style={{
+					...layoutElements.contentContainerCSS,
+					zIndex: 40,
+					gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+				}}
 			>
 				<div className='Column1' style={layoutElements.contentCSS}>
 					<div
@@ -912,7 +916,11 @@ export const Col_3_img_0_layout = ({
 
 			<div
 				className={`w-full flex SlideContentContainer`}
-				style={{ ...layoutElements.contentContainerCSS, zIndex: 40 }}
+				style={{
+					...layoutElements.contentContainerCSS,
+					zIndex: 40,
+					gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+				}}
 			>
 				{/* {Array.isArray(content) &&
 					content.map((item, index) => (

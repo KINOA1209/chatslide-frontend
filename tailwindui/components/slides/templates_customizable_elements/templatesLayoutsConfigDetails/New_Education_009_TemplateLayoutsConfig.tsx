@@ -181,7 +181,7 @@ export const New_Education_009_TemplateLayoutsConfig: {
 			height: '100%',
 			width: '100%',
 			display: 'grid',
-			gridTemplateColumns: 'repeat(2, 1fr)',
+			gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
 			gap: '50px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
