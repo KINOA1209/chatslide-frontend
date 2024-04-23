@@ -164,7 +164,7 @@ const TemplateSelector: React.FC<{
 				styles={{
 					control: (provided) => ({
 						...provided,
-						width: '15rem',
+						width: '20rem',
 						height: '36px',
 						borderRadius: '8px',
 						borderColor: '#e5e7eb',
@@ -206,7 +206,7 @@ const TemplateSelector: React.FC<{
 					<div className={`templateChoice flex flex-col `}>
 						<Instruction>Theme template</Instruction>
 						<DropDown
-							width='15rem'
+							width='20rem'
 							onChange={handleTemplateChange}
 							value={template}
 							style='input'
@@ -225,7 +225,6 @@ const TemplateSelector: React.FC<{
 					{/* Render color palette options only if there are more than one */}
 					{
 						<div className='paletteChoice w-full'>
-							<WrappableRow type='grid'>
 								{!hasSelectedCustomTemplateBgColor &&
 									paletteOptions.length > 1 && (
 										<div>
@@ -246,7 +245,6 @@ const TemplateSelector: React.FC<{
 										resetColorPicker={resetColorPicker}
 									/>
 								</div>
-							</WrappableRow>
 						</div>
 					}
 				</div>
