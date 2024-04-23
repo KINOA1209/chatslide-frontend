@@ -137,15 +137,13 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
 						<ChromePicker color={color} onChange={handleChange} />
 					</div>
 					{/* confirm button */}
-					<div className='grid grid-cols-2 gap-2'>
-						<SmallBlueButton
-							onClick={() => {
-								setDisplayColorPicker(false);
-							}}
-						>
-							Confirm
-						</SmallBlueButton>
-					</div>
+					<SmallBlueButton
+						onClick={() => {
+							setDisplayColorPicker(false);
+						}}
+					>
+						Confirm
+					</SmallBlueButton>
 				</>
 			)}
 		</div>
