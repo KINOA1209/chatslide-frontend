@@ -4,6 +4,9 @@ import Modal from './ui/Modal';
 import { Pricing, PricingComparison } from '@/app/(default)/landing/Pricing';
 import { BigTitle, Instruction, Title } from './ui/Text';
 import Card from './ui/Card';
+import { SmallBlueButton } from './button/DrlambdaButton';
+import { WrappableRow } from './layout/WrappableRow';
+import { isChatslide } from '@/utils/getHost';
 
 interface PaywallModalProps {
 	showModal: boolean;
@@ -48,9 +51,18 @@ const PaywallModal: React.FC<PaywallModalProps> = ({
 						<Instruction>Refer a friend to get 50 ⭐️credits.</Instruction>
 						<ReferralLink />
 
-						<Instruction>
-							Join our <a href='/discord' className='text-blue-600'>discord</a> community for 50 ⭐️credits.
-						</Instruction>
+						<WrappableRow type='grid'>
+							<SmallBlueButton>
+								<a href='/discord' target='_blank'>Join our discord community for 50 ⭐️credits.</a>
+							</SmallBlueButton>
+							<SmallBlueButton>
+								<a
+									href={isChatslide() ? 'https://twitter.com/chatslide_ai' : 'https://twitter.com/drlambda_ai'}
+									target='_blank'>
+									Follow our Twitter (X) for 50 ⭐️credits.
+								</a>
+							</SmallBlueButton>
+						</WrappableRow>
 					</Card>
 				)}
 				<Title>
