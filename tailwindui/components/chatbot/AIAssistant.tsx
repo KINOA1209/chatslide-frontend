@@ -153,9 +153,8 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			setLoading(false);
 
 			console.log('responseData structure:', response);
-			// If the slide is updated, add a success message
+			// If the slide data is updated
 			if (response.slide) {
-				// Update the slide at the current index with new data
 				console.log(
 					'updateSlide content after api call:',
 					response.slide,
@@ -171,9 +170,10 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						return newSlides;
 					});
 					setSlideIndex(currentSlideIndex + 1);
-				} else {
+				} else {  
+					// change the current slide
 					let content = response.slide.content;
-					if (content.length >= 6 && JSON.stringify(content).length > 600) {
+					if (content.length >= 6 && JSON.stringify(content).length > 600) { 
 						// too much new content in one page, need to split into two pages
 						const mid = Math.floor(content.length / 2);
 						const slidePage1 = { ...slides[currentSlideIndex], ...response.slide, content: content.slice(0, mid) };
@@ -200,7 +200,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				document.dispatchEvent(new Event(response.action));
 			}
 
-			addChatHistory(response);
+			addChatHistory(addSuccessMessage(response.chat, response.images));
 		}
 
 		catch (error) {

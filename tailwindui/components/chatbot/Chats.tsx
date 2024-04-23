@@ -229,7 +229,7 @@ const Chats: React.FC<ChatsProps> = ({
 		console.log('responseData structure:', chatResponse);
 		if (!chatResponse.chat || chatResponse.suggestions) {
 			// network fails, backend fails
-			addChatHistory(chatResponse)
+			addChatHistory(addErrorMessage(chatResponse.chat));
 		} else if (!chatResponse.suggestions) {
 			// ai does not understand
 			const errorMessage = addErrorMessage('😞 Sorry, I do not understand your request, can you try again?')

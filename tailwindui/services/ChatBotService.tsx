@@ -32,7 +32,7 @@ class ChatBotService {
 			console.error(error);
 			return {
 				role: 'assistant',
-				content: '😞 Sorry, I do not understand your request, can you try again?',
+				chat: '😞 Sorry, I do not understand your request, can you try again?',
 			}
 		}
 	}
