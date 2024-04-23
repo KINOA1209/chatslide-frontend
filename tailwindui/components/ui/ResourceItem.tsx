@@ -62,7 +62,7 @@ const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
 		return <FiFilePlus style={FileIconStyle} />;
 	}
 	fileType = fileType.toLowerCase();
-	console.log('current file type: ', fileType);
+	// console.log('current file type: ', fileType);
 	switch (fileType) {
 		case 'doc':
 			// return <FiFilePlus style={{ width: '20px', height: '20px' }} />;
