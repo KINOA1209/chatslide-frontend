@@ -325,7 +325,7 @@ export default function Topic() {
 			<PaywallModal
 				showModal={showPaymentModal}
 				setShowModal={setShowPaymentModal}
-				message='Upgrade for more ⭐️credits.'
+				message='You need more ⭐️credits'
 				showReferralLink={true}
 			/>
 
