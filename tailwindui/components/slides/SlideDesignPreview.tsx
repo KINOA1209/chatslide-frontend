@@ -8,9 +8,6 @@ import {
 } from '@/components/slides/slideTemplates';
 import { layoutOptions } from './slideLayout';
 import SlideContainer from './SlideContainer';
-import '@/components/slides/overflowScrollbar.css';
-import themeConfigData from './templates_customizable_elements/theme_elements';
-import layoutConfigData from './templates_customizable_elements/layout_elements';
 import { Explanation } from '../ui/Text';
 import { ScrollBar } from '../ui/ScrollBar';
 import { useProject } from '@/hooks/use-project';
