@@ -74,12 +74,12 @@ export const generateTemplate = (templateName: string) => {
 		const ChosenLayoutCover =
 			layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
 
-		useEffect(() => {
-			console.log(
-				'selected theme element backgroundColor is gradient background',
-				themeElements.isGradientBackground,
-			);
-		}, [palette]);
+		// useEffect(() => {
+		// 	console.log(
+		// 		'selected theme element backgroundColor is gradient background',
+		// 		themeElements.isGradientBackground,
+		// 	);
+		// }, [palette]);
 
 		return (
 			<>
