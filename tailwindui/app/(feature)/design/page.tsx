@@ -230,7 +230,7 @@ export default function DesignPage() {
 
 	useEffect(() => {
 		if (isSubmitting) {
-			if (project?.presentation_slides) {
+			if (project?.parsed_slides && project?.parsed_slides.length > 0) {
 				setShowGenerationStatusModal(true);
 				viewSlidesSubmit();
 				setIsSubmitting(false);
