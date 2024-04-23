@@ -233,7 +233,7 @@ const Chats: React.FC<ChatsProps> = ({
 			regenerateText,
 		);
 		console.log('responseData structure:', chatResponse);
-		if (!chatResponse.chat || chatResponse.suggestions) {
+		if (!chatResponse.chat || !chatResponse.suggestions) {
 			// network fails, backend fails
 			addChatHistory(addErrorMessage(chatResponse.chat));
 		} else if (!chatResponse.suggestions) {
