@@ -203,6 +203,7 @@ export default function Topic() {
 			search_online: searchOnlineScope,
 			knowledge_summary: knowledge_summary,
 			section_count: Math.round(pageCountEst / 3),
+			credit_cost: Math.max(20, pageCountEst)
 		};
 
 		bulkUpdateProject({
