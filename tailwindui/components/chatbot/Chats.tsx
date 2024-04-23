@@ -301,7 +301,7 @@ const Chats: React.FC<ChatsProps> = ({
 									{chat.imageUrls.map((imageUrl, i) => (
 										<div
 											key={i}
-											className='image-preview-container'
+											className='image-preview-container cursor-grab'
 											style={{ width: 'calc(50% - 4px)', marginBottom: '4px' }}
 											draggable // Make the image container draggable
 											onDragStart={() => handleImageDragStart(imageUrl)} // Call handleImageDragStart with imageUrl

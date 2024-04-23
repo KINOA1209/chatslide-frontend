@@ -256,7 +256,7 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 	} = useSlides();
 	const { changeTemplateAndPalette } = useSlides();
 	const [selectedTemplate, setSelectedTemplate] = useState<TemplateKeys>(
-		slides[0].template || 'Default',
+		slides[0]?.template || 'Default',
 	);
 	const [showModal, setShowModal] = useState(false);
 	// Assert the type of selectedTemplate as TemplateKeys
@@ -278,7 +278,7 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 	useEffect(() => {
 		console.log(
 			'selcetedTemplate, selectedPalette',
-			slides[0].template,
+			slides[0]?.template,
 			slides[0]?.palette,
 		);
 	}, []);

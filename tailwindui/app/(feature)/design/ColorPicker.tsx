@@ -122,25 +122,29 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
 				<div style={colorPreviewStyle}></div>
 				<span>{color}</span>
 			</div>
+			<div style={{ width: '15rem' }}>
+				<SmallBlueButton
+					customizeStyle={{ width: '100%', marginTop: '4px' }}
+					onClick={resetColorPicker}
+				>
+					Reset
+				</SmallBlueButton>
+			</div>
+
 			{displayColorPicker && (
-				<>
+				<div className='w-[15rem]'>
 					<div className='my-2 mx-1'>
 						<ChromePicker color={color} onChange={handleChange} />
 					</div>
-					{/* Reset button */}
-					<div className='grid grid-cols-2 gap-2'>
-						<SmallBlueButton
-							onClick={resetColorPicker}
-						>
-							Reset
-						</SmallBlueButton>
-						<SmallBlueButton
-							onClick={() => {setDisplayColorPicker(false);}}
-						>
-							Confirm
-						</SmallBlueButton>
-					</div>
-				</>
+					{/* confirm button */}
+					<SmallBlueButton
+						onClick={() => {
+							setDisplayColorPicker(false);
+						}}
+					>
+						Confirm
+					</SmallBlueButton>
+				</div>
 			)}
 		</div>
 	);
