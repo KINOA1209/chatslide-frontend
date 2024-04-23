@@ -6,6 +6,7 @@ type ChatHistory = {
 	choices?: string[];
 	imageUrls?: string[]; 
 	emoji?: string;   // only for assistant messages
+	isFeedback?: boolean;
 };
 
 export type ChatResponse = {
