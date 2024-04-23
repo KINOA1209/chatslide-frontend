@@ -327,8 +327,8 @@ class ProjectService {
 					slideData.illustration !== null
 						? slideData.illustration
 						: [
-								'https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png',
-						  ];
+							'https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png',
+						];
 				slide.quote = slideData.quote || 'Your quote here';
 				slide.source = slideData.source || '';
 				slide.chart = slideData.chart;

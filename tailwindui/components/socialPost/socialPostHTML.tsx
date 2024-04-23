@@ -554,7 +554,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 							share={isShared}
 							project={project}
 							host={host}
-							isSocialPost={true}
+							shareEntry={'socialPosts'}
 							showShareModal={showShareModal}
 							setShowShareModal={setShowShareModal}
 						/>
