@@ -73,8 +73,11 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
 					{credits}⭐️
 				</a>
 				<button
-					type='button'
-					className='inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500'
+					// type='button'
+					className='inline-flex justify-start w-[8rem] rounded-md border border-gray-200 shadow-sm px-4 py-2 bg-white 
+					text-sm font-medium text-gray-700 whitespace-nowrap overflow-ellipsis overflow-hidden
+					hover:bg-gray-50 
+					focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500'
 					id='dropdown-menu-button'
 					onClick={toggleDropdown}
 					aria-expanded={isOpen}
