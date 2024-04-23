@@ -275,13 +275,13 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 		// }
 		setShowModal(false);
 	};
-	// useEffect(() => {
-	// 	console.log(
-	// 		'selcetedTemplate, selectedPalette',
-	// 		slides[0]?.template,
-	// 		slides[0]?.palette,
-	// 	);
-	// }, []);
+	useEffect(() => {
+		console.log(
+			'selcetedTemplate, selectedPalette',
+			slides[0]?.template,
+			slides[0]?.palette,
+		);
+	}, []);
 
 	useEffect(() => {
 		document.addEventListener('change_template', (e) => {
