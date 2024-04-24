@@ -46,9 +46,10 @@ const ScenarioChoicePage = () => {
 
 	return (
 		<div className='flex flex-col flex-grow justify-center items-center relative'>
-			<div className='absolute hidden sm:block top-5 left-5'>
+			<div className='absolute block top-5 left-5'>
 				<BackButton href='/type-choice' dark={true} text='Type Choice' />
 			</div>
+      <div className='block md:hidden h-[3rem]' /> {/* Spacer */} 
 			<Column>
 				{/* title */}
 				<Title>

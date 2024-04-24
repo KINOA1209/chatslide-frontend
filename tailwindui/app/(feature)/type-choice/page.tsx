@@ -42,6 +42,7 @@ const ScenarioChoicePage = () => {
 					dark={true}
 					text='Dashboard'
 				/>
+        <div className='block md:hidden h-[3rem]' /> {/* Spacer */} 
 			</div>
 			<Column>
 				{/* title */}
