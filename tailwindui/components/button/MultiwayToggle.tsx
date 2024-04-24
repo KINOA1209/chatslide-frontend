@@ -17,14 +17,14 @@ const MultiwayToggle: React.FC<MultiwayToggleProps> = ({
 }) => {
   return (
     <div className='toggle flex justify-center items-center'>
-      <div className='flex items-center rounded-md border bg-gray-200 px-0.5 py-0.5 my-1'>
+      <div className='flex items-center rounded-md border bg-gray-200 sm:px-0.5 py-0.5 my-1'>
         {options.map((option) => (
           <div
             key={option.key}
-            className={`cursor-pointer min-w-[100px] h-[36px] px-2 py-1 flex justify-center items-center rounded-md ${selectedKey === option.key ? 'bg-white text-[#5168F6]' : ''}`}
+            className={`cursor-pointer min-w-[50px] md:min-w-[100px] h-[36px] px-1 md:px-2 py-1 flex justify-center items-center rounded-md ${selectedKey === option.key ? 'bg-white text-[#5168F6]' : ''}`}
             onClick={() => setSelectedKey(option.key)}
           >
-            <div className={`flex flex-row gap-2 font-bold break-words items-center justify-center ${selectedKey === option.key ? 'text-[#5168F6]' : 'text-[#707C8A]'}`}>
+            <div className={`flex flex-row gap-2 font-semibold sm:font-bold break-words items-center justify-center ${selectedKey === option.key ? 'text-[#5168F6]' : 'text-[#707C8A]'}`}>
               {option.text || option.element}
             </div>
           </div>
