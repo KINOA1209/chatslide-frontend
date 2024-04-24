@@ -53,7 +53,7 @@ const UserResearchWindow: FC<UserResearchWindowProps> = ({ onClick }) => {
 				id='userResearch'
 				className='w-full px-4 py-2 flex flex-col items-start gap-[0.5rem]'
 			>
-				<div className='text-center text-neutral-800 text-xl font-bold leading-normal font-creato-medium'>
+				<div className='text-center text-neutral-800 text-xl font-bold leading-normal'>
 					Earn free credits⭐ by joining our user study
 				</div>
 				<div className='text-gray-600 text-sm font-normal leading-normal tracking-[0.0175rem]'>

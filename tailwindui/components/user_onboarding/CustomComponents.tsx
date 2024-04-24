@@ -25,7 +25,7 @@ export const TutorialStepContent: FC<TutorialStepContentProps> = ({
 				<div className='text-neutral-900 text-base font-bold font-bold leading-tight tracking-tight'>
 					{action}
 				</div>
-				<p className='text-neutral-800 text-sm font-normal font-creato=regular leading-normal tracking-tight text-left'>
+				<p className='text-neutral-800 text-sm font-normal leading-normal tracking-tight text-left'>
 					{explanation}
 				</p>
 			</div>
