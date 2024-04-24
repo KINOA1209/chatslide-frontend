@@ -53,7 +53,7 @@ const ResourceEntry: React.FC<ResourceEntryProps> = ({
 
 			<div className='flex items-center gap-2'>
 				<ResourceIcon resource={resource} />
-				<div className='flex-wrap'>{resource.name.replace('.txt', '')}</div>
+				<div className='flex-wrap'>{resource.name.replace('.txt', '').replaceAll('_', ' ')}</div>
 			</div>
 			<div className='flex items-center gap-4'>
 				{resource.type === 'doc' && resource.name.endsWith('pdf') && (
