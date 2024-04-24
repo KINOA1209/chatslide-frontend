@@ -14,11 +14,19 @@ export const GenerationStatusProgressModal: FC<
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [percentage, setPercentage] = useState(0);
 	const [stepsCompleted, setStepsCompleted] = useState(false); // Flag to track whether steps are completed
+	const [canClose, setCanClose] = useState(false);
+
+	const additionalPrompt = ['💪 Still working on your request...', 30] as [string, number];
+	const extendedPrompts = [
+		...prompts,
+		additionalPrompt,
+	];
+
 	useEffect(() => {
 		const targetPercentage = 99;
 		let currentPercentage = 0;
 
-		if (prompts[currentIndex] && !stepsCompleted) {
+		if (extendedPrompts[currentIndex] && !stepsCompleted) {
 			const interval = setInterval(() => {
 				// Increment the progress until it reaches the target percentage
 				if (currentPercentage < targetPercentage) {
@@ -26,46 +34,27 @@ export const GenerationStatusProgressModal: FC<
 					setPercentage(currentPercentage);
 				} else {
 					clearInterval(interval); // Stop the interval when target percentage is reached
-					if (currentIndex < prompts.length - 1) {
+					if (currentIndex < extendedPrompts.length - 1) {
 						setCurrentIndex((prevIndex) => prevIndex + 1); // Move to the next prompt
 						setPercentage(0); // Reset percentage for the next prompt
 					} else {
 						setStepsCompleted(true); // Set flag to true when all steps are completed
+						setCanClose(true); // Enable the close button when all steps are completed
 					}
 				}
-			}, (prompts[currentIndex][1] || 1) * 10); // Adjust the interval duration based on waitingTime
+			}, (extendedPrompts[currentIndex][1] || 1) * 10); // Adjust the interval duration based on waitingTime
 
 			return () => clearInterval(interval); // Clean up interval on unmount
 		}
-	}, [currentIndex, prompts]);
+	}, [currentIndex, extendedPrompts]);
 
-	// useEffect(() => {
-	// 	const targetPercentage = 99;
-	// 	let currentPercentage = 0;
-
-	// 	if (prompts[currentIndex]) {
-	// 		const interval = setInterval(() => {
-	// 			// Increment the progress until it reaches the target percentage
-	// 			if (currentPercentage < targetPercentage) {
-	// 				currentPercentage++;
-	// 				setPercentage(currentPercentage);
-	// 			} else {
-	// 				clearInterval(interval); // Stop the interval when target percentage is reached
-	// 				setCurrentIndex((prevIndex) => prevIndex + 1); // Move to the next prompt
-	// 				setPercentage(0); // Reset percentage for the next prompt
-	// 			}
-	// 		}, (prompts[currentIndex][1] || 1) * 10); // Adjust the interval duration based on waitingTime
-
-	// 		return () => clearInterval(interval); // Clean up interval on unmount
-	// 	}
-	// }, [currentIndex, prompts]);
 	return (
 		<Modal
 			showModal={true}
 			setShowModal={onClick}
 			position='fixed max-w-[50rem] h-auto'
 			clickOutsideToClose={false}
-			canClose={false}
+			canClose={canClose}
 		>
 			{/* Generation status prompt area */}
 			<section
@@ -75,7 +64,7 @@ export const GenerationStatusProgressModal: FC<
 				<div className='w-full flex flex-row items-center justify-between'>
 					{/* status prompt text */}
 					<div className='text-center text-neutral-800 text-xl font-bold leading-normal font-creato-medium'>
-						{prompts[currentIndex] && prompts[currentIndex][0]}
+						{extendedPrompts[currentIndex] && extendedPrompts[currentIndex][0]}
 					</div>
 
 					{/* progress status number percentage */}

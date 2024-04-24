@@ -110,6 +110,7 @@ export default function Topic() {
 
 	const handleGenerationStatusModal = () => {
 		// console.log('user Research Modal toggled');
+		setSummarizing(true);
 		setShowGenerationStatusModal(!showGenerationStatusModal);
 	};
 	const tourSteps: Step[] = [
@@ -151,6 +152,10 @@ export default function Topic() {
 			return pageCountEst;
 		}
 		return 20;
+	}
+
+	function getEstWriteOutlineTime() {
+		return Math.min(30, 10 + selectedResources.length * 5);
 	}
 
 	useEffect(() => {
@@ -203,7 +208,7 @@ export default function Topic() {
 
 		// if needs to summarize resources
 		if (selectedResources?.length > 0 || searchOnlineScope) {
-			setSummarizing(true);
+			setSummarizing(true);  // should already be set to true
 			try {
 				console.log('resources', selectedResources);
 				console.log('summarizing resources');
@@ -233,6 +238,7 @@ export default function Topic() {
 			setSummarizing(false);
 		} else {
 			console.log('no need to summarize resources');
+			setSummarizing(false);
 		}
 
 		try {
@@ -319,12 +325,17 @@ export default function Topic() {
 				(summarizing ? (
 					<GenerationStatusProgressModal
 						onClick={handleGenerationStatusModal}
-						prompts={[['📚 Reading your resources...', 28]]}
+						prompts={searchOnlineScope ? [
+							['🔍 Searching online...', 5],
+							['📚 Reading your resources...', 25]
+						] : [
+							['📚 Reading your resources...', 30]
+						]}
 					></GenerationStatusProgressModal>
 				) : (
 					<GenerationStatusProgressModal
 						onClick={handleGenerationStatusModal}
-						prompts={[['📝 Writing outlines for your slides...', 10]]}
+						prompts={[['📝 Writing outlines for your slides...', getEstWriteOutlineTime()]]}
 					></GenerationStatusProgressModal>
 				))}
 
