@@ -107,7 +107,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 	}, [isSubmitting]);
 
 	return (
-		<div className='w-full flex max-h-[900px] flex-col justify-center items-center gap-4 overflow-auto'>
+		<div className='w-full flex max-h-[900px] flex-col justify-center items-start gap-4 overflow-y-scroll'>
 
 
 			{/* slides and scripts contents */}

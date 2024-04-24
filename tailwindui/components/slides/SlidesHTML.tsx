@@ -117,7 +117,7 @@ export const calculateNonPresentScale = (
 	workflow = 'slides',
 ) => {
 	// console.log("width", width, "height", height, "isChatWindowOpen", isChatWindowOpen, "showScript", showScript);
-	if (width < 640) {
+	if (width < 1024) {
 		// mobile, layout vertically
 		if (workflow === 'socialPosts') {
 			return Math.min(1, Math.min(width / 450, (height - 200) / 650) * 0.7);
@@ -126,7 +126,7 @@ export const calculateNonPresentScale = (
 		}
 	} else {
 		const chatWindowWidth = width > 1280 && isChatWindowOpen ? 250 : 0;
-		const scriptEditorHeight = showScript ? 200 : 0;
+		const scriptEditorHeight = 0;
 		if (workflow === 'socialPosts') {
 			return Math.min(
 				1,
@@ -259,6 +259,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					showScript,
 				),
 			);
+      // console.log(nonPresentScale);
 		};
 
 		window.addEventListener('resize', handleResize);
@@ -665,7 +666,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	}
 
 	return (
-		<div className='w-full h-full flex flex-col items-start justify-around py-2 relative'>
+		<div className='w-full h-full flex flex-col items-start justify-around py-2 relative gap-y-2'>
 			<div className='w-full flex flex-row items-center justify-center'>
 				<ActionsToolBar
 					undo={undoChange}
@@ -752,11 +753,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				showReferralLink={true}
 			/>
 
-			<div className='w-full flex flex-row items-start justify-center sm:justify-around gap-2 overflow-auto'>
-				{/* vertical bar */}
-
+			<div className='w-full flex flex-row items-start justify-center lg:justify-around gap-2 lg:h-[80vh]'>
+				
+        {/* vertical bar */}
 				<Panel>
-					<div className='h-full hidden sm:flex md:w-[150px]'>
+					<div className='h-full hidden lg:flex md:w-[150px]'>
 						<DraggableSlidesPreview
 							ref={verticalCurrentSlideRef}
 							slideIndex={slideIndex}
@@ -768,8 +769,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				</Panel>
 
 				<Panel>
-					<div className='flex flex-row items-center justify-center'>
-						<div className='hidden sm:block'>
+					<div className='flex flex-row items-center justify-start'>
+						<div className='hidden lg:block'>
 							<SlideLeftNavigator
 								currentSlideIndex={slideIndex}
 								slides={slides}
@@ -800,7 +801,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							/>
 						</div>
 
-						<div className='hidden sm:block'>
+						<div className='hidden lg:block'>
 							<SlideRightNavigator
 								currentSlideIndex={slideIndex}
 								slides={slides}
@@ -837,7 +838,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 					{/* Slide pages indicator */}
 					<div className='flex flex-row items-center'>
-						<div className='block sm:hidden'>
+						<div className='block lg:hidden'>
 							<SlideLeftNavigator
 								currentSlideIndex={slideIndex}
 								slides={slides}
@@ -848,7 +849,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							currentSlideIndex={slideIndex}
 							slides={slides}
 						/>
-						<div className='block sm:hidden'>
+						<div className='block lg:hidden'>
 							<SlideRightNavigator
 								currentSlideIndex={slideIndex}
 								slides={slides}
@@ -858,7 +859,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					</div>
 
 					{/* horizontal  */}
-					<div className='block sm:hidden w-[90vw] sm:w-4xl py-4 justify-center items-center'>
+					<div className='block lg:hidden w-[90vw] sm:w-4xl py-4 justify-center items-center'>
 						<ScrollBar
 							currentElementRef={horizontalCurrentSlideRef}
 							index={slideIndex}
