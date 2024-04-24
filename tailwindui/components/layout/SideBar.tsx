@@ -218,6 +218,8 @@ const SideBar = ({ }: SideBarProps) => {
 						</>
 					)}
 
+          <div className='mt-[5rem]'> {/* Spacer for intercom */} </div>
+
 					{/* <div className='relative'>
 						<FeedbackButton timeout={path.includes('/slides') ? 30 * 1000 : 0} />
 					</div> */}
