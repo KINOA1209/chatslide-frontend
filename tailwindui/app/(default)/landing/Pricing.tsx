@@ -198,8 +198,8 @@ const PricingComparison: React.FC<{
         options={[
           { key: 'onetime', text: 'One Time' },
           { key: 'monthly', text: 'Monthly' },
-          { key: 'yearly', text: 'Yearly (60% off)' },
-          { key: 'lifetime', text: 'Lifetime' }
+          { key: 'yearly', element: <span>Yearly <span className='text-xs'>(40% off)</span></span>},
+          { key: 'lifetime', element: <span className='text-green-600'>Lifetime</span>}
         ]}
         selectedKey={interval}
         setSelectedKey={setInterval as (key: string) => void}
