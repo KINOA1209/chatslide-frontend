@@ -177,8 +177,14 @@ class UserService {
 			if (creditNum > 10000) {
 				credits = 'Unlimited';
 			}
-			const tier: string = data['tier'] || 'FREE';
-			const expirationDate: string = data['expiration_date'] || '';
+			let tier: string = data['tier'] || 'FREE';
+      const expirationDate: string = data['expiration_date'] || '';
+      if (tier.includes('CANCELLED_')) {
+        if (expirationDate && new Date(expirationDate) > new Date()) {
+        tier = tier.replaceAll('CANCELLED_', '')
+        }
+      }
+
 			const username: string = data['username'] || null;
 			const email: string = data['email'] || null;
 

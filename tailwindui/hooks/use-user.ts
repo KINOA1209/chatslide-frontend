@@ -120,6 +120,7 @@ export const useUser = () => {
 				setUid(uid);
 				setToken(idToken);
 				setIsPaidUser(isPaidUser);
+        setExpirationDate(expirationDate);
 				setUsername(username);
 				setEmail(email);
 				userStatus = UserStatus.Inited;
