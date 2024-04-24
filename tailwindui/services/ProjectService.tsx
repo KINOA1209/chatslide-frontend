@@ -223,7 +223,7 @@ class ProjectService {
 			slide.title = slideData.title || 'New Slide';
 			slide.subtopic = slideData.subtopic || 'New Slide';
 			slide.userName = slideData.userName || '';
-			slide.template = slideData.template || ('Default' as TemplateKeys);
+      slide.template = slideData.template || ('Simplistic_008' as TemplateKeys);
 			slide.palette = slideData.palette || 'Original';
 			slide.content = slideData.content || [
 				'Some content here',

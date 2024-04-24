@@ -208,7 +208,7 @@ export const projectFinishedSteps = (project: Project | null) => {
 		} else {
 			return finishedStepsArray;  // if no slides, return early with outlines	
 		}
-		if (project?.template && project.template != 'Default') {
+		if (project?.template) {
       finishedStepsArray.push(3);
     }
 		if (project.has_scripts) finishedStepsArray.push(4);

@@ -74,12 +74,12 @@ export const generateTemplate = (templateName: string) => {
 		const ChosenLayoutCover =
 			layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
 
-		useEffect(() => {
-			console.log(
-				'selected theme element backgroundColor is gradient background',
-				themeElements.isGradientBackground,
-			);
-		}, [palette]);
+		// useEffect(() => {
+		// 	console.log(
+		// 		'selected theme element backgroundColor is gradient background',
+		// 		themeElements.isGradientBackground,
+		// 	);
+		// }, [palette]);
 
 		return (
 			<>
@@ -361,10 +361,10 @@ export const availableTemplates = {
 };
 
 export const templateDisplayNames = {
-	Simplistic_008: '🖼️ General Pitch',
+	Simplistic_008: '🌅 Simplistic',
 	New_Education_009: '📚 Education',
 	Event_Report_010: '📈 Report',
-	// Default: '📌 Default',
+	// Default: '📃 Blank',
 	Business_002: '📎 Business',
 	Business_Dark_005: '💼 Business Dark',
 	Business_Light_006: '📄 Business Light',
