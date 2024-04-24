@@ -29,7 +29,7 @@ const SurveySection: React.FC<SurveySectionProps> = ({
 	const sectionObject = surveyStaticDataObject[section];
 
 	return (
-		<div className='flex flex-col text-center font-creato-medium' ref={ref}>
+		<div className='flex flex-col text-center' ref={ref}>
 			<Title>
 				{sectionObject.question}
 			</Title>

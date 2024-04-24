@@ -11,7 +11,7 @@ export const GrayLabel: React.FC<InputBoxProps> = ({
 }) => {
 	return (
 		<div
-			className={`text-center text-neutral-800 text-xs font-bold leading-snug tracking-wide ${bgColor} rounded px-1 py-0.5 ml-2`}
+			className={`text-center text-neutral-800 text-xs font-bold leading-snug tracking-wide ${bgColor} rounded px-1 py-0.5 ml-2 cursor-auto`}
 		>
 			{children}
 		</div>
@@ -21,7 +21,7 @@ export const GrayLabel: React.FC<InputBoxProps> = ({
 export const BlueLabel: React.FC<InputBoxProps> = ({ children }) => {
 	return (
 		<div
-			className={`max-h-6 text-center text-Blue text-xs font-bold leading-snug tracking-wide bg-Sky border border-1 border-Blue rounded px-1 py-0.5`}
+			className={`max-h-6 text-center text-Blue text-xs font-bold leading-snug tracking-wide bg-Sky border border-1 border-Blue rounded cursor-auto px-1 py-0.5`}
 		>
 			{children}
 		</div>

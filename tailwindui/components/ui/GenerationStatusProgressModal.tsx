@@ -179,7 +179,7 @@ export const GenerationStatusProgressModal: FC<
       >
         <div className='w-full flex flex-row items-center justify-between'>
           {/* status prompt text */}
-          <div className='text-center text-neutral-800 text-xl font-bold leading-normal font-creato-medium'>
+          <div className='text-center text-neutral-800 text-xl font-bold leading-normal'>
             {canClose ?
               '💪 Still working on your job...' :
               prompts[currentIndex] && prompts[currentIndex][0]}
@@ -187,7 +187,7 @@ export const GenerationStatusProgressModal: FC<
 
           {/* progress status number percentage */}
           <div className='flex flex-col lg:flex-row gap-[1.5rem] self-center'>
-            <span className='text-center text-neutral-800 text-xl font-bold leading-normal font-creato-medium'>
+            <span className='text-center text-neutral-800 text-xl font-bold leading-normal'>
               {percentage.toFixed(0)}%
             </span>
           </div>

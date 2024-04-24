@@ -33,7 +33,7 @@ const OnboardingSurveyButton: React.FC<OnboardingSurveyButtonProps> = ({
 		<div className='relative flex items-center'>
 			<button
 				onClick={handleClick}
-				className={`rounded-full border-2 px-2 py-1 sm:px-4 sm:py-2 transition-all font-creato-regular text-md font-normal leading-normal tracking-wide
+				className={`rounded-full border-2 px-2 py-1 sm:px-4 sm:py-2 transition-all text-md font-normal leading-normal tracking-wide
             ${
 							selectedItems.includes(textValue)
 								? 'bg-[#E5E6FF] text-[#6366F1] border-[#6366F1]'
@@ -53,7 +53,7 @@ const OnboardingSurveyButton: React.FC<OnboardingSurveyButtonProps> = ({
 			{showTooltip && (
 				<span
 					className={`absolute bottom-full mb-2 w-auto p-2 text-white bg-black text-xs rounded-lg 
-                            shadow-lg translate-y-1 font-creato-regular font-normal tracking-wide`}
+                            shadow-lg translate-y-1 font-normal tracking-wide`}
 				>
 					{tooltipMessage}
 				</span>
