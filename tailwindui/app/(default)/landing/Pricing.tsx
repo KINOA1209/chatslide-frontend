@@ -210,7 +210,7 @@ const PricingComparison: React.FC<{
 	};
 
 	return (
-		<div className='w-full flex flex-col items-center overflow-y-scroll'>
+		<div className='flex flex-col items-center overflow-y-scroll overflow-x-scroll'>
 			<MultiwayToggle
 				options={[
 					{ key: 'onetime', text: 'One Time' },
@@ -343,7 +343,7 @@ const PricingComparison: React.FC<{
             <div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
           </div>
         } */}
-				<div className="brix---pricing-column">
+				<div className="brix---pricing-column-last">
 					<div className="brix---pricing-table-top">
 						<div className="brix---mg-bottom-8px">
 							<div className="brix---color-neutral-600">
@@ -702,11 +702,11 @@ const PricingComparison: React.FC<{
 			</div>
 
 			{userTier.includes('PRO') &&
-				<div className='text-gray-600 whitespace-nowrap mt-4'>
+				<div className='text-gray-600 md:whitespace-nowrap mt-4'>
 					* Early users who purchased PRO plan before still have Unlimited credits under our <a href='terms'>fair usage</a> policy.
 				</div>}
 			{userTier.includes('PLUS') &&
-				<div className='text-gray-600 whitespace-nowrap mt-4'>
+				<div className='text-gray-600 md:whitespace-nowrap mt-4'>
 					* If you purchased a lifetime deal, the monthly credits may be different from this retail plan.
 				</div>}
 		</div>
