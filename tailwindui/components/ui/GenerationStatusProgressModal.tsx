@@ -4,6 +4,8 @@ import FillOutFormImg from '@/public/images/user_onboarding/FillOutForms.png';
 import BookASessionImg from '@/public/images/user_onboarding/BookASession.png';
 import { getBrand } from '@/utils/getHost';
 import { Explanation, Instruction, Title } from './Text';
+
+
 interface GenerationStatusProgressModalProps {
   onClick: () => void;
   prompts: [string, number][]; // Array of prompt text and waiting time pairs
@@ -16,6 +18,7 @@ export const GenerationStatusProgressModal: FC<
   const [percentage, setPercentage] = useState(0);
   const [stepsCompleted, setStepsCompleted] = useState(false); // Flag to track whether steps are completed
   const [canClose, setCanClose] = useState(false);
+  const [showModal, setShowModal] = useState(true);
 
   useEffect(() => {
     const targetPercentage = 99;
@@ -45,10 +48,10 @@ export const GenerationStatusProgressModal: FC<
 
   return (
     <Modal
-      showModal={true}
-      setShowModal={onClick}
-      position='fixed max-w-[50rem] h-auto'
-      clickOutsideToClose={false}
+      showModal={showModal}
+      setShowModal={setShowModal}
+      // position='fixed max-w-[50rem] h-auto'
+      clickOutsideToClose={canClose}
       canClose={canClose}
     >
       {/* Generation status prompt area */}

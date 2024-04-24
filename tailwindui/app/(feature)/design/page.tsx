@@ -47,7 +47,6 @@ import { Blank } from '@/components/ui/Loading';
 import Project from '@/models/Project';
 import { addIdToRedir } from '@/utils/redirWithId';
 import SlidesService from '@/services/SlidesService';
-import { set } from 'lodash';
 import Slide from '@/models/Slide';
 import ProjectService from '@/services/ProjectService';
 
