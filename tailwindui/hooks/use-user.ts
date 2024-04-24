@@ -66,7 +66,7 @@ export const useUser = () => {
 				}
 				let username = await AuthService.getCurrentUserDisplayName();
 
-				const { credits, tier, username: usernameInDB, email: emailInDB } =
+				const { credits, tier, username: usernameInDB, email: emailInDB, expirationDate } =
 					await UserService.getUserCreditsAndTier(idToken);
 
 				if (usernameInDB && emailInDB) {
@@ -94,6 +94,7 @@ export const useUser = () => {
 					credits: credits,
 					tier: tier,
 					isPaidUser: isPaidUser,
+          expirationDate: expirationDate,
 				});
 
 				mixpanel.init('22044147cd36f20bf805d416e1235329', {
@@ -143,6 +144,7 @@ export const useUser = () => {
 	};
 
 	const updateCreditsAndTier = async () => {
+    console.log(' -- updating credits and tier')
 		const { credits, tier, expirationDate } =
 			await UserService.getUserCreditsAndTier(token);
 		const isPaidUser = [
