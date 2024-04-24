@@ -69,8 +69,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
 	const project_id = params.project_id;
-	const project = await ProjectService.getSharedProjectDetails(project_id, true);
-	const metadata = await generateMetadata({ params })
+	const project = await ProjectService.getSharedProjectDetails(project_id, true, 'video');
 
 	return (
 		<div className='flex flex-col w-screen'>
