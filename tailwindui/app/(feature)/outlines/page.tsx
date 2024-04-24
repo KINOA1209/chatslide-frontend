@@ -121,7 +121,7 @@ export default function WorkflowStep2() {
 	return (
 		<div className='relative'>
 			{/* user tutorial */}
-			<div className='absolute right-[3rem] top-[7rem] flex flex-col items-end space-x-4'>
+			<div className='absolute right-[1rem] top-[8em] sm:top-[6rem] flex flex-col items-end space-x-4'>
 				<ActionsToolBar startTour={startTour} onlyShowTutorial={true} />
 			</div>
 			<MyCustomJoyride steps={StepsOutlinePage()} />

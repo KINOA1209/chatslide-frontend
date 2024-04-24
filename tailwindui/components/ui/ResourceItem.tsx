@@ -62,7 +62,7 @@ const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
 		return <FiFilePlus style={FileIconStyle} />;
 	}
 	fileType = fileType.toLowerCase();
-	console.log('current file type: ', fileType);
+	// console.log('current file type: ', fileType);
 	switch (fileType) {
 		case 'doc':
 			// return <FiFilePlus style={{ width: '20px', height: '20px' }} />;
@@ -207,7 +207,7 @@ export const ResourceItem: React.FC<Resource> = ({
 				overflow: 'hidden',
 			}}
 		>
-			<div style={{ width: '40px', height: '40px' }}>
+			<div className='mx-auto my-auto w-[40px] h-[40px]'>
 				{/* Ensure consistent dimensions for the file icon */}
 				<ResourceIcon
 					resource={{

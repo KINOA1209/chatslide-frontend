@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import Slide from '@/models/Slide';
 import { templateDispatch as defaultTemplateDispatch } from './templateDispatch';
-import { useSlides } from '@/hooks/use-slides';
+import './slideContainer.css';
+
 
 type SlideContainerProps = {
 	slide: Slide;
@@ -57,7 +58,10 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 	return (
 		<div
 			id='slideContainer'
-			className={`${isPresenting ? 'fixed top-0 left-0 w-full h-full z-50' : 'relative rounded p-1' + (highlightBorder ? ' border-Blue' : subHighlightBorder ? ' border-green-600' : ' border-gray-200') + (noBorder ? ' border-0' : ' border-2')}`}
+			className={`${isPresenting ? 'fixed top-0 left-0 w-full h-full z-50' : 'relative rounded p-1' +
+				(highlightBorder ? ' border-Blue' : subHighlightBorder ? ' border-green-600' : ' border-gray-200') +
+				(noBorder ? ' border-0' : ' border-2') 
+				}`}
 			ref={containerRef}
 			style={{
 				boxSizing: 'border-box',

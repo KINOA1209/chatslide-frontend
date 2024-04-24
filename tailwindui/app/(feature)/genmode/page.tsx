@@ -37,7 +37,7 @@ const GenerationModePage = () => {
 			</div>
 			<div className='flex flex-col justify-center items-center gap-4 sm:gap-12 p-4 sm:p-8'>
 				{/* title */}
-				<div className='w-[80vh] text-center text-neutral-800 text-xl sm:text-2xl font-normal font-creato-medium leading-9 tracking-wide whitespace-normal break-words'>
+				<div className='w-[80vh] text-center text-neutral-800 text-xl sm:text-2xl font-normal leading-9 tracking-wide whitespace-normal break-words'>
 					Great! <br />
 					How would you like to get started?
 				</div>
@@ -58,10 +58,10 @@ const GenerationModePage = () => {
 									alt={option.id}
 									src={option.imageSrc}
 								/>
-								<div className='text-center text-lg my-3 font-creato-medium leading-snug tracking-wide whitespace-nowrap font-bold'>
+								<div className='text-center text-lg my-3 leading-snug tracking-wide whitespace-nowrap font-bold'>
 									{option.title}
 								</div>
-								<div className='text-center my-2 font-creato-medium leading-snug tracking-tight whitespace-nowrap font-normal'>
+								<div className='text-center my-2 leading-snug tracking-tight whitespace-nowrap font-normal'>
 									{option.description}
 								</div>
 							</div>

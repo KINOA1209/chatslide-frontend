@@ -44,7 +44,7 @@ import { WrappableRow } from '@/components/layout/WrappableRow';
 import { formatName } from './util';
 
 
-const MAX_TOPIC_LENGTH = 2000;
+const MAX_TOPIC_LENGTH = 4000;
 const MIN_TOPIC_LENGTH = 3;
 
 const audienceDict = {
@@ -110,6 +110,7 @@ export default function Topic() {
 
 	const handleGenerationStatusModal = () => {
 		// console.log('user Research Modal toggled');
+		setSummarizing(true);
 		setShowGenerationStatusModal(!showGenerationStatusModal);
 	};
 	const tourSteps: Step[] = [
@@ -128,25 +129,10 @@ export default function Topic() {
 		}
 	}, []);
 
-	useEffect(() => {
-		if (selectedResources.length > 0) {
-			if (topic.length == 0) {
-				console.log('setting topic for resource', selectedResources[0]);
-				setTopic(formatName(selectedResources[0].name,
-					['url', 'webpage', 'youtube'].includes(selectedResources[0].type),
-					MAX_TOPIC_LENGTH
-				),
-				);
-			}
-		}
-
-		// console.log('selectedResources', selectedResources);
-	}, [selectedResources]);
-
 	const updateTopic = (topic: string) => {
 		if (topic.length < MIN_TOPIC_LENGTH) {
 			setIsNextEnabled(false);
-			setTopicError(`Please enter at least ${MIN_TOPIC_LENGTH} characters.`);
+			setTopicError(`Please enter at least ${MIN_TOPIC_LENGTH} characters, or use "Files First" option.`);
 		}
 		if (topic.length >= MIN_TOPIC_LENGTH) {
 			setIsNextEnabled(true);
@@ -168,6 +154,10 @@ export default function Topic() {
 		return 20;
 	}
 
+	function getEstWriteOutlineTime() {
+		return Math.min(30, 10 + selectedResources.length * 5);
+	}
+
 	useEffect(() => {
 		if (isSubmitting) {
 			handleSubmit();
@@ -177,9 +167,9 @@ export default function Topic() {
 	const handleSubmit = async () => {
 		console.log('submitting');
 		if (generationMode === 'from_topic' && topic.length < MIN_TOPIC_LENGTH) {
-			setTopicError(`Please enter at least ${MIN_TOPIC_LENGTH} characters.`);
+			setTopicError(`Please enter at least ${MIN_TOPIC_LENGTH} characters, or use "Files First" option.`);
 			toast.error(
-				`Please enter at least ${MIN_TOPIC_LENGTH} characters for topic.`,
+				`Please enter at least ${MIN_TOPIC_LENGTH} characters for topic, or use "Files First" option.`,
 			);
 			setIsSubmitting(false);
 			setShowGenerationStatusModal(false);
@@ -218,7 +208,7 @@ export default function Topic() {
 
 		// if needs to summarize resources
 		if (selectedResources?.length > 0 || searchOnlineScope) {
-			setSummarizing(true);
+			setSummarizing(true);  // should already be set to true
 			try {
 				console.log('resources', selectedResources);
 				console.log('summarizing resources');
@@ -248,6 +238,7 @@ export default function Topic() {
 			setSummarizing(false);
 		} else {
 			console.log('no need to summarize resources');
+			setSummarizing(false);
 		}
 
 		try {
@@ -318,7 +309,7 @@ export default function Topic() {
 	return (
 		<div className='relative'>
 			{/* user tutorial */}
-			<div className='absolute right-[2rem] top-[7rem] flex flex-col items-end space-x-4'>
+			<div className='absolute right-[1rem] top-[8rem] sm:top-[6rem] flex flex-col items-end space-x-4'>
 				<ActionsToolBar startTour={startTour} onlyShowTutorial={true} />
 			</div>
 			<MyCustomJoyride steps={StepsSummaryPage(isNextEnabled)} />
@@ -334,12 +325,17 @@ export default function Topic() {
 				(summarizing ? (
 					<GenerationStatusProgressModal
 						onClick={handleGenerationStatusModal}
-						prompts={[['📚 Reading your resources...', 28]]}
+						prompts={searchOnlineScope ? [
+							['🔍 Searching online...', 5],
+							['📚 Reading your resources...', 25]
+						] : [
+							['📚 Reading your resources...', 30]
+						]}
 					></GenerationStatusProgressModal>
 				) : (
 					<GenerationStatusProgressModal
 						onClick={handleGenerationStatusModal}
-						prompts={[['📝 Writing outlines for your slides...', 10]]}
+						prompts={[['📝 Writing outlines for your slides...', getEstWriteOutlineTime()]]}
 					></GenerationStatusProgressModal>
 				))}
 

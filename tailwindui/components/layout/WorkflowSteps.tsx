@@ -91,7 +91,7 @@ const OneStep: React.FC<StepProps> = ({
 					{renderLine}
 				</div>
 				<span
-					className={`absolute top-8 text-white text-sm font-normal font-creato-medium leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-18px]'}`}
+					className={`absolute top-8 text-white text-sm font-normal leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-18px]'}`}
 				>
 					{desc}
 				</span>
@@ -110,7 +110,7 @@ const OneStep: React.FC<StepProps> = ({
 					{renderLine}
 				</div>
 				<span
-					className={`absolute top-8 text-white text-sm font-normal font-creato-medium leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-8px]'}`}
+					className={`absolute top-8 text-white text-sm font-normal leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-8px]'}`}
 				>
 					{desc}
 				</span>
@@ -208,7 +208,7 @@ export const projectFinishedSteps = (project: Project | null) => {
 		} else {
 			return finishedStepsArray;  // if no slides, return early with outlines	
 		}
-		if (project?.template && project.template != 'Default') {
+		if (project?.template) {
       finishedStepsArray.push(3);
     }
 		if (project.has_scripts) finishedStepsArray.push(4);

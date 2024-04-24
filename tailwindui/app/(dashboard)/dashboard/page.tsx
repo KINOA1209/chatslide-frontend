@@ -175,11 +175,11 @@ export default function Dashboard() {
 					{/* flex container controlling max width */}
 					<div className='w-full flex flex-wrap items-center justify-between'>
 						{/* my project title text */}
-						{/* <div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-black text-base font-bold font-creato-medium leading-10 tracking-wide border-white border-b-2'>
+						{/* <div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-black text-base font-bold leading-10 tracking-wide border-white border-b-2'>
 							My Projects
 						</div> */}
 						<div
-							className='text-[24px] font-bold font-creato-medium leading-[32px] tracking-wide'
+							className='text-[24px] font-bold leading-[32px] tracking-wide'
 							style={{
 								color: 'var(--colors-text-text-secondary-700, #344054)',
 							}}

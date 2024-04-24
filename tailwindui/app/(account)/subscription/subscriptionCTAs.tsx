@@ -15,7 +15,7 @@ const PrimaryButton: FC<ButtonProps> = ({ onClick, label }) => {
 			onClick={onClick}
 			className='h-10 py-2 bg-white rounded-md border border-[#5168f6] justify-center items-center inline-flex'
 		>
-			<span className='w-[9rem] text-center text-[#5168f6] text-base font-creato-medium leading-none tracking-tight'>
+			<span className='w-[9rem] text-center text-[#5168f6] text-base leading-none tracking-tight'>
 				{label}
 			</span>
 		</button>
@@ -29,7 +29,7 @@ const SecondaryButton: FC<ButtonProps> = ({ onClick, label }) => {
 			onClick={onClick}
 			className='w-24 h-10 px-2 py-0.5 rounded border border-[#FFFFFF] justify-center items-center gap-1.5 inline-flex'
 		>
-			<span className='text-center text-[#5168f6] text-base font-medium font-creato-medium leading-none tracking-wide'>
+			<span className='text-center text-[#5168f6] text-base font-medium leading-none tracking-wide'>
 				{label}
 			</span>
 		</button>
@@ -56,7 +56,7 @@ const UserResearchWindow: FC<UserResearchWindowProps> = ({ onClick }) => {
 				<div className='text-center text-neutral-800 text-xl font-bold leading-normal font-creato-medium'>
 					Earn free credits⭐ by joining our user study
 				</div>
-				<div className='text-gray-600 text-sm font-normal font-creato-medium leading-normal tracking-[0.0175rem]'>
+				<div className='text-gray-600 text-sm font-normal leading-normal tracking-[0.0175rem]'>
 					We want to learn more about what you think of {getBrand()}, and how you
 					use {getBrand()}.
 				</div>
@@ -86,11 +86,11 @@ const UserResearchWindow: FC<UserResearchWindowProps> = ({ onClick }) => {
 							</div>
 
 							<div className='text-center'>
-								<span className='text-black text-base font-bold font-creato-medium leading-snug tracking-tight'>
+								<span className='text-black text-base font-bold leading-snug tracking-tight'>
 									Book a session +1000⭐
 									<br />
 								</span>
-								<span className='text-black text-sm font-normal font-creato-medium leading-snug tracking-tight'>
+								<span className='text-black text-sm font-normal leading-snug tracking-tight'>
 									(~30 mins){' '}
 								</span>
 							</div>
@@ -123,11 +123,11 @@ const UserResearchWindow: FC<UserResearchWindowProps> = ({ onClick }) => {
 							</div>
 
 							<div className='text-center'>
-								<span className='text-black text-base font-bold font-creato-medium leading-snug tracking-tight'>
+								<span className='text-black text-base font-bold leading-snug tracking-tight'>
 									Fill out form +100⭐
 									<br />
 								</span>
-								<span className='text-black text-sm font-normal font-creato-medium leading-snug tracking-tight'>
+								<span className='text-black text-sm font-normal leading-snug tracking-tight'>
 									(5-10 mins){' '}
 								</span>
 							</div>

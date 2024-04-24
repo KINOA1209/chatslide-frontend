@@ -34,7 +34,7 @@ export const UnlimitedUpgrade: React.FC<{
 		}
 	}
 
-	if (isLifetime && credits != 'Unlimited')
+	if (credits != 'Unlimited')
 		return (
 			<Card>
 				<BigTitle>✅ Upgrade to Unlimited</BigTitle>

@@ -23,7 +23,7 @@ export const ExitTourButton: React.FC<ExitTourButtonProps> = ({
 					<div className='w-8 rounded-full border-2 border-white'>
 						<img src={imgSRC} alt='Exit button' />
 					</div>
-					<div className='w-28 text-left text-white text-base font-medium font-creato-medium leading-tight'>
+					<div className='w-28 text-left text-white text-base font-medium leading-tight'>
 						Exit tour
 					</div>
 				</div>
@@ -48,7 +48,7 @@ const PrimaryColorButton: FC<ButtonProps> = ({ onClick, label, disabled }) => {
 			} rounded justify-center items-center gap-1.5 inline-flex`}
 			disabled={disabled}
 		>
-			<span className='text-center text-zinc-100 text-base font-medium font-creato-medium leading-none tracking-wide'>
+			<span className='text-center text-zinc-100 text-base font-medium leading-none tracking-wide'>
 				{label}
 			</span>
 		</button>
@@ -66,7 +66,7 @@ const SecondaryColorButton: FC<ButtonProps> = ({
 			className='w-24 h-10 px-2 py-0.5 rounded border border-[#FFFFFF] justify-center items-center gap-1.5 inline-flex'
 			disabled={disabled}
 		>
-			<span className='text-center text-[#5168f6] text-base font-medium font-creato-medium leading-none tracking-wide'>
+			<span className='text-center text-[#5168f6] text-base font-medium leading-none tracking-wide'>
 				{label}
 			</span>
 		</button>

@@ -28,13 +28,13 @@ interface UserFileList {
 // Define a new component for the table header
 const FileTableHeader = () => (
 	<div className='grid bg-[#ECF1FE] border border-gray-200 grid-cols-2 md:grid-cols-3'>
-		{/* <div className='hidden md:flex w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+		{/* <div className='hidden md:flex w-full ml-4 text-indigo-300 text-[13px] font-bold uppercase leading-normal tracking-wide'>
           Type
         </div> */}
-		<div className='col-span-2 flex w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+		<div className='col-span-2 flex w-full ml-4 text-indigo-300 text-[13px] font-bold uppercase leading-normal tracking-wide'>
 			Title
 		</div>
-		<div className='hidden md:flex w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'>
+		<div className='hidden md:flex w-full ml-4 text-indigo-300 text-[13px] font-bold uppercase leading-normal tracking-wide'>
 			Date
 		</div>
 	</div>
@@ -103,14 +103,14 @@ const FileManagement: React.FC<UserFileList> = ({
 				<ResourceItem {...resource} />
 
 				{/* timestamp and delete icon */}
-				<div className='h-full flex justify-between items-center w-full py-4 px-2 text-gray-600 text-[13px] font-normal font-creato-medium leading-normal tracking-[0.12rem]'>
+				<div className='h-full flex justify-end items-center w-full py-4 px-2 text-gray-600 text-[13px] font-normal leading-normal tracking-[0.12rem]'>
 					{' '}
 					{resource.timestamp && (
 						<div className='hidden md:block'>
 							{moment(resource.timestamp).format('L')}
 						</div>
 					)}
-					{!selectable ? (
+					{!selectable && (
 						<div className='w-8 flex flex-row-reverse cursor-pointer'>
 							<div onClick={(e) => handleDeleteFile(e, resource.id)}>
 								{deletingIds.includes(resource.id) ? (
@@ -120,8 +120,6 @@ const FileManagement: React.FC<UserFileList> = ({
 								)}
 							</div>
 						</div>
-					) : (
-						<></>
 					)}
 					{/* selected mark */}
 					<div className='flex flex-row-reverse shrink-0'>

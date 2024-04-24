@@ -10,7 +10,7 @@ export const ColumbiaTemplateThemeConfig: {
 		// fontSize: '27pt',
 		backgroundColorCover: '#B9D9EB',
 		backgroundColor: '#B9D9EB',
-		// titleFont: 'text-3xl font-bold font-creato-medium leading-[100%] ',
+		// titleFont: 'text-3xl font-bold leading-[100%] ',
 		// titleFontColor: 'text-black',
 		titleFontCSS: {
 			fontSize: '24pt', // text-3xl in points
@@ -20,7 +20,7 @@ export const ColumbiaTemplateThemeConfig: {
 			color: '#000', // text-black color
 		},
 		// subtopicFont:
-		//   'text-xl font-normal font-creato-medium uppercase leading-[150%] tracking-[0.15rem]',
+		//   'text-xl font-normal uppercase leading-[150%] tracking-[0.15rem]',
 		// subtopicFontColor: 'text-neutral-900',
 		subtopicFontCSS: {
 			fontSize: '16pt', // text-xl in points
@@ -32,7 +32,7 @@ export const ColumbiaTemplateThemeConfig: {
 			color: '#111827', // text-neutral-900 color
 		},
 		// contentFont:
-		//   'text-opacity-70 text-base font-normal font-creato-medium leading-[140%] tracking-[0.025rem] ',
+		//   'text-opacity-70 text-base font-normal leading-[140%] tracking-[0.025rem] ',
 		// contentFontColor: 'text-neutral-900',
 		contentFontCSS: {
 			fontSize: '16pt', // base size sent from backend
@@ -44,7 +44,7 @@ export const ColumbiaTemplateThemeConfig: {
 			display: 'list-item',
 		},
 		// userNameFont:
-		// 	'text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
+		// 	'text-sm font-normal leading-[140%] tracking-[0.026rem]',
 		// userNameFontColor: 'text-[#000]',
 		userNameFontCSS: {
 			fontSize: '1rem', // Equivalent to text-sm
@@ -55,7 +55,7 @@ export const ColumbiaTemplateThemeConfig: {
 			color: '#000000', // Equivalent to text-[#3D3D3D]
 		},
 		// headFont:
-		//   'text-neutral-800 text-4xl font-normal font-creato-medium leading-[120%] tracking-tight',
+		//   'text-neutral-800 text-4xl font-normal leading-[120%] tracking-tight',
 		// headFontColor: 'text-neutral-800',
 		headFontCSS: {
 			fontSize: '32pt', // text-4xl in points

@@ -24,7 +24,7 @@ export const MITTemplateThemeConfig: {
 			color: '#111827', // text-neutral-900 color
 		},
 		// contentFont:
-		//   'text-opacity-70 text-base font-normal font-creato-medium leading-[140%] tracking-[0.025rem] ',
+		//   'text-opacity-70 text-base font-normal leading-[140%] tracking-[0.025rem] ',
 		// contentFontColor: 'text-neutral-900',
 		contentFontCSS: {
 			fontSize: '16pt', // base size sent from backend
@@ -36,7 +36,7 @@ export const MITTemplateThemeConfig: {
 			display: 'list-item',
 		},
 		// userNameFont:
-		// 	'text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
+		// 	'text-sm font-normal leading-[140%] tracking-[0.026rem]',
 		// userNameFontColor: 'text-[#F0F0F2]',
 		userNameFontCSS: {
 			fontSize: '1rem', // Equivalent to text-sm
@@ -47,7 +47,7 @@ export const MITTemplateThemeConfig: {
 			color: '#F0F0F2', // Equivalent to text-[#3D3D3D]
 		},
 		// headFont:
-		//   'text-neutral-800 text-4xl font-normal font-creato-medium leading-[120%] tracking-tight',
+		//   'text-neutral-800 text-4xl font-normal leading-[120%] tracking-tight',
 		// headFontColor: 'text-neutral-800',
 		headFontCSS: {
 			fontSize: '32pt', // text-4xl in points

@@ -18,6 +18,8 @@ import { Explanation } from '@/components/ui/Text';
 import { SiQuicktime } from 'react-icons/si';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { FaChrome } from 'react-icons/fa';
+import ShareButton from '@/components/button/ShareButton';
+import { getOrigin } from '@/utils/getHost';
 
 
 const VideoVisualizer = ({
@@ -30,6 +32,22 @@ const VideoVisualizer = ({
 	const videoSource = videoUrl;
 	const [isDownloading, setIsDownloading] = useState(false);
 	const [showQuickTimeModal, setShowQuickTimeModal] = useState(false);
+	const { project, isShared, updateIsShared } = useProject();
+	const [host, setHost] = useState(getOrigin());
+	const [showShareModal, setShowShareModal] = useState(false);
+
+	
+	useEffect(() => {
+		if (
+			window.location.hostname !== 'localhost' &&
+			window.location.hostname !== '127.0.0.1'
+		) {
+			setHost('https://' + window.location.hostname);
+		} else {
+			setHost(window.location.hostname);
+		}
+	}, []);
+
 
 	const QuickTimeModal = () => {
 		return (
@@ -139,6 +157,17 @@ const VideoVisualizer = ({
 								}
 								explanation={'Download'}
 							/>
+							{project && (
+								<ShareButton
+									setShare={updateIsShared}
+									share={isShared}
+									project={project}
+									host={host}
+									shareEntry={'video'}
+									showShareModal={showShareModal}
+									setShowShareModal={setShowShareModal}
+								/>
+							)}
 						</ToolBar>
 					</div>
 					<Video videoUrl={videoSource} />

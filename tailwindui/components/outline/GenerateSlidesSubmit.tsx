@@ -65,6 +65,7 @@ const GenerateSlidesSubmit = ({
 			// router.push(addIdToRedir('/slides'));
 		} catch (e) {
 			setIsSubmitting(false);
+			console.error('Error generating slides:', e);
 			toast.error(
 				'Server is busy now. Please try again later. Reference code: ' +
 					project?.id,

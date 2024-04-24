@@ -189,7 +189,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 				<div
 					className={`w-full h-[150px] flex flex-col items-center justify-center border rounded-md border-2 border-gray-200 cursor-pointer 
 						${isDragging ? 'bg-blue-100 border-blue-500' : ''}
-						${isUploading ? 'bg-gray-500 animate-pulse' : ''}`}
+						${isUploading ? 'bg-gray-500 animate-pulse cursor-progress' : ''}`}
 					onDragEnter={handleDragEnter}
 					onDragOver={handleDragOver}
 					onDragLeave={handleDragLeave}

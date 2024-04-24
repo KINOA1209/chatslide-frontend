@@ -6,6 +6,7 @@ import { uneditableTemplateDispatch } from './templateDispatch';
 import Slide from '@/models/Slide';
 import { useSlides } from '@/hooks/use-slides';
 import { ScrollBar } from '../ui/ScrollBar';
+import './slideContainer.css';
 
 interface DraggableSlidesPreviewProps {
 	slideIndex: number;
@@ -30,8 +31,8 @@ export const DraggableSlidesPreview = forwardRef<
 		>
 			{slides.map((slide, index) => (
 				<div
-					key={`previewContainer${index}${slides.length}`} // force update when slide length changes
-					className={`w-[6rem] h-[4.5rem] lg:w-[8rem] lg:h-[6rem] rounded-md flex-shrink-0 cursor-move px-2`}
+					key={`previewContainer` + index.toString() + slides.length.toString()} // force update when slide length changes
+					className={`w-[6rem] h-[4.5rem] lg:w-[8rem] lg:h-[6rem] rounded-md flex-shrink-0 px-2 grabCursor`}
 					onClick={() => gotoPage(index)}
 					ref={index === slideIndex ? ref : null}
 					draggable={index !== 0}
@@ -66,6 +67,7 @@ export const DraggableSlidesPreview = forwardRef<
 						}
 					}}
 				>
+					{/* {index + 1} */}
 					<SlideContainer
 						slide={slide}
 						index={index}

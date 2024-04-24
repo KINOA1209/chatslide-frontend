@@ -1,0 +1,7 @@
+.grabCursor * {
+	cursor: grab !important;
+}
+
+.autoCursor * {
+	cursor: auto !important;
+}
