@@ -356,7 +356,9 @@ const ProjectItem: React.FC<{
 													share={isShared}
 													setShare={(share: boolean) => {
 														setIsShared(share);
-														ProjectService.SlideShareLink(token, project.id, share);
+														// could be enhance later since video_is_shared no exist in the return project currently
+														const video_is_shared = (project.video_url && project.video_url !== '') ? true : false
+														ProjectService.SlideShareLink(token, project.id, share, video_is_shared);
 													}}
 													project={project}
 													showShareModal={showShareModal}

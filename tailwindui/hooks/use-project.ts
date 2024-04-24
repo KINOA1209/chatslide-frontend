@@ -15,6 +15,7 @@ const useSelectedResourcesBear = createBearStore<Resource[]>()(
 const useIsGpt35Bear = createBearStore<boolean>()('isGpt35', true, true);
 const useIsShared = createBearStore<boolean>()('isShared', false, true);
 const useOutlinesBear = createBearStore<Outlines>()('outlines', [], true);
+const useVideoIsShared = createBearStore<boolean>()('videoIsShared', false, true)
 
 export enum ProjectStatus {
 	NotInited,
@@ -31,6 +32,7 @@ export const useProject = () => {
 		useSelectedResourcesBear();
 	const { isGpt35, setIsGpt35 } = useIsGpt35Bear();
 	const { isShared, setIsShared } = useIsShared();
+	const { videoIsShared, setVideoIsShared } = useVideoIsShared();
 	const { token } = useUser();
 	const { outlines, setOutlines } = useOutlinesBear();
 
@@ -84,16 +86,17 @@ export const useProject = () => {
 		});
 	}
 
-	const updateIsShared = (is_shared: boolean, is_public: boolean | undefined) => {
+	const updateIsShared = (is_shared: boolean, video_is_shared: boolean, is_public: boolean | undefined) => {
 		if (!project) return;
 		console.log('-- updateIsShared', is_shared, is_public);
 		setIsShared(is_shared);
+		setVideoIsShared(video_is_shared)
 		if (is_public === undefined) {
 			setProject({ ...project, is_shared: is_shared } as Project);
-			ProjectService.SlideShareLink(token, project.id, is_shared);
+			ProjectService.SlideShareLink(token, project.id, is_shared, video_is_shared);
 		} else {
 			setProject({ ...project, is_shared: is_shared, is_public: is_public } as Project);
-			ProjectService.SlideShareLink(token, project.id, is_shared, is_public);
+			ProjectService.SlideShareLink(token, project.id, is_shared, video_is_shared, is_public);
 		}
 	};
 
@@ -126,6 +129,7 @@ export const useProject = () => {
 		setIsGpt35,
 		isShared,
 		updateIsShared,
+		videoIsShared,
 		outlines,
 		updateOutlines,
 	};

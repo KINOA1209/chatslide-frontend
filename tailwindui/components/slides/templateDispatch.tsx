@@ -230,7 +230,10 @@ export const templateDispatch = (
 			return (
 				<div
 					className='ql-editor non-editable-ql-editor'
-					style={{ ...style, outline: 'none' }}
+					style={{ 
+						...style, 
+						outline: 'none',
+					}}
 				>
 					{Array.isArray(content) ? (
 						content.map((item, index) => (
