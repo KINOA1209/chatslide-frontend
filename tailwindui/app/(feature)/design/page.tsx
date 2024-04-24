@@ -86,7 +86,7 @@ export default function DesignPage() {
   const { token, isPaidUser } = useUser();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { outlines, project, updateProject, bulkUpdateProject } = useProject();
-  const { setSlides, setSlideIndex, debouncedSyncSlides } = useSlides();
+  const { debouncedSyncSlides } = useSlides();
   const [template, setTemplate] = useState<TemplateKeys>(
     project?.template || getTemplateFromAudicence(project?.audience || ''),
   );
@@ -209,8 +209,7 @@ export default function DesignPage() {
           parsed_slides: newSlides as Slide[],
         } as Project);
 
-        setSlides(newSlides);
-        setSlideIndex(0);
+        initSlides(newSlides);
         debouncedSyncSlides(newSlides);
 
         router.push(addIdToRedir('/slides'));
