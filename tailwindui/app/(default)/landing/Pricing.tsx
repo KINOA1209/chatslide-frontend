@@ -2,11 +2,12 @@
 
 
 import MultiwayToggle from "@/components/button/MultiwayToggle";
+import { Explanation } from "@/components/ui/Text";
 import { useUser } from "@/hooks/use-user";
 import UserService from "@/services/UserService";
 import { userInEU } from "@/utils/userLocation";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 type Tier = 'FREE' | 'PLUS' | 'PRO' | 'ULTIMATE';
@@ -60,6 +61,27 @@ const PricingComparison: React.FC<{
 			}
 		}
 		return ''
+	}
+
+	const CtaButton: FC<{ tier: Tier }> = ({ tier }) => {
+		const cta = getCta(tier);
+		const bgColor = cta.includes('✅') ? 'white' : '';
+		const textColor = cta.includes('✅') ? 'black' : '';
+
+		return (
+			<button
+				onClick={() => handleClick(tier)}
+				className="brix---btn-primary-small-full-width w-button whitespace-nowrap flex flex-col"
+				style={{
+					backgroundColor: bgColor,
+					color: textColor
+				}}
+			>
+				<span>{getCta(tier)}</span>
+				{/* {interval === 'lifetime' && (<span className='text-xs'>14 day money back</span>)} */}
+
+			</button>
+		)
 	}
 
 	const getOriginalPrice = (tier: Tier): number => {
@@ -222,6 +244,11 @@ const PricingComparison: React.FC<{
 				setSelectedKey={setInterval as (key: string) => void}
 			/>
 
+			{/* <Explanation>
+				{interval === 'lifetime' && '14 day money back guarantee'}
+				{interval === 'yearly' && '3 day money back guarantee'}
+			</Explanation> */}
+
 			<div
 				data-w-id="a8590735-7e8f-bd41-a09e-37f58b801ed3"
 				className={`w-layout-grid ${showFreeTier ? 'brix---grid-4-columns-pricing-tablet' : 'brix---grid-3-columns'}`}
@@ -357,13 +384,7 @@ const PricingComparison: React.FC<{
 								<div className="brix---text-300-medium">{getSecondLine('PLUS')}</div>
 							</div>
 						</div>
-						<button
-							onClick={() => handleClick('PLUS')}
-							className="brix---btn-primary-small-full-width w-button whitespace-nowrap"
-						// style={{ backgroundColor: '#9AAEF9' }}
-						>
-							{getCta('PLUS')}
-						</button>
+						<CtaButton tier={'PLUS'}/>
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
@@ -458,12 +479,7 @@ const PricingComparison: React.FC<{
 								<div className="brix---text-300-medium">{getSecondLine('PRO')}</div>
 							</div>
 						</div>
-						<button
-							onClick={() => handleClick('PRO')}
-							className="brix---btn-primary-small-full-width w-button whitespace-nowrap"
-						>
-							{getCta('PRO')}
-						</button>
+						<CtaButton tier={'PRO'}/>
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
@@ -586,12 +602,7 @@ const PricingComparison: React.FC<{
 								<div className="brix---text-300-medium">{getSecondLine('ULTIMATE')}</div>
 							</div>
 						</div>
-						<button
-							onClick={() => handleClick('ULTIMATE')}
-							className="brix---btn-primary-small-full-width w-button whitespace-nowrap"
-						>
-							{getCta('ULTIMATE')}
-						</button>
+						<CtaButton tier={'ULTIMATE'}/>
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
