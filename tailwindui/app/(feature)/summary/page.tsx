@@ -110,7 +110,7 @@ export default function Topic() {
 
 	const handleGenerationStatusModal = () => {
 		// console.log('user Research Modal toggled');
-		setSummarizing(true);
+		// setSummarizing(true);
 		setShowGenerationStatusModal(!showGenerationStatusModal);
 	};
 	const tourSteps: Step[] = [
