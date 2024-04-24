@@ -4,47 +4,6 @@ import FillOutFormImg from '@/public/images/user_onboarding/FillOutForms.png';
 import BookASessionImg from '@/public/images/user_onboarding/BookASession.png';
 import { getBrand } from '@/utils/getHost';
 import { Explanation, Instruction, Title } from './Text';
-import { useUser } from '@/hooks/use-user';
-
-
-const ProgressButton: FC<{
-  href: string;
-  imgSrc: string;
-  alt: string;
-  children: React.ReactNode;
-}> = ({ href, imgSrc, alt, children }) => {
-  return (
-    <a
-      href={href}
-      target='_blank'
-      className='py-2 px-2 rounded-md hover:bg-gray-300 transition duration-300 ease-in-out'
-      role='menuitem'
-    >
-      {' '}
-      <div
-        className='w-80 relative flex flex-row justify-evenly items-center transition duration-300 ease-in-out hover:shadow-lg'
-        style={{
-          borderRadius: '0.4375rem',
-          border: '1px solid var(--Blue-Blue_200, #B4C5FA)',
-          background: '#FFF',
-          boxShadow: '0px 12px 28.8px 0px rgba(74, 153, 246, 0.25)',
-        }}
-      >
-        <div className='h-[4rem] w-[4rem] sm:h-[5rem] sm:w-[5rem] lg:w-[7rem] lg:h-[7rem]'>
-          <img
-            src={imgSrc}
-            alt={alt}
-            className='h-[4rem] w-[4rem] sm:h-[5rem] sm:w-[5rem] lg:w-[7rem] lg:h-[7rem] object-contain'
-          />
-        </div>
-
-        <div className='text-center'>
-          {children}
-        </div>
-      </div>
-    </a>
-  );
-};
 
 
 interface GenerationStatusProgressModalProps {
@@ -60,73 +19,6 @@ export const GenerationStatusProgressModal: FC<
   const [stepsCompleted, setStepsCompleted] = useState(false); // Flag to track whether steps are completed
   const [canClose, setCanClose] = useState(false);
   const [showModal, setShowModal] = useState(true);
-  const { isPaidUser, tier, credits } = useUser();
-
-  const ctas = [
-    {
-      href: 'https://calendar.app.google/2uGV3B6h9UdYBHPB8',
-      imgSrc: BookASessionImg.src,
-      alt: 'Book a session',
-      instruction: 'Book a session +1000⭐',
-      explanation: '~30 mins',
-    },
-    {
-      href: '/account',
-      imgSrc: BookASessionImg.src,
-      alt: 'Upgrade to unlimited',
-      instruction: 'Upgrade to unlimited +🌟🌟🌟🌟🌟',
-      explanation: 'One-time payment',
-      condition: ({isPaidUser, credits}: {isPaidUser: boolean, credits: string}) => isPaidUser && credits !== 'Unlimited',
-    },
-    {
-      href: 'https://forms.gle/kncWqBjU4n5xps1w8',
-      imgSrc: FillOutFormImg.src,
-      alt: 'Fill out a form',
-      instruction: 'Fill out form +100⭐',
-      explanation: '5-10 mins',
-    },
-    {
-      href: `https://twitter.com/${getBrand()}_ai`,
-      imgSrc: FillOutFormImg.src,
-      alt: 'Follow our Twitter',
-      instruction: 'Follow our Twitter +50⭐',
-      explanation: '1 click',
-    },
-    {
-      href: 'https://discord.gg/7g3g4CJ',
-      imgSrc: FillOutFormImg.src,
-      alt: 'Join our Discord',
-      instruction: 'Join our Discord +50⭐',
-      explanation: '1 click',
-    },
-    {
-      href: 'https://appsumo.com/products/drlambda/',
-      imgSrc: FillOutFormImg.src,
-      alt: 'Write a review',
-      instruction: 'Write a review 🌮🌮🌮🌮🌮',
-      explanation: '5 mins',
-      condition: ({tier}: {tier: string}) => tier === 'PRO_LIFETIME',
-    },
-    {
-      href: '/affiliate',
-      imgSrc: FillOutFormImg.src,
-      alt: 'Join affiliate program',
-      instruction: 'Join affiliate program 💸💸💸💸💸',
-      explanation: '5 mins',
-    },
-  ];
-
-  const filteredCTAs = ctas.filter(item => !item.condition || item.condition({isPaidUser, credits, tier}));
-
-  // Function to pick 2 random elements
-  const pickRandomCTAs = (count: number) => {
-    let shuffled = [...filteredCTAs];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled.slice(0, count);
-  };
 
   useEffect(() => {
     const targetPercentage = 99;
@@ -197,24 +89,85 @@ export const GenerationStatusProgressModal: FC<
         className='w-full px-4 py-2 flex flex-col items-start gap-[0.5rem]'
       >
         <Title center>
-          More ways to get credits 🌟
+          Earn free credits⭐ by joining our user study
         </Title>
         <Explanation>
           We want to learn more about what you think of {getBrand()}, and how you
           use {getBrand()}.
         </Explanation>
         <div className='flex flex-col lg:flex-row gap-[1.5rem] self-center'>
-          {pickRandomCTAs(2).map((cta, index) => (
-            <ProgressButton
-              key={index}
-              href={cta.href}
-              imgSrc={cta.imgSrc}
-              alt={cta.alt}
+          {/* book a session */}
+          <a
+            href='https://calendar.app.google/2uGV3B6h9UdYBHPB8'
+            target='_blank'
+            className='py-2 px-2 rounded-md hover:bg-gray-300 transition duration-300 ease-in-out'
+            role='menuitem'
+          >
+            <div
+              className='w-80 relative flex flex-row justify-evenly items-center transition duration-300 ease-in-out hover:shadow-lg'
+              style={{
+                borderRadius: '0.4375rem',
+                border: '1px solid var(--Blue-Blue_200, #B4C5FA)',
+                background: '#FFF',
+                boxShadow: '0px 12px 28.8px 0px rgba(74, 153, 246, 0.25)',
+              }}
             >
-              <Instruction>{cta.instruction}</Instruction>
-              <Explanation>{cta.explanation}</Explanation>
-            </ProgressButton>
-          ))}
+              <div className='h-[4rem] w-[4rem] sm:h-[5rem] sm:w-[5rem] lg:w-[7rem] lg:h-[7rem]'>
+                <img
+                  src={BookASessionImg.src}
+                  alt='Book a session'
+                  className='h-[4rem] w-[4rem] sm:h-[5rem] sm:w-[5rem] lg:w-[7rem] lg:h-[7rem] object-contain'
+                />
+              </div>
+
+              <div className='text-center'>
+                <Instruction>
+                  Book a session <br></br>+1000⭐
+                  <br />
+                </Instruction>
+                <Explanation>
+                  (~30 mins){' '}
+                </Explanation>
+              </div>
+            </div>
+          </a>
+
+          {/* fill out a form */}
+          <a
+            href='https://forms.gle/kncWqBjU4n5xps1w8'
+            target='_blank'
+            className='py-2 px-2 rounded-md hover:bg-gray-300 transition duration-300 ease-in-out'
+            role='menuitem'
+          >
+            {' '}
+            <div
+              className='w-80 relative flex flex-row justify-evenly items-center transition duration-300 ease-in-out hover:shadow-lg'
+              style={{
+                borderRadius: '0.4375rem',
+                border: '1px solid var(--Blue-Blue_200, #B4C5FA)',
+                background: '#FFF',
+                boxShadow: '0px 12px 28.8px 0px rgba(74, 153, 246, 0.25)',
+              }}
+            >
+              <div className='h-[4rem] w-[4rem] sm:h-[5rem] sm:w-[5rem] lg:w-[7rem] lg:h-[7rem]'>
+                <img
+                  src={FillOutFormImg.src}
+                  alt='Book a session'
+                  className='h-[4rem] w-[4rem] sm:h-[5rem] sm:w-[5rem] lg:w-[7rem] lg:h-[7rem] object-contain'
+                />
+              </div>
+
+              <div className='text-center'>
+                <Instruction>
+                  Fill out form <br></br>+100⭐
+                  <br />
+                </Instruction>
+                <Explanation>
+                  (5-10 mins){' '}
+                </Explanation>
+              </div>
+            </div>
+          </a>
         </div>
       </section>
     </Modal>
