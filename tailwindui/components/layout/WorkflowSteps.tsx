@@ -91,7 +91,7 @@ const OneStep: React.FC<StepProps> = ({
 					{renderLine}
 				</div>
 				<span
-					className={`absolute top-8 text-white text-sm font-normal font-creato-medium leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-18px]'}`}
+					className={`absolute top-8 text-white text-sm font-normal leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-18px]'}`}
 				>
 					{desc}
 				</span>
@@ -110,7 +110,7 @@ const OneStep: React.FC<StepProps> = ({
 					{renderLine}
 				</div>
 				<span
-					className={`absolute top-8 text-white text-sm font-normal font-creato-medium leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-8px]'}`}
+					className={`absolute top-8 text-white text-sm font-normal leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-8px]'}`}
 				>
 					{desc}
 				</span>

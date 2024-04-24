@@ -54,7 +54,7 @@ export const Clean_Lifestyle_003_TemplateThemeConfig: {
 			display: 'list-item',
 		},
 		// userNameFont:
-		// 	'text-[14pt] font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
+		// 	'text-[14pt] font-normal leading-[140%] tracking-[0.026rem]',
 		// userNameFontColor: 'text-[#A9A9A9]',
 		userNameFontCSS: {
 			fontSize: '1rem', // Equivalent to text-sm

@@ -50,7 +50,7 @@ const ScenarioChoicePage = () => {
 					Hey {username}, <br />
 					what are you planning to create today?
 				</Title>
-				{/* <div className='w-[80vh] h-8 text-center text-gray-600 text-base font-normal font-creato-medium leading-normal tracking-tight'>
+				{/* <div className='w-[80vh] h-8 text-center text-gray-600 text-base font-normal leading-normal tracking-tight'>
           {scenarios.description}
         </div> */}
 				{/* three types of scenarios */}
@@ -72,7 +72,7 @@ const ScenarioChoicePage = () => {
 									src={scenario.imageSrc}
 								/>
 							</div>
-							<div className='text-center my-2 font-creato-medium leading-snug tracking-tight whitespace-nowrap font-bold'>
+							<div className='text-center my-2 leading-snug tracking-tight whitespace-nowrap font-bold'>
 								{scenario.title}
 							</div>
 						</div>

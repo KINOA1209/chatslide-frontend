@@ -68,13 +68,13 @@ export const SlidePagesIndicator: React.FC<{
 		<div className='col-span-1'>
 			<div className='w-20 h-7 px-4 py-1 bg-indigo-400 rounded-3xl justify-center items-center gap-2 inline-flex'>
 				<div className='flex flex-row text-center'>
-					<span className='text-zinc-100 text-xs font-bold font-creato-medium leading-tight tracking-wide'>
+					<span className='text-zinc-100 text-xs font-bold leading-tight tracking-wide'>
 						{currentSlideIndex + 1}
 					</span>
-					<span className='text-zinc-100 text-xs font-normal font-creato-medium leading-tight tracking-wide'>
+					<span className='text-zinc-100 text-xs font-normal leading-tight tracking-wide'>
 						{' / '}
 					</span>
-					<span className='text-zinc-100 text-xs font-bold font-creato-medium leading-tight tracking-wide'>
+					<span className='text-zinc-100 text-xs font-bold leading-tight tracking-wide'>
 						{slides.length}
 					</span>
 				</div>

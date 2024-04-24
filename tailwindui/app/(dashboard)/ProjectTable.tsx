@@ -122,7 +122,7 @@ const ProjectItem: React.FC<{
 				{/* thumbnail */}
 				<div
 					className={`h-full hidden lg:flex col-span-1 p-1 items-center justify-center ${!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
-						} font-creato-medium leading-normal`}
+						} leading-normal`}
 				>
 					<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
 						<div
@@ -150,7 +150,7 @@ const ProjectItem: React.FC<{
 				{/* title */}
 				<div
 					className={`col-span-3 lg:col-span-2 p-2 flex items-center ${!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
-						} font-creato-medium leading-[20px]`}
+						} leading-[20px]`}
 					style={{ padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)` }}
 				>
 					<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
@@ -480,7 +480,7 @@ const ProjectTable: React.FC<Props> = ({
 						borderRadius: 'var(--radius-md) var(--radius-md) 0px 0px',
 					}}
 				>
-					{/* <div className='hidden lg:flex col-span-1 w-full ml-4 text-indigo-300 text-[13px] font-bold font-creato-medium uppercase leading-normal tracking-wide'> */}
+					{/* <div className='hidden lg:flex col-span-1 w-full ml-4 text-indigo-300 text-[13px] font-bold uppercase leading-normal tracking-wide'> */}
 					<div
 						className='flex col-span-3 w-full capitalize '
 						style={{

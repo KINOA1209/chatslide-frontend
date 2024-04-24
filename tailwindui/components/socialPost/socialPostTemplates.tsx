@@ -224,7 +224,7 @@ export const Col_1_img_0 = ({
 					<div className='mt-[5%]'>{content}</div>
 				</div>
 				<div className='w-full h-[7%] mt-[2%]'>
-					<div className='flex flex-row justify-center items-center font-creato-medium leading-normal tracking-wide text-[15px] text-[white]'>
+					<div className='flex flex-row justify-center items-center leading-normal tracking-wide text-[15px] text-[white]'>
 						{icon}{getBrand()}
 					</div>
 				</div>
@@ -323,7 +323,7 @@ export const Col_2_img_1 = ({
 					</div>
 				</div>
 				<div className='w-full h-[7%] mt-[2%]'>
-					<div className='flex flex-row justify-center items-center font-creato-medium leading-normal tracking-wide text-[15px] text-[white]'>
+					<div className='flex flex-row justify-center items-center leading-normal tracking-wide text-[15px] text-[white]'>
 						{icon}{getBrand()}
 					</div>
 				</div>
@@ -501,7 +501,7 @@ export const img_0_template2 = ({
 						borderRight: '1px solid #E7E5E5',
 					}}
 				>
-					<div className='flex flex-row justify-center items-center font-creato-medium leading-normal tracking-wide text-[15px]'>
+					<div className='flex flex-row justify-center items-center leading-normal tracking-wide text-[15px]'>
 						{icon}{getBrand()}
 					</div>
 				</div>

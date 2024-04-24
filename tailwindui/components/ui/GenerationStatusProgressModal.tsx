@@ -3,6 +3,7 @@ import React, { FC, useEffect, useState } from 'react';
 import FillOutFormImg from '@/public/images/user_onboarding/FillOutForms.png';
 import BookASessionImg from '@/public/images/user_onboarding/BookASession.png';
 import { getBrand } from '@/utils/getHost';
+import { Explanation, Instruction, Title } from './Text';
 interface GenerationStatusProgressModalProps {
   onClick: () => void;
   prompts: [string, number][]; // Array of prompt text and waiting time pairs
@@ -84,13 +85,13 @@ export const GenerationStatusProgressModal: FC<
         id='userResearch'
         className='w-full px-4 py-2 flex flex-col items-start gap-[0.5rem]'
       >
-        <div className='text-center text-neutral-800 text-xl font-bold leading-normal font-creato-medium'>
+        <Title center>
           Earn free credits⭐ by joining our user study
-        </div>
-        <div className='text-gray-600 text-sm font-normal font-creato-medium leading-normal tracking-[0.0175rem]'>
+        </Title>
+        <Explanation>
           We want to learn more about what you think of {getBrand()}, and how you
           use {getBrand()}.
-        </div>
+        </Explanation>
         <div className='flex flex-col lg:flex-row gap-[1.5rem] self-center'>
           {/* book a session */}
           <a
@@ -117,13 +118,13 @@ export const GenerationStatusProgressModal: FC<
               </div>
 
               <div className='text-center'>
-                <span className='text-black text-xs sm:text-base font-bold font-creato-medium leading-snug tracking-tight'>
+                <Instruction>
                   Book a session <br></br>+1000⭐
                   <br />
-                </span>
-                <span className='text-black text-sm font-normal font-creato-medium leading-snug tracking-tight'>
+                </Instruction>
+                <Explanation>
                   (~30 mins){' '}
-                </span>
+                </Explanation>
               </div>
             </div>
           </a>
@@ -154,13 +155,13 @@ export const GenerationStatusProgressModal: FC<
               </div>
 
               <div className='text-center'>
-                <span className='text-black text-base font-bold font-creato-medium leading-snug tracking-tight'>
+                <Instruction>
                   Fill out form <br></br>+100⭐
                   <br />
-                </span>
-                <span className='text-black text-sm font-normal font-creato-medium leading-snug tracking-tight'>
+                </Instruction>
+                <Explanation>
                   (5-10 mins){' '}
-                </span>
+                </Explanation>
               </div>
             </div>
           </a>

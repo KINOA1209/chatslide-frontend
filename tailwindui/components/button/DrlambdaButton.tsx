@@ -167,7 +167,7 @@ export const BackButton: React.FC<BackButtonProps> = ({
 			<div
 				className={`text-center self-center ${
 					dark ? 'text-neural-800' : 'text-white'
-				} font-medium font-creato-medium leading-normal tracking-[0.035rem] whitespace-nowrap hidden sm:block`}
+				} font-medium leading-normal tracking-[0.035rem] whitespace-nowrap hidden sm:block`}
 			>
 				{text}
 			</div>

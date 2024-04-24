@@ -27,7 +27,7 @@ export default async function Discover() {
 			 */}
 			{/* <div className='grow flex flex-col'>
 				<div className='w-full max-w-7xl flex flex-wrap items-end justify-center'>
-					<div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-white text-base font-bold font-creato-medium leading-10 tracking-wide border-white border-b-2'>
+					<div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-white text-base font-bold leading-10 tracking-wide border-white border-b-2'>
 						Discover Projects
 					</div>
 
@@ -42,11 +42,11 @@ export default async function Discover() {
 				{/* flex container controlling max width */}
 				<div className='w-full flex flex-wrap items-center justify-between'>
 					{/* my project title text */}
-					{/* <div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-black text-base font-bold font-creato-medium leading-10 tracking-wide border-white border-b-2'>
+					{/* <div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-black text-base font-bold leading-10 tracking-wide border-white border-b-2'>
 							My Projects
 						</div> */}
 					<div
-						className='text-[24px] font-bold font-creato-medium leading-[32px] tracking-wide'
+						className='text-[24px] font-bold leading-[32px] tracking-wide'
 						style={{
 							color: 'var(--colors-text-text-secondary-700, #344054)',
 						}}
@@ -85,7 +85,7 @@ export default async function Discover() {
 				{projects && projects.length > 0 ? (
 					<ProjectTable currentProjects={projects} isDiscover={true} />
 				) : (
-					<div className='flex items-center mt-[1rem] md:mt-[6rem] justify-center text-gray-600 text-[14px] md:text-[20px] font-normal font-creato-medium leading-normal tracking-wide'>
+					<div className='flex items-center mt-[1rem] md:mt-[6rem] justify-center text-gray-600 text-[14px] md:text-[20px] font-normal leading-normal tracking-wide'>
 						There are no community projects yet.
 					</div>
 				)}

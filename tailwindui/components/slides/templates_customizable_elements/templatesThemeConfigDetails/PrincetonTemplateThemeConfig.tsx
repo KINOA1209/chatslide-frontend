@@ -35,7 +35,7 @@ export const PrincetonTemplateThemeConfig: {
 			display: 'list-item',
 		},
 		// userNameFont:
-		// 	'text-sm font-normal font-creato-medium leading-[140%] tracking-[0.026rem]',
+		// 	'text-sm font-normal leading-[140%] tracking-[0.026rem]',
 		// userNameFontColor: 'text-[#000]',
 		userNameFontCSS: {
 			fontSize: '1rem', // Equivalent to text-sm
