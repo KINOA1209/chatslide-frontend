@@ -46,6 +46,76 @@ const ProgressButton: FC<{
   );
 };
 
+const ctas = [
+  {
+    href: 'https://calendar.app.google/2uGV3B6h9UdYBHPB8',
+    imgSrc: BookASessionImg.src,
+    alt: 'Book a session',
+    instruction: 'Book a session',
+    emoji: '+1000⭐',
+    explanation: '~30 mins',
+  },
+  {
+    href: '/account',
+    imgSrc: BookASessionImg.src,
+    alt: 'Upgrade to unlimited',
+    instruction: 'Upgrade to unlimited',
+    emoji: '+🌟🌟🌟🌟🌟',
+    explanation: 'One-time payment',
+    condition: ({ isPaidUser, credits }: { isPaidUser: boolean, credits: string }) => isPaidUser && credits !== 'Unlimited',
+  },
+  {
+    href: 'https://forms.gle/kncWqBjU4n5xps1w8',
+    imgSrc: FillOutFormImg.src,
+    alt: 'Fill out a form',
+    instruction: 'Fill out form',
+    emoji: '+100⭐',
+    explanation: '5-10 mins',
+  },
+  {
+    href: `https://twitter.com/${getBrand()}_ai`,
+    imgSrc: FillOutFormImg.src,
+    alt: 'Follow our Twitter',
+    instruction: 'Follow our Twitter',
+    emoji: '+50⭐',
+    explanation: '1 click',
+  },
+  {
+    href: 'https://discord.gg/7g3g4CJ',
+    imgSrc: FillOutFormImg.src,
+    alt: 'Join our Discord',
+    instruction: 'Join our Discord',
+    emoji: '+50⭐',
+    explanation: '1 click',
+  },
+  {
+    href: 'https://appsumo.com/products/drlambda/',
+    imgSrc: FillOutFormImg.src,
+    alt: 'Write a review',
+    instruction: 'Write a review',
+    emoji: '🌮🌮🌮🌮🌮',
+    explanation: '5 mins',
+    condition: ({ tier }: { tier: string }) => tier === 'PRO_LIFETIME',
+  },
+  {
+    href: '/affiliate',
+    imgSrc: FillOutFormImg.src,
+    alt: 'Join affiliate program',
+    instruction: 'Join affiliate program',
+    emoji: '💸💸💸💸💸',
+    explanation: '5 mins',
+  }
+];
+
+// Function to pick 2 random elements
+const pickRandomCTAs = (filteredCTAs: any, count: number) => {
+  let shuffled = [...filteredCTAs];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled.slice(0, count);
+};
 
 interface GenerationStatusProgressModalProps {
   onClick: () => void;
@@ -61,72 +131,12 @@ export const GenerationStatusProgressModal: FC<
   const [canClose, setCanClose] = useState(false);
   const [showModal, setShowModal] = useState(true);
   const { isPaidUser, tier, credits } = useUser();
+  const [selectedCtas, setSelectedCtas] = useState([] as any[]);
 
-  const ctas = [
-    {
-      href: 'https://calendar.app.google/2uGV3B6h9UdYBHPB8',
-      imgSrc: BookASessionImg.src,
-      alt: 'Book a session',
-      instruction: 'Book a session +1000⭐',
-      explanation: '~30 mins',
-    },
-    {
-      href: '/account',
-      imgSrc: BookASessionImg.src,
-      alt: 'Upgrade to unlimited',
-      instruction: 'Upgrade to unlimited +🌟🌟🌟🌟🌟',
-      explanation: 'One-time payment',
-      condition: ({isPaidUser, credits}: {isPaidUser: boolean, credits: string}) => isPaidUser && credits !== 'Unlimited',
-    },
-    {
-      href: 'https://forms.gle/kncWqBjU4n5xps1w8',
-      imgSrc: FillOutFormImg.src,
-      alt: 'Fill out a form',
-      instruction: 'Fill out form +100⭐',
-      explanation: '5-10 mins',
-    },
-    {
-      href: `https://twitter.com/${getBrand()}_ai`,
-      imgSrc: FillOutFormImg.src,
-      alt: 'Follow our Twitter',
-      instruction: 'Follow our Twitter +50⭐',
-      explanation: '1 click',
-    },
-    {
-      href: 'https://discord.gg/7g3g4CJ',
-      imgSrc: FillOutFormImg.src,
-      alt: 'Join our Discord',
-      instruction: 'Join our Discord +50⭐',
-      explanation: '1 click',
-    },
-    {
-      href: 'https://appsumo.com/products/drlambda/',
-      imgSrc: FillOutFormImg.src,
-      alt: 'Write a review',
-      instruction: 'Write a review 🌮🌮🌮🌮🌮',
-      explanation: '5 mins',
-      condition: ({tier}: {tier: string}) => tier === 'PRO_LIFETIME',
-    },
-    {
-      href: '/affiliate',
-      imgSrc: FillOutFormImg.src,
-      alt: 'Join affiliate program',
-      instruction: 'Join affiliate program 💸💸💸💸💸',
-      explanation: '5 mins',
-    },
-  ];
-
-  const filteredCTAs = ctas.filter(item => !item.condition || item.condition({isPaidUser, credits, tier}));
-
-  // Function to pick 2 random elements
-  const pickRandomCTAs = (count: number) => {
-    let shuffled = [...filteredCTAs];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled.slice(0, count);
-  };
+  useEffect(() => {
+    const filteredCTAs = ctas.filter(item => !item.condition || item.condition({ isPaidUser, credits, tier }));
+    setSelectedCtas(pickRandomCTAs(filteredCTAs, 2));
+  }, [isPaidUser, credits, tier]);
 
   useEffect(() => {
     const targetPercentage = 99;
@@ -204,14 +214,15 @@ export const GenerationStatusProgressModal: FC<
           use {getBrand()}.
         </Explanation>
         <div className='flex flex-col lg:flex-row gap-[1.5rem] self-center'>
-          {pickRandomCTAs(2).map((cta, index) => (
+          {selectedCtas.map((cta, index) => (
             <ProgressButton
               key={index}
               href={cta.href}
               imgSrc={cta.imgSrc}
               alt={cta.alt}
             >
-              <Instruction>{cta.instruction}</Instruction>
+              <Instruction center>{cta.instruction}</Instruction>
+              <Instruction center>{cta.emoji}</Instruction>
               <Explanation>{cta.explanation}</Explanation>
             </ProgressButton>
           ))}

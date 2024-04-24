@@ -146,7 +146,7 @@ const SideBar = ({ }: SideBarProps) => {
       {/* credits and user studies */}
       <div className='flex flex-col items-left justify-between'>
         <div className='block py-1 text-sm text-white'>
-          {parseInt(credits) < 200 && (
+          {/* {parseInt(credits) < 200 && (
             <a
               href='/account'
               className={`block py-1 text-sm text-green-400 mx-auto text-center rounded-lg hover:bg-gray-400`}
@@ -154,7 +154,7 @@ const SideBar = ({ }: SideBarProps) => {
             >
               {'Missing credits?'}
             </a>
-          )}
+          )} */}
           {
             credits != 'Unlimited' && tier.includes('LIFETIME') && isSidebarOpen && (
               <a
