@@ -21,12 +21,12 @@ export interface SideBarItem {
 export const SideBarData: SideBarItem[] = [
 	{
 		title: 'Dashboard',
-		icon: <GoHome />,
+		icon: <GoHome width={24}/>,
 		path: '/dashboard',
 	},
 	{
 		title: 'Uploads',
-		icon: <GoFile />,
+		icon: <GoFile width={24}/>,
 		path: '/my-resources',
 	},
 	{
