@@ -66,20 +66,28 @@ export const generateTemplate = (templateName: string) => {
 		palette,
 		themeElements,
 		layoutElements,
-	}: MainSlideProps) => {
-		const { customTemplateBgColor, hasSelectedCustomTemplateBgColor } =
-			useSlides();
+	}: // initialTemplateTitleFontFamily,
+	MainSlideProps) => {
+		const {
+			customTemplateBgColor,
+			hasSelectedCustomTemplateBgColor,
+			setInitalLoadedTitleFontFamily,
+			HasSelectedCustomizedTemplateTitleFontFamily,
+			setHasSelectedCustomizedTemplateTitleFontFamily,
+		} = useSlides();
 		const ChosenLayoutNonCover =
 			layoutOptions[layoutOptionNonCover as keyof typeof layoutOptions];
 		const ChosenLayoutCover =
 			layoutOptions[layoutOptionCover as keyof typeof layoutOptions];
 
 		// useEffect(() => {
+		// 	// set initial loaded title font family
 		// 	console.log(
-		// 		'selected theme element backgroundColor is gradient background',
-		// 		themeElements.isGradientBackground,
+		// 		'themeElements titleFontCSS fontFamily',
+		// 		themeElements?.titleFontCSS.fontFamily,
 		// 	);
-		// }, [palette]);
+		// 	setInitalLoadedTitleFontFamily(themeElements?.titleFontCSS.fontFamily);
+		// }, []);
 
 		return (
 			<>
@@ -271,6 +279,7 @@ export interface MainSlideProps {
 	template?: TemplateKeys;
 	themeElements: ThemeElements;
 	layoutElements: LayoutElements;
+	// initialTemplateTitleFontFamily?: string;
 }
 
 // deprecated

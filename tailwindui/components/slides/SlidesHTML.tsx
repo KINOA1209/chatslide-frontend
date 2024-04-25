@@ -70,10 +70,12 @@ type SlidesHTMLProps = {
 };
 
 export const loadCustomizableElements = (
-  templateName: string,
-  paletteName: string = 'Original',
-  customTemplateBgColor?: string,
-  hasSelectedCustomTemplateBgColor?: boolean,
+	templateName: string,
+	paletteName: string = 'Original',
+	customTemplateBgColor?: string,
+	hasSelectedCustomTemplateBgColor?: boolean,
+	customizedTemplateTitleFontFamily?: string,
+	hasSelectedCustomizedTemplateTitleFontFamily?: boolean,
 ) => {
   // return (
   // 	themeConfigData[templateName as keyof ThemeConfig] ||
@@ -87,15 +89,29 @@ export const loadCustomizableElements = (
     (Default_TemplateThemeConfig['Original'] as ThemeElements);
   // console.log('loaded theme configurations is:', selectedThemeElements);
 
-  // If customTemplateBgColor is provided, update the selectedThemeElements
-  if (customTemplateBgColor && hasSelectedCustomTemplateBgColor) {
-    selectedThemeElements = {
-      ...selectedThemeElements,
-      backgroundColorCover: `${customTemplateBgColor}`,
-      backgroundColor: `${customTemplateBgColor}`,
-    };
-  }
-  return selectedThemeElements;
+	// If customTemplateBgColor is provided, update the selectedThemeElements
+	if (customTemplateBgColor && hasSelectedCustomTemplateBgColor) {
+		selectedThemeElements = {
+			...selectedThemeElements,
+			backgroundColorCover: `${customTemplateBgColor}`,
+			backgroundColor: `${customTemplateBgColor}`,
+		};
+	}
+
+	if (
+		customizedTemplateTitleFontFamily &&
+		hasSelectedCustomizedTemplateTitleFontFamily
+	) {
+		selectedThemeElements = {
+			...selectedThemeElements,
+			titleFontCSS: {
+				...selectedThemeElements.titleFontCSS, // Preserve existing titleFontCSS properties
+				fontFamily: customizedTemplateTitleFontFamily, // Update fontFamily
+			},
+		};
+	}
+
+	return selectedThemeElements;
 };
 
 export const loadLayoutConfigElements = (

@@ -14,6 +14,8 @@ import Select from 'react-select';
 import { ColorPicker } from './ColorPicker';
 import { useSlides } from '@/hooks/use-slides';
 import { WrappableRow } from '@/components/layout/WrappableRow';
+import FontFamilyPicker from './FontFamilyPicker';
+import { loadCustomizableElements } from '@/components/slides/SlidesHTML';
 
 const SlideDesignPreview = dynamic(
 	() => import('@/components/slides/SlideDesignPreview'),
@@ -56,12 +58,26 @@ const TemplateSelector: React.FC<{
 	palette: PaletteKeys;
 	setPalette: (palette: PaletteKeys) => void;
 	showCustomColorPicker?: boolean;
-}> = ({ template, setTemplate, paletteOptions, setPalette, palette, showCustomColorPicker = false }) => {
+}> = ({
+	template,
+	setTemplate,
+	paletteOptions,
+	setPalette,
+	palette,
+	showCustomColorPicker = false,
+}) => {
 	const {
+		slides,
 		hasSelectedCustomTemplateBgColor,
 		customTemplateBgColor,
 		updateCustomBgColorForTemplate,
 		toggleHasSelectedCustomTemplateBgColor,
+		initalLoadedTitleFontFamily,
+		setInitalLoadedTitleFontFamily,
+		customizedTemplateTitleFontFamily,
+		setCustomizedTemplateTitleFontFamily,
+		HasSelectedCustomizedTemplateTitleFontFamily,
+		setHasSelectedCustomizedTemplateTitleFontFamily,
 	} = useSlides();
 	type OptionType = { value: PaletteKeys; label: JSX.Element };
 
@@ -73,24 +89,53 @@ const TemplateSelector: React.FC<{
 		// setSelectedCustomTemplateBgColor(color);
 		updateCustomBgColorForTemplate(color);
 		toggleHasSelectedCustomTemplateBgColor(true);
-		console.log('SelectedCustomTemplateBgColor:', customTemplateBgColor);
+		// console.log('SelectedCustomTemplateBgColor:', customTemplateBgColor);
 	};
 	const [finalPaletteOptions, setFinalPaletteOptions] =
 		useState(paletteOptions); //
+
 	useEffect(() => {
 		setFinalPaletteOptions(paletteOptions); // Update finalPaletteOptions when paletteOptions changes
 	}, [paletteOptions]);
+
+	useEffect(() => {
+		setCurrentSelectedPalette(paletteOptions[0]); // Update finalPaletteOptions when paletteOptions changes
+		setPalette(paletteOptions[0]);
+		// console.log('currentSelectedPalette', currentSelectedPalette);
+		// console.log('SelectedPalette', palette);
+		// use the consistent template and palette value to reload initial font family to stay consistent
+		const initialCurrentTemplateTitleFontFamily = loadCustomizableElements(
+			template as TemplateKeys,
+			currentSelectedPalette as PaletteKeys,
+		);
+
+		setInitalLoadedTitleFontFamily(
+			initialCurrentTemplateTitleFontFamily?.titleFontCSS?.fontFamily,
+		);
+	}, [template]);
+
+	const handleCustomTemplateTitleFontFamilyChange = (fontFamily: string) => {
+		// console.log(
+		// 	'hasSelectedCustomTemplateFontFamily',
+		// 	HasSelectedCustomizedTemplateTitleFontFamily,
+		// );
+		setCustomizedTemplateTitleFontFamily(fontFamily);
+		setHasSelectedCustomizedTemplateTitleFontFamily(true);
+	};
 
 	useEffect(() => {
 		// Whenever template changes, reset currentPalette to the first value of paletteOptions
 		// Whenever template changes, reset currentPalette to the first value of paletteOptions
 
 		if (paletteOptions.length === 1) {
+			setCurrentSelectedPalette(paletteOptions[0]); // Update finalPaletteOptions when paletteOptions changes
 			setPalette(paletteOptions[0]); // If only one option, set it as default
 		} else if (!paletteOptions.includes(currentSelectedPalette)) {
+			setCurrentSelectedPalette(paletteOptions[0]); // Update finalPaletteOptions when paletteOptions changes
 			setPalette(paletteOptions[0]); // If current palette is not in options, set first option as default
 		}
 	}, [template, paletteOptions]);
+
 	const handleTemplateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const selectedValue = e.target.value as TemplateKeys;
 		setTemplate(selectedValue);
@@ -124,6 +169,11 @@ const TemplateSelector: React.FC<{
 		toggleHasSelectedCustomTemplateBgColor(false);
 	};
 
+	const resetFontFamilyPicker = () => {
+		// console.log('initalLoadedTitleFontFamily', initalLoadedTitleFontFamily);
+		setHasSelectedCustomizedTemplateTitleFontFamily(false);
+	};
+
 	const PaletteSelector = () => {
 		return (
 			<Select
@@ -135,8 +185,7 @@ const TemplateSelector: React.FC<{
 							<div
 								className='w-4 h-4 mr-2'
 								style={{
-									backgroundColor:
-										colorPreviews[paletteOption as PaletteKeys],
+									backgroundColor: colorPreviews[paletteOption as PaletteKeys],
 								}}
 							/>
 							{paletteOption}
@@ -154,8 +203,7 @@ const TemplateSelector: React.FC<{
 							<div
 								className='w-4 h-4 mr-2'
 								style={{
-									backgroundColor:
-										colorPreviews[palette as PaletteKeys],
+									backgroundColor: colorPreviews[palette as PaletteKeys],
 								}}
 							/>
 							{palette}
@@ -177,9 +225,7 @@ const TemplateSelector: React.FC<{
 					menu: (provided) => ({ ...provided, zIndex: 999 }), // Ensure the menu appears above other elements
 					option: (provided, state) => ({
 						...provided,
-						backgroundColor: state.isSelected
-							? '#d1d5db'
-							: '#ffffff',
+						backgroundColor: state.isSelected ? '#d1d5db' : '#ffffff',
 						color: state.isSelected ? '#4b5563' : '#000000',
 						':hover': {
 							backgroundColor: '#d1d5db',
@@ -196,7 +242,7 @@ const TemplateSelector: React.FC<{
 				}}
 			></Select>
 		);
-	}
+	};
 
 	return (
 		<div>
@@ -215,10 +261,11 @@ const TemplateSelector: React.FC<{
 							{/* Map over the template options */}
 							{Object.entries(templateDisplayNames).map(([key, value]) => (
 								<option key={key} value={key}>
-									{`${value} ${(availablePalettes[key as TemplateKeys]?.length ?? 0) > 1
-										? '(palette ✅)'
-										: ''
-										}`}
+									{`${value} ${
+										(availablePalettes[key as TemplateKeys]?.length ?? 0) > 1
+											? '(palette ✅)'
+											: ''
+									}`}
 								</option>
 							))}
 						</DropDown>
@@ -231,10 +278,10 @@ const TemplateSelector: React.FC<{
 									<div>
 										<Instruction>Theme color</Instruction>
 										<PaletteSelector />
-									</div>)}
+									</div>
+								)}
 
-
-							{showCustomColorPicker &&
+							{showCustomColorPicker && (
 								<div>
 									<Instruction>Customize theme color</Instruction>
 									<ColorPicker
@@ -242,12 +289,13 @@ const TemplateSelector: React.FC<{
 										initialColor={
 											hasSelectedCustomTemplateBgColor
 												? customTemplateBgColor ||
-												colorPreviews[palette as PaletteKeys]
+												  colorPreviews[palette as PaletteKeys]
 												: colorPreviews[palette as PaletteKeys]
 										} // Provide a default value if customTemplateBgColor is undefined
 										resetColorPicker={resetColorPicker}
 									/>
-								</div>}
+								</div>
+							)}
 						</div>
 					}
 				</div>

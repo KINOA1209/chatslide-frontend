@@ -41,6 +41,51 @@ const useHasSelectedCustomTemplateBgColor = createBearStore<boolean>()(
 	true,
 );
 
+const useInitalLoadedSubtitleFontFamily = createBearStore<string | undefined>()(
+	'initalLoadedSubtitleFontFamily',
+	'Arial',
+	true,
+);
+const useCustomizedTemplateSubtitleFontFamily = createBearStore<
+	string | undefined
+>()('customizedTemplateSubtitleFontFamily', '', true);
+const useHasSelectedCustomizedTemplateSubtitleFontFamily =
+	createBearStore<boolean>()(
+		'HasSelectedCustomizedTemplateSubtitleFontFamily',
+		false,
+		true,
+	);
+
+const useInitalLoadedContentFontFamily = createBearStore<string | undefined>()(
+	'initalLoadedContentFontFamily',
+	'Arial',
+	true,
+);
+const useCustomizedTemplateContentFontFamily = createBearStore<
+	string | undefined
+>()('customizedTemplateContentFontFamily', '', true);
+const useHasSelectedCustomizedTemplateContentFontFamily =
+	createBearStore<boolean>()(
+		'HasSelectedCustomizedTemplateContentFontFamily',
+		false,
+		true,
+	);
+
+const useInitalLoadedTitleFontFamily = createBearStore<string | undefined>()(
+	'initalLoadedTitleFontFamily',
+	'Arial',
+	true,
+);
+const useCustomizedTemplateTitleFontFamily = createBearStore<
+	string | undefined
+>()('customizedTemplateTitleFontFamily', '', true);
+const useHasSelectedCustomizedTemplateTitleFontFamily =
+	createBearStore<boolean>()(
+		'HasSelectedCustomizedTemplateTitleFontFamily',
+		false,
+		true,
+	);
+
 export enum SaveStatus {
 	UpToDate,
 	Saving,
@@ -92,7 +137,41 @@ export const useSlides = () => {
 		hasSelectedCustomTemplateBgColor,
 		setHasSelectedCustomTemplateBgColor,
 	} = useHasSelectedCustomTemplateBgColor();
+	// for customized font family
+	// title font
+	const { initalLoadedTitleFontFamily, setInitalLoadedTitleFontFamily } =
+		useInitalLoadedTitleFontFamily();
+	const {
+		customizedTemplateTitleFontFamily,
+		setCustomizedTemplateTitleFontFamily,
+	} = useCustomizedTemplateTitleFontFamily();
+	const {
+		HasSelectedCustomizedTemplateTitleFontFamily,
+		setHasSelectedCustomizedTemplateTitleFontFamily,
+	} = useHasSelectedCustomizedTemplateTitleFontFamily();
 
+	// subtitle font
+	const { initalLoadedSubtitleFontFamily, setInitalLoadedSubtitleFontFamily } =
+		useInitalLoadedSubtitleFontFamily();
+	const {
+		customizedTemplateSubtitleFontFamily,
+		setCustomizedTemplateSubtitleFontFamily,
+	} = useCustomizedTemplateSubtitleFontFamily();
+	const {
+		HasSelectedCustomizedTemplateSubtitleFontFamily,
+		setHasSelectedCustomizedTemplateSubtitleFontFamily,
+	} = useHasSelectedCustomizedTemplateSubtitleFontFamily();
+	// content font
+	const { initalLoadedContentFontFamily, setInitalLoadedContentFontFamily } =
+		useInitalLoadedContentFontFamily();
+	const {
+		customizedTemplateContentFontFamily,
+		setCustomizedTemplateContentFontFamily,
+	} = useCustomizedTemplateContentFontFamily();
+	const {
+		HasSelectedCustomizedTemplateContentFontFamily,
+		setHasSelectedCustomizedTemplateContentFontFamily,
+	} = useHasSelectedCustomizedTemplateContentFontFamily();
 	const updateCustomBgColorForTemplate = (color: string) => {
 		setCustomTemplateBgColor(color);
 
@@ -425,9 +504,11 @@ export const useSlides = () => {
 		setSlidesHistoryIndex(0);
 		clearChatHistory();
 		setIsPresenting(false);
-		setHasSelectedCustomTemplateBgColor(slides?.[0]?.background_color ? true : false);
+		setHasSelectedCustomTemplateBgColor(
+			slides?.[0]?.background_color ? true : false,
+		);
 		setCustomTemplateBgColor(slides?.[0]?.background_color || '');
-		
+
 		slidesStatus = SlidesStatus.Inited;
 	};
 
@@ -538,5 +619,23 @@ export const useSlides = () => {
 		hasSelectedCustomTemplateBgColor,
 		updateCustomBgColorForTemplate,
 		toggleHasSelectedCustomTemplateBgColor,
+		initalLoadedTitleFontFamily,
+		setInitalLoadedTitleFontFamily,
+		customizedTemplateTitleFontFamily,
+		setCustomizedTemplateTitleFontFamily,
+		HasSelectedCustomizedTemplateTitleFontFamily,
+		setHasSelectedCustomizedTemplateTitleFontFamily,
+		initalLoadedSubtitleFontFamily,
+		setInitalLoadedSubtitleFontFamily,
+		customizedTemplateSubtitleFontFamily,
+		setCustomizedTemplateSubtitleFontFamily,
+		HasSelectedCustomizedTemplateSubtitleFontFamily,
+		setHasSelectedCustomizedTemplateSubtitleFontFamily,
+		initalLoadedContentFontFamily,
+		setInitalLoadedContentFontFamily,
+		customizedTemplateContentFontFamily,
+		setCustomizedTemplateContentFontFamily,
+		HasSelectedCustomizedTemplateContentFontFamily,
+		setHasSelectedCustomizedTemplateContentFontFamily,
 	};
 };
