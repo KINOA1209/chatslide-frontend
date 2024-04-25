@@ -287,7 +287,7 @@ const TemplateSelector: React.FC<{
 								/>
 							</div>
 							{/* font customization section */}
-							<div className='flex flex-col xl:flex-row gap-[4px]'>
+							{/* <div className='flex flex-col xl:flex-row gap-[4px]'>
 								<div>
 									<Instruction>Customize Title Heading</Instruction>
 									<FontFamilyPicker
@@ -333,7 +333,7 @@ const TemplateSelector: React.FC<{
 										resetFontFamilyPicker={resetFontFamilyPicker}
 									></FontFamilyPicker>
 								</div>
-							</div>
+							</div> */}
 						</div>
 					}
 				</div>
