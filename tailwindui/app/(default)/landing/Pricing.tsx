@@ -124,12 +124,12 @@ const PricingComparison: React.FC<{
 				amount = 236;
 				return <span className='text-green-600'>
 					{currency + amount.toFixed(2)}
-					<span className='text-xs'> (80% off)</span>
+					<span className='text-xs'>-80%</span>
 				</span>;
 			} else {
 				return <span>
 					{currency + amount.toFixed(2)}
-					<span className='text-xs'> (50% off)</span>
+					<span className='text-xs'> -50%</span>
 				</span>;
 			}
 		}
@@ -245,8 +245,8 @@ const PricingComparison: React.FC<{
 				options={[
 					{ key: 'onetime', text: 'One Time' },
 					{ key: 'monthly', text: 'Monthly' },
-					{ key: 'yearly', element: <span>Yearly <span className='text-xs'><s>40%</s></span></span> },
-					{ key: 'lifetime', element: <span className='text-green-600'>Lifetime <span className='text-xs'><s>80%</s></span></span> },
+					{ key: 'yearly', element: <span>Yearly <span className='text-xs'>-40%</span></span> },
+					{ key: 'lifetime', element: <span className='text-green-600'>Lifetime <span className='text-xs'>-80%</span></span> },
 				]}
 				selectedKey={interval}
 				setSelectedKey={setInterval as (key: string) => void}
