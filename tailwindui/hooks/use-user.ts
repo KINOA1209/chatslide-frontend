@@ -81,7 +81,10 @@ export const useUser = () => {
 					'PRO_YEARLY',
 					'PLUS_YEARLY',
 					'PRO_LIFETIME',
-					'PLUS_LIFETIME'
+					'PLUS_LIFETIME',
+					'ULTIMATE_YEARLY',
+					'ULTIMATE_MONTHLY',
+					'ULTIMATE_LIFETIME'
 				].includes(tier);
 
 				username = username?.split('@')[0] || 'User';
