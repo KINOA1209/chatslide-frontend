@@ -488,7 +488,7 @@ const PricingComparison: React.FC<{
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">⭐️ Credits</div>
 						</div>
-						<div className="brix---text-300-medium"><b>2500</b> / month{userTier.includes('PRO') && ' *'}</div>
+						<div className="brix---text-300-medium"><b>4000</b> / month{userTier.includes('PRO') && ' *'}</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
