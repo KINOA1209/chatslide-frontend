@@ -243,7 +243,7 @@ const PricingComparison: React.FC<{
 		<div className='flex flex-col items-center overflow-y-scroll overflow-x-scroll'>
 			<MultiwayToggle
 				options={[
-					{ key: 'onetime', text: 'One Time' },
+					{ key: 'onetime', text: '3 Day' },
 					{ key: 'monthly', text: 'Monthly' },
 					{ key: 'yearly', element: <span>Yearly <span className='text-xs'>-40%</span></span> },
 					{ key: 'lifetime', element: <span className='text-green-600'>Lifetime <span className='text-xs'>-80%</span></span> },
