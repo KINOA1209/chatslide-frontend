@@ -70,7 +70,7 @@ const ShareVideoPage: React.FC<ShareVideoPageProps> = ({ project_id }) => {
 
     return (
         <>
-            <ToastContainer />
+            {/* <ToastContainer /> */}
             {videoUrl !== '' ? (
                 <div className='flex flex-col h-full items-center justify-center overflow-hidden'>
                     <Video videoUrl={videoUrl} />
