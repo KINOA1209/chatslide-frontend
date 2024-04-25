@@ -29,6 +29,9 @@ const PricingComparison: React.FC<{
 		if (!token) {
 			return 'Sign up to Start';
 		}
+		if (interval === 'onetime' && tier != 'PLUS') {
+			return '⏹️ Unavailable for One Time';
+		}
 		if (userTier.includes('CANCELLED') || userTier === 'FREE') {
 			if (tier === 'FREE')
 				return '✅ Current Plan';
@@ -65,8 +68,8 @@ const PricingComparison: React.FC<{
 
 	const CtaButton: FC<{ tier: Tier }> = ({ tier }) => {
 		const cta = getCta(tier);
-		const bgColor = cta.includes('✅') ? 'white' : '';
-		const textColor = cta.includes('✅') ? 'black' : '';
+		const bgColor = (cta.includes('✅') || cta.includes('⏹️'))? 'white' : '';
+		const textColor = (cta.includes('✅') || cta.includes('⏹️'))? 'black' : '';
 
 		return (
 			<button
