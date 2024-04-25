@@ -297,6 +297,7 @@ export default function DesignPage() {
                 ] || ['Original']
               }
               palette={colorPalette}
+							showCustomColorPicker={false}
             />
 
             {/* images */}

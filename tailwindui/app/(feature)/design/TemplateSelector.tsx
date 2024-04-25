@@ -55,7 +55,8 @@ const TemplateSelector: React.FC<{
 	paletteOptions: PaletteKeys[];
 	palette: PaletteKeys;
 	setPalette: (palette: PaletteKeys) => void;
-}> = ({ template, setTemplate, paletteOptions, setPalette, palette }) => {
+	showCustomColorPicker?: boolean;
+}> = ({ template, setTemplate, paletteOptions, setPalette, palette, showCustomColorPicker = false }) => {
 	const {
 		hasSelectedCustomTemplateBgColor,
 		customTemplateBgColor,
@@ -79,8 +80,6 @@ const TemplateSelector: React.FC<{
 	useEffect(() => {
 		setFinalPaletteOptions(paletteOptions); // Update finalPaletteOptions when paletteOptions changes
 	}, [paletteOptions]);
-
-	const { slides } = useSlides();
 
 	useEffect(() => {
 		// Whenever template changes, reset currentPalette to the first value of paletteOptions
@@ -227,15 +226,16 @@ const TemplateSelector: React.FC<{
 					{/* Render color palette options only if there are more than one */}
 					{
 						<div className='paletteChoice w-full'>
-								{!hasSelectedCustomTemplateBgColor &&
-									paletteOptions.length > 1 && (
-										<div>
-											<Instruction>Theme color</Instruction>
-											<PaletteSelector />
-										</div>)}
+							{!hasSelectedCustomTemplateBgColor &&
+								paletteOptions.length > 1 && (
+									<div>
+										<Instruction>Theme color</Instruction>
+										<PaletteSelector />
+									</div>)}
 
-								{slides && <div>
-									<Instruction>Customize theme color</Instruction>
+							<div>
+								<Instruction>Customize theme color</Instruction>
+								{showCustomColorPicker &&
 									<ColorPicker
 										onCustomColorChange={handleCustomTemplateBgColorChange}
 										initialColor={
@@ -245,8 +245,8 @@ const TemplateSelector: React.FC<{
 												: colorPreviews[palette as PaletteKeys]
 										} // Provide a default value if customTemplateBgColor is undefined
 										resetColorPicker={resetColorPicker}
-									/>
-								</div>}
+									/>}
+							</div>
 						</div>
 					}
 				</div>
