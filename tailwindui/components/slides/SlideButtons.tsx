@@ -269,19 +269,20 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 		useState<PaletteKeys>(slides[0]?.palette || 'Original');
 
 	const handleConfirm = () => {
-		console.log('selectedTemplate:', selectedPaletteOption);
+		// console.log('selectedTemplate:', selectedPaletteOption);
 		// if (!hasSelectedCustomTemplateBgColor) {
 		changeTemplateAndPalette(selectedTemplate, selectedPaletteOption);
 		// }
 		setShowModal(false);
 	};
-	useEffect(() => {
-		console.log(
-			'selcetedTemplate, selectedPalette',
-			selectedTemplate,
-			selectedPaletteOption,
-		);
-	}, [selectedTemplate]);
+	// inconsistent?
+	// useEffect(() => {
+	// 	console.log(
+	// 		'selcetedTemplate, selectedPalette',
+	// 		selectedTemplate,
+	// 		selectedPaletteOption,
+	// 	);
+	// }, [selectedTemplate]);
 
 	useEffect(() => {
 		document.addEventListener('change_template', (e) => {

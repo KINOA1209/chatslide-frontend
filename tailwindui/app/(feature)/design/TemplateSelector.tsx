@@ -15,6 +15,7 @@ import { ColorPicker } from './ColorPicker';
 import { useSlides } from '@/hooks/use-slides';
 import { WrappableRow } from '@/components/layout/WrappableRow';
 import FontFamilyPicker from './FontFamilyPicker';
+import { loadCustomizableElements } from '@/components/slides/SlidesHTML';
 
 const SlideDesignPreview = dynamic(
 	() => import('@/components/slides/SlideDesignPreview'),
@@ -84,9 +85,26 @@ const TemplateSelector: React.FC<{
 	};
 	const [finalPaletteOptions, setFinalPaletteOptions] =
 		useState(paletteOptions); //
+
 	useEffect(() => {
 		setFinalPaletteOptions(paletteOptions); // Update finalPaletteOptions when paletteOptions changes
 	}, [paletteOptions]);
+
+	useEffect(() => {
+		setCurrentSelectedPalette(paletteOptions[0]); // Update finalPaletteOptions when paletteOptions changes
+		setPalette(paletteOptions[0]);
+		// console.log('currentSelectedPalette', currentSelectedPalette);
+		// console.log('SelectedPalette', palette);
+		// use the consistent template and palette value to reload initial font family to stay consistent
+		const initialCurrentTemplateTitleFontFamily = loadCustomizableElements(
+			template as TemplateKeys,
+			currentSelectedPalette as PaletteKeys,
+		);
+
+		setInitalLoadedTitleFontFamily(
+			initialCurrentTemplateTitleFontFamily?.titleFontCSS?.fontFamily,
+		);
+	}, [template, palette]);
 
 	const handleCustomTemplateTitleFontFamilyChange = (fontFamily: string) => {
 		// console.log(
@@ -102,8 +120,10 @@ const TemplateSelector: React.FC<{
 		// Whenever template changes, reset currentPalette to the first value of paletteOptions
 
 		if (paletteOptions.length === 1) {
+			setCurrentSelectedPalette(paletteOptions[0]); // Update finalPaletteOptions when paletteOptions changes
 			setPalette(paletteOptions[0]); // If only one option, set it as default
 		} else if (!paletteOptions.includes(currentSelectedPalette)) {
+			setCurrentSelectedPalette(paletteOptions[0]); // Update finalPaletteOptions when paletteOptions changes
 			setPalette(paletteOptions[0]); // If current palette is not in options, set first option as default
 		}
 	}, [template, paletteOptions]);

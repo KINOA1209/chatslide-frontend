@@ -224,22 +224,22 @@ export const templateDispatch = (
 	// const initialTemplateTitleFontFamily =
 	// 	themeElements?.titleFontCSS?.fontFamily;
 
-	useEffect(() => {
-		// everytime change template we reload the initial themeelement of current template for initial display
-		const initialCurrentTemplateTitleFontFamily = loadCustomizableElements(
-			templateKey as TemplateKeys,
-			slide.palette as PaletteKeys,
-		);
-		console.log(
-			'initialCurrentTemplateTitleFontFamily',
-			templateKey,
-			slide.palette,
-			initialCurrentTemplateTitleFontFamily,
-		);
-		setInitalLoadedTitleFontFamily(
-			initialCurrentTemplateTitleFontFamily?.titleFontCSS?.fontFamily,
-		);
-	}, [templateKey]);
+	// useEffect(() => {
+	// 	// everytime change template we reload the initial themeelement of current template for initial display
+	// 	const initialCurrentTemplateTitleFontFamily = loadCustomizableElements(
+	// 		templateKey as TemplateKeys,
+	// 		slide.palette as PaletteKeys,
+	// 	);
+	// 	console.log(
+	// 		'initialCurrentTemplateTitleFontFamily',
+	// 		templateKey,
+	// 		slide.palette,
+	// 		initialCurrentTemplateTitleFontFamily,
+	// 	);
+	// 	setInitalLoadedTitleFontFamily(
+	// 		initialCurrentTemplateTitleFontFamily?.titleFontCSS?.fontFamily,
+	// 	);
+	// }, [templateKey]);
 
 	const layoutElements = loadLayoutConfigElements(
 		templateKey as TemplateKeys,
