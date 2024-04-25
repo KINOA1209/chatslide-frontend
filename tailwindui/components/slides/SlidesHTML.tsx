@@ -490,6 +490,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
   function handleAddPage() {
     addEmptyPage(slideIndex);
+		document.dispatchEvent(new Event('change_layout'));
   }
 
   function handleDuplicatePage() {
