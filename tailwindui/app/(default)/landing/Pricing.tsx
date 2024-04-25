@@ -30,7 +30,7 @@ const PricingComparison: React.FC<{
 			return 'Sign up to Start';
 		}
 		if (interval === 'onetime' && tier != 'PLUS') {
-			return '⏹️ Unavailable for One Time';
+			return '⏹️ Unavailable';
 		}
 		if (userTier.includes('CANCELLED') || userTier === 'FREE') {
 			if (tier === 'FREE')
@@ -153,7 +153,7 @@ const PricingComparison: React.FC<{
 	const getSecondLine = (tier: Tier): string | JSX.Element => {
 		switch (interval) {
 			case 'onetime':
-				return '1 day access';
+				return '3 day access';
 			case 'monthly':
 				return 'then ' + getPrice(tier);
 			case 'yearly':
@@ -247,10 +247,11 @@ const PricingComparison: React.FC<{
 				setSelectedKey={setInterval as (key: string) => void}
 			/>
 
-			{/* <Explanation>
+			<Explanation>
+				{interval === 'onetime' && 'You can also use this as a top-up for your other plans'}
 				{interval === 'lifetime' && '14 day money back guarantee'}
 				{interval === 'yearly' && '3 day money back guarantee'}
-			</Explanation> */}
+			</Explanation>
 
 			<div
 				data-w-id="a8590735-7e8f-bd41-a09e-37f58b801ed3"
