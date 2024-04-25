@@ -57,7 +57,15 @@ const TemplateSelector: React.FC<{
 	paletteOptions: PaletteKeys[];
 	palette: PaletteKeys;
 	setPalette: (palette: PaletteKeys) => void;
-}> = ({ template, setTemplate, paletteOptions, setPalette, palette }) => {
+	showCustomColorPicker?: boolean;
+}> = ({
+	template,
+	setTemplate,
+	paletteOptions,
+	setPalette,
+	palette,
+	showCustomColorPicker = false,
+}) => {
 	const {
 		slides,
 		hasSelectedCustomTemplateBgColor,
@@ -104,7 +112,7 @@ const TemplateSelector: React.FC<{
 		setInitalLoadedTitleFontFamily(
 			initialCurrentTemplateTitleFontFamily?.titleFontCSS?.fontFamily,
 		);
-	}, [template, palette]);
+	}, [template]);
 
 	const handleCustomTemplateTitleFontFamilyChange = (fontFamily: string) => {
 		// console.log(
@@ -273,67 +281,21 @@ const TemplateSelector: React.FC<{
 									</div>
 								)}
 
-							<div>
-								<Instruction>Customize theme color</Instruction>
-								<ColorPicker
-									onCustomColorChange={handleCustomTemplateBgColorChange}
-									initialColor={
-										hasSelectedCustomTemplateBgColor
-											? customTemplateBgColor ||
-											  colorPreviews[palette as PaletteKeys]
-											: colorPreviews[palette as PaletteKeys]
-									} // Provide a default value if customTemplateBgColor is undefined
-									resetColorPicker={resetColorPicker}
-								/>
-							</div>
-							{/* font customization section */}
-							{/* <div className='flex flex-col xl:flex-row gap-[4px]'>
+							{showCustomColorPicker && (
 								<div>
-									<Instruction>Customize Title Heading</Instruction>
-									<FontFamilyPicker
-										selectedFontFamily={
-											HasSelectedCustomizedTemplateTitleFontFamily
-												? customizedTemplateTitleFontFamily ||
-												  initalLoadedTitleFontFamily
-												: initalLoadedTitleFontFamily
-										}
-										onCustomFontFamilyChange={
-											handleCustomTemplateTitleFontFamilyChange
-										}
-										resetFontFamilyPicker={resetFontFamilyPicker}
-									></FontFamilyPicker>
+									<Instruction>Customize theme color</Instruction>
+									<ColorPicker
+										onCustomColorChange={handleCustomTemplateBgColorChange}
+										initialColor={
+											hasSelectedCustomTemplateBgColor
+												? customTemplateBgColor ||
+												  colorPreviews[palette as PaletteKeys]
+												: colorPreviews[palette as PaletteKeys]
+										} // Provide a default value if customTemplateBgColor is undefined
+										resetColorPicker={resetColorPicker}
+									/>
 								</div>
-								<div>
-									<Instruction>Customize Subtitle Heading</Instruction>
-									<FontFamilyPicker
-										selectedFontFamily={
-											HasSelectedCustomizedTemplateTitleFontFamily
-												? customizedTemplateTitleFontFamily ||
-												  initalLoadedTitleFontFamily
-												: initalLoadedTitleFontFamily
-										}
-										onCustomFontFamilyChange={
-											handleCustomTemplateTitleFontFamilyChange
-										}
-										resetFontFamilyPicker={resetFontFamilyPicker}
-									></FontFamilyPicker>
-								</div>
-								<div>
-									<Instruction>Customize Paragraph</Instruction>
-									<FontFamilyPicker
-										selectedFontFamily={
-											HasSelectedCustomizedTemplateTitleFontFamily
-												? customizedTemplateTitleFontFamily ||
-												  initalLoadedTitleFontFamily
-												: initalLoadedTitleFontFamily
-										}
-										onCustomFontFamilyChange={
-											handleCustomTemplateTitleFontFamilyChange
-										}
-										resetFontFamilyPicker={resetFontFamilyPicker}
-									></FontFamilyPicker>
-								</div>
-							</div> */}
+							)}
 						</div>
 					}
 				</div>

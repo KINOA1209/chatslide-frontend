@@ -9,6 +9,7 @@ class ProjectService {
 	static async getSharedProjectDetails(
 		project_id: string,
 		server_side: boolean = false, // if true, fetch use abs url
+		shareEntry: string = 'slides',
 	): Promise<Project> {
 		//console.log(`Fetching shared project details.`);
 		const headers = new Headers();
@@ -19,10 +20,12 @@ class ProjectService {
 		const url = server_side
 			? `${protocol}://${baseUrl}/api/get_shared_project`
 			: '/api/get_shared_project';
+		const url_fecthed = shareEntry === 'video' ? `${url}?project_id=${project_id}&video=True`
+			: `${url}?project_id=${project_id}`
 
 		try {
 			// fetch project details
-			const response = await fetch(`${url}?project_id=${project_id}`, {
+			const response = await fetch(url_fecthed, {
 				method: 'GET',
 				headers: headers,
 			});
@@ -403,6 +406,7 @@ class ProjectService {
 		token: string,
 		project_id: string,
 		is_shared: boolean,
+		video_is_shared: boolean,
 		is_public: boolean = false,
 	): Promise<void> {
 		const headers = new Headers();
@@ -420,6 +424,7 @@ class ProjectService {
 				body: JSON.stringify({
 					project_id: project_id,
 					is_shared: is_shared,
+					video_is_shared: video_is_shared,
 					is_public: is_public,
 				}),
 			});

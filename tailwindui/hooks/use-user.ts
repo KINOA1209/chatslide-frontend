@@ -66,7 +66,7 @@ export const useUser = () => {
 				}
 				let username = await AuthService.getCurrentUserDisplayName();
 
-				const { credits, tier, username: usernameInDB, email: emailInDB } =
+				const { credits, tier, username: usernameInDB, email: emailInDB, expirationDate } =
 					await UserService.getUserCreditsAndTier(idToken);
 
 				if (usernameInDB && emailInDB) {
@@ -75,14 +75,20 @@ export const useUser = () => {
 					}
 				}
 
-				const isPaidUser = [
-					'PRO_MONTHLY',
-					'PLUS_MONTHLY',
-					'PRO_YEARLY',
-					'PLUS_YEARLY',
-					'PRO_LIFETIME',
-					'PLUS_LIFETIME'
-				].includes(tier);
+        const PAID_TIERS = [
+          'PLUS_ONETIME',
+          'PLUS_MONTHLY',
+          'PLUS_YEARLY',
+          'PLUS_LIFETIME',
+          'PRO_MONTHLY',
+          'PRO_YEARLY',
+          'PRO_LIFETIME',
+          'ULTIMATE_MONTHLY',
+          'ULTIMATE_YEARLY',
+          'ULTIMATE_LIFETIME'
+        ];
+
+        const isPaidUser = PAID_TIERS.includes(tier);
 
 				username = username?.split('@')[0] || 'User';
 
@@ -94,6 +100,7 @@ export const useUser = () => {
 					credits: credits,
 					tier: tier,
 					isPaidUser: isPaidUser,
+          expirationDate: expirationDate,
 				});
 
 				mixpanel.init('22044147cd36f20bf805d416e1235329', {
@@ -120,6 +127,7 @@ export const useUser = () => {
 				setUid(uid);
 				setToken(idToken);
 				setIsPaidUser(isPaidUser);
+        setExpirationDate(expirationDate);
 				setUsername(username);
 				setEmail(email);
 				userStatus = UserStatus.Inited;
@@ -142,6 +150,7 @@ export const useUser = () => {
 	};
 
 	const updateCreditsAndTier = async () => {
+    console.log(' -- updating credits and tier')
 		const { credits, tier, expirationDate } =
 			await UserService.getUserCreditsAndTier(token);
 		const isPaidUser = [

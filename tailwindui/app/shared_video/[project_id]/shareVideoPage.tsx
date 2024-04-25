@@ -28,7 +28,7 @@ const ShareVideoPage: React.FC<ShareVideoPageProps> = ({ project_id }) => {
         const init = async () => {
             let project;
             try {
-                project = await ProjectService.getSharedProjectDetails(project_id);
+                project = await ProjectService.getSharedProjectDetails(project_id, false, 'video');
             } catch (error) {
                 console.error(`Error fetching project ${project_id} details:`, error);
                 setLoading(false);
@@ -70,7 +70,7 @@ const ShareVideoPage: React.FC<ShareVideoPageProps> = ({ project_id }) => {
 
     return (
         <>
-            <ToastContainer />
+            {/* <ToastContainer /> */}
             {videoUrl !== '' ? (
                 <div className='flex flex-col h-full items-center justify-center overflow-hidden'>
                     <Video videoUrl={videoUrl} />

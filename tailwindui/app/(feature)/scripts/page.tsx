@@ -21,7 +21,6 @@ import AvatarSelector from '@/components/language/AvatarSelector';
 import { GrayLabel } from '@/components/ui/GrayLabel';
 import { Blank } from '@/components/ui/Loading';
 import { bgmDisplayNames } from '@/components/language/bgmData';
-import { set } from 'lodash';
 import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
 import { FiPlay } from 'react-icons/fi';
 import Modal from '@/components/ui/Modal';

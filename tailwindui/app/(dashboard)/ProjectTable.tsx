@@ -155,7 +155,7 @@ const ProjectItem: React.FC<{
 			<div
 				className={`col-span-3 lg:col-span-2 p-2 flex items-center ${
 					!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
-				} font-creato-medium leading-[20px]`}
+				} leading-[20px]`}
 				style={{ padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)` }}
 			>
 				<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
@@ -173,10 +173,10 @@ const ProjectItem: React.FC<{
 			{/* type */}
 			{
 				<div
-					className={`col-span-3 lg:col-span-2 p-2 flex items-center ${
-						!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
-					} leading-[20px]`}
-					style={{ padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)` }}
+					className='col-span-1 hidden lg:block items-center '
+					style={{
+						padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
+					}}
 				>
 					<div className='flex flex-col gap-[4px]'>
 						{project.content_type === 'presentation' ? (
@@ -365,10 +365,16 @@ const ProjectItem: React.FC<{
 												share={isShared}
 												setShare={(share: boolean) => {
 													setIsShared(share);
+													// could be enhance later since video_is_shared no exist in the return project currently
+													const video_is_shared =
+														project.video_url && project.video_url !== ''
+															? true
+															: false;
 													ProjectService.SlideShareLink(
 														token,
 														project.id,
 														share,
+														video_is_shared,
 													);
 												}}
 												project={project}

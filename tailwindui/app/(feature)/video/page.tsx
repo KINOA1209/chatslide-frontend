@@ -32,7 +32,7 @@ const VideoVisualizer = ({
 	const videoSource = videoUrl;
 	const [isDownloading, setIsDownloading] = useState(false);
 	const [showQuickTimeModal, setShowQuickTimeModal] = useState(false);
-	const { project, isShared, updateIsShared } = useProject();
+	const { project, isShared, updateIsShared, videoIsShared } = useProject();
 	const [host, setHost] = useState(getOrigin());
 	const [showShareModal, setShowShareModal] = useState(false);
 
@@ -160,7 +160,7 @@ const VideoVisualizer = ({
 							{project && (
 								<ShareButton
 									setShare={updateIsShared}
-									share={isShared}
+									share={videoIsShared}
 									project={project}
 									host={host}
 									shareEntry={'video'}

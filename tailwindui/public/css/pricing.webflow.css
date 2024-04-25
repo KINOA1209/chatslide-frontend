@@ -5279,6 +5279,25 @@ h6 {
 	transition-timing-function: ease, ease, ease;
 }
 
+.brix---btn-secondary-small-full-width {
+	color: #5168f6;
+	text-align: center;
+	transform-style: preserve-3d;
+	background-color: #FFFFFF;
+	border-radius: 8px;
+	justify-content: center;
+	width: 100%;
+	padding: 18px 24px;
+	font-family: Creatodisplay, sans-serif;
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 18px;
+	text-decoration: none;
+	transition-property: background-color, transform, color;
+	transition-duration: .3s, .3s, .3s;
+	transition-timing-function: ease, ease, ease;
+}
+
 .brix---btn-primary-small-full-width:hover {
 	background-color: var(--elements-webflow-library--secondary--color-1);
 	color: var(--elements-webflow-library--neutral--100);
@@ -5367,7 +5386,7 @@ h6 {
 	padding-top: 0px;
 	padding-bottom: 0px;
 	display: flex;
-	white-space: nowrap;
+	/* white-space: nowrap; */
 }
 
 .brix---text-300-bold {
@@ -6822,7 +6841,17 @@ h6 {
 	}
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 900px) {
+	.brix---grid-4-columns-pricing-tablet {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+
+	.brix---pricing-column-first {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 700px) {
 	.section-regular {
 		padding-top: 64px;
 		padding-bottom: 64px;
@@ -7203,7 +7232,7 @@ h6 {
 	}
 
 	.brix---grid-4-columns-pricing-tablet {
-		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-columns: 1fr 1fr;
 	}
 
 	.brix---heading-h1-size {
@@ -7443,7 +7472,15 @@ h6 {
 	}
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 460px) {
+	.brix---pricing-column-last {
+		display: none;
+	}
+
+	.brix---grid-4-columns-pricing-tablet {
+		grid-template-columns: 1fr 1fr;
+	}
+
 	h1 {
 		font-size: 50px;
 	}
@@ -7920,6 +7957,10 @@ h6 {
 		padding: 16px 32px;
 	}
 
+	.brix---btn-secondary-small-full-width {
+		padding: 16px 32px;
+	}
+
 	.brix---text-400-bold {
 		font-size: 20px;
 		line-height: 22px;
@@ -8226,413 +8267,420 @@ h6 {
 	}
 }
 
-@media screen and (max-width: 479px) {
-	.container-regular {
-		flex-flow: column;
-	}
-
-	.header-bottom-wrap {
-		margin-bottom: 36px;
-	}
-
-	.search {
-		grid-row-gap: 12px;
-		flex-direction: column;
-	}
-
-	.partnership-text-wrap {
-		display: none;
-	}
-
-	.logo-grid {
-		grid-template-columns: 1fr 1fr;
-	}
-
-	.company-card {
-		padding: 32px;
-	}
-
-	.browse-grid {
-		grid-template-columns: 1fr;
-	}
-
-	.header-title-wrap {
-		text-align: center;
-	}
-
-	.about-header-video-wrapper {
-		height: 280px;
-	}
-
-	.button-primary,
-	.button-outline,
-	.button-secondary,
-	.button-primary-right-icon,
-	.document-table-header,
-	.button-secondary-right-icon {
-		width: 100%;
-	}
-
-	.section-companies {
-		overflow: hidden;
-	}
-
-	.footer-left-column {
-		grid-column-gap: 20px;
-		grid-template-columns: 1fr;
-	}
-
-	.footer-legal-links {
-		grid-row-gap: 8px;
-		flex-direction: column;
-	}
-
-	.footer-section {
-		padding-left: 20px;
-		padding-right: 20px;
-	}
-
-	.form-text-field {
-		line-height: 24px;
-	}
-
-	.footer-form {
-		flex-wrap: wrap;
-		max-width: 100%;
-	}
-
-	.search-button {
-		width: 100%;
-	}
-
-	.header-right-wrap {
-		margin-bottom: 36px;
-	}
-
-	.account-right-block {
-		display: none;
-	}
-
-	.account-button {
-		width: 100%;
-	}
-
-	.job-tags {
-		grid-row-gap: 8px;
-		flex-wrap: wrap;
-	}
-
-	.blog-slider-right-button,
-	.blog-slider-left-button {
-		top: -60px;
-	}
-
-	.banner-button {
-		display: none;
-	}
-
-	.div-block {
-		margin-left: 0;
-	}
-
-	.secondary-button {
-		text-align: center;
-		width: 100%;
-	}
-
-	.container {
-		max-width: none;
-	}
-
-	.centered-heading {
-		margin-bottom: 24px;
-	}
-
-	.team-slide-wrapper {
-		width: 100%;
-		margin-right: 0%;
-	}
-
-	.combine-padding-global {
-		padding-left: 1rem;
-		padding-right: 1rem;
-	}
-
-	.combine-pricing5_cost-tertiary {
-		font-size: 1.25rem;
-	}
-
-	.combine-pricing5_details {
-		justify-content: space-between;
-		padding: 0;
-		font-size: .875rem;
-	}
-
-	.combine-pricing5_cost-primary,
-	.combine-pricing5_cost-secondary {
-		font-size: 1.25rem;
-	}
-
-	.combine-pricing5_table-header {
-		grid-column-gap: .5rem;
-	}
-
-	.combine-padding-global-2 {
-		padding-left: 1rem;
-		padding-right: 1rem;
-	}
-
-	.combine-pricing5_cost-tertiary-2 {
-		font-size: 1.25rem;
-	}
-
-	.combine-pricing5_details-2 {
-		justify-content: space-between;
-		padding: 0;
-		font-size: .875rem;
-	}
-
-	.combine-pricing5_cost-primary-2,
-	.combine-pricing5_cost-secondary-2 {
-		font-size: 1.25rem;
-	}
-
-	.combine-pricing5_table-header-2 {
-		grid-column-gap: .5rem;
-	}
-
-	.combine-padding-global-3 {
-		padding-left: 1rem;
-		padding-right: 1rem;
-	}
-
-	.brix---btn-primary-small-full-width {
-		width: 100%;
-		padding-top: 18px;
-		padding-bottom: 18px;
-	}
-
-	.brix---mg-bottom-16px {
-		margin-bottom: 15px;
-	}
-
-	.brix---text-200 {
-		font-size: 15px;
-		line-height: 16px;
-	}
-
-	.brix---mg-bottom-8px {
-		margin-bottom: 6px;
-	}
-
-	.brix---text-300-bold {
-		font-size: 17px;
-		line-height: 21px;
-	}
-
-	.brix---grid-4-columns-pricing-tablet {
-		grid-template-columns: 1fr;
-	}
-
-	.brix---paragraph-default {
-		font-size: 17px;
-		line-height: 28px;
-	}
-
-	.brix---heading-h1-size {
-		margin-bottom: 10px;
-		font-size: 30px;
-		line-height: 37px;
-	}
-
-	.brix---subtitle {
-		font-size: 14px;
-		line-height: 18px;
-	}
-
-	.brix---mg-bottom-48px {
-		margin-bottom: 32px;
-	}
-
-	.brix---container-default {
-		padding-left: 20px;
-		padding-right: 20px;
-	}
-
-	.brix---social-icon-square-30px {
-		border-radius: 6px;
-		width: 30px;
-		min-width: 30px;
-		height: 30px;
-		min-height: 30px;
-		font-size: 14px;
-	}
-
-	.brix---social-media-grid-right---t-center {
-		grid-template-columns: repeat(auto-fit, 30px);
-	}
-
-	.brix---footer-col-title {
-		margin-bottom: 16px;
-		font-size: 16px;
-		line-height: 18px;
-	}
-
-	.brix---footer-link {
-		font-size: 16px;
-		line-height: 19px;
-	}
-
-	.brix---footer-list-item {
-		margin-bottom: 8px;
-	}
-
-	.brix---btn-primary {
-		width: 100%;
-		padding-top: 18px;
-		padding-bottom: 18px;
-		font-size: 17px;
-		line-height: 19px;
-	}
-
-	.brix---input {
-		min-height: 54px;
-		padding-left: 18px;
-		padding-right: 18px;
-		font-size: 16px;
-		line-height: 18px;
-	}
-
-	.brix---input::placeholder {
-		font-size: 16px;
-		line-height: 16px;
-	}
-
-	.brix---grid-footer-subscribe-1-col {
-		grid-template-columns: 1fr;
-	}
-
-	.brix---footer-logo {
-		width: 100%;
-		max-width: 240px;
-	}
-
-	.brix---mg-bottom-24px {
-		margin-bottom: 16px;
-	}
-
-	.brix---footer-top-border-bottom {
-		padding-top: 80px;
-		padding-bottom: 80px;
-	}
-
-	.brix---heading-h3-size {
-		margin-bottom: 10px;
-		font-size: 20px;
-		line-height: 30px;
-	}
-
-	.brix---team-v13-content {
-		bottom: 32px;
-		left: 24px;
-	}
-
-	.brix---avatar-image {
-		width: 100%;
-	}
-
-	.brix---grid-3-columns {
-		grid-template-columns: 1fr;
-	}
-
-	.brix---paragraph-default-2 {
-		font-size: 17px;
-		line-height: 28px;
-	}
-
-	.brix---heading-h2-size {
-		font-size: 24px;
-		line-height: 34px;
-	}
-
-	.brix---mg-bottom-16px-2 {
-		margin-bottom: 15px;
-	}
-
-	.brix---mg-bottom-48px-2 {
-		margin-bottom: 32px;
-	}
-
-	.brix---container-default-2 {
-		padding-left: 20px;
-		padding-right: 20px;
-	}
-
-	.brix---btn-secondary,
-	.brix---btn-primary-2 {
-		width: 100%;
-		padding-top: 18px;
-		padding-bottom: 18px;
-		font-size: 17px;
-		line-height: 19px;
-	}
-
-	.brix---button-row-left {
-		width: 100%;
-		margin-bottom: 20px;
-		margin-right: 0;
-	}
-
-	.brix---buttons-row-center {
-		flex-direction: column;
-	}
-
-	.brix---heading-h1-size-2 {
-		margin-bottom: 10px;
-		font-size: 30px;
-		line-height: 37px;
-	}
-
-	.brix---buttons-row {
-		flex-direction: column;
-		align-items: stretch;
-	}
-
-	.brix---hero-bg-image-light {
-		padding-top: 140px;
-		padding-bottom: 100px;
-	}
-
-	.brix---btn-primary-small {
-		width: 100%;
-		padding-top: 18px;
-		padding-bottom: 18px;
-	}
-
-	.brix---header-nav-list-item-show-in-mbl,
-	.brix---header-nav-list-item {
-		text-align: left;
-		width: 100%;
-	}
-
-	.brix---header-logo {
-		max-width: 84%;
-	}
-
-	.combine-padding-global-4 {
-		padding-left: 1rem;
-		padding-right: 1rem;
-	}
-
-	.uui-layout13_image-01 {
-		width: 80%;
-		right: -7%;
-	}
-
-	.uui-layout13_image-02 {
-		top: 20%;
-	}
-}
+/* @media screen and (max-width: 479px) {
+  .container-regular {
+    flex-flow: column;
+  }
+
+  .header-bottom-wrap {
+    margin-bottom: 36px;
+  }
+
+  .search {
+    grid-row-gap: 12px;
+    flex-direction: column;
+  }
+
+  .partnership-text-wrap {
+    display: none;
+  }
+
+  .logo-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .company-card {
+    padding: 32px;
+  }
+
+  .browse-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .header-title-wrap {
+    text-align: center;
+  }
+
+  .about-header-video-wrapper {
+    height: 280px;
+  }
+
+  .button-primary,
+  .button-outline,
+  .button-secondary,
+  .button-primary-right-icon,
+  .document-table-header,
+  .button-secondary-right-icon {
+    width: 100%;
+  }
+
+  .section-companies {
+    overflow: hidden;
+  }
+
+  .footer-left-column {
+    grid-column-gap: 20px;
+    grid-template-columns: 1fr;
+  }
+
+  .footer-legal-links {
+    grid-row-gap: 8px;
+    flex-direction: column;
+  }
+
+  .footer-section {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .form-text-field {
+    line-height: 24px;
+  }
+
+  .footer-form {
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+
+  .search-button {
+    width: 100%;
+  }
+
+  .header-right-wrap {
+    margin-bottom: 36px;
+  }
+
+  .account-right-block {
+    display: none;
+  }
+
+  .account-button {
+    width: 100%;
+  }
+
+  .job-tags {
+    grid-row-gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .blog-slider-right-button,
+  .blog-slider-left-button {
+    top: -60px;
+  }
+
+  .banner-button {
+    display: none;
+  }
+
+  .div-block {
+    margin-left: 0;
+  }
+
+  .secondary-button {
+    text-align: center;
+    width: 100%;
+  }
+
+  .container {
+    max-width: none;
+  }
+
+  .centered-heading {
+    margin-bottom: 24px;
+  }
+
+  .team-slide-wrapper {
+    width: 100%;
+    margin-right: 0%;
+  }
+
+  .combine-padding-global {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .combine-pricing5_cost-tertiary {
+    font-size: 1.25rem;
+  }
+
+  .combine-pricing5_details {
+    justify-content: space-between;
+    padding: 0;
+    font-size: .875rem;
+  }
+
+  .combine-pricing5_cost-primary,
+  .combine-pricing5_cost-secondary {
+    font-size: 1.25rem;
+  }
+
+  .combine-pricing5_table-header {
+    grid-column-gap: .5rem;
+  }
+
+  .combine-padding-global-2 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .combine-pricing5_cost-tertiary-2 {
+    font-size: 1.25rem;
+  }
+
+  .combine-pricing5_details-2 {
+    justify-content: space-between;
+    padding: 0;
+    font-size: .875rem;
+  }
+
+  .combine-pricing5_cost-primary-2,
+  .combine-pricing5_cost-secondary-2 {
+    font-size: 1.25rem;
+  }
+
+  .combine-pricing5_table-header-2 {
+    grid-column-gap: .5rem;
+  }
+
+  .combine-padding-global-3 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .brix---btn-primary-small-full-width {
+    width: 100%;
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+
+  .brix---btn-secondary-small-full-width {
+    width: 100%;
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .brix---mg-bottom-16px {
+    margin-bottom: 15px;
+  }
+
+  .brix---text-200 {
+    font-size: 15px;
+    line-height: 16px;
+  }
+
+  .brix---mg-bottom-8px {
+    margin-bottom: 6px;
+  }
+
+  .brix---text-300-bold {
+    font-size: 17px;
+    line-height: 21px;
+  }
+
+  .brix---grid-4-columns-pricing-tablet {
+    grid-template-columns: 1fr;
+  }
+
+  .brix---paragraph-default {
+    font-size: 17px;
+    line-height: 28px;
+  }
+
+  .brix---heading-h1-size {
+    margin-bottom: 10px;
+    font-size: 30px;
+    line-height: 37px;
+  }
+
+  .brix---subtitle {
+    font-size: 14px;
+    line-height: 18px;
+  }
+
+  .brix---mg-bottom-48px {
+    margin-bottom: 32px;
+  }
+
+  .brix---container-default {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .brix---social-icon-square-30px {
+    border-radius: 6px;
+    width: 30px;
+    min-width: 30px;
+    height: 30px;
+    min-height: 30px;
+    font-size: 14px;
+  }
+
+  .brix---social-media-grid-right---t-center {
+    grid-template-columns: repeat(auto-fit, 30px);
+  }
+
+  .brix---footer-col-title {
+    margin-bottom: 16px;
+    font-size: 16px;
+    line-height: 18px;
+  }
+
+  .brix---footer-link {
+    font-size: 16px;
+    line-height: 19px;
+  }
+
+  .brix---footer-list-item {
+    margin-bottom: 8px;
+  }
+
+  .brix---btn-primary {
+    width: 100%;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    font-size: 17px;
+    line-height: 19px;
+  }
+
+  .brix---input {
+    min-height: 54px;
+    padding-left: 18px;
+    padding-right: 18px;
+    font-size: 16px;
+    line-height: 18px;
+  }
+
+  .brix---input::placeholder {
+    font-size: 16px;
+    line-height: 16px;
+  }
+
+  .brix---grid-footer-subscribe-1-col {
+    grid-template-columns: 1fr;
+  }
+
+  .brix---footer-logo {
+    width: 100%;
+    max-width: 240px;
+  }
+
+  .brix---mg-bottom-24px {
+    margin-bottom: 16px;
+  }
+
+  .brix---footer-top-border-bottom {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .brix---heading-h3-size {
+    margin-bottom: 10px;
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  .brix---team-v13-content {
+    bottom: 32px;
+    left: 24px;
+  }
+
+  .brix---avatar-image {
+    width: 100%;
+  }
+
+  .brix---grid-3-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .brix---paragraph-default-2 {
+    font-size: 17px;
+    line-height: 28px;
+  }
+
+  .brix---heading-h2-size {
+    font-size: 24px;
+    line-height: 34px;
+  }
+
+  .brix---mg-bottom-16px-2 {
+    margin-bottom: 15px;
+  }
+
+  .brix---mg-bottom-48px-2 {
+    margin-bottom: 32px;
+  }
+
+  .brix---container-default-2 {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .brix---btn-secondary,
+  .brix---btn-primary-2 {
+    width: 100%;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    font-size: 17px;
+    line-height: 19px;
+  }
+
+  .brix---button-row-left {
+    width: 100%;
+    margin-bottom: 20px;
+    margin-right: 0;
+  }
+
+  .brix---buttons-row-center {
+    flex-direction: column;
+  }
+
+  .brix---heading-h1-size-2 {
+    margin-bottom: 10px;
+    font-size: 30px;
+    line-height: 37px;
+  }
+
+  .brix---buttons-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .brix---hero-bg-image-light {
+    padding-top: 140px;
+    padding-bottom: 100px;
+  }
+
+  .brix---btn-primary-small {
+    width: 100%;
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .brix---header-nav-list-item-show-in-mbl,
+  .brix---header-nav-list-item {
+    text-align: left;
+    width: 100%;
+  }
+
+  .brix---header-logo {
+    max-width: 84%;
+  }
+
+  .combine-padding-global-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .uui-layout13_image-01 {
+    width: 80%;
+    right: -7%;
+  }
+
+  .uui-layout13_image-02 {
+    top: 20%;
+  }
+} */
 
 #w-node-e444a021-0958-c479-e141-f928c478b337-a1504b34 {
 	grid-area: 1 / 1 / 2 / 2;

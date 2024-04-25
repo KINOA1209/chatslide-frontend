@@ -12,9 +12,10 @@ import { Explanation, Instruction } from '../ui/Text';
 import RadioButton from '../ui/RadioButton';
 import { MdOutlineShare } from 'react-icons/md';
 import { getBrand, getOrigin } from '@/utils/getHost';
+import { useProject } from '@/hooks/use-project';
 type ShareButtonProps = {
 	share: boolean;
-	setShare: null | ((is_shared: boolean, is_public?: boolean) => void);
+	setShare: null | ((is_shared: boolean, video_is_shared: boolean, is_public?: boolean) => void);
 	showShareModal: boolean; // Accept showCloneModal as prop
 	setShowShareModal: React.Dispatch<React.SetStateAction<boolean>>; // Accept setShowCloneModal as prop
 	isDropdownVisible?: boolean;
@@ -44,9 +45,15 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 	// const [showModal, setShowModal] = useState(false);
 	const project_id = project?.id || '';
 	const [isPublic, setIsPublic] = useState(project.is_public);
+	const { isShared, videoIsShared } = useProject();
 
 	const toggleShare = async () => {
-		setShare && setShare(true, isPublic); // updates db as well
+		if (setShare){
+			// updates db as well
+			shareEntry === 'video' ? setShare(isShared, true, isPublic) :
+			setShare(true, videoIsShared, isPublic)
+		}
+		//setShare && setShare(true, isPublic); 
 		setShowShareModal && setShowShareModal(true);
 		setIsDropdownVisible && setIsDropdownVisible(false);
 	};
@@ -69,7 +76,11 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 
 	const handlePost = async (platform: string, shareEntry: string) => {
 		try {
-			setShare && setShare(true, isPublic);
+			if (setShare){
+				// updates db as well
+				shareEntry === 'video' ? setShare(isShared, true, isPublic) :
+				setShare(true, videoIsShared, isPublic)
+			}
 			const shareLink = shareEntry === 'video' ? `${host}/shared_video/${project_id}` : `${host}/shared/${project_id}`;
 			const hashTags = limitedKeywords
 				.map((keyword) => `#${keyword}`)
@@ -121,7 +132,8 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 							]}
 							selectedValue={share ? 'yes' : 'no'}
 							setSelectedValue={(value) => {
-								setShare(value === 'yes', isPublic);
+								shareEntry === 'video' ? setShare(isShared, value === 'yes', isPublic) :
+								setShare(value === 'yes', videoIsShared, isPublic);
 							}}
 						/>
 					)}

@@ -70,7 +70,7 @@ const OneStep: React.FC<StepProps> = ({
 					{renderLine}
 				</div>
 				<span
-					className={`absolute top-8 text-neutral-800 text-white text-sm font-creato-bold leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-8px]'}`}
+					className={`absolute top-8 text-neutral-800 text-white text-sm font-bold leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-8px]'}`}
 				>
 					{desc}
 				</span>

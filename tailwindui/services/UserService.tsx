@@ -177,12 +177,22 @@ class UserService {
 			if (creditNum > 10000) {
 				credits = 'Unlimited';
 			}
-			const tier: string = data['tier'] || 'FREE';
-			const expirationDate: string = data['expiration_date'] || '';
+			let tier: string = data['tier'] || 'FREE';
+      let expirationDate: string = data['expiration_date'] || '';
+      if (expirationDate) {
+        // local date with only month and day
+        expirationDate = new Date(expirationDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      }
+      if (tier.includes('CANCELLED_')) {
+        if (expirationDate && new Date(expirationDate) > new Date()) {
+        tier = tier.replaceAll('CANCELLED_', '')
+        }
+      }
+
 			const username: string = data['username'] || null;
 			const email: string = data['email'] || null;
 
-			console.log(`User credits: ${credits}`);
+			console.log(`User credits: ${credits}, expiration date: ${expirationDate}, tier: ${tier}`);
 
 			return { credits, tier, expirationDate, username, email };
 		} catch (error) {

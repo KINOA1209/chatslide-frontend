@@ -23,7 +23,7 @@ export const UnlimitedUpgrade: React.FC<{
 
 	async function upgradeToUnlimited() {
 		const url = await UserService.checkout(
-			'PRO_LIFETIME',
+			'ULTIMATE_LIFETIME',
 			email,
 			!useEuro ? '$' : '€',
 			token,
@@ -37,10 +37,10 @@ export const UnlimitedUpgrade: React.FC<{
 	if (credits != 'Unlimited')
 		return (
 			<Card>
-				<BigTitle>✅ Upgrade to Unlimited</BigTitle>
+				<BigTitle>✅ Upgrade to Ultimate</BigTitle>
 				<Instruction>
 					🤫 Shhhh, snatch a lifetime deal now. Only available until May 11, 2024. <br />
-					Get a lifetime upgrade to our Unlimited credits plan at a discounted price.
+					Get a lifetime upgrade to our Ultimate at a discounted price.
 				</Instruction>
 					<BigBlueButton
 						onClick={upgradeToUnlimited}

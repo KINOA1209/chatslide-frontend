@@ -22,10 +22,10 @@ export const TutorialStepContent: FC<TutorialStepContentProps> = ({
 				className='flex flex-col items-start gap-[0.5rem] flex-wrap'
 				style={{ maxWidth: '25rem' }}
 			>
-				<div className='text-neutral-900 text-base font-bold font-creato-bold leading-tight tracking-tight'>
+				<div className='text-neutral-900 text-base font-bold font-bold leading-tight tracking-tight'>
 					{action}
 				</div>
-				<p className='text-neutral-800 text-sm font-normal font-creato=regular leading-normal tracking-tight text-left'>
+				<p className='text-neutral-800 text-sm font-normal leading-normal tracking-tight text-left'>
 					{explanation}
 				</p>
 			</div>
