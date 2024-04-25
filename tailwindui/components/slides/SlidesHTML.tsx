@@ -197,12 +197,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
     Math.min(dimensions.width / 960, dimensions.height / 540),
   );
 
-  const [nonPresentScale, setNonPresentScale] = useState(
-    calculateNonPresentScale(dimensions.width, dimensions.height, showScript),
-  );
-
   //const [isChatWindowOpen, setIsChatWindowOpen] = useState(false);
   const { isChatWindowOpen, setIsChatWindowOpen } = useChatHistory();
+
+
+	const [nonPresentScale, setNonPresentScale] = useState(
+		calculateNonPresentScale(dimensions.width, dimensions.height, showScript, isChatWindowOpen),
+	);
 
   const canUndo = slidesHistoryIndex > 0;
   const canRedo = slidesHistoryIndex < slidesHistory.length - 1;
@@ -210,12 +211,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
   const horizontalCurrentSlideRef = useRef<HTMLDivElement>(null);
   const verticalCurrentSlideRef = useRef<HTMLDivElement>(null);
   const { isShared, updateIsShared, project } = useProject();
-
-  const [draggedSlideIndex, setDraggedSlideIndex] = useState(-1);
-
   const [host, setHost] = useState(getOrigin());
-
-  const router = useRouter();
 
   useEffect(() => {
     if (
