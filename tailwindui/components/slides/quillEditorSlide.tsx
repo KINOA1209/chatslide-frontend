@@ -16,6 +16,7 @@ import { SlRefresh } from 'react-icons/sl';
 import ReactDOMServer from 'react-dom/server';
 import { useChatHistory } from '@/hooks/use-chat-history';
 import { Delta } from 'quill/core';
+import List, { ListContainer } from 'quill/formats/list';
 
 type QuillEditableProps = {
 	content: string | string[];
@@ -113,6 +114,15 @@ Size.whitelist = [
 	'64pt',
 ];
 Quill.register(Size, true);
+
+// file in quill/formats/list.js
+class UListContainer extends ListContainer {}
+UListContainer.blotName = 'list-container'
+UListContainer.tagName = 'UL'
+
+Quill.register({
+	'formats/list-container': UListContainer
+}, true);
 
 const toolbarOptions = [
 	['regenerate'],
