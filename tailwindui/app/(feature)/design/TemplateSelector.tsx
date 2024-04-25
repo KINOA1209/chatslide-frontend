@@ -286,20 +286,53 @@ const TemplateSelector: React.FC<{
 									resetColorPicker={resetColorPicker}
 								/>
 							</div>
-							<div>
-								<Instruction>Customize Title Heading</Instruction>
-								<FontFamilyPicker
-									selectedFontFamily={
-										HasSelectedCustomizedTemplateTitleFontFamily
-											? customizedTemplateTitleFontFamily ||
-											  initalLoadedTitleFontFamily
-											: initalLoadedTitleFontFamily
-									}
-									onCustomFontFamilyChange={
-										handleCustomTemplateTitleFontFamilyChange
-									}
-									resetFontFamilyPicker={resetFontFamilyPicker}
-								></FontFamilyPicker>
+							{/* font customization section */}
+							<div className='flex flex-col xl:flex-row gap-[4px]'>
+								<div>
+									<Instruction>Customize Title Heading</Instruction>
+									<FontFamilyPicker
+										selectedFontFamily={
+											HasSelectedCustomizedTemplateTitleFontFamily
+												? customizedTemplateTitleFontFamily ||
+												  initalLoadedTitleFontFamily
+												: initalLoadedTitleFontFamily
+										}
+										onCustomFontFamilyChange={
+											handleCustomTemplateTitleFontFamilyChange
+										}
+										resetFontFamilyPicker={resetFontFamilyPicker}
+									></FontFamilyPicker>
+								</div>
+								<div>
+									<Instruction>Customize Subtitle Heading</Instruction>
+									<FontFamilyPicker
+										selectedFontFamily={
+											HasSelectedCustomizedTemplateTitleFontFamily
+												? customizedTemplateTitleFontFamily ||
+												  initalLoadedTitleFontFamily
+												: initalLoadedTitleFontFamily
+										}
+										onCustomFontFamilyChange={
+											handleCustomTemplateTitleFontFamilyChange
+										}
+										resetFontFamilyPicker={resetFontFamilyPicker}
+									></FontFamilyPicker>
+								</div>
+								<div>
+									<Instruction>Customize Paragraph</Instruction>
+									<FontFamilyPicker
+										selectedFontFamily={
+											HasSelectedCustomizedTemplateTitleFontFamily
+												? customizedTemplateTitleFontFamily ||
+												  initalLoadedTitleFontFamily
+												: initalLoadedTitleFontFamily
+										}
+										onCustomFontFamilyChange={
+											handleCustomTemplateTitleFontFamilyChange
+										}
+										resetFontFamilyPicker={resetFontFamilyPicker}
+									></FontFamilyPicker>
+								</div>
 							</div>
 						</div>
 					}
