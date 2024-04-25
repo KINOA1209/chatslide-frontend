@@ -41,6 +41,21 @@ const useHasSelectedCustomTemplateBgColor = createBearStore<boolean>()(
 	true,
 );
 
+const useInitalLoadedTitleFontFamily = createBearStore<string | undefined>()(
+	'initalLoadedTitleFontFamily',
+	'Arial',
+	true,
+);
+const useCustomizedTemplateTitleFontFamily = createBearStore<
+	string | undefined
+>()('customizedTemplateTitleFontFamily', '', true);
+const useHasSelectedCustomizedTemplateTitleFontFamily =
+	createBearStore<boolean>()(
+		'HasSelectedCustomizedTemplateTitleFontFamily',
+		false,
+		true,
+	);
+
 export enum SaveStatus {
 	UpToDate,
 	Saving,
@@ -92,6 +107,17 @@ export const useSlides = () => {
 		hasSelectedCustomTemplateBgColor,
 		setHasSelectedCustomTemplateBgColor,
 	} = useHasSelectedCustomTemplateBgColor();
+	// for customized font family
+	const { initalLoadedTitleFontFamily, setInitalLoadedTitleFontFamily } =
+		useInitalLoadedTitleFontFamily();
+	const {
+		customizedTemplateTitleFontFamily,
+		setCustomizedTemplateTitleFontFamily,
+	} = useCustomizedTemplateTitleFontFamily();
+	const {
+		HasSelectedCustomizedTemplateTitleFontFamily,
+		setHasSelectedCustomizedTemplateTitleFontFamily,
+	} = useHasSelectedCustomizedTemplateTitleFontFamily();
 
 	const updateCustomBgColorForTemplate = (color: string) => {
 		setCustomTemplateBgColor(color);
@@ -425,9 +451,11 @@ export const useSlides = () => {
 		setSlidesHistoryIndex(0);
 		clearChatHistory();
 		setIsPresenting(false);
-		setHasSelectedCustomTemplateBgColor(slides?.[0]?.background_color ? true : false);
+		setHasSelectedCustomTemplateBgColor(
+			slides?.[0]?.background_color ? true : false,
+		);
 		setCustomTemplateBgColor(slides?.[0]?.background_color || '');
-		
+
 		slidesStatus = SlidesStatus.Inited;
 	};
 
@@ -538,5 +566,11 @@ export const useSlides = () => {
 		hasSelectedCustomTemplateBgColor,
 		updateCustomBgColorForTemplate,
 		toggleHasSelectedCustomTemplateBgColor,
+		initalLoadedTitleFontFamily,
+		setInitalLoadedTitleFontFamily,
+		customizedTemplateTitleFontFamily,
+		setCustomizedTemplateTitleFontFamily,
+		HasSelectedCustomizedTemplateTitleFontFamily,
+		setHasSelectedCustomizedTemplateTitleFontFamily,
 	};
 };

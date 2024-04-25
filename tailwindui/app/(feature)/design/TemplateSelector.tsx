@@ -14,6 +14,7 @@ import Select from 'react-select';
 import { ColorPicker } from './ColorPicker';
 import { useSlides } from '@/hooks/use-slides';
 import { WrappableRow } from '@/components/layout/WrappableRow';
+import FontFamilyPicker from './FontFamilyPicker';
 
 const SlideDesignPreview = dynamic(
 	() => import('@/components/slides/SlideDesignPreview'),
@@ -57,10 +58,17 @@ const TemplateSelector: React.FC<{
 	setPalette: (palette: PaletteKeys) => void;
 }> = ({ template, setTemplate, paletteOptions, setPalette, palette }) => {
 	const {
+		slides,
 		hasSelectedCustomTemplateBgColor,
 		customTemplateBgColor,
 		updateCustomBgColorForTemplate,
 		toggleHasSelectedCustomTemplateBgColor,
+		initalLoadedTitleFontFamily,
+		setInitalLoadedTitleFontFamily,
+		customizedTemplateTitleFontFamily,
+		setCustomizedTemplateTitleFontFamily,
+		HasSelectedCustomizedTemplateTitleFontFamily,
+		setHasSelectedCustomizedTemplateTitleFontFamily,
 	} = useSlides();
 	type OptionType = { value: PaletteKeys; label: JSX.Element };
 
@@ -72,13 +80,22 @@ const TemplateSelector: React.FC<{
 		// setSelectedCustomTemplateBgColor(color);
 		updateCustomBgColorForTemplate(color);
 		toggleHasSelectedCustomTemplateBgColor(true);
-		console.log('SelectedCustomTemplateBgColor:', customTemplateBgColor);
+		// console.log('SelectedCustomTemplateBgColor:', customTemplateBgColor);
 	};
 	const [finalPaletteOptions, setFinalPaletteOptions] =
 		useState(paletteOptions); //
 	useEffect(() => {
 		setFinalPaletteOptions(paletteOptions); // Update finalPaletteOptions when paletteOptions changes
 	}, [paletteOptions]);
+
+	const handleCustomTemplateTitleFontFamilyChange = (fontFamily: string) => {
+		// console.log(
+		// 	'hasSelectedCustomTemplateFontFamily',
+		// 	HasSelectedCustomizedTemplateTitleFontFamily,
+		// );
+		setCustomizedTemplateTitleFontFamily(fontFamily);
+		setHasSelectedCustomizedTemplateTitleFontFamily(true);
+	};
 
 	useEffect(() => {
 		// Whenever template changes, reset currentPalette to the first value of paletteOptions
@@ -90,6 +107,7 @@ const TemplateSelector: React.FC<{
 			setPalette(paletteOptions[0]); // If current palette is not in options, set first option as default
 		}
 	}, [template, paletteOptions]);
+
 	const handleTemplateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const selectedValue = e.target.value as TemplateKeys;
 		setTemplate(selectedValue);
@@ -123,6 +141,11 @@ const TemplateSelector: React.FC<{
 		toggleHasSelectedCustomTemplateBgColor(false);
 	};
 
+	const resetFontFamilyPicker = () => {
+		// console.log('initalLoadedTitleFontFamily', initalLoadedTitleFontFamily);
+		setHasSelectedCustomizedTemplateTitleFontFamily(false);
+	};
+
 	const PaletteSelector = () => {
 		return (
 			<Select
@@ -134,8 +157,7 @@ const TemplateSelector: React.FC<{
 							<div
 								className='w-4 h-4 mr-2'
 								style={{
-									backgroundColor:
-										colorPreviews[paletteOption as PaletteKeys],
+									backgroundColor: colorPreviews[paletteOption as PaletteKeys],
 								}}
 							/>
 							{paletteOption}
@@ -153,8 +175,7 @@ const TemplateSelector: React.FC<{
 							<div
 								className='w-4 h-4 mr-2'
 								style={{
-									backgroundColor:
-										colorPreviews[palette as PaletteKeys],
+									backgroundColor: colorPreviews[palette as PaletteKeys],
 								}}
 							/>
 							{palette}
@@ -176,9 +197,7 @@ const TemplateSelector: React.FC<{
 					menu: (provided) => ({ ...provided, zIndex: 999 }), // Ensure the menu appears above other elements
 					option: (provided, state) => ({
 						...provided,
-						backgroundColor: state.isSelected
-							? '#d1d5db'
-							: '#ffffff',
+						backgroundColor: state.isSelected ? '#d1d5db' : '#ffffff',
 						color: state.isSelected ? '#4b5563' : '#000000',
 						':hover': {
 							backgroundColor: '#d1d5db',
@@ -195,7 +214,7 @@ const TemplateSelector: React.FC<{
 				}}
 			></Select>
 		);
-	}
+	};
 
 	return (
 		<div>
@@ -214,10 +233,11 @@ const TemplateSelector: React.FC<{
 							{/* Map over the template options */}
 							{Object.entries(templateDisplayNames).map(([key, value]) => (
 								<option key={key} value={key}>
-									{`${value} ${(availablePalettes[key as TemplateKeys]?.length ?? 0) > 1
-										? '(palette ✅)'
-										: ''
-										}`}
+									{`${value} ${
+										(availablePalettes[key as TemplateKeys]?.length ?? 0) > 1
+											? '(palette ✅)'
+											: ''
+									}`}
 								</option>
 							))}
 						</DropDown>
@@ -225,26 +245,42 @@ const TemplateSelector: React.FC<{
 					{/* Render color palette options only if there are more than one */}
 					{
 						<div className='paletteChoice w-full'>
-								{!hasSelectedCustomTemplateBgColor &&
-									paletteOptions.length > 1 && (
-										<div>
-											<Instruction>Theme color</Instruction>
-											<PaletteSelector />
-										</div>)}
+							{!hasSelectedCustomTemplateBgColor &&
+								paletteOptions.length > 1 && (
+									<div>
+										<Instruction>Theme color</Instruction>
+										<PaletteSelector />
+									</div>
+								)}
 
-								<div>
-									<Instruction>Customize theme color</Instruction>
-									<ColorPicker
-										onCustomColorChange={handleCustomTemplateBgColorChange}
-										initialColor={
-											hasSelectedCustomTemplateBgColor
-												? customTemplateBgColor ||
-												colorPreviews[palette as PaletteKeys]
-												: colorPreviews[palette as PaletteKeys]
-										} // Provide a default value if customTemplateBgColor is undefined
-										resetColorPicker={resetColorPicker}
-									/>
-								</div>
+							<div>
+								<Instruction>Customize theme color</Instruction>
+								<ColorPicker
+									onCustomColorChange={handleCustomTemplateBgColorChange}
+									initialColor={
+										hasSelectedCustomTemplateBgColor
+											? customTemplateBgColor ||
+											  colorPreviews[palette as PaletteKeys]
+											: colorPreviews[palette as PaletteKeys]
+									} // Provide a default value if customTemplateBgColor is undefined
+									resetColorPicker={resetColorPicker}
+								/>
+							</div>
+							<div>
+								<Instruction>Customize Title Heading</Instruction>
+								<FontFamilyPicker
+									selectedFontFamily={
+										HasSelectedCustomizedTemplateTitleFontFamily
+											? customizedTemplateTitleFontFamily ||
+											  initalLoadedTitleFontFamily
+											: initalLoadedTitleFontFamily
+									}
+									onCustomFontFamilyChange={
+										handleCustomTemplateTitleFontFamilyChange
+									}
+									resetFontFamilyPicker={resetFontFamilyPicker}
+								></FontFamilyPicker>
+							</div>
 						</div>
 					}
 				</div>

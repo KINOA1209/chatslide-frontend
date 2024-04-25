@@ -74,6 +74,8 @@ export const loadCustomizableElements = (
 	paletteName: string = 'Original',
 	customTemplateBgColor?: string,
 	hasSelectedCustomTemplateBgColor?: boolean,
+	customizedTemplateTitleFontFamily?: string,
+	hasSelectedCustomizedTemplateTitleFontFamily?: boolean,
 ) => {
 	// return (
 	// 	themeConfigData[templateName as keyof ThemeConfig] ||
@@ -95,6 +97,20 @@ export const loadCustomizableElements = (
 			backgroundColor: `${customTemplateBgColor}`,
 		};
 	}
+
+	if (
+		customizedTemplateTitleFontFamily &&
+		hasSelectedCustomizedTemplateTitleFontFamily
+	) {
+		selectedThemeElements = {
+			...selectedThemeElements,
+			titleFontCSS: {
+				...selectedThemeElements.titleFontCSS, // Preserve existing titleFontCSS properties
+				fontFamily: customizedTemplateTitleFontFamily, // Update fontFamily
+			},
+		};
+	}
+
 	return selectedThemeElements;
 };
 
@@ -584,10 +600,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			false, // canEdit
 			exportToPdfMode, //exportToPdfMode
 			false, //editMathMode
-			() => { }, //setIsEditMode
-			() => { }, // handleSlideEdit
-			() => () => { }, // updateImgUrlArray,
-			() => { }, // toggleEditMode,
+			() => {}, //setIsEditMode
+			() => {}, // handleSlideEdit
+			() => () => {}, // updateImgUrlArray,
+			() => {}, // toggleEditMode,
 			// slide.palette,
 			index === 0, // isCoverPage
 			slide.layout, // layoutOptionNonCover
@@ -659,9 +675,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		<Blank>
 			<div className='flex flex-col items-center justify-center'>
 				<div>Loading...</div>
-				<a href={`${addIdToRedir('/outlines')}`} className='text-blue-500'>Recreate this slide deck.</a>
+				<a href={`${addIdToRedir('/outlines')}`} className='text-blue-500'>
+					Recreate this slide deck.
+				</a>
 			</div>
-		</Blank>
+		</Blank>;
 	}
 
 	return (

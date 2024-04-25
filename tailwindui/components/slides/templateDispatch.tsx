@@ -78,7 +78,10 @@ export const templateDispatch = (
 	const {
 		customTemplateBgColor,
 		updateCustomBgColorForTemplate,
+		setInitalLoadedTitleFontFamily,
 		hasSelectedCustomTemplateBgColor,
+		customizedTemplateTitleFontFamily,
+		HasSelectedCustomizedTemplateTitleFontFamily,
 	} = useSlides();
 	const { isPaidUser, token } = useUser();
 
@@ -214,7 +217,30 @@ export const templateDispatch = (
 		slide.palette as PaletteKeys,
 		customTemplateBgColor,
 		hasSelectedCustomTemplateBgColor,
+		customizedTemplateTitleFontFamily,
+		HasSelectedCustomizedTemplateTitleFontFamily,
 	);
+
+	// const initialTemplateTitleFontFamily =
+	// 	themeElements?.titleFontCSS?.fontFamily;
+
+	useEffect(() => {
+		// everytime change template we reload the initial themeelement of current template for initial display
+		const initialCurrentTemplateTitleFontFamily = loadCustomizableElements(
+			templateKey as TemplateKeys,
+			slide.palette as PaletteKeys,
+		);
+		console.log(
+			'initialCurrentTemplateTitleFontFamily',
+			templateKey,
+			slide.palette,
+			initialCurrentTemplateTitleFontFamily,
+		);
+		setInitalLoadedTitleFontFamily(
+			initialCurrentTemplateTitleFontFamily?.titleFontCSS?.fontFamily,
+		);
+	}, [templateKey]);
+
 	const layoutElements = loadLayoutConfigElements(
 		templateKey as TemplateKeys,
 		slide.layout as keyof typeof layoutOptions,
@@ -433,6 +459,7 @@ export const templateDispatch = (
 			template={slide.template}
 			themeElements={themeElements}
 			layoutElements={layoutElements}
+			// initialTemplateTitleFontFamily={initialTemplateTitleFontFamily}
 		/>
 	);
 	// }
