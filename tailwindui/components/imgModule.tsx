@@ -1136,13 +1136,13 @@ export const ImgModule = ({
 		transform: 'translateY(-50%)',
 	};
 
-	const showIconsFunctionText = (layout:string) => {
+	const showIconsFunctionText = (layout: string) => {
 		if (layout === 'Col_2_img_2_layout' ||
-			layout === 'Col_3_img_3_layout' 
+			layout === 'Col_3_img_3_layout'
 		) {
 			return false
 		}
-		else{
+		else {
 			return true
 		}
 	}
@@ -1422,7 +1422,7 @@ export const ImgModule = ({
 								style={{ zIndex: 53 }}>
 								<ToolBar>
 									{!isImgEditMode && (
-										<button 
+										<button
 											onClick={openModal}
 											className='flex flex-row items-center justify-center gap-1'>
 											<MdImageSearch
