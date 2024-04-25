@@ -233,9 +233,10 @@ const TemplateSelector: React.FC<{
 										<PaletteSelector />
 									</div>)}
 
-							<div>
-								<Instruction>Customize theme color</Instruction>
-								{showCustomColorPicker &&
+
+							{showCustomColorPicker &&
+								<div>
+									<Instruction>Customize theme color</Instruction>
 									<ColorPicker
 										onCustomColorChange={handleCustomTemplateBgColorChange}
 										initialColor={
@@ -245,8 +246,8 @@ const TemplateSelector: React.FC<{
 												: colorPreviews[palette as PaletteKeys]
 										} // Provide a default value if customTemplateBgColor is undefined
 										resetColorPicker={resetColorPicker}
-									/>}
-							</div>
+									/>
+								</div>}
 						</div>
 					}
 				</div>
