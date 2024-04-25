@@ -189,16 +189,21 @@ const PricingComparison: React.FC<{
 		else if (userTier.includes('PLUS')) {
 			if (tier === 'PLUS') {
 				return handleManageSubscription(token);
-			} else {
+			} else {  // PRO or ULTIMATE
 				return handleSubscription(tier, token);
 			}
 		}
 		else if (userTier.includes('PRO')) {
 			if (tier === 'PLUS') {
 				toast.success('Your plan already includes this feature');
-			} else {
+			} else if (tier === 'PRO') {
 				return handleManageSubscription(token);
+			} else {  // ULTIMATE
+				return handleSubscription(tier, token);
 			}
+		}
+		else if (userTier.includes('ULTIMATE')) {  // cannot manage subscription
+			toast.success('Your plan already includes this feature');
 		}
 	}
 
