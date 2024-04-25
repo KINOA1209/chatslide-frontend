@@ -80,6 +80,8 @@ const TemplateSelector: React.FC<{
 		setFinalPaletteOptions(paletteOptions); // Update finalPaletteOptions when paletteOptions changes
 	}, [paletteOptions]);
 
+	const { slides } = useSlides();
+
 	useEffect(() => {
 		// Whenever template changes, reset currentPalette to the first value of paletteOptions
 		// Whenever template changes, reset currentPalette to the first value of paletteOptions
@@ -232,7 +234,7 @@ const TemplateSelector: React.FC<{
 											<PaletteSelector />
 										</div>)}
 
-								<div>
+								{slides && <div>
 									<Instruction>Customize theme color</Instruction>
 									<ColorPicker
 										onCustomColorChange={handleCustomTemplateBgColorChange}
@@ -244,7 +246,7 @@ const TemplateSelector: React.FC<{
 										} // Provide a default value if customTemplateBgColor is undefined
 										resetColorPicker={resetColorPicker}
 									/>
-								</div>
+								</div>}
 						</div>
 					}
 				</div>
