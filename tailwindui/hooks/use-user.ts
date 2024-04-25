@@ -75,14 +75,20 @@ export const useUser = () => {
 					}
 				}
 
-				const isPaidUser = [
-					'PRO_MONTHLY',
-					'PLUS_MONTHLY',
-					'PRO_YEARLY',
-					'PLUS_YEARLY',
-					'PRO_LIFETIME',
-					'PLUS_LIFETIME'
-				].includes(tier);
+        const PAID_TIERS = [
+          'PLUS_ONETIME',
+          'PLUS_MONTHLY',
+          'PLUS_YEARLY',
+          'PLUS_LIFETIME',
+          'PRO_MONTHLY',
+          'PRO_YEARLY',
+          'PRO_LIFETIME',
+          'ULTIMATE_MONTHLY',
+          'ULTIMATE_YEARLY',
+          'ULTIMATE_LIFETIME'
+        ];
+
+        const isPaidUser = PAID_TIERS.includes(tier);
 
 				username = username?.split('@')[0] || 'User';
 

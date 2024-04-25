@@ -29,6 +29,9 @@ const PricingComparison: React.FC<{
 		if (!token) {
 			return 'Sign up to Start';
 		}
+		if (interval === 'onetime' && tier != 'PLUS') {
+			return '⏹️ Unavailable';
+		}
 		if (userTier.includes('CANCELLED') || userTier === 'FREE') {
 			if (tier === 'FREE')
 				return '✅ Current Plan';
@@ -65,8 +68,8 @@ const PricingComparison: React.FC<{
 
 	const CtaButton: FC<{ tier: Tier }> = ({ tier }) => {
 		const cta = getCta(tier);
-		const bgColor = cta.includes('✅') ? 'white' : '';
-		const textColor = cta.includes('✅') ? 'black' : '';
+		const bgColor = (cta.includes('✅') || cta.includes('⏹️'))? 'white' : '';
+		const textColor = (cta.includes('✅') || cta.includes('⏹️'))? 'black' : '';
 
 		return (
 			<button
@@ -121,12 +124,12 @@ const PricingComparison: React.FC<{
 				amount = 236;
 				return <span className='text-green-600'>
 					{currency + amount.toFixed(2)}
-					<span className='text-xs'> (80% off)</span>
+					<span className='text-xs'>-80%</span>
 				</span>;
 			} else {
 				return <span>
 					{currency + amount.toFixed(2)}
-					<span className='text-xs'> (50% off)</span>
+					<span className='text-xs'> -50%</span>
 				</span>;
 			}
 		}
@@ -150,7 +153,7 @@ const PricingComparison: React.FC<{
 	const getSecondLine = (tier: Tier): string | JSX.Element => {
 		switch (interval) {
 			case 'onetime':
-				return '1 day access';
+				return '3 day access';
 			case 'monthly':
 				return 'then ' + getPrice(tier);
 			case 'yearly':
@@ -186,16 +189,21 @@ const PricingComparison: React.FC<{
 		else if (userTier.includes('PLUS')) {
 			if (tier === 'PLUS') {
 				return handleManageSubscription(token);
-			} else {
+			} else {  // PRO or ULTIMATE
 				return handleSubscription(tier, token);
 			}
 		}
 		else if (userTier.includes('PRO')) {
 			if (tier === 'PLUS') {
 				toast.success('Your plan already includes this feature');
-			} else {
+			} else if (tier === 'PRO') {
 				return handleManageSubscription(token);
+			} else {  // ULTIMATE
+				return handleSubscription(tier, token);
 			}
+		}
+		else if (userTier.includes('ULTIMATE')) {  // cannot manage subscription
+			toast.success('Your plan already includes this feature');
 		}
 	}
 
@@ -235,19 +243,20 @@ const PricingComparison: React.FC<{
 		<div className='flex flex-col items-center overflow-y-scroll overflow-x-scroll'>
 			<MultiwayToggle
 				options={[
-					{ key: 'onetime', text: 'One Time' },
+					{ key: 'onetime', text: '3 Day' },
 					{ key: 'monthly', text: 'Monthly' },
-					{ key: 'yearly', element: <span>Yearly <span className='text-xs'><s>40%</s></span></span> },
-					{ key: 'lifetime', element: <span className='text-green-600'>Lifetime <span className='text-xs'><s>80%</s></span></span> },
+					{ key: 'yearly', element: <span>Yearly <span className='text-xs'>-40%</span></span> },
+					{ key: 'lifetime', element: <span className='text-green-600'>Lifetime <span className='text-xs'>-80%</span></span> },
 				]}
 				selectedKey={interval}
 				setSelectedKey={setInterval as (key: string) => void}
 			/>
 
-			{/* <Explanation>
+			<Explanation>
+				{interval === 'onetime' && 'You can also use this as a top-up for your other plans'}
 				{interval === 'lifetime' && '14 day money back guarantee'}
 				{interval === 'yearly' && '3 day money back guarantee'}
-			</Explanation> */}
+			</Explanation>
 
 			<div
 				data-w-id="a8590735-7e8f-bd41-a09e-37f58b801ed3"
@@ -485,7 +494,7 @@ const PricingComparison: React.FC<{
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">⭐️ Credits</div>
 						</div>
-						<div className="brix---text-300-medium"><b>2500</b> / month{userTier.includes('PRO') && ' *'}</div>
+						<div className="brix---text-300-medium"><b>4000</b> / month{userTier.includes('PRO') && ' *'}</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">

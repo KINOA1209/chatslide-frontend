@@ -116,6 +116,7 @@ const LinkInput = ({
 			if (essentialLink && essentialLink.length > 0) {
 				setLinkUrl('https://www.' + essentialLink[0]);
 				setUrlIsYoutube(true);
+        addLink(link);
 			}
 		} else if (regex2.test(link)) {
 			const essentialLink = link.match(regex2);
@@ -124,6 +125,7 @@ const LinkInput = ({
 				if (vID && vID.length > 0) {
 					setLinkUrl('https://www.youtube.com/watch?v=' + vID[0]);
 					setUrlIsYoutube(true);
+          addLink(link);
 				}
 			}
 		} else if (regex3.test(link)) {
@@ -133,11 +135,13 @@ const LinkInput = ({
 				if (vID && vID.length > 0) {
 					setLinkUrl('https://www.youtube.com/watch?v=' + vID[0]);
 					setUrlIsYoutube(true);
+          addLink(link);
 				}
 			}
 		} else {
 			// url is not youtube, assuming it is a web link
 			setUrlIsYoutube(false);
+      addLink(link);
 		}
 	};
 
@@ -155,6 +159,7 @@ const LinkInput = ({
 						className='text-sm md:text-l form-input w-full border-none bg-gray-100'
 						value={linkUrl}
 						onChange={(e) => handleLinkChange(e.target.value)}
+            onClick={(e) => (e.target as HTMLInputElement).select()}
 						placeholder='Paste webpage, Youtube, or 𝕏 link'
 					/>
 				</div>

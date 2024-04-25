@@ -316,6 +316,7 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 						palette={selectedPaletteOption}
 						setTemplate={setSelectedTemplate}
 						setPalette={setSelectedPaletteOption}
+						showCustomColorPicker={true}
 					/>
 				</div>
 			</Modal>

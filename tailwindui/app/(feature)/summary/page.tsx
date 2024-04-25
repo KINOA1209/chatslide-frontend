@@ -44,7 +44,7 @@ import { WrappableRow } from '@/components/layout/WrappableRow';
 import { formatName } from './util';
 
 
-const MAX_TOPIC_LENGTH = 4000;
+const MAX_TOPIC_LENGTH = 3000;
 const MIN_TOPIC_LENGTH = 3;
 
 const audienceDict = {
