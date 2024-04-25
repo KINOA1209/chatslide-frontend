@@ -1136,6 +1136,17 @@ export const ImgModule = ({
 		transform: 'translateY(-50%)',
 	};
 
+	const showIconsFunctionText = (layout:string) => {
+		if (layout === 'Col_2_img_2_layout' ||
+			layout === 'Col_3_img_3_layout' 
+		) {
+			return false
+		}
+		else{
+			return true
+		}
+	}
+
 	return (
 		<>
 			{/* select image modal */}
@@ -1422,7 +1433,7 @@ export const ImgModule = ({
 													fontWeight: 'bold',
 												}}
 											/>
-											Change
+											{showIconsFunctionText(slides[slideIndex].layout) ? "Change" : ""}
 										</button>
 									)}
 
@@ -1438,7 +1449,7 @@ export const ImgModule = ({
 														color: '#344054',
 													}}
 												/>
-												Resize
+												{showIconsFunctionText(slides[slideIndex].layout) ? "Resize" : ""}
 											</>
 										) : (
 											<>
@@ -1474,7 +1485,7 @@ export const ImgModule = ({
 														color: '#344054',
 													}}
 												/>
-												Delete
+												{showIconsFunctionText(slides[slideIndex].layout) ? "Delete" : ""}
 											</button>
 											{project?.additional_images && (
 												<button
@@ -1493,7 +1504,7 @@ export const ImgModule = ({
 															color: '#344054',
 														}}
 													/>
-													Shuffle
+													{showIconsFunctionText(slides[slideIndex].layout) ? "Shuffle" : ""}
 												</button>
 											)}
 										</>
