@@ -8,6 +8,15 @@ import { useProject } from './use-project';
 import Project from '@/models/Project';
 import debounce from 'lodash.debounce';
 import SlidesService from '@/services/SlidesService';
+import dynamic from 'next/dynamic';
+// import { colorPreviews } from '@/app/(feature)/design/TemplateSelector';
+// Dynamically import the component with SSR disabled
+const colorPreviews: any = dynamic(
+	() => import('@/app/(feature)/design/TemplateSelector'),
+	{
+		ssr: false,
+	},
+);
 
 const useSlidesBear = createBearStore<Slide[]>()('slides', [], true);
 const useSlideIndex = createBearStore<number>()('slideIndex', 0, true);
@@ -469,6 +478,10 @@ export const useSlides = () => {
 				...slide,
 				template: newTemplate,
 				palette: newPalette,
+				background_color: hasSelectedCustomTemplateBgColor
+					? customTemplateBgColor
+					: colorPreviews[newPalette as PaletteKeys],
+
 				// images_position: [{}, {}, {}],// comment this line because it cause the image position to be wrong after changing template and palette
 			};
 		});
@@ -504,10 +517,10 @@ export const useSlides = () => {
 		setSlidesHistoryIndex(0);
 		clearChatHistory();
 		setIsPresenting(false);
-		setHasSelectedCustomTemplateBgColor(
-			slides?.[0]?.background_color ? true : false,
-		);
-		setCustomTemplateBgColor(slides?.[0]?.background_color || '');
+		// setHasSelectedCustomTemplateBgColor(
+		// 	slides?.[0]?.background_color ? true : false,
+		// );
+		// setCustomTemplateBgColor(slides?.[0]?.background_color || '');
 
 		slidesStatus = SlidesStatus.Inited;
 	};

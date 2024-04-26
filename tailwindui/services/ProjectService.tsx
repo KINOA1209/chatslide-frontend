@@ -20,8 +20,10 @@ class ProjectService {
 		const url = server_side
 			? `${protocol}://${baseUrl}/api/get_shared_project`
 			: '/api/get_shared_project';
-		const url_fecthed = shareEntry === 'video' ? `${url}?project_id=${project_id}&video=True`
-			: `${url}?project_id=${project_id}`
+		const url_fecthed =
+			shareEntry === 'video'
+				? `${url}?project_id=${project_id}&video=True`
+				: `${url}?project_id=${project_id}`;
 
 		try {
 			// fetch project details
@@ -220,13 +222,13 @@ class ProjectService {
 				typeof jsonSlides[key] === 'string'
 					? JSON.parse(jsonSlides[key])
 					: jsonSlides[key];
-			//console.log('slideData:', slideData);
+			// console.log('slideData:', slideData);
 			const slide = new Slide();
 			slide.head = slideData.head || '';
 			slide.title = slideData.title || 'New Slide';
 			slide.subtopic = slideData.subtopic || 'New Slide';
 			slide.userName = slideData.userName || '';
-      slide.template = slideData.template || ('Simplistic_008' as TemplateKeys);
+			slide.template = slideData.template || ('Simplistic_008' as TemplateKeys);
 			slide.palette = slideData.palette || 'Original';
 			slide.content = slideData.content || [
 				'Some content here',
@@ -248,7 +250,7 @@ class ProjectService {
 			slide.logo = slideData.logo;
 			slide.logo_url = slideData.logo_url || '';
 			slide.background_url = slideData.background_url || '';
-			slide.background_color = slideData.background_color || '';
+			slide.background_color = slideData.background_color || ''; // for customized background color
 			// slide.show_logo = slideData.hasOwnProperty('show_logo')
 			// 	? slideData.show_logo
 			// 	: true;
@@ -330,8 +332,8 @@ class ProjectService {
 					slideData.illustration !== null
 						? slideData.illustration
 						: [
-							'https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png',
-						];
+								'https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png',
+						  ];
 				slide.quote = slideData.quote || 'Your quote here';
 				slide.source = slideData.source || '';
 				slide.chart = slideData.chart;

@@ -269,10 +269,14 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 		useState<PaletteKeys>(slides[0]?.palette || 'Original');
 
 	const handleConfirm = () => {
-		// console.log('selectedTemplate:', selectedPaletteOption);
+		console.log('selectedTemplate:', selectedTemplate, selectedPaletteOption);
 		// if (!hasSelectedCustomTemplateBgColor) {
 		changeTemplateAndPalette(selectedTemplate, selectedPaletteOption);
 		// }
+		// when confirm, set the selected palette color code to background color
+		// updateCustomBgColorForTemplate(
+		// 	colorPreviews[selectedPaletteOption as PaletteKeys],
+		// );
 		setShowModal(false);
 	};
 	// inconsistent?
