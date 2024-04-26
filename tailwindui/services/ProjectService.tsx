@@ -222,7 +222,7 @@ class ProjectService {
 				typeof jsonSlides[key] === 'string'
 					? JSON.parse(jsonSlides[key])
 					: jsonSlides[key];
-			console.log('slideData:', slideData);
+			// console.log('slideData:', slideData);
 			const slide = new Slide();
 			slide.head = slideData.head || '';
 			slide.title = slideData.title || 'New Slide';

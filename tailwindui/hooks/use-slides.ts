@@ -8,7 +8,15 @@ import { useProject } from './use-project';
 import Project from '@/models/Project';
 import debounce from 'lodash.debounce';
 import SlidesService from '@/services/SlidesService';
-import { colorPreviews } from '@/app/(feature)/design/TemplateSelector';
+import dynamic from 'next/dynamic';
+// import { colorPreviews } from '@/app/(feature)/design/TemplateSelector';
+// Dynamically import the component with SSR disabled
+const colorPreviews: any = dynamic(
+	() => import('@/app/(feature)/design/TemplateSelector'),
+	{
+		ssr: false,
+	},
+);
 
 const useSlidesBear = createBearStore<Slide[]>()('slides', [], true);
 const useSlideIndex = createBearStore<number>()('slideIndex', 0, true);
