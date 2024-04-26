@@ -1147,7 +1147,7 @@ export const ImgModule = ({
 		}
 	}
 
-	const layoutEntry = isSlide ? slides[slideIndex].layout : socialPosts[socialPostsIndex].template
+	const layoutEntry = isSlide ? slides[slideIndex]?.layout : socialPosts[socialPostsIndex]?.template
 
 	return (
 		<>
