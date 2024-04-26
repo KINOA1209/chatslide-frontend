@@ -234,6 +234,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 
 		//https://stackoverflow.com/questions/27519836/uncaught-typeerror-cannot-assign-to-read-only-property
 		const currentSlide = { ...socialPosts[slideIndex] };
+		const currentSocialPosts = [...socialPosts];
 		const className = tag;
 
 		const applyUpdate = (
@@ -282,9 +283,20 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 				currentSlide.source = content as string;
 			} else if (className === 'theme') {
 				// Update theme for all slides
-				socialPosts.forEach((slide) => {
-					slide.theme = content as ThemeObject;
+				// currentSocialPosts.forEach((slide) => {
+				// 	let newContent = {...slide.theme}
+				// 	newContent = content as ThemeObject
+				// 	slide.theme = newContent
+				// 	//slide.theme = content as ThemeObject;
+				// });
+
+				const newSocialPosts = currentSocialPosts.map(slide => {
+					return {
+						...slide,
+						theme: {...slide.theme, ...content as ThemeObject}
+					};
 				});
+				setSocialPosts(newSocialPosts)
 			} else if (className === 'chart') {
 				currentSlide.chart = content as Chart[];
 			} else if (className === 'is_chart') {
@@ -327,7 +339,13 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		}
 		console.log('updating social post page', slideIndex);
 		console.log(currentSlide);
-		updateSocialPostsPage(slideIndex, currentSlide, rerender);
+		if(tag !== 'theme'){
+			updateSocialPostsPage(slideIndex, currentSlide, rerender);
+		}
+		else{
+			//setSocialPosts(currentSocialPosts)
+		}
+
 	}
 
 	function toggleEditMode() {

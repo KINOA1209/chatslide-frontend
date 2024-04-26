@@ -1147,6 +1147,8 @@ export const ImgModule = ({
 		}
 	}
 
+	const layoutEntry = isSlide ? slides[slideIndex]?.layout : socialPosts[socialPostsIndex]?.template
+
 	return (
 		<>
 			{/* select image modal */}
@@ -1433,7 +1435,7 @@ export const ImgModule = ({
 													fontWeight: 'bold',
 												}}
 											/>
-											{showIconsFunctionText(slides[slideIndex].layout) ? "Change" : ""}
+											{showIconsFunctionText(layoutEntry) ? "Change" : ""}
 										</button>
 									)}
 
@@ -1449,7 +1451,7 @@ export const ImgModule = ({
 														color: '#344054',
 													}}
 												/>
-												{showIconsFunctionText(slides[slideIndex].layout) ? "Resize" : ""}
+												{showIconsFunctionText(layoutEntry) ? "Resize" : ""}
 											</>
 										) : (
 											<>
@@ -1485,7 +1487,7 @@ export const ImgModule = ({
 														color: '#344054',
 													}}
 												/>
-												{showIconsFunctionText(slides[slideIndex].layout) ? "Delete" : ""}
+												{showIconsFunctionText(layoutEntry) ? "Delete" : ""}
 											</button>
 											{project?.additional_images && (
 												<button
@@ -1504,7 +1506,7 @@ export const ImgModule = ({
 															color: '#344054',
 														}}
 													/>
-													{showIconsFunctionText(slides[slideIndex].layout) ? "Shuffle" : ""}
+													{showIconsFunctionText(layoutEntry) ? "Shuffle" : ""}
 												</button>
 											)}
 										</>

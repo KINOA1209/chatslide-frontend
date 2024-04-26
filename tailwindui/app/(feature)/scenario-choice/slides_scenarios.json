@@ -3,6 +3,12 @@
 	"description": "We'll create contents tailored to your needs.",
 	"options": [
 		{
+			"id": "general",
+			"title": "General",
+			"imageSrc": "/images/scenario/general.webp",
+			"audience": "Community_Members"
+		},
+		{
 			"id": "sales_pitch",
 			"title": "Sales Pitch",
 			"imageSrc": "/images/scenario/sales_pitch.jpg",
@@ -37,12 +43,6 @@
 			"title": "Scientific Teaching",
 			"imageSrc": "/images/scenario/scientific_teaching.jpg",
 			"audience": "Students"
-		},
-		{
-			"id": "financial_advising",
-			"title": "Financial Advising",
-			"imageSrc": "/images/scenario/financial_advising.webp",
-			"audience": "Business_Clients"
 		},
 		{
 			"id": "health_advising",
