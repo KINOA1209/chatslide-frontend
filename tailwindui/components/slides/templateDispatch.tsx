@@ -83,6 +83,10 @@ export const templateDispatch = (
 		hasSelectedCustomTemplateBgColor,
 		customizedTemplateTitleFontFamily,
 		HasSelectedCustomizedTemplateTitleFontFamily,
+		customizedTemplateSubtitleFontFamily,
+		HasSelectedCustomizedTemplateSubtitleFontFamily,
+		customizedTemplateContentFontFamily,
+		HasSelectedCustomizedTemplateContentFontFamily,
 	} = useSlides();
 	const { isPaidUser, token } = useUser();
 
@@ -220,6 +224,10 @@ export const templateDispatch = (
 		hasSelectedCustomTemplateBgColor,
 		customizedTemplateTitleFontFamily,
 		HasSelectedCustomizedTemplateTitleFontFamily,
+		customizedTemplateSubtitleFontFamily,
+		HasSelectedCustomizedTemplateSubtitleFontFamily,
+		customizedTemplateContentFontFamily,
+		HasSelectedCustomizedTemplateContentFontFamily,
 	);
 
 	// const initialTemplateTitleFontFamily =
@@ -257,8 +265,8 @@ export const templateDispatch = (
 			return (
 				<div
 					className='ql-editor non-editable-ql-editor'
-					style={{ 
-						...style, 
+					style={{
+						...style,
 						outline: 'none',
 					}}
 				>

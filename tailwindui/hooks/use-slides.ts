@@ -199,6 +199,54 @@ export const useSlides = () => {
 		setHasSelectedCustomTemplateBgColor(selectedState);
 	};
 
+	const updateCustomizedTitleFontFamilyForTemplate = (
+		selectedFontFamily: string,
+	) => {
+		setCustomizedTemplateTitleFontFamily(selectedFontFamily);
+
+		// update slide.background_color for all pages
+
+		const newSlides = slides.map((slide, index) => {
+			return { ...slide, titleFontFamily: selectedFontFamily };
+		});
+		setSlides(newSlides);
+		updateSlideHistory(newSlides);
+		debouncedSyncSlides(newSlides, true);
+		// setHasSelectedCustomTemplateBgColor(true);
+	};
+
+	const updateCustomizedSubtitleFontFamilyForTemplate = (
+		selectedFontFamily: string,
+	) => {
+		setCustomizedTemplateSubtitleFontFamily(selectedFontFamily);
+
+		// update slide.background_color for all pages
+
+		const newSlides = slides.map((slide, index) => {
+			return { ...slide, subtitleFontFamily: selectedFontFamily };
+		});
+		setSlides(newSlides);
+		updateSlideHistory(newSlides);
+		debouncedSyncSlides(newSlides, true);
+		// setHasSelectedCustomTemplateBgColor(true);
+	};
+
+	const updateCustomizedContentFontFamilyForTemplate = (
+		selectedFontFamily: string,
+	) => {
+		setCustomizedTemplateContentFontFamily(selectedFontFamily);
+
+		// update slide.background_color for all pages
+
+		const newSlides = slides.map((slide, index) => {
+			return { ...slide, contentFontFamily: selectedFontFamily };
+		});
+		setSlides(newSlides);
+		updateSlideHistory(newSlides);
+		debouncedSyncSlides(newSlides, true);
+		// setHasSelectedCustomTemplateBgColor(true);
+	};
+
 	// to control show or not show logo
 
 	const init = async () => {
@@ -631,6 +679,9 @@ export const useSlides = () => {
 		customTemplateBgColor,
 		hasSelectedCustomTemplateBgColor,
 		updateCustomBgColorForTemplate,
+		updateCustomizedTitleFontFamilyForTemplate,
+		updateCustomizedContentFontFamilyForTemplate,
+		updateCustomizedSubtitleFontFamilyForTemplate,
 		toggleHasSelectedCustomTemplateBgColor,
 		initalLoadedTitleFontFamily,
 		setInitalLoadedTitleFontFamily,

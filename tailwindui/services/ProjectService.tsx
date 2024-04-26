@@ -251,6 +251,9 @@ class ProjectService {
 			slide.logo_url = slideData.logo_url || '';
 			slide.background_url = slideData.background_url || '';
 			slide.background_color = slideData.background_color || ''; // for customized background color
+			slide.titleFontFamily = slideData.titleFontFamily || '';
+			slide.subtitleFontFamily = slideData.subtitleFontFamily || '';
+			slide.contentFontFamily = slideData.contentFontFamily || '';
 			// slide.show_logo = slideData.hasOwnProperty('show_logo')
 			// 	? slideData.show_logo
 			// 	: true;

@@ -1296,6 +1296,7 @@ export const Col_2_img_1_layout = ({
 						backgroundColor: themeElements.titleAndSubtopicBoxBackgroundColor
 							? themeElements.titleAndSubtopicBoxBackgroundColor
 							: '',
+						width: '100%',
 					}}
 				>
 					<div className={``} ref={topicRef} style={layoutElements.topicCSS}>

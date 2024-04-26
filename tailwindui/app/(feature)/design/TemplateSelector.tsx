@@ -66,11 +66,15 @@ const TemplateSelector: React.FC<{
 	palette,
 	showCustomColorPicker = false,
 }) => {
+	// should not use slides because there could be no slides object yet
 	const {
 		slides,
 		hasSelectedCustomTemplateBgColor,
 		customTemplateBgColor,
 		updateCustomBgColorForTemplate,
+		updateCustomizedTitleFontFamilyForTemplate,
+		updateCustomizedSubtitleFontFamilyForTemplate,
+		updateCustomizedContentFontFamilyForTemplate,
 		toggleHasSelectedCustomTemplateBgColor,
 		initalLoadedTitleFontFamily,
 		setInitalLoadedTitleFontFamily,
@@ -78,12 +82,24 @@ const TemplateSelector: React.FC<{
 		setCustomizedTemplateTitleFontFamily,
 		HasSelectedCustomizedTemplateTitleFontFamily,
 		setHasSelectedCustomizedTemplateTitleFontFamily,
+		initalLoadedSubtitleFontFamily,
+		setInitalLoadedSubtitleFontFamily,
+		customizedTemplateSubtitleFontFamily,
+		setCustomizedTemplateSubtitleFontFamily,
+		HasSelectedCustomizedTemplateSubtitleFontFamily,
+		setHasSelectedCustomizedTemplateSubtitleFontFamily,
+		initalLoadedContentFontFamily,
+		setInitalLoadedContentFontFamily,
+		customizedTemplateContentFontFamily,
+		setCustomizedTemplateContentFontFamily,
+		HasSelectedCustomizedTemplateContentFontFamily,
+		setHasSelectedCustomizedTemplateContentFontFamily,
 	} = useSlides();
 	type OptionType = { value: PaletteKeys; label: JSX.Element };
 
 	// const [selectedCustomTemplateBgColor, setSelectedCustomTemplateBgColor] =
 	// 	useState<string>('');
-	const [currentSelectedPalette, setCurrentSelectedPalette] = useState(palette); // Initialize currentPalette with palette
+	// const [currentSelectedPalette, setCurrentSelectedPalette] = useState(palette); // Initialize currentPalette with palette
 	const [resettingColor, setResettingColor] = useState(false);
 	const handleCustomTemplateBgColorChange = (color: string) => {
 		// setSelectedCustomTemplateBgColor(color);
@@ -94,43 +110,77 @@ const TemplateSelector: React.FC<{
 	const [finalPaletteOptions, setFinalPaletteOptions] =
 		useState(paletteOptions); //
 
+	// useEffect(() => {
+	// 	setCurrentSelectedPalette(palette);
+	// }, [palette]);
+
 	useEffect(() => {
 		setFinalPaletteOptions(paletteOptions); // Update finalPaletteOptions when paletteOptions changes
 	}, [paletteOptions]);
 
 	useEffect(() => {
-		// setCurrentSelectedPalette(paletteOptions[0]); // Update finalPaletteOptions when paletteOptions changes
-		// setPalette(paletteOptions[0]);
-		// console.log('currentSelectedPalette', currentSelectedPalette);
-		// console.log('SelectedPalette', palette);
 		// use the consistent template and palette value to reload initial font family to stay consistent
 		const initialCurrentTemplateTitleFontFamily = loadCustomizableElements(
 			template as TemplateKeys,
-			currentSelectedPalette as PaletteKeys,
+			palette as PaletteKeys,
+		);
+		console.log(
+			'initialCurrentTemplateTitleFontFamily',
+			template,
+			palette,
+			// currentSelectedPalette,
+			initialCurrentTemplateTitleFontFamily,
 		);
 
 		setInitalLoadedTitleFontFamily(
 			initialCurrentTemplateTitleFontFamily?.titleFontCSS?.fontFamily,
 		);
-	}, [template]);
+		setInitalLoadedSubtitleFontFamily(
+			initialCurrentTemplateTitleFontFamily?.subtopicFontCSS?.fontFamily,
+		);
+		setInitalLoadedContentFontFamily(
+			initialCurrentTemplateTitleFontFamily?.contentFontCSS?.fontFamily,
+		);
+	}, [template, palette]); // template + palette
 
 	const handleCustomTemplateTitleFontFamilyChange = (fontFamily: string) => {
 		// console.log(
 		// 	'hasSelectedCustomTemplateFontFamily',
 		// 	HasSelectedCustomizedTemplateTitleFontFamily,
 		// );
-		setCustomizedTemplateTitleFontFamily(fontFamily);
+		// setCustomizedTemplateTitleFontFamily(fontFamily);
+		updateCustomizedTitleFontFamilyForTemplate(fontFamily);
 		setHasSelectedCustomizedTemplateTitleFontFamily(true);
+	};
+
+	const handleCustomTemplateSubtitleFontFamilyChange = (fontFamily: string) => {
+		// console.log(
+		// 	'hasSelectedCustomTemplateFontFamily',
+		// 	HasSelectedCustomizedTemplateTitleFontFamily,
+		// );
+		// setCustomizedTemplateTitleFontFamily(fontFamily);
+		updateCustomizedSubtitleFontFamilyForTemplate(fontFamily);
+		setHasSelectedCustomizedTemplateSubtitleFontFamily(true);
+	};
+
+	const handleCustomTemplateContentFontFamilyChange = (fontFamily: string) => {
+		// console.log(
+		// 	'hasSelectedCustomTemplateFontFamily',
+		// 	HasSelectedCustomizedTemplateTitleFontFamily,
+		// );
+		// setCustomizedTemplateTitleFontFamily(fontFamily);
+		updateCustomizedContentFontFamilyForTemplate(fontFamily);
+		setHasSelectedCustomizedTemplateContentFontFamily(true);
 	};
 
 	useEffect(() => {
 		// Whenever template changes, reset currentPalette to the first value of paletteOptions
 
 		if (paletteOptions.length === 1) {
-			setCurrentSelectedPalette(paletteOptions[0]); // Update finalPaletteOptions when paletteOptions changes
+			// setCurrentSelectedPalette(paletteOptions[0]); // Update finalPaletteOptions when paletteOptions changes
 			setPalette(paletteOptions[0]); // If only one option, set it as default
-		} else if (!paletteOptions.includes(currentSelectedPalette)) {
-			setCurrentSelectedPalette(paletteOptions[0]); // Update finalPaletteOptions when paletteOptions changes
+		} else if (!paletteOptions.includes(palette)) {
+			// setCurrentSelectedPalette(paletteOptions[0]); // Update finalPaletteOptions when paletteOptions changes
 			setPalette(paletteOptions[0]); // If current palette is not in options, set first option as default
 		}
 	}, [template, paletteOptions]);
@@ -153,11 +203,11 @@ const TemplateSelector: React.FC<{
 	// };
 	const handlePaletteChange = (selectedOption: OptionType | null) => {
 		if (selectedOption !== null) {
-			setCurrentSelectedPalette(selectedOption.value);
+			// setCurrentSelectedPalette(selectedOption.value);
 			setPalette(selectedOption.value);
 		} else {
 			// Handle the case where no option is selected, for example, clear the palette
-			setCurrentSelectedPalette(paletteOptions[0]);
+			// setCurrentSelectedPalette(paletteOptions[0]);
 
 			setPalette(paletteOptions[0]);
 		}
@@ -172,6 +222,8 @@ const TemplateSelector: React.FC<{
 	const resetFontFamilyPicker = () => {
 		// console.log('initalLoadedTitleFontFamily', initalLoadedTitleFontFamily);
 		setHasSelectedCustomizedTemplateTitleFontFamily(false);
+		setHasSelectedCustomizedTemplateSubtitleFontFamily(false);
+		setHasSelectedCustomizedTemplateContentFontFamily(false);
 	};
 
 	const PaletteSelector = () => {
@@ -213,7 +265,7 @@ const TemplateSelector: React.FC<{
 				styles={{
 					control: (provided) => ({
 						...provided,
-						width: '20rem',
+						width: '15rem',
 						height: '36px',
 						borderRadius: '8px',
 						borderColor: '#e5e7eb',
@@ -253,7 +305,7 @@ const TemplateSelector: React.FC<{
 					<div className={`templateChoice flex flex-col `}>
 						<Instruction>Theme template</Instruction>
 						<DropDown
-							width='20rem'
+							width='15rem'
 							onChange={handleTemplateChange}
 							value={template}
 							style='input'
@@ -296,6 +348,56 @@ const TemplateSelector: React.FC<{
 									/>
 								</div>
 							)}
+							<div className='flex flex-col xl:flex-row gap-[1rem]'>
+								{/* heading */}
+								<div>
+									<Instruction>Customize Heading</Instruction>
+									<FontFamilyPicker
+										onCustomFontFamilyChange={
+											handleCustomTemplateTitleFontFamilyChange
+										}
+										selectedFontFamily={
+											HasSelectedCustomizedTemplateTitleFontFamily
+												? customizedTemplateTitleFontFamily
+												: initalLoadedTitleFontFamily
+										}
+										resetFontFamilyPicker={resetFontFamilyPicker}
+										disableResetButton={true}
+									/>
+								</div>
+								{/* subheading */}
+								<div>
+									<Instruction>Customize Subheading</Instruction>
+									<FontFamilyPicker
+										onCustomFontFamilyChange={
+											handleCustomTemplateSubtitleFontFamilyChange
+										}
+										selectedFontFamily={
+											HasSelectedCustomizedTemplateSubtitleFontFamily
+												? customizedTemplateSubtitleFontFamily
+												: initalLoadedSubtitleFontFamily
+										}
+										resetFontFamilyPicker={resetFontFamilyPicker}
+										disableResetButton={true}
+									/>
+								</div>
+								{/* paragraph */}
+								<div>
+									<Instruction>Customize Paragraph</Instruction>
+									<FontFamilyPicker
+										onCustomFontFamilyChange={
+											handleCustomTemplateContentFontFamilyChange
+										}
+										selectedFontFamily={
+											HasSelectedCustomizedTemplateContentFontFamily
+												? customizedTemplateContentFontFamily
+												: initalLoadedContentFontFamily
+										}
+										resetFontFamilyPicker={resetFontFamilyPicker}
+										disableResetButton={false}
+									/>
+								</div>
+							</div>
 						</div>
 					}
 				</div>
