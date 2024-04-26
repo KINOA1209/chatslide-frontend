@@ -72,6 +72,16 @@ const SideBar = ({ }: SideBarProps) => {
     }
   }, [path]);
 
+	function getTierDisplayName(tier: string, isSidebarOpen: boolean): string {
+		const level = tier.split('_')[0];
+		if (!isSidebarOpen && level === 'ULTIMATE') {
+			return 'ULT';
+		}
+		if (isSidebarOpen)
+			return level + ' Tier';
+		return level;
+	}
+
   // avoid hydration error during development caused by persistence
   if (!useHydrated()) return <></>;
 
@@ -193,7 +203,7 @@ const SideBar = ({ }: SideBarProps) => {
 
           <div className={`w-fit mx-auto py-1`}>
             <BlueLabel>
-              {tier.split('_')[0]} {isSidebarOpen && 'Tier'}
+              {getTierDisplayName(tier, isSidebarOpen)}
             </BlueLabel>
           </div>
 
