@@ -18,7 +18,8 @@ const ProjectLoading = () => {
 	const pathname = usePathname();
 	const router = useRouter();
 	const { initSlides } = useSlides();
-	const { project, initProject, updateProject, bulkUpdateProject } = useProject();
+	const { project, initProject, updateProject, bulkUpdateProject } =
+		useProject();
 	const { token } = useUser();
 	const { initSocialPosts } = useSocialPosts();
 	const [failed, setFailed] = useState(false);
@@ -55,6 +56,8 @@ const ProjectLoading = () => {
 				);
 				await initProject(project); // will also init outlines
 				const parsedSlides = project?.parsed_slides; // Assign to a variable to simplify null check
+
+				// console.log('fetchProhectDetails loaded parsedSlides', parsedSlides);
 
 				if (parsedSlides && parsedSlides.length > 0) {
 					initSlides(parsedSlides);

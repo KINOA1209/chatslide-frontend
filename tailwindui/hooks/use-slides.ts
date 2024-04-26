@@ -199,6 +199,54 @@ export const useSlides = () => {
 		setHasSelectedCustomTemplateBgColor(selectedState);
 	};
 
+	const updateCustomizedTitleFontFamilyForTemplate = (
+		selectedFontFamily: string,
+	) => {
+		setCustomizedTemplateTitleFontFamily(selectedFontFamily);
+
+		// update slide.background_color for all pages
+
+		const newSlides = slides.map((slide, index) => {
+			return { ...slide, titleFontFamily: selectedFontFamily };
+		});
+		setSlides(newSlides);
+		updateSlideHistory(newSlides);
+		debouncedSyncSlides(newSlides, true);
+		// setHasSelectedCustomTemplateBgColor(true);
+	};
+
+	const updateCustomizedSubtitleFontFamilyForTemplate = (
+		selectedFontFamily: string,
+	) => {
+		setCustomizedTemplateSubtitleFontFamily(selectedFontFamily);
+
+		// update slide.background_color for all pages
+
+		const newSlides = slides.map((slide, index) => {
+			return { ...slide, subtitleFontFamily: selectedFontFamily };
+		});
+		setSlides(newSlides);
+		updateSlideHistory(newSlides);
+		debouncedSyncSlides(newSlides, true);
+		// setHasSelectedCustomTemplateBgColor(true);
+	};
+
+	const updateCustomizedContentFontFamilyForTemplate = (
+		selectedFontFamily: string,
+	) => {
+		setCustomizedTemplateContentFontFamily(selectedFontFamily);
+
+		// update slide.background_color for all pages
+
+		const newSlides = slides.map((slide, index) => {
+			return { ...slide, contentFontFamily: selectedFontFamily };
+		});
+		setSlides(newSlides);
+		updateSlideHistory(newSlides);
+		debouncedSyncSlides(newSlides, true);
+		// setHasSelectedCustomTemplateBgColor(true);
+	};
+
 	// to control show or not show logo
 
 	const init = async () => {
@@ -481,6 +529,15 @@ export const useSlides = () => {
 				background_color: hasSelectedCustomTemplateBgColor
 					? customTemplateBgColor
 					: colorPreviews[newPalette as PaletteKeys],
+				titleFontFamily: HasSelectedCustomizedTemplateTitleFontFamily
+					? customizedTemplateTitleFontFamily
+					: initalLoadedTitleFontFamily,
+				subtitleFontFamily: HasSelectedCustomizedTemplateSubtitleFontFamily
+					? customizedTemplateSubtitleFontFamily
+					: initalLoadedSubtitleFontFamily,
+				contentFontFamily: HasSelectedCustomizedTemplateContentFontFamily
+					? customizedTemplateContentFontFamily
+					: initalLoadedContentFontFamily,
 
 				// images_position: [{}, {}, {}],// comment this line because it cause the image position to be wrong after changing template and palette
 			};
@@ -517,10 +574,6 @@ export const useSlides = () => {
 		setSlidesHistoryIndex(0);
 		clearChatHistory();
 		setIsPresenting(false);
-		// setHasSelectedCustomTemplateBgColor(
-		// 	slides?.[0]?.background_color ? true : false,
-		// );
-		// setCustomTemplateBgColor(slides?.[0]?.background_color || '');
 
 		slidesStatus = SlidesStatus.Inited;
 	};
@@ -631,6 +684,9 @@ export const useSlides = () => {
 		customTemplateBgColor,
 		hasSelectedCustomTemplateBgColor,
 		updateCustomBgColorForTemplate,
+		updateCustomizedTitleFontFamilyForTemplate,
+		updateCustomizedContentFontFamilyForTemplate,
+		updateCustomizedSubtitleFontFamilyForTemplate,
 		toggleHasSelectedCustomTemplateBgColor,
 		initalLoadedTitleFontFamily,
 		setInitalLoadedTitleFontFamily,

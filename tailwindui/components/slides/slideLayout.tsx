@@ -635,7 +635,10 @@ export const Col_2_img_0_layout = ({
 	// );
 
 	return (
-		<div className={`SlideLayoutCanvas`} style={layoutElements.canvaCSS}>
+		<div
+			className={`SlideLayoutCanvas`}
+			style={{ display: 'grid', ...layoutElements.canvaCSS }}
+		>
 			<div
 				className={`SlideTopicAndSubtopicBox`}
 				style={{
@@ -692,28 +695,28 @@ export const Col_2_img_0_layout = ({
 						</>
 					)}
 					{/* {updatedContent.length === 0 && showAddButton && (
-						<div
-							className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
-							// onClick={handleAddTextColumn}
-							onClick={() =>
-								handleAddTextColumn({
-									handleSlideEdit: handleSlideEdit,
-									isVerticalContent: false,
-									themeElements: themeElements,
-									fontSize: '16pt',
-									contentIndex: 0,
-									slideIndex: slideIndex,
-									slides: slides,
-									setUpdatedContent: setUpdatedContent,
-									setShowAddButton: setShowAddButton,
-									shouldShowAddButton: updatedContent.length <= 1,
-								})
-							}
-						>
-							<RiAddLine className={addIconStyle} />
-							Add One Column of text
-						</div>
-					)} */}
+					<div
+						className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
+						// onClick={handleAddTextColumn}
+						onClick={() =>
+							handleAddTextColumn({
+								handleSlideEdit: handleSlideEdit,
+								isVerticalContent: false,
+								themeElements: themeElements,
+								fontSize: '16pt',
+								contentIndex: 0,
+								slideIndex: slideIndex,
+								slides: slides,
+								setUpdatedContent: setUpdatedContent,
+								setShowAddButton: setShowAddButton,
+								shouldShowAddButton: updatedContent.length <= 1,
+							})
+						}
+					>
+						<RiAddLine className={addIconStyle} />
+						Add One Column of text
+					</div>
+				)} */}
 					{/* {updatedContent.slice(0, 1).map((item, index) => ( */}
 					{updatedContentCol1.map((item, index) => (
 						<React.Fragment key={`contentText_${index}`}>
@@ -743,32 +746,32 @@ export const Col_2_img_0_layout = ({
 						style={layoutElements.contentIndexTextDividerCSS}
 					></div>
 					{/* {updatedContent.length === 1 && showAddButton && (
+					<div
+						className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
+						// onClick={handleAddColumn}
+						onClick={() =>
+							handleAddTextColumn({
+								handleSlideEdit: handleSlideEdit,
+								isVerticalContent: false,
+								themeElements: themeElements,
+								fontSize: '16pt',
+								contentIndex: 1,
+								slideIndex: slideIndex,
+								slides: slides,
+								setUpdatedContent: setUpdatedContent,
+								setShowAddButton: setShowAddButton,
+								shouldShowAddButton: updatedContent.length <= 1,
+							})
+						}
+					>
 						<div
-							className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
-							// onClick={handleAddColumn}
-							onClick={() =>
-								handleAddTextColumn({
-									handleSlideEdit: handleSlideEdit,
-									isVerticalContent: false,
-									themeElements: themeElements,
-									fontSize: '16pt',
-									contentIndex: 1,
-									slideIndex: slideIndex,
-									slides: slides,
-									setUpdatedContent: setUpdatedContent,
-									setShowAddButton: setShowAddButton,
-									shouldShowAddButton: updatedContent.length <= 1,
-								})
-							}
-						>
-							<div
-								className={`SlideContentIndexTextDivider`}
-								style={layoutElements.contentIndexTextDividerCSS}
-							></div>
-							<RiAddLine className={addIconStyle} />
-							Add One Column of text
-						</div>
-					)} */}
+							className={`SlideContentIndexTextDivider`}
+							style={layoutElements.contentIndexTextDividerCSS}
+						></div>
+						<RiAddLine className={addIconStyle} />
+						Add One Column of text
+					</div>
+				)} */}
 					{showEditorBoxCol2 && (
 						<>
 							{setUpdatedContentCol2((prevContent: JSX.Element[]) => [
@@ -805,6 +808,7 @@ export const Col_2_img_0_layout = ({
 					))}
 				</div>
 			</div>
+
 			<div
 				className={`SlideLogo`}
 				style={{
@@ -900,7 +904,7 @@ export const Col_3_img_0_layout = ({
 	// }, [shouldShowEditorBox]);
 
 	return (
-		<div style={layoutElements.canvaCSS}>
+		<div style={{ display: 'grid', ...layoutElements.canvaCSS }}>
 			<div
 				style={{
 					...layoutElements.titleAndSubtopicBoxCSS,
@@ -1292,6 +1296,7 @@ export const Col_2_img_1_layout = ({
 						backgroundColor: themeElements.titleAndSubtopicBoxBackgroundColor
 							? themeElements.titleAndSubtopicBoxBackgroundColor
 							: '',
+						width: '100%',
 					}}
 				>
 					<div className={``} ref={topicRef} style={layoutElements.topicCSS}>

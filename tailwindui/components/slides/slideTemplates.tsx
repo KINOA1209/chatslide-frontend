@@ -248,6 +248,10 @@ const New_Education_009_template = generateTemplate(
 	'New_Education_009_template',
 );
 const Event_Report_010_template = generateTemplate('Event_Report_010_template');
+
+const Creative_Brief_011_template = generateTemplate(
+	'Creative_Brief_011_template',
+);
 export interface MainSlideProps {
 	user_name: JSX.Element;
 	title: JSX.Element;

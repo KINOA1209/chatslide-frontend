@@ -108,6 +108,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, embed = false }) => {
 			let project;
 			try {
 				project = await ProjectService.getSharedProjectDetails(project_id);
+				// console.log('SharedProjectDetails', project);
 			} catch (error) {
 				console.error(`Error fetching project ${project_id} details:`, error);
 				setLoading(false);

@@ -60,7 +60,7 @@ export const Event_Report_010_TemplateThemeConfig: {
 			fontSize: '30pt',
 			fontWeight: 'bold',
 			fontFamily: 'Poppins Bold',
-			lineHeight: '32px',
+			lineHeight: '44px',
 			color: '#2B2A34',
 		},
 		contentFontCSS_non_vertical_content: {
@@ -118,7 +118,7 @@ export const Event_Report_010_TemplateThemeConfig: {
 			fontSize: '30pt',
 			fontWeight: 'bold',
 			fontFamily: 'Poppins Bold',
-			lineHeight: '32px',
+			lineHeight: '44px',
 			color: '#2B2A34',
 		},
 		contentFontCSS_non_vertical_content: {
@@ -176,7 +176,7 @@ export const Event_Report_010_TemplateThemeConfig: {
 			fontSize: '30pt',
 			fontWeight: 'bold',
 			fontFamily: 'Poppins Bold',
-			lineHeight: '32px',
+			lineHeight: '44px',
 			color: '#2B2A34',
 		},
 		contentFontCSS_non_vertical_content: {
@@ -234,7 +234,7 @@ export const Event_Report_010_TemplateThemeConfig: {
 			fontSize: '30pt',
 			fontWeight: 'bold',
 			fontFamily: 'Poppins Bold',
-			lineHeight: '32px',
+			lineHeight: '44px',
 			color: '#2B2A34',
 		},
 		contentFontCSS_non_vertical_content: {
@@ -292,7 +292,7 @@ export const Event_Report_010_TemplateThemeConfig: {
 			fontSize: '30pt',
 			fontWeight: 'bold',
 			fontFamily: 'Poppins Bold',
-			lineHeight: '32px',
+			lineHeight: '44px',
 			color: '#2B2A34',
 		},
 		contentFontCSS_non_vertical_content: {
@@ -350,7 +350,7 @@ export const Event_Report_010_TemplateThemeConfig: {
 			fontSize: '30pt',
 			fontWeight: 'bold',
 			fontFamily: 'Poppins Bold',
-			lineHeight: '32px',
+			lineHeight: '44px',
 			color: '#2B2A34',
 		},
 		contentFontCSS_non_vertical_content: {
@@ -408,7 +408,7 @@ export const Event_Report_010_TemplateThemeConfig: {
 			fontSize: '30pt',
 			fontWeight: 'bold',
 			fontFamily: 'Poppins Bold',
-			lineHeight: '32px',
+			lineHeight: '44px',
 			color: '#2B2A34',
 		},
 		contentFontCSS_non_vertical_content: {
