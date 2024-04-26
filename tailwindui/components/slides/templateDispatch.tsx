@@ -23,6 +23,7 @@ import Chart, { Group } from '@/models/Chart';
 import ImagesPosition from '@/models/ImagesPosition';
 import { lightColorPalette, darkColorPalette } from './palette';
 import { useSlides } from '@/hooks/use-slides';
+import '@/components/socialPost/quillEditor.scss';
 
 const QuillEditable = dynamic(
 	() => import('@/components/slides/quillEditorSlide'),
@@ -32,12 +33,12 @@ const QuillEditable = dynamic(
 const processContent = (item: string) => {
 	if (isHTML(item)) {
 		if (item.trim().startsWith('<li') && item.trim().endsWith('</li>')) {
-			return `<ol>${item}</ol>`;
+			return `<ul>${item}</ul>`;
 		} else {
 			return item;
 		}
 	} else {
-		return `<ol><li>${item}</li></ol>\n`;
+		return `<ul><li>${item}</li></ul>\n`;
 	}
 };
 

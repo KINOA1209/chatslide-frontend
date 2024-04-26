@@ -52,6 +52,8 @@ import RadioButton, { RadioButtonOption } from './ui/RadioButton';
 import { Explanation, Instruction } from './ui/Text';
 import { WordSelector } from './slides/WordSelector';
 import { useSocialPosts } from '@/hooks/use-socialpost';
+import { MdImageSearch } from "react-icons/md";
+import { IoMdCrop } from "react-icons/io";
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -375,20 +377,20 @@ export const ImgModule = ({
 	const decodeImageUrl = (url: string | null): string => {
 		if (!url) return '';
 		if (url.includes('freepik')) {
-		  const urlMatch = url.match(/url=([^&]+)/);
-		  if (urlMatch && urlMatch[1]) {
-			const decodedUrl = decodeURIComponent(decodeURIComponent(urlMatch[1]));
-			//console.log('decodedurl', decodedUrl)
-			return decodedUrl;
-		  }
-		  //console.log('url parameter not found',url)
-		  // If 'url' parameter is not found, return the original url
-		  return url;
+			const urlMatch = url.match(/url=([^&]+)/);
+			if (urlMatch && urlMatch[1]) {
+				const decodedUrl = decodeURIComponent(decodeURIComponent(urlMatch[1]));
+				//console.log('decodedurl', decodedUrl)
+				return decodedUrl;
+			}
+			//console.log('url parameter not found',url)
+			// If 'url' parameter is not found, return the original url
+			return url;
 		}
 		// If 'freepik' is not included in the url, return the original url
 		//console.log('freepik not found', url)
 		return url;
-	  };
+	};
 
 	const handleImageClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.preventDefault();
@@ -1134,6 +1136,17 @@ export const ImgModule = ({
 		transform: 'translateY(-50%)',
 	};
 
+	const showIconsFunctionText = (layout: string) => {
+		if (layout === 'Col_2_img_2_layout' ||
+			layout === 'Col_3_img_3_layout'
+		) {
+			return false
+		}
+		else {
+			return true
+		}
+	}
+
 	return (
 		<>
 			{/* select image modal */}
@@ -1262,10 +1275,10 @@ export const ImgModule = ({
 				onDragOver={(e) => e.preventDefault()}
 				onClick={openModal}
 				className={`w-full h-full transition ease-in-out duration-150 relative ${selectedImg === ''
-						? 'bg-[#E7E9EB]'
-						: canEdit
-							? 'hover:bg-[#CAD0D3]'
-							: ''
+					? 'bg-[#E7E9EB]'
+					: canEdit
+						? 'hover:bg-[#CAD0D3]'
+						: ''
 					} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
 				style={{
 					overflow: isImgEditMode ? 'visible' : 'hidden',
@@ -1278,7 +1291,7 @@ export const ImgModule = ({
 					chartData.length > 0 ? ( // chart
 					<div
 						className='w-full h-full flex items-center justify-center overflow-hidden '
-						// onClick={openModal}
+					// onClick={openModal}
 					>
 						<DynamicChart
 							chartType={selectedChartType}
@@ -1287,24 +1300,30 @@ export const ImgModule = ({
 						/>
 					</div>
 				) : selectedImg === '' || imgLoadError ? ( // updload icon
-					<div
-						className='flex flex-col items-center justify-center cursor-pointer'
+					// if loading is fail and in editable page we show the error image
+					// otherwise(like presentation) show a empty div
+					canEdit ? (
+						<div
+							className='flex flex-col items-center justify-center cursor-pointer'
 						// onClick={openModal}
-					>
-						<svg
-							className='w-20 h-20 opacity-50'
-							viewBox='0 0 24 24'
-							xmlns='http://www.w3.org/2000/svg'
 						>
-							<rect x='0' fill='none' width='24' height='24' />
-							<g>
-								<path d='M23 4v2h-3v3h-2V6h-3V4h3V1h2v3h3zm-8.5 7c.828 0 1.5-.672 1.5-1.5S15.328 8 14.5 8 13 8.672 13 9.5s.672 1.5 1.5 1.5zm3.5 3.234l-.513-.57c-.794-.885-2.18-.885-2.976 0l-.655.73L9 9l-3 3.333V6h7V4H6c-1.105 0-2 .895-2 2v12c0 1.105.895 2 2 2h12c1.105 0 2-.895 2-2v-7h-2v3.234z' />
-							</g>
-						</svg>
-						<div className='text-black opacity-50'>
-							{canEdit && 'Click to add image'}
+							<svg
+								className='w-20 h-20 opacity-50'
+								viewBox='0 0 24 24'
+								xmlns='http://www.w3.org/2000/svg'
+							>
+								<rect x='0' fill='none' width='24' height='24' />
+								<g>
+									<path d='M23 4v2h-3v3h-2V6h-3V4h3V1h2v3h3zm-8.5 7c.828 0 1.5-.672 1.5-1.5S15.328 8 14.5 8 13 8.672 13 9.5s.672 1.5 1.5 1.5zm3.5 3.234l-.513-.57c-.794-.885-2.18-.885-2.976 0l-.655.73L9 9l-3 3.333V6h7V4H6c-1.105 0-2 .895-2 2v12c0 1.105.895 2 2 2h12c1.105 0 2-.895 2-2v-7h-2v3.234z' />
+								</g>
+							</svg>
+							<div className='text-black opacity-50'>
+								{canEdit && 'Click to add image'}
+							</div>
 						</div>
-					</div>
+					) : (
+						<div></div>
+					)
 				) : (
 					// image
 					<div
@@ -1384,10 +1403,10 @@ export const ImgModule = ({
 								height={540}
 								// objectFit='contain'
 								className={`transition ease-in-out duration-150 ${canEdit
-										? isImgEditMode
-											? 'brightness-100'
-											: 'hover:brightness-50'
-										: ''
+									? isImgEditMode
+										? 'brightness-100'
+										: 'hover:brightness-50'
+									: ''
 									}`}
 								onError={(e) => {
 									console.log('failed to load image', imgsrc);
@@ -1397,102 +1416,96 @@ export const ImgModule = ({
 							/>
 						</Rnd>
 						{canEdit && showImgButton && (
-							<div className='absolute top-2 left-2' style={{ zIndex: 53 }}>
+							<div
+								className={`absolute top-2 font-creato-medium ${isImgEditMode ? 'left-2'
+									: 'left-4'}`}
+								style={{ zIndex: 53 }}>
 								<ToolBar>
-									<ButtonWithExplanation
-										explanation={!isImgEditMode ? 'Resize' : 'Apply'}
-										button={
-											<button onClick={toggleImgEditMode}>
-												{!isImgEditMode ? (
-													<IoMdResize
-														style={{
-															strokeWidth: '2',
-															flex: '1',
-															width: '1.5rem',
-															height: '1.5rem',
-															fontWeight: 'bold',
-															color: '#344054',
-														}}
-													/>
-												) : (
-													<FaCheck
-														style={{
-															strokeWidth: '0.8',
-															width: '1.5rem',
-															height: '1.5rem',
-															fontWeight: 'bold',
-															color: '#344054',
-														}}
-													/>
-												)}
-											</button>
-										}
-									/>
 									{!isImgEditMode && (
-										<ButtonWithExplanation
-											explanation='Change'
-											button={
-												<button onClick={openModal}>
-													<GoPencil
-														style={{
-															strokeWidth: '1',
-															flex: '1',
-															width: '1.5rem',
-															height: '1.5rem',
-															fontWeight: 'bold',
-															color: '#344054',
-														}}
-													/>
-												</button>
-											}
-										/>
+										<button
+											onClick={openModal}
+											className='flex flex-row items-center justify-center gap-1'>
+											<MdImageSearch
+												style={{
+													width: '1.2rem',
+													height: '1.2rem',
+													color: '#344054',
+													fontWeight: 'bold',
+												}}
+											/>
+											{showIconsFunctionText(slides[slideIndex].layout) ? "Change" : ""}
+										</button>
 									)}
+
+									<button onClick={toggleImgEditMode} className='flex flex-row items-center justify-center gap-1'>
+										{!isImgEditMode ? (
+											<>
+												<IoMdCrop
+													style={{
+														strokeWidth: '0.8',
+														width: '1.2rem',
+														height: '1.2rem',
+														fontWeight: 'bold',
+														color: '#344054',
+													}}
+												/>
+												{showIconsFunctionText(slides[slideIndex].layout) ? "Resize" : ""}
+											</>
+										) : (
+											<>
+												<FaCheck
+													style={{
+														strokeWidth: '0.8',
+														width: '1rem',
+														height: '1rem',
+														fontWeight: 'bold',
+														color: '#344054',
+													}}
+												/>
+												Apply
+											</>
+										)}
+									</button>
 
 									{!isImgEditMode && (
 										<>
-											<ButtonWithExplanation
-												explanation='Delete'
-												button={
-													<button
-														onClick={() => {
-															updateSingleCallback('');
-														}}
-													>
-														<LuTrash2
-															style={{
-																strokeWidth: '2',
-																flex: '1',
-																width: '1.5rem',
-																height: '1.5rem',
-																fontWeight: 'bold',
-																color: '#344054',
-															}}
-														/>
-													</button>
-												}
-											/>
-											{project?.additional_images && (
-												<ButtonWithExplanation
-													explanation='Shuffle'
-													button={
-														<button
-															onClick={() => {
-																updateSingleCallback('shuffle', false, {});
-															}}
-														>
-															<HiOutlineRefresh
-																style={{
-																	strokeWidth: '2',
-																	flex: '1',
-																	width: '1.5rem',
-																	height: '1.5rem',
-																	fontWeight: 'bold',
-																	color: '#344054',
-																}}
-															/>
-														</button>
-													}
+											<button
+												className='flex flex-row items-center justify-center gap-1'
+												onClick={() => {
+													updateSingleCallback('');
+												}}
+											>
+												<LuTrash2
+													style={{
+														strokeWidth: '2',
+														flex: '1',
+														width: '1rem',
+														height: '1rem',
+														fontWeight: 'bold',
+														color: '#344054',
+													}}
 												/>
+												{showIconsFunctionText(slides[slideIndex].layout) ? "Delete" : ""}
+											</button>
+											{project?.additional_images && (
+												<button
+													className='flex flex-row items-center justify-center gap-1'
+													onClick={() => {
+														updateSingleCallback('shuffle', false, {});
+													}}
+												>
+													<HiOutlineRefresh
+														style={{
+															strokeWidth: '2',
+															flex: '1',
+															width: '1rem',
+															height: '1rem',
+															fontWeight: 'bold',
+															color: '#344054',
+														}}
+													/>
+													{showIconsFunctionText(slides[slideIndex].layout) ? "Shuffle" : ""}
+												</button>
 											)}
 										</>
 									)}
