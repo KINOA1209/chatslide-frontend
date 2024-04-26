@@ -99,8 +99,8 @@ const TemplateSelector: React.FC<{
 	}, [paletteOptions]);
 
 	useEffect(() => {
-		setCurrentSelectedPalette(paletteOptions[0]); // Update finalPaletteOptions when paletteOptions changes
-		setPalette(paletteOptions[0]);
+		// setCurrentSelectedPalette(paletteOptions[0]); // Update finalPaletteOptions when paletteOptions changes
+		// setPalette(paletteOptions[0]);
 		// console.log('currentSelectedPalette', currentSelectedPalette);
 		// console.log('SelectedPalette', palette);
 		// use the consistent template and palette value to reload initial font family to stay consistent
@@ -124,7 +124,6 @@ const TemplateSelector: React.FC<{
 	};
 
 	useEffect(() => {
-		// Whenever template changes, reset currentPalette to the first value of paletteOptions
 		// Whenever template changes, reset currentPalette to the first value of paletteOptions
 
 		if (paletteOptions.length === 1) {
@@ -158,7 +157,8 @@ const TemplateSelector: React.FC<{
 			setPalette(selectedOption.value);
 		} else {
 			// Handle the case where no option is selected, for example, clear the palette
-			// setCurrentPalette(paletteOptions[0])
+			setCurrentSelectedPalette(paletteOptions[0]);
+
 			setPalette(paletteOptions[0]);
 		}
 	};

@@ -9,7 +9,9 @@ import { GoPlus, GoShare } from 'react-icons/go';
 import { LuTrash2, LuPalette } from 'react-icons/lu';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import Modal from '../ui/Modal';
-import TemplateSelector from '@/app/(feature)/design/TemplateSelector';
+import TemplateSelector, {
+	colorPreviews,
+} from '@/app/(feature)/design/TemplateSelector';
 import { FiPlay } from 'react-icons/fi';
 import { FaRegClone } from 'react-icons/fa';
 import { PaletteKeys, TemplateKeys } from './slideTemplates';
@@ -269,10 +271,14 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 		useState<PaletteKeys>(slides[0]?.palette || 'Original');
 
 	const handleConfirm = () => {
-		// console.log('selectedTemplate:', selectedPaletteOption);
+		console.log('selectedTemplate:', selectedTemplate, selectedPaletteOption);
 		// if (!hasSelectedCustomTemplateBgColor) {
 		changeTemplateAndPalette(selectedTemplate, selectedPaletteOption);
 		// }
+		// when confirm, set the selected palette color code to background color
+		// updateCustomBgColorForTemplate(
+		// 	colorPreviews[selectedPaletteOption as PaletteKeys],
+		// );
 		setShowModal(false);
 	};
 	// inconsistent?
