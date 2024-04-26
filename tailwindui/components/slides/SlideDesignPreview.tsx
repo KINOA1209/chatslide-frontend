@@ -37,10 +37,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 	// });
 
 	useEffect(() => {
-		// console.log(
-		// 	'imported slides object layouts',
-		// 	Object.values(slides).map((slide) => slide.layout),
-		// );
+		console.log('current project', project);
 		const isValidTemplateKey = (key: string): key is TemplateKeys => {
 			return key in availableTemplates;
 		};
@@ -66,8 +63,11 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			newSlide.layout = layoutKey as keyof typeof layoutOptions;
 			newSlide.images_position = slides[0]?.images_position;
 			// add background url and logo_url for preview
-			newSlide.background_url = slides[0]?.background_url;
-			newSlide.logo_url = slides[0]?.logo_url;
+			newSlide.background_url =
+				project?.selected_background?.[0]?.thumbnail_url || '';
+			newSlide.logo_url = project?.selected_logo?.[0]?.thumbnail_url || '';
+			newSlide.logo = project?.logo || '';
+
 			if (
 				layoutKey === 'Col_2_img_0_layout' ||
 				layoutKey === 'Col_2_img_2_layout'
