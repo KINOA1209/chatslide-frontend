@@ -82,6 +82,16 @@ const SideBar = ({ }: SideBarProps) => {
 		return level;
 	}
 
+	function getCreditsDisplay(credits: string, isSidebarOpen: boolean): string {
+		if(isSidebarOpen) {
+			return credits + ' ⭐️ Credits';
+		}
+		if (credits === 'Unlimited') {
+			return '∞ ⭐️';
+		}
+		return credits + ' ⭐️';
+	}
+
   // avoid hydration error during development caused by persistence
   if (!useHydrated()) return <></>;
 
@@ -186,7 +196,7 @@ const SideBar = ({ }: SideBarProps) => {
             }
             role='menuitem'
           >
-            {credits} ⭐️ {isSidebarOpen && 'Credits'}
+            {getCreditsDisplay(credits, isSidebarOpen)}
           </a>
 
           {
