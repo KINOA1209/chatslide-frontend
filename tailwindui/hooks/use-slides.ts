@@ -529,6 +529,15 @@ export const useSlides = () => {
 				background_color: hasSelectedCustomTemplateBgColor
 					? customTemplateBgColor
 					: colorPreviews[newPalette as PaletteKeys],
+				titleFontFamily: HasSelectedCustomizedTemplateTitleFontFamily
+					? customizedTemplateTitleFontFamily
+					: initalLoadedTitleFontFamily,
+				subtitleFontFamily: HasSelectedCustomizedTemplateSubtitleFontFamily
+					? customizedTemplateSubtitleFontFamily
+					: initalLoadedSubtitleFontFamily,
+				contentFontFamily: HasSelectedCustomizedTemplateContentFontFamily
+					? customizedTemplateContentFontFamily
+					: initalLoadedContentFontFamily,
 
 				// images_position: [{}, {}, {}],// comment this line because it cause the image position to be wrong after changing template and palette
 			};
@@ -565,10 +574,6 @@ export const useSlides = () => {
 		setSlidesHistoryIndex(0);
 		clearChatHistory();
 		setIsPresenting(false);
-		// setHasSelectedCustomTemplateBgColor(
-		// 	slides?.[0]?.background_color ? true : false,
-		// );
-		// setCustomTemplateBgColor(slides?.[0]?.background_color || '');
 
 		slidesStatus = SlidesStatus.Inited;
 	};

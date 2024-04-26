@@ -100,7 +100,7 @@ const TemplateSelector: React.FC<{
 	// const [selectedCustomTemplateBgColor, setSelectedCustomTemplateBgColor] =
 	// 	useState<string>('');
 	// const [currentSelectedPalette, setCurrentSelectedPalette] = useState(palette); // Initialize currentPalette with palette
-	const [resettingColor, setResettingColor] = useState(false);
+	// const [resettingColor, setResettingColor] = useState(false);
 	const handleCustomTemplateBgColorChange = (color: string) => {
 		// setSelectedCustomTemplateBgColor(color);
 		updateCustomBgColorForTemplate(color);
@@ -125,11 +125,13 @@ const TemplateSelector: React.FC<{
 			palette as PaletteKeys,
 		);
 		console.log(
-			'initialCurrentTemplateTitleFontFamily',
+			'initialCurrentTemplate font familt',
 			template,
 			palette,
 			// currentSelectedPalette,
 			initialCurrentTemplateTitleFontFamily,
+			initalLoadedSubtitleFontFamily,
+			initalLoadedContentFontFamily,
 		);
 
 		setInitalLoadedTitleFontFamily(
@@ -221,6 +223,15 @@ const TemplateSelector: React.FC<{
 
 	const resetFontFamilyPicker = () => {
 		// console.log('initalLoadedTitleFontFamily', initalLoadedTitleFontFamily);
+		updateCustomizedTitleFontFamilyForTemplate(
+			initalLoadedTitleFontFamily || '',
+		);
+		updateCustomizedSubtitleFontFamilyForTemplate(
+			initalLoadedSubtitleFontFamily || '',
+		);
+		updateCustomizedContentFontFamilyForTemplate(
+			initalLoadedContentFontFamily || '',
+		);
 		setHasSelectedCustomizedTemplateTitleFontFamily(false);
 		setHasSelectedCustomizedTemplateSubtitleFontFamily(false);
 		setHasSelectedCustomizedTemplateContentFontFamily(false);

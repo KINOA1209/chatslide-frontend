@@ -52,6 +52,7 @@ class ProjectService {
 
 			if (project?.presentation_slides) {
 				project.parsed_slides = this.parseSlides(project.presentation_slides);
+				// console.log('getSharedProjectDetails', project.parsed_slides);
 			}
 			if (project?.social_posts && project?.post_type) {
 				project.parsed_socialPosts = this.parseSocialPosts(
