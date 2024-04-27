@@ -32,7 +32,7 @@ export default function Studio() {
 					<Explanation>
 						Coming soon, expected in May, 2024. <br />
 						Learn more about our future plans on our <a href='https://blog.drlambda.ai/drlambda-product-roadmap/' className='text-blue-600'>roadmap</a>. <br />
-						Join our <a href='discord' className='text-blue-600'>discord</a> channel to get up to date information.
+						Join our <a href='discord' className='text-blue-600'>Discord</a> channel to get up to date information.
 					</Explanation>
 
 					<EarlyAccessButton
