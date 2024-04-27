@@ -83,7 +83,7 @@ export const BrandingButton: React.FC<{}> = () => {
 					}}
 				/>
 				<Instruction>
-					Change branding color on
+					Change branding color and fonts on
 					<div
 						className='text-blue-600 cursor-pointer'
 						onClick={() => {
